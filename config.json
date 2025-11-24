@@ -1,0 +1,44 @@
+{
+	"type": "minecraftBedrock",
+	"name": "UtilityCraft Expanded",
+	"namespace": "utilitycraft",
+	"authors": [
+		"Dorios Studios"
+	],
+	"targetVersion": "1.21.120",
+	"description": "Adds even more machines and features for your world with UtilityCraft!",
+	"experimentalGameplay": {
+		"upcomingCreatorFeatures": false,
+		"experimentalCreatorCameraFeatures": false,
+		"enableGameTestFramework": false,
+		"renderDragonFeatures": false,
+		"educationEdition": false
+	},
+	"bdsProject": false,
+	"packs": {
+		"behaviorPack": "./BP",
+		"resourcePack": "./RP"
+	},
+	"worlds": [
+		"./worlds/*"
+	],
+	"compiler": {
+		"plugins": [
+			"generatorScripts",
+			"typeScript",
+			"entityIdentifierAlias",
+			"customEntityComponents",
+			"customItemComponents",
+			"customBlockComponents",
+			"customCommands",
+			"moLang",
+			"formatVersionCorrection",
+			[
+				"simpleRewrite",
+				{
+					"packName": "UtilityCraft Expanded"
+				}
+			]
+		]
+	}
+}

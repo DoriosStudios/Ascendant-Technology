@@ -1,0 +1,44 @@
+{
+	"format_version": 2,
+	"metadata": {
+		"authors": [
+			"Dorios Studios"
+		]
+	},
+	"header": {
+		"name": "UtilityCraft Expanded",
+		"description": "Adds even more machines and features for your world with UtilityCraft!",
+		"min_engine_version": [
+			1,
+			21,
+			120
+		],
+		"uuid": "1cd6f925-5e4f-45a6-93e5-f29241179512",
+		"version": [
+			1,
+			0,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "resources",
+			"uuid": "91d85c39-5c71-4597-b095-598a8436d59c",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "8d4e0a7e-98d5-4bdb-bfcc-ff0c08f09799",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	]
+}

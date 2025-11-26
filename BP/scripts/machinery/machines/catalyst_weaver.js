@@ -43,6 +43,16 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         feedFluidSlot(machine, tank)
 
         const inv = machine.inv
+        
+        // Priority 1: Check energy first
+        const hasEnergy = machine.energy.get() > 0
+        if (!hasEnergy) {
+            machine.showWarning('No Energy', false)
+            tank.display(FLUID_DISPLAY_SLOT)
+            return
+        }
+        
+        // Priority 2: Basic validation
         const recipes = resolveRecipes(block)
         if (!recipes || recipes.length === 0) {
             machine.showWarning('No Recipes')
@@ -57,10 +67,33 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             return
         }
 
+        // Priority 3: Try to match recipe
         const potentialCount = countPotentialRecipes(recipes, inputStack)
         const catalystStacks = CATALYST_SLOTS.map(slot => inv.getItem(slot))
         const recipe = matchRecipe(recipes, inputStack, catalystStacks, tank)
         
+        // Priority 4: Check fluid requirements with specific messages
+        if (recipe && recipe.fluid?.type) {
+            const tankType = tank.getType()
+            const fluidName = DoriosAPI.utils.capitalizeFirst(recipe.fluid.type)
+            
+            if (tankType !== 'empty' && tankType !== recipe.fluid.type) {
+                machine.showWarning(`Wrong Fluid\n§7Need ${fluidName}`)
+                tank.display(FLUID_DISPLAY_SLOT)
+                return
+            }
+            
+            const needFluid = recipe.fluid.amount ?? 0
+            if (tank.get() < needFluid) {
+                machine.showWarning(`Not Enough ${fluidName}\n§7Need ${needFluid}mB`)
+                tank.display(FLUID_DISPLAY_SLOT)
+                return
+            }
+            
+            if (tankType === 'empty') tank.setType(recipe.fluid.type)
+        }
+        
+        // Priority 5: Invalid recipe (last resort)
         if (!recipe) {
             const catalystStatus = recipes.some(r => matchesStack(r.input, inputStack)) 
                 ? analyzeCatalystStatus(recipes.find(r => matchesStack(r.input, inputStack)), catalystStacks)
@@ -77,11 +110,6 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             } else {
                 machine.showWarning(`Invalid Recipe\n§7${potentialCount} potential recipe${potentialCount !== 1 ? 's' : ''}`)
             }
-            tank.display(FLUID_DISPLAY_SLOT)
-            return
-        }
-
-        if (!validateFluid(tank, recipe, machine)) {
             tank.display(FLUID_DISPLAY_SLOT)
             return
         }
@@ -108,7 +136,10 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         }
 
         if (recipe.byproduct && byproductSlot && byproductSlot.typeId === recipe.byproduct.id) {
-            const requiredSpace = recipe.byproduct.amount ?? 1
+            let requiredSpace = recipe.byproduct.amount ?? 1
+            if (Array.isArray(requiredSpace)) {
+                requiredSpace = requiredSpace[1] // Use max value for space check
+            }
             const availableSpace = (byproductSlot.maxAmount ?? 64) - byproductSlot.amount
             if (availableSpace < requiredSpace) {
                 machine.showWarning('Byproduct Slot Full')
@@ -144,11 +175,6 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         } else {
             const consumption = machine.boosts.consumption
             const energyToConsume = Math.min(machine.energy.get(), machine.rate, maxBatches * energyCost * consumption)
-            if (energyToConsume <= 0) {
-                machine.showWarning('No Energy', false)
-                tank.display(FLUID_DISPLAY_SLOT)
-                return
-            }
             machine.energy.consume(energyToConsume)
             machine.addProgress(energyToConsume / consumption)
         }
@@ -257,28 +283,6 @@ function matchesCatalysts(requirements = [], stacks) {
     return true
 }
 
-function validateFluid(tank, recipe, machine) {
-    const needFluid = recipe.fluid?.amount ?? 0
-    if (needFluid <= 0) return true
-
-    const requiredType = recipe.fluid.type
-    const tankType = tank.getType()
-    
-    if (tankType !== 'empty' && tankType !== requiredType) {
-        const fluidName = DoriosAPI.utils.capitalizeFirst(requiredType)
-        machine.showWarning(`Wrong Fluid (Need ${fluidName})`)
-        return false
-    }
-
-    if (tank.get() < needFluid) {
-        const fluidName = DoriosAPI.utils.capitalizeFirst(requiredType)
-        machine.showWarning(`Not Enough ${fluidName}`)
-        return false
-    }
-
-    if (tankType === 'empty') tank.setType(requiredType)
-    return true
-}
 
 function calculateMaxBatches({ inputStack, catalystStacks, recipe, outputSpace, tank, byproductSlot }) {
     let max = Infinity
@@ -312,7 +316,10 @@ function calculateMaxBatches({ inputStack, catalystStacks, recipe, outputSpace, 
 
     if (recipe.byproduct) {
         const slot = byproductSlot
-        const amount = recipe.byproduct.amount ?? 1
+        let amount = recipe.byproduct.amount ?? 1
+        if (Array.isArray(amount)) {
+            amount = amount[1] // Use max value for capacity check
+        }
         if (!slot) {
             // ok, empty slot -> can accept at least one craft
         } else if (slot.typeId !== recipe.byproduct.id) {
@@ -355,7 +362,14 @@ function applyCraft(machine, recipe, crafts, tank) {
 
 function addByproduct(machine, byproduct) {
     const slot = machine.inv.getItem(BYPRODUCT_SLOT)
-    const amount = byproduct.amount ?? 1
+    
+    // Normalize amount to support [min, max] ranges
+    let amount = byproduct.amount ?? 1
+    if (Array.isArray(amount)) {
+        const [min, max] = amount
+        amount = Math.floor(Math.random() * (max - min + 1)) + min
+    }
+    
     if (!slot) {
         machine.entity.setItem(BYPRODUCT_SLOT, byproduct.id, amount)
     } else if (slot.typeId === byproduct.id) {

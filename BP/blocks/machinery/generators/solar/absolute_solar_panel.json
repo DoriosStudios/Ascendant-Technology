@@ -1,0 +1,87 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:absolute_solar_panel",
+			"states": {
+				"utilitycraft:on": [
+					false,
+					true
+				]
+			},
+			"menu_category": {
+				"category": "construction"
+			}
+		},
+		"components": {
+			"utilitycraft:solar_panel": {
+				"entity": {
+					"name": "solar_panel",
+					"type": "passive"
+				},
+				"generator": {
+					"energy_cap": 256000000,
+					"rate_speed_base": 96000
+				}
+			},
+			"minecraft:geometry": "geometry.utilitycraft_solar_panel",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_absolute_solar_panel_off",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:tick": {
+				"interval_range": [
+					2,
+					2
+				]
+			},
+			"minecraft:selection_box": {
+				"origin": [
+					-8,
+					0,
+					-8
+				],
+				"size": [
+					16,
+					5,
+					16
+				]
+			},
+			"minecraft:collision_box": {
+				"origin": [
+					-8,
+					0,
+					-8
+				],
+				"size": [
+					16,
+					5,
+					16
+				]
+			},
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 1
+			},
+			"minecraft:destructible_by_explosion": false,
+			"tag:dorios:generator": {},
+			"tag:dorios:energy": {},
+			"tag:minecraft:is_pickaxe_item_destructible": {}
+		},
+		"permutations": [
+			{
+				"condition": "q.block_state('utilitycraft:on') == true ",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_absolute_solar_panel_on",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 4
+				}
+			}
+		]
+	}
+}

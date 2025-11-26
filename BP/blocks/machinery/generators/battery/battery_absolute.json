@@ -1,0 +1,133 @@
+	{
+	"format_version": "1.20.80",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:absolute_battery",
+			"states": {
+				"utilitycraft:capacity": [
+					0,
+					1,
+					2,
+					3,
+					4,
+					5,
+					6
+				]
+			},
+			"menu_category": {
+				"category": "construction"
+			}
+		},
+		"components": {
+			"utilitycraft:battery": {
+				"energy_cap": 2048000000,
+				"rate_speed_base": 800000
+			},
+			"minecraft:geometry": "geometry.utilitycraft_battery",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_battery_absolute_0",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:tick": {
+				"interval_range": [
+					2,
+					2
+				]
+			},
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 1
+			},
+			"minecraft:destructible_by_explosion": false,
+			"tag:dorios:energy": {},
+			"tag:dorios:generator": {},
+			"tag:minecraft:is_pickaxe_item_destructible": {}
+		},
+		"permutations": [
+			{
+				"condition": "q.block_state('utilitycraft:capacity') == 0",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_battery_absolute_0",
+							"render_method": "alpha_test"
+						}
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:capacity') == 1",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_battery_absolute_1",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 1
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:capacity') == 2",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_battery_absolute_2",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 2
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:capacity') == 3",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_battery_absolute_3",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 3
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:capacity') == 4",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_battery_absolute_4",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 4
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:capacity') == 5",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_battery_absolute_5",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 5
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:capacity') == 6",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_battery_absolute_6",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 6
+				}
+			}
+		]
+	}
+}

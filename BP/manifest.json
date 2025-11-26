@@ -3,7 +3,8 @@
 	"metadata": {
 		"authors": [
 			"Dorios Studios"
-		]
+		],
+		"product_type": "addon"
 	},
 	"header": {
 		"name": "UtilityCraft Expanded",
@@ -24,6 +25,35 @@
 		{
 			"type": "data",
 			"uuid": "c75ff6b0-0594-4525-b866-8930d5fb9415",
+			"version": [
+				1,
+				0,
+				0
+			]
+		},
+		{
+			"type": "script",
+			"language": "javascript",
+			"entry": "scripts/main.js",
+			"uuid": "6584b5c2-0351-46c5-b2d4-4dea5d09321c",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	],
+	"dependencies": [
+		{
+			"module_name": "@minecraft/server",
+			"version": "2.2.0"
+		},
+		{
+			"module_name": "@minecraft/server-ui",
+			"version": "2.0.0"
+		},
+		{
+			"uuid": "1cd6f925-5e4f-45a6-93e5-f29241179512",
 			"version": [
 				1,
 				0,

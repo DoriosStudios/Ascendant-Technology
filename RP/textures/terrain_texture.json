@@ -3,5 +3,63 @@
 	"padding": 8,
 	"resource_pack_name": "UtilityCraft Expanded",
 	"texture_name": "atlas.terrain",
-	"texture_data": {}
+	"texture_data": {
+		"utilitycraft_absolute_furnator_off": {
+			"textures": "textures/blocks/generators/absolute_furnator_off"
+		},
+		"utilitycraft_absolute_furnator_on": {
+			"textures": "textures/blocks/generators/absolute_furnator_on"
+		},
+		"utilitycraft_absolute_magmator_off": {
+			"textures": "textures/blocks/generators/absolute_magmator_off"
+		},
+		"utilitycraft_absolute_magmator_on": {
+			"textures": "textures/blocks/generators/absolute_magmator_on"
+		},
+		"utilitycraft_absolute_solar_panel_off": {
+			"textures": "textures/blocks/generators/absolute_solarpanel_off"
+		},
+		"utilitycraft_absolute_solar_panel_on": {
+			"textures": "textures/blocks/generators/absolute_solarpanel_on"
+		},
+		"utilitycraft_absolute_thermo_generator_off": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_off"
+		},
+		"utilitycraft_absolute_thermo_generator_on": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_on"
+		},
+		"utilitycraft_absolute_wind_turbine_off": {
+			"textures": "textures/blocks/generators/absolute_wind_turbine_off"
+		},
+		"utilitycraft_absolute_wind_turbine_on": {
+			"textures": "textures/blocks/generators/absolute_wind_turbine_on"
+		},
+		"utilitycraft_battery_absolute_0": {
+			"textures": "textures/blocks/generators/battery_absolute_0"
+		},
+		"utilitycraft_battery_absolute_1": {
+			"textures": "textures/blocks/generators/battery_absolute_1"
+		},
+		"utilitycraft_battery_absolute_2": {
+			"textures": "textures/blocks/generators/battery_absolute_2"
+		},
+		"utilitycraft_battery_absolute_3": {
+			"textures": "textures/blocks/generators/battery_absolute_3"
+		},
+		"utilitycraft_battery_absolute_4": {
+			"textures": "textures/blocks/generators/battery_absolute_4"
+		},
+		"utilitycraft_battery_absolute_5": {
+			"textures": "textures/blocks/generators/battery_absolute_5"
+		},
+		"utilitycraft_battery_absolute_6": {
+			"textures": "textures/blocks/generators/battery_absolute_6"
+		},
+		"utilitycraft_catalyst_weaver_off": {
+			"textures": "textures/blocks/machines/catalyst_weaver_off"
+		},
+		"utilitycraft_catalyst_weaver_on": {
+			"textures": "textures/blocks/machines/catalyst_weaver_on"
+		}
+	}
 }

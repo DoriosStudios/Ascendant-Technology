@@ -1,0 +1,10 @@
+tile.utilitycraft:absolute_battery.name=Batería Absoluta
+tile.utilitycraft:absolute_furnator.name=Furnator Absoluto
+tile.utilitycraft:absolute_magmator.name=Magmator Absoluto
+tile.utilitycraft:absolute_solar_panel.name=Panel Solar Absoluto
+tile.utilitycraft:absolute_thermo_generator.name=Generador Termal Absoluto
+tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta
+
+tile.utilitycraft:catalyst_weaver.name=Tejedor de Catalizadores
+
+entity.utilitycraft:catalyst_weaver.name=Tejedor Catalizador

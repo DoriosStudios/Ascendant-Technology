@@ -1,3 +1,4 @@
+## Generators
 tile.utilitycraft:absolute_battery.name=Absolute Battery
 tile.utilitycraft:absolute_furnator.name=Absolute Furnator
 tile.utilitycraft:absolute_magmator.name=Absolute Magmator
@@ -5,11 +6,16 @@ tile.utilitycraft:absolute_solar_panel.name=Absolute Solar Panel
 tile.utilitycraft:absolute_thermo_generator.name=Absolute Thermo Generator
 tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine
 
+## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver
 
+## Other Blocks
 tile.utilitycraft:flat_conduit.name=Flat Conduit
 
-entity.utilitycraft:catalyst_weaver.name=Catalyst Weaver
+## Items
+item.utilitycraft:aetherium=Aetherium Ingot
+item.utilitycraft:liquified_aetherium_bucket=Liquified Aetherium Bucket
+item.utilitycraft:aetherium_shard=Aetherium Shard
 
-item.utilitycraft:aetherium.name=Aetherium Ingot
-item.utilitycraft:liquified_aetherium_bucket.name=Liquified Aetherium Bucket
+## Entities
+entity.utilitycraft:catalyst_weaver.name=Catalyst Weaver

@@ -7,8 +7,8 @@
 		"product_type": "addon"
 	},
 	"header": {
-		"name": "UtilityCraft Expanded",
-		"description": "Adds even more machines and features for your world with UtilityCraft!",
+		"name": "Ascendant Technology",
+		"description": "Adds even more machines and features for your world with UtilityCraft!\nv0.1.13",
 		"min_engine_version": [
 			1,
 			21,
@@ -18,7 +18,7 @@
 		"version": [
 			1,
 			0,
-			0
+			1
 		]
 	},
 	"modules": [

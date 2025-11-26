@@ -1,0 +1,15 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:aetherium",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_aetherium",
+            "minecraft:allow_off_hand": true
+        }
+    }
+}

@@ -9,7 +9,7 @@
             }
         },
         "components": {
-            "minecraft:icon": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_06",
+            "minecraft:icon": "utilitycraft_liquified_aetherium_bar_06",
             "minecraft:tags": {
                 "tags": [
                     "utilitycraft:ui_element"

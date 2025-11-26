@@ -1,5 +1,159 @@
 {
 	"resource_pack_name": "UtilityCraft Expanded",
 	"texture_name": "atlas.items",
-	"texture_data": {}
+	"texture_data": {
+		"utilitycraft_aetherium": {
+			"textures": "textures/items/ores/aetherium_ingot"
+		},
+		"utilitycraft_liquified_aetherium_bucket": {
+			"textures": "textures/items/water_bucket"
+		},
+		"utilitycraft_liquified_aetherium_bar_00": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_00"
+		},
+		"utilitycraft_liquified_aetherium_bar_01": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_01"
+		},
+		"utilitycraft_liquified_aetherium_bar_02": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_02"
+		},
+		"utilitycraft_liquified_aetherium_bar_03": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_03"
+		},
+		"utilitycraft_liquified_aetherium_bar_04": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_04"
+		},
+		"utilitycraft_liquified_aetherium_bar_05": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_05"
+		},
+		"utilitycraft_liquified_aetherium_bar_06": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_06"
+		},
+		"utilitycraft_liquified_aetherium_bar_07": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_07"
+		},
+		"utilitycraft_liquified_aetherium_bar_08": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_08"
+		},
+		"utilitycraft_liquified_aetherium_bar_09": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_09"
+		},
+		"utilitycraft_liquified_aetherium_bar_10": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_10"
+		},
+		"utilitycraft_liquified_aetherium_bar_11": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_11"
+		},
+		"utilitycraft_liquified_aetherium_bar_12": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_12"
+		},
+		"utilitycraft_liquified_aetherium_bar_13": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_13"
+		},
+		"utilitycraft_liquified_aetherium_bar_14": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_14"
+		},
+		"utilitycraft_liquified_aetherium_bar_15": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_15"
+		},
+		"utilitycraft_liquified_aetherium_bar_16": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_16"
+		},
+		"utilitycraft_liquified_aetherium_bar_17": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_17"
+		},
+		"utilitycraft_liquified_aetherium_bar_18": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_18"
+		},
+		"utilitycraft_liquified_aetherium_bar_19": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_19"
+		},
+		"utilitycraft_liquified_aetherium_bar_20": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_20"
+		},
+		"utilitycraft_liquified_aetherium_bar_21": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_21"
+		},
+		"utilitycraft_liquified_aetherium_bar_22": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_22"
+		},
+		"utilitycraft_liquified_aetherium_bar_23": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_23"
+		},
+		"utilitycraft_liquified_aetherium_bar_24": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_24"
+		},
+		"utilitycraft_liquified_aetherium_bar_25": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_25"
+		},
+		"utilitycraft_liquified_aetherium_bar_26": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_26"
+		},
+		"utilitycraft_liquified_aetherium_bar_27": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_27"
+		},
+		"utilitycraft_liquified_aetherium_bar_28": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_28"
+		},
+		"utilitycraft_liquified_aetherium_bar_29": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_29"
+		},
+		"utilitycraft_liquified_aetherium_bar_30": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_30"
+		},
+		"utilitycraft_liquified_aetherium_bar_31": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_31"
+		},
+		"utilitycraft_liquified_aetherium_bar_32": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_32"
+		},
+		"utilitycraft_liquified_aetherium_bar_33": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_33"
+		},
+		"utilitycraft_liquified_aetherium_bar_34": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_34"
+		},
+		"utilitycraft_liquified_aetherium_bar_35": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_35"
+		},
+		"utilitycraft_liquified_aetherium_bar_36": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_36"
+		},
+		"utilitycraft_liquified_aetherium_bar_37": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_37"
+		},
+		"utilitycraft_liquified_aetherium_bar_38": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_38"
+		},
+		"utilitycraft_liquified_aetherium_bar_39": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_39"
+		},
+		"utilitycraft_liquified_aetherium_bar_40": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_40"
+		},
+		"utilitycraft_liquified_aetherium_bar_41": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_41"
+		},
+		"utilitycraft_liquified_aetherium_bar_42": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_42"
+		},
+		"utilitycraft_liquified_aetherium_bar_43": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_43"
+		},
+		"utilitycraft_liquified_aetherium_bar_44": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_44"
+		},
+		"utilitycraft_liquified_aetherium_bar_45": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_45"
+		},
+		"utilitycraft_liquified_aetherium_bar_46": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_46"
+		},
+		"utilitycraft_liquified_aetherium_bar_47": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_47"
+		},
+		"utilitycraft_liquified_aetherium_bar_48": {
+			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_48"
+		}
+	}
 }

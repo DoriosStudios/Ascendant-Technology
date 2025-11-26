@@ -251,6 +251,7 @@ registerFluidContainerBatch([
     { id: "minecraft:water_bucket", amount: 1000, type: "water", output: "minecraft:bucket" },
     { id: "utilitycraft:water_ball", amount: 1000, type: "water" },
     { id: "minecraft:milk_bucket", amount: 1000, type: "milk", output: "minecraft:bucket" },
+    { id: "utilitycraft:liquified_aetherium_bucket", amount: 1000, type: "liquified_aetherium", output: "minecraft:bucket" },
     { id: "minecraft:experience_bottle", amount: 8, type: "xp", output: "minecraft:glass_bottle" },
     // Cloud's Fluid Cells
     { id: "fluidcells:water_cell", amount: 4000, type: "water", output: "fluidcells:empty_cell" },
@@ -270,7 +271,8 @@ registerFluidOutputBatch([
         fills: {
             water: "minecraft:water_bucket",
             lava: "minecraft:lava_bucket",
-            milk: "minecraft:milk_bucket"
+            milk: "minecraft:milk_bucket",
+            liquified_aetherium: "utilitycraft:liquified_aetherium_bucket"
         }
     },
     {

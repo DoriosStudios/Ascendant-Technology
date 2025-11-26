@@ -10,3 +10,6 @@ tile.utilitycraft:catalyst_weaver.name=Tecelão de Catalisadores
 tile.utilitycraft:flat_conduit.name=Conduíte Plano
 
 entity.utilitycraft:catalyst_weaver.name=Tecelão Catalisador
+
+item.utilitycraft:aetherium.name=Lingote de Aetherium
+item.utilitycraft:liquified_aetherium_bucket.name=Balde de Aetherium Liquefeito

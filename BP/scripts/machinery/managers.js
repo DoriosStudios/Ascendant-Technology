@@ -2021,6 +2021,17 @@ export class Energy {
 const fluidObjectives = new Map();
 
 /**
+ * Maps fluid type identifiers to their display item prefixes.
+ * Each prefix must include the namespace (e.g. "utilitycraft:liquified_aetherium").
+ * When no custom prefix is provided, FluidManager falls back to `utilitycraft:{type}`.
+ *
+ * Default registration bootstraps liquified_aetherium to use its dedicated UI assets.
+ */
+const fluidDisplayItemPrefixes = new Map([
+    ["liquified_aetherium", "utilitycraft:liquified_aetherium"],
+]);
+
+/**
  * Ensures that the required scoreboard objectives exist for a given tank index.
  *
  * Creates or retrieves four objectives per index:
@@ -2170,6 +2181,34 @@ export class FluidManager {
      */
     static registerFluidOutput(id, definition) {
         return registerFluidOutputDefinition(id, definition);
+    }
+
+    /**
+     * Registers or overrides the UI bar prefix for a specific fluid type.
+     *
+     * @param {string} type Fluid identifier (e.g. "water").
+     * @param {string} itemPrefix Base namespaced identifier used for UI frames (without _00 suffix).
+     * @returns {boolean} True if the mapping was stored.
+     */
+    static registerFluidDisplay(type, itemPrefix) {
+        if (typeof type !== "string" || type.length === 0) return false;
+        if (typeof itemPrefix !== "string" || itemPrefix.length === 0) return false;
+        fluidDisplayItemPrefixes.set(type.toLowerCase(), itemPrefix);
+        return true;
+    }
+
+    /**
+     * Resolves the display item identifier for a given fluid type and frame suffix.
+     *
+     * @param {string} type Fluid identifier.
+     * @param {string} frameSuffix Two-digit frame suffix ("00" – "48").
+     * @returns {string} Fully-qualified item identifier (e.g. "utilitycraft:water_12").
+     */
+    static getDisplayItemId(type, frameSuffix) {
+        const key = typeof type === "string" ? type.toLowerCase() : "";
+        const fallbackPrefix = key ? `utilitycraft:${key}` : "utilitycraft:fluid";
+        const prefix = fluidDisplayItemPrefixes.get(key) ?? fallbackPrefix;
+        return `${prefix}_${frameSuffix}`;
     }
 
 
@@ -2802,13 +2841,23 @@ export class FluidManager {
             return;
         }
 
-        const frame = Math.max(0, Math.min(48, Math.floor((fluid / cap) * 48)));
+        const safeCap = Math.max(1, cap || 1);
+        const normalizedFluid = Math.max(0, Math.min(fluid, safeCap));
+        const fillRatio = normalizedFluid / safeCap;
+        const frame = Math.max(0, Math.min(48, Math.floor(fillRatio * 48)));
         const frameName = frame.toString().padStart(2, "0");
+        const itemId = FluidManager.getDisplayItemId(type, frameName);
+        const percentFilled = fillRatio * 100;
 
-        const item = new ItemStack(`utilitycraft:${type}_${frameName}`, 1);
+        let item;
+        try {
+            item = new ItemStack(itemId, 1);
+        } catch {
+            item = new ItemStack("utilitycraft:empty_fluid_bar", 1);
+        }
         item.nameTag = `§r${DoriosAPI.utils.capitalizeFirst(type)}
-§r§7  Stored: ${FluidManager.formatFluid(fluid)} / ${FluidManager.formatFluid(cap)}
-§r§7  Percentage: ${(fluid / cap * 100).toFixed(2)}%`;
+    §r§7  Stored: ${FluidManager.formatFluid(fluid)} / ${FluidManager.formatFluid(cap)}
+    §r§7  Percentage: ${percentFilled.toFixed(2)}%`;
 
         inv.setItem(slot, item);
     }

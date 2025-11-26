@@ -7,4 +7,6 @@ tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine
 
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver
 
+tile.utilitycraft:flat_conduit.name=Flat Conduit
+
 entity.utilitycraft:catalyst_weaver.name=Catalyst Weaver

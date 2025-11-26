@@ -7,4 +7,6 @@ tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta
 
 tile.utilitycraft:catalyst_weaver.name=Tecelão de Catalisadores
 
+tile.utilitycraft:flat_conduit.name=Conduíte Plano
+
 entity.utilitycraft:catalyst_weaver.name=Tecelão Catalisador

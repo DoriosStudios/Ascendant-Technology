@@ -1,7 +1,8 @@
 export const ITEM_CONDUIT_COLORS = {
 	green: [
 		'utilitycraft:item_conduit',
-		'utilitycraft:item_conduit_green'
+		'utilitycraft:item_conduit_green',
+		'utilitycraft:flat_conduit'
 	],
 	blue: [
 		'utilitycraft:item_conduit_blue'

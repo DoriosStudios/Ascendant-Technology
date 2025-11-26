@@ -60,6 +60,12 @@
 		},
 		"utilitycraft_catalyst_weaver_on": {
 			"textures": "textures/blocks/machines/catalyst_weaver_on"
+		},
+		"utilitycraft_flat_conduit": {
+			"textures": "textures/blocks/pipes/flat_conduit"
+		},
+		"utilitycraft_item_conduit": {
+			"textures": "textures/blocks/pipes/flat_conduit"
 		}
 	}
 }

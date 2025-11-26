@@ -5,8 +5,8 @@
 		"utilitycraft_aetherium": {
 			"textures": "textures/items/ores/aetherium_ingot"
 		},
-		"utilitycraft_liquified_aetherium_bucket": {
-			"textures": "textures/items/water_bucket"
+		"utilitycraft_aetherium_shard": {
+			"textures": "textures/items/ores/aetherium_shard"
 		},
 		"utilitycraft_liquified_aetherium_bar_00": {
 			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_00"

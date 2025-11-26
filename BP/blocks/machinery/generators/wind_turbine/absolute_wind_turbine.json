@@ -33,7 +33,7 @@
                 },
                 "max_altitude_multiplier": 4,
                 "altitude": {
-                    "min": 16,
+                    "min": 12,
                     "base": 63,
                     "bonus_step": 8,
                     "penalty_step": 8,

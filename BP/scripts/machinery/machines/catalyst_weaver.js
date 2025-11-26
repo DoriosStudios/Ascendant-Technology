@@ -1,4 +1,4 @@
-import { Machine, FluidManager } from '../managers.js'
+import { Machine, FluidManager } from '../managers_extra.js'
 import { getCatalystWeaverRecipes } from '../../config/recipes/catalyst_weaver.js'
 
 const INPUT_SLOT = 3

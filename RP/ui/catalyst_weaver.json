@@ -34,16 +34,6 @@
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "chest_label@chest.chest_label": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [
-                        108,
-                        12
-                    ]
-                }
-            },
-            {
                 "exit_button_panel": {
                     "type": "panel",
                     "anchor_from": "top_right",
@@ -159,7 +149,19 @@
                         10,
                         -10
                     ],
-                    "layer": -1
+                    "layer": -1,
+                    "controls": [
+                                    {
+                                "chest_label@chest.chest_label": {
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "offset": [
+                                    -2,
+                                    -48
+                                ]
+                            }
+                        }
+                    ]
                 }
             },
             {

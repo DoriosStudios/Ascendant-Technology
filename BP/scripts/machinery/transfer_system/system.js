@@ -1,6 +1,6 @@
 import { world, system, ItemStack } from '@minecraft/server'
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
-import { FluidManager } from '../managers.js'
+import { FluidManager } from '../managers_extra.js'
 import {
     getItemConduitColorByTypeId,
     getColorSpecificNodesKey,

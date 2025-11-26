@@ -34,13 +34,13 @@ const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
 /**
  * @typedef {Object} RecipeByproduct
  * @property {string} id Byproduct item identifier (optional extra output).
- * @property {number} amount Byproduct quantity.
+ * @property {number|[number, number]} amount Byproduct quantity (single value or [min, max] range).
  * @property {number} chance Probability (0.0–1.0) of byproduct being produced.
  */
 
 /**
  * @typedef {Object} CatalystWeaverRecipe
- * @property {string} id Unique recipe identifier (e.g. "utilitycraft:lavasteel_ingot").
+ * @property {string} id Unique recipe identifier (e.g. "utilitycraft:steel_ingot").
  * @property {RecipeInput} input Primary input item and quantity.
  * @property {(RecipeCatalyst|null)[]} catalysts Array of up to 6 catalyst slots. Use `null` for empty slots.
  * @property {RecipeFluid} [fluid] Optional fluid requirement.
@@ -57,13 +57,12 @@ const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
  * 
  * Add a new entry to the `nativeCatalystWeaverRecipes` array using `defineWeaverRecipe()`:
  * 
- * ```javascript
  * defineWeaverRecipe({
- *   id: 'yournamespace:recipe_name',
- *   input: { id: 'minecraft:item_id', amount: 1 },
+ *   id: 'namespace:recipe_name',
+ *   input: { id: 'namespace:item_id', amount: 1 },
  *   catalysts: [
- *     { id: 'minecraft:catalyst_1', amount: 2 },
- *     { id: 'minecraft:catalyst_2', amount: 1 },
+ *     { id: 'namespace:catalyst_1', amount: 2 },
+ *     { id: 'namespace:catalyst_2', amount: 1 },
  *     null,  // empty slot
  *     null,
  *     null,
@@ -75,54 +74,7 @@ const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
  *   cost: 3200,           // optional (defaults to 6400 FE)
  *   speedModifier: 1.5    // optional (defaults to 1.0)
  * })
- * ```
  * 
- * ### Parameters
- * 
- * | Parameter       | Type                         | Required | Description                                                                 |
- * |-----------------|------------------------------|----------|-----------------------------------------------------------------------------|
- * | `id`            | `string`                     | ✅       | Unique recipe identifier (namespaced, e.g. `"utilitycraft:recipe_name"`).  |
- * | `input`         | `RecipeInput`                | ✅       | Primary item consumed (`{ id, amount }`).                                   |
- * | `catalysts`     | `(RecipeCatalyst\|null)[]`   | ✅       | Array of 6 slots; use `null` for empty. Catalysts are consumed each craft. |
- * | `output`        | `RecipeOutput`               | ✅       | Primary output item (`{ id, amount }`).                                     |
- * | `fluid`         | `RecipeFluid`                | ❌       | Fluid requirement (`{ type, amount }` in mB). Omit if no fluid needed.      |
- * | `byproduct`     | `RecipeByproduct`            | ❌       | Extra output with drop chance (`{ id, amount, chance }` 0.0–1.0).           |
- * | `cost`          | `number`                     | ❌       | Energy cost in FE. Defaults to `6400`.                                      |
- * | `speedModifier` | `number`                     | ❌       | Processing speed multiplier. Defaults to `1.0` (higher = faster).           |
- * 
- * ### Examples
- * 
- * #### Simple recipe (no fluid, no byproduct)
- * ```javascript
- * defineWeaverRecipe({
- *   id: 'utilitycraft:simple_alloy',
- *   input: { id: 'minecraft:copper_ingot', amount: 3 },
- *   catalysts: [
- *     { id: 'minecraft:redstone', amount: 2 },
- *     null, null, null, null, null
- *   ],
- *   output: { id: 'utilitycraft:conductive_alloy', amount: 1 },
- *   cost: 2400
- * })
- * ```
- * 
- * #### Recipe with fluid and byproduct
- * ```javascript
- * defineWeaverRecipe({
- *   id: 'utilitycraft:advanced_crystal',
- *   input: { id: 'minecraft:diamond', amount: 1 },
- *   catalysts: [
- *     { id: 'minecraft:echo_shard', amount: 2 },
- *     { id: 'minecraft:amethyst_shard', amount: 4 },
- *     null, null, null, null
- *   ],
- *   fluid: { type: 'liquified_aetherium', amount: 500 },
- *   output: { id: 'utilitycraft:aetherium_crystal', amount: 1 },
- *   byproduct: { id: 'minecraft:amethyst_shard', amount: 2, chance: 0.4 },
- *   cost: 8000,
- *   speedModifier: 0.8
- * })
- * ```
  * 
  * @type {CatalystWeaverRecipe[]}
  */
@@ -160,8 +112,26 @@ const nativeCatalystWeaverRecipes = [
         byproduct: { id: 'minecraft:bone_meal', amount: 4, chance: 0.5 },
         cost: 6400,
         speedModifier: 1
+    }),
+    defineWeaverRecipe({
+        id: 'utilitycraft:aetherium_ingot',
+        input: { id: 'minecraft:netherite_ingot', amount: 2 },
+        "catalysts": [
+            { id: "minecraft:iron_ingot", amount: 1 },
+            { id: "minecraft:gold_ingot", amount: 1 },
+            { id: "utilitycraft:ender_pearl_dust", amount: 4 },
+            { id: "utilitycraft:amethyst_dust", amount: 4 },
+            null,
+            null
+        ],
+        fluid: { type: 'lava', amount: 10000 },
+        output: { id: 'utilitycraft:aetherium', amount: 1 },
+        byproduct: { id: 'utilitycraft:refined_obsidian_dust', amount: [0, 2], chance: 0.2 },
+        cost: 12000,
+        speedModifier: 0.5
     })
 ]
+
 
 function defineWeaverRecipe(recipe, overrideCost) {
     const cost = Math.max(1, overrideCost ?? recipe.cost ?? WEAVER_DEFAULT_ENERGY_COST)

@@ -1,0 +1,47 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:ultimate_solar_panel"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"key": {
+			"A": {
+				"item": "utilitycraft:netherite_plate"
+			},
+			"B": {
+				"item": "utilitycraft:ultimate_solar_panel"
+			},
+			"C": {
+				"item": "utilitycraft:netherite_plate"
+			},
+			"D": {
+				"item": "utilitycraft:compressed_energized_iron_block_2"
+			},
+			"E": {
+				"item": "utilitycraft:aetherium"
+			}
+		},
+		"pattern": [
+			"AEA",
+			"EBE",
+			"CDC"
+		],
+		"result": {
+			"item": "utilitycraft:absolute_solar_panel"
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:compressed_energized_iron_block_2"
+			},
+			{
+				"item": "utilitycraft:aetherium"
+			},
+			{
+				"item": "minecraft:daylight_detector"
+			}
+		]
+	}
+}

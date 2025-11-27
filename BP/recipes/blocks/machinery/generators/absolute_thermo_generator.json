@@ -1,0 +1,41 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:ultimate_thermo_generator"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"key": {
+			"A": {
+				"item": "utilitycraft:compressed_copper_block"
+			},
+			"B": {
+				"item": "utilitycraft:ultimate_thermo_generator"
+			},
+			"C": {
+				"item": "utilitycraft:aetherium"
+			},
+			"D": {
+				"item": "utilitycraft:compressed_glass_2"
+			},
+			"E": {
+				"item": "utilitycraft:ultimate_chip"
+			}
+		},
+		"pattern": [
+			"ADA",
+			"EBE",
+			"CAC"
+		],
+		"result": {
+			"item": "utilitycraft:absolute_thermo_generator"
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:aetherium"
+			}
+		]
+	}
+}

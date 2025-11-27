@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:cloner"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "BAB",
+            "RCR",
+            "MAM"
+        ],
+        "key": {
+            "A":{
+                "item": "utilitycraft:aetherium"
+            },
+            "B": {
+                "item": "utilitycraft:bundle_of_blaze_rods"
+            },
+            "M": {
+                "item": "utilitycraft:compressed_iron_block"
+            },
+            "R": {
+                "item": "utilitycraft:compressed_energized_iron_block_2"
+            },
+            "C": {
+                "item": "utilitycraft:machine_case"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:cloner",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:aetherium"
+            }
+        ]
+    }
+}

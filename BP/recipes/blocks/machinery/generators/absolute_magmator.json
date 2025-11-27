@@ -1,0 +1,38 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:absolute_magmator"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"key": {
+			"G": {
+				"item": "utilitycraft:aetherium"
+			},
+			"B": {
+				"item": "utilitycraft:ultimate_magmator"
+			},
+			"D": {
+				"item": "utilitycraft:compressed_glass_2"
+			},
+			"E": {
+				"item": "utilitycraft:ultimate_chip"
+			}
+		},
+		"pattern": [
+			"GDG",
+			"EBE",
+			"GEG"
+		],
+		"result": {
+			"item": "utilitycraft:absolute_magmator"
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:aetherium"
+			}
+		]
+	}
+}

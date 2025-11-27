@@ -1,0 +1,44 @@
+{
+    "format_version": "1.20.80",
+        "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:catalyst_weaver"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+            "key": {
+            "A": {
+                "item": "utilitycraft:compressed_redstone_block_2"
+            },
+            "B": {
+                "item": "utilitycraft:infuser"
+            },
+            "C": {
+                "item": "utilitycraft:compressed_diamond_block_2"
+            },
+            "D": {
+                "item": "minecraft:pink_dye"
+            },
+            "E": {
+                "item": "utilitycraft:ultimate_chip"
+            },
+            "F": {
+                "item": "utilitycraft:ultimate_fluid_tank"
+            }
+        },
+        "pattern": [
+            "FDF",
+            "EBE",
+            "ACA"
+        ],
+            "result": {
+            "item": "utilitycraft:catalyst_weaver"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:compressed_diamond_block_2"
+            }
+        ]
+    }
+}

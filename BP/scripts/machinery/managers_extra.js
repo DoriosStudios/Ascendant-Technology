@@ -595,7 +595,6 @@ export class Generator {
             if (settings.generator.fluid_cap) {
                 const fluidManager = new FluidManager(entity, 0)
                 fluidManager.setCap(settings.generator.fluid_cap)
-                fluidManager.display()
 
                 if (fluid && fluid.amount > 0) {
                     fluidManager.setType(fluid.type)
@@ -919,7 +918,6 @@ export class Machine {
             if (settings.machine.fluid_cap) {
                 const fluidManager = new FluidManager(entity, 0)
                 fluidManager.setCap(settings.machine.fluid_cap)
-                fluidManager.display()
 
                 if (fluid && fluid.amount > 0) {
                     fluidManager.setType(fluid.type)
@@ -2080,10 +2078,23 @@ export class FluidManager {
     constructor(entity, index = 0) {
         this.entity = entity;
         this.index = index;
-        this.scoreId = entity?.scoreboardIdentity;
 
         // Ensure fluid objectives exist for this tank index
         initFluidObjectives(index);
+
+        this.scoreId = entity?.scoreboardIdentity;
+        if (!this.scoreId && entity) {
+            try {
+                entity.runCommand(`scoreboard players add @s fluid_${index} 0`);
+                this.scoreId = entity.scoreboardIdentity;
+            } catch (error) {
+                console.warn(`[UtilityCraft/FluidManager] Failed to seed fluid scoreboard for ${entity.typeId ?? 'unknown'}`, error);
+            }
+        }
+
+        if (!this.scoreId) {
+            throw new Error("FluidManager requires an entity with a scoreboard identity.");
+        }
 
         this.scores = {
             fluid: fluidObjectives.get(`fluid_${index}`),

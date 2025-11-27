@@ -39,8 +39,8 @@
                     "anchor_from": "top_right",
                     "anchor_to": "top_right",
                     "offset": [
-                        -28,
-                        8
+                        -24,
+                        20
                     ],
                     "controls": [
                         {
@@ -57,29 +57,43 @@
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [
-                        -140,
-                        20
+                        -104,
+                        72
                     ]
                 }
             },
             {
-                "fluid_display_panel": {
+                "upgrades@machineryCommon.vertical_interactive": {
+                    "$has_bg": true,
+                    "$collection_index_first": 16,
+                    "$collection_index_second": 17,
+                    "$has_third": false,
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        104,
+                        72
+                    ]
+                }
+            },
+            {
+                "fluid_display": {
                     "type": "panel",
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [
-                        140,
-                        20
+                        108,
+                        -12
                     ],
                     "controls": [
                         {
                             "fluid_bar@machineryCommon.vertical_single": {
                                 "$is_fluid": true,
-                                "$has_bg": true,
+                                "$has_bg": false,
                                 "$collection_index": 11,
                                 "anchor_from": "center",
                                 "anchor_to": "center",
-                                "layer": 0
+                                "layer": 5
                             }
                         },
                         {
@@ -98,21 +112,7 @@
                                 ],
                                 "layer": 13
                             }
-                        }
-                    ]
-                }
-            },
-            {
-                "upgrades@machineryCommon.vertical_interactive": {
-                    "$has_bg": true,
-                    "$collection_index_first": 16,
-                    "$collection_index_second": 17,
-                    "$has_third": false,
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [
-                        140,
-                        -45
+                        } 
                     ]
                 }
             },
@@ -128,8 +128,8 @@
                         26
                     ],
                     "offset": [
-                        150,
-                        136
+                        114,
+                        190
                     ],
                     "layer": -1
                 }
@@ -140,10 +140,10 @@
                     "texture": "textures/ui/scaled_ui",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "$cell_image_size": [243, 152],
+                    "$cell_image_size": [260, 128],
                     "size": [
-                        250,
-                        152
+                        260,
+                        128
                     ],
                     "offset": [
                         10,
@@ -156,8 +156,8 @@
                                 "anchor_from": "center",
                                 "anchor_to": "center",
                                 "offset": [
-                                    -2,
-                                    -48
+                                    1,
+                                    -40
                                 ]
                             }
                         }
@@ -288,8 +288,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        150,
-                        140
+                        114,
+                        194
                     ],
                     "collection_index": 10
                 }
@@ -300,7 +300,7 @@
                     "anchor_to": "top_middle",
                     "offset": [
                         92,
-                        88
+                        92
                     ],
                     "collection_index": 18
                 }

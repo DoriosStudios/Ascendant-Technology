@@ -20,7 +20,7 @@
 		},
 		"components": {
 			"utilitycraft:battery": {
-				"energy_cap": 2048000000,
+				"energy_cap": 25600000000,
 				"rate_speed_base": 800000
 			},
 			"minecraft:geometry": "geometry.utilitycraft_battery",

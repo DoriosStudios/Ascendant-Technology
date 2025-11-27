@@ -1,22 +1,74 @@
 ## Geradores
-tile.utilitycraft:absolute_battery.name=Bateria Absoluta
+tile.utilitycraft:absolute_battery.name=Bateria Absoluta \n§7 Velocidade: 800 MDE/t
 tile.utilitycraft:absolute_furnator.name=Furnator Absoluto \n§7 Velocidade: 320 MDE/t
 tile.utilitycraft:absolute_magmator.name=Magmator Absoluto \n§7 Velocidade: 400 MDE/t
 tile.utilitycraft:absolute_solar_panel.name=Painel Solar Absoluto \n§7 Velocidade Máx: 96 MDE/t
 tile.utilitycraft:absolute_thermo_generator.name=Gerador Térmico Absoluto \n§7 Velocidade: 16 MDE/t
-tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta \n§7 Velocidade Base: 64 MDE/t\n  Multiplicador de Altura Máximo: 1000%\n  Não funciona abaixo de y12
+tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta \n§7  Velocidade Base: 64 MDE/t\n  Multiplicador de Altura Máximo: 1000%\n  Não funciona abaixo de y12
 
 ## Máquinas
-tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7- Aceita melhorias:\n §a§7, §b§7
+tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7- Aceita melhorias:\n    §a§7, §b§7
+tile.utilitycraft:cloner.name=Clonador\n§7- Aceita melhorias:\n    §a§7, §b§7
 
 ## Outros Blocos
-tile.utilitycraft:flat_conduit.name=Conduíte Plano
+tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versão Estética
 
 ## Itens
 item.utilitycraft:aetherium=Lingote de Aetherium
-item.utilitycraft:liquified_aetherium_bucket=Balde de Aetherium Liquefeito
+item.utilitycraft:liquified_aetherium_bucket=Balde de Éter Liquefeito
 item.utilitycraft:aetherium_shard=Fragmento de Aetherium
 
+## Placeholders
+
+item.utilitycraft:liquefied_aetherium_00=Éter Líquido
+item.utilitycraft:liquefied_aetherium_01=Éter Líquido
+item.utilitycraft:liquefied_aetherium_02=Éter Líquido
+item.utilitycraft:liquefied_aetherium_03=Éter Líquido
+item.utilitycraft:liquefied_aetherium_04=Éter Líquido
+item.utilitycraft:liquefied_aetherium_05=Éter Líquido
+item.utilitycraft:liquefied_aetherium_06=Éter Líquido
+item.utilitycraft:liquefied_aetherium_07=Éter Líquido
+item.utilitycraft:liquefied_aetherium_08=Éter Líquido
+item.utilitycraft:liquefied_aetherium_09=Éter Líquido
+item.utilitycraft:liquefied_aetherium_10=Éter Líquido
+item.utilitycraft:liquefied_aetherium_11=Éter Líquido
+item.utilitycraft:liquefied_aetherium_12=Éter Líquido
+item.utilitycraft:liquefied_aetherium_13=Éter Líquido
+item.utilitycraft:liquefied_aetherium_14=Éter Líquido
+item.utilitycraft:liquefied_aetherium_15=Éter Líquido
+item.utilitycraft:liquefied_aetherium_16=Éter Líquido
+item.utilitycraft:liquefied_aetherium_17=Éter Líquido
+item.utilitycraft:liquefied_aetherium_18=Éter Líquido
+item.utilitycraft:liquefied_aetherium_19=Éter Líquido
+item.utilitycraft:liquefied_aetherium_20=Éter Líquido
+item.utilitycraft:liquefied_aetherium_21=Éter Líquido
+item.utilitycraft:liquefied_aetherium_22=Éter Líquido
+item.utilitycraft:liquefied_aetherium_23=Éter Líquido
+item.utilitycraft:liquefied_aetherium_24=Éter Líquido
+item.utilitycraft:liquefied_aetherium_25=Éter Líquido
+item.utilitycraft:liquefied_aetherium_26=Éter Líquido
+item.utilitycraft:liquefied_aetherium_27=Éter Líquido
+item.utilitycraft:liquefied_aetherium_28=Éter Líquido
+item.utilitycraft:liquefied_aetherium_29=Éter Líquido
+item.utilitycraft:liquefied_aetherium_30=Éter Líquido
+item.utilitycraft:liquefied_aetherium_31=Éter Líquido
+item.utilitycraft:liquefied_aetherium_32=Éter Líquido
+item.utilitycraft:liquefied_aetherium_33=Éter Líquido
+item.utilitycraft:liquefied_aetherium_34=Éter Líquido
+item.utilitycraft:liquefied_aetherium_35=Éter Líquido
+item.utilitycraft:liquefied_aetherium_36=Éter Líquido
+item.utilitycraft:liquefied_aetherium_37=Éter Líquido
+item.utilitycraft:liquefied_aetherium_38=Éter Líquido
+item.utilitycraft:liquefied_aetherium_39=Éter Líquido
+item.utilitycraft:liquefied_aetherium_40=Éter Líquido
+item.utilitycraft:liquefied_aetherium_41=Éter Líquido
+item.utilitycraft:liquefied_aetherium_42=Éter Líquido
+item.utilitycraft:liquefied_aetherium_43=Éter Líquido
+item.utilitycraft:liquefied_aetherium_44=Éter Líquido
+item.utilitycraft:liquefied_aetherium_45=Éter Líquido
+item.utilitycraft:liquefied_aetherium_46=Éter Líquido
+item.utilitycraft:liquefied_aetherium_47=Éter Líquido
+item.utilitycraft:liquefied_aetherium_48=Éter Líquido
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=Câmara Catalisadora
 entity.utilitycraft:cloner.name=Clonador

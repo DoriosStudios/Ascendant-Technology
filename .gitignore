@@ -13,3 +13,4 @@ Desktop.ini
 node_modules/
 builds/
 dist/
+tools/generate_dark_matter_capsules.py

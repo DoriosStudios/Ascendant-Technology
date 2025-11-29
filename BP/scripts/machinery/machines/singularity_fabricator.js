@@ -1,36 +1,34 @@
 import { Machine, Energy, FluidManager } from '../managers_extra.js'
+import { getClonerRecipes } from '../../config/recipes/cloner.js'
 
+const COMPONENT_ID = 'singularity_fabricator'
 const INPUT_SLOT = 3
 const STATUS_SLOT = 1
 const FLUID_SLOT = 10
 const FLUID_DISPLAY_SLOT = 11
 const OUTPUT_SLOT_ORIGINAL = 18
 const OUTPUT_SLOT_COPY = 19
-const DEFAULT_FLUID_TYPE = 'liquified_aetherium'
-const FLUID_PER_SECOND = 50
+const DEFAULT_FLUID_TYPE = 'dark_matter'
+const FLUID_PER_SECOND = 80
 const TICKS_PER_SECOND = 20
 const UPGRADE_SLOTS = [4, 5]
 const LEGACY_UPGRADE_SLOTS = [16, 17]
-const CLONER_RATE_SPEED_BASE = 80
-const ENERGY_USAGE_MULTIPLIER = 4
+const FABRICATOR_RATE_SPEED_BASE = 80
+const ENERGY_USAGE_MULTIPLIER = 6
 const MAX_RUNTIME_SECONDS = 24 * 60 * 60
-const CLONER_PROGRESS_PER_SECOND = CLONER_RATE_SPEED_BASE * TICKS_PER_SECOND * ENERGY_USAGE_MULTIPLIER
-const BASE_TIME_SECONDS = 180
-const MIN_TIME_SECONDS = 30
-const MAX_GENERIC_TIME_SECONDS = 3 * 60 * 60
-const BASE_KDE_PER_SECOND = 35
+const FABRICATOR_PROGRESS_PER_SECOND = FABRICATOR_RATE_SPEED_BASE * TICKS_PER_SECOND * ENERGY_USAGE_MULTIPLIER
 const KDE = 1000
-const MAX_TOTAL_KDE = Math.floor((MAX_RUNTIME_SECONDS * CLONER_PROGRESS_PER_SECOND) / KDE)
+const MAX_TOTAL_KDE = Math.floor((MAX_RUNTIME_SECONDS * FABRICATOR_PROGRESS_PER_SECOND) / KDE)
 
 doriosRegister()
 
 function doriosRegister() {
-    DoriosAPI.register.blockComponent('cloner', {
+    DoriosAPI.register.blockComponent(COMPONENT_ID, {
         beforeOnPlayerPlace(e, { params: settings }) {
             Machine.spawnMachineEntity(e, settings, () => {
                 const machine = new Machine(e.block, settings, true)
                 if (!machine?.entity) return
-                machine.setEnergyCost(settings.machine.energy_cost ?? 1000)
+                machine.setEnergyCost(settings.machine.energy_cost ?? 64000)
                 machine.displayProgress()
                 machine.displayEnergy()
                 machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '')
@@ -48,7 +46,7 @@ function doriosRegister() {
             const machine = new Machine(block, settings)
             if (!machine.valid) return
 
-            boostClonerThroughput(machine)
+            boostFabricatorThroughput(machine)
 
             migrateLegacyUpgradeSlots(machine)
             machine.transferItems()
@@ -62,13 +60,19 @@ function doriosRegister() {
                 tank.display(FLUID_DISPLAY_SLOT)
             }
 
+            const { recipes } = resolveFabricatorRecipes(block)
+            if (!recipes.length) {
+                fail('No Recipes')
+                return
+            }
+
             const inputStack = machine.inv.getItem(INPUT_SLOT)
             if (!inputStack) {
                 fail('Insert Template')
                 return
             }
 
-            const recipe = createGenericRecipeFromInput(inputStack)
+            const recipe = normalizeRecipe(matchRecipe(recipes, inputStack))
             if (!recipe) {
                 fail('Invalid Template')
                 return
@@ -155,59 +159,69 @@ function doriosRegister() {
     })
 }
 
-function createGenericRecipeFromInput(stack) {
-    if (!stack?.typeId) return null
+function resolveFabricatorRecipes(block) {
+    const component = block.getComponent('utilitycraft:machine_recipes')?.customComponentParameters?.params
 
-    const timeSeconds = clampTimeSeconds(calculateTimeFromStack(stack))
-    const density = Math.max(1, 64 / Math.max(1, stack?.maxAmount ?? 64))
-    const perSecondKDE = BASE_KDE_PER_SECOND * density
-    const totalCostKDE = clampTotalCostKDE(perSecondKDE * timeSeconds)
-
-    const input = {
-        id: stack.typeId,
-        amount: 1
+    if (!component || component.type === COMPONENT_ID || component.type === 'cloner') {
+        return { recipes: toRecipeArray(getClonerRecipes()) }
     }
 
-    const output = {
-        id: stack.typeId,
-        amount: 2
+    if (Array.isArray(component)) {
+        return { recipes: component }
     }
 
-    return {
-        id: `generic:${stack.typeId}`,
-        input,
-        output,
-        timeSeconds,
-        ticks: Math.max(1, Math.round(timeSeconds * TICKS_PER_SECOND)),
-        perSecondKDE,
-        costKDE: totalCostKDE,
-        energyCost: Math.max(KDE, Math.round(totalCostKDE * KDE)),
-        fluid: {
-            type: DEFAULT_FLUID_TYPE,
-            amount: Math.max(1, Math.round(timeSeconds * FLUID_PER_SECOND))
-        }
+    if (Array.isArray(component.recipes)) {
+        return { recipes: component.recipes }
     }
+
+    return { recipes: toRecipeArray(getClonerRecipes()) }
+}
+
+function toRecipeArray(value) {
+    return Array.isArray(value) ? value : []
+}
+
+function matchRecipe(recipes, stack) {
+    return recipes.find(recipe =>
+        recipe?.input?.id === stack?.typeId && stack?.amount >= (recipe.input.amount ?? 1)
+    ) ?? null
+}
+
+function normalizeRecipe(recipe) {
+    if (!recipe) return null
+
+    const normalized = { ...recipe }
+    normalized.input = { ...recipe.input, amount: Math.max(1, recipe.input?.amount ?? 1) }
+    normalized.output = {
+        ...recipe.output,
+        amount: Math.max(normalized.input.amount + 1, recipe.output?.amount ?? normalized.input.amount + 1)
+    }
+    normalized.rarity = recipe.rarity ?? 'common'
+
+    normalized.timeSeconds = clampTimeSeconds(normalized.timeSeconds ?? normalized.time ?? 1)
+    normalized.ticks = Math.max(1, Math.round(normalized.timeSeconds * TICKS_PER_SECOND))
+    const fallbackCostKDE = normalized.costKDE ?? ((normalized.energyCost ?? 0) / KDE)
+    const derivedCost = fallbackCostKDE || (normalized.timeSeconds * FLUID_PER_SECOND) / 10
+    normalized.costKDE = clampTotalCostKDE(derivedCost)
+    normalized.energyCost = Math.max(KDE, Math.round(normalized.costKDE * KDE))
+
+    return normalized
 }
 
 function clampTimeSeconds(value) {
-    return Math.max(MIN_TIME_SECONDS, Math.min(MAX_GENERIC_TIME_SECONDS, Math.round(value)))
-}
-
-function calculateTimeFromStack(stack) {
-    const maxAmount = Math.max(1, stack?.maxAmount ?? 64)
-    const density = Math.max(1, 64 / maxAmount)
-    return BASE_TIME_SECONDS * density
+    const seconds = Math.max(1, Number(value) || 1)
+    return Math.min(MAX_RUNTIME_SECONDS, seconds)
 }
 
 function getRecipeFluid(recipe) {
     if (!recipe) return null
     if (recipe.fluid && typeof recipe.fluid === 'object') {
-        recipe.fluid.type = recipe.fluid.type ?? DEFAULT_FLUID_TYPE
+        recipe.fluid.type = DEFAULT_FLUID_TYPE
         recipe.fluid.amount = Math.max(1, Math.round(recipe.fluid.amount ?? 0))
         return recipe.fluid
     }
 
-    const timeSeconds = recipe.timeSeconds ?? BASE_TIME_SECONDS
+    const timeSeconds = recipe.timeSeconds ?? 60
     recipe.fluid = {
         type: DEFAULT_FLUID_TYPE,
         amount: Math.max(1, Math.round(timeSeconds * FLUID_PER_SECOND))
@@ -284,14 +298,14 @@ function updateHud(machine, recipe, tank, crafted) {
 
     machine.on()
 
-    const action = crafted ? 'Clone Ready' : 'Cloning'
+    const action = crafted ? 'Replication Complete' : 'Replicating'
     const etaDisplay = formatEta(machine, recipe)
     const fluidBlock = formatFluidBlock(recipe?.fluid, tank)
     machine.setLabel(`
-§r§6${action}
-§r§7Template:
+§r§5${action}
+§r§7Blueprint:
     §b${formatName(recipe.input.id)}
-§r§7Mode: §fUniversal
+§r§7Rarity: §d${capitalize(recipe.rarity ?? 'unknown')}
 §r§7ETA: §f${etaDisplay}
 §r§cCost: §f${Energy.formatEnergyToText(recipe.energyCost)}
 ${fluidBlock}
@@ -369,7 +383,7 @@ function getProgressPerSecond(machine) {
     }
 
     const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
-    const updatesPerSecond = TICKS_PER_SECOND / tickSpeed
+    const updatesPerSecond = TICKS_PER_SECOND / Math.max(1, tickSpeed)
     const theoreticalPerUpdate = machine.rate / Math.max(machine.boosts.consumption, Number.EPSILON)
 
     if (theoreticalPerUpdate <= 0 || updatesPerSecond <= 0) return 0
@@ -474,7 +488,7 @@ function feedFluidSlot(machine, tank) {
     }
 }
 
-function boostClonerThroughput(machine) {
+function boostFabricatorThroughput(machine) {
     if (!machine) return
     machine.rate *= ENERGY_USAGE_MULTIPLIER
 }

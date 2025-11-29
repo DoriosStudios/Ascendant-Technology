@@ -2027,6 +2027,7 @@ const fluidObjectives = new Map();
  */
 const fluidDisplayItemPrefixes = new Map([
     ["liquified_aetherium", "utilitycraft:liquified_aetherium"],
+    ["dark_matter", "utilitycraft:dark_matter"],
 ]);
 
 /**

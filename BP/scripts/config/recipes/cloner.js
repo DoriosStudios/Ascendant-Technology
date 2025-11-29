@@ -20,12 +20,12 @@ export const CLONER_RARITIES = [
 ];
 
 const RARITY_BASE_RATE_KDE = {
-    common:      2.5,
-    uncommon:    12,
-    rare:        781,
-    epic:        4882,
-    legendary:   292968,
-    mythic:      18310546
+    common:      10,
+    uncommon:    48,
+    rare:        240,
+    epic:        1200,
+    legendary:   6000,
+    mythic:      30000
 };
 
 const nativeClonerRecipes = [

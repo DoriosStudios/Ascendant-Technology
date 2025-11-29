@@ -18,4 +18,5 @@
 //   └─ recipes/plants.js
 // ==================================================
 
-import './recipes/infuser.js';
+import './recipes/cloner.js';
+import './recipes/catalyst_weaver.js'

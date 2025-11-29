@@ -9,6 +9,7 @@ tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Ra
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7
 tile.utilitycraft:cloner.name=Cloner\n§7- Accepted upgrades: \n   §a§7, §b§7
+tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator\n§7- Accepted upgrades: \n   §a§7, §b§7\n§7- Requires §5Dark Matter Fluid
 
 ## Other Blocks
 tile.utilitycraft:flat_conduit.name=Flat Conduit\n§7  Aesthetic Version
@@ -17,6 +18,16 @@ tile.utilitycraft:flat_conduit.name=Flat Conduit\n§7  Aesthetic Version
 item.utilitycraft:aetherium=Aetherium Ingot
 item.utilitycraft:liquified_aetherium_bucket=Liquified Aetherium Bucket
 item.utilitycraft:aetherium_shard=Aetherium Shard
+
+## Dark Matter Capsules
+item.utilitycraft:dark_matter_liquid_capsule_1=Dark Matter Capsule (1 Bucket)
+item.utilitycraft:dark_matter_liquid_capsule_2=Dark Matter Capsule (2 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_3=Dark Matter Capsule (3 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_4=Dark Matter Capsule (4 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_5=Dark Matter Capsule (5 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_6=Dark Matter Capsule (6 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_7=Dark Matter Capsule (7 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_8=Dark Matter Capsule (8 Buckets)
 
 ## Placeholders
 item.utilitycraft:liquefied_aetherium_00=Liquified Aetherium
@@ -69,6 +80,58 @@ item.utilitycraft:liquefied_aetherium_46=Liquified Aetherium
 item.utilitycraft:liquefied_aetherium_47=Liquified Aetherium
 item.utilitycraft:liquefied_aetherium_48=Liquified Aetherium
 
+## Dark Matter Placeholders
+item.utilitycraft:dark_matter_00=Dark Matter Fluid
+item.utilitycraft:dark_matter_01=Dark Matter Fluid
+item.utilitycraft:dark_matter_02=Dark Matter Fluid
+item.utilitycraft:dark_matter_03=Dark Matter Fluid
+item.utilitycraft:dark_matter_04=Dark Matter Fluid
+item.utilitycraft:dark_matter_05=Dark Matter Fluid
+item.utilitycraft:dark_matter_06=Dark Matter Fluid
+item.utilitycraft:dark_matter_07=Dark Matter Fluid
+item.utilitycraft:dark_matter_08=Dark Matter Fluid
+item.utilitycraft:dark_matter_09=Dark Matter Fluid
+item.utilitycraft:dark_matter_10=Dark Matter Fluid
+item.utilitycraft:dark_matter_11=Dark Matter Fluid
+item.utilitycraft:dark_matter_12=Dark Matter Fluid
+item.utilitycraft:dark_matter_13=Dark Matter Fluid
+item.utilitycraft:dark_matter_14=Dark Matter Fluid
+item.utilitycraft:dark_matter_15=Dark Matter Fluid
+item.utilitycraft:dark_matter_16=Dark Matter Fluid
+item.utilitycraft:dark_matter_17=Dark Matter Fluid
+item.utilitycraft:dark_matter_18=Dark Matter Fluid
+item.utilitycraft:dark_matter_19=Dark Matter Fluid
+item.utilitycraft:dark_matter_20=Dark Matter Fluid
+item.utilitycraft:dark_matter_21=Dark Matter Fluid
+item.utilitycraft:dark_matter_22=Dark Matter Fluid
+item.utilitycraft:dark_matter_23=Dark Matter Fluid
+item.utilitycraft:dark_matter_24=Dark Matter Fluid
+item.utilitycraft:dark_matter_25=Dark Matter Fluid
+item.utilitycraft:dark_matter_26=Dark Matter Fluid
+item.utilitycraft:dark_matter_27=Dark Matter Fluid
+item.utilitycraft:dark_matter_28=Dark Matter Fluid
+item.utilitycraft:dark_matter_29=Dark Matter Fluid
+item.utilitycraft:dark_matter_30=Dark Matter Fluid
+item.utilitycraft:dark_matter_31=Dark Matter Fluid
+item.utilitycraft:dark_matter_32=Dark Matter Fluid
+item.utilitycraft:dark_matter_33=Dark Matter Fluid
+item.utilitycraft:dark_matter_34=Dark Matter Fluid
+item.utilitycraft:dark_matter_35=Dark Matter Fluid
+item.utilitycraft:dark_matter_36=Dark Matter Fluid
+item.utilitycraft:dark_matter_37=Dark Matter Fluid
+item.utilitycraft:dark_matter_38=Dark Matter Fluid
+item.utilitycraft:dark_matter_39=Dark Matter Fluid
+item.utilitycraft:dark_matter_40=Dark Matter Fluid
+item.utilitycraft:dark_matter_41=Dark Matter Fluid
+item.utilitycraft:dark_matter_42=Dark Matter Fluid
+item.utilitycraft:dark_matter_43=Dark Matter Fluid
+item.utilitycraft:dark_matter_44=Dark Matter Fluid
+item.utilitycraft:dark_matter_45=Dark Matter Fluid
+item.utilitycraft:dark_matter_46=Dark Matter Fluid
+item.utilitycraft:dark_matter_47=Dark Matter Fluid
+item.utilitycraft:dark_matter_48=Dark Matter Fluid
+
 ## Entities
 entity.utilitycraft:catalyst_weaver.name=Catalyst Weaver
 entity.utilitycraft:cloner.name=Cloner
+entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator

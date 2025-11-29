@@ -9,6 +9,7 @@ tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velo
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7- Acepta mejoras:\n  §a§7, §b§7
 tile.utilitycraft:cloner.name=Clonador\n§7- Acepta mejoras:\n  §a§7, §b§7
+tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad\n§7- Acepta mejoras:\n  §a§7, §b§7\n§7- Requiere fluido §5Materia Oscura
 
 ## Otros Bloques
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
@@ -17,6 +18,16 @@ tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
 item.utilitycraft:aetherium=Lingote de Éter
 item.utilitycraft:liquified_aetherium_bucket=Cubeta de Éter Liquefactado
 item.utilitycraft:aetherium_shard=Fragmento de Éter
+
+## Cápsulas de Materia Oscura
+item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Materia Oscura (1 Cubo)
+item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Materia Oscura (2 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Materia Oscura (3 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_4=Cápsula de Materia Oscura (4 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_5=Cápsula de Materia Oscura (5 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Materia Oscura (6 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Materia Oscura (7 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Materia Oscura (8 Cubos)
 
 ## Placeholders
 item.utilitycraft:liquefied_aetherium_00=Éter Liquefactado
@@ -68,6 +79,58 @@ item.utilitycraft:liquefied_aetherium_45=Éter Liquefactado
 item.utilitycraft:liquefied_aetherium_46=Éter Liquefactado
 item.utilitycraft:liquefied_aetherium_47=Éter Liquefactado
 item.utilitycraft:liquefied_aetherium_48=Éter Liquefactado
+
+## Placeholders de Materia Oscura
+item.utilitycraft:dark_matter_00=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_01=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_02=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_03=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_04=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_05=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_06=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_07=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_08=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_09=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_10=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_11=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_12=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_13=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_14=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_15=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_16=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_17=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_18=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_19=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_20=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_21=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_22=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_23=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_24=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_25=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_26=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_27=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_28=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_29=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_30=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_31=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_32=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_33=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_34=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_35=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_36=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_37=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_38=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_39=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_40=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_41=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_42=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_43=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_44=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_45=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_46=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_47=Fluido de Materia Oscura
+item.utilitycraft:dark_matter_48=Fluido de Materia Oscura
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=Cámara Catalisadora
 entity.utilitycraft:cloner.name=Clonador
+entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad

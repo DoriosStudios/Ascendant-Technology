@@ -22,6 +22,11 @@
             "requires": "($temp_container_title = 'entity.utilitycraft:cloner.name')",
             "$screen_content": "cloner.utility_panel",
             "$screen_bg_content": "common.screen_background"
+          },
+          {
+            "requires": "($temp_container_title = 'entity.utilitycraft:singularity_fabricator.name')",
+            "$screen_content": "cloner.utility_panel",
+            "$screen_bg_content": "common.screen_background"
           }
         ]
       }

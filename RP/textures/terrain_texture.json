@@ -67,6 +67,12 @@
 		"utilitycraft_cloner_on": {
 			"textures": "textures/blocks/machines/cloner_on"
 		},
+		"utilitycraft_singularity_fabricator_off": {
+			"textures": "textures/blocks/machines/cloner_off"
+		},
+		"utilitycraft_singularity_fabricator_on": {
+			"textures": "textures/blocks/machines/cloner_on"
+		},
 		"utilitycraft_flat_conduit": {
 			"textures": "textures/blocks/pipes/flat_conduit"
 		},

@@ -8,6 +8,57 @@
 		"utilitycraft_aetherium_shard": {
 			"textures": "textures/items/ores/aetherium_shard"
 		},
+		"utilitycraft_empty_liquid_capsule": {
+			"textures": "textures/items/misc/empty_liquid_capsule"
+		},
+		"utilitycraft_aetherium_liquid_capsule_1": {
+			"textures": "textures/items/misc/aetherium_liquid_capsule_1"
+		},
+		"utilitycraft_aetherium_liquid_capsule_2": {
+			"textures": "textures/items/misc/aetherium_liquid_capsule_2"
+		},
+		"utilitycraft_aetherium_liquid_capsule_3": {
+			"textures": "textures/items/misc/aetherium_liquid_capsule_3"
+		},
+		"utilitycraft_aetherium_liquid_capsule_4": {
+			"textures": "textures/items/misc/aetherium_liquid_capsule_4"
+		},
+		"utilitycraft_aetherium_liquid_capsule_5": {
+			"textures": "textures/items/misc/aetherium_liquid_capsule_5"
+		},
+		"utilitycraft_aetherium_liquid_capsule_6": {
+			"textures": "textures/items/misc/aetherium_liquid_capsule_6"
+		},
+		"utilitycraft_aetherium_liquid_capsule_7": {
+			"textures": "textures/items/misc/aetherium_liquid_capsule_7"
+		},
+		"utilitycraft_aetherium_liquid_capsule_8": {
+			"textures": "textures/items/misc/aetherium_liquid_capsule_8"
+		},
+		"utilitycraft_dark_matter_liquid_capsule_1": {
+			"textures": "textures/items/misc/dark_matter_liquid_capsule_1"
+		},
+		"utilitycraft_dark_matter_liquid_capsule_2": {
+			"textures": "textures/items/misc/dark_matter_liquid_capsule_2"
+		},
+		"utilitycraft_dark_matter_liquid_capsule_3": {
+			"textures": "textures/items/misc/dark_matter_liquid_capsule_3"
+		},
+		"utilitycraft_dark_matter_liquid_capsule_4": {
+			"textures": "textures/items/misc/dark_matter_liquid_capsule_4"
+		},
+		"utilitycraft_dark_matter_liquid_capsule_5": {
+			"textures": "textures/items/misc/dark_matter_liquid_capsule_5"
+		},
+		"utilitycraft_dark_matter_liquid_capsule_6": {
+			"textures": "textures/items/misc/dark_matter_liquid_capsule_6"
+		},
+		"utilitycraft_dark_matter_liquid_capsule_7": {
+			"textures": "textures/items/misc/dark_matter_liquid_capsule_7"
+		},
+		"utilitycraft_dark_matter_liquid_capsule_8": {
+			"textures": "textures/items/misc/dark_matter_liquid_capsule_8"
+		},
 		"utilitycraft_liquified_aetherium_bar_00": {
 			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_00"
 		},
@@ -154,6 +205,153 @@
 		},
 		"utilitycraft_liquified_aetherium_bar_48": {
 			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_48"
+		},
+		"utilitycraft_dark_matter_bar_00": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_00"
+		},
+		"utilitycraft_dark_matter_bar_01": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_01"
+		},
+		"utilitycraft_dark_matter_bar_02": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_02"
+		},
+		"utilitycraft_dark_matter_bar_03": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_03"
+		},
+		"utilitycraft_dark_matter_bar_04": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_04"
+		},
+		"utilitycraft_dark_matter_bar_05": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_05"
+		},
+		"utilitycraft_dark_matter_bar_06": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_06"
+		},
+		"utilitycraft_dark_matter_bar_07": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_07"
+		},
+		"utilitycraft_dark_matter_bar_08": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_08"
+		},
+		"utilitycraft_dark_matter_bar_09": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_09"
+		},
+		"utilitycraft_dark_matter_bar_10": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_10"
+		},
+		"utilitycraft_dark_matter_bar_11": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_11"
+		},
+		"utilitycraft_dark_matter_bar_12": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_12"
+		},
+		"utilitycraft_dark_matter_bar_13": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_13"
+		},
+		"utilitycraft_dark_matter_bar_14": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_14"
+		},
+		"utilitycraft_dark_matter_bar_15": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_15"
+		},
+		"utilitycraft_dark_matter_bar_16": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_16"
+		},
+		"utilitycraft_dark_matter_bar_17": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_17"
+		},
+		"utilitycraft_dark_matter_bar_18": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_18"
+		},
+		"utilitycraft_dark_matter_bar_19": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_19"
+		},
+		"utilitycraft_dark_matter_bar_20": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_20"
+		},
+		"utilitycraft_dark_matter_bar_21": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_21"
+		},
+		"utilitycraft_dark_matter_bar_22": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_22"
+		},
+		"utilitycraft_dark_matter_bar_23": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_23"
+		},
+		"utilitycraft_dark_matter_bar_24": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_24"
+		},
+		"utilitycraft_dark_matter_bar_25": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_25"
+		},
+		"utilitycraft_dark_matter_bar_26": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_26"
+		},
+		"utilitycraft_dark_matter_bar_27": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_27"
+		},
+		"utilitycraft_dark_matter_bar_28": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_28"
+		},
+		"utilitycraft_dark_matter_bar_29": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_29"
+		},
+		"utilitycraft_dark_matter_bar_30": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_30"
+		},
+		"utilitycraft_dark_matter_bar_31": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_31"
+		},
+		"utilitycraft_dark_matter_bar_32": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_32"
+		},
+		"utilitycraft_dark_matter_bar_33": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_33"
+		},
+		"utilitycraft_dark_matter_bar_34": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_34"
+		},
+		"utilitycraft_dark_matter_bar_35": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_35"
+		},
+		"utilitycraft_dark_matter_bar_36": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_36"
+		},
+		"utilitycraft_dark_matter_bar_37": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_37"
+		},
+		"utilitycraft_dark_matter_bar_38": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_38"
+		},
+		"utilitycraft_dark_matter_bar_39": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_39"
+		},
+		"utilitycraft_dark_matter_bar_40": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_40"
+		},
+		"utilitycraft_dark_matter_bar_41": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_41"
+		},
+		"utilitycraft_dark_matter_bar_42": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_42"
+		},
+		"utilitycraft_dark_matter_bar_43": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_43"
+		},
+		"utilitycraft_dark_matter_bar_44": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_44"
+		},
+		"utilitycraft_dark_matter_bar_45": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_45"
+		},
+		"utilitycraft_dark_matter_bar_46": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_46"
+		},
+		"utilitycraft_dark_matter_bar_47": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_47"
+		},
+		"utilitycraft_dark_matter_bar_48": {
+			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_48"
 		}
 	}
 }

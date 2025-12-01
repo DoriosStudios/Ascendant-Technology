@@ -19,4 +19,7 @@
 // ==================================================
 
 import './recipes/cloner.js';
-import './recipes/catalyst_weaver.js'
+import './recipes/catalyst_weaver.js';
+import './recipes/liquifier.js';
+
+import './recipes/added/insert_infuser.js';

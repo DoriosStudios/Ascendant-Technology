@@ -19,6 +19,167 @@ if (typeof globalThis.tickSpeed !== 'number' || globalThis.tickSpeed <= 0) {
 }
 const tickSpeed = globalThis.tickSpeed;
 
+const LABEL_CHAR_LIMIT = 255;
+const LABEL_PLACEHOLDER_ITEM = "utilitycraft:arrow_indicator_90";
+
+/**
+ * @typedef {string | {
+ *   title?: string,
+ *   subtitle?: string,
+ *   name?: string,
+ *   text?: string | string[],
+ *   lines?: string | string[],
+ *   nameLines?: string[],
+ *   lore?: string[]
+ *   rawText?: string
+ * }} LabelContent
+ */
+
+const splitRegex = /\r?\n/;
+
+function normalizeLoreEntries(entries) {
+    if (!Array.isArray(entries)) return [];
+    const lore = [];
+    for (const entry of entries) {
+        if (typeof entry !== "string") continue;
+        for (const line of entry.split(splitRegex)) {
+            const trimmed = line.trim();
+            if (trimmed.length === 0) continue;
+            lore.push(truncateLabelText(trimmed));
+        }
+    }
+    return lore;
+}
+
+/**
+ * Splits and trims multiline text, removing empty entries.
+ *
+ * @param {string} value
+ * @returns {string[]}
+ */
+function splitAndCleanLines(value) {
+    if (typeof value !== "string") return [];
+    return value
+        .split(splitRegex)
+        .map(line => line.trim())
+        .filter(line => line.length > 0);
+}
+
+/**
+ * Ensures text stays within Minecraft's 255-character label limit.
+ *
+ * @param {string} text
+ * @param {number} [limit=LABEL_CHAR_LIMIT]
+ * @returns {string}
+ */
+function truncateLabelText(text, limit = LABEL_CHAR_LIMIT) {
+    if (!text) return " ";
+    if (text.length <= limit) return text;
+    if (limit <= 3) return text.slice(0, limit);
+    return `${text.slice(0, limit - 1)}…`;
+}
+
+/**
+ * Normalizes the label content into a sanitized name and lore payload.
+ *
+ * @param {LabelContent} content
+ * @returns {{ nameTag: string, lore: string[] }}
+ */
+function normalizeLabelContent(content) {
+    if (typeof content === "string") {
+        const lines = splitAndCleanLines(content);
+        const collapsed = lines.join("\n") || " ";
+        return { nameTag: truncateLabelText(collapsed), lore: [] };
+    }
+
+    if (!content || typeof content !== "object") {
+        return { nameTag: " ", lore: [] };
+    }
+
+    const lore = normalizeLoreEntries(content.lore);
+
+    if (typeof content.rawText === "string") {
+        return {
+            nameTag: truncateLabelText(content.rawText),
+            lore
+        };
+    }
+
+    const nameLines = [];
+
+    const singleLineKeys = ["title", "subtitle", "name", "text"];
+    for (const key of singleLineKeys) {
+        const value = content[key];
+        if (typeof value === "string") {
+            nameLines.push(...splitAndCleanLines(value));
+        }
+    }
+
+    const multiLineKeys = ["nameLines", "lines"];
+    for (const key of multiLineKeys) {
+        const value = content[key];
+        if (Array.isArray(value)) {
+            for (const entry of value) {
+                if (typeof entry === "string") {
+                    nameLines.push(...splitAndCleanLines(entry));
+                }
+            }
+        } else if (typeof value === "string") {
+            nameLines.push(...splitAndCleanLines(value));
+        }
+    }
+
+    if (nameLines.length === 0) {
+        nameLines.push(" ");
+    }
+
+    return {
+        nameTag: truncateLabelText(nameLines.join("\n")),
+        lore
+    };
+}
+
+function extractMessageParts(message, fallback = "Status") {
+    if (Array.isArray(message)) {
+        const sanitized = message
+            .map(entry => typeof entry === "string" ? entry.trim() : "")
+            .filter(entry => entry.length > 0);
+        const title = sanitized.shift() ?? fallback;
+        return {
+            title,
+            requirements: sanitized
+        };
+    }
+
+    const lines = splitAndCleanLines(typeof message === "string" ? message : "");
+    const title = lines.shift() ?? fallback;
+    return {
+        title,
+        requirements: lines
+    };
+}
+
+function buildRequirementLore(lines) {
+    if (!Array.isArray(lines) || lines.length === 0) return [];
+    return lines.map(line => `§r${COLORS.red}${line}`);
+}
+
+/**
+ * Applies the normalized label content to an inventory slot.
+ *
+ * @param {Container} container
+ * @param {number} slot
+ * @param {LabelContent} content
+ */
+function applyLabelToSlot(container, slot, content) {
+    if (!container) return;
+    const { nameTag, lore } = normalizeLabelContent(content);
+    const baseItem = container.getItem(slot) ?? new ItemStack(LABEL_PLACEHOLDER_ITEM);
+    baseItem.nameTag = nameTag;
+    baseItem.setLore(lore);
+    container.setItem(slot, baseItem);
+}
+
 system.runInterval(() => {
     globalThis.tickCount += 2
     if (globalThis.tickCount == 1000) globalThis.tickCount = 0
@@ -670,20 +831,15 @@ export class Generator {
     /**
      * Sets a label in the generator inventory using a fixed item as placeholder.
      *
-     * The label is displayed by overriding the item's `nameTag` with custom text.
+     * Accepts either a raw string (legacy behavior) or a {@link LabelContent}
+     * object to split information between the item name and lore while
+     * respecting the 255-character cap of each component.
      *
-     * @param {string} text The text to display in the label. Supports Minecraft formatting codes (§).
+     * @param {LabelContent} content Label definition or legacy string.
      * @param {number} [slot=1] The inventory slot where the label will be placed.
      */
-    setLabel(text, slot = 1) {
-        // Always use the same placeholder item
-        const baseItem = this.inv.getItem(slot) ?? new ItemStack("utilitycraft:arrow_indicator_90");
-
-        // Apply the custom label text
-        baseItem.nameTag = text;
-
-        // Update the slot in the inventory
-        this.inv.setItem(slot, baseItem);
+    setLabel(content, slot = 1) {
+        applyLabelToSlot(this.inv, slot, content);
     }
 
     /**
@@ -1047,20 +1203,15 @@ export class Machine {
     /**
      * Sets a label in the machine inventory using a fixed item as placeholder.
      *
-     * The label is displayed by overriding the item's `nameTag` with custom text.
+     * Accepts either raw text (legacy) or a {@link LabelContent} object,
+     * splitting long details across the item name and lore to avoid the
+     * 255-character threshold per field.
      *
-     * @param {string} text The text to display in the label. Supports Minecraft formatting codes (§).
+     * @param {LabelContent} content Label definition or legacy string.
      * @param {number} [slot=1] The inventory slot where the label will be placed.
      */
-    setLabel(text, slot = 1) {
-        // Always use the same placeholder item
-        const baseItem = this.inv.getItem(slot) ?? new ItemStack("utilitycraft:arrow_indicator_90");
-
-        // Apply the custom label text
-        baseItem.nameTag = text;
-
-        // Update the slot in the inventory
-        this.inv.setItem(slot, baseItem);
+    setLabel(content, slot = 1) {
+        applyLabelToSlot(this.inv, slot, content);
     }
 
     /**
@@ -1176,15 +1327,24 @@ export class Machine {
 
         this.displayEnergy();
         this.off()
-        this.setLabel(`
-§r${COLORS.yellow}${message}!
+        const { title, requirements } = extractMessageParts(message, "Warning");
+        const efficiency = ((1 / this.boosts.consumption) * 100).toFixed(0);
+        const rateText = Energy.formatEnergyToText(Math.floor(this.baseRate));
+
+        const labelText = `
+§r${COLORS.yellow}${title}!
 
 §r${COLORS.green}Speed x${this.boosts.speed.toFixed(2)}
-§r${COLORS.green}Efficiency ${((1 / this.boosts.consumption) * 100).toFixed(0)}%%
+§r${COLORS.green}Efficiency ${efficiency}%%
 §r${COLORS.green}Cost ---
 
-§r${COLORS.red}Rate ${Energy.formatEnergyToText(Math.floor(this.baseRate))}/t
-    `);
+§r${COLORS.red}Rate ${rateText}/t
+        `.trim();
+
+        this.setLabel({
+            rawText: labelText,
+            lore: buildRequirementLore(requirements)
+        });
     }
 
     /**
@@ -1196,16 +1356,25 @@ export class Machine {
      */
     showStatus(message) {
         this.displayEnergy();
+        const { title, requirements } = extractMessageParts(message, "Operational");
+        const efficiency = ((1 / this.boosts.consumption) * 100).toFixed(0);
+        const costText = Energy.formatEnergyToText(this.getEnergyCost() * this.boosts.consumption);
+        const rateText = Energy.formatEnergyToText(Math.floor(this.baseRate));
 
-        this.setLabel(`
-§r${COLORS.darkGreen}${message}!
+        const labelText = `
+§r${COLORS.darkGreen}${title}!
 
 §r${COLORS.green}Speed x${this.boosts.speed.toFixed(2)}
-§r${COLORS.green}Efficiency ${((1 / this.boosts.consumption) * 100).toFixed(0)}%%
-§r${COLORS.green}Cost ${Energy.formatEnergyToText(this.getEnergyCost() * this.boosts.consumption)}
+§r${COLORS.green}Efficiency ${efficiency}%%
+§r${COLORS.green}Cost ${costText}
 
-§r${COLORS.red}Rate ${Energy.formatEnergyToText(Math.floor(this.baseRate))}/t
-    `);
+§r${COLORS.red}Rate ${rateText}/t
+        `.trim();
+
+        this.setLabel({
+            rawText: labelText,
+            lore: buildRequirementLore(requirements)
+        });
     }
 
     /**

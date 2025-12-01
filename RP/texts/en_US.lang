@@ -9,6 +9,7 @@ tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Ra
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7
 tile.utilitycraft:cloner.name=Cloner\n§7- Accepted upgrades: \n   §a§7, §b§7
+tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a§7, §b§7\n§7- Converts solids into processable fluids
 tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator\n§7- Accepted upgrades: \n   §a§7, §b§7\n§7- Requires §5Dark Matter Fluid
 
 ## Other Blocks
@@ -135,3 +136,4 @@ item.utilitycraft:dark_matter_48=Dark Matter Fluid
 entity.utilitycraft:catalyst_weaver.name=Catalyst Weaver
 entity.utilitycraft:cloner.name=Cloner
 entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator
+entity.utilitycraft:liquifier.name=Liquifier

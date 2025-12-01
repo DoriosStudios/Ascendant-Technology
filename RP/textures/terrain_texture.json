@@ -67,6 +67,12 @@
 		"utilitycraft_cloner_on": {
 			"textures": "textures/blocks/machines/cloner_on"
 		},
+		"utilitycraft_liquifier_off": {
+			"textures": "textures/blocks/machines/catalyst_weaver_off"
+		},
+		"utilitycraft_liquifier_on": {
+			"textures": "textures/blocks/machines/catalyst_weaver_on"
+		},
 		"utilitycraft_singularity_fabricator_off": {
 			"textures": "textures/blocks/machines/cloner_off"
 		},

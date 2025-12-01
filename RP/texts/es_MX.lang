@@ -9,6 +9,7 @@ tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velo
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7- Acepta mejoras:\n  §a§7, §b§7
 tile.utilitycraft:cloner.name=Clonador\n§7- Acepta mejoras:\n  §a§7, §b§7
+tile.utilitycraft:liquifier.name=Licuefactor\n§7- Acepta mejoras:\n  §a§7, §b§7\n§7- Convierte sólidos en fluidos procesables
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad\n§7- Acepta mejoras:\n  §a§7, §b§7\n§7- Requiere fluido §5Materia Oscura
 
 ## Otros Bloques
@@ -134,3 +135,4 @@ item.utilitycraft:dark_matter_48=Fluido de Materia Oscura
 entity.utilitycraft:catalyst_weaver.name=Cámara Catalisadora
 entity.utilitycraft:cloner.name=Clonador
 entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad
+entity.utilitycraft:liquifier.name=Liquefactor

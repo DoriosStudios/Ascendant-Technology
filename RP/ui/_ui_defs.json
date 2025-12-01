@@ -1,6 +1,7 @@
 {
     "ui_defs": [
         "ui/catalyst_weaver.json",
-        "ui/cloner.json"
+        "ui/cloner.json",
+        "ui/liquifier.json"
     ]
 }

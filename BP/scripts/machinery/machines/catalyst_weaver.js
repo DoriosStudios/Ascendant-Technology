@@ -9,6 +9,10 @@ const UPGRADE_SLOTS = [16, 17]
 const BYPRODUCT_SLOT = 18
 const OUTPUT_SLOT_INDEX = 19
 
+const RECIPE_PREVIEW_DEFAULT_LIMIT = 5
+const RECIPE_PREVIEW_CHAR_BUDGET = 240
+const RECIPE_PREVIEW_MAX_LENGTH = 24
+
 DoriosAPI.register.blockComponent('catalyst_weaver', {
     beforeOnPlayerPlace(e, { params: settings }) {
         Machine.spawnMachineEntity(e, settings, () => {
@@ -288,7 +292,14 @@ function matchesCatalysts(requirements = [], stacks) {
     return true
 }
 
-function buildRecipePreviewLore(recipes, inputStack, catalystStacks, limit = 5, maxLength = 24) {
+function buildRecipePreviewLore(
+    recipes,
+    inputStack,
+    catalystStacks,
+    limit = RECIPE_PREVIEW_DEFAULT_LIMIT,
+    maxLength = RECIPE_PREVIEW_MAX_LENGTH,
+    charBudget = RECIPE_PREVIEW_CHAR_BUDGET
+) {
     if (!Array.isArray(recipes) || recipes.length === 0) return []
     if (!inputStack) return []
 
@@ -316,15 +327,36 @@ function buildRecipePreviewLore(recipes, inputStack, catalystStacks, limit = 5, 
     const totalText = `${candidates.length} Potential Recipe${candidates.length === 1 ? '' : 's'}:`
 
     const lines = [`${reset}${gray}${totalText}`]
+    let currentLength = lines[0].length
+    let added = 0
+    const maxPreview = Math.max(0, limit)
 
-    const preview = candidates.slice(0, Math.max(0, limit))
-    for (const entry of preview) {
+    for (const entry of candidates) {
+        if (added >= maxPreview) break
+
         const truncated = truncatePreviewText(entry.name, maxLength)
-        lines.push(`${reset}${gray}  ${truncated}`)
+        const line = `${reset}${gray}  ${truncated}`
+        const potentialLength = currentLength + line.length
+
+        if (potentialLength > charBudget) break
+
+        lines.push(line)
+        currentLength = potentialLength
+        added++
     }
 
-    if (candidates.length > preview.length) {
-        lines.push(`${reset}${gray}  ...`)
+    const hasHiddenEntries = candidates.length > added
+    if (hasHiddenEntries) {
+        const ellipsisLine = `${reset}${gray}  ...`
+        if (currentLength + ellipsisLine.length <= charBudget) {
+            lines.push(ellipsisLine)
+        } else if (lines.length > 1) {
+            const lastLine = lines[lines.length - 1]
+            const withoutLast = currentLength - lastLine.length
+            if (withoutLast + ellipsisLine.length <= charBudget) {
+                lines[lines.length - 1] = ellipsisLine
+            }
+        }
     }
 
     return lines

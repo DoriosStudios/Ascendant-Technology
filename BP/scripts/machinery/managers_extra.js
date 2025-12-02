@@ -21,6 +21,7 @@ const tickSpeed = globalThis.tickSpeed;
 
 const LABEL_CHAR_LIMIT = 255;
 const LABEL_PLACEHOLDER_ITEM = "utilitycraft:arrow_indicator_90";
+const HIDDEN_SLOT_FILLER_ITEM = "utilitycraft:container_filler";
 
 /**
  * @typedef {string | {
@@ -894,6 +895,12 @@ export class Machine {
         this.boosts = this.calculateBoosts(this.upgrades)
         this.baseRate = settings.machine.rate_speed_base * this.boosts.speed * this.boosts.consumption
         this.rate = this.baseRate * tickSpeed
+        this.hiddenSlots = Array.isArray(settings?.machine?.hidden_slots)
+            ? settings.machine.hidden_slots.filter(slot => typeof slot === "number")
+            : []
+        if (this.hiddenSlots.length) {
+            this.fillHiddenSlots()
+        }
     }
 
     getTransferCooldown() {
@@ -1472,6 +1479,21 @@ export class Machine {
             if (!this.inv.getItem(index)) {
                 this.inv.setItem(index, new ItemStack("utilitycraft:arrow_right_0", 1));
             }
+        }
+    }
+
+    fillHiddenSlots(slots = this.hiddenSlots, fillerId = HIDDEN_SLOT_FILLER_ITEM) {
+        if (!Array.isArray(slots) || slots.length === 0) return;
+        if (!this.inv || !this.entity) return;
+
+        for (const slot of slots) {
+            if (typeof slot !== "number") continue;
+            if (slot < 0 || slot >= this.inv.size) continue;
+
+            const current = this.inv.getItem(slot);
+            if (current) continue;
+
+            this.entity.setItem(slot, fillerId, 1);
         }
     }
 

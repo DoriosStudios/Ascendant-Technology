@@ -5,6 +5,7 @@ const INPUT_SLOT = 3
 const CATALYST_SLOTS = [4, 5, 6, 7, 8, 9]
 const FLUID_SLOT = 10
 const FLUID_DISPLAY_SLOT = 11
+const UPGRADE_SLOTS = [16, 17]
 const BYPRODUCT_SLOT = 18
 const OUTPUT_SLOT_INDEX = 19
 
@@ -24,6 +25,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             if (blockedSlot?.typeId === 'utilitycraft:empty_fluid_bar') {
                 machine.inv.setItem(4)
             }
+
         })
     },
 

@@ -39,8 +39,8 @@
                     "anchor_from": "top_right",
                     "anchor_to": "top_right",
                     "offset": [
-                        -24,
-                        20
+                        12,
+                        58
                     ],
                     "controls": [
                         {
@@ -52,28 +52,39 @@
             {
                 "energy_bar@machineryCommon.vertical_single": {
                     "$is_energy": true,
-                    "$has_bg": true,
+                    "$has_bg": false,
                     "$collection_index": 0,
-                    "anchor_from": "center",
-                    "anchor_to": "center",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
                     "offset": [
-                        -104,
-                        72
+                        -68,
+                        56
                     ]
                 }
             },
             {
                 "upgrades@machineryCommon.vertical_interactive": {
-                    "$has_bg": true,
+                    "$has_bg": false,
                     "$collection_index_first": 16,
                     "$collection_index_second": 17,
                     "$has_third": false,
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [
-                        104,
-                        72
+                        106,
+                        92
                     ]
+                }
+            },
+            {
+                "upgrades_background":{
+                    "type": "image",
+                    "texture": "textures/ui/background_panel_blue",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [ 116, 98 ],
+                    "$cell_image_size": [ 28, 70 ],
+                    "size": [ 28, 70 ]
                 }
             },
             {
@@ -82,8 +93,8 @@
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [
-                        108,
-                        -12
+                        142,
+                        84
                     ],
                     "controls": [
                         {
@@ -117,37 +128,19 @@
                 }
             },
             {
-                "mini_background_panel": {
-                    "type": "image",
-                    "texture": "textures/ui/background_panel",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "$cell_image_size": [26, 26],
-                    "size": [
-                        26,
-                        26
-                    ],
-                    "offset": [
-                        114,
-                        190
-                    ],
-                    "layer": -1
-                }
-            },
-            {
                 "screen": {
                     "type": "image",
-                    "texture": "textures/ui/scaled_ui",
+                    "texture": "textures/ui/background_panel",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "$cell_image_size": [260, 128],
+                    "$cell_image_size": [254, 166],
                     "size": [
-                        260,
-                        128
+                        254,
+                        166
                     ],
                     "offset": [
-                        10,
-                        -10
+                        49,
+                        60
                     ],
                     "layer": -1,
                     "controls": [
@@ -156,12 +149,43 @@
                                 "anchor_from": "center",
                                 "anchor_to": "center",
                                 "offset": [
-                                    1,
-                                    -40
+                                    -6,
+                                    -89
                                 ]
                             }
                         }
                     ]
+                }
+            },
+            {
+                "text_background":{
+                        "type": "image",
+                        "texture": "textures/ui/simple_bg_gray",
+                        "anchor_from": "center",
+                        "anchor_to": "center",
+                        "offset": [
+                            0, -30
+                        ],
+                        "$cell_image_size": [156, 20],
+                        "size": [156, 20]
+                }
+            },
+            {
+                "info_panel": {
+                    "type": "image",
+                    "texture": "textures/ui/half_long_panel_classic",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$cell_image_size": [88, 166],
+                    "size": [
+                        88,
+                        166
+                    ],
+                    "offset": [
+                        -8,
+                        57
+                    ],
+                    "layer": 0
                 }
             },
             {
@@ -171,26 +195,9 @@
                     "anchor_to": "top_left",
                     "$text_scale": 0.55,
                     "offset": [
-                        57,
-                        38
+                        0,
+                        66
                     ]
-                }
-            },
-            {
-                "info_panel": {
-                    "type": "image",
-                    "texture": "textures/ui/screen_vertical_bg",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [
-                        68,
-                        68
-                    ],
-                    "offset": [
-                        54,
-                        38
-                    ],
-                    "layer": 0
                 }
             },
             {
@@ -199,7 +206,7 @@
                     "anchor_to": "top_middle",
                     "offset": [
                         64,
-                        63
+                        88
                     ],
                     "collection_index": 2
                 }
@@ -211,8 +218,8 @@
                     "$cell_image_size": [24, 24],
                     "size": [24, 24],
                     "offset": [
-                        10,
-                        60
+                        2,
+                        84.5
                     ],
                     "collection_index": 3
                 }
@@ -222,8 +229,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        -20,
-                        43
+                        -28,
+                        68
                     ],
                     "collection_index": 4
                 }
@@ -233,8 +240,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        -20,
-                        63
+                        -30,
+                        88
                     ],
                     "collection_index": 5
                 }
@@ -244,8 +251,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        -20,
-                        83
+                        -28,
+                        108
                     ],
                     "collection_index": 6
                 }
@@ -255,8 +262,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        40,
-                        43
+                        32,
+                        68
                     ],
                     "collection_index": 7
                 }
@@ -266,8 +273,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        40,
-                        63
+                        34,
+                        88
                     ],
                     "collection_index": 8
                 }
@@ -277,8 +284,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        40,
-                        83
+                        32,
+                        108
                     ],
                     "collection_index": 9
                 }
@@ -288,7 +295,7 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        114,
+                        152,
                         194
                     ],
                     "collection_index": 10
@@ -299,8 +306,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        92,
-                        92
+                        128,
+                        88
                     ],
                     "collection_index": 18
                 }
@@ -310,8 +317,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        92,
-                        60
+                        100,
+                        85
                     ],
                     "collection_index": 19,
                     "$cell_image_size": [

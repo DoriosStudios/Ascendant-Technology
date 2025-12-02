@@ -1,0 +1,62 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:mob_magnet",
+			"menu_category": {
+				"category": "construction"
+			},
+			"states": {
+				"utilitycraft:isOn": [
+					false,
+					true
+				],
+				"utilitycraft:rangeSelected": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24
+				]
+			}
+		},
+		"components": {
+			"utilitycraft:mob_magnet": {},
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_mob_magnet_off",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:map_color": "#1d1526",
+			"minecraft:tick": {
+				"interval_range": [
+					4,
+					4
+				]
+			},
+			"minecraft:selection_box": {
+				"origin": [
+					-8,
+					0,
+					-8
+				],
+				"size": [
+					16,
+					16,
+					16
+				]
+			},
+			"tag:minecraft:is_pickaxe_item_destructible": {}
+		},
+		"permutations": [
+			{
+				"condition": "q.block_state('utilitycraft:isOn') == 1",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_mob_magnet_on",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 6
+				}
+			}
+		]
+	}
+}

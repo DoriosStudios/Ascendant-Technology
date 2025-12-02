@@ -109,24 +109,24 @@ const nativeCatalystWeaverRecipes = [
         ],
         fluid: { type: 'lava', amount: 2000 },
         output: { id: 'minecraft:wither_skeleton_skull', amount: 1 },
-        byproduct: { id: 'minecraft:bone_meal', amount: 4, chance: 0.5 },
+        byproduct: { id: 'minecraft:bone_meal', amount: 4, chance: 0.6 },
         cost: 6400,
         speedModifier: 1
     }),
     defineWeaverRecipe({
         id: 'utilitycraft:aetherium_ingot',
-        input: { id: 'minecraft:netherite_ingot', amount: 2 },
+        input: { id: 'minecraft:gold_ingot', amount: 1 },
         "catalysts": [
-            { id: "minecraft:iron_ingot", amount: 1 },
-            { id: "minecraft:gold_ingot", amount: 1 },
+            { id: "utilitycraft:steel_ingot", amount: 1 },
+            { id: "utilitycraft:energized_iron_ingot", amount: 1 },
             { id: "utilitycraft:ender_pearl_dust", amount: 4 },
-            { id: "utilitycraft:amethyst_dust", amount: 4 },
+            { id: "utilitycraft:aetherium_shard", amount: 4 },
             null,
             null
         ],
         fluid: { type: 'lava', amount: 10000 },
         output: { id: 'utilitycraft:aetherium', amount: 1 },
-        byproduct: { id: 'utilitycraft:refined_obsidian_dust', amount: [0, 2], chance: 0.2 },
+        byproduct: { id: 'utilitycraft:refined_obsidian_dust', amount: [0, 2], chance: 0.05 },
         cost: 12000,
         speedModifier: 0.5
     })

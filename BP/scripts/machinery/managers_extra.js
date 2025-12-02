@@ -1327,7 +1327,7 @@ export class Machine {
      * @param {string} message The warning text to display.
      * @param {boolean} [resetProgress=true] Whether to reset the machine progress to 0.
      */
-    showWarning(message, resetProgress = true) {
+    showWarning(message, resetProgress = true, extraLore = []) {
         if (resetProgress) {
             this.setProgress(0);
         }
@@ -1348,9 +1348,15 @@ export class Machine {
 §r${COLORS.red}Rate ${rateText}/t
         `.trim();
 
+        const lore = buildRequirementLore(requirements);
+        if (Array.isArray(extraLore) && extraLore.length) {
+            if (lore.length > 0) lore.push(" ");
+            lore.push(...extraLore);
+        }
+
         this.setLabel({
             rawText: labelText,
-            lore: buildRequirementLore(requirements)
+            lore
         });
     }
 

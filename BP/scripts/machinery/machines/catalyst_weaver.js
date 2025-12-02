@@ -72,6 +72,9 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         // Priority 3: Try to match recipe
         const potentialCount = countPotentialRecipes(recipes, inputStack)
         const catalystStacks = CATALYST_SLOTS.map(slot => inv.getItem(slot))
+        const recipePreviewLore = potentialCount > 0
+            ? buildRecipePreviewLore(recipes, inputStack, catalystStacks)
+            : []
         const recipe = matchRecipe(recipes, inputStack, catalystStacks, tank)
         
         // Priority 4: Check fluid requirements with specific messages
@@ -102,15 +105,15 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
                 : 'invalid'
             
             if (catalystStatus === 'missing_all') {
-                machine.showWarning(`Missing Catalysts\n§7${potentialCount} potential recipe${potentialCount !== 1 ? 's' : ''}`)
+                machine.showWarning('Missing Catalysts', true, recipePreviewLore)
             } else if (catalystStatus === 'missing_catalysts') {
-                machine.showWarning(`Missing Some Catalysts\n§7${potentialCount} potential recipe${potentialCount !== 1 ? 's' : ''}`)
+                machine.showWarning('Missing Some Catalysts', true, recipePreviewLore)
             } else if (catalystStatus === 'insufficient_catalysts') {
-                machine.showWarning(`Insufficient Catalysts\n§7${potentialCount} potential recipe${potentialCount !== 1 ? 's' : ''}`)
+                machine.showWarning('Insufficient Catalysts', true, recipePreviewLore)
             } else if (catalystStatus === 'wrong_catalysts' || catalystStatus === 'extra_catalysts') {
-                machine.showWarning(`Wrong Catalysts\n§7${potentialCount} potential recipe${potentialCount !== 1 ? 's' : ''}`)
+                machine.showWarning('Wrong Catalysts', true, recipePreviewLore)
             } else {
-                machine.showWarning(`Invalid Recipe\n§7${potentialCount} potential recipe${potentialCount !== 1 ? 's' : ''}`)
+                machine.showWarning('Invalid Recipe', true, recipePreviewLore)
             }
             tank.display(FLUID_DISPLAY_SLOT)
             return
@@ -283,6 +286,86 @@ function matchesCatalysts(requirements = [], stacks) {
     }
 
     return true
+}
+
+function buildRecipePreviewLore(recipes, inputStack, catalystStacks, limit = 5, maxLength = 24) {
+    if (!Array.isArray(recipes) || recipes.length === 0) return []
+    if (!inputStack) return []
+
+    const candidates = []
+    for (const recipe of recipes) {
+        if (!recipe?.input || !recipe.output) continue
+        if (!matchesStack(recipe.input, inputStack)) continue
+
+        candidates.push({
+            name: formatRecipePreviewName(recipe),
+            score: getCatalystMatchScore(recipe.catalysts, catalystStacks)
+        })
+    }
+
+    if (candidates.length === 0) return []
+
+    candidates.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score
+        return a.name.localeCompare(b.name)
+    })
+
+    const colors = DoriosAPI?.constants?.textColors ?? {}
+    const gray = colors.gray ?? '§7'
+    const reset = colors.reset ?? '§r'
+    const totalText = `${candidates.length} Potential Recipe${candidates.length === 1 ? '' : 's'}:`
+
+    const lines = [`${reset}${gray}${totalText}`]
+
+    const preview = candidates.slice(0, Math.max(0, limit))
+    for (const entry of preview) {
+        const truncated = truncatePreviewText(entry.name, maxLength)
+        lines.push(`${reset}${gray}  ${truncated}`)
+    }
+
+    if (candidates.length > preview.length) {
+        lines.push(`${reset}${gray}  ...`)
+    }
+
+    return lines
+}
+
+function formatRecipePreviewName(recipe) {
+    if (recipe?.output?.name) return recipe.output.name
+    const amount = recipe?.output?.amount ?? 1
+    const baseId = recipe?.output?.id ?? recipe?.id
+    const readable = humanizeIdentifier(baseId)
+    return amount > 1 ? `${readable} x${amount}` : readable
+}
+
+function humanizeIdentifier(identifier) {
+    if (typeof identifier !== 'string' || identifier.length === 0) return 'Unknown'
+    const [, raw = identifier] = identifier.split(':')
+    return raw
+        .split(/[_\s]+/)
+        .filter(Boolean)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ')
+}
+
+function truncatePreviewText(text, limit = 32) {
+    if (typeof text !== 'string') return ''
+    if (limit <= 0) return ''
+    if (text.length <= limit) return text
+    if (limit <= 1) return text.slice(0, limit)
+    return `${text.slice(0, limit - 1)}…`
+}
+
+function getCatalystMatchScore(requirements = [], stacks = []) {
+    if (!Array.isArray(requirements) || !Array.isArray(stacks)) return 0
+    let score = 0
+    for (const requirement of requirements) {
+        if (!requirement?.id) continue
+        if (stacks.some(stack => stack?.typeId === requirement.id)) {
+            score++
+        }
+    }
+    return score
 }
 
 

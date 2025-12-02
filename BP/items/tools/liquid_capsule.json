@@ -1,0 +1,23 @@
+{
+  "format_version": "1.21.80",
+  "minecraft:item": {
+    "description": {
+      "identifier": "utilitycraft:empty_liquid_capsule",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:hand_equipped": false,
+      "minecraft:max_stack_size": 64,
+      "minecraft:glint": false,
+      "minecraft:icon": "utilitycraft_empty_liquid_capsule",
+      "minecraft:allow_off_hand": false,
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:transform_materials"
+        ]
+      }
+    }
+  }
+}

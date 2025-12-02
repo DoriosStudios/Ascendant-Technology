@@ -14,13 +14,27 @@ tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator\n§7- Accep
 
 ## Other Blocks
 tile.utilitycraft:flat_conduit.name=Flat Conduit\n§7  Aesthetic Version
+tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius
 
 ## Items
 item.utilitycraft:aetherium=Aetherium Ingot
 item.utilitycraft:liquified_aetherium_bucket=Liquified Aetherium Bucket
 item.utilitycraft:aetherium_shard=Aetherium Shard
+item.utilitycraft:void_essence=Void Essence
+item.utilitycraft:liquid_void=Liquid Void Capsule
 
-## Dark Matter Capsules
+## Liquid Capsules
+item.utilitycraft:empty_liquid_capsule=Empty Liquid Capsule
+
+item.utilitycraft:aetherium_liquid_capsule_1=Dark Matter Capsule (1 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_2=Dark Matter Capsule (2 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_3=Dark Matter Capsule (3 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_4=Dark Matter Capsule (4 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_5=Dark Matter Capsule (5 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_6=Dark Matter Capsule (6 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_7=Dark Matter Capsule (7 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_8=Dark Matter Capsule (8 Buckets)
+
 item.utilitycraft:dark_matter_liquid_capsule_1=Dark Matter Capsule (1 Bucket)
 item.utilitycraft:dark_matter_liquid_capsule_2=Dark Matter Capsule (2 Buckets)
 item.utilitycraft:dark_matter_liquid_capsule_3=Dark Matter Capsule (3 Buckets)

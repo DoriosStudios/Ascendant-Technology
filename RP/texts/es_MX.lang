@@ -14,13 +14,27 @@ tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad\n§7- A
 
 ## Otros Bloques
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
+tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7  Atrae mobs en un radio configurable
 
 ## Ítems
 item.utilitycraft:aetherium=Lingote de Éter
 item.utilitycraft:liquified_aetherium_bucket=Cubeta de Éter Liquefactado
 item.utilitycraft:aetherium_shard=Fragmento de Éter
+item.utilitycraft:void_essence=Esencia del Vacío
+item.utilitycraft:liquid_void=Ampolla de Vacío Líquido
 
 ## Cápsulas de Materia Oscura
+item.utilitycraft:empty_liquid_capsule=Cápsula de Líquido Vacía
+
+item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Éter Líquido (1 Cubo)
+item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Éter Líquido (2 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_3=Cápsula de Éter Líquido (3 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_4=Cápsula de Éter Líquido (4 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_5=Cápsula de Éter Líquido (5 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_6=Cápsula de Éter Líquido (6 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_7=Cápsula de Éter Líquido (7 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_8=Cápsula de Éter Líquido (8 Cubos)
+
 item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Materia Oscura (1 Cubo)
 item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Materia Oscura (2 Cubos)
 item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Materia Oscura (3 Cubos)

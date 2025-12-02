@@ -10,25 +10,46 @@ tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta \n§7  Vel
 tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7- Aceita melhorias:\n    §a§7, §b§7
 tile.utilitycraft:cloner.name=Clonador\n§7- Aceita melhorias:\n    §a§7, §b§7
 tile.utilitycraft:liquifier.name=Liquefator\n§7- Aceita melhorias:\n    §a§7, §b§7\n§7- Converte sólidos em fluidos processáveis
-tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade\n§7- Aceita melhorias:\n    §a§7, §b§7\n§7- Requer fluido §5Matéria Escura
+tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade\n§7- Não aceita melhorias\n§7- Requer §5Matéria Escura
 
 ## Outros Blocos
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versão Estética
+tile.utilitycraft:mob_magnet.name=Ímã de Mobs \n§7 Atrai mobs em um raio configurável
 
 ## Itens
-item.utilitycraft:aetherium=Lingote de Aetherium
+item.utilitycraft:aetherium=Barra de Aetherium
 item.utilitycraft:liquified_aetherium_bucket=Balde de Éter Liquefeito
 item.utilitycraft:aetherium_shard=Fragmento de Aetherium
+item.utilitycraft:void_essence=Essência do Vazio
+item.utilitycraft:liquid_void=Ampola de Vazio Líquido
 
-## Cápsulas de Matéria Escura
-item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Matéria Escura (1 Balde)
-item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Matéria Escura (2 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Matéria Escura (3 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_4=Cápsula de Matéria Escura (4 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_5=Cápsula de Matéria Escura (5 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Matéria Escura (6 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Matéria Escura (7 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Matéria Escura (8 Baldes)
+## Cápsulas de Líquidos
+
+item.utilitycraft:empty_liquid_capsule=Cápsula de Líquido Vazia
+
+item.utilitycraft:liquefied_aetherium_liquid_capsule_1=Cápsula de Éter Líquido \n§7(1 Balde)
+item.utilitycraft:liquefied_aetherium_liquid_capsule_2=Cápsula de Éter Líquido \n§7(2 Baldes)
+item.utilitycraft:liquefied_aetherium_liquid_capsule_3=Cápsula de Éter Líquido \n§7(3 Baldes)
+item.utilitycraft:liquefied_aetherium_liquid_capsule_4=Cápsula de Éter Líquido \n§7(4 Baldes)
+item.utilitycraft:liquefied_aetherium_liquid_capsule_5=Cápsula de Éter Líquido \n§7(5 Baldes)
+item.utilitycraft:liquefied_aetherium_liquid_capsule_6=Cápsula de Éter Líquido \n§7(6 Baldes)
+item.utilitycraft:liquefied_aetherium_liquid_capsule_7=Cápsula de Éter Líquido \n§7(7 Baldes)
+item.utilitycraft:liquefied_aetherium_liquid_capsule_8=Cápsula de Éter Líquido \n§7(8 Baldes)
+
+item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Matéria Escura \n§7(1 Balde)
+item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Matéria Escura \n§7(2 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Matéria Escura \n§7(3 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_4=Cápsula de Matéria Escura \n§7(4 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_5=Cápsula de Matéria Escura \n§7(5 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Matéria Escura \n§7(6 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Matéria Escura \n§7(7 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Matéria Escura \n§7(8 Baldes)
+
+## Entidades
+entity.utilitycraft:catalyst_weaver.name=§fCâmara Catalisadora
+entity.utilitycraft:cloner.name=Clonador
+entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade
+entity.utilitycraft:liquifier.name=Liquefator
 
 ## Placeholders
 item.utilitycraft:liquefied_aetherium_00=Éter Líquido
@@ -131,9 +152,3 @@ item.utilitycraft:dark_matter_45=Fluido de Matéria Escura
 item.utilitycraft:dark_matter_46=Fluido de Matéria Escura
 item.utilitycraft:dark_matter_47=Fluido de Matéria Escura
 item.utilitycraft:dark_matter_48=Fluido de Matéria Escura
-
-## Entidades
-entity.utilitycraft:catalyst_weaver.name=Câmara Catalisadora
-entity.utilitycraft:cloner.name=Clonador
-entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade
-entity.utilitycraft:liquifier.name=Liquefator

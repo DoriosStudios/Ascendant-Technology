@@ -1,13 +1,6 @@
 import { world, system, ItemStack } from '@minecraft/server'
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
 import { FluidManager } from '../managers_extra.js'
-import {
-    getItemConduitColorByTypeId,
-    getColorSpecificNodesKey,
-    getColorTagPrefix,
-    getUpdateNetworkTag,
-    isItemConduitType
-} from './conduit_colors.js'
 
 const offsets = [
     { x: 1, y: 0, z: 0 },
@@ -35,6 +28,7 @@ const types = {
 
 
 //#region Utils
+
 /**
  * Updates the block geometry states to visually connect with valid neighbors.
  *
@@ -63,8 +57,6 @@ export function updateGeometry(block, tag) {
 
     // Cache tag and container info for faster checks
     const isItemConduit = block.hasTag("dorios:item");
-    const blockColor = isItemConduit ? getItemConduitColorByTypeId(block.typeId) : null;
-    const isItemNetwork = tag === 'dorios:item';
 
     for (const [dir, loc] of Object.entries(offsets)) {
         const neighbor = dim.getBlock(loc);
@@ -74,21 +66,36 @@ export function updateGeometry(block, tag) {
         }
 
         // Connection logic
-        let sameNetwork = neighbor.hasTag(tag);
-        if (sameNetwork && isItemNetwork && blockColor) {
-            const neighborColor = getItemConduitColorByTypeId(neighbor.typeId);
-            const neighborIsExporter = neighbor.hasTag('dorios:isExporter');
-            if (neighborColor && neighborColor !== blockColor && !neighborIsExporter) {
-                sameNetwork = false;
-            }
-        }
+        const sameNetwork = neighbor.hasTag(tag);
         const validContainer = isItemConduit && (
             DoriosAPI.constants.vanillaContainers.includes(neighbor.typeId) ||
             neighbor.typeId.includes("dustveyn:storage_drawers")
         );
 
-        const shouldConnect = sameNetwork || validContainer;
+        let shouldConnect = false;
 
+        // Contenedores siempre se conectan si es item conduit
+        if (!shouldConnect && isItemConduit && validContainer) {
+            shouldConnect = true;
+        }
+
+        // Shared network tag check
+        if (!shouldConnect && neighbor.hasTag(tag)) {
+            const isNeighborPipe = neighbor.hasTag("dorios:isTube");
+
+            if (!isNeighborPipe) {
+                // Non-pipe neighbor: connect without color requirement
+                shouldConnect = true;
+            } else {
+                // Pipe neighbor: match color
+                for (const t of block.getTags()) {
+                    if (t.startsWith("dorios:color.") && neighbor.hasTag(t)) {
+                        shouldConnect = true;
+                        break;
+                    }
+                }
+            }
+        }
         // Apply state only if changed (avoid redundant permutations)
         if (block.getState(`utilitycraft:${dir}`) !== shouldConnect) {
             block.setState(`utilitycraft:${dir}`, shouldConnect);
@@ -152,20 +159,34 @@ export function updateGeometryExporter(block, tag) {
             continue;
         }
 
-        let connectsSameTag = neighbor.hasTag(tag);
-        const blockIsItemExporter = block.typeId === 'utilitycraft:item_exporter';
-        const neighborIsItemExporter = neighbor.typeId === 'utilitycraft:item_exporter';
-        if (connectsSameTag && blockIsItemExporter && neighborIsItemExporter) {
-            connectsSameTag = false;
-        }
-        const connectsContainer =
-            isItemConduit &&
-            (DoriosAPI.constants.vanillaContainers.includes(neighbor.typeId) ||
-                neighbor.typeId.includes("dustveyn:storage_drawers"));
+        const validContainer = isItemConduit && (
+            DoriosAPI.constants.vanillaContainers.includes(neighbor.typeId) ||
+            neighbor.typeId.includes("dustveyn:storage_drawers")
+        );
 
-        let shouldConnect = connectsSameTag || connectsContainer;
-        if (blockIsItemExporter && neighborIsItemExporter) {
-            shouldConnect = connectsContainer;
+        let shouldConnect = false;
+
+        // Contenedores siempre se conectan si es item conduit
+        if (!shouldConnect && isItemConduit && validContainer) {
+            shouldConnect = true;
+        }
+
+        // Shared network tag check
+        if (!shouldConnect && neighbor.hasTag(tag)) {
+            const isNeighborPipe = neighbor.hasTag("dorios:isTube");
+
+            if (!isNeighborPipe) {
+                // Non-pipe neighbor: connect without color requirement
+                shouldConnect = true;
+            } else {
+                // Pipe neighbor: match color
+                for (const t of block.getTags()) {
+                    if (t.startsWith("dorios:color.") && neighbor.hasTag(t)) {
+                        shouldConnect = true;
+                        break;
+                    }
+                }
+            }
         }
         newPerm = newPerm.withState(`utilitycraft:${visualDir}`, shouldConnect);
     }
@@ -189,13 +210,6 @@ export function updateGeometryExporter(block, tag) {
  *        The function used to rebuild or retrieve the network map when a connection is detected.
  */
 export function updatePipes(block, tag) {
-    if (!block?.dimension) return;
-
-    if (tag === 'item') {
-        updateItemPipes(block);
-        return;
-    }
-
     const dim = block.dimension;
     const rescanFunction = types[tag]
     tag = 'dorios:' + tag
@@ -224,92 +238,12 @@ export function updatePipes(block, tag) {
         }
 
         // Update geometry according to role
-        if (neighbor.hasTag("dorios:isExporter")) {
+        if (neighbor.hasTag("dorios:isExporter") || neighbor.hasTag("dorios:isImporter")) {
             updateGeometryExporter(neighbor, tag);
         } else if (neighbor.hasTag("dorios:isTube")) {
             updateGeometry(neighbor, tag);
         }
     }
-}
-
-function updateItemPipes(block) {
-    const dim = block.dimension;
-    const itemTag = 'dorios:item';
-    const neighbors = [
-        block,
-        dim.getBlock({ x: block.location.x, y: block.location.y + 1, z: block.location.z }),
-        dim.getBlock({ x: block.location.x, y: block.location.y - 1, z: block.location.z }),
-        dim.getBlock({ x: block.location.x, y: block.location.y, z: block.location.z - 1 }),
-        dim.getBlock({ x: block.location.x, y: block.location.y, z: block.location.z + 1 }),
-        dim.getBlock({ x: block.location.x - 1, y: block.location.y, z: block.location.z }),
-        dim.getBlock({ x: block.location.x + 1, y: block.location.y, z: block.location.z })
-    ];
-
-    const colorOrigins = new Map();
-
-    const recordColorOrigin = (candidate) => {
-        if (!candidate) return;
-        const color = getItemConduitColorByTypeId(candidate.typeId);
-        if (!color || colorOrigins.has(color)) return;
-        colorOrigins.set(color, candidate.location);
-    };
-
-    const recordFromAdjacent = (candidate) => {
-        if (!candidate) return;
-        for (const offset of offsets) {
-            const neighbor = dim.getBlock({
-                x: candidate.location.x + offset.x,
-                y: candidate.location.y + offset.y,
-                z: candidate.location.z + offset.z
-            });
-            if (!neighbor?.hasTag(itemTag)) continue;
-            if (!neighbor.hasTag('dorios:isTube')) continue;
-            recordColorOrigin(neighbor);
-        }
-    };
-
-    for (const candidate of neighbors) {
-        if (!candidate?.hasTag(itemTag)) continue;
-
-        if (candidate.hasTag('dorios:isExporter')) {
-            const originCount = colorOrigins.size;
-            updateGeometryExporter(candidate, itemTag);
-            recordFromAdjacent(candidate);
-            if (colorOrigins.size === originCount) {
-                const exporterEntity = dim.getEntitiesAtBlockLocation(candidate.location)[0];
-                if (exporterEntity) {
-                    const colorTags = exporterEntity.getTags().filter(tag => tag.startsWith('itemColor:'));
-                    for (const tag of colorTags) {
-                        const savedColor = tag.slice('itemColor:'.length);
-                        if (savedColor && !colorOrigins.has(savedColor)) {
-                            colorOrigins.set(savedColor, candidate.location);
-                        }
-                    }
-                }
-            }
-        } else if (candidate.hasTag('dorios:isTube')) {
-            updateGeometry(candidate, itemTag);
-            recordColorOrigin(candidate);
-        }
-    }
-
-    for (const [color, origin] of colorOrigins) {
-        startRescanItem(origin, dim, color);
-    }
-}
-
-function getExporterNetworkColor(block, dimension) {
-    const face = block.permutation?.getState('minecraft:block_face');
-    const { x, y, z } = block.location;
-
-    for (const [dir, offset] of Object.entries(blockFaceOffsets)) {
-        if (dir === face) continue;
-        const neighbor = dimension.getBlock({ x: x + offset[0], y: y + offset[1], z: z + offset[2] });
-        const color = getItemConduitColorByTypeId(neighbor?.typeId);
-        if (color) return color;
-    }
-
-    return null;
 }
 //#endregion
 

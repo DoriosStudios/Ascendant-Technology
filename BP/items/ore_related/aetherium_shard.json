@@ -9,7 +9,7 @@
         },
         "components": {
             "minecraft:icon": "utilitycraft_aetherium_shard",
-            "minecraft:allow_off_hand": true
+            "minecraft:allow_off_hand": false
         }
     }
 }

@@ -67,6 +67,12 @@
 		"utilitycraft_cloner_on": {
 			"textures": "textures/blocks/machines/cloner_on"
 		},
+		"utilitycraft_mob_magnet_off": {
+			"textures": "textures/blocks/machines/mob_magnet_off"
+		},
+		"utilitycraft_mob_magnet_on": {
+			"textures": "textures/blocks/machines/mob_magnet_on"
+		},
 		"utilitycraft_liquifier_off": {
 			"textures": "textures/blocks/machines/catalyst_weaver_off"
 		},

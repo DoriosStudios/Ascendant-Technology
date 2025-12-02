@@ -8,8 +8,14 @@
 		"utilitycraft_aetherium_shard": {
 			"textures": "textures/items/ores/aetherium_shard"
 		},
+		"utilitycraft_void_essence": {
+			"textures": "textures/items/misc/void_essence"
+		},
+		"utilitycraft_liquid_void": {
+			"textures": "textures/items/misc/liquid_void"
+		},
 		"utilitycraft_empty_liquid_capsule": {
-			"textures": "textures/items/misc/empty_liquid_capsule"
+			"textures": "textures/items/misc/liquid_capsule_0"
 		},
 		"utilitycraft_aetherium_liquid_capsule_1": {
 			"textures": "textures/items/misc/aetherium_liquid_capsule_1"

@@ -14,3 +14,6 @@ node_modules/
 builds/
 dist/
 tools/generate_dark_matter_capsules.py
+to_do.md
+references/
+all_utility_content.txt

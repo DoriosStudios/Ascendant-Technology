@@ -1,10 +1,11 @@
 {
-	"format_version": "1.20.80",
+	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
 			"identifier": "utilitycraft:absolute_furnator",
 			"menu_category": {
-				"category": "construction"
+				"category": "construction",
+				"group": "dorios:itemGroup.name.generators"
 			},
 			"traits": {
 				"minecraft:placement_direction": {

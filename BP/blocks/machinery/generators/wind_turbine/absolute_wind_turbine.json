@@ -1,10 +1,11 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.100",
     "minecraft:block": {
         "description": {
             "identifier": "utilitycraft:absolute_wind_turbine",
             "menu_category": {
-                "category": "construction"
+                "category": "construction",
+                "group": "dorios:itemGroup.name.generators"
             },
             "traits": {
                 "minecraft:placement_direction": {
@@ -35,9 +36,9 @@
                 "altitude": {
                     "min": 12,
                     "base": 63,
-                    "bonus_step": 8,
+                    "bonus_step": 10,
                     "penalty_step": 8,
-                    "step_ratio": 0.9,
+                    "step_ratio": 0.65,
                     "max_multiplier": 10
                 }
             },

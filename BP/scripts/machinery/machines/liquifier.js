@@ -2,11 +2,21 @@ import { Machine, Energy, FluidManager } from '../managers_extra.js';
 import { getLiquifierRecipes } from '../../config/recipes/liquifier.js';
 
 const INPUT_SLOT = 3;
-const STATUS_SLOT = 1;
 const FLUID_SLOT = 10;
 const FLUID_DISPLAY_SLOT = 11;
 const RESIDUE_SLOT = 19;
 const DEFAULT_FLUID_TYPE = 'liquified_aetherium';
+
+/*
+Slots (inventory_size: 20)
+- [0] HUD de energia (machine.displayEnergy padrão).
+- [3] Input de item (INPUT_SLOT).
+- [4,5] Slots de upgrades (de acordo com settings.machine.upgrades).
+- [10] Entrada de fluido (FLUID_SLOT).
+- [11] Display do tanque (FLUID_DISPLAY_SLOT) — bloqueado para o jogador.
+- [19] Saída de resíduo secundário/resultado extra (RESIDUE_SLOT).
+Slots escondidos: [6, 7, 8, 9, 12, 13, 14, 15, 16, 17, 18] (preenchimento/UI, não utilizáveis pelo jogador).
+*/
 
 DoriosAPI.register.blockComponent('liquifier', {
     beforeOnPlayerPlace(e, { params: settings }) {
@@ -18,7 +28,6 @@ DoriosAPI.register.blockComponent('liquifier', {
             machine.displayProgress();
             machine.displayEnergy();
             machine.blockSlots([FLUID_DISPLAY_SLOT]);
-            machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '');
 
             const tank = FluidManager.initializeSingle(machine.entity);
             tank.display(FLUID_DISPLAY_SLOT);
@@ -32,10 +41,14 @@ DoriosAPI.register.blockComponent('liquifier', {
         const machine = new Machine(block, settings);
         if (!machine.valid) return;
 
-        machine.transferItems();
+        if (tickGate(machine.entity, 'liq:items_cd', 4)) {
+            machine.transferItems();
+        }
 
         const tank = FluidManager.initializeSingle(machine.entity);
-        tank.transferFluids(block);
+        if (tickGate(machine.entity, 'liq:fluids_cd', 4)) {
+            tank.transferFluids(block);
+        }
         feedFluidSlot(machine, tank);
 
         const fail = (message, reset = true) => {
@@ -193,23 +206,35 @@ function rollByproduct(byproduct, crafts) {
     return total;
 }
 
+function tickGate(entity, key, interval) {
+    const cd = Number(entity.getDynamicProperty(key)) || 0;
+    if (cd > 0) {
+        entity.setDynamicProperty(key, cd - 1);
+        return false;
+    }
+    entity.setDynamicProperty(key, interval);
+    return true;
+}
+
 function updateHud(machine, recipe, tank, maxCrafts) {
     const fluidType = recipe.fluid.type ?? DEFAULT_FLUID_TYPE;
     const fluidPerCraft = recipe.fluid.amount;
     const tankAmount = FluidManager.formatFluid(tank.get());
     const tankCap = FluidManager.formatFluid(tank.getCap());
+    const lore = [
+        `§bInput: §f${formatName(recipe.input.id)}`,
+        `§dMelt: §f${formatFluidDisplayName(fluidType)}`,
+        `§7Yield: §f${FluidManager.formatFluid(fluidPerCraft)} each`,
+        `§7Tank: §f${tankAmount} §7/ §f${tankCap}`,
+        `§cCost: §f${Energy.formatEnergyToText(machine.getEnergyCost())}`,
+        `§7Queued Crafts: §f${maxCrafts}`
+    ];
 
-    machine.setLabel(`
-§r§6Liquifying
-§r§aInput: §f${formatName(recipe.input.id)}
-§r§bFluid: §f${formatFluidDisplayName(fluidType)}
-§r§bYield: §f${FluidManager.formatFluid(fluidPerCraft)} §7per craft
-§r§7Tank: 
-  §f${tankAmount}
-  ----------
-  §f${tankCap}
-§r§cCost: §f${Energy.formatEnergyToText(machine.getEnergyCost())}
-    `);
+    machine.setLabel({
+        title: '§6Flux Crucible',
+        lore,
+        rawText: undefined
+    });
 }
 
 function feedFluidSlot(machine, tank) {

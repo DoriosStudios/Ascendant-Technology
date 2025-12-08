@@ -12,6 +12,21 @@ const OUTPUT_SLOT_INDEX = 19
 const RECIPE_PREVIEW_DEFAULT_LIMIT = 5
 const RECIPE_PREVIEW_CHAR_BUDGET = 240
 const RECIPE_PREVIEW_MAX_LENGTH = 24
+const HELPER_MAX_POOL_ENTRIES = 5
+
+/*
+Slots (inventory_size: 20)
+- [0] HUD de energia (machine.displayEnergy padrão).
+- [1] Indicador de status/seta.
+- [3] Input base (INPUT_SLOT).
+- [4-9] Catalisadores (CATALYST_SLOTS).
+- [10] Entrada de fluido (FLUID_SLOT).
+- [11] Display do tanque (FLUID_DISPLAY_SLOT) — bloqueado ao jogador.
+- [16,17] Slots de upgrades (UPGRADE_SLOTS).
+- [18] Saída de subproduto (BYPRODUCT_SLOT).
+- [19] Saída principal (OUTPUT_SLOT_INDEX).
+Slots escondidos: [12, 13, 14, 15] (preenchimento/UI, não utilizáveis pelo jogador).
+*/
 
 DoriosAPI.register.blockComponent('catalyst_weaver', {
     beforeOnPlayerPlace(e, { params: settings }) {
@@ -40,13 +55,17 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         const machine = new Machine(block, settings)
         if (!machine.valid) return
 
-        machine.transferItems()
-        transferSlotForward(machine, BYPRODUCT_SLOT)
-        CATALYST_SLOTS.forEach(slot => machine.pullItemsFromAbove(slot))
+        if (tickGate(machine.entity, 'cw:items_cd', 4)) {
+            machine.transferItems()
+            transferSlotForward(machine, BYPRODUCT_SLOT)
+            CATALYST_SLOTS.forEach(slot => machine.pullItemsFromAbove(slot))
+        }
 
         const tank = FluidManager.initializeSingle(machine.entity)
-        tank.transferFluids(block)
-        feedFluidSlot(machine, tank)
+        if (tickGate(machine.entity, 'cw:fluids_cd', 4)) {
+            tank.transferFluids(block)
+            feedFluidSlot(machine, tank)
+        }
 
         const inv = machine.inv
         
@@ -80,6 +99,8 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             ? buildRecipePreviewLore(recipes, inputStack, catalystStacks)
             : []
         const recipe = matchRecipe(recipes, inputStack, catalystStacks, tank)
+        const helperLore = buildCatalystHelperLore(recipes, inputStack, catalystStacks)
+        const sharedLore = mergeLore(recipePreviewLore, helperLore)
         
         // Priority 4: Check fluid requirements with specific messages
         if (recipe && recipe.fluid?.type) {
@@ -87,14 +108,14 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             const fluidName = DoriosAPI.utils.capitalizeFirst(recipe.fluid.type)
             
             if (tankType !== 'empty' && tankType !== recipe.fluid.type) {
-                machine.showWarning(`Wrong Fluid\n§7Need ${fluidName}`)
+                machine.showWarning(`Wrong Fluid\n§7Need ${fluidName}`, true, sharedLore)
                 tank.display(FLUID_DISPLAY_SLOT)
                 return
             }
             
             const needFluid = recipe.fluid.amount ?? 0
             if (tank.get() < needFluid) {
-                machine.showWarning(`Not Enough ${fluidName}\n§7Need ${needFluid}mB`)
+                machine.showWarning(`Not Enough ${fluidName}\n§7Need ${needFluid}mB`, true, sharedLore)
                 tank.display(FLUID_DISPLAY_SLOT)
                 return
             }
@@ -109,15 +130,15 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
                 : 'invalid'
             
             if (catalystStatus === 'missing_all') {
-                machine.showWarning('Missing Catalysts', true, recipePreviewLore)
+                machine.showWarning('Missing Catalysts', true, sharedLore)
             } else if (catalystStatus === 'missing_catalysts') {
-                machine.showWarning('Missing Some Catalysts', true, recipePreviewLore)
+                machine.showWarning('Missing Some Catalysts', true, sharedLore)
             } else if (catalystStatus === 'insufficient_catalysts') {
-                machine.showWarning('Insufficient Catalysts', true, recipePreviewLore)
+                machine.showWarning('Insufficient Catalysts', true, sharedLore)
             } else if (catalystStatus === 'wrong_catalysts' || catalystStatus === 'extra_catalysts') {
-                machine.showWarning('Wrong Catalysts', true, recipePreviewLore)
+                machine.showWarning('Wrong Catalysts', true, sharedLore)
             } else {
-                machine.showWarning('Invalid Recipe', true, recipePreviewLore)
+                machine.showWarning('Invalid Recipe', true, sharedLore)
             }
             tank.display(FLUID_DISPLAY_SLOT)
             return
@@ -125,21 +146,21 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
 
         const outputSlot = inv.getItem(OUTPUT_SLOT_INDEX)
         if (outputSlot && outputSlot.typeId !== recipe.output?.id) {
-            machine.showWarning('Recipe Conflict')
+            machine.showWarning('Recipe Conflict', true, sharedLore)
             tank.display(FLUID_DISPLAY_SLOT)
             return
         }
 
         const outputSpace = (outputSlot?.maxAmount ?? 64) - (outputSlot?.amount ?? 0)
         if (outputSpace < (recipe.output?.amount ?? 1)) {
-            machine.showWarning('Output Full')
+            machine.showWarning('Output Full', true, sharedLore)
             tank.display(FLUID_DISPLAY_SLOT)
             return
         }
 
         const byproductSlot = recipe.byproduct ? inv.getItem(BYPRODUCT_SLOT) : null
         if (recipe.byproduct && byproductSlot && byproductSlot.typeId !== recipe.byproduct.id) {
-            machine.showWarning('Byproduct Full')
+            machine.showWarning('Byproduct Full', true, sharedLore)
             tank.display(FLUID_DISPLAY_SLOT)
             return
         }
@@ -151,7 +172,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             }
             const availableSpace = (byproductSlot.maxAmount ?? 64) - byproductSlot.amount
             if (availableSpace < requiredSpace) {
-                machine.showWarning('Byproduct Slot Full')
+                machine.showWarning('Byproduct Slot Full', true, sharedLore)
                 tank.display(FLUID_DISPLAY_SLOT)
                 return
             }
@@ -169,7 +190,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             byproductSlot
         })
         if (maxBatches <= 0) {
-            machine.showWarning('Missing Materials')
+            machine.showWarning('Missing Materials', true, sharedLore)
             tank.display(FLUID_DISPLAY_SLOT)
             return
         }
@@ -192,7 +213,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         machine.on()
         machine.displayEnergy()
         machine.displayProgress()
-        machine.showStatus('Running')
+        machine.showStatus('Running', helperLore)
     },
 
     onPlayerBreak(e) {
@@ -303,17 +324,27 @@ function buildRecipePreviewLore(
     if (!Array.isArray(recipes) || recipes.length === 0) return []
     if (!inputStack) return []
 
-    const candidates = []
+    const candidateMap = new Map()
     for (const recipe of recipes) {
         if (!recipe?.input || !recipe.output) continue
         if (!matchesStack(recipe.input, inputStack)) continue
 
-        candidates.push({
-            name: formatRecipePreviewName(recipe),
-            score: getCatalystMatchScore(recipe.catalysts, catalystStacks)
-        })
+        const key = getRecipePreviewKey(recipe)
+        const score = getCatalystMatchScore(recipe.catalysts, catalystStacks)
+        const existing = candidateMap.get(key)
+        if (existing) {
+            existing.score = Math.max(existing.score, score)
+            existing.variants++
+        } else {
+            candidateMap.set(key, {
+                name: formatRecipePreviewName(recipe),
+                score,
+                variants: 1
+            })
+        }
     }
 
+    const candidates = Array.from(candidateMap.values())
     if (candidates.length === 0) return []
 
     candidates.sort((a, b) => {
@@ -335,7 +366,9 @@ function buildRecipePreviewLore(
         if (added >= maxPreview) break
 
         const truncated = truncatePreviewText(entry.name, maxLength)
-        const line = `${reset}${gray}  ${truncated}`
+        const variantSuffix = entry.variants > 1 ? ` (+${entry.variants - 1} alt)` : ''
+        const lineText = `${truncated}`
+        const line = `${reset}${gray}  ${lineText}`
         const potentialLength = currentLength + line.length
 
         if (potentialLength > charBudget) break
@@ -362,12 +395,140 @@ function buildRecipePreviewLore(
     return lines
 }
 
+function buildCatalystHelperLore(recipes, inputStack, catalystStacks) {
+    if (!Array.isArray(recipes) || recipes.length === 0) return []
+    if (!inputStack) return []
+
+    const compatibleRecipes = getCompatibleRecipes(recipes, inputStack, catalystStacks)
+    if (compatibleRecipes.length === 0) return []
+
+    const insertedTotals = getCatalystStackTotals(catalystStacks)
+    const lore = []
+    const catalystOptions = collectFirstCatalystOptions(compatibleRecipes, insertedTotals)
+
+    if (catalystOptions.length) {
+        lore.push('§bCatalyst Options:')
+        const limited = catalystOptions.slice(0, HELPER_MAX_POOL_ENTRIES)
+        for (const entry of limited) {
+            const amountText = entry.amount > 0 ? ` (x${entry.amount})` : ''
+            lore.push(`§7- ${entry.name}${amountText}`)
+        }
+        if (catalystOptions.length > limited.length) {
+            lore.push('§7- ...')
+        }
+    }
+
+    if (compatibleRecipes.length === 1) {
+        const hint = findNextCatalystHint(compatibleRecipes[0], insertedTotals)
+        if (hint?.next) {
+            if (!catalystOptions.length) lore.push('§bCatalyst Options:')
+            const amountText = hint.next.amount > 1 ? ` x${hint.next.amount}` : ''
+            lore.push(`§eNext: §f${hint.next.name}${amountText}`)
+            if (hint.hasFollowing) {
+                lore.push('§eFollowing: §f...???')
+            }
+        }
+    }
+
+    return lore
+}
+
+function getCompatibleRecipes(recipes, inputStack, catalystStacks) {
+    const insertedTotals = getCatalystStackTotals(catalystStacks)
+    return recipes.filter(recipe => {
+        if (!matchesStack(recipe.input, inputStack)) return false
+        return isCatalystPrefixCompatible(recipe, insertedTotals)
+    })
+}
+
+function isCatalystPrefixCompatible(recipe, insertedTotals) {
+    const requirements = getCatalystRequirementTotals(recipe.catalysts)
+    if (insertedTotals.size === 0) return true
+    if (requirements.size === 0) return false
+
+    for (const [type, amount] of insertedTotals.entries()) {
+        const needed = requirements.get(type)
+        if (!needed) return false
+        if (amount <= 0) return false
+    }
+
+    return true
+}
+
+function collectFirstCatalystOptions(recipes, insertedTotals) {
+    const pool = new Map()
+    for (const recipe of recipes) {
+        const hint = findNextCatalystHint(recipe, insertedTotals)
+        const next = hint?.next
+        if (!next?.id) continue
+        const amount = Math.max(1, next.amount ?? 1)
+        const existing = pool.get(next.id)
+        if (existing) {
+            existing.amount = Math.max(existing.amount, amount)
+        } else {
+            pool.set(next.id, {
+                id: next.id,
+                name: next.name ?? humanizeIdentifier(next.id),
+                amount
+            })
+        }
+    }
+    return Array.from(pool.values()).sort((a, b) => a.name.localeCompare(b.name))
+}
+
+function findNextCatalystHint(recipe, insertedTotals) {
+    const catalysts = Array.isArray(recipe?.catalysts) ? recipe.catalysts.filter(Boolean) : []
+    if (!catalysts.length) return null
+
+    const available = new Map(insertedTotals)
+
+    for (let i = 0; i < catalysts.length; i++) {
+        const entry = catalysts[i]
+        if (!entry) continue
+        const have = available.get(entry.id) ?? 0
+        if (have >= entry.amount) {
+            available.set(entry.id, have - entry.amount)
+            continue
+        }
+
+        const missing = entry.amount - have
+        const hasFollowing = catalysts.slice(i + 1).some(Boolean)
+        return {
+            next: {
+                id: entry.id,
+                name: humanizeIdentifier(entry.id),
+                amount: missing
+            },
+            hasFollowing
+        }
+    }
+
+    return null
+}
+
+function mergeLore(...sections) {
+    const result = []
+    for (const section of sections) {
+        if (Array.isArray(section) && section.length) {
+            result.push(...section)
+        }
+    }
+    return result
+}
+
 function formatRecipePreviewName(recipe) {
     if (recipe?.output?.name) return recipe.output.name
     const amount = recipe?.output?.amount ?? 1
     const baseId = recipe?.output?.id ?? recipe?.id
     const readable = humanizeIdentifier(baseId)
     return amount > 1 ? `${readable} x${amount}` : readable
+}
+
+function getRecipePreviewKey(recipe) {
+    const id = recipe?.output?.id ?? recipe?.id ?? 'unknown'
+    const amount = recipe?.output?.amount ?? 1
+    const name = recipe?.output?.name ?? ''
+    return `${id}|${amount}|${name}`
 }
 
 function humanizeIdentifier(identifier) {
@@ -385,7 +546,7 @@ function truncatePreviewText(text, limit = 32) {
     if (limit <= 0) return ''
     if (text.length <= limit) return text
     if (limit <= 1) return text.slice(0, limit)
-    return `${text.slice(0, limit - 1)}…`
+    return `${text.slice(0, limit - 1)}...`
 }
 
 function getCatalystMatchScore(requirements = [], stacks = []) {
@@ -586,5 +747,15 @@ function transferSlotForward(machine, slotIndex) {
     const targetLoc = { x: x + offset[0], y: y + offset[1], z: z + offset[2] }
 
     DoriosAPI.containers.transferItemsAt(machine.inv, targetLoc, machine.dim, slotIndex)
+    return true
+}
+
+function tickGate(entity, key, interval) {
+    const cd = Number(entity.getDynamicProperty(key)) || 0
+    if (cd > 0) {
+        entity.setDynamicProperty(key, cd - 1)
+        return false
+    }
+    entity.setDynamicProperty(key, interval)
     return true
 }

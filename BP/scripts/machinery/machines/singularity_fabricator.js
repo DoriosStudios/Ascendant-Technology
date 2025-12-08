@@ -4,7 +4,7 @@ import { getClonerRecipes } from '../../config/recipes/cloner.js'
 const COMPONENT_ID = 'singularity_fabricator'
 const INPUT_SLOT = 3
 const STATUS_SLOT = 1
-const FLUID_SLOT = 10
+const FLUID_INPUT_SLOT = 10
 const FLUID_DISPLAY_SLOT = 11
 const OUTPUT_SLOT_ORIGINAL = 18
 const OUTPUT_SLOT_COPY = 19
@@ -19,6 +19,23 @@ const MAX_RUNTIME_SECONDS = 24 * 60 * 60
 const FABRICATOR_PROGRESS_PER_SECOND = FABRICATOR_RATE_SPEED_BASE * TICKS_PER_SECOND * ENERGY_USAGE_MULTIPLIER
 const KDE = 1000
 const MAX_TOTAL_KDE = Math.floor((MAX_RUNTIME_SECONDS * FABRICATOR_PROGRESS_PER_SECOND) / KDE)
+const MIN_FABRICATOR_TIME_SECONDS = 864000 / TICKS_PER_SECOND
+const MIN_FABRICATOR_ENERGY_COST = 1_000_000_000
+const MIN_FABRICATOR_COST_KDE = MIN_FABRICATOR_ENERGY_COST / KDE
+const MIN_FABRICATOR_RATE = 1
+
+/*
+Slots (inventory_size: 20)
+- [0] HUD de energia (machine.displayEnergy padrão).
+- [1] Indicador de status/seta (STATUS_SLOT).
+- [3] Input de template (INPUT_SLOT).
+- [4,5] Slots de upgrades (UPGRADE_SLOTS); 16,17 são legados removidos em purgeFabricatorUpgrades.
+- [10] Entrada de fluido (FLUID_INPUT_SLOT) — bloqueada ao jogador.
+- [11] Display do tanque (FLUID_DISPLAY_SLOT) — bloqueado ao jogador.
+- [18] Slot do original (OUTPUT_SLOT_ORIGINAL).
+- [19] Slot da cópia/resultados (OUTPUT_SLOT_COPY).
+Slots escondidos: [6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17] (preenchimento/UI, não utilizáveis; 10 também bloqueado em runtime).
+*/
 
 doriosRegister()
 
@@ -32,8 +49,8 @@ function doriosRegister() {
                 machine.displayProgress()
                 machine.displayEnergy()
                 machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '')
-                machine.blockSlots([FLUID_DISPLAY_SLOT])
-                migrateLegacyUpgradeSlots(machine)
+                machine.blockSlots([FLUID_DISPLAY_SLOT, FLUID_INPUT_SLOT])
+                purgeFabricatorUpgrades(machine)
 
                 const tank = FluidManager.initializeSingle(machine.entity)
                 tank.display(FLUID_DISPLAY_SLOT)
@@ -46,14 +63,11 @@ function doriosRegister() {
             const machine = new Machine(block, settings)
             if (!machine.valid) return
 
-            boostFabricatorThroughput(machine)
-
-            migrateLegacyUpgradeSlots(machine)
+            purgeFabricatorUpgrades(machine)
             machine.transferItems()
 
             const tank = FluidManager.initializeSingle(machine.entity)
             tank.transferFluids(block)
-            feedFluidSlot(machine, tank)
 
             const fail = (message, reset = true) => {
                 machine.showWarning(message, reset)
@@ -77,6 +91,8 @@ function doriosRegister() {
                 fail('Invalid Template')
                 return
             }
+
+            applyFabricatorRuntime(machine, recipe)
 
             const requiredFluid = getRecipeFluid(recipe)
             if (requiredFluid) {
@@ -202,15 +218,17 @@ function normalizeRecipe(recipe) {
     normalized.ticks = Math.max(1, Math.round(normalized.timeSeconds * TICKS_PER_SECOND))
     const fallbackCostKDE = normalized.costKDE ?? ((normalized.energyCost ?? 0) / KDE)
     const derivedCost = fallbackCostKDE || (normalized.timeSeconds * FLUID_PER_SECOND) / 10
-    normalized.costKDE = clampTotalCostKDE(derivedCost)
-    normalized.energyCost = Math.max(KDE, Math.round(normalized.costKDE * KDE))
+    const clampedCost = clampTotalCostKDE(derivedCost)
+    normalized.costKDE = Math.max(MIN_FABRICATOR_COST_KDE, clampedCost)
+    normalized.energyCost = Math.max(MIN_FABRICATOR_ENERGY_COST, Math.round(normalized.costKDE * KDE))
 
     return normalized
 }
 
 function clampTimeSeconds(value) {
     const seconds = Math.max(1, Number(value) || 1)
-    return Math.min(MAX_RUNTIME_SECONDS, seconds)
+    const capped = Math.min(MAX_RUNTIME_SECONDS, seconds)
+    return Math.max(MIN_FABRICATOR_TIME_SECONDS, capped)
 }
 
 function getRecipeFluid(recipe) {
@@ -461,50 +479,49 @@ function canAcceptSlotItem(slot, expectedId) {
     return !slot || slot.typeId === expectedId
 }
 
-function feedFluidSlot(machine, tank) {
-    const slotItem = machine.inv.getItem(FLUID_SLOT)
-    if (!slotItem) return
+function applyFabricatorRuntime(machine, recipe) {
+    if (!machine || !recipe) return
 
-    const fillDefinition = FluidManager.getFluidFillDefinition?.(slotItem.typeId)
-    if (fillDefinition) return
+    const targetSeconds = Math.max(MIN_FABRICATOR_TIME_SECONDS, recipe.timeSeconds ?? MIN_FABRICATOR_TIME_SECONDS)
+    recipe.timeSeconds = targetSeconds
+    recipe.ticks = Math.max(1, Math.round(targetSeconds * TICKS_PER_SECOND))
 
-    const result = tank.fluidItem(slotItem.typeId)
-    if (result === false) return
+    const normalizedCostKDE = recipe.costKDE ?? ((recipe.energyCost ?? MIN_FABRICATOR_ENERGY_COST) / KDE)
+    recipe.costKDE = Math.max(MIN_FABRICATOR_COST_KDE, normalizedCostKDE)
+    recipe.energyCost = Math.max(MIN_FABRICATOR_ENERGY_COST, Math.round(recipe.costKDE * KDE))
+    recipe.perSecondKDE = recipe.costKDE / targetSeconds
 
-    machine.entity.changeItemAmount(FLUID_SLOT, -1)
+    const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
+    const updatesPerSecond = Math.max(Number.EPSILON, TICKS_PER_SECOND / tickSpeed)
+    const progressPerSecond = recipe.energyCost / targetSeconds
+    const progressPerUpdate = progressPerSecond / updatesPerSecond
+    const desiredRate = Math.max(MIN_FABRICATOR_RATE, progressPerUpdate)
 
-    if (!result) return
-
-    const updated = machine.inv.getItem(FLUID_SLOT)
-    if (!updated) {
-        machine.entity.setItem(FLUID_SLOT, result, 1)
-        return
-    }
-
-    if (updated.typeId === result && updated.amount < updated.maxAmount) {
-        machine.entity.changeItemAmount(FLUID_SLOT, 1)
-    } else {
-        machine.entity.addItem(result, 1)
-    }
+    machine.boosts.speed = 1
+    machine.boosts.consumption = 1
+    machine.rate = desiredRate
+    machine.baseRate = desiredRate
+    machine.fabricatorTargetSeconds = targetSeconds
 }
 
-function boostFabricatorThroughput(machine) {
-    if (!machine) return
-    machine.rate *= ENERGY_USAGE_MULTIPLIER
-}
-
-function migrateLegacyUpgradeSlots(machine) {
+function purgeFabricatorUpgrades(machine) {
     if (!machine?.inv) return
-    for (const legacySlot of LEGACY_UPGRADE_SLOTS) {
-        const item = machine.inv.getItem(legacySlot)
-        if (!item) continue
-        if (typeof item.hasTag === 'function' && !item.hasTag('utilitycraft:is_upgrade')) continue
+    const slots = [...UPGRADE_SLOTS, ...LEGACY_UPGRADE_SLOTS]
+    const dropLocation = machine.block?.center?.() ?? machine.block?.location ?? machine.entity?.location
 
-        const target = UPGRADE_SLOTS.find(slot => !machine.inv.getItem(slot))
-        if (target === undefined) continue
-        machine.inv.setItem(target, item)
-        machine.inv.setItem(legacySlot, undefined)
+    for (const slot of slots) {
+        const item = machine.inv.getItem(slot)
+        if (!item) continue
+        const isUpgrade = typeof item.hasTag === 'function' && item.hasTag('utilitycraft:is_upgrade')
+        if (!isUpgrade) continue
+
+        machine.inv.setItem(slot, undefined)
+        if (machine.dim && dropLocation) {
+            machine.dim.spawnItem(item, dropLocation)
+        }
     }
+
+    machine.blockSlots(slots)
 }
 
 function clampTotalCostKDE(value) {

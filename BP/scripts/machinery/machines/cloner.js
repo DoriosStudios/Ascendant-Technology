@@ -1,8 +1,9 @@
 import { Machine, Energy, FluidManager } from '../managers_extra.js'
+import { getClonerRecipes } from '../../config/recipes/cloner.js'
 
 const INPUT_SLOT = 3
 const STATUS_SLOT = 1
-const FLUID_SLOT = 10
+const FLUID_INPUT_SLOT = 10
 const FLUID_DISPLAY_SLOT = 11
 const OUTPUT_SLOT_ORIGINAL = 18
 const OUTPUT_SLOT_COPY = 19
@@ -11,16 +12,35 @@ const FLUID_PER_SECOND = 50
 const TICKS_PER_SECOND = 20
 const UPGRADE_SLOTS = [4, 5]
 const LEGACY_UPGRADE_SLOTS = [16, 17]
-const CLONER_RATE_SPEED_BASE = 80
-const ENERGY_USAGE_MULTIPLIER = 4
-const MAX_RUNTIME_SECONDS = 24 * 60 * 60
-const CLONER_PROGRESS_PER_SECOND = CLONER_RATE_SPEED_BASE * TICKS_PER_SECOND * ENERGY_USAGE_MULTIPLIER
-const BASE_TIME_SECONDS = 180
-const MIN_TIME_SECONDS = 30
-const MAX_GENERIC_TIME_SECONDS = 3 * 60 * 60
-const BASE_KDE_PER_SECOND = 35
+const CLONER_BASE_TIME_SECONDS = 30 * 60
+const CLONER_ENERGY_COST = 1_000_000
 const KDE = 1000
-const MAX_TOTAL_KDE = Math.floor((MAX_RUNTIME_SECONDS * CLONER_PROGRESS_PER_SECOND) / KDE)
+const CLONER_COST_KDE = Math.round(CLONER_ENERGY_COST / KDE)
+const CLONER_SPEED_DURATION_SECONDS = [
+    CLONER_BASE_TIME_SECONDS,
+    20 * 60,
+    15 * 60,
+    10 * 60,
+    8 * 60,
+    6 * 60,
+    4 * 60,
+    2 * 60,
+    1 * 60
+]
+const MIN_CLONER_RATE = 1
+
+/*
+Slots (inventory_size: 20)
+- [0] HUD de energia (machine.displayEnergy padrão).
+- [1] Indicador de status/seta (STATUS_SLOT).
+- [3] Input de template (INPUT_SLOT).
+- [4,5] Slots de upgrades (UPGRADE_SLOTS); 16,17 são slots legados migrados.
+- [10] Entrada de fluido (FLUID_INPUT_SLOT) — bloqueada ao jogador.
+- [11] Display do tanque (FLUID_DISPLAY_SLOT) — bloqueado ao jogador.
+- [18] Slot do original/entrada a ser clonado (OUTPUT_SLOT_ORIGINAL).
+- [19] Slot da cópia/clonado (OUTPUT_SLOT_COPY).
+Slots escondidos: [6, 7, 8, 9, 12, 13, 14, 15, 16, 17] (preenchimento/UI, não utilizáveis; 16/17 usados apenas para migração legada).
+*/
 
 doriosRegister()
 
@@ -34,7 +54,7 @@ function doriosRegister() {
                 machine.displayProgress()
                 machine.displayEnergy()
                 machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '')
-                machine.blockSlots([FLUID_DISPLAY_SLOT])
+                machine.blockSlots([FLUID_DISPLAY_SLOT, FLUID_INPUT_SLOT])
                 migrateLegacyUpgradeSlots(machine)
 
                 const tank = FluidManager.initializeSingle(machine.entity)
@@ -48,14 +68,16 @@ function doriosRegister() {
             const machine = new Machine(block, settings)
             if (!machine.valid) return
 
-            boostClonerThroughput(machine)
-
             migrateLegacyUpgradeSlots(machine)
-            machine.transferItems()
+
+            if (tickGate(machine.entity, 'cln:items_cd', 4)) {
+                machine.transferItems()
+            }
 
             const tank = FluidManager.initializeSingle(machine.entity)
-            tank.transferFluids(block)
-            feedFluidSlot(machine, tank)
+            if (tickGate(machine.entity, 'cln:fluids_cd', 4)) {
+                tank.transferFluids(block)
+            }
 
             const fail = (message, reset = true) => {
                 machine.showWarning(message, reset)
@@ -68,11 +90,18 @@ function doriosRegister() {
                 return
             }
 
+            if (isSingularityFabricatorTemplate(inputStack.typeId)) {
+                fail('Use Singularity Fabricator')
+                return
+            }
+
             const recipe = createGenericRecipeFromInput(inputStack)
             if (!recipe) {
                 fail('Invalid Template')
                 return
             }
+
+            applyClonerRuntime(machine, recipe)
 
             const requiredFluid = getRecipeFluid(recipe)
             if (requiredFluid) {
@@ -143,10 +172,9 @@ function doriosRegister() {
             const crafts = handleProgress(machine, recipe, maxCrafts, tank)
             if (crafts > 0) {
                 updateHud(machine, recipe, tank, true)
-                return
+            } else {
+                updateHud(machine, recipe, tank, false)
             }
-
-            updateHud(machine, recipe, tank, false)
         },
 
         onPlayerBreak(e) {
@@ -157,11 +185,6 @@ function doriosRegister() {
 
 function createGenericRecipeFromInput(stack) {
     if (!stack?.typeId) return null
-
-    const timeSeconds = clampTimeSeconds(calculateTimeFromStack(stack))
-    const density = Math.max(1, 64 / Math.max(1, stack?.maxAmount ?? 64))
-    const perSecondKDE = BASE_KDE_PER_SECOND * density
-    const totalCostKDE = clampTotalCostKDE(perSecondKDE * timeSeconds)
 
     const input = {
         id: stack.typeId,
@@ -177,28 +200,27 @@ function createGenericRecipeFromInput(stack) {
         id: `generic:${stack.typeId}`,
         input,
         output,
-        timeSeconds,
-        ticks: Math.max(1, Math.round(timeSeconds * TICKS_PER_SECOND)),
-        perSecondKDE,
-        costKDE: totalCostKDE,
-        energyCost: Math.max(KDE, Math.round(totalCostKDE * KDE)),
+        timeSeconds: CLONER_BASE_TIME_SECONDS,
+        ticks: Math.max(1, Math.round(CLONER_BASE_TIME_SECONDS * TICKS_PER_SECOND)),
+        perSecondKDE: CLONER_COST_KDE / CLONER_BASE_TIME_SECONDS,
+        costKDE: CLONER_COST_KDE,
+        energyCost: CLONER_ENERGY_COST,
         fluid: {
             type: DEFAULT_FLUID_TYPE,
-            amount: Math.max(1, Math.round(timeSeconds * FLUID_PER_SECOND))
+            amount: Math.max(1, Math.round(CLONER_BASE_TIME_SECONDS * FLUID_PER_SECOND))
         }
     }
 }
 
-function clampTimeSeconds(value) {
-    return Math.max(MIN_TIME_SECONDS, Math.min(MAX_GENERIC_TIME_SECONDS, Math.round(value)))
-}
-
-function calculateTimeFromStack(stack) {
-    const maxAmount = Math.max(1, stack?.maxAmount ?? 64)
-    const density = Math.max(1, 64 / maxAmount)
-    return BASE_TIME_SECONDS * density
-}
-
+    function tickGate(entity, key, interval) {
+        const cd = Number(entity.getDynamicProperty(key)) || 0
+        if (cd > 0) {
+            entity.setDynamicProperty(key, cd - 1)
+            return false
+        }
+        entity.setDynamicProperty(key, interval)
+        return true
+    }
 function getRecipeFluid(recipe) {
     if (!recipe) return null
     if (recipe.fluid && typeof recipe.fluid === 'object') {
@@ -207,7 +229,7 @@ function getRecipeFluid(recipe) {
         return recipe.fluid
     }
 
-    const timeSeconds = recipe.timeSeconds ?? BASE_TIME_SECONDS
+    const timeSeconds = recipe.timeSeconds ?? CLONER_BASE_TIME_SECONDS
     recipe.fluid = {
         type: DEFAULT_FLUID_TYPE,
         amount: Math.max(1, Math.round(timeSeconds * FLUID_PER_SECOND))
@@ -284,18 +306,24 @@ function updateHud(machine, recipe, tank, crafted) {
 
     machine.on()
 
-    const action = crafted ? 'Clone Ready' : 'Cloning'
+    const action = crafted ? 'Duplication Ready' : 'Duplicating'
     const etaDisplay = formatEta(machine, recipe)
-    const fluidBlock = formatFluidBlock(recipe?.fluid, tank)
-    machine.setLabel(`
-§r§6${action}
-§r§7Template:
-    §b${formatName(recipe.input.id)}
-§r§7Mode: §fUniversal
-§r§7ETA: §f${etaDisplay}
-§r§cCost: §f${Energy.formatEnergyToText(recipe.energyCost)}
-${fluidBlock}
-    `)
+    const fluidLines = formatFluidBlock(recipe?.fluid, tank)
+    const lore = [
+        `§7Template: §b${formatName(recipe.input.id)}`,
+        '§7Mode: §fUniversal',
+        `§7ETA: §f${etaDisplay}`,
+        `§cCost: §f${Energy.formatEnergyToText(recipe.energyCost)}`
+    ]
+
+    if (Array.isArray(fluidLines) && fluidLines.length) {
+        lore.push(...fluidLines)
+    }
+
+    machine.setLabel({
+        title: `§6${action}`,
+        lore
+    })
 }
 
 function formatName(id) {
@@ -378,21 +406,16 @@ function getProgressPerSecond(machine) {
 }
 
 function formatFluidBlock(fluid, tank) {
-    const indent = '  '
-    if (!fluid) {
-        return `§r§3Fluid:\n§r${indent}§7None`
-    }
-
+    if (!fluid || !tank) return null
     const perCraft = FluidManager.formatFluid(Math.max(1, fluid.amount ?? 0))
-    const tankAmount = FluidManager.formatFluid(Math.max(0, tank?.get?.() ?? 0))
+    const tankAmount = FluidManager.formatFluid(Math.max(0, tank.get()))
+    const tankCap = FluidManager.formatFluid(Math.max(0, tank.getCap()))
     const fluidName = formatFluidDisplayName(fluid.type)
-
     return [
-        '§r§3Fluid:',
-        `§r${indent}§7${fluidName}`,
-        `§r${indent}§f${perCraft} §7per craft`,
-        `§r${indent}§f${tankAmount} §7in tank`
-    ].join('\n')
+        `§3Fluid: §f${fluidName}`,
+        `§7Need: §f${perCraft}`,
+        `§7Tank: §f${tankAmount} §7/ §f${tankCap}`
+    ]
 }
 
 function formatFluidDisplayName(type) {
@@ -447,36 +470,51 @@ function canAcceptSlotItem(slot, expectedId) {
     return !slot || slot.typeId === expectedId
 }
 
-function feedFluidSlot(machine, tank) {
-    const slotItem = machine.inv.getItem(FLUID_SLOT)
-    if (!slotItem) return
+function applyClonerRuntime(machine, recipe) {
+    if (!machine || !recipe) return
 
-    const fillDefinition = FluidManager.getFluidFillDefinition?.(slotItem.typeId)
-    if (fillDefinition) return
+    const speedLevel = getClonerSpeedLevel(machine)
+    const targetSeconds = CLONER_SPEED_DURATION_SECONDS[speedLevel] ?? CLONER_BASE_TIME_SECONDS
+    const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
+    const updatesPerSecond = TICKS_PER_SECOND / tickSpeed
 
-    const result = tank.fluidItem(slotItem.typeId)
-    if (result === false) return
-
-    machine.entity.changeItemAmount(FLUID_SLOT, -1)
-
-    if (!result) return
-
-    const updated = machine.inv.getItem(FLUID_SLOT)
-    if (!updated) {
-        machine.entity.setItem(FLUID_SLOT, result, 1)
-        return
+    recipe.timeSeconds = targetSeconds
+    recipe.ticks = Math.max(1, Math.round(targetSeconds * TICKS_PER_SECOND))
+    recipe.costKDE = CLONER_COST_KDE
+    recipe.perSecondKDE = recipe.costKDE / targetSeconds
+    recipe.energyCost = CLONER_ENERGY_COST
+    if (recipe.fluid) {
+        recipe.fluid.amount = Math.max(1, Math.round(targetSeconds * FLUID_PER_SECOND))
     }
 
-    if (updated.typeId === result && updated.amount < updated.maxAmount) {
-        machine.entity.changeItemAmount(FLUID_SLOT, 1)
-    } else {
-        machine.entity.addItem(result, 1)
-    }
+    machine.boosts.speed = 1
+    machine.boosts.consumption = 1
+
+    const progressPerSecond = recipe.energyCost / targetSeconds
+    const progressPerUpdate = progressPerSecond / updatesPerSecond
+    const desiredRate = Math.max(MIN_CLONER_RATE, progressPerUpdate)
+
+    machine.rate = desiredRate
+    machine.baseRate = desiredRate
+    machine.clonerTargetSeconds = targetSeconds
 }
 
-function boostClonerThroughput(machine) {
-    if (!machine) return
-    machine.rate *= ENERGY_USAGE_MULTIPLIER
+function getClonerSpeedLevel(machine) {
+    const speed = machine?.upgrades?.speed ?? 0
+    const clamped = Math.max(0, Math.floor(speed))
+    return Math.min(CLONER_SPEED_DURATION_SECONDS.length - 1, clamped)
+}
+
+function isSingularityFabricatorTemplate(itemId) {
+    if (!itemId) return false
+    const recipes = getClonerRecipes()
+    const normalizedId = itemId.toLowerCase()
+
+    return recipes.some(recipe => {
+        const inputId = recipe?.input?.id?.toLowerCase()
+        const outputId = recipe?.output?.id?.toLowerCase()
+        return inputId === normalizedId || outputId === normalizedId
+    })
 }
 
 function migrateLegacyUpgradeSlots(machine) {
@@ -493,7 +531,3 @@ function migrateLegacyUpgradeSlots(machine) {
     }
 }
 
-function clampTotalCostKDE(value) {
-    if (!Number.isFinite(value) || value <= 0) return 1
-    return Math.min(MAX_TOTAL_KDE, value)
-}

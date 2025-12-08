@@ -1,27 +1,266 @@
 import { system, world, ItemStack, BlockPermutation } from '@minecraft/server'
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
 
-import {
-    getFluidContainerDefinition,
-    getFluidContainerRegistry,
-    getFluidOutputDefinition,
-    getFluidOutputRegistry,
-    registerFluidContainer as registerFluidContainerDefinition,
-    registerFluidOutput as registerFluidOutputDefinition
-} from '../config/fluids/containers.js'
 import { updatePipes } from './transfer_system/system.js'
 const COLORS = DoriosAPI.constants.textColors
 
+const DEFAULT_TICK_SPEED = 10;
+
 globalThis.worldLoaded = false;
 globalThis.tickCount = 0;
-if (typeof globalThis.tickSpeed !== 'number' || globalThis.tickSpeed <= 0) {
-    globalThis.tickSpeed = 1;
+globalThis.tickSpeed = sanitizeTickSpeed(globalThis.tickSpeed);
+
+function sanitizeTickSpeed(value) {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric) || numeric <= 0) {
+        return DEFAULT_TICK_SPEED;
+    }
+    return numeric;
 }
-const tickSpeed = globalThis.tickSpeed;
+
+function getTickSpeed() {
+    const current = sanitizeTickSpeed(globalThis.tickSpeed);
+    if (current !== globalThis.tickSpeed) {
+        globalThis.tickSpeed = current;
+    }
+    return current;
+}
 
 const LABEL_CHAR_LIMIT = 255;
 const LABEL_PLACEHOLDER_ITEM = "utilitycraft:arrow_indicator_90";
 const HIDDEN_SLOT_FILLER_ITEM = "utilitycraft:container_filler";
+
+const REGISTER_FLUID_CONTAINER_EVENT = "utilitycraft:register_fluid_container";
+const REGISTER_FLUID_OUTPUT_EVENT = "utilitycraft:register_fluid_output";
+
+const fluidContainerRegistry = Object.create(null);
+const fluidOutputRegistry = Object.create(null);
+
+const sanitizeFluidType = (value) =>
+    typeof value === "string" ? value.trim().toLowerCase() : "";
+
+const clampFluidAmount = (value) => {
+    const amount = Math.floor(Number(value) || 0);
+    return Number.isFinite(amount) && amount > 0 ? amount : 0;
+};
+
+const normalizeAmountRange = (value) => {
+    if (typeof value === "number") {
+        const amount = clampFluidAmount(value);
+        return amount ? { min: amount, max: amount } : null;
+    }
+
+    if (Array.isArray(value)) {
+        const [rawMin, rawMax] = value;
+        const max = clampFluidAmount(rawMax ?? rawMin);
+        if (!max) return null;
+        const min = clampFluidAmount(rawMin) || max;
+        const low = Math.min(min, max);
+        const high = Math.max(min, max);
+        return { min: low, max: high };
+    }
+
+    if (typeof value === "object" && value) {
+        const rawMin = value.min ?? value.minimum ?? value[0];
+        const rawMax = value.max ?? value.maximum ?? value[1] ?? rawMin;
+        const max = clampFluidAmount(rawMax);
+        if (!max) return null;
+        const min = clampFluidAmount(rawMin) || max;
+        const low = Math.min(min, max);
+        const high = Math.max(min, max);
+        return { min: low, max: high };
+    }
+
+    return null;
+};
+
+function normalizeFluidContainer(definition) {
+    if (!definition) return null;
+
+    const amountRange = normalizeAmountRange(definition.amount);
+    const type = sanitizeFluidType(definition.type ?? definition.fluid ?? definition.liquid);
+
+    if (!amountRange || !type) return null;
+
+    const normalized = {
+        amount: amountRange.max,
+        amountRange,
+        minAmount: amountRange.min,
+        type
+    };
+
+    const output = definition.output ?? definition.result ?? definition.empty ?? definition.returnItem;
+    if (typeof output === "string" && output.length > 0) {
+        normalized.output = output;
+    }
+
+    return Object.freeze(normalized);
+}
+
+function normalizeFluidOutput(definition) {
+    if (!definition) return null;
+
+    const amountRange = normalizeAmountRange(definition.amount ?? definition.requirement);
+    if (!amountRange) return null;
+
+    const rawFills = definition.fills ?? definition.outputs ?? definition.types;
+    if (!rawFills || typeof rawFills !== "object") return null;
+
+    const fills = {};
+    for (const [rawType, itemId] of Object.entries(rawFills)) {
+        const type = sanitizeFluidType(rawType);
+        if (!type) continue;
+        if (typeof itemId !== "string" || itemId.length === 0) continue;
+        fills[type] = itemId;
+    }
+
+    if (Object.keys(fills).length === 0) return null;
+
+    return Object.freeze({
+        amount: amountRange.max,
+        amountRange,
+        minAmount: amountRange.min,
+        fills
+    });
+}
+
+function getFluidContainerRegistry() {
+    return fluidContainerRegistry;
+}
+
+function getFluidContainerDefinition(id) {
+    if (typeof id !== "string" || id.length === 0) return null;
+    return fluidContainerRegistry[id] ?? null;
+}
+
+function registerFluidContainerDefinition(id, definition) {
+    if (typeof id !== "string" || id.length === 0) return false;
+    const normalized = normalizeFluidContainer(definition);
+    if (!normalized) return false;
+    fluidContainerRegistry[id] = normalized;
+    return true;
+}
+
+function registerFluidContainerBatch(entries) {
+    if (!entries) return 0;
+
+    const queue = [];
+
+    if (Array.isArray(entries)) {
+        queue.push(...entries);
+    } else if (typeof entries === "object") {
+        for (const [id, definition] of Object.entries(entries)) {
+            if (definition && typeof definition === "object") {
+                queue.push({ id, ...definition });
+            }
+        }
+    } else {
+        return 0;
+    }
+
+    let registered = 0;
+
+    for (const entry of queue) {
+        if (!entry || typeof entry !== "object") continue;
+
+        const targets = [];
+        const appendTarget = value => {
+            if (typeof value === "string" && value.length > 0) {
+                targets.push(value);
+            }
+        };
+
+        appendTarget(entry.id);
+        appendTarget(entry.item);
+        appendTarget(entry.itemId);
+        if (Array.isArray(entry.ids)) {
+            for (const candidate of entry.ids) appendTarget(candidate);
+        }
+
+        const uniqueTargets = [...new Set(targets)];
+        if (uniqueTargets.length === 0) continue;
+
+        const normalized = normalizeFluidContainer(entry);
+        if (!normalized) continue;
+
+        for (const targetId of uniqueTargets) {
+            if (registerFluidContainerDefinition(targetId, normalized)) {
+                registered++;
+            }
+        }
+    }
+
+    return registered;
+}
+
+function getFluidOutputRegistry() {
+    return fluidOutputRegistry;
+}
+
+function getFluidOutputDefinition(id) {
+    if (typeof id !== "string" || id.length === 0) return null;
+    return fluidOutputRegistry[id] ?? null;
+}
+
+function registerFluidOutputDefinition(id, definition) {
+    if (typeof id !== 'string' || id.length === 0) return false;
+    const normalized = normalizeFluidOutput(definition);
+    if (!normalized) return false;
+    fluidOutputRegistry[id] = normalized;
+    return true;
+}
+
+function registerFluidOutputBatch(entries) {
+    if (!entries) return 0;
+
+    const queue = [];
+
+    if (Array.isArray(entries)) {
+        queue.push(...entries);
+    } else if (typeof entries === 'object') {
+        for (const [id, definition] of Object.entries(entries)) {
+            if (definition && typeof definition === 'object') {
+                queue.push({ id, ...definition });
+            }
+        }
+    } else {
+        return 0;
+    }
+
+    let registered = 0;
+
+    for (const entry of queue) {
+        if (!entry || typeof entry !== 'object') continue;
+
+        const targets = [];
+        const appendTarget = value => {
+            if (typeof value === 'string' && value.length > 0) {
+                targets.push(value);
+            }
+        };
+
+        appendTarget(entry.id);
+        appendTarget(entry.item);
+        appendTarget(entry.itemId);
+        if (Array.isArray(entry.ids)) {
+            for (const candidate of entry.ids) appendTarget(candidate);
+        }
+
+        const uniqueTargets = [...new Set(targets)];
+        if (uniqueTargets.length === 0) continue;
+
+        const normalized = normalizeFluidOutput(entry);
+        if (!normalized) continue;
+
+        for (const targetId of uniqueTargets) {
+            if (registerFluidOutputDefinition(targetId, normalized)) {
+                registered++;
+            }
+        }
+    }
+
+    return registered;
+}
 
 /**
  * @typedef {string | {
@@ -46,7 +285,10 @@ function normalizeLoreEntries(entries) {
         for (const line of entry.split(splitRegex)) {
             const trimmed = line.trim();
             if (trimmed.length === 0) continue;
-            lore.push(truncateLabelText(trimmed));
+            const safeLine = trimmed.startsWith("§r") || trimmed === " "
+                ? trimmed
+                : `§r${trimmed}`;
+            lore.push(truncateLabelText(safeLine));
         }
     }
     return lore;
@@ -77,7 +319,7 @@ function truncateLabelText(text, limit = LABEL_CHAR_LIMIT) {
     if (!text) return " ";
     if (text.length <= limit) return text;
     if (limit <= 3) return text.slice(0, limit);
-    return `${text.slice(0, limit - 1)}…`;
+    return `${text.slice(0, limit - 1)}...`;
 }
 
 /**
@@ -179,6 +421,28 @@ function applyLabelToSlot(container, slot, content) {
     baseItem.nameTag = nameTag;
     baseItem.setLore(lore);
     container.setItem(slot, baseItem);
+}
+
+/**
+ * Applies multiple labels across given slots. If slots are not provided, uses
+ * sequential slots starting at 0 for the number of contents provided.
+ *
+ * @param {Container} container
+ * @param {LabelContent|LabelContent[]} contents
+ * @param {number[]} [slots]
+ */
+function applyLabels(container, contents, slots) {
+    if (!container) return;
+    const list = Array.isArray(contents) ? contents.filter(Boolean) : [contents];
+    if (list.length === 0) return;
+    const targetSlots = Array.isArray(slots) && slots.length > 0
+        ? slots
+        : list.map((_, i) => i);
+
+    const count = Math.min(list.length, targetSlots.length);
+    for (let i = 0; i < count; i++) {
+        applyLabelToSlot(container, targetSlots[i], list[i]);
+    }
 }
 
 system.runInterval(() => {
@@ -608,11 +872,22 @@ export class Generator {
         this.dim = block.dimension
         this.block = block
         this.entity = this.dim.getEntitiesAtBlockLocation(block.location)[0]
-        if (!this.entity) return null
+        if (!this.entity) {
+            this.valid = false;
+            return;
+        }
+
+        // Ensure the entity has a scoreboard identity so Energy/Fluid managers don't throw
+        if (!this.entity.scoreboardIdentity) {
+            try {
+                Energy.initialize(this.entity);
+            } catch { /* ignore: scoreboard might not be ready yet */ }
+        }
+
         this.inv = this.entity?.getComponent('inventory')?.container
         this.energy = new Energy(this.entity)
         this.baseRate = settings.generator.rate_speed_base
-        this.rate = this.baseRate * tickSpeed
+        this.rate = this.baseRate * getTickSpeed()
     }
 
     /**
@@ -844,6 +1119,24 @@ export class Generator {
     }
 
     /**
+     * Applies multiple labels to the generator inventory.
+     * @param {LabelContent|LabelContent[]} contents
+     * @param {number[]} [slots]
+     */
+    setLabels(contents, slots) {
+        applyLabels(this.inv, contents, slots);
+    }
+
+    /**
+     * Applies multiple labels to the machine inventory.
+     * @param {LabelContent|LabelContent[]} contents
+     * @param {number[]} [slots]
+     */
+    setLabels(contents, slots) {
+        applyLabels(this.inv, contents, slots);
+    }
+
+    /**
      * Changes the texture of the block to the on version.
      */
     on() {
@@ -894,7 +1187,7 @@ export class Machine {
         this.upgrades = this.getUpgradeLevels(settings.machine.upgrades)
         this.boosts = this.calculateBoosts(this.upgrades)
         this.baseRate = settings.machine.rate_speed_base * this.boosts.speed * this.boosts.consumption
-        this.rate = this.baseRate * tickSpeed
+        this.rate = this.baseRate * getTickSpeed()
         this.hiddenSlots = Array.isArray(settings?.machine?.hidden_slots)
             ? settings.machine.hidden_slots.filter(slot => typeof slot === "number")
             : []
@@ -943,8 +1236,24 @@ export class Machine {
         const dim = block.dimension;
         const { entity } = data;
 
+        const requestedId = entity?.id;
+        const fallbackId = "utilitycraft:machine";
         let { x, y, z } = block.center(); y -= 0.25
-        const machineEntity = dim.spawnEntity("utilitycraft:machine", { x, y, z });
+
+        /** @type {Entity} */
+        let machineEntity;
+        try {
+            machineEntity = dim.spawnEntity(requestedId ?? fallbackId, { x, y, z });
+        } catch (err) {
+            const strict = entity?.strict_entity_id === true;
+            if (strict && requestedId) {
+                // In strict mode, do not fallback: surface the failure to avoid spawning the wrong inventory size.
+                throw err;
+            }
+            // If the requested entity type is invalid or missing, fall back to the
+            // standard machine entity to ensure a valid scoreboard identity.
+            machineEntity = dim.spawnEntity(fallbackId, { x, y, z });
+        }
 
         let machineEvent;
         let inventorySize = 2
@@ -979,9 +1288,14 @@ export class Machine {
 
         const inventoryEvent = `utilitycraft:inventory_${inventorySize}`;
 
-        // 3. Trigger machine type and inventory slot events
-        machineEntity.triggerEvent(machineEvent);
-        machineEntity.triggerEvent(inventoryEvent);
+        // 3. Trigger machine type and inventory slot events (skippable for custom entities)
+        if (!entity?.skip_machine_event && machineEvent) {
+            try { machineEntity.triggerEvent(machineEvent); } catch { /* ignore invalid machine event */ }
+        }
+
+        if (!entity?.skip_inventory_event) {
+            try { machineEntity.triggerEvent(inventoryEvent); } catch { /* ignore invalid inventory event (e.g., large custom sizes) */ }
+        }
 
         // 4. Assign name tag
         const name = blockToPlace.type.id.split(':')[1] ?? entity.name
@@ -1367,7 +1681,7 @@ export class Machine {
      *
      * @param {string} message The status text to display.
      */
-    showStatus(message) {
+    showStatus(message, extraLore = []) {
         this.displayEnergy();
         const { title, requirements } = extractMessageParts(message, "Operational");
         const efficiency = ((1 / this.boosts.consumption) * 100).toFixed(0);
@@ -1384,9 +1698,15 @@ export class Machine {
 §r${COLORS.red}Rate ${rateText}/t
         `.trim();
 
+        const lore = buildRequirementLore(requirements);
+        if (Array.isArray(extraLore) && extraLore.length) {
+            if (lore.length > 0) lore.push(" ");
+            lore.push(...extraLore);
+        }
+
         this.setLabel({
             rawText: labelText,
-            lore: buildRequirementLore(requirements)
+            lore
         });
     }
 
@@ -1396,16 +1716,27 @@ export class Machine {
      * @param {Array<number>} [slots=[4,5,6]] The inventory slots reserved for upgrades.
      * @returns {UpgradeLevels}
      */
-    getUpgradeLevels(slots = [4, 5]) {
+    getUpgradeLevels(slots = [4, 5, 6]) {
         /** @type {UpgradeLevels} */
         const levels = {
             energy: 0,
             range: 0,
             speed: 0,
+            size: 0,
             ultimate: 0
         };
 
+        // Gracefully handle oversized upgrade slot definitions (e.g., containers
+        // with huge logical inventories but a smaller physical container when the
+        // inventory event is skipped or missing). If the slot index is outside
+        // the current container size, ignore it instead of throwing.
+        const invSize = this.inv?.size ?? 0;
+        if (invSize <= 0) return levels;
+
         for (const slot of slots) {
+            if (typeof slot !== "number") continue;
+            if (slot < 0 || slot >= invSize) continue;
+
             const item = this.inv.getItem(slot);
             if (!item) continue;
 
@@ -1546,6 +1877,163 @@ export class Machine {
 }
 
 //#endregion
+
+// #region Container
+
+/**
+ * Lightweight wrapper to treat large storage blocks as “containers” while
+ * reusing the existing Machine utilities (energy, fluids, transfers, labels).
+ *
+ * - Automatically normalizes settings to avoid triggering machine/input/output
+ *   events (safer for custom inventory sizes).
+ * - Optional `container` section can toggle behaviors (e.g. skip energy bar
+ *   item injection via `display_energy_item: false`).
+ */
+export class Container {
+    /**
+     * @param {Block} block
+     * @param {Object} settings
+     * @param {boolean} [ignoreTick=false]
+     */
+    constructor(block, settings, ignoreTick = false) {
+        this.settings = Container.normalizeSettings(settings);
+        this.machine = new Machine(block, this.settings, ignoreTick);
+
+        // Mirror useful properties for drop-in compatibility
+        this.valid = this.machine.valid;
+        this.dim = this.machine.dim;
+        this.block = this.machine.block;
+        this.entity = this.machine.entity;
+        this.inv = this.machine.inv;
+        this.energy = this.machine.energy;
+        this.hiddenSlots = this.machine.hiddenSlots ?? [];
+    }
+
+    /**
+     * Returns a settings object compatible with Machine, forcing a container
+     * profile (no machine/input/output events by default) and honoring
+     * container-specific overrides.
+     */
+    static normalizeSettings(settings = {}) {
+        const entity = { ...(settings.entity ?? {}) };
+        const container = { ...(settings.container ?? {}) };
+        const machine = { ...(settings.machine ?? {}) };
+
+        // Containers should not auto-fire machine/input/output events unless
+        // explicitly requested.
+        if (entity.skip_machine_event === undefined) entity.skip_machine_event = true;
+        if (entity.skip_inventory_event === undefined) entity.skip_inventory_event = true;
+        if (entity.input_type === undefined) entity.input_type = null;
+        if (entity.output_type === undefined) entity.output_type = null;
+
+        // Allow `container.inventory_size` as shorthand for entity size.
+        if (container.inventory_size && !entity.inventory_size) {
+            entity.inventory_size = container.inventory_size;
+        }
+
+        // Very large inventories often lack matching inventory events; auto-skip to avoid errors
+        // unless the caller explicitly asked to keep the inventory event.
+        if ((entity.inventory_size ?? 0) > 64 && entity.skip_inventory_event === undefined) {
+            entity.skip_inventory_event = true;
+        }
+
+        // Propagate hidden slots if provided in container settings.
+        if (!Array.isArray(machine.hidden_slots) && Array.isArray(container.hidden_slots)) {
+            machine.hidden_slots = container.hidden_slots;
+        }
+
+        // Allow container-specific caps as shortcuts.
+        if (container.energy_cap && !machine.energy_cap) machine.energy_cap = container.energy_cap;
+        if (container.fluid_cap && !machine.fluid_cap) machine.fluid_cap = container.fluid_cap;
+
+        return { ...settings, entity, machine, container };
+    }
+
+    /**
+     * Spawns a container entity at the block location. Similar to
+     * Machine.spawnMachineEntity but tailored for containers and with an
+     * option to suppress the inventory energy-bar item.
+     */
+    static spawnContainerEntity(e, settings, callback) {
+        const normalized = Container.normalizeSettings(settings);
+        const { block, player, permutationToPlace } = e;
+        const mainHand = player.getComponent('equippable').getEquipment('Mainhand');
+
+        if (normalized.rotation) {
+            if (player.isInSurvival()) system.run(() => {
+                player.runCommand(`clear @s ${permutationToPlace.type.id} 0 1`);
+            });
+            e.cancel = true;
+            Rotation.facing(player, block, permutationToPlace);
+        }
+
+        const itemInfo = mainHand.getLore();
+        let energy = 0;
+        if (itemInfo[0] && itemInfo[0].includes('Energy')) {
+            energy = Energy.getEnergyFromText(itemInfo[0]);
+        }
+
+        let fluid = undefined;
+        const nextLine = energy > 0 ? itemInfo[1] : itemInfo[0];
+        if (nextLine) {
+            fluid = FluidManager.getFluidFromText(nextLine);
+        }
+
+        system.run(() => {
+            const entity = Machine.spawn(block, normalized, permutationToPlace);
+
+            Energy.initialize(entity);
+            const energyManager = new Energy(entity);
+            energyManager.set(energy);
+            energyManager.setCap(normalized.machine.energy_cap ?? 0);
+
+            // Optionally show energy bar item (default off for containers)
+            const shouldDisplayEnergyItem = normalized.container?.display_energy_item ?? false;
+            if (shouldDisplayEnergyItem) {
+                energyManager.display(normalized.container?.energy_display_slot ?? 0);
+            }
+
+            if (normalized.machine.fluid_cap) {
+                const fluidManager = new FluidManager(entity, 0);
+                fluidManager.setCap(normalized.machine.fluid_cap);
+
+                if (fluid && fluid.amount > 0) {
+                    fluidManager.setType(fluid.type);
+                    fluidManager.set(fluid.amount);
+                }
+            }
+
+            // Fill hidden slots right after creation to prevent importers from
+            // using them when we oversize the inventory.
+            system.run(() => {
+                if (normalized.machine.hidden_slots?.length) {
+                    const container = new Container(block, normalized, true);
+                    container.fillHiddenSlots(normalized.machine.hidden_slots);
+                }
+                if (callback) callback(entity);
+            });
+        });
+    }
+
+    // Convenience: mirror common Machine instance helpers
+    setLabel(...args) { return this.machine.setLabel(...args); }
+    setLabels(...args) { return this.machine.setLabels(...args); }
+    setEnergyCost(...args) { return this.machine.setEnergyCost(...args); }
+    on(...args) { return this.machine.on(...args); }
+    off(...args) { return this.machine.off(...args); }
+    transferItems(...args) { return this.machine.transferItems(...args); }
+    getTransferCooldown(...args) { return this.machine.getTransferCooldown(...args); }
+    setTransferCooldown(...args) { return this.machine.setTransferCooldown(...args); }
+    holdTransfers(...args) { return this.machine.holdTransfers(...args); }
+    shouldDelayTransfers(...args) { return this.machine.shouldDelayTransfers(...args); }
+    blockSlots(...args) { return this.machine.blockSlots(...args); }
+    fillHiddenSlots(...args) { return this.machine.fillHiddenSlots(...args); }
+    unblockSlots(...args) { return this.machine.unblockSlots(...args); }
+
+    static dropAllItems(entity) { return Machine.dropAllItems(entity); }
+}
+
+// #endregion
 
 
 //#region Energy
@@ -2344,9 +2832,9 @@ export class FluidManager {
     /**
      * Returns the current map of fluid container definitions.
      *
-     * The registry is populated inside `config/fluids/containers.js`
-     * and can be extended either in code or via the
-     * `utilitycraft:register_fluid_container` ScriptEvent.
+     * The registry is populated via `config/fluids/items.js` using
+     * `utilitycraft:register_fluid_container` ScriptEvents and can also be
+     * extended programmatically at runtime.
      */
     static get itemFluidContainers() {
         return getFluidContainerRegistry();
@@ -3121,6 +3609,202 @@ export class FluidManager {
         return caps[typeId] ?? 8000;
     }
 }
+
+const LEGACY_FLUID_ITEM_EVENT = "utilitycraft:register_fluid_item";
+const LEGACY_FLUID_HOLDER_EVENT = "utilitycraft:register_fluid_holder";
+const LEGACY_TICK_SPEED_EVENT = "utilitycraft:set_tick_speed";
+
+const normalizeFluidType = (value) =>
+    typeof value === "string" && value.trim().length
+        ? value.trim().toLowerCase()
+        : "";
+
+const safeJsonParse = (payload) => {
+    if (typeof payload !== "string" || payload.length === 0) return null;
+    try {
+        return JSON.parse(payload);
+    } catch {
+        return null;
+    }
+};
+
+system.afterEvents.scriptEventReceive.subscribe(event => {
+    const { id } = event;
+    if (id !== REGISTER_FLUID_CONTAINER_EVENT && id !== REGISTER_FLUID_OUTPUT_EVENT) {
+        return;
+    }
+
+    const trimmedMessage = typeof event.message === "string" ? event.message.trim() : "";
+    if (!trimmedMessage) return;
+
+    const payload = safeJsonParse(trimmedMessage);
+    if (!payload) return;
+
+    try {
+        if (id === REGISTER_FLUID_CONTAINER_EVENT) {
+            const added = registerFluidContainerBatch(payload);
+            if (added > 0) {
+                console.warn(`[UtilityCraft] Registered ${added} fluid container${added === 1 ? "" : "s"} via ScriptEvent.`);
+            }
+        } else {
+            const added = registerFluidOutputBatch(payload);
+            if (added > 0) {
+                console.warn(`[UtilityCraft] Registered ${added} fluid output container${added === 1 ? "" : "s"} via ScriptEvent.`);
+            }
+        }
+    } catch (error) {
+        console.warn(`[UtilityCraft] Failed to process ${id} payload:`, error);
+    }
+});
+
+function normalizeLegacyFluidContainer(entry) {
+    if (!entry || typeof entry !== "object") return null;
+
+    const amount = entry.amountRange ?? entry.amount ?? entry.value ?? entry.required;
+    const type = normalizeFluidType(entry.type ?? entry.fluid ?? entry.liquid);
+
+    if (amount === undefined || amount === null || !type) return null;
+
+    const normalized = { amount, type };
+    const output = entry.output ?? entry.result ?? entry.returnItem ?? entry.empty;
+    if (typeof output === "string" && output.length > 0) {
+        normalized.output = output;
+    }
+
+    return normalized;
+}
+
+function normalizeLegacyFluidHolder(entry) {
+    if (!entry || typeof entry !== "object") return null;
+
+    const amount = entry.amountRange ?? entry.required ?? entry.amount ?? entry.requirement;
+    const types = entry.types ?? entry.fills ?? entry.outputs;
+    if (amount === undefined || amount === null || typeof types !== "object" || types === null) return null;
+
+    const fills = {};
+    for (const [rawType, itemId] of Object.entries(types)) {
+        const type = normalizeFluidType(rawType);
+        if (!type) continue;
+        if (typeof itemId !== "string" || itemId.length === 0) continue;
+        fills[type] = itemId;
+    }
+
+    if (Object.keys(fills).length === 0) return null;
+
+    return { amount, fills };
+}
+
+system.afterEvents.scriptEventReceive.subscribe(event => {
+    const { id, message } = event;
+
+    if (id === LEGACY_TICK_SPEED_EVENT) {
+        const parsed = safeJsonParse(message);
+        const numeric = typeof parsed === "number" ? parsed : Number(message);
+        if (Number.isFinite(numeric)) {
+            globalThis.tickSpeed = sanitizeTickSpeed(numeric);
+        }
+        return;
+    }
+
+    if (id === LEGACY_FLUID_ITEM_EVENT) {
+        const payload = safeJsonParse(message);
+        if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
+
+        const queue = Array.isArray(payload)
+            ? payload
+            : Object.entries(payload).map(([entryId, definition]) => ({ id: entryId, ...definition }));
+
+        let added = 0;
+        let replaced = 0;
+
+        for (const entry of queue) {
+            if (!entry || typeof entry !== "object") continue;
+
+            const targets = [];
+            const appendTarget = value => {
+                if (typeof value === "string" && value.length > 0) {
+                    targets.push(value);
+                }
+            };
+            appendTarget(entry.id);
+            appendTarget(entry.item);
+            appendTarget(entry.itemId);
+
+            if (Array.isArray(entry.ids)) {
+                for (const candidate of entry.ids) {
+                    appendTarget(candidate);
+                }
+            }
+
+            const uniqueTargets = [...new Set(targets)];
+            if (uniqueTargets.length === 0) continue;
+
+            const normalized = normalizeLegacyFluidContainer(entry);
+            if (!normalized) continue;
+
+            for (const targetId of uniqueTargets) {
+                const existed = Boolean(getFluidContainerRegistry()[targetId]);
+                if (registerFluidContainerDefinition(targetId, normalized)) {
+                    existed ? replaced++ : added++;
+                }
+            }
+        }
+
+        if (added || replaced) {
+            console.warn(`[UtilityCraft] Registered ${added} new and ${replaced} updated fluid container${added + replaced === 1 ? "" : "s"} via legacy ScriptEvent.`);
+        }
+        return;
+    }
+
+    if (id === LEGACY_FLUID_HOLDER_EVENT) {
+        const payload = safeJsonParse(message);
+        if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
+
+        const queue = Array.isArray(payload)
+            ? payload
+            : Object.entries(payload).map(([entryId, definition]) => ({ id: entryId, ...definition }));
+
+        let added = 0;
+        let replaced = 0;
+
+        for (const entry of queue) {
+            if (!entry || typeof entry !== "object") continue;
+
+            const targets = [];
+            const appendTarget = value => {
+                if (typeof value === "string" && value.length > 0) {
+                    targets.push(value);
+                }
+            };
+            appendTarget(entry.id);
+            appendTarget(entry.item);
+            appendTarget(entry.itemId);
+
+            if (Array.isArray(entry.ids)) {
+                for (const candidate of entry.ids) {
+                    appendTarget(candidate);
+                }
+            }
+
+            const uniqueTargets = [...new Set(targets)];
+            if (uniqueTargets.length === 0) continue;
+
+            const normalized = normalizeLegacyFluidHolder(entry);
+            if (!normalized) continue;
+
+            for (const targetId of uniqueTargets) {
+                const existed = Boolean(getFluidOutputRegistry()[targetId]);
+                if (registerFluidOutputDefinition(targetId, normalized)) {
+                    existed ? replaced++ : added++;
+                }
+            }
+        }
+
+        if (added || replaced) {
+            console.warn(`[UtilityCraft] Registered ${added} new and ${replaced} updated fluid holder${added + replaced === 1 ? "" : "s"} via legacy ScriptEvent.`);
+        }
+    }
+});
 
 
 /**

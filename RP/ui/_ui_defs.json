@@ -1,7 +1,12 @@
 {
     "ui_defs": [
+        "ui/absolute_container.json",
         "ui/catalyst_weaver.json",
         "ui/cloner.json",
-        "ui/liquifier.json"
+        "ui/energizer.json",
+        "ui/liquifier.json",
+        "ui/network_center.json",
+        "ui/singularity_fabricator.json",
+        "ui/residue_processor.json"
     ]
 }

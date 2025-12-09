@@ -1,0 +1,22 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": { "identifier": "utilitycraft:residue_processor" },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": [
+            "SBS",
+            "MIM",
+            "CAC"
+        ],
+        "key": {
+            "S": { "item": "minecraft:soul_sand" },
+            "B": { "item": "minecraft:hopper" },
+            "M": { "item": "utilitycraft:machine_case" },
+            "I": { "item": "utilitycraft:infuser" },
+            "C": { "item": "utilitycraft:advanced_chip" },
+            "A": { "item": "utilitycraft:ultimate_chip" }
+        },
+        "result": { "item": "utilitycraft:residue_processor", "count": 1 },
+        "unlock": [ { "item": "utilitycraft:advanced_chip" } ]
+    }
+}

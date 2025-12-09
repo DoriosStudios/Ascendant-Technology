@@ -1,0 +1,130 @@
+{
+    "namespace": "residue_processor",
+    "residue_processor_top": {
+        "type": "collection_panel",
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "size": [162, 72],
+        "offset": [-10, -40],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "controls": [
+            { 
+                "chest_label@chest.chest_label": { 
+                    "offset": [10, 0] 
+                } 
+            },
+            { 
+                "energy_bar@machineryCommon.vertical_single": {
+                    "$is_energy": true, 
+                    "$has_bg": false, 
+                    "offset": [-72, 0] 
+                } 
+            },
+            {
+                "upgrades@machineryCommon.vertical_interactive": {
+                    "$has_bg": true,
+                    "$collection_index_first": 6,
+                    "$collection_index_second": 7,
+                    "$has_third": false,
+                    "offset": [102, 0]
+                }
+            },
+            {
+                "screen": {
+                    "type": "image",
+                    "texture": "textures/ui/half_long_panel_classic",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [90, 166],
+                    "offset": [-88, -8],
+                    "layer": 0
+                }
+            },
+            {
+                "item_label@machineryCommon.item_label": {
+                    "collection_index": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$text_scale": 0.55,
+                    "offset": [-78, 2]
+                }
+            },
+            {
+                "machinery@common_machines.machinery": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [20, 30],
+                    "collection_index": 2
+                }
+            },
+            {
+                "item@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-32, 28],
+                    "collection_index": 3,
+                    "$cell_image_size": [24, 24],
+                    "size": [24, 24]
+                }
+            },
+            {
+                "item@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-2, 28],
+                    "collection_index": 4,
+                    "$cell_image_size": [22, 22],
+                    "size": [22, 22]
+                }
+            },
+            {
+                "item@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [72, 30],
+                    "collection_index": 18
+                }
+            },
+            {
+                "item@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [92, 30],
+                    "collection_index": 19
+                }
+            }
+        ]
+    },
+    "utility_panel": {
+        "type": "panel",
+        "controls": [
+            { "container_gamepad_helpers@common.container_gamepad_helpers": {} },
+            { "flying_item_renderer@common.flying_item_renderer": { "layer": 14 } },
+            { "selected_item_details_factory@common.selected_item_details_factory": {} },
+            { "item_lock_notification_factory@common.item_lock_notification_factory": {} },
+            {
+                "root_panel@common.root_panel": {
+                    "layer": 1,
+                    "controls": [
+                        { "common_panel@common.common_panel": {} },
+                        {
+                            "chest_panel": {
+                                "type": "panel",
+                                "layer": 5,
+                                "controls": [
+                                    { "residue_processor_top@residue_processor.residue_processor_top": {} },
+                                    { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {} },
+                                    { "hotbar_grid@common.hotbar_grid_template": {} },
+                                    { "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {} }
+                                ]
+                            }
+                        },
+                        { "inventory_selected_icon_button@common.inventory_selected_icon_button": {} },
+                        { "gamepad_cursor@common.gamepad_cursor_button": {} }
+                    ]
+                }
+            }
+        ]
+    }
+}

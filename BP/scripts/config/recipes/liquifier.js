@@ -46,6 +46,45 @@ const nativeLiquifierRecipes = [
             chance: 0.35
         },
         description: "Breaks down ancient debris to extract liquified alloys."
+    }),
+    defineLiquifierRecipe({
+        id: "utilitycraft:dark_matter_from_void_essence",
+        input: { id: "utilitycraft:void_essence", amount: 3 },
+        fluid: { type: "dark_matter", amount: 750 },
+        energyCost: 6400,
+        seconds: 9,
+        byproduct: {
+            id: "minecraft:ender_pearl",
+            amount: 1,
+            chance: 0.2
+        },
+        description: "Condenses volatile void essence into thick dark matter concentrate."
+    }),
+    defineLiquifierRecipe({
+        id: "utilitycraft:dark_matter_from_obsidian",
+        input: { id: "minecraft:obsidian", amount: 2 },
+        fluid: { type: "dark_matter", amount: 500 },
+        energyCost: 5200,
+        seconds: 8,
+        byproduct: {
+            id: "minecraft:crying_obsidian",
+            amount: 1,
+            chance: 0.1
+        },
+        description: "Melts obsidian down into a small batch of dark matter."
+    }),
+    defineLiquifierRecipe({
+        id: "utilitycraft:dark_matter_from_refined_obsidian_dust",
+        input: { id: "utilitycraft:refined_obsidian_dust", amount: 4 },
+        fluid: { type: "dark_matter", amount: 1000 },
+        energyCost: 7600,
+        seconds: 12,
+        byproduct: {
+            id: "minecraft:obsidian",
+            amount: 1,
+            chance: 0.35
+        },
+        description: "Liquifies refined obsidian dust into a full bucket of dark matter."
     })
 ];
 

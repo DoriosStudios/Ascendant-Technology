@@ -80,23 +80,6 @@ const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
  */
 const nativeCatalystWeaverRecipes = [
     defineWeaverRecipe({
-        id: 'utilitycraft:lavasteel_ingot',
-        input: { id: 'minecraft:iron_ingot', amount: 2 },
-        catalysts: [
-            { id: 'minecraft:blaze_powder', amount: 1 },
-            { id: 'minecraft:magma_cream', amount: 1 },
-            null,
-            null,
-            null,
-            null
-        ],
-        fluid: { type: 'lava', amount: 1000 },
-        output: { id: 'minecraft:netherite_scrap', amount: 1 },
-        byproduct: { id: 'minecraft:netherrack', amount: 1, chance: 0.35 },
-        cost: 3600,
-        speedModifier: 1
-    }),
-    defineWeaverRecipe({
         id: 'utilitycraft:netherite_helm_upgrade',
         input: { id: 'minecraft:skeleton_skull', amount: 1 },
         catalysts: [
@@ -129,6 +112,39 @@ const nativeCatalystWeaverRecipes = [
         byproduct: { id: 'utilitycraft:refined_obsidian_dust', amount: [0, 2], chance: 0.05 },
         cost: 12000,
         speedModifier: 0.5
+    }),
+    defineWeaverRecipe({
+        id: 'utilitycraft:aetherium_from_shards',
+        input: { id: 'utilitycraft:aetherium_shard', amount: 4 },
+        catalysts: [
+            { id: 'utilitycraft:energized_iron_ingot', amount: 1 },
+            { id: 'utilitycraft:steel_ingot', amount: 1 },
+            { id: 'minecraft:quartz', amount: 2 },
+            null,
+            null,
+            null
+        ],
+        output: { id: 'utilitycraft:aetherium', amount: 1 },
+        byproduct: { id: 'minecraft:gold_nugget', amount: [1, 3], chance: 0.35 },
+        cost: 6200,
+        speedModifier: 1.2
+    }),
+    defineWeaverRecipe({
+        id: 'utilitycraft:refined_obsidian_conversion',
+        input: { id: 'utilitycraft:crying_obsidian_dust', amount: 4 },
+        catalysts: [
+            { id: 'minecraft:glowstone_dust', amount: 2 },
+            { id: 'utilitycraft:energized_iron_dust', amount: 1 },
+            null,
+            null,
+            null,
+            null
+        ],
+        fluid: { type: 'liquified_aetherium', amount: 250 },
+        output: { id: 'utilitycraft:refined_obsidian_dust', amount: 2 },
+        byproduct: { id: 'minecraft:obsidian', amount: 1, chance: 0.3 },
+        cost: 5400,
+        speedModifier: 1
     })
 ]
 

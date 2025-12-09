@@ -70,6 +70,34 @@ const nativeClonerRecipes = [
         time: 2400,
         input: { id: "minecraft:dragon_egg" },
         output: { id: "minecraft:dragon_egg" }
+    }),
+    defineClonerRecipe({
+        id: "utilitycraft:clone_aetherium_shard",
+        rarity: "uncommon",
+        time: 80,
+        input: { id: "utilitycraft:aetherium_shard" },
+        output: { id: "utilitycraft:aetherium_shard" }
+    }),
+    defineClonerRecipe({
+        id: "utilitycraft:clone_void_essence",
+        rarity: "rare",
+        time: 160,
+        input: { id: "utilitycraft:void_essence" },
+        output: { id: "utilitycraft:void_essence" }
+    }),
+    defineClonerRecipe({
+        id: "utilitycraft:clone_shulker_shell",
+        rarity: "rare",
+        time: 200,
+        input: { id: "minecraft:shulker_shell" },
+        output: { id: "minecraft:shulker_shell" }
+    }),
+    defineClonerRecipe({
+        id: "utilitycraft:clone_wither_skull",
+        rarity: "epic",
+        time: 900,
+        input: { id: "minecraft:wither_skeleton_skull" },
+        output: { id: "minecraft:wither_skeleton_skull" }
     })
 ].filter(Boolean);
 

@@ -21,5 +21,8 @@
 import './recipes/cloner.js';
 import './recipes/catalyst_weaver.js';
 import './recipes/liquifier.js';
+import './recipes/energizer.js';
+import './recipes/residue_processor.js';
 
 import './recipes/added/insert_infuser.js';
+import './fluids/items.js';

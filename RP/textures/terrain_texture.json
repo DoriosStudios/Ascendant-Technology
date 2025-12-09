@@ -61,6 +61,12 @@
 		"utilitycraft_catalyst_weaver_on": {
 			"textures": "textures/blocks/machines/catalyst_weaver_on"
 		},
+		"utilitycraft_energizer_off": {
+			"textures": "textures/blocks/machines/cloner_off"
+		},
+		"utilitycraft_energizer_on": {
+			"textures": "textures/blocks/machines/cloner_on"
+		},
 		"utilitycraft_cloner_off": {
 			"textures": "textures/blocks/machines/cloner_off"
 		},
@@ -78,6 +84,33 @@
 		},
 		"utilitycraft_liquifier_on": {
 			"textures": "textures/blocks/machines/catalyst_weaver_on"
+		},
+		"utilitycraft_residue_processor_off": {
+			"textures": "textures/blocks/machines/cloner_off"
+		},
+		"utilitycraft_residue_processor_on": {
+			"textures": "textures/blocks/machines/cloner_on"
+		},
+		"utilitycraft_laser_barrier_off": {
+			"textures": "textures/blocks/machines/laser_barrier_off"
+		},
+		"utilitycraft_laser_barrier_on": {
+			"textures": "textures/blocks/machines/laser_barrier_on"
+		},
+		"utilitycraft_network_center_off": {
+			"textures": "textures/blocks/machines/cloner_off"
+		},
+		"utilitycraft_network_center_on": {
+			"textures": "textures/blocks/machines/cloner_on"
+		},
+		"utilitycraft_absolute_container_off": {
+			"textures": "textures/blocks/machines/cloner_off"
+		},
+		"utilitycraft_absolute_container_on": {
+			"textures": "textures/blocks/machines/cloner_on"
+		},
+		"utilitycraft_laser_barrier_field": {
+			"textures": "textures/blocks/laser_barrier_field"
 		},
 		"utilitycraft_singularity_fabricator_off": {
 			"textures": "textures/blocks/machines/cloner_off"

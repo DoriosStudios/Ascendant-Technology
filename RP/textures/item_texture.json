@@ -65,6 +65,19 @@
 		"utilitycraft_dark_matter_liquid_capsule_8": {
 			"textures": "textures/items/misc/dark_matter_liquid_capsule_8"
 		},
+		"utilitycraft_size_upgrade": {
+			"textures": "textures/items/machinery/size_upgrade"
+		},
+		"utilitycraft_lucky_mesh":{
+			"textures": "textures/items/meshes/lucky_mesh"
+		},
+		"utilitycraft_lucky_AIOT":{
+			"textures": "textures/items/tools/lucky_aiot"
+		},
+		"utilitycraft_lucky_AIOT_item":{
+			"textures": "textures/items/tools/lucky_aiot"
+		},
+		// Holder
 		"utilitycraft_liquified_aetherium_bar_00": {
 			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_00"
 		},

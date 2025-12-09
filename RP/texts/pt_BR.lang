@@ -15,47 +15,19 @@ tile.utilitycraft:liquifier.name=Liquefator\n§7- Aceita melhorias:\n    §a�
 tile.utilitycraft:laser_barrier.name=Barreira de Laser\n§7- Aceita melhorias:\n    §b§7, §g§7
 tile.utilitycraft:residue_processor.name=Processador de Resíduos\n§7- Aceita melhorias:\n    §a§7, §b§7
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade
+tile.utilitycraft:network_center.name=Centro de Rede
 
 ## Outros Blocos
 tile.utilitycraft:mob_magnet.name=Ímã de Mobs \n§7 Atrai mobs em um raio configurável
 tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser
-ui.utilitycraft.mob_magnet.menu.title=Ímã de Mobs
-ui.utilitycraft.mob_magnet.menu.body=Selecione uma opção
-ui.utilitycraft.mob_magnet.menu.configure=Configurar Ímã
-ui.utilitycraft.mob_magnet.menu.filter=Filtragem de Mobs
-ui.utilitycraft.mob_magnet.settings.title=Configurações do Ímã de Mobs
-ui.utilitycraft.mob_magnet.settings.toggle=Ativado
-ui.utilitycraft.mob_magnet.settings.range=§9Nível de Alcance
-ui.utilitycraft.mob_magnet.settings.range_option=§b{0}§7 blocos §r(Nível {1})
-ui.utilitycraft.mob_magnet.settings.cooldown=Recarga de Teleporte
-ui.utilitycraft.mob_magnet.settings.cooldown_option={0} tiques
-ui.utilitycraft.mob_magnet.filter.title=Filtragem de Mobs
-ui.utilitycraft.mob_magnet.filter.body=Modo atual: {0}
-ui.utilitycraft.mob_magnet.filter.add=Adicionar Mob
-ui.utilitycraft.mob_magnet.filter.list=Lista de Mobs Filtrados ({0})
-ui.utilitycraft.mob_magnet.filter.remove=Remover Mob
-ui.utilitycraft.mob_magnet.filter.mode_button=Modo: {0}
-ui.utilitycraft.mob_magnet.filter.list_title=Lista de Mobs Filtrados
-ui.utilitycraft.mob_magnet.filter.list_empty=Nenhum mob configurado.
-ui.utilitycraft.mob_magnet.filter.list_body=Mobs filtrados no momento:
-ui.utilitycraft.mob_magnet.filter.add.title=Adicionar Mob
-ui.utilitycraft.mob_magnet.filter.add.field=Identificador da entidade (ex.: minecraft:zombie)
-ui.utilitycraft.mob_magnet.filter.add.placeholder=minecraft:zombie
-ui.utilitycraft.mob_magnet.filter.add.invalid=§cIdentificador de mob inválido
-ui.utilitycraft.mob_magnet.filter.add.success=§aAdicionado {0}
-ui.utilitycraft.mob_magnet.filter.add.duplicate=§eMob já está na lista
-ui.utilitycraft.mob_magnet.filter.remove.title=Remover Mob
-ui.utilitycraft.mob_magnet.filter.remove.body=Selecione um mob para remover
-ui.utilitycraft.mob_magnet.filter.remove.success=§cRemovido {0}
-ui.utilitycraft.mob_magnet.filter.mode.whitelist=Lista Branca
-ui.utilitycraft.mob_magnet.filter.mode.blacklist=Lista Negra
-ui.utilitycraft.mob_magnet.filter.mode_switched=§bModo alterado para {0}
 
 ## Itens
 item.utilitycraft:aetherium=Barra de Aetherium
 item.utilitycraft:aetherium_shard=Fragmento de Aetherium
 item.utilitycraft:void_essence=Essência do Vazio
 item.utilitycraft:liquid_void=Ampola de Vazio Líquido
+item.utilitycraft:lucky_aiot_item=AiOT da Sorte\n§7Pilhagem X\nFortuna X
+item.utilitycraft:lucky_aiot=AiOT da Sorte
 
 item.utilitycraft:size_upgrade=Módulo de Melhoria de §gTamanho§7\n- Aumenta a área da Barreira de Laser
 
@@ -90,8 +62,40 @@ entity.utilitycraft:laser_barrier.name=Barreira de Laser
 entity.utilitycraft:residue_processor.name=Processador de Resíduos
 entity.utilitycraft:energizer.name=Energizador
 entity.utilitycraft:network_center.name=§fCentro de Rede
-tile.utilitycraft:network_center.name=§fCentro de Rede
+entity.utilitycraft:absolute_container.name=§fContainer Absoluto
 
+
+ui.utilitycraft.mob_magnet.menu.title=Ímã de Mobs
+ui.utilitycraft.mob_magnet.menu.body=Selecione uma opção
+ui.utilitycraft.mob_magnet.menu.configure=Configurar Ímã
+ui.utilitycraft.mob_magnet.menu.filter=Filtragem de Mobs
+ui.utilitycraft.mob_magnet.settings.title=Configurações do Ímã de Mobs
+ui.utilitycraft.mob_magnet.settings.toggle=Ativado
+ui.utilitycraft.mob_magnet.settings.range=§9Nível de Alcance
+ui.utilitycraft.mob_magnet.settings.range_option=§b{0}§7 blocos §r(Nível {1})
+ui.utilitycraft.mob_magnet.settings.cooldown=Recarga de Teleporte
+ui.utilitycraft.mob_magnet.settings.cooldown_option={0} tiques
+ui.utilitycraft.mob_magnet.filter.title=Filtragem de Mobs
+ui.utilitycraft.mob_magnet.filter.body=Modo atual: {0}
+ui.utilitycraft.mob_magnet.filter.add=Adicionar Mob
+ui.utilitycraft.mob_magnet.filter.list=Lista de Mobs Filtrados ({0})
+ui.utilitycraft.mob_magnet.filter.remove=Remover Mob
+ui.utilitycraft.mob_magnet.filter.mode_button=Modo: {0}
+ui.utilitycraft.mob_magnet.filter.list_title=Lista de Mobs Filtrados
+ui.utilitycraft.mob_magnet.filter.list_empty=Nenhum mob configurado.
+ui.utilitycraft.mob_magnet.filter.list_body=Mobs filtrados no momento:
+ui.utilitycraft.mob_magnet.filter.add.title=Adicionar Mob
+ui.utilitycraft.mob_magnet.filter.add.field=Identificador da entidade (ex.: minecraft:zombie)
+ui.utilitycraft.mob_magnet.filter.add.placeholder=minecraft:zombie
+ui.utilitycraft.mob_magnet.filter.add.invalid=§cIdentificador de mob inválido
+ui.utilitycraft.mob_magnet.filter.add.success=§aAdicionado {0}
+ui.utilitycraft.mob_magnet.filter.add.duplicate=§eMob já está na lista
+ui.utilitycraft.mob_magnet.filter.remove.title=Remover Mob
+ui.utilitycraft.mob_magnet.filter.remove.body=Selecione um mob para remover
+ui.utilitycraft.mob_magnet.filter.remove.success=§cRemovido {0}
+ui.utilitycraft.mob_magnet.filter.mode.whitelist=Lista Branca
+ui.utilitycraft.mob_magnet.filter.mode.blacklist=Lista Negra
+ui.utilitycraft.mob_magnet.filter.mode_switched=§bModo alterado para {0}
 ## Placeholders
 item.utilitycraft:liquefied_aetherium_00=Aetherium Líquido
 item.utilitycraft:liquefied_aetherium_01=Aetherium Líquido

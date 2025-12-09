@@ -1,0 +1,71 @@
+{
+	"format_version": "1.21.90",
+	"minecraft:item": {
+		"description": {
+			"identifier": "utilitycraft:lucky_aiot",
+			"menu_category": {
+				"category": "equipment"
+			}
+		},
+		"components": {
+			"utilitycraft:hoe": {
+				"size": 3,
+				"runTractor": true
+			},
+			"minecraft:tags": {
+				"tags": [
+					"minecraft:is_axe",
+					"minecraft:is_pickaxe",
+                    "minecraft:is_sword",
+					"utilitycraft:is_aiot",
+					"minecraft:netherite_tier"
+				]
+			},
+			"minecraft:fire_resistant": {
+				"value": true
+			},
+			"minecraft:max_stack_size": 1,
+			"minecraft:hand_equipped": true,
+			"minecraft:durability": {
+				"max_durability": 7805
+			},
+			"minecraft:damage": 9,
+			"minecraft:icon": "utilitycraft_lucky_AIOT",
+			"minecraft:enchantable": {
+				"value": 50,
+				"slot": "axe"
+			},
+			"minecraft:repairable": {
+				"repair_items": [
+					{
+						"items": [
+							"minecraft:experience_bottle"
+						],
+						"repair_amount": 1561
+					},
+					{
+						"items": [
+							"utilitycraft:lucky_aiot"
+						],
+						"repair_amount": 7805
+					}
+				]
+			},
+			"minecraft:digger": {
+				"use_efficiency": true,
+				"destroy_speeds": [
+					{
+						"speed": 40,
+						"block": {
+							"tags": "q.any_tag('minecraft:is_pickaxe_item_destructible', 'minecraft:is_shovel_item_destructible', 'minecraft:is_axe_item_destructible', 'minecraft:is_hoe_item_destructible')"
+						}
+					},
+					{
+						"speed": 30,
+						"block": "minecraft:web"
+					}
+				]
+			}
+		}
+	}
+}

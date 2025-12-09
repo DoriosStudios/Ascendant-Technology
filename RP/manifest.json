@@ -8,7 +8,7 @@
 	},
 	"header": {
 		"name": "Ascendant Technology",
-		"description": "Adds even more machines and features for your world with UtilityCraft!\nv0.2.3",
+		"description": "Adds even more machines and features for your world with UtilityCraft!\n§7Requires UtilityCraft 3.3+\nv0.4.3 §aBeta - §6Dorios Studios",
 		"min_engine_version": [
 			1,
 			21,
@@ -18,7 +18,7 @@
 		"version": [
 			1,
 			0,
-			3
+			4
 		]
 	},
 	"modules": [

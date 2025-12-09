@@ -1,10 +1,11 @@
 {
-	"format_version": "1.20.80",
+	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
 			"identifier": "utilitycraft:singularity_fabricator",
 			"menu_category": {
-				"category": "construction"
+				"category": "construction",
+				"group": "dorios:itemGroup.name.machines"
 			},
 			"states": {
 				"utilitycraft:on": [
@@ -50,6 +51,7 @@
 						7,
 						8,
 						9,
+						10,
 						12,
 						13,
 						14,

@@ -1,28 +1,33 @@
 {
-	"format_version": "1.20.80",
+	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
 			"identifier": "utilitycraft:mob_magnet",
 			"menu_category": {
-				"category": "construction"
+				"category": "construction",
+				"group": "dorios:itemGroup.name.mob_grinding"
 			},
 			"states": {
 				"utilitycraft:isOn": [
 					false,
 					true
 				],
-				"utilitycraft:rangeSelected": [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24
-				]
+				"utilitycraft:rangeSelected": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24],
+				"utilitycraft:range": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+				"utilitycraft:filter": [0, 1]
 			}
 		},
 		"components": {
 			"utilitycraft:mob_magnet": {},
+			"utilitycraft:upgradeable": {},
 			"minecraft:material_instances": {
 				"*": {
 					"texture": "utilitycraft_mob_magnet_off",
 					"render_method": "alpha_test"
 				}
 			},
+			"tag:dorios:upgraedable": {},
+			"minecraft:geometry": "geometry.utilitycraft_block",
 			"minecraft:map_color": "#1d1526",
 			"minecraft:tick": {
 				"interval_range": [

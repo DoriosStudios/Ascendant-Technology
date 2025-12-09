@@ -39,7 +39,7 @@
                     "anchor_from": "top_right",
                     "anchor_to": "top_right",
                     "offset": [
-                        12,
+                        -4,
                         58
                     ],
                     "controls": [
@@ -71,7 +71,7 @@
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [
-                        106,
+                        98,
                         92
                     ]
                 }
@@ -82,7 +82,7 @@
                     "texture": "textures/ui/background_panel_blue",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ 116, 98 ],
+                    "offset": [ 108, 98 ],
                     "$cell_image_size": [ 28, 70 ],
                     "size": [ 28, 70 ]
                 }
@@ -93,7 +93,7 @@
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [
-                        142,
+                        128,
                         84
                     ],
                     "controls": [
@@ -135,11 +135,11 @@
                     "anchor_to": "center",
                     "$cell_image_size": [254, 166],
                     "size": [
-                        254,
+                        238,
                         166
                     ],
                     "offset": [
-                        49,
+                        39,
                         60
                     ],
                     "layer": -1,
@@ -164,7 +164,7 @@
                         "anchor_from": "center",
                         "anchor_to": "center",
                         "offset": [
-                            0, -30
+                            -2, -30
                         ],
                         "$cell_image_size": [156, 20],
                         "size": [156, 20]
@@ -295,8 +295,8 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        152,
-                        194
+                        138,
+                        195
                     ],
                     "collection_index": 10
                 }

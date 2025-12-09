@@ -1,9 +1,11 @@
 # Ascendant Technology
-An official expansion add-on for UtilityCraft, aim to add more end-game content.
+An official expansion add-on for UtilityCraft, aiming to add more end-game content.
 
 ---
 
 Latest Pre-release Changelog:
+
+---
 
 Version v0.4.3 is focused on heavy-duty storage, smarter automation, and UI quality-of-life polish ahead of broader testing.
 

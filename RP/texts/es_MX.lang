@@ -5,16 +5,52 @@ tile.utilitycraft:absolute_magmator.name=Magmator Absoluto\n§7  Velocidad: 400 
 tile.utilitycraft:absolute_solar_panel.name=Panel Solar Absoluto\n§7  Velocidad Máx: 96 DE/t
 tile.utilitycraft:absolute_thermo_generator.name=Generador Termal Absoluto\n§7   Velocidad: 16 DE/t
 tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velocidad Base: 64 DE/t\n  Multiplicador de Altura Máximo: 1000%\n  No funciona debajo de y12
+tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena ítems, energía y fluidos; transferencia inalámbrica y auras
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7- Acepta mejoras:\n  §a§7, §b§7
-tile.utilitycraft:cloner.name=Clonador\n§7- Acepta mejoras:\n  §a§7, §b§7
+tile.utilitycraft:cloner.name=Duplicador\n§7- Acepta mejoras:\n  §a§7, §b§7
+tile.utilitycraft:energizer.name=Energizador\n§7- Acepta mejoras:\n  §a§7, §b§7\n§7- Energiza lingotes, polvos y bloques con un enorme costo de DE
 tile.utilitycraft:liquifier.name=Licuefactor\n§7- Acepta mejoras:\n  §a§7, §b§7\n§7- Convierte sólidos en fluidos procesables
+tile.utilitycraft:laser_barrier.name=Barrera Láser\n§7- Acepta mejoras:\n  §a§7, §b§7, §dTamaño§7\n§7- Genera una rejilla láser temporal que bloquea y daña
+tile.utilitycraft:residue_processor.name=Procesador de Residuos\n§7- Acepta mejoras:\n  §a§7, §b§7\n§7- Recupera valor de desechos y subproductos
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad\n§7- Acepta mejoras:\n  §a§7, §b§7\n§7- Requiere fluido §5Materia Oscura
 
 ## Otros Bloques
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
 tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7  Atrae mobs en un radio configurable
+tile.utilitycraft:laser_barrier_field.name=Campo de Barrera Láser\n§7  Zona activa proyectada por la barrera
+ui.utilitycraft.mob_magnet.menu.title=Imán de Mobs
+ui.utilitycraft.mob_magnet.menu.body=Selecciona una opción
+ui.utilitycraft.mob_magnet.menu.configure=Configurar Imán
+ui.utilitycraft.mob_magnet.menu.filter=Filtrado de Mobs
+ui.utilitycraft.mob_magnet.settings.title=Configuración del Imán de Mobs
+ui.utilitycraft.mob_magnet.settings.toggle=Activado
+ui.utilitycraft.mob_magnet.settings.range=§9Nivel de Alcance
+ui.utilitycraft.mob_magnet.settings.range_option=§b{0}§7 bloques §r(Nivel {1})
+ui.utilitycraft.mob_magnet.settings.cooldown=Reutilización de Teletransporte
+ui.utilitycraft.mob_magnet.settings.cooldown_option={0} ticks
+ui.utilitycraft.mob_magnet.filter.title=Filtrado de Mobs
+ui.utilitycraft.mob_magnet.filter.body=Modo actual: {0}
+ui.utilitycraft.mob_magnet.filter.add=Añadir Mob
+ui.utilitycraft.mob_magnet.filter.list=Lista de Mobs Filtrados ({0})
+ui.utilitycraft.mob_magnet.filter.remove=Eliminar Mob
+ui.utilitycraft.mob_magnet.filter.mode_button=Modo: {0}
+ui.utilitycraft.mob_magnet.filter.list_title=Lista de Mobs Filtrados
+ui.utilitycraft.mob_magnet.filter.list_empty=No hay mobs configurados.
+ui.utilitycraft.mob_magnet.filter.list_body=Mobs filtrados actualmente:
+ui.utilitycraft.mob_magnet.filter.add.title=Añadir Mob
+ui.utilitycraft.mob_magnet.filter.add.field=Identificador de entidad (ej.: minecraft:zombie)
+ui.utilitycraft.mob_magnet.filter.add.placeholder=minecraft:zombie
+ui.utilitycraft.mob_magnet.filter.add.invalid=§cIdentificador de mob inválido
+ui.utilitycraft.mob_magnet.filter.add.success=§aSe añadió {0}
+ui.utilitycraft.mob_magnet.filter.add.duplicate=§eEl mob ya está en la lista
+ui.utilitycraft.mob_magnet.filter.remove.title=Eliminar Mob
+ui.utilitycraft.mob_magnet.filter.remove.body=Selecciona un mob para eliminar
+ui.utilitycraft.mob_magnet.filter.remove.success=§cSe eliminó {0}
+ui.utilitycraft.mob_magnet.filter.mode.whitelist=Lista Blanca
+ui.utilitycraft.mob_magnet.filter.mode.blacklist=Lista Negra
+ui.utilitycraft.mob_magnet.filter.mode_switched=§bModo cambiado a {0}
 
 ## Ítems
 item.utilitycraft:aetherium=Lingote de Éter
@@ -22,6 +58,11 @@ item.utilitycraft:liquified_aetherium_bucket=Cubeta de Éter Liquefactado
 item.utilitycraft:aetherium_shard=Fragmento de Éter
 item.utilitycraft:void_essence=Esencia del Vacío
 item.utilitycraft:liquid_void=Ampolla de Vacío Líquido
+item.utilitycraft:size_upgrade=Módulo de Tamaño
+item.utilitycraft:range_upgrade=Mejora de Alcance
+item.utilitycraft:damage_upgrade=Mejora de Daño
+item.utilitycraft:quantity_upgrade=Mejora de Cantidad
+item.utilitycraft:speed_upgrade=Mejora de Velocidad
 
 ## Cápsulas de Materia Oscura
 item.utilitycraft:empty_liquid_capsule=Cápsula de Líquido Vacía
@@ -147,6 +188,11 @@ item.utilitycraft:dark_matter_47=Fluido de Materia Oscura
 item.utilitycraft:dark_matter_48=Fluido de Materia Oscura
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=Cámara Catalisadora
-entity.utilitycraft:cloner.name=Clonador
+entity.utilitycraft:cloner.name=Duplicador
 entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad
 entity.utilitycraft:liquifier.name=Liquefactor
+entity.utilitycraft:laser_barrier.name=Barrera Láser
+entity.utilitycraft:residue_processor.name=Procesador de Residuos
+entity.utilitycraft:energizer.name=Energizador
+entity.utilitycraft:network_center.name=§fCentro de Red
+tile.utilitycraft:network_center.name=§fCentro de Red

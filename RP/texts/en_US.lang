@@ -1,20 +1,25 @@
 ## Generators
 tile.utilitycraft:absolute_battery.name=Absolute Battery\n§7  Rate: 800 MDE/t
-tile.utilitycraft:absolute_furnator.name=Absolute Furnator\n§7  Rate: 320 DE/t
-tile.utilitycraft:absolute_magmator.name=Absolute Magmator\n§7  Rate: 400 DE/t
-tile.utilitycraft:absolute_solar_panel.name=Absolute Solar Panel\n§7  Max Rate: 96 DE/t
-tile.utilitycraft:absolute_thermo_generator.name=Absolute Thermo Generator\n§7   Rate: 16 DE/t
-tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Rate: 64 DE/t\n  Max Height Multiplier: 1000%\n  Does not work below y12
+tile.utilitycraft:absolute_furnator.name=Absolute Furnator\n§7  Rate: 320 MDE/t
+tile.utilitycraft:absolute_magmator.name=Absolute Magmator\n§7  Rate: 400 MachinesDE/t
+tile.utilitycraft:absolute_solar_panel.name=Absolute Solar Panel\n§7  Max Rate: 96 MDE/t
+tile.utilitycraft:absolute_thermo_generator.name=Absolute Thermo Generator\n§7   Rate: 16 MDE/t
+tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Rate: 64 MDE/t\n  Max Height Multiplier: 1000%\n  Does not work below y12
 
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7
-tile.utilitycraft:cloner.name=Cloner\n§7- Accepted upgrades: \n   §a§7, §b§7
-tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a§7, §b§7\n§7- Converts solids into processable fluids
-tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator\n§7- Accepted upgrades: \n   §a§7, §b§7\n§7- Requires §5Dark Matter Fluid
+tile.utilitycraft:cloner.name=Duplicator\n§7- Accepted upgrades: \n   §a§7
+tile.utilitycraft:energizer.name=Energizer\n§7- Accepted upgrades: \n   §a§7, §b§7
+tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a§7, §b§7
+tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7- Accepted upgrades: \n   §b§7, §g§7
+tile.utilitycraft:residue_processor.name=Residue Processor\n§7- Accepted upgrades: \n   §a§7, §b§7
+tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator
+tile.utilitycraft:network_center.name=Network Center\n§7- Shows network stats
+tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 168 items \n- Can store fluids\n - Can store energy
 
 ## Other Blocks
-tile.utilitycraft:flat_conduit.name=Flat Conduit\n§7  Aesthetic Version
 tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius
+
 
 ## Items
 item.utilitycraft:aetherium=Aetherium Ingot
@@ -22,27 +27,72 @@ item.utilitycraft:liquified_aetherium_bucket=Liquified Aetherium Bucket
 item.utilitycraft:aetherium_shard=Aetherium Shard
 item.utilitycraft:void_essence=Void Essence
 item.utilitycraft:liquid_void=Liquid Void Capsule
+item.utilitycraft:size_upgrade=§gSize Upgrade§7\n- Increases Laser Barrier area
+
+## Entities
+entity.utilitycraft:catalyst_weaver.name=§fCatalyst Weaver
+entity.utilitycraft:cloner.name=Duplicator
+entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator
+entity.utilitycraft:liquifier.name=Liquifier
+entity.utilitycraft:laser_barrier.name=Laser Barrier
+entity.utilitycraft:residue_processor.name=Residue Processor
+entity.utilitycraft:energizer.name=Energizer
+entity.utilitycraft:network_center.name=§fNetwork Center
+tile.utilitycraft:laser_barrier_field.name=tile.utilitycraft:laser_barrier_field.name
 
 ## Liquid Capsules
 item.utilitycraft:empty_liquid_capsule=Empty Liquid Capsule
 
-item.utilitycraft:aetherium_liquid_capsule_1=Dark Matter Capsule (1 Buckets)
-item.utilitycraft:aetherium_liquid_capsule_2=Dark Matter Capsule (2 Buckets)
-item.utilitycraft:aetherium_liquid_capsule_3=Dark Matter Capsule (3 Buckets)
-item.utilitycraft:aetherium_liquid_capsule_4=Dark Matter Capsule (4 Buckets)
-item.utilitycraft:aetherium_liquid_capsule_5=Dark Matter Capsule (5 Buckets)
-item.utilitycraft:aetherium_liquid_capsule_6=Dark Matter Capsule (6 Buckets)
-item.utilitycraft:aetherium_liquid_capsule_7=Dark Matter Capsule (7 Buckets)
-item.utilitycraft:aetherium_liquid_capsule_8=Dark Matter Capsule (8 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_1=Liquified Aetherium Capsule §7\n- (1 Bucket)
+item.utilitycraft:aetherium_liquid_capsule_2=Liquified Aetherium Capsule §7\n- (2 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_3=Liquified Aetherium Capsule §7\n- (3 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_4=Liquified Aetherium Capsule §7\n- (4 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_5=Liquified Aetherium Capsule §7\n- (5 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_6=Liquified Aetherium Capsule §7\n- (6 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_7=Liquified Aetherium Capsule §7\n- (7 Buckets)
+item.utilitycraft:aetherium_liquid_capsule_8=Liquified Aetherium Capsule §7\n- (8 Buckets)
 
-item.utilitycraft:dark_matter_liquid_capsule_1=Dark Matter Capsule (1 Bucket)
-item.utilitycraft:dark_matter_liquid_capsule_2=Dark Matter Capsule (2 Buckets)
-item.utilitycraft:dark_matter_liquid_capsule_3=Dark Matter Capsule (3 Buckets)
-item.utilitycraft:dark_matter_liquid_capsule_4=Dark Matter Capsule (4 Buckets)
-item.utilitycraft:dark_matter_liquid_capsule_5=Dark Matter Capsule (5 Buckets)
-item.utilitycraft:dark_matter_liquid_capsule_6=Dark Matter Capsule (6 Buckets)
-item.utilitycraft:dark_matter_liquid_capsule_7=Dark Matter Capsule (7 Buckets)
-item.utilitycraft:dark_matter_liquid_capsule_8=Dark Matter Capsule (8 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_1=Dark Matter Capsule §7\n- (1 Bucket)
+item.utilitycraft:dark_matter_liquid_capsule_2=Dark Matter Capsule §7\n- (2 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_3=Dark Matter Capsule §7\n- (3 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_4=Dark Matter Capsule §7\n- (4 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_5=Dark Matter Capsule §7\n- (5 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_6=Dark Matter Capsule §7\n- (6 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_7=Dark Matter Capsule §7\n- (7 Buckets)
+item.utilitycraft:dark_matter_liquid_capsule_8=Dark Matter Capsule §7\n- (8 Buckets)
+
+## UI Texts
+ui.utilitycraft.mob_magnet.menu.title=Mob Magnet
+ui.utilitycraft.mob_magnet.menu.body=Select an option
+ui.utilitycraft.mob_magnet.menu.configure=Configure Magnet
+ui.utilitycraft.mob_magnet.menu.filter=Mob Filtering
+ui.utilitycraft.mob_magnet.settings.title=Mob Magnet Settings
+ui.utilitycraft.mob_magnet.settings.toggle=Enabled
+ui.utilitycraft.mob_magnet.settings.range=§9Range §rLevel
+ui.utilitycraft.mob_magnet.settings.range_option=§b{0}§7 blocks §r(Level {1})
+ui.utilitycraft.mob_magnet.settings.cooldown=Teleport Cooldown
+ui.utilitycraft.mob_magnet.settings.cooldown_option={0} ticks
+ui.utilitycraft.mob_magnet.filter.title=Mob Filtering
+ui.utilitycraft.mob_magnet.filter.body=Current mode: {0}
+ui.utilitycraft.mob_magnet.filter.add=Add Mob
+ui.utilitycraft.mob_magnet.filter.list=Filtered Mob List ({0})
+ui.utilitycraft.mob_magnet.filter.remove=Remove Mob
+ui.utilitycraft.mob_magnet.filter.mode_button=Mode: {0}
+ui.utilitycraft.mob_magnet.filter.list_title=Filtered Mob List
+ui.utilitycraft.mob_magnet.filter.list_empty=No mobs configured.
+ui.utilitycraft.mob_magnet.filter.list_body=Mobs currently filtered:
+ui.utilitycraft.mob_magnet.filter.add.title=Add Mob
+ui.utilitycraft.mob_magnet.filter.add.field=Entity identifier (e.g. minecraft:zombie)
+ui.utilitycraft.mob_magnet.filter.add.placeholder=minecraft:zombie
+ui.utilitycraft.mob_magnet.filter.add.invalid=§cInvalid mob identifier
+ui.utilitycraft.mob_magnet.filter.add.success=§aAdded {0}
+ui.utilitycraft.mob_magnet.filter.add.duplicate=§eMob already in list
+ui.utilitycraft.mob_magnet.filter.remove.title=Remove Mob
+ui.utilitycraft.mob_magnet.filter.remove.body=Select a mob to remove
+ui.utilitycraft.mob_magnet.filter.remove.success=§cRemoved {0}
+ui.utilitycraft.mob_magnet.filter.mode.whitelist=Whitelist
+ui.utilitycraft.mob_magnet.filter.mode.blacklist=Blacklist
+ui.utilitycraft.mob_magnet.filter.mode_switched=§bMode switched to {0}
 
 ## Placeholders
 item.utilitycraft:liquefied_aetherium_00=Liquified Aetherium
@@ -145,9 +195,3 @@ item.utilitycraft:dark_matter_45=Dark Matter Fluid
 item.utilitycraft:dark_matter_46=Dark Matter Fluid
 item.utilitycraft:dark_matter_47=Dark Matter Fluid
 item.utilitycraft:dark_matter_48=Dark Matter Fluid
-
-## Entities
-entity.utilitycraft:catalyst_weaver.name=§fCatalyst Weaver
-entity.utilitycraft:cloner.name=Cloner
-entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator
-entity.utilitycraft:liquifier.name=Liquifier

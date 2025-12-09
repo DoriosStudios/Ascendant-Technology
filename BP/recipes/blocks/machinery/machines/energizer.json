@@ -1,0 +1,45 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:energizer"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "ERE",
+            "MIM",
+            "CAC"
+        ],
+        "key": {
+            "E": {
+                "item": "utilitycraft:compressed_energized_iron_block_2"
+            },
+            "R": {
+                "item": "minecraft:redstone_block"
+            },
+            "M": {
+                "item": "utilitycraft:machine_case"
+            },
+            "I": {
+                "item": "utilitycraft:infuser"
+            },
+            "C": {
+                "item": "utilitycraft:advanced_chip"
+            },
+            "A": {
+                "item": "utilitycraft:ultimate_chip"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:energizer",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:advanced_chip"
+            }
+        ]
+    }
+}

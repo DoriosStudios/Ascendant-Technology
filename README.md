@@ -1,5 +1,5 @@
 # Ascendant Technology
-An expansion add-on for UtilityCraft
+An official expansion add-on for UtilityCraft, aim to add more end-game content.
 
 ---
 

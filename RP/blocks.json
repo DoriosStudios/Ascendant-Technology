@@ -3,5 +3,9 @@
 		1,
 		1,
 		0
-	]
+	],
+	"utilitycraft:laser_barrier_field": {
+		"sound": "stone",
+		"textures": "utilitycraft_laser_barrier_field"
+	}
 }

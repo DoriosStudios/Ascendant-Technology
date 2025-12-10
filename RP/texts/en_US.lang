@@ -1,10 +1,10 @@
 ## Generators
-tile.utilitycraft:absolute_battery.name=Absolute Battery\n§7  Rate: 800 MDE/t
-tile.utilitycraft:absolute_furnator.name=Absolute Furnator\n§7  Rate: 320 MDE/t
-tile.utilitycraft:absolute_magmator.name=Absolute Magmator\n§7  Rate: 400 MachinesDE/t
-tile.utilitycraft:absolute_solar_panel.name=Absolute Solar Panel\n§7  Max Rate: 96 MDE/t
-tile.utilitycraft:absolute_thermo_generator.name=Absolute Thermo Generator\n§7   Rate: 16 MDE/t
-tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Rate: 64 MDE/t\n  Max Height Multiplier: 1000%\n  Does not work below y12
+tile.utilitycraft:absolute_battery.name=Absolute Battery\n§7  Rate: 800 kDE/t
+tile.utilitycraft:absolute_furnator.name=Absolute Furnator\n§7  Rate: 320 kDE/t
+tile.utilitycraft:absolute_magmator.name=Absolute Magmator\n§7  Rate: 400 kDE/t
+tile.utilitycraft:absolute_solar_panel.name=Absolute Solar Panel\n§7  Max Rate: 96 kDE/t
+tile.utilitycraft:absolute_thermo_generator.name=Absolute Thermo Generator\n§7   Rate: 16 kDE/t
+tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Rate: 64 kDE/t\n  Max Height Multiplier: 1000%\n  Does not work below y12
 
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7

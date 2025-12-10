@@ -1,11 +1,11 @@
 ## Geradores
-tile.utilitycraft:absolute_battery.name=Bateria Absoluta \n§7 Velocidade: 800 MDE/t
-tile.utilitycraft:absolute_furnator.name=Furnator Absoluto \n§7 Velocidade: 320 MDE/t
-tile.utilitycraft:absolute_magmator.name=Magmator Absoluto \n§7 Velocidade: 400 MDE/t
+tile.utilitycraft:absolute_battery.name=Bateria Absoluta \n§7 Velocidade: 800 kDE/t
+tile.utilitycraft:absolute_furnator.name=Furnator Absoluto \n§7 Velocidade: 320 kDE/t
+tile.utilitycraft:absolute_magmator.name=Magmator Absoluto \n§7 Velocidade: 400 kDE/t
 tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena itens (168 espaços)\n- Armazena energia\n- Armazena líquidos)
-tile.utilitycraft:absolute_solar_panel.name=Painel Solar Absoluto \n§7 Velocidade Máx: 96 MDE/t
-tile.utilitycraft:absolute_thermo_generator.name=Gerador Térmico Absoluto \n§7 Velocidade: 16 MDE/t
-tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta \n§7  Velocidade Base: 64 MDE/t\n  Multiplicador de Altura Máximo: 10x\n  Não funciona abaixo de y12
+tile.utilitycraft:absolute_solar_panel.name=Painel Solar Absoluto \n§7 Velocidade Máx: 96 kDE/t
+tile.utilitycraft:absolute_thermo_generator.name=Gerador Térmico Absoluto \n§7 Velocidade: 16 kDE/t
+tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta \n§7  Velocidade Base: 64 kDE/t\n  Multiplicador de Altura Máximo: 10x\n  Não funciona abaixo de y12
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7- Aceita melhorias:\n    §a§7, §b§7

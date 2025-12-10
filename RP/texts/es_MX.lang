@@ -1,10 +1,10 @@
 ## Generadores
-tile.utilitycraft:absolute_battery.name=Batería Absoluta\n§7  Velocidad: 800 MDE/t
-tile.utilitycraft:absolute_furnator.name=Furnator Absoluto\n§7  Velocidad: 320 DE/t
-tile.utilitycraft:absolute_magmator.name=Magmator Absoluto\n§7  Velocidad: 400 DE/t
-tile.utilitycraft:absolute_solar_panel.name=Panel Solar Absoluto\n§7  Velocidad Máx: 96 DE/t
-tile.utilitycraft:absolute_thermo_generator.name=Generador Termal Absoluto\n§7   Velocidad: 16 DE/t
-tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velocidad Base: 64 DE/t\n  Multiplicador de Altura Máximo: 1000%\n  No funciona debajo de y12
+tile.utilitycraft:absolute_battery.name=Batería Absoluta\n§7  Velocidad: 800 kDE/t
+tile.utilitycraft:absolute_furnator.name=Furnator Absoluto\n§7  Velocidad: 320 kDE/t
+tile.utilitycraft:absolute_magmator.name=Magmator Absoluto\n§7  Velocidad: 400 kDE/t
+tile.utilitycraft:absolute_solar_panel.name=Panel Solar Absoluto\n§7  Velocidad Máx: 96 kDE/t
+tile.utilitycraft:absolute_thermo_generator.name=Generador Termal Absoluto\n§7   Velocidad: 16 kDE/t
+tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velocidad Base: 64 kDE/t\n  Multiplicador de Altura Máximo: 1000%\n  No funciona debajo de y12
 tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena ítems, energía y fluidos; transferencia inalámbrica y auras
 
 ## Máquinas

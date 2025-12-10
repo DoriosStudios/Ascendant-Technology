@@ -1,3 +1,5 @@
+import { system } from "@minecraft/server";
+
 const DEFAULT_ENERGY_COST = 3600;
 const DEFAULT_FLUID_AMOUNT = 250;
 const DEFAULT_INPUT_AMOUNT = 1;
@@ -88,25 +90,40 @@ const nativeLiquifierRecipes = [
     })
 ];
 
+export const liquifierRecipes = nativeLiquifierRecipes;
+
 export function getLiquifierRecipes() {
-    return nativeLiquifierRecipes;
+    return liquifierRecipes;
 }
 
-export const liquifierRecipes = getLiquifierRecipes();
+/**
+ * @typedef {Object} LiquifierRecipeDefinition
+ * @property {{ id: string, amount: number }} input Required solid input stack.
+ * @property {{ type: string, amount?: number }} fluid Required fluid output block; amount defaults to 250 mB.
+ * @property {string} [id] Optional identifier (defaults to the input identifier).
+ * @property {number} [energyCost] Optional FE override per craft (defaults to 3 600).
+ * @property {number} [seconds] Optional processing time in seconds (defaults to 6s).
+ * @property {{ id: string, amount?: number, chance?: number }} [byproduct] Optional secondary output definition.
+ * @property {string} [description] Optional HUD description.
+ */
 
 /**
  * @typedef {Object} LiquifierRecipe
- * @property {string} id Unique identifier for the recipe.
- * @property {{ id: string, amount: number }} input Input stack definition.
- * @property {{ type: string, amount: number }} fluid Fluid output definition.
+ * @property {string} id Unique identifier for the normalized recipe.
+ * @property {{ id: string, amount: number }} input Sanitized input stack definition.
+ * @property {{ type: string, amount: number }} fluid Sanitized fluid output definition.
  * @property {number} energyCost Energy required to finish one craft.
  * @property {number} ticks Processing time expressed in game ticks.
  * @property {number} seconds Processing time expressed in seconds.
- * @property {{ id: string, amount: number, chance?: number } | null} [byproduct]
- * Optional residue output definition.
- * @property {string | null} [description] Short flavor text used by the HUD.
+ * @property {{ id: string, amount: number, chance: number } | null} byproduct Optional residue output definition.
+ * @property {string | null} description Short flavor text used by the HUD.
  */
 
+/**
+ * Normalizes a liquifier recipe definition.
+ * @param {LiquifierRecipeDefinition} recipe
+ * @returns {LiquifierRecipe}
+ */
 function defineLiquifierRecipe(recipe) {
     if (!recipe || typeof recipe !== "object") throw new TypeError("Invalid liquifier recipe payload");
 
@@ -169,4 +186,49 @@ function clampChance(value) {
     const parsed = Number(value);
     if (!Number.isFinite(parsed)) return 1;
     return Math.max(0, Math.min(1, parsed));
+}
+
+const LIQUIFIER_EVENT_ID = "utilitycraft:register_liquifier_recipe";
+
+system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
+    if (id !== LIQUIFIER_EVENT_ID) return;
+
+    try {
+        const payload = JSON.parse(message);
+        if (!payload || typeof payload !== "object") return;
+
+        let added = 0;
+        let replaced = 0;
+
+        for (const [recipeId, definition] of Object.entries(payload)) {
+            if (!definition || typeof definition !== "object") {
+                console.warn(`[UtilityCraft] Ignored invalid liquifier recipe '${recipeId}'.`);
+                continue;
+            }
+
+            try {
+                const status = upsertLiquifierRecipe({ id: recipeId, ...definition });
+                if (status === "replaced") replaced++; else added++;
+            } catch (err) {
+                console.warn(`[UtilityCraft] Failed to register liquifier recipe '${recipeId}':`, err);
+            }
+        }
+
+        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} liquifier recipes.`);
+    } catch (err) {
+        console.warn("[UtilityCraft] Failed to parse liquifier recipe payload:", err);
+    }
+});
+
+function upsertLiquifierRecipe(definition) {
+    const recipe = defineLiquifierRecipe(definition);
+    const index = liquifierRecipes.findIndex(entry => entry.id === recipe.id);
+
+    if (index >= 0) {
+        liquifierRecipes[index] = recipe;
+        return "replaced";
+    }
+
+    liquifierRecipes.push(recipe);
+    return "added";
 }

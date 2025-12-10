@@ -1,17 +1,30 @@
+import { system } from "@minecraft/server";
+
 const DEFAULT_ENERGY_COST = 9600;
 const DEFAULT_SECONDS = 5;
 const TICKS_PER_SECOND = 20;
 
 /**
+ * @typedef {Object} EnergizerRecipeDefinition
+ * @property {{ id: string, amount: number } | string} input Required primary input stack.
+ * @property {{ id: string, amount: number } | string} output Required output stack.
+ * @property {string} [id] Optional unique recipe identifier (defaults to the input identifier).
+ * @property {number} [energyCost] Optional energy override in FE (defaults to 9 600).
+ * @property {number} [seconds] Optional processing time override in seconds (defaults to 5s).
+ * @property {string} [description] Optional flavor text surfaced in HUD.
+ * @property {('primary'|'aux')} [preferredSlot] Optional preferred input slot hint for the UI.
+ */
+
+/**
  * @typedef {Object} EnergizerRecipe
- * @property {string} id
- * @property {{ id: string, amount: number }} input
- * @property {{ id: string, amount: number }} output
- * @property {number} energyCost
- * @property {number} ticks
- * @property {number} seconds
- * @property {string | null} [description]
- * @property {('primary'|'aux')} [preferredSlot]
+ * @property {string} id Normalized recipe identifier.
+ * @property {{ id: string, amount: number }} input Input stack with sanitized amount.
+ * @property {{ id: string, amount: number }} output Output stack with sanitized amount.
+ * @property {number} energyCost Total FE cost per craft.
+ * @property {number} ticks Processing time expressed in game ticks.
+ * @property {number} seconds Processing time expressed in seconds.
+ * @property {string | null} description Optional flavor text (null when omitted).
+ * @property {('primary'|'aux')} preferredSlot Preferred slot target stored on the recipe.
  */
 
 const nativeEnergizerRecipes = [
@@ -66,12 +79,17 @@ const nativeEnergizerRecipes = [
     })
 ];
 
+export const energizerRecipes = nativeEnergizerRecipes;
+
 export function getEnergizerRecipes() {
-    return nativeEnergizerRecipes;
+    return energizerRecipes;
 }
 
-export const energizerRecipes = getEnergizerRecipes();
-
+/**
+ * Normalizes a recipe definition into an EnergizerRecipe object.
+ * @param {EnergizerRecipeDefinition} payload
+ * @returns {EnergizerRecipe}
+ */
 function defineEnergizerRecipe(payload) {
     if (!payload || typeof payload !== "object") {
         throw new TypeError("Invalid energizer recipe payload");
@@ -112,4 +130,49 @@ function clampSeconds(value) {
     const parsed = Number(value);
     if (!Number.isFinite(parsed) || parsed <= 0) return DEFAULT_SECONDS;
     return Math.max(1, Math.floor(parsed));
+}
+
+const ENERGIZER_EVENT_ID = "utilitycraft:register_energizer_recipe";
+
+system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
+    if (id !== ENERGIZER_EVENT_ID) return;
+
+    try {
+        const payload = JSON.parse(message);
+        if (!payload || typeof payload !== "object") return;
+
+        let added = 0;
+        let replaced = 0;
+
+        for (const [recipeId, definition] of Object.entries(payload)) {
+            if (!definition || typeof definition !== "object") {
+                console.warn(`[UtilityCraft] Ignored invalid energizer recipe entry for '${recipeId}'.`);
+                continue;
+            }
+
+            try {
+                const status = upsertEnergizerRecipe({ id: recipeId, ...definition });
+                if (status === "replaced") replaced++; else added++;
+            } catch (err) {
+                console.warn(`[UtilityCraft] Failed to register energizer recipe '${recipeId}':`, err);
+            }
+        }
+
+        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} energizer recipes.`);
+    } catch (err) {
+        console.warn("[UtilityCraft] Failed to parse energizer recipe payload:", err);
+    }
+});
+
+function upsertEnergizerRecipe(definition) {
+    const recipe = defineEnergizerRecipe(definition);
+    const index = energizerRecipes.findIndex(entry => entry.id === recipe.id);
+
+    if (index >= 0) {
+        energizerRecipes[index] = recipe;
+        return "replaced";
+    }
+
+    energizerRecipes.push(recipe);
+    return "added";
 }

@@ -1,6 +1,36 @@
+import { system } from "@minecraft/server";
+
 const KDE = 1000;
 const DEFAULT_FLUID_TYPE = 'liquified_aetherium';
 const FLUID_PER_SECOND = 50; // mB per second (significant long-term drain)
+
+/**
+ * @typedef {Object} ClonerRecipeDefinition
+ * @property {{ id: string, amount?: number } | string} [input] Template stack to duplicate (at least one of `input`, `template`, or `base` is required).
+ * @property {{ id: string, amount?: number } | string} [template] Alias for {@link ClonerRecipeDefinition.input} when `input` is omitted.
+ * @property {{ id: string, amount?: number } | string} [base] Additional alias accepted for {@link ClonerRecipeDefinition.input}.
+ * @property {{ id: string, amount?: number } | string} [output] Optional explicit output override (defaults to the input id).
+ * @property {keyof typeof RARITY_BASE_RATE_KDE | string} [rarity] Optional rarity tier (defaults to `common`).
+ * @property {number} [time] Optional processing time in seconds.
+ * @property {number} [timeSeconds] Alternate time field in seconds (falls back to 1s if omitted).
+ * @property {number} [cost] Optional extra cost in kDE added on top of the rarity baseline.
+ * @property {{ type?: string, amount?: number } | string | null} [fluid] Optional fluid requirement (string values use the default amount).
+ * @property {string} [id] Optional recipe identifier. Defaults to `<input id>-><output id>`.
+ */
+
+/**
+ * @typedef {Object} ClonerRecipe
+ * @property {string} id Unique recipe identifier.
+ * @property {keyof typeof RARITY_BASE_RATE_KDE} rarity Normalized rarity tier.
+ * @property {{ id: string, amount: number }} input Template input stack.
+ * @property {{ id: string, amount: number }} output Output stack that includes the duplicated copy.
+ * @property {number} timeSeconds Processing duration in seconds.
+ * @property {number} ticks Processing duration in ticks.
+ * @property {number} costKDE Total cost expressed in kDE.
+ * @property {number} perSecondKDE Energy consumption rate per second in kDE.
+ * @property {number} energyCost Total FE cost (kDE × 1 000) per craft.
+ * @property {{ type: string, amount: number } | null} fluid Optional fluid requirement.
+ */
 
 /**
  * Energy consumption (in kDE per second) grows exponentially per rarity.
@@ -104,16 +134,19 @@ const nativeClonerRecipes = [
 const registeredClonerRecipes = [];
 
 export function registerClonerRecipe(recipe) {
-    const normalized = defineClonerRecipe(recipe);
-    if (!normalized) return null;
-    registeredClonerRecipes.push(normalized);
-    return normalized;
+    const result = upsertClonerRecipe(recipe);
+    return result?.recipe ?? null;
 }
 
 export function getClonerRecipes() {
     return [...nativeClonerRecipes, ...registeredClonerRecipes];
 }
 
+/**
+ * Normalizes a cloner recipe definition object.
+ * @param {ClonerRecipeDefinition} definition
+ * @returns {ClonerRecipe | null}
+ */
 export function defineClonerRecipe(definition) {
     if (!definition) return null;
 
@@ -217,4 +250,58 @@ function sanitizeFluidType(type) {
     if (typeof type !== 'string') return null;
     const trimmed = type.trim();
     return trimmed.length ? trimmed.toLowerCase() : null;
+}
+
+const CLONER_EVENT_ID = 'utilitycraft:register_cloner_recipe';
+
+system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
+    if (id !== CLONER_EVENT_ID) return;
+
+    try {
+        const payload = JSON.parse(message);
+        if (!payload || typeof payload !== 'object') return;
+
+        let added = 0;
+        let replaced = 0;
+
+        for (const [recipeId, definition] of Object.entries(payload)) {
+            if (!definition || typeof definition !== 'object') {
+                console.warn(`[UtilityCraft] Ignored invalid cloner recipe '${recipeId}'.`);
+                continue;
+            }
+
+            try {
+                const result = upsertClonerRecipe({ id: recipeId, ...definition });
+                if (!result) continue;
+                if (result.status === 'replaced') replaced++;
+                else added++;
+            } catch (err) {
+                console.warn(`[UtilityCraft] Failed to register cloner recipe '${recipeId}':`, err);
+            }
+        }
+
+        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} cloner recipes.`);
+    } catch (err) {
+        console.warn('[UtilityCraft] Failed to parse cloner recipe payload:', err);
+    }
+});
+
+function upsertClonerRecipe(definition) {
+    const normalized = defineClonerRecipe(definition);
+    if (!normalized) return null;
+
+    const nativeIndex = nativeClonerRecipes.findIndex(entry => entry.id === normalized.id);
+    if (nativeIndex >= 0) {
+        nativeClonerRecipes[nativeIndex] = normalized;
+        return { recipe: normalized, status: 'replaced' };
+    }
+
+    const registeredIndex = registeredClonerRecipes.findIndex(entry => entry.id === normalized.id);
+    if (registeredIndex >= 0) {
+        registeredClonerRecipes[registeredIndex] = normalized;
+        return { recipe: normalized, status: 'replaced' };
+    }
+
+    registeredClonerRecipes.push(normalized);
+    return { recipe: normalized, status: 'added' };
 }

@@ -1,3 +1,4 @@
+import { system } from "@minecraft/server"
 import { infuserRecipes } from './infuser.js'
 
 const WEAVER_DEFAULT_ENERGY_COST = 6400
@@ -39,15 +40,28 @@ const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
  */
 
 /**
+ * @typedef {Object} CatalystWeaverRecipeDefinition
+ * @property {RecipeInput} input Required primary input item and quantity.
+ * @property {(RecipeCatalyst|null)[]} catalysts Required array of up to 6 catalyst slots. Missing slots are padded automatically with `null`.
+ * @property {RecipeOutput} output Required primary output item and quantity.
+ * @property {string} [id] Optional unique recipe identifier (defaults to the input identifier).
+ * @property {RecipeFluid} [fluid] Optional fluid requirement.
+ * @property {RecipeByproduct} [byproduct] Optional secondary output with drop chance.
+ * @property {number} [cost] Optional DE override per craft (defaults to 6 400).
+ * @property {number} [speedModifier] Optional processing speed multiplier (defaults to 1x).
+ */
+
+/**
  * @typedef {Object} CatalystWeaverRecipe
  * @property {string} id Unique recipe identifier (e.g. "utilitycraft:steel_ingot").
  * @property {RecipeInput} input Primary input item and quantity.
- * @property {(RecipeCatalyst|null)[]} catalysts Array of up to 6 catalyst slots. Use `null` for empty slots.
- * @property {RecipeFluid} [fluid] Optional fluid requirement.
+ * @property {(RecipeCatalyst|null)[]} catalysts Array of up to 6 catalyst slots with automatic `null` padding for unused entries.
+ * @property {RecipeFluid | undefined} fluid Optional fluid requirement.
  * @property {RecipeOutput} output Primary output item and quantity.
- * @property {RecipeByproduct} [byproduct] Optional secondary output with drop chance.
- * @property {number} [cost=6400] Energy cost in FE (Forge Energy units).
- * @property {number} [speedModifier=1] Processing speed multiplier (higher = faster).
+ * @property {RecipeByproduct | undefined} byproduct Optional secondary output with drop chance.
+ * @property {number} cost Energy cost in DE (Dorios Energy units).
+ * @property {number} speedModifier Processing speed multiplier (higher = faster).
+ * @property {number} processingTimeSeconds Derived processing time in seconds.
  */
 
 /**
@@ -62,16 +76,13 @@ const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
  *   input: { id: 'namespace:item_id', amount: 1 },
  *   catalysts: [
  *     { id: 'namespace:catalyst_1', amount: 2 },
- *     { id: 'namespace:catalyst_2', amount: 1 },
- *     null,  // empty slot
- *     null,
- *     null,
- *     null
+ *     { id: 'namespace:catalyst_2', amount: 1 }
+ *     // Remaining slots are optional and padded automatically
  *   ],
  *   fluid: { type: 'lava', amount: 1000 },           // optional
  *   output: { id: 'minecraft:result_item', amount: 1 },
  *   byproduct: { id: 'minecraft:bonus', amount: 2, chance: 0.25 },  // optional
- *   cost: 3200,           // optional (defaults to 6400 FE)
+ *   cost: 3200,           // optional (defaults to 6400 DE)
  *   speedModifier: 1.5    // optional (defaults to 1.0)
  * })
  * 
@@ -90,8 +101,8 @@ const nativeCatalystWeaverRecipes = [
             null,
             null
         ],
-        fluid: { type: 'lava', amount: 2000 },
         output: { id: 'minecraft:wither_skeleton_skull', amount: 1 },
+        fluid: { type: 'lava', amount: 2000 },
         byproduct: { id: 'minecraft:bone_meal', amount: 4, chance: 0.6 },
         cost: 6400,
         speedModifier: 1
@@ -149,11 +160,19 @@ const nativeCatalystWeaverRecipes = [
 ]
 
 
+/**
+ * Normalizes a Catalyst Weaver recipe definition.
+ * @param {CatalystWeaverRecipeDefinition} recipe
+ * @param {number} [overrideCost]
+ * @returns {CatalystWeaverRecipe}
+ */
 function defineWeaverRecipe(recipe, overrideCost) {
     const cost = Math.max(1, overrideCost ?? recipe.cost ?? WEAVER_DEFAULT_ENERGY_COST)
     const speedModifier = normalizeSpeedModifier(recipe.speedModifier)
+    const catalysts = normalizeCatalystSlots(recipe.catalysts)
     return {
         ...recipe,
+        catalysts,
         cost,
         speedModifier,
         processingTimeSeconds: computeProcessingSeconds(cost)
@@ -191,6 +210,34 @@ function normalizeOutput(output, amountHint) {
     return null
 }
 
+function normalizeCatalystSlots(rawSlots) {
+    const slots = Array(MAX_CATALYST_SLOTS).fill(null)
+    if (!Array.isArray(rawSlots)) return slots
+
+    rawSlots.slice(0, MAX_CATALYST_SLOTS).forEach((entry, index) => {
+        const normalized = normalizeCatalystEntry(entry)
+        if (normalized) slots[index] = normalized
+    })
+
+    return slots
+}
+
+function normalizeCatalystEntry(entry) {
+    if (!entry) return null
+    if (typeof entry === 'string') {
+        return { id: entry, amount: normalizePositiveInteger(1) }
+    }
+
+    if (typeof entry === 'object' && typeof entry.id === 'string') {
+        return {
+            id: entry.id,
+            amount: normalizePositiveInteger(entry.amount ?? 1)
+        }
+    }
+
+    return null
+}
+
 function translateInfuserRecipe(recipeKey, recipeDef) {
     if (!recipeKey || typeof recipeKey !== 'string') return null
     if (!recipeDef || typeof recipeDef !== 'object') return null
@@ -209,7 +256,7 @@ function translateInfuserRecipe(recipeKey, recipeDef) {
     const adjustedCost = Math.max(1, Math.round(baseCost / INFUSER_SPEED_MULTIPLIER))
 
     const translated = {
-        id: `infuser:${recipeKey}`,
+        id: `utilitycraft_infuser:${recipeKey}`,
         input: { id: inputId, amount: normalizePositiveInteger(recipeDef.inputAmount ?? 1) },
         catalysts,
         output,
@@ -230,6 +277,52 @@ function buildInfuserWeaverRecipes() {
     return Object.entries(infuserRecipes)
         .map(([key, def]) => translateInfuserRecipe(key, def))
         .filter(Boolean)
+}
+
+const CATALYST_WEAVER_EVENT_ID = "utilitycraft:register_catalyst_weaver_recipe"
+
+system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
+    if (id !== CATALYST_WEAVER_EVENT_ID) return
+
+    try {
+        const payload = JSON.parse(message)
+        if (!payload || typeof payload !== 'object') return
+
+        let added = 0
+        let replaced = 0
+
+        for (const [recipeId, definition] of Object.entries(payload)) {
+            if (!definition || typeof definition !== 'object') {
+                console.warn(`[UtilityCraft] Ignored invalid catalyst weaver recipe '${recipeId}'.`)
+                continue
+            }
+
+            try {
+                const status = upsertCatalystWeaverRecipe({ id: recipeId, ...definition })
+                if (status === 'replaced') replaced++
+                else added++
+            } catch (err) {
+                console.warn(`[UtilityCraft] Failed to register catalyst weaver recipe '${recipeId}':`, err)
+            }
+        }
+
+        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} catalyst weaver recipes.`)
+    } catch (err) {
+        console.warn('[UtilityCraft] Failed to parse catalyst weaver recipe payload:', err)
+    }
+})
+
+function upsertCatalystWeaverRecipe(definition) {
+    const recipe = defineWeaverRecipe(definition)
+    const index = nativeCatalystWeaverRecipes.findIndex(entry => entry.id === recipe.id)
+
+    if (index >= 0) {
+        nativeCatalystWeaverRecipes[index] = recipe
+        return 'replaced'
+    }
+
+    nativeCatalystWeaverRecipes.push(recipe)
+    return 'added'
 }
 
 export function getCatalystWeaverRecipes() {

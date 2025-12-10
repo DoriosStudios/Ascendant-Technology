@@ -1,17 +1,30 @@
+import { system } from "@minecraft/server";
+
 const DEFAULT_ENERGY_COST = 5200;
 const DEFAULT_SECONDS = 5;
 const TICKS_PER_SECOND = 20;
 
 /**
+ * @typedef {Object} ResidueRecipeDefinition
+ * @property {{ id: string, amount: number } | string} input Required input stack.
+ * @property {{ id: string, amount: number } | string} output Required primary output stack.
+ * @property {string} [id] Optional identifier (defaults to the input identifier).
+ * @property {number} [energyCost] Optional FE override per craft (defaults to 5 200).
+ * @property {number} [seconds] Optional processing duration in seconds (defaults to 5s).
+ * @property {{ id: string, amount?: number, chance?: number } | string} [byproduct] Optional byproduct definition.
+ * @property {string} [description] Optional HUD description.
+ */
+
+/**
  * @typedef {Object} ResidueRecipe
- * @property {string} id
- * @property {{ id: string, amount: number }} input
- * @property {{ id: string, amount: number }} output
- * @property {{ id: string, amount: number, chance?: number } | null} [byproduct]
- * @property {number} energyCost
- * @property {number} ticks
- * @property {number} seconds
- * @property {string | null} [description]
+ * @property {string} id Normalized recipe identifier.
+ * @property {{ id: string, amount: number }} input Input stack definition.
+ * @property {{ id: string, amount: number }} output Output stack definition.
+ * @property {{ id: string, amount: number, chance: number } | null} byproduct Optional normalized byproduct.
+ * @property {number} energyCost Energy required per craft.
+ * @property {number} ticks Processing time expressed in ticks.
+ * @property {number} seconds Processing time expressed in seconds.
+ * @property {string | null} description Optional description for UI.
  */
 
 const nativeResidueRecipes = [
@@ -61,12 +74,17 @@ const nativeResidueRecipes = [
     })
 ];
 
+export const residueProcessorRecipes = nativeResidueRecipes;
+
 export function getResidueProcessorRecipes() {
-    return nativeResidueRecipes;
+    return residueProcessorRecipes;
 }
 
-export const residueProcessorRecipes = getResidueProcessorRecipes();
-
+/**
+ * Normalizes a residue processor recipe definition.
+ * @param {ResidueRecipeDefinition} payload
+ * @returns {ResidueRecipe}
+ */
 function defineResidueRecipe(payload) {
     if (!payload || typeof payload !== 'object') {
         throw new TypeError('Invalid residue recipe payload');
@@ -123,4 +141,49 @@ function clampSeconds(value) {
     const parsed = Number(value);
     if (!Number.isFinite(parsed) || parsed <= 0) return DEFAULT_SECONDS;
     return Math.max(1, Math.floor(parsed));
+}
+
+const RESIDUE_EVENT_ID = "utilitycraft:register_residue_processor_recipe";
+
+system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
+    if (id !== RESIDUE_EVENT_ID) return;
+
+    try {
+        const payload = JSON.parse(message);
+        if (!payload || typeof payload !== 'object') return;
+
+        let added = 0;
+        let replaced = 0;
+
+        for (const [recipeId, definition] of Object.entries(payload)) {
+            if (!definition || typeof definition !== 'object') {
+                console.warn(`[UtilityCraft] Ignored invalid residue processor recipe '${recipeId}'.`);
+                continue;
+            }
+
+            try {
+                const status = upsertResidueRecipe({ id: recipeId, ...definition });
+                if (status === 'replaced') replaced++; else added++;
+            } catch (err) {
+                console.warn(`[UtilityCraft] Failed to register residue processor recipe '${recipeId}':`, err);
+            }
+        }
+
+        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} residue processor recipes.`);
+    } catch (err) {
+        console.warn('[UtilityCraft] Failed to parse residue processor recipe payload:', err);
+    }
+});
+
+function upsertResidueRecipe(definition) {
+    const recipe = defineResidueRecipe(definition);
+    const index = residueProcessorRecipes.findIndex(entry => entry.id === recipe.id);
+
+    if (index >= 0) {
+        residueProcessorRecipes[index] = recipe;
+        return 'replaced';
+    }
+
+    residueProcessorRecipes.push(recipe);
+    return 'added';
 }

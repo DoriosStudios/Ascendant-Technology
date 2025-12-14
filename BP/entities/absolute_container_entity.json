@@ -73,8 +73,8 @@
       "despawn": {
         "add": { "component_groups": ["despawn"] }
       },
-      "utilitycraft:inventory_173": {
-        "add": { "component_groups": ["utilitycraft:inventory_173"] }
+      "utilitycraft:inventory_170": {
+        "add": { "component_groups": ["utilitycraft:inventory_170"] }
       },
       "utilitycraft:set_families": {
         "add": { "component_groups": ["utilitycraft:families"] }

@@ -8,6 +8,9 @@
 		"utilitycraft_aetherium_shard": {
 			"textures": "textures/items/ores/aetherium_shard"
 		},
+		"utilitycraft_refined_aetherium_shard": {
+			"textures": "textures/items/ores/refined_aetherium_shard"
+		},
 		"utilitycraft_void_essence": {
 			"textures": "textures/items/misc/void_essence"
 		},

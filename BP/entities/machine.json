@@ -27,7 +27,6 @@
 					]
 				}
 			},
-			// Normal Generators
 			"utilitycraft:battery": {
 				"minecraft:type_family": {
 					"family": [
@@ -64,7 +63,6 @@
 					]
 				}
 			},
-			// Normal Machines
 			"utilitycraft:simple_input_machine": {
 				"minecraft:type_family": {
 					"family": [
@@ -119,7 +117,6 @@
 					]
 				}
 			},
-			// ======= fluid_container =======
 			"utilitycraft:simple_machine_fluid": {
 				"minecraft:type_family": {
 					"family": [
@@ -154,6 +151,12 @@
 					"container_type": "container"
 				}
 			},
+			"utilitycraft:inventory_180": {
+				"minecraft:inventory": {
+				"inventory_size": 180,
+				"container_type": "container"
+				}
+      		},
 			"utilitycraft:inventory_2": {
 				"minecraft:inventory": {
 					"inventory_size": 2,
@@ -273,6 +276,12 @@
 					"inventory_size": 27,
 					"container_type": "container"
 				}
+			},
+			"utilitycraft:inventory_194": {
+				"minecraft:inventory": {
+					"inventory_size": 194,
+					"container_type": "container"
+				}
 			}
 		},
 		"components": {
@@ -357,7 +366,6 @@
 					]
 				}
 			},
-			// Normal Machines
 			"utilitycraft:simple_input_machine": {
 				"add": {
 					"component_groups": [
@@ -393,7 +401,6 @@
 					]
 				}
 			},
-			// ======= fluid =======
 			"utilitycraft:simple_machine_fluid": {
 				"add": {
 					"component_groups": [
@@ -555,10 +562,10 @@
 					]
 				}
 			},
-			"utilitycraft:inventory_173": {
+			"utilitycraft:inventory_194": {
 				"add": {
 					"component_groups": [
-						"utilitycraft:inventory_173"
+						"utilitycraft:inventory_194"
 					]
 				}
 			},

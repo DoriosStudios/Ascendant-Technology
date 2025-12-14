@@ -1,5 +1,7 @@
 {
     "namespace": "absolute_container",
+    "toggle_unchecked@ascendant_common.toggle_state_unchecked": {},
+    "toggle_checked@ascendant_common.toggle_state_checked": {},
     "absolute_container_top": {
         "type": "collection_panel",
         "anchor_from": "center",
@@ -24,24 +26,115 @@
                 }
             },
             {
-                "energy_bar@machineryCommon.vertical_single": {
-                    "$collection_index": 168,
-                    "$is_energy": true,
-                    "$has_bg": false,
-                    "offset": [
-                        -188,
-                        0
+                "status_toggle_wrapper": {
+                    "type": "panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, -8],
+                    "size": [20, 20],
+                    "layer": 10,
+                    "controls": [
+                        {
+                            "toggle_backdrop@ascendant_common.panel_bg": {
+                                "size": [20, 20],
+                                "alpha": 0.9
+                            }
+                        },
+                        {
+                            "status_icon": {
+                                "type": "image",
+                                "texture": "textures/ui/icon_recipe_equipment",
+                                "size": [16, 16],
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "layer": 1
+                            }
+                        },
+                        {
+                            "show_status_panel@common.toggle": {
+                                "size": [20, 20],
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "toggle_default_state": false,
+                                "layer": 2,
+                                "$toggle_name": "status_toggle",
+                                "$unchecked_control": "absolute_container.toggle_unchecked",
+                                "$checked_control": "absolute_container.toggle_checked",
+                                "$unchecked_hover_control": "absolute_container.toggle_unchecked",
+                                "$checked_hover_control": "absolute_container.toggle_checked",
+                                "$unchecked_locked_control": "absolute_container.toggle_unchecked",
+                                "$checked_locked_control": "absolute_container.toggle_checked",
+                                "$unchecked_locked_hover_control": "absolute_container.toggle_unchecked",
+                                "$checked_locked_hover_control": "absolute_container.toggle_checked",
+                                "button_mappings": [
+                                    {
+                                        "from_button_id": "button.menu_select",
+                                        "to_button_id": "button.menu_select",
+                                        "mapping_type": "pressed"
+                                    },
+                                    {
+                                        "from_button_id": "button.menu_ok",
+                                        "to_button_id": "button.menu_select",
+                                        "mapping_type": "pressed"
+                                    }
+                                ]
+                            }
+                        }
                     ]
                 }
             },
             {
-                "upgrades_button":{
-                    "type": "button",
+                "status_panel": {
+                    "type": "panel",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-216, -188],
-                    "size": [18, 18],
-                    "layer": 5
+                    "offset": [-100, -32],
+                    "size": [80, 90],
+                    "layer": 15,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "show_status_panel",
+                            "source_property_name": "#toggle_state",
+                            "target_property_name": "#visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "status_bg@ascendant_common.panel_bg": {
+                                "size": [80, 90],
+                                "alpha": 0.95,
+                                "layer": 0
+                            }
+                        },
+                        {
+                            "status_title": {
+                                "type": "label",
+                                "text": "§6Status",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [0, 4],
+                                "color": [1, 1, 1],
+                                "layer": 1
+                            }
+                        },
+                        {
+                            "energy_bar@ascendant_common.energy_display": {
+                                "$energy_slot_index": 168,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [8, 18]
+                            }
+                        },
+                        {
+                            "fluid_bar@ascendant_common.liquid_display": {
+                                "$fluid_slot_index": 169,
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "offset": [-8, 18]
+                            }
+                        }
+                    ]
                 }
             },
             {
@@ -49,7 +142,7 @@
                     "type": "panel",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [80, 47],
+                    "offset": [62, 47],
                     "size": [252, 216],
                     "controls": [
                         {
@@ -67,84 +160,13 @@
                             }
                         },
                         {
-                            "storage_background":{
-                                "type": "image",
-                                "texture": "textures/ui/background_panel",
+                            "storage_background@ascendant_common.panel_bg":{
                                 "anchor_from": "top_left",
                                 "anchor_to":"top_left",
                                 "size": [264, 228],
                                 "offset": [-6, -6]
                             }
                         }
-                    ]
-                }
-            },
-            {
-                "fluid_panel": {
-                    "type": "panel",
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [
-                        -114,
-                        0
-                    ],
-                    "controls": [
-                        {
-                            "fluid_bar@machineryCommon.vertical_single": {
-                                "$is_fluid": true,
-                                "$has_bg": false,
-                                "$collection_index": 169,
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "layer": 0
-                            }
-                        },
-                        {
-                            "fluid_border": {
-                                "type": "image",
-                                "texture": "textures/ui/liquid_border",
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "size": [
-                                    50,
-                                    50
-                                ],
-                                "offset": [
-                                    10,
-                                    3
-                                ],
-                                "layer": 13
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "screen": {
-                    "type": "image",
-                    "texture": "textures/ui/long_panel_classic",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [
-                        176,
-                        216
-                    ],
-                    "offset": [
-                        -146,
-                        -19
-                    ],
-                    "layer": 0
-                }
-            },
-            {
-                "item_label@machineryCommon.item_label": {
-                    "collection_index": 170,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "$text_scale": 0.6,
-                    "offset": [
-                        -96,
-                        -6
                     ]
                 }
             }

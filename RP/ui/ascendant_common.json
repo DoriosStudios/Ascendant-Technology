@@ -1,0 +1,470 @@
+{
+    // ============================================================================
+    // ASCENDANT COMMON - Biblioteca de Componentes UI do Ascendant Technology
+    // ============================================================================
+    // Este arquivo contém componentes reutilizáveis para a interface do add-on.
+    // Use referências como "component@ascendant_common.nome_do_componente" para
+    // incluir esses elementos em outras telas de UI.
+    // ============================================================================
+
+    "namespace": "ascendant_common",
+
+    // ============================================================================
+    // SEÇÃO 1: PAINÉIS DE FUNDO (Background Panels)
+    // ============================================================================
+    // Painéis de imagem pré-configurados usando as texturas do add-on.
+    // Todos usam nineslice para redimensionamento automático.
+    // ============================================================================
+
+    // Painel de fundo padrão - cor neutra
+    // Uso: "@ascendant_common.panel_bg" com "size": [largura, altura]
+    "panel_bg": {
+        "type": "image",
+        "texture": "textures/ui/background_panel",
+        "size": ["100%", "100%"],
+        "layer": 0
+    },
+
+    // Painel de fundo azul - para destaques e seleções
+    // Uso: "@ascendant_common.panel_bg_blue" com "size": [largura, altura]
+    "panel_bg_blue": {
+        "type": "image",
+        "texture": "textures/ui/background_panel_blue",
+        "size": ["100%", "100%"],
+        "layer": 0
+    },
+
+    // Painel de fundo cinza simples - para áreas de texto
+    // Uso: "@ascendant_common.panel_bg_gray" com "size": [largura, altura]
+    "panel_bg_gray": {
+        "type": "image",
+        "texture": "textures/ui/simple_bg_gray",
+        "size": ["100%", "100%"],
+        "layer": 0
+    },
+
+    // Painel longo clássico - para telas de máquinas
+    // Uso: "@ascendant_common.panel_long_classic" com "size": [largura, altura]
+    "panel_long_classic": {
+        "type": "image",
+        "texture": "textures/ui/long_panel_classic",
+        "size": ["100%", "100%"],
+        "layer": 0
+    },
+
+    // Painel com borda - para elementos destacados
+    // Uso: "@ascendant_common.panel_with_border" com "size": [largura, altura]
+    "panel_with_border": {
+        "type": "image",
+        "texture": "textures/ui/background_with_border",
+        "size": ["100%", "100%"],
+        "layer": 0
+    },
+
+    // ============================================================================
+    // SEÇÃO 2: SLOTS DE ITENS (Item Slots)
+    // ============================================================================
+    // Slots interativos para itens do inventário/container.
+    // Parâmetro $slot_index define qual slot do container usar.
+    // ============================================================================
+
+    // Slot de item padrão com fundo neutro
+    // Parâmetros:
+    //   $slot_index: índice do slot no container (0-based)
+    // Uso: "@ascendant_common.slot_base" com "$slot_index": número
+    "slot_base": {
+        "type": "panel",
+        "size": [18, 18],
+        "$slot_index|default": 0,
+        "controls": [
+            {
+                "slot_bg@ascendant_common.panel_bg": {
+                    "size": [18, 18],
+                    "layer": 0
+                }
+            },
+            {
+                "item@common.container_item": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "$item_collection_name": "container_items",
+                    "$collection_index": "$slot_index",
+                    "layer": 1
+                }
+            }
+        ]
+    },
+
+    // Slot de item com fundo azul - para slots especiais
+    // Parâmetros:
+    //   $slot_index: índice do slot no container (0-based)
+    // Uso: "@ascendant_common.slot_blue" com "$slot_index": número
+    "slot_blue": {
+        "type": "panel",
+        "size": [18, 18],
+        "$slot_index|default": 0,
+        "controls": [
+            {
+                "slot_bg@ascendant_common.panel_bg_blue": {
+                    "size": [18, 18],
+                    "layer": 0
+                }
+            },
+            {
+                "item@common.container_item": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "$item_collection_name": "container_items",
+                    "$collection_index": "$slot_index",
+                    "layer": 1
+                }
+            }
+        ]
+    },
+
+    // ============================================================================
+    // SEÇÃO 3: COMPONENTES DE TOGGLE (Toggle Components)
+    // ============================================================================
+    // Botões e estados para toggles (ligar/desligar painéis).
+    // ============================================================================
+
+    // Botão de toggle completo com ícone customizável
+    // Parâmetros:
+    //   $toggle_name: nome único do toggle para bindings
+    //   $toggle_icon: textura do ícone (opcional, vazio = sem ícone)
+    //   $toggle_icon_size: tamanho do ícone [largura, altura]
+    // Uso: "@ascendant_common.toggle_button_base" com parâmetros
+    "toggle_button_base": {
+        "type": "panel",
+        "size": [20, 20],
+        "$toggle_name|default": "default_toggle",
+        "$toggle_texture|default": "textures/ui/cell_image",
+        "$toggle_icon|default": "",
+        "$toggle_icon_size|default": [16, 16],
+        "controls": [
+            {
+                "toggle_bg@ascendant_common.panel_bg": {
+                    "size": [20, 20],
+                    "alpha": 0.9,
+                    "layer": 0
+                }
+            },
+            {
+                "toggle_icon": {
+                    "type": "image",
+                    "texture": "$toggle_icon",
+                    "size": "$toggle_icon_size",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "layer": 1,
+                    "ignored": "($toggle_icon = '')"
+                }
+            },
+            {
+                "toggle@common.toggle": {
+                    "size": [20, 20],
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "toggle_default_state": false,
+                    "layer": 2,
+                    "$toggle_name": "$toggle_name",
+                    "$unchecked_control": "ascendant_common.toggle_state_unchecked",
+                    "$checked_control": "ascendant_common.toggle_state_checked",
+                    "$unchecked_hover_control": "ascendant_common.toggle_state_unchecked",
+                    "$checked_hover_control": "ascendant_common.toggle_state_checked",
+                    "$unchecked_locked_control": "ascendant_common.toggle_state_unchecked",
+                    "$checked_locked_control": "ascendant_common.toggle_state_checked",
+                    "$unchecked_locked_hover_control": "ascendant_common.toggle_state_unchecked",
+                    "$checked_locked_hover_control": "ascendant_common.toggle_state_checked",
+                    "button_mappings": [
+                        {
+                            "from_button_id": "button.menu_select",
+                            "to_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        },
+                        {
+                            "from_button_id": "button.menu_ok",
+                            "to_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    // Estado visual do toggle quando desmarcado (OFF)
+    // Usado internamente pelos toggles
+    "toggle_state_unchecked": {
+        "type": "image",
+        "texture": "textures/ui/background_panel",
+        "size": [20, 20],
+        "alpha": 0.6
+    },
+
+    // Estado visual do toggle quando marcado (ON)
+    // Usado internamente pelos toggles
+    "toggle_state_checked": {
+        "type": "image",
+        "texture": "textures/ui/background_panel_blue",
+        "size": [20, 20],
+        "alpha": 1.0
+    },
+
+    // ============================================================================
+    // SEÇÃO 4: PAINÉIS COLAPSÁVEIS (Collapsible Panels)
+    // ============================================================================
+    // Painéis que podem ser mostrados/escondidos via toggle.
+    // ============================================================================
+
+    // Painel colapsável genérico com título
+    // Parâmetros:
+    //   $panel_title: título exibido no topo do painel
+    //   $panel_content: referência ao conteúdo interno (namespace.element)
+    //   $panel_size: tamanho do painel [largura, altura]
+    //   $toggle_control_name: nome do toggle que controla a visibilidade
+    // Uso: "@ascendant_common.collapsible_panel" com parâmetros
+    "collapsible_panel": {
+        "type": "panel",
+        "$panel_title|default": "Panel",
+        "$panel_content|default": "common.empty_panel",
+        "$panel_size|default": [140, 90],
+        "$toggle_control_name|default": "toggle_control",
+        "controls": [
+            {
+                "panel_container": {
+                    "type": "panel",
+                    "size": "$panel_size",
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "$toggle_control_name",
+                            "source_property_name": "#toggle_state",
+                            "target_property_name": "#visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "bg@ascendant_common.panel_bg": {
+                                "size": "$panel_size",
+                                "alpha": 0.95,
+                                "layer": 0
+                            }
+                        },
+                        {
+                            "title": {
+                                "type": "label",
+                                "text": "$panel_title",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [0, 4],
+                                "color": [1, 1, 1],
+                                "layer": 1
+                            }
+                        },
+                        {
+                            "content@$panel_content": {
+                                "layer": 2
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    // ============================================================================
+    // SEÇÃO 5: GRIDS DE FORNALHA (Furnace Grids) - DEPRECATED
+    // ============================================================================
+    // Grids pré-configurados para a fornalha embutida.
+    // NOTA: A fornalha agora usa energia ao invés de slots de combustível.
+    // Esses componentes são mantidos para referência mas não são mais usados.
+    // ============================================================================
+
+    // Grid de entrada da fornalha (2x2 = 4 slots)
+    // Parâmetros:
+    //   $input_start_slot: índice inicial dos slots de entrada
+    // DEPRECATED: Use a fornalha baseada em energia
+    "furnace_input_grid": {
+        "type": "grid",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [8, 26],
+        "size": [36, 36],
+        "grid_dimensions": [2, 2],
+        "maximum_grid_items": 4,
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "layer": 2,
+        "$input_start_slot|default": 170,
+        "controls": [
+            {
+                "input_0@ascendant_common.slot_base": {
+                    "$slot_index": "$input_start_slot",
+                    "grid_position": [0, 0]
+                }
+            },
+            {
+                "input_1@ascendant_common.slot_base": {
+                    "$slot_index": "($input_start_slot + 1)",
+                    "grid_position": [1, 0]
+                }
+            },
+            {
+                "input_2@ascendant_common.slot_base": {
+                    "$slot_index": "($input_start_slot + 2)",
+                    "grid_position": [0, 1]
+                }
+            },
+            {
+                "input_3@ascendant_common.slot_base": {
+                    "$slot_index": "($input_start_slot + 3)",
+                    "grid_position": [1, 1]
+                }
+            }
+        ]
+    },
+
+    // Grid de saída da fornalha (2x2 = 4 slots)
+    // Parâmetros:
+    //   $output_start_slot: índice inicial dos slots de saída
+    "furnace_output_grid": {
+        "type": "grid",
+        "anchor_from": "top_right",
+        "anchor_to": "top_right",
+        "offset": [-8, 26],
+        "size": [36, 36],
+        "grid_dimensions": [2, 2],
+        "maximum_grid_items": 4,
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "layer": 2,
+        "$output_start_slot|default": 175,
+        "controls": [
+            {
+                "output_0@ascendant_common.slot_base": {
+                    "$slot_index": "$output_start_slot",
+                    "grid_position": [0, 0]
+                }
+            },
+            {
+                "output_1@ascendant_common.slot_base": {
+                    "$slot_index": "($output_start_slot + 1)",
+                    "grid_position": [1, 0]
+                }
+            },
+            {
+                "output_2@ascendant_common.slot_base": {
+                    "$slot_index": "($output_start_slot + 2)",
+                    "grid_position": [0, 1]
+                }
+            },
+            {
+                "output_3@ascendant_common.slot_base": {
+                    "$slot_index": "($output_start_slot + 3)",
+                    "grid_position": [1, 1]
+                }
+            }
+        ]
+    },
+
+    // ============================================================================
+    // SEÇÃO 6: ELEMENTOS DE TEXTO (Text Elements)
+    // ============================================================================
+    // Labels e textos estilizados reutilizáveis.
+    // ============================================================================
+
+    // Label de seção com fonte menor
+    // Parâmetros:
+    //   $label_text: texto a exibir (suporta códigos de cor como §7)
+    //   $label_color: cor RGB [r, g, b] (0.0-1.0)
+    // Uso: "@ascendant_common.section_label" com "$label_text": "texto"
+    "section_label": {
+        "type": "label",
+        "$label_text|default": "Label",
+        "$label_color|default": [1, 1, 1],
+        "text": "$label_text",
+        "font_scale_factor": 0.7,
+        "color": "$label_color",
+        "layer": 1
+    },
+
+    // ============================================================================
+    // SEÇÃO 7: INDICADORES VISUAIS (Visual Indicators)
+    // ============================================================================
+    // Setas, barras de progresso e outros indicadores.
+    // ============================================================================
+
+    // Seta de progresso horizontal (aponta para direita)
+    // Uso: "@ascendant_common.progress_arrow" com anchor e offset
+    "progress_arrow": {
+        "type": "image",
+        "texture": "textures/ui/arrow_dark_right_stretch",
+        "size": [22, 15],
+        "layer": 1
+    },
+
+    // ============================================================================
+    // SEÇÃO 8: DISPLAYS DE ENERGIA E FLUIDOS (Energy/Fluid Displays)
+    // ============================================================================
+    // Wrappers para as barras de energia e fluido do machineryCommon.
+    // Esses componentes dependem do namespace machineryCommon (dependência base).
+    // ============================================================================
+
+    // Display de fluido/líquido com borda decorativa
+    // Parâmetros:
+    //   $fluid_slot_index: índice do slot que contém os dados do fluido
+    // Uso: "@ascendant_common.liquid_display" com "$fluid_slot_index": número
+    "liquid_display": {
+        "type": "panel",
+        "$fluid_slot_index|default": 169,
+        "controls": [
+            {
+                // Barra de fluido da lib machineryCommon
+                "fluid_bar@machineryCommon.vertical_single": {
+                    "$is_fluid": true,
+                    "$has_bg": false,
+                    "$collection_index": "$fluid_slot_index",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "layer": 0
+                }
+            },
+            {
+                // Borda decorativa do display de fluido
+                "fluid_border": {
+                    "type": "image",
+                    "texture": "textures/ui/liquid_border",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "size": [50, 50],
+                    "offset": [10, 3],
+                    "layer": 13
+                }
+            }
+        ]
+    },
+
+    // Display de energia com barra vertical
+    // Parâmetros:
+    //   $energy_slot_index: índice do slot que contém os dados de energia
+    // Uso: "@ascendant_common.energy_display" com "$energy_slot_index": número
+    "energy_display": {
+        "type": "panel",
+        "$energy_slot_index|default": 168,
+        "controls": [
+            {
+                // Barra de energia da lib machineryCommon
+                "energy_bar@machineryCommon.vertical_single": {
+                    "$collection_index": "$energy_slot_index",
+                    "$is_energy": true,
+                    "$has_bg": false
+                }
+            }
+        ]
+    }
+
+    // ============================================================================
+    // FIM DO ARQUIVO - ascendant_common.json
+    // ============================================================================
+}

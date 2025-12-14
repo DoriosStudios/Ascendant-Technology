@@ -75,7 +75,6 @@ globalThis.DoriosAPI = {
                     );
                 } catch (error) {
                     if (error?.name === 'BlockCustomComponentAlreadyRegisteredError') {
-                        console.warn(`[DoriosAPI] Block component ${identifier} already registered. Skipping duplicate registration.`);
                         return;
                     }
                     throw error;

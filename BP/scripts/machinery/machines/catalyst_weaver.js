@@ -5,6 +5,7 @@ const INPUT_SLOT = 3
 const CATALYST_SLOTS = [4, 5, 6, 7, 8, 9]
 const FLUID_SLOT = 10
 const FLUID_DISPLAY_SLOT = 11
+const FLUID_INFO_SLOT = 12
 const UPGRADE_SLOTS = [16, 17]
 const BYPRODUCT_SLOT = 18
 const OUTPUT_SLOT_INDEX = 19
@@ -16,16 +17,17 @@ const HELPER_MAX_POOL_ENTRIES = 5
 
 /*
 Slots (inventory_size: 20)
-- [0] HUD de energia (machine.displayEnergy padrão).
-- [1] Indicador de status/seta.
-- [3] Input base (INPUT_SLOT).
-- [4-9] Catalisadores (CATALYST_SLOTS).
-- [10] Entrada de fluido (FLUID_SLOT).
-- [11] Display do tanque (FLUID_DISPLAY_SLOT) — bloqueado ao jogador.
-- [16,17] Slots de upgrades (UPGRADE_SLOTS).
-- [18] Saída de subproduto (BYPRODUCT_SLOT).
-- [19] Saída principal (OUTPUT_SLOT_INDEX).
-Slots escondidos: [12, 13, 14, 15] (preenchimento/UI, não utilizáveis pelo jogador).
+- [0] HUD de energia (machine.displayEnergy padrão → energy_bar@machineryCommon.vertical_single).
+- [1] Indicador de status/seta (machine.showStatus/machine.showWarning → machineryCommon.item_label).
+- [3] Input base (INPUT_SLOT) exibido em container_item índice 3.
+- [4-9] Catalisadores (CATALYST_SLOTS) vinculados aos container_item das laterais.
+- [10] Entrada de fluido (FLUID_SLOT) — container_item índice 10.
+- [11] Display do tanque (FLUID_DISPLAY_SLOT) — preenchido automaticamente pelo FluidManager.
+- [12] Slot oculto para o label “Catalyst Fluid” (machineryCommon.item_label → collection_index 12).
+- [16,17] Slots de upgrades (UPGRADE_SLOTS) → machineryCommon.vertical_interactive.
+- [18] Saída de subproduto (BYPRODUCT_SLOT) → container_item índice 18.
+- [19] Saída principal (OUTPUT_SLOT_INDEX) → container_item índice 19.
+Slots escondidos: [12, 13, 14, 15] (usados como placeholders invisíveis para UI/fluxos internos/labels).
 */
 
 DoriosAPI.register.blockComponent('catalyst_weaver', {
@@ -68,27 +70,28 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         }
 
         const inv = machine.inv
+        const catalystFluidFallbackLore = buildCatalystFluidLore(null, null, null)
+        const updateFluidLabel = (lines = catalystFluidFallbackLore) =>
+            machine.setLabel(buildCatalystFluidLabelContent(lines), FLUID_INFO_SLOT)
+        updateFluidLabel()
         
         // Priority 1: Check energy first
         const hasEnergy = machine.energy.get() > 0
         if (!hasEnergy) {
-            machine.showWarning('No Energy', false)
-            tank.display(FLUID_DISPLAY_SLOT)
+            showMachineWarning(machine, tank, 'No Energy', { resetProgress: false, lore: catalystFluidFallbackLore })
             return
         }
         
         // Priority 2: Basic validation
         const recipes = resolveRecipes(block)
         if (!recipes || recipes.length === 0) {
-            machine.showWarning('No Recipes')
-            tank.display(FLUID_DISPLAY_SLOT)
+            showMachineWarning(machine, tank, 'No Recipes', { lore: catalystFluidFallbackLore })
             return
         }
 
         const inputStack = inv.getItem(INPUT_SLOT)
         if (!inputStack) {
-            machine.showWarning('No Base Item')
-            tank.display(FLUID_DISPLAY_SLOT)
+            showMachineWarning(machine, tank, 'No Base Item', { lore: catalystFluidFallbackLore })
             return
         }
 
@@ -100,7 +103,9 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             : []
         const recipe = matchRecipe(recipes, inputStack, catalystStacks, tank)
         const helperLore = buildCatalystHelperLore(recipes, inputStack, catalystStacks)
-        const sharedLore = mergeLore(recipePreviewLore, helperLore)
+        const catalystFluidLore = buildCatalystFluidLore(recipe, recipes, inputStack)
+        const sharedLore = mergeLore(recipePreviewLore, helperLore, catalystFluidLore)
+        updateFluidLabel(catalystFluidLore)
         
         // Priority 4: Check fluid requirements with specific messages
         if (recipe && recipe.fluid?.type) {
@@ -108,15 +113,13 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             const fluidName = DoriosAPI.utils.capitalizeFirst(recipe.fluid.type)
             
             if (tankType !== 'empty' && tankType !== recipe.fluid.type) {
-                machine.showWarning(`Wrong Fluid\n§7Need ${fluidName}`, true, sharedLore)
-                tank.display(FLUID_DISPLAY_SLOT)
+                showMachineWarning(machine, tank, `Wrong Fluid\n§7Need ${fluidName}`, { lore: sharedLore })
                 return
             }
             
             const needFluid = recipe.fluid.amount ?? 0
             if (tank.get() < needFluid) {
-                machine.showWarning(`Not Enough ${fluidName}\n§7Need ${needFluid}mB`, true, sharedLore)
-                tank.display(FLUID_DISPLAY_SLOT)
+                showMachineWarning(machine, tank, `Not Enough ${fluidName}`, { lore: sharedLore })
                 return
             }
             
@@ -128,40 +131,37 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             const catalystStatus = recipes.some(r => matchesStack(r.input, inputStack)) 
                 ? analyzeCatalystStatus(recipes.find(r => matchesStack(r.input, inputStack)), catalystStacks)
                 : 'invalid'
-            
+
+            let warningMessage = 'Invalid Recipe'
             if (catalystStatus === 'missing_all') {
-                machine.showWarning('Missing Catalysts', true, sharedLore)
+                warningMessage = 'Missing Catalysts'
             } else if (catalystStatus === 'missing_catalysts') {
-                machine.showWarning('Missing Some Catalysts', true, sharedLore)
+                warningMessage = 'Missing Some Catalysts'
             } else if (catalystStatus === 'insufficient_catalysts') {
-                machine.showWarning('Insufficient Catalysts', true, sharedLore)
+                warningMessage = 'Insufficient Catalysts'
             } else if (catalystStatus === 'wrong_catalysts' || catalystStatus === 'extra_catalysts') {
-                machine.showWarning('Wrong Catalysts', true, sharedLore)
-            } else {
-                machine.showWarning('Invalid Recipe', true, sharedLore)
+                warningMessage = 'Wrong Catalysts'
             }
-            tank.display(FLUID_DISPLAY_SLOT)
+
+            showMachineWarning(machine, tank, warningMessage, { lore: sharedLore })
             return
         }
 
         const outputSlot = inv.getItem(OUTPUT_SLOT_INDEX)
         if (outputSlot && outputSlot.typeId !== recipe.output?.id) {
-            machine.showWarning('Recipe Conflict', true, sharedLore)
-            tank.display(FLUID_DISPLAY_SLOT)
+            showMachineWarning(machine, tank, 'Recipe Conflict', { lore: sharedLore })
             return
         }
 
         const outputSpace = (outputSlot?.maxAmount ?? 64) - (outputSlot?.amount ?? 0)
         if (outputSpace < (recipe.output?.amount ?? 1)) {
-            machine.showWarning('Output Full', true, sharedLore)
-            tank.display(FLUID_DISPLAY_SLOT)
+            showMachineWarning(machine, tank, 'Output Full', { lore: sharedLore })
             return
         }
 
         const byproductSlot = recipe.byproduct ? inv.getItem(BYPRODUCT_SLOT) : null
         if (recipe.byproduct && byproductSlot && byproductSlot.typeId !== recipe.byproduct.id) {
-            machine.showWarning('Byproduct Full', true, sharedLore)
-            tank.display(FLUID_DISPLAY_SLOT)
+            showMachineWarning(machine, tank, 'Byproduct Full', { lore: sharedLore })
             return
         }
 
@@ -172,8 +172,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             }
             const availableSpace = (byproductSlot.maxAmount ?? 64) - byproductSlot.amount
             if (availableSpace < requiredSpace) {
-                machine.showWarning('Byproduct Slot Full', true, sharedLore)
-                tank.display(FLUID_DISPLAY_SLOT)
+                showMachineWarning(machine, tank, 'Byproduct Slot Full', { lore: sharedLore })
                 return
             }
         }
@@ -190,8 +189,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             byproductSlot
         })
         if (maxBatches <= 0) {
-            machine.showWarning('Missing Materials', true, sharedLore)
-            tank.display(FLUID_DISPLAY_SLOT)
+            showMachineWarning(machine, tank, 'Missing Materials', { lore: sharedLore })
             return
         }
 
@@ -209,11 +207,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             machine.addProgress(energyToConsume / consumption)
         }
 
-        tank.display(FLUID_DISPLAY_SLOT)
-        machine.on()
-        machine.displayEnergy()
-        machine.displayProgress()
-        machine.showStatus('Running', helperLore)
+        showRunningDisplays(machine, tank, sharedLore)
     },
 
     onPlayerBreak(e) {
@@ -355,7 +349,7 @@ function buildRecipePreviewLore(
     const colors = DoriosAPI?.constants?.textColors ?? {}
     const gray = colors.gray ?? '§7'
     const reset = colors.reset ?? '§r'
-    const totalText = `${candidates.length} Potential Recipe${candidates.length === 1 ? '' : 's'}:`
+    const totalText = `${candidates.length} §mPotential Recipe${candidates.length === 1 ? '' : 's'}:`
 
     const lines = [`${reset}${gray}${totalText}`]
     let currentLength = lines[0].length
@@ -410,8 +404,7 @@ function buildCatalystHelperLore(recipes, inputStack, catalystStacks) {
         lore.push('§bCatalyst Options:')
         const limited = catalystOptions.slice(0, HELPER_MAX_POOL_ENTRIES)
         for (const entry of limited) {
-            const amountText = entry.amount > 0 ? ` (x${entry.amount})` : ''
-            lore.push(`§7- ${entry.name}${amountText}`)
+            lore.push(`§7- ${entry.name}`)
         }
         if (catalystOptions.length > limited.length) {
             lore.push('§7- ...')
@@ -514,6 +507,81 @@ function mergeLore(...sections) {
         }
     }
     return result
+}
+
+function buildCatalystFluidLore(recipe, recipes, inputStack) {
+    const header = '§dCatalyst Fluid:'
+    const bulletNone = '§7- None'
+
+    if (recipe) {
+        const type = recipe?.fluid?.type
+        if (!type) return [header, bulletNone]
+
+        const name = humanizeIdentifier(type)
+        const amount = recipe?.fluid?.amount
+        if (amount === undefined || amount === null) return [header, `§7- ${name}`]
+        return [header, `§7- ${name}`, `§7   Amount: ${amount}mB`]
+    }
+
+    if (!inputStack || !Array.isArray(recipes) || recipes.length === 0) {
+        return [header, bulletNone]
+    }
+
+    const candidates = recipes.filter(r => r?.input && matchesStack(r.input, inputStack))
+    if (!candidates.length) return [header, bulletNone]
+
+    const fluidDefs = candidates
+        .map(r => (r?.fluid?.type ? { type: r.fluid.type, amount: r.fluid.amount } : null))
+        .filter(Boolean)
+
+    if (!fluidDefs.length) return [header, bulletNone]
+
+    const firstType = fluidDefs[0].type
+    const sameType = fluidDefs.every(f => f.type === firstType)
+    if (!sameType) return [header, '§7- Varies']
+
+    const firstAmount = fluidDefs[0].amount
+    const sameAmount = fluidDefs.every(f => (f.amount ?? null) === (firstAmount ?? null))
+
+    const lines = [header, `§7- ${humanizeIdentifier(firstType)}`]
+    if (sameAmount && firstAmount !== undefined && firstAmount !== null) {
+        lines.push(`§7   Amount: ${firstAmount}mB`)
+    }
+    return lines
+}
+
+function buildCatalystFluidLabelContent(lines) {
+    const fallback = ['§dCatalyst Fluid:', '§7- None']
+    const entries = Array.isArray(lines) && lines.length ? lines : fallback
+    const [title, ...rest] = entries
+    const lore = rest.length ? rest : ['§7- None']
+    return {
+        rawText: title ?? '§dCatalyst Fluid:',
+        lore
+    }
+}
+
+/**
+ * Centraliza as atualizações dos displays de aviso para que seja fácil descobrir
+ * quais elementos são atualizados sempre que a máquina precisa pausar.
+ * - Restaura o display do tanque (slot 11 / fluid_bar).
+ * - Propaga a mensagem para o item_label principal (slot 1).
+ */
+function showMachineWarning(machine, tank, message, { resetProgress = true, lore = [] } = {}) {
+    machine.showWarning(message, resetProgress, lore)
+    tank.display(FLUID_DISPLAY_SLOT)
+}
+
+/**
+ * Mantém em um único local a lista de displays acionados enquanto a máquina roda.
+ * Atualiza o tanque visual, energia HUD, barra de progresso e rótulo principal.
+ */
+function showRunningDisplays(machine, tank, lore = []) {
+    tank.display(FLUID_DISPLAY_SLOT)
+    machine.on()
+    machine.displayEnergy()
+    machine.displayProgress()
+    machine.showStatus('Running', lore)
 }
 
 function formatRecipePreviewName(recipe) {

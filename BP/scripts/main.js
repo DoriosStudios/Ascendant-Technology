@@ -1,4 +1,4 @@
-import './doriosAPI/main.js'
+import './DoriosAPI/main.js'
 import './config/main.js'
 
 import './machinery/machines/catalyst_weaver.js'

@@ -1,0 +1,15 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:refined_aetherium_shard",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_refined_aetherium_shard",
+            "minecraft:allow_off_hand": false
+        }
+    }
+}

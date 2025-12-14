@@ -16,6 +16,7 @@ const CLONER_BASE_TIME_SECONDS = 30 * 60
 const CLONER_ENERGY_COST = 1_000_000
 const KDE = 1000
 const CLONER_COST_KDE = Math.round(CLONER_ENERGY_COST / KDE)
+const CLONER_BLOCK_ID = 'utilitycraft:cloner'
 const CLONER_SPEED_DURATION_SECONDS = [
     CLONER_BASE_TIME_SECONDS,
     20 * 60,
@@ -185,6 +186,10 @@ function doriosRegister() {
 
 function createGenericRecipeFromInput(stack) {
     if (!stack?.typeId) return null
+
+    if (stack.typeId.toLowerCase() === CLONER_BLOCK_ID) {
+        return null
+    }
 
     const input = {
         id: stack.typeId,

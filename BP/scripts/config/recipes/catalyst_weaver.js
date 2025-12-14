@@ -1,5 +1,6 @@
 import { system } from "@minecraft/server"
 import { infuserRecipes } from './infuser.js'
+import { defineClonerRecipe } from "./cloner.js"
 
 const WEAVER_DEFAULT_ENERGY_COST = 6400
 const WEAVER_RATE_PER_TICK = 180
@@ -156,6 +157,14 @@ const nativeCatalystWeaverRecipes = [
         byproduct: { id: 'minecraft:obsidian', amount: 1, chance: 0.3 },
         cost: 5400,
         speedModifier: 1
+    }),
+    defineWeaverRecipe({
+        input: { id: 'minecraft:gold_ingot', amount: 1 },
+        catalysts: [
+            { id: 'utilitycraft:copper_dust', amount: 4 }
+        ],
+        output: { id: 'utilitycraft:steel_ingot', amount: 1 },
+        fluid: { type: 'liquified_aetherium', amount: 100 }
     })
 ]
 

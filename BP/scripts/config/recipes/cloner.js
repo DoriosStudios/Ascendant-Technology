@@ -3,6 +3,7 @@ import { system } from "@minecraft/server";
 const KDE = 1000;
 const DEFAULT_FLUID_TYPE = 'liquified_aetherium';
 const FLUID_PER_SECOND = 50; // mB per second (significant long-term drain)
+const CLONER_BLOCK_ID = 'utilitycraft:cloner';
 
 /**
  * @typedef {Object} ClonerRecipeDefinition
@@ -152,8 +153,10 @@ export function defineClonerRecipe(definition) {
 
     const inputStack = normalizeItemStack(definition.input ?? definition.template ?? definition.base);
     if (!inputStack) return null;
+    if (isClonerItemId(inputStack.id)) return null;
 
     const outputStack = normalizeItemStack(definition.output ?? inputStack.id) ?? { id: inputStack.id, amount: 1 };
+    if (isClonerItemId(outputStack.id ?? inputStack.id)) return null;
 
     const TEMPLATE_AMOUNT = 1;
     const COPY_AMOUNT = TEMPLATE_AMOUNT;
@@ -250,6 +253,11 @@ function sanitizeFluidType(type) {
     if (typeof type !== 'string') return null;
     const trimmed = type.trim();
     return trimmed.length ? trimmed.toLowerCase() : null;
+}
+
+function isClonerItemId(id) {
+    if (typeof id !== 'string') return false;
+    return id.toLowerCase() === CLONER_BLOCK_ID;
 }
 
 const CLONER_EVENT_ID = 'utilitycraft:register_cloner_recipe';

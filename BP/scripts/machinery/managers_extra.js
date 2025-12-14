@@ -1,7 +1,18 @@
 import { system, world, ItemStack, BlockPermutation } from '@minecraft/server'
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
 
-import { updatePipes } from './transfer_system/system.js'
+/**
+ * Placeholder for pipe network update logic.
+ * This function is called when blocks are placed to update pipe connections.
+ * TODO: Implement transfer_system if pipe network updates are needed.
+ *
+ * @param {Block} block The block that was placed.
+ * @param {'energy'|'item'|'fluid'} type The type of pipe network to update.
+ */
+function updatePipes(block, type) {
+    // No-op: transfer_system not implemented in this extension
+}
+
 const COLORS = DoriosAPI.constants.textColors
 
 const DEFAULT_TICK_SPEED = 10;
@@ -407,6 +418,25 @@ function buildRequirementLore(lines) {
     return lines.map(line => `§r${COLORS.red}${line}`);
 }
 
+function sanitizeLabelLines(lines) {
+    if (!Array.isArray(lines) || lines.length === 0) return [];
+    const sanitized = [];
+    for (const entry of lines) {
+        if (typeof entry !== "string") continue;
+        const trimmed = entry.trim();
+        if (!trimmed) continue;
+        sanitized.push(trimmed.startsWith("§r") ? trimmed : `§r${trimmed}`);
+    }
+    return sanitized;
+}
+
+function appendLabelFooterSections(labelText, lines) {
+    const sanitized = sanitizeLabelLines(lines);
+    if (sanitized.length === 0) return labelText.trim();
+    const base = labelText.trim();
+    return `${base}\n\n${sanitized.join("\n")}`.trim();
+}
+
 /**
  * Applies the normalized label content to an inventory slot.
  *
@@ -417,7 +447,7 @@ function buildRequirementLore(lines) {
 function applyLabelToSlot(container, slot, content) {
     if (!container) return;
     const { nameTag, lore } = normalizeLabelContent(content);
-    const baseItem = container.getItem(slot) ?? new ItemStack(LABEL_PLACEHOLDER_ITEM);
+    const baseItem = new ItemStack(LABEL_PLACEHOLDER_ITEM);
     baseItem.nameTag = nameTag;
     baseItem.setLore(lore);
     container.setItem(slot, baseItem);
@@ -1182,6 +1212,9 @@ export class Machine {
         this.block = block
         this.entity = this.dim.getEntitiesAtBlockLocation(block.location)[0]
         if (!this.entity) return null
+        if (!this.entity.scoreboardIdentity) {
+            Energy.initialize(this.entity)
+        }
         this.inv = this.entity?.getComponent('inventory')?.container
         this.energy = new Energy(this.entity)
         this.upgrades = this.getUpgradeLevels(settings.machine.upgrades)
@@ -1641,7 +1674,7 @@ export class Machine {
      * @param {string} message The warning text to display.
      * @param {boolean} [resetProgress=true] Whether to reset the machine progress to 0.
      */
-    showWarning(message, resetProgress = true, extraLore = []) {
+    showWarning(message, resetProgress = true, extraLore = [], options = undefined) {
         if (resetProgress) {
             this.setProgress(0);
         }
@@ -1652,7 +1685,7 @@ export class Machine {
         const efficiency = ((1 / this.boosts.consumption) * 100).toFixed(0);
         const rateText = Energy.formatEnergyToText(Math.floor(this.baseRate));
 
-        const labelText = `
+        let labelText = `
 §r${COLORS.yellow}${title}!
 
 §r${COLORS.green}Speed x${this.boosts.speed.toFixed(2)}
@@ -1661,6 +1694,10 @@ export class Machine {
 
 §r${COLORS.red}Rate ${rateText}/t
         `.trim();
+
+        if (options?.footerLines) {
+            labelText = appendLabelFooterSections(labelText, options.footerLines);
+        }
 
         const lore = buildRequirementLore(requirements);
         if (Array.isArray(extraLore) && extraLore.length) {
@@ -1681,14 +1718,14 @@ export class Machine {
      *
      * @param {string} message The status text to display.
      */
-    showStatus(message, extraLore = []) {
+    showStatus(message, extraLore = [], options = undefined) {
         this.displayEnergy();
         const { title, requirements } = extractMessageParts(message, "Operational");
         const efficiency = ((1 / this.boosts.consumption) * 100).toFixed(0);
         const costText = Energy.formatEnergyToText(this.getEnergyCost() * this.boosts.consumption);
         const rateText = Energy.formatEnergyToText(Math.floor(this.baseRate));
 
-        const labelText = `
+        let labelText = `
 §r${COLORS.darkGreen}${title}!
 
 §r${COLORS.green}Speed x${this.boosts.speed.toFixed(2)}
@@ -1697,6 +1734,10 @@ export class Machine {
 
 §r${COLORS.red}Rate ${rateText}/t
         `.trim();
+
+        if (options?.footerLines) {
+            labelText = appendLabelFooterSections(labelText, options.footerLines);
+        }
 
         const lore = buildRequirementLore(requirements);
         if (Array.isArray(extraLore) && extraLore.length) {
@@ -2049,7 +2090,8 @@ export class Energy {
     constructor(entity) {
         this.entity = entity;
         this.scoreId = entity?.scoreboardIdentity;
-        this.cap = this.getCap()
+        // Only fetch cap if the entity has a scoreboard identity
+        this.cap = this.scoreId ? this.getCap() : 0;
     }
 
     //#region Statics
@@ -2205,6 +2247,7 @@ export class Energy {
      * console.log(cap); // → 25600000
      */
     getCap() {
+        if (!this.scoreId) return this.cap || 0;
         const value = objectives.energyCap.getScore(this.scoreId) || 0;
         const exp = objectives.energyCapExp.getScore(this.scoreId) || 0;
 
@@ -2225,6 +2268,7 @@ export class Energy {
      * console.log(value, exp); // → 25600 , 3
      */
     getCapNormalized() {
+        if (!this.scoreId) return { value: 0, exp: 0 };
         const value = objectives.energyCap.getScore(this.scoreId) || 0;
         const exp = objectives.energyCapExp.getScore(this.scoreId) || 0;
 
@@ -2263,6 +2307,7 @@ export class Energy {
      * console.log(current); // → 1250000
      */
     get() {
+        if (!this.scoreId) return 0;
         const value = objectives.energy.getScore(this.scoreId) || 0;
         const exp = objectives.energyExp.getScore(this.scoreId) || 0;
         return Energy.combineValue(value, exp);
@@ -2279,6 +2324,7 @@ export class Energy {
      * console.log(value, exp); // → 125000 , 1
      */
     getNormalized() {
+        if (!this.scoreId) return { value: 0, exp: 0 };
         return {
             value: objectives.energy.getScore(this.scoreId) || 0,
             exp: objectives.energyExp.getScore(this.scoreId) || 0,
@@ -2830,6 +2876,27 @@ export class FluidManager {
     }
 
     /**
+     * Returns a FluidManager instance for a given entity if it has fluid capabilities.
+     *
+     * This is useful for checking whether an arbitrary entity can hold fluid
+     * and obtaining a FluidManager instance to interact with it.
+     *
+     * @param {Entity} entity The entity to check.
+     * @param {number} [index=0] The fluid tank index to check.
+     * @returns {FluidManager|null} A FluidManager instance if the entity has fluid capacity, otherwise null.
+     */
+    static findType(entity, index = 0) {
+        if (!entity?.isValid) return null;
+        try {
+            const fm = new FluidManager(entity, index);
+            if (fm.getCap() > 0) return fm;
+        } catch {
+            // Entity doesn't have scoreboard identity or fluid objectives
+        }
+        return null;
+    }
+
+    /**
      * Returns the current map of fluid container definitions.
      *
      * The registry is populated via `config/fluids/items.js` using
@@ -3256,6 +3323,9 @@ export class FluidManager {
      * @returns {number} The amount actually consumed (0 if insufficient).
      */
     consume(amount) {
+        // Creative mode tanks never deplete
+        if (this.entity?.hasTag?.("creative")) return amount;
+
         const current = this.get();
         if (current < amount) return 0;
         this.add(-amount);
@@ -3373,7 +3443,10 @@ export class FluidManager {
             }
             if (!targetEntity) return 0;
 
-            const target = new FluidManager(targetEntity, 0);
+            // Use findType to safely get a FluidManager if the entity supports fluids
+            const target = FluidManager.findType(targetEntity, 0);
+            if (!target) return 0;
+
             const targetType = target.getType();
             const space = target.getFreeSpace();
 
@@ -3438,6 +3511,9 @@ export class FluidManager {
 
         const facing = block.getState("utilitycraft:axis");
         if (!facing) return false;
+
+        // Only allow transfer if this is a tube block
+        if (!block.hasTag("dorios:isTube")) return false;
 
         // Opposite direction vectors
         const opposites = {

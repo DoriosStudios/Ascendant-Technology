@@ -24,5 +24,6 @@ import './recipes/liquifier.js';
 import './recipes/energizer.js';
 import './recipes/residue_processor.js';
 
+import './recipes/added/insert_sieve.js';
 import './recipes/added/insert_infuser.js';
 import './fluids/items.js';

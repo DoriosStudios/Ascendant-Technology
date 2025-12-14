@@ -71,7 +71,7 @@
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [
-                        98,
+                        100,
                         92
                     ]
                 }
@@ -82,7 +82,7 @@
                     "texture": "textures/ui/background_panel_blue",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ 108, 98 ],
+                    "offset": [ 110, 98 ],
                     "$cell_image_size": [ 28, 70 ],
                     "size": [ 28, 70 ]
                 }
@@ -93,7 +93,7 @@
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [
-                        128,
+                        130,
                         84
                     ],
                     "controls": [
@@ -149,8 +149,8 @@
                                 "anchor_from": "center",
                                 "anchor_to": "center",
                                 "offset": [
-                                    -6,
-                                    -89
+                                    -5,
+                                    -92
                                 ]
                             }
                         }
@@ -164,7 +164,7 @@
                         "anchor_from": "center",
                         "anchor_to": "center",
                         "offset": [
-                            -2, -30
+                            -2, -32
                         ],
                         "$cell_image_size": [156, 20],
                         "size": [156, 20]
@@ -173,16 +173,16 @@
             {
                 "info_panel": {
                     "type": "image",
-                    "texture": "textures/ui/half_long_panel_classic",
+                    "texture": "textures/ui/long_panel_classic",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "$cell_image_size": [88, 166],
+                    "$cell_image_size": [104, 166],
                     "size": [
-                        88,
+                        104,
                         166
                     ],
                     "offset": [
-                        -8,
+                        -26,
                         57
                     ],
                     "layer": 0
@@ -195,8 +195,20 @@
                     "anchor_to": "top_left",
                     "$text_scale": 0.55,
                     "offset": [
-                        0,
+                        -14,
                         66
+                    ]
+                }
+            },
+            {
+                "fluid_info_label@machineryCommon.item_label": {
+                    "collection_index": 12,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$text_scale": 0.55,
+                    "offset": [
+                        -14,
+                        128
                     ]
                 }
             },
@@ -295,7 +307,7 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        138,
+                        140,
                         195
                     ],
                     "collection_index": 10

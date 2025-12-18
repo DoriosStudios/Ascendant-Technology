@@ -1,0 +1,31 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:singularity_fabricator"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "NBN",
+            "CLC",
+            "UWU"
+        ],
+        "key": {
+            "N": { "item": "minecraft:netherite_block" },
+            "B": { "item": "minecraft:beacon" },
+            "C": { "item": "utilitycraft:cryo_chamber" },
+            "L": { "item": "utilitycraft:liquifier" },
+            "U": { "item": "utilitycraft:ultimate_chip" },
+            "W": { "item": "utilitycraft:catalyst_weaver" }
+        },
+        "result": {
+            "item": "utilitycraft:singularity_fabricator",
+            "count": 1
+        },
+        "unlock": [
+            { "item": "minecraft:beacon" }
+        ]
+    }
+}

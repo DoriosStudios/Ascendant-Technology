@@ -173,6 +173,8 @@ const nativeCatalystWeaverRecipes = [
             {id: 'utilitycraft:titanium', amount: 1},
         ],
         output: {id: 'utilitycraft:hyper_processing_upgrade', amount: 1},
+        cost: 12800,
+        speedModifier: 0.25
     }),
     defineWeaverRecipe({
         input: {id: 'utilitycraft:quadruple_compressed_cobblestone'},

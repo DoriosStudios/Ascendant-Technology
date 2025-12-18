@@ -1,0 +1,31 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:cryo_chamber"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "IBI",
+            "MCM",
+            "SAS"
+        ],
+        "key": {
+            "I": { "item": "minecraft:blue_ice" },
+            "B": { "item": "utilitycraft:ultimate_chip" },
+            "M": { "item": "utilitycraft:compressed_energized_iron_block_2" },
+            "C": { "item": "utilitycraft:machine_case" },
+            "S": { "item": "minecraft:crying_obsidian" },
+            "A": { "item": "utilitycraft:aetherium" }
+        },
+        "result": {
+            "item": "utilitycraft:cryo_chamber",
+            "count": 1
+        },
+        "unlock": [
+            { "item": "utilitycraft:ultimate_chip" }
+        ]
+    }
+}

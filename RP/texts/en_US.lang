@@ -6,39 +6,44 @@ tile.utilitycraft:absolute_solar_panel.name=Absolute Solar Panel\n§7  Max Rate:
 tile.utilitycraft:absolute_thermo_generator.name=Absolute Thermo Generator\n§7   Rate: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Rate: 64 kDE/t\n  Max Height Multiplier: 1000%\n  Does not work below y12
 
+tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 168 items \n- Can store fluids \n- Can store energy
+
 ## Machines
-tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7
-tile.utilitycraft:cloner.name=Duplicator\n§7- Accepted upgrades: \n   §a§7
-tile.utilitycraft:energizer.name=Energizer\n§7- Accepted upgrades: \n   §a§7, §b§7
-tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a§7, §b§7
+tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
+tile.utilitycraft:cloner.name=Duplicator\n§7- Accepted upgrades: \n   §a§7, §d§7
+tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7\n§7- 3 Modes:\n Stabilizer,\n Freezer,\n Cryo Generator
+tile.utilitycraft:energizer.name=Energizer\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
+tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7- Accepted upgrades: \n   §b§7, §g§7
-tile.utilitycraft:residue_processor.name=Residue Processor\n§7- Accepted upgrades: \n   §a§7, §b§7
+tile.utilitycraft:residue_processor.name=Residue Processor\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator
 tile.utilitycraft:network_center.name=Network Center\n§7- Shows network stats
-tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 168 items \n- Can store fluids\n - Can store energy
 
 ## Other Blocks
+tile.utilitycraft:laser_barrier_field.name=Laser Barrier Field\n§7  Active area projected by the barrier
 tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius
 
 
 ## Items
 item.utilitycraft:aetherium=Aetherium Ingot
+item.utilitycraft:titanium=Titanium Ingot
+item.utilitycraft:raw_titanium=Raw Titanium
+item.utilitycraft:titanium_chunk=Titanium Chunk
 item.utilitycraft:liquified_aetherium_bucket=Liquified Aetherium Bucket
 item.utilitycraft:aetherium_shard=Aetherium Shard
+item.utilitycraft:refined_aetherium_shard=Refined Aetherium Shard
 item.utilitycraft:void_essence=Void Essence
 item.utilitycraft:liquid_void=Liquid Void Capsule
+## Modules
 item.utilitycraft:size_upgrade=§gSize Upgrade§7\n- Increases Laser Barrier area
+item.utilitycraft:hyper_processing_upgrade=§dHyper Processing Upgrade§7\n- Increases machine operation speed\n- No extra energy cost
 
-## Entities
-entity.utilitycraft:catalyst_weaver.name=§fCatalyst Weaver
-entity.utilitycraft:cloner.name=Duplicator
-entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator
-entity.utilitycraft:liquifier.name=Liquifier
-entity.utilitycraft:laser_barrier.name=Laser Barrier
-entity.utilitycraft:residue_processor.name=Residue Processor
-entity.utilitycraft:energizer.name=Energizer
-entity.utilitycraft:network_center.name=§fNetwork Center
-tile.utilitycraft:laser_barrier_field.name=tile.utilitycraft:laser_barrier_field.name
+## Meshes & Nets
+item.utilitycraft:lucky_mesh=§aLucky Mesh\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
+item.utilitycraft:lucky_fishing_net=§aLucky Fishing Net\n§7- Hook Speed Tier: 10\n§7- Item Multiplier: 2x
+
+item.utilitycraft:lucky_aiot_item=§aLucky AiOT\n§7Looting X\nFortune X
+item.utilitycraft:lucky_aiot=§aLucky AiOT
 
 ## Liquid Capsules
 item.utilitycraft:empty_liquid_capsule=Empty Liquid Capsule
@@ -61,7 +66,36 @@ item.utilitycraft:dark_matter_liquid_capsule_6=Dark Matter Capsule §7\n- (6 Buc
 item.utilitycraft:dark_matter_liquid_capsule_7=Dark Matter Capsule §7\n- (7 Buckets)
 item.utilitycraft:dark_matter_liquid_capsule_8=Dark Matter Capsule §7\n- (8 Buckets)
 
+item.utilitycraft:cryofluid_capsule_1=Cryofluid Capsule §7\n- (1 Bucket)
+item.utilitycraft:cryofluid_capsule_2=Cryofluid Capsule §7\n- (2 Buckets)
+item.utilitycraft:cryofluid_capsule_3=Cryofluid Capsule §7\n- (3 Buckets)
+item.utilitycraft:cryofluid_capsule_4=Cryofluid Capsule §7\n- (4 Buckets)
+item.utilitycraft:cryofluid_capsule_5=Cryofluid Capsule §7\n- (5 Buckets)
+item.utilitycraft:cryofluid_capsule_6=Cryofluid Capsule §7\n- (6 Buckets)
+item.utilitycraft:cryofluid_capsule_7=Cryofluid Capsule §7\n- (7 Buckets)
+item.utilitycraft:cryofluid_capsule_8=Cryofluid Capsule §7\n- (8 Buckets)
+
+## Entities
+entity.utilitycraft:absolute_container.name=§fAbsolute Container
+entity.utilitycraft:catalyst_weaver.name=§fCatalyst Weaver
+entity.utilitycraft:cloner.name=Duplicator
+entity.utilitycraft:cryo_chamber.name=§fCryo Chamber
+entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator
+entity.utilitycraft:liquifier.name=Liquifier
+entity.utilitycraft:laser_barrier.name=Laser Barrier
+entity.utilitycraft:residue_processor.name=Residue Processor
+entity.utilitycraft:energizer.name=Energizer
+entity.utilitycraft:network_center.name=§fNetwork Center
+
 ## UI Texts
+ui.utilitycraft:status_label_container=Container Status
+
+ui.utilitycraft.water_label=§9Water
+ui.utilitycraft.cryofluid_label=§bCryofluid
+ui.utilitycraft:cryo_chamber.generator.titanium_label=Titanium
+ui.utilitycraft:cryo_chamber.generator.insert_titanium=Insert Titanium
+ui.utilitycraft:cryo_chamber.generator.need_titanium=Need Titanium
+
 ui.utilitycraft.mob_magnet.menu.title=Mob Magnet
 ui.utilitycraft.mob_magnet.menu.body=Select an option
 ui.utilitycraft.mob_magnet.menu.configure=Configure Magnet
@@ -195,3 +229,53 @@ item.utilitycraft:dark_matter_45=Dark Matter Fluid
 item.utilitycraft:dark_matter_46=Dark Matter Fluid
 item.utilitycraft:dark_matter_47=Dark Matter Fluid
 item.utilitycraft:dark_matter_48=Dark Matter Fluid
+## Cryofluid Placeholders
+item.utilitycraft:cryofluid_00=Cryofluid
+item.utilitycraft:cryofluid_01=Cryofluid
+item.utilitycraft:cryofluid_02=Cryofluid
+item.utilitycraft:cryofluid_03=Cryofluid
+item.utilitycraft:cryofluid_04=Cryofluid
+item.utilitycraft:cryofluid_05=Cryofluid
+item.utilitycraft:cryofluid_06=Cryofluid
+item.utilitycraft:cryofluid_07=Cryofluid
+item.utilitycraft:cryofluid_08=Cryofluid
+item.utilitycraft:cryofluid_09=Cryofluid
+item.utilitycraft:cryofluid_10=Cryofluid
+item.utilitycraft:cryofluid_11=Cryofluid
+item.utilitycraft:cryofluid_12=Cryofluid
+item.utilitycraft:cryofluid_13=Cryofluid
+item.utilitycraft:cryofluid_14=Cryofluid
+item.utilitycraft:cryofluid_15=Cryofluid
+item.utilitycraft:cryofluid_16=Cryofluid
+item.utilitycraft:cryofluid_17=Cryofluid
+item.utilitycraft:cryofluid_18=Cryofluid
+item.utilitycraft:cryofluid_19=Cryofluid
+item.utilitycraft:cryofluid_20=Cryofluid
+item.utilitycraft:cryofluid_21=Cryofluid
+item.utilitycraft:cryofluid_22=Cryofluid
+item.utilitycraft:cryofluid_23=Cryofluid
+item.utilitycraft:cryofluid_24=Cryofluid
+item.utilitycraft:cryofluid_25=Cryofluid
+item.utilitycraft:cryofluid_26=Cryofluid
+item.utilitycraft:cryofluid_27=Cryofluid
+item.utilitycraft:cryofluid_28=Cryofluid
+item.utilitycraft:cryofluid_29=Cryofluid
+item.utilitycraft:cryofluid_30=Cryofluid
+item.utilitycraft:cryofluid_31=Cryofluid
+item.utilitycraft:cryofluid_32=Cryofluid
+item.utilitycraft:cryofluid_33=Cryofluid
+item.utilitycraft:cryofluid_34=Cryofluid
+item.utilitycraft:cryofluid_35=Cryofluid
+item.utilitycraft:cryofluid_36=Cryofluid
+item.utilitycraft:cryofluid_37=Cryofluid
+item.utilitycraft:cryofluid_38=Cryofluid
+item.utilitycraft:cryofluid_39=Cryofluid
+item.utilitycraft:cryofluid_40=Cryofluid
+item.utilitycraft:cryofluid_41=Cryofluid
+item.utilitycraft:cryofluid_42=Cryofluid
+item.utilitycraft:cryofluid_43=Cryofluid
+item.utilitycraft:cryofluid_44=Cryofluid
+item.utilitycraft:cryofluid_45=Cryofluid
+item.utilitycraft:cryofluid_46=Cryofluid
+item.utilitycraft:cryofluid_47=Cryofluid
+item.utilitycraft:cryofluid_48=Cryofluid

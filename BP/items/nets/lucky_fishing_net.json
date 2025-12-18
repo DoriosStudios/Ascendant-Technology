@@ -1,0 +1,22 @@
+{
+	"format_version": "1.21.90",
+	"minecraft:item": {
+		"description": {
+			"identifier": "utilitycraft:lucky_fishing_net",
+			"menu_category": {
+				"category": "construction",
+				"group": "dorios:itemGroup.name.fishing_nets"
+			}
+		},
+		"components": {
+			"minecraft:icon": "utilitycraft_lucky_fishing_net",
+			"utilitycraft:fishing_net": {
+				"tier": 7,
+				"speed": 3,
+				"chance_multiplier": 10,
+				"amount_multiplier": 2,
+				"rolls": 8
+			}
+		}
+	}
+}

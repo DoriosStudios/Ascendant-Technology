@@ -9,7 +9,7 @@
 			}
 		},
                 "components": {
-                        "minecraft:icon": "utilitycraft_lucky_AIOT_item",
+                        "minecraft:icon": "utilitycraft_lucky_aiot",
                         "minecraft:tags": {
                                 "tags": [
                                         "minecraft:diamond_tier"

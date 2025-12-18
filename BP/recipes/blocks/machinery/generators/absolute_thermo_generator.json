@@ -2,7 +2,7 @@
 	"format_version": "1.20.80",
 	"minecraft:recipe_shaped": {
 		"description": {
-			"identifier": "utilitycraft:ultimate_thermo_generator"
+			"identifier": "utilitycraft:absolute_thermo_generator"
 		},
 		"tags": [
 			"utilitycraft_workbench"

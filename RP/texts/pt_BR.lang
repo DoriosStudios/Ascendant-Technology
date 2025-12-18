@@ -1,19 +1,21 @@
 ## Geradores
-tile.utilitycraft:absolute_battery.name=Bateria Absoluta \n§7 Velocidade: 800 kDE/t
-tile.utilitycraft:absolute_furnator.name=Furnator Absoluto \n§7 Velocidade: 320 kDE/t
-tile.utilitycraft:absolute_magmator.name=Magmator Absoluto \n§7 Velocidade: 400 kDE/t
-tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena itens (168 espaços)\n- Armazena energia\n- Armazena líquidos)
-tile.utilitycraft:absolute_solar_panel.name=Painel Solar Absoluto \n§7 Velocidade Máx: 96 kDE/t
-tile.utilitycraft:absolute_thermo_generator.name=Gerador Térmico Absoluto \n§7 Velocidade: 16 kDE/t
+tile.utilitycraft:absolute_battery.name=Bateria Absoluta \n§7  Velocidade: 800 kDE/t
+tile.utilitycraft:absolute_furnator.name=Furnator Absoluto \n§7  Velocidade: 320 kDE/t
+tile.utilitycraft:absolute_magmator.name=Magmator Absoluto \n§7  Velocidade: 400 kDE/t
+tile.utilitycraft:absolute_solar_panel.name=Painel Solar Absoluto \n§7  Velocidade Máx: 96 kDE/t
+tile.utilitycraft:absolute_thermo_generator.name=Gerador Térmico Absoluto \n§7  Velocidade: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta \n§7  Velocidade Base: 64 kDE/t\n  Multiplicador de Altura Máximo: 10x\n  Não funciona abaixo de y12
 
+tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena itens (168 espaços)\n- Armazena energia\n- Armazena líquidos
+
 ## Máquinas
-tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7- Aceita melhorias:\n    §a§7, §b§7
-tile.utilitycraft:cloner.name=Duplicador\n§7- Aceita melhorias:\n    §a§7, §b§7
-tile.utilitycraft:energizer.name=Energizador\n§7- Aceita melhorias:\n    §a§7, §b§7
-tile.utilitycraft:liquifier.name=Liquefator\n§7- Aceita melhorias:\n    §a§7, §b§7
+tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:cloner.name=Duplicador\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:cryo_chamber.name=Câmara Criogênica\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7\n§7- 3 modos:\n  Estabilizador,\n  Resfrigerador,\n  Gerador de Criofluido
+tile.utilitycraft:energizer.name=Energizador\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:liquifier.name=Liquefator\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:laser_barrier.name=Barreira de Laser\n§7- Aceita melhorias:\n    §b§7, §g§7
-tile.utilitycraft:residue_processor.name=Processador de Resíduos\n§7- Aceita melhorias:\n    §a§7, §b§7
+tile.utilitycraft:residue_processor.name=Processador de Resíduos\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade
 tile.utilitycraft:network_center.name=Centro de Rede
 
@@ -23,18 +25,29 @@ tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser
 
 ## Itens
 item.utilitycraft:aetherium=Barra de Aetherium
+item.utilitycraft:titanium=Barra de Titânio
+item.utilitycraft:raw_titanium=Titânio Bruto
+item.utilitycraft:titanium_chunk=Pedaço de Titânio
 item.utilitycraft:aetherium_shard=Fragmento de Aetherium
+item.utilitycraft:refined_aetherium_shard=Aetherium Refinado
+
 item.utilitycraft:void_essence=Essência do Vazio
 item.utilitycraft:liquid_void=Ampola de Vazio Líquido
-item.utilitycraft:lucky_aiot_item=AiOT da Sorte\n§7Pilhagem X\nFortuna X
-item.utilitycraft:lucky_aiot=AiOT da Sorte
 
+## Ferramentas / Armas
+item.utilitycraft:lucky_aiot_item=§aAiOT da Sorte\n§7Pilhagem X\nFortuna X
+item.utilitycraft:lucky_aiot=§aAiOT da Sorte
+
+### Módulos de Melhoria
 item.utilitycraft:size_upgrade=Módulo de Melhoria de §gTamanho§7\n- Aumenta a área da Barreira de Laser
+item.utilitycraft:hyper_processing_upgrade=Módulo de Melhoria de §dHyper Processamento§7\n- Aumenta a velocidade de operação das Máquinas\n- Não aumenta o consumo de energia
+
+### Malhas & Redes
+item.utilitycraft:lucky_mesh=§aMalha da Sorte\n§7- Tier Máx: Diamante\n§7- Multiplicador de Itens: 2x
+item.utilitycraft:lucky_fishing_net=§aRede de Pesca da Sorte\n§7- Nível de Velocidade: 10\n§7- Multiplicador de Itens: 2x
 
 ## Cápsulas de Líquidos
-
 item.utilitycraft:empty_liquid_capsule=Cápsula de Líquido Vazia
-
 item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido \n§7(1 Balde)
 item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido \n§7(2 Baldes)
 item.utilitycraft:aetherium_liquid_capsule_3=Cápsula de Aetherium Líquido \n§7(3 Baldes)
@@ -53,9 +66,19 @@ item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Matéria Escura \n§7
 item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Matéria Escura \n§7(7 Baldes)
 item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Matéria Escura \n§7(8 Baldes)
 
+item.utilitycraft:cryofluid_capsule_1=Cápsula de Criofluido \n§7(1 Balde)
+item.utilitycraft:cryofluid_capsule_2=Cápsula de Criofluido \n§7(2 Baldes)
+item.utilitycraft:cryofluid_capsule_3=Cápsula de Criofluido \n§7(3 Baldes)
+item.utilitycraft:cryofluid_capsule_4=Cápsula de Criofluido \n§7(4 Baldes)
+item.utilitycraft:cryofluid_capsule_5=Cápsula de Criofluido \n§7(5 Baldes)
+item.utilitycraft:cryofluid_capsule_6=Cápsula de Criofluido \n§7(6 Baldes)
+item.utilitycraft:cryofluid_capsule_7=Cápsula de Criofluido \n§7(7 Baldes)
+item.utilitycraft:cryofluid_capsule_8=Cápsula de Criofluido \n§7(8 Baldes)
+
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCâmara Catalisadora
 entity.utilitycraft:cloner.name=Duplicador
+entity.utilitycraft:cryo_chamber.name=§fCâmara Criogênica
 entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade
 entity.utilitycraft:liquifier.name=Liquefator
 entity.utilitycraft:laser_barrier.name=Barreira de Laser
@@ -64,6 +87,8 @@ entity.utilitycraft:energizer.name=Energizador
 entity.utilitycraft:network_center.name=§fCentro de Rede
 entity.utilitycraft:absolute_container.name=§fContainer Absoluto
 
+## UI
+ui.utilitycraft:status_label_container=Informações do Container
 
 ui.utilitycraft.mob_magnet.menu.title=Ímã de Mobs
 ui.utilitycraft.mob_magnet.menu.body=Selecione uma opção
@@ -96,6 +121,9 @@ ui.utilitycraft.mob_magnet.filter.remove.success=§cRemovido {0}
 ui.utilitycraft.mob_magnet.filter.mode.whitelist=Lista Branca
 ui.utilitycraft.mob_magnet.filter.mode.blacklist=Lista Negra
 ui.utilitycraft.mob_magnet.filter.mode_switched=§bModo alterado para {0}
+ui.utilitycraft:cryo_chamber.generator.titanium_label=Titânio
+ui.utilitycraft:cryo_chamber.generator.insert_titanium=Insira Titânio
+ui.utilitycraft:cryo_chamber.generator.need_titanium=Precisa de Titânio
 ## Placeholders
 item.utilitycraft:liquefied_aetherium_00=Aetherium Líquido
 item.utilitycraft:liquefied_aetherium_01=Aetherium Líquido
@@ -197,3 +225,53 @@ item.utilitycraft:dark_matter_45=Fluido de Matéria Escura
 item.utilitycraft:dark_matter_46=Fluido de Matéria Escura
 item.utilitycraft:dark_matter_47=Fluido de Matéria Escura
 item.utilitycraft:dark_matter_48=Fluido de Matéria Escura
+## Placeholders de Criofluido
+item.utilitycraft:cryofluid_00=Criofluido
+item.utilitycraft:cryofluid_01=Criofluido
+item.utilitycraft:cryofluid_02=Criofluido
+item.utilitycraft:cryofluid_03=Criofluido
+item.utilitycraft:cryofluid_04=Criofluido
+item.utilitycraft:cryofluid_05=Criofluido
+item.utilitycraft:cryofluid_06=Criofluido
+item.utilitycraft:cryofluid_07=Criofluido
+item.utilitycraft:cryofluid_08=Criofluido
+item.utilitycraft:cryofluid_09=Criofluido
+item.utilitycraft:cryofluid_10=Criofluido
+item.utilitycraft:cryofluid_11=Criofluido
+item.utilitycraft:cryofluid_12=Criofluido
+item.utilitycraft:cryofluid_13=Criofluido
+item.utilitycraft:cryofluid_14=Criofluido
+item.utilitycraft:cryofluid_15=Criofluido
+item.utilitycraft:cryofluid_16=Criofluido
+item.utilitycraft:cryofluid_17=Criofluido
+item.utilitycraft:cryofluid_18=Criofluido
+item.utilitycraft:cryofluid_19=Criofluido
+item.utilitycraft:cryofluid_20=Criofluido
+item.utilitycraft:cryofluid_21=Criofluido
+item.utilitycraft:cryofluid_22=Criofluido
+item.utilitycraft:cryofluid_23=Criofluido
+item.utilitycraft:cryofluid_24=Criofluido
+item.utilitycraft:cryofluid_25=Criofluido
+item.utilitycraft:cryofluid_26=Criofluido
+item.utilitycraft:cryofluid_27=Criofluido
+item.utilitycraft:cryofluid_28=Criofluido
+item.utilitycraft:cryofluid_29=Criofluido
+item.utilitycraft:cryofluid_30=Criofluido
+item.utilitycraft:cryofluid_31=Criofluido
+item.utilitycraft:cryofluid_32=Criofluido
+item.utilitycraft:cryofluid_33=Criofluido
+item.utilitycraft:cryofluid_34=Criofluido
+item.utilitycraft:cryofluid_35=Criofluido
+item.utilitycraft:cryofluid_36=Criofluido
+item.utilitycraft:cryofluid_37=Criofluido
+item.utilitycraft:cryofluid_38=Criofluido
+item.utilitycraft:cryofluid_39=Criofluido
+item.utilitycraft:cryofluid_40=Criofluido
+item.utilitycraft:cryofluid_41=Criofluido
+item.utilitycraft:cryofluid_42=Criofluido
+item.utilitycraft:cryofluid_43=Criofluido
+item.utilitycraft:cryofluid_44=Criofluido
+item.utilitycraft:cryofluid_45=Criofluido
+item.utilitycraft:cryofluid_46=Criofluido
+item.utilitycraft:cryofluid_47=Criofluido
+item.utilitycraft:cryofluid_48=Criofluido

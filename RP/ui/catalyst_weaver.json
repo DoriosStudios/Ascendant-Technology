@@ -197,18 +197,10 @@
                     "offset": [
                         -14,
                         66
-                    ]
-                }
-            },
-            {
-                "fluid_info_label@machineryCommon.item_label": {
-                    "collection_index": 12,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "$text_scale": 0.55,
-                    "offset": [
-                        -14,
-                        128
+                    ],
+                    "size": [
+                        88,
+                        148
                     ]
                 }
             },

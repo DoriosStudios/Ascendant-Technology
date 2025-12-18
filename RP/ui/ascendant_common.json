@@ -16,31 +16,60 @@
     // Todos usam nineslice para redimensionamento automático.
     // ============================================================================
 
-    // Painel de fundo padrão - cor neutra
-    // Uso: "@ascendant_common.panel_bg" com "size": [largura, altura]
-    "panel_bg": {
-        "type": "image",
-        "texture": "textures/ui/background_panel",
-        "size": ["100%", "100%"],
-        "layer": 0
+    // Painel parametrizável - escolhe a cor via $panel_color
+    // Cores suportadas: gray (default), dark, blue, aqua
+    "panel": {
+        "type": "panel",
+        "$panel_size|default": ["100%", "100%"],
+        "$panel_alpha|default": 1,
+        "$panel_layer|default": 0,
+        "$panel_color|default": "gray",
+        "$panel_texture|default": "textures/ui/background_panel",
+        "$panel_color|gray": {
+            "$panel_texture": "textures/ui/background_panel"
+        },
+        "$panel_color|dark": {
+            "$panel_texture": "textures/ui/background_panel_dark"
+        },
+        "$panel_color|blue": {
+            "$panel_texture": "textures/ui/background_panel_blue"
+        },
+        "$panel_color|aqua": {
+            "$panel_texture": "textures/ui/background_panel_aqua"
+        },
+        "controls": [
+            {
+                "panel_surface": {
+                    "type": "image",
+                    "texture": "$panel_texture",
+                    "size": "$panel_size",
+                    "alpha": "$panel_alpha",
+                    "layer": "$panel_layer"
+                }
+            }
+        ]
     },
 
-    // Painel de fundo azul - para destaques e seleções
-    // Uso: "@ascendant_common.panel_bg_blue" com "size": [largura, altura]
-    "panel_bg_blue": {
-        "type": "image",
-        "texture": "textures/ui/background_panel_blue",
-        "size": ["100%", "100%"],
-        "layer": 0
+    // Wrappers legados para manter compatibilidade
+    "panel_bg@ascendant_common.panel": {
+        "$panel_color": "gray"
     },
 
-    // Painel de fundo cinza simples - para áreas de texto
-    // Uso: "@ascendant_common.panel_bg_gray" com "size": [largura, altura]
-    "panel_bg_gray": {
-        "type": "image",
-        "texture": "textures/ui/simple_bg_gray",
-        "size": ["100%", "100%"],
-        "layer": 0
+    "panel_bg_dark@ascendant_common.panel": {
+        "$panel_color": "dark"
+    },
+
+    "panel_bg_blue@ascendant_common.panel": {
+        "$panel_color": "blue"
+    },
+
+    "panel_bg_aqua@ascendant_common.panel": {
+        "$panel_color": "aqua"
+    },
+
+    "panel_bg_gray@ascendant_common.panel": {
+        "$panel_color": "gray",
+        "$panel_texture": "textures/ui/simple_bg_gray"
     },
 
     // Painel longo clássico - para telas de máquinas
@@ -96,9 +125,6 @@
     },
 
     // Slot de item com fundo azul - para slots especiais
-    // Parâmetros:
-    //   $slot_index: índice do slot no container (0-based)
-    // Uso: "@ascendant_common.slot_blue" com "$slot_index": número
     "slot_blue": {
         "type": "panel",
         "size": [18, 18],
@@ -125,8 +151,8 @@
     // ============================================================================
     // SEÇÃO 3: COMPONENTES DE TOGGLE (Toggle Components)
     // ============================================================================
+
     // Botões e estados para toggles (ligar/desligar painéis).
-    // ============================================================================
 
     // Botão de toggle completo com ícone customizável
     // Parâmetros:
@@ -136,7 +162,7 @@
     // Uso: "@ascendant_common.toggle_button_base" com parâmetros
     "toggle_button_base": {
         "type": "panel",
-        "size": [20, 20],
+        "size": ["100%", "100%"],
         "$toggle_name|default": "default_toggle",
         "$toggle_texture|default": "textures/ui/cell_image",
         "$toggle_icon|default": "",
@@ -144,7 +170,7 @@
         "controls": [
             {
                 "toggle_bg@ascendant_common.panel_bg": {
-                    "size": [20, 20],
+                    "size": ["100%", "100%"],
                     "alpha": 0.9,
                     "layer": 0
                 }
@@ -162,7 +188,7 @@
             },
             {
                 "toggle@common.toggle": {
-                    "size": [20, 20],
+                    "size": ["100%", "100%"],
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "toggle_default_state": false,
@@ -197,18 +223,41 @@
     // Usado internamente pelos toggles
     "toggle_state_unchecked": {
         "type": "image",
-        "texture": "textures/ui/background_panel",
-        "size": [20, 20],
-        "alpha": 0.6
+        "texture": "textures/ui/button_borderless_dark",
+        "size": ["100%", "100%"],
+        "controls":[
+            {
+                "plus":{
+                    "type": "image",
+                    "texture": "textures/ui/plus",
+                    "size": [8, 8],
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "layer": 1
+                }
+            }
+        ]
     },
 
     // Estado visual do toggle quando marcado (ON)
     // Usado internamente pelos toggles
     "toggle_state_checked": {
         "type": "image",
-        "texture": "textures/ui/background_panel_blue",
-        "size": [20, 20],
-        "alpha": 1.0
+        "texture": "textures/ui/button_borderless_darkpressednohover",
+        "size": ["100%", "100%"],
+        "alpha": 0.9,
+        "controls":[
+            {
+                "minus":{
+                    "type": "image",
+                    "texture": "textures/ui/minus",
+                    "size": [8, 8],
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "layer": 1
+                }
+            }
+        ]
     },
 
     // ============================================================================

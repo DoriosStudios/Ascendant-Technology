@@ -4,6 +4,7 @@
         "ui/absolute_container.json",
         "ui/catalyst_weaver.json",
         "ui/cloner.json",
+        "ui/cryo_chamber.json",
         "ui/energizer.json",
         "ui/liquifier.json",
         "ui/network_center.json",

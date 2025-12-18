@@ -1,7 +1,7 @@
 {
     "namespace": "absolute_container",
-    "toggle_unchecked@ascendant_common.toggle_state_unchecked": {},
-    "toggle_checked@ascendant_common.toggle_state_checked": {},
+    "toggle_unchecked@ascendant_common.toggle_state_unchecked": { },
+    "toggle_checked@ascendant_common.toggle_state_checked": { },
     "absolute_container_top": {
         "type": "collection_panel",
         "anchor_from": "center",
@@ -18,10 +18,30 @@
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "chest_label@chest.chest_label": {
-                    "offset": [
-                        10,
-                        0
+                "close_button":{
+                    "type": "panel",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [82, -55],
+                    "controls":[
+                        {
+                            "close_button@common.light_close_button":{
+                                "size": [ 12, 12 ],
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "offset": [0, 0]
+                            }
+                        },
+                        {
+                            "close_button_bg": {
+                                "type": "image",
+                                "texture": "textures/ui/background_panel_dark",
+                                "size": [ 22, 24 ],
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "layer": 0
+                            }
+                        }
                     ]
                 }
             },
@@ -30,34 +50,26 @@
                     "type": "panel",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [0, -8],
-                    "size": [20, 20],
+                    "offset": [ 153, -4 ],
+                    "size": [ 20, 94 ],
                     "layer": 10,
                     "controls": [
                         {
-                            "toggle_backdrop@ascendant_common.panel_bg": {
-                                "size": [20, 20],
-                                "alpha": 0.9
-                            }
-                        },
-                        {
-                            "status_icon": {
+                            "toggle_backdrop": {
                                 "type": "image",
-                                "texture": "textures/ui/icon_recipe_equipment",
-                                "size": [16, 16],
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "layer": 1
+                                "texture": "textures/ui/background_panel_dark",
+                                "size": [ 22, 98 ]
                             }
                         },
                         {
                             "show_status_panel@common.toggle": {
-                                "size": [20, 20],
+                                "size": [18, 94 ],
                                 "anchor_from": "center",
                                 "anchor_to": "center",
                                 "toggle_default_state": false,
                                 "layer": 2,
                                 "$toggle_name": "status_toggle",
+                                "$toggle_texture": "#plus_button_visible",
                                 "$unchecked_control": "absolute_container.toggle_unchecked",
                                 "$checked_control": "absolute_container.toggle_checked",
                                 "$unchecked_hover_control": "absolute_container.toggle_unchecked",
@@ -88,8 +100,8 @@
                     "type": "panel",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-100, -32],
-                    "size": [80, 90],
+                    "offset": [ 170, -2 ],
+                    "size": [ 160, 90 ],
                     "layer": 15,
                     "bindings": [
                         {
@@ -101,20 +113,21 @@
                     ],
                     "controls": [
                         {
-                            "status_bg@ascendant_common.panel_bg": {
-                                "size": [80, 90],
-                                "alpha": 0.95,
+                            "status_bg": {
+                                "type": "image",
+                                "texture": "textures/ui/background_panel_dark",
+                                "size": [ 150, 98 ],
                                 "layer": 0
                             }
                         },
                         {
                             "status_title": {
                                 "type": "label",
-                                "text": "§6Status",
+                                "text": "ui.utilitycraft:status_label_container",
                                 "anchor_from": "top_middle",
                                 "anchor_to": "top_middle",
-                                "offset": [0, 4],
-                                "color": [1, 1, 1],
+                                "offset": [ 0, 5 ],
+                                "color": [ 1, 1, 1 ],
                                 "layer": 1
                             }
                         },
@@ -123,7 +136,7 @@
                                 "$energy_slot_index": 168,
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
-                                "offset": [8, 18]
+                                "offset": [ -32, 2 ]
                             }
                         },
                         {
@@ -131,7 +144,27 @@
                                 "$fluid_slot_index": 169,
                                 "anchor_from": "top_right",
                                 "anchor_to": "top_right",
-                                "offset": [-8, 18]
+                                "offset": [ 8, 2 ]
+                            }
+                        },
+                        {
+                            "container_label_bg": {
+                                "type": "image",
+                                "texture": "textures/ui/background_panel_dark",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [ 0, -29 ],
+                                "size": [ 150, 24 ],
+                                "layer": 1,
+                                "controls": [
+                                    {
+                                        "chest_label@chest.chest_label":{
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [20, 7]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]
@@ -142,16 +175,16 @@
                     "type": "panel",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [62, 47],
-                    "size": [252, 216],
+                    "offset": [ -62, 47 ],
+                    "size": [ 252, 216 ],
                     "controls": [
                         {
                             "storage_grid": {
                                 "type": "grid",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
-                                "size": [252, 216],
-                                "grid_dimensions": [14, 12],
+                                "size": [ 252, 216 ],
+                                "grid_dimensions": [ 14, 12 ],
                                 "maximum_grid_items": 168,
                                 "grid_item_template": "chest.chest_grid_item",
                                 "collection_name": "container_items",
@@ -160,14 +193,26 @@
                             }
                         },
                         {
-                            "storage_background@ascendant_common.panel_bg":{
+                            "storage_background": {
+                                "type": "image",
+                                "texture": "textures/ui/background_panel_dark",
                                 "anchor_from": "top_left",
-                                "anchor_to":"top_left",
-                                "size": [264, 228],
-                                "offset": [-6, -6]
+                                "anchor_to": "top_left",
+                                "size": [ 264, 228 ],
+                                "offset": [ -6, -6 ]
                             }
                         }
                     ]
+                }
+            },
+            {
+                "inventory_bg": {
+                    "type": "image",
+                    "texture": "textures/ui/background_panel_dark",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "offset": [ 158, 125 ],
+                    "size": [ 174, 104 ]
                 }
             }
         ]
@@ -176,7 +221,7 @@
         "type": "panel",
         "controls": [
             {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {}
+                "container_gamepad_helpers@common.container_gamepad_helpers": { }
             },
             {
                 "flying_item_renderer@common.flying_item_renderer": {
@@ -184,47 +229,55 @@
                 }
             },
             {
-                "selected_item_details_factory@common.selected_item_details_factory": {}
+                "selected_item_details_factory@common.selected_item_details_factory": { }
             },
             {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+                "item_lock_notification_factory@common.item_lock_notification_factory": { }
             },
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
                     "controls": [
                         {
-                            "common_panel@common.common_panel": {}
-                        },
-                        {
                             "chest_panel": {
                                 "type": "panel",
                                 "layer": 5,
                                 "controls": [
                                     {
-                                        "absolute_container_top@absolute_container.absolute_container_top": {}
+                                        "absolute_container_top@absolute_container.absolute_container_top": { }
                                     },
                                     {
-                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
-                                            "offset": [-149, 32]
+                                        "inventory_panel_bottom_half@common.inventory_panel_bottom_half": {
+                                            "offset": [ 148, 32 ]
+                                        }
+                                    },
+                                    {
+                                        "inventory_label": {
+                                            "type": "label",
+                                            "text": "container.inventory",
+                                            "color": [ 1, 1, 1 ],
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [ 156, 106 ],
+                                            "layer": 14
                                         }
                                     },
                                     {
                                         "hotbar_grid@common.hotbar_grid_template": {
-                                            "offset": [-149, 32]
+                                            "offset": [ 148, 32 ]
                                         }
                                     },
                                     {
-                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": { }
                                     }
                                 ]
                             }
                         },
                         {
-                            "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                            "inventory_selected_icon_button@common.inventory_selected_icon_button": { }
                         },
                         {
-                            "gamepad_cursor@common.gamepad_cursor_button": {}
+                            "gamepad_cursor@common.gamepad_cursor_button": { }
                         }
                     ]
                 }

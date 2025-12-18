@@ -2,7 +2,7 @@
 	"format_version": "1.20.80",
 	"minecraft:recipe_shaped": {
 		"description": {
-			"identifier": "utilitycraft:ultimate_wind_turbine"
+			"identifier": "utilitycraft:absolute_wind_turbine"
 		},
 		"tags": [
 			"utilitycraft_workbench"

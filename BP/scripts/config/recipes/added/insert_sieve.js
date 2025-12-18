@@ -4,6 +4,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     const newDrops = {
         "utilitycraft:crushed_cobbled_deepslate": [
             { item: "utilitycraft:aetherium_shard", amount: 1, chance: 0.005, tier: 7 },
+            { item: "utilitycraft:titanium_chunk", amount: 1, chance: 0.1, tier: 4 }
         ],
         "utilitycraft:crushed_endstone": [
             { item: "utilitycraft:aetherium_shard", amount: 1, chance: 0.1, tier: 5 },

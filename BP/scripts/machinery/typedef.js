@@ -58,7 +58,7 @@
 
 /**
  * @global
- * @typedef {"energy" | "filter" | "quantity" | "range" | "speed" | "ultimate"} UpgradeType
+ * @typedef {"energy" | "filter" | "quantity" | "range" | "speed" | "ultimate" | "size" | "hyper"} UpgradeType
  */
 
 /**
@@ -70,7 +70,9 @@
  * @property {number} energy
  * @property {number} range
  * @property {number} speed
+ * @property {number} size
  * @property {number} ultimate
+ * @property {number} hyper
  */
 
 /**

@@ -4,7 +4,7 @@
 		"description": {
 			"identifier": "utilitycraft:lucky_aiot",
 			"menu_category": {
-				"category": "equipment"
+				"category": "none"
 			}
 		},
 		"components": {
@@ -30,7 +30,7 @@
 				"max_durability": 7805
 			},
 			"minecraft:damage": 9,
-			"minecraft:icon": "utilitycraft_lucky_AIOT",
+			"minecraft:icon": "utilitycraft_lucky_aiot",
 			"minecraft:enchantable": {
 				"value": 50,
 				"slot": "axe"

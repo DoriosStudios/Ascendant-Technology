@@ -154,7 +154,7 @@ const nativeCatalystWeaverRecipes = [
         ],
         fluid: { type: 'liquified_aetherium', amount: 250 },
         output: { id: 'utilitycraft:refined_obsidian_dust', amount: 2 },
-        byproduct: { id: 'minecraft:obsidian', amount: 1, chance: 0.3 },
+        byproduct: { id: 'minecraft:obsidian', amount: 1, chance: 0.001 },
         cost: 5400,
         speedModifier: 1
     }),
@@ -163,11 +163,32 @@ const nativeCatalystWeaverRecipes = [
         catalysts: [
             { id: 'utilitycraft:copper_dust', amount: 4 }
         ],
-        output: { id: 'utilitycraft:steel_ingot', amount: 1 },
-        fluid: { type: 'liquified_aetherium', amount: 100 }
+        output: { id: 'utilitycraft:bronze_ingot', amount: 1 }
+    }),
+    defineWeaverRecipe({
+        input: {id: 'utilitycraft:speed_upgrade', amount: 1},
+        catalysts: [
+            {id: 'utilitycraft:energized_iron_dust', amount: 2},
+            {id: 'utilitycraft:aetherium_shard', amount: 1},
+            {id: 'utilitycraft:titanium', amount: 1},
+        ],
+        output: {id: 'utilitycraft:hyper_processing_upgrade', amount: 1},
+    }),
+    defineWeaverRecipe({
+        input: {id: 'utilitycraft:quadruple_compressed_cobblestone'},
+        catalysts: [
+            {id: 'utilitycraft:compressed_coal_block_4', amount: 1},
+        ],
+        output: {id: 'utilitycraft:compressed_blackstone_4', amount: 1},
+        cost: 601600,
+        speedModifier: 0.5
+    }),
+    defineWeaverRecipe({
+        input: {id: 'minecraft:amethyst_shard', amount: 1},
+        fluid: {type: 'dark_matter', amount: 800},
+        output: {id: 'utilitycraft:refined_aetherium_shard', amount: 1}
     })
 ]
-
 
 /**
  * Normalizes a Catalyst Weaver recipe definition.

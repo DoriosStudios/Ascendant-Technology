@@ -1,5 +1,5 @@
 // ==================================================
-// UtilityCraft – Main Recipe Loader
+// Ascendant Technology – Main Recipe Loader
 // ==================================================
 // Central file that imports all recipe definitions
 // and registers them into DoriosAPI.
@@ -26,4 +26,6 @@ import './recipes/residue_processor.js';
 
 import './recipes/added/insert_sieve.js';
 import './recipes/added/insert_infuser.js';
+import './recipes/added/insert_crusher.js';
+import './recipes/added/insert_incinerator.js';
 import './fluids/items.js';

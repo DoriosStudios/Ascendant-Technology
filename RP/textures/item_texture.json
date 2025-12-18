@@ -11,14 +11,62 @@
 		"utilitycraft_refined_aetherium_shard": {
 			"textures": "textures/items/ores/refined_aetherium_shard"
 		},
+		"utilitycraft_titanium_chunk":{
+			"textures": "textures/items/ores/titanium_chunk"
+		},
+		"utilitycraft_raw_titanium": {
+			"textures": "textures/items/ores/raw_titanium"
+		},
+		"utilitycraft_titanium_ingot": {
+			"textures": "textures/items/ores/titanium_ingot"
+		},
 		"utilitycraft_void_essence": {
 			"textures": "textures/items/misc/void_essence"
 		},
 		"utilitycraft_liquid_void": {
 			"textures": "textures/items/misc/liquid_void"
 		},
+		"utilitycraft_size_upgrade": {
+			"textures": "textures/items/machinery/size_upgrade"
+		},
+		"utilitycraft_hyper_processing_upgrade": {
+			"textures": "textures/items/machinery/hyper_processing_upgrade"
+		},
+		"utilitycraft_lucky_mesh":{
+			"textures": "textures/items/meshes/lucky_mesh"
+		},
+		"utilitycraft_lucky_aiot":{
+			"textures": "textures/items/tools/lucky_aiot"
+		},
+		"utilitycraft_lucky_fishing_net":{
+			"textures": "textures/items/nets/lucky_net"
+		},
 		"utilitycraft_empty_liquid_capsule": {
 			"textures": "textures/items/misc/liquid_capsule_0"
+		},
+		"utilitycraft_cryofluid_capsule_1": {
+			"textures": "textures/items/tools/capsules/cryofluid_capsule_1"
+		},
+		"utilitycraft_cryofluid_capsule_2": {
+			"textures": "textures/items/tools/capsules/cryofluid_capsule_2"
+		},
+		"utilitycraft_cryofluid_capsule_3": {
+			"textures": "textures/items/tools/capsules/cryofluid_capsule_3"
+		},
+		"utilitycraft_cryofluid_capsule_4": {
+			"textures": "textures/items/tools/capsules/cryofluid_capsule_4"
+		},
+		"utilitycraft_cryofluid_capsule_5": {
+			"textures": "textures/items/tools/capsules/cryofluid_capsule_5"
+		},
+		"utilitycraft_cryofluid_capsule_6": {
+			"textures": "textures/items/tools/capsules/cryofluid_capsule_6"
+		},
+		"utilitycraft_cryofluid_capsule_7": {
+			"textures": "textures/items/tools/capsules/cryofluid_capsule_7"
+		},
+		"utilitycraft_cryofluid_capsule_8": {
+			"textures": "textures/items/tools/capsules/cryofluid_capsule_8"
 		},
 		"utilitycraft_aetherium_liquid_capsule_1": {
 			"textures": "textures/items/misc/aetherium_liquid_capsule_1"
@@ -68,19 +116,7 @@
 		"utilitycraft_dark_matter_liquid_capsule_8": {
 			"textures": "textures/items/misc/dark_matter_liquid_capsule_8"
 		},
-		"utilitycraft_size_upgrade": {
-			"textures": "textures/items/machinery/size_upgrade"
-		},
-		"utilitycraft_lucky_mesh":{
-			"textures": "textures/items/meshes/lucky_mesh"
-		},
-		"utilitycraft_lucky_AIOT":{
-			"textures": "textures/items/tools/lucky_aiot"
-		},
-		"utilitycraft_lucky_AIOT_item":{
-			"textures": "textures/items/tools/lucky_aiot"
-		},
-		// Holder
+		// Holders
 		"utilitycraft_liquified_aetherium_bar_00": {
 			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_00"
 		},
@@ -374,6 +410,153 @@
 		},
 		"utilitycraft_dark_matter_bar_48": {
 			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_48"
+		},
+		"utilitycraft:cryofluid_00": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_00"
+		},
+		"utilitycraft:cryofluid_01": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_01"
+		},
+		"utilitycraft:cryofluid_02": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_02"
+		},
+		"utilitycraft:cryofluid_03": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_03"
+		},
+		"utilitycraft:cryofluid_04": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_04"
+		},
+		"utilitycraft:cryofluid_05": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_05"
+		},
+		"utilitycraft:cryofluid_06": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_06"
+		},
+		"utilitycraft:cryofluid_07": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_07"
+		},
+		"utilitycraft:cryofluid_08": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_08"
+		},
+		"utilitycraft:cryofluid_09": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_09"
+		},
+		"utilitycraft:cryofluid_10": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_10"
+		},
+		"utilitycraft:cryofluid_11": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_11"
+		},
+		"utilitycraft:cryofluid_12": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_12"
+		},
+		"utilitycraft:cryofluid_13": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_13"
+		},
+		"utilitycraft:cryofluid_14": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_14"
+		},
+		"utilitycraft:cryofluid_15": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_15"
+		},
+		"utilitycraft:cryofluid_16": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_16"
+		},
+		"utilitycraft:cryofluid_17": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_17"
+		},
+		"utilitycraft:cryofluid_18": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_18"
+		},
+		"utilitycraft:cryofluid_19": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_19"
+		},
+		"utilitycraft:cryofluid_20": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_20"
+		},
+		"utilitycraft:cryofluid_21": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_21"
+		},
+		"utilitycraft:cryofluid_22": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_22"
+		},
+		"utilitycraft:cryofluid_23": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_23"
+		},
+		"utilitycraft:cryofluid_24": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_24"
+		},
+		"utilitycraft:cryofluid_25": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_25"
+		},
+		"utilitycraft:cryofluid_26": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_26"
+		},
+		"utilitycraft:cryofluid_27": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_27"
+		},
+		"utilitycraft:cryofluid_28": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_28"
+		},
+		"utilitycraft:cryofluid_29": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_29"
+		},
+		"utilitycraft:cryofluid_30": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_30"
+		},
+		"utilitycraft:cryofluid_31": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_31"
+		},
+		"utilitycraft:cryofluid_32": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_32"
+		},
+		"utilitycraft:cryofluid_33": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_33"
+		},
+		"utilitycraft:cryofluid_34": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_34"
+		},
+		"utilitycraft:cryofluid_35": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_35"
+		},
+		"utilitycraft:cryofluid_36": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_36"
+		},
+		"utilitycraft:cryofluid_37": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_37"
+		},
+		"utilitycraft:cryofluid_38": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_38"
+		},
+		"utilitycraft:cryofluid_39": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_39"
+		},
+		"utilitycraft:cryofluid_40": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_40"
+		},
+		"utilitycraft:cryofluid_41": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_41"
+		},
+		"utilitycraft:cryofluid_42": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_42"
+		},
+		"utilitycraft:cryofluid_43": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_43"
+		},
+		"utilitycraft:cryofluid_44": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_44"
+		},
+		"utilitycraft:cryofluid_45": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_45"
+		},
+		"utilitycraft:cryofluid_46": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_46"
+		},
+		"utilitycraft:cryofluid_47": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_47"
+		},
+		"utilitycraft:cryofluid_48": {
+			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_48"
 		}
 	}
 }

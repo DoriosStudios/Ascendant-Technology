@@ -1,3 +1,4 @@
+import { system } from '@minecraft/server'
 import { Machine, Energy, FluidManager, Rotation } from '../managers_extra.js'
 
 // ──────────────────────────────────────────────────────
@@ -118,7 +119,7 @@ function getContext(block) {
     if (!block) return null
 
     const entity = block.dimension.getEntitiesAtBlockLocation(block.location)[0]
-    if (!entity?.isValid()) return null
+    if (!entity?.isValid) return null
 
     const inv = entity.getComponent('inventory')?.container
     if (!inv || inv.size < TOTAL_SLOTS) return null

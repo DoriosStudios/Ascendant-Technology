@@ -17,6 +17,105 @@ const COLORS = DoriosAPI.constants.textColors
 
 const DEFAULT_TICK_SPEED = 10;
 
+const CARDINAL_DIRECTION_OFFSETS = Object.freeze({
+    north: { x: 0, y: 0, z: -1 },
+    south: { x: 0, y: 0, z: 1 },
+    east: { x: 1, y: 0, z: 0 },
+    west: { x: -1, y: 0, z: 0 },
+    up: { x: 0, y: 1, z: 0 },
+    down: { x: 0, y: -1, z: 0 }
+});
+
+const OPPOSITE_DIRECTIONS = Object.freeze({
+    north: "south",
+    south: "north",
+    east: "west",
+    west: "east",
+    up: "down",
+    down: "up"
+});
+
+const LEFT_OF_DIRECTION = Object.freeze({
+    north: "west",
+    south: "east",
+    east: "north",
+    west: "south"
+});
+
+const RIGHT_OF_DIRECTION = Object.freeze({
+    north: "east",
+    south: "west",
+    east: "south",
+    west: "north"
+});
+
+const VALID_RELATIVE_DIRECTIONS = new Set(["front", "back", "left", "right", "up", "down"]);
+
+const cloneOffsetVector = (vector) => ({ x: vector.x, y: vector.y, z: vector.z });
+
+function normalizeCustomOffset(offset) {
+    if (!offset || typeof offset !== "object") return null;
+    const x = Number(offset.x);
+    const y = Number(offset.y);
+    const z = Number(offset.z);
+    if (![x, y, z].every(Number.isFinite)) return null;
+    return { x, y, z };
+}
+
+function resolveRelativeDirection(baseDirection, relative) {
+    if (!relative || !VALID_RELATIVE_DIRECTIONS.has(relative)) return null;
+
+    if (!baseDirection && ["front", "back", "left", "right"].includes(relative)) {
+        return null;
+    }
+
+    switch (relative) {
+        case "front":
+            return baseDirection;
+        case "back":
+            return OPPOSITE_DIRECTIONS[baseDirection];
+        case "left":
+            return LEFT_OF_DIRECTION[baseDirection] ?? null;
+        case "right":
+            return RIGHT_OF_DIRECTION[baseDirection] ?? null;
+        case "up":
+            return "up";
+        case "down":
+            return "down";
+        default:
+            return null;
+    }
+}
+
+function resolveDirectionVector(direction) {
+    if (!direction) return null;
+    const key = direction.toLowerCase();
+    const vector = CARDINAL_DIRECTION_OFFSETS[key];
+    return vector ? cloneOffsetVector(vector) : null;
+}
+
+function resolveFluidTransferOffset(facing, options) {
+    if (!options) options = {};
+
+    const customOffset = normalizeCustomOffset(options.offset);
+    if (customOffset) return customOffset;
+
+    let direction = options.direction;
+    if (direction) {
+        return resolveDirectionVector(direction);
+    }
+
+    if (options.relative) {
+        const relativeDirection = resolveRelativeDirection(facing, options.relative);
+        if (relativeDirection) {
+            return resolveDirectionVector(relativeDirection);
+        }
+    }
+
+    const fallbackDirection = options.useFacing ? facing : OPPOSITE_DIRECTIONS[facing];
+    return resolveDirectionVector(fallbackDirection);
+}
+
 globalThis.worldLoaded = false;
 globalThis.tickCount = 0;
 globalThis.tickSpeed = sanitizeTickSpeed(globalThis.tickSpeed);
@@ -1219,8 +1318,14 @@ export class Machine {
         this.energy = new Energy(this.entity)
         this.upgrades = this.getUpgradeLevels(settings.machine.upgrades)
         this.boosts = this.calculateBoosts(this.upgrades)
-        this.baseRate = settings.machine.rate_speed_base * this.boosts.speed * this.boosts.consumption
+
+        const baseSpeedMultiplier = this.boosts.baseSpeed ?? 1;
+        const hyperMultiplier = this.boosts.hyper ?? 1;
+        const energyRateUnits = settings.machine.rate_speed_base * baseSpeedMultiplier * this.boosts.consumption;
+
+        this.baseRate = energyRateUnits
         this.rate = this.baseRate * getTickSpeed()
+        this.processingRate = this.baseRate * hyperMultiplier * getTickSpeed()
         this.hiddenSlots = Array.isArray(settings?.machine?.hidden_slots)
             ? settings.machine.hidden_slots.filter(slot => typeof slot === "number")
             : []
@@ -1589,9 +1694,12 @@ export class Machine {
      * @param {number} amount Value to add to the current progress.
      */
     addProgress(amount) {
+        if (typeof amount !== "number" || amount === 0) return;
         const key = "dorios:progress";
+        const hyper = this.boosts?.hyper ?? 1;
+        const delta = amount > 0 ? amount * hyper : amount;
         let current = this.entity.getDynamicProperty(key) ?? 0;
-        this.entity.setDynamicProperty(key, current + amount);
+        this.entity.setDynamicProperty(key, current + delta);
     }
 
     /**
@@ -1764,7 +1872,8 @@ export class Machine {
             range: 0,
             speed: 0,
             size: 0,
-            ultimate: 0
+            ultimate: 0,
+            hyper: 0
         };
 
         // Gracefully handle oversized upgrade slot definitions (e.g., containers
@@ -1810,6 +1919,19 @@ export class Machine {
     }
 
     /**
+     * Calculates the Hyper Processing multiplier.
+     * Slightly weaker than the base speed upgrade to keep combined stacking in check.
+     *
+     * @param {number} hyperAmount
+     * @returns {number} Hyper multiplier (>= 1)
+     */
+    calculateHyperBoost(hyperAmount) {
+        const hyperLevel = Math.min(8, hyperAmount);
+        if (hyperLevel <= 0) return 1;
+        return 1 + 0.0625 * hyperLevel * (hyperLevel + 1);
+    }
+
+    /**
      * Calculates the consumption multiplier (lower = better).
      *
      * Formula (depends on energy upgrade level):
@@ -1838,12 +1960,15 @@ export class Machine {
      */
     calculateBoosts(levels) {
         const speedLevel = levels.speed ?? 0;
+        const hyperLevel = levels.hyper ?? 0;
         const energyLevel = levels.energy ?? 0;
 
-        const speed = this.calculateSpeed(speedLevel);
-        const consumption = this.calculateConsumption(energyLevel, speed);
+        const baseSpeed = this.calculateSpeed(speedLevel);
+        const hyper = this.calculateHyperBoost(hyperLevel);
+        const speed = baseSpeed * hyper;
+        const consumption = this.calculateConsumption(energyLevel, baseSpeed);
 
-        return { speed, consumption };
+        return { speed, consumption, hyper, baseSpeed };
     }
 
     /**
@@ -1907,6 +2032,9 @@ export class Machine {
 
             // Skip UI placeholder items
             if (item.hasTag("utilitycraft:ui_element")) continue;
+
+            const typeId = item.typeId ?? "";
+            if (typeId.startsWith("utilitycraft:cryofluid_")) continue;
 
             // Drop item into the world
             dim.spawnItem(item, center);
@@ -2190,28 +2318,31 @@ export class Energy {
      * parseFormattedEnergy("§r§7  Energy: 12.5 kDE / 256 kDE", 1); // 256000
      */
     static getEnergyFromText(input, index = 0) {
+        if (typeof input !== "string" || input.length === 0) return 0;
+
         // Remove Minecraft formatting codes
         const cleanedInput = input.replace(/§[0-9a-frklmnor]/gi, '');
 
-        // Find all matches like "12.5 kDE"
-        const matches = cleanedInput.match(/([\d.]+)\s*(kDE|MDE|GDE|TDE|DE)/g);
+        // Collect matches like "12.5 kDE"
+        const matches = [...cleanedInput.matchAll(/([\d.]+)\s*(kDE|MDE|GDE|TDE|DE)/gi)];
+        if (!matches.length || index < 0 || index >= matches.length) return 0;
 
-        if (!matches || index >= matches.length) {
-            throw new Error("Invalid input or index: couldn't parse energy values.");
-        }
+        const [, valueStr, rawUnit] = matches[index];
+        const unit = rawUnit?.toUpperCase?.() ?? 'DE';
 
-        const [valueStr, unit] = matches[index].split(' ');
-        let multiplier = 1;
+        const multipliers = {
+            DE: 1,
+            KDE: 1e3,
+            MDE: 1e6,
+            GDE: 1e9,
+            TDE: 1e12
+        };
 
-        switch (unit) {
-            case 'kDE': multiplier = 1e3; break;
-            case 'MDE': multiplier = 1e6; break;
-            case 'GDE': multiplier = 1e9; break;
-            case 'TDE': multiplier = 1e12; break;
-            case 'DE': multiplier = 1; break;
-        }
+        const multiplier = multipliers[unit] ?? 1;
+        const value = parseFloat(valueStr);
+        if (!Number.isFinite(value)) return 0;
 
-        return parseFloat(valueStr) * multiplier;
+        return value * multiplier;
     }
     //#endregion
 
@@ -2759,6 +2890,7 @@ const fluidObjectives = new Map();
 const fluidDisplayItemPrefixes = new Map([
     ["liquified_aetherium", "utilitycraft:liquified_aetherium"],
     ["dark_matter", "utilitycraft:dark_matter"],
+    ["cryofluid", "utilitycraft:cryofluid"],
 ]);
 
 /**
@@ -3491,65 +3623,61 @@ export class FluidManager {
 
 
     /**
-     * Transfers fluid from this tank or machine toward the opposite
-     * direction of its facing axis (`utilitycraft:axis`).
+     * Transfers fluid from this tank or machine toward a neighboring block.
      *
      * ## Behavior
-     * - Reads `utilitycraft:axis` from the source block.
-     * - Determines the **opposite direction vector** (e.g. east → west).
-     * - Locates the target block in that opposite direction.
-     * - If the target has the tag `"dorios:fluid"`, tries to transfer fluid to it.
-     * - If the target is a fluid tank with no entity, one is spawned empty first.
-     * - Uses {@link FluidManager.transferTo} to handle transfer and visual updates.
+     * - Supports absolute directions (north, south, etc.) or relative offsets (front/back/left/right).
+     * - Falls back to the opposite of `utilitycraft:axis` when no override is provided.
+     * - Optionally enforces the source block to be tagged as `dorios:isTube`.
+     * - Creates entities for empty fluid tanks before transferring.
      *
      * @param {Block} block The source block associated with this fluid entity.
      * @param {number} [amount=100] Maximum amount to transfer (in mB).
+     * @param {{
+     *   direction?: string,
+     *   relative?: "front"|"back"|"left"|"right"|"up"|"down",
+     *   offset?: {x:number,y:number,z:number},
+     *   requireTube?: boolean,
+     *   targetTag?: string|null,
+     *   targetIndex?: number,
+     *   useFacing?: boolean
+     * }} [options] Optional configuration for the transfer.
      * @returns {boolean} True if a valid transfer occurred, false otherwise.
      */
-    transferFluids(block, amount = 100) {
+    transferFluids(block, amount = 100, options = undefined) {
         if (!block || !this.entity?.isValid) return false;
 
+        const opts = options ?? {};
+        const requireTube = opts.requireTube ?? block.hasTag("dorios:isTube");
+        if (requireTube && !block.hasTag("dorios:isTube")) return false;
+
         const facing = block.getState("utilitycraft:axis");
-        if (!facing) return false;
-
-        // Only allow transfer if this is a tube block
-        if (!block.hasTag("dorios:isTube")) return false;
-
-        // Opposite direction vectors
-        const opposites = {
-            east: [-1, 0, 0],
-            west: [1, 0, 0],
-            north: [0, 0, 1],
-            south: [0, 0, -1],
-            up: [0, -1, 0],
-            down: [0, 1, 0]
-        };
-
-        const offset = opposites[facing];
+        const offset = resolveFluidTransferOffset(facing, opts);
         if (!offset) return false;
 
+        const targetTag = opts.targetTag ?? "dorios:fluid";
+        const targetIndex = Number.isInteger(opts.targetIndex) ? opts.targetIndex : 0;
+
         const { x, y, z } = block.location;
-        const targetLoc = { x: x + offset[0], y: y + offset[1], z: z + offset[2] };
+        const targetLoc = { x: x + offset.x, y: y + offset.y, z: z + offset.z };
         const dim = block.dimension;
         const targetBlock = dim.getBlock(targetLoc);
         if (!targetBlock) return false;
 
-        // Only proceed if the target block supports fluids
-        if (!targetBlock.hasTag("dorios:fluid")) return false;
+        if (targetTag && !targetBlock.hasTag(targetTag)) return false;
 
         let targetEntity = dim.getEntitiesAtBlockLocation(targetLoc)[0];
 
-        // If target is a tank and has no entity, spawn an empty one
         if (!targetEntity && targetBlock.typeId.includes("fluid_tank")) {
             const type = this.getType();
-            if (type == 'empty') return
+            if (type === 'empty') return false;
             FluidManager.addfluidToTank(targetBlock, type, 0);
             targetEntity = dim.getEntitiesAtBlockLocation(targetLoc)[0];
         }
 
         if (!targetEntity) return false;
 
-        const targetFluid = new FluidManager(targetEntity, 0);
+        const targetFluid = new FluidManager(targetEntity, targetIndex);
         if (!targetFluid || targetFluid.getCap() <= 0) return false;
 
         const transferred = this.transferTo(targetFluid, amount);

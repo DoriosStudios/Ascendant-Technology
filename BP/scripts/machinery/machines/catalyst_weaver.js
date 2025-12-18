@@ -349,7 +349,7 @@ function buildRecipePreviewLore(
     const colors = DoriosAPI?.constants?.textColors ?? {}
     const gray = colors.gray ?? '§7'
     const reset = colors.reset ?? '§r'
-    const totalText = `${candidates.length} §mPotential Recipe${candidates.length === 1 ? '' : 's'}:`
+    const totalText = `${candidates.length} Potential Recipe${candidates.length === 1 ? '' : 's'}:`
 
     const lines = [`${reset}${gray}${totalText}`]
     let currentLength = lines[0].length

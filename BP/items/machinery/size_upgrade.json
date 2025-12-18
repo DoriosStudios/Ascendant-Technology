@@ -4,7 +4,8 @@
     "description": {
       "identifier": "utilitycraft:size_upgrade",
       "menu_category": {
-        "category": "items"
+        "category": "items",
+        "group": "dorios:itemGroup.name.upgrades"
       }
     },
     "components": {

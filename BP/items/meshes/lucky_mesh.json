@@ -1,0 +1,23 @@
+{
+	"format_version": "1.21.110",
+	"minecraft:item": {
+		"description": {
+			"identifier": "utilitycraft:lucky_mesh",
+			"menu_category": {
+				"category": "construction",
+				"group": "dorios:itemGroup.name.meshes"
+			}
+		},
+		"components": {
+			"minecraft:icon": "utilitycraft_lucky_mesh",
+			"utilitycraft:mesh": {
+				"tier": 7,
+				"multiplier": 8,
+				"amount_multiplier": 2
+			},
+			"minecraft:fire_resistant": {
+				"value": true
+			}
+		}
+	}
+}

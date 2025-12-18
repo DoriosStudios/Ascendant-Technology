@@ -2,7 +2,7 @@
 	"format_version": "1.20.80",
 	"minecraft:recipe_shaped": {
 		"description": {
-			"identifier": "utilitycraft:ultimate_solar_panel"
+			"identifier": "utilitycraft:absolute_solar_panel"
 		},
 		"tags": [
 			"utilitycraft_workbench"

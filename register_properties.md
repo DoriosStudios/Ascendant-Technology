@@ -20,3 +20,17 @@ Every processing machine now listens for `system` script events so you can regis
 You can also fire these events from scripts using `system.sendScriptEvent` exactly like the Infuser sample in `BP/scripts/config/recipes/added/insert_infuser.js`.
 
 ##### *Man, I need a Wiki for ts.*
+
+---
+
+
+Use `$dark_mode: true` anywhere you reference `ascendant_common.toggle_button_base` (e.g., in `absolute_container.status_toggle`) to guarantee consistent visuals with dark backdrops without recreating the state machine.
+
+### Color panels (`ascendant_common.panel`)
+
+| Variable | Type | Default | Description |
+| --- | --- | --- | --- |
+| `$panel_size` | array `[w, h]` | `["100%", "100%"]` | Final dimensions for the rendered panel surface. |
+| `$panel_alpha` | number | `1` | Opacity multiplier (0-1). |
+| `$panel_layer` | int | `0` | Layer utility for stacking panels under/over other controls. |
+| `$panel_color` | string | `"gray"` | Color preset feeding the proper texture: `gray`, `dark`, `blue`, or `aqua`. |

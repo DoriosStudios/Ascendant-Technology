@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:item": {
+    "description": {
+      "identifier": "utilitycraft:hyper_processing_upgrade",
+      "menu_category": {
+        "category": "items",
+        "group": "dorios:itemGroup.name.upgrades"
+      }
+    },
+    "components": {
+      "minecraft:icon": "utilitycraft_hyper_processing_upgrade",
+      "minecraft:max_stack_size": 16,
+      "minecraft:tags": {
+        "tags": [
+          "utilitycraft:is_upgrade",
+          "utilitycraft:hyper_processing_upgrade"
+        ]
+      }
+    }
+  }
+}

@@ -57,12 +57,21 @@
 		- **Features:** Three dedicated upgrade slots — Length (slot 1), Height (slot 2), and Energy Efficiency (slot 3). Size upgrades add +1 to the selected dimension (max +8 each); sneak while applying a size upgrade to target Height. No UI—apply/remove upgrades by interacting with the block.
 		- **Notes:** Defensive utility only—not intended for mob farming.
 
-- 🟠 **Cryo Chamber**
+- � **Cryo Chamber**
 	- **Purpose:** Thermal stabilizer that keeps volatile alloys from exploding.
-	- **Operating Mode:** Constant energy input to maintain low or stable temperatures for sensitive reactions.
-	- **Additional Fields:**
+	- **Operating Mode:** Constant energy input to maintain low or stable temperatures for sensitive reactions, as cooling down items and food and generating Cryofluid.
+	- **Main Function: Cryo Stabilizer**
 		- **Use Cases:** Prevent reaction failure, stabilize volatile materials, enable advanced alloy processing.
-		- **Notes:** Not a freezer; intended exclusively for industrial/high-tier recipes.
+		- **Notes:** Intended exclusively for industrial/high-tier recipes.
+		- **Operating Mode:** Uses its main screen to monitor and maintain target temperatures for items in the "stabilizer slot".
+	- **Secondary Function: Cooling Chamber**
+	    - **Use Cases**: Restore food, items, cool heated tools, and machinery to its cold state.
+		- **Notes:** Useful for survival scenarios; not a substitute for dedicated refrigeration units.
+		- **Operating Mode:** Uses its own side of the screen to manage cooling tasks, changing the items in "freezer slot" to its cold variants.
+	- **Tertiary Function: Cryofluid Generator**
+		- **Use Cases:** Produces Cryofluid from cold water for cooling machines or better cold clothing crafting.
+		- **Notes:** Cryofluid can be used in other machines or crafting recipes.
+		- **Operating Mode:** Uses fluid input/output ports to convert water into Cryofluid over time. Is a machine with 2 fluid tanks (input and output) and do not accept items as input for this function.
 
 - 🟠 **Vaporworks Processor (Steam/Gas)**
 	- **Purpose:** Converts water into steam and other gases as supplemental reagents.

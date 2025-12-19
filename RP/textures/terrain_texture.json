@@ -86,10 +86,10 @@
 			"textures": "textures/blocks/machines/mob_magnet_on"
 		},
 		"utilitycraft_liquifier_off": {
-			"textures": "textures/blocks/machines/catalyst_weaver_off"
+			"textures": "textures/blocks/machines/liquifier_off"
 		},
 		"utilitycraft_liquifier_on": {
-			"textures": "textures/blocks/machines/catalyst_weaver_on"
+			"textures": "textures/blocks/machines/liquifier_on"
 		},
 		"utilitycraft_residue_processor_off": {
 			"textures": "textures/blocks/machines/cloner_off"
@@ -119,10 +119,10 @@
 			"textures": "textures/blocks/laser_barrier_field"
 		},
 		"utilitycraft_singularity_fabricator_off": {
-			"textures": "textures/blocks/machines/cloner_off"
+			"textures": "textures/blocks/machines/singularity_fabricator_off"
 		},
 		"utilitycraft_singularity_fabricator_on": {
-			"textures": "textures/blocks/machines/cloner_on"
+			"textures": "textures/blocks/machines/singularity_fabricator_on"
 		},
 		"utilitycraft_flat_conduit": {
 			"textures": "textures/blocks/pipes/flat_conduit"

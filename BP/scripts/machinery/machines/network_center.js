@@ -3,15 +3,15 @@ import { Machine, Energy } from '../managers_extra.js'
 const ENERGY_COST = 400
 const SCAN_COOLDOWN_TICKS = 40 // scan every 2 seconds (20tps)
 const MAX_VISITED = 4096 // safety cap to avoid runaway graphs
-const MAX_LINES_SUMMARY = 3 // limitar detalhes para não poluir UI
+const MAX_LINES_SUMMARY = 10 // limitar detalhes para não poluir UI (agora mostrando até X máquinas)
 
 /*
 Slots (inventory_size: 6)
 Painéis de exibição:
   [0] Output (Gasto):
-      - Mostra o número de máquinas conectadas, baterias e demanda livre de energia.
+      - Mostra o número de máquinas conectadas e demanda livre de energia.
   [1] Cálculos Gasto:
-      - Exibe a capacidade total, energia ocupada e energia livre da rede.
+      - Exibe a capacidade total, baterias,s energia ocupada e energia livre da rede.
   [2] Δ Energia (Resumo):
       - Apresenta o balanço energético: input, output, saldo e status do scan.
   [3] Input (Geração):
@@ -212,24 +212,24 @@ function renderPanels(machine, summary) {
         lore: [
             `§7Machines: §f${summary.machines}`,
             ...topMachines,
-            `§7Batteries: §f${summary.batteries}`,
-            ...topBats,
+            `§7...`,
             `§7Net Outflow: §f${outflowText}/t`
         ]
     }
     const panelOutB = {
-        title: '§cStorage',
+        title: '§eStorage',
         lore: [
             `§7Stored: §f${Energy.formatEnergyToText(summary.stored)}`,
             `§7Capacity: §f${Energy.formatEnergyToText(summary.cap)}`,
             `§7Free: §f${Energy.formatEnergyToText(free)}`,
+            `§7Batteries: §f${summary.batteries}`,
             `§7Bat. Cap: §f${Energy.formatEnergyToText(summary.batteryCap)}`
         ]
     }
 
     // Center: Balance
     const panelMid = {
-        title: '§fEnergy',
+        title: '§eEnergy',
         lore: [
             `§7Net: §f${netText}/t`,
             `§7Buffer: §f${fillPct.toFixed(1)}%%`,

@@ -8,9 +8,9 @@
             "utilitycraft_workbench"
         ],
         "pattern": [
-            "ERE",
-            "MIM",
-            "CAC"
+            "EUE",
+            "MRM",
+            "AUA"
         ],
         "key": {
             "E": {
@@ -28,8 +28,11 @@
             "C": {
                 "item": "utilitycraft:advanced_chip"
             },
-            "A": {
+            "U": {
                 "item": "utilitycraft:ultimate_chip"
+            },
+            "A": {
+                "item": "utilitycraft:aetherium"
             }
         },
         "result": {

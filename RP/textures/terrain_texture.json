@@ -129,6 +129,15 @@
 		},
 		"utilitycraft_item_conduit": {
 			"textures": "textures/blocks/pipes/flat_conduit"
+		},
+		"utilitycraft_deepslate_titanium_ore": {
+			"textures": "textures/blocks/ores/deepslate_titanium_ore"
+		},
+		"utilitycraft_deepslate_aetherium_ore": {
+			"textures": "textures/blocks/ores/deepslate_aetherium_ore"
+		},
+		"utilitycraft_end_aetherium_ore": {
+			"textures": "textures/blocks/ores/end_aetherium_ore"
 		}
 	}
 }

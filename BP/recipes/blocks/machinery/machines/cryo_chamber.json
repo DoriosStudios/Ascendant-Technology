@@ -15,9 +15,9 @@
         "key": {
             "I": { "item": "minecraft:blue_ice" },
             "B": { "item": "utilitycraft:ultimate_chip" },
-            "M": { "item": "utilitycraft:compressed_energized_iron_block_2" },
+            "M": { "item": "utilitycraft:advanced_fluid_tank" },
             "C": { "item": "utilitycraft:machine_case" },
-            "S": { "item": "minecraft:crying_obsidian" },
+            "S": { "item": "utilitycraft:compressed_steel_block" },
             "A": { "item": "utilitycraft:aetherium" }
         },
         "result": {

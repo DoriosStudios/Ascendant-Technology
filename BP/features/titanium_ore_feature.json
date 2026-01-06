@@ -1,0 +1,15 @@
+{
+  "format_version": "1.17.0",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "utilitycraft:titanium_ore_feature"
+    },
+    "count": 8,
+    "replace_rules": [
+      {
+        "places_block": "utilitycraft:deepslate_titanium_ore",
+        "may_replace": ["minecraft:deepslate"]
+      }
+    ]
+  }
+}

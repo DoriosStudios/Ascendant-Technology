@@ -17,13 +17,13 @@
                 "item": "utilitycraft:aetherium"
             },
             "B": {
-                "item": "minecraft:bucket"
+                "item": "utilitycraft:ultimate_fluid_tank"
             },
             "S": {
                 "item": "utilitycraft:aetherium_shard"
             },
             "M": {
-                "item": "utilitycraft:compressed_iron_block"
+                "item": "utilitycraft:compressed_steel_block"
             },
             "R": {
                 "item": "utilitycraft:compressed_energized_iron_block_2"

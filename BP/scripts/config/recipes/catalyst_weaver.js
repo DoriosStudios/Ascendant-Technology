@@ -109,6 +109,7 @@ const nativeCatalystWeaverRecipes = [
         speedModifier: 1
     }),
     defineWeaverRecipe({
+        // Aetherium Ingot from Gold Ingot
         id: 'utilitycraft:aetherium_ingot',
         input: { id: 'minecraft:gold_ingot', amount: 1 },
         "catalysts": [

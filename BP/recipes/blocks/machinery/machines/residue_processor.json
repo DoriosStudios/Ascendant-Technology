@@ -12,8 +12,8 @@
             "S": { "item": "minecraft:soul_sand" },
             "B": { "item": "minecraft:hopper" },
             "M": { "item": "utilitycraft:machine_case" },
-            "I": { "item": "utilitycraft:infuser" },
-            "C": { "item": "utilitycraft:advanced_chip" },
+            "I": { "item": "utilitycraft:crusher" },
+            "C": { "item": "utilitycraft:aetherium" },
             "A": { "item": "utilitycraft:ultimate_chip" }
         },
         "result": { "item": "utilitycraft:residue_processor", "count": 1 },

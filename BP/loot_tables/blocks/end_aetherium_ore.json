@@ -1,0 +1,288 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            {
+              "enchantment": "silk_touch",
+              "levels": { "min": 1 }
+            }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:end_aetherium_ore"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 1, "max": 1 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 1, "max": 2 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 2, "max": 2 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 2, "max": 3 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "max": 0 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 3, "max": 3 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 3, "max": 5 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 4, "max": 4 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 3, "max": 6 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 5, "max": 5 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 4, "max": 7 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 6, "max": 6 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 5, "max": 8 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 7, "max": 7 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 6, "max": 9 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 8, "max": 8 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 8, "max": 10 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 9, "max": 9 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 9, "max": 11 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "match_tool",
+          "enchantments": [
+            { "enchantment": "silk_touch", "levels": { "max": 0 } },
+            { "enchantment": "fortune", "levels": { "min": 10, "max": 10 } }
+          ]
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:aetherium_shard",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": { "min": 12, "max": 15 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

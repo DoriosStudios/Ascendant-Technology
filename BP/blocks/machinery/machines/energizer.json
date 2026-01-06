@@ -37,16 +37,16 @@
 					"inventory_size": 20
 				},
 				"machine": {
-					"energy_cap": 12288000,
+					"energy_cap": 25600000,
 					"energy_cost": 9600,
 					"rate_speed_base": 24000,
 					"upgrades": [
 						6,
-						7
+						7,
+						8
 					],
 					"hidden_slots": [
 						5,
-						8,
 						9,
 						10,
 						11,

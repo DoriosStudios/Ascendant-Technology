@@ -23,6 +23,10 @@ tile.utilitycraft:network_center.name=Centro de Rede
 tile.utilitycraft:mob_magnet.name=Ímã de Mobs \n§7 Atrai mobs em um raio configurável
 tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser
 
+tile.utilitycraft:deepslate_aetherium_ore.name=Minério de Aetherium de Ardosiabissal
+tile.utilitycraft:deepslate_titanium_ore.name=Minério de Titânio de Ardosiabissal
+tile.utilitycraft:end_aetherium_ore.name=Minério de Aetherium do Fim
+
 ## Itens
 item.utilitycraft:aetherium=Barra de Aetherium
 item.utilitycraft:titanium=Barra de Titânio
@@ -40,7 +44,7 @@ item.utilitycraft:lucky_aiot=§aAiOT da Sorte
 
 ### Módulos de Melhoria
 item.utilitycraft:size_upgrade=Módulo de Melhoria de §gTamanho§7\n- Aumenta a área da Barreira de Laser
-item.utilitycraft:hyper_processing_upgrade=Módulo de Melhoria de §dHyper Processamento§7\n- Aumenta a velocidade de operação das Máquinas\n- Não aumenta o consumo de energia
+item.utilitycraft:hyper_processing_upgrade=Módulo de Melhoria de §dHyper Processamento§7\n- Aumenta a velocidade das máquinas\n- Não aumenta o consumo de energia\n- Exclusivo para máquinas AT
 
 ### Malhas & Redes
 item.utilitycraft:lucky_mesh=§aMalha da Sorte\n§7- Tier Máx: Diamante\n§7- Multiplicador de Itens: 2x
@@ -88,6 +92,10 @@ entity.utilitycraft:network_center.name=§fCentro de Rede
 entity.utilitycraft:absolute_container.name=§fContainer Absoluto
 
 ## UI
+at:itemGroup.name.machines=Máquinas (Ascendant Technology)
+at:itemGroup.name.capsules=Cápsulas de Líquidos (Ascendant Technology)
+at:itemGroup.name.experimental=Experimental
+
 ui.utilitycraft:status_label_container=Informações do Container
 
 ui.utilitycraft.mob_magnet.menu.title=Ímã de Mobs

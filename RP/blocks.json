@@ -4,8 +4,62 @@
 		1,
 		0
 	],
+	"utilitycraft:absolute_battery": {
+		"sound": "metal"
+	},
+	"utilitycraft:absolute_container": {
+		"sound": "metal"
+	},
+	"utilitycraft:absolute_furnator": {
+		"sound": "metal"
+	},
+	"utilitycraft:absolute_magmator": {
+		"sound": "metal"
+	},
+	"utilitycraft:absolute_solar_panel": {
+		"sound": "metal"
+	},
+	"utilitycraft:absolute_thermo_generator": {
+		"sound": "metal"
+	},
+	"utilitycraft:absolute_wind_turbine": {
+		"sound": "metal"
+	},
+	"utilitycraft:catalyst_weaver": {
+		"sound": "metal"
+	},
+	"utilitycraft:cloner": {
+		"sound": "metal"
+	},
+	"utilitycraft:cryo_chamber": {
+		"sound": "metal"
+	},
+	"utilitycraft:energizer": {
+		"sound": "metal"
+	},
+	"utilitycraft:laser_barrier": {
+		"sound": "metal"
+	},
 	"utilitycraft:laser_barrier_field": {
-		"sound": "stone",
+		"sound": "glass",
 		"textures": "utilitycraft_laser_barrier_field"
+	},
+	"utilitycraft:liquifier": {
+		"sound": "metal"
+	},
+	"utilitycraft:mob_magnet": {
+		"sound": "metal"
+	},
+	"utilitycraft:network_center": {
+		"sound": "metal"
+	},
+	"utilitycraft:residue_processor": {
+		"sound": "metal"
+	},
+	"utilitycraft:singularity_fabricator": {
+		"sound": "metal"
+	},
+	"utilitycraft:synthesis_crucible": {
+		"sound": "metal"
 	}
 }

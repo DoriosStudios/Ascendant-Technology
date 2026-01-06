@@ -8,22 +8,25 @@
             "utilitycraft_workbench"
         ],
         "pattern": [
-            "BAB",
-            "RCR",
-            "MAM"
+            "AHA",
+            "RER",
+            "MCM"
         ],
         "key": {
             "A":{
                 "item": "utilitycraft:aetherium"
             },
-            "B": {
-                "item": "utilitycraft:bundle_of_blaze_rods"
+            "H": {
+                "item": "utilitycraft:ender_hopper"
             },
             "M": {
-                "item": "utilitycraft:compressed_iron_block"
+                "item": "utilitycraft:compressed_steel_block"
             },
             "R": {
                 "item": "utilitycraft:compressed_energized_iron_block_2"
+            },
+            "E": {
+                "item": "minecraft:ender_eye"
             },
             "C": {
                 "item": "utilitycraft:machine_case"

@@ -88,6 +88,10 @@ entity.utilitycraft:network_center.name=§fCentro de Red
 entity.utilitycraft:absolute_container.name=§fContenedor Absoluto
 
 ## UI Texts
+at:itemGroup.name.machines=Máquinas (Ascendant Technology)
+at:itemGroup.name.capsules=Cápsulas de Líquidos (Ascendant Technology)
+at:itemGroup.name.experimental=Experimental
+
 ui.utilitycraft:status_label_container=Información del Contenedor
 
 ui.utilitycraft.water_label=§9Agua

@@ -1,3 +1,4 @@
+import { ItemStack } from '@minecraft/server'
 import { Machine, FluidManager } from '../managers_extra.js'
 import { getCatalystWeaverRecipes } from '../../config/recipes/catalyst_weaver.js'
 
@@ -106,6 +107,17 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         const catalystFluidLore = buildCatalystFluidLore(recipe, recipes, inputStack)
         const sharedLore = mergeLore(recipePreviewLore, helperLore, catalystFluidLore)
         updateFluidLabel(catalystFluidLore)
+
+        const outputId = recipe?.output?.id
+        if (recipe && !isValidItemId(outputId)) {
+            showMachineWarning(machine, tank, 'Output item not found', { lore: sharedLore })
+            return
+        }
+        const byproductId = recipe?.byproduct?.id
+        if (recipe?.byproduct && !isValidItemId(byproductId)) {
+            showMachineWarning(machine, tank, 'Byproduct item not found', { lore: sharedLore })
+            return
+        }
         
         // Priority 4: Check fluid requirements with specific messages
         if (recipe && recipe.fluid?.type) {
@@ -722,6 +734,17 @@ function addByproduct(machine, byproduct) {
         machine.entity.changeItemAmount(BYPRODUCT_SLOT, amount)
     } else {
         machine.entity.addItem(byproduct.id, amount)
+    }
+}
+
+function isValidItemId(id) {
+    if (!id || typeof id !== 'string') return false
+    try {
+        // Attempt to instantiate an ItemStack; throws if the id is invalid/unregistered.
+        new ItemStack(id, 1)
+        return true
+    } catch {
+        return false
     }
 }
 

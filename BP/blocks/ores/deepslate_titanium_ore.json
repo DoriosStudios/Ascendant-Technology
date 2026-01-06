@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:block": {
+    "description": {
+      "identifier": "utilitycraft:deepslate_titanium_ore",
+      "menu_category": {
+        "category": "nature",
+        "group": "itemGroup.name.ore"
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 3.6
+      },
+      "minecraft:destructible_by_explosion": false,
+      "minecraft:loot": "loot_tables/blocks/deepslate_titanium_ore.json",
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "utilitycraft_deepslate_titanium_ore",
+          "render_method": "opaque"
+        }
+      },
+      "tag:minecraft:is_pickaxe_item_destructible": {},
+      "tag:minecraft:iron_tier_destructible": {}
+    }
+  }
+}

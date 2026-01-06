@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"target": "ESNext",
+		"checkJs": false,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": ".",
+		"paths": {
+			"@minecraft/server": ["./references/schemas/server-2.3.0.d.ts"],
+			"@minecraft/server-ui": ["./references/schemas/server-ui-2.0.0.d.ts"],
+			"@minecraft/server-gametest": ["./references/schemas/server-gametest-1.0.0-beta.d.ts"],
+			"@minecraft/server-editor": ["./references/schemas/server-editor-0.1.0-beta.d.ts"],
+			"@minecraft/server-net": ["./references/schemas/server-net-1.0.0-beta.d.ts"],
+			"@minecraft/server-admin": ["./references/schemas/server-admin-1.0.0-beta.d.ts"],
+			"@minecraft/debug-utilities": ["./references/schemas/debug-utilities-1.0.0-beta.d.ts"],
+			"@minecraft/diagnostics": ["./references/schemas/diagnostics-1.0.0-beta.d.ts"]
+		}
+	},
+	"include": [
+		"BP/scripts/**/*.js",
+		"references/scripts/**/*.js",
+		"references/schemas/**/*.d.ts",
+		"references/types/**/*.d.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"builds"
+	]
+}

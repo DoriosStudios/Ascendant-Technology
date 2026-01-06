@@ -30,6 +30,65 @@ const CLONER_SPEED_DURATION_SECONDS = [
 ]
 const MIN_CLONER_RATE = 1
 
+/**
+ * @typedef {Object} ClonerException
+ * @property {string[]} ids - Lowercased identifiers blocked from cloning.
+ * @property {string|string[]} warn - Warning text (single line or multiple) displayed to the player.
+ */
+
+const clonerExceptions = (() => {
+    /** @type {ClonerException[]} */
+    const entries = []
+
+    const normalizeIds = (value) => {
+        if (!value) return []
+        const list = Array.isArray(value) ? value : [value]
+        return list
+            .map(id => typeof id === 'string' ? id.trim().toLowerCase() : '')
+            .filter(Boolean)
+    }
+
+    const defineException = (config) => {
+        if (!config) return
+        const ids = normalizeIds(config.id ?? config.ids)
+        if (!ids.length) return
+        const warn = config.warn ?? config.message ?? "Can't duplicate this item"
+        entries.push({ ids, warn })
+    }
+
+    const find = (typeId) => {
+        if (!typeId) return null
+        const normalized = typeId.toLowerCase()
+        return entries.find(entry => entry.ids.includes(normalized)) ?? null
+    }
+
+    // Predefined exceptions
+    defineException({
+        id: ['utilitycraft:lucky_sword', 'utilitycraft:lucky_pickaxe'],
+        warn: "Can't duplicate Lucky Tools!"
+    })
+
+    defineException({
+        id: ['minecraft:banner', 'minecraft:potion'],
+        warn: "Can't duplicate items with data!"
+    })
+
+    return { defineException, find }
+})()
+
+function formatExceptionWarning(exception) {
+    if (!exception) return "Can't duplicate this item"
+    const warn = exception.warn
+    if (Array.isArray(warn)) {
+        const lines = warn.filter(line => typeof line === 'string' && line.trim().length)
+        return lines.length ? lines.join('\n') : "Can't duplicate this item"
+    }
+    if (typeof warn === 'string' && warn.trim().length) {
+        return warn
+    }
+    return "Can't duplicate this item"
+}
+
 /*
 Slots (inventory_size: 20)
 - [0] HUD de energia (machine.displayEnergy padrão).
@@ -88,6 +147,14 @@ function doriosRegister() {
             const inputStack = machine.inv.getItem(INPUT_SLOT)
             if (!inputStack) {
                 fail('Insert Template')
+                return
+            }
+
+            const templateMeta = captureTemplateMetadata(inputStack)
+
+            const exception = clonerExceptions.find(inputStack.typeId)
+            if (exception) {
+                fail(formatExceptionWarning(exception))
                 return
             }
 
@@ -170,7 +237,7 @@ function doriosRegister() {
                 return
             }
 
-            const crafts = handleProgress(machine, recipe, maxCrafts, tank)
+            const crafts = handleProgress(machine, recipe, maxCrafts, tank, templateMeta)
             if (crafts > 0) {
                 updateHud(machine, recipe, tank, true)
             } else {
@@ -262,13 +329,13 @@ function calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe, tank) {
     return Math.max(0, max)
 }
 
-function handleProgress(machine, recipe, maxCrafts, tank) {
+function handleProgress(machine, recipe, maxCrafts, tank, templateMeta) {
     const energyCost = recipe.energyCost
     const progress = machine.getProgress()
 
     if (progress >= energyCost) {
         const crafts = Math.min(maxCrafts, Math.floor(progress / energyCost))
-        applyCraft(machine, recipe, crafts, tank)
+        applyCraft(machine, recipe, crafts, tank, templateMeta)
         machine.addProgress(-(crafts * energyCost))
         return crafts
     }
@@ -283,7 +350,7 @@ function handleProgress(machine, recipe, maxCrafts, tank) {
     return 0
 }
 
-function applyCraft(machine, recipe, crafts, tank) {
+function applyCraft(machine, recipe, crafts, tank, templateMeta) {
     if (crafts <= 0) return
 
     const inputQty = (recipe.input.amount ?? 1) * crafts
@@ -296,11 +363,11 @@ function applyCraft(machine, recipe, crafts, tank) {
     }
 
     const originalAmount = getOriginalAmountPerCraft(recipe) * crafts
-    addItemsToSlot(machine, OUTPUT_SLOT_ORIGINAL, recipe.input.id, originalAmount)
+    addItemsToSlot(machine, OUTPUT_SLOT_ORIGINAL, recipe.input.id, originalAmount, templateMeta)
 
     const copyAmount = getCopyAmountPerCraft(recipe) * crafts
     if (copyAmount > 0) {
-        addItemsToSlot(machine, OUTPUT_SLOT_COPY, recipe.output.id, copyAmount)
+        addItemsToSlot(machine, OUTPUT_SLOT_COPY, recipe.output.id, copyAmount, templateMeta)
     }
 }
 
@@ -430,20 +497,118 @@ function formatFluidDisplayName(type) {
     return cleaned.length ? cleaned : pretty
 }
 
-function addItemsToSlot(machine, slotIndex, itemId, amount) {
+function addItemsToSlot(machine, slotIndex, itemId, amount, templateMeta) {
     if (!amount || amount <= 0 || !itemId) return
     const slot = machine.inv.getItem(slotIndex)
+
     if (!slot) {
         machine.entity.setItem(slotIndex, itemId, amount)
+        applyTemplateMetadataToSlot(machine, slotIndex, templateMeta)
         return
     }
 
     if (slot.typeId !== itemId) {
         machine.entity.setItem(slotIndex, itemId, amount)
+        applyTemplateMetadataToSlot(machine, slotIndex, templateMeta)
         return
     }
 
     machine.entity.changeItemAmount(slotIndex, amount)
+    applyTemplateMetadataToSlot(machine, slotIndex, templateMeta)
+}
+
+function applyTemplateMetadataToSlot(machine, slotIndex, templateMeta) {
+    if (!templateMeta || !machine?.inv) return
+    const stack = machine.inv.getItem(slotIndex)
+    if (!stack || stack.typeId !== templateMeta.typeId) return
+    applyTemplateMetadata(stack, templateMeta)
+    machine.inv.setItem(slotIndex, stack)
+}
+
+function captureTemplateMetadata(stack) {
+    if (!stack) return null
+    const lore = typeof stack.getLore === 'function' ? stack.getLore() : []
+    const enchantments = extractEnchantments(stack)
+    const meta = {
+        typeId: stack.typeId,
+        nameTag: typeof stack.nameTag === 'string' && stack.nameTag.length > 0 ? stack.nameTag : undefined,
+        lore: Array.isArray(lore) && lore.length ? [...lore] : undefined,
+        enchantments: enchantments.length ? enchantments : undefined
+    }
+    return meta
+}
+
+function applyTemplateMetadata(targetStack, templateMeta) {
+    if (!targetStack || !templateMeta) return
+    if (typeof templateMeta.nameTag === 'string') {
+        targetStack.nameTag = templateMeta.nameTag
+    }
+    if (Array.isArray(templateMeta.lore)) {
+        targetStack.setLore(templateMeta.lore)
+    }
+    applyEnchantmentsToStack(targetStack, templateMeta.enchantments)
+}
+
+function applyEnchantmentsToStack(targetStack, enchantments) {
+    if (!Array.isArray(enchantments) || enchantments.length === 0) return
+    const comp = getEnchantableComponent(targetStack)
+    if (!comp || typeof comp.addEnchantments !== 'function') return
+
+    const sanitized = enchantments
+        .map(entry => {
+            const level = Number(entry?.level) || 0
+            if (!entry?.type || level <= 0) return null
+            return { type: entry.type, level }
+        })
+        .filter(Boolean)
+
+    if (!sanitized.length) return
+
+    try {
+        comp.removeAllEnchantments?.()
+    } catch { }
+
+    try {
+        comp.addEnchantments(sanitized)
+    } catch (error) {
+        console.warn('[cloner] Failed to copy enchantments:', error)
+    }
+}
+
+function extractEnchantments(stack) {
+    const comp = getEnchantableComponent(stack)
+    if (!comp) return []
+
+    let list = []
+    try {
+        if (typeof comp.getEnchantments === 'function') {
+            list = comp.getEnchantments()
+        } else if (Array.isArray(comp.enchantments)) {
+            list = comp.enchantments
+        }
+    } catch (error) {
+        console.warn('[cloner] Failed to read enchantments:', error)
+        return []
+    }
+
+    if (!Array.isArray(list)) return []
+
+    return list
+        .map(entry => {
+            if (!entry?.type) return null
+            const level = Number(entry.level ?? entry.lvl ?? entry.amount ?? 0)
+            if (level <= 0) return null
+            return { type: entry.type, level }
+        })
+        .filter(Boolean)
+}
+
+function getEnchantableComponent(stack) {
+    if (!stack || typeof stack.getComponent !== 'function') return null
+    return stack.getComponent('minecraft:enchantable')
+        ?? stack.getComponent('minecraft:enchantments')
+        ?? stack.getComponent('enchantments')
+        ?? null
 }
 
 function computeSlotCapacity(slot, expectedId, perCraft) {

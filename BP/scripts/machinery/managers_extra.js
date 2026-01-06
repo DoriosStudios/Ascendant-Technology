@@ -1928,7 +1928,7 @@ export class Machine {
     calculateHyperBoost(hyperAmount) {
         const hyperLevel = Math.min(8, hyperAmount);
         if (hyperLevel <= 0) return 1;
-        return 1 + 0.0625 * hyperLevel * (hyperLevel + 1);
+        return 1 + 0.075 * hyperLevel * (hyperLevel + 1);
     }
 
     /**

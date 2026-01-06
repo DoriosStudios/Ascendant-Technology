@@ -6,7 +6,7 @@ tile.utilitycraft:absolute_solar_panel.name=Absolute Solar Panel\n§7  Max Rate:
 tile.utilitycraft:absolute_thermo_generator.name=Absolute Thermo Generator\n§7   Rate: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Rate: 64 kDE/t\n  Max Height Multiplier: 1000%\n  Does not work below y12
 
-tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 168 items \n- Can store fluids \n- Can store energy
+tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 168 items\n- Can store fluids\n- Can store energy
 
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
@@ -22,6 +22,10 @@ tile.utilitycraft:network_center.name=Network Center\n§7- Shows network stats
 ## Other Blocks
 tile.utilitycraft:laser_barrier_field.name=Laser Barrier Field\n§7  Active area projected by the barrier
 tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius
+
+tile.utilitycraft:deepslate_aetherium_ore.name=Deepslate Aetherium Ore
+tile.utilitycraft:deepslate_titanium_ore.name=Deepslate Titanium Ore
+tile.utilitycraft:end_aetherium_ore.name=End Aetherium Ore
 
 
 ## Items
@@ -88,6 +92,10 @@ entity.utilitycraft:energizer.name=Energizer
 entity.utilitycraft:network_center.name=§fNetwork Center
 
 ## UI Texts
+at:itemGroup.name.machines=Machines (Ascendant Technology)
+at:itemGroup.name.capsules=Liquid Capsules (Ascendant Technology)
+at:itemGroup.name.experimental=Experimental
+
 ui.utilitycraft:status_label_container=Container Status
 
 ui.utilitycraft.water_label=§9Water

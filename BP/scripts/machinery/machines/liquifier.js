@@ -47,7 +47,10 @@ DoriosAPI.register.blockComponent('liquifier', {
 
         const tank = FluidManager.initializeSingle(machine.entity);
         if (tickGate(machine.entity, 'liq:fluids_cd', 4)) {
-            tank.transferFluids(block);
+            const available = tank.get();
+            if (available > 0) {
+                tank.transferFluids(block, available);
+            }
         }
         feedFluidSlot(machine, tank);
 

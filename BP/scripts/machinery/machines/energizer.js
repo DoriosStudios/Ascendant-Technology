@@ -26,8 +26,7 @@ DoriosAPI.register.blockComponent('energizer', {
             const machine = new Machine(e.block, settings, true)
             if (!machine?.entity) return
 
-            const defaultCost = settings?.machine?.energy_cost ?? 9600
-            machine.setEnergyCost(defaultCost)
+            machine.setEnergyCost(settings.machine.energy_cost)
             machine.displayEnergy()
             machine.displayProgress()
             machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '')
@@ -83,7 +82,7 @@ DoriosAPI.register.blockComponent('energizer', {
             return
         }
 
-        const energyCost = channel.recipe.energyCost ?? settings.machine.energy_cost ?? 9600
+        const energyCost = channel.recipe.energyCost ?? settings.machine.energy_cost
         machine.setEnergyCost(energyCost)
 
         const progress = machine.getProgress()
@@ -91,19 +90,24 @@ DoriosAPI.register.blockComponent('energizer', {
             const crafts = Math.min(maxCrafts, Math.floor(progress / energyCost))
             if (crafts > 0) {
                 processCraft(machine, channel, crafts)
-                machine.addProgress(-(crafts * energyCost))
+                machine.addProgress(-crafts * energyCost)
             }
         } else {
             const consumption = machine.boosts.consumption
-            const needed = energyCost - progress
-            const spendable = Math.min(machine.energy.get(), machine.rate, needed * consumption)
-            if (spendable > 0) {
-                machine.energy.consume(spendable)
-                machine.addProgress(spendable / Math.max(consumption, Number.EPSILON))
+            const energyToConsume = Math.min(
+                machine.energy.get(),
+                machine.rate,
+                maxCrafts * energyCost * consumption
+            )
+
+            if (energyToConsume > 0) {
+                machine.energy.consume(energyToConsume)
+                machine.addProgress(energyToConsume / Math.max(consumption, Number.EPSILON))
             }
         }
 
-        updateHud(machine, channel)
+        const status = progress >= energyCost ? 'Running' : 'Charging'
+        updateHud(machine, channel, status)
         machine.displayEnergy()
         machine.displayProgress()
         machine.on()
@@ -167,7 +171,7 @@ function processCraft(machine, channel, crafts) {
     }
 }
 
-function updateHud(machine, channel) {
+function updateHud(machine, channel, status = 'Running') {
     const recipe = channel.recipe
     const slotName = slotTitle(channel.slot)
     const costText = Energy.formatEnergyToText(machine.getEnergyCost())
@@ -175,13 +179,23 @@ function updateHud(machine, channel) {
     const outputName = formatName(recipe.output.id)
     const desc = recipe.description ? `\n§7${recipe.description}` : ''
 
+    const rateText = Energy.formatEnergyToText(Math.floor(machine.rate))
+    const efficiencyPct = (1 / machine.boosts.consumption) * 100
+    const stats = [
+        ``,
+        `§aStatus: §f${status}`,
+        `§aSpeed: §fx${machine.boosts.speed.toFixed(2)}`,
+        `§aEfficiency: §f${efficiencyPct.toFixed(0)}%%`,
+        `§aRate: §f${rateText}/t`
+    ]
+
     machine.setLabel({
-        title: `§6${slotName} Channel`,
+        title: `§r§6${slotName} Channel`,
         lore: [
             `§bInput: §f${inputName}`,
             `§dOutput: §f${outputName}`,
-            `§cCost: §f${costText}`,
-            `§7Cycle: §f${recipe.seconds}s`
+            `§cCost: §f${costText} per item\n`,
+            ...stats
         ],
         description: desc ? desc : undefined
     })

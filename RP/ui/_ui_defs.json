@@ -8,6 +8,7 @@
         "ui/energizer.json",
         "ui/liquifier.json",
         "ui/network_center.json",
+        "ui/synthesis_crucible.json",
         "ui/singularity_fabricator.json",
         "ui/residue_processor.json"
     ]

@@ -38,7 +38,8 @@
                     "$has_bg": true,
                     "$collection_index_first": 6,
                     "$collection_index_second": 7,
-                    "$has_third": false,
+                    "$collection_index_third": 8,
+                    "$has_third": true,
                     "offset": [
                         102,
                         0
@@ -67,6 +68,9 @@
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "size": [
+                        74, 140
+                    ],
                     "$text_scale": 0.55,
                     "offset": [
                         -78,
@@ -86,7 +90,7 @@
                 }
             },
             {
-                "item@common.container_item": {
+                "input_item@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
@@ -99,20 +103,18 @@
                 }
             },
             {
-                "item@common.container_item": {
+                "alt_item@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        -2,
-                        28
+                        -4,
+                        30
                     ],
-                    "collection_index": 4,
-                    "$cell_image_size": [22, 22],
-                    "size": [22, 22]
+                    "collection_index": 4
                 }
             },
             {
-                "item@common.container_item": {
+                "output_item@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [

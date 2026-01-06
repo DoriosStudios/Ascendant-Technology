@@ -46,19 +46,11 @@ const nativeEnergizerRecipes = [
     }),
     defineEnergizerRecipe({
         id: "utilitycraft:energized_iron_block",
-        input: { id: "utilitycraft:steel_block", amount: 1 },
+        input: { id: "utilitycraft:iron_block", amount: 1 },
         output: { id: "utilitycraft:energized_iron_block", amount: 1 },
         energyCost: 1820000,
         seconds: 18,
         description: "Bulk recipe for automation lines feeding higher-tier machines."
-    }),
-    defineEnergizerRecipe({
-        id: "utilitycraft:energized_iron_ingot_from_steel",
-        input: { id: "utilitycraft:steel_ingot", amount: 1 },
-        output: { id: "utilitycraft:energized_iron_ingot", amount: 1 },
-        energyCost: 88000,
-        seconds: 3,
-        description: "Steel shortcuts into energized iron when you are swimming in alloys."
     }),
     defineEnergizerRecipe({
         id: "utilitycraft:energized_iron_dust",
@@ -76,6 +68,11 @@ const nativeEnergizerRecipes = [
         energyCost: 2400000,
         seconds: 8,
         description: "Overcharges compacted redstone into an Energy Upgrade module."
+    }),
+    defineEnergizerRecipe({
+        input: {id: "minecraft:raw_iron_block", amount: 1},
+        output: {id: "utilitycraft:raw_energized_iron_block", amount: 1},
+        energyCost: 1820000
     })
 ];
 

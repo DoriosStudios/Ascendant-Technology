@@ -1,0 +1,75 @@
+{
+    "format_version": "1.21.60",
+    "minecraft:crafting_items_catalog": {
+        "categories": [
+            {
+                "category_name": "construction",
+                "groups": [
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:singularity_fabricator",
+                            "name": "at:itemGroup.name.machines"
+                        },
+                        "items": [
+                            "utilitycraft:cloner",
+                            "utilitycraft:catalyst_weaver", 
+                            "utilitycraft:cryo_chamber",
+                            "utilitycraft:energizer",
+                            "utilitycraft:liquifier",
+                            "utilitycraft:mob_magnet",
+                            "utilitycraft:network_center",
+                            "utilitycraft:residue_processor",
+                            "utilitycraft:singularity_fabricator"
+                        ]
+                    },{
+                        "group_identifier": {
+                            "icon": "minecraft:command_block",
+                            "name": "at:itemGroup.name.experimental"
+                        },
+                        "items": [
+                            "utilitycraft:synthesis_crucible"
+                        ]
+                    }
+                ]
+            },{
+                "category_name": "items",
+                "groups": [
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:empty_liquid_capsule",
+                            "name": "at:itemGroup.name.capsules"
+                        },
+                        "items": [
+                            // Cryo, Liquified Aetherium and Dark Matter Capsules 1 to 8 each
+                            "utilitycraft:empty_liquid_capsule",
+                            "utilitycraft:cryofluid_capsule_1",
+                            "utilitycraft:cryofluid_capsule_2",
+                            "utilitycraft:cryofluid_capsule_3",
+                            "utilitycraft:cryofluid_capsule_4",
+                            "utilitycraft:cryofluid_capsule_5",
+                            "utilitycraft:cryofluid_capsule_6",
+                            "utilitycraft:cryofluid_capsule_7",
+                            "utilitycraft:cryofluid_capsule_8",
+                            "utilitycraft:aetherium_liquid_capsule_1",
+                            "utilitycraft:aetherium_liquid_capsule_2",
+                            "utilitycraft:aetherium_liquid_capsule_3",
+                            "utilitycraft:aetherium_liquid_capsule_4",
+                            "utilitycraft:aetherium_liquid_capsule_5",
+                            "utilitycraft:aetherium_liquid_capsule_6",
+                            "utilitycraft:aetherium_liquid_capsule_7",
+                            "utilitycraft:aetherium_liquid_capsule_8",
+                            "utilitycraft:dark_matter_liquid_capsule_1",
+                            "utilitycraft:dark_matter_liquid_capsule_2",
+                            "utilitycraft:dark_matter_liquid_capsule_3",
+                            "utilitycraft:dark_matter_liquid_capsule_4",
+                            "utilitycraft:dark_matter_liquid_capsule_5",
+                            "utilitycraft:dark_matter_liquid_capsule_6",
+                            "utilitycraft:dark_matter_liquid_capsule_7",
+                            "utilitycraft:dark_matter_liquid_capsule_8"
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

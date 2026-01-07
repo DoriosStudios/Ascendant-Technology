@@ -62,10 +62,10 @@
 			"textures": "textures/blocks/machines/catalyst_weaver_on"
 		},
 		"utilitycraft_energizer_off": {
-			"textures": "textures/blocks/machines/cloner_off"
+			"textures": "textures/blocks/machines/energizer_off"
 		},
 		"utilitycraft_energizer_on": {
-			"textures": "textures/blocks/machines/cloner_on"
+			"textures": "textures/blocks/machines/energizer_on"
 		},
 		"utilitycraft_cloner_off": {
 			"textures": "textures/blocks/machines/cloner_off"

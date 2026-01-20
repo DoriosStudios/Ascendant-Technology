@@ -10,7 +10,7 @@
     ],
     "key": {
       "T": {"item": "utilitycraft:titanium"},
-      "D": {"item": "utilitycraft:diamond_mesh"}
+      "D": {"item": "utilitycraft:diamond_fishing_net"}
     },
     "result": { "item": "utilitycraft:titanium_fishing_net" },
     "unlock": [ { "item": "utilitycraft:titanium_mesh" } ]

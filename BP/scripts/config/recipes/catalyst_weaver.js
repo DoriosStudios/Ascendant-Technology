@@ -92,23 +92,6 @@ const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
  */
 const nativeCatalystWeaverRecipes = [
     defineWeaverRecipe({
-        id: 'utilitycraft:netherite_helm_upgrade',
-        input: { id: 'minecraft:skeleton_skull', amount: 1 },
-        catalysts: [
-            { id: 'minecraft:wither_rose', amount: 3 },
-            { id: 'minecraft:soul_sand', amount: 4 },
-            { id: 'minecraft:bone', amount: 3 },
-            { id: 'minecraft:coal', amount: 4 },
-            null,
-            null
-        ],
-        output: { id: 'minecraft:wither_skeleton_skull', amount: 1 },
-        fluid: { type: 'lava', amount: 2000 },
-        byproduct: { id: 'minecraft:bone_meal', amount: 4, chance: 0.6 },
-        cost: 6400,
-        speedModifier: 1
-    }),
-    defineWeaverRecipe({
         // Aetherium Ingot from Gold Ingot
         id: 'utilitycraft:aetherium_ingot',
         input: { id: 'minecraft:gold_ingot', amount: 1 },
@@ -141,6 +124,17 @@ const nativeCatalystWeaverRecipes = [
         byproduct: { id: 'minecraft:gold_nugget', amount: [1, 3], chance: 0.35 },
         cost: 6200,
         speedModifier: 1.2
+    }),
+    defineWeaverRecipe({
+        id: 'at:easier_aetherium',
+        input: { id: 'minecraft:netherite_ingot'},
+        catalysts: [
+            {id: 'utilitycraft:aetherium_shard', amount: 4},
+        ],
+        output: {id: 'utilitycraft:aetherium'},
+        fluid: {type: 'lava', amount: 8000},
+        cost: 86000,
+        speedModifier: 8
     }),
     defineWeaverRecipe({
         id: 'utilitycraft:refined_obsidian_conversion',

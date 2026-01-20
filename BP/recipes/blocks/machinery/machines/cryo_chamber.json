@@ -18,7 +18,7 @@
             "M": { "item": "utilitycraft:advanced_fluid_tank" },
             "C": { "item": "utilitycraft:machine_case" },
             "S": { "item": "utilitycraft:compressed_steel_block" },
-            "A": { "item": "utilitycraft:aetherium" }
+            "A": { "item": "utilitycraft:aetherium_block" }
         },
         "result": {
             "item": "utilitycraft:cryo_chamber",

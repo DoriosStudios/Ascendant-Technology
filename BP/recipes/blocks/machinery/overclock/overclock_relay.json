@@ -4,17 +4,17 @@
         "description": { "identifier": "utilitycraft:overclock_relay" },
         "tags": ["utilitycraft_workbench"],
         "pattern": [
-            " S ",
+            "CSC",
             "CAC",
             " M "
         ],
         "key": {
             "S": { "item": "utilitycraft:reinforced_cable" },
-            "C": { "item": "minecraft:copper_ingot" },
-            "A": { "item": "utilitycraft:advanced_chip" },
+            "C": { "item": "utilitycraft:titanium" },
+            "A": { "item": "utilitycraft:ultimate_chip" },
             "M": { "item": "utilitycraft:machine_case" }
         },
         "result": { "item": "utilitycraft:overclock_relay", "count": 1 },
-        "unlock": [ { "item": "utilitycraft:advanced_chip" } ]
+        "unlock": [ { "item": "utilitycraft:titanium" } ]
     }
 }

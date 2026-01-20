@@ -4,13 +4,13 @@
     "description": { "identifier": "utilitycraft:aetherium_mesh_craft" },
     "tags": ["crafting_table"],
     "pattern": [
-      "ISI",
-      "S S",
-      "ISI"
+      "AAA",
+      "ANA",
+      "AAA"
     ],
     "key": {
-      "I": { "item": "utilitycraft:aetherium" },
-      "S": { "item": "minecraft:string" }
+      "A": { "item": "utilitycraft:aetherium" },
+      "N": { "item": "utilitycraft:netherite_mesh" }
     },
     "result": { "item": "utilitycraft:aetherium_mesh" },
     "unlock": [ { "item": "utilitycraft:aetherium" } ]

@@ -4,16 +4,15 @@
     "description": { "identifier": "utilitycraft:size_upgrade" },
     "tags": ["utilitycraft_workbench"],
     "pattern": [
-      "APA",
-      "CSC",
-      "ABA"
+      "ACA",
+      "CBC",
+      "APA"
     ],
     "key": {
       "A": { "item": "utilitycraft:basic_chip" },
       "P": { "item": "minecraft:ender_pearl" },
-      "S": { "item": "utilitycraft:machine_case" },
       "B": {"item": "utilitycraft:base_upgrade"},
-      "C": { "item": "utilitycraft:amethyst_dust" }
+      "C": { "item": "utilitycraft:gold_dust" }
     },
     "result": { "item": "utilitycraft:size_upgrade", "count": 1 },
     "unlock": [ { "item": "utilitycraft:basic_chip" } ]

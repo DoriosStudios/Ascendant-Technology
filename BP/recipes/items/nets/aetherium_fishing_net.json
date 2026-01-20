@@ -10,7 +10,7 @@
     ],
     "key": {
       "T": {"item": "utilitycraft:aetherium"},
-      "D": {"item": "utilitycraft:netherite_mesh"}
+      "D": {"item": "utilitycraft:netherite_fishing_net"}
     },
     "result": { "item": "utilitycraft:aetherium_fishing_net" },
     "unlock": [ { "item": "utilitycraft:aetherium_mesh" } ]

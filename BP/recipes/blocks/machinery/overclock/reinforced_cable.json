@@ -9,10 +9,10 @@
             "TRT"
         ],
         "key": {
-            "T": { "item": "utilitycraft:titanium" },
-            "R": { "item": "minecraft:redstone_block" },
-            "C": { "item": "minecraft:copper_ingot" },
-            "A": { "item": "utilitycraft:advanced_chip" }
+            "T": { "item": "utilitycraft:titanium_nugget" },
+            "R": { "item": "minecraft:redstone" },
+            "C": { "item": "minecraft:copper_nugget" },
+            "A": { "item": "utilitycraft:energized_iron_dust" }
         },
         "result": { "item": "utilitycraft:reinforced_cable", "count": 8 },
         "unlock": [ { "item": "utilitycraft:advanced_chip" } ]

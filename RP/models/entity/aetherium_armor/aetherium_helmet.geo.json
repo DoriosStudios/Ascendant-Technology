@@ -1,0 +1,795 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.helmet_aetherium_armor",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 4.5,
+				"visible_bounds_offset": [
+					0,
+					1.75,
+					0
+				]
+			},
+			"bones": [
+				{
+					"name": "hat",
+					"pivot": [
+						0,
+						24,
+						0
+					]
+				},
+				{
+					"name": "Armor_Helmet",
+					"parent": "hat",
+					"pivot": [
+						0,
+						24,
+						0
+					]
+				},
+				{
+					"name": "Helmet",
+					"parent": "Armor_Helmet",
+					"pivot": [
+						0,
+						24,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4,
+								23,
+								-4
+							],
+							"size": [
+								8,
+								9,
+								8
+							],
+							"inflate": 0.75,
+							"uv": {
+								"north": {
+									"uv": [
+										8,
+										8
+									],
+									"uv_size": [
+										8,
+										9
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										8
+									],
+									"uv_size": [
+										8,
+										9
+									]
+								},
+								"south": {
+									"uv": [
+										24,
+										8
+									],
+									"uv_size": [
+										8,
+										9
+									]
+								},
+								"west": {
+									"uv": [
+										16,
+										8
+									],
+									"uv_size": [
+										8,
+										9
+									]
+								},
+								"up": {
+									"uv": [
+										8,
+										0
+									],
+									"uv_size": [
+										8,
+										8
+									]
+								},
+								"down": {
+									"uv": [
+										16,
+										8
+									],
+									"uv_size": [
+										8,
+										-8
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Helmet_Parts",
+					"parent": "Helmet",
+					"pivot": [
+						0,
+						25,
+						0
+					]
+				},
+				{
+					"name": "Helmet_Horns",
+					"parent": "Helmet_Parts",
+					"pivot": [
+						0,
+						25,
+						0
+					]
+				},
+				{
+					"name": "Helmet_Left_Horn",
+					"parent": "Helmet_Horns",
+					"pivot": [
+						-1.4,
+						32.8,
+						-3.8
+					],
+					"rotation": [
+						-22.5,
+						27.5,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								-5.48,
+								29.6,
+								-7
+							],
+							"size": [
+								4,
+								3.2,
+								7.2
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										9,
+										26
+									],
+									"uv_size": [
+										5,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										26
+									],
+									"uv_size": [
+										9,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										23,
+										26
+									],
+									"uv_size": [
+										5,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										14,
+										26
+									],
+									"uv_size": [
+										9,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										9,
+										17
+									],
+									"uv_size": [
+										5,
+										9
+									]
+								},
+								"down": {
+									"uv": [
+										14,
+										26
+									],
+									"uv_size": [
+										5,
+										-9
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Helmet_Left_Horn_II",
+					"parent": "Helmet_Left_Horn",
+					"pivot": [
+						-4.6,
+						32.8,
+						-7
+					],
+					"rotation": [
+						-32.5,
+						-40,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4.6,
+								30.4,
+								-10.2
+							],
+							"size": [
+								2.4,
+								2.4,
+								4.8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										6,
+										81
+									],
+									"uv_size": [
+										3,
+										3
+									]
+								},
+								"east": {
+									"uv": [
+										0,
+										81
+									],
+									"uv_size": [
+										6,
+										3
+									]
+								},
+								"south": {
+									"uv": [
+										15,
+										81
+									],
+									"uv_size": [
+										3,
+										3
+									]
+								},
+								"west": {
+									"uv": [
+										9,
+										81
+									],
+									"uv_size": [
+										6,
+										3
+									]
+								},
+								"up": {
+									"uv": [
+										6,
+										75
+									],
+									"uv_size": [
+										3,
+										6
+									]
+								},
+								"down": {
+									"uv": [
+										9,
+										81
+									],
+									"uv_size": [
+										3,
+										-6
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Helmet_Left_Horn_III",
+					"parent": "Helmet_Left_Horn_II",
+					"pivot": [
+						-3.8,
+						30.4,
+						-10.2
+					],
+					"rotation": [
+						-45,
+						-15,
+						-10
+					],
+					"cubes": [
+						{
+							"origin": [
+								-3.8,
+								30.4,
+								-15
+							],
+							"size": [
+								1.6,
+								1.6,
+								4.8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										90,
+										71
+									],
+									"uv_size": [
+										2,
+										2
+									]
+								},
+								"east": {
+									"uv": [
+										84,
+										71
+									],
+									"uv_size": [
+										6,
+										2
+									]
+								},
+								"south": {
+									"uv": [
+										98,
+										71
+									],
+									"uv_size": [
+										2,
+										2
+									]
+								},
+								"west": {
+									"uv": [
+										92,
+										71
+									],
+									"uv_size": [
+										6,
+										2
+									]
+								},
+								"up": {
+									"uv": [
+										90,
+										65
+									],
+									"uv_size": [
+										2,
+										6
+									]
+								},
+								"down": {
+									"uv": [
+										92,
+										71
+									],
+									"uv_size": [
+										2,
+										-6
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Helmet_Right_Horn",
+					"parent": "Helmet_Horns",
+					"pivot": [
+						1.4,
+						32.8,
+						-3.8
+					],
+					"rotation": [
+						-22.5,
+						-27.5,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								1.48,
+								29.6,
+								-7
+							],
+							"size": [
+								4,
+								3.2,
+								7.2
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										37,
+										26
+									],
+									"uv_size": [
+										5,
+										4
+									]
+								},
+								"east": {
+									"uv": [
+										28,
+										26
+									],
+									"uv_size": [
+										9,
+										4
+									]
+								},
+								"south": {
+									"uv": [
+										51,
+										26
+									],
+									"uv_size": [
+										5,
+										4
+									]
+								},
+								"west": {
+									"uv": [
+										42,
+										26
+									],
+									"uv_size": [
+										9,
+										4
+									]
+								},
+								"up": {
+									"uv": [
+										37,
+										17
+									],
+									"uv_size": [
+										5,
+										9
+									]
+								},
+								"down": {
+									"uv": [
+										42,
+										26
+									],
+									"uv_size": [
+										5,
+										-9
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Helmet_Right_Horn_II",
+					"parent": "Helmet_Right_Horn",
+					"pivot": [
+						4.6,
+						32.8,
+						-7
+					],
+					"rotation": [
+						-32.5,
+						40,
+						0
+					],
+					"cubes": [
+						{
+							"origin": [
+								2.2,
+								30.4,
+								-10.2
+							],
+							"size": [
+								2.4,
+								2.4,
+								4.8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										82,
+										18
+									],
+									"uv_size": [
+										3,
+										3
+									]
+								},
+								"east": {
+									"uv": [
+										76,
+										18
+									],
+									"uv_size": [
+										6,
+										3
+									]
+								},
+								"south": {
+									"uv": [
+										91,
+										18
+									],
+									"uv_size": [
+										3,
+										3
+									]
+								},
+								"west": {
+									"uv": [
+										85,
+										18
+									],
+									"uv_size": [
+										6,
+										3
+									]
+								},
+								"up": {
+									"uv": [
+										82,
+										12
+									],
+									"uv_size": [
+										3,
+										6
+									]
+								},
+								"down": {
+									"uv": [
+										85,
+										18
+									],
+									"uv_size": [
+										3,
+										-6
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Helmet_Right_Horn_III",
+					"parent": "Helmet_Right_Horn_II",
+					"pivot": [
+						3.8,
+						30.4,
+						-10.2
+					],
+					"rotation": [
+						-45,
+						15,
+						10
+					],
+					"cubes": [
+						{
+							"origin": [
+								2.2,
+								30.4,
+								-15
+							],
+							"size": [
+								1.6,
+								1.6,
+								4.8
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										74,
+										90
+									],
+									"uv_size": [
+										2,
+										2
+									]
+								},
+								"east": {
+									"uv": [
+										68,
+										90
+									],
+									"uv_size": [
+										6,
+										2
+									]
+								},
+								"south": {
+									"uv": [
+										82,
+										90
+									],
+									"uv_size": [
+										2,
+										2
+									]
+								},
+								"west": {
+									"uv": [
+										76,
+										90
+									],
+									"uv_size": [
+										6,
+										2
+									]
+								},
+								"up": {
+									"uv": [
+										74,
+										84
+									],
+									"uv_size": [
+										2,
+										6
+									]
+								},
+								"down": {
+									"uv": [
+										76,
+										90
+									],
+									"uv_size": [
+										2,
+										-6
+									]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Helmet_Ornaments",
+					"parent": "Helmet_Parts",
+					"pivot": [
+						0,
+						25,
+						0
+					]
+				},
+				{
+					"name": "Helmet_Center_Ornament",
+					"parent": "Helmet_Ornaments",
+					"pivot": [
+						0,
+						27.4,
+						-4.8
+					],
+					"rotation": [
+						12.5,
+						0,
+						0
+					]
+				},
+				{
+					"name": "Helmet_Ornament_X",
+					"parent": "Helmet_Center_Ornament",
+					"pivot": [
+						0,
+						27.4,
+						-4.8
+					],
+					"rotation": [
+						0,
+						0,
+						45
+					],
+					"cubes": [
+						{
+							"origin": [
+								-4.8,
+								27.4,
+								-4.8
+							],
+							"size": [
+								4.8,
+								4.8,
+								2.4
+							],
+							"uv": {
+								"north": {
+									"uv": [
+										21,
+										79
+									],
+									"uv_size": [
+										6,
+										6
+									]
+								},
+								"east": {
+									"uv": [
+										18,
+										79
+									],
+									"uv_size": [
+										3,
+										6
+									]
+								},
+								"south": {
+									"uv": [
+										30,
+										79
+									],
+									"uv_size": [
+										6,
+										6
+									]
+								},
+								"west": {
+									"uv": [
+										27,
+										79
+									],
+									"uv_size": [
+										3,
+										6
+									]
+								},
+								"up": {
+									"uv": [
+										21,
+										76
+									],
+									"uv_size": [
+										6,
+										3
+									]
+								},
+								"down": {
+									"uv": [
+										27,
+										79
+									],
+									"uv_size": [
+										6,
+										-3
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

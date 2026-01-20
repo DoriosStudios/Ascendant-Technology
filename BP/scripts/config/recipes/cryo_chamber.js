@@ -271,168 +271,131 @@ function normalizePositiveInteger(value, fallback = 1) {
  */
 const stabilizationRecipes = [
     defineCryoRecipe({
-        id: 'utilitycraft:unstable_aetherium_stabilization',
+        id: 'utilitycraft:stabilize_darloonite_crystal',
         category: CATEGORY.STABILIZATION,
-        input: { id: 'utilitycraft:unstable_aetherium_ingot', amount: 1 },
-        output: { id: 'utilitycraft:stable_aetherium_ingot', amount: 1 },
-        fluid: { type: 'cryofluid', amount: 500, label: 'Cryofluid' },
-        energyCost: 8000,
+        input: { id: 'utilitycraft:charged_darloonite_crystal', amount: 1 },
+        output: { id: 'utilitycraft:darloonite_crystal', amount: 1 },
+        fluid: { type: 'cryofluid', amount: 1600, label: 'Cryofluid' },
+        energyCost: 24000,
         time: 200,
-        tags: ['aetherium', 'stabilization'],
-        ui: {
-            name: 'Stable Aetherium',
-            description: 'Locks unstable ingots using a cryogenic bath.',
-            processingMessage: 'Stabilizing {{input}}',
-            completionMessage: '{{output}} secured'
-        }
+        tags: ['darloonite']
     }),
     defineCryoRecipe({
-        id: 'utilitycraft:volatile_alloy_stabilization',
+        id: 'utilitycraft:deenergize_iron_dust',
         category: CATEGORY.STABILIZATION,
-        input: { id: 'utilitycraft:volatile_alloy_dust', amount: 1 },
-        output: { id: 'utilitycraft:stabilized_alloy_dust', amount: 1 },
+        input: { id: 'utilitycraft:energized_iron_dust', amount: 1 },
+        output: { id: 'utilitycraft:iron_dust', amount: 1 },
         fluid: { type: 'cryofluid', amount: 250, label: 'Cryofluid' },
         energyCost: 4000,
         time: 100,
-        tags: ['alloy', 'stabilization'],
-        ui: {
-            processingMessage: 'Cooling {{input}} dust',
-            completionMessage: 'Alloy stabilized'
-        }
+        tags: ['energized_iron']
     }),
     defineCryoRecipe({
-        id: 'utilitycraft:reactive_crystal_stabilization',
+        id: 'utilitycraft:deenergize_iron_ingot',
         category: CATEGORY.STABILIZATION,
-        input: { id: 'utilitycraft:reactive_crystal', amount: 1 },
-        output: { id: 'utilitycraft:inert_crystal', amount: 1 },
-        fluid: { type: 'cryofluid', amount: 1000, label: 'Cryofluid' },
+        input: { id: 'utilitycraft:energized_iron_ingot', amount: 1 },
+        output: { id: 'minecraft:iron_ingot', amount: 1 },
+        fluid: { type: 'cryofluid', amount: 500, label: 'Cryofluid' },
+        energyCost: 8000,
+        time: 200,
+        tags: ['energized_iron']
+    }),
+    defineCryoRecipe({
+        id: 'utilitycraft:deenergize_brute_iron',
+        category: CATEGORY.STABILIZATION,
+        input: { id: 'utilitycraft:brute_energized_iron', amount: 1 },
+        output: { id: 'minecraft:raw_iron', amount: 1 },
+        fluid: { type: 'cryofluid', amount: 500, label: 'Cryofluid' },
+        energyCost: 8000,
+        time: 200,
+        tags: ['energized_iron']
+    }),
+    defineCryoRecipe({
+        id: 'utilitycraft:deenergize_iron_block',
+        category: CATEGORY.STABILIZATION,
+        input: { id: 'utilitycraft:energized_iron_block', amount: 1 },
+        output: { id: 'minecraft:iron_block', amount: 1 },
+        fluid: { type: 'cryofluid', amount: 4000, label: 'Cryofluid' },
+        energyCost: 64000,
+        time: 1200,
+        tags: ['energized_iron']
+    }),
+    defineCryoRecipe({
+        id: 'utilitycraft:deenergize_brute_iron_block',
+        category: CATEGORY.STABILIZATION,
+        input: { id: 'utilitycraft:brute_energized_iron_block', amount: 1 },
+        output: { id: 'minecraft:raw_iron_block', amount: 1 },
+        fluid: { type: 'cryofluid', amount: 4000, label: 'Cryofluid' },
+        energyCost: 64000,
+        time: 1200,
+        tags: ['energized_iron']
+    }),
+    defineCryoRecipe({
+        id: 'utilitycraft:refined_aetherium_shard_cooling',
+        category: CATEGORY.STABILIZATION,
+        input: { id: 'utilitycraft:refined_aetherium_shard', amount: 1 },
+        output: { id: 'utilitycraft:aetherium_shard', amount: 1 },
+        fluid: { type: 'cryofluid', amount: 400, label: 'Cryofluid' },
         energyCost: 12000,
         time: 300,
-        tags: ['crystal'],
-        ui: {
-            indicator: 'arrow_diag',
-            processingMessage: 'Neutralizing {{input}}',
-            completionMessage: '{{output}} ready'
-        }
+        tags: ['aetherium']
     })
 ];
 
 /**
  * Cooling recipes for items and food.
- * Converts heated/normal items to their cold variants using energy only.
+ * Converts heated/normal items to their cold variants using energy and, optionally, water.
  * @type {CryoRecipe[]}
  */
 const coolingRecipes = [
-    // Food cooling
     defineCryoRecipe({
-        id: 'utilitycraft:frozen_beef',
+        id: 'utilitycraft:cool_cooked_beef',
         category: CATEGORY.COOLING,
-        inputs: [
-            { id: 'minecraft:cooked_beef', amount: 1 },
-            { id: 'minecraft:beef', amount: 1 }
-        ],
-        output: { id: 'utilitycraft:frozen_beef', amount: 1 },
+        input: { id: 'minecraft:cooked_beef', amount: 1 },
+        output: { id: 'minecraft:beef', amount: 1 },
         energyCost: 2400,
-        time: 40,
-        tags: ['food'],
-        ui: {
-            processingMessage: 'Blast freezing {{input}}',
-            completionMessage: '{{output}} packed'
-        }
+        time: 40
     }),
     defineCryoRecipe({
-        id: 'utilitycraft:frozen_porkchop',
+        id: 'utilitycraft:cool_cooked_porkchop',
         category: CATEGORY.COOLING,
-        inputs: [
-            { id: 'minecraft:cooked_porkchop', amount: 1 },
-            { id: 'minecraft:porkchop', amount: 1 }
-        ],
-        output: { id: 'utilitycraft:frozen_porkchop', amount: 1 },
+        input: { id: 'minecraft:cooked_porkchop', amount: 1 },
+        output: { id: 'minecraft:porkchop', amount: 1 },
         energyCost: 2400,
-        time: 40,
-        tags: ['food']
+        time: 40
     }),
     defineCryoRecipe({
-        id: 'utilitycraft:frozen_chicken',
+        id: 'utilitycraft:cool_cooked_chicken',
         category: CATEGORY.COOLING,
-        inputs: [
-            { id: 'minecraft:cooked_chicken', amount: 1 },
-            { id: 'minecraft:chicken', amount: 1 }
-        ],
-        output: { id: 'utilitycraft:frozen_chicken', amount: 1 },
+        input: { id: 'minecraft:cooked_chicken', amount: 1 },
+        output: { id: 'minecraft:chicken', amount: 1 },
         energyCost: 2400,
-        time: 40,
-        tags: ['food']
+        time: 40
     }),
-    // Tool cooling
     defineCryoRecipe({
-        id: 'utilitycraft:cooled_tool_core',
+        id: 'utilitycraft:snow_block_to_ice',
         category: CATEGORY.COOLING,
-        input: { id: 'utilitycraft:overheated_tool_core', amount: 1 },
-        output: { id: 'utilitycraft:cooled_tool_core', amount: 1 },
-        energyCost: 12000,
-        time: 120,
-        ui: {
-            processingMessage: 'Reinforcing tool core',
-            completionMessage: 'Tool core stabilized'
-        }
-    }),
-    // Material cooling
-    defineCryoRecipe({
-        id: 'utilitycraft:cooled_ingot',
-        category: CATEGORY.COOLING,
-        inputs: [
-            { id: 'utilitycraft:heated_ingot', amount: 1 },
-            { id: 'utilitycraft:molten_ingot', amount: 1 }
-        ],
-        output: { id: 'utilitycraft:cooled_ingot', amount: 1 },
-        energyCost: 4800,
-        time: 60,
-        ui: {
-            indicator: 'arrow_split',
-            processingMessage: 'Tempering {{input}}'
-        }
-    }),
-    // Ice production chain
-    defineCryoRecipe({
-        id: 'utilitycraft:snow_to_ice',
-        category: CATEGORY.COOLING,
-        inputs: [
-            { id: 'minecraft:snow', amount: 1 },
-            { id: 'minecraft:snow_block', amount: 1 }
-        ],
+        input: { id: 'minecraft:snow', amount: 1 },
         output: { id: 'minecraft:ice', amount: 1 },
         fluid: { type: 'water', amount: 100, source: 'water', label: 'Water' },
-        energyCost: 1600,
-        time: 20,
-        tags: ['ice_chain'],
-        ui: {
-            processingMessage: 'Crystallizing {{input}}',
-            completionMessage: '{{output}} formed'
-        }
+        energyCost: 16000,
+        time: 1
     }),
     defineCryoRecipe({
-        id: 'utilitycraft:ice_to_packed',
+        id: 'utilitycraft:ice_to_packed_ice',
         category: CATEGORY.COOLING,
         input: { id: 'minecraft:ice', amount: 1 },
         output: { id: 'minecraft:packed_ice', amount: 1 },
         energyCost: 4000,
-        time: 60,
-        ui: {
-            processingMessage: 'Compressing ice layers'
-        }
+        time: 100
     }),
     defineCryoRecipe({
-        id: 'utilitycraft:packed_to_blue',
+        id: 'utilitycraft:packed_ice_to_blue_ice',
         category: CATEGORY.COOLING,
         input: { id: 'minecraft:packed_ice', amount: 1 },
         output: { id: 'minecraft:blue_ice', amount: 1 },
         energyCost: 8000,
-        time: 100,
-        ui: {
-            processingMessage: 'Forging {{output}}',
-            completionMessage: 'Blue Ice ready'
-        }
+        time: 200
     })
 ];
 

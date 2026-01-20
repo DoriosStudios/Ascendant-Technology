@@ -6,15 +6,16 @@
     "pattern": [
       "APA",
       "CSC",
-      "APA"
+      "ABA"
     ],
     "key": {
-      "A": { "item": "utilitycraft:advanced_chip" },
+      "A": { "item": "utilitycraft:basic_chip" },
       "P": { "item": "minecraft:ender_pearl" },
       "S": { "item": "utilitycraft:machine_case" },
-      "C": { "item": "minecraft:comparator" }
+      "B": {"item": "utilitycraft:base_upgrade"},
+      "C": { "item": "utilitycraft:amethyst_dust" }
     },
     "result": { "item": "utilitycraft:size_upgrade", "count": 1 },
-    "unlock": [ { "item": "utilitycraft:advanced_chip" } ]
+    "unlock": [ { "item": "utilitycraft:basic_chip" } ]
   }
 }

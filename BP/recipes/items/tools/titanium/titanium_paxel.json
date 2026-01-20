@@ -1,0 +1,21 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:titanium_paxel_craft" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "XPS",
+      "ITI",
+      "ITI"
+    ],
+    "key": {
+      "X": { "item": "utilitycraft:titanium_axe" },
+      "P": { "item": "utilitycraft:titanium_pickaxe" },
+      "S": { "item": "utilitycraft:titanium_shovel" },
+      "I": { "item": "utilitycraft:titanium" },
+      "T": { "item": "minecraft:stick" }
+    },
+    "result": { "item": "utilitycraft:titanium_paxel" },
+    "unlock": [ { "item": "utilitycraft:titanium" } ]
+  }
+}

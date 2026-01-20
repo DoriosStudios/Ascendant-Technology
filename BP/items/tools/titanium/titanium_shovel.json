@@ -1,0 +1,42 @@
+{
+    "format_version": "1.21.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:titanium_shovel",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.shovel"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_titanium_shovel",
+            "minecraft:hand_equipped": true,
+            "minecraft:max_stack_size": 1,
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_shovel",
+                    "minecraft:is_tool"
+                ]
+            },
+            "minecraft:enchantable": {
+                "value": 20,
+                "slot": "shovel"
+            },
+            "minecraft:durability": {
+                "max_durability": 1561
+            },
+            "minecraft:damage": 5,
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "speed": 10,
+                        "block": {
+                            "tags": "q.any_tag('minecraft:is_shovel_item_destructible')"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

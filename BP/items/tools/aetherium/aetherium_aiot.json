@@ -1,0 +1,55 @@
+{
+    "format_version": "1.21.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_aiot",
+            "menu_category": {
+                "category": "equipment",
+                "group": "dorios:itemGroup.name.aiots"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_aetherium_aiot",
+            "minecraft:hand_equipped": true,
+            "minecraft:max_stack_size": 1,
+            "minecraft:fire_resistant": {
+                "value": true
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_pickaxe",
+                    "minecraft:is_axe",
+                    "minecraft:is_shovel",
+                    "minecraft:is_hoe",
+                    "minecraft:is_sword",
+                    "minecraft:is_tool",
+                    "utilitycraft:is_aiot",
+                    "minecraft:transformable_items"
+                ]
+            },
+            "minecraft:enchantable": {
+                "value": 22,
+                "slot": "pickaxe"
+            },
+            "minecraft:durability": {
+                "max_durability": 17895
+            },
+            "minecraft:damage": 12,
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "speed": 12,
+                        "block": {
+                            "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible', 'minecraft:is_shovel_item_destructible', 'minecraft:is_axe_item_destructible', 'minecraft:is_hoe_item_destructible')"
+                        }
+                    },
+                    {
+                        "speed": 12,
+                        "block": "minecraft:web"
+                    }
+                ]
+            }
+        }
+    }
+}

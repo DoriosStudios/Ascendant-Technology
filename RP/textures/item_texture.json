@@ -20,6 +20,93 @@
 		"utilitycraft_titanium_ingot": {
 			"textures": "textures/items/ores/titanium_ingot"
 		},
+		"utilitycraft_titanium_nugget": {
+			"textures": "textures/items/ores/titanium_nugget"
+		},
+		"utilitycraft_aetherium_helmet": {
+			"textures": "textures/items/armor/aetherium_helmet"
+		},
+		"utilitycraft_aetherium_chestplate": {
+			"textures": "textures/items/armor/aetherium_chestplate"
+		},
+		"utilitycraft_aetherium_leggings": {
+			"textures": "textures/items/armor/aetherium_leggings"
+		},
+		"utilitycraft_aetherium_boots": {
+			"textures": "textures/items/armor/aetherium_boots"
+		},
+		"utilitycraft_titanium_helmet": {
+			"textures": "textures/items/armor/titanium_helmet"
+		},
+		"utilitycraft_titanium_chestplate": {
+			"textures": "textures/items/armor/titanium_chestplate"
+		},
+		"utilitycraft_titanium_leggings": {
+			"textures": "textures/items/armor/titanium_leggings"
+		},
+		"utilitycraft_titanium_boots": {
+			"textures": "textures/items/armor/titanium_boots"
+		},
+		"utilitycraft_titanium_sword": {
+			"textures": "textures/items/tools/titanium_sword"
+		},
+		"utilitycraft_titanium_pickaxe": {
+			"textures": "textures/items/tools/titanium_pickaxe"
+		},
+		"utilitycraft_titanium_axe": {
+			"textures": "textures/items/tools/titanium_axe"
+		},
+		"utilitycraft_titanium_shovel": {
+			"textures": "textures/items/tools/titanium_shovel"
+		},
+		"utilitycraft_titanium_hoe": {
+			"textures": "textures/items/tools/titanium_hoe"
+		},
+		"utilitycraft_titanium_paxel": {
+			"textures": "textures/items/tools/titanium_paxel"
+		},
+		"utilitycraft_titanium_aiot": {
+			"textures": "textures/items/tools/titanium_aiot"
+		},
+		"utilitycraft_titanium_hammer": {
+			"textures": "textures/items/tools/titanium_hammer"
+		},
+		"utilitycraft_titanium_mesh": {
+			"textures": "textures/items/meshes/titanium_mesh"
+		},
+		"utilitycraft_aetherium_mesh": {
+			"textures": "textures/items/meshes/aetherium_mesh"
+		},
+		"utilitycraft_titanium_fishing_net":{
+			"textures": "textures/items/nets/titanium_net"
+		},
+		"utilitycraft_aetherium_fishing_net":{
+			"textures": "textures/items/nets/aetherium_net"
+		},
+		"utilitycraft_aetherium_sword": {
+			"textures": "textures/items/tools/aetherium_sword"
+		},
+		"utilitycraft_aetherium_pickaxe": {
+			"textures": "textures/items/tools/aetherium_pickaxe"
+		},
+		"utilitycraft_aetherium_axe": {
+			"textures": "textures/items/tools/aetherium_axe"
+		},
+		"utilitycraft_aetherium_shovel": {
+			"textures": "textures/items/tools/aetherium_shovel"
+		},
+		"utilitycraft_aetherium_hoe": {
+			"textures": "textures/items/tools/aetherium_hoe"
+		},
+		"utilitycraft_aetherium_paxel": {
+			"textures": "textures/items/tools/aetherium_paxel"
+		},
+		"utilitycraft_aetherium_aiot": {
+			"textures": "textures/items/tools/aetherium_aiot"
+		},
+		"utilitycraft_aetherium_hammer": {
+			"textures": "textures/items/tools/aetherium_hammer"
+		},
 		"utilitycraft_void_essence": {
 			"textures": "textures/items/misc/void_essence"
 		},
@@ -557,6 +644,153 @@
 		},
 		"utilitycraft:cryofluid_48": {
 			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_48"
+		},
+		"utilitycraft:overclock_00": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_00"
+		},
+		"utilitycraft:overclock_01": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_01"
+		},
+		"utilitycraft:overclock_02": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_02"
+		},
+		"utilitycraft:overclock_03": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_03"
+		},
+		"utilitycraft:overclock_04": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_04"
+		},
+		"utilitycraft:overclock_05": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_05"
+		},
+		"utilitycraft:overclock_06": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_06"
+		},
+		"utilitycraft:overclock_07": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_07"
+		},
+		"utilitycraft:overclock_08": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_08"
+		},
+		"utilitycraft:overclock_09": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_09"
+		},
+		"utilitycraft:overclock_10": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_10"
+		},
+		"utilitycraft:overclock_11": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_11"
+		},
+		"utilitycraft:overclock_12": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_12"
+		},
+		"utilitycraft:overclock_13": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_13"
+		},
+		"utilitycraft:overclock_14": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_14"
+		},
+		"utilitycraft:overclock_15": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_15"
+		},
+		"utilitycraft:overclock_16": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_16"
+		},
+		"utilitycraft:overclock_17": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_17"
+		},
+		"utilitycraft:overclock_18": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_18"
+		},
+		"utilitycraft:overclock_19": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_19"
+		},
+		"utilitycraft:overclock_20": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_20"
+		},
+		"utilitycraft:overclock_21": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_21"
+		},
+		"utilitycraft:overclock_22": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_22"
+		},
+		"utilitycraft:overclock_23": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_23"
+		},
+		"utilitycraft:overclock_24": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_24"
+		},
+		"utilitycraft:overclock_25": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_25"
+		},
+		"utilitycraft:overclock_26": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_26"
+		},
+		"utilitycraft:overclock_27": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_27"
+		},
+		"utilitycraft:overclock_28": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_28"
+		},
+		"utilitycraft:overclock_29": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_29"
+		},
+		"utilitycraft:overclock_30": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_30"
+		},
+		"utilitycraft:overclock_31": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_31"
+		},
+		"utilitycraft:overclock_32": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_32"
+		},
+		"utilitycraft:overclock_33": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_33"
+		},
+		"utilitycraft:overclock_34": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_34"
+		},
+		"utilitycraft:overclock_35": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_35"
+		},
+		"utilitycraft:overclock_36": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_36"
+		},
+		"utilitycraft:overclock_37": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_37"
+		},
+		"utilitycraft:overclock_38": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_38"
+		},
+		"utilitycraft:overclock_39": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_39"
+		},
+		"utilitycraft:overclock_40": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_40"
+		},
+		"utilitycraft:overclock_41": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_41"
+		},
+		"utilitycraft:overclock_42": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_42"
+		},
+		"utilitycraft:overclock_43": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_43"
+		},
+		"utilitycraft:overclock_44": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_44"
+		},
+		"utilitycraft:overclock_45": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_45"
+		},
+		"utilitycraft:overclock_46": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_46"
+		},
+		"utilitycraft:overclock_47": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_47"
+		},
+		"utilitycraft:overclock_48": {
+			"textures": "textures/items/ui/overclock_bar/overclock_frame_48"
 		}
 	}
 }

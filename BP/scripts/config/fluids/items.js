@@ -2,6 +2,8 @@ import { system, world } from "@minecraft/server";
 
 const RegisterContainer = "utilitycraft:register_fluid_container";
 const RegisterOutput = "utilitycraft:register_fluid_output";
+const RegisterLegacyContainer = "utilitycraft:register_fluid_item";
+const RegisterLegacyHolder = "utilitycraft:register_fluid_holder";
 
 const ATNewCapsules = [
     // Ascendant Technology Expansion
@@ -44,6 +46,29 @@ const ATNewContainers = [
     }
 ];
 
+const ATLegacyCapsules = Object.fromEntries(
+    ATNewCapsules.map(({ id, amount, type, output }) => [id, { amount, type, output }])
+);
+
+function resolveLegacyRequired(value) {
+    if (typeof value === "number") return value;
+    if (Array.isArray(value)) return Math.max(...value.map(Number).filter(Number.isFinite));
+    if (value && typeof value === "object") {
+        const max = Number(value.max ?? value.maximum ?? value[1] ?? value.min ?? value.minimum ?? value[0]);
+        return Number.isFinite(max) ? max : 0;
+    }
+    return 0;
+}
+
+const ATLegacyHolders = Object.fromEntries(
+    ATNewContainers
+        .filter(entry => entry && entry.id && entry.fills)
+        .map(entry => {
+            const required = resolveLegacyRequired(entry.amount);
+            return [entry.id, { types: { ...entry.fills }, required }];
+        })
+);
+
 function sendRegistration(eventId, payload) {
     if (!payload || payload.length === 0) return;
     system.sendScriptEvent(eventId, JSON.stringify(payload));
@@ -53,5 +78,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     system.runTimeout(() => {
         sendRegistration(RegisterContainer, ATNewCapsules);
         sendRegistration(RegisterOutput, ATNewContainers);
+        sendRegistration(RegisterLegacyContainer, ATLegacyCapsules);
+        sendRegistration(RegisterLegacyHolder, ATLegacyHolders);
     }, 0);
 });

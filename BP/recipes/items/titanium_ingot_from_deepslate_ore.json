@@ -1,0 +1,9 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_furnace": {
+    "description": { "identifier": "utilitycraft:deepslate_titanium_ore_to_ingot" },
+    "tags": ["furnace", "blast_furnace"],
+    "input": "utilitycraft:deepslate_titanium_ore",
+    "output": "utilitycraft:titanium"
+  }
+}

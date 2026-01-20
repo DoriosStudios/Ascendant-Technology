@@ -38,21 +38,26 @@
 					"fluid": true
 				},
 				"machine": {
-					"energy_cap": 2048000,
+					"energy_cap": 256800000,
 					"energy_cost": 6400,
 					"rate_speed_base": 180,
-					"fluid_cap": 256000,
+					"fluid_cap": 128000,
 					"upgrades": [
+						15,
 						16,
 						17
 					],
 					"hidden_slots": [
 						12,
 						13,
-						14,
-						15
+						14
 					]
 				}
+			},
+			"utilitycraft:special_container":{
+				"Input": 3,
+				"Catalyst Slots": [4, 5, 6, 7, 8, 9],
+				"Fluid Manual Input": 10
 			},
 			"utilitycraft:machine_recipes": {
 				"type": "catalyst_weaver"

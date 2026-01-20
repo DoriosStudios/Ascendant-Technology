@@ -1,4 +1,4 @@
-import { Machine, Energy } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine } from '../managers_extra.js'
 import { ItemStack } from '@minecraft/server'
 
 const DEFAULT_COST = 800
@@ -207,13 +207,13 @@ function computeWall(block, length, height) {
 function getForward(block) {
     const axis = block.permutation?.getState('utilitycraft:axis') ?? 'north'
     switch (axis) {
-        case 'south': return { x: 0, y: 0, z: 1 }
+        case 'south': return { x: 0, y: 0, z: -1 }
         case 'east': return { x: 1, y: 0, z: 0 }
         case 'west': return { x: -1, y: 0, z: 0 }
         case 'up': return { x: 0, y: 1, z: 0 }
         case 'down': return { x: 0, y: -1, z: 0 }
         case 'north':
-        default: return { x: 0, y: 0, z: -1 }
+        default: return { x: 0, y: 0, z: 1 }
     }
 }
 
@@ -352,15 +352,17 @@ function shouldRefreshField(machine, needsRebuild) {
 
 function updateHud(machine, length, height, levels) {
     const costText = Energy.formatEnergyToText(machine.getEnergyCost())
+    const overclockLine = buildOverclockLoreLine(machine)
     machine.setLabel({
-        title: '§6Laser Barrier',
+        title: '§r§6Laser Barrier',
         lore: [
-            '§7Modo: §fMuro a Laser',
-            `§cCusto/ciclo: §f${costText}`,
-            `§7Comprimento x Altura: §f${length}x${height}`,
-            `§7Upg Comprimento: §f${levels.lengthLevel}`,
-            `§7Upg Altura: §f${levels.heightLevel}`,
-            `§7Upg Energia: §f${levels.energyLevel}`
+            '§7Mode: §fLaser Wall',
+            `§cCost/Cycle: §f${costText}`,
+            `§7Total Size: §f${length}x${height}`,
+            `§7Length: §f${levels.lengthLevel}`,
+            `§7Height: §f${levels.heightLevel}`,
+            `§7Energy: §f${levels.energyLevel}`,
+            ...(overclockLine ? [overclockLine] : [])
         ]
     })
 }

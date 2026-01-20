@@ -220,11 +220,11 @@
           "anchor_to": "top_middle",
           "size": [
             84,
-            24
+            26
           ],
           "offset": [
             136,
-            163
+            164
           ],
           "layer": 0
         }
@@ -235,8 +235,8 @@
           "anchor_to": "top_middle",
           "collection_index": 4,
           "offset": [
-            106,
-            166
+            107,
+            168
           ]
         }
       },
@@ -247,7 +247,7 @@
           "collection_index": 5,
           "offset": [
             126,
-            166
+            168
           ]
         }
       },
@@ -256,8 +256,8 @@
           "anchor_from": "top_middle",
           "anchor_to": "top_middle",
           "offset": [
-            146,
-            166
+            145,
+            168
           ],
           "collection_index": 9
         }
@@ -269,8 +269,8 @@
           "anchor_from": "top_middle",
           "anchor_to": "top_middle",
           "offset": [
-            166,
-            166
+            165,
+            168
           ],
           "size": [
             18,
@@ -317,7 +317,8 @@
           "offset": [
             -128,
             40
-          ]
+          ],
+          "size": [ 78, 64 ]
         }
       },
       {

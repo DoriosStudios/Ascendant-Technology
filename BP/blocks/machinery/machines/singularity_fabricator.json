@@ -38,9 +38,9 @@
 					"fluid": true
 				},
 				"machine": {
-					"energy_cap": 65536000,
+					"energy_cap": 1000000000,
 					"energy_cost": 256000,
-					"rate_speed_base": 80,
+					"rate_speed_base": 2560000,
 					"fluid_cap": 1024000,
 					"upgrades": [
 						4,
@@ -60,6 +60,9 @@
 						17
 					]
 				}
+			},
+			"utilitycraft:special_container":{
+				"Template": 3
 			},
 			"utilitycraft:machine_recipes": {
 				"type": "singularity_fabricator"

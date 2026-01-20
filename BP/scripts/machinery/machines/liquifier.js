@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager } from '../managers_extra.js';
+import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine } from '../managers_extra.js';
 import { getLiquifierRecipes } from '../../config/recipes/liquifier.js';
 
 const INPUT_SLOT = 3;
@@ -49,7 +49,28 @@ DoriosAPI.register.blockComponent('liquifier', {
         if (tickGate(machine.entity, 'liq:fluids_cd', 4)) {
             const available = tank.get();
             if (available > 0) {
-                tank.transferFluids(block, available);
+                // Ensure network cache exists when we have fluid to send
+                let nodes = [];
+                try {
+                    const cached = machine.entity.getDynamicProperty('dorios:fluid_nodes');
+                    if (cached) nodes = JSON.parse(cached);
+                } catch { /* ignore */ }
+
+                if (!Array.isArray(nodes) || nodes.length === 0) {
+                    updatePipes(block, 'fluid');
+                    try {
+                        const cached = machine.entity.getDynamicProperty('dorios:fluid_nodes');
+                        if (cached) nodes = JSON.parse(cached);
+                    } catch { /* ignore */ }
+                }
+
+                // Direct adjacent push (respect block facing so the outlet follows orientation)
+                tank.transferFluids(block, available, { useFacing: true });
+
+                // Network push (through fluid cables, including reinforced cable)
+                if (Array.isArray(nodes) && nodes.length) {
+                    tank.transferToNetwork(available, 'nearest', nodes);
+                }
             }
         }
         feedFluidSlot(machine, tank);
@@ -232,6 +253,9 @@ function updateHud(machine, recipe, tank, maxCrafts) {
         `§cCost: §f${Energy.formatEnergyToText(machine.getEnergyCost())}`,
         `§7Queued Crafts: §f${maxCrafts}`
     ];
+
+    const overclockLine = buildOverclockLoreLine(machine);
+    if (overclockLine) lore.push(overclockLine);
 
     machine.setLabel({
         title: '§6Flux Crucible',

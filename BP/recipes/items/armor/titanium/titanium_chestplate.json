@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:titanium_chestplate_craft" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "A A",
+      "AAA",
+      "AAA"
+    ],
+    "key": {
+      "A": { "item": "utilitycraft:titanium" }
+    },
+    "result": { "item": "utilitycraft:titanium_chestplate" },
+    "unlock": [ { "item": "utilitycraft:titanium" } ]
+  }
+}

@@ -39,7 +39,7 @@ const nativeLiquifierRecipes = [
     defineLiquifierRecipe({
         id: "utilitycraft:liquified_aetherium_from_debris",
         input: { id: "minecraft:ancient_debris", amount: 2 },
-        fluid: { type: "liquified_aetherium", amount: 1000 },
+        fluid: { type: "dark_matter", amount: 1000 },
         energyCost: 12800,
         seconds: 20,
         byproduct: {
@@ -47,7 +47,7 @@ const nativeLiquifierRecipes = [
             amount: 2,
             chance: 0.35
         },
-        description: "Breaks down ancient debris to extract liquified alloys."
+        description: "Breaks down ancient debris into a full batch of dark matter."
     }),
     defineLiquifierRecipe({
         id: "utilitycraft:dark_matter_from_void_essence",

@@ -1,4 +1,4 @@
-import { Machine, Energy } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine } from '../managers_extra.js'
 
 const ENERGY_COST = 400
 const SCAN_COOLDOWN_TICKS = 40 // scan every 2 seconds (20tps)
@@ -132,7 +132,7 @@ function scanNetwork(machine) {
             queue.push({ x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z })
         }
 
-        if (block.typeId === 'utilitycraft:energy_cable') {
+        if (block.typeId === 'utilitycraft:energy_cable' || block.typeId === 'utilitycraft:reinforced_cable') {
             summary.cables++
             continue
         }
@@ -236,6 +236,9 @@ function renderPanels(machine, summary) {
             summary.truncated ? '§cNetwork truncated (too many nodes)' : '§7Scan §aOK'
         ]
     }
+
+    const overclockLine = buildOverclockLoreLine(machine)
+    if (overclockLine) panelMid.lore.push(overclockLine)
 
     // Right side: Inputs
     const panelInA = {

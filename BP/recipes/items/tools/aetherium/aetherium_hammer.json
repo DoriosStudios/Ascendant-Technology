@@ -1,0 +1,19 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:aetherium_hammer_craft" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "ABA",
+      "ASA",
+      " S "
+    ],
+    "key": {
+      "A": { "item": "utilitycraft:aetherium" },
+      "B": { "item": "utilitycraft:aetherium_block" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "result": { "item": "utilitycraft:aetherium_hammer" },
+    "unlock": [ { "item": "utilitycraft:aetherium_block" } ]
+  }
+}

@@ -46,7 +46,7 @@ const nativeEnergizerRecipes = [
     }),
     defineEnergizerRecipe({
         id: "utilitycraft:energized_iron_block",
-        input: { id: "utilitycraft:iron_block", amount: 1 },
+        input: { id: "minecraft:iron_block", amount: 1 },
         output: { id: "utilitycraft:energized_iron_block", amount: 1 },
         energyCost: 1820000,
         seconds: 18,

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:aetherium_fishing_net_craft" },
+    "tags": ["utilitycraft_workbench"],
+    "pattern": [
+      "TTT",
+      "DTD",
+      "TTT"
+    ],
+    "key": {
+      "T": {"item": "utilitycraft:aetherium"},
+      "D": {"item": "utilitycraft:netherite_mesh"}
+    },
+    "result": { "item": "utilitycraft:aetherium_fishing_net" },
+    "unlock": [ { "item": "utilitycraft:aetherium_mesh" } ]
+  }
+}

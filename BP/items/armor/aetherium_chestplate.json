@@ -1,0 +1,26 @@
+{
+    "format_version": "1.21.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_chestplate",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.chestplate"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_aetherium_chestplate",
+            "minecraft:wearable": {
+                "slot": "slot.armor.chest"
+            },
+            "minecraft:fire_resistant": {},
+            "minecraft:knockback_resistance": {
+                "value": 1
+            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:durability": {
+                "max_durability": 1387
+            }
+        }
+    }
+}

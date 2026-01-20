@@ -7,7 +7,7 @@
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
 		"paths": {
-			"@minecraft/server": ["./references/schemas/server-2.3.0.d.ts"],
+			"@minecraft/server": ["./references/schemas/server-2.4.0.d.ts"],
 			"@minecraft/server-ui": ["./references/schemas/server-ui-2.0.0.d.ts"],
 			"@minecraft/server-gametest": ["./references/schemas/server-gametest-1.0.0-beta.d.ts"],
 			"@minecraft/server-editor": ["./references/schemas/server-editor-0.1.0-beta.d.ts"],
@@ -19,7 +19,7 @@
 	},
 	"include": [
 		"BP/scripts/**/*.js",
-		"references/scripts/**/*.js",
+		"references/UtilityCraft Scripts/scripts/**/*.js",
 		"references/schemas/**/*.d.ts",
 		"references/types/**/*.d.ts"
 	],

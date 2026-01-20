@@ -37,7 +37,7 @@
 					"inventory_size": 20
 				},
 				"machine": {
-					"energy_cap": 25600000,
+					"energy_cap": 256000000,
 					"energy_cost": 9600,
 					"rate_speed_base": 24000,
 					"upgrades": [
@@ -59,6 +59,10 @@
 						18
 					]
 				}
+			},
+			"utilitycraft:special_container":{
+				"Primary Input": 3,
+				"Aux Input": 4
 			},
 			"utilitycraft:machine_recipes": {
 				"type": "energizer"

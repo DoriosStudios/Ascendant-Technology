@@ -1,128 +1,131 @@
-import { ItemStack } from '@minecraft/server';
-
+/// <reference path="./drops_guide.js" />
+import { ItemStack, world } from '@minecraft/server';
 
 /**
  * Registry of custom drop behaviors by block identifier.
  *
  * Each entry receives a DropContext and returns an array of ItemStacks to spawn.
  */
+/** @type {Record<string, DropHandler>} */
 export const DROPS_LIBRARY = {
-  /** Deepslate Aetherium Ore (drops reduced to roughly half). */
-  'utilitycraft:deepslate_aetherium_ore': (ctx) => computeDrops(ctx, {
-    dropId: 'utilitycraft:aetherium_shard',
-    silkDropId: 'utilitycraft:deepslate_aetherium_ore',
-    baseRange: [1, 1],
-    fortuneMath: { mode: 'multiplier', perLevel: [0.2, 0.4] },
-  }),
+	/** Deepslate Aetherium Ore (drops reduced to roughly half). */
+	'utilitycraft:deepslate_aetherium_ore': (context) => computeDrops(context, {
+		dropId: 'utilitycraft:aetherium_shard',
+		silkDropId: 'utilitycraft:deepslate_aetherium_ore',
+		baseRange: [1, 1],
+		fortuneMath: { mode: 'multiplier', perLevel: [0.2, 0.5] },
+	}),
 
-  /** End Aetherium Ore (higher yield). */
-  'utilitycraft:end_aetherium_ore': (ctx) => computeDrops(ctx, {
-    dropId: 'utilitycraft:aetherium_shard',
-    silkDropId: 'utilitycraft:end_aetherium_ore',
-    baseRange: [1, 1],
-    // Use math-based scaling here for a smoother curve
-    fortuneMath: { mode: 'multiplier', perLevel: [0.5, 0.6] }
-  }),
+	/** End Aetherium Ore (higher yield). */
+	'utilitycraft:end_aetherium_ore': (context) => computeDrops(context, {
+		dropId: 'utilitycraft:aetherium_shard',
+		silkDropId: 'utilitycraft:end_aetherium_ore',
+		baseRange: [1, 1],
+		// Use math-based scaling here for a smoother curve
+		fortuneMath: { mode: 'multiplier', perLevel: [0.5, 0.75] }
+	}),
 
-  /** Deepslate Titanium Ore. */
-  'utilitycraft:deepslate_titanium_ore': (ctx) => computeDrops(ctx, {
-    dropId: 'utilitycraft:raw_titanium',
-    silkDropId: 'utilitycraft:deepslate_titanium_ore',
-    baseRange: [1, 1],
-    fortuneMath: { mode: 'bonus', perLevel: [0.6, 1], cap: [10, 14] },
-    specialTools: [
-      {
-        toolId: 'utilitycraft:smelting_pickaxe',
-        dropId: 'utilitycraft:titanium',
-        fortuneMath: { mode: 'multiplier', perLevel: [0.2, 0.25], cap: [12, 16] },
-        baseRange: [1, 1],
-      },
-      {
-        toolType: 'utilitycraft:is_hammer',
-        dropId: 'utilitycraft:titanium_nugget',
-        fortuneMath: { mode: 'bonus', perLevel: [1, 1.5], cap: [12, 16] },
-        baseRange: [1, 1],
-      }
-    ],
-  }),
+	/** Deepslate Titanium Ore. */
+	'utilitycraft:deepslate_titanium_ore': (context) => computeDrops(context, {
+		dropId: 'utilitycraft:raw_titanium',
+		silkDropId: 'utilitycraft:deepslate_titanium_ore',
+		baseSound: { id: 'dig.deepslate', volume: 1, pitch: 1 },
+		suppressVanillaSound: false,
+		baseRange: [1, 1],
+		fortuneMath: { mode: 'bonus', perLevel: [0.6, 1] },
+		specialTools: [
+			{
+				toolId: 'utilitycraft:smelting_pickaxe',
+				dropId: 'utilitycraft:titanium',
+				fortuneMath: { mode: 'multiplier', perLevel: [0.25, 2] },
+				baseRange: [1, 1],
+				sound: { id: 'random.fizz', volume: 0.65, pitch: 1.5 },
+				xp: [2, 5],
+			},
+			{
+				toolType: 'utilitycraft:is_hammer',
+				dropId: 'utilitycraft:titanium_nugget',
+				fortuneMath: { mode: 'bonus', perLevel: [1, 3] },
+				baseRange: [5, 12],
+				sound: { id: 'dig.netherrack', volume: 1, pitch: 0.5 },
+			}
+		],
+	}),
+	'utilitycraft:raw_titanium_block': (context) => computeDrops(context, {
+		specialTools: [
+			{
+				toolId: 'utilitycraft:smelting_pickaxe',
+				dropId: 'utilitycraft:titanium_block',
+				silkDropId: 'utilitycraft:raw_titanium_block',
+				baseRange: [1, 1],
+				sound: { id: 'random.fizz', volume: 0.65, pitch: 1.5 },
+			}
+		]
+	})
 };
 
 const toolFetchedTags = new Set([
-  'minecraft:is_pickaxe',
-  'minecraft:is_axe',
-  'minecraft:is_shovel',
-  'minecraft:is_hoe',
-  'minecraft:is_sword',
-  'utilitycraft:is_aiot',
-  'utilitycraft:is_hammer',
-  'utilitycraft:is_paxel'
+	'minecraft:is_pickaxe',
+	'minecraft:is_axe',
+	'minecraft:is_shovel',
+	'minecraft:is_hoe',
+	'minecraft:is_sword',
+	'utilitycraft:is_aiot',
+	'utilitycraft:is_hammer',
+	'utilitycraft:is_paxel'
 ]);
 
 // Safe random helper: uses DoriosAPI.randomInterval when available, else a local inclusive random int.
 const randInt = (min, max) => {
-  const apiRand = globalThis?.DoriosAPI?.randomInterval;
-  if (typeof apiRand === 'function') return apiRand(min, max);
-  const minCeil = Math.ceil(min);
-  const maxFloor = Math.floor(max);
-  return Math.floor(Math.random() * (maxFloor - minCeil + 1)) + minCeil;
+	const apiRand = globalThis?.DoriosAPI?.randomInterval;
+	if (typeof apiRand === 'function') return apiRand(min, max);
+	const minCeil = Math.ceil(min);
+	const maxFloor = Math.floor(max);
+	return Math.floor(Math.random() * (maxFloor - minCeil + 1)) + minCeil;
 };
 
-/**
- * @typedef {Object} DropContext
- * @property {import('@minecraft/server').Block} block - Block being broken.
- * @property {import('@minecraft/server').Player} player - Player who broke the block.
- * @property {import('@minecraft/server').Dimension} dimension - Dimension where the block exists.
- * @property {import('@minecraft/server').ItemStack | undefined} tool - Tool used to break.
- * @property {number} fortuneLevel - Fortune level on the tool (0 if none).
- * @property {boolean} hasSilkTouch - Whether the tool has Silk Touch.
- */
+const randFloat = (min = 0, max = 1) => Math.random() * (max - min) + min;
 
-/**
- * @typedef {Object} FortuneTier
- * @property {number} level - Exact fortune level this tier covers (falls through if above max defined).
- * @property {[number, number]} range - Inclusive min/max drop range for this level.
- */
+const normalizeChance = (chance, fallback = 1) => {
+	if (chance === undefined || chance === null) return fallback;
+	const num = Number(chance);
+	if (!Number.isFinite(num)) return fallback;
+	if (num <= 0) return 0;
+	return num > 1 ? num / 100 : num;
+};
 
-/**
- * @typedef {Object} DropEntry
- * @property {string} dropId - Item identifier to drop when not silk touch.
- * @property {string} silkDropId - Item identifier to drop when silk touch is present (usually the block itself).
- * @property {[number, number]} baseRange - Drop range when Fortune = 0.
- * @property {string|string[]=} toolType - Optional required tool tag (or tags) to allow the drop. If defined and the tool doesn't have the tag, no drop is produced.
- * @property {FortuneTier[]=} fortuneTiers - Ordered list of fortune tiers. If omitted, fortuneMath is used.\
- * Each entry defines (`level`, `min`, `max`) drops for the exact fortune level.
- * Only recommended for sparse or highly custom tiers. For smoother scaling, use fortuneMath instead. 
- * - Example:
- * ```JS
- * 
- *    fortuneTiers:{
- *      tier(1, 1, 2), // Fortune I gives 1-2 drops
- *    }
- * 
- * ```
+const rollChance = (chance, fallback = 1) => {
+	const normalized = normalizeChance(chance, fallback);
+	if (normalized <= 0) return false;
+	if (normalized >= 1) return true;
+	return randFloat(0, 1) <= normalized;
+};
 
- * @property {FortuneMath=} fortuneMath - Dynamic formula when tiers are omitted.
- * @property {SpecialToolOverride[]=} specialTools - Per-tool override configs.
- */
+const normalizeRange = (value, fallback = [1, 1]) => {
+	if (Array.isArray(value)) {
+		const min = Number(value[0]);
+		const max = Number(value[1] ?? value[0]);
+		if (Number.isFinite(min) && Number.isFinite(max)) {
+			return [Math.min(min, max), Math.max(min, max)];
+		}
+	}
 
-/**
- * @typedef {Object} FortuneMath
- * @property {'multiplier'|'bonus'} mode - How to scale drops.
- * @property {[number, number]} perLevel - For mode multiplier: factor added per level (e.g., 0.25 adds +25% per level). For bonus: flat added per level.
- * @property {[number, number]=} cap - Optional cap for [min, max] after scaling.
- */
+	if (typeof value === 'number' && Number.isFinite(value)) {
+		return [value, value];
+	}
 
-/**
- * @typedef {Object} SpecialToolOverride
- * @property {string} toolId - Item typeId to match (exact).
- * @property {string=} dropId - Override dropId for the block when using this tool.
- * @property {string=} silkDropId - Override silkDropId for the block when using this tool.
- * @property {[number, number]=} baseRange - Override baseRange for the special tool. Default = [1,1].
- * @property {FortuneTier[]=} fortuneTiers - Override fortuneTiers for the special tool. If omitted, `fortuneMath` is used. \
- * Follows [`min`, `max`, `level`] structure.
- * @property {FortuneMath=} fortuneMath - Override fortuneMath. 
- * @property {string|string[]=} toolType - Optional tag requirement for this override. When provided, the tool must match BOTH toolId (if set) and toolType.
- */
+	if (value && typeof value === 'object') {
+		const min = Number(value.min ?? value.minimum ?? value[0]);
+		const max = Number(value.max ?? value.maximum ?? value[1] ?? min);
+		if (Number.isFinite(min) && Number.isFinite(max)) {
+			return [Math.min(min, max), Math.max(min, max)];
+		}
+	}
+
+	return fallback;
+};
+
+// Tipos movidos para drops_guide.js (IntelliSense).
 
 /**
  * Resolve how many items to drop based on fortune tiers.
@@ -131,91 +134,286 @@ const randInt = (min, max) => {
  * @returns {number}
  */
 function resolveAmount(config, fortuneLevel) {
-  const lvl = Number.isFinite(fortuneLevel) ? fortuneLevel : 0;
+	const lvl = Number.isFinite(fortuneLevel) ? fortuneLevel : 0;
 
-  if (!config?.fortuneTiers?.length) {
-    // Use dynamic fortune math if provided
-    if (config?.fortuneMath) {
-      const [baseMin, baseMax] = config.baseRange;
-      const { mode, perLevel, cap } = config.fortuneMath;
-      const [dMin, dMax] = perLevel ?? [0, 0];
-      let min = baseMin;
-      let max = baseMax;
-      if (mode === 'multiplier') {
-        min = baseMin * (1 + dMin * lvl);
-        max = baseMax * (1 + dMax * lvl);
-      } else if (mode === 'bonus') {
-        min = baseMin + dMin * lvl;
-        max = baseMax + dMax * lvl;
-      }
-      if (cap) {
-        const [cMin, cMax] = cap;
-        min = Math.min(min, cMin ?? min);
-        max = Math.min(max, cMax ?? max);
-      }
-      return randInt(Math.max(1, Math.floor(min)), Math.max(1, Math.floor(max)));
-    }
+	if (!config?.fortuneTiers?.length) {
+		// Use dynamic fortune math if provided
+		if (config?.fortuneMath) {
+			const [baseMin, baseMax] = config.baseRange;
+			const { mode, perLevel, cap } = config.fortuneMath;
+			const [dMin, dMax] = perLevel ?? [0, 0];
+			let min = baseMin;
+			let max = baseMax;
+			if (mode === 'multiplier') {
+				min = baseMin * (1 + dMin * lvl);
+				max = baseMax * (1 + dMax * lvl);
+			} else if (mode === 'bonus') {
+				min = baseMin + dMin * lvl;
+				max = baseMax + dMax * lvl;
+			}
+			if (cap) {
+				const [cMin, cMax] = cap;
+				min = Math.min(min, cMin ?? min);
+				max = Math.min(max, cMax ?? max);
+			}
+			return randInt(Math.max(1, Math.floor(min)), Math.max(1, Math.floor(max)));
+		}
 
-    const [min, max] = config.baseRange;
-    return randInt(min, max);
-  }
+		const [min, max] = config.baseRange;
+		return randInt(min, max);
+	}
 
-  const tiers = config.fortuneTiers;
-  const exact = tiers.find(t => t.level === lvl);
+	const tiers = config.fortuneTiers;
+	const exact = tiers.find(t => t.level === lvl);
 
-  // Fortune below first defined tier → use baseRange
-  if (!exact && lvl < tiers[0].level) {
-    const [min, max] = config.baseRange;
-    return randInt(min, max);
-  }
+	// Fortune below first defined tier → use baseRange
+	if (!exact && lvl < tiers[0].level) {
+		const [min, max] = config.baseRange;
+		return randInt(min, max);
+	}
 
-  // Above max defined → clamp to last tier
-  const tier = exact ?? tiers[tiers.length - 1];
-  const [min, max] = tier?.range ?? config.baseRange;
-  return randInt(min, max);
+	// Above max defined → clamp to last tier
+	const tier = exact ?? tiers[tiers.length - 1];
+	const [min, max] = tier?.range ?? config.baseRange;
+	return randInt(min, max);
+}
+
+function resolveExtraDrops(config, fortuneLevel) {
+	if (!config?.extraDrops?.length) return [];
+
+	const drops = [];
+	for (const entry of config.extraDrops) {
+		if (!entry?.dropId) continue;
+		if (!rollChance(entry.chance, 1)) continue;
+
+		const baseRange = normalizeRange(entry.amountRange ?? entry.amount ?? [1, 1]);
+		const amount = resolveAmount({
+			baseRange,
+			fortuneMath: entry.fortuneMath,
+			fortuneTiers: entry.fortuneTiers
+		}, fortuneLevel);
+
+		if (amount <= 0) continue;
+		drops.push(new ItemStack(entry.dropId, amount));
+	}
+
+	return drops;
+}
+
+function resolveXpAmount(xp) {
+	if (xp === undefined || xp === null) return undefined;
+	const range = normalizeRange(xp, [0, 0]);
+	const amount = randInt(range[0], range[1]);
+	return amount > 0 ? amount : undefined;
+}
+
+const normalizeList = (value) => {
+	if (Array.isArray(value)) return value.map(v => String(v).toLowerCase());
+	if (value === undefined || value === null) return [];
+	return [String(value).toLowerCase()];
+};
+
+const normalizeDimensionId = (id) => {
+	if (!id) return '';
+	const raw = String(id).toLowerCase();
+	return raw.replace('minecraft:', '');
+};
+
+function getBiomeId(dimension, location) {
+	if (!dimension || !location) return '';
+	try {
+		const biome = dimension.getBiome?.(location);
+		const id = biome?.id ?? biome?.typeId ?? biome?.identifier;
+		return id ? String(id).toLowerCase() : '';
+	} catch {
+		return '';
+	}
+}
+
+function matchesConditions(ctx, conditions) {
+	if (!conditions) return true;
+
+	const block = ctx.block;
+	const player = ctx.player;
+	const dimension = ctx.dimension;
+
+	if (conditions.dimension) {
+		const allowed = normalizeList(conditions.dimension).map(normalizeDimensionId);
+		const current = normalizeDimensionId(dimension?.id ?? dimension?.typeId ?? dimension?.dimensionId);
+		if (allowed.length && !allowed.includes(current)) return false;
+	}
+
+	if (conditions.timeRange && typeof world?.getTimeOfDay === 'function') {
+		const [min, max] = normalizeRange(conditions.timeRange, [0, 23999]);
+		const time = world.getTimeOfDay();
+		if (Number.isFinite(time)) {
+			const t = ((time % 24000) + 24000) % 24000;
+			const inRange = min <= max ? (t >= min && t <= max) : (t >= min || t <= max);
+			if (!inRange) return false;
+		}
+	}
+
+	if (conditions.biome) {
+		const biomeId = getBiomeId(dimension, block?.location);
+		const allowed = normalizeList(conditions.biome);
+		if (!biomeId || !allowed.includes(biomeId)) return false;
+	}
+
+	if (conditions.playerSneaking !== undefined) {
+		const sneaking = Boolean(player?.isSneaking);
+		if (sneaking !== Boolean(conditions.playerSneaking)) return false;
+	}
+
+	if (conditions.playerGameMode) {
+		const modes = normalizeList(conditions.playerGameMode);
+		const mode = player?.getGameMode?.()?.toLowerCase?.() ?? '';
+		if (modes.length && !modes.includes(mode)) return false;
+	}
+
+	if (conditions.toolType) {
+		if (!toolMatchesType(ctx.tool, conditions.toolType)) return false;
+	}
+
+	if (conditions.blockStates && block?.permutation) {
+		for (const [key, expected] of Object.entries(conditions.blockStates)) {
+			try {
+				const value = block.permutation.getState(key);
+				if (value !== expected) return false;
+			} catch {
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 /**
  * Compute drops for a block using the provided config.
- * @param {DropContext} ctx
+ * @param {DropContext} context
  * @param {DropEntry} config
- * @returns {ItemStack[]}
+ * @returns {DropResult | null}
  */
-function computeDrops(ctx, config) {
-  // If the base config demands a specific tool type, enforce it before anything else
-  if (config.toolType && !toolMatchesType(ctx.tool, config.toolType)) {
-    return [];
-  }
+function computeDrops(context, config) {
+	if (!matchesConditions(context, config.conditions)) {
+		return null;
+	}
 
-  // Apply special tool override if present
-  if (ctx.tool && config.specialTools?.length) {
-    const match = findSpecialToolOverride(ctx.tool, config.specialTools);
-    if (match) {
-      config = { ...config, ...match };
-    }
-  }
+	// If the base config demands a specific tool type, enforce it before anything else
+	if (config.toolType && !toolMatchesType(context.tool, config.toolType)) {
+		return null;
+	}
 
-  if (ctx.hasSilkTouch) {
-    return [new ItemStack(config.silkDropId, 1)];
-  }
+	let usedSpecialOverride = false;
+	let specialSound;
 
-  const amount = resolveAmount(config, ctx.fortuneLevel);
-  return [new ItemStack(config.dropId, amount)];
+	// Apply special tool override if present
+	if (context.tool && config.specialTools?.length) {
+		const match = findSpecialToolOverride(context.tool, config.specialTools);
+		if (match) {
+			if (!matchesConditions(context, match.conditions)) return null;
+			specialSound = match.sound;
+			config = { ...config, ...match };
+			usedSpecialOverride = true;
+		}
+	}
+
+	const hasBaseDrop = Boolean(config.dropId && Array.isArray(config.baseRange));
+	const extraDrops = resolveExtraDrops(config, context.fortuneLevel);
+	const hasExtras = Boolean(
+		extraDrops.length ||
+		config.baseSound ||
+		config.particles?.length ||
+		config.statusEffects?.length ||
+		config.commands?.length ||
+		config.xp !== undefined
+	);
+	const replaceVanilla = config.replaceVanilla ?? (hasBaseDrop || usedSpecialOverride);
+	const sound = usedSpecialOverride ? specialSound : undefined;
+
+	if (!hasBaseDrop && !usedSpecialOverride && !hasExtras) {
+		return null;
+	}
+
+	const baseSound = config.baseSound;
+	const omitSpecialSound = Boolean(config.omitSpecialSound);
+	const suppressVanillaSound = Boolean(config.suppressVanillaSound);
+	const xp = resolveXpAmount(config.xp);
+
+	if (context.hasSilkTouch) {
+		const drops = [];
+		if (config.silkDropId) {
+			drops.push(new ItemStack(config.silkDropId, 1));
+		}
+
+		if (extraDrops.length) {
+			drops.push(...extraDrops);
+		}
+
+		if (!drops.length && !hasExtras && !usedSpecialOverride) return null;
+
+		return {
+			drops,
+			replaceVanilla,
+			sound,
+			baseSound,
+			omitSpecialSound,
+			suppressVanillaSound,
+			particles: config.particles,
+			statusEffects: config.statusEffects,
+			xp,
+			commands: config.commands,
+			commandTarget: config.commandTarget
+		};
+	}
+
+	if (!config.dropId || !config.baseRange) {
+		if (!extraDrops.length && !hasExtras && !usedSpecialOverride) return null;
+		return {
+			drops: extraDrops,
+			replaceVanilla,
+			sound,
+			baseSound,
+			omitSpecialSound,
+			suppressVanillaSound,
+			particles: config.particles,
+			statusEffects: config.statusEffects,
+			xp,
+			commands: config.commands,
+			commandTarget: config.commandTarget
+		};
+	}
+
+	const amount = resolveAmount(config, context.fortuneLevel);
+	const drops = [new ItemStack(config.dropId, amount), ...extraDrops];
+	return {
+		drops,
+		replaceVanilla,
+		sound,
+		baseSound,
+		omitSpecialSound,
+		suppressVanillaSound,
+		particles: config.particles,
+		statusEffects: config.statusEffects,
+		xp,
+		commands: config.commands,
+		commandTarget: config.commandTarget
+	};
 }
 
 // Shared fortune table helper
 function tier(level, min, max) {
-  return { level, range: [min, max] };
+	return { level, range: [min, max] };
 }
 
 function getTagsFromTool(tool) {
-  if (!tool) return [];
-  try {
-    const rawToolTags = tool.getTags?.() ?? [];
-    return rawToolTags.filter(t => toolFetchedTags.has(t));
-  } catch {
-    return [];
-  }
+	if (!tool) return [];
+	try {
+		const rawToolTags = tool.getTags?.() ?? [];
+		return rawToolTags.filter(t => toolFetchedTags.has(t));
+	} catch {
+		return [];
+	}
 }
 
 /**
@@ -226,14 +424,14 @@ function getTagsFromTool(tool) {
  * @returns {boolean}
  */
 function toolMatchesType(tool, requiredType) {
-  if (!requiredType) return true;
-  const toolTags = getTagsFromTool(tool);
-  if (!toolTags.length) return false;
+	if (!requiredType) return true;
+	const toolTags = getTagsFromTool(tool);
+	if (!toolTags.length) return false;
 
-  if (Array.isArray(requiredType)) {
-    return requiredType.some(tag => toolTags.includes(tag));
-  }
-  return toolTags.includes(requiredType);
+	if (Array.isArray(requiredType)) {
+		return requiredType.some(tag => toolTags.includes(tag));
+	}
+	return toolTags.includes(requiredType);
 }
 
 /**
@@ -244,21 +442,21 @@ function toolMatchesType(tool, requiredType) {
  * @returns {SpecialToolOverride | undefined}
  */
 function findSpecialToolOverride(tool, overrides) {
-  if (!tool || !overrides?.length) return undefined;
-  return overrides.find((override) => {
-    if (override.toolId && override.toolId !== tool.typeId) return false;
-    if (override.toolType && !toolMatchesType(tool, override.toolType)) return false;
-    return true;
-  });
+	if (!tool || !overrides?.length) return undefined;
+	return overrides.find((override) => {
+		if (override.toolId && override.toolId !== tool.typeId) return false;
+		if (override.toolType && !toolMatchesType(tool, override.toolType)) return false;
+		return true;
+	});
 }
 
 /**
  * Attempts to get an ItemStack array for the given block id.
- * @param {DropContext} ctx
- * @returns {ItemStack[] | null}
+ * @param {DropContext} context
+ * @returns {DropResult | ItemStack[] | null}
  */
-export function getDropsForBlock(ctx) {
-  const handler = DROPS_LIBRARY[ctx.block.typeId];
-  if (!handler) return null;
-  return handler(ctx) ?? null;
+export function getDropsForBlock(context) {
+	const handler = DROPS_LIBRARY[context.block.typeId];
+	if (!handler) return null;
+	return handler(context) ?? null;
 }

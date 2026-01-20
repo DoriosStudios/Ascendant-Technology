@@ -7,7 +7,7 @@ const CATALYST_SLOTS = [4, 5, 6, 7, 8, 9]
 const FLUID_SLOT = 10
 const FLUID_DISPLAY_SLOT = 11
 const FLUID_INFO_SLOT = 12
-const UPGRADE_SLOTS = [16, 17]
+const UPGRADE_SLOTS = [15, 16, 17]
 const BYPRODUCT_SLOT = 18
 const OUTPUT_SLOT_INDEX = 19
 
@@ -25,10 +25,10 @@ Slots (inventory_size: 20)
 - [10] Entrada de fluido (FLUID_SLOT) — container_item índice 10.
 - [11] Display do tanque (FLUID_DISPLAY_SLOT) — preenchido automaticamente pelo FluidManager.
 - [12] Slot oculto para o label “Catalyst Fluid” (machineryCommon.item_label → collection_index 12).
-- [16,17] Slots de upgrades (UPGRADE_SLOTS) → machineryCommon.vertical_interactive.
+- [15, 16, 17] Slots de upgrades (UPGRADE_SLOTS) → machineryCommon.vertical_interactive.
 - [18] Saída de subproduto (BYPRODUCT_SLOT) → container_item índice 18.
 - [19] Saída principal (OUTPUT_SLOT_INDEX) → container_item índice 19.
-Slots escondidos: [12, 13, 14, 15] (usados como placeholders invisíveis para UI/fluxos internos/labels).
+Slots escondidos: [12, 13, 14] (usados como placeholders invisíveis para UI/fluxos internos/labels).
 */
 
 DoriosAPI.register.blockComponent('catalyst_weaver', {

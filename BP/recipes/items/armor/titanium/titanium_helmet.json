@@ -1,0 +1,16 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:titanium_helmet_craft" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "AAA",
+      "A A"
+    ],
+    "key": {
+      "A": { "item": "utilitycraft:titanium" }
+    },
+    "result": { "item": "utilitycraft:titanium_helmet" },
+    "unlock": [ { "item": "utilitycraft:titanium" } ]
+  }
+}

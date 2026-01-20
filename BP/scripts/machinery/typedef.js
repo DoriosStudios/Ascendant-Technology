@@ -36,6 +36,7 @@
  * @property {number} machine.energy_cost Energy consumed per operation.
  * @property {number} generator.fluidCap Maximum internal fluid capacity.
  * @property {number} machine.rate_speed_base Base processing rate (DE/t).
+ * @property {number} [machine.fixed_rate] Optional fixed energy rate (DE per second). When set, the per-update cost scales with tick speed and ignores rate_speed_base.
  * @property {number[]} machine.upgrades List of accepted upgrade IDs.
  */
 

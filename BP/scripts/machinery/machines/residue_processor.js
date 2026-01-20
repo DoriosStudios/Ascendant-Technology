@@ -1,4 +1,4 @@
-import { Machine, Energy } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine } from '../managers_extra.js'
 import { getResidueProcessorRecipes } from '../../config/recipes/residue_processor.js'
 
 const INPUT_SLOT = 3
@@ -230,6 +230,9 @@ function updateHud(machine, recipe, maxCrafts) {
         `§7Cycle: §f${recipe.seconds}s`,
         `§7Batch Ready: §f${maxCrafts}`
     )
+
+    const overclockLine = buildOverclockLoreLine(machine)
+    if (overclockLine) lore.push(overclockLine)
 
     if (desc) lore.push(desc)
 

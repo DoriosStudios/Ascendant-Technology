@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:aetherium_chestplate_craft_alt" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "A A",
+      "AAA",
+      "AAA"
+    ],
+    "key": {
+      "A": { "item": "utilitycraft:aetherium" }
+    },
+    "result": { "item": "utilitycraft:aetherium_chestplate" },
+    "unlock": [ { "item": "utilitycraft:aetherium" } ]
+  }
+}

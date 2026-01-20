@@ -1,0 +1,19 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "utilitycraft:titanium_nuggets_from_ingot"
+    },
+    "tags": ["crafting_table"],
+    "ingredients": [
+      { "item": "utilitycraft:titanium" }
+    ],
+    "result": {
+      "item": "utilitycraft:titanium_nugget",
+      "count": 9
+    },
+    "unlock": [
+      { "item": "utilitycraft:titanium" }
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+	"format_version": "1.21.100",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:reinforced_cable",
+			"menu_category": {
+				"category": "construction",
+				"group": "dorios:itemGroup.name.pipes"
+			},
+			"states": {
+				"utilitycraft:up": [false, true],
+				"utilitycraft:down": [false, true],
+				"utilitycraft:north": [false, true],
+				"utilitycraft:south": [false, true],
+				"utilitycraft:east": [false, true],
+				"utilitycraft:west": [false, true]
+			}
+		},
+		"components": {
+			"minecraft:geometry": {
+				"identifier": "geometry.utilitycraft_reinforced_cable",
+				"bone_visibility": {
+					"up": "q.block_state('utilitycraft:up')",
+					"down": "q.block_state('utilitycraft:down')",
+					"north": "q.block_state('utilitycraft:north')",
+					"south": "q.block_state('utilitycraft:south')",
+					"east": "q.block_state('utilitycraft:east')",
+					"west": "q.block_state('utilitycraft:west')"
+				}
+			},
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_reinforced_cable",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:collision_box": {
+				"origin": [0, 0, 0],
+				"size": [0, 0, 0]
+			},
+			"minecraft:selection_box": {
+				"origin": [-4, 4, -4],
+				"size": [8, 8, 8]
+			},
+			"minecraft:light_emission": 3,
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 1
+			},
+			"minecraft:destructible_by_explosion": false,
+			"tag:minecraft:is_pickaxe_item_destructible": {},
+			"tag:dorios:energy": {},
+			"tag:dorios:fluid": {},
+			"tag:dorios:isTube": {},
+			"tag:dorios:color.default": {},
+			"tag:dorios:overclock_network": {}
+		}
+	}
+}

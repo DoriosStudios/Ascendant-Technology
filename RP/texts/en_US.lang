@@ -9,19 +9,29 @@ tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Ra
 tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 168 items\n- Can store fluids\n- Can store energy
 
 ## Machines
-tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicator\n§7- Accepted upgrades: \n   §a§7, §d§7
-tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7\n§7- 3 Modes:\n Stabilizer,\n Freezer,\n Cryo Generator
-tile.utilitycraft:energizer.name=Energizer\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7- Accepted upgrades: \n   §b§7, §g§7
-tile.utilitycraft:residue_processor.name=Residue Processor\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
+tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
+tile.utilitycraft:cloner.name=Duplicator\n§7- Accepted upgrades: \n   §a§7, §d§7
+tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7\n§7- 3 Modes:\n Stabilizer,\n Freezer,\n Cryo Generator
+tile.utilitycraft:energizer.name=Energizer\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
+tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
+tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7- Accepted upgrades: \n   §b§7, §g§7
+tile.utilitycraft:residue_processor.name=Residue Processor\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator
 tile.utilitycraft:network_center.name=Network Center\n§7- Shows network stats
+tile.utilitycraft:overclock_tower.name=Overclock Tower\n§7- Generates overclock charge (Titanium + energy)
+tile.utilitycraft:overclock_relay.name=Overclock Relay\n§7- Mirrors tower charge into the network
+tile.utilitycraft:overclock_injector.name=Overclock Injector\n§7- Applies overclock to the facing machine
+tile.utilitycraft:reinforced_extractor.name=Reinforced Extractor
+tile.utilitycraft:smart_importer.name=Smart Importer
+tile.utilitycraft:reinforced_cable.name=Reinforced Cable\n§7- High-capacity energy/fluid/overclock backbone
 
 ## Other Blocks
 tile.utilitycraft:laser_barrier_field.name=Laser Barrier Field\n§7  Active area projected by the barrier
 tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius
+
+tile.utilitycraft:aetherium_block.name=Aetherium Block
+tile.utilitycraft:titanium_block.name=Titanium Block
+tile.utilitycraft:raw_titanium_block.name=Raw Titanium Block
 
 tile.utilitycraft:deepslate_aetherium_ore.name=Deepslate Aetherium Ore
 tile.utilitycraft:deepslate_titanium_ore.name=Deepslate Titanium Ore
@@ -29,13 +39,39 @@ tile.utilitycraft:end_aetherium_ore.name=End Aetherium Ore
 
 
 ## Items
+### Aetherium
 item.utilitycraft:aetherium=Aetherium Ingot
-item.utilitycraft:titanium=Titanium Ingot
-item.utilitycraft:raw_titanium=Raw Titanium
-item.utilitycraft:titanium_chunk=Titanium Chunk
-item.utilitycraft:liquified_aetherium_bucket=Liquified Aetherium Bucket
 item.utilitycraft:aetherium_shard=Aetherium Shard
 item.utilitycraft:refined_aetherium_shard=Refined Aetherium Shard
+item.utilitycraft:aetherium_helmet=Aetherium Helmet
+item.utilitycraft:aetherium_chestplate=Aetherium Chestplate
+item.utilitycraft:aetherium_leggings=Aetherium Leggings
+item.utilitycraft:aetherium_boots=Aetherium Boots
+item.utilitycraft:aetherium_sword=Aetherium Sword
+item.utilitycraft:aetherium_pickaxe=Aetherium Pickaxe
+item.utilitycraft:aetherium_axe=Aetherium Axe
+item.utilitycraft:aetherium_shovel=Aetherium Shovel
+item.utilitycraft:aetherium_hoe=Aetherium Hoe
+item.utilitycraft:aetherium_paxel=Aetherium Paxel
+item.utilitycraft:aetherium_aiot=Aetherium AiOT
+item.utilitycraft:aetherium_hammer=Aetherium Hammer
+### Titanium
+item.utilitycraft:titanium=Titanium Ingot
+item.utilitycraft:raw_titanium=Raw Titanium
+item.utilitycraft:titanium_nugget=Titanium Nugget
+item.utilitycraft:titanium_chunk=Titanium Chunk
+item.utilitycraft:titanium_helmet=Titanium Helmet
+item.utilitycraft:titanium_chestplate=Titanium Chestplate
+item.utilitycraft:titanium_leggings=Titanium Leggings
+item.utilitycraft:titanium_boots=Titanium Boots
+item.utilitycraft:titanium_sword=Titanium Sword
+item.utilitycraft:titanium_pickaxe=Titanium Pickaxe
+item.utilitycraft:titanium_axe=Titanium Axe
+item.utilitycraft:titanium_shovel=Titanium Shovel
+item.utilitycraft:titanium_hoe=Titanium Hoe
+item.utilitycraft:titanium_paxel=Titanium Paxel
+item.utilitycraft:titanium_aiot=Titanium AiOT
+item.utilitycraft:titanium_hammer=Titanium Hammer
 item.utilitycraft:void_essence=Void Essence
 item.utilitycraft:liquid_void=Liquid Void Capsule
 ## Modules
@@ -45,6 +81,10 @@ item.utilitycraft:hyper_processing_upgrade=§dHyper Processing Upgrade§7\n- Inc
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aLucky Mesh\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
 item.utilitycraft:lucky_fishing_net=§aLucky Fishing Net\n§7- Hook Speed Tier: 10\n§7- Item Multiplier: 2x
+item.utilitycraft:aetherium_mesh=§uAetherium §7Mesh\n§7- Max Drop Tier: Interdimensional\n§7- Item Multiplier: 1.5x
+item.utilitycraft:aetherium_fishing_net=§uAetherium §7Fishing Net\n§7- Hook Speed Tier: 8\n§7- Item Multiplier: 1.5x
+item.utilitycraft:titanium_mesh=§3Titanium §7Mesh\n§7- Max Drop Tier: Diamond
+item.utilitycraft:titanium_fishing_net=§3Titanium §7Fishing Net\n§7- Hook Speed Tier: 6
 
 item.utilitycraft:lucky_aiot_item=§aLucky AiOT\n§7Looting X\nFortune X
 item.utilitycraft:lucky_aiot=§aLucky AiOT
@@ -90,11 +130,19 @@ entity.utilitycraft:laser_barrier.name=Laser Barrier
 entity.utilitycraft:residue_processor.name=Residue Processor
 entity.utilitycraft:energizer.name=Energizer
 entity.utilitycraft:network_center.name=§fNetwork Center
+entity.utilitycraft:overclock_tower.name=§fOverclock Tower
+entity.utilitycraft:overclock_relay.name=§fOverclock Relay
+entity.utilitycraft:overclock_injector.name=§fOverclock Injector
 
 ## UI Texts
-at:itemGroup.name.machines=Machines (Ascendant Technology)
-at:itemGroup.name.capsules=Liquid Capsules (Ascendant Technology)
-at:itemGroup.name.experimental=Experimental
+at:itemGroup.name.machines=Machines §u(Ascendant Technology)
+at:itemGroup.name.capsules=Liquid Capsules §u(Ascendant Technology)
+at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
+at:itemGroup.name.armor=Armor §u(Ascendant Technology)
+
+at:ui.h=H
+at:ui.l=L
+at:ui.e=E
 
 ui.utilitycraft:status_label_container=Container Status
 
@@ -137,6 +185,55 @@ ui.utilitycraft.mob_magnet.filter.mode.blacklist=Blacklist
 ui.utilitycraft.mob_magnet.filter.mode_switched=§bMode switched to {0}
 
 ## Placeholders
+item.utilitycraft:overclock_00=Overclock
+item.utilitycraft:overclock_01=Overclock
+item.utilitycraft:overclock_02=Overclock
+item.utilitycraft:overclock_03=Overclock
+item.utilitycraft:overclock_04=Overclock
+item.utilitycraft:overclock_05=Overclock
+item.utilitycraft:overclock_06=Overclock
+item.utilitycraft:overclock_07=Overclock
+item.utilitycraft:overclock_08=Overclock
+item.utilitycraft:overclock_09=Overclock
+item.utilitycraft:overclock_10=Overclock
+item.utilitycraft:overclock_11=Overclock
+item.utilitycraft:overclock_12=Overclock
+item.utilitycraft:overclock_13=Overclock
+item.utilitycraft:overclock_14=Overclock
+item.utilitycraft:overclock_15=Overclock
+item.utilitycraft:overclock_16=Overclock
+item.utilitycraft:overclock_17=Overclock
+item.utilitycraft:overclock_18=Overclock
+item.utilitycraft:overclock_19=Overclock
+item.utilitycraft:overclock_20=Overclock
+item.utilitycraft:overclock_21=Overclock
+item.utilitycraft:overclock_22=Overclock
+item.utilitycraft:overclock_23=Overclock
+item.utilitycraft:overclock_24=Overclock
+item.utilitycraft:overclock_25=Overclock
+item.utilitycraft:overclock_26=Overclock
+item.utilitycraft:overclock_27=Overclock
+item.utilitycraft:overclock_28=Overclock
+item.utilitycraft:overclock_29=Overclock
+item.utilitycraft:overclock_30=Overclock
+item.utilitycraft:overclock_31=Overclock
+item.utilitycraft:overclock_32=Overclock
+item.utilitycraft:overclock_33=Overclock
+item.utilitycraft:overclock_34=Overclock
+item.utilitycraft:overclock_35=Overclock
+item.utilitycraft:overclock_36=Overclock
+item.utilitycraft:overclock_37=Overclock
+item.utilitycraft:overclock_38=Overclock
+item.utilitycraft:overclock_39=Overclock
+item.utilitycraft:overclock_40=Overclock
+item.utilitycraft:overclock_41=Overclock
+item.utilitycraft:overclock_42=Overclock
+item.utilitycraft:overclock_43=Overclock
+item.utilitycraft:overclock_44=Overclock
+item.utilitycraft:overclock_45=Overclock
+item.utilitycraft:overclock_46=Overclock
+item.utilitycraft:overclock_47=Overclock
+item.utilitycraft:overclock_48=Overclock
 item.utilitycraft:liquefied_aetherium_00=Liquified Aetherium
 item.utilitycraft:liquefied_aetherium_01=Liquified Aetherium
 item.utilitycraft:liquefied_aetherium_02=Liquified Aetherium
@@ -186,6 +283,55 @@ item.utilitycraft:liquefied_aetherium_45=Liquified Aetherium
 item.utilitycraft:liquefied_aetherium_46=Liquified Aetherium
 item.utilitycraft:liquefied_aetherium_47=Liquified Aetherium
 item.utilitycraft:liquefied_aetherium_48=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_00=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_01=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_02=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_03=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_04=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_05=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_06=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_07=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_08=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_09=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_10=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_11=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_12=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_13=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_14=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_15=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_16=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_17=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_18=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_19=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_20=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_21=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_22=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_23=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_24=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_25=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_26=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_27=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_28=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_29=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_30=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_31=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_32=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_33=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_34=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_35=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_36=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_37=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_38=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_39=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_40=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_41=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_42=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_43=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_44=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_45=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_46=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_47=Liquified Aetherium
+item.utilitycraft:liquified_aetherium_48=Liquified Aetherium
 
 ## Dark Matter Placeholders
 item.utilitycraft:dark_matter_00=Dark Matter Fluid

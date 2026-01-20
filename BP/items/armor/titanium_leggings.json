@@ -1,0 +1,22 @@
+{
+    "format_version": "1.21.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:titanium_leggings",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.leggings"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_titanium_leggings",
+            "minecraft:wearable": {
+                "slot": "slot.armor.legs"
+            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:durability": {
+                "max_durability": 225
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import { ItemStack } from "@minecraft/server";
-import { Machine, Energy, FluidManager } from '../managers_extra.js';
+import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../managers_extra.js';
 import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../config/recipes/cryo_chamber.js';
 
 /**
@@ -118,6 +118,11 @@ function getCryoChamberTanks(machine, settings) {
 }
 DoriosAPI.register.blockComponent('cryo_chamber', {
     beforeOnPlayerPlace(e, { params: settings }) {
+        // Persist multi-slot mapping for smart importers/exporters (no entity required)
+        try {
+            const invSize = settings?.entity?.inventory_size ?? 27;
+        } catch { /* ignore */ }
+
         Machine.spawnMachineEntity(e, settings, () => {
             const machine = new Machine(e.block, settings, true);
             if (!machine?.entity) return;
@@ -180,6 +185,7 @@ DoriosAPI.register.blockComponent('cryo_chamber', {
 
     onPlayerBreak(e) {
         Machine.onDestroy(e);
+        clearMultiSlotConfig(e.block);
     }
 });
 
@@ -689,6 +695,9 @@ function renderModuleStatus(machine, moduleConfig, status, waterTank, cryofluidT
         }
     }
 
+    const overclockLine = buildOverclockLoreLine(machine);
+    if (overclockLine) lines.push(overclockLine);
+
     machine.setLabel({ rawText: lines.join('\n') }, slot);
 }
 
@@ -727,7 +736,12 @@ function feedFluidSlot(machine, tank, slot) {
 
     // Replace with empty container
     if (containerData.output) {
-        machine.inv.setItem(slot, new ItemStack(containerData.output, 1));
+        machine.inv.setItem(slot, undefined);
+        machine.dim.spawnItem(new ItemStack(containerData.output, 1), {
+            x: machine.block.location.x + 0.5,
+            y: machine.block.location.y + 1,
+            z: machine.block.location.z + 0.5
+        });
     } else {
         machine.entity.changeItemAmount(slot, -1);
     }
@@ -752,7 +766,12 @@ function extractFluidSlot(machine, tank, slot) {
 
     // Consume fluid and give filled capsule
     tank.consume(fillDef.amount);
-    machine.inv.setItem(slot, new ItemStack(fillDef.fills[tankType], 1));
+    machine.inv.setItem(slot, undefined);
+    machine.dim.spawnItem(new ItemStack(fillDef.fills[tankType], 1), {
+        x: machine.block.location.x + 0.5,
+        y: machine.block.location.y + 1,
+        z: machine.block.location.z + 0.5
+    });
 }
 
 /**

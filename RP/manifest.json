@@ -8,7 +8,7 @@
 	},
 	"header": {
 		"name": "Ascendant Technology",
-		"description": "Requires UtilityCraft 3.3+ | v0.6.0 §aBeta - §6Dorios Studios",
+		"description": "Requires UtilityCraft 3.3+ | v0.7.0 §aBeta - §6Dorios Studios",
 		"min_engine_version": [
 			1,
 			21,
@@ -18,7 +18,7 @@
 		"version": [
 			1,
 			0,
-			10
+			13
 		]
 	},
 	"modules": [

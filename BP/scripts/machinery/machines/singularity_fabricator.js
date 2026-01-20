@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager } from '../managers_extra.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../managers_extra.js'
 import { getClonerRecipes } from '../../config/recipes/cloner.js'
 
 const COMPONENT_ID = 'singularity_fabricator'
@@ -13,14 +13,14 @@ const FLUID_PER_SECOND = 80
 const TICKS_PER_SECOND = 20
 const UPGRADE_SLOTS = [4, 5]
 const LEGACY_UPGRADE_SLOTS = [16, 17]
-const FABRICATOR_RATE_SPEED_BASE = 80
+const FABRICATOR_RATE_SPEED_BASE = 2560000
 const ENERGY_USAGE_MULTIPLIER = 6
 const MAX_RUNTIME_SECONDS = 24 * 60 * 60
 const FABRICATOR_PROGRESS_PER_SECOND = FABRICATOR_RATE_SPEED_BASE * TICKS_PER_SECOND * ENERGY_USAGE_MULTIPLIER
 const KDE = 1000
 const MAX_TOTAL_KDE = Math.floor((MAX_RUNTIME_SECONDS * FABRICATOR_PROGRESS_PER_SECOND) / KDE)
-const MIN_FABRICATOR_TIME_SECONDS = 864000 / TICKS_PER_SECOND
-const MIN_FABRICATOR_ENERGY_COST = 1_000_000_000
+const MIN_FABRICATOR_TIME_SECONDS = 60 * 60
+const MIN_FABRICATOR_ENERGY_COST = Math.round(FABRICATOR_PROGRESS_PER_SECOND * MIN_FABRICATOR_TIME_SECONDS)
 const MIN_FABRICATOR_COST_KDE = MIN_FABRICATOR_ENERGY_COST / KDE
 const MIN_FABRICATOR_RATE = 1
 
@@ -52,6 +52,9 @@ function doriosRegister() {
                 machine.blockSlots([FLUID_DISPLAY_SLOT, FLUID_INPUT_SLOT])
                 purgeFabricatorUpgrades(machine)
 
+                machine.entity.addTag(`fluidWhitelist:${DEFAULT_FLUID_TYPE}`)
+                machine.entity.setDynamicProperty?.('dorios:fluid_whitelist', DEFAULT_FLUID_TYPE)
+
                 const tank = FluidManager.initializeSingle(machine.entity)
                 tank.display(FLUID_DISPLAY_SLOT)
             })
@@ -62,6 +65,9 @@ function doriosRegister() {
             const { block } = e
             const machine = new Machine(block, settings)
             if (!machine.valid) return
+
+            machine.entity?.addTag?.(`fluidWhitelist:${DEFAULT_FLUID_TYPE}`)
+            machine.entity?.setDynamicProperty?.('dorios:fluid_whitelist', DEFAULT_FLUID_TYPE)
 
             purgeFabricatorUpgrades(machine)
             machine.transferItems()
@@ -92,7 +98,7 @@ function doriosRegister() {
                 return
             }
 
-            applyFabricatorRuntime(machine, recipe)
+            applyFabricatorRuntime(machine, recipe, settings)
 
             const requiredFluid = getRecipeFluid(recipe)
             if (requiredFluid) {
@@ -319,6 +325,7 @@ function updateHud(machine, recipe, tank, crafted) {
     const action = crafted ? 'Replication Complete' : 'Replicating'
     const etaDisplay = formatEta(machine, recipe)
     const fluidBlock = formatFluidBlock(recipe?.fluid, tank)
+    const overclockLine = buildOverclockLoreLine(machine)
     machine.setLabel(`
 §r§5${action}
 §r§7Blueprint:
@@ -327,6 +334,7 @@ function updateHud(machine, recipe, tank, crafted) {
 §r§7ETA: §f${etaDisplay}
 §r§cCost: §f${Energy.formatEnergyToText(recipe.energyCost)}
 ${fluidBlock}
+${overclockLine ? overclockLine : ''}
     `)
 }
 
@@ -479,15 +487,24 @@ function canAcceptSlotItem(slot, expectedId) {
     return !slot || slot.typeId === expectedId
 }
 
-function applyFabricatorRuntime(machine, recipe) {
+function resolveFabricatorRateSpeedBase(settings) {
+    const candidate = Number(settings?.machine?.rate_speed_base)
+    if (!Number.isFinite(candidate) || candidate <= 0) return FABRICATOR_RATE_SPEED_BASE
+    return candidate
+}
+
+function applyFabricatorRuntime(machine, recipe, settings) {
     if (!machine || !recipe) return
 
     const targetSeconds = Math.max(MIN_FABRICATOR_TIME_SECONDS, recipe.timeSeconds ?? MIN_FABRICATOR_TIME_SECONDS)
+    recipe.dynamicTimeSeconds = targetSeconds
     recipe.timeSeconds = targetSeconds
     recipe.ticks = Math.max(1, Math.round(targetSeconds * TICKS_PER_SECOND))
 
-    const normalizedCostKDE = recipe.costKDE ?? ((recipe.energyCost ?? MIN_FABRICATOR_ENERGY_COST) / KDE)
-    recipe.costKDE = Math.max(MIN_FABRICATOR_COST_KDE, normalizedCostKDE)
+    const rateSpeedBase = resolveFabricatorRateSpeedBase(settings)
+    const progressPerSecondBase = Math.max(MIN_FABRICATOR_RATE, rateSpeedBase) * ENERGY_USAGE_MULTIPLIER * TICKS_PER_SECOND
+    const dynamicCostKDE = clampTotalCostKDE((progressPerSecondBase * targetSeconds) / KDE)
+    recipe.costKDE = Math.max(MIN_FABRICATOR_COST_KDE, dynamicCostKDE)
     recipe.energyCost = Math.max(MIN_FABRICATOR_ENERGY_COST, Math.round(recipe.costKDE * KDE))
     recipe.perSecondKDE = recipe.costKDE / targetSeconds
 
@@ -495,12 +512,13 @@ function applyFabricatorRuntime(machine, recipe) {
     const updatesPerSecond = Math.max(Number.EPSILON, TICKS_PER_SECOND / tickSpeed)
     const progressPerSecond = recipe.energyCost / targetSeconds
     const progressPerUpdate = progressPerSecond / updatesPerSecond
+    const perTickRate = Math.max(MIN_FABRICATOR_RATE, progressPerSecond / TICKS_PER_SECOND)
     const desiredRate = Math.max(MIN_FABRICATOR_RATE, progressPerUpdate)
 
     machine.boosts.speed = 1
     machine.boosts.consumption = 1
     machine.rate = desiredRate
-    machine.baseRate = desiredRate
+    machine.baseRate = perTickRate
     machine.fabricatorTargetSeconds = targetSeconds
 }
 

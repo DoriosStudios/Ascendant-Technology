@@ -1,0 +1,46 @@
+{
+    "format_version": "1.21.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_hoe",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.hoe"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_aetherium_hoe",
+            "minecraft:hand_equipped": true,
+            "minecraft:max_stack_size": 1,
+            "minecraft:fire_resistant": {
+                "value": true
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_hoe",
+                    "minecraft:is_tool",
+                    "minecraft:transformable_items"
+                ]
+            },
+            "minecraft:enchantable": {
+                "value": 22,
+                "slot": "hoe"
+            },
+            "minecraft:durability": {
+                "max_durability": 3579
+            },
+            "minecraft:damage": 4,
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "speed": 12,
+                        "block": {
+                            "tags": "q.any_tag('minecraft:is_hoe_item_destructible')"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

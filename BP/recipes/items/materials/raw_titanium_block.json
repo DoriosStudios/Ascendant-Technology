@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "utilitycraft:raw_titanium_block"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "AAA",
+      "AAA",
+      "AAA"
+    ],
+    "key": {
+      "A": {
+        "item": "utilitycraft:raw_titanium"
+      }
+    },
+    "result": {
+      "item": "utilitycraft:raw_titanium_block"
+    },
+    "unlock": [
+      { "item": "utilitycraft:raw_titanium" }
+    ]
+  }
+}

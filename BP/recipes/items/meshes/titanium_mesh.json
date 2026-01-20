@@ -1,0 +1,18 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:titanium_mesh_craft" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "TTT",
+      "TDT",
+      "TTT"
+    ],
+    "key": {
+      "D": { "item": "utilitycraft:diamond_mesh" },
+      "T": { "item": "utilitycraft:titanium" }
+    },
+    "result": { "item": "utilitycraft:titanium_mesh" },
+    "unlock": [ { "item": "utilitycraft:titanium" } ]
+  }
+}

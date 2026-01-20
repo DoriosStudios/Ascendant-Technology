@@ -74,10 +74,10 @@
 			"textures": "textures/blocks/machines/cloner_on"
 		},
 		"utilitycraft_cryo_chamber_off": {
-			"textures": "textures/blocks/machines/cloner_off"
+			"textures": "textures/blocks/machines/cryo_chamber_off"
 		},
 		"utilitycraft_cryo_chamber_on": {
-			"textures": "textures/blocks/machines/cloner_on"
+			"textures": "textures/blocks/machines/cryo_chamber_on"
 		},
 		"utilitycraft_mob_magnet_off": {
 			"textures": "textures/blocks/machines/mob_magnet_off"
@@ -92,10 +92,10 @@
 			"textures": "textures/blocks/machines/liquifier_on"
 		},
 		"utilitycraft_residue_processor_off": {
-			"textures": "textures/blocks/machines/cloner_off"
+			"textures": "textures/blocks/machines/residue_processor_off"
 		},
 		"utilitycraft_residue_processor_on": {
-			"textures": "textures/blocks/machines/cloner_on"
+			"textures": "textures/blocks/machines/residue_processor_on"
 		},
 		"utilitycraft_laser_barrier_off": {
 			"textures": "textures/blocks/machines/laser_barrier_off"
@@ -104,16 +104,16 @@
 			"textures": "textures/blocks/machines/laser_barrier_on"
 		},
 		"utilitycraft_network_center_off": {
-			"textures": "textures/blocks/machines/cloner_off"
+			"textures": "textures/blocks/machines/network_center_off"
 		},
 		"utilitycraft_network_center_on": {
-			"textures": "textures/blocks/machines/cloner_on"
+			"textures": "textures/blocks/machines/network_center_on"
 		},
 		"utilitycraft_absolute_container_off": {
-			"textures": "textures/blocks/machines/cloner_off"
+			"textures": "textures/blocks/generators/absolute_container_off"
 		},
 		"utilitycraft_absolute_container_on": {
-			"textures": "textures/blocks/machines/cloner_on"
+			"textures": "textures/blocks/generators/absolute_container_on"
 		},
 		"utilitycraft_laser_barrier_field": {
 			"textures": "textures/blocks/laser_barrier_field"
@@ -130,6 +130,9 @@
 		"utilitycraft_item_conduit": {
 			"textures": "textures/blocks/pipes/flat_conduit"
 		},
+		"utilitycraft_reinforced_cable": {
+			"textures": "textures/blocks/pipes/reinforced_cable"
+		},
 		"utilitycraft_deepslate_titanium_ore": {
 			"textures": "textures/blocks/ores/deepslate_titanium_ore"
 		},
@@ -138,6 +141,27 @@
 		},
 		"utilitycraft_end_aetherium_ore": {
 			"textures": "textures/blocks/ores/end_aetherium_ore"
+		},
+		"utilitycraft_titanium_block": {
+			"textures": "textures/blocks/ores/titanium_block"
+		},
+		"utilitycraft_aetherium_block": {
+			"textures": "textures/blocks/ores/aetherium_block"
+		},
+		"utilitycraft_raw_titanium_block": {
+			"textures": "textures/blocks/ores/raw_titanium_block"
+		},
+		"utilitycraft_overclock_tower_on": {
+			"textures": "textures/blocks/machines/overclock_tower_on"
+		},
+		"utilitycraft_overclock_relay_on": {
+			"textures": "textures/blocks/machines/overclock_tower_on"
+		},
+		"utilitycraft_overclock_tower_off": {
+			"textures": "textures/blocks/machines/overclock_tower_off"
+		},
+		"utilitycraft_overclock_relay_off": {
+			"textures": "textures/blocks/machines/overclock_tower_off"
 		}
 	}
 }

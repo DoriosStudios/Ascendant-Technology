@@ -1,0 +1,23 @@
+{
+	"format_version": "1.21.110",
+	"minecraft:item": {
+		"description": {
+			"identifier": "utilitycraft:aetherium_mesh",
+			"menu_category": {
+				"category": "construction",
+				"group": "dorios:itemGroup.name.meshes"
+			}
+		},
+		"components": {
+			"minecraft:icon": "utilitycraft_aetherium_mesh",
+			"utilitycraft:mesh": {
+				"tier": 8,
+				"multiplier": 6,
+				"amount_multiplier": 1.5
+			},
+			"minecraft:fire_resistant": {
+				"value": true
+			}
+		}
+	}
+}

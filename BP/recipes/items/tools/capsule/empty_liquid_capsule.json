@@ -1,0 +1,28 @@
+{
+    "format_version": "1.20.0",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:empty_liquid_capsule"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            "S",
+            "G",
+            "S"
+        ],
+        "key": {
+            "G": {
+                "item": "minecraft:glass"
+            },
+            "S": {
+                "item": "utilitycraft:steel_ingot"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:empty_liquid_capsule",
+            "count": 2
+        }
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "format_version": "1.21.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_sword",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.sword"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_aetherium_sword",
+            "minecraft:hand_equipped": true,
+            "minecraft:max_stack_size": 1,
+            "minecraft:fire_resistant": {
+                "value": true
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_sword",
+                    "minecraft:is_tool",
+                    "minecraft:transformable_items"
+                ]
+            },
+            "minecraft:enchantable": {
+                "value": 22,
+                "slot": "sword"
+            },
+            "minecraft:durability": {
+                "max_durability": 3579
+            },
+            "minecraft:damage": 9,
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "speed": 12,
+                        "block": "minecraft:web"
+                    }
+                ]
+            }
+        }
+    }
+}

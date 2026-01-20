@@ -1,0 +1,18 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:aetherium_sword_craft_alt" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "A",
+      "A",
+      "S"
+    ],
+    "key": {
+      "A": { "item": "utilitycraft:aetherium" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "result": { "item": "utilitycraft:aetherium_sword" },
+    "unlock": [ { "item": "utilitycraft:aetherium" } ]
+  }
+}

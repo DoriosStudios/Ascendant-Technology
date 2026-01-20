@@ -1,0 +1,18 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:titanium_axe_craft" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "AA ",
+      "AS ",
+      " S "
+    ],
+    "key": {
+      "A": { "item": "utilitycraft:titanium" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "result": { "item": "utilitycraft:titanium_axe" },
+    "unlock": [ { "item": "utilitycraft:titanium" } ]
+  }
+}

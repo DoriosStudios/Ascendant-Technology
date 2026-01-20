@@ -1,0 +1,51 @@
+{
+    "format_version": "1.21.80",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:titanium_aiot",
+            "menu_category": {
+                "category": "equipment",
+                "group": "dorios:itemGroup.name.aiots"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_titanium_aiot",
+            "minecraft:hand_equipped": true,
+            "minecraft:max_stack_size": 1,
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_pickaxe",
+                    "minecraft:is_axe",
+                    "minecraft:is_shovel",
+                    "minecraft:is_hoe",
+                    "minecraft:is_sword",
+                    "minecraft:is_tool",
+                    "utilitycraft:is_aiot"
+                ]
+            },
+            "minecraft:enchantable": {
+                "value": 20,
+                "slot": "pickaxe"
+            },
+            "minecraft:durability": {
+                "max_durability": 7805
+            },
+            "minecraft:damage": 11,
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "speed": 10,
+                        "block": {
+                            "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible', 'minecraft:is_shovel_item_destructible', 'minecraft:is_axe_item_destructible', 'minecraft:is_hoe_item_destructible')"
+                        }
+                    },
+                    {
+                        "speed": 10,
+                        "block": "minecraft:web"
+                    }
+                ]
+            }
+        }
+    }
+}

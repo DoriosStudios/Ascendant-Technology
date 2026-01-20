@@ -1,5 +1,5 @@
 import { system } from '@minecraft/server'
-import { Machine, Energy, FluidManager, Rotation } from '../managers_extra.js'
+import { Machine, Energy, FluidManager, Rotation, buildOverclockLoreLine } from '../managers_extra.js'
 
 // ──────────────────────────────────────────────────────
 // CONFIGURAÇÃO
@@ -151,7 +151,6 @@ function tick(ctx) {
     // Atualiza displays de HUD
     energy.display(SLOT_ENERGY)
     fluid.display(SLOT_FLUID)
-
     // Estado visual "ligado"
     setOn(block, true)
 }

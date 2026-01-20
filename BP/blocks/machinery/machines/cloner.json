@@ -38,9 +38,9 @@
 					"fluid": true
 				},
 				"machine": {
-					"energy_cap": 32768000,
+					"energy_cap": 512000000,
 					"energy_cost": 128000,
-					"rate_speed_base": 80,
+					"rate_speed_base": 400,
 					"fluid_cap": 512000,
 					"upgrades": [
 						4,
@@ -59,6 +59,9 @@
 						17
 					]
 				}
+			},
+			"utilitycraft:special_container":{
+				"Template": 3
 			},
 			"utilitycraft:machine_recipes": {
 				"type": "cloner"

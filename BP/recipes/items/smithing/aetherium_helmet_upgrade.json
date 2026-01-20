@@ -1,0 +1,16 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:aetherium_helmet_craft_alt" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "AAA",
+      "A A"
+    ],
+    "key": {
+      "A": { "item": "utilitycraft:aetherium" }
+    },
+    "result": { "item": "utilitycraft:aetherium_helmet" },
+    "unlock": [ { "item": "utilitycraft:aetherium" } ]
+  }
+}

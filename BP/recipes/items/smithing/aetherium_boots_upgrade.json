@@ -1,0 +1,16 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:aetherium_boots_craft_alt" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "A A",
+      "A A"
+    ],
+    "key": {
+      "A": { "item": "utilitycraft:aetherium" }
+    },
+    "result": { "item": "utilitycraft:aetherium_boots" },
+    "unlock": [ { "item": "utilitycraft:aetherium" } ]
+  }
+}

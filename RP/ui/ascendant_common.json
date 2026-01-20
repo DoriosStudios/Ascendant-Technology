@@ -72,6 +72,87 @@
         "$panel_texture": "textures/ui/simple_bg_gray"
     },
 
+    "dialog_background_dark": {
+        "type": "image",
+        "texture": "textures/ui/background_panel_dark"
+    },
+
+    "dialog_background_blue": {
+        "type": "image",
+        "texture": "textures/ui/background_panel_blue"
+    },
+
+    // Colored panels with common_panel behavior (close button, divider, etc.)
+    "dark_panel": {
+        "type": "panel",
+        "$dialog_background|default": "ascendant_common.dialog_background_dark",
+        "$show_close_button|default": true,
+        "$close_button_visible_binding_name|default": "#close_button_visible",
+        "$close_button_offset|default": [ 0, 0 ],
+        "$close_button_layer|default": 2,
+        "$use_compact_close_button|default": false,
+        "$show_divider|default": false,
+        "$divider_offset|default": [ "42.5%", "22px" ],
+        "$divider_visible_binding_name|default": "",
+        "$divider_visible_binding_type|default": "none",
+        "$divider_size|default": [ "5px", "100% - 29px" ],
+        "controls": [
+            {
+                "bg_image@$dialog_background": {
+                    "layer": 1
+                }
+            },
+            {
+                "dialog_divider@common.dialog_divider": {
+                    "visible": "$show_divider",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": "$divider_offset",
+                    "size": "$divider_size",
+                    "bindings": [
+                        {
+                            "binding_name": "$divider_visible_binding_name",
+                            "binding_name_override": "#visible",
+                            "binding_type": "$divider_visible_binding_type"
+                        }
+                    ]
+                }
+            },
+            {
+                "close_button_holder": {
+                    "type": "panel",
+                    "ignored": "(not $show_close_button)",
+                    "controls": [
+                        {
+                            "close@common.light_close_button": {
+                                "layer": "$close_button_layer",
+                                "offset": "$close_button_offset",
+                                "ignored": "$use_compact_close_button"
+                            }
+                        },
+                        {
+                            "compact_close@common.compact_close_button": {
+                                "layer": "$close_button_layer",
+                                "offset": "$close_button_offset",
+                                "ignored": "(not $use_compact_close_button)"
+                            }
+                        }
+                    ],
+                    "bindings": [
+                        {
+                            "binding_name": "$close_button_visible_binding_name",
+                            "binding_name_override": "#visible"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    "blue_panel@ascendant_common.dark_panel": {
+        "$dialog_background": "ascendant_common.dialog_background_blue"
+    },
+
     // Painel longo clássico - para telas de máquinas
     // Uso: "@ascendant_common.panel_long_classic" com "size": [largura, altura]
     "panel_long_classic": {
@@ -124,6 +205,13 @@
         ]
     },
 
+    // Vanilla slot (uses common.container_item)
+    "slot_vanilla@common.container_item": {
+        "$slot_index|default": 0,
+        "$item_collection_name": "container_items",
+        "$collection_index": "$slot_index"
+    },
+
     // Slot de item com fundo azul - para slots especiais
     "slot_blue": {
         "type": "panel",
@@ -143,6 +231,355 @@
                     "$item_collection_name": "container_items",
                     "$collection_index": "$slot_index",
                     "layer": 1
+                }
+            }
+        ]
+    },
+
+    // Dark slot background image
+    "dark_cell_image": {
+        "type": "image",
+        "texture": "textures/ui/dark_cell_image",
+        "layer": 0
+    },
+
+    // Dark cell image panel with selection state
+    "dark_cell_image_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "cell_image@ascendant_common.dark_cell_image": {
+                    "$cell_selected_binding_name|default": "#is_selected_slot",
+                    "visible": true,
+                    "bindings": [
+                        {
+                            "binding_name": "(not $cell_selected_binding_name)",
+                            "binding_name_override": "#visible",
+                            "binding_type": "collection",
+                            "binding_collection_name": "$item_collection_name"
+                        }
+                    ]
+                }
+            },
+            {
+                "cell_image_selected@common.cell_image_selected": {
+                    "$cell_selected_binding_name|default": "#is_selected_slot",
+                    "visible": false,
+                    "bindings": [
+                        {
+                            "binding_name": "$cell_selected_binding_name",
+                            "binding_name_override": "#visible",
+                            "binding_type": "collection",
+                            "binding_collection_name": "$item_collection_name"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+
+    // Vanilla dark slot (uses common.container_item with dark background)
+    "slot_vanilla_dark@common.container_item": {
+        "$slot_index|default": 0,
+        "$item_collection_name": "container_items",
+        "$collection_index": "$slot_index",
+        "$background_images": "ascendant_common.dark_cell_image"
+    },
+
+    // Dark slot variant using dark_cell_image
+    "slot_dark": {
+        "type": "panel",
+        "size": [18, 18],
+        "$slot_index|default": 0,
+        "controls": [
+            {
+                "slot_bg@ascendant_common.dark_cell_image": {
+                    "size": [18, 18],
+                    "layer": 0
+                }
+            },
+            {
+                "item@common.container_item": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "$item_collection_name": "container_items",
+                    "$collection_index": "$slot_index",
+                    "layer": 1
+                }
+            }
+        ]
+    },
+
+    // Dark container item (based on common.container_item)
+    "dark_container": {
+        "type": "input_panel",
+        "size": [18, 18],
+        "layer": 1,
+        "$cell_image_size|default": [18, 18],
+        "$cell_overlay_ref|default": "common.cell_overlay",
+        "$button_ref|default": "common.container_slot_button_prototype",
+        "$stack_count_required|default": true,
+        "$durability_bar_required|default": true,
+        "$storage_bar_required|default": true,
+        "$item_renderer|default": "common.item_renderer",
+        "$item_renderer_panel_size|default": [18, 18],
+        "$item_renderer_size|default": [16, 16],
+        "$item_renderer_offset|default": [0, 0],
+        "$background_images|default": "ascendant_common.dark_cell_image_panel",
+        "$background_image_control_name|default": "bg",
+        "$focus_id|default": "",
+        "$focus_override_down|default": "",
+        "$focus_override_up|default": "",
+        "$focus_override_left|default": "",
+        "$focus_override_right|default": "",
+        "focus_identifier": "$focus_id",
+        "focus_change_down": "$focus_override_down",
+        "focus_change_up": "$focus_override_up",
+        "focus_change_left": "$focus_override_left",
+        "focus_change_right": "$focus_override_right",
+        "focus_enabled": true,
+        "focus_wrap_enabled": false,
+        "focus_magnet_enabled": true,
+        "tts_ignore_count": true,
+        "controls": [
+            {
+                "item_cell": {
+                    "type": "panel",
+                    "size": "$cell_image_size",
+                    "layer": 0,
+                    "controls": [
+                        {
+                            "$background_image_control_name@$background_images": {
+                                "layer": 1
+                            }
+                        },
+                        {
+                            "item": {
+                                "type": "panel",
+                                "size": "$item_renderer_panel_size",
+                                "layer": 0,
+                                "controls": [
+                                    {
+                                        "stack_count_label@common.stack_count_label": {
+                                            "layer": 27
+                                        }
+                                    },
+                                    {
+                                        "$item_renderer@$item_renderer": {
+                                            "size": "$item_renderer_size",
+                                            "offset": "$item_renderer_offset",
+                                            "anchor_to": "center",
+                                            "anchor_from": "center",
+                                            "layer": 7
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "durability_bar@common.durability_bar": {
+                                "layer": 20
+                            }
+                        },
+                        {
+                            "storage_bar@common.storage_bar": {
+                                "layer": 20
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "item_cell_overlay_ref@$cell_overlay_ref": {
+                    "layer": 3
+                }
+            },
+            {
+                "item_selected_image@common.slot_selected": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_button_ref@$button_ref": {
+                    "tts_ignore_count": true,
+                    "tts_skip_message": true,
+                    "tts_inherit_siblings": true,
+                    "layer": 5
+                }
+            },
+            {
+                "container_item_lock_overlay@common.container_item_lock_overlay": {
+                    "size": "$item_renderer_size",
+                    "offset": [1, 1],
+                    "anchor_to": "top_left",
+                    "anchor_from": "top_left",
+                    "layer": 6
+                }
+            },
+            {
+                "item_lock_cell_image@common.item_lock_cell_image": {
+                    "layer": 2
+                }
+            },
+            {
+                "bundle_slot_panel@gameplay.bundle_slot_panel": {
+                    "layer": 10
+                }
+            }
+        ]
+    },
+
+    // ============================================================================
+    // SECTION 2B: ITEM GRIDS (2x2 and 3x3)
+    // ============================================================================
+    // Slots are provided through $grid_slots in row-major order.
+    // Example: [0,1,2,3] for 2x2 or [0..8] for 3x3.
+    // ============================================================================
+
+    // 2x2 grid (manual slots)
+    // Parameters:
+    //   $slot_index_0..3: slot indices in row-major order
+    //   $slot_control: slot control reference (ascendant_common.slot_vanilla or ascendant_common.slot_vanilla_dark)
+    "grid_2x2": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [0, 0],
+        "size": [36, 36],
+        "layer": 2,
+        "$slot_index_0|default": 2,
+        "$slot_index_1|default": 3,
+        "$slot_index_2|default": 4,
+        "$slot_index_3|default": 5,
+        "$slot_control|default": "ascendant_common.slot_vanilla",
+        "controls": [
+            {
+                "grid_2x2_slot_0@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 0],
+                    "$slot_index": "$slot_index_0"
+                }
+            },
+            {
+                "grid_2x2_slot_1@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 0],
+                    "$slot_index": "$slot_index_1"
+                }
+            },
+            {
+                "grid_2x2_slot_2@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 18],
+                    "$slot_index": "$slot_index_2"
+                }
+            },
+            {
+                "grid_2x2_slot_3@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 18],
+                    "$slot_index": "$slot_index_3"
+                }
+            }
+        ]
+    },
+
+    // 3x3 grid (manual slots)
+    // Parameters:
+    //   $slot_index_0..8: slot indices in row-major order
+    //   $slot_control: slot control reference (ascendant_common.slot_vanilla or ascendant_common.slot_vanilla_dark)
+    "grid_3x3": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [0, 0],
+        "size": [54, 54],
+        "layer": 2,
+        "$slot_index_0|default": 2,
+        "$slot_index_1|default": 3,
+        "$slot_index_2|default": 4,
+        "$slot_index_3|default": 5,
+        "$slot_index_4|default": 6,
+        "$slot_index_5|default": 7,
+        "$slot_index_6|default": 8,
+        "$slot_index_7|default": 9,
+        "$slot_index_8|default": 10,
+        "$slot_control|default": "common.container_item",
+        "controls": [
+            {
+                "grid_3x3_slot_0@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 0],
+                    "$slot_index": "$slot_index_0"
+                }
+            },
+            {
+                "grid_3x3_slot_1@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 0],
+                    "$slot_index": "$slot_index_1"
+                }
+            },
+            {
+                "grid_3x3_slot_2@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [36, 0],
+                    "$slot_index": "$slot_index_2"
+                }
+            },
+            {
+                "grid_3x3_slot_3@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 18],
+                    "$slot_index": "$slot_index_3"
+                }
+            },
+            {
+                "grid_3x3_slot_4@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 18],
+                    "$slot_index": "$slot_index_4"
+                }
+            },
+            {
+                "grid_3x3_slot_5@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [36, 18],
+                    "$slot_index": "$slot_index_5"
+                }
+            },
+            {
+                "grid_3x3_slot_6@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 36],
+                    "$slot_index": "$slot_index_6"
+                }
+            },
+            {
+                "grid_3x3_slot_7@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 36],
+                    "$slot_index": "$slot_index_7"
+                }
+            },
+            {
+                "grid_3x3_slot_8@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [36, 36],
+                    "$slot_index": "$slot_index_8"
                 }
             }
         ]
@@ -489,6 +926,52 @@
                     "size": [50, 50],
                     "offset": [10, 3],
                     "layer": 13
+                }
+            }
+        ]
+    },
+
+    // Overclock bar display (rendered like vertical_single)
+    // Parameters:
+    //   $overclock_slot_index: slot index that stores the overclock bar item
+    //   $outline_texture: outline texture
+    //   $has_bg: show bar background
+    "overclock_slot_display": {
+        "type": "collection_panel",
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "size": [162, 72],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "$overclock_slot_index|default": 0,
+        "$outline_texture|default": "textures/ui/energy_border",
+        "$has_bg|default": false,
+        "controls": [
+            {
+                "overclock_item@machineryCommon.container_item_3": {
+                    "collection_index": "$overclock_slot_index",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [10, 14]
+                }
+            },
+            {
+                "overclock_border": {
+                    "type": "image",
+                    "texture": "$outline_texture",
+                    "size": [144, 50],
+                    "offset": [10, 3],
+                    "layer": 9
+                }
+            },
+            {
+                "background": {
+                    "type": "image",
+                    "texture": "textures/ui/bar_bg",
+                    "size": [28, 64],
+                    "offset": [10, 3],
+                    "layer": 0,
+                    "visible": "$has_bg"
                 }
             }
         ]

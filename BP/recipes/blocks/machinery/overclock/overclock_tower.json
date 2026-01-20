@@ -1,0 +1,22 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": { "identifier": "utilitycraft:overclock_tower" },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": [
+            "TST",
+            "RMR",
+            "AUA"
+        ],
+        "key": {
+            "T": { "item": "utilitycraft:titanium" },
+            "S": { "item": "utilitycraft:reinforced_cable" },
+            "R": { "item": "minecraft:redstone_block" },
+            "M": { "item": "utilitycraft:machine_case" },
+            "A": { "item": "utilitycraft:aetherium" },
+            "U": { "item": "utilitycraft:ultimate_chip" }
+        },
+        "result": { "item": "utilitycraft:overclock_tower", "count": 1 },
+        "unlock": [ { "item": "utilitycraft:ultimate_chip" } ]
+    }
+}

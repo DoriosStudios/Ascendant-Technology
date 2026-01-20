@@ -53,6 +53,18 @@
 	"utilitycraft:network_center": {
 		"sound": "metal"
 	},
+	"utilitycraft:reinforced_cable": {
+		"sound": "metal"
+	},
+	"utilitycraft:overclock_tower": {
+		"sound": "metal"
+	},
+	"utilitycraft:overclock_relay": {
+		"sound": "metal"
+	},
+	"utilitycraft:overclock_injector": {
+		"sound": "metal"
+	},
 	"utilitycraft:residue_processor": {
 		"sound": "metal"
 	},
@@ -60,6 +72,24 @@
 		"sound": "metal"
 	},
 	"utilitycraft:synthesis_crucible": {
+		"sound": "metal"
+	},
+	"utilitycraft:titanium_block": {
+		"sound": "metal"
+	},
+	"utilitycraft:aetherium_block": {
+		"sound": "amethyst_block"
+	},
+	"utilitycraft:deepslate_aetherium_ore": {
+		"sound": "deepslate"
+	},
+	"utilitycraft:end_aetherium_ore": {
+		"sound": "amethyst_block"
+	},
+	"utilitycraft:deepslate_titanium_ore": {
+		"sound": "deepslate"
+	},
+	"utilitycraft:raw_titanium_block": {
 		"sound": "metal"
 	}
 }

@@ -22,12 +22,15 @@
 					"inventory_size": 20
 				},
 				"machine": {
-					"energy_cap": 720000,
+					"energy_cap": 12800000,
 					"energy_cost": 5200,
 					"rate_speed_base": 16000,
 					"upgrades": [6, 7],
 					"hidden_slots": [5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 				}
+			},
+			"utilitycraft:special_container":{
+				"Residue Input": 3
 			},
 			"utilitycraft:machine_recipes": {
 				"type": "residue_processor"

@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "utilitycraft:titanium_from_nuggets"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "AAA",
+      "AAA",
+      "AAA"
+    ],
+    "key": {
+      "A": {
+        "item": "utilitycraft:titanium_nugget"
+      }
+    },
+    "result": {
+      "item": "utilitycraft:titanium"
+    },
+    "unlock": [
+      { "item": "utilitycraft:titanium_nugget" }
+    ]
+  }
+}

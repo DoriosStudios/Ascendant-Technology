@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:titanium_aiot_craft" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "IWI",
+      "RPH",
+      "SRI"
+    ],
+    "key": {
+      "I": { "item": "utilitycraft:titanium" },
+      "W": { "item": "utilitycraft:titanium_sword" },
+      "R": { "item": "minecraft:string" },
+      "P": { "item": "utilitycraft:titanium_paxel" },
+      "H": { "item": "utilitycraft:titanium_hoe" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "result": { "item": "utilitycraft:titanium_aiot" },
+    "unlock": [ { "item": "utilitycraft:titanium_paxel" } ]
+  }
+}

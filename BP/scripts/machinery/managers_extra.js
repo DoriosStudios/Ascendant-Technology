@@ -9,13 +9,80 @@ import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
  * @param {Block} block The block that was placed.
  * @param {'energy'|'item'|'fluid'} type The type of pipe network to update.
  */
-function updatePipes(block, type) {
-    // No-op: transfer_system not implemented in this extension
+export function updatePipes(block, type) {
+    if (!block || (type !== 'energy' && type !== 'fluid')) return;
+
+    const dim = block.dimension;
+
+    // --- ENERGY NETWORK --- now handled by transfer_system; keep stub to avoid overrides
+    if (type === 'energy') return;
+
+    // --- FLUID NETWORK: keep previous stub logic ---
+    const sourceEntity = dim.getEntitiesAtBlockLocation(block.location)[0];
+    if (!sourceEntity) return;
+
+    const OFFSETS = [
+        { x: 1, y: 0, z: 0 },
+        { x: -1, y: 0, z: 0 },
+        { x: 0, y: 1, z: 0 },
+        { x: 0, y: -1, z: 0 },
+        { x: 0, y: 0, z: 1 },
+        { x: 0, y: 0, z: -1 },
+    ];
+
+    const start = block.location;
+    const queue = [start];
+    const visited = new Set();
+    const nodes = [];
+    const MAX_VISITED = 2048;
+
+    const isFluidContainer = (entity) => {
+        try {
+            return !!FluidManager.findType?.(entity, 0);
+        } catch { return false; }
+    };
+
+    const targetTag = 'dorios:fluid';
+
+    while (queue.length && visited.size <= MAX_VISITED) {
+        const pos = queue.shift();
+        const key = `${pos.x}|${pos.y}|${pos.z}`;
+        if (visited.has(key)) continue;
+        visited.add(key);
+
+        const nodeBlock = dim.getBlock(pos);
+        const isTargetTagged = nodeBlock?.hasTag?.(targetTag);
+        if (!nodeBlock || !isTargetTagged) continue;
+
+        // Explore neighbors
+        for (const off of OFFSETS) {
+            queue.push({ x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z });
+        }
+
+        const [entity] = dim.getEntitiesAtBlockLocation(pos);
+        if (!entity) continue;
+
+        const isContainer = isFluidContainer(entity);
+        if (!isContainer) continue;
+
+        // Avoid listing self
+        if (pos.x === start.x && pos.y === start.y && pos.z === start.z) continue;
+
+        nodes.push(pos);
+    }
+
+    const prop = "dorios:fluid_nodes";
+
+    try {
+        sourceEntity.setDynamicProperty(prop, JSON.stringify(nodes));
+        sourceEntity.removeTag?.("updateNetwork");
+    } catch { /* ignore storage errors */ }
 }
 
 const COLORS = DoriosAPI.constants.textColors
 
 const DEFAULT_TICK_SPEED = 10;
+const TICKS_PER_SECOND = 20;
 
 const CARDINAL_DIRECTION_OFFSETS = Object.freeze({
     north: { x: 0, y: 0, z: -1 },
@@ -136,6 +203,20 @@ function getTickSpeed() {
     return current;
 }
 
+function resolveMachineEnergyRateUnits(settings, baseSpeedMultiplier, consumptionMultiplier) {
+    const machineSettings = settings?.machine ?? {};
+    const fixedRate = Number(machineSettings.fixed_rate ?? 0);
+
+    if (Number.isFinite(fixedRate) && fixedRate > 0) {
+        const perTick = fixedRate / TICKS_PER_SECOND;
+        return Math.max(0, perTick) * baseSpeedMultiplier * consumptionMultiplier;
+    }
+
+    const rateSpeedBase = Number(machineSettings.rate_speed_base ?? 0);
+    if (!Number.isFinite(rateSpeedBase) || rateSpeedBase <= 0) return 0;
+    return rateSpeedBase * baseSpeedMultiplier * consumptionMultiplier;
+}
+
 const LABEL_CHAR_LIMIT = 255;
 const LABEL_PLACEHOLDER_ITEM = "utilitycraft:arrow_indicator_90";
 const HIDDEN_SLOT_FILLER_ITEM = "utilitycraft:container_filler";
@@ -145,6 +226,7 @@ const REGISTER_FLUID_OUTPUT_EVENT = "utilitycraft:register_fluid_output";
 
 const fluidContainerRegistry = Object.create(null);
 const fluidOutputRegistry = Object.create(null);
+const fluidHolderRegistry = Object.create(null);
 
 const sanitizeFluidType = (value) =>
     typeof value === "string" ? value.trim().toLowerCase() : "";
@@ -317,6 +399,15 @@ function registerFluidOutputDefinition(id, definition) {
     const normalized = normalizeFluidOutput(definition);
     if (!normalized) return false;
     fluidOutputRegistry[id] = normalized;
+
+    // Mirror into holder-style registry for compatibility with legacy APIs
+    const required = normalized.amountRange?.max ?? normalized.amount;
+    if (Number.isFinite(required) && required > 0) {
+        fluidHolderRegistry[id] = {
+            required,
+            types: { ...normalized.fills }
+        };
+    }
     return true;
 }
 
@@ -371,6 +462,14 @@ function registerFluidOutputBatch(entries) {
 
     return registered;
 }
+
+const resolveHolderRequirement = (holder) => {
+    if (!holder || typeof holder !== "object") return 0;
+    const candidate = holder.required ?? holder.amount ?? holder.minAmount;
+    if (Number.isFinite(candidate)) return candidate;
+    if (holder.amountRange?.max && Number.isFinite(holder.amountRange.max)) return holder.amountRange.max;
+    return 0;
+};
 
 /**
  * @typedef {string | {
@@ -534,6 +633,20 @@ function appendLabelFooterSections(labelText, lines) {
     if (sanitized.length === 0) return labelText.trim();
     const base = labelText.trim();
     return `${base}\n\n${sanitized.join("\n")}`.trim();
+}
+
+/**
+ * Builds a formatted overclock line for HUD/lore when the machine is overclocked.
+ * Returns null when no overclock is active.
+ *
+ * @param {Machine} machine
+ * @returns {string|null}
+ */
+export function buildOverclockLoreLine(machine) {
+    if (!machine || typeof machine.getOverclockClock !== "function") return null;
+    const clock = machine.getOverclockClock();
+    if (!Number.isFinite(clock) || clock <= 1) return null;
+    return `§r§6Overclocked x${clock.toFixed(2)}`;
 }
 
 /**
@@ -799,6 +912,7 @@ export class Rotation {
                 if (perm.hasTag('dorios:fluid')) {
                     updatePipes(block, 'fluid');
                 }
+                try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
             })
         })
     }
@@ -956,6 +1070,18 @@ world.afterEvents.worldLoad.subscribe(() => {
         world.setDynamicProperty("loaded", false);
     }
 
+    // Sync tick speed from world property when available
+    try {
+        const storedTickSpeed = Number(world.getDynamicProperty("utilitycraft:tickSpeed"));
+        if (Number.isFinite(storedTickSpeed)) {
+            const sanitized = sanitizeTickSpeed(storedTickSpeed);
+            globalThis.tickSpeed = sanitized;
+            world.setDynamicProperty("utilitycraft:tickSpeed", sanitized);
+        } else {
+            world.setDynamicProperty("utilitycraft:tickSpeed", getTickSpeed());
+        }
+    } catch { /* ignore dynamic property issues */ }
+
     worldLoaded = world.getDynamicProperty("loaded");
 
     if (world.getDimension('overworld').getEntities()[0]) {
@@ -1056,6 +1182,9 @@ export class Generator {
 
         if (entity.inventory_size) inventorySize = entity.inventory_size
 
+        // Ensure we always request a positive inventory size
+        inventorySize = Math.max(1, Math.floor(inventorySize));
+
         const inventoryEvent = `utilitycraft:inventory_${inventorySize}`;
 
         // 3. Trigger generator type and inventory slot events
@@ -1138,6 +1267,7 @@ export class Generator {
             if (perm.hasTag('dorios:fluid')) {
                 updatePipes(block, 'fluid');
             }
+            try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
         }, 2)
 
         const itemInfo = player.getComponent('equippable').getEquipment('Mainhand').getLore();
@@ -1168,6 +1298,7 @@ export class Generator {
                 }
             }
             this.addNearbyMachines(entity)
+            try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
             system.run(() => { if (callback) callback(entity) })
         });
     }
@@ -1289,6 +1420,7 @@ export class Generator {
     displayEnergy(slot = 0) {
         this.energy.display(slot);
     }
+
 }
 
 //#region Machine
@@ -1316,12 +1448,18 @@ export class Machine {
         }
         this.inv = this.entity?.getComponent('inventory')?.container
         this.energy = new Energy(this.entity)
+        if (this.entity.getDynamicProperty("dorios:base_energy_cap") === undefined && settings?.machine?.energy_cap) {
+            this.entity.setDynamicProperty("dorios:base_energy_cap", settings.machine.energy_cap)
+        }
         this.upgrades = this.getUpgradeLevels(settings.machine.upgrades)
         this.boosts = this.calculateBoosts(this.upgrades)
 
+        this.overclock = this.readOverclockState()
+        this.applyOverclockBoosts(settings)
+
         const baseSpeedMultiplier = this.boosts.baseSpeed ?? 1;
         const hyperMultiplier = this.boosts.hyper ?? 1;
-        const energyRateUnits = settings.machine.rate_speed_base * baseSpeedMultiplier * this.boosts.consumption;
+        const energyRateUnits = resolveMachineEnergyRateUnits(settings, baseSpeedMultiplier, this.boosts.consumption);
 
         this.baseRate = energyRateUnits
         this.rate = this.baseRate * getTickSpeed()
@@ -1329,6 +1467,20 @@ export class Machine {
         this.hiddenSlots = Array.isArray(settings?.machine?.hidden_slots)
             ? settings.machine.hidden_slots.filter(slot => typeof slot === "number")
             : []
+        this.overclockSlot = Number.isFinite(settings?.machine?.overclock_slot)
+            ? Number(settings.machine.overclock_slot)
+            : undefined
+
+        // Fallback: if no explicit overclock slot is provided, use the first
+        // available hidden slot (keeps the HUD off visible slots and avoids
+        // clobbering player-facing UI).
+        if (this.overclockSlot === undefined && this.hiddenSlots.length && this.inv?.size) {
+            const candidate = this.hiddenSlots.find(slot => slot >= 0 && slot < this.inv.size);
+            if (candidate !== undefined) {
+                this.overclockSlot = candidate;
+            }
+        }
+
         if (this.hiddenSlots.length) {
             this.fillHiddenSlots()
         }
@@ -1433,6 +1585,20 @@ export class Machine {
 
         if (!entity?.skip_inventory_event) {
             try { machineEntity.triggerEvent(inventoryEvent); } catch { /* ignore invalid inventory event (e.g., large custom sizes) */ }
+
+            // Validate the applied inventory size; if it mismatches, retry once
+            const currentInvSize = machineEntity.getComponent("inventory")?.container?.size;
+            if (currentInvSize !== inventorySize) {
+                try { machineEntity.triggerEvent(inventoryEvent); } catch { /* ignore second attempt */ }
+            }
+
+            // Deferred retry to catch cases where immediate events are ignored the tick of spawn
+            system.run(() => {
+                const deferredSize = machineEntity.getComponent("inventory")?.container?.size;
+                if (deferredSize !== inventorySize) {
+                    try { machineEntity.triggerEvent(inventoryEvent); } catch { /* ignore deferred failure */ }
+                }
+            });
         }
 
         // 4. Assign name tag
@@ -1526,6 +1692,9 @@ export class Machine {
 
             Energy.initialize(entity)
             const energyManager = new Energy(entity)
+            if (settings?.machine?.energy_cap) {
+                entity.setDynamicProperty("dorios:base_energy_cap", settings.machine.energy_cap)
+            }
             energyManager.set(energy)
             energyManager.setCap(settings.machine.energy_cap)
             energyManager.display()
@@ -1539,6 +1708,7 @@ export class Machine {
                     fluidManager.set(fluid.amount)
                 }
             }
+            try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
             system.run(() => { if (callback) callback(entity) })
         });
     }
@@ -1774,6 +1944,54 @@ export class Machine {
         this.energy.display(slot);
     }
 
+    getOverclockStrength() {
+        const level = Number(this.overclock?.level ?? 0);
+        const effectiveness = Number(this.overclock?.effectiveness ?? 0);
+        return Math.max(0, level * effectiveness);
+    }
+
+    getOverclockClock() {
+        const strength = this.getOverclockStrength();
+        // Keep the clock tied to the same curve used for speed boosts.
+        const clock = 1 + 0.35 * strength;
+        return Math.max(1, clock);
+    }
+
+    getOverclockYieldMultiplier() {
+        return Math.max(1, Math.floor(this.getOverclockClock()));
+    }
+
+    displayOverclock(slot = this.overclockSlot) {
+        if (slot === undefined || slot === null) return;
+        if (!Number.isFinite(slot)) return;
+
+        const container = this.entity.getComponent("minecraft:inventory")?.container;
+        if (!container) return;
+        if (slot < 0 || slot >= container.size) return;
+
+        const clock = this.getOverclockClock();
+        const frameClock = Math.min(clock, 3); // cap visual range at 3x for the 00-48 map
+        const frame = Math.max(0, Math.min(48, Math.floor(((frameClock - 1) / 2) * 48)));
+        const frameName = frame.toString().padStart(2, "0");
+
+        const prevClock = Number(this.entity.getDynamicProperty("dorios:last_overclock_clock") ?? clock);
+        const epsilon = 0.001;
+        let state = "Stable";
+        if (clock > prevClock + epsilon) state = "Increasing";
+        else if (clock < prevClock - epsilon) state = "Decreasing";
+        this.entity.setDynamicProperty("dorios:last_overclock_clock", clock);
+
+        const formatClock = (value) => {
+            if (value >= 10) return value.toFixed(2);
+            return value.toFixed(3);
+        };
+
+        const item = new ItemStack(`utilitycraft:overclock_${frameName}`, 1);
+        item.nameTag = `§r§5Overclock\n§r§6Clock: ${formatClock(clock)}x\n§r§7State: ${state}`;
+
+        container.setItem(slot, item);
+    }
+
     /**
      * Displays a warning label in the machine.
      *
@@ -1792,6 +2010,8 @@ export class Machine {
         const { title, requirements } = extractMessageParts(message, "Warning");
         const efficiency = ((1 / this.boosts.consumption) * 100).toFixed(0);
         const rateText = Energy.formatEnergyToText(Math.floor(this.baseRate));
+        const overclockClock = Number(this.boosts.overclockClock ?? 1);
+        const overclockLine = overclockClock > 1 ? `\n§r§6Overclocked x${overclockClock.toFixed(2)}` : "";
 
         let labelText = `
 §r${COLORS.yellow}${title}!
@@ -1801,6 +2021,7 @@ export class Machine {
 §r${COLORS.green}Cost ---
 
 §r${COLORS.red}Rate ${rateText}/t
+${overclockLine}
         `.trim();
 
         if (options?.footerLines) {
@@ -1813,6 +2034,7 @@ export class Machine {
             lore.push(...extraLore);
         }
 
+        this.displayOverclock();
         this.setLabel({
             rawText: labelText,
             lore
@@ -1828,10 +2050,13 @@ export class Machine {
      */
     showStatus(message, extraLore = [], options = undefined) {
         this.displayEnergy();
+        this.displayOverclock();
         const { title, requirements } = extractMessageParts(message, "Operational");
         const efficiency = ((1 / this.boosts.consumption) * 100).toFixed(0);
         const costText = Energy.formatEnergyToText(this.getEnergyCost() * this.boosts.consumption);
         const rateText = Energy.formatEnergyToText(Math.floor(this.baseRate));
+        const overclockClock = Number(this.boosts.overclockClock ?? 1);
+        const overclockLine = overclockClock > 1 ? `\n§r§6Overclocked x${overclockClock.toFixed(2)}` : "";
 
         let labelText = `
 §r${COLORS.darkGreen}${title}!
@@ -1841,6 +2066,7 @@ export class Machine {
 §r${COLORS.green}Cost ${costText}
 
 §r${COLORS.red}Rate ${rateText}/t
+    ${overclockLine}
         `.trim();
 
         if (options?.footerLines) {
@@ -1969,6 +2195,86 @@ export class Machine {
         const consumption = this.calculateConsumption(energyLevel, baseSpeed);
 
         return { speed, consumption, hyper, baseSpeed };
+    }
+
+    readOverclockState() {
+        if (!this.entity) return { level: 0, effectiveness: 0, ttl: 0 };
+
+        const level = Number(this.entity.getDynamicProperty("dorios:overclock_level") ?? 0);
+        let ttl = Number(this.entity.getDynamicProperty("dorios:overclock_ttl") ?? 0);
+        const effectiveness = Number(this.entity.getDynamicProperty("dorios:overclock_eff") ?? 0);
+
+        if (ttl > 0) {
+            this.entity.setDynamicProperty("dorios:overclock_ttl", ttl - 1);
+        } else if (level > 0) {
+            this.entity.setDynamicProperty("dorios:overclock_level", 0);
+            this.entity.setDynamicProperty("dorios:overclock_eff", 0);
+        }
+
+        return { level, effectiveness, ttl };
+    }
+
+    getBaseEnergyCap(settings) {
+        const baseProp = this.entity?.getDynamicProperty("dorios:base_energy_cap");
+        if (typeof baseProp === "number" && baseProp > 0) return baseProp;
+        if (settings?.machine?.energy_cap) return settings.machine.energy_cap;
+        if (typeof this.energy?.cap === "number" && this.energy.cap > 0) return this.energy.cap;
+        return 0;
+    }
+
+    applyEnergyCapBoost(multiplier, settings) {
+        if (!this.energy || !multiplier || multiplier <= 0) return;
+        const baseCap = this.getBaseEnergyCap(settings);
+        if (!baseCap) return;
+
+        const desired = Math.max(baseCap, Math.floor(baseCap * multiplier));
+        if (desired !== this.energy.getCap()) {
+            this.energy.setCap(desired);
+        }
+    }
+
+    restoreBaseEnergyCap(settings) {
+        if (!this.energy) return;
+        const baseCap = this.getBaseEnergyCap(settings);
+        if (!baseCap) return;
+
+        const current = this.energy.get();
+        const desired = Math.max(baseCap, current);
+        if (desired !== this.energy.getCap()) {
+            this.energy.setCap(desired);
+        }
+    }
+
+    applyOverclockBoosts(settings) {
+        if (!this.overclock || this.overclock.level <= 0 || this.overclock.effectiveness <= 0) {
+            this.boosts.overclockClock = 1;
+            this.boosts.overclockYield = 1;
+            this.restoreBaseEnergyCap(settings);
+            return;
+        }
+
+        const strength = Math.max(0, this.overclock.level * this.overclock.effectiveness);
+        if (strength <= 0) {
+            this.boosts.overclockClock = 1;
+            this.boosts.overclockYield = 1;
+            this.restoreBaseEnergyCap(settings);
+            return;
+        }
+
+        const clockMult = 1 + 0.35 * strength;
+        const speedMult = clockMult;
+        const consumptionMult = 1 + 0.25 * strength;
+        const capacityMult = 1 + 0.25 * strength;
+        const yieldMult = Math.max(1, Math.floor(clockMult));
+
+        this.boosts.baseSpeed = (this.boosts.baseSpeed ?? 1) * speedMult;
+        this.boosts.speed = (this.boosts.speed ?? 1) * speedMult;
+        this.boosts.consumption = (this.boosts.consumption ?? 1) * consumptionMult;
+        this.boosts.overclockCapacity = capacityMult;
+        this.boosts.overclockClock = clockMult;
+        this.boosts.overclockYield = yieldMult;
+
+        this.applyEnergyCapBoost(capacityMult, settings);
     }
 
     /**
@@ -2153,6 +2459,9 @@ export class Container {
 
             Energy.initialize(entity);
             const energyManager = new Energy(entity);
+            if (normalized?.machine?.energy_cap) {
+                entity.setDynamicProperty("dorios:base_energy_cap", normalized.machine.energy_cap);
+            }
             energyManager.set(energy);
             energyManager.setCap(normalized.machine.energy_cap ?? 0);
 
@@ -2870,6 +3179,71 @@ export class Energy {
     }
 
 }
+
+/**
+ * Shares energy from an entity to its adjacent neighbors (6-directions).
+ * - Only transfers to entities with `dorios:energy_container` family.
+ * - Skips if source has no energy or neighbor has no free space.
+ * - Honors per-neighbor and total caps to avoid draining everything at once.
+ *
+ * @param {Entity} entity Source entity.
+ * @param {{ perNeighbor?: number, maxTotal?: number, skipSources?: boolean }} [options]
+ *   - perNeighbor: max DE sent to each neighbor (default 10,000).
+ *   - maxTotal: max DE sent in total across neighbors (default perNeighbor * 6).
+ *   - skipSources: if true, do not send to entities with `dorios:energy_source`.
+ * @returns {number} Total energy transferred.
+ */
+export function shareEnergyWithNeighbors(entity, options = {}) {
+    if (!entity) return 0;
+    const dim = entity.dimension;
+    if (!dim) return 0;
+
+    const perNeighbor = Number(options.perNeighbor ?? 10000);
+    const maxTotal = Number(options.maxTotal ?? perNeighbor * 6);
+    const skipSources = !!options.skipSources;
+
+    const src = new Energy(entity);
+    let available = src.get();
+    if (available <= 0) return 0;
+
+    const offsets = [
+        { x: 1, y: 0, z: 0 },
+        { x: -1, y: 0, z: 0 },
+        { x: 0, y: 1, z: 0 },
+        { x: 0, y: -1, z: 0 },
+        { x: 0, y: 0, z: 1 },
+        { x: 0, y: 0, z: -1 },
+    ];
+
+    let transferred = 0;
+    const { x, y, z } = entity.location;
+
+    for (const off of offsets) {
+        if (available <= 0 || transferred >= maxTotal) break;
+        const pos = { x: Math.floor(x + off.x), y: Math.floor(y + off.y), z: Math.floor(z + off.z) };
+        const neighbor = dim.getEntitiesAtBlockLocation(pos)[0];
+        if (!neighbor || neighbor === entity) continue;
+
+        const tf = neighbor.getComponent?.("minecraft:type_family");
+        if (!tf?.hasTypeFamily?.("dorios:energy_container")) continue;
+        if (skipSources && tf.hasTypeFamily?.("dorios:energy_source")) continue;
+
+        const target = new Energy(neighbor);
+        const space = target.getFreeSpace();
+        if (space <= 0) continue;
+
+        const send = Math.min(perNeighbor, space, available, maxTotal - transferred);
+        if (send <= 0) continue;
+
+        const sent = src.transferTo(target, send);
+        if (sent > 0) {
+            available -= sent;
+            transferred += sent;
+        }
+    }
+
+    return transferred;
+}
 //#endregion
 
 
@@ -2892,6 +3266,39 @@ const fluidDisplayItemPrefixes = new Map([
     ["dark_matter", "utilitycraft:dark_matter"],
     ["cryofluid", "utilitycraft:cryofluid"],
 ]);
+
+function getFluidWhitelist(entity) {
+    const allowed = [];
+    if (!entity) return allowed;
+
+    try {
+        const whitelistTags = entity.getTags?.().filter(t => t.startsWith("fluidWhitelist:")) ?? [];
+        for (const tag of whitelistTags) {
+            const entry = tag.split(":")[1];
+            if (entry) allowed.push(entry.toLowerCase());
+        }
+    } catch { /* ignore tag read errors */ }
+
+    try {
+        const rawProp = entity.getDynamicProperty?.("dorios:fluid_whitelist");
+        if (typeof rawProp === "string" && rawProp.length) {
+            for (const token of rawProp.split(",")) {
+                const trimmed = token.trim().toLowerCase();
+                if (trimmed) allowed.push(trimmed);
+            }
+        }
+    } catch { /* ignore missing dynamic property */ }
+
+    return allowed;
+}
+
+function entityAllowsFluid(entity, type) {
+    const allowed = getFluidWhitelist(entity);
+    if (!allowed.length) return true;
+    const normalized = typeof type === "string" ? type.toLowerCase() : "";
+    if (!normalized) return false;
+    return allowed.includes(normalized);
+}
 
 /**
  * Ensures that the required scoreboard objectives exist for a given tank index.
@@ -3249,6 +3656,7 @@ export class FluidManager {
         // ─── Source entity check ───────────────────────────────
         const sourceEntity = dim.getEntitiesAtBlockLocation(sourceLoc)[0];
         if (!sourceEntity) return false;
+        if (sourceEntity.hasTag?.("dorios:fluid_input_only")) return false;
 
         const sourceFluid = new FluidManager(sourceEntity, 0);
         if (!sourceFluid || sourceFluid.get() <= 0) return false;
@@ -3265,6 +3673,8 @@ export class FluidManager {
 
         // If still no entity (non-tank machine), stop
         if (!targetEntity) return false;
+
+        if (!entityAllowsFluid(targetEntity, sourceFluid.getType())) return false;
 
         // ─── Perform fluid transfer ───────────────────────────────
         const targetFluid = new FluidManager(targetEntity, 0);
@@ -3289,6 +3699,7 @@ export class FluidManager {
      */
     tryInsert(type, amount) {
         if (amount <= 0) return false;
+        if (!entityAllowsFluid(this.entity, type)) return false;
         const currentType = this.getType();
         if (currentType === "empty" || currentType === type) {
             if (amount <= this.getFreeSpace()) {
@@ -3324,7 +3735,24 @@ export class FluidManager {
             return output; // Return resulting item (e.g., empty bucket)
         }
 
-        // 2. Handle empty containers that should be filled with the stored fluid
+        // 2. Handle holder-style items that extract fluid
+        const holder = fluidHolderRegistry[typeId];
+        if (holder) {
+            const storedType = this.getType();
+            if (!storedType || storedType === 'empty') return false;
+
+            const outputItemId = holder.types?.[storedType];
+            if (!outputItemId) return false;
+
+            const required = resolveHolderRequirement(holder);
+            if (required <= 0 || this.get() < required) return false;
+
+            this.add(-required);
+            if (this.get() <= 0) this.setType('empty');
+            return outputItemId;
+        }
+
+        // 3. Handle empty containers that should be filled with the stored fluid
         const fillDefinition = FluidManager.getFluidFillDefinition(typeId);
         if (fillDefinition) {
             const storedType = this.getType();
@@ -3340,7 +3768,7 @@ export class FluidManager {
             return filledItemId;
         }
 
-        // 3. Not a recognized container item
+        // 4. Not a recognized container item
         return false;
     }
 
@@ -3546,7 +3974,17 @@ export class FluidManager {
    * @returns {number} Total amount of fluid transferred (in mB).
    */
     transferToNetwork(speed, mode = "nearest", nodes) {
-        if (!Array.isArray(nodes) || nodes.length === 0) return 0;
+        if (this.entity?.hasTag?.("dorios:fluid_input_only")) return 0;
+        if (!Array.isArray(nodes) || nodes.length === 0) {
+            // Try cached fluid nodes if absent
+            try {
+                const cached = this.entity.getDynamicProperty("dorios:fluid_nodes");
+                if (cached) {
+                    nodes = JSON.parse(cached);
+                }
+            } catch { /* ignore */ }
+            if (!Array.isArray(nodes) || nodes.length === 0) return 0;
+        }
 
         const dim = this.entity.dimension;
         const pos = this.entity.location;
@@ -3574,6 +4012,7 @@ export class FluidManager {
                 targetEntity = dim.getEntitiesAtBlockLocation(loc)[0];
             }
             if (!targetEntity) return 0;
+            if (!entityAllowsFluid(targetEntity, type)) return 0;
 
             // Use findType to safely get a FluidManager if the entity supports fluids
             const target = FluidManager.findType(targetEntity, 0);
@@ -3646,6 +4085,7 @@ export class FluidManager {
      */
     transferFluids(block, amount = 100, options = undefined) {
         if (!block || !this.entity?.isValid) return false;
+        if (this.entity?.hasTag?.("dorios:fluid_input_only")) return false;
 
         const opts = options ?? {};
         const requireTube = opts.requireTube ?? block.hasTag("dorios:isTube");
@@ -3677,6 +4117,9 @@ export class FluidManager {
 
         if (!targetEntity) return false;
 
+    const sourceType = this.getType();
+    if (!entityAllowsFluid(targetEntity, sourceType)) return false;
+
         const targetFluid = new FluidManager(targetEntity, targetIndex);
         if (!targetFluid || targetFluid.getCap() <= 0) return false;
 
@@ -3692,14 +4135,17 @@ export class FluidManager {
      * @returns {number} The actual amount transferred.
      */
     transferTo(other, amount) {
-        if (this.getType() !== other.getType() && other.getType() !== "empty") return 0;
+        if (this.entity?.hasTag?.("dorios:fluid_input_only")) return 0;
+        const sourceType = this.getType();
+        if (!entityAllowsFluid(other?.entity, sourceType)) return 0;
+        if (sourceType !== other.getType() && other.getType() !== "empty") return 0;
 
         const transferable = Math.min(amount, this.get(), other.getFreeSpace());
         if (transferable <= 0) return 0;
 
         this.add(-transferable);
         other.add(transferable);
-        if (other.getType() === "empty") other.setType(this.getType());
+        if (other.getType() === "empty") other.setType(sourceType);
         return transferable;
     }
 
@@ -3814,9 +4260,13 @@ export class FluidManager {
     }
 }
 
+// Expose holder map to mirror upstream API shape
+FluidManager.itemFluidHolders = fluidHolderRegistry;
+
 const LEGACY_FLUID_ITEM_EVENT = "utilitycraft:register_fluid_item";
 const LEGACY_FLUID_HOLDER_EVENT = "utilitycraft:register_fluid_holder";
 const LEGACY_TICK_SPEED_EVENT = "utilitycraft:set_tick_speed";
+const UPDATE_PIPES_EVENT = "dorios:updatePipes";
 
 const normalizeFluidType = (value) =>
     typeof value === "string" && value.trim().length
@@ -3861,6 +4311,43 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
     }
 });
 
+// Handles pipe network refreshes triggered via scriptevent dorios:updatePipes type|[x,y,z]
+system.afterEvents.scriptEventReceive.subscribe(event => {
+    const { id, message, sourceEntity } = event;
+    if (id !== UPDATE_PIPES_EVENT) return;
+
+    const text = typeof message === "string" ? message : "";
+    const [rawType, rawCoords] = text.split("|");
+    const type = rawType?.trim();
+    if (type !== "energy" && type !== "fluid" && type !== "item") return;
+
+    let location = null;
+    try {
+        const parsed = JSON.parse(rawCoords ?? "null");
+        if (Array.isArray(parsed) && parsed.length >= 3) {
+            const [x, y, z] = parsed.map(Number);
+            if ([x, y, z].every(Number.isFinite)) location = { x, y, z };
+        } else if (parsed && typeof parsed === "object") {
+            const x = Number(parsed.x);
+            const y = Number(parsed.y);
+            const z = Number(parsed.z);
+            if ([x, y, z].every(Number.isFinite)) location = { x, y, z };
+        }
+    } catch { /* ignore malformed payloads */ }
+
+    if (!location) return;
+
+    const dim = sourceEntity?.dimension ?? world.getDimension("overworld");
+    const block = dim.getBlock(location);
+    if (!block) return;
+
+    try {
+        updatePipes(block, type);
+    } catch (err) {
+        console.warn(`[UtilityCraft] updatePipes ScriptEvent failed: ${err}`);
+    }
+});
+
 function normalizeLegacyFluidContainer(entry) {
     if (!entry || typeof entry !== "object") return null;
 
@@ -3901,11 +4388,16 @@ function normalizeLegacyFluidHolder(entry) {
 system.afterEvents.scriptEventReceive.subscribe(event => {
     const { id, message } = event;
 
-    if (id === LEGACY_TICK_SPEED_EVENT) {
+    const isTickSpeedEvent = id === LEGACY_TICK_SPEED_EVENT || id === "dorios:set_tick_speed";
+    if (isTickSpeedEvent) {
         const parsed = safeJsonParse(message);
         const numeric = typeof parsed === "number" ? parsed : Number(message);
         if (Number.isFinite(numeric)) {
-            globalThis.tickSpeed = sanitizeTickSpeed(numeric);
+            const sanitized = sanitizeTickSpeed(numeric);
+            globalThis.tickSpeed = sanitized;
+            try {
+                world.setDynamicProperty("utilitycraft:tickSpeed", sanitized);
+            } catch { /* ignore property errors */ }
         }
         return;
     }

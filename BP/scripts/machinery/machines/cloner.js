@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager } from '../managers_extra.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../managers_extra.js'
 import { getClonerRecipes } from '../../config/recipes/cloner.js'
 
 const INPUT_SLOT = 3
@@ -117,6 +117,9 @@ function doriosRegister() {
                 machine.blockSlots([FLUID_DISPLAY_SLOT, FLUID_INPUT_SLOT])
                 migrateLegacyUpgradeSlots(machine)
 
+                machine.entity.addTag(`fluidWhitelist:${DEFAULT_FLUID_TYPE}`)
+                machine.entity.setDynamicProperty?.('dorios:fluid_whitelist', DEFAULT_FLUID_TYPE)
+
                 const tank = FluidManager.initializeSingle(machine.entity)
                 tank.display(FLUID_DISPLAY_SLOT)
             })
@@ -127,6 +130,9 @@ function doriosRegister() {
             const { block } = e
             const machine = new Machine(block, settings)
             if (!machine.valid) return
+
+            machine.entity?.addTag?.(`fluidWhitelist:${DEFAULT_FLUID_TYPE}`)
+            machine.entity?.setDynamicProperty?.('dorios:fluid_whitelist', DEFAULT_FLUID_TYPE)
 
             migrateLegacyUpgradeSlots(machine)
 
@@ -381,6 +387,7 @@ function updateHud(machine, recipe, tank, crafted) {
     const action = crafted ? 'Duplication Ready' : 'Duplicating'
     const etaDisplay = formatEta(machine, recipe)
     const fluidLines = formatFluidBlock(recipe?.fluid, tank)
+    const overclockLine = buildOverclockLoreLine(machine)
     const lore = [
         `§7Template: §b${formatName(recipe.input.id)}`,
         '§7Mode: §fUniversal',
@@ -391,6 +398,8 @@ function updateHud(machine, recipe, tank, crafted) {
     if (Array.isArray(fluidLines) && fluidLines.length) {
         lore.push(...fluidLines)
     }
+
+    if (overclockLine) lore.push(overclockLine)
 
     machine.setLabel({
         title: `§6${action}`,

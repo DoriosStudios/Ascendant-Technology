@@ -1,0 +1,17 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:titanium_leggings_craft" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "AAA",
+      "A A",
+      "A A"
+    ],
+    "key": {
+      "A": { "item": "utilitycraft:titanium" }
+    },
+    "result": { "item": "utilitycraft:titanium_leggings" },
+    "unlock": [ { "item": "utilitycraft:titanium" } ]
+  }
+}

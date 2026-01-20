@@ -62,6 +62,10 @@
 					]
 				}
 			},
+			"utilitycraft:special_container":{
+				"Input": 3,
+				"Fluid Manual Input": 10
+			},
 			"utilitycraft:machine_recipes": {
 				"type": "liquifier"
 			},

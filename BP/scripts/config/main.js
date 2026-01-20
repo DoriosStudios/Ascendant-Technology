@@ -29,3 +29,5 @@ import './recipes/added/insert_infuser.js';
 import './recipes/added/insert_crusher.js';
 import './recipes/added/insert_incinerator.js';
 import './fluids/items.js';
+
+// Dynamic properties used across the pack (overclock burn/power/eff etc.)

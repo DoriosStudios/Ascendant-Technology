@@ -1,0 +1,9 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_furnace": {
+    "description": { "identifier": "utilitycraft:raw_titanium_block_to_block" },
+    "tags": ["furnace", "blast_furnace"],
+    "input": "utilitycraft:raw_titanium_block",
+    "output": "utilitycraft:titanium_block"
+  }
+}

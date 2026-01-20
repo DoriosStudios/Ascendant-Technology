@@ -53,20 +53,20 @@
    - Possible Upgrades: Throughput, Insulation, Anti-Crystal Coating.  
    - Referência: https://github.com/DoriosStudios/Ascendant-Technology/blob/main/Machine_To_Do.md
 
-- [:chip:] Hyper Processing Unit (HPU):
-   - Purpose: Módulo plugável que multiplica ciclos lógicos (throughput) de máquinas compatíveis.
-   - Operating Mode: Instala em slot HPU de máquina; define multiplier (x2/x4/x8); consome criofluido e energia por ciclo extra; sem crio → degradação + corrupção de output.
+- [:chip:] Hyper Processing Upgrade (HPU):
+   - Purpose: Módulo de melhoria (item) plugável que aumenta a velocidade de operação de máquinas compatíveis.
+   - Operating Mode: Instalado nos slots de upgrade da máquina; aumenta a taxa de processamento e **não** adiciona custo extra de energia (conforme descrição do item nos arquivos de linguagem).
    - Tiers:
-      - Basic: x2 | low extra-consume
-      - Advanced: x4 | med extra-consume
-      - Expert: x8 | high extra-consume
-      - Ultimate: x16 | extreme consume, requires multi-frame
-   - Possible Upgrades: Energy Cap, Stability Damping, Heat Profile (require Titanium Frame).  
+      - Basic: +speed (low)
+      - Advanced: +speed (medium)
+      - Expert: +speed (high)
+      - Ultimate: +speed (max)
+   - Possible Upgrades: (Opcional) variantes futuras do módulo com trade-offs claros (ex.: +speed com +consumo / +speed com +risco).
    - Referência: https://github.com/DoriosStudios/Ascendant-Technology/blob/main/Machine_To_Do.md
 
 - [:shield:] Cryo Stabilizer:
-   - Purpose: Mitigar heat/instability gerados por HPUs; consome criofluido para reduzir chance de corrupção.
-   - Operating Mode: Anexo local ou cluster-mode; modo automático prioriza máquinas ativas com HPU; alocação percentual configurável.
+   - Purpose: Mitigar heat/instability gerados por operação em alta velocidade (ex.: modos de overdrive), usando Criofluido como custo de estabilização.
+   - Operating Mode: Anexo local que prioriza máquinas “em stress”; reduz chance de eventos negativos quando a fábrica está forçando throughput.
    - Tiers:
       - Basic: -10% heat | low crio cost
       - Advanced: -25% heat | med crio cost
@@ -76,8 +76,9 @@
    - Referência: https://github.com/DoriosStudios/Ascendant-Technology/blob/main/Machine_To_Do.md
 
 - [:thermometer:] Thermal Dissipator:
-   - Purpose: Dissipar calor (passivo/ativo). Arrays aumentam dissipation rate; ativo usa energia para boost.
-   - Operating Mode: Slot thermal-link; passivo scaled com Titanium Frame; ativo consome energia por tick para aumentar dissipation.
+   - Purpose: Dissipar calor (passivo/ativo) para setups de alta performance.
+   - Operating Mode: Funciona como helper/adjacente; versões ativas consomem energia por tick para aumentar dissipação.
+   - Nota de design: Idealmente fundir com Cryo Stabilizer em um único conceito (ex.: **Thermal Control Module**) para evitar sistemas redundantes.
    - Tiers:
       - Basic: 5 units/tick passive
       - Advanced: 12 units/tick passive / +active
@@ -86,9 +87,9 @@
    - Possible Upgrades: Fan Boost, Radiator Plating (Titanium), Smart Link (Network Center).  
    - Referência: https://github.com/DoriosStudios/Ascendant-Technology/blob/main/Machine_To_Do.md
 
-- [:control_knobs:] Overclock Controller:
-   - Purpose: Painel UI para definir perfis por máquina/cluster: target cycles, max instability, resource priority.
-   - Operating Mode: Define regras que enviam sinais ao Load Balancer; possui fail-safe thresholds e cooldowns.
+- [:control_knobs:] Overdrive Controller (UI):
+   - Purpose: Painel/UI para configurar perfis de “Overdrive” por máquina (quando habilitado): intensidade, limites e prioridades.
+   - Operating Mode: Preferencialmente integrado ao **Network Center** (painéis), evitando criar um bloco extra só para isso.
    - Tiers:
       - Basic: perfil por máquina
       - Advanced: perfil por cluster + logging
@@ -98,8 +99,9 @@
    - Referência: https://github.com/DoriosStudios/Ascendant-Technology/blob/main/Machine_To_Do.md
 
 - [:electric_plug:] Flux Regulator / Load Balancer:
-   - Purpose: Distribuir energia e criofluido entre máquinas; implementa weighted round-robin e emergency shedding.
-   - Operating Mode: Inputs multi-source, outputs multi-target; regras por tag; smoothing window para evitar oscillation.
+   - Purpose: Distribuir energia e criofluido entre máquinas com prioridade.
+   - Operating Mode: Se for implementado, manter regras simples (prioridade/limites) e telemetria pelo Network Center.
+   - Nota de design: evitar algoritmos avançados (WRR/preditivo) cedo; isso tende a complicar mais do que enriquecer.
    - Tiers:
       - Basic: small cluster balancing
       - Advanced: multi-cluster balancing + priority
@@ -153,8 +155,8 @@
    - Referência: https://github.com/DoriosStudios/Ascendant-Technology/blob/main/Machine_To_Do.md
 
 - [:warning:] Instability Meter:
-   - Purpose: Medir instabilidade acumulada (0–100) em cluster e emitir triggers quando thresholds alcançados.
-   - Operating Mode: Sensor ligado à Network Center; thresholds configuráveis; triggers automáticas para shedding.
+   - Purpose: Medir instabilidade acumulada (0–100) e emitir alertas.
+   - Operating Mode: Melhor como painel do **Network Center** primeiro; virar bloco separado só se houver necessidade de gameplay.
    - Tiers:
       - Basic: visual readout
       - Advanced: thresholds + alarms

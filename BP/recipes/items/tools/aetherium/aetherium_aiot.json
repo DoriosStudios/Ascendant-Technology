@@ -1,0 +1,22 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:aetherium_aiot_craft" },
+    "tags": ["crafting_table"],
+    "pattern": [
+      "IWI",
+      "RPH",
+      "SRI"
+    ],
+    "key": {
+      "I": { "item": "utilitycraft:aetherium" },
+      "W": { "item": "utilitycraft:aetherium_sword" },
+      "R": { "item": "minecraft:string" },
+      "P": { "item": "utilitycraft:aetherium_paxel" },
+      "H": { "item": "utilitycraft:aetherium_hoe" },
+      "S": { "item": "minecraft:stick" }
+    },
+    "result": { "item": "utilitycraft:aetherium_aiot" },
+    "unlock": [ { "item": "utilitycraft:aetherium_paxel" } ]
+  }
+}

@@ -1,4 +1,4 @@
-import { Machine, Energy } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine } from '../managers_extra.js'
 import { getEnergizerRecipes } from '../../config/recipes/energizer.js'
 
 const INPUT_SLOTS = [3, 4]
@@ -188,6 +188,9 @@ function updateHud(machine, channel, status = 'Running') {
         `§aEfficiency: §f${efficiencyPct.toFixed(0)}%%`,
         `§aRate: §f${rateText}/t`
     ]
+
+    const overclockLine = buildOverclockLoreLine(machine)
+    if (overclockLine) stats.push(overclockLine)
 
     machine.setLabel({
         title: `§r§6${slotName} Channel`,

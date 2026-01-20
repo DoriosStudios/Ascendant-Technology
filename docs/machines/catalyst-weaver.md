@@ -27,7 +27,7 @@ Advanced catalyst weaving: combines a base item, up to six catalysts, and option
 - Cost per recipe (default 6,400 DE when not specified).
 
 ## Upgrades
-- 2 upgrade slots (standard upgrade system).
+- 3 upgrade slots (standard upgrade system).
 
 ## Recipes
 See the [recipe page](../recipes/catalyst-weaver.md).

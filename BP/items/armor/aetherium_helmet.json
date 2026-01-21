@@ -11,7 +11,12 @@
         "components": {
             "minecraft:icon": "utilitycraft_aetherium_helmet",
             "minecraft:wearable": {
-                "slot": "slot.armor.head"
+                "slot": "slot.armor.head",
+                "protection": 5
+            },
+            "minecraft:enchantable": {
+                "slot": "armor_head",
+                "value": 30
             },
             "minecraft:fire_resistant": {},
             "minecraft:knockback_resistance": {
@@ -19,7 +24,7 @@
             },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
-                "max_durability": 952
+                "max_durability": 1276
             }
         }
     }

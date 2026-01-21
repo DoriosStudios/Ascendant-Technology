@@ -30,7 +30,7 @@
                 "use_efficiency": true,
                 "destroy_speeds": [
                     {
-                        "speed": 10,
+                        "speed": 12,
                         "block": {
                             "tags": "q.any_tag('minecraft:is_shovel_item_destructible')"
                         }

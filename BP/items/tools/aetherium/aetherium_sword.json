@@ -23,7 +23,7 @@
                 ]
             },
             "minecraft:enchantable": {
-                "value": 22,
+                "value": 30,
                 "slot": "sword"
             },
             "minecraft:durability": {
@@ -34,7 +34,7 @@
                 "use_efficiency": true,
                 "destroy_speeds": [
                     {
-                        "speed": 12,
+                        "speed": 16,
                         "block": "minecraft:web"
                     }
                 ]

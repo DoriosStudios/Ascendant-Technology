@@ -11,11 +11,16 @@
         "components": {
             "minecraft:icon": "utilitycraft_titanium_chestplate",
             "minecraft:wearable": {
-                "slot": "slot.armor.chest"
+                "slot": "slot.armor.chest",
+                "protection": 8
+            },
+            "minecraft:enchantable": {
+                "slot": "armor_torso",
+                "value": 18
             },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
-                "max_durability": 240
+                "max_durability": 561
             }
         }
     }

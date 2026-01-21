@@ -23,7 +23,7 @@
                 ]
             },
             "minecraft:enchantable": {
-                "value": 22,
+                "value": 30,
                 "slot": "pickaxe"
             },
             "minecraft:durability": {
@@ -34,7 +34,7 @@
                 "use_efficiency": true,
                 "destroy_speeds": [
                     {
-                        "speed": 12,
+                        "speed": 16,
                         "block": {
                             "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible')"
                         }

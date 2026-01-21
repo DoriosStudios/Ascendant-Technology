@@ -11,7 +11,12 @@
         "components": {
             "minecraft:icon": "utilitycraft_aetherium_leggings",
             "minecraft:wearable": {
-                "slot": "slot.armor.legs"
+                "slot": "slot.armor.legs",
+                "protection": 8
+            },
+            "minecraft:enchantable": {
+                "slot": "armor_legs",
+                "value": 30
             },
             "minecraft:fire_resistant": {},
             "minecraft:knockback_resistance": {
@@ -19,7 +24,7 @@
             },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
-                "max_durability": 1300
+                "max_durability": 1316
             }
         }
     }

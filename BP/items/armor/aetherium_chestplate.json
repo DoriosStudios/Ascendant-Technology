@@ -11,7 +11,16 @@
         "components": {
             "minecraft:icon": "utilitycraft_aetherium_chestplate",
             "minecraft:wearable": {
-                "slot": "slot.armor.chest"
+                "slot": "slot.armor.chest",
+                "protection": 10,
+                "hides_player_location": true
+            },
+            "minecraft:damage_absorption": {
+                "absorbable_causes": ["magic", "sonic_boom"]
+            },
+            "minecraft:enchantable": {
+                "slot": "armor_torso",
+                "value": 30
             },
             "minecraft:fire_resistant": {},
             "minecraft:knockback_resistance": {

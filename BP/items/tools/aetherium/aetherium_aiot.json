@@ -28,8 +28,8 @@
                 ]
             },
             "minecraft:enchantable": {
-                "value": 22,
-                "slot": "pickaxe"
+                "value": 30,
+                "slot": "axe"
             },
             "minecraft:durability": {
                 "max_durability": 17895

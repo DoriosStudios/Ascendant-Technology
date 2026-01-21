@@ -1,5 +1,7 @@
 # Energizer (Pulse Forge)
 
+[![](../pics/energizer.png)](../pics/energizer.png)
+
 Converter that turns common items into energized variants without catalysts.
 
 ## What it does

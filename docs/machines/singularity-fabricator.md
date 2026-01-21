@@ -1,6 +1,8 @@
 # Singularity Fabricator
 
-Extreme variant of the Cloner, focused on singularity items and absurdly high costs.
+[![](../pics/singularity_fabricator.png)](../pics/singularity_fabricator.png)
+
+Extreme variant of the Duplicator, focused on singularity items and absurdly high costs.
 
 ## What it does
 - Uses templates to generate the original item + one copy.

@@ -1,6 +1,11 @@
 # Network Center
 
+[![](../pics/network_center.png)](../pics/network_center.png)
+
 Control panel that scans the connected energy network and shows a full system summary.
+
+> [!NOTE]
+> Not the final UI design; WILL change in future versions.
 
 ## What it does
 - Scans cables and energy-tagged blocks in the network.

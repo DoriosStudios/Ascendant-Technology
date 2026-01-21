@@ -1,5 +1,7 @@
 # Catalyst Weaver (Arc Loom)
 
+[![](../pics/catalyst_weaver.png)](../pics/catalyst_weaver.png)
+
 Advanced catalyst weaving: combines a base item, up to six catalysts, and optional fluid to produce a main output and possible byproduct.
 
 ## What it does

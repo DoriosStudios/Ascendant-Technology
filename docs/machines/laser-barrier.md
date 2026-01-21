@@ -1,5 +1,7 @@
 # Laser Barrier
 
+[![](../pics/laser_barrier.png)](../pics/laser_barrier.png)
+
 Defensive controller that projects a laser wall in the block's facing direction and periodically damages entities in the area.
 
 ## What it does

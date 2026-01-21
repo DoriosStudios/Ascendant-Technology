@@ -1,5 +1,7 @@
 # Cryo Chamber
 
+[![](../pics/cryo_chamber.png)](../pics/cryo_chamber.png)
+
 Multifunction thermal stabilizer running three modules in parallel: Cryo Stabilizer, Cooling Chamber, and Cryofluid Generator.
 
 ## Modules (run at the same time)

@@ -1,5 +1,7 @@
 # Duplicator (Cloner | Replication Matrix)
 
+[![](../pics/duplicator.png)](../pics/duplicator.png)
+
 Replication chamber that duplicates items via templates, consuming huge energy and Liquified Aetherium.
 
 ## What it does

@@ -1,5 +1,7 @@
 # Residue Processor
 
+[![](../pics/residue_processor.png)](../pics/residue_processor.png)
+
 Residue processor that converts debris into reclaimed materials, with a chance of byproduct.
 
 ## What it does

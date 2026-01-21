@@ -1,5 +1,7 @@
 # Absolute Container
 
+[![](../pics/absolute_container.png)](../pics/absolute_container.png)
+
 A late-game singular vault that combines massive item storage with internal energy and fluid reserves in one block.
 
 ## What it does

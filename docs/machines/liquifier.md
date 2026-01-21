@@ -1,5 +1,7 @@
 # Liquifier (Flux Crucible)
 
+[![](../pics/liquifier.png)](../pics/liquifier.png)
+
 Thermal crucible that melts solids into fluid, with a chance of residue.
 
 ## What it does

@@ -20,6 +20,8 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 - Converts water into Cryofluid.
 - Requires energy and a catalyst (Titanium or Raw Titanium).
 - Outputs Cryofluid into the dedicated tank.
+> [!NOTE]
+> Cryofluid will be a better coolant for [Heavy Machinery Expansion](https://github.com/doriosstudios/utilitycraft-heavy-machinery) reactors in the future.
 
 ## Tanks
 - Water tank (input) and Cryofluid tank (output).

@@ -3,6 +3,8 @@
 [![](../pics/residue_processor.png)](../pics/residue_processor.png)
 
 Residue processor that converts debris into reclaimed materials, with a chance of byproduct.
+> [!NOTE]
+> The functionality is confusing even to me, its creator. This machine may or may not change in the future.
 
 ## What it does
 - Consumes residue and produces a main item.

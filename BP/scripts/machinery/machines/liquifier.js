@@ -210,12 +210,19 @@ function processCraft(machine, recipe, crafts, tank) {
     const yieldBoost = machine.boosts.overclockYield ?? 1;
     const fluidType = recipe.fluid.type ?? DEFAULT_FLUID_TYPE;
     if (tank.getType() === 'empty') tank.setType(fluidType);
-    tank.add(recipe.fluid.amount * crafts * yieldBoost);
+    
+    // Fluid amounts are already integers in mB, but apply yield boost
+    const fluidAmount = recipe.fluid.amount * crafts * yieldBoost;
+    tank.add(Math.floor(fluidAmount));
 
     if (recipe.byproduct) {
         const produced = rollByproduct(recipe.byproduct, crafts);
         if (produced > 0) {
-            addItemsToSlot(machine, RESIDUE_SLOT, recipe.byproduct.id, Math.floor(produced * yieldBoost));
+            const byproductRaw = produced * yieldBoost;
+            const byproductFinal = machine.addFractionalItem(recipe.byproduct.id, byproductRaw);
+            if (byproductFinal > 0) {
+                addItemsToSlot(machine, RESIDUE_SLOT, recipe.byproduct.id, byproductFinal);
+            }
         }
     }
 }

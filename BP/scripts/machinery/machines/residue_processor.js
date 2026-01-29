@@ -171,13 +171,22 @@ function processCraft(machine, recipe, crafts) {
 
     const yieldBoost = machine.boosts.overclockYield ?? 1
     const outputPer = Math.max(1, recipe.output.amount ?? 1)
-    const totalOutput = outputPer * crafts * yieldBoost
-    addItemsToSlot(machine, OUTPUT_SLOT, recipe.output.id, totalOutput)
+    const totalOutputRaw = outputPer * crafts * yieldBoost
+    
+    // Handle fractional output with accumulator
+    const totalOutput = machine.addFractionalItem(recipe.output.id, totalOutputRaw)
+    if (totalOutput > 0) {
+        addItemsToSlot(machine, OUTPUT_SLOT, recipe.output.id, totalOutput)
+    }
 
     if (recipe.byproduct) {
         const rolled = rollByproduct(recipe.byproduct, crafts)
         if (rolled > 0) {
-            addItemsToSlot(machine, BYPRODUCT_SLOT, recipe.byproduct.id, Math.floor(rolled * yieldBoost))
+            const byproductRaw = Math.floor(rolled * yieldBoost)
+            const byproductFinal = machine.addFractionalItem(recipe.byproduct.id, byproductRaw)
+            if (byproductFinal > 0) {
+                addItemsToSlot(machine, BYPRODUCT_SLOT, recipe.byproduct.id, byproductFinal)
+            }
         }
     }
 }

@@ -170,12 +170,19 @@ function processCraft(machine, channel, crafts) {
     machine.entity.changeItemAmount(channel.slot, -totalInput)
 
     const yieldBoost = machine.boosts.overclockYield ?? 1
-    const totalOutput = (channel.recipe.output.amount ?? 1) * crafts * yieldBoost
-    const existing = machine.inv.getItem(OUTPUT_SLOT)
-    if (!existing) {
-        machine.entity.setItem(OUTPUT_SLOT, channel.recipe.output.id, totalOutput)
-    } else {
-        machine.entity.changeItemAmount(OUTPUT_SLOT, totalOutput)
+    const baseOutput = (channel.recipe.output.amount ?? 1) * crafts
+    const totalOutputRaw = baseOutput * yieldBoost
+    
+    // Handle fractional items with accumulator
+    const totalOutput = machine.addFractionalItem(channel.recipe.output.id, totalOutputRaw)
+    
+    if (totalOutput > 0) {
+        const existing = machine.inv.getItem(OUTPUT_SLOT)
+        if (!existing) {
+            machine.entity.setItem(OUTPUT_SLOT, channel.recipe.output.id, totalOutput)
+        } else {
+            machine.entity.changeItemAmount(OUTPUT_SLOT, totalOutput)
+        }
     }
 }
 

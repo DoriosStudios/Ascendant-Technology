@@ -1371,6 +1371,18 @@ export class Generator {
     }
 
     /**
+     * Sets a new base rate and updates the effective rate using tick speed.
+     *
+     * @param {number} baseRate New base processing rate
+     * @returns {number} Updated effective rate
+     */
+    setRate(baseRate) {
+        this.baseRate = baseRate;
+        this.rate = this.baseRate * getTickSpeed();
+        return this.rate;
+    }
+
+    /**
      * Sets a label in the generator inventory using a fixed item as placeholder.
      *
      * Accepts either a raw string (legacy behavior) or a {@link LabelContent}
@@ -1492,6 +1504,21 @@ export class Machine {
         }
     }
 
+    /**
+     * Sets a new base rate and updates the effective rate using tick speed.
+     *
+     * @param {number} baseRate New base processing rate
+     * @returns {number} Updated effective rate
+     */
+    setRate(baseRate) {
+        this.baseRate = baseRate;
+        const tickSpeed = getTickSpeed();
+        this.rate = this.baseRate * tickSpeed;
+        const hyperMultiplier = this.boosts?.hyper ?? 1;
+        this.processingRate = this.baseRate * hyperMultiplier * tickSpeed;
+        return this.rate;
+    }
+
     getTransferCooldown() {
         return Math.max(0, this.entity.getDynamicProperty("dorios:transfer_cooldown") ?? 0);
     }
@@ -1581,6 +1608,20 @@ export class Machine {
         }
 
         if (entity.inventory_size) inventorySize = entity.inventory_size
+
+        if (entity.input_slots || entity.output_slots) {
+            const slotRegister = {};
+            if (entity.input_slots) {
+                slotRegister.input = entity.input_slots;
+            }
+
+            if (entity.output_slots) {
+                slotRegister.output = entity.output_slots;
+            }
+
+            machineEvent = "utilitycraft:special_machine";
+            machineEntity.runCommand(`scriptevent dorios:special_container ${JSON.stringify(slotRegister)}`);
+        }
 
         const inventoryEvent = `utilitycraft:inventory_${inventorySize}`;
 
@@ -2733,7 +2774,10 @@ export class Energy {
     static formatEnergyToText(value) {
         let unit = 'DE';
 
-        if (value >= 1e12) {
+        if (value >= 1e15) {
+            unit = 'PDE';
+            value /= 1e15;
+        } else if (value >= 1e12) {
             unit = 'TDE';
             value /= 1e12;
         } else if (value >= 1e9) {
@@ -2768,7 +2812,7 @@ export class Energy {
         const cleanedInput = input.replace(/§[0-9a-frklmnor]/gi, '');
 
         // Collect matches like "12.5 kDE"
-        const matches = [...cleanedInput.matchAll(/([\d.]+)\s*(kDE|MDE|GDE|TDE|DE)/gi)];
+        const matches = [...cleanedInput.matchAll(/([\d.]+)\s*(kDE|MDE|GDE|TDE|PDE|DE)/gi)];
         if (!matches.length || index < 0 || index >= matches.length) return 0;
 
         const [, valueStr, rawUnit] = matches[index];
@@ -2779,7 +2823,8 @@ export class Energy {
             KDE: 1e3,
             MDE: 1e6,
             GDE: 1e9,
-            TDE: 1e12
+            TDE: 1e12,
+            PDE: 1e15
         };
 
         const multiplier = multipliers[unit] ?? 1;
@@ -3713,7 +3758,7 @@ export class FluidManager {
         const cleaned = input.replace(/§./g, "").trim();
 
         // Match without "Stored"
-        const match = cleaned.match(/(\w+):\s*([\d.]+)\s*(mB|kB|MB|B)/);
+        const match = cleaned.match(/([^:]+):\s*([\d.]+)\s*(mB|kB|MB|B)/i);
         if (!match) return { type: "empty", amount: 0 };
 
         const [, rawType, rawValue, unit] = match;
@@ -3726,7 +3771,9 @@ export class FluidManager {
         };
 
         const amount = parseFloat(rawValue) * (multipliers[unit] ?? 1);
-        const type = rawType.toLowerCase();
+        const cleanedType = typeof rawType === "string" ? rawType.trim() : "";
+        const normalizedType = sanitizeFluidType(cleanedType.replace(/\s+/g, "_"));
+        const type = normalizedType || "empty";
 
         return { type, amount };
     }
@@ -4674,6 +4721,28 @@ system.afterEvents.scriptEventReceive.subscribe(e => {
             console.warn(`[destroyMachine] Error: ${err}`)
         }
     }
+})
+
+/**
+ * ScriptEvent handler to register special container slot ranges.
+ * Stores the slot map on the entity dynamic properties.
+ */
+system.afterEvents.scriptEventReceive.subscribe(e => {
+    const { id, message, sourceEntity } = e
+
+    if (id !== 'dorios:special_container') return
+
+    let slots
+    try {
+        slots = JSON.parse(message)
+    } catch {
+        return
+    }
+
+    if (!slots || (!slots.input && !slots.output)) return
+    if (!sourceEntity) return
+
+    sourceEntity.setDynamicProperty("dorios:special_container", JSON.stringify(slots))
 })
 
 /**

@@ -1296,21 +1296,6 @@
 			},
 			"controls": [
 				{
-					"item_label_container": {
-						"type": "panel",
-						"collection_index": "$index",
-						"layer": 3,
-						"size": "$text_borders",
-						"controls": [
-							{
-								"item_label@ascendant_common.item_label": {
-									"size": "$text_borders"
-								}
-							}
-						]
-					}
-				},
-				{
 					"background_panel@$panel_bg_control": {
 						"$panel_size": "$bg_size",
 						"layer": 1
@@ -1335,6 +1320,7 @@
 		"$panel_size|default": [ 176, 166 ],
 		"$panel_alpha|default": 1,
 		"$panel_layer|default": 0,
+		"$has_close_button|default": true,
 		"$close_button|default": "dark",
 		"$close_button|dark": true,
 		"$close_button|light": false,
@@ -1370,12 +1356,14 @@
 			},
 			{
 				"close_button_light@common.light_close_button": { 
-					"visible": "$light_close_button"
+					"visible": "$light_close_button",
+					"ignored": "($has_close_button = false)"
 				}
 			},
 			{
 				"close_button_dark@common.close_button": {
-					"visible": "$dark_close_button"
+					"visible": "$dark_close_button",
+					"ignored": "($has_close_button = false)"
 				}
 			}
 		]

@@ -230,13 +230,34 @@
 					]
 				}
 			},
-			// SECTION: Overview slots
+			// SECTION: Overview (collection index controls at top level)
 			{
-				"overview_energy_bar@ascendant_common.energy_display": {
+				"overview_label@machineryCommon.item_label": {
+					"collection_index": 0,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [66, 66],
-					"$energy_slot_index": 0,
+					"offset": [24, 20],
+					"$text_scale": 0.55,
+					"size": [72, 68],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_overview",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"overview_energy_bar@machineryCommon.vertical_single": {
+					"$is_energy": true,
+					"$has_bg": false,
+					"collection_index": 0,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [136, 24],
 					"layer": 20,
 					"bindings": [
 						{
@@ -249,12 +270,31 @@
 					]
 				}
 			},
-			// SECTION: Stabilizer slots
+			// SECTION: Stabilizer
+			{
+				"stabilizer_label@machineryCommon.item_label": {
+					"collection_index": 1,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [24, 20],
+					"$text_scale": 0.55,
+					"size": [72, 68],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_stabilizer",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
 			{
 				"stabilizer_input_slot@ascendant_common.slot_base": {
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"offset": [-48, 0],
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [112, 32],
 					"size": [22, 22],
 					"$cell_image_size": [22, 22],
 					"$slot_index": 3,
@@ -270,26 +310,14 @@
 							"target_property_name": "#visible",
 							"resolve_sibling_scope": true
 						}
-					],
-					"controls":[
-						{
-							"outline":{
-								"type": "image",
-								"texture": "textures/ui/orange_outline",
-								"layer": -1,
-								"size": [26, 26],
-								"anchor_from": "center",
-								"anchor_to": "center"
-							}
-						}
 					]
 				}
 			},
 			{
 				"stabilizer_progress_bar@machineryCommon.progress_bar": {
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"offset": [0, 0],
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [134, 36],
 					"collection_index": 2,
 					"layer": 20,
 					"bindings": [
@@ -305,9 +333,9 @@
 			},
 			{
 				"stabilizer_output_slot@ascendant_common.slot_base": {
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"offset": [48, 0],
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [156, 32],
 					"size": [22, 22],
 					"$cell_image_size": [22, 22],
 					"$slot_index": 14,
@@ -323,12 +351,31 @@
 					]
 				}
 			},
-			// SECTION: Cooling slots
+			// SECTION: Cooling
+			{
+				"cooling_label@machineryCommon.item_label": {
+					"collection_index": 18,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [24, 20],
+					"$text_scale": 0.55,
+					"size": [72, 68],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
 			{
 				"cooling_slot_6@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [82, 92],
+					"offset": [110, 28],
 					"$slot_index": 6,
 					"layer": 20,
 					"bindings": [
@@ -346,7 +393,7 @@
 				"cooling_slot_7@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [100, 92],
+					"offset": [128, 28],
 					"$slot_index": 7,
 					"layer": 20,
 					"bindings": [
@@ -364,7 +411,7 @@
 				"cooling_slot_8@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [118, 92],
+					"offset": [146, 28],
 					"$slot_index": 8,
 					"layer": 20,
 					"bindings": [
@@ -382,7 +429,7 @@
 				"cooling_slot_15@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [82, 110],
+					"offset": [110, 46],
 					"$slot_index": 15,
 					"layer": 20,
 					"bindings": [
@@ -400,7 +447,7 @@
 				"cooling_slot_16@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [100, 110],
+					"offset": [128, 46],
 					"$slot_index": 16,
 					"layer": 20,
 					"bindings": [
@@ -418,7 +465,7 @@
 				"cooling_slot_17@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [118, 110],
+					"offset": [146, 46],
 					"$slot_index": 17,
 					"layer": 20,
 					"bindings": [
@@ -436,7 +483,7 @@
 				"cooling_slot_24@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [82, 128],
+					"offset": [110, 64],
 					"$slot_index": 24,
 					"layer": 20,
 					"bindings": [
@@ -454,7 +501,7 @@
 				"cooling_slot_25@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [100, 128],
+					"offset": [128, 64],
 					"$slot_index": 25,
 					"layer": 20,
 					"bindings": [
@@ -472,7 +519,7 @@
 				"cooling_slot_26@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [118, 128],
+					"offset": [146, 64],
 					"$slot_index": 26,
 					"layer": 20,
 					"bindings": [
@@ -486,12 +533,31 @@
 					]
 				}
 			},
-			// SECTION: Generator slots
+			// SECTION: Generator
+			{
+				"generator_label@machineryCommon.item_label": {
+					"collection_index": 20,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [24, 20],
+					"$text_scale": 0.55,
+					"size": [72, 68],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_generator",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
 			{
 				"generator_water_input@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [82, 96],
+					"offset": [110, 34],
 					"$slot_index": 10,
 					"layer": 20,
 					"bindings": [
@@ -509,7 +575,7 @@
 				"generator_titanium_input@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [110, 96],
+					"offset": [138, 34],
 					"$slot_index": 19,
 					"layer": 20,
 					"bindings": [
@@ -527,7 +593,7 @@
 				"generator_cryofluid_output@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [138, 96],
+					"offset": [166, 34],
 					"$slot_index": 12,
 					"layer": 20,
 					"bindings": [
@@ -541,13 +607,34 @@
 					]
 				}
 			},
-			// SECTION: Cryofluid slots
+			// SECTION: Cryofluid
 			{
-				"tanks_water_display@ascendant_common.liquid_display": {
+				"tanks_label@machineryCommon.item_label": {
+					"collection_index": 11,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [82, 86],
-					"$fluid_slot_index": 11,
+					"offset": [24, 20],
+					"$text_scale": 0.55,
+					"size": [72, 68],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_tanks",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"tanks_water_bar@machineryCommon.vertical_single": {
+					"$is_fluid": true,
+					"$has_bg": false,
+					"collection_index": 11,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [110, 30],
 					"layer": 20,
 					"bindings": [
 						{
@@ -561,11 +648,13 @@
 				}
 			},
 			{
-				"tanks_cryo_display@ascendant_common.liquid_display": {
+				"tanks_cryo_bar@machineryCommon.vertical_single": {
+					"$is_fluid": true,
+					"$has_bg": false,
+					"collection_index": 13,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [138, 86],
-					"$fluid_slot_index": 13,
+					"offset": [158, 30],
 					"layer": 20,
 					"bindings": [
 						{
@@ -578,12 +667,69 @@
 					]
 				}
 			},
-			// SECTION: Upgrades slots
+			{
+				"water_label@machineryCommon.item_label": {
+					"collection_index": 11,
+					"$text_scale": 0.55,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [110, 62],
+					"size": [84, 14],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_tanks",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"cryofluid_label@machineryCommon.item_label": {
+					"collection_index": 13,
+					"$text_scale": 0.55,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [110, 76],
+					"size": [84, 14],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_tanks",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			// SECTION: Upgrades
+			{
+				"upgrades_label@machineryCommon.item_label": {
+					"collection_index": 4,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [24, 20],
+					"$text_scale": 0.55,
+					"size": [72, 68],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_upgrades",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
 			{
 				"upgrades_slot_1@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [82, 86],
+					"offset": [114, 60],
 					"$slot_index": 4,
 					"layer": 20,
 					"bindings": [
@@ -601,7 +747,7 @@
 				"upgrades_slot_2@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [101, 86],
+					"offset": [134, 60],
 					"$slot_index": 5,
 					"layer": 20,
 					"bindings": [
@@ -619,7 +765,7 @@
 				"upgrades_slot_3@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [120, 86],
+					"offset": [154, 60],
 					"$slot_index": 9,
 					"layer": 20,
 					"bindings": [
@@ -633,12 +779,69 @@
 					]
 				}
 			},
-			// SECTION: Status slots
+			// SECTION: Status
+			{
+				"status_stabilizer_label@machineryCommon.item_label": {
+					"collection_index": 1,
+					"$text_scale": 0.6,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [104, 30],
+					"size": [88, 16],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_status",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"status_cooling_label@machineryCommon.item_label": {
+					"collection_index": 18,
+					"$text_scale": 0.6,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [104, 46],
+					"size": [88, 20],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_status",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"status_generator_label@machineryCommon.item_label": {
+					"collection_index": 20,
+					"$text_scale": 0.6,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [104, 70],
+					"size": [88, 16],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_status",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
 			{
 				"status_progress_bar@machineryCommon.progress_bar": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [66, 144],
+					"offset": [158, 30],
 					"collection_index": 2,
 					"layer": 20,
 					"bindings": [
@@ -652,12 +855,31 @@
 					]
 				}
 			},
-			// SECTION: Guide slots
+			// SECTION: Guide
+			{
+				"guide_label@machineryCommon.item_label": {
+					"collection_index": 23,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [24, 20],
+					"$text_scale": 0.55,
+					"size": [72, 68],
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_guide",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
 			{
 				"guide_slot@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [82, 88],
+					"offset": [110, 34],
 					"$slot_index": 23,
 					"layer": 20,
 					"bindings": [
@@ -896,11 +1118,15 @@
 				"overview_bg@ascendant_common.aqua_bg": {}
 			},
 			{
-				"overview_screen@ascendant_common.screen": {
+				"overview_info_panel@ascendant_common.info_panel": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 14],
-					"$size": [90, 120]
+					"offset": [0, 0],
+					"$index": 0,
+					"$bg_size": [80, 76],
+					"$info_size": [72, 68],
+					"$text_borders": [72, 68],
+					"$background_color": "aqua"
 				}
 			},
 			{
@@ -908,7 +1134,7 @@
 					"$label_text": "Overview",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 0]
+					"offset": [86, 0]
 				}
 			},
 			{
@@ -918,7 +1144,8 @@
 					"localize": false,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 90],
+					"offset": [86, 52],
+					"size": [88, 14],
 					"color": [1, 1, 1],
 					"font_scale_factor": 0.5
 				}
@@ -945,11 +1172,15 @@
 				"stabilizer_bg@ascendant_common.panel": {}
 			},
 			{
-				"stabilizer_screen@ascendant_common.screen": {
+				"stabilizer_info_panel@ascendant_common.info_panel": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 14],
-					"$size": [90, 120]
+					"offset": [0, 0],
+					"$index": 1,
+					"$bg_size": [80, 76],
+					"$info_size": [72, 68],
+					"$text_borders": [72, 68],
+					"$background_color": "gray"
 				}
 			},
 			{
@@ -957,29 +1188,7 @@
 					"$label_text": "Stabilizer",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 0]
-				}
-			},
-			{
-				"stabilizer_input_outline": {
-					"type": "image",
-					"texture": "textures/ui/frozen_outline",
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [15, 45],
-					"size": [24, 24],
-					"layer": 0
-				}
-			},
-			{
-				"stabilizer_output_outline": {
-					"type": "image",
-					"texture": "textures/ui/frozen_outline",
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [87, 45],
-					"size": [24, 24],
-					"layer": 0
+					"offset": [86, 0]
 				}
 			}
 		]
@@ -1013,11 +1222,15 @@
 				"cooling_section_bg@ascendant_common.panel": {}
 			},
 			{
-				"cooling_screen@ascendant_common.screen": {
+				"cooling_info_panel@ascendant_common.info_panel": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 14],
-					"$size": [90, 120]
+					"offset": [0, 0],
+					"$index": 18,
+					"$bg_size": [80, 76],
+					"$info_size": [72, 68],
+					"$text_borders": [72, 68],
+					"$background_color": "gray"
 				}
 			},
 			{
@@ -1025,7 +1238,7 @@
 					"$label_text": "Cooling",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 0]
+					"offset": [86, 0]
 				}
 			},
 			{
@@ -1034,7 +1247,7 @@
 					"texture": "textures/ui/frozen_panel",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [8, 36],
+					"offset": [88, 12],
 					"size": [70, 70],
 					"layer": 0
 				}
@@ -1086,11 +1299,15 @@
 				}
 			},
 			{
-				"generator_screen@ascendant_common.screen": {
+				"generator_info_panel@ascendant_common.info_panel": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 14],
-					"$size": [90, 120]
+					"offset": [0, 0],
+					"$index": 20,
+					"$bg_size": [80, 76],
+					"$info_size": [72, 68],
+					"$text_borders": [72, 68],
+					"$background_color": "aqua"
 				}
 			},
 			{
@@ -1098,7 +1315,7 @@
 					"$label_text": "Generator",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 0]
+					"offset": [86, 0]
 				}
 			},
 			{
@@ -1107,7 +1324,7 @@
 					"texture": "textures/ui/at_water",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [16, 34],
+					"offset": [94, 6],
 					"size": [12, 12]
 				}
 			},
@@ -1117,7 +1334,7 @@
 					"texture": "textures/ui/at_cryofluid",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [72, 34],
+					"offset": [150, 6],
 					"size": [12, 12]
 				}
 			},
@@ -1127,7 +1344,7 @@
 					"texture": "textures/ui/orange_outline",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [43, 47],
+					"offset": [114, 20],
 					"size": [20, 20],
 					"layer": 0
 				}
@@ -1138,7 +1355,7 @@
 					"texture": "textures/ui/frozen_outline",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [71, 47],
+					"offset": [142, 20],
 					"size": [20, 20],
 					"layer": 0
 				}
@@ -1190,11 +1407,15 @@
 				}
 			},
 			{
-				"tanks_screen@ascendant_common.screen": {
+				"tanks_info_panel@ascendant_common.info_panel": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 14],
-					"$size": [90, 120]
+					"offset": [0, 0],
+					"$index": 11,
+					"$bg_size": [80, 76],
+					"$info_size": [72, 68],
+					"$text_borders": [72, 68],
+					"$background_color": "gray"
 				}
 			},
 			{
@@ -1202,7 +1423,7 @@
 					"$label_text": "Cryofluid",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 0]
+					"offset": [86, 0]
 				}
 			},
 			{
@@ -1211,7 +1432,7 @@
 					"texture": "textures/ui/at_water",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [16, 20],
+					"offset": [94, 6],
 					"size": [14, 14]
 				}
 			},
@@ -1221,28 +1442,30 @@
 					"texture": "textures/ui/at_cryofluid",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [72, 20],
+					"offset": [150, 6],
 					"size": [14, 14]
 				}
 			},
 			{
-				"water_label@machineryCommon.item_label": {
-					"$collection_index": 11,
-					"$text_scale": 0.55,
+				"tanks_water_border": {
+					"type": "image",
+					"texture": "textures/ui/liquid_border",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [24, 40],
-					"size": [140, 14]
+					"offset": [92, 18],
+					"size": [50, 50],
+					"layer": 13
 				}
 			},
 			{
-				"cryofluid_label@machineryCommon.item_label": {
-					"$collection_index": 13,
-					"$text_scale": 0.55,
+				"tanks_cryo_border": {
+					"type": "image",
+					"texture": "textures/ui/liquid_border",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [24, 56],
-					"size": [140, 14]
+					"offset": [140, 18],
+					"size": [50, 50],
+					"layer": 13
 				}
 			}
 		]
@@ -1275,11 +1498,15 @@
 				}
 			},
 			{
-				"upgrades_screen@ascendant_common.screen": {
+				"upgrades_info_panel@ascendant_common.info_panel": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 14],
-					"$size": [90, 120]
+					"offset": [0, 0],
+					"$index": 4,
+					"$bg_size": [80, 76],
+					"$info_size": [72, 68],
+					"$text_borders": [72, 68],
+					"$background_color": "blue"
 				}
 			},
 			{
@@ -1287,17 +1514,7 @@
 					"$label_text": "Upgrades",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 0]
-				}
-			},
-			{
-				"upgrades_label@machineryCommon.item_label": {
-					"$collection_index": 4,
-					"$text_scale": 0.55,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 16],
-					"size": [160, 14]
+					"offset": [86, 0]
 				}
 			},
 			{
@@ -1306,7 +1523,7 @@
 					"texture": "textures/ui/panels/background_panel_blue",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [6, 72],
+					"offset": [92, 44],
 					"size": [84, 26],
 					"layer": 0
 				}
@@ -1317,7 +1534,7 @@
 					"texture": "textures/items/machinery/base_upgrade",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [70, 76],
+					"offset": [158, 48],
 					"size": [18, 18],
 					"layer": 1
 				}
@@ -1352,11 +1569,15 @@
 				}
 			},
 			{
-				"status_screen@ascendant_common.screen": {
+				"status_info_panel@ascendant_common.info_panel": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 14],
-					"$size": [90, 120]
+					"offset": [0, 0],
+					"$index": 1,
+					"$bg_size": [80, 76],
+					"$info_size": [72, 68],
+					"$text_borders": [72, 68],
+					"$background_color": "aqua"
 				}
 			},
 			{
@@ -1364,37 +1585,7 @@
 					"$label_text": "Status",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 0]
-				}
-			},
-			{
-				"stabilizer_label@machineryCommon.item_label": {
-					"$collection_index": 1,
-					"$text_scale": 0.6,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 18],
-					"size": [160, 16]
-				}
-			},
-			{
-				"cooling_label@machineryCommon.item_label": {
-					"$collection_index": 18,
-					"$text_scale": 0.6,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 38],
-					"size": [160, 28]
-				}
-			},
-			{
-				"generator_label@machineryCommon.item_label": {
-					"$collection_index": 20,
-					"$text_scale": 0.6,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 70],
-					"size": [160, 16]
+					"offset": [86, 0]
 				}
 			}
 		]
@@ -1436,11 +1627,15 @@
 				}
 			},
 			{
-				"guide_screen@ascendant_common.screen": {
+				"guide_info_panel@ascendant_common.info_panel": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 14],
-					"$size": [90, 120]
+					"offset": [0, 0],
+					"$index": 23,
+					"$bg_size": [80, 76],
+					"$info_size": [72, 68],
+					"$text_borders": [72, 68],
+					"$background_color": "aqua"
 				}
 			},
 			{
@@ -1448,17 +1643,7 @@
 					"$label_text": "Guide",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 0]
-				}
-			},
-			{
-				"guide_item_label@machineryCommon.item_label": {
-					"$collection_index": 23,
-					"$text_scale": 0.55,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 18],
-					"size": [160, 14]
+					"offset": [86, 0]
 				}
 			},
 			{
@@ -1468,7 +1653,8 @@
 					"localize": false,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [0, 68],
+					"offset": [86, 52],
+					"size": [88, 14],
 					"color": [1, 1, 1],
 					"font_scale_factor": 0.5
 				}

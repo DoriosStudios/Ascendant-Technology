@@ -44,7 +44,7 @@ Defensive controller that projects a laser wall in the block's facing direction 
 - **Layered Defense**: Combine multiple barriers for enhanced protection.
 
 ## Notes
-- No UI interface; all upgrades are applied via direct interaction.
+- All upgrades are applied via direct interaction with the block.
 - The barrier requires line-of-sight from the controller block.
 - Energy consumption increases with field size upgrades.
 - Field visibility provides clear indication of active protection.

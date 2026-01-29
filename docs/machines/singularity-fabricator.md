@@ -35,11 +35,11 @@ Extreme variant of the Duplicator, focused on singularity items and absurdly hig
 ## Recipes
 
 ### Singularity Fabrication Mechanism
-The Singularity Fabricator accepts the same base templates as the Cloner, but applies:
+The Singularity Fabricator duplicates extremely rare and difficult-to-obtain items using:
 - **Required fluid:** Dark Matter.
 - **Minimum cost:** 55,296,000,000 DE (≈55.3 GDE) per craft.
 - **Minimum time:** 3,600s (1h) per craft; Real time.
-- **Dynamic scaling:** Cost scales with `rate_speed_base` to keep time stable.
+- **Dynamic scaling:** Cost scales with refresh speed to keep time stable.
 
 The result always includes the original item + one copy (total ×2), with output adjusted to at least `input + 1`.
 

@@ -31,9 +31,10 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 - **Upgrade Slots**: Speed/efficiency upgrades affect all modules
 
 ## Tanks
-- **Water tank** (input) and **Cryofluid tank** (output).
-- Default capacity: 64,000 mB (configurable in the machine definition).
+- **Water tank** (input): 64,000 mB capacity
+- **Cryofluid tank** (output): 64,000 mB capacity
 - Both tanks operate independently for different modules.
+- Tank capacity can be modified by editing the block definition file.
 
 ## Recipes
 

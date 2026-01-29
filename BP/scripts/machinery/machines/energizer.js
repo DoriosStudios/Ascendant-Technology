@@ -71,9 +71,10 @@ DoriosAPI.register.blockComponent('energizer', {
             return
         }
 
-        const maxCrafts = computeMaxCrafts(channel, outputSlot)
+        const yieldBoost = machine.boosts.overclockYield ?? 1
+        const maxCrafts = computeMaxCrafts(channel, outputSlot, yieldBoost)
         if (maxCrafts <= 0) {
-            const capacity = getOutputCapacity(outputSlot, channel.recipe.output.amount)
+            const capacity = getOutputCapacity(outputSlot, channel.recipe.output.amount, yieldBoost)
             if (capacity <= 0) {
                 machine.showWarning('Output Full', false)
             } else {
@@ -144,18 +145,19 @@ function matchRecipe(recipes, stack) {
     return recipes.find(recipe => recipe?.input?.id === stack.typeId && stack.amount >= (recipe.input.amount ?? 1)) ?? null
 }
 
-function computeMaxCrafts(channel, outputSlot) {
+function computeMaxCrafts(channel, outputSlot, yieldBoost = 1) {
     const inputPer = channel.recipe.input.amount ?? 1
     const outputPer = channel.recipe.output.amount ?? 1
     const inputCrafts = Math.floor(channel.stack.amount / inputPer)
-    const outputCrafts = getOutputCapacity(outputSlot, outputPer)
+    const outputCrafts = getOutputCapacity(outputSlot, outputPer, yieldBoost)
     return Math.max(0, Math.min(inputCrafts, outputCrafts))
 }
 
-function getOutputCapacity(slot, perCraft) {
+function getOutputCapacity(slot, perCraft, yieldBoost = 1) {
     const space = slot ? (slot.maxAmount ?? 64) - slot.amount : 64
     if (space <= 0) return 0
-    return Math.floor(space / Math.max(1, perCraft))
+    const effectivePerCraft = Math.max(1, perCraft * yieldBoost)
+    return Math.floor(space / effectivePerCraft)
 }
 
 function processCraft(machine, channel, crafts) {

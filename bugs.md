@@ -15,9 +15,9 @@ This is where all bugs noticed in Ascendant Technology will be shown. You can re
 - ❌ Reinforced Extractor
 
 # Last Changes
-## - <✅> Aetherium and Titanium armor does not provide protection. 
+#### - <✅> Aetherium and Titanium armor does not provide protection. 
 *(Fixed in 0.7.2)*
-## - ✅ Titanium armor set cannot be enchanted. 
+#### - ✅ Titanium armor set cannot be enchanted. 
 *(Fixed in 0.7.2)*
 # Past Changes
 - ✅ Some recipes for meshes and nets are different from UtilityCraft.

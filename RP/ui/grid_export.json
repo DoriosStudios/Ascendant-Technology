@@ -1,0 +1,118 @@
+{ 
+    "namespace": "ascendant_common",
+    /**
+     * 3x3 slot grid.
+     */
+    "grid_3x3": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [54, 54],
+		"layer": 2,
+		"$cell_size|default": [18, 18],
+		"$size|default": [54, 54],
+		"$slot_index_0|default": 2,
+		"$slot_index_1|default": 3,
+		"$slot_index_2|default": 4,
+		"$slot_index_3|default": 5,
+		"$slot_index_4|default": 6,
+		"$slot_index_5|default": 7,
+		"$slot_index_6|default": 8,
+		"$slot_index_7|default": 9,
+		"$slot_index_8|default": 10,
+		"$slot_control|default": "ascendant_common.slot_base",
+		"controls": [
+			{
+				"grid_3x3_slot_0@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"$slot_index": "$slot_index_0"
+				}
+			},
+			{
+				"grid_3x3_slot_1@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [18, 0],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"$slot_index": "$slot_index_1"
+				}
+			},
+			{
+				"grid_3x3_slot_2@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [36, 0],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"$slot_index": "$slot_index_2"
+				}
+			},
+			{
+				"grid_3x3_slot_3@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 18],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"$slot_index": "$slot_index_3"
+				}
+			},
+			{
+				"grid_3x3_slot_4@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [18, 18],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"$slot_index": "$slot_index_4"
+				}
+			},
+			{
+				"grid_3x3_slot_5@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [36, 18],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"$slot_index": "$slot_index_5"
+				}
+			},
+			{
+				"grid_3x3_slot_6@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 36],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"$slot_index": "$slot_index_6"
+				}
+			},
+			{
+				"grid_3x3_slot_7@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [18, 36],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"$slot_index": "$slot_index_7"
+				}
+			},
+			{
+				"grid_3x3_slot_8@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [36, 36],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"$slot_index": "$slot_index_8"
+				}
+			}
+		]
+	}
+}

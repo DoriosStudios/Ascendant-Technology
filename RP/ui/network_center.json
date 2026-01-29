@@ -18,7 +18,7 @@
       {
         "screen_left": {
           "type": "image",
-          "texture": "textures/ui/panel_classic_borderless",
+          "texture": "textures/ui/panels/panel_classic_borderless",
           "anchor_from": "center",
           "anchor_to": "center",
           "size": [
@@ -67,7 +67,7 @@
       {
         "screen_right": {
           "type": "image",
-          "texture": "textures/ui/panel_classic_borderless",
+          "texture": "textures/ui/panels/panel_classic_borderless",
           "anchor_from": "center",
           "anchor_to": "center",
           "size": [
@@ -116,7 +116,7 @@
       {
         "screen_center": {
           "type": "image",
-          "texture": "textures/ui/panel_classic_borderless",
+          "texture": "textures/ui/panels/panel_classic_borderless",
           "anchor_from": "center",
           "anchor_to": "center",
           "size": [
@@ -145,7 +145,7 @@
       {
         "text_background": {
           "type": "image",
-          "texture": "textures/ui/simple_bg_gray",
+          "texture": "textures/ui/panels/simple_bg_gray",
           "anchor_from": "center",
           "anchor_to": "center",
           "offset": [
@@ -206,7 +206,7 @@
             {
               "common_panel_black": {
                 "type": "image",
-                "texture": "textures/ui/background_panel_dark",
+                "texture": "textures/ui/panels/background_panel_dark",
                 "size": [
                   422,
                   166

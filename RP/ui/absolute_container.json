@@ -35,7 +35,7 @@
                         {
                             "close_button_bg": {
                                 "type": "image",
-                                "texture": "textures/ui/background_panel_dark",
+                                "texture": "textures/ui/panels/background_panel_dark",
                                 "size": [ 22, 24 ],
                                 "anchor_from": "center",
                                 "anchor_to": "center",
@@ -57,7 +57,7 @@
                         {
                             "toggle_backdrop": {
                                 "type": "image",
-                                "texture": "textures/ui/background_panel_dark",
+                                "texture": "textures/ui/panels/background_panel_dark",
                                 "size": [ 22, 98 ]
                             }
                         },
@@ -96,81 +96,6 @@
                 }
             },
             {
-                "status_panel": {
-                    "type": "panel",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [ 170, -2 ],
-                    "size": [ 160, 90 ],
-                    "layer": 15,
-                    "bindings": [
-                        {
-                            "binding_type": "view",
-                            "source_control_name": "show_status_panel",
-                            "source_property_name": "#toggle_state",
-                            "target_property_name": "#visible"
-                        }
-                    ],
-                    "controls": [
-                        {
-                            "status_bg": {
-                                "type": "image",
-                                "texture": "textures/ui/background_panel_dark",
-                                "size": [ 150, 98 ],
-                                "layer": 0
-                            }
-                        },
-                        {
-                            "status_title": {
-                                "type": "label",
-                                "text": "ui.utilitycraft:status_label_container",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [ 0, 5 ],
-                                "color": [ 1, 1, 1 ],
-                                "layer": 1
-                            }
-                        },
-                        {
-                            "energy_bar@ascendant_common.energy_display": {
-                                "$energy_slot_index": 168,
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [ -32, 2 ]
-                            }
-                        },
-                        {
-                            "fluid_bar@ascendant_common.liquid_display": {
-                                "$fluid_slot_index": 169,
-                                "anchor_from": "top_right",
-                                "anchor_to": "top_right",
-                                "offset": [ 8, 2 ]
-                            }
-                        },
-                        {
-                            "container_label_bg": {
-                                "type": "image",
-                                "texture": "textures/ui/background_panel_dark",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [ 0, -29 ],
-                                "size": [ 150, 24 ],
-                                "layer": 1,
-                                "controls": [
-                                    {
-                                        "chest_label@chest.chest_label":{
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "offset": [20, 7]
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            {
                 "storage_wrapper": {
                     "type": "panel",
                     "anchor_from": "center",
@@ -195,7 +120,7 @@
                         {
                             "storage_background": {
                                 "type": "image",
-                                "texture": "textures/ui/background_panel_dark",
+                                "texture": "textures/ui/panels/background_panel_dark",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "size": [ 264, 228 ],
@@ -208,7 +133,7 @@
             {
                 "inventory_bg": {
                     "type": "image",
-                    "texture": "textures/ui/background_panel_dark",
+                    "texture": "textures/ui/panels/background_panel_dark",
                     "anchor_from": "bottom_middle",
                     "anchor_to": "bottom_middle",
                     "offset": [ 158, 125 ],

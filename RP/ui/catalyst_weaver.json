@@ -11,7 +11,7 @@
     },
         "simple_bg": {
         "type": "image",
-        "texture": "textures/ui/background_panel",
+        "texture": "textures/ui/panels/background_panel",
         "size": [
             18,
             18
@@ -80,7 +80,7 @@
             {
                 "upgrades_background":{
                     "type": "image",
-                    "texture": "textures/ui/background_panel_blue",
+                    "texture": "textures/ui/panels/background_panel_blue",
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [ 110, 98 ],
@@ -131,7 +131,7 @@
             {
                 "screen": {
                     "type": "image",
-                    "texture": "textures/ui/background_panel",
+                    "texture": "textures/ui/panels/background_panel",
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "$cell_image_size": [254, 166],
@@ -161,7 +161,7 @@
             {
                 "text_background":{
                         "type": "image",
-                        "texture": "textures/ui/simple_bg_gray",
+                        "texture": "textures/ui/panels/simple_bg_gray",
                         "anchor_from": "center",
                         "anchor_to": "center",
                         "offset": [
@@ -174,7 +174,7 @@
             {
                 "info_panel": {
                     "type": "image",
-                    "texture": "textures/ui/long_panel_classic",
+                    "texture": "textures/ui/panels/long_panel_classic",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$cell_image_size": [104, 166],

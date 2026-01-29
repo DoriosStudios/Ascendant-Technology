@@ -67,7 +67,7 @@
                         {
                             "bg":{
                                 "type": "image",
-                                "texture": "textures/ui/panel_classic_borderless",
+                                "texture": "textures/ui/panels/panel_classic_borderless",
                                 "size": ["100%","100%"],
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
@@ -149,7 +149,6 @@
                     "offset": [ 0, 18 ],
                     "collection_index": 10
                 }
-
             }
         ]
     },

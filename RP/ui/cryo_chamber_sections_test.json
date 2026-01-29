@@ -1,0 +1,1530 @@
+{
+	"namespace": "cryo_chamber_sections_test",
+
+	// SECTION: Button styles
+	"section_button_state_unchecked@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/panels/background_panel_blue"
+	},
+	"section_button_state_checked@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/panels/background_panel_dark"
+	},
+	"section_button_state_unchecked_hover@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/panels/background_panel_blue"
+	},
+	"section_button_state_checked_hover@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/panels/background_panel_dark"
+	},
+	"section_button_base@ascendant_common.tab_button_toggle": {
+		"$tab_button_size": [24, 24],
+		"$tab_button_text_scale": 0.5,
+		"$unchecked_control": "cryo_chamber_sections_test.section_button_state_unchecked",
+		"$checked_control": "cryo_chamber_sections_test.section_button_state_checked",
+		"$unchecked_hover_control": "cryo_chamber_sections_test.section_button_state_unchecked_hover",
+		"$checked_hover_control": "cryo_chamber_sections_test.section_button_state_checked_hover",
+		"$unchecked_locked_control": "cryo_chamber_sections_test.section_button_state_unchecked",
+		"$checked_locked_control": "cryo_chamber_sections_test.section_button_state_checked",
+		"$unchecked_locked_hover_control": "cryo_chamber_sections_test.section_button_state_unchecked_hover",
+		"$checked_locked_hover_control": "cryo_chamber_sections_test.section_button_state_checked_hover"
+	},
+	"cryo_chamber_sections_top": {
+		"type": "collection_panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [200, 110],
+		"offset": [-6, -40],
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"controls": [
+			{
+				"layout_root": {
+					"type": "panel",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"size": [176, 166],
+					"offset": [0, 0],
+					"controls": [
+						{
+							"section_button_overview@cryo_chamber_sections_test.section_button_base": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [8, -32],
+								"layer": 3,
+								"$tab_group_name": "cryo_sections",
+								"$tab_index": 0,
+								"$toggle_property_bag": {
+									"#toggle_state": true
+								},
+								"$active_tab_index": 0,
+								"$tab_button_text": "Overview"
+							}
+						},
+						{
+							"section_button_stabilizer@cryo_chamber_sections_test.section_button_base": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [36, -32],
+								"layer": 3,
+								"$tab_group_name": "cryo_sections",
+								"$tab_index": 1,
+								"$toggle_property_bag": {
+									"#toggle_state": false
+								},
+								"$active_tab_index": 0,
+								"$tab_button_text": "Stabilize"
+							}
+						},
+						{
+							"section_button_cooling@cryo_chamber_sections_test.section_button_base": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [64, -32],
+								"layer": 3,
+								"$tab_group_name": "cryo_sections",
+								"$tab_index": 2,
+								"$toggle_property_bag": {
+									"#toggle_state": false
+								},
+								"$active_tab_index": 0,
+								"$tab_button_text": "Cooling"
+							}
+						},
+						{
+							"section_button_generator@cryo_chamber_sections_test.section_button_base": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [92, -32],
+								"layer": 3,
+								"$tab_group_name": "cryo_sections",
+								"$tab_index": 3,
+								"$toggle_property_bag": {
+									"#toggle_state": false
+								},
+								"$active_tab_index": 0,
+								"$tab_button_text": "Generator"
+							}
+						},
+						{
+							"section_button_tanks@cryo_chamber_sections_test.section_button_base": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [120, -32],
+								"layer": 3,
+								"$tab_group_name": "cryo_sections",
+								"$tab_index": 4,
+								"$toggle_property_bag": {
+									"#toggle_state": false
+								},
+								"$active_tab_index": 0,
+								"$tab_button_text": "Cryofluid"
+							}
+						},
+						{
+							"section_button_upgrades@cryo_chamber_sections_test.section_button_base": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [148, -32],
+								"layer": 3,
+								"$tab_group_name": "cryo_sections",
+								"$tab_index": 5,
+								"$toggle_property_bag": {
+									"#toggle_state": false
+								},
+								"$active_tab_index": 0,
+								"$tab_button_text": "Upgrades"
+							}
+						},
+						{
+							"section_button_status@cryo_chamber_sections_test.section_button_base": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [176, -32],
+								"layer": 3,
+								"$tab_group_name": "cryo_sections",
+								"$tab_index": 6,
+								"$toggle_property_bag": {
+									"#toggle_state": false
+								},
+								"$active_tab_index": 0,
+								"$tab_button_text": "Status"
+							}
+						},
+						{
+							"section_button_guide@cryo_chamber_sections_test.section_button_base": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [204, -32],
+								"layer": 3,
+								"$tab_group_name": "cryo_sections",
+								"$tab_index": 7,
+								"$toggle_property_bag": {
+									"#toggle_state": false
+								},
+								"$active_tab_index": 0,
+								"$tab_button_text": "Guide"
+							}
+						},
+						{
+							"overview_section@cryo_chamber_sections_test.section_overview": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [6, 40],
+								"layer": 2
+							}
+						},
+						{
+							"stabilizer_section@cryo_chamber_sections_test.section_stabilizer": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [6, 40],
+								"layer": 2
+							}
+						},
+						{
+							"cooling_section@cryo_chamber_sections_test.section_cooling": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [6, 40],
+								"layer": 2
+							}
+						},
+						{
+							"generator_section@cryo_chamber_sections_test.section_generator": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [6, 40],
+								"layer": 2
+							}
+						},
+						{
+							"tanks_section@cryo_chamber_sections_test.section_tanks": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [6, 40],
+								"layer": 2
+							}
+						},
+						{
+							"upgrades_section@cryo_chamber_sections_test.section_upgrades": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [6, 40],
+								"layer": 2
+							}
+						},
+						{
+							"status_section@cryo_chamber_sections_test.section_status": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [6, 40],
+								"layer": 2
+							}
+						},
+						{
+							"guide_section@cryo_chamber_sections_test.section_guide": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [6, 40],
+								"layer": 2
+							}
+						}
+					]
+				}
+			},
+			// SECTION: Overview slots
+			{
+				"overview_energy_bar@ascendant_common.energy_display": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [66, 66],
+					"$energy_slot_index": 0,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_overview",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			// SECTION: Stabilizer slots
+			{
+				"stabilizer_input_slot@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-48, 0],
+					"size": [22, 22],
+					"$cell_image_size": [22, 22],
+					"$slot_index": 3,
+					"$has_outline": true,
+					"$outline_size": [30, 30],
+					"$outline_variant": "orange",
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_stabilizer",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					],
+					"controls":[
+						{
+							"outline":{
+								"type": "image",
+								"texture": "textures/ui/orange_outline",
+								"layer": -1,
+								"size": [26, 26],
+								"anchor_from": "center",
+								"anchor_to": "center"
+							}
+						}
+					]
+				}
+			},
+			{
+				"stabilizer_progress_bar@machineryCommon.progress_bar": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, 0],
+					"collection_index": 2,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_stabilizer",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"stabilizer_output_slot@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [48, 0],
+					"size": [22, 22],
+					"$cell_image_size": [22, 22],
+					"$slot_index": 14,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_stabilizer",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			// SECTION: Cooling slots
+			{
+				"cooling_slot_6@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [82, 92],
+					"$slot_index": 6,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"cooling_slot_7@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [100, 92],
+					"$slot_index": 7,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"cooling_slot_8@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [118, 92],
+					"$slot_index": 8,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"cooling_slot_15@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [82, 110],
+					"$slot_index": 15,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"cooling_slot_16@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [100, 110],
+					"$slot_index": 16,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"cooling_slot_17@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [118, 110],
+					"$slot_index": 17,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"cooling_slot_24@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [82, 128],
+					"$slot_index": 24,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"cooling_slot_25@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [100, 128],
+					"$slot_index": 25,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"cooling_slot_26@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [118, 128],
+					"$slot_index": 26,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_cooling",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			// SECTION: Generator slots
+			{
+				"generator_water_input@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [82, 96],
+					"$slot_index": 10,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_generator",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"generator_titanium_input@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [110, 96],
+					"$slot_index": 19,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_generator",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"generator_cryofluid_output@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [138, 96],
+					"$slot_index": 12,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_generator",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			// SECTION: Cryofluid slots
+			{
+				"tanks_water_display@ascendant_common.liquid_display": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [82, 86],
+					"$fluid_slot_index": 11,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_tanks",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"tanks_cryo_display@ascendant_common.liquid_display": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [138, 86],
+					"$fluid_slot_index": 13,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_tanks",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			// SECTION: Upgrades slots
+			{
+				"upgrades_slot_1@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [82, 86],
+					"$slot_index": 4,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_upgrades",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"upgrades_slot_2@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [101, 86],
+					"$slot_index": 5,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_upgrades",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"upgrades_slot_3@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [120, 86],
+					"$slot_index": 9,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_upgrades",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			// SECTION: Status slots
+			{
+				"status_progress_bar@machineryCommon.progress_bar": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [66, 144],
+					"collection_index": 2,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_status",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			// SECTION: Guide slots
+			{
+				"guide_slot@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [82, 88],
+					"$slot_index": 23,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_guide",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"title_bar": {
+					"type": "panel",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-20, -53],
+					"size": [220, 22],
+					"controls": [
+						{
+							"chest_label@chest.chest_label": {
+								"offset": [8, 6]
+							}
+						},
+						{
+							"close_button@common.close_button": {
+								"anchor_from": "top_right",
+								"anchor_to": "top_right",
+								"offset": [20, 0]
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+	"section_buttons_panel": {
+		"type": "stack_panel",
+		"orientation": "horizontal",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"size": [220, 24],
+		"controls": [
+			{
+				"section_button_overview@cryo_chamber_sections_test.section_button_base": {
+					"$tab_group_name": "cryo_sections",
+					"$tab_index": 0,
+					"$toggle_property_bag": {
+						"#toggle_state": true
+					},
+					"$active_tab_index": 0,
+					"$tab_button_text": "Overview",
+					"$tab_button_size": [24, 24],
+					"$tab_button_text_scale": 0.5
+				}
+			},
+			{
+				"spacing_overview@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": [4, 0]
+				}
+			},
+			{
+				"section_button_stabilizer@cryo_chamber_sections_test.section_button_base": {
+					"$tab_group_name": "cryo_sections",
+					"$tab_index": 1,
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": 0,
+					"$tab_button_text": "Stabilize",
+					"$tab_button_size": [24, 24],
+					"$tab_button_text_scale": 0.5
+				}
+			},
+			{
+				"spacing_stabilizer@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": [4, 0]
+				}
+			},
+			{
+				"section_button_cooling@cryo_chamber_sections_test.section_button_base": {
+					"$tab_group_name": "cryo_sections",
+					"$tab_index": 2,
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": 0,
+					"$tab_button_text": "Cooling",
+					"$tab_button_size": [24, 24],
+					"$tab_button_text_scale": 0.5
+				}
+			},
+			{
+				"spacing_cooling@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": [4, 0]
+				}
+			},
+			{
+				"section_button_generator@cryo_chamber_sections_test.section_button_base": {
+					"$tab_group_name": "cryo_sections",
+					"$tab_index": 3,
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": 0,
+					"$tab_button_text": "Generator",
+					"$tab_button_size": [24, 24],
+					"$tab_button_text_scale": 0.5
+				}
+			},
+			{
+				"spacing_generator@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": [4, 0]
+				}
+			},
+			{
+				"section_button_tanks@cryo_chamber_sections_test.section_button_base": {
+					"$tab_group_name": "cryo_sections",
+					"$tab_index": 4,
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": 0,
+					"$tab_button_text": "Cryofluid",
+					"$tab_button_size": [24, 24],
+					"$tab_button_text_scale": 0.5
+				}
+			},
+			{
+				"spacing_tanks@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": [4, 0]
+				}
+			},
+			{
+				"section_button_upgrades@cryo_chamber_sections_test.section_button_base": {
+					"$tab_group_name": "cryo_sections",
+					"$tab_index": 5,
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": 0,
+					"$tab_button_text": "Upgrades",
+					"$tab_button_size": [24, 24],
+					"$tab_button_text_scale": 0.5
+				}
+			},
+			{
+				"spacing_upgrades@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": [4, 0]
+				}
+			},
+			{
+				"section_button_status@cryo_chamber_sections_test.section_button_base": {
+					"$tab_group_name": "cryo_sections",
+					"$tab_index": 6,
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": 0,
+					"$tab_button_text": "Status",
+					"$tab_button_size": [24, 24],
+					"$tab_button_text_scale": 0.5
+				}
+			},
+			{
+				"spacing_status@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": [4, 0]
+				}
+			},
+			{
+				"section_button_guide@cryo_chamber_sections_test.section_button_base": {
+					"$tab_group_name": "cryo_sections",
+					"$tab_index": 7,
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": 0,
+					"$tab_button_text": "Guide",
+					"$tab_button_size": [24, 24],
+					"$tab_button_text_scale": 0.5
+				}
+			}
+		]
+	},
+	"section_content_panel": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"size": [176, 166],
+		"controls": [
+			{
+				"overview_section@cryo_chamber_sections_test.section_overview": {}
+			},
+			{
+				"stabilizer_section@cryo_chamber_sections_test.section_stabilizer": {}
+			},
+			{
+				"cooling_section@cryo_chamber_sections_test.section_cooling": {}
+			},
+			{
+				"generator_section@cryo_chamber_sections_test.section_generator": {}
+			},
+			{
+				"tanks_section@cryo_chamber_sections_test.section_tanks": {}
+			},
+			{
+				"upgrades_section@cryo_chamber_sections_test.section_upgrades": {}
+			},
+			{
+				"status_section@cryo_chamber_sections_test.section_status": {}
+			},
+			{
+				"guide_section@cryo_chamber_sections_test.section_guide": {}
+			}
+		]
+	},
+	// SECTION: Overview
+	"section_overview": {
+		"type": "panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [176, 166],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "section_button_overview",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		],
+		"controls": [
+			{
+				"overview_bg@ascendant_common.aqua_bg": {}
+			},
+			{
+				"overview_screen@ascendant_common.screen": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 14],
+					"$size": [90, 120]
+				}
+			},
+			{
+				"title@ascendant_common.section_label": {
+					"$label_text": "Overview",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0]
+				}
+			},
+			{
+				"overview_hint": {
+					"type": "label",
+					"text": "Open Guide for layout tips",
+					"localize": false,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 90],
+					"color": [1, 1, 1],
+					"font_scale_factor": 0.5
+				}
+			}
+		]
+	},
+	// SECTION: Stabilizer
+	"section_stabilizer": {
+		"type": "panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [176, 166],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "section_button_stabilizer",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		],
+		"controls": [
+			{
+				"stabilizer_bg@ascendant_common.panel": {}
+			},
+			{
+				"stabilizer_screen@ascendant_common.screen": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 14],
+					"$size": [90, 120]
+				}
+			},
+			{
+				"title@ascendant_common.section_label": {
+					"$label_text": "Stabilizer",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0]
+				}
+			},
+			{
+				"stabilizer_input_outline": {
+					"type": "image",
+					"texture": "textures/ui/frozen_outline",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [15, 45],
+					"size": [24, 24],
+					"layer": 0
+				}
+			},
+			{
+				"stabilizer_output_outline": {
+					"type": "image",
+					"texture": "textures/ui/frozen_outline",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [87, 45],
+					"size": [24, 24],
+					"layer": 0
+				}
+			}
+		]
+	},
+	"stabilizer_status@machineryCommon.item_label": {
+		"$collection_index": 1,
+		"$text_scale": 0.55,
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 16],
+		"size": [160, 14]
+	},
+
+	// SECTION: Cooling
+	"section_cooling": {
+		"type": "panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [176, 166],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "section_button_cooling",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		],
+		"controls": [
+			{
+				"cooling_section_bg@ascendant_common.panel": {}
+			},
+			{
+				"cooling_screen@ascendant_common.screen": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 14],
+					"$size": [90, 120]
+				}
+			},
+			{
+				"title@ascendant_common.section_label": {
+					"$label_text": "Cooling",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0]
+				}
+			},
+			{
+				"cooling_bg": {
+					"type": "image",
+					"texture": "textures/ui/frozen_panel",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [8, 36],
+					"size": [70, 70],
+					"layer": 0
+				}
+			}
+		]
+	},
+	"cooling_status@machineryCommon.item_label": {
+		"$collection_index": 18,
+		"$text_scale": 0.55,
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 16],
+		"size": [160, 28],
+		"bindings": [
+						{
+				"binding_type": "view",
+				"source_control_name": "section_button_cooling",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		]
+	},
+	// SECTION: Generator
+	"section_generator": {
+		"type": "panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [176, 166],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "section_button_generator",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		],
+		"controls": [
+			{
+				"generator_bg": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_aqua",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"size": [176, 166],
+					"layer": -1
+				}
+			},
+			{
+				"generator_screen@ascendant_common.screen": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 14],
+					"$size": [90, 120]
+				}
+			},
+			{
+				"title@ascendant_common.section_label": {
+					"$label_text": "Generator",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0]
+				}
+			},
+			{
+				"water_icon": {
+					"type": "image",
+					"texture": "textures/ui/at_water",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [16, 34],
+					"size": [12, 12]
+				}
+			},
+			{
+				"cryo_icon": {
+					"type": "image",
+					"texture": "textures/ui/at_cryofluid",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [72, 34],
+					"size": [12, 12]
+				}
+			},
+			{
+				"titanium_input_outline": {
+					"type": "image",
+					"texture": "textures/ui/orange_outline",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [43, 47],
+					"size": [20, 20],
+					"layer": 0
+				}
+			},
+			{
+				"cryofluid_output_outline": {
+					"type": "image",
+					"texture": "textures/ui/frozen_outline",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [71, 47],
+					"size": [20, 20],
+					"layer": 0
+				}
+			}
+		]
+	},
+	"generator_status@machineryCommon.item_label": {
+		"$collection_index": 20,
+		"$text_scale": 0.55,
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 16],
+		"size": [160, 14],
+		"bindings": [
+						{
+				"binding_type": "view",
+				"source_control_name": "section_button_generator",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		]
+	},
+	// SECTION: Cryofluid
+	"section_tanks": {
+		"type": "panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [176, 166],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "section_button_tanks",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		],
+		"controls": [
+			{
+				"tanks_bg": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"size": [176, 166],
+					"layer": 0
+				}
+			},
+			{
+				"tanks_screen@ascendant_common.screen": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 14],
+					"$size": [90, 120]
+				}
+			},
+			{
+				"title@ascendant_common.section_label": {
+					"$label_text": "Cryofluid",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0]
+				}
+			},
+			{
+				"water_icon": {
+					"type": "image",
+					"texture": "textures/ui/at_water",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [16, 20],
+					"size": [14, 14]
+				}
+			},
+			{
+				"cryo_icon": {
+					"type": "image",
+					"texture": "textures/ui/at_cryofluid",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [72, 20],
+					"size": [14, 14]
+				}
+			},
+			{
+				"water_label@machineryCommon.item_label": {
+					"$collection_index": 11,
+					"$text_scale": 0.55,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [24, 40],
+					"size": [140, 14]
+				}
+			},
+			{
+				"cryofluid_label@machineryCommon.item_label": {
+					"$collection_index": 13,
+					"$text_scale": 0.55,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [24, 56],
+					"size": [140, 14]
+				}
+			}
+		]
+	},
+	// SECTION: Upgrades
+	"section_upgrades": {
+		"type": "panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [176, 166],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "section_button_upgrades",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		],
+		"controls": [
+			{
+				"upgrades_section_bg": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_blue",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"size": [176, 166],
+					"layer": 0
+				}
+			},
+			{
+				"upgrades_screen@ascendant_common.screen": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 14],
+					"$size": [90, 120]
+				}
+			},
+			{
+				"title@ascendant_common.section_label": {
+					"$label_text": "Upgrades",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0]
+				}
+			},
+			{
+				"upgrades_label@machineryCommon.item_label": {
+					"$collection_index": 4,
+					"$text_scale": 0.55,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 16],
+					"size": [160, 14]
+				}
+			},
+			{
+				"upgrade_bg": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_blue",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [6, 72],
+					"size": [84, 26],
+					"layer": 0
+				}
+			},
+			{
+				"upgrade_icon": {
+					"type": "image",
+					"texture": "textures/items/machinery/base_upgrade",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [70, 76],
+					"size": [18, 18],
+					"layer": 1
+				}
+			}
+		]
+	},
+	// SECTION: Status
+	"section_status": {
+		"type": "panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [176, 166],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "section_button_status",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		],
+		"controls": [
+			{
+				"status_section_bg": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_aqua",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"size": [176, 166],
+					"layer": 0
+				}
+			},
+			{
+				"status_screen@ascendant_common.screen": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 14],
+					"$size": [90, 120]
+				}
+			},
+			{
+				"title@ascendant_common.section_label": {
+					"$label_text": "Status",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0]
+				}
+			},
+			{
+				"stabilizer_label@machineryCommon.item_label": {
+					"$collection_index": 1,
+					"$text_scale": 0.6,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 18],
+					"size": [160, 16]
+				}
+			},
+			{
+				"cooling_label@machineryCommon.item_label": {
+					"$collection_index": 18,
+					"$text_scale": 0.6,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 38],
+					"size": [160, 28]
+				}
+			},
+			{
+				"generator_label@machineryCommon.item_label": {
+					"$collection_index": 20,
+					"$text_scale": 0.6,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 70],
+					"size": [160, 16]
+				}
+			}
+		]
+	},
+	// SECTION: Guide
+	"section_guide": {
+		"type": "panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [176, 166],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "section_button_guide",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		],
+		"controls": [
+			{
+				"guide_section_bg": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_aqua",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, 0],
+					"size": [176, 166],
+					"layer": 1,
+					"bindings":[
+									{
+				"binding_type": "view",
+				"source_control_name": "section_button_guide",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+					]
+				}
+			},
+			{
+				"guide_screen@ascendant_common.screen": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 14],
+					"$size": [90, 120]
+				}
+			},
+			{
+				"title@ascendant_common.section_label": {
+					"$label_text": "Guide",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0]
+				}
+			},
+			{
+				"guide_item_label@machineryCommon.item_label": {
+					"$collection_index": 23,
+					"$text_scale": 0.55,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 18],
+					"size": [160, 14]
+				}
+			},
+			{
+				"guide_hint": {
+					"type": "label",
+					"text": "Open this item to read the layout",
+					"localize": false,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 68],
+					"color": [1, 1, 1],
+					"font_scale_factor": 0.5
+				}
+			}
+		]
+	},
+	"utility_panel": {
+		"type": "panel",
+		"controls": [
+			{
+				"container_gamepad_helpers@common.container_gamepad_helpers": {}
+			},
+			{
+				"flying_item_renderer@common.flying_item_renderer": {
+					"layer": 14
+				}
+			},
+			{
+				"selected_item_details_factory@common.selected_item_details_factory": {}
+			},
+			{
+				"item_lock_notification_factory@common.item_lock_notification_factory": {}
+			},
+			{
+				"root_panel@common.root_panel": {
+					"layer": 1,
+					"controls": [
+						{
+							"chest_panel": {
+								"type": "panel",
+								"layer": 5,
+								"controls": [
+									{
+										"cryo_chamber_sections_top@cryo_chamber_sections_test.cryo_chamber_sections_top": {}
+									},
+									{
+										"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+									},
+									{
+										"hotbar_grid@common.hotbar_grid_template": {}
+									},
+									{
+										"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+									}
+								]
+							}
+						},
+						{
+							"inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+						},
+						{
+							"gamepad_cursor@common.gamepad_cursor_button": {}
+						}
+					]
+				}
+			}
+		]
+	}
+}

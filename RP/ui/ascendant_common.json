@@ -1,1002 +1,3093 @@
 {
-    // ============================================================================
-    // ASCENDANT COMMON - Biblioteca de Componentes UI do Ascendant Technology
-    // ============================================================================
-    // Este arquivo contém componentes reutilizáveis para a interface do add-on.
-    // Use referências como "component@ascendant_common.nome_do_componente" para
-    // incluir esses elementos em outras telas de UI.
-    // ============================================================================
+	/*
+	============================================================================
+	ASCENDANT COMMON - Ascendant Technology UI Component Library
+	============================================================================
+	Author: Kauziin - Dorios Studios
+	Made for: Ascendant Technology
+	Scope: Small, reusable UI component set.
+	Usage: Reference as "component@ascendant_common.component_name".
+	============================================================================
+	*/
 
-    "namespace": "ascendant_common",
+	"namespace": "ascendant_common",
 
-    // ============================================================================
-    // SEÇÃO 1: PAINÉIS DE FUNDO (Background Panels)
-    // ============================================================================
-    // Painéis de imagem pré-configurados usando as texturas do add-on.
-    // Todos usam nineslice para redimensionamento automático.
-    // ============================================================================
+	/* SECTION: ASSETS
+	 * Shared texture references used by UI components.
+	 */
 
-    // Painel parametrizável - escolhe a cor via $panel_color
-    // Cores suportadas: gray (default), dark, blue, aqua
-    "panel": {
-        "type": "panel",
-        "$panel_size|default": ["100%", "100%"],
-        "$panel_alpha|default": 1,
-        "$panel_layer|default": 0,
-        "$panel_color|default": "gray",
-        "$panel_texture|default": "textures/ui/background_panel",
-        "$panel_color|gray": {
-            "$panel_texture": "textures/ui/background_panel"
-        },
-        "$panel_color|dark": {
-            "$panel_texture": "textures/ui/background_panel_dark"
-        },
-        "$panel_color|blue": {
-            "$panel_texture": "textures/ui/background_panel_blue"
-        },
-        "$panel_color|aqua": {
-            "$panel_texture": "textures/ui/background_panel_aqua"
-        },
-        "controls": [
-            {
-                "panel_surface": {
-                    "type": "image",
-                    "texture": "$panel_texture",
-                    "size": "$panel_size",
-                    "alpha": "$panel_alpha",
-                    "layer": "$panel_layer"
-                }
-            }
-        ]
-    },
+	/* SUBSECTION: COLOR ASSETS - 16 COLORS
+	 * Cell textures, hover variants, and panel textures.
+	 * Texture paths:
+	 * - textures/ui/cells/<color>_cell
+	 * - textures/ui/cells/<color>_cell_hover
+	 * - textures/ui/panels/<color>_panel
+	 */
 
-    // Wrappers legados para manter compatibilidade
-    "panel_bg@ascendant_common.panel": {
-        "$panel_color": "gray"
-    },
+	/* ELEMENT: cell_white
+	 * White cell image.
+	 */
+	"cell_white": {
+		"type": "image",
+		"texture": "textures/ui/cells/white_cell"
+	},
 
-    "panel_bg_dark@ascendant_common.panel": {
-        "$panel_color": "dark"
-    },
+	/* ELEMENT: cell_white_hover
+	 * White cell hover image.
+	 */
+	"cell_white_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/white_cell_hover"
+	},
 
-    "panel_bg_blue@ascendant_common.panel": {
-        "$panel_color": "blue"
-    },
+	/* ELEMENT: panel_white
+	 * White panel image.
+	 */
+	"panel_white": {
+		"type": "image",
+		"texture": "textures/ui/panels/white_panel"
+	},
 
-    "panel_bg_aqua@ascendant_common.panel": {
-        "$panel_color": "aqua"
-    },
+	/* ELEMENT: cell_light_gray
+	 * Light gray cell image.
+	 */
+	"cell_light_gray": {
+		"type": "image",
+		"texture": "textures/ui/cells/light_gray_cell"
+	},
 
-    "panel_bg_gray@ascendant_common.panel": {
-        "$panel_color": "gray",
-        "$panel_texture": "textures/ui/simple_bg_gray"
-    },
+	/* ELEMENT: cell_light_gray_hover
+	 * Light gray cell hover image.
+	 */
+	"cell_light_gray_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/light_gray_cell_hover"
+	},
 
-    "dialog_background_dark": {
-        "type": "image",
-        "texture": "textures/ui/background_panel_dark"
-    },
+	/* ELEMENT: panel_light_gray
+	 * Light gray panel image.
+	 */
+	"panel_light_gray": {
+		"type": "image",
+		"texture": "textures/ui/panels/light_gray_panel"
+	},
 
-    "dialog_background_blue": {
-        "type": "image",
-        "texture": "textures/ui/background_panel_blue"
-    },
+	/* ELEMENT: cell_gray
+	 * Gray cell image.
+	 */
+	"cell_gray": {
+		"type": "image",
+		"texture": "textures/ui/cells/gray_cell"
+	},
 
-    // Colored panels with common_panel behavior (close button, divider, etc.)
-    "dark_panel": {
-        "type": "panel",
-        "$dialog_background|default": "ascendant_common.dialog_background_dark",
-        "$show_close_button|default": true,
-        "$close_button_visible_binding_name|default": "#close_button_visible",
-        "$close_button_offset|default": [ 0, 0 ],
-        "$close_button_layer|default": 2,
-        "$use_compact_close_button|default": false,
-        "$show_divider|default": false,
-        "$divider_offset|default": [ "42.5%", "22px" ],
-        "$divider_visible_binding_name|default": "",
-        "$divider_visible_binding_type|default": "none",
-        "$divider_size|default": [ "5px", "100% - 29px" ],
-        "controls": [
-            {
-                "bg_image@$dialog_background": {
-                    "layer": 1
-                }
-            },
-            {
-                "dialog_divider@common.dialog_divider": {
-                    "visible": "$show_divider",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": "$divider_offset",
-                    "size": "$divider_size",
-                    "bindings": [
-                        {
-                            "binding_name": "$divider_visible_binding_name",
-                            "binding_name_override": "#visible",
-                            "binding_type": "$divider_visible_binding_type"
-                        }
-                    ]
-                }
-            },
-            {
-                "close_button_holder": {
-                    "type": "panel",
-                    "ignored": "(not $show_close_button)",
-                    "controls": [
-                        {
-                            "close@common.light_close_button": {
-                                "layer": "$close_button_layer",
-                                "offset": "$close_button_offset",
-                                "ignored": "$use_compact_close_button"
-                            }
-                        },
-                        {
-                            "compact_close@common.compact_close_button": {
-                                "layer": "$close_button_layer",
-                                "offset": "$close_button_offset",
-                                "ignored": "(not $use_compact_close_button)"
-                            }
-                        }
-                    ],
-                    "bindings": [
-                        {
-                            "binding_name": "$close_button_visible_binding_name",
-                            "binding_name_override": "#visible"
-                        }
-                    ]
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_gray_hover
+	 * Gray cell hover image.
+	 */
+	"cell_gray_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/gray_cell_hover"
+	},
 
-    "blue_panel@ascendant_common.dark_panel": {
-        "$dialog_background": "ascendant_common.dialog_background_blue"
-    },
+	/* ELEMENT: panel_gray
+	 * Gray panel image.
+	 */
+	"panel_gray": {
+		"type": "image",
+		"texture": "textures/ui/panels/gray_panel"
+	},
 
-    // Painel longo clássico - para telas de máquinas
-    // Uso: "@ascendant_common.panel_long_classic" com "size": [largura, altura]
-    "panel_long_classic": {
-        "type": "image",
-        "texture": "textures/ui/long_panel_classic",
-        "size": ["100%", "100%"],
-        "layer": 0
-    },
+	/* ELEMENT: cell_black
+	 * Black cell image.
+	 */
+	"cell_black": {
+		"type": "image",
+		"texture": "textures/ui/cells/black_cell"
+	},
 
-    // Painel com borda - para elementos destacados
-    // Uso: "@ascendant_common.panel_with_border" com "size": [largura, altura]
-    "panel_with_border": {
-        "type": "image",
-        "texture": "textures/ui/background_with_border",
-        "size": ["100%", "100%"],
-        "layer": 0
-    },
+	/* ELEMENT: cell_black_hover
+	 * Black cell hover image.
+	 */
+	"cell_black_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/black_cell_hover"
+	},
 
-    // ============================================================================
-    // SEÇÃO 2: SLOTS DE ITENS (Item Slots)
-    // ============================================================================
-    // Slots interativos para itens do inventário/container.
-    // Parâmetro $slot_index define qual slot do container usar.
-    // ============================================================================
+	/* ELEMENT: panel_black
+	 * Black panel image.
+	 */
+	"panel_black": {
+		"type": "image",
+		"texture": "textures/ui/panels/black_panel"
+	},
 
-    // Slot de item padrão com fundo neutro
-    // Parâmetros:
-    //   $slot_index: índice do slot no container (0-based)
-    // Uso: "@ascendant_common.slot_base" com "$slot_index": número
-    "slot_base": {
-        "type": "panel",
-        "size": [18, 18],
-        "$slot_index|default": 0,
-        "controls": [
-            {
-                "slot_bg@ascendant_common.panel_bg": {
-                    "size": [18, 18],
-                    "layer": 0
-                }
-            },
-            {
-                "item@common.container_item": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "$item_collection_name": "container_items",
-                    "$collection_index": "$slot_index",
-                    "layer": 1
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_brown
+	 * Brown cell image.
+	 */
+	"cell_brown": {
+		"type": "image",
+		"texture": "textures/ui/cells/brown_cell"
+	},
 
-    // Vanilla slot (uses common.container_item)
-    "slot_vanilla@common.container_item": {
-        "$slot_index|default": 0,
-        "$item_collection_name": "container_items",
-        "$collection_index": "$slot_index"
-    },
+	/* ELEMENT: cell_brown_hover
+	 * Brown cell hover image.
+	 */
+	"cell_brown_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/brown_cell_hover"
+	},
 
-    // Slot de item com fundo azul - para slots especiais
-    "slot_blue": {
-        "type": "panel",
-        "size": [18, 18],
-        "$slot_index|default": 0,
-        "controls": [
-            {
-                "slot_bg@ascendant_common.panel_bg_blue": {
-                    "size": [18, 18],
-                    "layer": 0
-                }
-            },
-            {
-                "item@common.container_item": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "$item_collection_name": "container_items",
-                    "$collection_index": "$slot_index",
-                    "layer": 1
-                }
-            }
-        ]
-    },
+	/* ELEMENT: panel_brown
+	 * Brown panel image.
+	 */
+	"panel_brown": {
+		"type": "image",
+		"texture": "textures/ui/panels/brown_panel"
+	},
 
-    // Dark slot background image
-    "dark_cell_image": {
-        "type": "image",
-        "texture": "textures/ui/dark_cell_image",
-        "layer": 0
-    },
+	/* ELEMENT: cell_red
+	 * Red cell image.
+	 */
+	"cell_red": {
+		"type": "image",
+		"texture": "textures/ui/cells/red_cell"
+	},
 
-    // Dark cell image panel with selection state
-    "dark_cell_image_panel": {
-        "type": "panel",
-        "controls": [
-            {
-                "cell_image@ascendant_common.dark_cell_image": {
-                    "$cell_selected_binding_name|default": "#is_selected_slot",
-                    "visible": true,
-                    "bindings": [
-                        {
-                            "binding_name": "(not $cell_selected_binding_name)",
-                            "binding_name_override": "#visible",
-                            "binding_type": "collection",
-                            "binding_collection_name": "$item_collection_name"
-                        }
-                    ]
-                }
-            },
-            {
-                "cell_image_selected@common.cell_image_selected": {
-                    "$cell_selected_binding_name|default": "#is_selected_slot",
-                    "visible": false,
-                    "bindings": [
-                        {
-                            "binding_name": "$cell_selected_binding_name",
-                            "binding_name_override": "#visible",
-                            "binding_type": "collection",
-                            "binding_collection_name": "$item_collection_name"
-                        }
-                    ]
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_red_hover
+	 * Red cell hover image.
+	 */
+	"cell_red_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/red_cell_hover"
+	},
 
-    // Vanilla dark slot (uses common.container_item with dark background)
-    "slot_vanilla_dark@common.container_item": {
-        "$slot_index|default": 0,
-        "$item_collection_name": "container_items",
-        "$collection_index": "$slot_index",
-        "$background_images": "ascendant_common.dark_cell_image"
-    },
+	/* ELEMENT: panel_red
+	 * Red panel image.
+	 */
+	"panel_red": {
+		"type": "image",
+		"texture": "textures/ui/panels/red_panel"
+	},
 
-    // Dark slot variant using dark_cell_image
-    "slot_dark": {
-        "type": "panel",
-        "size": [18, 18],
-        "$slot_index|default": 0,
-        "controls": [
-            {
-                "slot_bg@ascendant_common.dark_cell_image": {
-                    "size": [18, 18],
-                    "layer": 0
-                }
-            },
-            {
-                "item@common.container_item": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "$item_collection_name": "container_items",
-                    "$collection_index": "$slot_index",
-                    "layer": 1
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_orange
+	 * Orange cell image.
+	 */
+	"cell_orange": {
+		"type": "image",
+		"texture": "textures/ui/cells/orange_cell"
+	},
 
-    // Dark container item (based on common.container_item)
-    "dark_container": {
-        "type": "input_panel",
-        "size": [18, 18],
-        "layer": 1,
-        "$cell_image_size|default": [18, 18],
-        "$cell_overlay_ref|default": "common.cell_overlay",
-        "$button_ref|default": "common.container_slot_button_prototype",
-        "$stack_count_required|default": true,
-        "$durability_bar_required|default": true,
-        "$storage_bar_required|default": true,
-        "$item_renderer|default": "common.item_renderer",
-        "$item_renderer_panel_size|default": [18, 18],
-        "$item_renderer_size|default": [16, 16],
-        "$item_renderer_offset|default": [0, 0],
-        "$background_images|default": "ascendant_common.dark_cell_image_panel",
-        "$background_image_control_name|default": "bg",
-        "$focus_id|default": "",
-        "$focus_override_down|default": "",
-        "$focus_override_up|default": "",
-        "$focus_override_left|default": "",
-        "$focus_override_right|default": "",
-        "focus_identifier": "$focus_id",
-        "focus_change_down": "$focus_override_down",
-        "focus_change_up": "$focus_override_up",
-        "focus_change_left": "$focus_override_left",
-        "focus_change_right": "$focus_override_right",
-        "focus_enabled": true,
-        "focus_wrap_enabled": false,
-        "focus_magnet_enabled": true,
-        "tts_ignore_count": true,
-        "controls": [
-            {
-                "item_cell": {
-                    "type": "panel",
-                    "size": "$cell_image_size",
-                    "layer": 0,
-                    "controls": [
-                        {
-                            "$background_image_control_name@$background_images": {
-                                "layer": 1
-                            }
-                        },
-                        {
-                            "item": {
-                                "type": "panel",
-                                "size": "$item_renderer_panel_size",
-                                "layer": 0,
-                                "controls": [
-                                    {
-                                        "stack_count_label@common.stack_count_label": {
-                                            "layer": 27
-                                        }
-                                    },
-                                    {
-                                        "$item_renderer@$item_renderer": {
-                                            "size": "$item_renderer_size",
-                                            "offset": "$item_renderer_offset",
-                                            "anchor_to": "center",
-                                            "anchor_from": "center",
-                                            "layer": 7
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "durability_bar@common.durability_bar": {
-                                "layer": 20
-                            }
-                        },
-                        {
-                            "storage_bar@common.storage_bar": {
-                                "layer": 20
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "item_cell_overlay_ref@$cell_overlay_ref": {
-                    "layer": 3
-                }
-            },
-            {
-                "item_selected_image@common.slot_selected": {
-                    "layer": 4
-                }
-            },
-            {
-                "item_button_ref@$button_ref": {
-                    "tts_ignore_count": true,
-                    "tts_skip_message": true,
-                    "tts_inherit_siblings": true,
-                    "layer": 5
-                }
-            },
-            {
-                "container_item_lock_overlay@common.container_item_lock_overlay": {
-                    "size": "$item_renderer_size",
-                    "offset": [1, 1],
-                    "anchor_to": "top_left",
-                    "anchor_from": "top_left",
-                    "layer": 6
-                }
-            },
-            {
-                "item_lock_cell_image@common.item_lock_cell_image": {
-                    "layer": 2
-                }
-            },
-            {
-                "bundle_slot_panel@gameplay.bundle_slot_panel": {
-                    "layer": 10
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_orange_hover
+	 * Orange cell hover image.
+	 */
+	"cell_orange_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/orange_cell_hover"
+	},
 
-    // ============================================================================
-    // SECTION 2B: ITEM GRIDS (2x2 and 3x3)
-    // ============================================================================
-    // Slots are provided through $grid_slots in row-major order.
-    // Example: [0,1,2,3] for 2x2 or [0..8] for 3x3.
-    // ============================================================================
+	/* ELEMENT: panel_orange
+	 * Orange panel image.
+	 */
+	"panel_orange": {
+		"type": "image",
+		"texture": "textures/ui/panels/orange_panel"
+	},
 
-    // 2x2 grid (manual slots)
-    // Parameters:
-    //   $slot_index_0..3: slot indices in row-major order
-    //   $slot_control: slot control reference (ascendant_common.slot_vanilla or ascendant_common.slot_vanilla_dark)
-    "grid_2x2": {
-        "type": "panel",
-        "anchor_from": "top_left",
-        "anchor_to": "top_left",
-        "offset": [0, 0],
-        "size": [36, 36],
-        "layer": 2,
-        "$slot_index_0|default": 2,
-        "$slot_index_1|default": 3,
-        "$slot_index_2|default": 4,
-        "$slot_index_3|default": 5,
-        "$slot_control|default": "ascendant_common.slot_vanilla",
-        "controls": [
-            {
-                "grid_2x2_slot_0@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [0, 0],
-                    "$slot_index": "$slot_index_0"
-                }
-            },
-            {
-                "grid_2x2_slot_1@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [18, 0],
-                    "$slot_index": "$slot_index_1"
-                }
-            },
-            {
-                "grid_2x2_slot_2@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [0, 18],
-                    "$slot_index": "$slot_index_2"
-                }
-            },
-            {
-                "grid_2x2_slot_3@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [18, 18],
-                    "$slot_index": "$slot_index_3"
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_yellow
+	 * Yellow cell image.
+	 */
+	"cell_yellow": {
+		"type": "image",
+		"texture": "textures/ui/cells/yellow_cell"
+	},
 
-    // 3x3 grid (manual slots)
-    // Parameters:
-    //   $slot_index_0..8: slot indices in row-major order
-    //   $slot_control: slot control reference (ascendant_common.slot_vanilla or ascendant_common.slot_vanilla_dark)
-    "grid_3x3": {
-        "type": "panel",
-        "anchor_from": "top_left",
-        "anchor_to": "top_left",
-        "offset": [0, 0],
-        "size": [54, 54],
-        "layer": 2,
-        "$slot_index_0|default": 2,
-        "$slot_index_1|default": 3,
-        "$slot_index_2|default": 4,
-        "$slot_index_3|default": 5,
-        "$slot_index_4|default": 6,
-        "$slot_index_5|default": 7,
-        "$slot_index_6|default": 8,
-        "$slot_index_7|default": 9,
-        "$slot_index_8|default": 10,
-        "$slot_control|default": "common.container_item",
-        "controls": [
-            {
-                "grid_3x3_slot_0@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [0, 0],
-                    "$slot_index": "$slot_index_0"
-                }
-            },
-            {
-                "grid_3x3_slot_1@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [18, 0],
-                    "$slot_index": "$slot_index_1"
-                }
-            },
-            {
-                "grid_3x3_slot_2@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [36, 0],
-                    "$slot_index": "$slot_index_2"
-                }
-            },
-            {
-                "grid_3x3_slot_3@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [0, 18],
-                    "$slot_index": "$slot_index_3"
-                }
-            },
-            {
-                "grid_3x3_slot_4@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [18, 18],
-                    "$slot_index": "$slot_index_4"
-                }
-            },
-            {
-                "grid_3x3_slot_5@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [36, 18],
-                    "$slot_index": "$slot_index_5"
-                }
-            },
-            {
-                "grid_3x3_slot_6@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [0, 36],
-                    "$slot_index": "$slot_index_6"
-                }
-            },
-            {
-                "grid_3x3_slot_7@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [18, 36],
-                    "$slot_index": "$slot_index_7"
-                }
-            },
-            {
-                "grid_3x3_slot_8@$slot_control": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [36, 36],
-                    "$slot_index": "$slot_index_8"
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_yellow_hover
+	 * Yellow cell hover image.
+	 */
+	"cell_yellow_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/yellow_cell_hover"
+	},
 
-    // ============================================================================
-    // SEÇÃO 3: COMPONENTES DE TOGGLE (Toggle Components)
-    // ============================================================================
+	/* ELEMENT: panel_yellow
+	 * Yellow panel image.
+	 */
+	"panel_yellow": {
+		"type": "image",
+		"texture": "textures/ui/panels/yellow_panel"
+	},
 
-    // Botões e estados para toggles (ligar/desligar painéis).
+	/* ELEMENT: cell_lime
+	 * Lime cell image.
+	 */
+	"cell_lime": {
+		"type": "image",
+		"texture": "textures/ui/cells/lime_cell"
+	},
 
-    // Botão de toggle completo com ícone customizável
-    // Parâmetros:
-    //   $toggle_name: nome único do toggle para bindings
-    //   $toggle_icon: textura do ícone (opcional, vazio = sem ícone)
-    //   $toggle_icon_size: tamanho do ícone [largura, altura]
-    // Uso: "@ascendant_common.toggle_button_base" com parâmetros
-    "toggle_button_base": {
-        "type": "panel",
-        "size": ["100%", "100%"],
-        "$toggle_name|default": "default_toggle",
-        "$toggle_texture|default": "textures/ui/cell_image",
-        "$toggle_icon|default": "",
-        "$toggle_icon_size|default": [16, 16],
-        "controls": [
-            {
-                "toggle_bg@ascendant_common.panel_bg": {
-                    "size": ["100%", "100%"],
-                    "alpha": 0.9,
-                    "layer": 0
-                }
-            },
-            {
-                "toggle_icon": {
-                    "type": "image",
-                    "texture": "$toggle_icon",
-                    "size": "$toggle_icon_size",
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "layer": 1,
-                    "ignored": "($toggle_icon = '')"
-                }
-            },
-            {
-                "toggle@common.toggle": {
-                    "size": ["100%", "100%"],
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "toggle_default_state": false,
-                    "layer": 2,
-                    "$toggle_name": "$toggle_name",
-                    "$unchecked_control": "ascendant_common.toggle_state_unchecked",
-                    "$checked_control": "ascendant_common.toggle_state_checked",
-                    "$unchecked_hover_control": "ascendant_common.toggle_state_unchecked",
-                    "$checked_hover_control": "ascendant_common.toggle_state_checked",
-                    "$unchecked_locked_control": "ascendant_common.toggle_state_unchecked",
-                    "$checked_locked_control": "ascendant_common.toggle_state_checked",
-                    "$unchecked_locked_hover_control": "ascendant_common.toggle_state_unchecked",
-                    "$checked_locked_hover_control": "ascendant_common.toggle_state_checked",
-                    "button_mappings": [
-                        {
-                            "from_button_id": "button.menu_select",
-                            "to_button_id": "button.menu_select",
-                            "mapping_type": "pressed"
-                        },
-                        {
-                            "from_button_id": "button.menu_ok",
-                            "to_button_id": "button.menu_select",
-                            "mapping_type": "pressed"
-                        }
-                    ]
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_lime_hover
+	 * Lime cell hover image.
+	 */
+	"cell_lime_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/lime_cell_hover"
+	},
 
-    // Estado visual do toggle quando desmarcado (OFF)
-    // Usado internamente pelos toggles
-    "toggle_state_unchecked": {
-        "type": "image",
-        "texture": "textures/ui/button_borderless_dark",
-        "size": ["100%", "100%"],
-        "controls":[
-            {
-                "plus":{
-                    "type": "image",
-                    "texture": "textures/ui/plus",
-                    "size": [8, 8],
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "layer": 1
-                }
-            }
-        ]
-    },
+	/* ELEMENT: panel_lime
+	 * Lime panel image.
+	 */
+	"panel_lime": {
+		"type": "image",
+		"texture": "textures/ui/panels/lime_panel"
+	},
 
-    // Estado visual do toggle quando marcado (ON)
-    // Usado internamente pelos toggles
-    "toggle_state_checked": {
-        "type": "image",
-        "texture": "textures/ui/button_borderless_darkpressednohover",
-        "size": ["100%", "100%"],
-        "alpha": 0.9,
-        "controls":[
-            {
-                "minus":{
-                    "type": "image",
-                    "texture": "textures/ui/minus",
-                    "size": [8, 8],
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "layer": 1
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_green
+	 * Green cell image.
+	 */
+	"cell_green": {
+		"type": "image",
+		"texture": "textures/ui/cells/green_cell"
+	},
 
-    // ============================================================================
-    // SEÇÃO 4: PAINÉIS COLAPSÁVEIS (Collapsible Panels)
-    // ============================================================================
-    // Painéis que podem ser mostrados/escondidos via toggle.
-    // ============================================================================
+	/* ELEMENT: cell_green_hover
+	 * Green cell hover image.
+	 */
+	"cell_green_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/green_cell_hover"
+	},
 
-    // Painel colapsável genérico com título
-    // Parâmetros:
-    //   $panel_title: título exibido no topo do painel
-    //   $panel_content: referência ao conteúdo interno (namespace.element)
-    //   $panel_size: tamanho do painel [largura, altura]
-    //   $toggle_control_name: nome do toggle que controla a visibilidade
-    // Uso: "@ascendant_common.collapsible_panel" com parâmetros
-    "collapsible_panel": {
-        "type": "panel",
-        "$panel_title|default": "Panel",
-        "$panel_content|default": "common.empty_panel",
-        "$panel_size|default": [140, 90],
-        "$toggle_control_name|default": "toggle_control",
-        "controls": [
-            {
-                "panel_container": {
-                    "type": "panel",
-                    "size": "$panel_size",
-                    "bindings": [
-                        {
-                            "binding_type": "view",
-                            "source_control_name": "$toggle_control_name",
-                            "source_property_name": "#toggle_state",
-                            "target_property_name": "#visible"
-                        }
-                    ],
-                    "controls": [
-                        {
-                            "bg@ascendant_common.panel_bg": {
-                                "size": "$panel_size",
-                                "alpha": 0.95,
-                                "layer": 0
-                            }
-                        },
-                        {
-                            "title": {
-                                "type": "label",
-                                "text": "$panel_title",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [0, 4],
-                                "color": [1, 1, 1],
-                                "layer": 1
-                            }
-                        },
-                        {
-                            "content@$panel_content": {
-                                "layer": 2
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
+	/* ELEMENT: panel_green
+	 * Green panel image.
+	 */
+	"panel_green": {
+		"type": "image",
+		"texture": "textures/ui/panels/green_panel"
+	},
 
-    // ============================================================================
-    // SEÇÃO 5: GRIDS DE FORNALHA (Furnace Grids) - DEPRECATED
-    // ============================================================================
-    // Grids pré-configurados para a fornalha embutida.
-    // NOTA: A fornalha agora usa energia ao invés de slots de combustível.
-    // Esses componentes são mantidos para referência mas não são mais usados.
-    // ============================================================================
+	/* ELEMENT: cell_cyan
+	 * Cyan cell image.
+	 */
+	"cell_cyan": {
+		"type": "image",
+		"texture": "textures/ui/cells/cyan_cell"
+	},
 
-    // Grid de entrada da fornalha (2x2 = 4 slots)
-    // Parâmetros:
-    //   $input_start_slot: índice inicial dos slots de entrada
-    // DEPRECATED: Use a fornalha baseada em energia
-    "furnace_input_grid": {
-        "type": "grid",
-        "anchor_from": "top_left",
-        "anchor_to": "top_left",
-        "offset": [8, 26],
-        "size": [36, 36],
-        "grid_dimensions": [2, 2],
-        "maximum_grid_items": 4,
-        "collection_name": "container_items",
-        "$item_collection_name": "container_items",
-        "layer": 2,
-        "$input_start_slot|default": 170,
-        "controls": [
-            {
-                "input_0@ascendant_common.slot_base": {
-                    "$slot_index": "$input_start_slot",
-                    "grid_position": [0, 0]
-                }
-            },
-            {
-                "input_1@ascendant_common.slot_base": {
-                    "$slot_index": "($input_start_slot + 1)",
-                    "grid_position": [1, 0]
-                }
-            },
-            {
-                "input_2@ascendant_common.slot_base": {
-                    "$slot_index": "($input_start_slot + 2)",
-                    "grid_position": [0, 1]
-                }
-            },
-            {
-                "input_3@ascendant_common.slot_base": {
-                    "$slot_index": "($input_start_slot + 3)",
-                    "grid_position": [1, 1]
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_cyan_hover
+	 * Cyan cell hover image.
+	 */
+	"cell_cyan_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/cyan_cell_hover"
+	},
 
-    // Grid de saída da fornalha (2x2 = 4 slots)
-    // Parâmetros:
-    //   $output_start_slot: índice inicial dos slots de saída
-    "furnace_output_grid": {
-        "type": "grid",
-        "anchor_from": "top_right",
-        "anchor_to": "top_right",
-        "offset": [-8, 26],
-        "size": [36, 36],
-        "grid_dimensions": [2, 2],
-        "maximum_grid_items": 4,
-        "collection_name": "container_items",
-        "$item_collection_name": "container_items",
-        "layer": 2,
-        "$output_start_slot|default": 175,
-        "controls": [
-            {
-                "output_0@ascendant_common.slot_base": {
-                    "$slot_index": "$output_start_slot",
-                    "grid_position": [0, 0]
-                }
-            },
-            {
-                "output_1@ascendant_common.slot_base": {
-                    "$slot_index": "($output_start_slot + 1)",
-                    "grid_position": [1, 0]
-                }
-            },
-            {
-                "output_2@ascendant_common.slot_base": {
-                    "$slot_index": "($output_start_slot + 2)",
-                    "grid_position": [0, 1]
-                }
-            },
-            {
-                "output_3@ascendant_common.slot_base": {
-                    "$slot_index": "($output_start_slot + 3)",
-                    "grid_position": [1, 1]
-                }
-            }
-        ]
-    },
+	/* ELEMENT: panel_cyan
+	 * Cyan panel image.
+	 */
+	"panel_cyan": {
+		"type": "image",
+		"texture": "textures/ui/panels/cyan_panel"
+	},
 
-    // ============================================================================
-    // SEÇÃO 6: ELEMENTOS DE TEXTO (Text Elements)
-    // ============================================================================
-    // Labels e textos estilizados reutilizáveis.
-    // ============================================================================
+	/* ELEMENT: cell_light_blue
+	 * Light blue cell image.
+	 */
+	"cell_light_blue": {
+		"type": "image",
+		"texture": "textures/ui/cells/light_blue_cell"
+	},
 
-    // Label de seção com fonte menor
-    // Parâmetros:
-    //   $label_text: texto a exibir (suporta códigos de cor como §7)
-    //   $label_color: cor RGB [r, g, b] (0.0-1.0)
-    // Uso: "@ascendant_common.section_label" com "$label_text": "texto"
-    "section_label": {
-        "type": "label",
-        "$label_text|default": "Label",
-        "$label_color|default": [1, 1, 1],
-        "text": "$label_text",
-        "font_scale_factor": 0.7,
-        "color": "$label_color",
-        "layer": 1
-    },
+	/* ELEMENT: cell_light_blue_hover
+	 * Light blue cell hover image.
+	 */
+	"cell_light_blue_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/light_blue_cell_hover"
+	},
 
-    // ============================================================================
-    // SEÇÃO 7: INDICADORES VISUAIS (Visual Indicators)
-    // ============================================================================
-    // Setas, barras de progresso e outros indicadores.
-    // ============================================================================
+	/* ELEMENT: panel_light_blue
+	 * Light blue panel image.
+	 */
+	"panel_light_blue": {
+		"type": "image",
+		"texture": "textures/ui/panels/light_blue_panel"
+	},
 
-    // Seta de progresso horizontal (aponta para direita)
-    // Uso: "@ascendant_common.progress_arrow" com anchor e offset
-    "progress_arrow": {
-        "type": "image",
-        "texture": "textures/ui/arrow_dark_right_stretch",
-        "size": [22, 15],
-        "layer": 1
-    },
+	/* ELEMENT: cell_blue
+	 * Blue cell image.
+	 */
+	"cell_blue": {
+		"type": "image",
+		"texture": "textures/ui/cells/blue_cell"
+	},
 
-    // ============================================================================
-    // SEÇÃO 8: DISPLAYS DE ENERGIA E FLUIDOS (Energy/Fluid Displays)
-    // ============================================================================
-    // Wrappers para as barras de energia e fluido do machineryCommon.
-    // Esses componentes dependem do namespace machineryCommon (dependência base).
-    // ============================================================================
+	/* ELEMENT: cell_blue_hover
+	 * Blue cell hover image.
+	 */
+	"cell_blue_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/blue_cell_hover"
+	},
 
-    // Display de fluido/líquido com borda decorativa
-    // Parâmetros:
-    //   $fluid_slot_index: índice do slot que contém os dados do fluido
-    // Uso: "@ascendant_common.liquid_display" com "$fluid_slot_index": número
-    "liquid_display": {
-        "type": "panel",
-        "$fluid_slot_index|default": 169,
-        "controls": [
-            {
-                // Barra de fluido da lib machineryCommon
-                "fluid_bar@machineryCommon.vertical_single": {
-                    "$is_fluid": true,
-                    "$has_bg": false,
-                    "$collection_index": "$fluid_slot_index",
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "layer": 0
-                }
-            },
-            {
-                // Borda decorativa do display de fluido
-                "fluid_border": {
-                    "type": "image",
-                    "texture": "textures/ui/liquid_border",
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": [50, 50],
-                    "offset": [10, 3],
-                    "layer": 13
-                }
-            }
-        ]
-    },
+	/* ELEMENT: panel_blue
+	 * Blue panel image.
+	 */
+	"panel_blue": {
+		"type": "image",
+		"texture": "textures/ui/panels/blue_panel"
+	},
 
-    // Overclock bar display (rendered like vertical_single)
-    // Parameters:
-    //   $overclock_slot_index: slot index that stores the overclock bar item
-    //   $outline_texture: outline texture
-    //   $has_bg: show bar background
-    "overclock_slot_display": {
-        "type": "collection_panel",
-        "anchor_from": "center",
-        "anchor_to": "center",
-        "size": [162, 72],
-        "collection_name": "container_items",
-        "$item_collection_name": "container_items",
-        "$overclock_slot_index|default": 0,
-        "$outline_texture|default": "textures/ui/energy_border",
-        "$has_bg|default": false,
-        "controls": [
-            {
-                "overclock_item@machineryCommon.container_item_3": {
-                    "collection_index": "$overclock_slot_index",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [10, 14]
-                }
-            },
-            {
-                "overclock_border": {
-                    "type": "image",
-                    "texture": "$outline_texture",
-                    "size": [144, 50],
-                    "offset": [10, 3],
-                    "layer": 9
-                }
-            },
-            {
-                "background": {
-                    "type": "image",
-                    "texture": "textures/ui/bar_bg",
-                    "size": [28, 64],
-                    "offset": [10, 3],
-                    "layer": 0,
-                    "visible": "$has_bg"
-                }
-            }
-        ]
-    },
+	/* ELEMENT: cell_purple
+	 * Purple cell image.
+	 */
+	"cell_purple": {
+		"type": "image",
+		"texture": "textures/ui/cells/purple_cell"
+	},
 
-    // Display de energia com barra vertical
-    // Parâmetros:
-    //   $energy_slot_index: índice do slot que contém os dados de energia
-    // Uso: "@ascendant_common.energy_display" com "$energy_slot_index": número
-    "energy_display": {
-        "type": "panel",
-        "$energy_slot_index|default": 168,
-        "controls": [
-            {
-                // Barra de energia da lib machineryCommon
-                "energy_bar@machineryCommon.vertical_single": {
-                    "$collection_index": "$energy_slot_index",
-                    "$is_energy": true,
-                    "$has_bg": false
-                }
-            }
-        ]
-    }
+	/* ELEMENT: cell_purple_hover
+	 * Purple cell hover image.
+	 */
+	"cell_purple_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/purple_cell_hover"
+	},
 
-    // ============================================================================
-    // FIM DO ARQUIVO - ascendant_common.json
-    // ============================================================================
+	/* ELEMENT: panel_purple
+	 * Purple panel image.
+	 */
+	"panel_purple": {
+		"type": "image",
+		"texture": "textures/ui/panels/purple_panel"
+	},
+
+	/* ELEMENT: cell_magenta
+	 * Magenta cell image.
+	 */
+	"cell_magenta": {
+		"type": "image",
+		"texture": "textures/ui/cells/magenta_cell"
+	},
+
+	/* ELEMENT: cell_magenta_hover
+	 * Magenta cell hover image.
+	 */
+	"cell_magenta_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/magenta_cell_hover"
+	},
+
+	/* ELEMENT: panel_magenta
+	 * Magenta panel image.
+	 */
+	"panel_magenta": {
+		"type": "image",
+		"texture": "textures/ui/panels/magenta_panel"
+	},
+
+	/* ELEMENT: cell_pink
+	 * Pink cell image.
+	 */
+	"cell_pink": {
+		"type": "image",
+		"texture": "textures/ui/cells/pink_cell"
+	},
+
+	/* ELEMENT: cell_pink_hover
+	 * Pink cell hover image.
+	 */
+	"cell_pink_hover": {
+		"type": "image",
+		"texture": "textures/ui/cells/pink_cell_hover"
+	},
+
+	/* ELEMENT: panel_pink
+	 * Pink panel image.
+	 */
+	"panel_pink": {
+		"type": "image",
+		"texture": "textures/ui/panels/pink_panel"
+	},
+
+	/* SUBSECTION: UI BACKGROUND ASSETS
+	 * Generic background images reused by components.
+	 */
+
+	/* ELEMENT: dark_cell
+	 * Dark cell background image.
+	 */
+	"dark_cell": {
+		"type": "image",
+		"texture": "textures/ui/cells/dark_cell_image"
+	},
+
+	/* ELEMENT: dark_bg
+	 * Dark background panel image.
+	 */
+	"dark_bg": {
+		"type": "image",
+		"texture": "textures/ui/panels/background_panel_dark"
+	},
+
+	/* ELEMENT: blue_bg
+	 * Blue background panel image.
+	 */
+	"blue_bg": {
+		"type": "image",
+		"texture": "textures/ui/panels/background_panel_blue"
+	},
+
+	/* ELEMENT: aqua_bg
+	 * Aqua background panel image.
+	 */
+	"aqua_bg": {
+		"type": "image",
+		"texture": "textures/ui/panels/background_panel_aqua"
+	},
+
+	/* SECTION: DISPLAYS
+	 * Energy and fluid visual components.
+	 */
+
+	/* SUBSECTION: ENERGY AND FLUID DISPLAYS
+	 * Wrappers around machineryCommon bars and indicators.
+	 */
+
+	/* ELEMENT: energy_display
+	 * Vertical energy bar display.
+	 */
+	"energy_display": {
+		"type": "panel",
+		"$energy_slot_index|default": 168,
+		"controls": [
+			{
+				/* Energy bar from machineryCommon library. */
+				"energy_bar@machineryCommon.vertical_single": {
+					"$collection_index": "$energy_slot_index",
+					"$is_energy": true,
+					"$has_bg": false
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: liquid_display
+	 * Fluid bar display with decorative border.
+	 */
+	"liquid_display": {
+		"type": "panel",
+		"$fluid_slot_index|default": 169,
+		"controls": [
+			{
+				/* Fluid bar from machineryCommon library. */
+				"fluid_bar@machineryCommon.vertical_single": {
+					"$is_fluid": true,
+					"$has_bg": false,
+					"$collection_index": "$fluid_slot_index",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 0
+				}
+			},
+			{
+				/* Decorative border for the fluid display. */
+				"fluid_border": {
+					"type": "image",
+					"texture": "textures/ui/liquid_border",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"size": [50, 50],
+					"offset": [10, 3],
+					"layer": 13
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: overclock_slot_display
+	 * Overclock bar display rendered like vertical_single.
+	 */
+	"overclock_slot_display": {
+		"type": "collection_panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [162, 72],
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"$overclock_slot_index|default": 0,
+		"$outline_texture|default": "textures/ui/energy_border",
+		"$has_bg|default": false,
+		"controls": [
+			{
+				/* Item renderer for the overclock slot. */
+				"overclock_item@machineryCommon.container_item_3": {
+					"collection_index": "$overclock_slot_index",
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [10, 14]
+				}
+			},
+			{
+				/* Outline border for the display. */
+				"overclock_border": {
+					"type": "image",
+					"texture": "$outline_texture",
+					"size": [144, 50],
+					"offset": [10, 3],
+					"layer": 9
+				}
+			},
+			{
+				/* Optional background for the bar. */
+				"background": {
+					"type": "image",
+					"texture": "textures/ui/bar_bg",
+					"size": [28, 64],
+					"offset": [10, 3],
+					"layer": 0,
+					"visible": "$has_bg"
+				}
+			}
+		]
+	},
+
+	/* SECTION: GRIDS
+	 * Grid layouts for item slots.
+	 */
+
+	/* SUBSECTION: FURNACE GRIDS (DEPRECATED)
+	 * Legacy furnace grids kept for reference.
+	 */
+
+	/* ELEMENT: furnace_input_grid
+	 * Deprecated 2x2 furnace input grid.
+	 */
+	"furnace_input_grid": {
+		"type": "grid",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [8, 26],
+		"size": [36, 36],
+		"grid_dimensions": [2, 2],
+		"maximum_grid_items": 4,
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"layer": 2,
+		"$input_start_slot|default": 170,
+		"controls": [
+			{
+				"input_0@ascendant_common.slot_base": {
+					"$slot_index": "$input_start_slot",
+					"grid_position": [0, 0]
+				}
+			},
+			{
+				"input_1@ascendant_common.slot_base": {
+					"$slot_index": "($input_start_slot + 1)",
+					"grid_position": [1, 0]
+				}
+			},
+			{
+				"input_2@ascendant_common.slot_base": {
+					"$slot_index": "($input_start_slot + 2)",
+					"grid_position": [0, 1]
+				}
+			},
+			{
+				"input_3@ascendant_common.slot_base": {
+					"$slot_index": "($input_start_slot + 3)",
+					"grid_position": [1, 1]
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: furnace_output_grid
+	 * Deprecated 2x2 furnace output grid.
+	 */
+	"furnace_output_grid": {
+		"type": "grid",
+		"anchor_from": "top_right",
+		"anchor_to": "top_right",
+		"offset": [-8, 26],
+		"size": [36, 36],
+		"grid_dimensions": [2, 2],
+		"maximum_grid_items": 4,
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"layer": 2,
+		"$output_start_slot|default": 175,
+		"controls": [
+			{
+				"output_0@ascendant_common.slot_base": {
+					"$slot_index": "$output_start_slot",
+					"grid_position": [0, 0]
+				}
+			},
+			{
+				"output_1@ascendant_common.slot_base": {
+					"$slot_index": "($output_start_slot + 1)",
+					"grid_position": [1, 0]
+				}
+			},
+			{
+				"output_2@ascendant_common.slot_base": {
+					"$slot_index": "($output_start_slot + 2)",
+					"grid_position": [0, 1]
+				}
+			},
+			{
+				"output_3@ascendant_common.slot_base": {
+					"$slot_index": "($output_start_slot + 3)",
+					"grid_position": [1, 1]
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: ITEM GRIDS
+	 * Reusable item grids for 2x2 and 3x3 layouts.
+	 */
+
+	/* ELEMENT: grid_2x2
+	 * 2x2 slot grid with manual slot indices.
+	 * SIMPLE EXAMPLE:
+	 * { "grid@ascendant_common.grid_2x2": { "$slot_index_0": 0, "$slot_index_1": 1, "$slot_index_2": 2, "$slot_index_3": 3 } }
+	 */
+	"grid_2x2": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [36, 36],
+		"layer": 2,
+		"$slot_index_0|default": 2,
+		"$slot_index_1|default": 3,
+		"$slot_index_2|default": 4,
+		"$slot_index_3|default": 5,
+		"$slot_control|default": "ascendant_common.slot_base",
+		"controls": [
+			{
+				"grid_2x2_slot_0@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"$slot_index": "$slot_index_0"
+				}
+			},
+			{
+				"grid_2x2_slot_1@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [18, 0],
+					"$slot_index": "$slot_index_1"
+				}
+			},
+			{
+				"grid_2x2_slot_2@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 18],
+					"$slot_index": "$slot_index_2"
+				}
+			},
+			{
+				"grid_2x2_slot_3@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [18, 18],
+					"$slot_index": "$slot_index_3"
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: grid_3x3
+	 * 3x3 slot grid with manual slot indices.
+	 */
+	"grid_3x3": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [54, 54],
+		"layer": 2,
+		"$cell_size|default": [18, 18],
+		"$size|default": [54, 54],
+		"$slot_index_0|default": 2,
+		"$slot_index_1|default": 3,
+		"$slot_index_2|default": 4,
+		"$slot_index_3|default": 5,
+		"$slot_index_4|default": 6,
+		"$slot_index_5|default": 7,
+		"$slot_index_6|default": 8,
+		"$slot_index_7|default": 9,
+		"$slot_index_8|default": 10,
+		"$slot_control|default": "common.container_item",
+		"controls": [
+			{
+				"grid_3x3_slot_0@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"collection_panel": "$slot_index_0",
+					"$slot_index": "$slot_index_0"
+				}
+			},
+			{
+				"grid_3x3_slot_1@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [18, 0],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"collection_index": "$slot_index_1",
+					"$slot_index": "$slot_index_1"
+				}
+			},
+			{
+				"grid_3x3_slot_2@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [36, 0],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"collection_index": "$slot_index_2",
+					"$slot_index": "$slot_index_2"
+				}
+			},
+			{
+				"grid_3x3_slot_3@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 18],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"collection_index": "$slot_index_3",
+					"$slot_index": "$slot_index_3"
+				}
+			},
+			{
+				"grid_3x3_slot_4@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [18, 18],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"collection_index": "$slot_index_4",
+					"$slot_index": "$slot_index_4"
+				}
+			},
+			{
+				"grid_3x3_slot_5@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [36, 18],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"collection_index": "$slot_index_5",
+					"$slot_index": "$slot_index_5"
+				}
+			},
+			{
+				"grid_3x3_slot_6@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 36],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"collection_index": "$slot_index_6",
+					"$slot_index": "$slot_index_6"
+				}
+			},
+			{
+				"grid_3x3_slot_7@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [18, 36],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"collection_index": "$slot_index_7",
+					"$slot_index": "$slot_index_7"
+				}
+			},
+			{
+				"grid_3x3_slot_8@$slot_control": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [36, 36],
+					"size": "$cell_size",
+					"$cell_image_size": "$cell_size",
+					"collection_index": "$slot_index_8",
+					"$slot_index": "$slot_index_8"
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: IRON CHEST GRIDS
+	 * Preset grids for chest-sized containers.
+	 */
+
+	/* ELEMENT: iron_chest_grid_9x3
+	 * 9x3 grid (27 slots).
+	 */
+	"iron_chest_grid_9x3": {
+		"type": "grid",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [162, 54],
+		"grid_dimensions": [9, 3],
+		"maximum_grid_items": 27,
+		"$grid_item_template|default": "chest.chest_grid_item",
+		"grid_item_template": "$grid_item_template",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"layer": 2
+	},
+
+	/* ELEMENT: iron_chest_grid_9x4
+	 * 9x4 grid (36 slots).
+	 */
+	"iron_chest_grid_9x4": {
+		"type": "grid",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [162, 72],
+		"grid_dimensions": [9, 4],
+		"maximum_grid_items": 36,
+		"$grid_item_template|default": "chest.chest_grid_item",
+		"grid_item_template": "$grid_item_template",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"layer": 2
+	},
+
+	/* ELEMENT: iron_chest_grid_9x8
+	 * 9x8 grid (72 slots).
+	 */
+	"iron_chest_grid_9x8": {
+		"type": "grid",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [162, 144],
+		"grid_dimensions": [9, 8],
+		"maximum_grid_items": 72,
+		"$grid_item_template|default": "chest.chest_grid_item",
+		"grid_item_template": "$grid_item_template",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"layer": 2
+	},
+
+	/* ELEMENT: iron_chest_grid_8x6
+	 * 8x6 grid (48 slots).
+	 */
+	"iron_chest_grid_8x6": {
+		"type": "grid",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [144, 108],
+		"grid_dimensions": [8, 6],
+		"maximum_grid_items": 48,
+		"$grid_item_template|default": "chest.chest_grid_item",
+		"grid_item_template": "$grid_item_template",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"layer": 2
+	},
+
+	/* ELEMENT: iron_chest_grid_10x8
+	 * 10x8 grid (80 slots).
+	 */
+	"iron_chest_grid_10x8": {
+		"type": "grid",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [180, 144],
+		"grid_dimensions": [10, 8],
+		"maximum_grid_items": 80,
+		"$grid_item_template|default": "chest.chest_grid_item",
+		"grid_item_template": "$grid_item_template",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"layer": 2
+	},
+
+	/* ELEMENT: iron_chest_grid_14x12
+	 * 14x12 grid (168 slots).
+	 */
+	"iron_chest_grid_14x12": {
+		"type": "grid",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [252, 216],
+		"grid_dimensions": [14, 12],
+		"maximum_grid_items": 168,
+		"$grid_item_template|default": "chest.chest_grid_item",
+		"grid_item_template": "$grid_item_template",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"layer": 2
+	},
+
+	/* SECTION: CONTAINERS
+	 * Container layouts for chest-style UIs.
+	 */
+
+	/* SUBSECTION: IRON CHEST STORAGE WRAPPERS
+	 * Grid and background wrappers for iron chest sizes.
+	 */
+	"iron_chest_storage_wrapper_9x3": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"size": [162, 54],
+		"controls": [
+			{
+				"storage_scroll@ascendant_common.scroll_panel_9x3": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"layer": 2,
+					"$scrolling_content": "ascendant_common.iron_chest_grid_9x8"
+				}
+			},
+			{
+				"storage_background@ascendant_common.panel_gray": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [-6, -6],
+					"size": [174, 66],
+					"layer": 0
+				}
+			}
+		]
+	},
+
+	"iron_chest_storage_wrapper_9x4": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"size": [162, 72],
+		"controls": [
+			{
+				"storage_grid@ascendant_common.iron_chest_grid_9x4": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"layer": 2
+				}
+			},
+			{
+				"storage_background@ascendant_common.panel_gray": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [-6, -6],
+					"size": [174, 84],
+					"layer": 0
+				}
+			}
+		]
+	},
+
+	"iron_chest_storage_wrapper_9x8": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"size": [162, 144],
+		"controls": [
+			{
+				"storage_grid@ascendant_common.iron_chest_grid_9x8": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"layer": 2
+				}
+			},
+			{
+				"storage_background@ascendant_common.panel_gray": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [-6, -6],
+					"size": [174, 156],
+					"layer": 0
+				}
+			}
+		]
+	},
+
+	"iron_chest_storage_wrapper_8x6": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"size": [144, 108],
+		"controls": [
+			{
+				"storage_grid@ascendant_common.iron_chest_grid_8x6": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"layer": 2
+				}
+			},
+			{
+				"storage_background@ascendant_common.panel_gray": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [-6, -6],
+					"size": [156, 120],
+					"layer": 0
+				}
+			}
+		]
+	},
+
+	"iron_chest_storage_wrapper_10x8": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"size": [180, 144],
+		"controls": [
+			{
+				"storage_grid@ascendant_common.iron_chest_grid_10x8": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"layer": 2
+				}
+			},
+			{
+				"storage_background@ascendant_common.panel_gray": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [-6, -6],
+					"size": [192, 156],
+					"layer": 0
+				}
+			}
+		]
+	},
+
+	"iron_chest_storage_wrapper_14x12": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"size": [252, 216],
+		"controls": [
+			{
+				"storage_grid@ascendant_common.iron_chest_grid_14x12": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"layer": 2
+				}
+			},
+			{
+				"storage_background@ascendant_common.panel_gray": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [-6, -6],
+					"size": [264, 228],
+					"layer": 0
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: IRON CHEST CONTAINER ROOTS
+	 * Simplified container layout without status panels.
+	 */
+	"iron_chest_container_top_base": {
+		"type": "collection_panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [162, 72],
+		"offset": [0, -40],
+		"$storage_wrapper_ref|default": "ascendant_common.iron_chest_storage_wrapper_9x4",
+		"$show_container_label|default": false,
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"controls": [
+			{
+				"storage_wrapper@$storage_wrapper_ref": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, 0]
+				}
+			},
+			{
+				"container_label_bg@ascendant_common.panel_gray": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [0, -29],
+					"size": [150, 24],
+					"layer": 1,
+					"ignored": "(not $show_container_label)",
+					"controls": [
+						{
+							"chest_label@chest.chest_label": {
+								"anchor_from": "top_middle",
+								"anchor_to": "top_middle",
+								"offset": [20, 7]
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+
+	"iron_chest_container_top_9x3@ascendant_common.iron_chest_container_top_base": {
+		"size": [162, 72],
+		"offset": [0, -31],
+		"$storage_wrapper_ref": "ascendant_common.iron_chest_storage_wrapper_9x3"
+	},
+
+	"iron_chest_container_top_9x4@ascendant_common.iron_chest_container_top_base": {
+		"size": [162, 72],
+		"offset": [0, -40],
+		"$storage_wrapper_ref": "ascendant_common.iron_chest_storage_wrapper_9x4"
+	},
+
+	"iron_chest_container_top_9x8@ascendant_common.iron_chest_container_top_base": {
+		"size": [162, 144],
+		"offset": [0, -76],
+		"$storage_wrapper_ref": "ascendant_common.iron_chest_storage_wrapper_9x8"
+	},
+
+	"iron_chest_container_top_8x6@ascendant_common.iron_chest_container_top_base": {
+		"size": [144, 108],
+		"offset": [0, -58],
+		"$storage_wrapper_ref": "ascendant_common.iron_chest_storage_wrapper_8x6"
+	},
+
+	"iron_chest_container_top_10x8@ascendant_common.iron_chest_container_top_base": {
+		"size": [180, 144],
+		"offset": [0, -76],
+		"$storage_wrapper_ref": "ascendant_common.iron_chest_storage_wrapper_10x8"
+	},
+
+	"iron_chest_container_top_14x12@ascendant_common.iron_chest_container_top_base": {
+		"size": [252, 216],
+		"offset": [0, -112],
+		"$storage_wrapper_ref": "ascendant_common.iron_chest_storage_wrapper_14x12"
+	},
+
+	"iron_chest_utility_panel_base": {
+		"type": "panel",
+		"$container_top_ref|default": "ascendant_common.iron_chest_container_top_base",
+		"controls": [
+			{
+				"container_gamepad_helpers@common.container_gamepad_helpers": {}
+			},
+			{
+				"flying_item_renderer@common.flying_item_renderer": {
+					"layer": 14
+				}
+			},
+			{
+				"selected_item_details_factory@common.selected_item_details_factory": {}
+			},
+			{
+				"item_lock_notification_factory@common.item_lock_notification_factory": {}
+			},
+			{
+				"root_panel@common.root_panel": {
+					"layer": 1,
+					"controls": [
+						{
+							"common_panel@common.common_panel": {}
+						},
+						{
+							"chest_panel": {
+								"type": "panel",
+								"layer": 5,
+								"controls": [
+									{
+										"iron_chest_container_top@$container_top_ref": {}
+									},
+									{
+										"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+									},
+									{
+										"hotbar_grid@common.hotbar_grid_template": {}
+									},
+									{
+										"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+									}
+								]
+							}
+						},
+						{
+							"inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+						},
+						{
+							"gamepad_cursor@common.gamepad_cursor_button": {}
+						}
+					]
+				}
+			}
+		]
+	},
+
+	"iron_chest_utility_panel_9x3@ascendant_common.iron_chest_utility_panel_base": {
+		"$container_top_ref": "ascendant_common.iron_chest_container_top_9x3"
+	},
+
+	"iron_chest_utility_panel_9x4@ascendant_common.iron_chest_utility_panel_base": {
+		"$container_top_ref": "ascendant_common.iron_chest_container_top_9x4"
+	},
+
+	"iron_chest_utility_panel_9x8@ascendant_common.iron_chest_utility_panel_base": {
+		"$container_top_ref": "ascendant_common.iron_chest_container_top_9x8"
+	},
+
+	"iron_chest_utility_panel_8x6@ascendant_common.iron_chest_utility_panel_base": {
+		"$container_top_ref": "ascendant_common.iron_chest_container_top_8x6"
+	},
+
+	"iron_chest_utility_panel_10x8@ascendant_common.iron_chest_utility_panel_base": {
+		"$container_top_ref": "ascendant_common.iron_chest_container_top_10x8"
+	},
+
+	"iron_chest_utility_panel_14x12@ascendant_common.iron_chest_utility_panel_base": {
+		"$container_top_ref": "ascendant_common.iron_chest_container_top_14x12"
+	},
+
+	/* SECTION: PANELS
+	 * Panel building blocks and panel-based layouts.
+	 */
+
+	/* SUBSECTION: BACKGROUND PANELS
+	 * Parametric and legacy background panels.
+	 */
+
+		/* ELEMENT: info_panel
+		 * Basic machine info panel with customizable background.
+		 */
+		"info_panel": {
+			"type": "panel",
+			"$index|default": 0,
+			"size": "$bg_size",
+			"$background_color|default": "gray",
+			"$text_borders|default": [76, 150],
+			"$info_size|default": [80, 154],
+			"$bg_size|default": [90, 166],
+			"$panel_bg_control|default": "ascendant_common.panel_bg",
+			"$background_color|dark": {
+				"$panel_bg_control": "ascendant_common.panel_bg_dark"
+			},
+			"$background_color|blue": {
+				"$panel_bg_control": "ascendant_common.panel_bg_blue"
+			},
+			"$background_color|aqua": {
+				"$panel_bg_control": "ascendant_common.panel_bg_aqua"
+			},
+			"$background_color|gray": {
+				"$panel_bg_control": "ascendant_common.panel_bg"
+			},
+			"controls": [
+				{
+					"item_label_container": {
+						"type": "panel",
+						"collection_index": "$index",
+						"layer": 3,
+						"size": "$text_borders",
+						"controls": [
+							{
+								"item_label@ascendant_common.item_label": {
+									"size": "$text_borders"
+								}
+							}
+						]
+					}
+				},
+				{
+					"background_panel@$panel_bg_control": {
+						"$panel_size": "$bg_size",
+						"layer": 1
+					}
+				},
+				{
+					"screen@ascendant_common.screen": {
+						"anchor_from": "center",
+						"anchor_to": "center",
+						"size": "$info_size",
+						"layer": 2
+					}
+				}
+			]
+		},
+
+	/* ELEMENT: panel
+	 * Parametric background panel controlled by $panel_color.
+	 */
+	"panel": {
+		"type": "panel",
+		"$panel_size|default": [ 176, 166 ],
+		"$panel_alpha|default": 1,
+		"$panel_layer|default": 0,
+		"$close_button|default": "dark",
+		"$close_button|dark": true,
+		"$close_button|light": false,
+		"$dark_close_button|default": "$close_button",
+		"$dark_close_button|dark": true,
+		"$dark_close_button|light": false,
+		"$light_close_button|default": "$close_button",
+		"$light_close_button|dark": false,
+		"$light_close_button|light": true,
+		"$panel_color|default": "gray",
+		"$panel_texture|default": "textures/ui/panels/background_panel",
+		"$panel_color|gray": {
+			"$panel_texture": "textures/ui/panels/background_panel"
+		},
+		"$panel_color|dark": {
+			"$panel_texture": "textures/ui/panels/background_panel_dark"
+		},
+		"$panel_color|blue": {
+			"$panel_texture": "textures/ui/panels/background_panel_blue"
+		},
+		"$panel_color|aqua": {
+			"$panel_texture": "textures/ui/panels/background_panel_aqua"
+		},
+		"controls": [
+			{
+				"panel_surface": {
+					"type": "image",
+					"texture": "$panel_texture",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer"
+				}
+			},
+			{
+				"close_button_light@common.light_close_button": { 
+					"visible": "$light_close_button"
+				}
+			},
+			{
+				"close_button_dark@common.close_button": {
+					"visible": "$dark_close_button"
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: panel_bg
+	 * Legacy wrapper for the default gray panel.
+	 */
+	"panel_bg@ascendant_common.panel": {
+		"$panel_color": "gray"
+	},
+
+	/* ELEMENT: panel_bg_dark
+	 * Legacy wrapper for the dark panel.
+	 */
+	"panel_bg_dark@ascendant_common.panel": {
+		"$panel_color": "dark"
+	},
+
+	/* ELEMENT: panel_bg_blue
+	 * Legacy wrapper for the blue panel.
+	 */
+	"panel_bg_blue@ascendant_common.panel": {
+		"$panel_color": "blue"
+	},
+
+
+	/* ELEMENT: panel_bg_aqua
+	 * Legacy wrapper for the aqua panel.
+	 */
+	"panel_bg_aqua@ascendant_common.panel": {
+		"$panel_color": "aqua"
+	},
+
+	/* ELEMENT: panel_bg_gray
+	 * Legacy wrapper for a simple gray background texture.
+	 */
+	"panel_bg_gray@ascendant_common.panel": {
+		"$panel_color": "gray",
+		"$panel_texture": "textures/ui/panels/simple_bg_gray"
+	},
+
+	/* SUBSECTION: COLLAPSIBLE PANELS
+	 * Panels that show or hide content using a toggle state.
+	 */
+
+	/* ELEMENT: collapsible_panel
+	 * Generic collapsible panel with a title and content slot.
+	 */
+	"collapsible_panel": {
+		"type": "panel",
+		"$panel_title|default": "Panel",
+		"$panel_content|default": "common.empty_panel",
+		"$panel_size|default": [140, 90],
+		"$toggle_control_name|default": "toggle_control",
+		"controls": [
+			{
+				"panel_container": {
+					"type": "panel",
+					"size": "$panel_size",
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "$toggle_control_name",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible"
+						}
+					],
+					"controls": [
+						{
+							"bg@ascendant_common.panel_bg": {
+								"size": "$panel_size",
+								"alpha": 0.95,
+								"layer": 0
+							}
+						},
+						{
+							"title": {
+								"type": "label",
+								"text": "$panel_title",
+								"anchor_from": "top_middle",
+								"anchor_to": "top_middle",
+								"offset": [0, 4],
+								"color": [1, 1, 1],
+								"layer": 1
+							}
+						},
+						{
+							"content@$panel_content": {
+								"layer": 2
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: DECORATIVE PANELS
+	 * Decorative backgrounds for machine screens and highlights.
+	 */
+
+	/* ELEMENT: panel_long_classic
+	 * Classic long panel for machine screens.
+	 */
+	"panel_long_classic": {
+		"type": "image",
+		"texture": "textures/ui/panels/long_panel_classic",
+		"size": ["100%", "100%"],
+		"layer": 0
+	},
+
+	/* ELEMENT: panel_with_border
+	 * Highlight panel with a border.
+	 */
+	"panel_with_border": {
+		"type": "image",
+		"texture": "textures/ui/panels/background_with_border",
+		"size": ["100%", "100%"],
+		"layer": 0
+	},
+
+	/* ELEMENT: screen
+	 * Borderless classic panel image used as a screen background.
+	 */
+	"screen": {
+		"type": "image",
+		"texture": "textures/ui/panels/panel_classic_borderless",
+		"$size|default": [86, 158],
+		"size": "$size",
+		"layer": 0
+	},
+
+	/* SUBSECTION: DIALOG BACKGROUNDS
+	 * Base background images for dialog panels.
+	 */
+
+	/* ELEMENT: dialog_background_dark
+	 * Dark dialog background image.
+	 */
+	"dialog_background_dark": {
+		"type": "image",
+		"texture": "textures/ui/panels/background_panel_dark"
+	},
+
+	/* ELEMENT: dialog_background_blue
+	 * Blue dialog background image.
+	 */
+	"dialog_background_blue": {
+		"type": "image",
+		"texture": "textures/ui/panels/background_panel_blue"
+	},
+
+	/* SUBSECTION: DIALOG PANELS
+	 * Dialog panels with close button and optional divider.
+	 */
+
+	/* ELEMENT: dark_panel
+	 * Dark dialog panel with optional close button and divider.
+	 */
+	"dark_panel": {
+		"type": "panel",
+		"$dialog_background|default": "ascendant_common.dialog_background_dark",
+		"$show_close_button|default": true,
+		"$close_button_visible_binding_name|default": "#close_button_visible",
+		"$close_button_offset|default": [0, 0],
+		"$close_button_layer|default": 2,
+		"$use_compact_close_button|default": false,
+		"$show_divider|default": false,
+		"$divider_offset|default": ["42.5%", "22px"],
+		"$divider_visible_binding_name|default": "",
+		"$divider_visible_binding_type|default": "none",
+		"$divider_size|default": ["5px", "100% - 29px"],
+		"controls": [
+			{
+				"bg_image@$dialog_background": {
+					"layer": 1
+				}
+			},
+			{
+				"dialog_divider@common.dialog_divider": {
+					"visible": "$show_divider",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": "$divider_offset",
+					"size": "$divider_size",
+					"bindings": [
+						{
+							"binding_name": "$divider_visible_binding_name",
+							"binding_name_override": "#visible",
+							"binding_type": "$divider_visible_binding_type"
+						}
+					]
+				}
+			},
+			{
+				"close_button_holder": {
+					"type": "panel",
+					"ignored": "(not $show_close_button)",
+					"controls": [
+						{
+							"close@common.light_close_button": {
+								"layer": "$close_button_layer",
+								"offset": "$close_button_offset",
+								"ignored": "$use_compact_close_button"
+							}
+						},
+						{
+							"compact_close@common.compact_close_button": {
+								"layer": "$close_button_layer",
+								"offset": "$close_button_offset",
+								"ignored": "(not $use_compact_close_button)"
+							}
+						}
+					],
+					"bindings": [
+						{
+							"binding_name": "$close_button_visible_binding_name",
+							"binding_name_override": "#visible"
+						}
+					]
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: blue_panel
+	 * Blue dialog panel using the dark panel behavior.
+	 */
+	"blue_panel@ascendant_common.dark_panel": {
+		"$dialog_background": "ascendant_common.dialog_background_blue"
+	},
+
+	/* SECTION: SLOTS
+	 * Inventory and container slot components.
+	 */
+
+	/* SUBSECTION: SLOT BASE
+	 * Primary slot template used by custom UIs.
+	 */
+
+	/* ELEMENT: slot_base
+	 * Highly customizable slot base with background, outline, and item renderer.
+	 */
+	"slot_base": {
+		"type": "input_panel",
+		"size": "$slot_size",
+		"layer": 1,
+		"$slot_size|default": [18, 18],
+		"$slot_index|default": 0,
+		"$cell_image_size|default": "$slot_size",
+		"$slot_bg_variant|default": "gray",
+		"$slot_color|default": "gray",
+		"$cell_color|default": [1, 1, 1],
+		"$cell_texture|default": "textures/ui/cell_image",
+		"$outline_variant|default": "none",
+		"$outline_texture|default": "",
+		"$has_outline|default": false,
+		"$outline_color|default": "textures/ui/frozen_outline",
+		"$outline_size|default": [22, 22],
+		"$cell_overlay_ref|default": "common.cell_overlay",
+		"$button_ref|default": "common.container_slot_button_prototype",
+		"$stack_count_required|default": true,
+		"$durability_bar_required|default": true,
+		"$storage_bar_required|default": true,
+		"$item_renderer|default": "common.item_renderer",
+		"$item_renderer_panel_size|default": "$slot_size",
+		"$item_renderer_size|default": [16, 16],
+		"$item_renderer_offset|default": [0, 0],
+		"$slot_background_ref|default": "common.empty_panel",
+		"$slot_background_offset|default": [0, 0],
+		"$slot_background_layer|default": -1,
+		"$cell_image_ref|default": "common.cell_image_panel",
+		"$cell_image_control_name|default": "cell",
+		"$focus_id|default": "",
+		"$focus_override_down|default": "",
+		"$focus_override_up|default": "",
+		"$focus_override_left|default": "",
+		"$focus_override_right|default": "",
+		"$slot_bg_variant|gray": {
+			"$cell_image_ref": "common.cell_image_panel"
+		},
+		"$slot_bg_variant|dark": {
+			"$cell_image_ref": "ascendant_common.dark_cell"
+		},
+		"$slot_bg_variant|blue": {
+			"$cell_image_ref": "ascendant_common.blue_bg"
+		},
+		"$slot_bg_variant|aqua": {
+			"$cell_image_ref": "ascendant_common.aqua_bg"
+		},
+		"$slot_color|dark": {
+			"$cell_image_ref": "ascendant_common.dark_cell"
+		},
+		"$slot_color|white": {
+			"$cell_image_ref": "ascendant_common.cell_white"
+		},
+		"$slot_color|light_gray": {
+			"$cell_image_ref": "ascendant_common.cell_light_gray"
+		},
+		"$slot_color|gray": {
+			"$cell_image_ref": "ascendant_common.cell_gray"
+		},
+		"$slot_color|black": {
+			"$cell_image_ref": "ascendant_common.cell_black"
+		},
+		"$slot_color|brown": {
+			"$cell_image_ref": "ascendant_common.cell_brown"
+		},
+		"$slot_color|red": {
+			"$cell_image_ref": "ascendant_common.cell_red"
+		},
+		"$slot_color|orange": {
+			"$cell_image_ref": "ascendant_common.cell_orange"
+		},
+		"$slot_color|yellow": {
+			"$cell_image_ref": "ascendant_common.cell_yellow"
+		},
+		"$slot_color|lime": {
+			"$cell_image_ref": "ascendant_common.cell_lime"
+		},
+		"$slot_color|green": {
+			"$cell_image_ref": "ascendant_common.cell_green"
+		},
+		"$slot_color|cyan": {
+			"$cell_image_ref": "ascendant_common.cell_cyan"
+		},
+		"$slot_color|light_blue": {
+			"$cell_image_ref": "ascendant_common.cell_light_blue"
+		},
+		"$slot_color|blue": {
+			"$cell_image_ref": "ascendant_common.cell_blue"
+		},
+		"$slot_color|purple": {
+			"$cell_image_ref": "ascendant_common.cell_purple"
+		},
+		"$slot_color|magenta": {
+			"$cell_image_ref": "ascendant_common.cell_magenta"
+		},
+		"$slot_color|pink": {
+			"$cell_image_ref": "ascendant_common.cell_pink"
+		},
+		"$outline_variant|none": {
+			"$outline_texture": ""
+		},
+		"$outline_variant|blue": {
+			"$outline_texture": "textures/ui/frozen_outline"
+		},
+		"$outline_variant|orange": {
+			"$outline_texture": "textures/ui/orange_outline"
+		},
+		"$has_outline|true": {
+			"$outline_texture": "textures/ui/cell_image"
+		},
+		"collection_index": "$slot_index",
+		"focus_identifier": "$focus_id",
+		"focus_change_down": "$focus_override_down",
+		"focus_change_up": "$focus_override_up",
+		"focus_change_left": "$focus_override_left",
+		"focus_change_right": "$focus_override_right",
+		"focus_enabled": true,
+		"focus_wrap_enabled": false,
+		"focus_magnet_enabled": true,
+		"tts_ignore_count": true,
+		"controls": [
+			{
+				"background@$slot_background_ref": {
+					"size": "$cell_image_size",
+					"offset": "$slot_background_offset",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"layer": "$slot_background_layer"
+				}
+			},
+			{
+				"item_cell": {
+					"type": "panel",
+					"size": "$cell_image_size",
+					"layer": 0,
+					"controls": [
+						{
+							"$cell_image_control_name@$cell_image_ref": {
+								"layer": 1
+							}
+						},
+						{
+							"slot_outline": {
+								"type": "image",
+								"texture": "$outline_texture",
+								"size": "$outline_size",
+								"anchor_from": "center",
+								"anchor_to": "center",
+								"layer": 2,
+								"ignored": "((not $has_outline) and ($outline_texture = ''))"
+							}
+						},
+						{
+							"item": {
+								"type": "panel",
+								"size": "$item_renderer_panel_size",
+								"layer": 0,
+								"controls": [
+									{
+										"stack_count_label@common.stack_count_label": {
+											"layer": 27
+										}
+									},
+									{
+										"$item_renderer@$item_renderer": {
+											"size": "$item_renderer_size",
+											"offset": "$item_renderer_offset",
+											"anchor_to": "center",
+											"anchor_from": "center",
+											"layer": 7
+										}
+									}
+								]
+							}
+						},
+						{
+							"durability_bar@common.durability_bar": {
+								"layer": 20
+							}
+						},
+						{
+							"storage_bar@common.storage_bar": {
+								"layer": 20
+							}
+						}
+					]
+				}
+			},
+			{
+				"item_cell_overlay_ref@$cell_overlay_ref": {
+					"layer": 3
+				}
+			},
+			{
+				"item_selected_image@common.slot_selected": {
+					"layer": 4
+				}
+			},
+			{
+				"item_button_ref@$button_ref": {
+					"tts_ignore_count": true,
+					"tts_skip_message": true,
+					"tts_inherit_siblings": true,
+					"layer": 5
+				}
+			},
+			{
+				"container_item_lock_overlay@common.container_item_lock_overlay": {
+					"size": "$item_renderer_size",
+					"offset": [1, 1],
+					"anchor_to": "top_left",
+					"anchor_from": "top_left",
+					"layer": 6
+				}
+			},
+			{
+				"item_lock_cell_image@common.item_lock_cell_image": {
+					"layer": 2
+				}
+			},
+			{
+				"bundle_slot_panel@gameplay.bundle_slot_panel": {
+					"layer": 10
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: CUSTOM SLOTS
+	 * Custom slot layouts and themed containers.
+	 */
+
+	/* ELEMENT: dark_container
+	 * Dark container slot based on common.container_item.
+	 */
+	"dark_container": {
+		"type": "input_panel",
+		"size": [18, 18],
+		"layer": 1,
+		"$cell_image_size|default": [18, 18],
+		"$cell_overlay_ref|default": "common.cell_overlay",
+		"$button_ref|default": "common.container_slot_button_prototype",
+		"$stack_count_required|default": true,
+		"$durability_bar_required|default": true,
+		"$storage_bar_required|default": true,
+		"$item_renderer|default": "common.item_renderer",
+		"$item_renderer_panel_size|default": [18, 18],
+		"$item_renderer_size|default": [16, 16],
+		"$item_renderer_offset|default": [0, 0],
+		"$background_images|default": "ascendant_common.dark_cell",
+		"$background_image_control_name|default": "bg",
+		"$focus_id|default": "",
+		"$focus_override_down|default": "",
+		"$focus_override_up|default": "",
+		"$focus_override_left|default": "",
+		"$focus_override_right|default": "",
+		"focus_identifier": "$focus_id",
+		"focus_change_down": "$focus_override_down",
+		"focus_change_up": "$focus_override_up",
+		"focus_change_left": "$focus_override_left",
+		"focus_change_right": "$focus_override_right",
+		"focus_enabled": true,
+		"focus_wrap_enabled": false,
+		"focus_magnet_enabled": true,
+		"tts_ignore_count": true,
+		"controls": [
+			{
+				"item_cell": {
+					"type": "panel",
+					"size": "$cell_image_size",
+					"layer": 0,
+					"controls": [
+						{
+							"$background_image_control_name@$background_images": {
+								"layer": 1
+							}
+						},
+						{
+							"item": {
+								"type": "panel",
+								"size": "$item_renderer_panel_size",
+								"layer": 0,
+								"controls": [
+									{
+										"stack_count_label@common.stack_count_label": {
+											"layer": 27
+										}
+									},
+									{
+										"$item_renderer@$item_renderer": {
+											"size": "$item_renderer_size",
+											"offset": "$item_renderer_offset",
+											"anchor_to": "center",
+											"anchor_from": "center",
+											"layer": 7
+										}
+									}
+								]
+							}
+						},
+						{
+							"durability_bar@common.durability_bar": {
+								"layer": 20
+							}
+						},
+						{
+							"storage_bar@common.storage_bar": {
+								"layer": 20
+							}
+						}
+					]
+				}
+			},
+			{
+				"item_cell_overlay_ref@$cell_overlay_ref": {
+					"layer": 3
+				}
+			},
+			{
+				"item_selected_image@common.slot_selected": {
+					"layer": 4
+				}
+			},
+			{
+				"item_button_ref@$button_ref": {
+					"tts_ignore_count": true,
+					"tts_skip_message": true,
+					"tts_inherit_siblings": true,
+					"layer": 5
+				}
+			},
+			{
+				"container_item_lock_overlay@common.container_item_lock_overlay": {
+					"size": "$item_renderer_size",
+					"offset": [1, 1],
+					"anchor_to": "top_left",
+					"anchor_from": "top_left",
+					"layer": 6
+				}
+			},
+			{
+				"item_lock_cell_image@common.item_lock_cell_image": {
+					"layer": 2
+				}
+			},
+			{
+				"bundle_slot_panel@gameplay.bundle_slot_panel": {
+					"layer": 10
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: slot_blue
+	 * Special slot with a blue background.
+	 */
+	"slot_blue": {
+		"type": "panel",
+		"size": [18, 18],
+		"$slot_index|default": 0,
+		"controls": [
+			{
+				"slot_bg@ascendant_common.panel_bg_blue": {
+					"size": [18, 18],
+					"layer": 0
+				}
+			},
+			{
+				"item@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"$item_collection_name": "container_items",
+					"$collection_index": "$slot_index",
+					"layer": 1
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: slot_dark
+	 * Dark slot variant using dark_cell_image.
+	 */
+	"slot_dark": {
+		"type": "panel",
+		"size": [18, 18],
+		"$slot_index|default": 0,
+		"controls": [
+			{
+				"slot_bg@ascendant_common.dark_cell_image": {
+					"size": [18, 18],
+					"layer": 0
+				}
+			},
+			{
+				"item@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"$item_collection_name": "container_items",
+					"$collection_index": "$slot_index",
+					"layer": 1
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: SLOT OVERLAYS AND IMAGES
+	 * Slot background images and image panels.
+	 */
+
+	/* ELEMENT: cell_image_panel_tinted
+	 * Tinted cell image panel with selection state.
+	 */
+	"cell_image_panel_tinted": {
+		"type": "panel",
+		"$cell_texture|default": "textures/ui/cell_image",
+		"$cell_color|default": [1, 1, 1],
+		"$cell_selected_binding_name|default": "#is_selected_slot",
+		"$item_collection_name|default": "container_items",
+		"controls": [
+			{
+				"cell_image": {
+					"type": "image",
+					"texture": "$cell_texture",
+					"color": "$cell_color",
+					"layer": 0,
+					"bindings": [
+						{
+							"binding_name": "(not $cell_selected_binding_name)",
+							"binding_name_override": "#visible",
+							"binding_type": "collection",
+							"binding_collection_name": "$item_collection_name"
+						}
+					]
+				}
+			},
+			{
+				"cell_image_selected@common.cell_image_selected": {
+					"$cell_selected_binding_name|default": "#is_selected_slot",
+					"visible": false,
+					"bindings": [
+						{
+							"binding_name": "$cell_selected_binding_name",
+							"binding_name_override": "#visible",
+							"binding_type": "collection",
+							"binding_collection_name": "$item_collection_name"
+						}
+					]
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: dark_cell_image
+	 * Dark slot background image.
+	 */
+	"dark_cell_image": {
+		"type": "image",
+		"texture": "textures/ui/cells/dark_cell_image",
+		"layer": 0
+	},
+
+	/* ELEMENT: dark_cell_image_panel
+	 * Dark slot image panel with selection state.
+	 */
+	"dark_cell_image_panel": {
+		"type": "panel",
+		"controls": [
+			{
+				"cell_image@ascendant_common.dark_cell_image": {
+					"$cell_selected_binding_name|default": "#is_selected_slot",
+					"visible": true,
+					"bindings": [
+						{
+							"binding_name": "(not $cell_selected_binding_name)",
+							"binding_name_override": "#visible",
+							"binding_type": "collection",
+							"binding_collection_name": "$item_collection_name"
+						}
+					]
+				}
+			},
+			{
+				"cell_image_selected@common.cell_image_selected": {
+					"$cell_selected_binding_name|default": "#is_selected_slot",
+					"visible": false,
+					"bindings": [
+						{
+							"binding_name": "$cell_selected_binding_name",
+							"binding_name_override": "#visible",
+							"binding_type": "collection",
+							"binding_collection_name": "$item_collection_name"
+						}
+					]
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: VANILLA SLOTS
+	 * Vanilla container item slots and variants.
+	 */
+
+	/* ELEMENT: slot_vanilla
+	 * Vanilla slot using common.container_item.
+	 */
+	"slot_vanilla@common.container_item": {
+		"$slot_index|default": 0,
+		"$item_collection_name": "container_items",
+		"collection_index": "$slot_index"
+	},
+
+	/* ELEMENT: slot_vanilla_dark
+	 * Vanilla slot with a dark background image.
+	 */
+	"slot_vanilla_dark@common.container_item": {
+		"$slot_index|default": 0,
+		"$item_collection_name": "container_items",
+		"collection_index": "$slot_index",
+		"$background_images": "ascendant_common.dark_cell_image"
+	},
+
+	/* SECTION: TABS
+	 * Toggle-driven tabs with stack-panel sections.
+	 */
+
+	/* SUBSECTION: TAB BUTTON STATES
+	 * Visual states for tab toggles.
+	 */
+
+	/* ELEMENT: tab_button_state_base
+	 * Base visual state for a tab toggle.
+	 */
+	"tab_button_state_base": {
+		"type": "panel",
+		"size": "$tab_button_size",
+		"$tab_button_size|default": [36, 20],
+		"$tab_button_texture|default": "textures/ui/button_borderless_dark",
+		"$tab_button_text|default": "Tab",
+		"$tab_button_text_color|default": [1, 1, 1],
+		"$tab_button_text_scale|default": 0.6,
+		"controls": [
+			{
+				"bg": {
+					"type": "image",
+					"texture": "$tab_button_texture",
+					"size": "$tab_button_size",
+					"layer": 0
+				}
+			},
+			{
+				"label": {
+					"type": "label",
+					"text": "$tab_button_text",
+					"font_scale_factor": "$tab_button_text_scale",
+					"text_alignment": "center",
+					"color": "$tab_button_text_color",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 1
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: tab_button_state_checked
+	 * Checked visual state for a tab toggle.
+	 */
+	"tab_button_state_checked@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/button_borderless_darkpressednohover"
+	},
+
+	/* ELEMENT: tab_button_state_unchecked_hover
+	 * Hover visual state for an unchecked tab toggle.
+	 */
+	"tab_button_state_unchecked_hover@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/button_borderless_darkpressednohover"
+	},
+
+	/* ELEMENT: tab_button_state_checked_hover
+	 * Hover visual state for a checked tab toggle.
+	 */
+	"tab_button_state_checked_hover@ascendant_common.tab_button_state_checked": {},
+
+	/* SUBSECTION: TAB BUTTONS
+	 * Toggle controls that select the active tab.
+	 */
+
+	/* ELEMENT: tab_button_toggle
+	 * Toggle-based tab button.
+	 */
+	"tab_button_toggle@common.toggle": {
+		"size": "$tab_button_size",
+		"$tab_button_size|default": [36, 20],
+		"$tab_button_text|default": "Tab",
+		"$tab_button_text_scale|default": 0.6,
+		"$tab_group_name|default": "tabs_group",
+		"$tab_index|default": 0,
+		"$toggle_state_binding_name|default": "#toggle_state",
+		"$active_tab_index|default": 0,
+		"$unchecked_control|default": "ascendant_common.tab_button_state_base",
+		"$checked_control|default": "ascendant_common.tab_button_state_checked",
+		"$unchecked_hover_control|default": "ascendant_common.tab_button_state_unchecked_hover",
+		"$checked_hover_control|default": "ascendant_common.tab_button_state_checked_hover",
+		"$unchecked_locked_control|default": "ascendant_common.tab_button_state_base",
+		"$checked_locked_control|default": "ascendant_common.tab_button_state_checked",
+		"$unchecked_locked_hover_control|default": "ascendant_common.tab_button_state_unchecked_hover",
+		"$checked_locked_hover_control|default": "ascendant_common.tab_button_state_checked_hover",
+		"$radio_toggle_group": true,
+		"$toggle_name": "$tab_group_name",
+		"$toggle_group_default_selected": "$active_tab_index",
+		"$toggle_group_forced_index": "$tab_index",
+		"controls": [
+			{
+				"unchecked@$unchecked_control": {
+					"$tab_button_text": "$tab_button_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_text_scale": "$tab_button_text_scale"
+				}
+			},
+			{
+				"checked@$checked_control": {
+					"$tab_button_text": "$tab_button_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_text_scale": "$tab_button_text_scale"
+				}
+			},
+			{
+				"unchecked_hover@$unchecked_hover_control": {
+					"$tab_button_text": "$tab_button_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_text_scale": "$tab_button_text_scale"
+				}
+			},
+			{
+				"checked_hover@$checked_hover_control": {
+					"$tab_button_text": "$tab_button_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_text_scale": "$tab_button_text_scale"
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: section_button_toggle
+	 * Compact tab toggle preset for vertical section lists.
+	 */
+	"section_button_toggle@ascendant_common.tab_button_toggle": {
+		"$tab_button_size": [60, 18],
+		"$tab_button_text_scale": 0.5
+	},
+
+	/* ELEMENT: tab_button_spacing
+	 * Spacer between tab buttons.
+	 */
+	"tab_button_spacing": {
+		"type": "panel",
+		"$tab_button_spacing|default": [4, 0],
+		"size": "$tab_button_spacing"
+	},
+
+	/* ELEMENT: tab_buttons_panel
+	 * Container for the tab navigation buttons.
+	 */
+	"tab_buttons_panel": {
+		"type": "stack_panel",
+		"orientation": "$tab_buttons_orientation",
+		"$tab_buttons_orientation|default": "horizontal",
+		"$tab_group_name|default": "tabs_group",
+		"$active_tab_index|default": 0,
+		"$has_third|default": true,
+		"$has_fourth|default": true,
+		"$has_fifth|default": true,
+		"$tab_button_size|default": [36, 20],
+		"$tab_button_spacing|default": [4, 0],
+		"$tab_button_0_text|default": "tab_0",
+		"$tab_button_1_text|default": "tab_1",
+		"$tab_button_2_text|default": "tab_2",
+		"$tab_button_3_text|default": "tab_3",
+		"$tab_button_4_text|default": "tab_4",
+		"controls": [
+			{
+				"tab_button_0@ascendant_common.tab_button_toggle": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 0,
+					"$toggle_state_binding_name": "('#' + $tab_group_name + '_tab_0')",
+					"$toggle_property_bag": {
+						"#toggle_state": true
+					},
+					"$active_tab_index": "$active_tab_index",
+					"$tab_button_text": "$tab_button_0_text",
+					"$tab_button_size": "$tab_button_size"
+				}
+			},
+			{
+				"spacing_0@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": "$tab_button_spacing"
+				}
+			},
+			{
+				"tab_button_1@ascendant_common.tab_button_toggle": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 1,
+					"$toggle_state_binding_name": "('#' + $tab_group_name + '_tab_1')",
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": "$active_tab_index",
+					"$tab_button_text": "$tab_button_1_text",
+					"$tab_button_size": "$tab_button_size"
+				}
+			},
+			{
+				"spacing_1@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": "$tab_button_spacing"
+				}
+			},
+			{
+				"tab_button_2@ascendant_common.tab_button_toggle": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 2,
+					"$toggle_state_binding_name": "('#' + $tab_group_name + '_tab_2')",
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": "$active_tab_index",
+					"$tab_button_text": "$tab_button_2_text",
+					"$tab_button_size": "$tab_button_size",
+					"ignored": "(not $has_third)"
+				}
+			},
+			{
+				"spacing_2@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": "$tab_button_spacing",
+					"ignored": "(not $has_third)"
+				}
+			},
+			{
+				"tab_button_3@ascendant_common.tab_button_toggle": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 3,
+					"$toggle_state_binding_name": "('#' + $tab_group_name + '_tab_3')",
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": "$active_tab_index",
+					"$tab_button_text": "$tab_button_3_text",
+					"$tab_button_size": "$tab_button_size",
+					"ignored": "(not $has_fourth)"
+				}
+			},
+			{
+				"spacing_3@ascendant_common.tab_button_spacing": {
+					"$tab_button_spacing": "$tab_button_spacing",
+					"ignored": "(not $has_fourth)"
+				}
+			},
+			{
+				"tab_button_4@ascendant_common.tab_button_toggle": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 4,
+					"$toggle_state_binding_name": "('#' + $tab_group_name + '_tab_4')",
+					"$toggle_property_bag": {
+						"#toggle_state": false
+					},
+					"$active_tab_index": "$active_tab_index",
+					"$tab_button_text": "$tab_button_4_text",
+					"$tab_button_size": "$tab_button_size",
+					"ignored": "(not $has_fifth)"
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: TAB CONTENT
+	 * Stack panels with visibility controlled by toggle state.
+	 */
+
+	/* ELEMENT: tab_section_base
+	 * Base stack panel for a tab section.
+	 */
+	"tab_section_base": {
+		"type": "panel",
+		"$tab_toggle_control_name|default": "tab_button_0",
+		"$tab_group_name|default": "tabs_group",
+		"$tab_content|default": "common.empty_panel",
+		"$tab_enabled|default": true,
+		"controls": [
+			{
+				"content@$tab_content": {}
+			}
+		],
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "$tab_toggle_control_name",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": true
+			}
+		],
+		"ignored": "(not $tab_enabled)"
+	},
+
+	/* ELEMENT: tab_0
+	 * Tab section index 0.
+	 */
+	"tab_0@ascendant_common.tab_section_base": {
+		"$tab_toggle_control_name": "tab_button"
+	},
+
+	/* ELEMENT: tab_1
+	 * Tab section index 1.
+	 */
+	"tab_1@ascendant_common.tab_section_base": {
+		"$tab_toggle_control_name": "tab_button"
+	},
+
+	/* ELEMENT: tab_2
+	 * Tab section index 2.
+	 */
+	"tab_2@ascendant_common.tab_section_base": {
+		"$tab_toggle_control_name": "tab_button"
+	},
+
+	/* ELEMENT: tab_3
+	 * Tab section index 3.
+	 */
+	"tab_3@ascendant_common.tab_section_base": {
+		"$tab_toggle_control_name": "tab_button"
+	},
+
+	/* ELEMENT: tab_4
+	 * Tab section index 4.
+	 */
+	"tab_4@ascendant_common.tab_section_base": {
+		"$tab_toggle_control_name": "tab_button"
+	},
+
+	/* ELEMENT: tab_wrapper_base
+	 * Wrapper that places a tab button and its content together.
+	 */
+	"tab_wrapper_base": {
+		"type": "panel",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"size": ["100%", "100%"],
+		"$tab_group_name|default": "tabs_group",
+		"$tab_index|default": 0,
+		"$tab_button_text|default": "Tab",
+		"$tab_button_size|default": [36, 20],
+		"$tab_button_text_scale|default": 0.6,
+		"$tab_button_offset|default": [0, 0],
+		"$tab_content_offset|default": [0, 24],
+		"$toggle_default_state|default": false,
+		"$tab_content|default": "common.empty_panel",
+		"$tab_enabled|default": true,
+		"controls": [
+			{
+				"tab_button@ascendant_common.tab_button_toggle": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": "$tab_button_offset",
+					"layer": 2,
+					"toggle_default_state": "$toggle_default_state",
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": "$tab_index",
+					"$tab_button_text": "$tab_button_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_text_scale": "$tab_button_text_scale"
+				}
+			},
+			{
+				"tab_content@ascendant_common.tab_section_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": "$tab_content_offset",
+					"layer": 1,
+					"$tab_toggle_control_name": "tab_button",
+					"$tab_content": "$tab_content"
+				}
+			}
+		],
+		"ignored": "(not $tab_enabled)"
+	},
+
+	/* ELEMENT: tabs_content_panel
+	 * Container that hosts the five tab sections.
+	 */
+	"tabs_content_panel": {
+		"type": "panel",
+		"$tab_group_name|default": "tabs_group",
+		"$has_third|default": true,
+		"$has_fourth|default": true,
+		"$has_fifth|default": true,
+		"$tab_0_content|default": "common.empty_panel",
+		"$tab_1_content|default": "common.empty_panel",
+		"$tab_2_content|default": "common.empty_panel",
+		"$tab_3_content|default": "common.empty_panel",
+		"$tab_4_content|default": "common.empty_panel",
+		"controls": [
+			{
+				"tab_0@ascendant_common.tab_0": {
+					"$tab_content": "$tab_0_content",
+					"$tab_group_name": "$tab_group_name"
+				}
+			},
+			{
+				"tab_1@ascendant_common.tab_1": {
+					"$tab_content": "$tab_1_content",
+					"$tab_group_name": "$tab_group_name"
+				}
+			},
+			{
+				"tab_2@ascendant_common.tab_2": {
+					"$tab_content": "$tab_2_content",
+					"$tab_enabled": "$has_third",
+					"$tab_group_name": "$tab_group_name"
+				}
+			},
+			{
+				"tab_3@ascendant_common.tab_3": {
+					"$tab_content": "$tab_3_content",
+					"$tab_enabled": "$has_fourth",
+					"$tab_group_name": "$tab_group_name"
+				}
+			},
+			{
+				"tab_4@ascendant_common.tab_4": {
+					"$tab_content": "$tab_4_content",
+					"$tab_enabled": "$has_fifth",
+					"$tab_group_name": "$tab_group_name"
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: TAB ROOT
+	 * Assembles the buttons and content panels.
+	 */
+
+	/* ELEMENT: tabs_root
+	 * Root container for the tab system.
+	 */
+	"tabs_root": {
+		"type": "panel",
+		"size": ["100%", "100%"],
+		"$tab_group_name|default": "tabs_group",
+		"$active_tab_index|default": 0,
+		"$has_third|default": true,
+		"$has_fourth|default": true,
+		"$has_fifth|default": true,
+		"$tabs_buttons_offset|default": [0, 0],
+		"$tabs_buttons_layer|default": 1,
+		"$tabs_content_offset|default": [0, 24],
+		"$tabs_content_layer|default": 2,
+		"$tab_buttons_orientation|default": "horizontal",
+		"$tab_button_size|default": [36, 20],
+		"$tab_button_spacing|default": [4, 0],
+		"$tab_button_offset_0|default": [0, 0],
+		"$tab_button_offset_1|default": [40, 0],
+		"$tab_button_offset_2|default": [80, 0],
+		"$tab_button_offset_3|default": [120, 0],
+		"$tab_button_offset_4|default": [160, 0],
+		"$tab_button_0_text|default": "tab_0",
+		"$tab_button_1_text|default": "tab_1",
+		"$tab_button_2_text|default": "tab_2",
+		"$tab_button_3_text|default": "tab_3",
+		"$tab_button_4_text|default": "tab_4",
+		"$tab_0_content|default": "common.empty_panel",
+		"$tab_1_content|default": "common.empty_panel",
+		"$tab_2_content|default": "common.empty_panel",
+		"$tab_3_content|default": "common.empty_panel",
+		"$tab_4_content|default": "common.empty_panel",
+		"controls": [
+			{
+				"tab_0@ascendant_common.tab_wrapper_base": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 0,
+					"$tab_button_text": "$tab_button_0_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_offset": "$tab_button_offset_0",
+					"$tab_content_offset": "$tabs_content_offset",
+					"$toggle_default_state": true,
+					"$tab_content": "$tab_0_content"
+				}
+			},
+			{
+				"tab_1@ascendant_common.tab_wrapper_base": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 1,
+					"$tab_button_text": "$tab_button_1_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_offset": "$tab_button_offset_1",
+					"$tab_content_offset": "$tabs_content_offset",
+					"$toggle_default_state": false,
+					"$tab_content": "$tab_1_content"
+				}
+			},
+			{
+				"tab_2@ascendant_common.tab_wrapper_base": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 2,
+					"$tab_button_text": "$tab_button_2_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_offset": "$tab_button_offset_2",
+					"$tab_content_offset": "$tabs_content_offset",
+					"$toggle_default_state": false,
+					"$tab_content": "$tab_2_content",
+					"$tab_enabled": "$has_third"
+				}
+			},
+			{
+				"tab_3@ascendant_common.tab_wrapper_base": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 3,
+					"$tab_button_text": "$tab_button_3_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_offset": "$tab_button_offset_3",
+					"$tab_content_offset": "$tabs_content_offset",
+					"$toggle_default_state": false,
+					"$tab_content": "$tab_3_content",
+					"$tab_enabled": "$has_fourth"
+				}
+			},
+			{
+				"tab_4@ascendant_common.tab_wrapper_base": {
+					"$tab_group_name": "$tab_group_name",
+					"$tab_index": 4,
+					"$tab_button_text": "$tab_button_4_text",
+					"$tab_button_size": "$tab_button_size",
+					"$tab_button_offset": "$tab_button_offset_4",
+					"$tab_content_offset": "$tabs_content_offset",
+					"$toggle_default_state": false,
+					"$tab_content": "$tab_4_content",
+					"$tab_enabled": "$has_fifth"
+				}
+			}
+		]
+	},
+
+	/* SECTION: SCROLLING
+	 * Scrollable panels and scrollbars.
+	 */
+
+	/* ELEMENT: scroll_nothing_panel
+	 * Empty panel used as a scroll background.
+	 */
+	"scroll_nothing_panel": {
+		"type": "panel",
+		"size": ["100%", "100%"]
+	},
+
+	/* ELEMENT: scroll_box
+	 * Draggable scrollbar thumb.
+	 */
+	"scroll_box": {
+		"type": "panel",
+		"controls": [
+			{
+				"actual_box": {
+					"type": "scrollbar_box",
+					"anchor_to": "top_left",
+					"anchor_from": "top_left",
+					"layer": 5,
+					"contained": true,
+					"draggable": "vertical",
+					"button_mappings": [
+						{
+							"from_button_id": "button.menu_select",
+							"to_button_id": "button.menu_select",
+							"mapping_type": "pressed",
+							"button_up_right_of_first_refusal": true
+						}
+					],
+					"controls": [
+						{
+							"mouse_box": {
+								"type": "image",
+								"texture": "textures/ui/cell_image"
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: scrollbar_track
+	 * Scrollbar track control.
+	 */
+	"scrollbar_track": {
+		"type": "scroll_track",
+		"button_mappings": [
+			{
+				"from_button_id": "button.menu_select",
+				"to_button_id": "button.scrollbar_skip_track",
+				"mapping_type": "pressed"
+			}
+		]
+	},
+
+	/* ELEMENT: scroll_view_control
+	 * Scroll view with a vertical scrollbar.
+	 */
+	"scroll_view_control": {
+		"$scrolling_content|default": "common.empty_panel",
+		"$scrolling_background|default": "ascendant_common.scroll_nothing_panel",
+		"type": "scroll_view",
+		"anchor_from": "left_middle",
+		"anchor_to": "left_middle",
+		"size": ["100%+20px", "100%"],
+		"scroll_speed": 5,
+		"scrollbar_track_button": "button.scrollbar_skip_track",
+		"scrollbar_touch_button": "button.scrollbar_touch",
+		"always_listen_to_input": true,
+		"always_handle_pointer": true,
+		"scrollbar_track": "track",
+		"scrollbar_box": "actual_box",
+		"always_handle_scrolling": false,
+		"scroll_view_port": "viewport",
+		"scroll_box_and_track_panel": "bar_and_track",
+		"scroll_content": "scrolling_content",
+		"jump_to_bottom_on_update": false,
+		"button_mappings": [
+			{
+				"from_button_id": "button.menu_select",
+				"to_button_id": "button.scrollbar_touch",
+				"mapping_type": "pressed",
+				"button_up_right_of_first_refusal": true
+			}
+		],
+		"controls": [
+			{
+				"viewport": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"type": "panel",
+					"size": ["100%-20px", "100%+0.4px"],
+					"clips_children": true,
+					"layer": -4,
+					"controls": [
+						{
+							"scrolling_content@$scrolling_content": {}
+						}
+					]
+				}
+			},
+			{
+				"background@$scrolling_background": {}
+			},
+			{
+				"bar_and_track": {
+					"type": "panel",
+					"size": [14, "100%-2px"],
+					"offset": [0, 0],
+					"anchor_from": "right_middle",
+					"anchor_to": "right_middle",
+					"layer": 5,
+					"controls": [
+						{
+							"track@ascendant_common.scrollbar_track": {
+								"layer": 2,
+								"anchor_from": "center",
+								"anchor_to": "center"
+							}
+						},
+						{
+							"scroll_box@ascendant_common.scroll_box": {
+								"layer": 5,
+								"anchor_from": "center",
+								"anchor_to": "center"
+							}
+						},
+						{
+							"outline": {
+								"type": "image",
+								"size": ["100%+2px", "100%+2px"],
+								"texture": "textures/ui/cell_image"
+							}
+						},
+						{
+							"outline_outer": {
+								"type": "image",
+								"layer": -1,
+								"size": ["100%+6px", "100%+8px"],
+								"offset": [1, 0],
+								"texture": "textures/ui/button_borderless_darkpressednohover"
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: scrolling_panel
+	 * Wrapper for a configurable scroll view.
+	 */
+	"scrolling_panel": {
+		"type": "panel",
+		"$scrolling_content|default": "common.empty_panel",
+		"$scrolling_background|default": "ascendant_common.scroll_nothing_panel",
+		"size": [162, 72],
+		"controls": [
+			{
+				"scrolling_panel_base": {
+					"type": "input_panel",
+					"anchor_to": "top_left",
+					"anchor_from": "top_left",
+					"controls": [
+						{
+							"view_control@ascendant_common.scroll_view_control": {
+								"$scrolling_content": "$scrolling_content",
+								"$scrolling_background": "$scrolling_background"
+							}
+						}
+					],
+					"button_mappings": []
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: IRON CHEST SCROLL PANELS
+	 * Scroll view presets for 9x3 and 9x4 viewports.
+	 */
+	"scroll_panel_9x3": {
+		"type": "panel",
+		"$scrolling_content|default": "common.empty_panel",
+		"$scrolling_background|default": "ascendant_common.scroll_nothing_panel",
+		"size": [162, 54],
+		"controls": [
+			{
+				"scrolling_panel_base": {
+					"type": "input_panel",
+					"anchor_to": "top_left",
+					"anchor_from": "top_left",
+					"controls": [
+						{
+							"view_control@ascendant_common.scroll_view_control": {
+								"$scrolling_content": "$scrolling_content",
+								"$scrolling_background": "$scrolling_background"
+							}
+						}
+					],
+					"button_mappings": []
+				}
+			}
+		]
+	},
+
+	"scroll_panel_9x4": {
+		"type": "panel",
+		"$scrolling_content|default": "common.empty_panel",
+		"$scrolling_background|default": "ascendant_common.scroll_nothing_panel",
+		"size": [162, 72],
+		"controls": [
+			{
+				"scrolling_panel_base": {
+					"type": "input_panel",
+					"anchor_to": "top_left",
+					"anchor_from": "top_left",
+					"controls": [
+						{
+							"view_control@ascendant_common.scroll_view_control": {
+								"$scrolling_content": "$scrolling_content",
+								"$scrolling_background": "$scrolling_background"
+							}
+						}
+					],
+					"button_mappings": []
+				}
+			}
+		]
+	},
+
+	/* SECTION: TEXT
+	 * Reusable text elements.
+	 */
+
+	/* SUBSECTION: LABELS
+	 * Small labels and section headers.
+	 */
+
+	/* ELEMENT: item_label
+	 * Label that always displays the item name at a specific index.
+	 */
+	"item_label": {
+		"type": "label",
+		"$item_collection_name|default": "container_items",
+		"$collection_index|default": 0,
+		"text": "#item_name",
+		"color": [
+			0,
+			1,
+			0
+		],
+		"layer": 1,
+		"localize": false,
+		"collection_index": "$collection_index",
+		"bindings": [
+			{
+				"binding_name": "#item_name",
+				"binding_type": "collection",
+				"binding_collection_name": "$item_collection_name"
+			}
+		]
+	},
+
+	/* ELEMENT: section_label
+	 * Section label with a smaller font size.
+	 */
+	"section_label": {
+		"type": "label",
+		"$label_text|default": "Label",
+		"$label_color|default": [1, 1, 1],
+		"text": "$label_text",
+		"font_scale_factor": 0.7,
+		"color": "$label_color",
+		"layer": 1
+	},
+
+	/* ELEMENT: selected_item_label
+	 * Label that displays the selected item name.
+	 */
+	"selected_item_label": {
+		"type": "label",
+		"text": "#selected_hover_text",
+		"color": [
+			0,
+			1,
+			0
+		],
+		"layer": 1,
+		"localize": false
+	},
+
+	/* SECTION: TOGGLES
+	 * Toggle components and visual states.
+	 */
+
+	/* SUBSECTION: TOGGLE STATES
+	 * Visual states for toggle controls.
+	 */
+
+	/* ELEMENT: toggle_state_unchecked
+	 * Visual state for unchecked toggles.
+	 */
+	"toggle_state_unchecked": {
+		"type": "image",
+		"texture": "textures/ui/button_borderless_dark",
+		"size": ["100%", "100%"],
+		"controls": [
+			{
+				"plus": {
+					"type": "image",
+					"texture": "textures/ui/plus",
+					"size": [8, 8],
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 1
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: toggle_state_checked
+	 * Visual state for checked toggles.
+	 */
+	"toggle_state_checked": {
+		"type": "image",
+		"texture": "textures/ui/button_borderless_darkpressednohover",
+		"size": ["100%", "100%"],
+		"alpha": 0.9,
+		"controls": [
+			{
+				"minus": {
+					"type": "image",
+					"texture": "textures/ui/minus",
+					"size": [8, 8],
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 1
+				}
+			}
+		]
+	},
+
+	/* SUBSECTION: TOGGLE BUTTONS
+	 * Toggle button base for custom UIs.
+	 */
+
+	/* ELEMENT: toggle_button_base
+	 * Full toggle button with an optional icon.
+	 */
+	"toggle_button_base": {
+		"type": "panel",
+		"size": ["100%", "100%"],
+		"$toggle_name|default": "default_toggle",
+		"$toggle_texture|default": "textures/ui/cell_image",
+		"$toggle_icon|default": "",
+		"controls": [
+			{
+				"toggle_bg@ascendant_common.panel_bg": {
+					"size": ["100%", "100%"],
+					"alpha": 0.9,
+					"layer": 0
+				}
+			},
+			{
+				"toggle_icon": {
+					"type": "image",
+					"texture": "$toggle_icon",
+					"size": [16, 16],
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 1,
+					"ignored": "($toggle_icon = '')"
+				}
+			},
+			{
+				"toggle@common.toggle": {
+					"size": ["100%", "100%"],
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 2,
+					"$toggle_name": "$toggle_name",
+					"$unchecked_control": "ascendant_common.toggle_state_unchecked",
+					"$checked_control": "ascendant_common.toggle_state_checked",
+					"$unchecked_hover_control": "ascendant_common.toggle_state_unchecked",
+					"$checked_hover_control": "ascendant_common.toggle_state_checked",
+					"$unchecked_locked_control": "ascendant_common.toggle_state_unchecked",
+					"$checked_locked_control": "ascendant_common.toggle_state_checked",
+					"$unchecked_locked_hover_control": "ascendant_common.toggle_state_unchecked",
+					"$checked_locked_hover_control": "ascendant_common.toggle_state_checked",
+					"button_mappings": [
+						{
+							"from_button_id": "button.menu_select",
+							"to_button_id": "button.menu_select",
+							"mapping_type": "pressed"
+						},
+						{
+							"from_button_id": "button.menu_ok",
+							"to_button_id": "button.menu_select",
+							"mapping_type": "pressed"
+						}
+					]
+				}
+			}
+		]
+	},
+
+
+	/* SECTION: VISUAL INDICATORS
+	 * Simple visual indicators such as arrows.
+	 */
+
+	/* SUBSECTION: PROGRESS INDICATORS
+	 * Progress arrows and related indicators.
+	 */
+
+	/* ELEMENT: progress_arrow
+	 * Horizontal progress arrow pointing to the right.
+	 */
+	"progress_arrow": {
+		"type": "image",
+		"texture": "textures/ui/arrow_dark_right_stretch",
+		"size": [22, 15],
+		"layer": 1
+	}
 }

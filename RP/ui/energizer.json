@@ -49,7 +49,7 @@
             {
                 "screen": {
                     "type": "image",
-                    "texture": "textures/ui/half_long_panel_classic",
+                    "texture": "textures/ui/panels/half_long_panel_classic",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "size": [

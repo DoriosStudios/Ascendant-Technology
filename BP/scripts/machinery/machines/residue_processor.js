@@ -72,7 +72,8 @@ DoriosAPI.register.blockComponent('residue_processor', {
             return
         }
 
-        const crafts = computeMaxCrafts(recipe, inputStack, outputSlot, byproductSlot)
+        const yieldBoost = machine.boosts.overclockYield ?? 1
+        const crafts = computeMaxCrafts(recipe, inputStack, outputSlot, byproductSlot, yieldBoost)
         if (crafts.max <= 0) {
             machine.showWarning(crafts.reason ?? 'Missing Items')
             return
@@ -126,21 +127,21 @@ function matchRecipe(recipes, stack) {
     return recipes.find(recipe => recipe.input?.id === stack.typeId && stack.amount >= (recipe.input.amount ?? 1))
 }
 
-function computeMaxCrafts(recipe, inputSlot, outputSlot, byproductSlot) {
+function computeMaxCrafts(recipe, inputSlot, outputSlot, byproductSlot, yieldBoost = 1) {
     const inputPer = Math.max(1, recipe.input.amount ?? 1)
     const outputPer = Math.max(1, recipe.output.amount ?? 1)
 
     const availableInput = Math.floor(inputSlot.amount / inputPer)
-    const outputSpace = getOutputCapacity(outputSlot, outputPer)
+    const outputSpace = getOutputCapacity(outputSlot, outputPer, yieldBoost)
 
     let byproductSpace = Number.MAX_SAFE_INTEGER
     if (recipe.byproduct) {
         const bpAmount = Math.max(1, recipe.byproduct.amount ?? 1)
         if (!byproductSlot) {
-            byproductSpace = Math.floor(64 / bpAmount)
+            byproductSpace = Math.floor(64 / (bpAmount * yieldBoost))
         } else if (byproductSlot.typeId === recipe.byproduct.id) {
             const free = (byproductSlot.maxAmount ?? 64) - byproductSlot.amount
-            byproductSpace = Math.floor(free / bpAmount)
+            byproductSpace = Math.floor(free / (bpAmount * yieldBoost))
         } else {
             return { max: 0, reason: 'Residue Slot Busy' }
         }
@@ -156,10 +157,11 @@ function computeMaxCrafts(recipe, inputSlot, outputSlot, byproductSlot) {
     return { max }
 }
 
-function getOutputCapacity(slot, perCraft) {
+function getOutputCapacity(slot, perCraft, yieldBoost = 1) {
     const space = slot ? (slot.maxAmount ?? 64) - slot.amount : 64
     if (space <= 0) return 0
-    return Math.floor(space / Math.max(1, perCraft))
+    const effectivePerCraft = Math.max(1, perCraft * yieldBoost)
+    return Math.floor(space / effectivePerCraft)
 }
 
 function processCraft(machine, recipe, crafts) {
@@ -167,14 +169,15 @@ function processCraft(machine, recipe, crafts) {
     const totalInput = inputPer * crafts
     machine.entity.changeItemAmount(INPUT_SLOT, -totalInput)
 
+    const yieldBoost = machine.boosts.overclockYield ?? 1
     const outputPer = Math.max(1, recipe.output.amount ?? 1)
-    const totalOutput = outputPer * crafts
+    const totalOutput = outputPer * crafts * yieldBoost
     addItemsToSlot(machine, OUTPUT_SLOT, recipe.output.id, totalOutput)
 
     if (recipe.byproduct) {
         const rolled = rollByproduct(recipe.byproduct, crafts)
         if (rolled > 0) {
-            addItemsToSlot(machine, BYPRODUCT_SLOT, recipe.byproduct.id, rolled)
+            addItemsToSlot(machine, BYPRODUCT_SLOT, recipe.byproduct.id, Math.floor(rolled * yieldBoost))
         }
     }
 }

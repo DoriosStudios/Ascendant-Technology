@@ -2,6 +2,7 @@
 import './DoriosAPI/main.js'
 import './config/main.js'
 import './drops/drop_system.js'
+import './transmutable_injection_ascendant.js'
 
 // Machines
 import './machinery/machines/catalyst_weaver.js'
@@ -13,6 +14,7 @@ import './machinery/machines/energizer.js'
 import './machinery/machines/laser_barrier.js'
 import './machinery/machines/residue_processor.js'
 import './machinery/machines/network_center.js'
+import './machinery/machines/tabs_test_machine.js'
 
 // Blocks
 import './machinery/machines/absolute_container.js'

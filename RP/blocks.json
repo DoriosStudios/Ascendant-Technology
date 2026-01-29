@@ -53,6 +53,9 @@
 	"utilitycraft:network_center": {
 		"sound": "metal"
 	},
+	"utilitycraft:tabs_test_machine": {
+		"sound": "metal"
+	},
 	"utilitycraft:reinforced_cable": {
 		"sound": "metal"
 	},

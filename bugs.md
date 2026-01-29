@@ -8,8 +8,8 @@ This is where all bugs noticed in Ascendant Technology will be shown. You can re
 
 ## Current Version (0.7.2)
 - 🔷 Titanium and Aetherium cannot be obtained from compressed variants of crushed blocks.
-- 🔷 Singularity Fabricator's speed is unstable.
-   - Not exactly a bug, but it's inconvenient.
+- 🔷 Singularity Fabricator requires absurd amount of power to operate.
+   - After 0.7.0 rework, energy requirements are too high for practical use.
 - ⚠️ Reinforced Cable does not conduct electricity.
 - 🔶 The armor icon in Pocket UI disappears when using Aetherium and Titanium armor. 
 - 🔶 Some machines UI  gets very close on older phones.

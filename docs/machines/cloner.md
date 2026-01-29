@@ -8,6 +8,7 @@ Replication chamber that duplicates items via templates, consuming huge energy a
 - Uses a template to produce the original item + one copy.
 - Consumes Liquified Aetherium per recipe.
 - Time and cost vary by recipe rarity.
+- Supports a wide range of items from common to mythic rarity.
 
 ## How to use
 1. Insert the template in the main slot.
@@ -20,17 +21,36 @@ Replication chamber that duplicates items via templates, consuming huge energy a
 - The Cloner block itself cannot be duplicated.
 
 ## Inputs and outputs
-- Input: template.
-- Outputs: original (slot 18) and copy (slot 19).
+- **Input**: Template.
+- **Outputs**: Original (slot 18) and copy (slot 19).
+
+## Machine Capabilities
+- **Energy Capacity**: 512,000,000 DE (512 MDE)
+- **Energy Consumption**: Varies by rarity (10,000 - 30,000 DE per second)
+- **Processing Rate**: 400 DE/tick (slow, high precision)
+- **Fluid Tank Capacity**: 512,000 mB (512 buckets)
+- **Fluid Consumption**: 50 mB per second of recipe time
+- **Upgrade Slots**: 2 slots; speed upgrades reduce duplication time
 
 ## Fluids
-- Only Liquified Aetherium (internal tank).
-
-## Energy
-- Cost and time depend on the recipe (see recipe page).
-
-## Upgrades
-- 2 upgrade slots; speed upgrades reduce duplication time.
+- Only **Liquified Aetherium** (internal tank).
+- Consumed continuously during the replication process.
 
 ## Recipes
-See the [recipe page](../recipes/cloner.md).
+
+### Cloning Mechanism
+The Cloner always produces **1 original item + 1 copy** (total ×2).
+
+**Fluid Consumption:** Liquified Aetherium at **50 mB per second** of recipe time.
+
+### Cost per Rarity (kDE per second)
+| Rarity | Energy Cost (DE/s) |
+| --- | --- |
+| Common | 10,000 |
+| Uncommon | 48,000 |
+| Rare | 240,000 |
+| Epic | 1,200,000 |
+| Legendary | 6,000,000 |
+| Mythic | 30,000,000 |
+
+**Note**: Processing time varies based on the item's complexity and rarity. Higher rarity items require exponentially more energy and time.

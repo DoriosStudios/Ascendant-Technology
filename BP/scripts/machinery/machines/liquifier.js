@@ -112,7 +112,7 @@ DoriosAPI.register.blockComponent('liquifier', {
             return;
         }
 
-        const crafts = calculateCrafts(machine, tank, recipe, inputStack, byproductSlot);
+        const crafts = calculateCrafts(machine, tank, recipe, inputStack, byproductSlot, machine.boosts.overclockYield ?? 1);
         if (crafts.max <= 0) {
             fail(crafts.reason ?? 'Missing Items');
             return;
@@ -170,24 +170,24 @@ function matchRecipe(recipes, stack) {
     return recipes.find(recipe => recipe.input?.id === stack.typeId);
 }
 
-function calculateCrafts(machine, tank, recipe, inputStack, byproductSlot) {
+function calculateCrafts(machine, tank, recipe, inputStack, byproductSlot, yieldBoost = 1) {
     const inputAmount = Math.max(1, recipe.input.amount ?? 1);
     const fluidPerCraft = Math.max(1, recipe.fluid.amount ?? 1);
 
     const availableItems = Math.floor(inputStack.amount / inputAmount);
-    const availableFluid = Math.floor(tank.getFreeSpace() / fluidPerCraft);
+    const availableFluid = Math.floor(tank.getFreeSpace() / (fluidPerCraft * yieldBoost));
 
     let residueCapacity = Number.MAX_SAFE_INTEGER;
     if (recipe.byproduct) {
         const residueAmount = Math.max(1, recipe.byproduct.amount ?? 1);
         if (!byproductSlot) {
-            residueCapacity = Math.floor((64) / residueAmount);
+            residueCapacity = Math.floor((64) / (residueAmount * yieldBoost));
         } else {
             if (byproductSlot.typeId !== recipe.byproduct.id) {
                 return { max: 0, reason: 'Residue Slot Busy' };
             }
             const free = (byproductSlot.maxAmount ?? 64) - byproductSlot.amount;
-            residueCapacity = Math.floor(free / residueAmount);
+            residueCapacity = Math.floor(free / (residueAmount * yieldBoost));
         }
     }
 
@@ -207,14 +207,15 @@ function processCraft(machine, recipe, crafts, tank) {
     const totalInput = inputPerCraft * crafts;
     machine.entity.changeItemAmount(INPUT_SLOT, -totalInput);
 
+    const yieldBoost = machine.boosts.overclockYield ?? 1;
     const fluidType = recipe.fluid.type ?? DEFAULT_FLUID_TYPE;
     if (tank.getType() === 'empty') tank.setType(fluidType);
-    tank.add(recipe.fluid.amount * crafts);
+    tank.add(recipe.fluid.amount * crafts * yieldBoost);
 
     if (recipe.byproduct) {
         const produced = rollByproduct(recipe.byproduct, crafts);
         if (produced > 0) {
-            addItemsToSlot(machine, RESIDUE_SLOT, recipe.byproduct.id, produced);
+            addItemsToSlot(machine, RESIDUE_SLOT, recipe.byproduct.id, Math.floor(produced * yieldBoost));
         }
     }
 }

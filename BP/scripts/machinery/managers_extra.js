@@ -2,22 +2,19 @@ import { system, world, ItemStack, BlockPermutation } from '@minecraft/server'
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
 
 /**
- * Placeholder for pipe network update logic.
- * This function is called when blocks are placed to update pipe connections.
- * TODO: Implement transfer_system if pipe network updates are needed.
+ * Updates pipe network connections for energy or fluid systems.
+ * Performs a breadth-first search to find all connected blocks with the specified tag
+ * and caches connected container locations in a dynamic property.
  *
- * @param {Block} block The block that was placed.
- * @param {'energy'|'item'|'fluid'} type The type of pipe network to update.
+ * @param {Block} block The block that was placed or modified.
+ * @param {'energy'|'fluid'} type The type of pipe network to update.
  */
 export function updatePipes(block, type) {
     if (!block || (type !== 'energy' && type !== 'fluid')) return;
 
     const dim = block.dimension;
 
-    // --- ENERGY NETWORK --- now handled by transfer_system; keep stub to avoid overrides
-    if (type === 'energy') return;
-
-    // --- FLUID NETWORK: keep previous stub logic ---
+    // Get the entity at the block location
     const sourceEntity = dim.getEntitiesAtBlockLocation(block.location)[0];
     if (!sourceEntity) return;
 
@@ -36,13 +33,22 @@ export function updatePipes(block, type) {
     const nodes = [];
     const MAX_VISITED = 2048;
 
+    // Type-specific helpers and tags
+    const isEnergyContainer = (entity) => {
+        try {
+            const tf = entity.getComponent("minecraft:type_family");
+            return tf?.hasTypeFamily("dorios:energy_container") ?? false;
+        } catch { return false; }
+    };
+
     const isFluidContainer = (entity) => {
         try {
             return !!FluidManager.findType?.(entity, 0);
         } catch { return false; }
     };
 
-    const targetTag = 'dorios:fluid';
+    const targetTag = type === 'energy' ? 'dorios:energy' : 'dorios:fluid';
+    const isContainer = type === 'energy' ? isEnergyContainer : isFluidContainer;
 
     while (queue.length && visited.size <= MAX_VISITED) {
         const pos = queue.shift();
@@ -62,8 +68,8 @@ export function updatePipes(block, type) {
         const [entity] = dim.getEntitiesAtBlockLocation(pos);
         if (!entity) continue;
 
-        const isContainer = isFluidContainer(entity);
-        if (!isContainer) continue;
+        const isValidContainer = isContainer(entity);
+        if (!isValidContainer) continue;
 
         // Avoid listing self
         if (pos.x === start.x && pos.y === start.y && pos.z === start.z) continue;
@@ -71,7 +77,7 @@ export function updatePipes(block, type) {
         nodes.push(pos);
     }
 
-    const prop = "dorios:fluid_nodes";
+    const prop = type === 'energy' ? "dorios:energy_nodes" : "dorios:fluid_nodes";
 
     try {
         sourceEntity.setDynamicProperty(prop, JSON.stringify(nodes));

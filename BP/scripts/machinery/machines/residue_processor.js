@@ -167,12 +167,13 @@ function processCraft(machine, recipe, crafts) {
     const totalInput = inputPer * crafts
     machine.entity.changeItemAmount(INPUT_SLOT, -totalInput)
 
+    const yieldBoost = machine.boosts.overclockYield ?? 1
     const outputPer = Math.max(1, recipe.output.amount ?? 1)
-    const totalOutput = outputPer * crafts
+    const totalOutput = outputPer * crafts * yieldBoost
     addItemsToSlot(machine, OUTPUT_SLOT, recipe.output.id, totalOutput)
 
     if (recipe.byproduct) {
-        const rolled = rollByproduct(recipe.byproduct, crafts)
+        const rolled = rollByproduct(recipe.byproduct, crafts * yieldBoost)
         if (rolled > 0) {
             addItemsToSlot(machine, BYPRODUCT_SLOT, recipe.byproduct.id, rolled)
         }

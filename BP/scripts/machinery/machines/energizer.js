@@ -162,7 +162,8 @@ function processCraft(machine, channel, crafts) {
     const totalInput = (channel.recipe.input.amount ?? 1) * crafts
     machine.entity.changeItemAmount(channel.slot, -totalInput)
 
-    const totalOutput = (channel.recipe.output.amount ?? 1) * crafts
+    const yieldBoost = machine.boosts.overclockYield ?? 1
+    const totalOutput = (channel.recipe.output.amount ?? 1) * crafts * yieldBoost
     const existing = machine.inv.getItem(OUTPUT_SLOT)
     if (!existing) {
         machine.entity.setItem(OUTPUT_SLOT, channel.recipe.output.id, totalOutput)

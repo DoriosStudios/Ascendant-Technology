@@ -207,12 +207,13 @@ function processCraft(machine, recipe, crafts, tank) {
     const totalInput = inputPerCraft * crafts;
     machine.entity.changeItemAmount(INPUT_SLOT, -totalInput);
 
+    const yieldBoost = machine.boosts.overclockYield ?? 1;
     const fluidType = recipe.fluid.type ?? DEFAULT_FLUID_TYPE;
     if (tank.getType() === 'empty') tank.setType(fluidType);
-    tank.add(recipe.fluid.amount * crafts);
+    tank.add(recipe.fluid.amount * crafts * yieldBoost);
 
     if (recipe.byproduct) {
-        const produced = rollByproduct(recipe.byproduct, crafts);
+        const produced = rollByproduct(recipe.byproduct, crafts * yieldBoost);
         if (produced > 0) {
             addItemsToSlot(machine, RESIDUE_SLOT, recipe.byproduct.id, produced);
         }

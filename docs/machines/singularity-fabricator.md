@@ -16,7 +16,7 @@ Extreme variant of the Duplicator, focused on singularity items and absurdly hig
 
 ## Energy and time
 - Minimum time per craft: 3,600s (1h).
-- Minimum cost per craft: 1,105,920,000,000 DE (≈1.106 TDE).
+- Minimum cost per craft: 55,296,000,000 DE (≈55.3 GDE).
 - Cost scales with `rate_speed_base` via the dynamic time calculation; longer recipes still raise the total cost.
 
 ## Fluids

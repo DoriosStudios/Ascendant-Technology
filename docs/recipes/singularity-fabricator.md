@@ -2,7 +2,7 @@
 
 The Singularity Fabricator accepts the same base templates as the Cloner, but applies:
 - **Required fluid:** Dark Matter.
-- **Minimum cost:** 1,105,920,000,000 DE (≈1.106 TDE) per craft.
+- **Minimum cost:** 55,296,000,000 DE (≈55.3 GDE) per craft.
 - **Minimum time:** 3,600s (1h) per craft; Real time.
 - **Dynamic scaling:** cost scales with `rate_speed_base` to keep time stable.
 

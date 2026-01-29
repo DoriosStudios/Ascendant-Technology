@@ -23,11 +23,13 @@ import './recipes/catalyst_weaver.js';
 import './recipes/liquifier.js';
 import './recipes/energizer.js';
 import './recipes/residue_processor.js';
+import './recipes/infuser.js';
 
 import './recipes/added/insert_sieve.js';
 import './recipes/added/insert_infuser.js';
 import './recipes/added/insert_crusher.js';
 import './recipes/added/insert_incinerator.js';
 import './fluids/items.js';
+import './register_coolant.js';
 
 // Dynamic properties used across the pack (overclock burn/power/eff etc.)

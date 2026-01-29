@@ -1,5 +1,5 @@
 import { system } from "@minecraft/server"
-import { infuserRecipes } from './infuser.js'
+import { infuserRecipesData } from './data/infuser_recipes.js'
 import { defineClonerRecipe } from "./cloner.js"
 
 const WEAVER_DEFAULT_ENERGY_COST = 6400
@@ -301,7 +301,7 @@ function translateInfuserRecipe(recipeKey, recipeDef) {
 }
 
 function buildInfuserWeaverRecipes() {
-    return Object.entries(infuserRecipes)
+    return Object.entries(infuserRecipesData)
         .map(([key, def]) => translateInfuserRecipe(key, def))
         .filter(Boolean)
 }

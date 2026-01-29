@@ -23,7 +23,6 @@ import './recipes/catalyst_weaver.js';
 import './recipes/liquifier.js';
 import './recipes/energizer.js';
 import './recipes/residue_processor.js';
-import './recipes/infuser.js';
 
 import './recipes/added/insert_sieve.js';
 import './recipes/added/insert_infuser.js';

@@ -1,11 +1,9 @@
 import { system } from "@minecraft/server"
-import { infuserRecipesData } from './data/infuser_recipes.js'
 import { defineClonerRecipe } from "./cloner.js"
 
 const WEAVER_DEFAULT_ENERGY_COST = 6400
 const WEAVER_RATE_PER_TICK = 180
 const TICKS_PER_SECOND = 20
-const INFUSER_SPEED_MULTIPLIER = 2.5
 const MAX_CATALYST_SLOTS = 6
 const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
 
@@ -265,47 +263,6 @@ function normalizeCatalystEntry(entry) {
     return null
 }
 
-function translateInfuserRecipe(recipeKey, recipeDef) {
-    if (!recipeKey || typeof recipeKey !== 'string') return null
-    if (!recipeDef || typeof recipeDef !== 'object') return null
-
-    const [catalystId, inputId] = recipeKey.split('|')
-    if (!catalystId || !inputId) return null
-
-    const output = normalizeOutput(recipeDef.output, recipeDef.outputAmount)
-    if (!output) return null
-
-    const catalysts = Array(MAX_CATALYST_SLOTS).fill(null)
-    const catalystAmount = normalizePositiveInteger(recipeDef.required ?? recipeDef.catalystAmount ?? 1)
-    catalysts[0] = { id: catalystId, amount: catalystAmount }
-
-    const baseCost = recipeDef.cost ?? WEAVER_DEFAULT_ENERGY_COST
-    const adjustedCost = Math.max(1, Math.round(baseCost / INFUSER_SPEED_MULTIPLIER))
-
-    const translated = {
-        id: `utilitycraft_infuser:${recipeKey}`,
-        input: { id: inputId, amount: normalizePositiveInteger(recipeDef.inputAmount ?? 1) },
-        catalysts,
-        output,
-        speedModifier: normalizeSpeedModifier(recipeDef.speedModifier ?? INFUSER_SPEED_MULTIPLIER)
-    }
-
-    if (recipeDef.fluid) {
-        translated.fluid = typeof recipeDef.fluid === 'string'
-            ? { type: recipeDef.fluid, amount: normalizePositiveInteger(recipeDef.fluidAmount ?? 0, 0) }
-            : recipeDef.fluid
-    }
-    if (recipeDef.byproduct) translated.byproduct = recipeDef.byproduct
-
-    return defineWeaverRecipe(translated, adjustedCost)
-}
-
-function buildInfuserWeaverRecipes() {
-    return Object.entries(infuserRecipesData)
-        .map(([key, def]) => translateInfuserRecipe(key, def))
-        .filter(Boolean)
-}
-
 const CATALYST_WEAVER_EVENT_ID = "utilitycraft:register_catalyst_weaver_recipe"
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
@@ -353,10 +310,7 @@ function upsertCatalystWeaverRecipe(definition) {
 }
 
 export function getCatalystWeaverRecipes() {
-    return [
-        ...nativeCatalystWeaverRecipes,
-        ...buildInfuserWeaverRecipes()
-    ]
+    return [...nativeCatalystWeaverRecipes]
 }
 
 export const catalystWeaverRecipes = getCatalystWeaverRecipes()

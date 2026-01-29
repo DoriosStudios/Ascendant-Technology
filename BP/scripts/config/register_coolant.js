@@ -10,7 +10,7 @@ world.afterEvents.worldLoad.subscribe(() => {
     // Register Cryofluid as a coolant for Heavy Machinery
     const coolantData = {
         "cryofluid": {
-            cooling_efficiency: 1.0,  // 100% effectiveness (better than water)
+            cooling_efficiency: 1.5,  // 150% effectiveness (superior coolant)
             description: "Advanced cooling fluid from Ascendant Technology"
         }
     };

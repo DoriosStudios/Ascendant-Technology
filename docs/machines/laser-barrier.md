@@ -24,11 +24,9 @@ Defensive controller that projects a laser wall in the block's facing direction 
 - **Max Upgrades**: Up to +8 length/height, up to 8 energy efficiency levels
 
 ## Upgrades
-- **Length (Size Upgrade)**: Increases wall length (up to +8).
-- **Height (Size Upgrade)**: Sneak while applying to increase height (up to +8).
-- **Energy Upgrade**: Reduces cost per cycle (up to 8 levels).
-- **Installation**: Right-click with upgrade item to install.
-- **Removal**: Sneak with empty hand to remove upgrades.
+- **Length (Size Upgrade)** (L): Increases wall length (up to +8).
+- **Height (Size Upgrade)** (H): Sneak while applying to increase height (up to +8).
+- **Energy Upgrade** (E): Reduces cost per cycle (up to 8 levels).
 
 ## Defensive Mechanics
 - **Field Projection**: Laser wall projects in the block's facing direction.
@@ -44,7 +42,6 @@ Defensive controller that projects a laser wall in the block's facing direction 
 - **Layered Defense**: Combine multiple barriers for enhanced protection.
 
 ## Notes
-- All upgrades are applied via direct interaction with the block.
 - The barrier requires line-of-sight from the controller block.
 - Energy consumption increases with field size upgrades.
 - Field visibility provides clear indication of active protection.

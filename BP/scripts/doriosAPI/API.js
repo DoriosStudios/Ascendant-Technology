@@ -68,17 +68,10 @@ globalThis.DoriosAPI = {
                 const { blockComponentRegistry } = e;
                 const identifier = NAMESPACE + ':' + id;
 
-                try {
-                    blockComponentRegistry.registerCustomComponent(
-                        identifier,
-                        handlers
-                    );
-                } catch (error) {
-                    if (error?.name === 'BlockCustomComponentAlreadyRegisteredError') {
-                        return;
-                    }
-                    throw error;
-                }
+                blockComponentRegistry.registerCustomComponent(
+                    identifier,
+                    handlers
+                );
             });
         },
 
@@ -97,18 +90,87 @@ globalThis.DoriosAPI = {
                 const { itemComponentRegistry } = e;
                 const identifier = NAMESPACE + ':' + id;
 
-                try {
-                    itemComponentRegistry.registerCustomComponent(
-                        identifier,
-                        handlers
-                    );
-                } catch (error) {
-                    if (error?.name === 'ItemCustomComponentAlreadyRegisteredError') {
-                        console.warn(`[DoriosAPI] Item component ${identifier} already registered. Skipping duplicate registration.`);
-                        return;
+                itemComponentRegistry.registerCustomComponent(
+                    identifier,
+                    handlers
+                );
+            });
+        },
+
+        /**
+         * Registers a custom command.
+         *
+         * @param {Object} command Command definition
+         * @param {string} command.name Command name (without namespace)
+         * @param {string} command.description Command description
+         * @param {keyof DoriosAPI.constants.permissionMap} [command.permissionLevel="any"]
+         * @param {boolean} [command.cheatsRequired=false]
+         * @param {Array<Object>} [command.parameters]
+         * @param {string} command.parameters[].name Parameter name
+         * @param {keyof DoriosAPI.constants.typeMap} command.parameters[].type
+         * @param {boolean} [command.parameters[].optional=false]
+         * @param {string[]} [command.parameters[].enum]
+         * @param {Function} command.callback Command execution callback
+         */
+        command(command) {
+            system.beforeEvents.startup.subscribe(e => {
+                const { permissionMap, typeMap } = DoriosAPI.constants;
+
+                const permission =
+                    permissionMap[command.permissionLevel?.toLowerCase()] ??
+                    CommandPermissionLevel.Any;
+
+                const definition = {
+                    name: `${NAMESPACE}:${command.name}`,
+                    description: command.description ?? "",
+                    permissionLevel: permission,
+                    cheatsRequired: command.cheatsRequired ?? false,
+                };
+
+                const mandatory = [];
+                const optional = [];
+
+                if (Array.isArray(command.parameters)) {
+                    for (const param of command.parameters) {
+                        // ENUM SUPPORT
+                        if (param.type === "enum" && Array.isArray(param.enum)) {
+                            const enumId = `${NAMESPACE}:${command.name}_${param.name}`;
+
+                            e.customCommandRegistry.registerEnum(enumId, param.enum);
+
+                            const def = {
+                                name: enumId,
+                                type: CustomCommandParamType.Enum
+                            };
+
+                            (param.optional ? optional : mandatory).push(def);
+                            continue;
+                        }
+
+                        const def = {
+                            name: param.name,
+                            type: typeMap[param.type] ?? CustomCommandParamType.String
+                        };
+
+                        (param.optional ? optional : mandatory).push(def);
                     }
-                    throw error;
                 }
+
+                if (mandatory.length) definition.mandatoryParameters = mandatory;
+                if (optional.length) definition.optionalParameters = optional;
+
+                e.customCommandRegistry.registerCommand(definition, (origin, ...args) => {
+                    system.run(() => {
+                        try {
+                            command.callback(origin, ...args);
+                        } catch (err) {
+                            console.warn(
+                                `[${NAMESPACE}:command:${command.name}]`,
+                                err
+                            );
+                        }
+                    });
+                });
             });
         }
     },
@@ -149,6 +211,80 @@ globalThis.DoriosAPI = {
      */
 
     containers: {
+        /**
+         * Transfers items from a specific source slot into one or more target slots.
+         *
+         * This is a low-level helper designed for precise inventory control.
+         * It assumes inventories and slot indices are already validated.
+         *
+         * Rules:
+         * - If a target slot is empty, the item is moved there and the operation ends.
+         * - If a target slot contains the same item, it fills up to max stack.
+         * - Different items are skipped.
+         * - Source slot is updated once at the end.
+         *
+         * @param {Container} sourceInv Source inventory container
+         * @param {number} sourceSlot Source slot index
+         * @param {Container} targetInv Target inventory container
+         * @param {number | number[]} targetSlots Target slot or list of slots
+         * @returns {number} Amount of items transferred
+         */
+        transferItemToSlots(sourceInv, sourceSlot, targetInv, targetSlots) {
+            if (!sourceInv || !targetInv) return 0;
+
+            const sourceItem = sourceInv.getItem(sourceSlot);
+            if (!sourceItem) return 0;
+
+            const slots = Array.isArray(targetSlots) ? targetSlots : [targetSlots];
+
+            let remaining = sourceItem.amount;
+            let transferred = 0;
+            const itemId = sourceItem.typeId;
+            const maxStack = sourceItem.maxAmount;
+
+            for (const slot of slots) {
+                if (remaining <= 0) break;
+
+                const targetItem = targetInv.getItem(slot);
+
+                // Empty slot → move all remaining and finish
+                if (!targetItem) {
+                    const moved = remaining;
+                    const newItem = sourceItem.clone();
+                    newItem.amount = moved;
+
+                    targetInv.setItem(slot, newItem);
+                    remaining = 0;
+                    transferred += moved;
+                    break;
+                }
+
+                // Different item → skip
+                if (targetItem.typeId !== itemId) continue;
+
+                // Same item → try to merge
+                const space = maxStack - targetItem.amount;
+                if (space <= 0) continue;
+
+                const moved = Math.min(space, remaining);
+                targetItem.amount += moved;
+                targetInv.setItem(slot, targetItem);
+
+                remaining -= moved;
+                transferred += moved;
+            }
+
+            // Update source slot once
+            if (remaining <= 0) {
+                sourceInv.setItem(sourceSlot, undefined);
+            } else if (remaining !== sourceItem.amount) {
+                const updated = sourceItem.clone();
+                updated.amount = remaining;
+                sourceInv.setItem(sourceSlot, updated);
+            }
+
+            return transferred;
+        },
         /**
          * This function was created by **Dorios Studios** to handle
          * item insertions into inventories with compatibility for
@@ -216,33 +352,15 @@ globalThis.DoriosAPI = {
             const tf = target.getComponent("minecraft:type_family");
             if (!tf) return false;
 
-            const isMachine = tf.hasTypeFamily("dorios:machine");
+            const isMachine = tf.hasTypeFamily("dorios:machine") && !tf.hasTypeFamily("dorios:multiblock");
             const blockedSlots = isMachine
                 ? DoriosAPI.containers.getMachineBlockedSlots(target)
                 : new Set();
 
             // ───────────────────────────────
-            // Simple Input
-            // ───────────────────────────────
-            if (tf.hasTypeFamily("dorios:simple_input")) {
-                const slotNext = targetInv.getItem(3);
-                if (!slotNext) {
-                    targetInv.setItem(3, itemStack);
-                    return true;
-                }
-                if (slotNext.typeId === itemId && slotNext.amount < slotNext.maxAmount) {
-                    const insertAmount = Math.min(itemStack.amount, slotNext.maxAmount - slotNext.amount);
-                    slotNext.amount += insertAmount;
-                    targetInv.setItem(3, slotNext);
-                    return insertAmount;
-                }
-                return false;
-            }
-
-            // ───────────────────────────────
             // Complex Input (uses getAllowedSlots)
             // ───────────────────────────────
-            if (tf.hasTypeFamily("dorios:complex_input")) {
+            if (tf.hasTypeFamily("dorios:complex_input") || tf.hasTypeFamily("dorios:special_container")) {
                 const [start, end] = DoriosAPI.containers.getAllowedInputRange(target);
 
                 for (let i = start; i <= end; i++) {
@@ -264,6 +382,24 @@ globalThis.DoriosAPI = {
                     }
                 }
 
+                return false;
+            }
+
+            // ───────────────────────────────
+            // Simple Input
+            // ───────────────────────────────
+            if (tf.hasTypeFamily("dorios:simple_input")) {
+                const slotNext = targetInv.getItem(3);
+                if (!slotNext) {
+                    targetInv.setItem(3, itemStack);
+                    return true;
+                }
+                if (slotNext.typeId === itemId && slotNext.amount < slotNext.maxAmount) {
+                    const insertAmount = Math.min(itemStack.amount, slotNext.maxAmount - slotNext.amount);
+                    slotNext.amount += insertAmount;
+                    targetInv.setItem(3, slotNext);
+                    return insertAmount;
+                }
                 return false;
             }
 
@@ -514,37 +650,15 @@ globalThis.DoriosAPI = {
             if (!fromLoc || !toLoc || !dim) return false;
 
             // --- Resolve source ---
-            let source = null;
-            try {
-                const fromBlock = dim.getBlock(fromLoc);
-                if (DoriosAPI.constants.vanillaContainers.includes(fromBlock?.typeId)) {
-                    source = fromBlock;
-                } else {
-                    const fromEntity = dim.getEntitiesAtBlockLocation(fromLoc)[0];
-                    if (fromEntity) source = fromEntity;
-                }
-            } catch {
-                return false;
-            }
-            if (!source) return false;
+            let source = this.getContainerAt(fromLoc, dim);
+            if (!source.container) return false;
 
             // --- Resolve target ---
-            let target = null;
-            try {
-                const toBlock = dim.getBlock(toLoc);
-                if (DoriosAPI.constants.vanillaContainers.includes(toBlock?.typeId)) {
-                    target = toBlock;
-                } else {
-                    const toEntity = dim.getEntitiesAtBlockLocation(toLoc)[0];
-                    if (toEntity) target = toEntity;
-                }
-            } catch {
-                return false;
-            }
-            if (!target) return false;
+            let target = this.getContainerAt(toLoc, dim);
+            if (!target.container) return false;
 
             /** @type {Container} */
-            const sourceInv = source?.getComponent?.("minecraft:inventory")?.container ?? source;
+            const sourceInv = source.container;
             if (!sourceInv) return false;
 
             // Resolve range
@@ -560,7 +674,7 @@ globalThis.DoriosAPI = {
             let transferred = false;
 
             /** @type {EntityTypeFamilyComponent} */
-            const tf = target?.getComponent("minecraft:type_family");
+            const tf = target.entity?.getComponent("minecraft:type_family");
             const isMachineTarget = tf?.hasTypeFamily("dorios:machine");
             const isDoriosContainer = tf?.hasTypeFamily("dorios:container")
                 && !tf?.hasTypeFamily("dorios:complex_input")
@@ -571,8 +685,8 @@ globalThis.DoriosAPI = {
                 const item = sourceInv.getItem(slot);
                 if (!item) continue;
 
-                if (DoriosAPI.constants.vanillaContainers.includes(target?.typeId) || isDoriosContainer) {
-                    const targetInv = target.getComponent("minecraft:inventory")?.container;
+                if (DoriosAPI.constants.vanillaContainers.includes(target.block?.typeId) || isDoriosContainer) {
+                    const targetInv = target.container;
                     if (targetInv) {
                         const added = sourceInv.transferItem(slot, targetInv);
                         transferred = item.amount - (added?.amount ?? 0);
@@ -581,13 +695,13 @@ globalThis.DoriosAPI = {
                 }
 
                 // Fallback → use addItem for Dorios machines and others
-                const added = this.addItem(target, item);
+                const added = this.addItem(target.entity, item);
                 if (added === true) {
                     sourceInv.setItem(slot, undefined);
                     transferred = item.maxAmount;
                 } else if (typeof added === "number" && added > 0) {
                     if (item.amount - added <= 0) {
-                        sourceInv.setItem(slot,);
+                        sourceInv.setItem(slot, undefined);
                     } else {
                         item.amount -= added
                         sourceInv.setItem(slot, item);
@@ -599,33 +713,62 @@ globalThis.DoriosAPI = {
             return transferred;
         },
         /**
-         * Returns a valid container at a specific world location.
+         * Returns container-related data at a specific world location.
          *
-         * - Checks both blocks and entities at the given coordinates.
-         * - Works with vanilla containers, Dorios machines, and custom entities.
-         * - Returns the inventory container (`Container`) if found, otherwise `null`.
+         * - Checks block inventories first.
+         * - Supports Dorios multiblock ports backed by entities.
+         * - Falls back to entity-based containers.
          *
          * @function getContainerAt
          * @memberof DoriosAPI.containers
          * @param {Vector3} loc World coordinates to check.
          * @param {Dimension} dim Dimension where the location exists.
-         * @returns {import('@minecraft/server').Container|null} The container if found, or null.
+         * @returns {{
+         *   container: import('@minecraft/server').Container | null,
+         *   block: import('@minecraft/server').Block | undefined,
+         *   entity: import('@minecraft/server').Entity | null | undefined
+         * }} Object containing the resolved container and its source references.
          */
         getContainerAt(loc, dim) {
-            // Try block container
-            const block = dim.getBlock(loc);
-            const blockInv = block?.getComponent("minecraft:inventory")?.container;
-            if (blockInv) return blockInv;
+            // ── Try block container ─────────────────────────────
+            let container;
+            let block;
+            let entity;
 
-            // Try entity container
-            const ent = dim.getEntitiesAtBlockLocation(loc)[0];
-            const tf = ent?.getComponent?.("minecraft:type_family");
-            if (!tf?.hasTypeFamily("dorios:container")) return null
+            block = dim.getBlock(loc);
+            container = block?.getComponent("minecraft:inventory")?.container;
 
-            const entInv = ent?.getComponent("minecraft:inventory")?.container;
-            if (entInv) return entInv;
+            if (container) {
+                return { container, block, entity };
+            }
 
-            return null;
+            // ── Dorios multiblock port ──────────────────────────
+            if (block?.hasTag("dorios:multiblock.port") && block.hasTag("dorios:item")) {
+                entity = dim.getEntities({
+                    tags: [
+                        `input:[${Math.floor(loc.x)},${Math.floor(loc.y)},${Math.floor(loc.z)}]`
+                    ]
+                })[0];
+                container = entity?.getComponent("minecraft:inventory")?.container;
+                return { container, block, entity };
+            }
+
+            // ── Try entity container ────────────────────────────
+            entity = dim.getEntitiesAtBlockLocation(loc)[0];
+            const tf = entity?.getComponent?.("minecraft:type_family");
+
+            if (!tf?.hasTypeFamily("dorios:container")) {
+                return { container: null, block, entity };
+            }
+
+            container = entity?.getComponent("minecraft:inventory")?.container;
+
+            if (container) {
+                return { container, block, entity };
+            }
+
+            // ── Nothing found ────────────────────────────────────
+            return { container: null, block, entity: null };
         },
         /**
          * Returns the allowed slot range for a container entity or block,
@@ -657,6 +800,16 @@ globalThis.DoriosAPI = {
             const size = inv.size;
 
             if (!tf) return [0, size - 1];
+
+            if (tf.hasTypeFamily("dorios:special_container")) {
+                const raw = target.getDynamicProperty("dorios:special_container");
+                let slotsRegister;
+                try {
+                    slotsRegister = JSON.parse(raw);
+                } catch { }
+
+                if (slotsRegister && slotsRegister.input) return slotsRegister.input;
+            }
 
             const isSimpleInput = tf.hasTypeFamily("dorios:simple_input");
             const isSimpleOutput = tf.hasTypeFamily("dorios:simple_output");
@@ -713,6 +866,16 @@ globalThis.DoriosAPI = {
             const size = inv.size;
 
             if (!tf) return [0, size - 1];
+
+            if (tf.hasTypeFamily("dorios:special_container")) {
+                const raw = target.getDynamicProperty("dorios:special_container");
+                let slotsRegister;
+                try {
+                    slotsRegister = JSON.parse(raw);
+                } catch { }
+
+                if (slotsRegister && slotsRegister.output) return slotsRegister.output;
+            }
 
             const isSimpleOutput = tf.hasTypeFamily("dorios:simple_output");
             const isComplexOutput = tf.hasTypeFamily("dorios:complex_output");
@@ -823,6 +986,24 @@ globalThis.DoriosAPI = {
      * @namespace DoriosAPI.utils
      */
     utils: {
+        toSlotArray(v) {
+            return Array.isArray(v) ? v : [v];
+        },
+
+        /**
+         * Offsets a position by a vector * amount.
+         *
+         * @param {{x:number,y:number,z:number}} pos
+         * @param {{x:number,y:number,z:number}} vec
+         * @param {number} amount
+         */
+        offsetPos(pos, vec, amount = 1) {
+            return {
+                x: pos.x + vec.x * amount,
+                y: pos.y + vec.y * amount,
+                z: pos.z + vec.z * amount
+            };
+        },
         /**
          * Converts a number of seconds into a formatted time string (mm:ss or hh:mm:ss).
          *

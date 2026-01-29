@@ -1700,6 +1700,7 @@ export class Machine {
             energyManager.display()
 
             if (settings.machine.fluid_cap) {
+                entity.setDynamicProperty("dorios:base_fluid_cap", settings.machine.fluid_cap)
                 const fluidManager = new FluidManager(entity, 0)
                 fluidManager.setCap(settings.machine.fluid_cap)
 
@@ -1931,6 +1932,50 @@ export class Machine {
         const itemId = `utilitycraft:${type}_${normalized}`;
         inv.setItem(slot, new ItemStack(itemId, 1));
     }
+
+    /**
+     * Adds fractional item amount to accumulator.
+     * When the accumulator reaches 1.0 or more, returns the integer part.
+     * 
+     * @param {string} itemId The item identifier to accumulate for
+     * @param {number} amount The fractional amount to add (can be fractional like 2.3)
+     * @returns {number} Integer amount that can be added to inventory
+     */
+    addFractionalItem(itemId, amount) {
+        if (!itemId || typeof amount !== "number" || amount <= 0) return 0;
+        
+        const key = `dorios:frac_${itemId.replace(/:/g, "_")}`;
+        const current = Number(this.entity.getDynamicProperty(key) ?? 0);
+        const newTotal = current + amount;
+        const integerPart = Math.floor(newTotal);
+        const fractionalPart = newTotal - integerPart;
+        
+        this.entity.setDynamicProperty(key, fractionalPart);
+        return integerPart;
+    }
+
+    /**
+     * Gets the current fractional accumulator value for an item.
+     * 
+     * @param {string} itemId The item identifier
+     * @returns {number} Current fractional amount (0 to 0.999...)
+     */
+    getFractionalItem(itemId) {
+        if (!itemId) return 0;
+        const key = `dorios:frac_${itemId.replace(/:/g, "_")}`;
+        return Number(this.entity.getDynamicProperty(key) ?? 0);
+    }
+
+    /**
+     * Resets the fractional accumulator for an item.
+     * 
+     * @param {string} itemId The item identifier
+     */
+    resetFractionalItem(itemId) {
+        if (!itemId) return;
+        const key = `dorios:frac_${itemId.replace(/:/g, "_")}`;
+        this.entity.setDynamicProperty(key, 0);
+    }
     //#endregion
 
     /**
@@ -2146,15 +2191,25 @@ ${overclockLine}
 
     /**
      * Calculates the Hyper Processing multiplier.
-     * Slightly weaker than the base speed upgrade to keep combined stacking in check.
+     * Splits the boost between speed increase and production increase to avoid excessive speed.
+     * 
+     * Returns both the speed component and the production (yield) component.
      *
      * @param {number} hyperAmount
-     * @returns {number} Hyper multiplier (>= 1)
+     * @returns {{ speedBoost: number, yieldBoost: number, theoretical: number }} Hyper boost components
      */
     calculateHyperBoost(hyperAmount) {
         const hyperLevel = Math.min(8, hyperAmount);
-        if (hyperLevel <= 0) return 1;
-        return 1 + 0.075 * hyperLevel * (hyperLevel + 1);
+        if (hyperLevel <= 0) return { speedBoost: 1, yieldBoost: 1, theoretical: 1 };
+        
+        // Theoretical boost calculation (for display purposes)
+        const theoretical = 1 + 0.075 * hyperLevel * (hyperLevel + 1);
+        
+        // Split: 40% goes to speed, 60% goes to production
+        const speedComponent = 1 + (theoretical - 1) * 0.4;
+        const yieldComponent = 1 + (theoretical - 1) * 0.6;
+        
+        return { speedBoost: speedComponent, yieldBoost: yieldComponent, theoretical };
     }
 
     /**
@@ -2179,10 +2234,10 @@ ${overclockLine}
     }
 
     /**
-     * Aggregates all boosts (speed + consumption).
+     * Aggregates all boosts (speed + consumption + hyper yield).
      *
-     * @param {Object} levels Upgrade levels { speed, energy, ... }
-     * @returns {{ speed: number, consumption: number }}
+     * @param {Object} levels Upgrade levels { speed, energy, hyper, ... }
+     * @returns {{ speed: number, consumption: number, hyper: number, hyperYield: number, baseSpeed: number }}
      */
     calculateBoosts(levels) {
         const speedLevel = levels.speed ?? 0;
@@ -2190,11 +2245,18 @@ ${overclockLine}
         const energyLevel = levels.energy ?? 0;
 
         const baseSpeed = this.calculateSpeed(speedLevel);
-        const hyper = this.calculateHyperBoost(hyperLevel);
-        const speed = baseSpeed * hyper;
+        const hyperBoost = this.calculateHyperBoost(hyperLevel);
+        const speed = baseSpeed * hyperBoost.speedBoost;
         const consumption = this.calculateConsumption(energyLevel, baseSpeed);
 
-        return { speed, consumption, hyper, baseSpeed };
+        return { 
+            speed, 
+            consumption, 
+            hyper: hyperBoost.speedBoost, 
+            hyperYield: hyperBoost.yieldBoost,
+            hyperTheoretical: hyperBoost.theoretical,
+            baseSpeed 
+        };
     }
 
     readOverclockState() {
@@ -2245,36 +2307,103 @@ ${overclockLine}
         }
     }
 
+    getBaseFluidCap(settings) {
+        const baseProp = this.entity?.getDynamicProperty("dorios:base_fluid_cap");
+        if (typeof baseProp === "number" && baseProp > 0) return baseProp;
+        if (settings?.machine?.fluid_cap) return settings.machine.fluid_cap;
+        try {
+            const fluid = new FluidManager(this.entity, 0);
+            if (typeof fluid?.cap === "number" && fluid.cap > 0) return fluid.cap;
+        } catch { /* ignore if entity doesn't have fluid */ }
+        return 0;
+    }
+
+    applyFluidCapBoost(multiplier, settings) {
+        if (!multiplier || multiplier <= 0) return;
+        const baseCap = this.getBaseFluidCap(settings);
+        if (!baseCap) return;
+
+        try {
+            const fluid = new FluidManager(this.entity, 0);
+            const desired = Math.max(baseCap, Math.floor(baseCap * multiplier));
+            if (desired !== fluid.getCap()) {
+                fluid.setCap(desired);
+            }
+        } catch { /* ignore if entity doesn't have fluid */ }
+    }
+
+    restoreBaseFluidCap(settings) {
+        const baseCap = this.getBaseFluidCap(settings);
+        if (!baseCap) return;
+
+        try {
+            const fluid = new FluidManager(this.entity, 0);
+            const current = fluid.get();
+            const desired = Math.max(baseCap, current);
+            if (desired !== fluid.getCap()) {
+                fluid.setCap(desired);
+            }
+        } catch { /* ignore if entity doesn't have fluid */ }
+    }
+
     applyOverclockBoosts(settings) {
         if (!this.overclock || this.overclock.level <= 0 || this.overclock.effectiveness <= 0) {
             this.boosts.overclockClock = 1;
-            this.boosts.overclockYield = 1;
+            // Keep hyperYield if it exists from hyper upgrades
+            if (!this.boosts.hyperYield) {
+                this.boosts.overclockYield = 1;
+            } else {
+                this.boosts.overclockYield = this.boosts.hyperYield;
+            }
             this.restoreBaseEnergyCap(settings);
+            this.restoreBaseFluidCap(settings);
             return;
         }
 
         const strength = Math.max(0, this.overclock.level * this.overclock.effectiveness);
         if (strength <= 0) {
             this.boosts.overclockClock = 1;
-            this.boosts.overclockYield = 1;
+            // Keep hyperYield if it exists from hyper upgrades
+            if (!this.boosts.hyperYield) {
+                this.boosts.overclockYield = 1;
+            } else {
+                this.boosts.overclockYield = this.boosts.hyperYield;
+            }
             this.restoreBaseEnergyCap(settings);
+            this.restoreBaseFluidCap(settings);
             return;
         }
 
-        const clockMult = 1 + 0.35 * strength;
-        const speedMult = clockMult;
-        const consumptionMult = 1 + 0.25 * strength;
+        // Calculate theoretical clock multiplier
+        const theoreticalClock = 1 + 0.35 * strength;
+        
+        // Cap speed at 2x, excess goes to production/consumption multipliers
+        let speedMult = Math.min(2, theoreticalClock);
+        let yieldMult = 1;
+        let consumptionMult = 1 + 0.25 * strength;
+        
+        // When theoretical clock exceeds 2x, convert excess to production/consumption doubling
+        if (theoreticalClock > 2) {
+            const excessMultiplier = theoreticalClock / 2;
+            yieldMult = excessMultiplier;
+            consumptionMult *= excessMultiplier;
+        }
+        
+        // Capacity boosts for energy and fluid
         const capacityMult = 1 + 0.25 * strength;
-        const yieldMult = Math.max(1, Math.floor(clockMult));
 
         this.boosts.baseSpeed = (this.boosts.baseSpeed ?? 1) * speedMult;
         this.boosts.speed = (this.boosts.speed ?? 1) * speedMult;
         this.boosts.consumption = (this.boosts.consumption ?? 1) * consumptionMult;
         this.boosts.overclockCapacity = capacityMult;
-        this.boosts.overclockClock = clockMult;
-        this.boosts.overclockYield = yieldMult;
+        this.boosts.overclockClock = theoreticalClock; // Keep for display purposes
+        
+        // Combine overclock yield with hyper yield from upgrades
+        const hyperYield = this.boosts.hyperYield ?? 1;
+        this.boosts.overclockYield = yieldMult * hyperYield;
 
         this.applyEnergyCapBoost(capacityMult, settings);
+        this.applyFluidCapBoost(capacityMult, settings);
     }
 
     /**

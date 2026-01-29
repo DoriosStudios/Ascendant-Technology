@@ -1,15 +1,44 @@
 Base file for a changelog in markdown format following Ascendant Technology's patchnote conventions.
 
-Firstly, we have the main sections of the changelog:
+## Changelog header and summary
+
+Start every changelog with a version header and a short summary paragraph (1–3 sentences).
+Use the same tone and language as the rest of the file (English is the default; Portuguese is acceptable if the release notes are fully in PT).
+
+Recommended patterns based on past releases:
+
+```Markdown
+# v0.7.2
+
+Small fix regarding some recipes and text entries.
+```
+
+Drafts and previews should include a suffix:
+
+```Markdown
+# v0.3.0-alpha (Draft)
+
+Pre-release snapshot focused on heavy-duty storage, smarter automation, and UI quality-of-life polish ahead of broader testing.
+```
+
+Keep one blank line between the summary and the first section header.
+
+## Section layout
+
+Use uppercase section headers by default (this is the most common pattern in past changelogs). If you choose Title Case, keep it consistent in the same file.
+
+Main sections observed in past changelogs:
 
 ```Markdown
 ## BLOCKS
+## MACHINES (Optional, when you want a dedicated machine section)
 ## ITEMS
 ## RECIPES (When there's too many recipe changes, consider splitting into subcategories)
-## UI/UX
-## BUG FIXES
+## UI or ## UI/UX
+## FLUIDS (Optional, when liquid systems change)
+## BUG FIXES (or ## Bug Fixes)
 ## TECHNICAL CHANGES (Optional, for modpack devs and advanced users)
-## THIRD-PARTY INTEGRATION (Optional, for compatibility notes)
+## THIRD-PARTY / INTEGRATION (Optional, for compatibility notes)
 ```
 
 Inside each section, use bullet points to list changes. For example:
@@ -71,6 +100,8 @@ Items section with subcategories:
 
 Basically, follow the structure and formatting demonstrated in the provided changelog snippets for consistency.
 
+## Writing rules (based on past changelogs)
+
 Some simple rules to keep in mind:
 - Use clear and concise language, such as:
     - "Added", "Removed", "Increased", "Decreased", "Fixed", "Updated", "Modified"
@@ -80,7 +111,24 @@ Some simple rules to keep in mind:
     - "Changes" overwrites this rule. "Added" always comes first, then "Changes" and then "Removed".
 - Remember to include brief summaries at the top of each changelog file, as shown in the examples. These are important for users to quickly understand the main features of the update.
 
-In "TECHNICAL CHANGES", use more technical language suitable for modpack developers and advanced users. Don't hesitate to include implementation details that may help them understand the changes better, even if it needs to show code snippets or configuration changes.
+Additional consistency rules from recent files:
+- Prefer one concise summary paragraph at the top. Avoid lists in the summary.
+- Use **bold** for per-item sub-entries when listing multiple stats (Armor/Tools examples below).
+- Keep units consistent inside a single file: use the same spacing and casing for `mB`, `kDE`, `DE`, `MB`, etc.
+- When referencing files, components, or tags, wrap them in backticks (e.g., `utilitycraft:special_container`).
+- When a change impacts players and scripts, mention both the player-facing effect and the technical change in sub-bullets.
+
+In "TECHNICAL CHANGES", use more technical language suitable for modpack developers and advanced users. Don’t hesitate to include implementation details that may help them understand the changes better, including config keys, ScriptEvents, or short inline code references.
+
+## Footer links (optional, used in recent releases)
+
+When the release references previous notes, add a short footer with links:
+
+```Markdown
+---
+For a full list of changes, see previous changelogs.
+[Changelog v0.7.1](...) | [Changelog v0.7.0](...)
+```
 
 Here are some examples of how to format specific changes:
 ```Markdown

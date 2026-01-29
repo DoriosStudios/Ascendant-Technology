@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 
 /**
  * Infusing recipes for the Infuser machine.
@@ -9,7 +9,17 @@ import { system } from "@minecraft/server";
  * @constant
  * @type {InfuserRecipes}
  */
-export const infuserRecipes = {
+export const infuserRecipes = {};
+
+const infuserRecipesRegister = {
+    "utilitycraft:amethyst_dust|utilitycraft:obsidian_dust": {
+        output: "utilitycraft:stabilized_obsidian_dust",
+        required: 4
+    },
+    "utilitycraft:amethyst_dust|utilitycraft:crying_obsidian_dust": {
+        output: "utilitycraft:stabilized_obsidian_dust",
+        required: 1
+    },
     "minecraft:redstone|minecraft:iron_ingot": {
         output: "utilitycraft:energized_iron_ingot",
         required: 4
@@ -168,15 +178,26 @@ export const infuserRecipes = {
     "minecraft:redstone|minecraft:raw_iron": {
         output: "utilitycraft:raw_energized_iron",
         required: 4
-    }
+    },
     // Cost multiplier needed
+    "minecraft:bone_meal|minecraft:cobblestone": {
+        output: "minecraft:calcite",
+        required: 4
+    }
 };
+
+world.afterEvents.worldLoad.subscribe(() => {
+    system.sendScriptEvent(
+        "utilitycraft:register_infuser_recipe",
+        JSON.stringify(infuserRecipesRegister)
+    );
+});
 
 /**
  * ScriptEvent receiver: "utilitycraft:register_infuser_recipe"
  *
  * Allows other addons or scripts to dynamically add or replace Infuser recipes.
- * The key must be in `"catalyst|input"` format.
+ * The key must be in "catalyst|input" format.
  *
  * Expected payload format (JSON):
  * ```json
@@ -204,12 +225,11 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
         for (const [recipeKey, data] of Object.entries(payload)) {
             if (!data.output || typeof data.output !== "string") continue;
             if (!recipeKey.includes("|")) {
-                console.warn(`[UtilityCraft] Invalid infuser key '${recipeKey}', expected "catalyst|input" format.`);
+                console.warn(`[UtilityCraft: Ascendant Technology] Invalid infuser key '${recipeKey}', expected "catalyst|input" format.`);
                 continue;
             }
 
             if (infuserRecipes[recipeKey]) {
-                console.warn(`[UtilityCraft] Replaced existing infuser recipe for '${recipeKey}'.`);
                 replaced++;
             } else {
                 added++;
@@ -218,9 +238,9 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
             infuserRecipes[recipeKey] = data;
         }
 
-        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} infuser recipes.`);
+        console.warn(`[UtilityCraft: Ascendant Technology] Registered ${added} new and replaced ${replaced} infuser recipes.`);
     } catch (err) {
-        console.warn("[UtilityCraft] Failed to parse infuser registration payload:", err);
+        console.warn("[UtilityCraft: Ascendant Technology] Failed to parse infuser registration payload:", err);
     }
 });
 

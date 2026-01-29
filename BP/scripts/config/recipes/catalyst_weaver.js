@@ -1,5 +1,5 @@
 import { system } from "@minecraft/server"
-import { infuserRecipes } from './infuser.js'
+import { infuserRecipes } from './infuser_registry.js'
 import { defineClonerRecipe } from "./cloner.js"
 
 const WEAVER_DEFAULT_ENERGY_COST = 6400

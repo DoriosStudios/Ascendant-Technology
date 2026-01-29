@@ -87,6 +87,21 @@ const nativeLiquifierRecipes = [
             chance: 0.35
         },
         description: "Liquifies refined obsidian dust into a full bucket of dark matter."
+    }),
+    defineLiquifierRecipe({
+        input: { id: "utilitycraft:compressed_obsidian"},
+        fluid: { type: "dark_matter", amount: 9000},
+        energyCost: 64000
+    }),
+    defineLiquifierRecipe({
+        input: { id: "utilitycraft:compressed_obsidian_2"},
+        fluid: { type: "dark_matter", amount: 72000},
+        energyCost: 560000
+    }),
+    defineLiquifierRecipe({
+        input: { id: "utilitycraft:compressed_obsidian_3"},
+        fluid: { type: "dark_matter", amount: 576000},
+        energyCost: 5000000
     })
 ];
 

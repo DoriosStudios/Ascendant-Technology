@@ -8,7 +8,7 @@ const FLUID_INPUT_SLOT = 10
 const FLUID_DISPLAY_SLOT = 11
 const OUTPUT_SLOT_ORIGINAL = 18
 const OUTPUT_SLOT_COPY = 19
-const DEFAULT_FLUID_TYPE = 'dark_matter'
+const DEFAULT_FLUID_TYPE = 'dark_matter' || "Dark Matter"
 const FLUID_PER_SECOND = 80
 const TICKS_PER_SECOND = 20
 const UPGRADE_SLOTS = [4, 5]
@@ -493,6 +493,27 @@ function resolveFabricatorRateSpeedBase(settings) {
     return candidate
 }
 
+function resolveFabricatorUpdateTicks(machine) {
+    const tickCount = Number(globalThis.tickCount ?? 0)
+    const lastTick = machine?.entity?.getDynamicProperty?.('dorios:fabricator_last_tick')
+
+    let delta = 0
+    if (typeof lastTick === 'number' && tickCount > lastTick) {
+        delta = tickCount - lastTick
+    }
+
+    if (machine?.entity?.setDynamicProperty) {
+        machine.entity.setDynamicProperty('dorios:fabricator_last_tick', tickCount)
+    }
+
+    if (!Number.isFinite(delta) || delta <= 0) {
+        const fallback = Number(globalThis.tickSpeed ?? 1)
+        return Math.max(1, Number.isFinite(fallback) ? fallback : 1)
+    }
+
+    return Math.max(1, Math.floor(delta))
+}
+
 function applyFabricatorRuntime(machine, recipe, settings) {
     if (!machine || !recipe) return
 
@@ -508,8 +529,8 @@ function applyFabricatorRuntime(machine, recipe, settings) {
     recipe.energyCost = Math.max(MIN_FABRICATOR_ENERGY_COST, Math.round(recipe.costKDE * KDE))
     recipe.perSecondKDE = recipe.costKDE / targetSeconds
 
-    const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
-    const updatesPerSecond = Math.max(Number.EPSILON, TICKS_PER_SECOND / tickSpeed)
+    const refreshTicks = resolveFabricatorUpdateTicks(machine)
+    const updatesPerSecond = Math.max(Number.EPSILON, TICKS_PER_SECOND / refreshTicks)
     const progressPerSecond = recipe.energyCost / targetSeconds
     const progressPerUpdate = progressPerSecond / updatesPerSecond
     const perTickRate = Math.max(MIN_FABRICATOR_RATE, progressPerSecond / TICKS_PER_SECOND)

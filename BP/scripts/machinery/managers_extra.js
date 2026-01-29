@@ -1734,6 +1734,41 @@ export class Machine {
         if (nextLine) {
             fluid = FluidManager.getFluidFromText(nextLine)
         }
+
+        const shouldUpdateEnergy = permutationToPlace?.hasTag?.('dorios:energy');
+        const shouldUpdateFluid = permutationToPlace?.hasTag?.('dorios:fluid');
+
+        if (shouldUpdateEnergy || shouldUpdateFluid) {
+            system.runTimeout(() => {
+                const dim = block.dimension;
+                const offsets = [
+                    { x: 1, y: 0, z: 0 },
+                    { x: -1, y: 0, z: 0 },
+                    { x: 0, y: 1, z: 0 },
+                    { x: 0, y: -1, z: 0 },
+                    { x: 0, y: 0, z: 1 },
+                    { x: 0, y: 0, z: -1 },
+                ];
+
+                const refresh = (type, tag) => {
+                    updatePipes(block, type);
+                    for (const off of offsets) {
+                        const neighbor = dim.getBlock({
+                            x: block.location.x + off.x,
+                            y: block.location.y + off.y,
+                            z: block.location.z + off.z,
+                        });
+                        if (neighbor?.hasTag?.(tag)) {
+                            updatePipes(neighbor, type);
+                        }
+                    }
+                };
+
+                if (shouldUpdateEnergy) refresh('energy', 'dorios:energy');
+                if (shouldUpdateFluid) refresh('fluid', 'dorios:fluid');
+            }, 2);
+        }
+
         system.run(() => {
             const entity = Machine.spawn(block, settings, permutationToPlace)
 

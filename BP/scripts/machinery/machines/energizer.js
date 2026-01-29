@@ -75,7 +75,7 @@ DoriosAPI.register.blockComponent('energizer', {
         const yieldBoost = machine.boosts.overclockYield ?? 1
         const maxCrafts = computeMaxCrafts(channel, outputSlot, yieldBoost)
         if (maxCrafts <= 0) {
-            const capacity = getOutputCapacity(outputSlot, channel.recipe.output.amount, yieldBoost)
+            const capacity = getOutputCapacity(outputSlot, channel.recipe.output.id, channel.recipe.output.amount, yieldBoost)
             if (capacity <= 0) {
                 machine.showWarning('Output Full', false)
             } else {
@@ -154,15 +154,30 @@ function computeMaxCrafts(channel, outputSlot, yieldBoost = 1) {
     const inputPer = channel.recipe.input.amount ?? 1
     const outputPer = channel.recipe.output.amount ?? 1
     const inputCrafts = Math.floor(channel.stack.amount / inputPer)
-    const outputCrafts = getOutputCapacity(outputSlot, outputPer, yieldBoost)
+    const outputCrafts = getOutputCapacity(outputSlot, channel.recipe.output.id, outputPer, yieldBoost)
     return Math.max(0, Math.min(inputCrafts, outputCrafts))
 }
 
-function getOutputCapacity(slot, perCraft, yieldBoost = 1) {
-    const space = slot ? (slot.maxAmount ?? 64) - slot.amount : 64
+function getOutputCapacity(slot, outputId, perCraft, yieldBoost = 1) {
+    const maxStack = resolveMaxStackSize(slot, outputId)
+    const space = slot ? maxStack - slot.amount : maxStack
     if (space <= 0) return 0
     const effectivePerCraft = Math.max(1, perCraft * yieldBoost)
     return Math.floor(space / effectivePerCraft)
+}
+
+function resolveMaxStackSize(slot, outputId) {
+    if (slot?.maxAmount) return slot.maxAmount
+    if (!outputId) return 64
+    try {
+        const probe = new ItemStack(outputId, 1)
+        if (probe?.maxAmount) return probe.maxAmount
+        const comp = probe?.getComponent?.("minecraft:max_stack_size")
+        if (typeof comp?.value === "number") return comp.value
+    } catch {
+        // Fall back to default stack size
+    }
+    return 64
 }
 
 function processCraft(machine, channel, crafts) {
@@ -178,10 +193,15 @@ function processCraft(machine, channel, crafts) {
     
     if (totalOutput > 0) {
         const existing = machine.inv.getItem(OUTPUT_SLOT)
+        const maxStack = resolveMaxStackSize(existing, channel.recipe.output.id)
+        const available = existing ? Math.max(0, maxStack - existing.amount) : maxStack
+        const toInsert = Math.min(totalOutput, available)
+        if (toInsert <= 0) return
+
         if (!existing) {
-            machine.entity.setItem(OUTPUT_SLOT, channel.recipe.output.id, totalOutput)
+            machine.entity.setItem(OUTPUT_SLOT, channel.recipe.output.id, toInsert)
         } else {
-            machine.entity.changeItemAmount(OUTPUT_SLOT, totalOutput)
+            machine.entity.changeItemAmount(OUTPUT_SLOT, toInsert)
         }
     }
 }

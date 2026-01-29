@@ -12,15 +12,15 @@ This file will be constantly updated as bugs come and go.
 ❌ : To be removed  
 
 ## Current Version (0.7.2)
-- 🔷 Titanium and Aetherium cannot be obtained from compressed variants of crushed blocks.
-- 🔷 Singularity Fabricator doesn't accept Dark Matter.  
-- 🔷 Singularity Fabricator requires an absurd amount of power to operate.
+- 🔷 Titanium and Aetherium cannot be obtained from compressed variants of crushed blocks. [#2](https://github.com/DoriosStudios/Ascendant-Technology/issues/2)
+- 🔷 Singularity Fabricator doesn't accept Dark Matter.  [#13](https://github.com/DoriosStudios/Ascendant-Technology/issues/13)
+- 🔷 Singularity Fabricator requires an absurd amount of power to operate.  [#4](https://github.com/DoriosStudios/Ascendant-Technology/issues/4)
    - After 0.7.0 rework, energy requirements are too high for practical use.
-- 🔷 Energizer creates more items than it should, exceeding the item's maximum stack size.
-- 🔷 Reinforced Cable does not conduct electricity. 
-- 🔶 The armor icon in Pocket UI disappears when using Aetherium and Titanium armor. 
+- 🔷 Energizer creates more items than it should, exceeding the item's maximum stack size.  [#8](https://github.com/DoriosStudios/Ascendant-Technology/issues/8)
+- 🔷 Reinforced Cable does not conduct electricity.  [#15](https://github.com/DoriosStudios/Ascendant-Technology/issues/15)
+- 🔶 The armor icon in Pocket UI disappears when using Aetherium and Titanium armor.  
 - 🔶 Some machines UI  gets very close on older phones.
-- ❌ Reinforced Extractor
+- ❌ Reinforced Extractor is not useful, so it will be removed in future updates.
 
 # Last Changes
 - ✅ **Aetherium and Titanium armor does not provide protection.**  

@@ -1,12 +1,13 @@
 This is where all bugs noticed in Ascendant Technology will be shown. You can report more as soon as you see them, at any time, using **Ascendant Tech Exp.** tag. This channel will be constantly updated as bugs come and go.
 
-✅ : Fixed  
+🔷 : Fixed, but not released yet
+✅ : Fixed    
 ⚠️ : To be Fixed  
 🔶 : Couldn't reproduce  
 ❌ : To be removed  
 
 ## Current Version (0.7.2)
-- ⚠️ Titanium and Aetherium cannot be obtained from compressed variants of crushed blocks.
+- 🔷 Titanium and Aetherium cannot be obtained from compressed variants of crushed blocks.
 - ⚠️ Singularity Fabricator's speed is unstable.
    - Not exactly a bug, but it's inconvenient.
 - ⚠️ Reinforced Cable does not conduct electricity.

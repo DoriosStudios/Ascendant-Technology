@@ -16,5 +16,7 @@ Anyway, it's on beta right now, so expect bugs and stuff not working properly.
 
 Download: https://github.com/DoriosStudios/Ascendant-Technology/releases
 
-Water and Cryofluid icons by Anuke(n):
+Water and Cryofluid icons are not mine.
+
+The creator of Mindustry, Anuke(n), has granted permission for the use of these assets. See the original work:
 https://github.com/Anuken/Mindustry

@@ -64,6 +64,7 @@ function refreshNeighbors(block) {
         const pos = { x: block.location.x + off.x, y: block.location.y + off.y, z: block.location.z + off.z };
         const neighbor = dim.getBlock(pos);
         if (!neighbor) continue;
+        if (neighbor.hasTag("dorios:energy")) updatePipes(neighbor, "energy");
         if (neighbor.hasTag("dorios:fluid")) updatePipes(neighbor, "fluid");
 
         // Update visual connections for overclock network

@@ -7,16 +7,14 @@ import { system, world } from "@minecraft/server";
  * coolant types that can be used in machines like the Thermal Reactor.
  */
 world.afterEvents.worldLoad.subscribe(() => {
-    system.runTimeout(() => {
-        // Register Cryofluid as a coolant for Heavy Machinery
-        const coolantData = {
-            "cryofluid": {
-                cooling_efficiency: 1.0,  // 100% effectiveness (better than water)
-                description: "Advanced cooling fluid from Ascendant Technology"
-            }
-        };
+    // Register Cryofluid as a coolant for Heavy Machinery
+    const coolantData = {
+        "cryofluid": {
+            cooling_efficiency: 1.0,  // 100% effectiveness (better than water)
+            description: "Advanced cooling fluid from Ascendant Technology"
+        }
+    };
 
-        system.sendScriptEvent("utilitycraft:register_coolant", JSON.stringify(coolantData));
-        console.warn("[Ascendant Technology] Registered Cryofluid as a coolant for Heavy Machinery.");
-    }, 0);
+    system.sendScriptEvent("utilitycraft:register_coolant", JSON.stringify(coolantData));
+    console.warn("[Ascendant Technology] Registered Cryofluid as a coolant for Heavy Machinery.");
 });

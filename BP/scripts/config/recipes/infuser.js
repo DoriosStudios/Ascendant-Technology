@@ -10,8 +10,6 @@ import { infuserRecipesData } from "./data/infuser_recipes.js";
  * recipes via scriptevent.
  */
 world.afterEvents.worldLoad.subscribe(() => {
-    system.runTimeout(() => {
-        system.sendScriptEvent("utilitycraft:register_infuser_recipe", JSON.stringify(infuserRecipesData));
-        console.warn("[Ascendant Technology] Registered infuser recipes to UtilityCraft.");
-    }, 0);
+    system.sendScriptEvent("utilitycraft:register_infuser_recipe", JSON.stringify(infuserRecipesData));
+    console.warn("[Ascendant Technology] Registered infuser recipes to UtilityCraft.");
 });

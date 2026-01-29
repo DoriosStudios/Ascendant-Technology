@@ -4202,7 +4202,7 @@ export class FluidManager {
         } catch {
             item = new ItemStack("utilitycraft:empty_fluid_bar", 1);
         }
-        item.nameTag = `§r${DoriosAPI.utils.capitalizeFirst(type)}
+        item.nameTag = `§r${DoriosAPI.utils.formatIdToText(type)}
     §r§7  Stored: ${FluidManager.formatFluid(fluid)} / ${FluidManager.formatFluid(cap)}
     §r§7  Percentage: ${percentFilled.toFixed(2)}%`;
 

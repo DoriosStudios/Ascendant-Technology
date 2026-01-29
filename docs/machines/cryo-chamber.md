@@ -6,7 +6,7 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 
 ## Modules (run at the same time)
 ### Cryo Stabilizer
-- Stabilizes volatile materials using Cryofluid.
+- Stabilizes volatile or/and charged materials using Cryofluid.
 - Input: stabilizer slot.
 - Output: stabilizer slot.
 - Requires energy and, when the recipe asks for it, Cryofluid.

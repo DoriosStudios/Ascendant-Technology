@@ -1,4 +1,5 @@
 import { Machine, Energy, buildOverclockLoreLine } from '../managers_extra.js'
+import { startHeaterAura, tickHeaterAura, stopHeaterAuraAt } from '../multi_core.js'
 import { getEnergizerRecipes } from '../../config/recipes/energizer.js'
 
 const INPUT_SLOTS = [3, 4]
@@ -108,6 +109,8 @@ DoriosAPI.register.blockComponent('energizer', {
 
         const status = progress >= energyCost ? 'Running' : 'Charging'
         updateHud(machine, channel, status)
+        // Tick the heater aura (consumes energyPerSecond while active)
+        tickHeaterAura(block, machine, { energyPerSecond: 100 })
         machine.displayEnergy()
         machine.displayProgress()
         machine.on()
@@ -115,6 +118,8 @@ DoriosAPI.register.blockComponent('energizer', {
 
     onPlayerBreak(e) {
         Machine.onDestroy(e)
+        // Stop any active heater aura when the machine is removed
+        stopHeaterAuraAt(e.block)
     }
 })
 

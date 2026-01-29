@@ -1,5 +1,6 @@
 import { ItemStack } from "@minecraft/server";
 import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../managers_extra.js';
+import { tickCoolingAuras, stopCoolingAuraAt } from '../multi_core.js';
 import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../config/recipes/cryo_chamber.js';
 
 /**
@@ -181,10 +182,15 @@ DoriosAPI.register.blockComponent('cryo_chamber', {
         cryofluidTank.display(CRYOFLUID_DISPLAY_SLOT);
         machine.displayEnergy();
         updateMachineStatus(machine, statuses, waterTank, cryofluidTank);
+
+        // Tick AC cooling aura (consumes energyPerSecond when active)
+        tickCoolingAuras(block, machine, 100);
     },
 
     onPlayerBreak(e) {
         Machine.onDestroy(e);
+        // Ensure any active cooling aura is stopped when the machine is removed
+        stopCoolingAuraAt(e.block);
         clearMultiSlotConfig(e.block);
     }
 });

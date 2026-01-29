@@ -2,12 +2,12 @@ import { system, world, ItemStack, BlockPermutation } from '@minecraft/server'
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
 
 /**
- * Placeholder for pipe network update logic.
- * This function is called when blocks are placed to update pipe connections.
- * TODO: Implement transfer_system if pipe network updates are needed.
+ * Updates pipe network connections for energy or fluid systems.
+ * Performs a breadth-first search to find all connected blocks with the specified tag
+ * and caches connected container locations in a dynamic property.
  *
- * @param {Block} block The block that was placed.
- * @param {'energy'|'item'|'fluid'} type The type of pipe network to update.
+ * @param {Block} block The block that was placed or modified.
+ * @param {'energy'|'fluid'} type The type of pipe network to update.
  */
 export function updatePipes(block, type) {
     if (!block || (type !== 'energy' && type !== 'fluid')) return;

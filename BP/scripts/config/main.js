@@ -11,7 +11,6 @@
 //   │  ├─ crusher.js
 //   │  ├─ fuel.js
 //   │  ├─ furnace.js
-//   │  ├─ infuser.js
 //   │  ├─ melter.js
 //   │  ├─ press.js
 //   │  └─ sieve.js

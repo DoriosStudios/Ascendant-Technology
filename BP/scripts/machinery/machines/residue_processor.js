@@ -175,9 +175,9 @@ function processCraft(machine, recipe, crafts) {
     addItemsToSlot(machine, OUTPUT_SLOT, recipe.output.id, totalOutput)
 
     if (recipe.byproduct) {
-        const rolled = rollByproduct(recipe.byproduct, crafts * yieldBoost)
+        const rolled = rollByproduct(recipe.byproduct, crafts)
         if (rolled > 0) {
-            addItemsToSlot(machine, BYPRODUCT_SLOT, recipe.byproduct.id, rolled)
+            addItemsToSlot(machine, BYPRODUCT_SLOT, recipe.byproduct.id, Math.floor(rolled * yieldBoost))
         }
     }
 }

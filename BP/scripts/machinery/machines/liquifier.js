@@ -213,9 +213,9 @@ function processCraft(machine, recipe, crafts, tank) {
     tank.add(recipe.fluid.amount * crafts * yieldBoost);
 
     if (recipe.byproduct) {
-        const produced = rollByproduct(recipe.byproduct, crafts * yieldBoost);
+        const produced = rollByproduct(recipe.byproduct, crafts);
         if (produced > 0) {
-            addItemsToSlot(machine, RESIDUE_SLOT, recipe.byproduct.id, produced);
+            addItemsToSlot(machine, RESIDUE_SLOT, recipe.byproduct.id, Math.floor(produced * yieldBoost));
         }
     }
 }

@@ -22,7 +22,7 @@ This is where all bugs noticed in Ascendant Technology will be shown. You can re
 # Past Changes
 - ✅ Some recipes for meshes and nets are different from UtilityCraft.  
 *(Fixed in 0.7.1)*
-- <✅> Ascendant Technology is incompatible with Vibrant Visuals.   *(Fixed in 0.7.1)*
+- <✅> Ascendant Technology is incompatible with Vibrant Visuals.    *(Fixed in 0.7.1)*
 - <✅> Laser Barrier doesn't have an UI.  
 *(Fixed in 0.7.0)*
 - <✅> Liquid Capsules cannot be used directly in a tank.  

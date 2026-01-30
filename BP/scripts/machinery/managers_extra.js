@@ -1474,6 +1474,7 @@ export class Machine {
 
         this.overclock = this.readOverclockState()
         this.applyOverclockBoosts(settings)
+        this.applyHarmonicBoosts()
 
         const baseSpeedMultiplier = this.boosts.baseSpeed ?? 1;
         const hyperMultiplier = this.boosts.hyper ?? 1;
@@ -2487,6 +2488,22 @@ ${overclockLine}
 
         this.applyEnergyCapBoost(capacityMult, settings);
         this.applyFluidCapBoost(capacityMult, settings);
+    }
+
+    /**
+     * Apply harmonic boost from Spectral Harmonizer to machine speeds.
+     * Harmonic boost is applied on top of overclock boosts when machines
+     * are synchronized with a Spectral Harmonizer during beat windows.
+     */
+    applyHarmonicBoosts() {
+        if (!this.entity) return;
+        
+        const harmonicBoost = Number(this.entity.getDynamicProperty('sh:harmonicBoost') ?? 0);
+        if (harmonicBoost <= 0) return;
+        
+        // Apply harmonic speed boost multiplicatively
+        this.boosts.baseSpeed = (this.boosts.baseSpeed ?? 1) * (1 + harmonicBoost);
+        this.boosts.speed = (this.boosts.speed ?? 1) * (1 + harmonicBoost);
     }
 
     /**

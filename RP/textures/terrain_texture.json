@@ -109,6 +109,12 @@
 		"utilitycraft_network_center_on": {
 			"textures": "textures/blocks/machines/network_center_on"
 		},
+		"utilitycraft_spectral_harmonizer_off": {
+			"textures": "textures/blocks/machines/spectral_harmonizer_off"
+		},
+		"utilitycraft_spectral_harmonizer_on": {
+			"textures": "textures/blocks/machines/spectral_harmonizer_on"
+		},
 		"utilitycraft_absolute_container_off": {
 			"textures": "textures/blocks/generators/absolute_container_off"
 		},

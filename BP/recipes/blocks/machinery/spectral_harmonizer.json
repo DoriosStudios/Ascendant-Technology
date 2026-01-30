@@ -1,0 +1,22 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": { "identifier": "utilitycraft:spectral_harmonizer" },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": [
+            "BCB",
+            "HAH",
+            "TMT"
+        ],
+        "key": {
+            "B": { "item": "utilitycraft:beat_core" },
+            "C": { "item": "utilitycraft:ultimate_chip" },
+            "H": { "item": "utilitycraft:harmonic_coupler" },
+            "A": { "item": "utilitycraft:aetherium_block" },
+            "T": { "item": "utilitycraft:titanium" },
+            "M": { "item": "utilitycraft:machine_case" }
+        },
+        "result": { "item": "utilitycraft:spectral_harmonizer", "count": 1 },
+        "unlock": [ { "item": "utilitycraft:harmonic_coupler" } ]
+    }
+}

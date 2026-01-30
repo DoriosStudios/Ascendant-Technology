@@ -79,6 +79,7 @@ item.utilitycraft:liquid_void=Liquid Void Capsule
 item.utilitycraft:size_upgrade=§gSize Upgrade§7\n- Increases Laser Barrier area
 item.utilitycraft:hyper_processing_upgrade=§dHyper Processing Upgrade§7\n- Increases machine operation speed\n- No extra energy cost
 
+item.utilitycraft:harmonic_coupler=§6Harmonic Coupler§7\n- Machine upgrade for synchronization\n- Enables beat cycle speed boosts
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aLucky Mesh\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
 item.utilitycraft:lucky_fishing_net=§aLucky Fishing Net\n§7- Hook Speed Tier: 10\n§7- Item Multiplier: 2x
@@ -130,6 +131,7 @@ entity.utilitycraft:liquifier.name=Liquifier
 entity.utilitycraft:laser_barrier.name=Laser Barrier
 entity.utilitycraft:residue_processor.name=Residue Processor
 entity.utilitycraft:energizer.name=Energizer
+entity.utilitycraft:spectral_harmonizer.name=§fSpectral Harmonizer
 entity.utilitycraft:network_center.name=§fNetwork Center
 entity.utilitycraft:tabs_test_machine.name=§fTabs Test Machine
 entity.utilitycraft:overclock_tower.name=§fOverclock Tower

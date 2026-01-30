@@ -1,0 +1,19 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": { "identifier": "utilitycraft:harmonic_coupler" },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": [
+            "TBT",
+            "BCB",
+            "TBT"
+        ],
+        "key": {
+            "T": { "item": "utilitycraft:titanium" },
+            "B": { "item": "utilitycraft:beat_core" },
+            "C": { "item": "utilitycraft:advanced_chip" }
+        },
+        "result": { "item": "utilitycraft:harmonic_coupler", "count": 1 },
+        "unlock": [ { "item": "utilitycraft:beat_core" } ]
+    }
+}

@@ -119,6 +119,12 @@
 		"utilitycraft_hyper_processing_upgrade": {
 			"textures": "textures/items/machinery/hyper_processing_upgrade"
 		},
+		"utilitycraft_beat_core": {
+			"textures": "textures/items/machinery/beat_core"
+		},
+		"utilitycraft_harmonic_coupler": {
+			"textures": "textures/items/machinery/harmonic_coupler"
+		},
 		"utilitycraft_lucky_mesh":{
 			"textures": "textures/items/meshes/lucky_mesh"
 		},

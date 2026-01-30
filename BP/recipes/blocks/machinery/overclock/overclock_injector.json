@@ -1,0 +1,21 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": { "identifier": "utilitycraft:overclock_injector" },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": [
+            "TAT",
+            "RCR",
+            "TIT"
+        ],
+        "key": {
+            "T": { "item": "utilitycraft:titanium" },
+            "A": { "item": "utilitycraft:advanced_chip" },
+            "R": { "item": "utilitycraft:reinforced_cable" },
+            "C": { "item": "utilitycraft:cryo_chamber" },
+            "I": { "item": "utilitycraft:energized_iron_ingot" }
+        },
+        "result": { "item": "utilitycraft:overclock_injector", "count": 1 },
+        "unlock": [ { "item": "utilitycraft:overclock_tower" } ]
+    }
+}

@@ -657,3 +657,115 @@ DoriosAPI.register.blockComponent("overclock_relay", {
         Machine.onDestroy(e);
     }
 });
+
+DoriosAPI.register.blockComponent("overclock_injector", {
+    beforeOnPlayerPlace(e, { params: settings }) {
+        Machine.spawnMachineEntity(e, settings, (entity) => {
+            entity.setDynamicProperty(HEAT_PROP, 0);
+            entity.setDynamicProperty(LEVEL_PROP, 0);
+            entity.setDynamicProperty(EFF_PROP, 0);
+        });
+    },
+
+    onTick(e, { params: settings }) {
+        if (!globalThis.worldLoaded) return;
+        const machine = new Machine(e.block, settings, true);
+        if (!machine?.entity) return;
+
+        // Scan for overclock source in the network
+        const source = scanForOverclockSource(e.block);
+        const level = Number(source.level ?? 0);
+        const effectiveness = Number.isFinite(source.effectiveness) && source.effectiveness > 0
+            ? source.effectiveness
+            : 1;
+
+        // Store the overclock data on the injector entity
+        setOverclockOnEntity(machine.entity, level, level > 0 ? effectiveness : 0);
+
+        // Heat management and coolant consumption
+        let currentHeat = Number(machine.entity.getDynamicProperty(HEAT_PROP) ?? 0);
+        let overheating = false;
+        let coolantStatus = "§cNo Coolant";
+        let coolantEffectiveness = 0;
+
+        if (level > 0) {
+            // Try to drain coolant
+            const fluid = new FluidManager(machine.entity, 0);
+            const fluidType = fluid.getType();
+            const fluidAmount = fluid.get();
+
+            let coolantOk = false;
+
+            if (fluidType === "utilitycraft:cryofluid" && fluidAmount >= CRYO_DRAIN_PER_TICK) {
+                fluid.add(-CRYO_DRAIN_PER_TICK);
+                coolantEffectiveness = 1.0;
+                coolantOk = true;
+                coolantStatus = "§bCryofluid (100%)";
+            } else if (fluidType === "minecraft:water" && fluidAmount >= WATER_DRAIN_PER_TICK) {
+                fluid.add(-WATER_DRAIN_PER_TICK);
+                coolantEffectiveness = 0.5;
+                coolantOk = true;
+                coolantStatus = "§9Water (50%)";
+            }
+
+            if (coolantOk) {
+                // Reduce heat when coolant is present
+                currentHeat = Math.max(0, currentHeat - 2);
+            } else {
+                // Increase heat when no coolant
+                currentHeat += level * 0.5;
+            }
+
+            // Check if overheating
+            if (currentHeat >= MELT_HEAT_THRESHOLD) {
+                overheating = true;
+                e.block.setBlockState("utilitycraft:overheating", true);
+                
+                // Give a warning before melting
+                if (currentHeat >= MELT_HEAT_THRESHOLD + 10) {
+                    meltBlock(e.block);
+                    return;
+                }
+            } else {
+                e.block.setBlockState("utilitycraft:overheating", false);
+            }
+
+            // Apply overclock to the facing machine
+            const applied = applyOverclockToTarget(e.block, level, effectiveness * coolantEffectiveness);
+
+            if (applied) {
+                machine.on();
+            } else {
+                machine.off();
+            }
+        } else {
+            // No overclock available, cool down gradually
+            currentHeat = Math.max(0, currentHeat - 1);
+            machine.off();
+            e.block.setBlockState("utilitycraft:overheating", false);
+        }
+
+        machine.entity.setDynamicProperty(HEAT_PROP, currentHeat);
+
+        // Display status
+        const statusLines = [
+            `§r§7Overclock Level: §e${level.toFixed(2)}`,
+            `§r§7Effectiveness: §e${(effectiveness * 100).toFixed(0)}%`,
+            `§r§7Coolant: ${coolantStatus}`,
+            `§r§7Heat: §${overheating ? 'c' : (currentHeat > MELT_HEAT_THRESHOLD / 2 ? 'e' : 'a')}${currentHeat.toFixed(1)}§r§7/${MELT_HEAT_THRESHOLD}`
+        ];
+
+        if (overheating) {
+            statusLines.push("§r§c§lWARNING: OVERHEATING!");
+        }
+
+        machine.showStatus("Overclock Injector", statusLines);
+        machine.displayEnergy?.();
+        machine.displayFluid?.();
+        machine.displayOverclock?.();
+    },
+
+    onPlayerBreak(e) {
+        Machine.onDestroy(e);
+    }
+});

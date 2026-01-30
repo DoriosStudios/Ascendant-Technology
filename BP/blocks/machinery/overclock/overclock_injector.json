@@ -1,0 +1,130 @@
+{
+	"format_version": "1.21.100",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:overclock_injector",
+			"menu_category": {
+				"category": "construction",
+				"group": "dorios:itemGroup.name.machines"
+			},
+			"states": {
+				"utilitycraft:on": [false, true],
+				"utilitycraft:axis": ["east", "west", "north", "south", "up", "down"],
+				"utilitycraft:overheating": [false, true]
+			}
+		},
+		"components": {
+			"utilitycraft:overclock_injector": {
+				"rotation": "facing",
+				"entity": {
+					"input_type": "simple",
+					"output_type": "simple",
+					"inventory_size": 1
+				},
+				"machine": {
+					"energy_cap": 10240000,
+					"upgrades": [],
+					"fluid_tanks": [
+						{
+							"capacity": 64000,
+							"accepts": ["utilitycraft:cryofluid", "minecraft:water"]
+						}
+					]
+				}
+			},
+			"minecraft:geometry": "geometry.utilitycraft_injector",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_overclock_injector_off",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:tick": {
+				"interval_range": [2, 2]
+			},
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 1
+			},
+			"minecraft:destructible_by_explosion": false,
+			"tag:dorios:machine": {},
+			"tag:dorios:energy": {},
+			"tag:dorios:fluid": {},
+			"tag:dorios:overclock_network": {},
+			"tag:minecraft:is_pickaxe_item_destructible": {}
+		},
+		"permutations": [
+			{
+				"condition": "q.block_state('utilitycraft:on') == 1 && q.block_state('utilitycraft:overheating') == 0",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_overclock_injector_on",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 8
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:overheating') == 1",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_overclock_injector_overheat",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 12
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'north'",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [0, 180, 0]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'south'",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [0, 0, 0]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'east'",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [0, 90, 0]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'west'",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [0, -90, 0]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'up'",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [90, 0, 0]
+					}
+				}
+			},
+			{
+				"condition": "q.block_state('utilitycraft:axis') == 'down'",
+				"components": {
+					"minecraft:transformation": {
+						"rotation": [-90, 0, 0]
+					}
+				}
+			}
+		]
+	}
+}

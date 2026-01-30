@@ -2700,6 +2700,8 @@ export class Container {
                     const container = new Container(block, normalized, true);
                     container.fillHiddenSlots(normalized.machine.hidden_slots);
                 }
+                try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
+                try { globalThis.refreshConnectedEnergy?.(block); } catch { /* ignore energy refresh */ }
                 if (callback) callback(entity);
             });
         });

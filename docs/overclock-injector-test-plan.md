@@ -54,15 +54,15 @@
 - [ ] "overheating" block state remains false
 
 #### Warning State
-- [ ] Warning state triggers at 32+ heat
+- [ ] Warning state triggers at 32° heat
 - [ ] "overheating" block state changes to true
 - [ ] Texture changes to overheat variant
 - [ ] Light emission increases to 12
-- [ ] Status shows "WARNING: OVERHEATING!"
+- [ ] Status shows "WARNING: OVERHEATING! (X° to melt)"
 - [ ] Can recover if coolant is added
 
 #### Melt Failure
-- [ ] Block melts at 42+ heat
+- [ ] Block melts when heat reaches 42°
 - [ ] Melt plays anvil break sound
 - [ ] Block is destroyed (becomes air)
 - [ ] Block entity is properly cleaned up
@@ -124,13 +124,13 @@
 1. Set up working overclock system (Scenario 1)
 2. Let Cryofluid run out
 3. Observe heat increase
-4. Watch for overheat warning
-5. Verify melt at critical threshold
+4. Watch for overheat warning at 32°
+5. Verify melt occurs at 42°
 6. Confirm network disruption
 
 ### Scenario 3: Coolant Recovery
 1. Set up working overclock system
-2. Let injector start overheating (32-40 heat)
+2. Let injector start overheating (32-40° heat range)
 3. Add Cryofluid
 4. Verify heat decreases
 5. Confirm return to normal operation

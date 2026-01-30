@@ -50,7 +50,8 @@ const OVERCLOCK_FUELS = {
 
 const CRYO_DRAIN_PER_TICK = 120;
 const WATER_DRAIN_PER_TICK = 240;
-const MELT_HEAT_THRESHOLD = 32;
+const OVERHEAT_WARNING_THRESHOLD = 32;
+const MELT_HEAT_THRESHOLD = 42;
 
 function key(pos) {
     return `${pos.x}|${pos.y}|${pos.z}`;
@@ -717,12 +718,12 @@ DoriosAPI.register.blockComponent("overclock_injector", {
             }
 
             // Check if overheating
-            if (currentHeat >= MELT_HEAT_THRESHOLD) {
+            if (currentHeat >= OVERHEAT_WARNING_THRESHOLD) {
                 overheating = true;
                 e.block.setBlockState("utilitycraft:overheating", true);
                 
-                // Give a warning before melting
-                if (currentHeat >= MELT_HEAT_THRESHOLD + 10) {
+                // Melt the block if heat reaches critical threshold
+                if (currentHeat >= MELT_HEAT_THRESHOLD) {
                     meltBlock(e.block);
                     return;
                 }
@@ -752,11 +753,11 @@ DoriosAPI.register.blockComponent("overclock_injector", {
             `§r§7Overclock Level: §e${level.toFixed(2)}`,
             `§r§7Effectiveness: §e${(effectiveness * 100).toFixed(0)}%`,
             `§r§7Coolant: ${coolantStatus}`,
-            `§r§7Heat: §${overheating ? 'c' : (currentHeat > MELT_HEAT_THRESHOLD / 2 ? 'e' : 'a')}${currentHeat.toFixed(1)}§r§7/${MELT_HEAT_THRESHOLD}`
+            `§r§7Heat: §${overheating ? 'c' : (currentHeat > 25 ? 'e' : 'a')}${currentHeat.toFixed(1)}§r§7/${MELT_HEAT_THRESHOLD}`
         ];
 
         if (overheating) {
-            statusLines.push("§r§c§lWARNING: OVERHEATING!");
+            statusLines.push(`§r§c§lWARNING: OVERHEATING! (${MELT_HEAT_THRESHOLD - currentHeat.toFixed(1)}° to melt)`);
         }
 
         machine.showStatus("Overclock Injector", statusLines);

@@ -25,16 +25,17 @@ The injector REQUIRES coolant to operate safely when overclock is active:
 
 #### Normal Operation (with coolant)
 - Green/Blue indicators
-- Heat decreases over time
+- Heat decreases over time (2°/tick)
 - Full overclock boost applied
 
 #### Overheating (without coolant)
-- Heat increases based on overclock level
-- Warning state at 32+ heat
+- Heat increases based on overclock level (0.5 × level/tick)
+- Warning state begins at 32°
 - Visual indicators (red glow, higher light emission)
+- Can still recover by adding coolant
 
 #### Melt State (critical failure)
-- Occurs at 42+ heat
+- Occurs when heat reaches 42° or higher
 - Block is destroyed permanently
 - Plays destruction sound
 - Interrupts network connection
@@ -105,7 +106,8 @@ When interacting with the block, you'll see:
 ### Specifications
 - **Energy Capacity**: 10,240,000 DE
 - **Fluid Capacity**: 64,000 mB
-- **Heat Threshold**: 32 (warning) / 42 (melt)
+- **Overheat Warning**: 32° (warning state begins)
+- **Melt Threshold**: 42° (block destroyed)
 - **Cooling Rate**: 2 heat/tick (with coolant)
 - **Heating Rate**: 0.5 × overclock level/tick (no coolant)
 - **Tick Rate**: Every 2 ticks

@@ -18,6 +18,8 @@ This file will be constantly updated as bugs come and go.
    - After 0.7.0 rework, energy requirements are too high for practical use.
 - 🔷 Energizer creates more items than it should, exceeding the item's maximum stack size.  [#8](https://github.com/DoriosStudios/Ascendant-Technology/issues/8)
 - 🔷 Reinforced Cable does not conduct electricity.  [#15](https://github.com/DoriosStudios/Ascendant-Technology/issues/15)
+- ⚠️ Ascendant Technology machines do not connect with energy cables and networks.
+   - This is a partial issue with AT Machines. Can be "fixed" by breaking and replacing the cables.
 - 🔶 The armor icon in Pocket UI disappears when using Aetherium and Titanium armor.  
 - 🔶 Some machines UI  gets very close on older phones.
 - ❌ Reinforced Extractor is not useful, so it will be removed in future updates.

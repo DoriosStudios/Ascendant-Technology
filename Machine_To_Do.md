@@ -6,7 +6,7 @@ Machine status:
 - 🟡 Planned (approved direction, not started)
 - 🔵 Prototype (may change / experimental)
 - 🟣 Needs Design (idea exists, spec missing)
-- 🔴 On Hold / Cut (paused or removed)
+- 🔴 On Hold / Cut (paused or removed)  
 
 - 🟢 **Absolute Container**
 	- **Purpose:** Singular vault that layers massive item, energy, and fluid storage without automated upgrades or informational clutter.

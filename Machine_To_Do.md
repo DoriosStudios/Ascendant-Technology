@@ -127,12 +127,17 @@ Machine status:
 	- **Purpose:** Syncs multiple machines into a single clock cycle to enable burst-speed windows with beat cycles.
 	- **Operating Mode:** Consumes Beat Cores (1 per 10 cycles); desynchronization causes 5-second stall when cores are depleted.
 	- **Features:**
-		- **Beat Cycles:** 3-second cycles providing 10% speed boost during beat windows.
-		- **Scan Range:** 16-block radius for up to 32 machines.
+		- **Beat Cycles:** 3-second cycles providing 10% speed boost during beat windows (first 1.5s).
+		- **Scan Range:** 16 blocks in each direction (cubic volume: 33×33×33) for up to 32 machines.
+		- **Optimization:** Machine scanning cached every 20 ticks (1 second) for performance.
 		- **Use Cases:** Timed production surges, synchronized speed boosts for factory optimization.
-		- **Requirements:** Machines must have Harmonic Coupler upgrades installed.
+		- **Requirements:** Machines must have Harmonic Coupler upgrades installed in upgrade slots.
 		- **Energy:** 12.8 MDE capacity, 3.2 KDE/tick upkeep cost.
-	- **Notes:** Late-game utility for factory throughput optimization; boost stacks with other upgrades.
+	- **Items:**
+		- **Beat Core:** Crafted from Energized Iron, Redstone, and Aetherium Shard (yields 2).
+		- **Harmonic Coupler:** Crafted from Titanium, Beat Cores, and Advanced Chip.
+		- **Spectral Harmonizer:** Crafted from Beat Cores, Ultimate Chip, Harmonic Couplers, Aetherium Block, Titanium, and Machine Case.
+	- **Notes:** Late-game utility for factory throughput optimization; boost stacks multiplicatively with other upgrades and overclock systems.
 
 ---
 

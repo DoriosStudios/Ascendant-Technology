@@ -161,10 +161,12 @@ Machine status:
 	- **Operating Mode:** Basic pipes move Cryofluid at a fixed rate; higher tiers improve throughput and reduce loss/decay.
 	- **Notes:** Only add if the addon wants a dedicated Cryofluid routing layer (otherwise keep capsules + direct machine tanks).
 
-- 🟡 **Thermal Control Module**
+- 🟢 **Thermal Control Module**
 	- **Purpose:** One stability/heat helper that makes high-tier setups safer without introducing a whole “cluster management” meta.
 	- **Operating Mode:** Adjacent block/module that reduces negative effects from high-speed operation (heat/instability themes) at a steady upkeep (energy and/or Cryofluid).
 	- **Notes:** This intentionally merges multiple AI concepts (Cryo Stabilizer + Thermal Dissipator) into a single, readable component.
+	- **Implementation Status:** Core system designed and documented with block definition, scripts, and configuration files. Ready for testing and refinement.
+	- **Documentation:** Complete design spec, progression guide, recipes, and balance documentation available in `docs/systems/` and `docs/machines/`.
 
 - 🟡 **Overclock Boost Network**
 	- **Purpose:** Late-game “true overclock” system that boosts multiple machine attributes via a dedicated reinforced cable, without colliding with the existing **Hyper Processing Upgrade** item.

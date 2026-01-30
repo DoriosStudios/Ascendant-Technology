@@ -130,7 +130,7 @@ Machine status:
 ## Planned ideas (curated)
 
 - 🟡 **Cryo Reservoir**
-	- **Purpose:** It will create pure cryofluid with reduced losses and high gain, with a greater capacity for items and liquids for greater automation.
+	- **Purpose:** Create pure cryofluid with reduced losses and high gain, with a greater capacity for items and liquids for greater automation.
 	- **Operating Mode:** It will function like the Cryofluid Generator section of the Cryo Chamber, but will be a standalone, multi-block device.
 	- **Notes:** Cryofluid already exists in the addon (Cryo Chamber + capsules). This block would be the “network-scale” storage option.
 

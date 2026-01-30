@@ -133,12 +133,22 @@ docs/
 - Professional gaming terminology used
 - Consistent formatting and style
 
+### Note for New Languages
+The 5 new language translations (fr_FR, de_DE, ru_RU, ja_JP, zh_CN) are **initial automated translations** created from the English source. While they maintain 100% key coverage and formatting consistency, they should be reviewed by native speakers for:
+- Natural phrasing and grammar
+- Gaming terminology preferences
+- Cultural appropriateness
+- Complete translation of all text (some English words may remain)
+
+**Community contribution welcome!** Native speakers are encouraged to review and improve these translations through pull requests.
+
 ### Verification
 - ✅ All keys present and accounted for
 - ✅ Formatting codes verified
 - ✅ Special characters preserved
 - ✅ Line breaks maintained
 - ✅ File encoding correct (UTF-8)
+- ⚠️ Native speaker review recommended for new languages
 
 ## Next Steps
 
@@ -162,9 +172,9 @@ From the original issue:
 
 ✅ **New languages are available in-game** - 5 new languages added (fr_FR, de_DE, ru_RU, ja_JP, zh_CN)
 
-✅ **Existing strings are reviewed and consistent** - All formatting codes fixed, descriptions added, consistency verified
+✅ **Existing strings are reviewed and consistent** - All formatting issues fixed
 
-✅ **No missing keys in UI or items** - All languages have complete 396-key parity
+✅ **No missing keys in UI or items** - Verified - all languages have complete 403-key parity
 
 ---
 

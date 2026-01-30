@@ -140,23 +140,14 @@ Machine status:
 	- **Operating Mode:**
 		- An **Overclock Tower** generates the overclock “charge” (boost level). As well as the energy itself, overclock has its own bar and properties.
 		- An **Overclock Relay** exports that property into the network (to prevent self-boosting loops).
-		- Overclock is applied through a dedicated **Overclock Injector** block placed in-line near the target machine(s). This block also have the Reinforced Cable properties for energy/fluid transfer.
-		- The injector passes normal energy/fluid transfer, but only applies overclock if it is the injection point (no opt-in per-machine UI required).
-		- Cooling is mandatory: **Cryofluid** = 100% effectiveness; **Water** = 50% effectiveness.
+		- Overclock is applied through a Reinforced Cable, near the target machine(s).
 		- Overclock boosts machine attributes (example set): energy capacity, processing speed, and liquid transfer/consumption rates.
 		- Generators are excluded from overclock effects to preserve the need to supply extra energy.
-	- **Failure / Risk:** If an injector runs without coolant, it overheats and **melts**: the block breaks, plays a “burnt” SFX, and the network connection is interrupted (machines beyond stop receiving energy).
-	- **Notes:** This system is intentionally *separate* from **Hyper Processing Upgrade** (which already increases speed with **no extra energy cost**).
 
 - 🟢 **Overclock Tower**
 	- **Purpose:** Main overclock generator: defines the available boost level for a factory.
 	- **Operating Mode:** Consumes energy and Titanium (with a config file) to produce an overclock charge that can be exported by an relay.
 	- **Notes:** This is the “overclocker” itself.
-
-- 🔴 **Overclock Relay**
-	- **Purpose:** Export the Overclock Tower’s overclock charge into the network without allowing the source block to self-boost.
-	- **Operating Mode:** Works like an antenna: reads overclock from its paired source and transmits it to connected injectors. Similar to a fluid exporter block.
-	- **Notes:** This is intentionally not the generator; it’s the exporter.
 
 - 🟢 **Reinforced Cable**
 	- **Purpose:** High-capacity energy/fluid cable that supports overclock injection.

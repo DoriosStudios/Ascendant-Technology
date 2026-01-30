@@ -162,3 +162,14 @@ Machine status:
 	- **Purpose:** High-capacity energy/fluid cable that supports overclock injection.
 	- **Operating Mode:** Functions like a reinforced cable for energy/fluid transfer, but is compatible with overclock injection when paired with an injector block.
 	- **Notes:** This is the “backbone” cable for overclock networks.
+
+- 🟢 **Overclock Injector**
+	- **Purpose:** Directional injector that applies overclock boosts to the facing machine while allowing energy/fluid passthrough.
+	- **Operating Mode:** Scans the overclock network for available charge, then applies it to the machine it faces. Requires continuous coolant (Cryofluid 100% or Water 50%) to prevent overheating.
+	- **Risk Mechanic:** Without coolant, heat accumulates based on overclock level. At 32+ heat, enters warning state. At 42+ heat, the block melts and is destroyed permanently.
+	- **Features:**
+		- Directional placement (must face target machine)
+		- Integrated energy/fluid transfer (10.24M DE, 64K mB)
+		- Real-time heat monitoring and status display
+		- Excludes generators from boosting
+	- **Notes:** This is the critical injection point that makes the overclock system operational with meaningful risk/reward gameplay.

@@ -279,6 +279,8 @@ function refreshConnectedEnergy(block) {
     }
 }
 
+globalThis.refreshConnectedEnergy = refreshConnectedEnergy;
+
 DoriosAPI.register.blockComponent("reinforced_cable", {
     beforeOnPlayerPlace(e) {
         // After placement, refresh adjacent networks

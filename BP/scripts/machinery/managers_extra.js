@@ -1792,6 +1792,7 @@ export class Machine {
                 }
             }
             try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
+            try { globalThis.refreshConnectedEnergy?.(block); } catch { /* ignore energy refresh */ }
             system.run(() => { if (callback) callback(entity) })
         });
     }

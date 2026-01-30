@@ -22,7 +22,8 @@
                             "utilitycraft:overclock_tower",
                             "utilitycraft:overclock_relay",
                             "utilitycraft:residue_processor",
-                            "utilitycraft:singularity_fabricator"
+                            "utilitycraft:singularity_fabricator",
+                            "ascendant:thermal_control_module"
                         ]
                     },
                     {

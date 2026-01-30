@@ -15,6 +15,7 @@
         "ui/singularity_fabricator.json",
         "ui/residue_processor.json",
         "ui/overclock_tower.json",
-        "ui/overclock_relay.json"
+        "ui/overclock_relay.json",
+        "ui/vaporworks_processor.json"
     ]
 }

@@ -17,6 +17,7 @@ tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a�
 tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7- Accepted upgrades: \n   §b§7, §g§7
 tile.utilitycraft:residue_processor.name=Residue Processor\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator
+tile.utilitycraft:vaporworks_processor.name=Vaporworks Processor\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7\n§7- Converts fluids into steam/gas
 tile.utilitycraft:network_center.name=Network Center\n§7- Shows network stats
 tile.utilitycraft:tabs_test_machine.name=Tabs Test Machine\n§7- UI tabs testing block
 tile.utilitycraft:overclock_tower.name=Overclock Tower\n§7- Generates overclock charge (Titanium + energy)
@@ -120,6 +121,15 @@ item.utilitycraft:cryofluid_capsule_6=Cryofluid Capsule §7\n- (6 Buckets)
 item.utilitycraft:cryofluid_capsule_7=Cryofluid Capsule §7\n- (7 Buckets)
 item.utilitycraft:cryofluid_capsule_8=Cryofluid Capsule §7\n- (8 Buckets)
 
+item.utilitycraft:steam_capsule_1=Steam Capsule §7\n- (1 Bucket)
+item.utilitycraft:steam_capsule_2=Steam Capsule §7\n- (2 Buckets)
+item.utilitycraft:steam_capsule_3=Steam Capsule §7\n- (3 Buckets)
+item.utilitycraft:steam_capsule_4=Steam Capsule §7\n- (4 Buckets)
+item.utilitycraft:steam_capsule_5=Steam Capsule §7\n- (5 Buckets)
+item.utilitycraft:steam_capsule_6=Steam Capsule §7\n- (6 Buckets)
+item.utilitycraft:steam_capsule_7=Steam Capsule §7\n- (7 Buckets)
+item.utilitycraft:steam_capsule_8=Steam Capsule §7\n- (8 Buckets)
+
 ## Entities
 entity.utilitycraft:absolute_container.name=§fAbsolute Container
 entity.utilitycraft:catalyst_weaver.name=§fCatalyst Weaver
@@ -130,6 +140,7 @@ entity.utilitycraft:liquifier.name=Liquifier
 entity.utilitycraft:laser_barrier.name=Laser Barrier
 entity.utilitycraft:residue_processor.name=Residue Processor
 entity.utilitycraft:energizer.name=Energizer
+entity.utilitycraft:vaporworks_processor.name=Vaporworks Processor
 entity.utilitycraft:network_center.name=§fNetwork Center
 entity.utilitycraft:tabs_test_machine.name=§fTabs Test Machine
 entity.utilitycraft:overclock_tower.name=§fOverclock Tower

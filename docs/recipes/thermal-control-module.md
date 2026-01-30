@@ -31,7 +31,7 @@ This document contains all crafting recipes related to the Thermal Control Modul
 **Ingredients:**
 - 3× Titanium Ingot
 - 4× Copper Ingot
-- 1× Cryofluid Capsule (returned empty after crafting)
+- 1× Cryofluid Capsule (catalyst, not consumed - returned empty)
 
 **Notes:**
 - The Cryofluid Capsule is used as a catalyst and returned empty
@@ -58,7 +58,7 @@ This document contains all crafting recipes related to the Thermal Control Modul
 
 ### Efficiency Upgrade
 **Type:** Crafting Table Recipe  
-**Output:** 1× Thermal Efficiency Upgrade
+**Output:** 1× Efficiency Upgrade
 
 **Ingredients:**
 - 2× Titanium Plate
@@ -73,7 +73,7 @@ This document contains all crafting recipes related to the Thermal Control Modul
 
 ### Range Extension Upgrade
 **Type:** Crafting Table Recipe  
-**Output:** 1× Range Extension Upgrade
+**Output:** 1× Range Upgrade
 
 **Ingredients:**
 - 1× Advanced Machine Frame
@@ -214,12 +214,16 @@ To craft all upgrades, you need:
 ## Recipe Costs Summary
 
 ### Total Materials for Basic Module
-- Titanium: 19 ingots (4 plates + heat sink + casings)
-- Aetherium: 3 shards (2 module + 1 casing)
-- Copper: 4 ingots (heat sink)
-- Iron: 4 plates (casings)
-- Advanced Machine Frame: 1
-- Cryofluid Capsule: 1 (catalyst, returned)
+- **Titanium**: 23 ingots total
+  - 4 plates for module (16 ingots, 4×4 each)
+  - 3 ingots for heat sink
+  - 4 plates for casings (16 ingots total for 4 casings, using 2)
+  - Note: Crafting 4 casings requires 16 ingots, but only 2 casings are used
+- **Aetherium**: 3 shards (2 module + 1 casing recipe)
+- **Copper**: 4 ingots (heat sink)
+- **Iron**: 4 plates (casings - requires same 16 ingots casing craft)
+- **Advanced Machine Frame**: 1
+- **Cryofluid Capsule**: 1 (catalyst, returned empty)
 
 ### Total Materials for Fully Upgraded Module
 Add to basic module:

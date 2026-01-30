@@ -8,6 +8,20 @@ import { getThermalControlConfig } from '../../config/recipes/thermal_control_mo
  * 1. Passive Cooling - Always active, 10% heat reduction
  * 2. Active Cooling - Requires energy + Cryofluid, 40% heat reduction
  * 
+ * Implementation Note:
+ * This is a prototype implementation that provides the foundation for the
+ * heat management system. Full functionality requires:
+ * - Machines to have heat properties (dynamic properties on entities)
+ * - Integration with H.P.U and overclock systems to generate heat
+ * - Heat threshold effects on machine efficiency
+ * 
+ * Current Implementation Status:
+ * - Block placement and entity spawning: ✓ Complete
+ * - Energy and Cryofluid management: ✓ Complete
+ * - Adjacent machine scanning: ✓ Complete
+ * - Heat reading/writing: ⚠ Placeholder (requires machine integration)
+ * - Upgrade system: ⚠ Framework ready (needs UI integration)
+ * 
  * Slot Layout (inventory_size: 27):
  * - [0] Energy HUD indicator
  * - [1] Status label
@@ -172,8 +186,10 @@ function scanAdjacentMachines(block) {
                 machines.push({
                     location: adjacentBlock.location,
                     typeId: adjacentBlock.typeId,
-                    // In a full implementation, would read heat levels here
-                    heatLevel: 0
+                    // TODO: Read actual heat level from machine entity
+                    // const entity = dimension.getEntitiesAtBlockLocation(location)[0];
+                    // heatLevel: entity?.getDynamicProperty('machine:heat') ?? 0
+                    heatLevel: 0  // Placeholder until heat system implemented
                 });
             }
         } catch (error) {
@@ -187,10 +203,20 @@ function scanAdjacentMachines(block) {
 
 /**
  * Calculate Cryofluid cost based on adjacent machines
+ * 
+ * NOTE: In a full implementation, this would check machine heat levels
+ * and apply the HIGH_HEAT_MULTIPLIER when any machine is above 75% heat.
+ * Current implementation uses base costs only.
+ * 
+ * @param {number} machineCount - Number of adjacent machines being cooled
+ * @returns {number} Cryofluid cost in mB
  */
 function calculateCryofluidCost(machineCount) {
     let cost = BASE_CRYOFLUID_COST;
     cost += machineCount * PER_MACHINE_COST;
+    
+    // TODO: Apply HIGH_HEAT_MULTIPLIER when any machine > 75% heat
+    // This requires heat properties to be implemented on machines
     
     // Cap at maximum
     cost = Math.min(cost, MAX_CRYOFLUID_PER_TICK);
@@ -200,19 +226,32 @@ function calculateCryofluidCost(machineCount) {
 
 /**
  * Apply cooling to adjacent machines
- * In a full implementation, this would reduce heat properties on machines
+ * 
+ * IMPLEMENTATION NOTE:
+ * This is a placeholder for the actual cooling logic. Full implementation requires:
+ * 1. Heat property system on machine entities (e.g., 'machine:heat' dynamic property)
+ * 2. Reading current heat: entity.getDynamicProperty('machine:heat')
+ * 3. Calculating reduction: finalHeat = currentHeat * (1 - coolingRate)
+ * 4. Writing back: entity.setDynamicProperty('machine:heat', finalHeat)
+ * 5. Integration with H.P.U/overclock systems to generate heat
+ * 
+ * The infrastructure is ready; this function just needs the heat property
+ * system to be implemented on other machines.
+ * 
+ * @param {Array} machines - Array of machine info objects with location/type
+ * @param {number} coolingRate - Cooling effectiveness (0.10 or 0.40)
  */
 function applyCooling(machines, coolingRate) {
-    // This is a placeholder for the actual cooling logic
+    // Placeholder for actual cooling logic
     // Full implementation would:
-    // 1. Read heat property from each machine entity
-    // 2. Calculate heat reduction: finalHeat = currentHeat * (1 - coolingRate)
-    // 3. Write back reduced heat to machine entity
-    
-    for (const machine of machines) {
-        // Placeholder: cooling applied
-        // Real implementation would modify machine.entity dynamic properties
-    }
+    // for (const machine of machines) {
+    //     const entity = dimension.getEntitiesAtBlockLocation(machine.location)[0];
+    //     if (entity) {
+    //         const currentHeat = entity.getDynamicProperty('machine:heat') ?? 0;
+    //         const finalHeat = currentHeat * (1 - coolingRate);
+    //         entity.setDynamicProperty('machine:heat', Math.max(0, finalHeat));
+    //     }
+    // }
 }
 
 /**
@@ -247,14 +286,21 @@ function handleFluidTransfer(machine, fluid) {
 
 /**
  * Get fluid amount from capsule item
+ * 
+ * TODO: Implement tier-based capsule amounts
+ * Different capsule tiers should return different amounts
+ * 
+ * @param {ItemStack} itemStack - The capsule item
+ * @returns {number} Fluid amount in mB
  */
 function getCapsuleFluidAmount(itemStack) {
     const typeId = itemStack.typeId;
     
     // Parse capsule type to determine fluid amount
     if (typeId.includes('cryofluid_capsule')) {
-        // Default to 1000 mB per capsule
-        // Could be refined based on capsule tier
+        // TODO: Parse tier from typeId and return appropriate amount
+        // Example: cryofluid_capsule_1 = 1000, cryofluid_capsule_8 = 8000
+        // For now, default to 1000 mB per capsule
         return 1000;
     }
     

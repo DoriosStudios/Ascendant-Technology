@@ -175,7 +175,7 @@ Thermal Control Module (1×):
 Heat Sink (1×):
 ├─ Titanium Ingot (3×)
 ├─ Copper Ingot (4×)
-└─ Cryofluid Capsule (1×, returned empty)
+└─ Cryofluid Capsule (1×) - catalyst, not consumed
 ```
 
 #### Upgrade Costs

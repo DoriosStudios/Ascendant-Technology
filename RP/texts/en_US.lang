@@ -26,7 +26,7 @@ tile.utilitycraft:reinforced_extractor.name=Reinforced Extractor
 tile.utilitycraft:smart_importer.name=Smart Importer
 tile.utilitycraft:reinforced_cable.name=Reinforced Cable\n§7- High-capacity energy/fluid/overclock backbone
 
-tile.ascendant:thermal_control_module.name=Thermal Control Module\n§7- Stability & heat management\n- Accepted upgrades:\n   §a§7, §g§7\n- Modes:\n Passive (10% cooling),\n Active (40% cooling)
+tile.ascendant:thermal_control_module.name=Thermal Control Module\n§7- Stability & heat management\n- Accepted upgrades:\n   §a§7, §e§7\n- Modes:\n Passive (10% cooling),\n Active (40% cooling)
 ## Other Blocks
 tile.utilitycraft:laser_barrier_field.name=Laser Barrier Field\n§7  Active area projected by the barrier
 tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius

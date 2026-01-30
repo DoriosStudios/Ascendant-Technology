@@ -228,7 +228,7 @@ Duration: Variable
 
 ### Early Game (Not Recommended)
 Overclock Network is NOT for early game:
-- Requires Titanium (deep slate ore)
+- Requires Titanium (deepslate ore)
 - Needs Energized Iron (advanced processing)
 - High energy demands
 - Complex infrastructure

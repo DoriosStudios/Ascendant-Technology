@@ -121,15 +121,22 @@ Machine status:
 
 ---
 
-## Concepts suggested by AI:
+## Implemented from AI Concepts:
 
-- 🧠 **Spectral Harmonizer**
-	- **Purpose:** Syncs multiple machines into a single clock cycle to enable burst-speed windows or shared cooldown reductions.
-	- **Operating Mode:** Consumes rare "beat cores"; failure briefly desynchronizes connected equipment.
-	- **Additional Fields:**
-		- **Use Cases:** Timed production surges, synchronized cooldown windows, or shared maintenance cycles.
-		- **Risks:** Mistimed beats can stall connected machines for several seconds; requires redundant energy buffering.
-		- **Notes:** Only compatible with machines upgraded with harmonic couplers.
+- 🟢 **Spectral Harmonizer**
+	- **Purpose:** Syncs multiple machines into a single clock cycle to enable burst-speed windows with beat cycles.
+	- **Operating Mode:** Consumes Beat Cores (1 per 10 cycles); desynchronization causes 5-second stall when cores are depleted.
+	- **Features:**
+		- **Beat Cycles:** 3-second cycles providing 10% speed boost during beat windows.
+		- **Scan Range:** 16-block radius for up to 32 machines.
+		- **Use Cases:** Timed production surges, synchronized speed boosts for factory optimization.
+		- **Requirements:** Machines must have Harmonic Coupler upgrades installed.
+		- **Energy:** 12.8 MDE capacity, 3.2 KDE/tick upkeep cost.
+	- **Notes:** Late-game utility for factory throughput optimization; boost stacks with other upgrades.
+
+---
+
+## Concepts suggested by AI (not yet implemented):
 
 - 🧠 **Entropy Condenser**
 	- **Purpose:** Compresses unwanted byproducts into dense entropy pellets for late-game reactors.

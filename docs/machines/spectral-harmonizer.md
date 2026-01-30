@@ -43,8 +43,9 @@ The Spectral Harmonizer operates in 3-second beat cycles (60 ticks):
 - **Processing Rate**: 16,000 DE/tick
 - **Beat Cycle**: 60 ticks (3 seconds)
 - **Speed Boost**: 10% during beat window
-- **Scan Range**: 16 blocks radius
+- **Scan Range**: 16 blocks in each direction (cubic volume: 33×33×33)
 - **Max Machines**: 32 synchronized machines
+- **Scan Interval**: 20 ticks (1 second) between rescans
 
 ## Status Indicators
 
@@ -61,7 +62,7 @@ The Spectral Harmonizer operates in 3-second beat cycles (60 ticks):
 
 ### Synchronized Panel (Slot 5)
 - **Active**: Number of machines currently synchronized / total compatible machines.
-- **Range**: Scan radius (16 blocks).
+- **Range**: Scan range (16 blocks in each direction, cubic volume).
 - **Status**: Messages about machine synchronization.
 
 ## Failure States

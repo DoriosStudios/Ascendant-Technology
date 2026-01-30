@@ -2501,8 +2501,7 @@ ${overclockLine}
         const harmonicBoost = Number(this.entity.getDynamicProperty('sh:harmonicBoost') ?? 0);
         if (harmonicBoost <= 0) return;
         
-        // Apply harmonic speed boost multiplicatively
-        this.boosts.baseSpeed = (this.boosts.baseSpeed ?? 1) * (1 + harmonicBoost);
+        // Apply harmonic speed boost to processing rate only (not baseSpeed to avoid double application)
         this.boosts.speed = (this.boosts.speed ?? 1) * (1 + harmonicBoost);
     }
 

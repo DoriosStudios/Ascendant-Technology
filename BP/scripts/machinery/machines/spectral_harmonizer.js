@@ -8,8 +8,9 @@ const BEAT_CYCLE_TICKS = 60 // 3 seconds at 20 tps
 const BEAT_CORES_PER_CYCLE = 10 // consume 1 beat core every 10 cycles
 const SPEED_BOOST = 0.10 // 10% speed boost during beat window
 const DESYNC_PENALTY_TICKS = 100 // 5-second stall on failure
-const MAX_SCAN_RADIUS = 16 // maximum distance to scan for machines
+const MAX_SCAN_RADIUS = 16 // maximum distance to scan for machines (cubic scan: 16 blocks in each direction)
 const MAX_MACHINES = 32 // maximum machines to synchronize
+const SCAN_INTERVAL = 20 // ticks between full machine scans (optimization)
 
 /*
 Slots (inventory_size: 10)
@@ -37,6 +38,8 @@ DoriosAPI.register.blockComponent('spectral_harmonizer', {
             machine.entity.setDynamicProperty('sh:coreCounter', 0)
             machine.entity.setDynamicProperty('sh:desyncTimer', 0)
             machine.entity.setDynamicProperty('sh:lastSyncCount', 0)
+            machine.entity.setDynamicProperty('sh:cachedMachines', JSON.stringify([]))
+            machine.entity.setDynamicProperty('sh:lastScan', 0)
             
             machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '')
         })
@@ -183,15 +186,71 @@ function consumeBeatCore(machine) {
 function scanAndSyncMachines(harmonizer, beatPhase) {
     const dim = harmonizer.block.dimension
     const center = harmonizer.block.location
+    const currentTick = globalThis.tickCount ?? 0
+    
+    // Check if we need to rescan for machines
+    const lastScan = harmonizer.entity.getDynamicProperty('sh:lastScan') ?? 0
+    const shouldRescan = (currentTick - lastScan) >= SCAN_INTERVAL
+    
+    let machineList = []
+    
+    if (shouldRescan) {
+        // Perform full scan for machines with harmonic couplers
+        machineList = performMachineScan(dim, center)
+        harmonizer.entity.setDynamicProperty('sh:cachedMachines', JSON.stringify(machineList))
+        harmonizer.entity.setDynamicProperty('sh:lastScan', currentTick)
+    } else {
+        // Use cached machine list
+        try {
+            const cached = harmonizer.entity.getDynamicProperty('sh:cachedMachines')
+            machineList = cached ? JSON.parse(cached) : []
+        } catch {
+            machineList = []
+        }
+    }
     
     let syncedCount = 0
-    let totalCount = 0
+    let totalCount = machineList.length
     
-    // Scan nearby blocks for machines with harmonic couplers
+    // Apply beat synchronization to cached machines
+    const isBeatWindow = beatPhase < (BEAT_CYCLE_TICKS / 2)
+    
+    for (const pos of machineList) {
+        const entities = dim.getEntitiesAtBlockLocation(pos)
+        if (!entities || entities.length === 0) continue
+        
+        const entity = entities[0]
+        
+        // Apply beat synchronization
+        if (isBeatWindow) {
+            entity.setDynamicProperty('sh:harmonicBoost', SPEED_BOOST)
+            entity.setDynamicProperty('sh:harmonicTTL', 10)
+            syncedCount++
+        } else {
+            const ttl = entity.getDynamicProperty('sh:harmonicTTL') ?? 0
+            if (ttl > 0) {
+                entity.setDynamicProperty('sh:harmonicTTL', ttl - 1)
+                entity.setDynamicProperty('sh:harmonicBoost', SPEED_BOOST)
+                syncedCount++
+            } else {
+                entity.setDynamicProperty('sh:harmonicBoost', 0)
+            }
+        }
+    }
+    
+    return { synced: syncedCount, total: totalCount }
+}
+
+function performMachineScan(dim, center) {
+    const machines = []
+    let machineCount = 0
+    
+    // Use labeled loops for proper breaking
+    outerLoop: 
     for (let x = -MAX_SCAN_RADIUS; x <= MAX_SCAN_RADIUS; x++) {
         for (let y = -MAX_SCAN_RADIUS; y <= MAX_SCAN_RADIUS; y++) {
             for (let z = -MAX_SCAN_RADIUS; z <= MAX_SCAN_RADIUS; z++) {
-                if (totalCount >= MAX_MACHINES) break
+                if (machineCount >= MAX_MACHINES) break outerLoop
                 
                 const pos = { x: center.x + x, y: center.y + y, z: center.z + z }
                 const block = dim.getBlock(pos)
@@ -210,29 +269,13 @@ function scanAndSyncMachines(harmonizer, beatPhase) {
                 const hasHarmonicCoupler = checkForHarmonicCoupler(inv)
                 if (!hasHarmonicCoupler) continue
                 
-                totalCount++
-                
-                // Apply beat synchronization
-                const isBeatWindow = beatPhase < (BEAT_CYCLE_TICKS / 2)
-                if (isBeatWindow) {
-                    entity.setDynamicProperty('sh:harmonicBoost', SPEED_BOOST)
-                    entity.setDynamicProperty('sh:harmonicTTL', 10)
-                    syncedCount++
-                } else {
-                    const ttl = entity.getDynamicProperty('sh:harmonicTTL') ?? 0
-                    if (ttl > 0) {
-                        entity.setDynamicProperty('sh:harmonicTTL', ttl - 1)
-                        entity.setDynamicProperty('sh:harmonicBoost', SPEED_BOOST)
-                        syncedCount++
-                    } else {
-                        entity.setDynamicProperty('sh:harmonicBoost', 0)
-                    }
-                }
+                machines.push(pos)
+                machineCount++
             }
         }
     }
     
-    return { synced: syncedCount, total: totalCount }
+    return machines
 }
 
 function checkForHarmonicCoupler(inventory) {
@@ -275,7 +318,7 @@ function renderPanels(machine, data) {
         title: '§dBeat Cycle',
         lore: [
             `§7Next Core: §f${nextCoreIn} cycles`,
-            `§7Window: §f${(BEAT_CYCLE_TICKS / 20).toFixed(1)}s`,
+            `§7Window: §f${(BEAT_CYCLE_TICKS / 2 / 20).toFixed(1)}s`,
             `§7Consumption: §f1/${BEAT_CORES_PER_CYCLE}`
         ]
     }

@@ -77,7 +77,9 @@ item.utilitycraft:void_essence=Void Essence
 item.utilitycraft:liquid_void=Liquid Void Capsule
 ## Modules
 item.utilitycraft:size_upgrade=§gSize Upgrade§7\n- Increases Laser Barrier area
+item.utilitycraft:beat_core=§eBeat Core§7\n- Consumable fuel for Spectral Harmonizer\n- Consumed at 1 per 10 beat cycles
 item.utilitycraft:hyper_processing_upgrade=§dHyper Processing Upgrade§7\n- Increases machine operation speed\n- No extra energy cost
+item.utilitycraft:beat_core=§eBeat Core§7\n- Consumable fuel for Spectral Harmonizer\n- Consumed at 1 per 10 beat cycles
 
 item.utilitycraft:harmonic_coupler=§6Harmonic Coupler§7\n- Machine upgrade for synchronization\n- Enables beat cycle speed boosts
 ## Meshes & Nets

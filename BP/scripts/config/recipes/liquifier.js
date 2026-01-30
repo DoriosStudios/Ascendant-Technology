@@ -1,4 +1,5 @@
 import { system } from "@minecraft/server";
+import { registerRecipeSystem } from '../utilitycraft_integration.js';
 
 const DEFAULT_ENERGY_COST = 3600;
 const DEFAULT_FLUID_AMOUNT = 250;
@@ -204,6 +205,9 @@ function clampChance(value) {
 }
 
 const LIQUIFIER_EVENT_ID = "utilitycraft:register_liquifier_recipe";
+
+// Track integration registration
+registerRecipeSystem('liquifier');
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (id !== LIQUIFIER_EVENT_ID) return;

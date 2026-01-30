@@ -1,6 +1,7 @@
 import { system } from "@minecraft/server"
 import { infuserRecipes } from './infuser_registry.js'
 import { defineClonerRecipe } from "./cloner.js"
+import { registerRecipeSystem } from '../utilitycraft_integration.js'
 
 const WEAVER_DEFAULT_ENERGY_COST = 6400
 const WEAVER_RATE_PER_TICK = 180
@@ -307,6 +308,9 @@ function buildInfuserWeaverRecipes() {
 }
 
 const CATALYST_WEAVER_EVENT_ID = "utilitycraft:register_catalyst_weaver_recipe"
+
+// Track integration registration
+registerRecipeSystem('catalyst_weaver')
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (id !== CATALYST_WEAVER_EVENT_ID) return

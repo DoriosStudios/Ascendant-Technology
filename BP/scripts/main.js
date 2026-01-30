@@ -4,6 +4,9 @@ import './config/main.js'
 import './drops/drop_system.js'
 import './transmutable_injection_ascendant.js'
 
+// Integration bridge (must load before machines)
+import './machinery/registration_bridge.js'
+
 // Machines
 import './machinery/machines/catalyst_weaver.js'
 import './machinery/machines/cloner.js'

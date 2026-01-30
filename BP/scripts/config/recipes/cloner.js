@@ -1,4 +1,5 @@
 import { system } from "@minecraft/server";
+import { registerRecipeSystem } from '../utilitycraft_integration.js';
 
 const KDE = 1000;
 const DEFAULT_FLUID_TYPE = 'liquified_aetherium';
@@ -261,6 +262,9 @@ function isClonerItemId(id) {
 }
 
 const CLONER_EVENT_ID = 'utilitycraft:register_cloner_recipe';
+
+// Track integration registration
+registerRecipeSystem('cloner');
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (id !== CLONER_EVENT_ID) return;

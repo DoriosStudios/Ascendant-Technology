@@ -18,6 +18,9 @@
 //   └─ recipes/plants.js
 // ==================================================
 
+// Initialize UtilityCraft integration
+import './utilitycraft_integration.js';
+
 import './recipes/cloner.js';
 import './recipes/catalyst_weaver.js';
 import './recipes/liquifier.js';

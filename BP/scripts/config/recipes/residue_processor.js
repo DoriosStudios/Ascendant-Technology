@@ -1,4 +1,5 @@
 import { system } from "@minecraft/server";
+import { registerRecipeSystem } from '../utilitycraft_integration.js';
 
 const DEFAULT_ENERGY_COST = 5200;
 const DEFAULT_SECONDS = 5;
@@ -144,6 +145,9 @@ function clampSeconds(value) {
 }
 
 const RESIDUE_EVENT_ID = "utilitycraft:register_residue_processor_recipe";
+
+// Track integration registration
+registerRecipeSystem('residue_processor');
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (id !== RESIDUE_EVENT_ID) return;

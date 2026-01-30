@@ -1,4 +1,5 @@
 import { system } from "@minecraft/server";
+import { registerRecipeSystem } from '../utilitycraft_integration.js';
 
 const DEFAULT_ENERGY_COST = 9600;
 const DEFAULT_SECONDS = 5;
@@ -130,6 +131,9 @@ function clampSeconds(value) {
 }
 
 const ENERGIZER_EVENT_ID = "utilitycraft:register_energizer_recipe";
+
+// Track integration registration
+registerRecipeSystem('energizer');
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (id !== ENERGIZER_EVENT_ID) return;

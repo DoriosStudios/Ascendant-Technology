@@ -35,9 +35,9 @@ if (originalBlockComponent) {
 
 /**
  * Validates that all expected AT machines are registered
- * @returns {boolean} True if all machines registered
+ * @returns {Promise<boolean>} True if all machines registered
  */
-export function validateMachineRegistrations() {
+export async function validateMachineRegistrations() {
     const expectedMachines = [
         'liquifier',
         'energizer',

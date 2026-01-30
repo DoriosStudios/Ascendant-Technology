@@ -12,7 +12,7 @@ import {
     printIntegrationReport,
     MACHINE_CAPABILITIES,
     sendRecipeEvent
-} from './config/utilitycraft_integration.js';
+} from './utilitycraft_integration.js';
 
 /**
  * Test 1: Integration Validation

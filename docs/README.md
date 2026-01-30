@@ -234,7 +234,7 @@ Ascendant-Technology/
 ## 🔗 Links
 
 - **GitHub:** [DoriosStudios/Ascendant-Technology](https://github.com/DoriosStudios/Ascendant-Technology)
-- **UtilityCraft:** [DoriosStudios/UtilityCraft](https://github.com/doriosstudios/utilitycraft)
+- **UtilityCraft:** [DoriosStudios/UtilityCraft](https://github.com/DoriosStudios/UtilityCraft)
 - **Download:** [Releases](https://github.com/DoriosStudios/Ascendant-Technology/releases)
 - **Bug Reports:** [Known Bugs](../bugs.md)
 

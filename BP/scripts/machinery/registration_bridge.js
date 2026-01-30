@@ -31,6 +31,9 @@ if (originalBlockComponent) {
         // Track registration for integration monitoring
         registerMachine(id);
     };
+} else {
+    console.warn('[AT Integration] DoriosAPI not available - registration tracking disabled');
+    console.warn('[AT Integration] Ensure UtilityCraft is loaded before Ascendant Technology');
 }
 
 /**

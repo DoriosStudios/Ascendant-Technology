@@ -314,8 +314,11 @@ export function registerMachine(machineId) {
         return;
     }
 
-    integrationStatus.machinesRegistered.push(machineId);
-    log(`Machine registered: ${machineId}`);
+    // Avoid duplicate registrations
+    if (!integrationStatus.machinesRegistered.includes(machineId)) {
+        integrationStatus.machinesRegistered.push(machineId);
+        log(`Machine registered: ${machineId}`);
+    }
 }
 
 /**
@@ -323,8 +326,11 @@ export function registerMachine(machineId) {
  * @param {string} recipeSystem - Recipe system identifier
  */
 export function registerRecipeSystem(recipeSystem) {
-    integrationStatus.recipesRegistered.push(recipeSystem);
-    log(`Recipe system registered: ${recipeSystem}`);
+    // Avoid duplicate registrations
+    if (!integrationStatus.recipesRegistered.includes(recipeSystem)) {
+        integrationStatus.recipesRegistered.push(recipeSystem);
+        log(`Recipe system registered: ${recipeSystem}`);
+    }
 }
 
 /**
@@ -394,14 +400,12 @@ export function printIntegrationReport() {
     log("=========================");
 }
 
-// Initialize integration on world load
-world.afterEvents.worldInitialize.subscribe(() => {
-    initializeIntegration();
-});
-
-// Print integration report after world loads (with delay to ensure all systems loaded)
+// Initialize integration on world load (not worldInitialize, to ensure dependencies loaded)
 world.afterEvents.worldLoad.subscribe(() => {
+    initializeIntegration();
+    
+    // Print integration report after a short delay to ensure all registrations complete
     system.runTimeout(() => {
         printIntegrationReport();
-    }, 100); // 5 second delay (100 ticks)
+    }, 40); // 2 second delay (40 ticks)
 });

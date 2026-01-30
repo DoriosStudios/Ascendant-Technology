@@ -240,13 +240,13 @@ function exampleAddCustomRecipes() {
 
 // Run tests after world loads
 world.afterEvents.worldLoad.subscribe(() => {
-    // Wait a bit to ensure all systems are loaded
+    // Wait for integration to initialize and report
     system.runTimeout(() => {
         runIntegrationTests();
         
         // Uncomment to test custom recipe registration
         // exampleAddCustomRecipes();
-    }, 120); // 6 second delay
+    }, 60); // 3 second delay (60 ticks)
 });
 
 // Export test functions for external use

@@ -8,6 +8,8 @@ Machine status:
 - 🟣 Needs Design (idea exists, spec missing)
 - 🔴 On Hold / Cut (paused or removed)  
 
+---
+
 - 🟢 **Absolute Container**
 	- **Purpose:** Singular vault that layers massive item, energy, and fluid storage without automated upgrades or informational clutter.
 	- **Operating Mode:** 14×12 item grid with HUD indicators for energy and fluid levels (no label display); energy/fluid caps sit at 25.6 M each and integrate with Dorios energy/fluid systems.

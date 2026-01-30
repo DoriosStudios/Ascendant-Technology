@@ -77,8 +77,8 @@ item.utilitycraft:titanium_hammer=Титан Hammer
 item.utilitycraft:void_essence=Сущность Пустоты
 item.utilitycraft:liquid_void=Капсула Жидкой Пустоты
 ## Модули
-item.utilitycraft:size_upgrade=§gУлучшение Размера§7\n- Increases Лазерный Барьер area
-item.utilitycraft:hyper_processing_upgrade=§dУлучшение Гиперобработки§7\n- Increases machine operation speed\n- No extra energy cost
+item.utilitycraft:size_upgrade=§gУлучшение Размера§7\n- Увеличивает область Лазерного Барьера
+item.utilitycraft:hyper_processing_upgrade=§dУлучшение Гиперобработки§7\n- Увеличивает скорость работы машин\n- Без дополнительных энергозатрат
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aУдачная Сетка\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x

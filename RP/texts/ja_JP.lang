@@ -77,8 +77,8 @@ item.utilitycraft:titanium_hammer=チタン Hammer
 item.utilitycraft:void_essence=虚無のエッセンス
 item.utilitycraft:liquid_void=液体虚無カプセル
 ## モジュール
-item.utilitycraft:size_upgrade=§gサイズアップグレード§7\n- Increases レーザーバリア area
-item.utilitycraft:hyper_processing_upgrade=§dハイパー処理アップグレード§7\n- Increases machine operation speed\n- No extra energy cost
+item.utilitycraft:size_upgrade=§gサイズアップグレード§7\n- レーザーバリアの範囲を拡大
+item.utilitycraft:hyper_processing_upgrade=§dハイパー処理アップグレード§7\n- 機械の動作速度を向上\n- 追加のエネルギーコストなし
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aラッキーメッシュ\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x

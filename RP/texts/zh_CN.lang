@@ -77,8 +77,8 @@ item.utilitycraft:titanium_hammer=钛 Hammer
 item.utilitycraft:void_essence=虚空精华
 item.utilitycraft:liquid_void=液态虚空胶囊
 ## 模块
-item.utilitycraft:size_upgrade=§g大小升级§7\n- Increases 激光屏障 area
-item.utilitycraft:hyper_processing_upgrade=§d超级处理升级§7\n- Increases machine operation speed\n- No extra energy cost
+item.utilitycraft:size_upgrade=§g大小升级§7\n- 增加激光屏障区域
+item.utilitycraft:hyper_processing_upgrade=§d超级处理升级§7\n- 提高机器运行速度\n- 无额外能量消耗
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§a幸运网格\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x

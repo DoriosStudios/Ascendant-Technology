@@ -1,4 +1,4 @@
-## Generators
+## Generatoren
 tile.utilitycraft:absolute_battery.name=Absolute Batterie\n§7  Rate: 800 kDE/t
 tile.utilitycraft:absolute_furnator.name=Absoluter Furnator\n§7  Rate: 320 kDE/t
 tile.utilitycraft:absolute_magmator.name=Absoluter Magmator\n§7  Rate: 400 kDE/t
@@ -8,7 +8,7 @@ tile.utilitycraft:absolute_wind_turbine.name=Absolute Windturbine\n§7  Basisrat
 
 tile.utilitycraft:absolute_container.name=Absoluter Container\n§7- Speichert bis zu 10,7K Gegenstände\n- Kann Flüssigkeiten speichern\n- Kann Energie speichern
 
-## Machines
+## Maschinen
 tile.utilitycraft:catalyst_weaver.name=Katalysatorweber\n§7- Akzeptierte Upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:cloner.name=Duplikator\n§7- Akzeptierte Upgrades: \n   §a§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Kryokammer\n§7- Akzeptierte Upgrades: \n   §a§7, §b§7, §d§7\n§7- 3 Modi:\n Stabilisator,\n Gefrierschrank,\n Kryogenerator
@@ -26,7 +26,7 @@ tile.utilitycraft:reinforced_extractor.name=Verstärkter Extraktor
 tile.utilitycraft:smart_importer.name=Intelligenter Importeur
 tile.utilitycraft:reinforced_cable.name=Verstärktes Kabel\n§7- Hochkapazitäts-Energie/Flüssigkeits/Übertaktungs-Rückgrat
 
-## Other Blocks
+## Andere Blöcke
 tile.utilitycraft:flat_conduit.name=Flache Leitung\n§7  Ästhetische Version
 tile.utilitycraft:laser_barrier_field.name=Laserbarriere Field\n§7  Aktiver Bereich, der von der Barriere projiziert wird
 tile.utilitycraft:mob_magnet.name=Mob-Magnet\n§7  Zieht Mobs in einen konfigurierbaren Radius
@@ -40,7 +40,7 @@ tile.utilitycraft:deepslate_titanium_ore.name=Tiefenschiefer-Titan-Erz
 tile.utilitycraft:end_aetherium_ore.name=End-Aetherium-Erz
 
 
-## Items
+## Gegenstände
 ### Aetherium
 item.utilitycraft:aetherium=Aetherium-Barren
 item.utilitycraft:aetherium_shard=Aetherium-Scherbe
@@ -77,7 +77,7 @@ item.utilitycraft:titanium_hammer=Titan-Hammer
 item.utilitycraft:void_essence=Leerenessenz
 item.utilitycraft:liquid_void=Flüssige-Leere-Kapsel
 ## Modules
-item.utilitycraft:size_upgrade=§gGrößen-Upgrade§7\n- Increases Laserbarriere area
+item.utilitycraft:size_upgrade=§gGrößen-Upgrade§7\n- Vergrößert Laserbarrierebereich
 item.utilitycraft:hyper_processing_upgrade=§dHyper-Verarbeitungs-Upgrade§7\n- Erhöht Maschinengeschwindigkeit\n- Keine zusätzlichen Energiekosten
 
 ## Meshes & Nets

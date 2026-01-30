@@ -47,14 +47,14 @@ This document summarizes the localization expansion completed for Ascendant Tech
 
 | Language | Tile Keys | Item Keys | Entity Keys | UI Keys | Total Keys |
 |----------|-----------|-----------|-------------|---------|------------|
-| en_US    | 32        | 313       | 14          | 37      | 396        |
-| pt_BR    | 32        | 313       | 14          | 37      | 396        |
-| es_MX    | 32        | 313       | 14          | 37      | 396        |
-| fr_FR    | 32        | 313       | 14          | 37      | 396        |
-| de_DE    | 32        | 313       | 14          | 37      | 396        |
-| ru_RU    | 32        | 313       | 14          | 37      | 396        |
-| ja_JP    | 32        | 313       | 14          | 37      | 396        |
-| zh_CN    | 32        | 313       | 14          | 37      | 396        |
+| en_US    | 32        | 313       | 14          | 37      | 403        |
+| pt_BR    | 32        | 313       | 14          | 37      | 403        |
+| es_MX    | 32        | 313       | 14          | 37      | 403        |
+| fr_FR    | 32        | 313       | 14          | 37      | 403        |
+| de_DE    | 32        | 313       | 14          | 37      | 403        |
+| ru_RU    | 32        | 313       | 14          | 37      | 403        |
+| ja_JP    | 32        | 313       | 14          | 37      | 403        |
+| zh_CN    | 32        | 313       | 14          | 37      | 403        |
 
 ✅ **All languages have 100% key parity**
 

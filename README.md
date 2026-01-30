@@ -18,6 +18,19 @@ Anyway, it's on beta right now, so expect bugs and stuff not working properly.
 
 ---
 
+## For Developers
+
+Ascendant Technology integrates cleanly with UtilityCraft core systems. Check out the documentation:
+
+- **[Integration Specification](./docs/INTEGRATION.md)** - Complete integration details
+- **[API Usage Guide](./docs/API_USAGE.md)** - How to use the integration APIs
+- **[Quick Reference](./docs/QUICK_REFERENCE.md)** - Quick code snippets
+- **[Documentation Index](./docs/README.md)** - All documentation
+
+Want to add recipes or create compatible add-ons? See the [API Usage Guide](./docs/API_USAGE.md).
+
+---
+
 See also:
 - **[Heavy Machinery Expansion](https://github.com/DoriosStudios/UtilityCraft-Heavy-Machinery)**
 - **[UtilityCraft](https://github.com/DoriosStudios/UtilityCraft)**

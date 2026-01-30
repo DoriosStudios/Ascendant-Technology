@@ -21,6 +21,9 @@
 // Initialize UtilityCraft integration
 import './utilitycraft_integration.js';
 
+// Integration tests (uncomment to run tests on world load)
+// import './integration_tests.js';
+
 import './recipes/cloner.js';
 import './recipes/catalyst_weaver.js';
 import './recipes/liquifier.js';

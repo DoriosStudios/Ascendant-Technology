@@ -9,14 +9,14 @@ tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena has
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:cloner.name=Duplicador\n§7- Acepta mejoras:\n    §a§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Cámara Criogénica\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- 3 modos:\n  Estabilizador,\n  Refrigerador,\n  Generador de Criolíquido
 tile.utilitycraft:energizer.name=Energizador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Energiza lingotes, polvos y bloques con un enorme costo de DE
 tile.utilitycraft:liquifier.name=Licuefactor\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Convierte sólidos en fluidos procesables
 tile.utilitycraft:laser_barrier.name=Barrera Láser\n§7- Acepta mejoras:\n    §b§7, §g§7
 tile.utilitycraft:residue_processor.name=Procesador de Residuos\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Recupera valor de desechos y subproductos
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad
-tile.utilitycraft:network_center.name=Centro de Red
+tile.utilitycraft:network_center.name=Centro de Red\n§7- Muestra estadísticas de red
 tile.utilitycraft:tabs_test_machine.name=Máquina de Prueba (Pestañas)\n§7- Bloque de prueba de pestañas
 tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Genera carga de overclock (Titanio + energía)
 tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica la carga de la torre en la red
@@ -89,32 +89,32 @@ item.utilitycraft:lucky_aiot=§aAiOT de la Suerte
 ## Cápsulas de Líquidos
 item.utilitycraft:empty_liquid_capsule=Cápsula de Líquido Vacía
 
-item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido (1 Cubo)
-item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido (2 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_3=Cápsula de Aetherium Líquido (3 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_4=Cápsula de Aetherium Líquido (4 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_5=Cápsula de Aetherium Líquido (5 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_6=Cápsula de Aetherium Líquido (6 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_7=Cápsula de Aetherium Líquido (7 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_8=Cápsula de Aetherium Líquido (8 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido §7\n- (1 Cubo)
+item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido §7\n- (2 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_3=Cápsula de Aetherium Líquido §7\n- (3 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_4=Cápsula de Aetherium Líquido §7\n- (4 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_5=Cápsula de Aetherium Líquido §7\n- (5 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_6=Cápsula de Aetherium Líquido §7\n- (6 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_7=Cápsula de Aetherium Líquido §7\n- (7 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_8=Cápsula de Aetherium Líquido §7\n- (8 Cubos)
 
-item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Materia Oscura (1 Cubo)
-item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Materia Oscura (2 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Materia Oscura (3 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_4=Cápsula de Materia Oscura (4 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_5=Cápsula de Materia Oscura (5 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Materia Oscura (6 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Materia Oscura (7 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Materia Oscura (8 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Materia Oscura §7\n- (1 Cubo)
+item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Materia Oscura §7\n- (2 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Materia Oscura §7\n- (3 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_4=Cápsula de Materia Oscura §7\n- (4 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_5=Cápsula de Materia Oscura §7\n- (5 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Materia Oscura §7\n- (6 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Materia Oscura §7\n- (7 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Materia Oscura §7\n- (8 Cubos)
 
-item.utilitycraft:cryofluid_capsule_1=Cápsula de Criolíquido (1 Cubo)
-item.utilitycraft:cryofluid_capsule_2=Cápsula de Criolíquido (2 Cubos)
-item.utilitycraft:cryofluid_capsule_3=Cápsula de Criolíquido (3 Cubos)
-item.utilitycraft:cryofluid_capsule_4=Cápsula de Criolíquido (4 Cubos)
-item.utilitycraft:cryofluid_capsule_5=Cápsula de Criolíquido (5 Cubos)
-item.utilitycraft:cryofluid_capsule_6=Cápsula de Criolíquido (6 Cubos)
-item.utilitycraft:cryofluid_capsule_7=Cápsula de Criolíquido (7 Cubos)
-item.utilitycraft:cryofluid_capsule_8=Cápsula de Criolíquido (8 Cubos)
+item.utilitycraft:cryofluid_capsule_1=Cápsula de Criolíquido §7\n- (1 Cubo)
+item.utilitycraft:cryofluid_capsule_2=Cápsula de Criolíquido §7\n- (2 Cubos)
+item.utilitycraft:cryofluid_capsule_3=Cápsula de Criolíquido §7\n- (3 Cubos)
+item.utilitycraft:cryofluid_capsule_4=Cápsula de Criolíquido §7\n- (4 Cubos)
+item.utilitycraft:cryofluid_capsule_5=Cápsula de Criolíquido §7\n- (5 Cubos)
+item.utilitycraft:cryofluid_capsule_6=Cápsula de Criolíquido §7\n- (6 Cubos)
+item.utilitycraft:cryofluid_capsule_7=Cápsula de Criolíquido §7\n- (7 Cubos)
+item.utilitycraft:cryofluid_capsule_8=Cápsula de Criolíquido §7\n- (8 Cubos)
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCámara Catalizadora
@@ -156,7 +156,7 @@ ui.utilitycraft.mob_magnet.menu.configure=Configurar Imán
 ui.utilitycraft.mob_magnet.menu.filter=Filtrado de Mobs
 ui.utilitycraft.mob_magnet.settings.title=Configuración del Imán de Mobs
 ui.utilitycraft.mob_magnet.settings.toggle=Activado
-ui.utilitycraft.mob_magnet.settings.range=§9Nivel de Alcance
+ui.utilitycraft.mob_magnet.settings.range=§9Nivel de Alcance §r
 ui.utilitycraft.mob_magnet.settings.range_option=§b{0}§7 bloques §r(Nivel {1})
 ui.utilitycraft.mob_magnet.settings.cooldown=Reutilización de Teletransporte
 ui.utilitycraft.mob_magnet.settings.cooldown_option={0} ticks

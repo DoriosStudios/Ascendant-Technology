@@ -10,14 +10,14 @@ tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena iten
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicador\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:cloner.name=Duplicador\n§7- Aceita melhorias:\n    §a§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Câmara Criogênica\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7\n§7- 3 modos:\n  Estabilizador,\n  Resfrigerador,\n  Gerador de Criofluido
 tile.utilitycraft:energizer.name=Energizador\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:liquifier.name=Liquefator\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:laser_barrier.name=Barreira de Laser\n§7- Aceita melhorias:\n    §b§7, §g§7
 tile.utilitycraft:residue_processor.name=Processador de Resíduos\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade
-tile.utilitycraft:network_center.name=Centro de Rede
+tile.utilitycraft:network_center.name=Centro de Rede\n§7- Mostra estatísticas da rede
 tile.utilitycraft:tabs_test_machine.name=Máquina de Teste (Tabs)\n§7- Bloco de teste de abas
 tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Gera carga de overclock (Titânio + energia)
 tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica a carga da torre na rede
@@ -28,7 +28,7 @@ tile.utilitycraft:smart_importer.name=Importador Inteligente
 ## Outros Blocos
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versão Estética
 tile.utilitycraft:mob_magnet.name=Ímã de Mobs \n§7 Atrai mobs em um raio configurável
-tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser
+tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser\n§7  Área ativa projetada pela barreira
 tile.utilitycraft:reinforced_cable.name=Cabo Reforçado\n§7- Espinha dorsal de alta capacidade para energia, fluidos e overclock
 
 tile.utilitycraft:aetherium_block.name=Bloco de Aetherium
@@ -159,7 +159,7 @@ ui.utilitycraft.mob_magnet.menu.configure=Configurar Ímã
 ui.utilitycraft.mob_magnet.menu.filter=Filtragem de Mobs
 ui.utilitycraft.mob_magnet.settings.title=Configurações do Ímã de Mobs
 ui.utilitycraft.mob_magnet.settings.toggle=Ativado
-ui.utilitycraft.mob_magnet.settings.range=§9Nível de Alcance
+ui.utilitycraft.mob_magnet.settings.range=§9Nível de Alcance §r
 ui.utilitycraft.mob_magnet.settings.range_option=§b{0}§7 blocos §r(Nível {1})
 ui.utilitycraft.mob_magnet.settings.cooldown=Recarga de Teleporte
 ui.utilitycraft.mob_magnet.settings.cooldown_option={0} tiques

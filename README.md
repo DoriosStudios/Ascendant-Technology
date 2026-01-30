@@ -14,9 +14,14 @@ And lots of more content.
 
 Anyway, it's on beta right now, so expect bugs and stuff not working properly.
 
-## [ Download ]: https://github.com/DoriosStudios/Ascendant-Technology/releases
+## [ [Download](https://github.com/DoriosStudios/Ascendant-Technology/releases) ]   
 
-Check every bug ever [here](./bugs.md).
+---
+
+See also:
+- **[Heavy Machinery Expansion](https://github.com/DoriosStudios/UtilityCraft-Heavy-Machinery)**
+- **[UtilityCraft](https://github.com/DoriosStudios/UtilityCraft)**
+- [Known Bugs](./bugs.md).
 
 ---
 

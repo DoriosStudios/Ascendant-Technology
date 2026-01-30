@@ -27,6 +27,7 @@ tile.utilitycraft:smart_importer.name=Smart Importer
 tile.utilitycraft:reinforced_cable.name=Reinforced Cable\n§7- High-capacity energy/fluid/overclock backbone
 
 ## Other Blocks
+tile.utilitycraft:flat_conduit.name=Flat Conduit\n§7  Aesthetic Version
 tile.utilitycraft:laser_barrier_field.name=Laser Barrier Field\n§7  Active area projected by the barrier
 tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius
 

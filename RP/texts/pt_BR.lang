@@ -26,6 +26,7 @@ tile.utilitycraft:reinforced_extractor.name=Extrator Reforçado
 tile.utilitycraft:smart_importer.name=Importador Inteligente
 
 ## Outros Blocos
+tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versão Estética
 tile.utilitycraft:mob_magnet.name=Ímã de Mobs \n§7 Atrai mobs em um raio configurável
 tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser
 tile.utilitycraft:reinforced_cable.name=Cabo Reforçado\n§7- Espinha dorsal de alta capacidade para energia, fluidos e overclock
@@ -148,6 +149,9 @@ at:ui.l=L
 at:ui.e=E
 
 ui.utilitycraft:status_label_container=Informações do Container
+
+ui.utilitycraft.water_label=§9Água
+ui.utilitycraft.cryofluid_label=§bCriofluido
 
 ui.utilitycraft.mob_magnet.menu.title=Ímã de Mobs
 ui.utilitycraft.mob_magnet.menu.body=Selecione uma opção

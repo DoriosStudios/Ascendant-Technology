@@ -18,6 +18,10 @@ Anyway, it's on beta right now, so expect bugs and stuff not working properly.
 
 Check every bug ever [here](./bugs.md).
 
+## Development Roadmap
+
+See the [Roadmap Issues Document](./ROADMAP_ISSUES.md) for detailed information about planned features and improvements for version 1.0.
+
 ---
 
 Water and Cryofluid icons are **NOT** mine.

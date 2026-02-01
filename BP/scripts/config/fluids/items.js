@@ -5,6 +5,29 @@ const RegisterOutput = "utilitycraft:register_fluid_output";
 const RegisterLegacyContainer = "utilitycraft:register_fluid_item";
 const RegisterLegacyHolder = "utilitycraft:register_fluid_holder";
 
+const INFINITE_CAPSULE_FALLBACK_MB = 512000;
+
+const ATInfiniteCapsules = [
+    {
+        id: "utilitycraft:aetherium_liquid_capsule_infinite",
+        amount: 512000,
+        type: "liquified_aetherium",
+        output: "utilitycraft:aetherium_liquid_capsule_infinite"
+    },
+    {
+        id: "utilitycraft:dark_matter_liquid_capsule_infinite",
+        amount: 512000,
+        type: "dark_matter",
+        output: "utilitycraft:dark_matter_liquid_capsule_infinite"
+    },
+    {
+        id: "utilitycraft:cryofluid_capsule_infinite",
+        amount: 512000,
+        type: "cryofluid",
+        output: "utilitycraft:cryofluid_capsule_infinite"
+    }
+];
+
 const ATNewCapsules = [
     // Ascendant Technology Expansion
     { id: "utilitycraft:aetherium_liquid_capsule_1", amount: 1000, type: "liquified_aetherium", output: "utilitycraft:empty_liquid_capsule" },
@@ -32,6 +55,7 @@ const ATNewCapsules = [
     { id: "utilitycraft:cryofluid_capsule_6", amount: 6000, type: "cryofluid", output: "utilitycraft:empty_liquid_capsule" },
     { id: "utilitycraft:cryofluid_capsule_7", amount: 7000, type: "cryofluid", output: "utilitycraft:empty_liquid_capsule" },
     { id: "utilitycraft:cryofluid_capsule_8", amount: 8000, type: "cryofluid", output: "utilitycraft:empty_liquid_capsule" },
+    ...ATInfiniteCapsules,
 ];
 
 const ATNewContainers = [

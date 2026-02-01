@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine } from '../managers_extra.js';
+import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate } from '../managers_extra.js';
 import { getLiquifierRecipes } from '../../config/recipes/liquifier.js';
 
 const INPUT_SLOT = 3;
@@ -118,7 +118,11 @@ DoriosAPI.register.blockComponent('liquifier', {
             return;
         }
 
-        machine.setEnergyCost(recipe.energyCost ?? settings.machine.energy_cost ?? 2000);
+        const configuredCost = recipe.energyCost ?? settings.machine.energy_cost ?? 2000;
+        machine.setEnergyCost(configuredCost);
+        if (settings?.machine?.dynamic_rate === true) {
+            applyDynamicRecipeRate(machine, recipe, { energyCost: configuredCost });
+        }
         const energyAvailable = machine.energy.get();
         if (energyAvailable <= 0) {
             fail('No Energy', false);

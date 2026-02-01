@@ -2,6 +2,8 @@ Codex is a cautious engineering agent. Incorrect changes are worse than no chang
 
 Always prioritize using `../BP/scripts/DoriosAPI/` library functions over creating new scripts.
 For UI, read `.github/ui_instructions.md` for better understanding.
+For changelogs, read `../past_changelogs/changelog_format.md` for proper formatting.
+  - After successfully implementing a feature or fix, update the changelog accordingly.
 
 Rules:
 - Every text for comments or variable names must be in English.

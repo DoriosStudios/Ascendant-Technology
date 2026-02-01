@@ -59,71 +59,305 @@ const RARITY_BASE_RATE_KDE = {
     mythic:      30000
 };
 
-const nativeClonerRecipes = [
-    defineClonerRecipe({
+const ASCENDANT_BLOCK_RARITIES = Object.freeze({
+    "utilitycraft:absolute_battery": "legendary",
+    "utilitycraft:absolute_container": "legendary",
+    "utilitycraft:absolute_furnator": "legendary",
+    "utilitycraft:absolute_magmator": "legendary",
+    "utilitycraft:absolute_solar_panel": "legendary",
+    "utilitycraft:absolute_thermo_generator": "legendary",
+    "utilitycraft:absolute_wind_turbine": "legendary",
+    "utilitycraft:aetherium_block": "epic",
+    "utilitycraft:raw_titanium_block": "uncommon",
+    "utilitycraft:titanium_block": "rare",
+    "utilitycraft:deepslate_titanium_ore": "rare",
+    "utilitycraft:deepslate_aetherium_ore": "epic",
+    "utilitycraft:end_aetherium_ore": "legendary",
+    "utilitycraft:catalyst_weaver": "epic",
+    "utilitycraft:cryo_chamber": "epic",
+    "utilitycraft:energizer": "rare",
+    "utilitycraft:laser_barrier": "rare",
+    "utilitycraft:laser_barrier_field": "rare",
+    "utilitycraft:liquifier": "rare",
+    "utilitycraft:mob_magnet": "rare",
+    "utilitycraft:network_center": "rare",
+    "utilitycraft:overclock_relay": "epic",
+    "utilitycraft:overclock_tower": "legendary",
+    "utilitycraft:reinforced_cable": "rare",
+    "utilitycraft:reinforced_extractor": "epic",
+    "utilitycraft:residue_processor": "rare",
+    "utilitycraft:singularity_fabricator": "mythic",
+    "utilitycraft:tabs_test_machine": "common"
+});
+
+const VANILLA_MYTHIC_BLOCKS = new Set([
+    "minecraft:barrier",
+    "minecraft:bedrock",
+    "minecraft:chain_command_block",
+    "minecraft:command_block",
+    "minecraft:dragon_egg",
+    "minecraft:end_portal_frame",
+    "minecraft:reinforced_deepslate",
+    "minecraft:repeating_command_block",
+    "minecraft:spawner",
+    "minecraft:structure_block"
+]);
+
+const VANILLA_LEGENDARY_BLOCKS = new Set([
+    "minecraft:ancient_debris",
+    "minecraft:beacon",
+    "minecraft:conduit",
+    "minecraft:end_gateway",
+    "minecraft:lodestone",
+    "minecraft:netherite_block",
+    "minecraft:respawn_anchor"
+]);
+
+const VANILLA_EPIC_BLOCKS = new Set([
+    "minecraft:diamond_block",
+    "minecraft:diamond_ore",
+    "minecraft:deepslate_diamond_ore",
+    "minecraft:deepslate_emerald_ore",
+    "minecraft:emerald_block",
+    "minecraft:emerald_ore",
+    "minecraft:enchanting_table",
+    "minecraft:ender_chest"
+]);
+
+const VANILLA_RARE_BLOCKS = new Set([
+    "minecraft:crying_obsidian",
+    "minecraft:glowstone",
+    "minecraft:gold_block",
+    "minecraft:gold_ore",
+    "minecraft:deepslate_gold_ore",
+    "minecraft:obsidian",
+    "minecraft:sculk",
+    "minecraft:sculk_catalyst",
+    "minecraft:sculk_sensor",
+    "minecraft:sculk_shrieker",
+    "minecraft:sea_lantern",
+    "minecraft:spore_blossom"
+]);
+
+const VANILLA_UNCOMMON_BLOCKS = new Set([
+    "minecraft:amethyst_block",
+    "minecraft:budding_amethyst",
+    "minecraft:calcite",
+    "minecraft:coal_block",
+    "minecraft:coal_ore",
+    "minecraft:deepslate_coal_ore",
+    "minecraft:copper_block",
+    "minecraft:copper_ore",
+    "minecraft:deepslate_copper_ore",
+    "minecraft:cut_copper",
+    "minecraft:exposed_copper",
+    "minecraft:weathered_copper",
+    "minecraft:oxidized_copper",
+    "minecraft:iron_block",
+    "minecraft:iron_ore",
+    "minecraft:deepslate_iron_ore",
+    "minecraft:lapis_block",
+    "minecraft:lapis_ore",
+    "minecraft:deepslate_lapis_ore",
+    "minecraft:nether_gold_ore",
+    "minecraft:nether_quartz_ore",
+    "minecraft:raw_copper_block",
+    "minecraft:raw_gold_block",
+    "minecraft:raw_iron_block",
+    "minecraft:redstone_block",
+    "minecraft:redstone_ore",
+    "minecraft:deepslate_redstone_ore",
+    "minecraft:tuff",
+    "minecraft:dripstone_block"
+]);
+
+const VANILLA_COMMON_BLOCKS = new Set([
+    "minecraft:clay",
+    "minecraft:cobblestone",
+    "minecraft:coarse_dirt",
+    "minecraft:dirt",
+    "minecraft:grass_block",
+    "minecraft:gravel",
+    "minecraft:ice",
+    "minecraft:packed_ice",
+    "minecraft:blue_ice",
+    "minecraft:mycelium",
+    "minecraft:rooted_dirt",
+    "minecraft:sand",
+    "minecraft:red_sand",
+    "minecraft:snow_block",
+    "minecraft:stone",
+    "minecraft:glass"
+]);
+
+const VANILLA_COMMON_PATTERNS = [
+    /^minecraft:.*_planks$/,
+    /^minecraft:.*_log$/,
+    /^minecraft:.*_wood$/,
+    /^minecraft:stripped_.*_(log|wood)$/,
+    /^minecraft:.*_stem$/,
+    /^minecraft:.*_hyphae$/,
+    /^minecraft:.*_slab$/,
+    /^minecraft:.*_stairs$/,
+    /^minecraft:.*_wall$/,
+    /^minecraft:.*_fence$/,
+    /^minecraft:.*_fence_gate$/,
+    /^minecraft:.*_door$/,
+    /^minecraft:.*_trapdoor$/,
+    /^minecraft:.*_button$/,
+    /^minecraft:.*_pressure_plate$/,
+    /^minecraft:.*_sign$/,
+    /^minecraft:.*_hanging_sign$/,
+    /^minecraft:.*_carpet$/,
+    /^minecraft:.*_wool$/,
+    /^minecraft:.*_concrete$/,
+    /^minecraft:.*_concrete_powder$/,
+    /^minecraft:.*_terracotta$/,
+    /^minecraft:.*_glazed_terracotta$/,
+    /^minecraft:.*_glass_pane$/,
+    /^minecraft:.*_glass$/,
+    /^minecraft:.*_leaves$/,
+    /^minecraft:.*_sapling$/,
+    /^minecraft:.*_bricks$/,
+    /^minecraft:.*_tiles$/,
+    /^minecraft:.*_sandstone$/,
+    /^minecraft:.*_stone$/,
+    /^minecraft:.*_cobblestone$/,
+    /^minecraft:.*_deepslate$/,
+    /^minecraft:.*_basalt$/,
+    /^minecraft:.*_blackstone$/,
+    /^minecraft:.*_prismarine$/,
+    /^minecraft:.*_purpur$/,
+    /^minecraft:.*_quartz$/,
+    /^minecraft:.*_mud$/,
+    /^minecraft:.*_granite$/,
+    /^minecraft:.*_diorite$/,
+    /^minecraft:.*_andesite$/
+];
+
+function normalizeBlockId(value) {
+    if (typeof value !== "string") return "";
+    return value.trim().toLowerCase();
+}
+
+function isCommonConstructionBlock(id) {
+    if (!id.startsWith("minecraft:")) return false;
+    if (VANILLA_COMMON_BLOCKS.has(id)) return true;
+    return VANILLA_COMMON_PATTERNS.some(pattern => pattern.test(id));
+}
+
+function resolveVanillaBlockRarity(id) {
+    if (!id.startsWith("minecraft:")) return null;
+    if (VANILLA_MYTHIC_BLOCKS.has(id)) return "mythic";
+    if (VANILLA_LEGENDARY_BLOCKS.has(id)) return "legendary";
+    if (VANILLA_EPIC_BLOCKS.has(id)) return "epic";
+    if (VANILLA_RARE_BLOCKS.has(id)) return "rare";
+    if (VANILLA_UNCOMMON_BLOCKS.has(id)) return "uncommon";
+    if (/_shulker_box$/.test(id)) return "rare";
+    if (/_ore$/.test(id) || /:deepslate_.*_ore$/.test(id)) return "uncommon";
+    if (/^minecraft:raw_.*_block$/.test(id)) return "uncommon";
+    if (isCommonConstructionBlock(id)) return "common";
+    return null;
+}
+
+function addBlocksToMap(target, blocks, rarity) {
+    for (const id of blocks) {
+        target[id] = rarity;
+    }
+}
+
+function buildClonerBlockRarityMap() {
+    const map = {};
+    addBlocksToMap(map, VANILLA_COMMON_BLOCKS, "common");
+    addBlocksToMap(map, VANILLA_UNCOMMON_BLOCKS, "uncommon");
+    addBlocksToMap(map, VANILLA_RARE_BLOCKS, "rare");
+    addBlocksToMap(map, VANILLA_EPIC_BLOCKS, "epic");
+    addBlocksToMap(map, VANILLA_LEGENDARY_BLOCKS, "legendary");
+    addBlocksToMap(map, VANILLA_MYTHIC_BLOCKS, "mythic");
+    Object.assign(map, ASCENDANT_BLOCK_RARITIES);
+    return map;
+}
+
+export const CLONER_BLOCK_RARITY_MAP = Object.freeze(buildClonerBlockRarityMap());
+
+export function getClonerBlockRarity(id) {
+    const normalized = normalizeBlockId(id);
+    if (!normalized) return "common";
+
+    const ascendantRarity = ASCENDANT_BLOCK_RARITIES[normalized];
+    if (ascendantRarity) return ascendantRarity;
+
+    const vanillaRarity = resolveVanillaBlockRarity(normalized);
+    if (vanillaRarity) return vanillaRarity;
+
+    return "common";
+}
+
+const nativeSingularityRecipes = [
+    defineSingularityRecipe({
         id: "utilitycraft:clone_slime_core",
         rarity: "common",
         time: 3,
         input: { id: "minecraft:slime_ball" },
         output: { id: "minecraft:slime_ball" }
     }),
-    defineClonerRecipe({
+    defineSingularityRecipe({
         id: "utilitycraft:clone_ender_pearl",
         rarity: "uncommon",
         time: 60,
         input: { id: "minecraft:ender_pearl" },
         output: { id: "minecraft:ender_pearl" }
     }),
-    defineClonerRecipe({
+    defineSingularityRecipe({
         id: "utilitycraft:clone_ancient_debris",
         rarity: "rare",
         time: 150,
         input: { id: "minecraft:ancient_debris" },
         output: { id: "minecraft:ancient_debris" }
     }),
-    defineClonerRecipe({
+    defineSingularityRecipe({
         id: "utilitycraft:clone_totem",
         rarity: "epic",
         time: 600,
         input: { id: "minecraft:totem_of_undying" },
         output: { id: "minecraft:totem_of_undying" }
     }),
-    defineClonerRecipe({
+    defineSingularityRecipe({
         id: "utilitycraft:clone_nether_star",
         rarity: "legendary",
         time: 1200,
         input: { id: "minecraft:nether_star" },
         output: { id: "minecraft:nether_star" }
     }),
-    defineClonerRecipe({
+    defineSingularityRecipe({
         id: "utilitycraft:clone_dragon_egg",
         rarity: "mythic",
         time: 2400,
         input: { id: "minecraft:dragon_egg" },
         output: { id: "minecraft:dragon_egg" }
     }),
-    defineClonerRecipe({
+    defineSingularityRecipe({
         id: "utilitycraft:clone_aetherium_shard",
         rarity: "uncommon",
         time: 80,
         input: { id: "utilitycraft:aetherium_shard" },
         output: { id: "utilitycraft:aetherium_shard" }
     }),
-    defineClonerRecipe({
+    defineSingularityRecipe({
         id: "utilitycraft:clone_void_essence",
         rarity: "rare",
         time: 160,
         input: { id: "utilitycraft:void_essence" },
         output: { id: "utilitycraft:void_essence" }
     }),
-    defineClonerRecipe({
+    defineSingularityRecipe({
         id: "utilitycraft:clone_shulker_shell",
         rarity: "rare",
         time: 200,
         input: { id: "minecraft:shulker_shell" },
         output: { id: "minecraft:shulker_shell" }
     }),
-    defineClonerRecipe({
+    defineSingularityRecipe({
         id: "utilitycraft:clone_wither_skull",
         rarity: "epic",
         time: 900,
@@ -132,15 +366,24 @@ const nativeClonerRecipes = [
     })
 ].filter(Boolean);
 
-const registeredClonerRecipes = [];
+const registeredSingularityRecipes = [];
 
-export function registerClonerRecipe(recipe) {
-    const result = upsertClonerRecipe(recipe);
+export function registerSingularityRecipe(recipe) {
+    const result = upsertSingularityRecipe(recipe);
     return result?.recipe ?? null;
 }
 
+export function getSingularityRecipes() {
+    return [...nativeSingularityRecipes, ...registeredSingularityRecipes];
+}
+
+// Backwards compatibility for older integrations.
+export function registerClonerRecipe(recipe) {
+    return registerSingularityRecipe(recipe);
+}
+
 export function getClonerRecipes() {
-    return [...nativeClonerRecipes, ...registeredClonerRecipes];
+    return getSingularityRecipes();
 }
 
 /**
@@ -148,7 +391,7 @@ export function getClonerRecipes() {
  * @param {ClonerRecipeDefinition} definition
  * @returns {ClonerRecipe | null}
  */
-export function defineClonerRecipe(definition) {
+export function defineSingularityRecipe(definition) {
     if (!definition) return null;
 
     const inputStack = normalizeItemStack(definition.input ?? definition.template ?? definition.base);
@@ -279,37 +522,37 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
             }
 
             try {
-                const result = upsertClonerRecipe({ id: recipeId, ...definition });
+                const result = upsertSingularityRecipe({ id: recipeId, ...definition });
                 if (!result) continue;
                 if (result.status === 'replaced') replaced++;
                 else added++;
             } catch (err) {
-                console.warn(`[UtilityCraft] Failed to register cloner recipe '${recipeId}':`, err);
+                console.warn(`[UtilityCraft] Failed to register singularity recipe '${recipeId}':`, err);
             }
         }
 
-        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} cloner recipes.`);
+        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} singularity recipes.`);
     } catch (err) {
-        console.warn('[UtilityCraft] Failed to parse cloner recipe payload:', err);
+        console.warn('[UtilityCraft] Failed to parse singularity recipe payload:', err);
     }
 });
 
-function upsertClonerRecipe(definition) {
-    const normalized = defineClonerRecipe(definition);
+function upsertSingularityRecipe(definition) {
+    const normalized = defineSingularityRecipe(definition);
     if (!normalized) return null;
 
-    const nativeIndex = nativeClonerRecipes.findIndex(entry => entry.id === normalized.id);
+    const nativeIndex = nativeSingularityRecipes.findIndex(entry => entry.id === normalized.id);
     if (nativeIndex >= 0) {
-        nativeClonerRecipes[nativeIndex] = normalized;
+        nativeSingularityRecipes[nativeIndex] = normalized;
         return { recipe: normalized, status: 'replaced' };
     }
 
-    const registeredIndex = registeredClonerRecipes.findIndex(entry => entry.id === normalized.id);
+    const registeredIndex = registeredSingularityRecipes.findIndex(entry => entry.id === normalized.id);
     if (registeredIndex >= 0) {
-        registeredClonerRecipes[registeredIndex] = normalized;
+        registeredSingularityRecipes[registeredIndex] = normalized;
         return { recipe: normalized, status: 'replaced' };
     }
 
-    registeredClonerRecipes.push(normalized);
+    registeredSingularityRecipes.push(normalized);
     return { recipe: normalized, status: 'added' };
 }

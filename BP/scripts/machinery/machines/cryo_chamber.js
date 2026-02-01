@@ -288,7 +288,10 @@ function processItemRecipe(machine, tanks, recipes, settings, moduleConfig) {
 
     const consumption = machine.boosts.consumption;
     const needed = energyCost - progress;
-    const spendable = Math.min(machine.energy.get(), machine.rate, needed * consumption);
+    const rate = Number.isFinite(machine.processingRate) && machine.processingRate > 0
+        ? machine.processingRate
+        : machine.rate;
+    const spendable = Math.min(machine.energy.get(), rate, needed * consumption);
 
     if (spendable > 0) {
         machine.energy.consume(spendable);
@@ -383,7 +386,10 @@ function processCoolingSlot(machine, settings, recipes, slot, tanks) {
 
     const consumption = machine.boosts.consumption;
     const needed = energyCost - progress;
-    const spendable = Math.min(machine.energy.get(), machine.rate, needed * consumption);
+    const rate = Number.isFinite(machine.processingRate) && machine.processingRate > 0
+        ? machine.processingRate
+        : machine.rate;
+    const spendable = Math.min(machine.energy.get(), rate, needed * consumption);
 
     if (spendable > 0) {
         machine.energy.consume(spendable);
@@ -556,7 +562,10 @@ function processGenerator(machine, waterTank, cryofluidTank, settings) {
 
     const consumption = machine.boosts.consumption;
     const needed = energyCost - progress;
-    const spendable = Math.min(machine.energy.get(), machine.rate, needed * consumption);
+    const rate = Number.isFinite(machine.processingRate) && machine.processingRate > 0
+        ? machine.processingRate
+        : machine.rate;
+    const spendable = Math.min(machine.energy.get(), rate, needed * consumption);
 
     if (spendable > 0) {
         machine.energy.consume(spendable);

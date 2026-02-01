@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate } from '../managers_extra.js'
 import { getResidueProcessorRecipes } from '../../config/recipes/residue_processor.js'
 
 const INPUT_SLOT = 3
@@ -81,6 +81,10 @@ DoriosAPI.register.blockComponent('residue_processor', {
 
         const energyCost = recipe.energyCost ?? settings.machine.energy_cost ?? 5200
         machine.setEnergyCost(energyCost)
+
+        if (settings?.machine?.dynamic_rate === true) {
+            applyDynamicRecipeRate(machine, recipe, { energyCost })
+        }
 
         if (machine.energy.get() <= 0) {
             machine.showWarning('No Energy', false)

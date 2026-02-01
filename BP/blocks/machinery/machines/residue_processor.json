@@ -25,6 +25,7 @@
 					"energy_cap": 12800000,
 					"energy_cost": 5200,
 					"rate_speed_base": 16000,
+					"dynamic_rate": true,
 					"upgrades": [6, 7],
 					"hidden_slots": [5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 				}

@@ -223,6 +223,74 @@ function resolveMachineEnergyRateUnits(settings, baseSpeedMultiplier, consumptio
     return rateSpeedBase * baseSpeedMultiplier * consumptionMultiplier;
 }
 
+function resolveRecipeTimeSeconds(recipe) {
+    if (!recipe || typeof recipe !== "object") return null;
+
+    const candidates = [
+        recipe.timeSeconds,
+        recipe.seconds,
+        recipe.time,
+        recipe.processingTimeSeconds
+    ];
+
+    for (const value of candidates) {
+        const seconds = Number(value);
+        if (Number.isFinite(seconds) && seconds > 0) return seconds;
+    }
+
+    const ticks = Number(recipe.ticks ?? recipe.timeTicks ?? recipe.processingTicks ?? 0);
+    if (Number.isFinite(ticks) && ticks > 0) {
+        return ticks / TICKS_PER_SECOND;
+    }
+
+    return null;
+}
+
+/**
+ * Adjusts a machine's rate so a recipe finishes in its configured time.
+ *
+ * Uses recipe time fields (seconds/timeSeconds/time/ticks) to derive a
+ * per-update rate while keeping energy consumption aligned with the
+ * machine's efficiency multiplier.
+ *
+ * @param {Machine} machine
+ * @param {Object} recipe
+ * @param {{ energyCost?: number, speedMultiplier?: number, consumptionMultiplier?: number }} [options]
+ * @returns {boolean} True when a dynamic rate was applied.
+ */
+export function applyDynamicRecipeRate(machine, recipe, options = {}) {
+    if (!machine || !recipe) return false;
+
+    const timeSeconds = resolveRecipeTimeSeconds(recipe);
+    if (!Number.isFinite(timeSeconds) || timeSeconds <= 0) return false;
+
+    const energyCost = Number(options.energyCost ?? recipe.energyCost ?? machine.getEnergyCost());
+    if (!Number.isFinite(energyCost) || energyCost <= 0) return false;
+
+    const speedCandidate = Number(options.speedMultiplier ?? machine.boosts?.speed ?? 1);
+    const speedMultiplier = Number.isFinite(speedCandidate) && speedCandidate > 0 ? speedCandidate : 1;
+
+    const consumptionCandidate = Number(options.consumptionMultiplier ?? machine.boosts?.consumption ?? 1);
+    const consumptionMultiplier = Math.max(Number.EPSILON,
+        Number.isFinite(consumptionCandidate) && consumptionCandidate > 0 ? consumptionCandidate : 1
+    );
+
+    const tickSpeed = getTickSpeed();
+    const progressPerSecond = (energyCost / timeSeconds) * speedMultiplier;
+    if (!Number.isFinite(progressPerSecond) || progressPerSecond <= 0) return false;
+
+    const energyPerSecond = progressPerSecond * consumptionMultiplier;
+    if (!Number.isFinite(energyPerSecond) || energyPerSecond <= 0) return false;
+
+    const baseRate = Math.max(1, energyPerSecond / TICKS_PER_SECOND);
+    machine.baseRate = baseRate;
+    machine.rate = baseRate * tickSpeed;
+    const hyperMultiplier = machine.boosts?.hyper ?? 1;
+    machine.processingRate = baseRate * hyperMultiplier * tickSpeed;
+
+    return true;
+}
+
 const LABEL_CHAR_LIMIT = 255;
 const LABEL_PLACEHOLDER_ITEM = "utilitycraft:arrow_indicator_90";
 const HIDDEN_SLOT_FILLER_ITEM = "utilitycraft:container_filler";
@@ -233,6 +301,7 @@ const REGISTER_FLUID_OUTPUT_EVENT = "utilitycraft:register_fluid_output";
 const fluidContainerRegistry = Object.create(null);
 const fluidOutputRegistry = Object.create(null);
 const fluidHolderRegistry = Object.create(null);
+const INFINITE_FLUID_CAP_FALLBACK = 1_024_000;
 
 const sanitizeFluidType = (value) =>
     typeof value === "string" ? value.trim().toLowerCase() : "";
@@ -286,6 +355,10 @@ function normalizeFluidContainer(definition) {
         minAmount: amountRange.min,
         type
     };
+
+    if (definition.infinite === true) {
+        normalized.infinite = true;
+    }
 
     const output = definition.output ?? definition.result ?? definition.empty ?? definition.returnItem;
     if (typeof output === "string" && output.length > 0) {
@@ -3774,14 +3847,23 @@ export class FluidManager {
      */
     static formatFluid(value) {
         let unit = "mB";
-        if (value >= 1e9) {
-            unit = "MB";
-            value /= 1e6;
-        } else if (value >= 1e6) {
-            unit = "kB";
-            value /= 1e3;
+        let decimals = 1;
+
+        if (value >= 1000) {
+            let bucketValue = value / 1000;
+            const units = ["B", "KB", "MB", "GB", "TB", "PB"];
+            let unitIndex = 0;
+
+            while (bucketValue >= 1000 && unitIndex < units.length - 1) {
+                bucketValue /= 1000;
+                unitIndex += 1;
+            }
+
+            unit = units[unitIndex];
+            value = bucketValue;
+            decimals = unitIndex >= 2 ? 2 : 1;
         }
-        return `${value.toFixed(1)} ${unit}`;
+        return `${value.toFixed(decimals)} ${unit}`;
     }
 
     /**
@@ -3796,16 +3878,22 @@ export class FluidManager {
         const cleaned = input.replace(/§./g, "").trim();
 
         // Match without "Stored"
-        const match = cleaned.match(/([^:]+):\s*([\d.]+)\s*(mB|kB|MB|B)/i);
+        const match = cleaned.match(/([^:]+):\s*([\d.]+)\s*(mB|B|KB|MB|GB|TB|PB)/i);
         if (!match) return { type: "empty", amount: 0 };
 
-        const [, rawType, rawValue, unit] = match;
+        const [, rawType, rawValue, rawUnit] = match;
+        const unit = typeof rawUnit === "string"
+            ? (rawUnit.toLowerCase() === "mb" && rawUnit !== "MB" ? "mB" : rawUnit.toUpperCase())
+            : "mB";
 
         const multipliers = {
             mB: 1,
-            B: 1000,
-            kB: 1000,
-            MB: 1_000_000
+            B: 1_000,
+            KB: 1_000_000,
+            MB: 1_000_000_000,
+            GB: 1_000_000_000_000,
+            TB: 1_000_000_000_000_000,
+            PB: 1_000_000_000_000_000_000
         };
 
         const amount = parseFloat(rawValue) * (multipliers[unit] ?? 1);
@@ -3946,6 +4034,30 @@ export class FluidManager {
         const insertData = FluidManager.getContainerData(typeId);
         if (insertData) {
             const { type, output } = insertData;
+            if (insertData.infinite === true) {
+                if (!entityAllowsFluid(this.entity, type)) return false;
+
+                const currentType = this.getType();
+                if (currentType !== "empty" && currentType !== type) return false;
+
+                let cap = this.getCap();
+                let effectiveCap = cap;
+                if (!Number.isFinite(effectiveCap) || effectiveCap <= 0) {
+                    effectiveCap = INFINITE_FLUID_CAP_FALLBACK;
+                    try {
+                        this.setCap(effectiveCap);
+                    } catch { /* ignore cap reset errors */ }
+                }
+
+                const current = this.get();
+                const freeSpace = Math.max(0, effectiveCap - current);
+                if (freeSpace <= 0) return false;
+
+                if (currentType === "empty") this.setType(type);
+                this.add(freeSpace);
+                return output ?? typeId;
+            }
+
             const insertAmount = insertData.amountRange?.max ?? insertData.amount;
 
             // Ensure the tank can accept this fluid

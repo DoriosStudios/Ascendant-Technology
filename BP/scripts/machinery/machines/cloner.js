@@ -1,5 +1,5 @@
 import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../managers_extra.js'
-import { getClonerRecipes } from '../../config/recipes/cloner.js'
+import { getSingularityRecipes } from '../../config/recipes/cloner.js'
 
 const INPUT_SLOT = 3
 const STATUS_SLOT = 1
@@ -653,7 +653,10 @@ function applyClonerRuntime(machine, recipe) {
     if (!machine || !recipe) return
 
     const speedLevel = getClonerSpeedLevel(machine)
-    const targetSeconds = CLONER_SPEED_DURATION_SECONDS[speedLevel] ?? CLONER_BASE_TIME_SECONDS
+    const baseSeconds = CLONER_SPEED_DURATION_SECONDS[speedLevel] ?? CLONER_BASE_TIME_SECONDS
+    const overclockClock = Number(machine.boosts?.overclockClock ?? 1)
+    const timeScale = Number.isFinite(overclockClock) && overclockClock > 0 ? overclockClock : 1
+    const targetSeconds = Math.max(1, baseSeconds / timeScale)
     const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
     const updatesPerSecond = TICKS_PER_SECOND / tickSpeed
 
@@ -686,7 +689,7 @@ function getClonerSpeedLevel(machine) {
 
 function isSingularityFabricatorTemplate(itemId) {
     if (!itemId) return false
-    const recipes = getClonerRecipes()
+    const recipes = getSingularityRecipes()
     const normalizedId = itemId.toLowerCase()
 
     return recipes.some(recipe => {

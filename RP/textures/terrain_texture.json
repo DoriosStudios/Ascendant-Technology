@@ -79,6 +79,12 @@
 		"utilitycraft_cryo_chamber_on": {
 			"textures": "textures/blocks/machines/cryo_chamber_on"
 		},
+		"utilitycraft_ascane_engine_off": {
+			"textures": "textures/blocks/machines/energizer_off"
+		},
+		"utilitycraft_ascane_engine_on": {
+			"textures": "textures/blocks/machines/energizer_on"
+		},
 		"utilitycraft_mob_magnet_off": {
 			"textures": "textures/blocks/machines/mob_magnet_off"
 		},

@@ -7,6 +7,7 @@
         "ui/cloner.json",
         "ui/cryo_chamber.json",
         "ui/cryo_chamber_sections_test.json",
+        "ui/ascane_engine.json",
         "ui/energizer.json",
         "ui/laser_barrier.json",
         "ui/liquifier.json",

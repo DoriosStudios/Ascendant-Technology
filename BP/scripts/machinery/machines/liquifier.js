@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate } from '../managers_extra.js';
+import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js';
 import { getLiquifierRecipes } from '../../config/recipes/liquifier.js';
 
 const INPUT_SLOT = 3;

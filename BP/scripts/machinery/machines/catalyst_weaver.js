@@ -1,5 +1,5 @@
 import { ItemStack } from '@minecraft/server'
-import { Machine, FluidManager, applyDynamicRecipeRate } from '../managers_extra.js'
+import { Machine, FluidManager, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
 import { getCatalystWeaverRecipes } from '../../config/recipes/catalyst_weaver.js'
 
 const INPUT_SLOT = 3

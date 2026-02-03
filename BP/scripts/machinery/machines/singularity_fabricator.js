@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../managers_extra.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../AscendantMachinery/core.js'
 import { getSingularityRecipes } from '../../config/recipes/cloner.js'
 
 const COMPONENT_ID = 'singularity_fabricator'

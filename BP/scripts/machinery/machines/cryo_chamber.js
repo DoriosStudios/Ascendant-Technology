@@ -1,5 +1,5 @@
 import { ItemStack } from "@minecraft/server";
-import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../managers_extra.js';
+import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../AscendantMachinery/core.js';
 import { tickCoolingAuras, stopCoolingAuraAt } from '../multi_core.js';
 import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../config/recipes/cryo_chamber.js';
 
@@ -191,7 +191,6 @@ DoriosAPI.register.blockComponent('cryo_chamber', {
         Machine.onDestroy(e);
         // Ensure any active cooling aura is stopped when the machine is removed
         stopCoolingAuraAt(e.block);
-        clearMultiSlotConfig(e.block);
     }
 });
 

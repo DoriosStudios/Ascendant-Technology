@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
 import { getResidueProcessorRecipes } from '../../config/recipes/residue_processor.js'
 
 const INPUT_SLOT = 3

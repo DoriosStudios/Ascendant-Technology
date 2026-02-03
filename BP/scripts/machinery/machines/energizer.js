@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
 import { startHeaterAura, tickHeaterAura, stopHeaterAuraAt } from '../multi_core.js'
 import { getEnergizerRecipes } from '../../config/recipes/energizer.js'
 

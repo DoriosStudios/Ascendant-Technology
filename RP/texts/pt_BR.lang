@@ -10,6 +10,7 @@ tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena iten
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:ascane_engine.name=Ascane Engine\n§7- Repara, encanta e reforça equipamentos\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:cloner.name=Duplicador\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Câmara Criogênica\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7\n§7- 3 modos:\n  Estabilizador,\n  Resfrigerador,\n  Gerador de Criofluido
 tile.utilitycraft:energizer.name=Energizador\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
@@ -83,6 +84,16 @@ item.utilitycraft:lucky_aiot=§aAiOT da Sorte
 ### Módulos de Melhoria
 item.utilitycraft:size_upgrade=Módulo de Melhoria de §gTamanho§7\n- Aumenta a área da Barreira de Laser
 item.utilitycraft:hyper_processing_upgrade=Módulo de Melhoria de §dHyper Processamento§7\n- Aumenta a velocidade das máquinas\n- Não aumenta o consumo de energia\n- Exclusivo para máquinas AT
+item.utilitycraft:ascane_module_base=§7Base do Módulo Ascano
+item.utilitycraft:enchantability_module=Módulo de §bEncantamento I§7\n- Adiciona e melhora encantamentos na Ascane Engine
+item.utilitycraft:enchantability_module_2=Módulo de §bEncantamento II§7\n- Adiciona e melhora encantamentos na Ascane Engine
+item.utilitycraft:enchantability_module_3=Módulo de §bEncantamento III§7\n- Adiciona e melhora encantamentos na Ascane Engine
+item.utilitycraft:enchantability_module_4=Módulo de §bEncantamento IV§7\n- Adiciona e melhora encantamentos na Ascane Engine
+item.utilitycraft:enchantability_module_5=Módulo de §bEncantamento V§7\n- Adiciona e melhora encantamentos na Ascane Engine
+item.utilitycraft:reinforcement_module=Módulo de §6Reforço I§7\n- Aumenta a capacidade de reforço na Ascane Engine
+item.utilitycraft:reinforcement_module_2=Módulo de §6Reforço II§7\n- Aumenta a capacidade de reforço na Ascane Engine
+item.utilitycraft:reinforcement_module_3=Módulo de §6Reforço III§7\n- Aumenta a capacidade de reforço na Ascane Engine
+item.utilitycraft:curse_protection_module=Módulo de §5Proteção contra Maldição§7\n- Impede maldição na Ascane Engine
 
 ### Malhas & Redes
 item.utilitycraft:lucky_mesh=§aMalha da Sorte\n§7- Tier Máx: Diamante\n§7- Multiplicador de Itens: 2x
@@ -130,6 +141,7 @@ entity.utilitycraft:liquifier.name=Liquefator
 entity.utilitycraft:laser_barrier.name=Barreira de Laser
 entity.utilitycraft:residue_processor.name=Processador de Resíduos
 entity.utilitycraft:energizer.name=Energizador
+entity.utilitycraft:ascane_engine.name=Ascane Engine
 entity.utilitycraft:network_center.name=§fCentro de Rede
 entity.utilitycraft:tabs_test_machine.name=§fMáquina de Teste (Tabs)
 entity.utilitycraft:absolute_container.name=§fContainer Absoluto
@@ -233,6 +245,23 @@ item.utilitycraft:overclock_45=Overclock
 item.utilitycraft:overclock_46=Overclock
 item.utilitycraft:overclock_47=Overclock
 item.utilitycraft:overclock_48=Overclock
+item.utilitycraft:arcane_00=Progresso Arcano
+item.utilitycraft:arcane_01=Progresso Arcano
+item.utilitycraft:arcane_02=Progresso Arcano
+item.utilitycraft:arcane_03=Progresso Arcano
+item.utilitycraft:arcane_04=Progresso Arcano
+item.utilitycraft:arcane_05=Progresso Arcano
+item.utilitycraft:arcane_06=Progresso Arcano
+item.utilitycraft:arcane_07=Progresso Arcano
+item.utilitycraft:arcane_08=Progresso Arcano
+item.utilitycraft:arcane_09=Progresso Arcano
+item.utilitycraft:arcane_10=Progresso Arcano
+item.utilitycraft:arcane_11=Progresso Arcano
+item.utilitycraft:arcane_12=Progresso Arcano
+item.utilitycraft:arcane_13=Progresso Arcano
+item.utilitycraft:arcane_14=Progresso Arcano
+item.utilitycraft:arcane_15=Progresso Arcano
+item.utilitycraft:arcane_16=Progresso Arcano
 item.utilitycraft:liquefied_aetherium_00=Aetherium Líquido
 item.utilitycraft:liquefied_aetherium_01=Aetherium Líquido
 item.utilitycraft:liquefied_aetherium_02=Aetherium Líquido

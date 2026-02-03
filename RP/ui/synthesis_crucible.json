@@ -31,7 +31,7 @@
       },
       {
         "header_bg@ascendant_common.panel": {
-          "$panel_color": "blue",
+          "$panel_color": "light_blue",
           "$panel_size": [
             240,
             22
@@ -113,8 +113,9 @@
         }
       },
       {
-        "modifier_slot@ascendant_common.slot_blue": {
+        "modifier_slot@ascendant_common.slot_base": {
           "$slot_index": 5,
+          "$slot_color": "light_blue",
           "anchor_from": "top_middle",
           "anchor_to": "top_middle",
           "offset": [

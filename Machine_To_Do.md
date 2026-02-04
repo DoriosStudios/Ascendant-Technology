@@ -81,6 +81,7 @@ Machine status:
 		- **Notes:** Cryofluid can be used in other machines or crafting recipes.
 		- **Operating Mode:** Uses fluid input/output ports to convert water into Cryofluid over time. Is a machine with 2 fluid tanks (input and output) and do not accept items as input for this function.
 
+- 🟢 **Vaporworks Processor (Steam/Gas)**
 - 🟠 **Ascane Engine (formerly Synthesis Crucible)**
 	- **Purpose:** High-tier repair, enchantment, and reinforcement hub for equipment.
 	- **Operating Mode:** 3×3 equipment grid; repairs always run, while enchant and reinforcement run when their modules are installed.

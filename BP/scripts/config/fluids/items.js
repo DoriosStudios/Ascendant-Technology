@@ -55,6 +55,15 @@ const ATNewCapsules = [
     { id: "utilitycraft:cryofluid_capsule_6", amount: 6000, type: "cryofluid", output: "utilitycraft:empty_liquid_capsule" },
     { id: "utilitycraft:cryofluid_capsule_7", amount: 7000, type: "cryofluid", output: "utilitycraft:empty_liquid_capsule" },
     { id: "utilitycraft:cryofluid_capsule_8", amount: 8000, type: "cryofluid", output: "utilitycraft:empty_liquid_capsule" },
+    // Steam capsules
+    { id: "utilitycraft:steam_capsule_1", amount: 1000, type: "steam", output: "utilitycraft:empty_liquid_capsule" },
+    { id: "utilitycraft:steam_capsule_2", amount: 2000, type: "steam", output: "utilitycraft:empty_liquid_capsule" },
+    { id: "utilitycraft:steam_capsule_3", amount: 3000, type: "steam", output: "utilitycraft:empty_liquid_capsule" },
+    { id: "utilitycraft:steam_capsule_4", amount: 4000, type: "steam", output: "utilitycraft:empty_liquid_capsule" },
+    { id: "utilitycraft:steam_capsule_5", amount: 5000, type: "steam", output: "utilitycraft:empty_liquid_capsule" },
+    { id: "utilitycraft:steam_capsule_6", amount: 6000, type: "steam", output: "utilitycraft:empty_liquid_capsule" },
+    { id: "utilitycraft:steam_capsule_7", amount: 7000, type: "steam", output: "utilitycraft:empty_liquid_capsule" },
+    { id: "utilitycraft:steam_capsule_8", amount: 8000, type: "steam", output: "utilitycraft:empty_liquid_capsule" },
     ...ATInfiniteCapsules,
 ];
 
@@ -66,6 +75,7 @@ const ATNewContainers = [
             liquified_aetherium: "utilitycraft:aetherium_liquid_capsule_8",
             dark_matter: "utilitycraft:dark_matter_liquid_capsule_8",
             cryofluid: "utilitycraft:cryofluid_capsule_8",
+            steam: "utilitycraft:steam_capsule_8",
         }
     }
 ];

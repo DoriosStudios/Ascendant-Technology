@@ -30,10 +30,8 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
             machine.displayEnergy();
             machine.blockSlots([INPUT_DISPLAY_SLOT, OUTPUT_DISPLAY_SLOT]);
 
-            const tankInput = FluidManager.initializeSingle(machine.entity, 'input');
+            const [tankInput, tankOutput] = FluidManager.initializeMultiple(machine.entity, 2);
             tankInput.display(INPUT_DISPLAY_SLOT);
-
-            const tankOutput = FluidManager.initializeSingle(machine.entity, 'output');
             tankOutput.display(OUTPUT_DISPLAY_SLOT);
 
             machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '');
@@ -47,8 +45,7 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
         const machine = new Machine(block, settings);
         if (!machine.valid) return;
 
-        const tankInput = FluidManager.initializeSingle(machine.entity, 'input');
-        const tankOutput = FluidManager.initializeSingle(machine.entity, 'output');
+        const [tankInput, tankOutput] = FluidManager.initializeMultiple(machine.entity, 2);
 
         if (tickGate(machine.entity, 'vw:fluids_cd', 4)) {
             const available = tankOutput.get();

@@ -1,6 +1,103 @@
 import { system, world, ItemStack, BlockPermutation } from '@minecraft/server'
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
 
+const ENERGY_DEBUG_PROP = "utilitycraft:debug_energy";
+const ENERGY_GEOMETRY_TAG = "dorios:energy";
+const ENERGY_GEOMETRY_SKIP_TYPES = new Set([
+    "utilitycraft:reinforced_cable"
+]);
+
+function energyDebugEnabled() {
+    try {
+        const value = world.getDynamicProperty(ENERGY_DEBUG_PROP);
+        if (value !== undefined) return value === true;
+    } catch { /* ignore dynamic property errors */ }
+    return globalThis.energyDebugEnabled === true;
+}
+
+function formatBlockPos(pos) {
+    if (!pos) return "?";
+    return `${Math.floor(pos.x)},${Math.floor(pos.y)},${Math.floor(pos.z)}`;
+}
+
+function logEnergyDebug(message, details) {
+    if (!energyDebugEnabled()) return;
+    const suffix = details
+        ? ` ${typeof details === "string" ? details : JSON.stringify(details)}`
+        : "";
+    console.warn(`[EnergyDebug] ${message}${suffix}`);
+}
+
+function shouldSkipEnergyGeometry(block) {
+    if (!block) return true;
+    if (ENERGY_GEOMETRY_SKIP_TYPES.has(block.typeId)) return true;
+    if (block.hasTag?.("dorios:overclock_network")) return true;
+    return false;
+}
+
+function updateEnergyGeometry(block) {
+    if (!block?.permutation || !block?.dimension) return;
+    if (shouldSkipEnergyGeometry(block)) return;
+    if (!block.hasTag?.("dorios:isTube")) return;
+
+    const dim = block.dimension;
+    const { x, y, z } = block.location;
+
+    const neighbors = {
+        up: dim.getBlock({ x, y: y + 1, z }),
+        down: dim.getBlock({ x, y: y - 1, z }),
+        north: dim.getBlock({ x, y, z: z - 1 }),
+        south: dim.getBlock({ x, y, z: z + 1 }),
+        east: dim.getBlock({ x: x + 1, y, z }),
+        west: dim.getBlock({ x: x - 1, y, z })
+    };
+
+    const colorTags = (block.getTags?.() ?? []).filter(tag => tag.startsWith("dorios:color."));
+
+    for (const [dir, neighbor] of Object.entries(neighbors)) {
+        let shouldConnect = false;
+
+        if (neighbor?.hasTag?.(ENERGY_GEOMETRY_TAG)) {
+            const isNeighborPipe = neighbor.hasTag?.("dorios:isTube");
+
+            if (!isNeighborPipe) {
+                shouldConnect = true;
+            } else {
+                for (const tag of colorTags) {
+                    if (neighbor.hasTag?.(tag)) {
+                        shouldConnect = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (block.getState(`utilitycraft:${dir}`) !== shouldConnect) {
+            block.setState(`utilitycraft:${dir}`, shouldConnect);
+        }
+    }
+}
+
+function refreshEnergyGeometryAround(block) {
+    if (!block?.dimension) return;
+    const dim = block.dimension;
+    const { x, y, z } = block.location;
+    const targets = [
+        block,
+        dim.getBlock({ x, y: y + 1, z }),
+        dim.getBlock({ x, y: y - 1, z }),
+        dim.getBlock({ x, y, z: z - 1 }),
+        dim.getBlock({ x, y, z: z + 1 }),
+        dim.getBlock({ x: x - 1, y, z }),
+        dim.getBlock({ x: x + 1, y, z })
+    ];
+
+    for (const target of targets) {
+        if (!target?.hasTag?.(ENERGY_GEOMETRY_TAG)) continue;
+        updateEnergyGeometry(target);
+    }
+}
+
 /**
  * Updates pipe network connections for energy or fluid systems.
  * Performs a breadth-first search to find all connected blocks with the specified tag
@@ -11,6 +108,16 @@ import { ActionFormData, ModalFormData } from '@minecraft/server-ui'
  */
 export function updatePipes(block, type) {
     if (!block || (type !== 'energy' && type !== 'fluid')) return;
+
+    if (type === 'energy') {
+        logEnergyDebug("updatePipes", {
+            block: block.typeId,
+            pos: formatBlockPos(block.location)
+        });
+        try { globalThis.refreshConnectedEnergy?.(block); } catch { /* ignore energy refresh */ }
+        try { refreshEnergyGeometryAround(block); } catch { /* ignore geometry refresh */ }
+        return;
+    }
 
     const dim = block.dimension;
 
@@ -33,22 +140,14 @@ export function updatePipes(block, type) {
     const nodes = [];
     const MAX_VISITED = 2048;
 
-    // Type-specific helpers and tags
-    const isEnergyContainer = (entity) => {
-        try {
-            const tf = entity.getComponent("minecraft:type_family");
-            return tf?.hasTypeFamily("dorios:energy_container") ?? false;
-        } catch { return false; }
-    };
-
     const isFluidContainer = (entity) => {
         try {
             return !!FluidManager.findType?.(entity, 0);
         } catch { return false; }
     };
 
-    const targetTag = type === 'energy' ? 'dorios:energy' : 'dorios:fluid';
-    const isContainer = type === 'energy' ? isEnergyContainer : isFluidContainer;
+    const targetTag = 'dorios:fluid';
+    const isContainer = isFluidContainer;
 
     while (queue.length && visited.size <= MAX_VISITED) {
         const pos = queue.shift();
@@ -77,7 +176,7 @@ export function updatePipes(block, type) {
         nodes.push(pos);
     }
 
-    const prop = type === 'energy' ? "dorios:energy_nodes" : "dorios:fluid_nodes";
+    const prop = "dorios:fluid_nodes";
 
     try {
         sourceEntity.setDynamicProperty(prop, JSON.stringify(nodes));
@@ -223,6 +322,74 @@ function resolveMachineEnergyRateUnits(settings, baseSpeedMultiplier, consumptio
     return rateSpeedBase * baseSpeedMultiplier * consumptionMultiplier;
 }
 
+function resolveRecipeTimeSeconds(recipe) {
+    if (!recipe || typeof recipe !== "object") return null;
+
+    const candidates = [
+        recipe.timeSeconds,
+        recipe.seconds,
+        recipe.time,
+        recipe.processingTimeSeconds
+    ];
+
+    for (const value of candidates) {
+        const seconds = Number(value);
+        if (Number.isFinite(seconds) && seconds > 0) return seconds;
+    }
+
+    const ticks = Number(recipe.ticks ?? recipe.timeTicks ?? recipe.processingTicks ?? 0);
+    if (Number.isFinite(ticks) && ticks > 0) {
+        return ticks / TICKS_PER_SECOND;
+    }
+
+    return null;
+}
+
+/**
+ * Adjusts a machine's rate so a recipe finishes in its configured time.
+ *
+ * Uses recipe time fields (seconds/timeSeconds/time/ticks) to derive a
+ * per-update rate while keeping energy consumption aligned with the
+ * machine's efficiency multiplier.
+ *
+ * @param {Machine} machine
+ * @param {Object} recipe
+ * @param {{ energyCost?: number, speedMultiplier?: number, consumptionMultiplier?: number }} [options]
+ * @returns {boolean} True when a dynamic rate was applied.
+ */
+export function applyDynamicRecipeRate(machine, recipe, options = {}) {
+    if (!machine || !recipe) return false;
+
+    const timeSeconds = resolveRecipeTimeSeconds(recipe);
+    if (!Number.isFinite(timeSeconds) || timeSeconds <= 0) return false;
+
+    const energyCost = Number(options.energyCost ?? recipe.energyCost ?? machine.getEnergyCost());
+    if (!Number.isFinite(energyCost) || energyCost <= 0) return false;
+
+    const speedCandidate = Number(options.speedMultiplier ?? machine.boosts?.speed ?? 1);
+    const speedMultiplier = Number.isFinite(speedCandidate) && speedCandidate > 0 ? speedCandidate : 1;
+
+    const consumptionCandidate = Number(options.consumptionMultiplier ?? machine.boosts?.consumption ?? 1);
+    const consumptionMultiplier = Math.max(Number.EPSILON,
+        Number.isFinite(consumptionCandidate) && consumptionCandidate > 0 ? consumptionCandidate : 1
+    );
+
+    const tickSpeed = getTickSpeed();
+    const progressPerSecond = (energyCost / timeSeconds) * speedMultiplier;
+    if (!Number.isFinite(progressPerSecond) || progressPerSecond <= 0) return false;
+
+    const energyPerSecond = progressPerSecond * consumptionMultiplier;
+    if (!Number.isFinite(energyPerSecond) || energyPerSecond <= 0) return false;
+
+    const baseRate = Math.max(1, energyPerSecond / TICKS_PER_SECOND);
+    machine.baseRate = baseRate;
+    machine.rate = baseRate * tickSpeed;
+    const hyperMultiplier = machine.boosts?.hyper ?? 1;
+    machine.processingRate = baseRate * hyperMultiplier * tickSpeed;
+
+    return true;
+}
+
 const LABEL_CHAR_LIMIT = 255;
 const LABEL_PLACEHOLDER_ITEM = "utilitycraft:arrow_indicator_90";
 const HIDDEN_SLOT_FILLER_ITEM = "utilitycraft:container_filler";
@@ -233,6 +400,7 @@ const REGISTER_FLUID_OUTPUT_EVENT = "utilitycraft:register_fluid_output";
 const fluidContainerRegistry = Object.create(null);
 const fluidOutputRegistry = Object.create(null);
 const fluidHolderRegistry = Object.create(null);
+const INFINITE_FLUID_CAP_FALLBACK = 1_024_000;
 
 const sanitizeFluidType = (value) =>
     typeof value === "string" ? value.trim().toLowerCase() : "";
@@ -286,6 +454,10 @@ function normalizeFluidContainer(definition) {
         minAmount: amountRange.min,
         type
     };
+
+    if (definition.infinite === true) {
+        normalized.infinite = true;
+    }
 
     const output = definition.output ?? definition.result ?? definition.empty ?? definition.returnItem;
     if (typeof output === "string" && output.length > 0) {
@@ -1559,7 +1731,7 @@ export class Machine {
         const dim = block.dimension;
         const { entity } = data;
 
-        const requestedId = entity?.id;
+        const requestedId = entity?.identifier ?? entity?.id;
         const fallbackId = "utilitycraft:machine";
         let { x, y, z } = block.center(); y -= 0.25
 
@@ -3774,14 +3946,23 @@ export class FluidManager {
      */
     static formatFluid(value) {
         let unit = "mB";
-        if (value >= 1e9) {
-            unit = "MB";
-            value /= 1e6;
-        } else if (value >= 1e6) {
-            unit = "kB";
-            value /= 1e3;
+        let decimals = 1;
+
+        if (value >= 1000) {
+            let bucketValue = value / 1000;
+            const units = ["B", "KB", "MB", "GB", "TB", "PB"];
+            let unitIndex = 0;
+
+            while (bucketValue >= 1000 && unitIndex < units.length - 1) {
+                bucketValue /= 1000;
+                unitIndex += 1;
+            }
+
+            unit = units[unitIndex];
+            value = bucketValue;
+            decimals = unitIndex >= 2 ? 2 : 1;
         }
-        return `${value.toFixed(1)} ${unit}`;
+        return `${value.toFixed(decimals)} ${unit}`;
     }
 
     /**
@@ -3796,16 +3977,22 @@ export class FluidManager {
         const cleaned = input.replace(/§./g, "").trim();
 
         // Match without "Stored"
-        const match = cleaned.match(/([^:]+):\s*([\d.]+)\s*(mB|kB|MB|B)/i);
+        const match = cleaned.match(/([^:]+):\s*([\d.]+)\s*(mB|B|KB|MB|GB|TB|PB)/i);
         if (!match) return { type: "empty", amount: 0 };
 
-        const [, rawType, rawValue, unit] = match;
+        const [, rawType, rawValue, rawUnit] = match;
+        const unit = typeof rawUnit === "string"
+            ? (rawUnit.toLowerCase() === "mb" && rawUnit !== "MB" ? "mB" : rawUnit.toUpperCase())
+            : "mB";
 
         const multipliers = {
             mB: 1,
-            B: 1000,
-            kB: 1000,
-            MB: 1_000_000
+            B: 1_000,
+            KB: 1_000_000,
+            MB: 1_000_000_000,
+            GB: 1_000_000_000_000,
+            TB: 1_000_000_000_000_000,
+            PB: 1_000_000_000_000_000_000
         };
 
         const amount = parseFloat(rawValue) * (multipliers[unit] ?? 1);
@@ -3946,6 +4133,30 @@ export class FluidManager {
         const insertData = FluidManager.getContainerData(typeId);
         if (insertData) {
             const { type, output } = insertData;
+            if (insertData.infinite === true) {
+                if (!entityAllowsFluid(this.entity, type)) return false;
+
+                const currentType = this.getType();
+                if (currentType !== "empty" && currentType !== type) return false;
+
+                let cap = this.getCap();
+                let effectiveCap = cap;
+                if (!Number.isFinite(effectiveCap) || effectiveCap <= 0) {
+                    effectiveCap = INFINITE_FLUID_CAP_FALLBACK;
+                    try {
+                        this.setCap(effectiveCap);
+                    } catch { /* ignore cap reset errors */ }
+                }
+
+                const current = this.get();
+                const freeSpace = Math.max(0, effectiveCap - current);
+                if (freeSpace <= 0) return false;
+
+                if (currentType === "empty") this.setType(type);
+                this.add(freeSpace);
+                return output ?? typeId;
+            }
+
             const insertAmount = insertData.amountRange?.max ?? insertData.amount;
 
             // Ensure the tank can accept this fluid
@@ -4487,6 +4698,7 @@ const LEGACY_FLUID_ITEM_EVENT = "utilitycraft:register_fluid_item";
 const LEGACY_FLUID_HOLDER_EVENT = "utilitycraft:register_fluid_holder";
 const LEGACY_TICK_SPEED_EVENT = "utilitycraft:set_tick_speed";
 const UPDATE_PIPES_EVENT = "dorios:updatePipes";
+const ENERGY_DEBUG_EVENT = "utilitycraft:debug_energy";
 
 const normalizeFluidType = (value) =>
     typeof value === "string" && value.trim().length
@@ -4565,6 +4777,35 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
         updatePipes(block, type);
     } catch (err) {
         console.warn(`[UtilityCraft] updatePipes ScriptEvent failed: ${err}`);
+    }
+});
+
+// Handles energy debug toggles via scriptevent utilitycraft:debug_energy
+system.afterEvents.scriptEventReceive.subscribe(event => {
+    const { id, message } = event;
+    if (id !== ENERGY_DEBUG_EVENT) return;
+
+    const raw = typeof message === "string" ? message.trim().toLowerCase() : "";
+    let nextState = null;
+
+    if (!raw || raw === "toggle") {
+        nextState = !energyDebugEnabled();
+    } else if (["true", "1", "on", "enable", "enabled"].includes(raw)) {
+        nextState = true;
+    } else if (["false", "0", "off", "disable", "disabled"].includes(raw)) {
+        nextState = false;
+    } else {
+        console.warn(`[EnergyDebug] Unknown toggle value: ${raw}`);
+        return;
+    }
+
+    globalThis.energyDebugEnabled = nextState;
+
+    try {
+        world.setDynamicProperty(ENERGY_DEBUG_PROP, nextState);
+        console.warn(`[EnergyDebug] ${nextState ? "Enabled" : "Disabled"} (ScriptEvent).`);
+    } catch (error) {
+        console.warn(`[EnergyDebug] Failed to set ${ENERGY_DEBUG_PROP} (ScriptEvent).`, error);
     }
 });
 

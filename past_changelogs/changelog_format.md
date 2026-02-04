@@ -31,7 +31,6 @@ Main sections observed in past changelogs:
 
 ```Markdown
 ## BLOCKS
-## MACHINES (Optional, when you want a dedicated machine section)
 ## ITEMS
 ## RECIPES (When there's too many recipe changes, consider splitting into subcategories)
 ## UI or ## UI/UX
@@ -40,6 +39,12 @@ Main sections observed in past changelogs:
 ## TECHNICAL CHANGES (Optional, for modpack devs and advanced users)
 ## THIRD-PARTY / INTEGRATION (Optional, for compatibility notes)
 ```
+
+Always follow the order above when including multiple sections. Omit sections that have no changes in the release.
+
+---
+
+## Subsection layout
 
 Inside each section, use bullet points to list changes. For example:
 

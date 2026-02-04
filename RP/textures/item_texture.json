@@ -119,6 +119,36 @@
 		"utilitycraft_hyper_processing_upgrade": {
 			"textures": "textures/items/machinery/hyper_processing_upgrade"
 		},
+		"utilitycraft_ascane_module_base": {
+			"textures": "textures/items/machinery/size_upgrade"
+		},
+		"utilitycraft_enchantability_module": {
+			"textures": "textures/items/machinery/modules/ench_mod_1"
+		},
+		"utilitycraft_enchantability_module_2": {
+			"textures": "textures/items/machinery/modules/ench_mod_2"
+		},
+		"utilitycraft_enchantability_module_3": {
+			"textures": "textures/items/machinery/modules/ench_mod_3"
+		},
+		"utilitycraft_enchantability_module_4": {
+			"textures": "textures/items/machinery/modules/ench_mod_4"
+		},
+		"utilitycraft_enchantability_module_5": {
+			"textures": "textures/items/machinery/modules/ench_mod_5"
+		},
+		"utilitycraft_reinforcement_module": {
+			"textures": "textures/items/machinery/hyper_processing_upgrade"
+		},
+		"utilitycraft_reinforcement_module_2": {
+			"textures": "textures/items/machinery/hyper_processing_upgrade"
+		},
+		"utilitycraft_reinforcement_module_3": {
+			"textures": "textures/items/machinery/hyper_processing_upgrade"
+		},
+		"utilitycraft_curse_protection_module": {
+			"textures": "textures/items/machinery/size_upgrade"
+		},
 		"utilitycraft_lucky_mesh":{
 			"textures": "textures/items/meshes/lucky_mesh"
 		},
@@ -644,6 +674,57 @@
 		},
 		"utilitycraft:cryofluid_48": {
 			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_48"
+		},
+		"utilitycraft:arcane_00": {
+			"textures": "textures/ui/bars/enchanting/arcane_00"
+		},
+		"utilitycraft:arcane_01": {
+			"textures": "textures/ui/bars/enchanting/arcane_01"
+		},
+		"utilitycraft:arcane_02": {
+			"textures": "textures/ui/bars/enchanting/arcane_02"
+		},
+		"utilitycraft:arcane_03": {
+			"textures": "textures/ui/bars/enchanting/arcane_03"
+		},
+		"utilitycraft:arcane_04": {
+			"textures": "textures/ui/bars/enchanting/arcane_04"
+		},
+		"utilitycraft:arcane_05": {
+			"textures": "textures/ui/bars/enchanting/arcane_05"
+		},
+		"utilitycraft:arcane_06": {
+			"textures": "textures/ui/bars/enchanting/arcane_05"
+		},
+		"utilitycraft:arcane_07": {
+			"textures": "textures/ui/bars/enchanting/arcane_07"
+		},
+		"utilitycraft:arcane_08": {
+			"textures": "textures/ui/bars/enchanting/arcane_08"
+		},
+		"utilitycraft:arcane_09": {
+			"textures": "textures/ui/bars/enchanting/arcane_09"
+		},
+		"utilitycraft:arcane_10": {
+			"textures": "textures/ui/bars/enchanting/arcane_10"
+		},
+		"utilitycraft:arcane_11": {
+			"textures": "textures/ui/bars/enchanting/arcane_11"
+		},
+		"utilitycraft:arcane_12": {
+			"textures": "textures/ui/bars/enchanting/arcane_12"
+		},
+		"utilitycraft:arcane_13": {
+			"textures": "textures/ui/bars/enchanting/arcane_13"
+		},
+		"utilitycraft:arcane_14": {
+			"textures": "textures/ui/bars/enchanting/arcane_14"
+		},
+		"utilitycraft:arcane_15": {
+			"textures": "textures/ui/bars/enchanting/arcane_15"
+		},
+		"utilitycraft:arcane_16": {
+			"textures": "textures/ui/bars/enchanting/arcane_16"
 		},
 		"utilitycraft:overclock_00": {
 			"textures": "textures/items/ui/overclock_bar/overclock_frame_00"

@@ -76,8 +76,8 @@ const nativeLiquifierRecipes = [
         description: "Melts obsidian down into a small batch of dark matter."
     }),
     defineLiquifierRecipe({
-        id: "utilitycraft:dark_matter_from_refined_obsidian_dust",
-        input: { id: "utilitycraft:refined_obsidian_dust", amount: 4 },
+        id: "utilitycraft:dark_matter_from_stabilized_obsidian_dust",
+        input: { id: "utilitycraft:stabilized_obsidian_dust", amount: 4 },
         fluid: { type: "dark_matter", amount: 1000 },
         energyCost: 7600,
         seconds: 12,

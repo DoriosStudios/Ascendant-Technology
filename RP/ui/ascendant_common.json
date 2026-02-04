@@ -21,7 +21,8 @@
 	 * Texture paths:
 	 * - textures/ui/cells/<color>_cell
 	 * - textures/ui/cells/<color>_cell_hover
-	 * - textures/ui/panels/<color>_panel
+	 * - textures/ui/panels/background_panel
+	 * - textures/ui/panels/background_panel_<color>
 	 */
 
 	/* ELEMENT: cell_white
@@ -45,7 +46,7 @@
 	 */
 	"panel_white": {
 		"type": "image",
-		"texture": "textures/ui/panels/white_panel"
+		"texture": "textures/ui/panels/background_panel_white"
 	},
 
 	/* ELEMENT: cell_light_gray
@@ -69,7 +70,7 @@
 	 */
 	"panel_light_gray": {
 		"type": "image",
-		"texture": "textures/ui/panels/light_gray_panel"
+		"texture": "textures/ui/panels/background_panel_light_gray"
 	},
 
 	/* ELEMENT: cell_gray
@@ -93,7 +94,7 @@
 	 */
 	"panel_gray": {
 		"type": "image",
-		"texture": "textures/ui/panels/gray_panel"
+		"texture": "textures/ui/panels/background_panel"
 	},
 
 	/* ELEMENT: cell_black
@@ -117,7 +118,7 @@
 	 */
 	"panel_black": {
 		"type": "image",
-		"texture": "textures/ui/panels/black_panel"
+		"texture": "textures/ui/panels/background_panel_black"
 	},
 
 	/* ELEMENT: cell_brown
@@ -141,7 +142,7 @@
 	 */
 	"panel_brown": {
 		"type": "image",
-		"texture": "textures/ui/panels/brown_panel"
+		"texture": "textures/ui/panels/background_panel_brown"
 	},
 
 	/* ELEMENT: cell_red
@@ -165,7 +166,7 @@
 	 */
 	"panel_red": {
 		"type": "image",
-		"texture": "textures/ui/panels/red_panel"
+		"texture": "textures/ui/panels/background_panel_red"
 	},
 
 	/* ELEMENT: cell_orange
@@ -189,7 +190,7 @@
 	 */
 	"panel_orange": {
 		"type": "image",
-		"texture": "textures/ui/panels/orange_panel"
+		"texture": "textures/ui/panels/background_panel_orange"
 	},
 
 	/* ELEMENT: cell_yellow
@@ -213,7 +214,7 @@
 	 */
 	"panel_yellow": {
 		"type": "image",
-		"texture": "textures/ui/panels/yellow_panel"
+		"texture": "textures/ui/panels/background_panel_yellow"
 	},
 
 	/* ELEMENT: cell_lime
@@ -237,7 +238,7 @@
 	 */
 	"panel_lime": {
 		"type": "image",
-		"texture": "textures/ui/panels/lime_panel"
+		"texture": "textures/ui/panels/background_panel_lime"
 	},
 
 	/* ELEMENT: cell_green
@@ -261,7 +262,7 @@
 	 */
 	"panel_green": {
 		"type": "image",
-		"texture": "textures/ui/panels/green_panel"
+		"texture": "textures/ui/panels/background_panel_green"
 	},
 
 	/* ELEMENT: cell_cyan
@@ -285,7 +286,7 @@
 	 */
 	"panel_cyan": {
 		"type": "image",
-		"texture": "textures/ui/panels/cyan_panel"
+		"texture": "textures/ui/panels/background_panel_cyan"
 	},
 
 	/* ELEMENT: cell_light_blue
@@ -309,7 +310,7 @@
 	 */
 	"panel_light_blue": {
 		"type": "image",
-		"texture": "textures/ui/panels/light_blue_panel"
+		"texture": "textures/ui/panels/background_panel_light_blue"
 	},
 
 	/* ELEMENT: cell_blue
@@ -333,7 +334,7 @@
 	 */
 	"panel_blue": {
 		"type": "image",
-		"texture": "textures/ui/panels/blue_panel"
+		"texture": "textures/ui/panels/background_panel_blue"
 	},
 
 	/* ELEMENT: cell_purple
@@ -357,7 +358,7 @@
 	 */
 	"panel_purple": {
 		"type": "image",
-		"texture": "textures/ui/panels/purple_panel"
+		"texture": "textures/ui/panels/background_panel_purple"
 	},
 
 	/* ELEMENT: cell_magenta
@@ -381,7 +382,7 @@
 	 */
 	"panel_magenta": {
 		"type": "image",
-		"texture": "textures/ui/panels/magenta_panel"
+		"texture": "textures/ui/panels/background_panel_magenta"
 	},
 
 	/* ELEMENT: cell_pink
@@ -405,7 +406,7 @@
 	 */
 	"panel_pink": {
 		"type": "image",
-		"texture": "textures/ui/panels/pink_panel"
+		"texture": "textures/ui/panels/background_panel_pink"
 	},
 
 	/* SUBSECTION: UI BACKGROUND ASSETS
@@ -1270,100 +1271,340 @@
 	 * Parametric and legacy background panels.
 	 */
 
-		/* ELEMENT: info_panel
-		 * Basic machine info panel with customizable background.
-		 */
-		"info_panel": {
-			"type": "panel",
-			"$index|default": 0,
-			"size": "$bg_size",
-			"$background_color|default": "gray",
-			"$text_borders|default": [76, 150],
-			"$info_size|default": [80, 154],
-			"$bg_size|default": [90, 166],
-			"$panel_bg_control|default": "ascendant_common.panel_bg",
-			"$background_color|dark": {
-				"$panel_bg_control": "ascendant_common.panel_bg_dark"
-			},
-			"$background_color|blue": {
-				"$panel_bg_control": "ascendant_common.panel_bg_blue"
-			},
-			"$background_color|aqua": {
-				"$panel_bg_control": "ascendant_common.panel_bg_aqua"
-			},
-			"$background_color|gray": {
-				"$panel_bg_control": "ascendant_common.panel_bg"
-			},
-			"controls": [
-				{
-					"background_panel@$panel_bg_control": {
-						"$panel_size": "$bg_size",
-						"layer": 1
-					}
-				},
-				{
-					"screen@ascendant_common.screen": {
-						"anchor_from": "center",
-						"anchor_to": "center",
-						"size": "$info_size",
-						"layer": 2
-					}
-				}
-			]
+	/* ELEMENT: info_panel
+	 * Basic machine info panel with customizable background.
+	 */
+	"info_panel": {
+		"type": "panel",
+		"$index|default": 0,
+		"size": "$bg_size",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"$has_bg|default": true,
+		"$background_color|default": "gray",
+		"$text_borders|default": [76, 150],
+		"$info_size|default": ["100% - 8px", "100% - 8px"],
+		"$bg_size|default": [90, 166],
+		"$has_close_button|default": false,
+		"$panel_bg_control|default": "ascendant_common.panel_no_close",
+		"$background_color|dark": {
+			"$panel_bg_control": "ascendant_common.panel_bg_dark"
 		},
+		"$background_color|blue": {
+			"$panel_bg_control": "ascendant_common.panel_bg_blue"
+		},
+		"$background_color|aqua": {
+			"$panel_bg_control": "ascendant_common.panel_bg_aqua"
+		},
+		"$background_color|gray": {
+			"$panel_bg_control": "ascendant_common.panel_bg"
+		},
+		"$background_color|white": {
+			"$panel_bg_control": "ascendant_common.panel_bg_white"
+		},
+		"$background_color|light_gray": {
+			"$panel_bg_control": "ascendant_common.panel_bg_light_gray"
+		},
+		"$background_color|black": {
+			"$panel_bg_control": "ascendant_common.panel_bg_black"
+		},
+		"$background_color|brown": {
+			"$panel_bg_control": "ascendant_common.panel_bg_brown"
+		},
+		"$background_color|red": {
+			"$panel_bg_control": "ascendant_common.panel_bg_red"
+		},
+		"$background_color|orange": {
+			"$panel_bg_control": "ascendant_common.panel_bg_orange"
+		},
+		"$background_color|yellow": {
+			"$panel_bg_control": "ascendant_common.panel_bg_yellow"
+		},
+		"$background_color|lime": {
+			"$panel_bg_control": "ascendant_common.panel_bg_lime"
+		},
+		"$background_color|green": {
+			"$panel_bg_control": "ascendant_common.panel_bg_green"
+		},
+		"$background_color|cyan": {
+			"$panel_bg_control": "ascendant_common.panel_bg_cyan"
+		},
+		"$background_color|light_blue": {
+			"$panel_bg_control": "ascendant_common.panel_bg_light_blue"
+		},
+		"$background_color|purple": {
+			"$panel_bg_control": "ascendant_common.panel_bg_purple"
+		},
+		"$background_color|magenta": {
+			"$panel_bg_control": "ascendant_common.panel_bg_magenta"
+		},
+		"$background_color|pink": {
+			"$panel_bg_control": "ascendant_common.panel_bg_pink"
+		},
+		"controls": [
+			{
+				"background_panel@$panel_bg_control": {
+					"visible": "$has_bg",
+					"$panel_size": "$bg_size",
+					"layer": 1,
+					"$has_close_button": "$has_close_button"
+				}
+			},
+			{
+				"screen@ascendant_common.screen": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"size": "$info_size",
+					"layer": 2
+				}
+			}
+		]
+	},
 
 	/* ELEMENT: panel
 	 * Parametric background panel controlled by $panel_color.
 	 */
 	"panel": {
 		"type": "panel",
-		"$panel_size|default": [ 176, 166 ],
+		"size": "$panel_size",
+		"$panel_size|default": [176, 166],
 		"$panel_alpha|default": 1,
 		"$panel_layer|default": 0,
-		"$has_close_button|default": true,
+		"$has_close_button|default": false,
 		"$close_button|default": "dark",
-		"$close_button|dark": true,
-		"$close_button|light": false,
-		"$dark_close_button|default": "$close_button",
-		"$dark_close_button|dark": true,
-		"$dark_close_button|light": false,
-		"$light_close_button|default": "$close_button",
-		"$light_close_button|dark": false,
-		"$light_close_button|light": true,
 		"$panel_color|default": "gray",
-		"$panel_texture|default": "textures/ui/panels/background_panel",
-		"$panel_color|gray": {
-			"$panel_texture": "textures/ui/panels/background_panel"
-		},
-		"$panel_color|dark": {
-			"$panel_texture": "textures/ui/panels/background_panel_dark"
-		},
-		"$panel_color|blue": {
-			"$panel_texture": "textures/ui/panels/background_panel_blue"
-		},
-		"$panel_color|aqua": {
-			"$panel_texture": "textures/ui/panels/background_panel_aqua"
-		},
+		"$panel_texture|default": "",
+		"$label_color|default": "black",
+		"$label_offset|default": [8, 8],
+		"$label_anchor|default": "top_left",
+		"$has_container_label|default": true,
 		"controls": [
 			{
-				"panel_surface": {
+				"panel_surface_custom": {
 					"type": "image",
 					"texture": "$panel_texture",
 					"size": "$panel_size",
 					"alpha": "$panel_alpha",
-					"layer": "$panel_layer"
+					"layer": "$panel_layer",
+					"visible": "($panel_texture != '')"
 				}
 			},
 			{
-				"close_button_light@common.light_close_button": { 
-					"visible": "$light_close_button",
-					"ignored": "($has_close_button = false)"
+				"panel_surface_gray": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'gray')"
 				}
 			},
 			{
-				"close_button_dark@common.close_button": {
-					"visible": "$dark_close_button",
-					"ignored": "($has_close_button = false)"
+				"panel_surface_dark": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_dark",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'dark')"
+				}
+			},
+			{
+				"panel_surface_blue": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_blue",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'blue')"
+				}
+			},
+			{
+				"panel_surface_aqua": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_aqua",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'aqua')"
+				}
+			},
+			{
+				"panel_surface_white": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_white",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'white')"
+				}
+			},
+			{
+				"panel_surface_light_gray": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_light_gray",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'light_gray')"
+				}
+			},
+			{
+				"panel_surface_black": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_black",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'black')"
+				}
+			},
+			{
+				"panel_surface_brown": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_brown",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'brown')"
+				}
+			},
+			{
+				"panel_surface_red": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_red",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'red')"
+				}
+			},
+			{
+				"panel_surface_orange": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_orange",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'orange')"
+				}
+			},
+			{
+				"panel_surface_yellow": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_yellow",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'yellow')"
+				}
+			},
+			{
+				"panel_surface_lime": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_lime",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'lime')"
+				}
+			},
+			{
+				"panel_surface_green": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_green",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'green')"
+				}
+			},
+			{
+				"panel_surface_cyan": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_cyan",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'cyan')"
+				}
+			},
+			{
+				"panel_surface_light_blue": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_light_blue",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'light_blue')"
+				}
+			},
+			{
+				"panel_surface_purple": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_purple",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'purple')"
+				}
+			},
+			{
+				"panel_surface_magenta": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_magenta",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'magenta')"
+				}
+			},
+			{
+				"panel_surface_pink": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_pink",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'pink')"
+				}
+			},
+			{
+				"container_label@chest.chest_label": {
+					"anchor_from": "$label_anchor",
+					"anchor_to": "$label_anchor",
+					"offset": "$label_offset",
+					"layer": 2,
+					"color": "$label_color",
+					"ignored": "(not $has_container_label)"
+				}
+			},
+			{
+				"close_panel": {
+					"type": "panel",
+					"visible": "$has_close_button",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"size": "$panel_size",
+					"layer": 3,
+					"controls": [
+						{
+							"close_button_light@common.light_close_button": {
+								"visible": "($close_button = 'light')",
+								"anchor_from": "top_right",
+								"anchor_to": "top_right",
+								"offset": [-4, 4]
+							}
+						},
+						{
+							"close_button_dark@common.close_button": {
+								"visible": "($close_button = 'dark')",
+								"anchor_from": "top_right",
+								"anchor_to": "top_right",
+								"offset": [-4, 4]
+							}
+						}
+					]
 				}
 			}
 		]
@@ -1371,39 +1612,231 @@
 
 	/* ELEMENT: panel_bg
 	 * Legacy wrapper for the default gray panel.
+	 * Colors: Gray (default), Dark, Blue, Aqua, White, Light Gray, Black, Brown, Red, Orange, Yellow, Lime, Green, Cyan, Light Blue, Purple, Magenta, Pink
 	 */
-	"panel_bg@ascendant_common.panel": {
-		"$panel_color": "gray"
-	},
+	"panel_bg@ascendant_common.panel": { "$panel_color": "gray", "$has_close_button": false },
+	"panel_bg_dark@ascendant_common.panel": { "$panel_color": "dark", "$has_close_button": false },
+	"panel_bg_blue@ascendant_common.panel": { "$panel_color": "blue", "$has_close_button": false },
+	"panel_bg_aqua@ascendant_common.panel": { "$panel_color": "aqua", "$has_close_button": false },
+	"panel_bg_white@ascendant_common.panel": { "$panel_color": "white", "$has_close_button": false },
+	"panel_bg_light_gray@ascendant_common.panel": { "$panel_color": "light_gray", "$has_close_button": false },
+	"panel_bg_black@ascendant_common.panel": { "$panel_color": "black", "$has_close_button": false },
+	"panel_bg_brown@ascendant_common.panel": { "$panel_color": "brown", "$has_close_button": false },
+	"panel_bg_red@ascendant_common.panel": { "$panel_color": "red", "$has_close_button": false },
+	"panel_bg_orange@ascendant_common.panel": { "$panel_color": "orange", "$has_close_button": false },
+	"panel_bg_yellow@ascendant_common.panel": { "$panel_color": "yellow", "$has_close_button": false },
+	"panel_bg_lime@ascendant_common.panel": { "$panel_color": "lime", "$has_close_button": false },
+	"panel_bg_green@ascendant_common.panel": { "$panel_color": "green", "$has_close_button": false },
+	"panel_bg_cyan@ascendant_common.panel": { "$panel_color": "cyan", "$has_close_button": false },
+	"panel_bg_light_blue@ascendant_common.panel": { "$panel_color": "light_blue", "$has_close_button": false },
+	"panel_bg_purple@ascendant_common.panel": { "$panel_color": "purple", "$has_close_button": false },
+	"panel_bg_magenta@ascendant_common.panel": { "$panel_color": "magenta", "$has_close_button": false },
+	"panel_bg_pink@ascendant_common.panel": { "$panel_color": "pink", "$has_close_button": false },
 
-	/* ELEMENT: panel_bg_dark
-	 * Legacy wrapper for the dark panel.
+	/* ELEMENT: panel_no_close
+	 * Parametric background panel without a close button.
 	 */
-	"panel_bg_dark@ascendant_common.panel": {
-		"$panel_color": "dark"
-	},
-
-	/* ELEMENT: panel_bg_blue
-	 * Legacy wrapper for the blue panel.
-	 */
-	"panel_bg_blue@ascendant_common.panel": {
-		"$panel_color": "blue"
-	},
-
-
-	/* ELEMENT: panel_bg_aqua
-	 * Legacy wrapper for the aqua panel.
-	 */
-	"panel_bg_aqua@ascendant_common.panel": {
-		"$panel_color": "aqua"
-	},
-
-	/* ELEMENT: panel_bg_gray
-	 * Legacy wrapper for a simple gray background texture.
-	 */
-	"panel_bg_gray@ascendant_common.panel": {
-		"$panel_color": "gray",
-		"$panel_texture": "textures/ui/panels/simple_bg_gray"
+	"panel_no_close": {
+		"type": "panel",
+		"$panel_size|default": [176, 166],
+		"$panel_alpha|default": 1,
+		"$panel_layer|default": 0,
+		"$has_close_button|default": false,
+		"$close_button|default": "dark",
+		"$panel_color|default": "gray",
+		"$panel_texture|default": "",
+		"controls": [
+			{
+				"panel_surface_custom": {
+					"type": "image",
+					"texture": "$panel_texture",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture != '')"
+				}
+			},
+			{
+				"panel_surface_gray": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'gray')"
+				}
+			},
+			{
+				"panel_surface_dark": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_dark",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'dark')"
+				}
+			},
+			{
+				"panel_surface_blue": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_blue",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'blue')"
+				}
+			},
+			{
+				"panel_surface_aqua": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_aqua",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'aqua')"
+				}
+			},
+			{
+				"panel_surface_white": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_white",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'white')"
+				}
+			},
+			{
+				"panel_surface_light_gray": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_light_gray",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'light_gray')"
+				}
+			},
+			{
+				"panel_surface_black": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_black",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'black')"
+				}
+			},
+			{
+				"panel_surface_brown": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_brown",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'brown')"
+				}
+			},
+			{
+				"panel_surface_red": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_red",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'red')"
+				}
+			},
+			{
+				"panel_surface_orange": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_orange",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'orange')"
+				}
+			},
+			{
+				"panel_surface_yellow": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_yellow",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'yellow')"
+				}
+			},
+			{
+				"panel_surface_lime": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_lime",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'lime')"
+				}
+			},
+			{
+				"panel_surface_green": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_green",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'green')"
+				}
+			},
+			{
+				"panel_surface_cyan": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_cyan",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'cyan')"
+				}
+			},
+			{
+				"panel_surface_light_blue": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_light_blue",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'light_blue')"
+				}
+			},
+			{
+				"panel_surface_purple": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_purple",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'purple')"
+				}
+			},
+			{
+				"panel_surface_magenta": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_magenta",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'magenta')"
+				}
+			},
+			{
+				"panel_surface_pink": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_pink",
+					"size": "$panel_size",
+					"alpha": "$panel_alpha",
+					"layer": "$panel_layer",
+					"visible": "($panel_texture = '') and ($panel_color = 'pink')"
+				}
+			}
+		]
 	},
 
 	/* SUBSECTION: COLLAPSIBLE PANELS
@@ -1610,17 +2043,26 @@
 	 */
 	"slot_base": {
 		"type": "input_panel",
+		"$slot_size|default": [18, 18],
 		"size": "$slot_size",
 		"layer": 1,
-		"$slot_size|default": [18, 18],
 		"$slot_index|default": 0,
-		"$cell_image_size|default": "$slot_size",
+		"$item_collection_name|default": "container_items",
+		"$slot_panel_mode|default": "fixed",
+		"$slot_panel_size|default": "$slot_size",
+		"$slot_panel_offset|default": [0, 0],
+		"$slot_panel_auto_size|default": ["100% - 4px", "100% - 4px"],
+		"$slot_panel_auto_offset|default": [2, 2],
+		"$cell_image_size|default": "$slot_panel_size",
 		"$slot_bg_variant|default": "gray",
 		"$slot_color|default": "gray",
 		"$cell_color|default": [1, 1, 1],
 		"$cell_texture|default": "textures/ui/cell_image",
+		"$cell_custom_enabled|default": false,
 		"$outline_variant|default": "none",
 		"$outline_texture|default": "",
+		"$outline_texture_resizable|default": "",
+		"$outline_resizable|default": false,
 		"$has_outline|default": false,
 		"$outline_color|default": "textures/ui/frozen_outline",
 		"$outline_size|default": [22, 22],
@@ -1630,11 +2072,13 @@
 		"$durability_bar_required|default": true,
 		"$storage_bar_required|default": true,
 		"$item_renderer|default": "common.item_renderer",
-		"$item_renderer_panel_size|default": "$slot_size",
+		"$item_renderer_panel_size|default": "$slot_panel_size",
 		"$item_renderer_size|default": [16, 16],
 		"$item_renderer_offset|default": [0, 0],
-		"$slot_background_ref|default": "common.empty_panel",
-		"$slot_background_offset|default": [0, 0],
+		"$slot_background_enabled|default": false,
+		"$slot_background_ref|default": "ascendant_common.panel_bg_dark",
+		"$slot_background_size|default": "$slot_panel_size",
+		"$slot_background_offset|default": "$slot_panel_offset",
 		"$slot_background_layer|default": -1,
 		"$cell_image_ref|default": "common.cell_image_panel",
 		"$cell_image_control_name|default": "cell",
@@ -1643,11 +2087,18 @@
 		"$focus_override_up|default": "",
 		"$focus_override_left|default": "",
 		"$focus_override_right|default": "",
+		"$slot_panel_mode|auto": {
+			"$slot_panel_size": "$slot_panel_auto_size",
+			"$slot_panel_offset": "$slot_panel_auto_offset",
+			"$cell_image_size": "$slot_panel_auto_size",
+			"$slot_background_size": "$slot_panel_auto_size",
+			"$slot_background_offset": "$slot_panel_auto_offset"
+		},
 		"$slot_bg_variant|gray": {
 			"$cell_image_ref": "common.cell_image_panel"
 		},
 		"$slot_bg_variant|dark": {
-			"$cell_image_ref": "ascendant_common.dark_cell"
+			"$cell_image_ref": "ascendant_common.dark_cell_image_panel"
 		},
 		"$slot_bg_variant|blue": {
 			"$cell_image_ref": "ascendant_common.blue_bg"
@@ -1656,7 +2107,7 @@
 			"$cell_image_ref": "ascendant_common.aqua_bg"
 		},
 		"$slot_color|dark": {
-			"$cell_image_ref": "ascendant_common.dark_cell"
+			"$cell_image_ref": "ascendant_common.dark_cell_image_panel"
 		},
 		"$slot_color|white": {
 			"$cell_image_ref": "ascendant_common.cell_white"
@@ -1707,16 +2158,78 @@
 			"$cell_image_ref": "ascendant_common.cell_pink"
 		},
 		"$outline_variant|none": {
-			"$outline_texture": ""
+			"$outline_texture": "",
+			"$outline_texture_resizable": ""
 		},
-		"$outline_variant|blue": {
-			"$outline_texture": "textures/ui/frozen_outline"
+		"$outline_variant|frozen": {
+			"$outline_texture": "textures/ui/frozen_outline",
+			"$outline_texture_resizable": "textures/ui/resizable_frozen_outline"
 		},
 		"$outline_variant|orange": {
-			"$outline_texture": "textures/ui/orange_outline"
+			"$outline_texture": "textures/ui/orange_outline",
+			"$outline_texture_resizable": "textures/ui/resizable_orange_outline"
 		},
-		"$has_outline|true": {
-			"$outline_texture": "textures/ui/cell_image"
+		"$outline_variant|black": {
+			"$outline_texture": "textures/ui/outlines/black_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/black_outline"
+		},
+		"$outline_variant|blue": {
+			"$outline_texture": "textures/ui/outlines/blue_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/blue_outline"
+		},
+		"$outline_variant|brown": {
+			"$outline_texture": "textures/ui/outlines/brown_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/brown_outline"
+		},
+		"$outline_variant|dark": {
+			"$outline_texture": "textures/ui/outlines/dark_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/dark_outline"
+		},
+		"$outline_variant|gray": {
+			"$outline_texture": "textures/ui/outlines/gray_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/gray_outline"
+		},
+		"$outline_variant|green": {
+			"$outline_texture": "textures/ui/outlines/green_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/green_outline"
+		},
+		"$outline_variant|light_blue": {
+			"$outline_texture": "textures/ui/outlines/light_blue_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/light_blue_outline"
+		},
+		"$outline_variant|light_gray": {
+			"$outline_texture": "textures/ui/outlines/light_gray_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/light_gray_outline"
+		},
+		"$outline_variant|lime": {
+			"$outline_texture": "textures/ui/outlines/lime_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/lime_outline"
+		},
+		"$outline_variant|magenta": {
+			"$outline_texture": "textures/ui/outlines/magenta_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/magenta_outline"
+		},
+		"$outline_variant|pink": {
+			"$outline_texture": "textures/ui/outlines/pink_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/pink_outline",
+			"nineslice": [2, 2]
+		},
+		"$outline_variant|purple": {
+			"$outline_texture": "textures/ui/outlines/purple_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/purple_outline",
+			"nineslice": [2, 2]
+		},
+		"$outline_variant|red": {
+			"$outline_texture": "textures/ui/outlines/red_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/red_outline"
+		},
+		"$outline_variant|white": {
+			"$outline_texture": "textures/ui/outlines/white_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/white_outline"
+		},
+		"$outline_variant|yellow": {
+			"$outline_texture": "textures/ui/outlines/yellow_outline",
+			"$outline_texture_resizable": "textures/ui/outlines/yellow_outline"
 		},
 		"collection_index": "$slot_index",
 		"focus_identifier": "$focus_id",
@@ -1731,22 +2244,50 @@
 		"controls": [
 			{
 				"background@$slot_background_ref": {
-					"size": "$cell_image_size",
+					"size": "$slot_background_size",
 					"offset": "$slot_background_offset",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"layer": "$slot_background_layer"
+					"layer": "$slot_background_layer",
+					"visible": "$slot_background_enabled"
 				}
 			},
 			{
 				"item_cell": {
 					"type": "panel",
-					"size": "$cell_image_size",
+					"size": "$slot_panel_size",
+					"offset": "$slot_panel_offset",
 					"layer": 0,
 					"controls": [
 						{
-							"$cell_image_control_name@$cell_image_ref": {
+							"cell_image_custom@ascendant_common.cell_image_panel_tinted": {
+								"$cell_texture": "$cell_texture",
+								"$cell_color": "$cell_color",
+								"$item_collection_name": "$item_collection_name",
+								"size": "$cell_image_size",
+								"visible": "$cell_custom_enabled",
 								"layer": 1
+							}
+						},
+						{
+							"$cell_image_control_name@$cell_image_ref": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [0, 0],
+								"size": "$cell_image_size",
+								"layer": 1,
+								"visible": "(not $cell_custom_enabled)"
+							}
+						},
+						{
+							"slot_outline_resizable": {
+								"type": "image",
+								"texture": "$outline_texture_resizable",
+								"size": "$outline_size",
+								"anchor_from": "center",
+								"anchor_to": "center",
+								"layer": 2,
+								"ignored": "(not $outline_resizable) or ($outline_texture_resizable = '')"
 							}
 						},
 						{
@@ -1757,7 +2298,7 @@
 								"anchor_from": "center",
 								"anchor_to": "center",
 								"layer": 2,
-								"ignored": "((not $has_outline) and ($outline_texture = ''))"
+								"ignored": "((not $has_outline) and ($outline_texture = '')) or (($outline_resizable = true) and ($outline_texture_resizable != ''))"
 							}
 						},
 						{
@@ -1882,6 +2423,10 @@
 					"controls": [
 						{
 							"$background_image_control_name@$background_images": {
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [0, 0],
+								"size": "$cell_image_size",
 								"layer": 1
 							}
 						},
@@ -2022,16 +2567,19 @@
 	 */
 	"cell_image_panel_tinted": {
 		"type": "panel",
+		"$cell_image_size|default": [18, 18],
 		"$cell_texture|default": "textures/ui/cell_image",
 		"$cell_color|default": [1, 1, 1],
 		"$cell_selected_binding_name|default": "#is_selected_slot",
 		"$item_collection_name|default": "container_items",
+		"size": "$cell_image_size",
 		"controls": [
 			{
 				"cell_image": {
 					"type": "image",
 					"texture": "$cell_texture",
 					"color": "$cell_color",
+					"size": "$cell_image_size",
 					"layer": 0,
 					"bindings": [
 						{
@@ -2046,6 +2594,7 @@
 			{
 				"cell_image_selected@common.cell_image_selected": {
 					"$cell_selected_binding_name|default": "#is_selected_slot",
+					"size": "$cell_image_size",
 					"visible": false,
 					"bindings": [
 						{
@@ -2074,10 +2623,13 @@
 	 */
 	"dark_cell_image_panel": {
 		"type": "panel",
+		"$cell_image_size|default": [18, 18],
+		"size": "$cell_image_size",
 		"controls": [
 			{
 				"cell_image@ascendant_common.dark_cell_image": {
 					"$cell_selected_binding_name|default": "#is_selected_slot",
+					"size": "$cell_image_size",
 					"visible": true,
 					"bindings": [
 						{
@@ -2092,6 +2644,7 @@
 			{
 				"cell_image_selected@common.cell_image_selected": {
 					"$cell_selected_binding_name|default": "#is_selected_slot",
+					"size": "$cell_image_size",
 					"visible": false,
 					"bindings": [
 						{
@@ -2148,6 +2701,10 @@
 		"$tab_button_text|default": "Tab",
 		"$tab_button_text_color|default": [1, 1, 1],
 		"$tab_button_text_scale|default": 0.6,
+		"$tab_button_icon|default": "",
+		"$tab_button_icon_size|default": ["100% - 4px", "100% - 4px"],
+		"$tab_button_icon_offset|default": [0, 0],
+		"$tab_button_icon_color|default": [1, 1, 1],
 		"controls": [
 			{
 				"bg": {
@@ -2155,6 +2712,19 @@
 					"texture": "$tab_button_texture",
 					"size": "$tab_button_size",
 					"layer": 0
+				}
+			},
+			{
+				"icon": {
+					"type": "image",
+					"texture": "$tab_button_icon",
+					"size": "$tab_button_icon_size",
+					"offset": "$tab_button_icon_offset",
+					"color": "$tab_button_icon_color",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 2,
+					"ignored": "($tab_button_icon = '')"
 				}
 			},
 			{
@@ -2203,6 +2773,10 @@
 		"$tab_button_size|default": [36, 20],
 		"$tab_button_text|default": "Tab",
 		"$tab_button_text_scale|default": 0.6,
+		"$tab_button_icon|default": "",
+		"$tab_button_icon_size|default": [12, 12],
+		"$tab_button_icon_offset|default": [0, 0],
+		"$tab_button_icon_color|default": [1, 1, 1],
 		"$tab_group_name|default": "tabs_group",
 		"$tab_index|default": 0,
 		"$toggle_state_binding_name|default": "#toggle_state",
@@ -2224,28 +2798,44 @@
 				"unchecked@$unchecked_control": {
 					"$tab_button_text": "$tab_button_text",
 					"$tab_button_size": "$tab_button_size",
-					"$tab_button_text_scale": "$tab_button_text_scale"
+					"$tab_button_text_scale": "$tab_button_text_scale",
+					"$tab_button_icon": "$tab_button_icon",
+					"$tab_button_icon_size": "$tab_button_icon_size",
+					"$tab_button_icon_offset": "$tab_button_icon_offset",
+					"$tab_button_icon_color": "$tab_button_icon_color"
 				}
 			},
 			{
 				"checked@$checked_control": {
 					"$tab_button_text": "$tab_button_text",
 					"$tab_button_size": "$tab_button_size",
-					"$tab_button_text_scale": "$tab_button_text_scale"
+					"$tab_button_text_scale": "$tab_button_text_scale",
+					"$tab_button_icon": "$tab_button_icon",
+					"$tab_button_icon_size": "$tab_button_icon_size",
+					"$tab_button_icon_offset": "$tab_button_icon_offset",
+					"$tab_button_icon_color": "$tab_button_icon_color"
 				}
 			},
 			{
 				"unchecked_hover@$unchecked_hover_control": {
 					"$tab_button_text": "$tab_button_text",
 					"$tab_button_size": "$tab_button_size",
-					"$tab_button_text_scale": "$tab_button_text_scale"
+					"$tab_button_text_scale": "$tab_button_text_scale",
+					"$tab_button_icon": "$tab_button_icon",
+					"$tab_button_icon_size": "$tab_button_icon_size",
+					"$tab_button_icon_offset": "$tab_button_icon_offset",
+					"$tab_button_icon_color": "$tab_button_icon_color"
 				}
 			},
 			{
 				"checked_hover@$checked_hover_control": {
 					"$tab_button_text": "$tab_button_text",
 					"$tab_button_size": "$tab_button_size",
-					"$tab_button_text_scale": "$tab_button_text_scale"
+					"$tab_button_text_scale": "$tab_button_text_scale",
+					"$tab_button_icon": "$tab_button_icon",
+					"$tab_button_icon_size": "$tab_button_icon_size",
+					"$tab_button_icon_offset": "$tab_button_icon_offset",
+					"$tab_button_icon_color": "$tab_button_icon_color"
 				}
 			}
 		]
@@ -2900,11 +3490,7 @@
 		"$item_collection_name|default": "container_items",
 		"$collection_index|default": 0,
 		"text": "#item_name",
-		"color": [
-			0,
-			1,
-			0
-		],
+		"color": [0, 1, 0],
 		"layer": 1,
 		"localize": false,
 		"collection_index": "$collection_index",
@@ -2913,6 +3499,35 @@
 				"binding_name": "#item_name",
 				"binding_type": "collection",
 				"binding_collection_name": "$item_collection_name"
+			}
+		]
+	},
+	
+	"item_label_view": {
+		"type": "label",
+		"$item_collection_name|default": "container_items",
+		"$collection_index|default": 0,
+		"text": "#item_name",
+		"color": [0, 1, 0],
+		"layer": 1,
+		"localize": false,
+		"$visible_source_control_name|default": "",
+		"$visible_source_property_name|default": "#toggle_state",
+		"$visible_target_property_name|default": "#visible",
+		"font_scale_factor": 1,
+		"collection_index": "$collection_index",
+		"bindings": [
+			{
+				"binding_name": "#item_name",
+				"binding_type": "collection",
+				"binding_collection_name": "$item_collection_name"
+			},
+			{
+				"binding_type": "view",
+				"source_control_name": "$visible_source_control_name",
+				"source_property_name": "$visible_source_property_name",
+				"target_property_name": "$visible_target_property_name",
+				"resolve_sibling_scope": true
 			}
 		]
 	},
@@ -2936,11 +3551,7 @@
 	"selected_item_label": {
 		"type": "label",
 		"text": "#selected_hover_text",
-		"color": [
-			0,
-			1,
-			0
-		],
+		"color": [0, 1, 0],
 		"layer": 1,
 		"localize": false
 	},
@@ -3059,7 +3670,6 @@
 			}
 		]
 	},
-
 
 	/* SECTION: VISUAL INDICATORS
 	 * Simple visual indicators such as arrows.

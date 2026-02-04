@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine } from '../AscendantMachinery/core.js'
 
 const ENERGY_COST = 400
 const SCAN_COOLDOWN_TICKS = 40 // scan every 2 seconds (20tps)

@@ -82,6 +82,13 @@ Machine status:
 		- **Operating Mode:** Uses fluid input/output ports to convert water into Cryofluid over time. Is a machine with 2 fluid tanks (input and output) and do not accept items as input for this function.
 
 - 🟢 **Vaporworks Processor (Steam/Gas)**
+- 🟠 **Ascane Engine (formerly Synthesis Crucible)**
+	- **Purpose:** High-tier repair, enchantment, and reinforcement hub for equipment.
+	- **Operating Mode:** 3×3 equipment grid; repairs always run, while enchant and reinforcement run when their modules are installed.
+	- **Modules:** Enchantment Module (levels 1–5) and Reinforcement Module (levels 1–3).
+	- **Notes:** Enchantment levels depend on module tier and item rarity; overclock adds its normal boosts and increases reinforcement beyond 100% when Tier 3 is installed (bonus uses half the overclock boost).
+
+- 🟠 **Vaporworks Processor (Steam/Gas)**
 	- **Purpose:** Converts water into steam and other gases as supplemental reagents.
 	- **Operating Mode:** Heat + fluid input turn water into steam, which can be fed into other systems.
 	- **Additional Fields:**

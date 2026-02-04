@@ -1,5 +1,5 @@
 import { system } from "@minecraft/server";
-import { FluidManager, Rotation } from "../managers_extra.js";
+import { FluidManager, Rotation } from "../AscendantMachinery/core.js";
 
 const DEFAULT_RATE = 4000;
 const MAX_SCAN = 256;

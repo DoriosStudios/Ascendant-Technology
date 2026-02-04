@@ -4,7 +4,7 @@ import { system, world } from "@minecraft/server";
 world.afterEvents.worldLoad.subscribe(() => {
     const addedRecipes = {
         "minecraft:glowstone_dust|utilitycraft:crying_obsidian_dust": { 
-            output: "utilitycraft:refined_obsidian_dust", 
+            output: "utilitycraft:stabilized_obsidian_dust", 
             required: 4 
         },
         "minecraft:blaze_powder|minecraft:obsidian": {

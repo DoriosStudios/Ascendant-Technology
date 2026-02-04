@@ -41,6 +41,7 @@
 					"energy_cap": 8192000,
 					"energy_cost": 3600,
 					"rate_speed_base": 3600,
+					"dynamic_rate": true,
 					"fluid_cap": 128000,
 					"fluid_rate": 128000,
 					"upgrades": [

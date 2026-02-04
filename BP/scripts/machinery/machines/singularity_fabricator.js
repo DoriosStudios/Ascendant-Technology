@@ -1,5 +1,5 @@
-import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../managers_extra.js'
-import { getClonerRecipes } from '../../config/recipes/cloner.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../AscendantMachinery/core.js'
+import { getSingularityRecipes } from '../../config/recipes/cloner.js'
 
 const COMPONENT_ID = 'singularity_fabricator'
 const INPUT_SLOT = 3
@@ -185,7 +185,7 @@ function resolveFabricatorRecipes(block) {
     const component = block.getComponent('utilitycraft:machine_recipes')?.customComponentParameters?.params
 
     if (!component || component.type === COMPONENT_ID || component.type === 'cloner') {
-        return { recipes: toRecipeArray(getClonerRecipes()) }
+        return { recipes: toRecipeArray(getSingularityRecipes()) }
     }
 
     if (Array.isArray(component)) {
@@ -196,7 +196,7 @@ function resolveFabricatorRecipes(block) {
         return { recipes: component.recipes }
     }
 
-    return { recipes: toRecipeArray(getClonerRecipes()) }
+    return { recipes: toRecipeArray(getSingularityRecipes()) }
 }
 
 function toRecipeArray(value) {

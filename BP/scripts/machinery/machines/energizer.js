@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
 import { startHeaterAura, tickHeaterAura, stopHeaterAuraAt } from '../multi_core.js'
 import { getEnergizerRecipes } from '../../config/recipes/energizer.js'
 
@@ -86,6 +86,10 @@ DoriosAPI.register.blockComponent('energizer', {
 
         const energyCost = channel.recipe.energyCost ?? settings.machine.energy_cost
         machine.setEnergyCost(energyCost)
+
+        if (settings?.machine?.dynamic_rate === true) {
+            applyDynamicRecipeRate(machine, channel.recipe, { energyCost })
+        }
 
         const progress = machine.getProgress()
         if (progress >= energyCost) {

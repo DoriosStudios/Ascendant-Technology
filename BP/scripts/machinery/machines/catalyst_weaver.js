@@ -1,5 +1,5 @@
 import { ItemStack } from '@minecraft/server'
-import { Machine, FluidManager } from '../managers_extra.js'
+import { Machine, FluidManager, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
 import { getCatalystWeaverRecipes } from '../../config/recipes/catalyst_weaver.js'
 
 const INPUT_SLOT = 3
@@ -191,6 +191,14 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
 
         const energyCost = recipe.cost ?? settings.machine.energy_cost
         machine.setEnergyCost(energyCost)
+
+        if (settings?.machine?.dynamic_rate === true) {
+            const recipeSpeed = Number(recipe.speedModifier ?? 1)
+            const normalizedRecipeSpeed = Number.isFinite(recipeSpeed) && recipeSpeed > 0 ? recipeSpeed : 1
+            const machineSpeed = machine.boosts?.speed ?? 1
+            const combinedSpeed = machineSpeed * normalizedRecipeSpeed
+            applyDynamicRecipeRate(machine, recipe, { energyCost, speedMultiplier: combinedSpeed })
+        }
 
         const maxBatches = calculateMaxBatches({
             inputStack,

@@ -1,5 +1,5 @@
 import { ItemStack } from "@minecraft/server";
-import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../managers_extra.js';
+import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../AscendantMachinery/core.js';
 import { tickCoolingAuras, stopCoolingAuraAt } from '../multi_core.js';
 import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../config/recipes/cryo_chamber.js';
 
@@ -191,7 +191,6 @@ DoriosAPI.register.blockComponent('cryo_chamber', {
         Machine.onDestroy(e);
         // Ensure any active cooling aura is stopped when the machine is removed
         stopCoolingAuraAt(e.block);
-        clearMultiSlotConfig(e.block);
     }
 });
 
@@ -288,7 +287,10 @@ function processItemRecipe(machine, tanks, recipes, settings, moduleConfig) {
 
     const consumption = machine.boosts.consumption;
     const needed = energyCost - progress;
-    const spendable = Math.min(machine.energy.get(), machine.rate, needed * consumption);
+    const rate = Number.isFinite(machine.processingRate) && machine.processingRate > 0
+        ? machine.processingRate
+        : machine.rate;
+    const spendable = Math.min(machine.energy.get(), rate, needed * consumption);
 
     if (spendable > 0) {
         machine.energy.consume(spendable);
@@ -383,7 +385,10 @@ function processCoolingSlot(machine, settings, recipes, slot, tanks) {
 
     const consumption = machine.boosts.consumption;
     const needed = energyCost - progress;
-    const spendable = Math.min(machine.energy.get(), machine.rate, needed * consumption);
+    const rate = Number.isFinite(machine.processingRate) && machine.processingRate > 0
+        ? machine.processingRate
+        : machine.rate;
+    const spendable = Math.min(machine.energy.get(), rate, needed * consumption);
 
     if (spendable > 0) {
         machine.energy.consume(spendable);
@@ -556,7 +561,10 @@ function processGenerator(machine, waterTank, cryofluidTank, settings) {
 
     const consumption = machine.boosts.consumption;
     const needed = energyCost - progress;
-    const spendable = Math.min(machine.energy.get(), machine.rate, needed * consumption);
+    const rate = Number.isFinite(machine.processingRate) && machine.processingRate > 0
+        ? machine.processingRate
+        : machine.rate;
+    const spendable = Math.min(machine.energy.get(), rate, needed * consumption);
 
     if (spendable > 0) {
         machine.energy.consume(spendable);

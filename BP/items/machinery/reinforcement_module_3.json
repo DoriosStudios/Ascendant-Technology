@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:item": {
+    "description": {
+      "identifier": "utilitycraft:reinforcement_module_3",
+      "menu_category": {
+        "category": "items",
+        "group": "dorios:itemGroup.name.upgrades"
+      }
+    },
+    "components": {
+      "minecraft:icon": "utilitycraft_reinforcement_module_3",
+      "minecraft:max_stack_size": 1,
+      "minecraft:tags": {
+        "tags": [
+          "utilitycraft:is_module",
+          "utilitycraft:ascane_module",
+          "utilitycraft:ascane_reinforcement",
+          "utilitycraft:ascane_reinforcement_3"
+        ]
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 
 
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
+tile.utilitycraft:ascane_engine.name=Ascane Engine\n§7- Repairs, enchants, and reinforces gear\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:cloner.name=Duplicator\n§7- Accepted upgrades: \n   §a§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7\n§7- 3 Modes:\n Stabilizer,\n Freezer,\n Cryo Generator
 tile.utilitycraft:energizer.name=Energizer\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
@@ -79,6 +80,16 @@ item.utilitycraft:liquid_void=Liquid Void Capsule
 ## Modules
 item.utilitycraft:size_upgrade=§gSize Upgrade§7\n- Increases Laser Barrier area
 item.utilitycraft:hyper_processing_upgrade=§dHyper Processing Upgrade§7\n- Increases machine operation speed\n- No extra energy cost
+item.utilitycraft:ascane_module_base=§7Base Module\n- Used to craft Ascane Engine modules
+item.utilitycraft:enchantability_module=§aEnchantability Module I§7\n- Allows equipment to be enchanted\nin the Ascane Engine \n- Max Enchant Level: I
+item.utilitycraft:enchantability_module_2=§bEnchantability Module II§7\n- Increases item enchantability in\nthe Ascane Engine \n- Max Enchant Level: II
+item.utilitycraft:enchantability_module_3=§eEnchantability Module III§7\n- Increases item enchantability in\nthe Ascane Engine \n- Max Enchant Level: III
+item.utilitycraft:enchantability_module_4=§4Enchantability Module IV§7\n- Increases item enchantability in\nthe Ascane Engine \n- Max Enchant Level: IV
+item.utilitycraft:enchantability_module_5=§uEnchantability Module V§7\n- Increases item enchantability in\nthe Ascane Engine \n- Max Enchant Level: V
+item.utilitycraft:reinforcement_module=§6Reinforcement Module I§7\n- Increases the durability of an\nequipment. \n- Reinforcement Amount: 25%
+item.utilitycraft:reinforcement_module_2=§6Reinforcement Module II§7\n- Increases the durability of an\nequipment. \n- Reinforcement Amount: 50%
+item.utilitycraft:reinforcement_module_3=§6Reinforcement Module III§7\n- Increases the durability of an\nequipment. \n- Reinforcement Amount: 100%
+item.utilitycraft:curse_protection_module=§gCurse Protection Module§7\n- Prevents curses in the Ascane Engine
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aLucky Mesh\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
@@ -133,6 +144,7 @@ item.utilitycraft:steam_capsule_8=Steam Capsule §7\n- (8 Buckets)
 ## Entities
 entity.utilitycraft:absolute_container.name=§fAbsolute Container
 entity.utilitycraft:catalyst_weaver.name=§fCatalyst Weaver
+entity.utilitycraft:ascane_engine.name=Ascane Engine
 entity.utilitycraft:cloner.name=Duplicator
 entity.utilitycraft:cryo_chamber.name=§fCryo Chamber
 entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator
@@ -247,6 +259,23 @@ item.utilitycraft:overclock_45=Overclock
 item.utilitycraft:overclock_46=Overclock
 item.utilitycraft:overclock_47=Overclock
 item.utilitycraft:overclock_48=Overclock
+item.utilitycraft:arcane_00=Arcane Progress
+item.utilitycraft:arcane_01=Arcane Progress
+item.utilitycraft:arcane_02=Arcane Progress
+item.utilitycraft:arcane_03=Arcane Progress
+item.utilitycraft:arcane_04=Arcane Progress
+item.utilitycraft:arcane_05=Arcane Progress
+item.utilitycraft:arcane_06=Arcane Progress
+item.utilitycraft:arcane_07=Arcane Progress
+item.utilitycraft:arcane_08=Arcane Progress
+item.utilitycraft:arcane_09=Arcane Progress
+item.utilitycraft:arcane_10=Arcane Progress
+item.utilitycraft:arcane_11=Arcane Progress
+item.utilitycraft:arcane_12=Arcane Progress
+item.utilitycraft:arcane_13=Arcane Progress
+item.utilitycraft:arcane_14=Arcane Progress
+item.utilitycraft:arcane_15=Arcane Progress
+item.utilitycraft:arcane_16=Arcane Progress
 item.utilitycraft:liquefied_aetherium_00=Liquified Aetherium
 item.utilitycraft:liquefied_aetherium_01=Liquified Aetherium
 item.utilitycraft:liquefied_aetherium_02=Liquified Aetherium

@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager } from "../managers_extra.js";
+import { Machine, Energy, FluidManager } from "../AscendantMachinery/core.js";
 
 const OFFSETS = [
     { x: 1, y: 0, z: 0 },
@@ -14,6 +14,7 @@ const TTL_PROP = "dorios:overclock_ttl";
 const EFF_PROP = "dorios:overclock_eff";
 const HEAT_PROP = "dorios:overclock_heat";
 const FUEL_PROP = "dorios:oc_fuel";
+const TOWER_NEED_PROP = "dorios:oc_energy_need";
 
 const MAX_SCAN_NODES = 96;
 const OVERCLOCK_TTL = 6;
@@ -195,7 +196,8 @@ function collectEnergyTargets(startBlock, sourceEntity) {
             const adjPos = { x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z };
             const adjBlock = dim.getBlock(adjPos);
             if (!adjBlock?.hasTag("dorios:energy")) continue;
-            if (adjBlock.hasTag("dorios:overclock_network")) continue;
+            const isTower = adjBlock.typeId === "utilitycraft:overclock_tower";
+            if (adjBlock.hasTag("dorios:overclock_network") && !isTower) continue;
 
             const entities = dim.getEntitiesAtBlockLocation(adjPos);
             if (!Array.isArray(entities) || entities.length === 0) continue;
@@ -205,6 +207,21 @@ function collectEnergyTargets(startBlock, sourceEntity) {
                 const tf = entity.getComponent?.("minecraft:type_family");
                 if (!tf?.hasTypeFamily?.("dorios:energy_container")) continue;
                 if (tf.hasTypeFamily?.("dorios:energy_source")) continue;
+
+                if (adjBlock.typeId === "utilitycraft:overclock_tower") {
+                    let shouldCharge = false;
+                    try {
+                        const need = Number(entity.getDynamicProperty(TOWER_NEED_PROP) ?? 0);
+                        if (Number.isFinite(need) && need > 0) {
+                            const towerEnergy = new Energy(entity);
+                            shouldCharge = towerEnergy.get() < need;
+                        }
+                    } catch {
+                        shouldCharge = false;
+                    }
+
+                    if (!shouldCharge) continue;
+                }
 
                 const uniqueKey = entity.scoreboardIdentity?.id ?? key(adjPos);
                 if (entityKeys.has(uniqueKey)) continue;
@@ -575,11 +592,13 @@ DoriosAPI.register.blockComponent("overclock_tower", {
         if (totalPower <= 0 || activeBurns <= 0) {
             machine.showWarning("Insert Fuel", false, getPossibleFuels(OVERCLOCK_FUELS), { footerLines: ["Needs Overclock Fuel"] });
             machine.entity.setDynamicProperty(LEVEL_PROP, 0);
+            machine.entity.setDynamicProperty(TOWER_NEED_PROP, 0);
             machine.off();
             return;
         }
 
         const energyCost = Math.ceil(TOWER_BASE_ENERGY_COST * Math.max(1, totalPower / 2));
+        machine.entity.setDynamicProperty(TOWER_NEED_PROP, energyCost);
         if (machine.energy.get() < energyCost) {
             machine.showWarning("Low Energy", false, [], { footerLines: ["Insufficient power"] });
             machine.entity.setDynamicProperty(LEVEL_PROP, 0);

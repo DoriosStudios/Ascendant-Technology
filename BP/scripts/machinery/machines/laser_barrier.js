@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine } from '../managers_extra.js'
+import { Machine, Energy, buildOverclockLoreLine } from '../AscendantMachinery/core.js'
 import { ItemStack } from '@minecraft/server'
 
 const DEFAULT_COST = 800

@@ -1,4 +1,4 @@
-import { updatePipes } from "../managers_extra.js";
+import { updatePipes } from "../AscendantMachinery/core.js";
 import { system, world } from "@minecraft/server";
 
 const OFFSETS = [
@@ -16,6 +16,30 @@ const ENERGY_TUBE_TYPES = new Set([
 ]);
 
 const MAX_ENERGY_SCAN = 2048;
+const ENERGY_DEBUG_PROP = "utilitycraft:debug_energy";
+
+function energyDebugEnabled() {
+    try {
+        const value = world.getDynamicProperty(ENERGY_DEBUG_PROP);
+        if (value !== undefined) return value === true;
+    } catch {
+        // ignore dynamic property errors
+    }
+    return globalThis.energyDebugEnabled === true;
+}
+
+function formatPos(pos) {
+    if (!pos) return "?";
+    return `${pos.x},${pos.y},${pos.z}`;
+}
+
+function logEnergyDebug(message, details) {
+    if (!energyDebugEnabled()) return;
+    const suffix = details
+        ? ` ${typeof details === "string" ? details : JSON.stringify(details)}`
+        : "";
+    console.warn(`[EnergyDebug] ${message}${suffix}`);
+}
 
 function posKey(pos) {
     return `${pos.x}|${pos.y}|${pos.z}`;
@@ -139,6 +163,12 @@ function updateEnergySourceNetwork(source, startPos) {
     if (!source || !startPos) return;
     const targets = collectEnergyTargets(startPos, source);
 
+    logEnergyDebug("updateEnergySourceNetwork", {
+        source: formatPos(source.location),
+        start: formatPos(startPos),
+        targets: targets.length
+    });
+
     try {
         const oldTags = source.getTags?.() ?? [];
         for (const tag of oldTags) {
@@ -156,6 +186,10 @@ function updateEnergySourceNetwork(source, startPos) {
 
 function refreshEnergyNetwork(block) {
     const sources = collectEnergySources(block);
+    logEnergyDebug("refreshEnergyNetwork", {
+        seed: formatPos(block?.location),
+        sources: sources.length
+    });
     for (const { entity, startPos } of sources) {
         updateEnergySourceNetwork(entity, startPos);
     }
@@ -163,9 +197,32 @@ function refreshEnergyNetwork(block) {
 
 function scheduleEnergyRescan(block) {
     if (!block?.dimension) return;
+    logEnergyDebug("scheduleEnergyRescan", {
+        seed: formatPos(block.location),
+        type: block.typeId
+    });
     system.run(() => {
         refreshEnergyNetwork(block);
     });
+}
+
+function resolveEnergySeedEntity(block) {
+    if (!block?.dimension) return null;
+    if (block.hasTag?.("dorios:multiblock.port")) {
+        return resolveEnergyPortEntity(block.dimension, block.location);
+    }
+    return block.dimension.getEntitiesAtBlockLocation(block.location)[0];
+}
+
+function isEnergySourceBlock(block) {
+    const entity = resolveEnergySeedEntity(block);
+    const tf = entity?.getComponent?.("minecraft:type_family");
+    return tf?.hasTypeFamily?.("dorios:energy_source") ?? false;
+}
+
+function shouldSeedEnergyRescan(block) {
+    if (!block?.hasTag?.("dorios:energy")) return false;
+    return isEnergyTube(block) || isEnergySourceBlock(block);
 }
 
 function refreshGeometryOverclock(block) {
@@ -260,23 +317,33 @@ globalThis.refreshOverclockNetwork = refreshOverclockAround;
 
 function refreshConnectedEnergy(block) {
     if (!block?.dimension) return;
-    if (block.hasTag?.("dorios:energy")) {
-        scheduleEnergyRescan(block);
-        return;
-    }
-
     const dim = block.dimension;
+    const seeds = new Set();
+
+    const enqueueSeed = (candidate) => {
+        if (!candidate) return;
+        if (!shouldSeedEnergyRescan(candidate)) return;
+        const key = posKey(candidate.location);
+        if (seeds.has(key)) return;
+        seeds.add(key);
+        scheduleEnergyRescan(candidate);
+    };
+
+    enqueueSeed(block);
+
     for (const off of OFFSETS) {
         const neighbor = dim.getBlock({
             x: block.location.x + off.x,
             y: block.location.y + off.y,
             z: block.location.z + off.z
         });
-        if (neighbor?.hasTag?.("dorios:energy")) {
-            scheduleEnergyRescan(neighbor);
-            return;
-        }
+        enqueueSeed(neighbor);
     }
+
+    logEnergyDebug("refreshConnectedEnergy", {
+        origin: formatPos(block.location),
+        seeds: seeds.size
+    });
 }
 
 globalThis.refreshConnectedEnergy = refreshConnectedEnergy;

@@ -80,7 +80,7 @@
             {
                 "upgrades_background":{
                     "type": "image",
-                    "texture": "textures/ui/panels/background_panel_blue",
+                    "texture": "textures/ui/panels/background_panel_light_blue",
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [ 110, 98 ],

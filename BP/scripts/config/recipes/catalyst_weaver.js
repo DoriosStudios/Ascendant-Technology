@@ -1,6 +1,6 @@
 import { system } from "@minecraft/server"
 import { infuserRecipes } from './infuser_registry.js'
-import { defineClonerRecipe } from "./cloner.js"
+import { defineSingularityRecipe } from "./cloner.js"
 
 const WEAVER_DEFAULT_ENERGY_COST = 6400
 const WEAVER_RATE_PER_TICK = 180
@@ -105,7 +105,7 @@ const nativeCatalystWeaverRecipes = [
         ],
         fluid: { type: 'lava', amount: 10000 },
         output: { id: 'utilitycraft:aetherium', amount: 1 },
-        byproduct: { id: 'utilitycraft:refined_obsidian_dust', amount: [0, 2], chance: 0.05 },
+        byproduct: { id: 'utilitycraft:stabilized_obsidian_dust', amount: [0, 2], chance: 0.05 },
         cost: 12000,
         speedModifier: 0.5
     }),
@@ -133,11 +133,11 @@ const nativeCatalystWeaverRecipes = [
         ],
         output: {id: 'utilitycraft:aetherium'},
         fluid: {type: 'lava', amount: 8000},
-        cost: 86000,
-        speedModifier: 8
+        cost: 512000,
+        speedModifier: 12
     }),
     defineWeaverRecipe({
-        id: 'utilitycraft:refined_obsidian_conversion',
+        id: 'utilitycraft:stabilized_obsidian_conversion',
         input: { id: 'utilitycraft:crying_obsidian_dust', amount: 4 },
         catalysts: [
             { id: 'minecraft:glowstone_dust', amount: 2 },
@@ -148,7 +148,7 @@ const nativeCatalystWeaverRecipes = [
             null
         ],
         fluid: { type: 'liquified_aetherium', amount: 250 },
-        output: { id: 'utilitycraft:refined_obsidian_dust', amount: 2 },
+        output: { id: 'utilitycraft:stabilized_obsidian_dust', amount: 2 },
         byproduct: { id: 'minecraft:obsidian', amount: 1, chance: 0.001 },
         cost: 5400,
         speedModifier: 1
@@ -202,12 +202,15 @@ function defineWeaverRecipe(recipe, overrideCost) {
         catalysts,
         cost,
         speedModifier,
-        processingTimeSeconds: computeProcessingSeconds(cost)
+        processingTimeSeconds: computeProcessingSeconds(cost, speedModifier)
     }
 }
 
-function computeProcessingSeconds(cost) {
-    return Number((cost / ENERGY_PER_SECOND).toFixed(2))
+function computeProcessingSeconds(cost, speedModifier = 1) {
+    const baseSeconds = cost / ENERGY_PER_SECOND
+    const normalizedSpeed = normalizeSpeedModifier(speedModifier)
+    const adjusted = baseSeconds / Math.max(0.0001, normalizedSpeed)
+    return Number(adjusted.toFixed(2))
 }
 
 function normalizePositiveInteger(value, fallback = 1) {

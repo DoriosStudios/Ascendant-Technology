@@ -24,7 +24,7 @@
 				"machine": {
 					"energy_cap": 6400000,
 					"energy_cost": 0,
-					"rate_speed_base": 0,
+					"rate_speed_base": 6400000,
 					"upgrades": [],
 					"hidden_slots": [3, 4],
 					"overclock_slot": 2

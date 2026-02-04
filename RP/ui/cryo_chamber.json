@@ -96,7 +96,7 @@
 			{
 				"water_icon": {
 					"type": "image",
-					"texture": "textures/ui/at_water",
+					"texture": "textures/ui//at_icons/water_icon",
 					"offset": [-120, -12],
 					"size": [16, 16],
 					"anchor_from": "center",
@@ -138,7 +138,7 @@
 			{
 				"cryofluid_icon": {
 					"type": "image",
-					"texture": "textures/ui/at_cryofluid",
+					"texture": "textures/ui//at_icons/cryofluid_icon",
 					"size": [16, 16],
 					"anchor_from": "center",
 					"anchor_to": "center",
@@ -149,7 +149,7 @@
 			{
 				"upgrades_background": {
 					"type": "image",
-					"texture": "textures/ui/panels/background_panel_blue",
+					"texture": "textures/ui/panels/background_panel_light_blue",
 					"anchor_from": "top_middle",
 					"anchor_to": "top_middle",
 					"size": [84, 26],

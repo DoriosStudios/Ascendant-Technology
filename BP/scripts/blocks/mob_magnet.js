@@ -66,7 +66,18 @@ if (typeof globalThis[GLOBAL_TICK_KEY] !== "number") {
 	}, 1);
 }
 
-const getCurrentTick = () => globalThis[GLOBAL_TICK_KEY];
+const getCurrentTick = () => {
+	const systemTick = Number(system.currentTick);
+	if (Number.isFinite(systemTick)) return systemTick;
+	return globalThis[GLOBAL_TICK_KEY];
+};
+
+function normalizeCooldownGate(nextAllowed, now) {
+	if (!Number.isFinite(nextAllowed) || nextAllowed <= 0) return 0;
+	if (!Number.isFinite(now) || now < 0) return nextAllowed;
+	if (nextAllowed - now > TICK_WRAP / 2) return 0;
+	return nextAllowed;
+}
 
 
 DoriosAPI.register.blockComponent("mob_magnet", {
@@ -101,7 +112,8 @@ DoriosAPI.register.blockComponent("mob_magnet", {
 			if (!entity?.isValid) continue;
 			if (entity.hasTag(IMMUNE_TAG)) continue;
 
-			const nextAllowed = Number(entity.getDynamicProperty(MAGNET_COOLDOWN_PROP)) || 0;
+			let nextAllowed = Number(entity.getDynamicProperty(MAGNET_COOLDOWN_PROP)) || 0;
+			nextAllowed = normalizeCooldownGate(nextAllowed, now);
 			if (cooldownTicks > 0 && nextAllowed > now) continue;
 
 			entity.teleport(

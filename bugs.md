@@ -18,9 +18,9 @@ This file will be constantly updated as bugs come and go.
    - After 0.7.0 rework, energy requirements are too high for practical use.
 - 🔷 Energizer creates more items than it should, exceeding the item's maximum stack size.  [#8](https://github.com/DoriosStudios/Ascendant-Technology/issues/8)
 - 🔷 Reinforced Cable does not conduct electricity.  [#15](https://github.com/DoriosStudios/Ascendant-Technology/issues/15)
-- 🔷 Mob Magnet texts are bugged.
-- ⚠️ Mob Magnet sometimes fails to pull mobs after state updates.
-- ⚠️ Ascendant Technology machines do not connect with energy cables and networks.
+- 🔷 Mob Magnet texts are bugged. [#36](https://github.com/DoriosStudios/Ascendant-Technology/issues/36)
+- 🔷 Mob Magnet sometimes fails to pull mobs after state updates. [#37](https://github.com/DoriosStudios/Ascendant-Technology/issues/37)
+- 🔷 Ascendant Technology machines do not connect with energy cables and networks. [#38](https://github.com/DoriosStudios/Ascendant-Technology/issues/38)
    - This is a partial issue with AT Machines. Can be "fixed" by breaking and replacing the cables.
 - 🔶 The armor icon in Pocket UI disappears when using Aetherium and Titanium armor.  
 - 🔶 Some machines UI  gets very close on older phones.

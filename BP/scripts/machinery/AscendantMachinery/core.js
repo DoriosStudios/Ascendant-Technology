@@ -2254,6 +2254,11 @@ export class Machine {
             }
             try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
             try { globalThis.refreshConnectedEnergy?.(block); } catch { /* ignore energy refresh */ }
+            if (shouldUpdateEnergy) {
+                system.runTimeout(() => {
+                    try { globalThis.refreshConnectedEnergy?.(block); } catch { /* ignore energy refresh */ }
+                }, 10);
+            }
             system.run(() => { if (callback) callback(entity) })
         });
     }
@@ -3224,15 +3229,18 @@ export class Container {
 
             // Fill hidden slots right after creation to prevent importers from
             // using them when we oversize the inventory.
-            system.run(() => {
-                if (normalized.machine.hidden_slots?.length) {
-                    const container = new Container(block, normalized, true);
-                    container.fillHiddenSlots(normalized.machine.hidden_slots);
-                }
-                try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
-                try { globalThis.refreshConnectedEnergy?.(block); } catch { /* ignore energy refresh */ }
-                if (callback) callback(entity);
-            });
+                system.run(() => {
+                    if (normalized.machine.hidden_slots?.length) {
+                        const container = new Container(block, normalized, true);
+                        container.fillHiddenSlots(normalized.machine.hidden_slots);
+                    }
+                    try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
+                    try { globalThis.refreshConnectedEnergy?.(block); } catch { /* ignore energy refresh */ }
+                    system.runTimeout(() => {
+                        try { globalThis.refreshConnectedEnergy?.(block); } catch { /* ignore energy refresh */ }
+                    }, 10);
+                    if (callback) callback(entity);
+                });
         });
     }
 

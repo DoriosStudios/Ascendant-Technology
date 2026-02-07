@@ -66,7 +66,22 @@
                             "utilitycraft:dark_matter_liquid_capsule_5",
                             "utilitycraft:dark_matter_liquid_capsule_6",
                             "utilitycraft:dark_matter_liquid_capsule_7",
-                            "utilitycraft:dark_matter_liquid_capsule_8"
+                            "utilitycraft:dark_matter_liquid_capsule_8",
+                            "utilitycraft:steam_capsule_1",
+                            "utilitycraft:steam_capsule_2",
+                            "utilitycraft:steam_capsule_3",
+                            "utilitycraft:steam_capsule_4",
+                            "utilitycraft:steam_capsule_5",
+                            "utilitycraft:steam_capsule_6",
+                            "utilitycraft:steam_capsule_7",
+                            "utilitycraft:steam_capsule_8",
+                            "utilitycraft:cryofluid_capsule_infinite",
+                            "utilitycraft:aetherium_liquid_capsule_infinite",
+                            "utilitycraft:dark_matter_liquid_capsule_infinite",
+                            "utilitycraft:water_capsule_infinite",
+                            "utilitycraft:lava_capsule_infinite",
+                            "utilitycraft:milk_capsule_infinite",
+                            "utilitycraft:xp_capsule_infinite"
                         ]
                     }
                 ]

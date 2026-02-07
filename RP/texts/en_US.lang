@@ -78,6 +78,8 @@ item.utilitycraft:titanium_aiot=Titanium AiOT
 item.utilitycraft:titanium_hammer=Titanium Hammer
 item.utilitycraft:void_essence=Void Essence
 item.utilitycraft:liquid_void=Liquid Void Capsule
+item.utilitycraft:enderling_tear=Enderling Tear
+item.utilitycraft:pure_enderling_tear=Pure Enderling Tear
 ## Modules
 item.utilitycraft:size_upgrade=§gSize Upgrade§7\n- Increases Laser Barrier area
 item.utilitycraft:hyper_processing_upgrade=§dHyper Processing Upgrade§7\n- Increases machine operation speed\n- No extra energy cost
@@ -167,6 +169,15 @@ entity.utilitycraft:tabs_test_machine.name=§fTabs Test Machine
 entity.utilitycraft:overclock_tower.name=§fOverclock Tower
 entity.utilitycraft:overclock_relay.name=§fOverclock Relay
 entity.utilitycraft:overclock_injector.name=§fOverclock Injector
+entity.utilitycraft:snareling.name=Snareling
+entity.utilitycraft:watchling.name=Watchling
+entity.utilitycraft:blastling.name=Blastling
+entity.utilitycraft:endersent.name=Endersent
+
+item.spawn_egg.entity.utilitycraft:snareling.name=Snareling Spawn Egg
+item.spawn_egg.entity.utilitycraft:watchling.name=Watchling Spawn Egg
+item.spawn_egg.entity.utilitycraft:blastling.name=Blastling Spawn Egg
+item.spawn_egg.entity.utilitycraft:endersent.name=Endersent Spawn Egg
 
 ## UI Texts
 at:itemGroup.name.machines=Machines §u(Ascendant Technology)

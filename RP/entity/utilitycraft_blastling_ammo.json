@@ -1,0 +1,20 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "utilitycraft:blastling_ammo",
+      "materials": {
+        "default": "slime"
+      },
+      "textures": {
+        "default": "textures/entity/projectiles/blastling_ammo"
+      },
+      "geometry": {
+        "default": "geometry.utilitycraft_projectile"
+      },
+      "render_controllers": [
+        "controller.render.slime"
+      ]
+    }
+  }
+}

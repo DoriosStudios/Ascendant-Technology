@@ -1,3 +1,94 @@
 {
-    
+	"entity_sounds": {
+		"entities": {
+			"utilitycraft:snareling": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.utilitycraft_snareling.say",
+					"hurt": "mob.utilitycraft_snareling.hit",
+					"death": "mob.utilitycraft_snareling.death",
+					"step": {
+						"sound": "mob.irongolem.walk",
+						"volume": 1.0,
+						"pitch": 1.0
+					},
+					"throw": {
+						"sound": "mob.irongolem.throw",
+						"volume": 1.0,
+						"pitch": 1.0
+					}
+				}
+			},
+			"utilitycraft:watchling": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.utilitycraft_watchling.say",
+					"hurt": "mob.utilitycraft_watchling.hit",
+					"death": "mob.utilitycraft_watchling.death",
+					"step": {
+						"sound": "mob.irongolem.walk",
+						"volume": 1.0,
+						"pitch": 1.0
+					},
+					"throw": {
+						"sound": "mob.irongolem.throw",
+						"volume": 1.0,
+						"pitch": 1.0
+					}
+				}
+			},
+			"utilitycraft:blastling": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.utilitycraft_blastling.say",
+					"hurt": "mob.utilitycraft_blastling.hit",
+					"death": "mob.utilitycraft_blastling.death",
+					"step": {
+						"sound": "mob.irongolem.walk",
+						"volume": 1.0,
+						"pitch": 1.0
+					},
+					"throw": {
+						"sound": "mob.irongolem.throw",
+						"volume": 1.0,
+						"pitch": 1.0
+					}
+				}
+			},
+			"utilitycraft:endersent": {
+				"volume": 1.0,
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"events": {
+					"ambient": "mob.utilitycraft_endersent.say",
+					"hurt": "mob.utilitycraft_endersent.hit",
+					"death": "mob.utilitycraft_endersent.death",
+					"step": {
+						"sound": "mob.irongolem.walk",
+						"volume": 1.0,
+						"pitch": 1.0
+					},
+					"throw": {
+						"sound": "mob.irongolem.throw",
+						"volume": 1.0,
+						"pitch": 1.0
+					}
+				}
+			}
+		}
+	}
 }

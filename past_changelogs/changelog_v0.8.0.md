@@ -43,6 +43,9 @@ Stability and correctness updates for the Overclock system, improved machine upg
     - **Tier V:** Max level 5; includes low-max enchantments (e.g., Mending, Infinity).
   - **Reinforcement Module:** Enables armor reinforcement in the Ascane Engine.
     - Higher tiers grant more durability points.
+### Misc
+- Added Enderling Tear and Pure Enderling Tear.
+  - New Enderling drop materials reserved for future Interdimensional Gem crafting.
 ### Capsules
 - Added Infinite Capsules:
   - Vanilla fluids: Water, Lava, Milk, XP.
@@ -99,6 +102,17 @@ Stability and correctness updates for the Overclock system, improved machine upg
 - Extended command helpers and block-lookup APIs used across scripts.
 - Updated the drop system to support `dropMode` (replace/supplement/vanilla) and broader tool tag matching.
 - Added non-cancel replacement support via `originalDropId` → `replaceDropId` for intrusive drop swaps that preserve vanilla break effects.
+- Added drop system XP delivery control (`xpMode`) with player, orb, auto, or disabled modes.
+- Added a Dorios Excavate compatibility bridge that listens for `dorios:blockLoot` and `dorios:hammerBlock` ScriptEvents, using loot-table fallback when custom drops are not defined.
+- Updated Titanium-related drops to use non-cancel swap logic for hammer and smelting-pickaxe outcomes, keeping break effects while replacing the raw drops.
+- Excavate bridge now favors swap-based drops first and falls back to `setblock ... destroy` when loot-table access is disabled.
+
+### Entities
+- Ported the Enderling family (Snareling, Watchling, Blastling, Endersent) from End Expansion references.
+  - Updated identifiers to `utilitycraft:*`, refreshed format versions, and added spawn rules + loot tables.
+- Updated Enderling entity and projectile components to current schemas.
+  - Aligned `minecraft:hurt_when_wet`, `minecraft:shooter`, `minecraft:spawn_entity`, and projectile field naming for newer format validation.
+- Added Enderling client assets (textures, spawn-egg icons, and sound definitions) from the End Expansion reference pack.
 
 ### HUD & UI Assets
 - HUD and lore fluid display now uses bucket-based units: `mB → B → KB → MB → GB → TB → PB` (decimal scaling).

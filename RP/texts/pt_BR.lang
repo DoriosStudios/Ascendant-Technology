@@ -76,6 +76,8 @@ item.utilitycraft:titanium_hammer=Martelo de Titânio
 
 item.utilitycraft:void_essence=Essência do Vazio
 item.utilitycraft:liquid_void=Ampola de Vazio Líquido
+item.utilitycraft:enderling_tear=Lágrima de Enderling
+item.utilitycraft:pure_enderling_tear=Lágrima de Enderling Pura
 
 ## Ferramentas / Armas
 item.utilitycraft:lucky_aiot_item=§aAiOT da Sorte\n§7Pilhagem X\nFortuna X
@@ -156,6 +158,15 @@ entity.utilitycraft:absolute_container.name=§fContainer Absoluto
 entity.utilitycraft:overclock_tower.name=§fTorre de Overclock
 entity.utilitycraft:overclock_relay.name=§fRelé de Overclock
 entity.utilitycraft:overclock_injector.name=§fInjetor de Overclock
+entity.utilitycraft:snareling.name=Snareling
+entity.utilitycraft:watchling.name=Watchling
+entity.utilitycraft:blastling.name=Blastling
+entity.utilitycraft:endersent.name=Endersent
+
+item.spawn_egg.entity.utilitycraft:snareling.name=Ovo Gerador de Snareling
+item.spawn_egg.entity.utilitycraft:watchling.name=Ovo Gerador de Watchling
+item.spawn_egg.entity.utilitycraft:blastling.name=Ovo Gerador de Blastling
+item.spawn_egg.entity.utilitycraft:endersent.name=Ovo Gerador de Endersent
 
 ## UI
 at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)

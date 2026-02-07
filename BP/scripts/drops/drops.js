@@ -1,6 +1,15 @@
 /// <reference path="./drops_guide.js" />
 import { ItemStack, world } from '@minecraft/server';
 
+export const DROPS_SETTINGS = {
+	xpMode: 'auto',
+	replaceSearchRadius: 2.5,
+	excavateBridge: {
+		enabled: true,
+		useLootTables: true
+	}
+};
+
 /**
  * Registry of custom drop behaviors by block identifier.
  *
@@ -14,6 +23,8 @@ export const DROPS_LIBRARY = {
 		silkDropId: 'utilitycraft:deepslate_aetherium_ore',
 		baseRange: [1, 1],
 		dropMode: 'vanilla',
+		originalDropId: 'utilitycraft:aetherium_shard', // translating from loot_tables to custom drop
+		replaceDropId: 'utilitycraft:aetherium_shard',
 		fortuneMath: { mode: 'multiplier', perLevel: [0.2, 0.5] },
 	}),
 
@@ -23,6 +34,8 @@ export const DROPS_LIBRARY = {
 		silkDropId: 'utilitycraft:end_aetherium_ore',
 		baseRange: [1, 1],
 		dropMode: 'vanilla',
+		originalDropId: 'utilitycraft:aetherium_shard', // translating from loot_tables to custom drop
+		replaceDropId: 'utilitycraft:aetherium_shard',
 		// Use math-based scaling here for a smoother curve
 		fortuneMath: { mode: 'multiplier', perLevel: [0.5, 0.75] }
 	}),
@@ -35,11 +48,16 @@ export const DROPS_LIBRARY = {
 		suppressVanillaSound: false,
 		baseRange: [1, 1],
 		dropMode: 'vanilla',
+		originalDropId: 'utilitycraft:raw_titanium', // translating from loot_tables to custom drop
+		replaceDropId: 'utilitycraft:raw_titanium',
 		fortuneMath: { mode: 'bonus', perLevel: [0.6, 1] },
 		specialTools: [
 			{
 				toolId: 'utilitycraft:smelting_pickaxe',
 				dropId: 'utilitycraft:titanium',
+				dropMode: 'vanilla',
+				originalDropId: 'utilitycraft:raw_titanium',
+				replaceDropId: 'utilitycraft:titanium',
 				fortuneMath: { mode: 'multiplier', perLevel: [0.25, 2] },
 				baseRange: [1, 1],
 				sound: { id: 'random.fizz', volume: 0.65, pitch: 1.5 },
@@ -48,6 +66,9 @@ export const DROPS_LIBRARY = {
 			{
 				toolType: 'utilitycraft:is_hammer',
 				dropId: 'utilitycraft:titanium_nugget',
+				dropMode: 'vanilla',
+				originalDropId: 'utilitycraft:raw_titanium',
+				replaceDropId: 'utilitycraft:titanium_nugget',
 				fortuneMath: { mode: 'bonus', perLevel: [1, 3] },
 				baseRange: [5, 12],
 				sound: { id: 'dig.netherrack', volume: 1, pitch: 0.5 },
@@ -60,6 +81,9 @@ export const DROPS_LIBRARY = {
 				toolId: 'utilitycraft:smelting_pickaxe',
 				dropId: 'utilitycraft:titanium_block',
 				silkDropId: 'utilitycraft:raw_titanium_block',
+				dropMode: 'vanilla',
+				originalDropId: 'utilitycraft:raw_titanium_block',
+				replaceDropId: 'utilitycraft:titanium_block',
 				baseRange: [1, 1],
 				sound: { id: 'random.fizz', volume: 0.65, pitch: 1.5 },
 			}
@@ -77,6 +101,8 @@ const toolFetchedTags = new Set([
 	'utilitycraft:is_hammer',
 	'utilitycraft:is_paxel'
 ]);
+
+const toolTagCache = new Map();
 
 const normalizeRequiredTags = (requiredType) => {
 	if (!requiredType) return [];
@@ -386,6 +412,7 @@ function computeDrops(context, config) {
 	const omitSpecialSound = Boolean(config.omitSpecialSound);
 	const suppressVanillaSound = Boolean(config.suppressVanillaSound);
 	const xp = resolveXpAmount(config.xp);
+	const xpMode = config.xpMode;
 
 	if (context.hasSilkTouch) {
 		const drops = [];
@@ -409,6 +436,7 @@ function computeDrops(context, config) {
 			particles: config.particles,
 			statusEffects: config.statusEffects,
 			xp,
+			xpMode,
 			commands: config.commands,
 			commandTarget: config.commandTarget,
 			replaceOriginalId: replacement?.originalDropId,
@@ -428,6 +456,7 @@ function computeDrops(context, config) {
 			particles: config.particles,
 			statusEffects: config.statusEffects,
 			xp,
+			xpMode,
 			commands: config.commands,
 			commandTarget: config.commandTarget,
 			replaceOriginalId: replacement?.originalDropId,
@@ -447,6 +476,7 @@ function computeDrops(context, config) {
 		particles: config.particles,
 		statusEffects: config.statusEffects,
 		xp,
+		xpMode,
 		commands: config.commands,
 		commandTarget: config.commandTarget,
 		replaceOriginalId: replacement?.originalDropId,
@@ -462,7 +492,12 @@ function tier(level, min, max) {
 function getTagsFromTool(tool, requiredType) {
 	if (!tool) return [];
 	try {
-		const rawToolTags = tool.getTags?.() ?? [];
+		const cacheKey = tool?.typeId;
+		let rawToolTags = cacheKey ? toolTagCache.get(cacheKey) : undefined;
+		if (!rawToolTags) {
+			rawToolTags = tool.getTags?.() ?? [];
+			if (cacheKey) toolTagCache.set(cacheKey, rawToolTags);
+		}
 		if (!rawToolTags.length) return [];
 		const requiredTags = normalizeRequiredTags(requiredType);
 		if (!requiredTags.length) return rawToolTags;

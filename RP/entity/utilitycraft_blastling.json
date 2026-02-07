@@ -1,0 +1,42 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "utilitycraft:blastling",
+      "textures": {
+        "default": "textures/entity/mobs/blastling"
+      },
+      "materials": {
+        "default": "skeleton"
+      },
+      "geometry": {
+        "default": "geometry.utilitycraft_blastling"
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "spawn_egg": {
+        "texture": "utilitycraft:blastling",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.utilitycraft_blastling.walk",
+        "idle": "animation.utilitycraft_blastling.idle",
+        "mad": "animation.utilitycraft_blastling.mad"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving"
+          },
+          {
+            "mad": "query.is_moving && query.is_angry"
+          },
+          {
+            "idle": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

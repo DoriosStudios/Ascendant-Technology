@@ -113,6 +113,24 @@
 		"utilitycraft_liquid_void": {
 			"textures": "textures/items/misc/liquid_void"
 		},
+		"utilitycraft_enderling_tear": {
+			"textures": "textures/items/misc/void_essence"
+		},
+		"utilitycraft_pure_enderling_tear": {
+			"textures": "textures/items/misc/liquid_void"
+		},
+		"utilitycraft:snareling": {
+			"textures": "textures/items/mobs/snareling"
+		},
+		"utilitycraft:watchling": {
+			"textures": "textures/items/mobs/watchling"
+		},
+		"utilitycraft:blastling": {
+			"textures": "textures/items/mobs/blastling"
+		},
+		"utilitycraft:endersent": {
+			"textures": "textures/items/mobs/endersent"
+		},
 		"utilitycraft_size_upgrade": {
 			"textures": "textures/items/machinery/size_upgrade"
 		},

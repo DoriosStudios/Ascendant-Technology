@@ -1,0 +1,89 @@
+{
+	"format_version": "1.20.0",
+	"sound_definitions": {
+		"mob.utilitycraft_snareling.say": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/snareling/say"
+			]
+		},
+		"mob.utilitycraft_snareling.hit": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/snareling/hit"
+			]
+		},
+		"mob.utilitycraft_snareling.death": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/snareling/death"
+			]
+		},
+		"mob.utilitycraft_watchling.say": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/watchling/hit"
+			]
+		},
+		"mob.utilitycraft_watchling.hit": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/watchling/hit"
+			]
+		},
+		"mob.utilitycraft_watchling.death": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/watchling/death"
+			]
+		},
+		"mob.utilitycraft_blastling.say": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/blastling/say"
+			]
+		},
+		"mob.utilitycraft_blastling.hit": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/blastling/hit"
+			]
+		},
+		"mob.utilitycraft_blastling.death": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/blastling/death"
+			]
+		},
+		"mob.utilitycraft_endersent.say": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/endersent/say"
+			]
+		},
+		"mob.utilitycraft_endersent.hit": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/endersent/hit"
+			]
+		},
+		"mob.utilitycraft_endersent.death": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/mob/endersent/death"
+			]
+		},
+		"utilitycraft.snareling_web_shot": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/snareling_web_shot"
+			]
+		},
+		"utilitycraft.blastling_ammo_shot": {
+			"category": "neutral",
+			"sounds": [
+				"sounds/blastling_ammo_shot"
+			]
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "utilitycraft:snareling_web",
+      "materials": {
+        "default": "slime"
+      },
+      "textures": {
+        "default": "textures/entity/projectiles/snareling_web"
+      },
+      "geometry": {
+        "default": "geometry.utilitycraft_projectile"
+      },
+      "render_controllers": [
+        "controller.render.slime"
+      ]
+    }
+  }
+}

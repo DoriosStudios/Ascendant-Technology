@@ -1,0 +1,47 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "utilitycraft:snareling_web",
+			"is_spawnable": false,
+			"is_summonable": true,
+			"is_experimental": false,
+			"runtime_identifier": "minecraft:snowball"
+		},
+		"component_groups": {
+			"exploding": {
+				"minecraft:explode": {
+					"fuse_length": 2,
+					"power": 4,
+					"fuse_lit": true,
+					"causes_fire": false
+				}
+			}
+		},
+		"components": {
+			"minecraft:collision_box": {
+				"width": 0.25,
+				"height": 0.25
+			},
+			"minecraft:projectile": {
+				"on_hit": {
+					"impact_damage": {
+						"damage": 7,
+						"knockback": true,
+						"semi_random_diff_damage": false,
+						"destroy_on_hit": true
+					},
+					"stick_in_ground": {
+						"shake_time": 0.35
+					},
+					"arrow_effect": {}
+				},
+				"power": 1.5,
+				"gravity": 0.03,
+				"angle_offset": 0.0
+			},
+			"minecraft:physics": {}
+		},
+		"events": {}
+	}
+}

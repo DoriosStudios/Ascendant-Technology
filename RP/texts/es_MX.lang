@@ -71,6 +71,8 @@ item.utilitycraft:aetherium_shard=Fragmento de Aetherium
 item.utilitycraft:refined_aetherium_shard=Fragmento de Aetherium Refinado
 item.utilitycraft:void_essence=Esencia del Vacío
 item.utilitycraft:liquid_void=Ampolla de Vacío Líquido
+item.utilitycraft:enderling_tear=Lágrima de Enderling
+item.utilitycraft:pure_enderling_tear=Lágrima de Enderling Pura
 
 ## Módulos
 item.utilitycraft:size_upgrade=Mejora de §gTamaño§7\n- Aumenta el área de la Barrera Láser
@@ -140,6 +142,15 @@ entity.utilitycraft:absolute_container.name=§fContenedor Absoluto
 entity.utilitycraft:overclock_tower.name=§fTorre de Overclock
 entity.utilitycraft:overclock_relay.name=§fRelé de Overclock
 entity.utilitycraft:overclock_injector.name=§fInyector de Overclock
+entity.utilitycraft:snareling.name=Snareling
+entity.utilitycraft:watchling.name=Watchling
+entity.utilitycraft:blastling.name=Blastling
+entity.utilitycraft:endersent.name=Endersent
+
+item.spawn_egg.entity.utilitycraft:snareling.name=Huevo Generador de Snareling
+item.spawn_egg.entity.utilitycraft:watchling.name=Huevo Generador de Watchling
+item.spawn_egg.entity.utilitycraft:blastling.name=Huevo Generador de Blastling
+item.spawn_egg.entity.utilitycraft:endersent.name=Huevo Generador de Endersent
 
 ## UI Texts
 at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)

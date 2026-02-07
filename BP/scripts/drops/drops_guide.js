@@ -132,6 +132,7 @@
  * @property {DropSound|string=} sound - Som especial ao aplicar override.
  * @property {DropSound|string=} baseSound - Som base do bloco.
  * @property {boolean=} omitSpecialSound - Ignora `sound` do override.
+ * @property {'auto'|'player'|'orb'|'none'=} xpMode - How XP is awarded.
  * @property {DropConditions=} conditions - Condições adicionais.
  * @example
  * {
@@ -152,6 +153,7 @@
  *   - `replace`: substitui o drop vanilla (cancela a quebra).
  *   - `supplement`: mantém o vanilla e adiciona extras (não cancela).
  *   - `vanilla`: não gera o drop base (só extras/efeitos).
+ * @property {'auto'|'player'|'orb'|'none'=} xpMode - How XP is awarded.
  * @property {boolean=} replaceVanilla - Legado: `true` → replace, `false` → supplement.
  * @property {string|string[]=} toolType - Tag(s) exigidas. Ex: `"minecraft:is_pickaxe"`.
  * @property {FortuneTier[]=} fortuneTiers - Tiers de Fortune.
@@ -164,6 +166,7 @@
  * @property {DropEffect[]=} statusEffects - Efeitos no player.
  * @property {ExtraDropEntry[]=} extraDrops - Drops extras com chance.
  * @property {number|[number, number]=} xp - XP extra. Ex: `3` ou `[1, 5]`.
+ * @property {'auto'|'player'|'orb'|'none'=} xpMode - How XP is awarded.
  * @property {string[]=} commands - Comandos pós-quebra.
  * @property {'player'|'dimension'=} commandTarget - Quem executa comandos.
  * @property {DropConditions=} conditions - Condições adicionais.
@@ -187,8 +190,11 @@
  * @property {DropParticle[]=} particles - Partículas extras.
  * @property {DropEffect[]=} statusEffects - Efeitos no player.
  * @property {number|[number, number]=} xp - XP extra.
+ * @property {'auto'|'player'|'orb'|'none'=} xpMode - How XP is awarded.
  * @property {string[]=} commands - Comandos.
  * @property {'player'|'dimension'=} commandTarget - Quem executa comandos.
+ * @property {string=} replaceOriginalId - Vanilla item to remove when replacing without cancel.
+ * @property {import('@minecraft/server').ItemStack[]=} replaceDrops - Drops spawned after replacement.
  * @example
  * {
  *   drops: [new ItemStack("minecraft:diamond", 1)],

@@ -1,0 +1,289 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.utilitycraft_snareling",
+        "texture_width": 128,
+        "texture_height": 128,
+        "visible_bounds_width": 3,
+        "visible_bounds_height": 4.5,
+        "visible_bounds_offset": [
+          0,
+          1.75,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "Arms",
+          "pivot": [
+            1,
+            37,
+            3
+          ]
+        },
+        {
+          "name": "Arm0",
+          "pivot": [
+            -7,
+            37,
+            3
+          ],
+          "cubes": [
+            {
+              "origin": [
+                6.0,
+                0.0,
+                2.0
+              ],
+              "size": [
+                2.0,
+                39.0,
+                2.0
+              ],
+              "uv": [
+                0,
+                47
+              ],
+              "inflate": 0
+            },
+            {
+              "origin": [
+                6.0,
+                0.0,
+                4.0
+              ],
+              "size": [
+                2.0,
+                2.0,
+                9.0
+              ],
+              "uv": [
+                48,
+                45
+              ],
+              "inflate": 0
+            }
+          ],
+          "parent": "Arms"
+        },
+        {
+          "name": "Arm1",
+          "pivot": [
+            7,
+            37,
+            3
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                2.0
+              ],
+              "size": [
+                2.0,
+                39.0,
+                2.0
+              ],
+              "uv": [
+                40,
+                24
+              ],
+              "inflate": 0
+            },
+            {
+              "origin": [
+                -8.0,
+                0.0,
+                4.0
+              ],
+              "size": [
+                2.0,
+                2.0,
+                9.0
+              ],
+              "uv": [
+                54,
+                18
+              ],
+              "inflate": 0
+            }
+          ],
+          "parent": "Arms"
+        },
+        {
+          "name": "Legs",
+          "pivot": [
+            0,
+            25,
+            0
+          ]
+        },
+        {
+          "name": "Leg0",
+          "pivot": [
+            -3,
+            25,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -4.0,
+                0.0,
+                -1.0
+              ],
+              "size": [
+                2.0,
+                25.0,
+                2.0
+              ],
+              "uv": [
+                48,
+                27
+              ],
+              "inflate": 0
+            }
+          ],
+          "parent": "Legs"
+        },
+        {
+          "name": "Leg1",
+          "pivot": [
+            3,
+            25,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                2.0,
+                0.0,
+                -1.0
+              ],
+              "size": [
+                2.0,
+                25.0,
+                2.0
+              ],
+              "uv": [
+                48,
+                0
+              ],
+              "inflate": 0
+            }
+          ],
+          "parent": "Legs"
+        },
+        {
+          "name": "Snareling",
+          "pivot": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "name": "Body",
+          "pivot": [
+            0,
+            34,
+            0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6.0,
+                24.0,
+                -10.0
+              ],
+              "size": [
+                12.0,
+                15.0,
+                8.0
+              ],
+              "pivot": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation": [
+                -12.5,
+                0.0,
+                0.0
+              ],
+              "uv": [
+                0,
+                24
+              ],
+              "inflate": 0
+            },
+            {
+              "origin": [
+                -5.0,
+                28.0,
+                -2.0
+              ],
+              "size": [
+                10.0,
+                10.0,
+                4.0
+              ],
+              "pivot": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation": [
+                -12.5,
+                0.0,
+                0.0
+              ],
+              "uv": [
+                8,
+                47
+              ],
+              "inflate": 0
+            }
+          ],
+          "parent": "Snareling"
+        },
+        {
+          "name": "Head",
+          "pivot": [
+            0,
+            44,
+            3
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -6.0,
+                39.0,
+                -2.0
+              ],
+              "size": [
+                12.0,
+                12.0,
+                12.0
+              ],
+              "uv": [
+                0,
+                0
+              ],
+              "inflate": 0
+            }
+          ],
+          "parent": "Body",
+          "rotation": [
+            -12.5,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}

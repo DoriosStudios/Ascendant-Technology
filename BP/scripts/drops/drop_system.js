@@ -1,6 +1,6 @@
 import { world, system, EffectTypes } from '@minecraft/server';
 import './drops.js'; // ensures DoriosAPI is available globally when main.js loads
-import { getDropsForBlock } from './drops.js';
+import { DROPS_SETTINGS, getDropsForBlock } from './drops.js';
 
 /**
  * Extract fortune and silk touch levels from the breaking tool.
@@ -72,6 +72,41 @@ function damageHeldTool(player, tool, slot) {
   }
 }
 
+const XP_MODES = new Set(['auto', 'player', 'orb', 'none']);
+
+function resolveXpMode(explicitMode) {
+  const raw = typeof explicitMode === 'string'
+    ? explicitMode
+    : (typeof DROPS_SETTINGS?.xpMode === 'string' ? DROPS_SETTINGS.xpMode : 'auto');
+  const mode = raw.toLowerCase();
+  return XP_MODES.has(mode) ? mode : 'auto';
+}
+
+function awardXp(player, dimension, pos, xp, mode) {
+  if (!Number.isFinite(xp) || xp <= 0) return;
+  if (mode === 'none') return;
+
+  if (mode === 'orb') {
+    dimension?.spawnExperienceOrb?.(pos, xp);
+    return;
+  }
+
+  if (mode === 'player') {
+    if (typeof player?.addExperience === 'function') {
+      player.addExperience(xp);
+      return;
+    }
+    dimension?.spawnExperienceOrb?.(pos, xp);
+    return;
+  }
+
+  if (typeof player?.addExperience === 'function') {
+    player.addExperience(xp);
+  } else {
+    dimension?.spawnExperienceOrb?.(pos, xp);
+  }
+}
+
 const randFloat = (min = 0, max = 1) => Math.random() * (max - min) + min;
 
 const normalizeChance = (chance, fallback = 1) => {
@@ -101,6 +136,237 @@ const resolveEffectType = (id) => {
   if (!normalized) return undefined;
   return EffectTypes?.get?.(normalized) ?? EffectTypes?.get?.(id) ?? normalized;
 };
+
+function getPlayerTool(player) {
+  if (!player) return undefined;
+  try {
+    const equippable = player.getComponent?.('equippable');
+    const equipped = equippable?.getEquipment?.('Mainhand');
+    if (equipped) return equipped;
+  } catch {
+    // ignore
+  }
+
+  try {
+    const inv = player.getComponent?.('inventory')?.container;
+    const slot = player.selectedSlot ?? 0;
+    return inv?.getItem?.(slot);
+  } catch {
+    return undefined;
+  }
+}
+
+function parseScriptEventLocation(message) {
+  if (!message || typeof message !== 'string') return null;
+  const parts = message.split(',').map(part => Number(part.trim()));
+  if (parts.length < 3) return null;
+  const [x, y, z] = parts;
+  if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) return null;
+  return { x: Math.floor(x), y: Math.floor(y), z: Math.floor(z) };
+}
+
+function isUnbreakableBlock(block) {
+  const unbreakables = globalThis?.DoriosAPI?.constants?.unbreakableBlocks;
+  if (!block?.typeId || !Array.isArray(unbreakables)) return false;
+  return unbreakables.includes(block.typeId);
+}
+
+function destroyBlockWithDrops(dimension, loc) {
+  if (!dimension || !loc) return false;
+  const x = Math.floor(loc.x);
+  const y = Math.floor(loc.y);
+  const z = Math.floor(loc.z);
+  const command = `setblock ${x} ${y} ${z} air destroy`;
+  try {
+    if (typeof dimension.runCommand === 'function') {
+      dimension.runCommand(command);
+      return true;
+    }
+  } catch {
+    return false;
+  }
+  return false;
+}
+
+function executeDropActions({
+  block,
+  blockId,
+  dimension,
+  player,
+  loc,
+  drops,
+  replaceVanilla,
+  removeBlock,
+  sound,
+  baseSound,
+  omitSpecialSound,
+  suppressVanillaSound,
+  particles,
+  statusEffects,
+  xp,
+  xpMode,
+  commands,
+  commandTarget,
+  replaceOriginalId,
+  replaceDrops,
+  removeVanillaEntities
+}) {
+  if (!dimension || !loc) return;
+
+  system.run(() => {
+    const resolvedSound = omitSpecialSound ? baseSound : (sound ?? baseSound);
+
+    if (removeBlock) {
+      try {
+        if (typeof dimension.setBlockType === 'function') {
+          dimension.setBlockType(loc, 'minecraft:air');
+        } else if (block?.setType) {
+          block.setType('minecraft:air');
+        } else {
+          const fallback = dimension.getBlock?.(loc);
+          fallback?.setType?.('minecraft:air');
+        }
+      } catch (error) {
+        console.warn('[drops] Failed setting block to air for', blockId, error);
+      }
+
+      if (replaceVanilla && !resolvedSound && !suppressVanillaSound) {
+        dimension.playSound?.('dig.deepslate', loc);
+      }
+    }
+
+    const pos = { x: loc.x + 0.5, y: loc.y + 0.5, z: loc.z + 0.5 };
+    if (resolvedSound) {
+      const soundId = typeof resolvedSound === 'string' ? resolvedSound : resolvedSound?.id;
+      const hasOptions = typeof resolvedSound === 'object' && resolvedSound !== null;
+      const options = hasOptions ? { volume: resolvedSound.volume, pitch: resolvedSound.pitch } : undefined;
+
+      if (soundId) {
+        try {
+          if (options) {
+            dimension.playSound?.(soundId, pos, options);
+          } else {
+            dimension.playSound?.(soundId, pos);
+          }
+        } catch (error) {
+          console.warn('[drops] Failed playing sound for', blockId, error);
+        }
+      }
+    }
+
+    if (Number.isFinite(xp) && xp > 0) {
+      try {
+        awardXp(player, dimension, pos, xp, xpMode);
+      } catch (error) {
+        console.warn('[drops] Failed awarding XP for', blockId, error);
+      }
+    }
+
+    if (statusEffects?.length) {
+      for (const effect of statusEffects) {
+        if (!effect?.id) continue;
+        if (!rollChance(effect.chance, 1)) continue;
+        const duration = Math.max(1, Math.floor(effect.duration ?? 0));
+        if (duration <= 0) continue;
+
+        const amp = Math.max(0, Math.floor(effect.amplifier ?? 0));
+        const effectType = resolveEffectType(effect.id);
+        if (!effectType) continue;
+        try {
+          player.addEffect(effectType, duration, {
+            amplifier: amp,
+            showParticles: effect.showParticles !== false
+          });
+        } catch (error) {
+          console.warn('[drops] Failed applying effect for', blockId, error);
+        }
+      }
+    }
+
+    if (particles?.length && typeof dimension.spawnParticle === 'function') {
+      for (const particle of particles) {
+        if (!particle?.id) continue;
+        if (!rollChance(particle.chance, 1)) continue;
+
+        const count = Math.max(1, Math.floor(particle.count ?? 1));
+        const offset = particle.offset ?? { x: 0, y: 0, z: 0 };
+        const spread = Math.max(0, Number(particle.spread ?? 0));
+
+        for (let i = 0; i < count; i++) {
+          const fx = spread ? randFloat(-spread, spread) : 0;
+          const fy = spread ? randFloat(-spread, spread) : 0;
+          const fz = spread ? randFloat(-spread, spread) : 0;
+          const spawnPos = {
+            x: pos.x + (offset.x ?? 0) + fx,
+            y: pos.y + (offset.y ?? 0) + fy,
+            z: pos.z + (offset.z ?? 0) + fz
+          };
+
+          try {
+            dimension.spawnParticle(particle.id, spawnPos);
+          } catch (error) {
+            console.warn('[drops] Failed spawning particle for', blockId, error);
+            break;
+          }
+        }
+      }
+    }
+
+    if (commands?.length) {
+      const runner = commandTarget === 'player'
+        ? player?.runCommand?.bind(player)
+        : dimension?.runCommand?.bind(dimension);
+
+      if (typeof runner === 'function') {
+        for (const cmd of commands) {
+          if (!cmd || typeof cmd !== 'string') continue;
+          try {
+            runner(cmd);
+          } catch (error) {
+            console.warn('[drops] Failed running command for', blockId, error);
+          }
+        }
+      }
+    }
+
+    if (removeVanillaEntities && replaceOriginalId && replaceDrops?.length) {
+      try {
+        const maxDistance = Number(DROPS_SETTINGS?.replaceSearchRadius) || 2.5;
+        const candidates = dimension.getEntities({
+          type: 'item',
+          maxDistance,
+          location: pos
+        });
+        for (const entity of candidates) {
+          const item = entity?.getComponent('minecraft:item')?.itemStack;
+          if (item?.typeId === replaceOriginalId) {
+            entity.remove();
+          }
+        }
+      } catch (error) {
+        console.warn('[drops] Failed replacing vanilla drops for', blockId, error);
+      }
+
+      for (const stack of replaceDrops) {
+        if (!stack) continue;
+        try {
+          dimension.spawnItem(stack, pos);
+        } catch (error) {
+          console.warn('[drops] Failed spawning replacement drop for', blockId, error);
+        }
+      }
+    }
+
+    for (const stack of drops ?? []) {
+      if (!stack) continue;
+      try {
+        dimension.spawnItem(stack, pos);
+      } catch (error) {
+        console.warn('[drops] Failed spawning drop for', blockId, error);
+      }
+    }
+  });
+}
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const { block, player, dimension, itemStack } = event;
@@ -149,6 +415,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const particles = resolved?.particles ?? [];
   const statusEffects = resolved?.statusEffects ?? [];
   const xp = resolved?.xp;
+  const xpMode = resolveXpMode(resolved?.xpMode);
   const commands = resolved?.commands ?? [];
   const commandTarget = resolved?.commandTarget ?? 'dimension';
 
@@ -170,150 +437,183 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     event.cancel = true;
   }
 
-  // Inject custom drops, optionally replacing vanilla drops.
-  const loc = { ...block.location };
-  system.run(() => {
-    const resolvedSound = omitSpecialSound ? baseSound : (sound ?? baseSound);
+  executeDropActions({
+    block,
+    blockId,
+    dimension,
+    player,
+    loc: { ...block.location },
+    drops,
+    replaceVanilla,
+    removeBlock: replaceVanilla,
+    sound,
+    baseSound,
+    omitSpecialSound,
+    suppressVanillaSound,
+    particles,
+    statusEffects,
+    xp,
+    xpMode,
+    commands,
+    commandTarget,
+    replaceOriginalId,
+    replaceDrops,
+    removeVanillaEntities: shouldReplaceOriginal
+  });
+});
 
-    if (replaceVanilla) {
-      dimension.setBlockType(loc, 'minecraft:air');
-      if (!resolvedSound && !suppressVanillaSound) {
-        dimension.playSound('dig.deepslate', loc);
-      }
+const EXCAVATE_EVENT_IDS = new Set(['dorios:blockloot', 'dorios:hammerblock']);
+
+const scriptEventSignal =
+  world.afterEvents?.scriptEventReceive ??
+  world.afterEvents?.scriptEventReceived ??
+  world.afterEvents?.scriptEvent;
+
+if (!scriptEventSignal?.subscribe) {
+  console.warn('[drops] ScriptEventReceive not available; Excavate bridge disabled.');
+} else scriptEventSignal.subscribe((event) => {
+  const bridgeSettings = DROPS_SETTINGS?.excavateBridge;
+  if (bridgeSettings?.enabled === false) return;
+
+  const eventId = String(event?.id ?? '').toLowerCase();
+  if (!EXCAVATE_EVENT_IDS.has(eventId)) return;
+
+  const player = event?.sourceEntity;
+  if (!player) return;
+
+  if (player.isInCreative?.() === true || player.getGameMode?.()?.toLowerCase() === 'creative') {
+    return;
+  }
+
+  const loc = parseScriptEventLocation(event?.message);
+  if (!loc) return;
+
+  const dimension = player?.dimension;
+  if (!dimension) return;
+
+  let block;
+  try {
+    block = dimension.getBlock(loc);
+  } catch {
+    return;
+  }
+
+  if (!block || block.typeId === 'minecraft:air') return;
+  if (isUnbreakableBlock(block)) return;
+
+  const tool = getPlayerTool(player);
+  const { fortuneLevel, hasSilkTouch } = getEnchantData(tool);
+
+  const dropResult = getDropsForBlock({
+    block,
+    player,
+    dimension,
+    tool,
+    fortuneLevel,
+    hasSilkTouch,
+  });
+
+  const resolved = Array.isArray(dropResult)
+    ? { drops: dropResult, replaceVanilla: false }
+    : dropResult;
+
+  const replaceVanilla = Boolean(resolved?.replaceVanilla);
+  const replaceOriginalId = resolved?.replaceOriginalId;
+  const replaceDrops = Array.isArray(resolved?.replaceDrops) ? resolved.replaceDrops : [];
+  const sound = resolved?.sound;
+  const baseSound = resolved?.baseSound;
+  const omitSpecialSound = Boolean(resolved?.omitSpecialSound);
+  const suppressVanillaSound = Boolean(resolved?.suppressVanillaSound);
+  const particles = resolved?.particles ?? [];
+  const statusEffects = resolved?.statusEffects ?? [];
+  const xp = resolved?.xp;
+  const xpMode = resolveXpMode(resolved?.xpMode);
+  const commands = resolved?.commands ?? [];
+  const commandTarget = resolved?.commandTarget ?? 'dimension';
+
+  const useLootTables = bridgeSettings?.useLootTables !== false;
+  const hasReplacement = Boolean(replaceOriginalId) && replaceDrops.length > 0;
+  const wantsVanillaDrops = !replaceVanilla && !hasReplacement;
+
+  let vanillaDrops = [];
+  let blockDestroyed = false;
+
+  if (useLootTables && wantsVanillaDrops) {
+    try {
+      const lootManager = world.getLootTableManager?.();
+      vanillaDrops = lootManager?.generateLootFromBlock?.(block, tool) ?? [];
+    } catch (error) {
+      console.warn('[drops] Failed generating loot table drops for', block.typeId, error);
     }
+  }
 
-    const pos = { x: loc.x + 0.5, y: loc.y + 0.5, z: loc.z + 0.5 };
-    if (resolvedSound) {
-      const soundId = typeof resolvedSound === 'string' ? resolvedSound : resolvedSound?.id;
-      const hasOptions = typeof resolvedSound === 'object' && resolvedSound !== null;
-      const options = hasOptions ? { volume: resolvedSound.volume, pitch: resolvedSound.pitch } : undefined;
+  if (!useLootTables && wantsVanillaDrops) {
+    blockDestroyed = destroyBlockWithDrops(dimension, loc);
+  }
 
-      if (soundId) {
-        try {
-          if (options) {
-            dimension.playSound?.(soundId, pos, options);
-          } else {
-            dimension.playSound?.(soundId, pos);
-          }
-        } catch (error) {
-          console.warn('[drops] Failed playing sound for', blockId, error);
-        }
-      }
+  if (!resolved) {
+    if (vanillaDrops.length) {
+      executeDropActions({
+        block,
+        blockId: block.typeId,
+        dimension,
+        player,
+        loc: { ...block.location },
+        drops: vanillaDrops.filter(Boolean),
+        replaceVanilla: false,
+        removeBlock: !blockDestroyed,
+        sound,
+        baseSound,
+        omitSpecialSound,
+        suppressVanillaSound,
+        particles: [],
+        statusEffects: [],
+        xp: undefined,
+        xpMode,
+        commands: [],
+        commandTarget: 'dimension',
+        replaceOriginalId,
+        replaceDrops,
+        removeVanillaEntities: false
+      });
+    } else if (!blockDestroyed) {
+      destroyBlockWithDrops(dimension, loc);
     }
+    return;
+  }
 
-    if (Number.isFinite(xp) && xp > 0) {
-      try {
-        if (typeof player.addExperience === 'function') {
-          player.addExperience(xp);
-        } else if (typeof dimension.spawnExperienceOrb === 'function') {
-          dimension.spawnExperienceOrb(pos, xp);
-        }
-      } catch (error) {
-        console.warn('[drops] Failed awarding XP for', blockId, error);
-      }
-    }
+  let drops = [];
+  if (vanillaDrops.length) drops.push(...vanillaDrops);
+  if (resolved?.drops?.length) drops.push(...resolved.drops);
 
-    if (statusEffects.length) {
-      for (const effect of statusEffects) {
-        if (!effect?.id) continue;
-        if (!rollChance(effect.chance, 1)) continue;
-        const duration = Math.max(1, Math.floor(effect.duration ?? 0));
-        if (duration <= 0) continue;
+  if (!blockDestroyed && hasReplacement) {
+    drops = drops.filter(stack => stack?.typeId !== replaceOriginalId);
+    drops.push(...replaceDrops);
+  }
 
-        const amp = Math.max(0, Math.floor(effect.amplifier ?? 0));
-        const effectType = resolveEffectType(effect.id);
-        if (!effectType) continue;
-        try {
-          player.addEffect(effectType, duration, {
-            amplifier: amp,
-            showParticles: effect.showParticles !== false
-          });
-        } catch (error) {
-          console.warn('[drops] Failed applying effect for', blockId, error);
-        }
-      }
-    }
+  drops = drops.filter(Boolean);
 
-    if (particles.length && typeof dimension.spawnParticle === 'function') {
-      for (const particle of particles) {
-        if (!particle?.id) continue;
-        if (!rollChance(particle.chance, 1)) continue;
-
-        const count = Math.max(1, Math.floor(particle.count ?? 1));
-        const offset = particle.offset ?? { x: 0, y: 0, z: 0 };
-        const spread = Math.max(0, Number(particle.spread ?? 0));
-
-        for (let i = 0; i < count; i++) {
-          const fx = spread ? randFloat(-spread, spread) : 0;
-          const fy = spread ? randFloat(-spread, spread) : 0;
-          const fz = spread ? randFloat(-spread, spread) : 0;
-          const spawnPos = {
-            x: pos.x + (offset.x ?? 0) + fx,
-            y: pos.y + (offset.y ?? 0) + fy,
-            z: pos.z + (offset.z ?? 0) + fz
-          };
-
-          try {
-            dimension.spawnParticle(particle.id, spawnPos);
-          } catch (error) {
-            console.warn('[drops] Failed spawning particle for', blockId, error);
-            break;
-          }
-        }
-      }
-    }
-
-    if (commands.length) {
-      const runner = commandTarget === 'player'
-        ? player?.runCommand?.bind(player)
-        : dimension?.runCommand?.bind(dimension);
-
-      if (typeof runner === 'function') {
-        for (const cmd of commands) {
-          if (!cmd || typeof cmd !== 'string') continue;
-          try {
-            runner(cmd);
-          } catch (error) {
-            console.warn('[drops] Failed running command for', blockId, error);
-          }
-        }
-      }
-    }
-
-    if (shouldReplaceOriginal) {
-      try {
-        const candidates = dimension.getEntities({
-          type: 'item',
-          maxDistance: 2.5,
-          location: pos
-        });
-        for (const entity of candidates) {
-          const item = entity?.getComponent('minecraft:item')?.itemStack;
-          if (item?.typeId === replaceOriginalId) {
-            entity.remove();
-          }
-        }
-      } catch (error) {
-        console.warn('[drops] Failed replacing vanilla drops for', blockId, error);
-      }
-
-      for (const stack of replaceDrops) {
-        if (!stack) continue;
-        try {
-          dimension.spawnItem(stack, pos);
-        } catch (error) {
-          console.warn('[drops] Failed spawning replacement drop for', blockId, error);
-        }
-      }
-    }
-
-    for (const stack of drops) {
-      if (!stack) continue;
-      try {
-        dimension.spawnItem(stack, pos);
-      } catch (error) {
-        console.warn('[drops] Failed spawning drop for', blockId, error);
-      }
-    }
+  executeDropActions({
+    block,
+    blockId: block.typeId,
+    dimension,
+    player,
+    loc: { ...block.location },
+    drops,
+    replaceVanilla,
+    removeBlock: !blockDestroyed,
+    sound,
+    baseSound,
+    omitSpecialSound,
+    suppressVanillaSound,
+    particles,
+    statusEffects,
+    xp,
+    xpMode,
+    commands,
+    commandTarget,
+    replaceOriginalId,
+    replaceDrops,
+    removeVanillaEntities: blockDestroyed && hasReplacement
   });
 });

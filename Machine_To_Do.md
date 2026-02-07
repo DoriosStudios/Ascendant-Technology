@@ -128,7 +128,7 @@ Machine status:
 		- **Features:** Multiple capacity tiers, can fuel machines or tools temporarily.
 		- **Notes:** Storage-only; no generation or routing logic onboard.
 
-- 🟠 **Interdimensional Infuser**
+- 🟡 **Interdimensional Infuser**
    - **Purpose:** Create and process Interdimensional Gems.
    - **Operating Mode:** Combines base gems with infusion fluids to produce powerful Interdimensional Gems. Consumes a gigantic amount of energy and requires precise fluid management.
    - **Slots:**
@@ -137,6 +137,17 @@ Machine status:
 		- **Fluid Input:** 4-8 different tanks for infusion fluids.
 		- **Output:** 1 Interdimensional Gem output slot.
 		- **(Optional) Residue Slot:** For failed infusions or unstable byproducts.
+
+- 🟡 **Mob Temporal Chamber**
+	- **Purpose:** Simulate the process of spawning a mob, killing and collecting its drops just by using its essence.
+	- **Operating Mode:** The chamber is built in a 5x5x5 shape, with the middle block being the core. It consumes mob essence and energy to simulate the spawning and killing of a mob, producing its drops without actually spawning it in the world. Additionally, it also drops the estimated XP value of the mob directly into a XP Tank inside the machine. It will use the Heavy Machinery *Multiblock System* to check if the structure is built correctly and to determine the tier of the machine (the more layers, the higher the tier, which will allow simulating stronger mobs).
+	- **Slots:**
+		- **Mob Essence Input:** 1 slot for mob essence.
+		- **Drops Storage:** 36 slots for storing the drops from the simulated mob.
+		- **XP Tank:** A fluid tank that stores the XP value of the simulated mob as a fluid (e.g., "XP Fluid").
+	- **Notes:** This machine is designed for two things:
+		1. Farming mob drops without needing to set up complex mob farms or worry about mob cap and spawn mechanics.
+		2. Providing a way to convert mob essence into XP for players who want to focus on enchanting or other XP-based activities without needing to farm mobs directly.
 
 ---
 

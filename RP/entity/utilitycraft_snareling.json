@@ -1,0 +1,42 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "utilitycraft:snareling",
+      "textures": {
+        "default": "textures/entity/mobs/snareling"
+      },
+      "materials": {
+        "default": "skeleton"
+      },
+      "geometry": {
+        "default": "geometry.utilitycraft_snareling"
+      },
+      "render_controllers": [
+        "controller.render.default"
+      ],
+      "spawn_egg": {
+        "texture": "utilitycraft:snareling",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.utilitycraft_snareling.walk",
+        "idle": "animation.utilitycraft_snareling.idle",
+        "mad": "animation.utilitycraft_snareling.mad"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving"
+          },
+          {
+            "mad": "query.is_moving && query.is_angry"
+          },
+          {
+            "idle": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

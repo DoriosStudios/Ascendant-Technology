@@ -1,0 +1,298 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "utilitycraft:endersent",
+			"is_spawnable": true,
+			"is_summonable": true,
+			"is_experimental": false
+		},
+		"component_groups": {
+			"minecraft:player_created": {
+				"minecraft:behavior.hurt_by_target": {
+					"entity_types": {
+						"filters": {
+							"all_of": [
+								{
+									"operator": "!=",
+									"subject": "other",
+									"test": "is_family",
+									"value": "player"
+								},
+								{
+									"operator": "!=",
+									"subject": "other",
+									"test": "is_family",
+									"value": "creeper"
+								}
+							]
+						}
+					},
+					"priority": 2
+				}
+			},
+			"minecraft:village_created": {
+				"minecraft:behavior.defend_village_target": {
+					"priority": 1
+				},
+				"minecraft:dweller": {
+					"can_find_poi": false,
+					"can_migrate": true,
+					"dweller_role": "defender",
+					"dwelling_type": "village",
+					"first_founding_reward": 0,
+					"update_interval_base": 60,
+					"update_interval_variant": 40
+				}
+			}
+		},
+		"components": {
+			"minecraft:attack": {
+				"damage": 25
+			},
+			"minecraft:balloonable": {},
+			"minecraft:behavior.hurt_by_target": {
+				"priority": 3
+			},
+			"minecraft:behavior.look_at_player": {
+				"look_distance": 6,
+				"priority": 7,
+				"probability": 0.02
+			},
+			"minecraft:behavior.melee_attack": {
+				"priority": 2,
+				"random_stop_interval": 100,
+				"reach_multiplier": 1.4,
+				"speed_multiplier": 1,
+				"track_target": false
+			},
+			"minecraft:behavior.move_through_village": {
+				"only_at_night": true,
+				"priority": 3,
+				"speed_multiplier": 0.6
+			},
+			"minecraft:behavior.move_towards_restriction": {
+				"priority": 4,
+				"speed_multiplier": 1
+			},
+			"minecraft:behavior.move_towards_target": {
+				"priority": 2,
+				"speed_multiplier": 0.9,
+				"within_radius": 32
+			},
+			"minecraft:behavior.nearest_attackable_target": {
+				"entity_types": [
+					{
+						"filters": {
+							"any_of": [
+								{
+									"subject": "other",
+									"test": "is_family",
+									"value": "player"
+								}
+							]
+						},
+						"max_dist": 300,
+						"must_see": false
+					}
+				],
+				"must_reach": true,
+				"must_see": false,
+				"priority": 3,
+				"within_radius": 16
+			},
+			"minecraft:behavior.offer_flower": {
+				"priority": 5
+			},
+			"minecraft:behavior.owner_hurt_by_target": {
+				"priority": 1
+			},
+			"minecraft:behavior.owner_hurt_target": {
+				"priority": 2
+			},
+			"minecraft:behavior.random_look_around": {
+				"priority": 8
+			},
+			"minecraft:behavior.random_stroll": {
+				"priority": 6,
+				"speed_multiplier": 1,
+				"xz_dist": 16
+			},
+			"minecraft:boss": {
+				"hud_range": 125,
+				"name": "Endersent",
+				"should_darken_sky": false
+			},
+			"minecraft:can_climb": {},
+			"minecraft:collision_box": {
+				"height": 2.9,
+				"width": 1.4
+			},
+			"minecraft:experience_reward": {
+				"on_death": "query.last_hit_by_player ? 50 : 0"
+			},
+			"minecraft:fall_damage": {
+				"value": 0
+			},
+			"minecraft:fire_immune": {},
+			"minecraft:follow_range": {
+				"value": 64
+			},
+			"minecraft:health": {
+				"max": 300,
+				"value": 300
+			},
+			"minecraft:hurt_when_wet": {},
+			"minecraft:jump.static": {},
+			"minecraft:knockback_resistance": {
+				"max": 10,
+				"value": 10
+			},
+			"minecraft:leashable": {
+				"hard_distance": 6,
+				"max_distance": 10,
+				"soft_distance": 4
+			},
+			"minecraft:loot": {
+				"table": "loot_tables/entities/endersent.json"
+			},
+			"minecraft:movement": {
+				"value": 0.47
+			},
+			"minecraft:movement.basic": {},
+			"minecraft:nameable": {
+				"allow_name_tag_renaming": false,
+				"always_show": false
+			},
+			"minecraft:navigation.walk": {
+				"avoid_damage_blocks": true,
+				"avoid_water": true,
+				"can_path_over_water": false
+			},
+			"minecraft:physics": {},
+			"minecraft:preferred_path": {
+				"default_block_cost": 1.5,
+				"jump_cost": 5,
+				"max_fall_blocks": 1,
+				"preferred_path_blocks": [
+					{
+						"blocks": [
+							"grass_path"
+						],
+						"cost": 0
+					},
+					{
+						"blocks": [
+							"cobblestone",
+							"stone",
+							"stonebrick",
+							"sandstone",
+							"mossy_cobblestone",
+							"stone_slab",
+							"stone_slab2",
+							"stone_slab3",
+							"stone_slab4",
+							"double_stone_slab",
+							"double_stone_slab2",
+							"double_stone_slab3",
+							"double_stone_slab4",
+							"wooden_slab",
+							"double_wooden_slab",
+							"planks",
+							"brick_block",
+							"nether_brick",
+							"red_nether_brick",
+							"end_bricks",
+							"red_sandstone",
+							"stained_glass",
+							"glass",
+							"glowstone",
+							"prismarine",
+							"emerald_block",
+							"diamond_block",
+							"lapis_block",
+							"gold_block",
+							"redstone_block",
+							"purple_glazed_terracotta",
+							"white_glazed_terracotta",
+							"orange_glazed_terracotta",
+							"magenta_glazed_terracotta",
+							"light_blue_glazed_terracotta",
+							"yellow_glazed_terracotta",
+							"lime_glazed_terracotta",
+							"pink_glazed_terracotta",
+							"gray_glazed_terracotta",
+							"silver_glazed_terracotta",
+							"cyan_glazed_terracotta",
+							"blue_glazed_terracotta",
+							"brown_glazed_terracotta",
+							"green_glazed_terracotta",
+							"red_glazed_terracotta",
+							"black_glazed_terracotta"
+						],
+						"cost": 1
+					},
+					{
+						"blocks": [
+							"bed",
+							"lectern",
+							"composter",
+							"grindstone",
+							"blast_furnace",
+							"smoker",
+							"fletching_table",
+							"cartography_table",
+							"brewing_stand",
+							"smithing_table",
+							"cauldron",
+							"barrel",
+							"loom",
+							"stonecutter"
+						],
+						"cost": 50
+					}
+				]
+			},
+			"minecraft:scale": {
+				"value": 1.12
+			},
+			"minecraft:spawn_entity": {
+				"entities": [
+					{
+						"max_wait_time": 30,
+						"min_wait_time": 30,
+						"num_to_spawn": 7,
+						"should_leash": false,
+						"single_use": true,
+						"spawn_entity": "utilitycraft:watchling",
+						"spawn_event": "minecraft:entity_spawned"
+					}
+				]
+			},
+			"minecraft:type_family": {
+				"family": [
+					"robot"
+				]
+			},
+			"minecraft:underwater_movement": {
+				"value": 0.02
+			}
+		},
+		"events": {
+			"minecraft:from_player": {
+				"add": {
+					"component_groups": [
+						"minecraft:player_created"
+					]
+				}
+			},
+			"minecraft:from_village": {
+				"add": {
+					"component_groups": [
+						"minecraft:village_created"
+					]
+				}
+			}
+		}
+	}
+}

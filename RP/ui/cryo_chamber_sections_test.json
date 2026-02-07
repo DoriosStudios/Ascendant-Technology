@@ -4,8 +4,8 @@
 	// SECTION: Button styles
 	"section_button_state_unchecked@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_light_blue" },
 	"section_button_state_checked@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_dark" },
-	"section_button_state_unchecked_hover@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_light_blue" },
-	"section_button_state_checked_hover@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_dark" },
+	"section_button_state_unchecked_hover@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_blue" },
+	"section_button_state_checked_hover@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_blue" },
 	"section_button_base@ascendant_common.tab_button_toggle": {
 		"$tab_button_size": [28, 28],
 		"$tab_button_text_scale": 0.5,
@@ -43,7 +43,7 @@
 							"section_button_stabilizer@cryo_chamber_sections_test.section_button_base": {
 								"anchor_from": "top_left",
 								"anchor_to": "top_left",
-								"offset": [8, 16],
+								"offset": [68, 16],
 								"layer": -5,
 								"$tab_group_name": "cryo_sections",
 								"$tab_index": 0,
@@ -59,7 +59,7 @@
 							"section_button_cooling@cryo_chamber_sections_test.section_button_base": {
 								"anchor_from": "top_left",
 								"anchor_to": "top_left",
-								"offset": [36, 16],
+								"offset": [96, 16],
 								"layer": -5,
 								"$tab_group_name": "cryo_sections",
 								"$tab_index": 1,
@@ -75,7 +75,7 @@
 							"section_button_generator@cryo_chamber_sections_test.section_button_base": {
 								"anchor_from": "top_left",
 								"anchor_to": "top_left",
-								"offset": [64, 16],
+								"offset": [124, 16],
 								"layer": -5,
 								"$tab_group_name": "cryo_sections",
 								"$tab_index": 2,
@@ -92,7 +92,7 @@
 							"section_button_guide@cryo_chamber_sections_test.section_button_base": {
 								"anchor_from": "top_left",
 								"anchor_to": "top_left",
-								"offset": [92, 16],
+								"offset": [152, 16],
 								"layer": -5,
 								"$tab_group_name": "cryo_sections",
 								"$tab_index": 3,
@@ -664,7 +664,8 @@
 					"$tab_button_size": [14, 14],
 					"$tab_button_text_scale": 0.5,
 					"$tab_button_text": "",
-					"$tab_button_icon": "textures/ui/at_icons/titanium_stabilized"
+					"$tab_button_icon": "textures/ui/at_icons/titanium_stabilized",
+					"toggle_default_state": true
 				}
 			},
 			{
@@ -828,7 +829,7 @@
 				"cooling_section_bg@ascendant_common.panel": {
 					"$panel_size": [176, 86],
 					"offset": [0, 40],
-					"$has_close_button": false,
+					"$has_close_button": true,
 					"$has_container_label": false,
 					"layer": -2
 				}
@@ -861,7 +862,12 @@
 					"anchor_to": "top_left",
 					"offset": [0, 0],
 					"size": [176, 80],
-					"layer": -3
+					"layer": -3,
+					"controls": [
+						{
+							"close_button@common.close_button": {}
+						}
+					]
 				}
 			},
 			{
@@ -911,7 +917,7 @@
 					"$panel_size": [176, 166],
 					"$panel_color": "aqua",
 					"layer": 0,
-					"$has_close_button": false,
+					"$has_close_button": true,
 					"$has_container_label": false
 				}
 			},
@@ -1018,7 +1024,7 @@
 					"$panel_size": [176, 166],
 					"$panel_color": "aqua",
 					"layer": 3,
-					"$has_close_button": false,
+					"$has_close_button": true,
 					"$has_container_label": false,
 					"bindings": [
 						{

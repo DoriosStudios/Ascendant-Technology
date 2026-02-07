@@ -66,7 +66,6 @@
                                 "size": [18, 94 ],
                                 "anchor_from": "center",
                                 "anchor_to": "center",
-                                "toggle_default_state": false,
                                 "layer": 2,
                                 "$toggle_name": "status_toggle",
                                 "$toggle_texture": "#plus_button_visible",
@@ -88,6 +87,82 @@
                                         "from_button_id": "button.menu_ok",
                                         "to_button_id": "button.menu_select",
                                         "mapping_type": "pressed"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "status_panel": {
+                    "type": "panel",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [170, 7],
+                    "size": [160, 90],
+                    "layer": 9,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "show_status_panel",
+                            "source_property_name": "#toggle_state",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": true
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "status_bg": {
+                                "type": "image",
+                                "texture": "textures/ui/panels/background_panel_dark",
+                                "size": [150, 98],
+                                "layer": 0
+                            }
+                        },
+                        {
+                            "status_title": {
+                                "type": "label",
+                                "text": "ui.utilitycraft:status_label_container",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [0, 5],
+                                "color": [1, 1, 1],
+                                "layer": 1
+                            }
+                        },
+                        {
+                            "energy_bar@ascendant_common.energy_display": {
+                                "$energy_slot_index": 168,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [-32, 2]
+                            }
+                        },
+                        {
+                            "fluid_bar@ascendant_common.liquid_display": {
+                                "$fluid_slot_index": 169,
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "offset": [8, 2]
+                            }
+                        },
+                        {
+                            "container_label_bg": {
+                                "type": "image",
+                                "texture": "textures/ui/panels/background_panel_dark",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [0, -29],
+                                "size": [150, 24],
+                                "layer": 1,
+                                "controls": [
+                                    {
+                                        "chest_label@chest.chest_label": {
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [20, 7]
+                                        }
                                     }
                                 ]
                             }
@@ -166,6 +241,7 @@
                         {
                             "chest_panel": {
                                 "type": "panel",
+                                "offset": [-16, -10],
                                 "layer": 5,
                                 "controls": [
                                     {

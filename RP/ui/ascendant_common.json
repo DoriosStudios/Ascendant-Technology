@@ -504,6 +504,39 @@
 		]
 	},
 
+	/* ELEMENT: gas_display
+	 * Gas bar display with decorative border.
+	 */
+	"gas_display": {
+		"type": "panel",
+		"$gas_slot_index|default": 169,
+		"controls": [
+			{
+				/* Gas bar from machineryCommon library. */
+				"gas_bar@machineryCommon.vertical_single": {
+					"$is_gas": true,
+					"$has_bg": false,
+					"$collection_index": "$gas_slot_index",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 0
+				}
+			},
+			{
+				/* Decorative border for the gas display. */
+				"gas_border": {
+					"type": "image",
+					"texture": "textures/ui/gas_border",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"size": [50, 50],
+					"offset": [10, 3],
+					"layer": 13
+				}
+			}
+		]
+	},
+
 	/* ELEMENT: overclock_slot_display
 	 * Overclock bar display rendered like vertical_single.
 	 */

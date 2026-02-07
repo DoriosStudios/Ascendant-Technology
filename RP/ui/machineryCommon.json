@@ -12,6 +12,7 @@
         "$item_collection_name": "container_items",
         "$is_energy|default": false,
         "$is_liquid|default": false,
+        "$is_gas|default": false,
         "$has_bg|default": false,
         "$collection_index|default": 0,
         "controls": [
@@ -56,6 +57,22 @@
                     ],
                     "layer": 9,
                     "visible": "$is_liquid"
+                }
+            },
+            {
+                "background_gas": {
+                    "type": "image",
+                    "texture": "textures/ui/gas_border",
+                    "size": [
+                        144,
+                        50
+                    ],
+                    "offset": [
+                        10,
+                        3
+                    ],
+                    "layer": 9,
+                    "visible": "$is_gas"
                 }
             },
             {
@@ -162,6 +179,7 @@
         "$item_collection_name": "container_items",
         "$is_energy|default": false,
         "$is_liquid|default": false,
+        "$is_gas|default": false,
         "$has_bg|default": false,
         "$collection_index|default": 0,
         "controls": [
@@ -228,6 +246,22 @@
                     ],
                     "layer": 9,
                     "visible": "$is_liquid"
+                }
+            },
+            {
+                "background_gas": {
+                    "type": "image",
+                    "texture": "textures/ui/gas_border",
+                    "size": [
+                        144,
+                        50
+                    ],
+                    "offset": [
+                        10,
+                        3
+                    ],
+                    "layer": 9,
+                    "visible": "$is_gas"
                 }
             }
         ]

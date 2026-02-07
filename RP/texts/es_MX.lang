@@ -117,6 +117,14 @@ item.utilitycraft:cryofluid_capsule_6=Cápsula de Criolíquido (6 Cubos)
 item.utilitycraft:cryofluid_capsule_7=Cápsula de Criolíquido (7 Cubos)
 item.utilitycraft:cryofluid_capsule_8=Cápsula de Criolíquido (8 Cubos)
 
+item.utilitycraft:aetherium_liquid_capsule_infinite=Cápsula de Aetherium Líquido (Infinito)
+item.utilitycraft:dark_matter_liquid_capsule_infinite=Cápsula de Materia Oscura (Infinito)
+item.utilitycraft:cryofluid_capsule_infinite=Cápsula de Criolíquido (Infinito)
+item.utilitycraft:water_capsule_infinite=Cápsula de Agua (Infinito)
+item.utilitycraft:lava_capsule_infinite=Cápsula de Lava (Infinito)
+item.utilitycraft:milk_capsule_infinite=Cápsula de Leche (Infinito)
+item.utilitycraft:xp_capsule_infinite=Cápsula de XP (Infinito)
+
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCámara Catalizadora
 entity.utilitycraft:cloner.name=Duplicador
@@ -134,10 +142,10 @@ entity.utilitycraft:overclock_relay.name=§fRelé de Overclock
 entity.utilitycraft:overclock_injector.name=§fInyector de Overclock
 
 ## UI Texts
-at:itemGroup.name.machines=Máquinas (Ascendant Technology)
-at:itemGroup.name.capsules=Cápsulas de Líquidos (Ascendant Technology)
-at:itemGroup.name.experimental=Experimental
-at:itemGroup.name.armor=Armaduras (Ascendant Technology)
+at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)
+at:itemGroup.name.capsules=Cápsulas de Fluidos §u(Ascendant Technology)
+at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
+at:itemGroup.name.armor=Armaduras §u(Ascendant Technology)
 
 at:ui.h=A
 at:ui.l=L
@@ -156,17 +164,27 @@ ui.utilitycraft.mob_magnet.menu.body=Selecciona una opción
 ui.utilitycraft.mob_magnet.menu.configure=Configurar Imán
 ui.utilitycraft.mob_magnet.menu.filter=Filtrado de Mobs
 ui.utilitycraft.mob_magnet.settings.title=Configuración del Imán de Mobs
+ui.utilitycraft.mob_magnet.settings.body=Usa los botones para alternar cada valor.\n\n- Para aumentar el alcance, usa Módulos de Mejora de Alcance
 ui.utilitycraft.mob_magnet.settings.toggle=Activado
 ui.utilitycraft.mob_magnet.settings.range=§9Nivel de Alcance
-ui.utilitycraft.mob_magnet.settings.range_option=§b{0}§7 bloques §r(Nivel {1})
+ui.utilitycraft.mob_magnet.settings.range_option=§b%s§7 bloques §r§t(Nivel %s)
 ui.utilitycraft.mob_magnet.settings.cooldown=Reutilización de Teletransporte
-ui.utilitycraft.mob_magnet.settings.cooldown_option={0} ticks
+ui.utilitycraft.mob_magnet.settings.cooldown_option=%s ticks
+ui.utilitycraft.mob_magnet.settings.button.toggle_on=Activado\n§aEncendido
+ui.utilitycraft.mob_magnet.settings.button.toggle_off=Activado\n§4Apagado
+ui.utilitycraft.mob_magnet.settings.button.range=Alcance\n§b%s bloques (Nivel %s)
+ui.utilitycraft.mob_magnet.settings.button.cooldown=Reutilización\n§g%s ticks
+ui.utilitycraft.mob_magnet.settings.button.back=Volver
 ui.utilitycraft.mob_magnet.filter.title=Filtrado de Mobs
-ui.utilitycraft.mob_magnet.filter.body=Modo actual: {0}
+ui.utilitycraft.mob_magnet.filter.body=Modo actual: %s
+ui.utilitycraft.mob_magnet.filter.body.whitelist=Modo actual: Lista Blanca
+ui.utilitycraft.mob_magnet.filter.body.blacklist=Modo actual: Lista Negra
 ui.utilitycraft.mob_magnet.filter.add=Añadir Mob
-ui.utilitycraft.mob_magnet.filter.list=Lista de Mobs Filtrados ({0})
+ui.utilitycraft.mob_magnet.filter.list=Lista de Mobs Filtrados (%s)
 ui.utilitycraft.mob_magnet.filter.remove=Eliminar Mob
-ui.utilitycraft.mob_magnet.filter.mode_button=Modo: {0}
+ui.utilitycraft.mob_magnet.filter.mode_button=Modo: %s
+ui.utilitycraft.mob_magnet.filter.mode_button.whitelist=Modo: Lista Blanca
+ui.utilitycraft.mob_magnet.filter.mode_button.blacklist=Modo: Lista Negra
 ui.utilitycraft.mob_magnet.filter.list_title=Lista de Mobs Filtrados
 ui.utilitycraft.mob_magnet.filter.list_empty=No hay mobs configurados.
 ui.utilitycraft.mob_magnet.filter.list_body=Mobs filtrados actualmente:
@@ -174,14 +192,16 @@ ui.utilitycraft.mob_magnet.filter.add.title=Añadir Mob
 ui.utilitycraft.mob_magnet.filter.add.field=Identificador de entidad (ej.: minecraft:zombie)
 ui.utilitycraft.mob_magnet.filter.add.placeholder=minecraft:zombie
 ui.utilitycraft.mob_magnet.filter.add.invalid=§cIdentificador de mob inválido
-ui.utilitycraft.mob_magnet.filter.add.success=§aSe añadió {0}
+ui.utilitycraft.mob_magnet.filter.add.success=§aSe añadió %s
 ui.utilitycraft.mob_magnet.filter.add.duplicate=§eEl mob ya está en la lista
 ui.utilitycraft.mob_magnet.filter.remove.title=Eliminar Mob
 ui.utilitycraft.mob_magnet.filter.remove.body=Selecciona un mob para eliminar
-ui.utilitycraft.mob_magnet.filter.remove.success=§cSe eliminó {0}
+ui.utilitycraft.mob_magnet.filter.remove.success=§cSe eliminó %s
 ui.utilitycraft.mob_magnet.filter.mode.whitelist=Lista Blanca
 ui.utilitycraft.mob_magnet.filter.mode.blacklist=Lista Negra
-ui.utilitycraft.mob_magnet.filter.mode_switched=§bModo cambiado a {0}
+ui.utilitycraft.mob_magnet.filter.mode_switched=§bModo cambiado a %s
+ui.utilitycraft.mob_magnet.filter.mode_switched.whitelist=§bModo cambiado a Lista Blanca
+ui.utilitycraft.mob_magnet.filter.mode_switched.blacklist=§bModo cambiado a Lista Negra
 
 ## Placeholders
 item.utilitycraft:overclock_00=Overclock

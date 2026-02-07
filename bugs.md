@@ -22,6 +22,9 @@ This file will be constantly updated as bugs come and go.
 - 🔷 Mob Magnet sometimes fails to pull mobs after state updates. [#37](https://github.com/DoriosStudios/Ascendant-Technology/issues/37)
 - 🔷 Ascendant Technology machines do not connect with energy cables and networks. [#38](https://github.com/DoriosStudios/Ascendant-Technology/issues/38)
    - This is a partial issue with AT Machines. Can be "fixed" by breaking and replacing the cables.
+- 🔷 Aetherium and Titanium hammers doesn't work. [#39](https://github.com/DoriosStudios/Ascendant-Technology/issues/39)
+- 🔷 Aetherium and Titanium ores can't be broken by Drills. [#40](https://github.com/DoriosStudios/Ascendant-Technology/issues/40)
+   - Lack of loot tables for these ores causes them to drop nothing when mined with a drill or by commands.
 - 🔶 The armor icon in Pocket UI disappears when using Aetherium and Titanium armor.  
 - 🔶 Some machines UI  gets very close on older phones.
 - ❌ Reinforced Extractor is not useful, so it will be removed in future updates.

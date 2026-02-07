@@ -283,6 +283,26 @@
           ]
         }
       ]
+    },
+    {
+      "rolls": 1,
+      "conditions": [
+        {
+          "condition": "survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "item",
+          "name": "utilitycraft:raw_titanium",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": 1
+            }
+          ]
+        }
+      ]
     }
   ]
 }

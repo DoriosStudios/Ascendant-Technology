@@ -79,6 +79,8 @@ Stability and correctness updates for the Overclock system, improved machine upg
 - Fixed Compressed Crushed Cobbled Deepslate not yielding Titanium and Aetherium. [#2](https://github.com/doriosstudios/ascendant-technology/issues/2)
 - Fixed Compressed Crushed Endstone not yielding Aetherium. [#2](https://github.com/doriosstudios/ascendant-technology/issues/2)
 - Fixed Energizer producing more items than the maximum stack size for energized outputs. [#8](https://github.com/doriosstudios/ascendant-technology/issues/8)
+- Fixed Aetherium and Titanium hammers not applying hammer recipes correctly. [#39](https://github.com/DoriosStudios/Ascendant-Technology/issues/39)
+- Fixed Aetherium and Titanium ores dropping nothing when mined by drills or command breaks. [#40](https://github.com/DoriosStudios/Ascendant-Technology/issues/40)
 - Fixed Liquid Capsule transfers between machines and tanks so capsules correctly insert and extract fluids.
 - Fixed Mob Magnet not pulling mobs in some cases after state updates.
 - Fixed machine network connectivity so machines reliably connect to energy cables and networks.

@@ -27,6 +27,10 @@
                 "max_durability": 1561
             },
             "minecraft:damage": 8,
+            "utilitycraft:hammer": {
+                "tier": 5
+            },
+            "utilitycraft:dig_pebble":{ },
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [

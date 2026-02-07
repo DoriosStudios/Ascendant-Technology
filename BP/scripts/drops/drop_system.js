@@ -140,6 +140,8 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
 
   const drops = resolved?.drops ?? [];
   const replaceVanilla = Boolean(resolved?.replaceVanilla);
+  const replaceOriginalId = resolved?.replaceOriginalId;
+  const replaceDrops = Array.isArray(resolved?.replaceDrops) ? resolved.replaceDrops : [];
   const sound = resolved?.sound;
   const baseSound = resolved?.baseSound;
   const omitSpecialSound = Boolean(resolved?.omitSpecialSound);
@@ -151,6 +153,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const commandTarget = resolved?.commandTarget ?? 'dimension';
 
   const hasDrops = drops.length > 0;
+  const shouldReplaceOriginal = !replaceVanilla && Boolean(replaceOriginalId) && replaceDrops.length > 0;
   const hasExtras = Boolean(
     baseSound || sound ||
     particles.length ||
@@ -159,7 +162,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     (Number.isFinite(xp) && xp > 0)
   );
 
-  if (!hasDrops && !hasExtras) {
+  if (!hasDrops && !hasExtras && !shouldReplaceOriginal) {
     return;
   }
 
@@ -273,6 +276,33 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
           } catch (error) {
             console.warn('[drops] Failed running command for', blockId, error);
           }
+        }
+      }
+    }
+
+    if (shouldReplaceOriginal) {
+      try {
+        const candidates = dimension.getEntities({
+          type: 'item',
+          maxDistance: 2.5,
+          location: pos
+        });
+        for (const entity of candidates) {
+          const item = entity?.getComponent('minecraft:item')?.itemStack;
+          if (item?.typeId === replaceOriginalId) {
+            entity.remove();
+          }
+        }
+      } catch (error) {
+        console.warn('[drops] Failed replacing vanilla drops for', blockId, error);
+      }
+
+      for (const stack of replaceDrops) {
+        if (!stack) continue;
+        try {
+          dimension.spawnItem(stack, pos);
+        } catch (error) {
+          console.warn('[drops] Failed spawning replacement drop for', blockId, error);
         }
       }
     }

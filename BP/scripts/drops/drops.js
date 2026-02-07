@@ -302,7 +302,6 @@ const DROP_MODES = new Set(["replace", "supplement", "vanilla"]);
 function resolveDropMode(config, usedSpecialOverride) {
 	const rawMode = typeof config?.dropMode === "string" ? config.dropMode.toLowerCase() : null;
 	if (rawMode && DROP_MODES.has(rawMode)) {
-		if (usedSpecialOverride && rawMode === "vanilla") return "replace";
 		return rawMode;
 	}
 
@@ -310,6 +309,25 @@ function resolveDropMode(config, usedSpecialOverride) {
 	if (config?.replaceVanilla === true) return "replace";
 	if (usedSpecialOverride) return "replace";
 	return "replace";
+}
+
+function resolveReplacement(config, fortuneLevel) {
+	const originalDropId = config?.originalDropId;
+	const replaceDropId = config?.replaceDropId;
+	if (!originalDropId || !replaceDropId) return null;
+
+	const baseRange = Array.isArray(config?.baseRange) ? config.baseRange : [1, 1];
+	const amount = resolveAmount({
+		baseRange,
+		fortuneMath: config?.fortuneMath,
+		fortuneTiers: config?.fortuneTiers
+	}, fortuneLevel);
+	const safeAmount = Math.max(1, Math.floor(Number(amount) || 1));
+
+	return {
+		originalDropId,
+		drops: [new ItemStack(replaceDropId, safeAmount)]
+	};
 }
 
 /**
@@ -344,6 +362,8 @@ function computeDrops(context, config) {
 
 	const dropMode = resolveDropMode(config, usedSpecialOverride);
 	const baseDropEnabled = dropMode === "replace";
+	const replacement = dropMode === "replace" ? null : resolveReplacement(config, context.fortuneLevel);
+	const hasReplacement = Boolean(replacement?.drops?.length);
 	const hasBaseDrop = Boolean(baseDropEnabled && config.dropId && Array.isArray(config.baseRange));
 	const extraDrops = resolveExtraDrops(config, context.fortuneLevel);
 	const hasExtras = Boolean(
@@ -352,7 +372,8 @@ function computeDrops(context, config) {
 		config.particles?.length ||
 		config.statusEffects?.length ||
 		config.commands?.length ||
-		config.xp !== undefined
+		config.xp !== undefined ||
+		hasReplacement
 	);
 	const replaceVanilla = dropMode === "replace";
 	const sound = usedSpecialOverride ? specialSound : undefined;
@@ -389,7 +410,9 @@ function computeDrops(context, config) {
 			statusEffects: config.statusEffects,
 			xp,
 			commands: config.commands,
-			commandTarget: config.commandTarget
+			commandTarget: config.commandTarget,
+			replaceOriginalId: replacement?.originalDropId,
+			replaceDrops: replacement?.drops
 		};
 	}
 
@@ -406,7 +429,9 @@ function computeDrops(context, config) {
 			statusEffects: config.statusEffects,
 			xp,
 			commands: config.commands,
-			commandTarget: config.commandTarget
+			commandTarget: config.commandTarget,
+			replaceOriginalId: replacement?.originalDropId,
+			replaceDrops: replacement?.drops
 		};
 	}
 
@@ -423,7 +448,9 @@ function computeDrops(context, config) {
 		statusEffects: config.statusEffects,
 		xp,
 		commands: config.commands,
-		commandTarget: config.commandTarget
+		commandTarget: config.commandTarget,
+		replaceOriginalId: replacement?.originalDropId,
+		replaceDrops: replacement?.drops
 	};
 }
 

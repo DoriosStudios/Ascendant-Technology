@@ -120,6 +120,8 @@
  * @property {string=} dropId - Drop alternativo para a ferramenta.
  * @property {string=} silkDropId - Drop alternativo com Silk Touch.
  * @property {[number, number]=} baseRange - Intervalo padrão. Ex: `[1, 1]`.
+ * @property {string=} originalDropId - Drop vanilla a remover quando usar substituição.
+ * @property {string=} replaceDropId - Drop que substitui o original sem cancelar a quebra.
  * @property {'replace'|'supplement'|'vanilla'=} dropMode - Como lidar com o drop vanilla quando este override é aplicado.
  *   - `replace`: substitui o drop vanilla (cancela a quebra).
  *   - `supplement`: mantém o vanilla e adiciona extras (não cancela).
@@ -144,6 +146,8 @@
  * @property {string=} dropId - Drop principal. Ex: `"minecraft:iron_ore"`.
  * @property {string=} silkDropId - Drop com Silk Touch. Ex: `"minecraft:stone"`.
  * @property {[number, number]=} baseRange - Range base. Ex: `[1, 2]`.
+ * @property {string=} originalDropId - Drop vanilla a remover quando usar substituição.
+ * @property {string=} replaceDropId - Drop que substitui o original sem cancelar a quebra.
  * @property {'replace'|'supplement'|'vanilla'=} dropMode - Como lidar com o drop vanilla.
  *   - `replace`: substitui o drop vanilla (cancela a quebra).
  *   - `supplement`: mantém o vanilla e adiciona extras (não cancela).

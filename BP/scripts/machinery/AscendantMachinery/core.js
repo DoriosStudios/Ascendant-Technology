@@ -103,11 +103,11 @@ function refreshEnergyGeometryAround(block) {
  * Performs a breadth-first search to find all connected blocks with the specified tag
  * and caches connected container locations in a dynamic property.
  *
- * @param {Block} block The block that was placed or modified.
- * @param {'energy'|'fluid'} type The type of pipe network to update.
+ * @param {Block} block The block that was placed or modified. 
+ * @param {'energy'|'fluid'|'gas'} type The type of pipe network to update.
  */
 export function updatePipes(block, type) {
-    if (!block || (type !== 'energy' && type !== 'fluid')) return;
+     if (!block || (type !== 'energy' && type !== 'fluid' && type !== 'gas')) return;
 
     if (type === 'energy') {
         logEnergyDebug("updatePipes", {
@@ -146,8 +146,14 @@ export function updatePipes(block, type) {
         } catch { return false; }
     };
 
-    const targetTag = 'dorios:fluid';
-    const isContainer = isFluidContainer;
+    const isGasContainer = (entity) => {
+        try {
+            return !!GasManager.findType?.(entity, 0);
+        } catch { return false; }
+    };
+
+    const targetTag = type === 'gas' ? 'dorios:gas' : 'dorios:fluid';
+    const isContainer = type === 'gas' ? isGasContainer : isFluidContainer;
 
     while (queue.length && visited.size <= MAX_VISITED) {
         const pos = queue.shift();
@@ -176,7 +182,7 @@ export function updatePipes(block, type) {
         nodes.push(pos);
     }
 
-    const prop = "dorios:fluid_nodes";
+    const prop = type === 'gas' ? "dorios:gas_nodes" : "dorios:fluid_nodes";
 
     try {
         sourceEntity.setDynamicProperty(prop, JSON.stringify(nodes));
@@ -396,13 +402,22 @@ const HIDDEN_SLOT_FILLER_ITEM = "utilitycraft:container_filler";
 
 const REGISTER_FLUID_CONTAINER_EVENT = "utilitycraft:register_fluid_container";
 const REGISTER_FLUID_OUTPUT_EVENT = "utilitycraft:register_fluid_output";
+const REGISTER_GAS_CONTAINER_EVENT = "utilitycraft:register_gas_container";
+const REGISTER_GAS_OUTPUT_EVENT = "utilitycraft:register_gas_output";
 
 const fluidContainerRegistry = Object.create(null);
 const fluidOutputRegistry = Object.create(null);
 const fluidHolderRegistry = Object.create(null);
+const gasContainerRegistry = Object.create(null);
+const gasOutputRegistry = Object.create(null);
+const gasHolderRegistry = Object.create(null);
 const INFINITE_FLUID_CAP_FALLBACK = 1_024_000;
+const INFINITE_GAS_CAP_FALLBACK = 1_024_000;
 
 const sanitizeFluidType = (value) =>
+    typeof value === "string" ? value.trim().toLowerCase() : "";
+
+const sanitizeGasType = (value) =>
     typeof value === "string" ? value.trim().toLowerCase() : "";
 
 const clampFluidAmount = (value) => {
@@ -633,6 +648,206 @@ function registerFluidOutputBatch(entries) {
 
         for (const targetId of uniqueTargets) {
             if (registerFluidOutputDefinition(targetId, normalized)) {
+                registered++;
+            }
+        }
+    }
+
+    return registered;
+}
+
+function normalizeGasContainer(definition) {
+    if (!definition) return null;
+
+    const amountRange = normalizeAmountRange(definition.amount);
+    const type = sanitizeGasType(definition.type ?? definition.gas ?? definition.vapor);
+
+    if (!amountRange || !type) return null;
+
+    const normalized = {
+        amount: amountRange.max,
+        amountRange,
+        minAmount: amountRange.min,
+        type
+    };
+
+    if (definition.infinite === true) {
+        normalized.infinite = true;
+    }
+
+    const output = definition.output ?? definition.result ?? definition.empty ?? definition.returnItem;
+    if (typeof output === "string" && output.length > 0) {
+        normalized.output = output;
+    }
+
+    return Object.freeze(normalized);
+}
+
+function normalizeGasOutput(definition) {
+    if (!definition) return null;
+
+    const amountRange = normalizeAmountRange(definition.amount ?? definition.requirement);
+    if (!amountRange) return null;
+
+    const rawFills = definition.fills ?? definition.outputs ?? definition.types;
+    if (!rawFills || typeof rawFills !== "object") return null;
+
+    const fills = {};
+    for (const [rawType, itemId] of Object.entries(rawFills)) {
+        const type = sanitizeGasType(rawType);
+        if (!type) continue;
+        if (typeof itemId !== "string" || itemId.length === 0) continue;
+        fills[type] = itemId;
+    }
+
+    if (Object.keys(fills).length === 0) return null;
+
+    return Object.freeze({
+        amount: amountRange.max,
+        amountRange,
+        minAmount: amountRange.min,
+        fills
+    });
+}
+
+function getGasContainerRegistry() {
+    return gasContainerRegistry;
+}
+
+function getGasContainerDefinition(id) {
+    if (typeof id !== "string" || id.length === 0) return null;
+    return gasContainerRegistry[id] ?? null;
+}
+
+function registerGasContainerDefinition(id, definition) {
+    if (typeof id !== "string" || id.length === 0) return false;
+    const normalized = normalizeGasContainer(definition);
+    if (!normalized) return false;
+    gasContainerRegistry[id] = normalized;
+    return true;
+}
+
+function registerGasContainerBatch(entries) {
+    if (!entries) return 0;
+
+    const queue = [];
+
+    if (Array.isArray(entries)) {
+        queue.push(...entries);
+    } else if (typeof entries === "object") {
+        for (const [id, definition] of Object.entries(entries)) {
+            if (definition && typeof definition === "object") {
+                queue.push({ id, ...definition });
+            }
+        }
+    } else {
+        return 0;
+    }
+
+    let registered = 0;
+
+    for (const entry of queue) {
+        if (!entry || typeof entry !== "object") continue;
+
+        const targets = [];
+        const appendTarget = value => {
+            if (typeof value === "string" && value.length > 0) {
+                targets.push(value);
+            }
+        };
+
+        appendTarget(entry.id);
+        appendTarget(entry.item);
+        appendTarget(entry.itemId);
+        if (Array.isArray(entry.ids)) {
+            for (const candidate of entry.ids) appendTarget(candidate);
+        }
+
+        const uniqueTargets = [...new Set(targets)];
+        if (uniqueTargets.length === 0) continue;
+
+        const normalized = normalizeGasContainer(entry);
+        if (!normalized) continue;
+
+        for (const targetId of uniqueTargets) {
+            if (registerGasContainerDefinition(targetId, normalized)) {
+                registered++;
+            }
+        }
+    }
+
+    return registered;
+}
+
+function getGasOutputRegistry() {
+    return gasOutputRegistry;
+}
+
+function getGasOutputDefinition(id) {
+    if (typeof id !== "string" || id.length === 0) return null;
+    return gasOutputRegistry[id] ?? null;
+}
+
+function registerGasOutputDefinition(id, definition) {
+    if (typeof id !== 'string' || id.length === 0) return false;
+    const normalized = normalizeGasOutput(definition);
+    if (!normalized) return false;
+    gasOutputRegistry[id] = normalized;
+
+    const required = normalized.amountRange?.max ?? normalized.amount;
+    if (Number.isFinite(required) && required > 0) {
+        gasHolderRegistry[id] = {
+            required,
+            types: { ...normalized.fills }
+        };
+    }
+    return true;
+}
+
+function registerGasOutputBatch(entries) {
+    if (!entries) return 0;
+
+    const queue = [];
+
+    if (Array.isArray(entries)) {
+        queue.push(...entries);
+    } else if (typeof entries === 'object') {
+        for (const [id, definition] of Object.entries(entries)) {
+            if (definition && typeof definition === 'object') {
+                queue.push({ id, ...definition });
+            }
+        }
+    } else {
+        return 0;
+    }
+
+    let registered = 0;
+
+    for (const entry of queue) {
+        if (!entry || typeof entry !== 'object') continue;
+
+        const targets = [];
+        const appendTarget = value => {
+            if (typeof value === 'string' && value.length > 0) {
+                targets.push(value);
+            }
+        };
+
+        appendTarget(entry.id);
+        appendTarget(entry.item);
+        appendTarget(entry.itemId);
+        if (Array.isArray(entry.ids)) {
+            for (const candidate of entry.ids) appendTarget(candidate);
+        }
+
+        const uniqueTargets = [...new Set(targets)];
+        if (uniqueTargets.length === 0) continue;
+
+        const normalized = normalizeGasOutput(entry);
+        if (!normalized) continue;
+
+        for (const targetId of uniqueTargets) {
+            if (registerGasOutputDefinition(targetId, normalized)) {
                 registered++;
             }
         }
@@ -1090,6 +1305,9 @@ export class Rotation {
                 if (perm.hasTag('dorios:fluid')) {
                     updatePipes(block, 'fluid');
                 }
+                if (perm.hasTag('dorios:gas')) {
+                    updatePipes(block, 'gas');
+                }
                 try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
             })
         })
@@ -1392,6 +1610,8 @@ export class Generator {
 
         const energy = new Energy(entity);
         const fluid = new FluidManager(entity)
+        let gas = null;
+        try { gas = GasManager.findType(entity, 0); } catch { /* ignore gas lookup */ }
         const blockItemId = brokenBlockPermutation.type.id
         const blockItem = new ItemStack(blockItemId);
         const lore = [];
@@ -1404,6 +1624,16 @@ export class Generator {
         if (fluid.type != 'empty') {
             const liquidName = DoriosAPI.utils.capitalizeFirst(fluid.type)
             lore.push(`§r§7  ${liquidName}: ${FluidManager.formatFluid(fluid.get())}/${FluidManager.formatFluid(fluid.cap)}`);
+        }
+
+        if (gas && gas.type !== 'empty' && gas.get() > 0) {
+            const gasName = DoriosAPI.utils.capitalizeFirst(gas.type)
+            lore.push(`§r§7  Gas (${gasName}): ${GasManager.formatGas(gas.get())}/${GasManager.formatGas(gas.cap)}`);
+        }
+
+        if (gas && gas.type !== 'empty' && gas.get() > 0) {
+            const gasName = DoriosAPI.utils.capitalizeFirst(gas.type)
+            lore.push(`§r§7  Gas (${gasName}): ${GasManager.formatGas(gas.get())}/${GasManager.formatGas(gas.cap)}`);
         }
 
         if (lore.length > 0) {
@@ -1445,19 +1675,39 @@ export class Generator {
             if (perm.hasTag('dorios:fluid')) {
                 updatePipes(block, 'fluid');
             }
+            if (perm.hasTag('dorios:gas')) {
+                updatePipes(block, 'gas');
+            }
             try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
         }, 2)
 
-        const itemInfo = player.getComponent('equippable').getEquipment('Mainhand').getLore();
+        const itemInfo = Array.isArray(player.getComponent('equippable').getEquipment('Mainhand').getLore())
+            ? player.getComponent('equippable').getEquipment('Mainhand').getLore()
+            : [];
         let energy = 0;
-        if (itemInfo[0] && itemInfo[0].includes('Energy')) {
-            energy = Energy.getEnergyFromText(itemInfo[0]);
+        let fluid = undefined;
+        let gas = undefined;
+
+        for (const line of itemInfo) {
+            if (!energy && typeof line === 'string' && line.includes('Energy')) {
+                energy = Energy.getEnergyFromText(line);
+            }
         }
 
-        let fluid = undefined
-        const nextLine = (energy > 0) ? itemInfo[1] : itemInfo[0]
-        if (nextLine) {
-            fluid = FluidManager.getFluidFromText(nextLine)
+        for (const line of itemInfo) {
+            if (!fluid) {
+                const parsed = FluidManager.getFluidFromText(line);
+                if (parsed?.type && parsed.type !== 'empty' && parsed.amount > 0) {
+                    fluid = parsed;
+                }
+            }
+            if (!gas) {
+                const parsedGas = GasManager.getGasFromText?.(line);
+                if (parsedGas?.type && parsedGas.type !== 'empty' && parsedGas.amount > 0) {
+                    gas = parsedGas;
+                }
+            }
+            if (fluid && gas) break;
         }
         system.run(() => {
             const entity = Generator.spawn(block, settings)
@@ -1473,6 +1723,15 @@ export class Generator {
                 if (fluid && fluid.amount > 0) {
                     fluidManager.setType(fluid.type)
                     fluidManager.set(fluid.amount)
+                }
+            }
+            if (settings.generator.gas_cap) {
+                const gasManager = new GasManager(entity, 0)
+                gasManager.setCap(settings.generator.gas_cap)
+
+                if (gas && gas.amount > 0) {
+                    gasManager.setType(gas.type)
+                    gasManager.set(gas.amount)
                 }
             }
             this.addNearbyMachines(entity)
@@ -1640,6 +1899,9 @@ export class Machine {
         this.energy = new Energy(this.entity)
         if (this.entity.getDynamicProperty("dorios:base_energy_cap") === undefined && settings?.machine?.energy_cap) {
             this.entity.setDynamicProperty("dorios:base_energy_cap", settings.machine.energy_cap)
+        }
+        if (this.entity.getDynamicProperty("dorios:base_gas_cap") === undefined && settings?.machine?.gas_cap) {
+            this.entity.setDynamicProperty("dorios:base_gas_cap", settings.machine.gas_cap)
         }
         this.upgrades = this.getUpgradeLevels(settings.machine.upgrades)
         this.boosts = this.calculateBoosts(this.upgrades)
@@ -1895,22 +2157,38 @@ export class Machine {
 
         }
 
-        const itemInfo = maindHand.getLore();
+        const itemInfo = Array.isArray(maindHand.getLore()) ? maindHand.getLore() : [];
         let energy = 0;
-        if (itemInfo[0] && itemInfo[0].includes('Energy')) {
-            energy = Energy.getEnergyFromText(itemInfo[0]);
+        let fluid = undefined;
+        let gas = undefined;
+
+        for (const line of itemInfo) {
+            if (!energy && typeof line === 'string' && line.includes('Energy')) {
+                energy = Energy.getEnergyFromText(line);
+            }
         }
 
-        let fluid = undefined
-        const nextLine = (energy > 0) ? itemInfo[1] : itemInfo[0]
-        if (nextLine) {
-            fluid = FluidManager.getFluidFromText(nextLine)
+        for (const line of itemInfo) {
+            if (!fluid) {
+                const parsed = FluidManager.getFluidFromText(line);
+                if (parsed?.type && parsed.type !== 'empty' && parsed.amount > 0) {
+                    fluid = parsed;
+                }
+            }
+            if (!gas) {
+                const parsedGas = GasManager.getGasFromText?.(line);
+                if (parsedGas?.type && parsedGas.type !== 'empty' && parsedGas.amount > 0) {
+                    gas = parsedGas;
+                }
+            }
+            if (fluid && gas) break;
         }
 
         const shouldUpdateEnergy = permutationToPlace?.hasTag?.('dorios:energy');
         const shouldUpdateFluid = permutationToPlace?.hasTag?.('dorios:fluid');
+        const shouldUpdateGas = permutationToPlace?.hasTag?.('dorios:gas');
 
-        if (shouldUpdateEnergy || shouldUpdateFluid) {
+        if (shouldUpdateEnergy || shouldUpdateFluid || shouldUpdateGas) {
             system.runTimeout(() => {
                 const dim = block.dimension;
                 const offsets = [
@@ -1938,6 +2216,7 @@ export class Machine {
 
                 if (shouldUpdateEnergy) refresh('energy', 'dorios:energy');
                 if (shouldUpdateFluid) refresh('fluid', 'dorios:fluid');
+                if (shouldUpdateGas) refresh('gas', 'dorios:gas');
             }, 2);
         }
 
@@ -1961,6 +2240,16 @@ export class Machine {
                 if (fluid && fluid.amount > 0) {
                     fluidManager.setType(fluid.type)
                     fluidManager.set(fluid.amount)
+                }
+            }
+            if (settings.machine.gas_cap) {
+                entity.setDynamicProperty("dorios:base_gas_cap", settings.machine.gas_cap)
+                const gasManager = new GasManager(entity, 0)
+                gasManager.setCap(settings.machine.gas_cap)
+
+                if (gas && gas.amount > 0) {
+                    gasManager.setType(gas.type)
+                    gasManager.set(gas.amount)
                 }
             }
             try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore overclock refresh */ }
@@ -2601,6 +2890,45 @@ ${overclockLine}
         } catch { /* ignore if entity doesn't have fluid */ }
     }
 
+    getBaseGasCap(settings) {
+        const baseProp = this.entity?.getDynamicProperty("dorios:base_gas_cap");
+        if (typeof baseProp === "number" && baseProp > 0) return baseProp;
+        if (settings?.machine?.gas_cap) return settings.machine.gas_cap;
+        try {
+            const gas = new GasManager(this.entity, 0);
+            if (typeof gas?.cap === "number" && gas.cap > 0) return gas.cap;
+        } catch { /* ignore if entity doesn't have gas */ }
+        return 0;
+    }
+
+    applyGasCapBoost(multiplier, settings) {
+        if (!multiplier || multiplier <= 0) return;
+        const baseCap = this.getBaseGasCap(settings);
+        if (!baseCap) return;
+
+        try {
+            const gas = new GasManager(this.entity, 0);
+            const desired = Math.max(baseCap, Math.floor(baseCap * multiplier));
+            if (desired !== gas.getCap()) {
+                gas.setCap(desired);
+            }
+        } catch { /* ignore if entity doesn't have gas */ }
+    }
+
+    restoreBaseGasCap(settings) {
+        const baseCap = this.getBaseGasCap(settings);
+        if (!baseCap) return;
+
+        try {
+            const gas = new GasManager(this.entity, 0);
+            const current = gas.get();
+            const desired = Math.max(baseCap, current);
+            if (desired !== gas.getCap()) {
+                gas.setCap(desired);
+            }
+        } catch { /* ignore if entity doesn't have gas */ }
+    }
+
     applyOverclockBoosts(settings) {
         if (!this.overclock || this.overclock.level <= 0 || this.overclock.effectiveness <= 0) {
             this.boosts.overclockClock = 1;
@@ -2612,6 +2940,7 @@ ${overclockLine}
             }
             this.restoreBaseEnergyCap(settings);
             this.restoreBaseFluidCap(settings);
+            this.restoreBaseGasCap(settings);
             return;
         }
 
@@ -2626,6 +2955,7 @@ ${overclockLine}
             }
             this.restoreBaseEnergyCap(settings);
             this.restoreBaseFluidCap(settings);
+            this.restoreBaseGasCap(settings);
             return;
         }
 
@@ -2659,6 +2989,7 @@ ${overclockLine}
 
         this.applyEnergyCapBoost(capacityMult, settings);
         this.applyFluidCapBoost(capacityMult, settings);
+        this.applyGasCapBoost(capacityMult, settings);
     }
 
     /**
@@ -2804,6 +3135,7 @@ export class Container {
         // Allow container-specific caps as shortcuts.
         if (container.energy_cap && !machine.energy_cap) machine.energy_cap = container.energy_cap;
         if (container.fluid_cap && !machine.fluid_cap) machine.fluid_cap = container.fluid_cap;
+        if (container.gas_cap && !machine.gas_cap) machine.gas_cap = container.gas_cap;
 
         return { ...settings, entity, machine, container };
     }
@@ -2826,16 +3158,31 @@ export class Container {
             Rotation.facing(player, block, permutationToPlace);
         }
 
-        const itemInfo = mainHand.getLore();
+        const itemInfo = Array.isArray(mainHand.getLore()) ? mainHand.getLore() : [];
         let energy = 0;
-        if (itemInfo[0] && itemInfo[0].includes('Energy')) {
-            energy = Energy.getEnergyFromText(itemInfo[0]);
+        let fluid = undefined;
+        let gas = undefined;
+
+        for (const line of itemInfo) {
+            if (!energy && typeof line === 'string' && line.includes('Energy')) {
+                energy = Energy.getEnergyFromText(line);
+            }
         }
 
-        let fluid = undefined;
-        const nextLine = energy > 0 ? itemInfo[1] : itemInfo[0];
-        if (nextLine) {
-            fluid = FluidManager.getFluidFromText(nextLine);
+        for (const line of itemInfo) {
+            if (!fluid) {
+                const parsed = FluidManager.getFluidFromText(line);
+                if (parsed?.type && parsed.type !== 'empty' && parsed.amount > 0) {
+                    fluid = parsed;
+                }
+            }
+            if (!gas) {
+                const parsedGas = GasManager.getGasFromText?.(line);
+                if (parsedGas?.type && parsedGas.type !== 'empty' && parsedGas.amount > 0) {
+                    gas = parsedGas;
+                }
+            }
+            if (fluid && gas) break;
         }
 
         system.run(() => {
@@ -2862,6 +3209,16 @@ export class Container {
                 if (fluid && fluid.amount > 0) {
                     fluidManager.setType(fluid.type);
                     fluidManager.set(fluid.amount);
+                }
+            }
+
+            if (normalized.machine.gas_cap) {
+                const gasManager = new GasManager(entity, 0);
+                gasManager.setCap(normalized.machine.gas_cap);
+
+                if (gas && gas.amount > 0) {
+                    gasManager.setType(gas.type);
+                    gasManager.set(gas.amount);
                 }
             }
 
@@ -3645,6 +4002,12 @@ export function shareEnergyWithNeighbors(entity, options = {}) {
 const fluidObjectives = new Map();
 
 /**
+ * Global map storing loaded gas-related scoreboard objectives per index.
+ * Each index represents an independent gas tank slot (e.g., 0, 1, 2).
+ */
+const gasObjectives = new Map();
+
+/**
  * Maps fluid type identifiers to their display item prefixes.
  * Each prefix must include the namespace (e.g. "utilitycraft:liquified_aetherium").
  * When no custom prefix is provided, FluidManager falls back to `utilitycraft:{type}`.
@@ -3655,6 +4018,14 @@ const fluidDisplayItemPrefixes = new Map([
     ["liquified_aetherium", "utilitycraft:liquified_aetherium"],
     ["dark_matter", "utilitycraft:dark_matter"],
     ["cryofluid", "utilitycraft:cryofluid"],
+]);
+
+/**
+ * Maps gas type identifiers to their display item prefixes.
+ * When no custom prefix is provided, GasManager falls back to `utilitycraft:{type}`.
+ */
+const gasDisplayItemPrefixes = new Map([
+    ["steam", "utilitycraft:steam"],
 ]);
 
 function getFluidWhitelist(entity) {
@@ -3690,6 +4061,39 @@ function entityAllowsFluid(entity, type) {
     return allowed.includes(normalized);
 }
 
+function getGasWhitelist(entity) {
+    const allowed = [];
+    if (!entity) return allowed;
+
+    try {
+        const whitelistTags = entity.getTags?.().filter(t => t.startsWith("gasWhitelist:")) ?? [];
+        for (const tag of whitelistTags) {
+            const entry = tag.split(":")[1];
+            if (entry) allowed.push(entry.toLowerCase());
+        }
+    } catch { /* ignore tag read errors */ }
+
+    try {
+        const rawProp = entity.getDynamicProperty?.("dorios:gas_whitelist");
+        if (typeof rawProp === "string" && rawProp.length) {
+            for (const token of rawProp.split(",")) {
+                const trimmed = token.trim().toLowerCase();
+                if (trimmed) allowed.push(trimmed);
+            }
+        }
+    } catch { /* ignore missing dynamic property */ }
+
+    return allowed;
+}
+
+function entityAllowsGas(entity, type) {
+    const allowed = getGasWhitelist(entity);
+    if (!allowed.length) return true;
+    const normalized = typeof type === "string" ? type.toLowerCase() : "";
+    if (!normalized) return false;
+    return allowed.includes(normalized);
+}
+
 /**
  * Ensures that the required scoreboard objectives exist for a given tank index.
  *
@@ -3715,6 +4119,35 @@ function initFluidObjectives(index = 0) {
             let obj = world.scoreboard.getObjective(id);
             if (!obj) obj = world.scoreboard.addObjective(id, display);
             fluidObjectives.set(id, obj);
+        }
+    }
+}
+
+/**
+ * Ensures that the required scoreboard objectives exist for a given gas tank index.
+ *
+ * Creates or retrieves four objectives per index:
+ * - `gas_{index}` → gas amount (mantissa)
+ * - `gasExp_{index}` → gas exponent
+ * - `gasCap_{index}` → Capacity (mantissa)
+ * - `gasCapExp_{index}` → Capacity exponent
+ *
+ * @param {number} [index=0] The gas tank index to initialize (default 0).
+ * @returns {void}
+ */
+function initGasObjectives(index = 0) {
+    const definitions = [
+        [`gas_${index}`, `gas ${index}`],
+        [`gasExp_${index}`, `gas Exp ${index}`],
+        [`gasCap_${index}`, `gas Cap ${index}`],
+        [`gasCapExp_${index}`, `gas Cap Exp ${index}`]
+    ];
+
+    for (const [id, display] of definitions) {
+        if (!gasObjectives.has(id)) {
+            let obj = world.scoreboard.getObjective(id);
+            if (!obj) obj = world.scoreboard.addObjective(id, display);
+            gasObjectives.set(id, obj);
         }
     }
 }
@@ -4691,16 +5124,534 @@ export class FluidManager {
     }
 }
 
+/**
+ * Manages scoreboard-based gas values for entities or machines.
+ *
+ * Provides a unified API to store, retrieve, normalize, and display gas values.
+ * Each instance can manage a specific tank index (0, 1, ...).
+ */
+export class GasManager {
+    /**
+     * Creates a new GasManager instance for a specific entity and tank index.
+     *
+     * @param {Entity} entity The entity representing the gas container.
+     * @param {number} [index=0] The index of the gas tank managed by this instance.
+     */
+    constructor(entity, index = 0) {
+        this.entity = entity;
+        this.index = index;
+
+        initGasObjectives(index);
+
+        this.scoreId = entity?.scoreboardIdentity;
+        if (!this.scoreId && entity) {
+            try {
+                entity.runCommand(`scoreboard players add @s gas_${index} 0`);
+                this.scoreId = entity.scoreboardIdentity;
+            } catch (error) {
+                console.warn(`[UtilityCraft/GasManager] Failed to seed gas scoreboard for ${entity.typeId ?? 'unknown'}`, error);
+            }
+        }
+
+        if (!this.scoreId) {
+            throw new Error("GasManager requires an entity with a scoreboard identity.");
+        }
+
+        this.scores = {
+            gas: gasObjectives.get(`gas_${index}`),
+            gasExp: gasObjectives.get(`gasExp_${index}`),
+            gasCap: gasObjectives.get(`gasCap_${index}`),
+            gasCapExp: gasObjectives.get(`gasCapExp_${index}`)
+        };
+
+        this.type = this.getType();
+        this.cap = this.getCap();
+        if (this.get() === 0) this.setType('empty');
+    }
+
+    static initializeSingle(entity) {
+        initGasObjectives(0);
+        return new GasManager(entity, 0);
+    }
+
+    static initializeMultiple(entity, maxIndex) {
+        const tanks = [];
+        for (let i = 0; i < maxIndex; i++) {
+            initGasObjectives(i);
+            tanks.push(new GasManager(entity, i));
+        }
+        return tanks;
+    }
+
+    static findType(entity, index = 0) {
+        if (!entity?.isValid) return null;
+        try {
+            const gm = new GasManager(entity, index);
+            if (gm.getCap() > 0) return gm;
+        } catch {
+            // Entity doesn't have scoreboard identity or gas objectives
+        }
+        return null;
+    }
+
+    static get itemGasContainers() {
+        return getGasContainerRegistry();
+    }
+
+    static registerGasContainer(id, definition) {
+        return registerGasContainerDefinition(id, definition);
+    }
+
+    static get gasOutputContainers() {
+        return getGasOutputRegistry();
+    }
+
+    static getGasFillDefinition(id) {
+        if (!id) return null;
+        return getGasOutputDefinition(id);
+    }
+
+    static registerGasOutput(id, definition) {
+        return registerGasOutputDefinition(id, definition);
+    }
+
+    static registerGasDisplay(type, itemPrefix) {
+        if (typeof type !== "string" || type.length === 0) return false;
+        if (typeof itemPrefix !== "string" || itemPrefix.length === 0) return false;
+        gasDisplayItemPrefixes.set(type.toLowerCase(), itemPrefix);
+        return true;
+    }
+
+    static getDisplayItemId(type, frameSuffix) {
+        const key = typeof type === "string" ? type.toLowerCase() : "";
+        const fallbackPrefix = key ? `utilitycraft:${key}` : "utilitycraft:gas";
+        const prefix = gasDisplayItemPrefixes.get(key) ?? fallbackPrefix;
+        return `${prefix}_${frameSuffix}`;
+    }
+
+    static normalizeValue(amount) {
+        let exp = 0;
+        let value = amount;
+        while (value > 1e9) {
+            value /= 1000;
+            exp += 3;
+        }
+        return { value: Math.floor(value), exp };
+    }
+
+    static combineValue(value, exp) {
+        return (value || 0) * (10 ** (exp || 0));
+    }
+
+    static formatGas(value) {
+        let unit = "mB";
+        let decimals = 1;
+
+        if (value >= 1000) {
+            let bucketValue = value / 1000;
+            const units = ["B", "KB", "MB", "GB", "TB", "PB"];
+            let unitIndex = 0;
+
+            while (bucketValue >= 1000 && unitIndex < units.length - 1) {
+                bucketValue /= 1000;
+                unitIndex += 1;
+            }
+
+            unit = units[unitIndex];
+            value = bucketValue;
+            decimals = unitIndex >= 2 ? 2 : 1;
+        }
+        return `${value.toFixed(decimals)} ${unit}`;
+    }
+
+    static getGasFromText(input) {
+        if (typeof input !== "string") return { type: "empty", amount: 0 };
+
+        const cleaned = input.replace(/§./g, "").trim();
+        const match = cleaned.match(/Gas\s*(?:\(([^)]+)\))?:\s*([\d.]+)\s*(mB|B|KB|MB|GB|TB|PB)/i);
+        if (!match) return { type: "empty", amount: 0 };
+
+        const [, rawType, rawValue, rawUnit] = match;
+        const unit = typeof rawUnit === "string"
+            ? (rawUnit.toLowerCase() === "mb" && rawUnit !== "MB" ? "mB" : rawUnit.toUpperCase())
+            : "mB";
+
+        const multipliers = {
+            mB: 1,
+            B: 1_000,
+            KB: 1_000_000,
+            MB: 1_000_000_000,
+            GB: 1_000_000_000_000,
+            TB: 1_000_000_000_000_000,
+            PB: 1_000_000_000_000_000_000
+        };
+
+        const amount = parseFloat(rawValue) * (multipliers[unit] ?? 1);
+        const cleanedType = typeof rawType === "string" ? rawType.trim() : "";
+        const normalizedType = sanitizeGasType(cleanedType.replace(/\s+/g, "_"));
+        const type = normalizedType || "empty";
+
+        return { type, amount };
+    }
+
+    static getContainerData(id) {
+        if (!id) return null;
+        return getGasContainerDefinition(id);
+    }
+
+    static initialize(entity) {
+        entity.runCommand(`scoreboard players set @s gas_0 0`);
+    }
+
+    gasItem(typeId) {
+        const insertData = GasManager.getContainerData(typeId);
+        if (insertData) {
+            const { type, output } = insertData;
+            if (insertData.infinite === true) {
+                if (!entityAllowsGas(this.entity, type)) return false;
+
+                const currentType = this.getType();
+                if (currentType !== "empty" && currentType !== type) return false;
+
+                let cap = this.getCap();
+                let effectiveCap = cap;
+                if (!Number.isFinite(effectiveCap) || effectiveCap <= 0) {
+                    effectiveCap = INFINITE_GAS_CAP_FALLBACK;
+                    try {
+                        this.setCap(effectiveCap);
+                    } catch { /* ignore cap reset errors */ }
+                }
+
+                const current = this.get();
+                const freeSpace = Math.max(0, effectiveCap - current);
+                if (freeSpace <= 0) return false;
+
+                if (currentType === "empty") this.setType(type);
+                this.add(freeSpace);
+                return output ?? typeId;
+            }
+
+            const insertAmount = insertData.amountRange?.max ?? insertData.amount;
+            const inserted = this.tryInsert(type, insertAmount);
+            if (!inserted) return false;
+
+            return output;
+        }
+
+        const holder = gasHolderRegistry[typeId];
+        if (holder) {
+            const storedType = this.getType();
+            if (!storedType || storedType === 'empty') return false;
+
+            const outputItemId = holder.types?.[storedType];
+            if (!outputItemId) return false;
+
+            const required = resolveHolderRequirement(holder);
+            if (required <= 0 || this.get() < required) return false;
+
+            this.add(-required);
+            if (this.get() <= 0) this.setType('empty');
+            return outputItemId;
+        }
+
+        const fillDefinition = GasManager.getGasFillDefinition(typeId);
+        if (fillDefinition) {
+            const storedType = this.getType();
+            if (!storedType || storedType === 'empty') return false;
+
+            const filledItemId = fillDefinition.fills?.[storedType];
+            if (!filledItemId) return false;
+            const drainAmount = fillDefinition.amountRange?.max ?? fillDefinition.amount;
+            if (this.get() < drainAmount) return false;
+
+            this.add(-drainAmount);
+            if (this.get() <= 0) this.setType('empty');
+            return filledItemId;
+        }
+
+        return false;
+    }
+
+    tryInsert(type, amount) {
+        if (amount <= 0) return false;
+        if (!entityAllowsGas(this.entity, type)) return false;
+        const currentType = this.getType();
+        if (currentType === "empty" || currentType === type) {
+            if (amount <= this.getFreeSpace()) {
+                if (currentType === "empty") this.setType(type);
+                this.add(amount);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    setCap(amount) {
+        const { value, exp } = GasManager.normalizeValue(amount);
+        this.scores.gasCap.setScore(this.scoreId, value);
+        this.scores.gasCapExp.setScore(this.scoreId, exp);
+    }
+
+    getCap() {
+        const v = this.scores.gasCap.getScore(this.scoreId) || 0;
+        const e = this.scores.gasCapExp.getScore(this.scoreId) || 0;
+        this.cap = GasManager.combineValue(v, e);
+        return this.cap;
+    }
+
+    set(amount) {
+        const { value, exp } = GasManager.normalizeValue(amount);
+        this.scores.gas.setScore(this.scoreId, value);
+        this.scores.gasExp.setScore(this.scoreId, exp);
+    }
+
+    get() {
+        const v = this.scores.gas.getScore(this.scoreId) || 0;
+        const e = this.scores.gasExp.getScore(this.scoreId) || 0;
+        return GasManager.combineValue(v, e);
+    }
+
+    add(amount) {
+        if (amount === 0) return 0;
+
+        const free = this.getFreeSpace();
+        if (amount > 0 && free <= 0) return 0;
+        if (amount > free) amount = free;
+
+        let value = this.scores.gas.getScore(this.scoreId) || 0;
+        let exp = this.scores.gasExp.getScore(this.scoreId) || 0;
+        const multi = 10 ** exp;
+        const normalizedAdd = Math.floor(amount / multi);
+
+        let newValue = value + normalizedAdd;
+        if (Math.abs(newValue) <= 1e9) {
+            this.scores.gas.addScore(this.scoreId, normalizedAdd);
+
+            if (exp > 0 && value < 1e6) {
+                this.set(this.get() + amount);
+            }
+        } else {
+            this.set(this.get() + amount);
+        }
+
+        return amount;
+    }
+
+    consume(amount) {
+        if (this.entity?.hasTag?.("dorios:gas_creative")) return amount;
+
+        const current = this.get();
+        if (current < amount) return 0;
+        this.add(-amount);
+        return amount;
+    }
+
+    getFreeSpace() {
+        return Math.max(0, this.getCap() - this.get());
+    }
+
+    has(amount) {
+        return this.get() >= amount;
+    }
+
+    isFull() {
+        return this.get() >= this.getCap();
+    }
+
+    getType() {
+        const tag = this.entity.getTags().find(t => t.startsWith(`gas${this.index}Type:`));
+        return tag ? tag.split(":")[1] : "empty";
+    }
+
+    setType(type) {
+        const old = this.entity.getTags().find(t => t.startsWith(`gas${this.index}Type:`));
+        if (old) this.entity.removeTag(old);
+        this.entity.addTag(`gas${this.index}Type:${type}`);
+        this.type = type;
+    }
+
+    transferToNetwork(speed, mode = "nearest", nodes) {
+        if (this.entity?.hasTag?.("dorios:gas_input_only")) return 0;
+        if (!Array.isArray(nodes) || nodes.length === 0) {
+            try {
+                const cached = this.entity.getDynamicProperty("dorios:gas_nodes");
+                if (cached) {
+                    nodes = JSON.parse(cached);
+                }
+            } catch { /* ignore */ }
+            if (!Array.isArray(nodes) || nodes.length === 0) return 0;
+        }
+
+        const dim = this.entity.dimension;
+        let available = this.get();
+        if (available <= 0 || speed <= 0) return 0;
+
+        let transferred = 0;
+        const type = this.getType();
+        if (!type || type === "empty") return 0;
+
+        let orderedTargets = [...nodes];
+        if (mode === "farthest") orderedTargets.reverse();
+
+        const processTarget = (loc, share = null) => {
+            const targetBlock = dim.getBlock(loc);
+            if (!targetBlock?.hasTag("dorios:gas")) return 0;
+
+            const targetEntity = dim.getEntitiesAtBlockLocation(loc)[0];
+            if (!targetEntity) return 0;
+            if (!entityAllowsGas(targetEntity, type)) return 0;
+
+            const target = GasManager.findType(targetEntity, 0);
+            if (!target) return 0;
+
+            const targetType = target.getType();
+            const space = target.getFreeSpace();
+
+            if (targetType !== "empty" && targetType !== type) return 0;
+            if (space <= 0) return 0;
+
+            if (targetType === "empty") target.setType(type);
+
+            const amount = share ? Math.min(share, space, available, speed) : Math.min(space, available, speed);
+            const added = target.add(amount);
+
+            if (added > 0) {
+                available -= added;
+                speed -= added;
+                transferred += added;
+            }
+
+            return added;
+        };
+
+        if (mode === "round") {
+            const share = Math.floor(speed / orderedTargets.length);
+            for (const loc of orderedTargets) {
+                if (available <= 0 || speed <= 0) break;
+                processTarget(loc, share);
+            }
+        } else {
+            for (const loc of orderedTargets) {
+                if (available <= 0 || speed <= 0) break;
+                processTarget(loc);
+            }
+        }
+
+        if (transferred > 0) this.add(-transferred);
+
+        return transferred;
+    }
+
+    transferGases(block, amount = 100, options = undefined) {
+        if (!block || !this.entity?.isValid) return false;
+        if (this.entity?.hasTag?.("dorios:gas_input_only")) return false;
+
+        const opts = options ?? {};
+        const requireTube = opts.requireTube ?? block.hasTag("dorios:isTube");
+        if (requireTube && !block.hasTag("dorios:isTube")) return false;
+
+        const facing = block.getState("utilitycraft:axis");
+        const offset = resolveFluidTransferOffset(facing, opts);
+        if (!offset) return false;
+
+        const targetTag = opts.targetTag ?? "dorios:gas";
+        const targetIndex = Number.isInteger(opts.targetIndex) ? opts.targetIndex : 0;
+
+        const { x, y, z } = block.location;
+        const targetLoc = { x: x + offset.x, y: y + offset.y, z: z + offset.z };
+        const dim = block.dimension;
+        const targetBlock = dim.getBlock(targetLoc);
+        if (!targetBlock) return false;
+
+        if (targetTag && !targetBlock.hasTag(targetTag)) return false;
+
+        const targetEntity = dim.getEntitiesAtBlockLocation(targetLoc)[0];
+        if (!targetEntity) return false;
+
+        const sourceType = this.getType();
+        if (!entityAllowsGas(targetEntity, sourceType)) return false;
+
+        const targetGas = new GasManager(targetEntity, targetIndex);
+        if (!targetGas || targetGas.getCap() <= 0) return false;
+
+        const transferred = this.transferTo(targetGas, amount);
+        return transferred > 0;
+    }
+
+    transferTo(other, amount) {
+        if (this.entity?.hasTag?.("dorios:gas_input_only")) return 0;
+        const sourceType = this.getType();
+        if (!entityAllowsGas(other?.entity, sourceType)) return 0;
+        if (sourceType !== other.getType() && other.getType() !== "empty") return 0;
+
+        const transferable = Math.min(amount, this.get(), other.getFreeSpace());
+        if (transferable <= 0) return 0;
+
+        this.add(-transferable);
+        other.add(transferable);
+        if (other.getType() === "empty") other.setType(sourceType);
+        return transferable;
+    }
+
+    receiveFrom(other, amount) {
+        return other.transferTo(this, amount);
+    }
+
+    display(slot = 4) {
+        const inv = this.entity.getComponent("minecraft:inventory")?.container;
+        if (!inv) return;
+
+        const gas = this.get();
+        const cap = this.getCap();
+        const type = this.getType();
+
+        if (type === "empty") {
+            let emptyBar = new ItemStack("utilitycraft:empty_fluid_bar");
+            emptyBar.nameTag = '§rEmpty';
+            inv.setItem(slot, emptyBar);
+            return;
+        }
+
+        const safeCap = Math.max(1, cap || 1);
+        const normalizedGas = Math.max(0, Math.min(gas, safeCap));
+        const fillRatio = normalizedGas / safeCap;
+        const frame = Math.max(0, Math.min(48, Math.floor(fillRatio * 48)));
+        const frameName = frame.toString().padStart(2, "0");
+        const itemId = GasManager.getDisplayItemId(type, frameName);
+        const percentFilled = fillRatio * 100;
+
+        let item;
+        try {
+            item = new ItemStack(itemId, 1);
+        } catch {
+            item = new ItemStack("utilitycraft:empty_fluid_bar", 1);
+        }
+        item.nameTag = `§r${DoriosAPI.utils.formatIdToText(type)}
+    §r§7  Stored: ${GasManager.formatGas(gas)} / ${GasManager.formatGas(cap)}
+    §r§7  Percentage: ${percentFilled.toFixed(2)}%`;
+
+        inv.setItem(slot, item);
+    }
+}
+
 // Expose holder map to mirror upstream API shape
 FluidManager.itemFluidHolders = fluidHolderRegistry;
+GasManager.itemGasHolders = gasHolderRegistry;
 
 const LEGACY_FLUID_ITEM_EVENT = "utilitycraft:register_fluid_item";
 const LEGACY_FLUID_HOLDER_EVENT = "utilitycraft:register_fluid_holder";
+const LEGACY_GAS_ITEM_EVENT = "utilitycraft:register_gas_item";
+const LEGACY_GAS_HOLDER_EVENT = "utilitycraft:register_gas_holder";
 const LEGACY_TICK_SPEED_EVENT = "utilitycraft:set_tick_speed";
 const UPDATE_PIPES_EVENT = "dorios:updatePipes";
 const ENERGY_DEBUG_EVENT = "utilitycraft:debug_energy";
 
 const normalizeFluidType = (value) =>
+    typeof value === "string" && value.trim().length
+        ? value.trim().toLowerCase()
+        : "";
+
+const normalizeGasType = (value) =>
     typeof value === "string" && value.trim().length
         ? value.trim().toLowerCase()
         : "";
@@ -4736,6 +5687,35 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
             const added = registerFluidOutputBatch(payload);
             if (added > 0) {
                 console.warn(`[UtilityCraft] Registered ${added} fluid output container${added === 1 ? "" : "s"} via ScriptEvent.`);
+            }
+        }
+    } catch (error) {
+        console.warn(`[UtilityCraft] Failed to process ${id} payload:`, error);
+    }
+});
+
+system.afterEvents.scriptEventReceive.subscribe(event => {
+    const { id } = event;
+    if (id !== REGISTER_GAS_CONTAINER_EVENT && id !== REGISTER_GAS_OUTPUT_EVENT) {
+        return;
+    }
+
+    const trimmedMessage = typeof event.message === "string" ? event.message.trim() : "";
+    if (!trimmedMessage) return;
+
+    const payload = safeJsonParse(trimmedMessage);
+    if (!payload) return;
+
+    try {
+        if (id === REGISTER_GAS_CONTAINER_EVENT) {
+            const added = registerGasContainerBatch(payload);
+            if (added > 0) {
+                console.warn(`[UtilityCraft] Registered ${added} gas container${added === 1 ? "" : "s"} via ScriptEvent.`);
+            }
+        } else {
+            const added = registerGasOutputBatch(payload);
+            if (added > 0) {
+                console.warn(`[UtilityCraft] Registered ${added} gas output container${added === 1 ? "" : "s"} via ScriptEvent.`);
             }
         }
     } catch (error) {
@@ -4836,6 +5816,43 @@ function normalizeLegacyFluidHolder(entry) {
     const fills = {};
     for (const [rawType, itemId] of Object.entries(types)) {
         const type = normalizeFluidType(rawType);
+        if (!type) continue;
+        if (typeof itemId !== "string" || itemId.length === 0) continue;
+        fills[type] = itemId;
+    }
+
+    if (Object.keys(fills).length === 0) return null;
+
+    return { amount, fills };
+}
+
+function normalizeLegacyGasContainer(entry) {
+    if (!entry || typeof entry !== "object") return null;
+
+    const amount = entry.amountRange ?? entry.amount ?? entry.value ?? entry.required;
+    const type = normalizeGasType(entry.type ?? entry.gas ?? entry.vapor);
+
+    if (amount === undefined || amount === null || !type) return null;
+
+    const normalized = { amount, type };
+    const output = entry.output ?? entry.result ?? entry.returnItem ?? entry.empty;
+    if (typeof output === "string" && output.length > 0) {
+        normalized.output = output;
+    }
+
+    return normalized;
+}
+
+function normalizeLegacyGasHolder(entry) {
+    if (!entry || typeof entry !== "object") return null;
+
+    const amount = entry.amountRange ?? entry.required ?? entry.amount ?? entry.requirement;
+    const types = entry.types ?? entry.fills ?? entry.outputs;
+    if (amount === undefined || amount === null || typeof types !== "object" || types === null) return null;
+
+    const fills = {};
+    for (const [rawType, itemId] of Object.entries(types)) {
+        const type = normalizeGasType(rawType);
         if (!type) continue;
         if (typeof itemId !== "string" || itemId.length === 0) continue;
         fills[type] = itemId;
@@ -4960,6 +5977,107 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
         if (added || replaced) {
             console.warn(`[UtilityCraft] Registered ${added} new and ${replaced} updated fluid holder${added + replaced === 1 ? "" : "s"} via legacy ScriptEvent.`);
         }
+        return;
+    }
+
+    if (id === LEGACY_GAS_ITEM_EVENT) {
+        const payload = safeJsonParse(message);
+        if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
+
+        const queue = Array.isArray(payload)
+            ? payload
+            : Object.entries(payload).map(([entryId, definition]) => ({ id: entryId, ...definition }));
+
+        let added = 0;
+        let replaced = 0;
+
+        for (const entry of queue) {
+            if (!entry || typeof entry !== "object") continue;
+
+            const targets = [];
+            const appendTarget = value => {
+                if (typeof value === "string" && value.length > 0) {
+                    targets.push(value);
+                }
+            };
+            appendTarget(entry.id);
+            appendTarget(entry.item);
+            appendTarget(entry.itemId);
+
+            if (Array.isArray(entry.ids)) {
+                for (const candidate of entry.ids) {
+                    appendTarget(candidate);
+                }
+            }
+
+            const uniqueTargets = [...new Set(targets)];
+            if (uniqueTargets.length === 0) continue;
+
+            const normalized = normalizeLegacyGasContainer(entry);
+            if (!normalized) continue;
+
+            for (const targetId of uniqueTargets) {
+                const existed = Boolean(getGasContainerRegistry()[targetId]);
+                if (registerGasContainerDefinition(targetId, normalized)) {
+                    existed ? replaced++ : added++;
+                }
+            }
+        }
+
+        if (added || replaced) {
+            console.warn(`[UtilityCraft] Registered ${added} new and ${replaced} updated gas container${added + replaced === 1 ? "" : "s"} via legacy ScriptEvent.`);
+        }
+        return;
+    }
+
+    if (id === LEGACY_GAS_HOLDER_EVENT) {
+        const payload = safeJsonParse(message);
+        if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
+
+        const queue = Array.isArray(payload)
+            ? payload
+            : Object.entries(payload).map(([entryId, definition]) => ({ id: entryId, ...definition }));
+
+        let added = 0;
+        let replaced = 0;
+
+        for (const entry of queue) {
+            if (!entry || typeof entry !== "object") continue;
+
+            const targets = [];
+            const appendTarget = value => {
+                if (typeof value === "string" && value.length > 0) {
+                    targets.push(value);
+                }
+            };
+            appendTarget(entry.id);
+            appendTarget(entry.item);
+            appendTarget(entry.itemId);
+
+            if (Array.isArray(entry.ids)) {
+                for (const candidate of entry.ids) {
+                    appendTarget(candidate);
+                }
+            }
+
+            const uniqueTargets = [...new Set(targets)];
+            if (uniqueTargets.length === 0) continue;
+
+            const normalized = normalizeLegacyGasHolder(entry);
+            if (!normalized) continue;
+
+            for (const targetId of uniqueTargets) {
+                const existed = Boolean(getGasOutputRegistry()[targetId]);
+                if (registerGasOutputDefinition(targetId, normalized)) {
+                    existed ? replaced++ : added++;
+                }
+            }
+        }
+
+        if (added || replaced) {
+            console.warn(`[UtilityCraft] Registered ${added} new and ${replaced} updated gas holder${added + replaced === 1 ? "" : "s"} via legacy ScriptEvent.`);
+        }
+        return;
     }
 });
 

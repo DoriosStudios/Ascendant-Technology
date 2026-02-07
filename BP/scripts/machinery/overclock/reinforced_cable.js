@@ -15,6 +15,11 @@ const ENERGY_TUBE_TYPES = new Set([
     "utilitycraft:reinforced_cable",
 ]);
 
+const TUBE_GEOMETRY_TYPES = new Set([
+    "utilitycraft:reinforced_cable",
+    "utilitycraft:gas_tube",
+]);
+
 const MAX_ENERGY_SCAN = 2048;
 const ENERGY_DEBUG_PROP = "utilitycraft:debug_energy";
 
@@ -267,7 +272,7 @@ function refreshNeighborCablesAround(block) {
         const pos = { x: block.location.x + off.x, y: block.location.y + off.y, z: block.location.z + off.z };
         const neighbor = dim.getBlock(pos);
         if (!neighbor) continue;
-        if (neighbor.typeId === "utilitycraft:reinforced_cable") {
+        if (TUBE_GEOMETRY_TYPES.has(neighbor.typeId)) {
             refreshGeometryOverclock(neighbor);
         }
     }
@@ -282,6 +287,7 @@ function refreshNeighbors(block) {
         if (!neighbor) continue;
         if (neighbor.hasTag("dorios:energy")) updatePipes(neighbor, "energy");
         if (neighbor.hasTag("dorios:fluid")) updatePipes(neighbor, "fluid");
+        if (neighbor.hasTag("dorios:gas")) updatePipes(neighbor, "gas");
 
         if (!energySeed && neighbor.hasTag?.("dorios:energy")) {
             energySeed = neighbor;
@@ -363,6 +369,19 @@ DoriosAPI.register.blockComponent("reinforced_cable", {
     }
 });
 
+DoriosAPI.register.blockComponent("gas_tube", {
+    beforeOnPlayerPlace(e) {
+        system.run(() => {
+            refreshNeighbors(e.block);
+        });
+    },
+    onPlayerBreak(e) {
+        system.run(() => {
+            refreshNeighbors(e.block);
+        });
+    }
+});
+
 // Keep cable geometry synced when placing/breaking relays (or other overclock network blocks)
 world.afterEvents.playerPlaceBlock.subscribe(({ block }) => {
     if (!block) return;
@@ -374,7 +393,7 @@ world.afterEvents.playerPlaceBlock.subscribe(({ block }) => {
         block.hasTag?.("dorios:fluid")
     ) {
         system.run(() => {
-            refreshGeometryOverclock(block.typeId === "utilitycraft:reinforced_cable" ? block : null);
+            refreshGeometryOverclock(TUBE_GEOMETRY_TYPES.has(block.typeId) ? block : null);
             refreshNeighborCablesAround(block);
             if (block.hasTag?.("dorios:energy")) {
                 refreshConnectedEnergy(block);

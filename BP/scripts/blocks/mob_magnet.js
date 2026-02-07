@@ -34,7 +34,8 @@ const EXCLUDED_FAMILIES = [
 const IMMUNE_TAG = "dorios:magnet_immune";
 const RANGE_STATE = "utilitycraft:range";
 const RANGE_SELECTED_STATE = "utilitycraft:rangeSelected";
-const FILTER_UPGRADE_STATE = "utilitycraft:filter_upgrade";
+const FILTER_UPGRADE_STATE = "utilitycraft:filter";
+const LEGACY_FILTER_UPGRADE_STATE = "utilitycraft:filter_upgrade";
 const MAGNET_COOLDOWN_PROP = "utilitycraft:mob_magnet_cooldown";
 const FILTER_MODES = {
 	BLACKLIST: "blacklist",
@@ -70,18 +71,18 @@ const getCurrentTick = () => globalThis[GLOBAL_TICK_KEY];
 
 DoriosAPI.register.blockComponent("mob_magnet", {
 	onTick({ block }) {
-		const rangeUpgrade = clampIndex(block.permutation.getState(RANGE_STATE), RANGE_LEVELS.length - 1);
+		const rangeUpgrade = clampIndex(getBlockStateValue(block.permutation, RANGE_STATE), RANGE_LEVELS.length - 1);
 		const maxRangeIndex = Math.min(rangeUpgrade, RANGE_LEVELS.length - 1);
 		const magnetId = getMagnetId(block.location);
 		const syncedState = syncMagnetState(block, magnetId, maxRangeIndex);
 		if (!syncedState.isOn) return;
 
 		const rangeSelected = syncedState.rangeIndex;
-		const trueRange = RANGE_LEVELS[rangeSelected];
+		const trueRange = RANGE_LEVELS[rangeSelected] ?? RANGE_LEVELS[0];
 		const cooldownTicks = getCooldownTicks(magnetId);
 		const now = getCurrentTick();
 
-		const hasFilterUpgrade = Number(block.permutation.getState(FILTER_UPGRADE_STATE)) > 0;
+		const hasFilterUpgrade = hasFilterUpgradeInstalled(block);
 		const filterConfig = hasFilterUpgrade ? getFilterConfig(magnetId) : null;
 
 		const { x, y, z } = block.location;
@@ -119,14 +120,7 @@ DoriosAPI.register.blockComponent("mob_magnet", {
 		if (hand || player.isSneaking) return;
 
 		const magnetId = getMagnetId(block.location);
-		const hasFilterUpgrade = Number(block.permutation.getState(FILTER_UPGRADE_STATE)) > 0;
-
-		if (hasFilterUpgrade) {
-			openEnhancedMenu(player, block, magnetId);
-			return;
-		}
-
-		openSettingsModal(player, block, magnetId);
+		openSettingsMenu(player, block, magnetId);
 	}
 });
 
@@ -140,56 +134,116 @@ function openEnhancedMenu(player, block, magnetId) {
 	menu.show(player).then(response => {
 		if (response.canceled || response.selection === undefined) return;
 		if (response.selection === 0) {
-			openSettingsModal(player, block, magnetId);
+			openSettingsMenu(player, block, magnetId, () => openEnhancedMenu(player, block, magnetId));
 			return;
 		}
 		openFilterMenu(player, block, magnetId);
 	});
 }
 
-function openSettingsModal(player, block, magnetId) {
-	const rangeUpgrade = clampIndex(block.permutation.getState(RANGE_STATE), RANGE_LEVELS.length - 1);
+function openSettingsMenu(player, block, magnetId, returnToMenu) {
+	const rangeUpgrade = clampIndex(getBlockStateValue(block.permutation, RANGE_STATE), RANGE_LEVELS.length - 1);
 	const maxRangeIndex = Math.min(rangeUpgrade, RANGE_LEVELS.length - 1);
 	const syncedState = syncMagnetState(block, magnetId, maxRangeIndex);
 	const isOn = syncedState.isOn;
 	const rangeSelected = syncedState.rangeIndex;
 	const cooldownIndex = getCooldownIndex(magnetId);
+	const rangeValue = RANGE_LEVELS[rangeSelected] ?? RANGE_LEVELS[0];
+	const cooldownTicks = COOLDOWN_OPTIONS[cooldownIndex] ?? COOLDOWN_OPTIONS[0];
+	const hasFilterUpgrade = hasFilterUpgradeInstalled(block);
+	const filterData = hasFilterUpgrade ? getFilterConfig(magnetId) : null;
+	const hasFilterEntries = Boolean(filterData?.list?.length);
+	const toggleKey = isOn
+		? "ui.utilitycraft.mob_magnet.settings.button.toggle_on"
+		: "ui.utilitycraft.mob_magnet.settings.button.toggle_off";
 
-	const rangeOptions = RANGE_LEVELS
-		.slice(0, maxRangeIndex + 1)
-		.map((value, idx) => tr("ui.utilitycraft.mob_magnet.settings.range_option", [value, idx]));
-	const cooldownOptions = COOLDOWN_OPTIONS.map(value => tr("ui.utilitycraft.mob_magnet.settings.cooldown_option", [value]));
-
-	const form = new ModalFormData()
+	const form = new ActionFormData()
 		.title(tr("ui.utilitycraft.mob_magnet.settings.title"))
-		.toggle(tr("ui.utilitycraft.mob_magnet.settings.toggle"), { defaultValue: isOn })
-		.dropdown(tr("ui.utilitycraft.mob_magnet.settings.range"), rangeOptions, { defaultValue: rangeSelected })
-		.dropdown(tr("ui.utilitycraft.mob_magnet.settings.cooldown"), cooldownOptions, { defaultValue: cooldownIndex });
+		.body(tr("ui.utilitycraft.mob_magnet.settings.body"))
+		.button(tr(toggleKey))
+		.button(tr("ui.utilitycraft.mob_magnet.settings.button.range", [rangeValue, rangeSelected]))
+		.button(tr("ui.utilitycraft.mob_magnet.settings.button.cooldown", [cooldownTicks]));
+
+	const actions = ["toggle", "range", "cooldown"];
+	if (hasFilterUpgrade && filterData) {
+		form.button(tr("ui.utilitycraft.mob_magnet.filter.add"));
+		actions.push("filter_add");
+
+		if (hasFilterEntries) {
+			form.button(tr("ui.utilitycraft.mob_magnet.filter.list", [filterData.list.length]));
+			actions.push("filter_list");
+
+			form.button(tr("ui.utilitycraft.mob_magnet.filter.remove"));
+			actions.push("filter_remove");
+		}
+
+		form.button(tr(getFilterModeButtonKey(filterData.mode)));
+		actions.push("filter_mode");
+	}
+	const hasReturn = typeof returnToMenu === "function";
+	if (hasReturn) {
+		form.button(tr("ui.utilitycraft.mob_magnet.settings.button.back"));
+		actions.push("back");
+	}
+
+	const returnToSettings = () => openSettingsMenu(player, block, magnetId, returnToMenu);
 
 	form.show(player).then(result => {
-		if (result.canceled || !result.formValues) return;
-		const [newOn, newRangeIndex, newCooldownIndex] = result.formValues;
+		if (result.canceled || result.selection === undefined) return;
+		const action = actions[result.selection];
 
-		const clampedRange = clampIndex(newRangeIndex, maxRangeIndex);
-		const appliedOn = Boolean(newOn);
-		applyBlockStates(block, {
-			"utilitycraft:isOn": appliedOn,
-			[RANGE_SELECTED_STATE]: getRangeStateValueFromIndex(clampedRange)
-		});
-		saveStoredMagnetState(magnetId, { isOn: appliedOn, rangeIndex: clampedRange });
+		switch (action) {
+			case "toggle": {
+				const appliedOn = !isOn;
+				applyBlockStates(block, {
+					"utilitycraft:isOn": appliedOn
+				});
+				saveStoredMagnetState(magnetId, { isOn: appliedOn, rangeIndex: rangeSelected });
+				break;
+			}
+			case "range": {
+				const nextRangeIndex = rangeSelected >= maxRangeIndex ? 0 : rangeSelected + 1;
+				applyBlockStates(block, {
+					[RANGE_SELECTED_STATE]: getRangeStateValueFromIndex(nextRangeIndex)
+				});
+				saveStoredMagnetState(magnetId, { isOn, rangeIndex: nextRangeIndex });
+				break;
+			}
+			case "cooldown": {
+				const nextCooldownIndex = (cooldownIndex + 1) % COOLDOWN_OPTIONS.length;
+				setCooldownIndex(magnetId, nextCooldownIndex);
+				break;
+			}
+			case "filter_add":
+				promptAddMob(player, block, magnetId, filterData ?? getFilterConfig(magnetId), returnToSettings);
+				return;
+			case "filter_list":
+				showFilteredMobList(player, block, magnetId, filterData ?? getFilterConfig(magnetId), returnToSettings);
+				return;
+			case "filter_remove":
+				promptRemoveMob(player, block, magnetId, filterData ?? getFilterConfig(magnetId), returnToSettings);
+				return;
+			case "filter_mode":
+				toggleFilterMode(player, block, magnetId, filterData ?? getFilterConfig(magnetId), returnToSettings);
+				return;
+			case "back":
+				returnToMenu();
+				return;
+		}
 
-		setCooldownIndex(magnetId, clampIndex(newCooldownIndex, COOLDOWN_OPTIONS.length - 1));
+		openSettingsMenu(player, block, magnetId, returnToMenu);
 	});
 }
 
 function openFilterMenu(player, block, magnetId) {
 	const filterData = getFilterConfig(magnetId);
 	const hasEntries = filterData.list.length > 0;
-	const modeLabel = formatModeLabel(filterData.mode);
+	const modeBodyKey = getFilterModeBodyKey(filterData.mode);
+	const modeButtonKey = getFilterModeButtonKey(filterData.mode);
 
 	const form = new ActionFormData()
 		.title(tr("ui.utilitycraft.mob_magnet.filter.title"))
-		.body(tr("ui.utilitycraft.mob_magnet.filter.body", [modeLabel]))
+		.body(tr(modeBodyKey))
 		.button(tr("ui.utilitycraft.mob_magnet.filter.add"));
 
 	const actions = ["add"];
@@ -202,7 +256,7 @@ function openFilterMenu(player, block, magnetId) {
 		actions.push("remove");
 	}
 
-	form.button(tr("ui.utilitycraft.mob_magnet.filter.mode_button", [modeLabel]));
+	form.button(tr(modeButtonKey));
 	actions.push("mode");
 
 	form.show(player).then(response => {
@@ -211,22 +265,22 @@ function openFilterMenu(player, block, magnetId) {
 
 		switch (action) {
 			case "add":
-				promptAddMob(player, block, magnetId, filterData);
+				promptAddMob(player, block, magnetId, filterData, () => openFilterMenu(player, block, magnetId));
 				break;
 			case "list":
-				showFilteredMobList(player, block, magnetId, filterData);
+				showFilteredMobList(player, block, magnetId, filterData, () => openFilterMenu(player, block, magnetId));
 				break;
 			case "remove":
-				promptRemoveMob(player, block, magnetId, filterData);
+				promptRemoveMob(player, block, magnetId, filterData, () => openFilterMenu(player, block, magnetId));
 				break;
 			case "mode":
-				toggleFilterMode(player, block, magnetId, filterData);
+				toggleFilterMode(player, block, magnetId, filterData, () => openFilterMenu(player, block, magnetId));
 				break;
 		}
 	});
 }
 
-function promptAddMob(player, block, magnetId, filterData) {
+function promptAddMob(player, block, magnetId, filterData, returnToMenu) {
 	const form = new ModalFormData()
 		.title(tr("ui.utilitycraft.mob_magnet.filter.add.title"))
 		.textField(
@@ -236,7 +290,7 @@ function promptAddMob(player, block, magnetId, filterData) {
 
 	form.show(player).then(result => {
 		if (result.canceled || !result.formValues) {
-			openFilterMenu(player, block, magnetId);
+			returnToMenu?.();
 			return;
 		}
 
@@ -244,7 +298,7 @@ function promptAddMob(player, block, magnetId, filterData) {
 		const normalized = normalizeMobId(input);
 		if (!normalized) {
 			player.onScreenDisplay.setActionBar(tr("ui.utilitycraft.mob_magnet.filter.add.invalid"));
-			promptAddMob(player, block, magnetId, filterData);
+			promptAddMob(player, block, magnetId, filterData, returnToMenu);
 			return;
 		}
 
@@ -258,11 +312,11 @@ function promptAddMob(player, block, magnetId, filterData) {
 			player.onScreenDisplay.setActionBar(tr("ui.utilitycraft.mob_magnet.filter.add.duplicate"));
 		}
 
-		promptAddMob(player, block, magnetId, filterData);
+		promptAddMob(player, block, magnetId, filterData, returnToMenu);
 	});
 }
 
-function showFilteredMobList(player, block, magnetId, filterData) {
+function showFilteredMobList(player, block, magnetId, filterData, returnToMenu) {
 	const form = new ActionFormData()
 		.title(tr("ui.utilitycraft.mob_magnet.filter.list_title"))
 		.body(
@@ -276,13 +330,13 @@ function showFilteredMobList(player, block, magnetId, filterData) {
 	}
 
 	form.show(player).then(() => {
-		openFilterMenu(player, block, magnetId);
+		returnToMenu?.();
 	});
 }
 
-function promptRemoveMob(player, block, magnetId, filterData) {
+function promptRemoveMob(player, block, magnetId, filterData, returnToMenu) {
 	if (filterData.list.length === 0) {
-		openFilterMenu(player, block, magnetId);
+		returnToMenu?.();
 		return;
 	}
 
@@ -296,7 +350,7 @@ function promptRemoveMob(player, block, magnetId, filterData) {
 
 	form.show(player).then(result => {
 		if (result.canceled || result.selection === undefined) {
-			openFilterMenu(player, block, magnetId);
+			returnToMenu?.();
 			return;
 		}
 
@@ -309,15 +363,15 @@ function promptRemoveMob(player, block, magnetId, filterData) {
 		}
 
 		if (filterData.list.length > 0) {
-			promptRemoveMob(player, block, magnetId, filterData);
+			promptRemoveMob(player, block, magnetId, filterData, returnToMenu);
 			return;
 		}
 
-		openFilterMenu(player, block, magnetId);
+		returnToMenu?.();
 	});
 }
 
-function toggleFilterMode(player, block, magnetId, filterData) {
+function toggleFilterMode(player, block, magnetId, filterData, returnToMenu) {
 	filterData.mode = filterData.mode === FILTER_MODES.WHITELIST
 		? FILTER_MODES.BLACKLIST
 		: FILTER_MODES.WHITELIST;
@@ -325,9 +379,9 @@ function toggleFilterMode(player, block, magnetId, filterData) {
 		player,
 		magnetId,
 		filterData,
-		tr("ui.utilitycraft.mob_magnet.filter.mode_switched", [formatModeLabel(filterData.mode)])
+		tr(getFilterModeSwitchedKey(filterData.mode))
 	);
-	openFilterMenu(player, block, magnetId);
+	returnToMenu?.();
 }
 
 function saveFilterAndNotify(player, magnetId, filterData, message) {
@@ -422,6 +476,29 @@ function applyBlockStates(block, updates) {
 	block.setPermutation(permutation);
 }
 
+function hasFilterUpgradeInstalled(block) {
+	const permutation = block?.permutation;
+	if (!permutation) return false;
+	const currentValue = getBlockStateValue(permutation, FILTER_UPGRADE_STATE);
+	if (currentValue !== undefined && currentValue !== null) {
+		return Number(currentValue) > 0;
+	}
+	const legacyValue = getBlockStateValue(permutation, LEGACY_FILTER_UPGRADE_STATE);
+	if (legacyValue !== undefined && legacyValue !== null) {
+		return Number(legacyValue) > 0;
+	}
+	return false;
+}
+
+function getBlockStateValue(permutation, stateId) {
+	if (!permutation) return undefined;
+	try {
+		return permutation.getState(stateId);
+	} catch {
+		return undefined;
+	}
+}
+
 function normalizeMobId(value) {
 	if (typeof value !== "string") return "";
 	return value.trim().toLowerCase();
@@ -433,6 +510,24 @@ function formatModeLabel(mode) {
 			? "ui.utilitycraft.mob_magnet.filter.mode.whitelist"
 			: "ui.utilitycraft.mob_magnet.filter.mode.blacklist"
 	);
+}
+
+function getFilterModeBodyKey(mode) {
+	return mode === FILTER_MODES.WHITELIST
+		? "ui.utilitycraft.mob_magnet.filter.body.whitelist"
+		: "ui.utilitycraft.mob_magnet.filter.body.blacklist";
+}
+
+function getFilterModeButtonKey(mode) {
+	return mode === FILTER_MODES.WHITELIST
+		? "ui.utilitycraft.mob_magnet.filter.mode_button.whitelist"
+		: "ui.utilitycraft.mob_magnet.filter.mode_button.blacklist";
+}
+
+function getFilterModeSwitchedKey(mode) {
+	return mode === FILTER_MODES.WHITELIST
+		? "ui.utilitycraft.mob_magnet.filter.mode_switched.whitelist"
+		: "ui.utilitycraft.mob_magnet.filter.mode_switched.blacklist";
 }
 
 function getMagnetStateKey(id) {
@@ -464,8 +559,8 @@ function saveStoredMagnetState(id, state) {
 function syncMagnetState(block, magnetId, maxRangeIndex) {
 	const stored = getStoredMagnetState(magnetId);
 	const permutation = block.permutation;
-	let isOn = Boolean(permutation.getState("utilitycraft:isOn"));
-	const blockStateValue = permutation.getState(RANGE_SELECTED_STATE);
+	let isOn = Boolean(getBlockStateValue(permutation, "utilitycraft:isOn"));
+	const blockStateValue = getBlockStateValue(permutation, RANGE_SELECTED_STATE);
 	let rangeIndex = clampIndex(getRangeIndexFromStateValue(blockStateValue), maxRangeIndex);
 
 	if (stored) {
@@ -478,7 +573,7 @@ function syncMagnetState(block, magnetId, maxRangeIndex) {
 	}
 
 	const updates = {};
-	if (Boolean(permutation.getState("utilitycraft:isOn")) !== isOn) {
+	if (Boolean(getBlockStateValue(permutation, "utilitycraft:isOn")) !== isOn) {
 		updates["utilitycraft:isOn"] = isOn;
 	}
 	const desiredStateValue = getRangeStateValueFromIndex(rangeIndex);

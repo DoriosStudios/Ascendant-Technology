@@ -14,8 +14,13 @@ import './machinery/machines/liquifier.js'
 import './machinery/machines/energizer.js'
 import './machinery/machines/laser_barrier.js'
 import './machinery/machines/residue_processor.js'
+import './machinery/machines/vaporworks_processor.js'
 import './machinery/machines/network_center.js'
 import './machinery/machines/tabs_test_machine.js'
+
+// Generators
+
+// Components
 
 // Blocks
 import './machinery/machines/absolute_container.js'

@@ -113,8 +113,17 @@ Some simple rules to keep in mind:
 - Use proper capitalization for item and block names.
 - When listing multiple changes for a single item or block, use sub-bullets for clarity
 - Always follow alphabetical order within sections and sub-sections for easy navigation.
-    - "Changes" overwrites this rule. "Added" always comes first, then "Changes" and then "Removed".
+  - "Changes" overwrites this rule. "Added" always comes first, then "Changes" and then "Removed".
+  - Exceptions: keep tier progressions, step-by-step flows, and issue-linked groups in logical order instead of alphabetical order.
 - Remember to include brief summaries at the top of each changelog file, as shown in the examples. These are important for users to quickly understand the main features of the update.
+
+Scope and detail guardrails (important for consistency):
+- Keep player-facing sections (BLOCKS, ITEMS, RECIPES, UI/UX, FLUIDS, BUG FIXES) free of internal IDs, file paths, script names, constants, or debug tooling.
+- BUG FIXES should describe user-visible outcomes. Root causes and developer-only issues belong in TECHNICAL CHANGES.
+- Omit purely dev-only changes (formatting-only, refactors, linting) unless they affect pack consumers or modpack developers.
+- Avoid explanation-only bullets; each bullet should state what changed and, optionally, the player impact.
+- Use a short Note only when behavior might surprise players.
+- For tiered items (modules/armor/tools), list tiers in order with a one-line effect each; keep it concise and player-facing.
 
 Additional consistency rules from recent files:
 - Prefer one concise summary paragraph at the top. Avoid lists in the summary.

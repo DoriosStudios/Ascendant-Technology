@@ -81,21 +81,32 @@ Machine status:
 		- **Notes:** Cryofluid can be used in other machines or crafting recipes.
 		- **Operating Mode:** Uses fluid input/output ports to convert water into Cryofluid over time. Is a machine with 2 fluid tanks (input and output) and do not accept items as input for this function.
 
-- 🟢 **Vaporworks Processor (Steam/Gas)**
-- 🟠 **Ascane Engine (formerly Synthesis Crucible)**
+- 🟢 **Ascane Engine (formerly Synthesis Crucible)**
 	- **Purpose:** High-tier repair, enchantment, and reinforcement hub for equipment.
 	- **Operating Mode:** 3×3 equipment grid; repairs always run, while enchant and reinforcement run when their modules are installed.
 	- **Modules:** Enchantment Module (levels 1–5) and Reinforcement Module (levels 1–3).
 	- **Notes:** Enchantment levels depend on module tier and item rarity; overclock adds its normal boosts and increases reinforcement beyond 100% when Tier 3 is installed (bonus uses half the overclock boost).
 
-- 🟠 **Vaporworks Processor (Steam/Gas)**
+- 🟢 **Vaporworks Processor (Steam/Gas)**
 	- **Purpose:** Converts water into steam and other gases as supplemental reagents.
 	- **Operating Mode:** Heat + fluid input turn water into steam, which can be fed into other systems.
 	- **Additional Fields:**
 		- **Usage:** Auxiliary input for specific machines, temporary processing boosts.
 		- **Notes:** Steam is a resource, not a power substitute; no complex gas piping required (initially).
 
-- 🟠 **Dimensional Teleporter**
+- 🟡 **Water Wheel**
+	- **Purpose:** Kinetic generator that harnesses flowing water to produce DE.
+	- **Operating Mode:** Place in flowing water; generates DE based on flow speed and wheel size.
+	- **Type**: Passive.
+	- **Unique Features:**
+		- **Flow Sensitivity:** More flow = more power. (Flow = Flowing Water block state in Minecraft)
+		- **Size Variants:** Different wheel sizes: small, medium, large.
+			- **Small:** Low output, easy to place in tight spaces. 2x2x1. Low energy generation potential. Easy to obtain, but weaker than a Solar Panel.
+			- **Medium:** Balanced output and size.	3x3x1. Moderate energy generation potential. A little less than Magmator level of efficiency.
+			- **Large:** High output, requires more space. 4x4x2. Greater energy generation potential, being compared to Wind Turbine level of efficiency.
+		- **Interconnectivity:** Can be aligned in series for compounded output.
+
+- 🟡 **Dimensional Teleporter**
 	- **Purpose:** Anchor-linked platform for deliberate teleportation.
 	- **Operating Mode:** Requires a linked core and high energy cost per activation.
 	- **Additional Fields:**
@@ -103,14 +114,14 @@ Machine status:
 		- **Restrictions:** No instant spam teleport; physical installation needed in each dimension.
 		- **Notes:** Late-game infrastructure; not a fast-travel replacement.
 
-- 🟠 **Item Energizer Pad**
+- 🟡 **Item Energizer Pad**
 	- **Purpose:** Benchtop booster that bathes tools in temporary buffs while draining power continuously.
 	- **Operating Mode:** Provides continuous energy drain while items remain active on the pad.
 	- **Additional Fields:**
 		- **Effects:** Enhanced efficiency, faster operation, temporary bonuses that wear off once removed.
 		- **Notes:** No permanent upgrades applied to items.
 
-- 🟠 **Portable Power Cell**
+-  **Portable Power Cell**
 	- **Purpose:** Pocket battery tiers for backpackable DE storage and emergency jump-starts.
 	- **Operating Mode:** Chargeable in machines, carries stored energy while on the player.
 	- **Additional Fields:**

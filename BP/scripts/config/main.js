@@ -31,5 +31,6 @@ import './recipes/added/insert_incinerator.js';
 
 import './fluids/items.js';
 import './fluids/coolant_register.js';
+import './gases/items.js';
 
 // Dynamic properties used across the pack (overclock burn/power/eff etc.)

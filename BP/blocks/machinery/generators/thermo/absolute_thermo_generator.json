@@ -23,7 +23,6 @@
 			}
 		},
 		"components": {
-			"utilitycraft:fluid_container": {},
 			"utilitycraft:thermo_generator": {
 				"entity": {
 					"name": "thermo_generator",

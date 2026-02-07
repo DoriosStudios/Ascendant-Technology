@@ -97,6 +97,7 @@ Stability and correctness updates for the Overclock system, improved machine upg
 ### Core Utilities
 - Improved time/format helpers, numeric scaling, and fluid/energy parsing utilities.
 - Extended command helpers and block-lookup APIs used across scripts.
+- Updated the drop system to support `dropMode` (replace/supplement/vanilla) and broader tool tag matching.
 
 ### HUD & UI Assets
 - HUD and lore fluid display now uses bucket-based units: `mB → B → KB → MB → GB → TB → PB` (decimal scaling).

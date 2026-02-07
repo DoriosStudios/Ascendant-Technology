@@ -120,6 +120,10 @@
  * @property {string=} dropId - Drop alternativo para a ferramenta.
  * @property {string=} silkDropId - Drop alternativo com Silk Touch.
  * @property {[number, number]=} baseRange - Intervalo padrão. Ex: `[1, 1]`.
+ * @property {'replace'|'supplement'|'vanilla'=} dropMode - Como lidar com o drop vanilla quando este override é aplicado.
+ *   - `replace`: substitui o drop vanilla (cancela a quebra).
+ *   - `supplement`: mantém o vanilla e adiciona extras (não cancela).
+ *   - `vanilla`: não gera o drop base (só extras/efeitos).
  * @property {FortuneTier[]=} fortuneTiers - Tiers customizados.
  * @property {FortuneMath=} fortuneMath - Escala customizada.
  * @property {string|string[]=} toolType - Tag extra exigida. Ex: `"utilitycraft:is_hammer"`.
@@ -140,7 +144,11 @@
  * @property {string=} dropId - Drop principal. Ex: `"minecraft:iron_ore"`.
  * @property {string=} silkDropId - Drop com Silk Touch. Ex: `"minecraft:stone"`.
  * @property {[number, number]=} baseRange - Range base. Ex: `[1, 2]`.
- * @property {boolean=} replaceVanilla - Trocar drop vanilla. Ex: `true`.
+ * @property {'replace'|'supplement'|'vanilla'=} dropMode - Como lidar com o drop vanilla.
+ *   - `replace`: substitui o drop vanilla (cancela a quebra).
+ *   - `supplement`: mantém o vanilla e adiciona extras (não cancela).
+ *   - `vanilla`: não gera o drop base (só extras/efeitos).
+ * @property {boolean=} replaceVanilla - Legado: `true` → replace, `false` → supplement.
  * @property {string|string[]=} toolType - Tag(s) exigidas. Ex: `"minecraft:is_pickaxe"`.
  * @property {FortuneTier[]=} fortuneTiers - Tiers de Fortune.
  * @property {FortuneMath=} fortuneMath - Escala dinâmica.

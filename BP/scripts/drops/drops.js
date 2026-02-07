@@ -13,6 +13,7 @@ export const DROPS_LIBRARY = {
 		dropId: 'utilitycraft:aetherium_shard',
 		silkDropId: 'utilitycraft:deepslate_aetherium_ore',
 		baseRange: [1, 1],
+		dropMode: 'vanilla',
 		fortuneMath: { mode: 'multiplier', perLevel: [0.2, 0.5] },
 	}),
 
@@ -21,6 +22,7 @@ export const DROPS_LIBRARY = {
 		dropId: 'utilitycraft:aetherium_shard',
 		silkDropId: 'utilitycraft:end_aetherium_ore',
 		baseRange: [1, 1],
+		dropMode: 'vanilla',
 		// Use math-based scaling here for a smoother curve
 		fortuneMath: { mode: 'multiplier', perLevel: [0.5, 0.75] }
 	}),
@@ -32,6 +34,7 @@ export const DROPS_LIBRARY = {
 		baseSound: { id: 'dig.deepslate', volume: 1, pitch: 1 },
 		suppressVanillaSound: false,
 		baseRange: [1, 1],
+		dropMode: 'vanilla',
 		fortuneMath: { mode: 'bonus', perLevel: [0.6, 1] },
 		specialTools: [
 			{
@@ -74,6 +77,12 @@ const toolFetchedTags = new Set([
 	'utilitycraft:is_hammer',
 	'utilitycraft:is_paxel'
 ]);
+
+const normalizeRequiredTags = (requiredType) => {
+	if (!requiredType) return [];
+	if (Array.isArray(requiredType)) return requiredType.map(tag => String(tag));
+	return [String(requiredType)];
+};
 
 // Safe random helper: uses DoriosAPI.randomInterval when available, else a local inclusive random int.
 const randInt = (min, max) => {
@@ -288,6 +297,21 @@ function matchesConditions(ctx, conditions) {
 	return true;
 }
 
+const DROP_MODES = new Set(["replace", "supplement", "vanilla"]);
+
+function resolveDropMode(config, usedSpecialOverride) {
+	const rawMode = typeof config?.dropMode === "string" ? config.dropMode.toLowerCase() : null;
+	if (rawMode && DROP_MODES.has(rawMode)) {
+		if (usedSpecialOverride && rawMode === "vanilla") return "replace";
+		return rawMode;
+	}
+
+	if (config?.replaceVanilla === false) return "supplement";
+	if (config?.replaceVanilla === true) return "replace";
+	if (usedSpecialOverride) return "replace";
+	return "replace";
+}
+
 /**
  * Compute drops for a block using the provided config.
  * @param {DropContext} context
@@ -318,7 +342,9 @@ function computeDrops(context, config) {
 		}
 	}
 
-	const hasBaseDrop = Boolean(config.dropId && Array.isArray(config.baseRange));
+	const dropMode = resolveDropMode(config, usedSpecialOverride);
+	const baseDropEnabled = dropMode === "replace";
+	const hasBaseDrop = Boolean(baseDropEnabled && config.dropId && Array.isArray(config.baseRange));
 	const extraDrops = resolveExtraDrops(config, context.fortuneLevel);
 	const hasExtras = Boolean(
 		extraDrops.length ||
@@ -328,7 +354,7 @@ function computeDrops(context, config) {
 		config.commands?.length ||
 		config.xp !== undefined
 	);
-	const replaceVanilla = config.replaceVanilla ?? (hasBaseDrop || usedSpecialOverride);
+	const replaceVanilla = dropMode === "replace";
 	const sound = usedSpecialOverride ? specialSound : undefined;
 
 	if (!hasBaseDrop && !usedSpecialOverride && !hasExtras) {
@@ -342,7 +368,7 @@ function computeDrops(context, config) {
 
 	if (context.hasSilkTouch) {
 		const drops = [];
-		if (config.silkDropId) {
+		if (baseDropEnabled && config.silkDropId) {
 			drops.push(new ItemStack(config.silkDropId, 1));
 		}
 
@@ -367,7 +393,7 @@ function computeDrops(context, config) {
 		};
 	}
 
-	if (!config.dropId || !config.baseRange) {
+	if (!baseDropEnabled || !config.dropId || !config.baseRange) {
 		if (!extraDrops.length && !hasExtras && !usedSpecialOverride) return null;
 		return {
 			drops: extraDrops,
@@ -406,11 +432,15 @@ function tier(level, min, max) {
 	return { level, range: [min, max] };
 }
 
-function getTagsFromTool(tool) {
+function getTagsFromTool(tool, requiredType) {
 	if (!tool) return [];
 	try {
 		const rawToolTags = tool.getTags?.() ?? [];
-		return rawToolTags.filter(t => toolFetchedTags.has(t));
+		if (!rawToolTags.length) return [];
+		const requiredTags = normalizeRequiredTags(requiredType);
+		if (!requiredTags.length) return rawToolTags;
+		const requiredSet = new Set(requiredTags);
+		return rawToolTags.filter(tag => toolFetchedTags.has(tag) || requiredSet.has(tag));
 	} catch {
 		return [];
 	}
@@ -425,7 +455,7 @@ function getTagsFromTool(tool) {
  */
 function toolMatchesType(tool, requiredType) {
 	if (!requiredType) return true;
-	const toolTags = getTagsFromTool(tool);
+	const toolTags = getTagsFromTool(tool, requiredType);
 	if (!toolTags.length) return false;
 
 	if (Array.isArray(requiredType)) {

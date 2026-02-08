@@ -412,6 +412,7 @@ const coolingRecipes = [
  * @property {number} [maxProcessPerTick] Max millibuckets processed per tick.
  * @property {CryofluidCatalystRequirement} [catalyst] Optional legacy single catalyst definition.
  * @property {CryofluidCatalystRequirement[]} [catalysts] Optional array of catalysts (first matching item is used).
+ * @property {CryofluidSupplementRequirement} [lapisRequirement] Optional Lapis requirement per 1000 mB water processed.
  */
 
 /**
@@ -420,6 +421,13 @@ const coolingRecipes = [
  * @property {number} itemsPerProcess Item count consumed per catalyst cycle.
  * @property {number} waterPerItem Millibuckets of input fluid processed per catalyst cycle.
  * @property {number} [cryoPerItem] Millibuckets of cryofluid produced per catalyst item (defaults to waterPerItem * conversionRate).
+ * @property {string} [label] Optional display label used in UI messages.
+ */
+
+/**
+ * @typedef {Object} CryofluidSupplementRequirement
+ * @property {string} itemId Item identifier required alongside the catalyst (e.g. "minecraft:lapis_lazuli").
+ * @property {number} itemsPer1000mB Items consumed per 1000 mB of water processed.
  * @property {string} [label] Optional display label used in UI messages.
  */
 
@@ -432,6 +440,12 @@ const defaultTitaniumCatalyst = {
     cryoPerItem: 800
 };
 
+const lapisRequirement = {
+    itemId: 'minecraft:lapis_lazuli',
+    label: 'Lapis Lazuli',
+    itemsPer1000mB: 8
+};
+
 const cryofluidGeneration = {
     inputFluid: 'water',
     outputFluid: 'cryofluid',
@@ -442,6 +456,7 @@ const cryofluidGeneration = {
     minOutput: 50,
     maxProcessPerTick: 1000,
     catalyst: defaultTitaniumCatalyst,
+    lapisRequirement,
     catalysts: [
         defaultTitaniumCatalyst,
         {

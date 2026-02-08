@@ -9,7 +9,7 @@ import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../confi
  * Operating Modes:
  * 1. Cryo Stabilizer - Stabilizes volatile materials using cryofluid
  * 2. Cooling Chamber - Converts items/food to cold variants
- * 3. Cryofluid Generator - Converts water + titanium catalyst into cryofluid
+ * 3. Cryofluid Generator - Converts water + titanium catalyst + lapis into cryofluid
  * 
  * Slot Layout (inventory_size: 27):
  * - [0] Energy HUD
@@ -24,6 +24,7 @@ import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../confi
  * - [13] Cryofluid tank display
  * - [14] Stabilizer output slot
  * - [19] Titanium catalyst slot (generator)
+ * - [21] Lapis slot (generator)
  * - [18] Cooling status label
  * - [20] Generator status label
  * - [23] Layout guide indicator
@@ -41,6 +42,7 @@ const WATER_DISPLAY_SLOT = 11;
 const CRYOFLUID_SLOT = 12;
 const CRYOFLUID_DISPLAY_SLOT = 13;
 const TITANIUM_SLOT = 19;
+const LAPIS_SLOT = 21;
 const STABILIZER_OUTPUT_SLOT = 14;
 const FREEZER_GRID_SLOTS = [6, 7, 8, 15, 16, 17, 24, 25, 26];
 const GENERATOR_STATUS_SLOT = 20;
@@ -72,7 +74,8 @@ const MODULE_CONFIG = {
         key: 'generator',
         label: MODULE_LABELS.generator,
         statusSlot: GENERATOR_STATUS_SLOT,
-        inputSlot: TITANIUM_SLOT
+        inputSlot: TITANIUM_SLOT,
+        lapisSlot: LAPIS_SLOT
     }
 };
 
@@ -436,15 +439,21 @@ function processGenerator(machine, waterTank, cryofluidTank, settings) {
     const module = MODULE_CONFIG.generator;
     const key = module.key;
     const catalysts = resolveGeneratorCatalysts(config);
+    const lapisRequirement = normalizeGeneratorSupplement(config?.lapisRequirement);
     const maxProcessPerTick = Math.max(1, config.maxProcessPerTick ?? 1000);
     const speedMultiplier = Math.max(1, machine.boosts.speed ?? 1);
     const minWaterRequired = Math.max(1, config.minInput ?? 100);
     const minCryoSpace = Math.max(1, config.minOutput ?? 50);
     const catalystSlot = module.inputSlot;
     const catalystStack = typeof catalystSlot === 'number' ? machine.inv.getItem(catalystSlot) : undefined;
+    const lapisSlot = module.lapisSlot;
+    const lapisStack = typeof lapisSlot === 'number' ? machine.inv.getItem(lapisSlot) : undefined;
     let catalystItemsNeeded = 0;
+    let lapisItemsNeeded = 0;
     let activeCatalyst = null;
     let activeCatalystLabel = '';
+    let lapisLabel = lapisRequirement?.label
+        ?? (lapisRequirement?.itemId ? formatItemName(lapisRequirement.itemId) : 'Lapis Lazuli');
     let itemsPerProcess = 0;
     let waterPerItem = 0;
     let cryoPerItem = 0;
@@ -510,6 +519,25 @@ function processGenerator(machine, waterTank, cryofluidTank, settings) {
         }
     }
 
+    if (lapisRequirement) {
+        if (!lapisStack || lapisStack.typeId !== lapisRequirement.itemId) {
+            return fail(`Need ${lapisLabel}`);
+        }
+
+        const lapisPerCycle = Math.max(1, lapisRequirement.itemsPer1000mB);
+        const availableCycles = Math.floor((lapisStack.amount ?? 0) / lapisPerCycle);
+        if (availableCycles <= 0) {
+            return fail(`Need ${lapisLabel}`);
+        }
+
+        const maxWaterFromLapis = availableCycles * 1000;
+        processAmount = Math.min(processAmount, maxWaterFromLapis);
+
+        if (processAmount < minWaterRequired) {
+            return fail(`Need ${lapisLabel}`);
+        }
+    }
+
     if (processAmount <= 0) {
         return fail('Need Water');
     }
@@ -535,6 +563,15 @@ function processGenerator(machine, waterTank, cryofluidTank, settings) {
         }
     }
 
+    if (lapisRequirement) {
+        const lapisPerCycle = Math.max(1, lapisRequirement.itemsPer1000mB);
+        const cyclesNeeded = Math.max(1, Math.ceil(processAmount / 1000));
+        lapisItemsNeeded = Math.max(lapisPerCycle, cyclesNeeded * lapisPerCycle);
+        if ((lapisStack?.amount ?? 0) < lapisItemsNeeded) {
+            return fail(`Need ${lapisLabel}`);
+        }
+    }
+
     let potentialOutput = Math.floor(processAmount * conversionPerWater);
     const outputAmount = Math.min(potentialOutput, cryofluidSpace);
     if (outputAmount <= 0) {
@@ -551,12 +588,20 @@ function processGenerator(machine, waterTank, cryofluidTank, settings) {
         if (catalystItemsNeeded > 0 && typeof catalystSlot === 'number') {
             machine.entity.changeItemAmount(catalystSlot, -catalystItemsNeeded);
         }
+        if (lapisItemsNeeded > 0 && typeof lapisSlot === 'number') {
+            machine.entity.changeItemAmount(lapisSlot, -lapisItemsNeeded);
+        }
         setModuleProgress(machine, key, 0);
         displayModuleProgress(machine, key, module.progressSlot, module.indicatorType);
-        const suffix = catalystItemsNeeded > 0
-            ? ` (${activeCatalystLabel || 'Catalyst'} -${catalystItemsNeeded})`
-            : '';
-        return createModuleStatus(key, module.label, 'processing', `+${FluidManager.formatFluid(outputAmount)}${suffix}`);
+        const completionParts = [];
+        if (catalystItemsNeeded > 0) {
+            completionParts.push(`${activeCatalystLabel || 'Catalyst'} -${catalystItemsNeeded}`);
+        }
+        if (lapisItemsNeeded > 0) {
+            completionParts.push(`${lapisLabel} -${lapisItemsNeeded}`);
+        }
+        const completionSuffix = completionParts.length ? ` (${completionParts.join(', ')})` : '';
+        return createModuleStatus(key, module.label, 'processing', `+${FluidManager.formatFluid(outputAmount)}${completionSuffix}`);
     }
 
     const consumption = machine.boosts.consumption;
@@ -571,10 +616,15 @@ function processGenerator(machine, waterTank, cryofluidTank, settings) {
         const gained = spendable / Math.max(consumption, Number.EPSILON);
         addModuleProgress(machine, key, gained);
         displayModuleProgress(machine, key, module.progressSlot, module.indicatorType);
-        const suffix = catalystItemsNeeded > 0
-            ? ` (${activeCatalystLabel || 'Catalyst'} ${catalystItemsNeeded})`
-            : '';
-        return createModuleStatus(key, module.label, 'processing', `Converting ${FluidManager.formatFluid(processAmount)}${suffix}`);
+        const processingParts = [];
+        if (catalystItemsNeeded > 0) {
+            processingParts.push(`${activeCatalystLabel || 'Catalyst'} ${catalystItemsNeeded}`);
+        }
+        if (lapisItemsNeeded > 0) {
+            processingParts.push(`${lapisLabel} ${lapisItemsNeeded}`);
+        }
+        const processingSuffix = processingParts.length ? ` (${processingParts.join(', ')})` : '';
+        return createModuleStatus(key, module.label, 'processing', `Converting ${FluidManager.formatFluid(processAmount)}${processingSuffix}`);
     }
 
     displayModuleProgress(machine, key, module.progressSlot, module.indicatorType);
@@ -590,7 +640,7 @@ function updateOperationGuide(machine) {
         '§rCryo Chamber Layout',
         '§7All modules run simultaneously',
         '',
-        '§9Left: Cryofluid Generator (Water + Titanium)',
+        '§9Left: Cryofluid Generator (Water + Titanium + Lapis)',
         '§bCenter: Cryo Stabilizer',
         '§aRight Grid: Cooling Chamber (3x3)'
     ].join('\n');
@@ -706,6 +756,11 @@ function renderModuleStatus(machine, moduleConfig, status, waterTank, cryofluidT
             const catalystStack = machine.inv.getItem(moduleConfig.inputSlot);
             const catalystLabel = catalystStack ? formatItemName(catalystStack.typeId) : 'Titanium';
             lines.push(`§r${COLORS.white}${catalystLabel} x${catalystStack?.amount ?? 0}`);
+        }
+        if (typeof moduleConfig.lapisSlot === 'number') {
+            const lapisStack = machine.inv.getItem(moduleConfig.lapisSlot);
+            const lapisLabel = lapisStack ? formatItemName(lapisStack.typeId) : 'Lapis Lazuli';
+            lines.push(`§r${COLORS.white}${lapisLabel} x${lapisStack?.amount ?? 0}`);
         }
     }
 
@@ -837,6 +892,21 @@ function normalizeGeneratorCatalyst(entry) {
         itemsPerProcess,
         waterPerItem,
         cryoPerItem
+    };
+}
+
+function normalizeGeneratorSupplement(entry) {
+    if (!entry || typeof entry.itemId !== 'string') {
+        return null;
+    }
+    const itemsPer1000mB = Math.max(1, Number(entry.itemsPer1000mB) || 1);
+    const label = typeof entry.label === 'string' && entry.label.trim().length > 0
+        ? entry.label.trim()
+        : undefined;
+    return {
+        itemId: entry.itemId,
+        label,
+        itemsPer1000mB
     };
 }
 

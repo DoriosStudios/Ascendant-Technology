@@ -136,6 +136,27 @@
 		"utilitycraft_item_conduit": {
 			"textures": "textures/blocks/pipes/flat_conduit"
 		},
+		"utilitycraft_conveyor_1": {
+			"textures": "textures/blocks/transportation/conveyor_1"
+		},
+		"utilitycraft_conveyor_inclined": {
+			"textures": "textures/blocks/transportation/conveyor_inclined"
+		},
+		"utilitycraft_conveyor_inclined_2": {
+			"textures": "textures/blocks/transportation/conveyor_inclined"
+		},
+		"utilitycraft_conveyor_bridge_path": {
+			"textures": "textures/blocks/laser_barrier_field"
+		},
+		"utilitycraft_conveyor_bridge_path_copper": {
+			"textures": "textures/blocks/laser_barrier_field"
+		},
+		"utilitycraft_conveyor_bridge_path_titanium": {
+			"textures": "textures/blocks/laser_barrier_field"
+		},
+		"utilitycraft_conveyor_bridge_path_aetherium": {
+			"textures": "textures/blocks/laser_barrier_field"
+		},
 		"utilitycraft_reinforced_cable": {
 			"textures": "textures/blocks/pipes/reinforced_cable"
 		},

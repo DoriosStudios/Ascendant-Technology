@@ -29,6 +29,51 @@ tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
 tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7  Atrae mobs en un radio configurable
 tile.utilitycraft:laser_barrier_field.name=Campo de Barrera Láser\n§7  Zona activa proyectada por la barrera
 tile.utilitycraft:reinforced_cable.name=Cable Reforzado\n§7- Espina dorsal reforzada para energía, fluidos y overclock
+tile.utilitycraft:copper_conveyor_horizontal.name=Cinta Transportadora de Cobre (Horizontal)
+tile.utilitycraft:copper_conveyor_inclined.name=Cinta Transportadora de Cobre (Inclinada)
+tile.utilitycraft:copper_conveyor_declined.name=Cinta Transportadora de Cobre (Descendente)
+tile.utilitycraft:copper_conveyor_vertical.name=Cinta Transportadora de Cobre (Vertical)
+tile.utilitycraft:copper_conveyor_bridge_transmitter.name=Puente de Cinta de Cobre (Transmisor)
+tile.utilitycraft:copper_conveyor_bridge_receiver.name=Puente de Cinta de Cobre (Receptor)
+
+tile.utilitycraft:titanium_conveyor_horizontal.name=Cinta Transportadora de Titanio (Horizontal)
+tile.utilitycraft:titanium_conveyor_inclined.name=Cinta Transportadora de Titanio (Inclinada)
+tile.utilitycraft:titanium_conveyor_declined.name=Cinta Transportadora de Titanio (Descendente)
+tile.utilitycraft:titanium_conveyor_vertical.name=Cinta Transportadora de Titanio (Vertical)
+tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=Puente de Cinta de Titanio (Transmisor)
+tile.utilitycraft:titanium_conveyor_bridge_receiver.name=Puente de Cinta de Titanio (Receptor)
+
+tile.utilitycraft:aetherium_conveyor_horizontal.name=Cinta Transportadora de Aetherium (Horizontal)
+tile.utilitycraft:aetherium_conveyor_inclined.name=Cinta Transportadora de Aetherium (Inclinada)
+tile.utilitycraft:aetherium_conveyor_declined.name=Cinta Transportadora de Aetherium (Descendente)
+tile.utilitycraft:aetherium_conveyor_vertical.name=Cinta Transportadora de Aetherium (Vertical)
+tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=Puente de Cinta de Aetherium (Transmisor)
+tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=Puente de Cinta de Aetherium (Receptor)
+
+tile.utilitycraft:conveyor_router.name=Enrutador de Cinta
+tile.utilitycraft:conveyor_smart_router.name=Enrutador Inteligente de Cinta
+tile.utilitycraft:conveyor_overflow.name=Cinta de Desbordamiento
+tile.utilitycraft:conveyor_underflow.name=Cinta de Subflujo
+tile.utilitycraft:conveyor_junction.name=Unión de Cinta
+tile.utilitycraft:conveyor_network_updater.name=Actualizador de Red de Cintas
+
+tile.utilitycraft:copper_conveyor_bridge_path.name=Camino del Puente de Cobre
+tile.utilitycraft:titanium_conveyor_bridge_path.name=Camino del Puente de Titanio
+tile.utilitycraft:aetherium_conveyor_bridge_path.name=Camino del Puente de Aetherium
+
+ui.utilitycraft.smart_router.title=Enrutador Inteligente
+ui.utilitycraft.smart_router.body_empty=Sostén un objeto para asignarlo a una dirección.
+ui.utilitycraft.smart_router.body_held=En mano: %s
+ui.utilitycraft.smart_router.button.assign_left=Asignar a la Izquierda
+ui.utilitycraft.smart_router.button.assign_front=Asignar al Frente
+ui.utilitycraft.smart_router.button.assign_right=Asignar a la Derecha
+ui.utilitycraft.smart_router.button.remove_item=Quitar objeto en mano
+ui.utilitycraft.smart_router.button.view=Ver asignaciones
+ui.utilitycraft.smart_router.button.clear_all=Limpiar todo
+ui.utilitycraft.smart_router.button.close=Cerrar
+ui.utilitycraft.smart_router.saved=Guardado.
+ui.utilitycraft.smart_router.removed=Eliminado.
+ui.utilitycraft.smart_router.cleared=Limpiado.
 tile.utilitycraft:aetherium_block.name=Bloque de Aetherium
 tile.utilitycraft:titanium_block.name=Bloque de Titanio
 tile.utilitycraft:raw_titanium_block.name=Bloque de Titanio en bruto
@@ -77,6 +122,7 @@ item.utilitycraft:pure_enderling_tear=Lágrima de Enderling Pura
 ## Módulos
 item.utilitycraft:size_upgrade=Mejora de §gTamaño§7\n- Aumenta el área de la Barrera Láser
 item.utilitycraft:hyper_processing_upgrade=Mejora de §dProcesamiento Híper§7\n- Aumenta la velocidad de operación de las máquinas\n- No aumenta el consumo de energía
+item.utilitycraft:upgrade_package=§6Paquete de Mejoras§7\n- Guarda mejoras de cintas para instalar en la red
 
 ## Mallas y Redes
 item.utilitycraft:lucky_mesh=§aMalla de la Suerte\n§7- Nivel Máx: Diamante\n§7- Multiplicador de Ítems: 2x
@@ -163,6 +209,18 @@ at:ui.l=L
 at:ui.e=E
 
 ui.utilitycraft:status_label_container=Información del Contenedor
+ui.utilitycraft.conveyor.bridge_obstructed=§cCamino del puente obstruido
+ui.utilitycraft.conveyor.upgrade_package.title=Paquete de Mejoras
+ui.utilitycraft.conveyor.upgrade_package.body=Elige dónde aplicar las mejoras almacenadas.
+ui.utilitycraft.conveyor.upgrade_package.body_empty=No hay mejoras guardadas en este paquete.
+ui.utilitycraft.conveyor.upgrade_package.button.network=Aplicar a la Red
+ui.utilitycraft.conveyor.upgrade_package.button.network_type=Aplicar a la Red (Este Tipo)
+ui.utilitycraft.conveyor.upgrade_package.button.type=Aplicar a Todos de Este Tipo
+ui.utilitycraft.conveyor.upgrade_package.button.block=Aplicar a Esta Cinta
+ui.utilitycraft.conveyor.upgrade_package.button.global=Aplicar Globalmente
+ui.utilitycraft.conveyor.upgrade_package.button.cancel=Cancelar
+ui.utilitycraft.conveyor.upgrade_package.applied=Mejoras aplicadas.
+ui.utilitycraft.conveyor.upgrade_package.failed=No se pudieron aplicar las mejoras.
 
 ui.utilitycraft.water_label=§9Agua
 ui.utilitycraft.cryofluid_label=§bCriolíquido

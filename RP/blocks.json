@@ -100,5 +100,89 @@
 	},
 	"utilitycraft:raw_titanium_block": {
 		"sound": "metal"
+	},
+	"utilitycraft:conveyor_bridge_path": {
+		"sound": "glass"
+	},
+	"utilitycraft:copper_conveyor_bridge_path": {
+		"sound": "glass"
+	},
+	"utilitycraft:titanium_conveyor_bridge_path": {
+		"sound": "glass"
+	},
+	"utilitycraft:aetherium_conveyor_bridge_path": {
+		"sound": "glass"
+	},
+	"utilitycraft:conveyor_router": {
+		"sound": "metal"
+	},
+	"utilitycraft:conveyor_smart_router": {
+		"sound": "metal"
+	},
+	"utilitycraft:conveyor_overflow": {
+		"sound": "metal"
+	},
+	"utilitycraft:conveyor_underflow": {
+		"sound": "metal"
+	},
+	"utilitycraft:conveyor_junction": {
+		"sound": "metal"
+	},
+	"utilitycraft:conveyor_network_updater": {
+		"sound": "metal"
+	},
+	"utilitycraft:copper_conveyor_horizontal": {
+		"sound": "metal"
+	},
+	"utilitycraft:copper_conveyor_inclined": {
+		"sound": "metal"
+	},
+	"utilitycraft:copper_conveyor_declined": {
+		"sound": "metal"
+	},
+	"utilitycraft:copper_conveyor_vertical": {
+		"sound": "metal"
+	},
+	"utilitycraft:copper_conveyor_bridge_transmitter": {
+		"sound": "metal"
+	},
+	"utilitycraft:copper_conveyor_bridge_receiver": {
+		"sound": "metal"
+	},
+	"utilitycraft:titanium_conveyor_horizontal": {
+		"sound": "metal"
+	},
+	"utilitycraft:titanium_conveyor_inclined": {
+		"sound": "metal"
+	},
+	"utilitycraft:titanium_conveyor_declined": {
+		"sound": "metal"
+	},
+	"utilitycraft:titanium_conveyor_vertical": {
+		"sound": "metal"
+	},
+	"utilitycraft:titanium_conveyor_bridge_transmitter": {
+		"sound": "metal"
+	},
+	"utilitycraft:titanium_conveyor_bridge_receiver": {
+		"sound": "metal"
+	},
+	"utilitycraft:aetherium_conveyor_horizontal": {
+		"sound": "metal"
+	},
+	"utilitycraft:aetherium_conveyor_inclined": {
+		"sound": "metal"
+	},
+	"utilitycraft:aetherium_conveyor_declined": {
+		"sound": "metal"
+	},
+	"utilitycraft:aetherium_conveyor_vertical": {
+		"sound": "metal"
+	},
+	"utilitycraft:aetherium_conveyor_bridge_transmitter": {
+		"sound": "metal"
+	},
+	"utilitycraft:aetherium_conveyor_bridge_receiver": {
+		"sound": "metal"
 	}
 }

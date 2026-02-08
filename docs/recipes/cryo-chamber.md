@@ -29,6 +29,7 @@ Recipes are split by module: stabilization (Cryo Stabilizer), cooling (Cooling C
 - **Base conversion:** 1000 mB water → 800 mB Cryofluid (0.8×).
 - **Energy cost:** 32,000 DE per 1000 mB of water.
 - **Limits:** minimum 100 mB of water, minimum 50 mB of output space, up to 1000 mB processed per tick.
+- **Supplement:** 8 Lapis Lazuli or 16 Lapis Lazuli Dust per 1000 mB water processed.
 - **Accepted catalysts:**
   - Titanium: 1000 mB water → 800 mB Cryofluid.
   - Raw Titanium: 1000 mB water → 1600 mB Cryofluid.

@@ -137,6 +137,9 @@
 		"utilitycraft_hyper_processing_upgrade": {
 			"textures": "textures/items/machinery/hyper_processing_upgrade"
 		},
+		"utilitycraft_upgrade_package": {
+			"textures": "textures/items/machinery/size_upgrade"
+		},
 		"utilitycraft_ascane_module_base": {
 			"textures": "textures/items/machinery/size_upgrade"
 		},

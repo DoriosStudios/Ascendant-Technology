@@ -500,6 +500,24 @@
 				}
 			},
 			{
+				"generator_lapis_input@ascendant_common.slot_base": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [138, 52],
+					"$slot_index": 21,
+					"layer": 20,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "section_button_generator",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
 				"generator_cryofluid_output@machineryCommon.vertical_single": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",

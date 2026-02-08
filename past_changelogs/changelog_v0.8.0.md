@@ -7,14 +7,16 @@ Stability and correctness updates for the Overclock system, improved machine upg
 - Added Ascane Engine
   - Repairs, enchants, and reinforces gear in a shared 3x3 grid.
   - Module slots control enchantment boosts, reinforcement targets, and curse protection.
-  - Enchantment upgrades now cap by module tier.
-  - Reinforcement is now stored as durability points and consumed on damage before armor durability is reduced.
-  - Lower-tier modules now cap low-level enchantments.
-  - Enchant changes now take about 2 seconds each.
-  - Uses XP to power enchanting.
-  - Added a dedicated disenchant slot to strip enchantments from items.
+  - Uses XP for enchanting.
+- Added Vaporworks Processor
+  - New machine that generates Steam from water using energy and a fuel source.
+  - Can use either Gas Tubes or Fluid Conduits for input and output.
 - Cloner
   - ETA is now affected by Overclock boost.
+
+### Ores
+- Aetherium Ore (End)
+  - Increased generation frequency by 2.5x.
 
 ### Overclock
 - Overclock Relay
@@ -29,8 +31,45 @@ Stability and correctness updates for the Overclock system, improved machine upg
 ### Transportation
 - Added Gas Tube
   - Pipe block intended for routing gas alongside existing fluid networks.
+- Added Conveyor Network Updater
+  - Automatically rebuilds adjacent conveyor network caches every 80 ticks.
+- Added Conveyor Belts (Copper, Titanium, Aetherium)
+  - Normal Conveyors:
+    - Tiers: Copper, Titanium, Aetherium.
+    - Speed: 1 block/sec, 2 blocks/sec, 5 blocks/sec, respectively.
+    - Variants: Horizontal, Vertical, Ascending/Inclined, Descending/Declined.
+    > Note: Aetherium conveyors only forward items when stacks reach 64 to cut down on loose entities.
+  - Bridge Conveyors:
+    - Operating Mode:
+      - Uses a transmitter/receiver system to create a temporary teleportation link between two points, allowing items to bypass gaps and terrain. Automatically builds a translucent path to guide item trajectories.
+    - Properties:
+      - Tiers: Copper, Titanium, Aetherium.
+      - Speed: Infinite. (Teleport)
+      - Range: 8 blocks, 16 blocks, 32 blocks, respectively.
+      - Variants: Horizontal only (for now).
+    > Note: 
+    > - Bridge conveyors are designed for long-distance item transport and can be used to create efficient item routes that bypass obstacles. However, they require careful setup and alignment to function properly, and they will not work if the path is obstructed. Bridges do not connect to different tiers, similar to normal conveyors, so a transmitter and receiver must be the same tier to link successfully.  
+    > - Bridge path guides are translucent and non-colliding for quick alignment. Paths blocked by any obstruction will warn the player.
+    > - Bridge paths now clear small environmental blocks (plants, torches, snow layers) and render per tier for easier management.
+  - Special Conveyors:
+    - Junction
+      - Allows conveyor lines to cross without merging or rerouting, preserving straight-through flow.
+    - Overflow Conveyor
+      - Sends items forward first; if blocked, alternates side outputs for overflow routing.
+    - Router
+      - Cycles outputs in order: Front → Right → Left.
+    - Smart Router
+      - Routes items based on per-item assignments set via the Smart Router UI.
+    - Underflow Conveyor
+      - Prioritizes side outputs, using the front only when sides are unavailable.
 
 ## ITEMS
+### Capsules
+- Added Infinite Capsules:
+  - Vanilla fluids: Water, Lava, Milk, XP.
+- Added New Fluid Capsules:
+  - Vanilla fluids: Water, Lava, Milk, XP.
+  - Ascendant Technology fluid: Steam.
 ### Modules
 - Added Ascane Engine Modules:
   - **Curse Protection Module:** Reduces the chance of curses during enchanting.
@@ -43,52 +82,49 @@ Stability and correctness updates for the Overclock system, improved machine upg
     - **Tier V:** Max level 5; includes low-max enchantments (e.g., Mending, Infinity).
   - **Reinforcement Module:** Enables armor reinforcement in the Ascane Engine.
     - Higher tiers grant more durability points.
+- Added Upgrade Package:
+  - Stores upgrades for mass application to machines. Can be used on conveyors and other state machines, such as Mob Magnets, Mob Grinders and Ender Hoppers.
+
 ### Misc
 - Added Enderling Tear and Pure Enderling Tear.
   - New Enderling drop materials reserved for future Interdimensional Gem crafting.
-### Capsules
-- Added Infinite Capsules:
-  - Vanilla fluids: Water, Lava, Milk, XP.
-- Added Fluid Capsules:
-  - Vanilla fluids: Water, Lava, Milk, XP.
-  - Ascendant Technology fluids: Steam, Liquified Aetherium, Dark Matter, Cryo Fluid.
 
 ## RECIPES
-- Added missing infuser and coolant recipes used by several machines and the Overclock Tower.
-- Added sieve and compressed-ore recipe integrations for compressed materials.
-
+- Added sieve drops for compressed variants.
+- Changed Cryofluid recipe
+  - You must now use Titanium alongside 8 Lapis Lazuli OR 16 Lapis Lazuli Dust per 1000 mB of water processed. This change was made to make the recipe more expensive and to give more use to Lapis, which is currently underused in the addon.
 ## UI/UX
-- Refined Cryo Chamber UI layout and improved several machine panels.
-- Added Ascane Engine UI with centered 3x3 grid, module column, upgrade slots, and a disenchant slot.
-- Updated Vaporworks Processor UI to match the Overclock Relay layout, with clearer bars and controls.
-- Added Steam UI fluid bar visuals (00–48).
-- Added optional container labels on machine panels.
-- Adjusted Ascane Engine slot ordering so input slots are prioritized for quick moves.
-- Fixed Ascane Engine 3x3 grid slots so the dark slot skin renders.
-- Fixed panel textures and background sizing for new panels.
-- Fixed the Absolute Container status toggle button and restored the status panel backdrop.
-- Updated machine UI accents to match the refreshed texture set.
-- Adjusted slot background sizing and refreshed dark slot visuals across slot panels.
-- Updated Mob Magnet settings to use button-based controls with inline value subtitles.
 - Fixed Mob Magnet value placeholders so subtitles render correctly in all languages.
+- Fixed panel textures and background sizing for new panels.
 - Moved Mob Magnet filter controls into the main settings panel and stabilized filter mode labels.
+- Updated Cryo Chamber UI layout and improved several machine panels.
+- Updated machine UI accents to match the refreshed texture set.
+- Updated Mob Magnet settings to use button-based controls with inline value subtitles.
 
 ## FLUIDS
+- Cryofluid
+  - It is now recgnonized as a coolant for Heavy Machinery machines.
+    - It has an efficiency of 175% as a coolant, making it the best coolant in the game at the moment.
+- Updated fluid display units to use bucket-based scaling: `mB → B → KB → MB → GB → TB → PB` (decimal scaling).
+
+## GASES
 - Added the Gas element system (separate from fluids) with gas capsules and gas networks.
-- Steam now behaves as a gas, and Vaporworks outputs gas accordingly.
+  - Gases are a new type of substance that can be generated, stored, and transported using dedicated mechanics. They will be used in future machines and recipes. They'll also have a block form that will flow high in the world, but they won't have fluid dynamics or flow like fluids.
+- Added Steam
+  - This is the first gas implemented in the system, and it will be used in future machines and recipes. It can be generated by the Vaporworks Processor, using either Gas Tubes or Fluid Conduits as transports.
 
 ## BUG FIXES
-- Fixed Cloner missing fluid consumption on recipes that require fluid.
 - Fixed Compressed Crushed Cobbled Deepslate not yielding Titanium and Aetherium. [#2](https://github.com/doriosstudios/ascendant-technology/issues/2)
 - Fixed Compressed Crushed Endstone not yielding Aetherium. [#2](https://github.com/doriosstudios/ascendant-technology/issues/2)
 - Fixed Energizer producing more items than the maximum stack size for energized outputs. [#8](https://github.com/doriosstudios/ascendant-technology/issues/8)
 - Fixed Aetherium and Titanium hammers not applying hammer recipes correctly. [#39](https://github.com/DoriosStudios/Ascendant-Technology/issues/39)
 - Fixed Aetherium and Titanium ores dropping nothing when mined by drills or command breaks. [#40](https://github.com/DoriosStudios/Ascendant-Technology/issues/40)
-- Fixed Liquid Capsule transfers between machines and tanks so capsules correctly insert and extract fluids.
-- Fixed Mob Magnet not pulling mobs in some cases after state updates.
-- Fixed machine network connectivity so machines reliably connect to energy cables and networks.
-- Fixed UtilityCraft energy cable visuals not refreshing when machines are placed or removed.
+- Fixed Mob Magnet text rendering issues. [#36](https://github.com/DoriosStudios/Ascendant-Technology/issues/36)
+- Fixed Mob Magnet not pulling mobs in some cases after state updates. [#37](https://github.com/DoriosStudios/Ascendant-Technology/issues/37)
+- Fixed machine network connectivity so machines reliably connect to energy cables and networks. [#38](https://github.com/DoriosStudios/Ascendant-Technology/issues/38)
 - Fixed Reinforced Cable not conducting electricity. [#15](https://github.com/doriosstudios/ascendant-technology/issues/15)
+- Fixed conveyor bridge paths not conducting energy across bridges.
+- Fixed Upgrade Package failing to apply stored conveyor upgrades reliably.
 - Fixed Singularity Fabricator not accepting Dark Matter. [#13](https://github.com/doriosstudios/ascendant-technology/issues/13)
 - Fixed Singularity Fabricator taking an impossible amount of time to craft Singularity items. [#4](https://github.com/doriosstudios/ascendant-technology/issues/4)
 
@@ -122,6 +158,11 @@ Stability and correctness updates for the Overclock system, improved machine upg
 ### Overclock & Energy Network
 - Tower charging is now gated by the TOWER_NEED_PROP constant (`dorios:oc_energy_need`); overclock relays and reinforced cables only push charge when the recipient's stored energy is below the declared need.
   - This also fixes reinforced cable energy conduction.
+- Overclock now boosts additional machine stats:
+  - Energy capacity
+  - Energy input rate
+  - Fluid capacity
+  - Unique properties depending on the machine
 - Added `utilitycraft:debug_energy` ScriptEvent toggle to enable energy network debug logs (including `updatePipes` and rescan traces).
 
 ### Runtime Registration

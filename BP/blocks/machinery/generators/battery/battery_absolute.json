@@ -54,7 +54,8 @@
 							"texture": "utilitycraft_battery_absolute_0",
 							"render_method": "alpha_test"
 						}
-					}
+					},
+					"minecraft:light_dampening": 15
 				}
 			},
 			{
@@ -66,7 +67,8 @@
 							"render_method": "alpha_test"
 						}
 					},
-					"minecraft:light_emission": 1
+					"minecraft:light_emission": 1,
+					"minecraft:light_dampening": 15
 				}
 			},
 			{
@@ -78,7 +80,8 @@
 							"render_method": "alpha_test"
 						}
 					},
-					"minecraft:light_emission": 2
+					"minecraft:light_emission": 2,
+					"minecraft:light_dampening": 15
 				}
 			},
 			{
@@ -90,7 +93,8 @@
 							"render_method": "alpha_test"
 						}
 					},
-					"minecraft:light_emission": 3
+					"minecraft:light_emission": 3,
+					"minecraft:light_dampening": 15
 				}
 			},
 			{
@@ -102,7 +106,8 @@
 							"render_method": "alpha_test"
 						}
 					},
-					"minecraft:light_emission": 4
+					"minecraft:light_emission": 4,
+					"minecraft:light_dampening": 15
 				}
 			},
 			{
@@ -114,7 +119,8 @@
 							"render_method": "alpha_test"
 						}
 					},
-					"minecraft:light_emission": 5
+					"minecraft:light_emission": 5,
+					"minecraft:light_dampening": 15
 				}
 			},
 			{
@@ -126,7 +132,8 @@
 							"render_method": "alpha_test"
 						}
 					},
-					"minecraft:light_emission": 6
+					"minecraft:light_emission": 6,
+					"minecraft:light_dampening": 15
 				}
 			}
 		]

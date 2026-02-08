@@ -33,6 +33,52 @@ tile.utilitycraft:gas_tube.name=Gas Tube\n§7- Gas transport line
 tile.utilitycraft:laser_barrier_field.name=Laser Barrier Field\n§7  Active area projected by the barrier
 tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius
 
+tile.utilitycraft:copper_conveyor_horizontal.name=Copper Conveyor (Horizontal)
+tile.utilitycraft:copper_conveyor_inclined.name=Copper Conveyor (Inclined)
+tile.utilitycraft:copper_conveyor_declined.name=Copper Conveyor (Declined)
+tile.utilitycraft:copper_conveyor_vertical.name=Copper Conveyor (Vertical)
+tile.utilitycraft:copper_conveyor_bridge_transmitter.name=Copper Conveyor Bridge (Transmitter)
+tile.utilitycraft:copper_conveyor_bridge_receiver.name=Copper Conveyor Bridge (Receiver)
+
+tile.utilitycraft:titanium_conveyor_horizontal.name=Titanium Conveyor (Horizontal)
+tile.utilitycraft:titanium_conveyor_inclined.name=Titanium Conveyor (Inclined)
+tile.utilitycraft:titanium_conveyor_declined.name=Titanium Conveyor (Declined)
+tile.utilitycraft:titanium_conveyor_vertical.name=Titanium Conveyor (Vertical)
+tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=Titanium Conveyor Bridge (Transmitter)
+tile.utilitycraft:titanium_conveyor_bridge_receiver.name=Titanium Conveyor Bridge (Receiver)
+
+tile.utilitycraft:aetherium_conveyor_horizontal.name=Aetherium Conveyor (Horizontal)
+tile.utilitycraft:aetherium_conveyor_inclined.name=Aetherium Conveyor (Inclined)
+tile.utilitycraft:aetherium_conveyor_declined.name=Aetherium Conveyor (Declined)
+tile.utilitycraft:aetherium_conveyor_vertical.name=Aetherium Conveyor (Vertical)
+tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=Aetherium Conveyor Bridge (Transmitter)
+tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=Aetherium Conveyor Bridge (Receiver)
+
+tile.utilitycraft:conveyor_router.name=Conveyor Router
+tile.utilitycraft:conveyor_smart_router.name=Conveyor Smart Router
+tile.utilitycraft:conveyor_overflow.name=Conveyor Overflow
+tile.utilitycraft:conveyor_underflow.name=Conveyor Underflow
+tile.utilitycraft:conveyor_junction.name=Conveyor Junction
+tile.utilitycraft:conveyor_network_updater.name=Conveyor Network Updater
+
+tile.utilitycraft:copper_conveyor_bridge_path.name=Copper Bridge Path
+tile.utilitycraft:titanium_conveyor_bridge_path.name=Titanium Bridge Path
+tile.utilitycraft:aetherium_conveyor_bridge_path.name=Aetherium Bridge Path
+
+ui.utilitycraft.smart_router.title=Smart Router
+ui.utilitycraft.smart_router.body_empty=Hold an item to assign it to a direction.
+ui.utilitycraft.smart_router.body_held=Held: %s
+ui.utilitycraft.smart_router.button.assign_left=Assign to Left
+ui.utilitycraft.smart_router.button.assign_front=Assign to Front
+ui.utilitycraft.smart_router.button.assign_right=Assign to Right
+ui.utilitycraft.smart_router.button.remove_item=Remove Held Item
+ui.utilitycraft.smart_router.button.view=View Assignments
+ui.utilitycraft.smart_router.button.clear_all=Clear All
+ui.utilitycraft.smart_router.button.close=Close
+ui.utilitycraft.smart_router.saved=Saved.
+ui.utilitycraft.smart_router.removed=Removed.
+ui.utilitycraft.smart_router.cleared=Cleared.
+
 tile.utilitycraft:aetherium_block.name=Aetherium Block
 tile.utilitycraft:titanium_block.name=Titanium Block
 tile.utilitycraft:raw_titanium_block.name=Raw Titanium Block
@@ -83,6 +129,7 @@ item.utilitycraft:pure_enderling_tear=Pure Enderling Tear
 ## Modules
 item.utilitycraft:size_upgrade=§gSize Upgrade§7\n- Increases Laser Barrier area
 item.utilitycraft:hyper_processing_upgrade=§dHyper Processing Upgrade§7\n- Increases machine operation speed\n- No extra energy cost
+item.utilitycraft:upgrade_package=§6Upgrade Package§7\n- Stores conveyor upgrades for network installation
 item.utilitycraft:ascane_module_base=§7Base Module\n- Used to craft Ascane Engine modules
 item.utilitycraft:enchantability_module=§aEnchantability Module I§7\n- Allows equipment to be enchanted\nin the Ascane Engine \n- Max Enchant Level: I
 item.utilitycraft:enchantability_module_2=§bEnchantability Module II§7\n- Increases item enchantability in\nthe Ascane Engine \n- Max Enchant Level: II
@@ -190,6 +237,18 @@ at:ui.l=L
 at:ui.e=E
 
 ui.utilitycraft:status_label_container=Container Status
+ui.utilitycraft.conveyor.bridge_obstructed=§cBridge path obstructed
+ui.utilitycraft.conveyor.upgrade_package.title=Upgrade Package
+ui.utilitycraft.conveyor.upgrade_package.body=Choose where to apply the stored upgrades.
+ui.utilitycraft.conveyor.upgrade_package.body_empty=No upgrades stored in this package.
+ui.utilitycraft.conveyor.upgrade_package.button.network=Apply to Network
+ui.utilitycraft.conveyor.upgrade_package.button.network_type=Apply to Network (This Type)
+ui.utilitycraft.conveyor.upgrade_package.button.type=Apply to All of This Type
+ui.utilitycraft.conveyor.upgrade_package.button.block=Apply to This Conveyor
+ui.utilitycraft.conveyor.upgrade_package.button.global=Apply Globally
+ui.utilitycraft.conveyor.upgrade_package.button.cancel=Cancel
+ui.utilitycraft.conveyor.upgrade_package.applied=Upgrades applied.
+ui.utilitycraft.conveyor.upgrade_package.failed=Unable to apply upgrades.
 
 ui.utilitycraft.water_label=§9Water
 ui.utilitycraft.cryofluid_label=§bCryofluid

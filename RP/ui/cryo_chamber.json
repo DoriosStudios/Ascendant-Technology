@@ -331,6 +331,25 @@
 				}
 			},
 			{
+				"lapis_outline": {
+					"type": "image",
+					"texture": "textures/ui/frozen_outline",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-94, 64],
+					"size": [22, 22],
+					"$cell_image_size": [22, 22]
+				}
+			},
+			{
+				"lapis_input@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-94, 64],
+					"collection_index": 21
+				}
+			},
+			{
 				"cryofluid_output@common.container_item": {
 					"anchor_from": "center",
 					"anchor_to": "center",

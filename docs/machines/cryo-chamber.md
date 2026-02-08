@@ -18,7 +18,8 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 
 ### Cryofluid Generator
 - Converts water into Cryofluid.
-- Requires energy and a catalyst (Titanium or Raw Titanium).
+- Requires energy, a titanium catalyst (Titanium or Raw Titanium), and Lapis Lazuli.
+- Consumes 8 Lapis Lazuli per 1000 mB of water processed.
 - Outputs Cryofluid into the dedicated tank.
 > [!NOTE]
 > Cryofluid will be a better coolant for [Heavy Machinery Expansion](https://github.com/doriosstudios/utilitycraft-heavy-machinery) reactors in the future.
@@ -65,6 +66,7 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 - **Base conversion:** 1000 mB water → 800 mB Cryofluid (0.8×).
 - **Energy cost:** 32,000 DE per 1000 mB of water.
 - **Limits:** Minimum 100 mB of water, minimum 50 mB of output space, up to 1000 mB processed per tick.
+- **Supplement:** 8 Lapis Lazuli per 1000 mB water processed.
 - **Accepted catalysts:**
   - **Titanium**: 1000 mB water → 800 mB Cryofluid.
   - **Raw Titanium**: 1000 mB water → 1600 mB Cryofluid.

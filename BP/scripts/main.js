@@ -30,3 +30,6 @@ import './blocks/mob_magnet.js'
 import './machinery/overclock/index.js'
 import './machinery/overclock/reinforced_cable.js'
 import './machinery/overclock/reinforced_extractor.js'
+
+// Conveyors
+import './machinery/transportation/conveyors.js'

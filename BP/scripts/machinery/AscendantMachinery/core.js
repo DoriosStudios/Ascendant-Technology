@@ -5253,7 +5253,7 @@ export class GasManager {
 
     static formatGas(value) {
         let unit = "mB";
-        let decimals = 1;
+        let decimals = 2;
 
         if (value >= 1000) {
             let bucketValue = value / 1000;

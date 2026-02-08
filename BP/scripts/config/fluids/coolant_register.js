@@ -2,7 +2,7 @@ import { world, system } from "@minecraft/server";
 
 const coolantsRegister = {
     "cryofluid": {
-        efficiency: 1.5,
+        efficiency: 1.75,
         tier: 2
     }
 }

@@ -1,6 +1,6 @@
 import { system } from "@minecraft/server"
 import { infuserRecipes } from './infuser_registry.js'
-import { defineSingularityRecipe } from "./cloner.js"
+import { defineSingularityRecipe } from "./duplicator.js"
 
 const WEAVER_DEFAULT_ENERGY_COST = 6400
 const WEAVER_RATE_PER_TICK = 180

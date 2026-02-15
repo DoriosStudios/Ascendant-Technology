@@ -11,6 +11,7 @@
     "components": {
       "minecraft:icon": "utilitycraft_upgrade_package",
       "minecraft:max_stack_size": 1,
+      "utilitycraft:upgrade_package": {},
       "minecraft:tags": {
         "tags": [
           "utilitycraft:upgrade_package"

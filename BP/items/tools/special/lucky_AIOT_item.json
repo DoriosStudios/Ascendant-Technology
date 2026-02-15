@@ -1,4 +1,4 @@
-	{
+{
 	"format_version": "1.21.10",
 	"minecraft:item": {
 		"description": {
@@ -15,10 +15,10 @@
                                         "minecraft:diamond_tier"
                                 ]
                         },
-                        "minecraft:glint": true,
                         "minecraft:max_stack_size": 1,
                         "minecraft:hand_equipped": true,
-                        "minecraft:damage": 9
+                        "minecraft:damage": 9,
+                        "minecraft:glint": true
                 }
 	}
 }

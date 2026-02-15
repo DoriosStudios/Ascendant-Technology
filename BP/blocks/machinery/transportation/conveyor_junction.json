@@ -2,10 +2,10 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:titanium_conveyor_bridge_receiver",
+			"identifier": "utilitycraft:conveyor_junction",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			},
 			"traits": {
 				"minecraft:placement_direction": {
@@ -25,9 +25,9 @@
 		},
 		"components": {
 			"utilitycraft:conveyor": {
-				"tier": "titanium",
-				"shape": "bridge_receiver",
-				"ips": 11
+				"tier": "universal",
+				"shape": "junction",
+				"ips": 5
 			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
 			"minecraft:material_instances": {
@@ -49,7 +49,6 @@
 			},
 			"minecraft:light_dampening": 0,
 			"tag:dorios:conveyor": {},
-			"tag:dorios:conveyor_bridge": {},
 			"tag:dorios:energy": {},
 			"tag:dorios:isTube": {},
 			"tag:dorios:color.default": {},

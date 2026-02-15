@@ -10,22 +10,22 @@
         },
         "components": {
             "minecraft:icon": "utilitycraft_titanium_pickaxe",
-            "minecraft:hand_equipped": true,
-            "minecraft:max_stack_size": 1,
             "minecraft:tags": {
                 "tags": [
                     "minecraft:is_pickaxe",
                     "minecraft:is_tool"
                 ]
             },
-            "minecraft:enchantable": {
-                "value": 20,
-                "slot": "pickaxe"
-            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:hand_equipped": true,
             "minecraft:durability": {
                 "max_durability": 1561
             },
             "minecraft:damage": 5,
+            "minecraft:enchantable": {
+                "value": 20,
+                "slot": "pickaxe"
+            },
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [

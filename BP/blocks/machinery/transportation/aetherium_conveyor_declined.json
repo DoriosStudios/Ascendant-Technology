@@ -2,10 +2,10 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:titanium_conveyor_bridge_transmitter",
+			"identifier": "utilitycraft:aetherium_conveyor_declined",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			},
 			"traits": {
 				"minecraft:placement_direction": {
@@ -25,15 +25,14 @@
 		},
 		"components": {
 			"utilitycraft:conveyor": {
-				"tier": "titanium",
-				"shape": "bridge_transmitter",
-				"ips": 11,
-				"bridge_range": 16
+				"tier": "aetherium",
+				"shape": "declined",
+				"ips": 64
 			},
-			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
+			"minecraft:geometry": "geometry.utilitycraft_aetherium_conveyor_declined",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_1",
+					"texture": "utilitycraft_conveyor_aetherium_inclined_2",
 					"render_method": "alpha_test"
 				}
 			},
@@ -50,7 +49,6 @@
 			},
 			"minecraft:light_dampening": 0,
 			"tag:dorios:conveyor": {},
-			"tag:dorios:conveyor_bridge": {},
 			"tag:dorios:energy": {},
 			"tag:dorios:isTube": {},
 			"tag:dorios:color.default": {},

@@ -2,10 +2,10 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:aetherium_conveyor_horizontal",
+			"identifier": "utilitycraft:conveyor_smart_router",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			},
 			"traits": {
 				"minecraft:placement_direction": {
@@ -25,9 +25,9 @@
 		},
 		"components": {
 			"utilitycraft:conveyor": {
-				"tier": "aetherium",
-				"shape": "horizontal",
-				"ips": 64
+				"tier": "universal",
+				"shape": "smart_router",
+				"ips": 5
 			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
 			"minecraft:material_instances": {

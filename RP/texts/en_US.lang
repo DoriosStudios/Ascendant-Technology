@@ -10,8 +10,8 @@ tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 
 
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:ascane_engine.name=Ascane Engine\n§7- Repairs, enchants, and reinforces gear\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicator\n§7- Accepted upgrades: \n   §a§7, §d§7
+tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7- Repairs, enchants, and reinforces gear\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
+tile.utilitycraft:duplicator.name=Duplicator\n§7- Accepted upgrades: \n   §a§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7\n§7- 3 Modes:\n Stabilizer,\n Freezer,\n Cryo Generator
 tile.utilitycraft:energizer.name=Energizer\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
@@ -33,37 +33,37 @@ tile.utilitycraft:gas_tube.name=Gas Tube\n§7- Gas transport line
 tile.utilitycraft:laser_barrier_field.name=Laser Barrier Field\n§7  Active area projected by the barrier
 tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius
 
-tile.utilitycraft:copper_conveyor_horizontal.name=Copper Conveyor (Horizontal)
-tile.utilitycraft:copper_conveyor_inclined.name=Copper Conveyor (Inclined)
-tile.utilitycraft:copper_conveyor_declined.name=Copper Conveyor (Declined)
-tile.utilitycraft:copper_conveyor_vertical.name=Copper Conveyor (Vertical)
-tile.utilitycraft:copper_conveyor_bridge_transmitter.name=Copper Conveyor Bridge (Transmitter)
-tile.utilitycraft:copper_conveyor_bridge_receiver.name=Copper Conveyor Bridge (Receiver)
+tile.utilitycraft:copper_conveyor_horizontal.name=§vCopper Conveyor\n§8- Horizontal\n- Speed: 1.0 m/s
+tile.utilitycraft:copper_conveyor_inclined.name=§vCopper Conveyor\n§8- Inclined\n- Speed: 1.0 m/s
+tile.utilitycraft:copper_conveyor_declined.name=§vCopper Conveyor\n§8- Declined\n- Speed: 1.0 m/s
+tile.utilitycraft:copper_conveyor_vertical.name=§vCopper Conveyor\n§8- Vertical\n- Speed: 2.4 m/s
+tile.utilitycraft:copper_conveyor_bridge_transmitter.name=§vCopper Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
+tile.utilitycraft:copper_conveyor_bridge_receiver.name=§vCopper Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
 
-tile.utilitycraft:titanium_conveyor_horizontal.name=Titanium Conveyor (Horizontal)
-tile.utilitycraft:titanium_conveyor_inclined.name=Titanium Conveyor (Inclined)
-tile.utilitycraft:titanium_conveyor_declined.name=Titanium Conveyor (Declined)
-tile.utilitycraft:titanium_conveyor_vertical.name=Titanium Conveyor (Vertical)
-tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=Titanium Conveyor Bridge (Transmitter)
-tile.utilitycraft:titanium_conveyor_bridge_receiver.name=Titanium Conveyor Bridge (Receiver)
+tile.utilitycraft:titanium_conveyor_horizontal.name=§tTitanium Conveyor\n§8- Horizontal\n- Speed: 2.2 m/s
+tile.utilitycraft:titanium_conveyor_inclined.name=§tTitanium Conveyor\n§8- Inclined\n- Speed: 2.2 m/s
+tile.utilitycraft:titanium_conveyor_declined.name=§tTitanium Conveyor\n§8- Declined\n- Speed: 2.2 m/s
+tile.utilitycraft:titanium_conveyor_vertical.name=§tTitanium Conveyor\n§8- Vertical\n- Speed: 5.3 m/s
+tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=§tTitanium Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
+tile.utilitycraft:titanium_conveyor_bridge_receiver.name=§tTitanium Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
 
-tile.utilitycraft:aetherium_conveyor_horizontal.name=Aetherium Conveyor (Horizontal)
-tile.utilitycraft:aetherium_conveyor_inclined.name=Aetherium Conveyor (Inclined)
-tile.utilitycraft:aetherium_conveyor_declined.name=Aetherium Conveyor (Declined)
-tile.utilitycraft:aetherium_conveyor_vertical.name=Aetherium Conveyor (Vertical)
-tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=Aetherium Conveyor Bridge (Transmitter)
-tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=Aetherium Conveyor Bridge (Receiver)
+tile.utilitycraft:aetherium_conveyor_horizontal.name=§dAetherium Conveyor\n§8- Horizontal\n- Speed: 20.0 m/s
+tile.utilitycraft:aetherium_conveyor_inclined.name=§dAetherium Conveyor\n§8- Inclined\n- Speed: 20.0 m/s
+tile.utilitycraft:aetherium_conveyor_declined.name=§dAetherium Conveyor\n§8- Declined\n- Speed: 20.0 m/s
+tile.utilitycraft:aetherium_conveyor_vertical.name=§dAetherium Conveyor\n§8- Vertical\n- Speed: 30.0 m/s
+tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=§dAetherium Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
+tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=§dAetherium Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
 
-tile.utilitycraft:conveyor_router.name=Conveyor Router
-tile.utilitycraft:conveyor_smart_router.name=Conveyor Smart Router
-tile.utilitycraft:conveyor_overflow.name=Conveyor Overflow
-tile.utilitycraft:conveyor_underflow.name=Conveyor Underflow
-tile.utilitycraft:conveyor_junction.name=Conveyor Junction
-tile.utilitycraft:conveyor_network_updater.name=Conveyor Network Updater
+tile.utilitycraft:conveyor_router.name=§aConveyor Router\n§8- Teleports items to a random output\n- Slightly longer delay before switching direction
+tile.utilitycraft:conveyor_smart_router.name=§aConveyor Smart Router\n§8- Routes items by assigned filters\n- Hold an item to configure
+tile.utilitycraft:conveyor_overflow.name=§aConveyor Overflow\n§8- Sends items forward first\n- Diverts overflow to the sides
+tile.utilitycraft:conveyor_underflow.name=§aConveyor Underflow\n§8- Diverts items to the sides first\n- Sends remaining items forward
+tile.utilitycraft:conveyor_junction.name=§aConveyor Junction\n§8- Splits items based on entry position
+tile.utilitycraft:conveyor_network_updater.name=§aConveyor Network Updater\n§8- Refreshes adjacent conveyor networks
 
-tile.utilitycraft:copper_conveyor_bridge_path.name=Copper Bridge Path
-tile.utilitycraft:titanium_conveyor_bridge_path.name=Titanium Bridge Path
-tile.utilitycraft:aetherium_conveyor_bridge_path.name=Aetherium Bridge Path
+tile.utilitycraft:copper_conveyor_bridge_path.name=§vCopper Bridge Path
+tile.utilitycraft:titanium_conveyor_bridge_path.name=§tTitanium Bridge Path
+tile.utilitycraft:aetherium_conveyor_bridge_path.name=§dAetherium Bridge Path
 
 ui.utilitycraft.smart_router.title=Smart Router
 ui.utilitycraft.smart_router.body_empty=Hold an item to assign it to a direction.
@@ -130,16 +130,16 @@ item.utilitycraft:pure_enderling_tear=Pure Enderling Tear
 item.utilitycraft:size_upgrade=§gSize Upgrade§7\n- Increases Laser Barrier area
 item.utilitycraft:hyper_processing_upgrade=§dHyper Processing Upgrade§7\n- Increases machine operation speed\n- No extra energy cost
 item.utilitycraft:upgrade_package=§6Upgrade Package§7\n- Stores conveyor upgrades for network installation
-item.utilitycraft:ascane_module_base=§7Base Module\n- Used to craft Ascane Engine modules
-item.utilitycraft:enchantability_module=§aEnchantability Module I§7\n- Allows equipment to be enchanted\nin the Ascane Engine \n- Max Enchant Level: I
-item.utilitycraft:enchantability_module_2=§bEnchantability Module II§7\n- Increases item enchantability in\nthe Ascane Engine \n- Max Enchant Level: II
-item.utilitycraft:enchantability_module_3=§eEnchantability Module III§7\n- Increases item enchantability in\nthe Ascane Engine \n- Max Enchant Level: III
-item.utilitycraft:enchantability_module_4=§4Enchantability Module IV§7\n- Increases item enchantability in\nthe Ascane Engine \n- Max Enchant Level: IV
-item.utilitycraft:enchantability_module_5=§uEnchantability Module V§7\n- Increases item enchantability in\nthe Ascane Engine \n- Max Enchant Level: V
+item.utilitycraft:ascane_module_base=§7Base Module\n- Used to craft Enchantment Station modules
+item.utilitycraft:enchantability_module=§aEnchantability Module I§7\n- Allows equipment to be enchanted\nin the Enchantment Station \n- Max Enchant Level: I
+item.utilitycraft:enchantability_module_2=§bEnchantability Module II§7\n- Increases item enchantability in\nthe Enchantment Station \n- Max Enchant Level: II
+item.utilitycraft:enchantability_module_3=§eEnchantability Module III§7\n- Increases item enchantability in\nthe Enchantment Station \n- Max Enchant Level: III
+item.utilitycraft:enchantability_module_4=§4Enchantability Module IV§7\n- Increases item enchantability in\nthe Enchantment Station \n- Max Enchant Level: IV
+item.utilitycraft:enchantability_module_5=§uEnchantability Module V§7\n- Increases item enchantability in\nthe Enchantment Station \n- Max Enchant Level: V
 item.utilitycraft:reinforcement_module=§6Reinforcement Module I§7\n- Increases the durability of an\nequipment. \n- Reinforcement Amount: 25%
 item.utilitycraft:reinforcement_module_2=§6Reinforcement Module II§7\n- Increases the durability of an\nequipment. \n- Reinforcement Amount: 50%
 item.utilitycraft:reinforcement_module_3=§6Reinforcement Module III§7\n- Increases the durability of an\nequipment. \n- Reinforcement Amount: 100%
-item.utilitycraft:curse_protection_module=§gCurse Protection Module§7\n- Prevents curses in the Ascane Engine
+item.utilitycraft:curse_protection_module=§gCurse Protection Module§7\n- Prevents curses in the Enchantment Station
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aLucky Mesh\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
@@ -202,8 +202,8 @@ item.utilitycraft:xp_capsule_infinite=XP Capsule §7\n- (Infinite)
 ## Entities
 entity.utilitycraft:absolute_container.name=§fAbsolute Container
 entity.utilitycraft:catalyst_weaver.name=§fCatalyst Weaver
-entity.utilitycraft:ascane_engine.name=Ascane Engine
-entity.utilitycraft:cloner.name=Duplicator
+entity.utilitycraft:enchantment_station.name=Enchantment Station
+entity.utilitycraft:duplicator.name=Duplicator
 entity.utilitycraft:cryo_chamber.name=§fCryo Chamber
 entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator
 entity.utilitycraft:liquifier.name=Liquifier
@@ -231,6 +231,7 @@ at:itemGroup.name.machines=Machines §u(Ascendant Technology)
 at:itemGroup.name.capsules=Fluid Capsules §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armor §u(Ascendant Technology)
+at:itemGroup.name.conveyors=Conveyors §u(Ascendant Technology)
 
 at:ui.h=H
 at:ui.l=L

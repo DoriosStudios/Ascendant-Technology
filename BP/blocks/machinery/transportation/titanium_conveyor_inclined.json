@@ -2,10 +2,10 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:copper_conveyor_inclined",
+			"identifier": "utilitycraft:titanium_conveyor_inclined",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			},
 			"traits": {
 				"minecraft:placement_direction": {
@@ -25,14 +25,14 @@
 		},
 		"components": {
 			"utilitycraft:conveyor": {
-				"tier": "copper",
+				"tier": "titanium",
 				"shape": "inclined",
-				"ips": 5
+				"ips": 11
 			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_inclined",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_inclined",
+					"texture": "utilitycraft_conveyor_titanium_inclined",
 					"render_method": "alpha_test"
 				}
 			},

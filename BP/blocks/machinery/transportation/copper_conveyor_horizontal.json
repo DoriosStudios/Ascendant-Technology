@@ -2,10 +2,10 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:conveyor_smart_router",
+			"identifier": "utilitycraft:copper_conveyor_horizontal",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			},
 			"traits": {
 				"minecraft:placement_direction": {
@@ -25,14 +25,14 @@
 		},
 		"components": {
 			"utilitycraft:conveyor": {
-				"tier": "universal",
-				"shape": "smart_router",
+				"tier": "copper",
+				"shape": "horizontal",
 				"ips": 5
 			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_1",
+					"texture": "utilitycraft_conveyor_copper",
 					"render_method": "alpha_test"
 				}
 			},

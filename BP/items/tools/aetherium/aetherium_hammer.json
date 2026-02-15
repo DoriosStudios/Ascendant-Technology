@@ -9,32 +9,49 @@
             }
         },
         "components": {
-            "minecraft:icon": "utilitycraft_aetherium_hammer",
-            "minecraft:hand_equipped": true,
-            "minecraft:max_stack_size": 1,
-            "minecraft:fire_resistant": {
-                "value": true
+            "utilitycraft:hammer": {
+                "tier": 4
             },
+            "utilitycraft:dig_pebble": {},
             "minecraft:tags": {
                 "tags": [
                     "minecraft:is_pickaxe",
                     "utilitycraft:is_hammer",
                     "minecraft:is_tool",
+                    "minecraft:netherite_tier",
                     "minecraft:transformable_items"
                 ]
             },
+            "minecraft:max_stack_size": 1,
+            "minecraft:hand_equipped": true,
+            "minecraft:durability": {
+                "max_durability": 3579
+            },
+            "minecraft:fire_resistant": {
+                "value": true
+            },
+            "minecraft:damage": 10,
+            "minecraft:icon": "utilitycraft_aetherium_hammer",
             "minecraft:enchantable": {
                 "value": 30,
                 "slot": "pickaxe"
             },
-            "minecraft:durability": {
-                "max_durability": 3579
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": [
+                            "utilitycraft:aetherium"
+                        ],
+                        "repair_amount": 1199
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:aetherium_hammer"
+                        ],
+                        "repair_amount": 3579
+                    }
+                ]
             },
-            "minecraft:damage": 10,
-            "utilitycraft:hammer": {
-                "tier": 7
-            },
-            "utilitycraft:dig_pebble":{},
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [

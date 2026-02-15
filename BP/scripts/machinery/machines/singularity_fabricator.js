@@ -1,5 +1,5 @@
 import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../AscendantMachinery/core.js'
-import { getSingularityRecipes } from '../../config/recipes/cloner.js'
+import { getSingularityRecipes } from '../../config/recipes/duplicator.js'
 
 const COMPONENT_ID = 'singularity_fabricator'
 const INPUT_SLOT = 3
@@ -184,7 +184,7 @@ function doriosRegister() {
 function resolveFabricatorRecipes(block) {
     const component = block.getComponent('utilitycraft:machine_recipes')?.customComponentParameters?.params
 
-    if (!component || component.type === COMPONENT_ID || component.type === 'cloner') {
+    if (!component || component.type === COMPONENT_ID) {
         return { recipes: toRecipeArray(getSingularityRecipes()) }
     }
 

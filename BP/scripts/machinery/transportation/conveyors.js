@@ -21,6 +21,8 @@ const BRIDGE_PATH_BY_TIER = Object.freeze({
 });
 const AIR_BLOCK_IDS = new Set(["minecraft:air", "minecraft:cave_air", "minecraft:void_air"]);
 
+const BRIDGE_PATH_DIRECTION_STATE = "utilitycraft:cardinal_direction";
+
 const BRIDGE_CLEARABLE_BLOCKS = new Set([
     "minecraft:snow",
     "minecraft:snow_layer",
@@ -87,9 +89,41 @@ const SPECIAL_CONVEYOR_TIER = "universal";
 const SPECIAL_CONVEYOR_IPS = 5;
 const SPECIAL_CONVEYOR_ENERGY_COST = 10;
 const ITEM_SPACING = 0.35;
+const INCLINED_DETECTION_RADIUS = 0.75;
 
 const ITEM_MOVE_TICK_PROP = "utilitycraft:conveyor_move_tick";
 const ITEM_MOVE_KEY_PROP = "utilitycraft:conveyor_move_key";
+const ENTITY_MOVE_TICK_PROP = "utilitycraft:conveyor_entity_move_tick";
+const ENTITY_MOVE_KEY_PROP = "utilitycraft:conveyor_entity_move_key";
+const CONVEYOR_CREATURE_EXCLUDED_TYPES = [
+    "minecraft:player",
+    "minecraft:item",
+    "minecraft:xp_orb",
+    "minecraft:minecart",
+    "minecraft:hopper_minecart",
+    "minecraft:tnt_minecart",
+    "minecraft:command_block_minecart",
+    "minecraft:spawner_minecart",
+    "minecraft:chest_minecart",
+    "minecraft:boat",
+    "minecraft:chest_boat",
+    "minecraft:armor_stand",
+    "minecraft:lightning_bolt",
+    "minecraft:falling_block"
+];
+const CONVEYOR_CREATURE_EXCLUDED_FAMILIES = [
+    "player",
+    "inanimate",
+    "projectile",
+    "machine",
+    "dorios:energy_container",
+    "dorios:fluid_container",
+    "dorios:battery"
+];
+const CONVEYOR_PERSIST_CHUNK_PREFIX = "utilitycraft:conveyor_chunk";
+const CONVEYOR_PERSIST_CHUNK_INDEX_META_PREFIX = "utilitycraft:conveyor_chunk_index";
+const CONVEYOR_PERSIST_CHUNK_INDEX_PAGE_PREFIX = "utilitycraft:conveyor_chunk_index_page";
+const CONVEYOR_PERSIST_CHUNK_PAGE_SIZE = 200;
 const MAX_CONVEYOR_ENERGY_SCAN = 2048;
 const CONVEYOR_UPGRADE_TYPES = new Set([
     "energy",
@@ -105,10 +139,13 @@ const CONVEYOR_NETWORK_DIRTY = new Set();
 const CONVEYOR_NETWORK_CACHE = new Map();
 const CONVEYOR_NETWORK_UPDATER_INTERVAL_DEFAULT = 80;
 const CONVEYOR_NETWORK_UPDATER_MAX_SCAN = 4096;
+const VERTICAL_DIRECTION_STATE = "utilitycraft:vertical_direction";
+const WRENCH_ITEM_ID = "utilitycraft:wrench";
 
 const UPGRADE_PACKAGE_ID = "utilitycraft:upgrade_package";
 const UPGRADE_PACKAGE_PROP = "utilitycraft:upgrade_package";
 const UPGRADE_PACKAGE_MAX = 64;
+const ENABLE_CONVEYOR_UPGRADE_PACKAGE = false;
 const CONVEYOR_UPGRADE_KEY_PREFIX = "utilitycraft:conveyor_upgrade";
 const CONVEYOR_UPGRADE_TYPE_KEY_PREFIX = "utilitycraft:conveyor_upgrade_type";
 const CONVEYOR_UPGRADE_BLOCK_KEY_PREFIX = "utilitycraft:conveyor_upgrade_block";
@@ -139,6 +176,8 @@ const BASE_SPEED = 0.05;
 const BASE_VERTICAL_SPEED = 0.12;
 const MAX_SPEED = 0.2;
 const MAX_VERTICAL_SPEED = 0.3;
+const AETHERIUM_SPEED_MULTIPLIER = 5;
+const ROUTER_DIRECTION_CHANGE_DELAY = 6;
 
 const CARDINAL_OFFSETS = Object.freeze({
     north: { x: 0, y: 0, z: -1 },
@@ -179,7 +218,7 @@ const LEFT_CARDINAL = Object.freeze({
 
 const conveyorRegistry = new Map();
 const bridgeCache = new Map();
-const routerCycleCache = new Map();
+const routerDirectionCache = new Map();
 const overflowCycleCache = new Map();
 const underflowCycleCache = new Map();
 const CONVEYOR_META_BY_TYPE = new Map();
@@ -191,7 +230,7 @@ function defineConveyorType(id, meta) {
 const TIERS = [
     { tier: "copper", ips: 5, bridgeRange: 8 },
     { tier: "titanium", ips: 11, bridgeRange: 16 },
-    { tier: "aetherium", ips: 64, bridgeRange: 32 }
+    { tier: "aetherium", ips: 128, bridgeRange: 32 }
 ];
 
 const SHAPES = ["horizontal", "inclined", "declined", "vertical"];
@@ -223,6 +262,199 @@ for (const tier of TIERS) {
 
 function posKey(pos) {
     return `${pos.x}|${pos.y}|${pos.z}`;
+}
+
+function parsePosKey(key) {
+    if (typeof key !== "string" || key.length === 0) return null;
+    const [xRaw, yRaw, zRaw] = key.split("|");
+    const x = Number(xRaw);
+    const y = Number(yRaw);
+    const z = Number(zRaw);
+    if (![x, y, z].every(Number.isFinite)) return null;
+    return { x, y, z };
+}
+
+function getConveyorChunkCoords(pos) {
+    if (!pos) return { x: 0, z: 0 };
+    const x = Math.floor(Number(pos.x) || 0);
+    const z = Math.floor(Number(pos.z) || 0);
+    return { x: Math.floor(x / 16), z: Math.floor(z / 16) };
+}
+
+function getConveyorChunkKey(coords) {
+    if (!coords) return "0|0";
+    return `${coords.x}|${coords.z}`;
+}
+
+function getConveyorChunkKeyFromPos(pos) {
+    return getConveyorChunkKey(getConveyorChunkCoords(pos));
+}
+
+function getConveyorChunkDataKey(dimId, chunkKey) {
+    return `${CONVEYOR_PERSIST_CHUNK_PREFIX}:${dimId}:${chunkKey}`;
+}
+
+function getConveyorChunkIndexMetaKey(dimId) {
+    return `${CONVEYOR_PERSIST_CHUNK_INDEX_META_PREFIX}:${dimId}`;
+}
+
+function getConveyorChunkIndexPageKey(dimId, page) {
+    return `${CONVEYOR_PERSIST_CHUNK_INDEX_PAGE_PREFIX}:${dimId}:${page}`;
+}
+
+function readWorldJsonProperty(key, fallback) {
+    const raw = world.getDynamicProperty(key);
+    if (typeof raw !== "string" || raw.length === 0) return fallback;
+    try {
+        return JSON.parse(raw);
+    } catch {
+        return fallback;
+    }
+}
+
+function writeWorldJsonProperty(key, value) {
+    if (value === null || value === undefined) {
+        world.setDynamicProperty(key, "");
+        return;
+    }
+    world.setDynamicProperty(key, JSON.stringify(value));
+}
+
+function encodeConveyorPosKey(pos) {
+    if (!pos) return "";
+    const x = Math.floor(Number(pos.x) || 0);
+    const y = Math.floor(Number(pos.y) || 0);
+    const z = Math.floor(Number(pos.z) || 0);
+    return `${x},${y},${z}`;
+}
+
+function decodeConveyorPosKey(value) {
+    if (typeof value !== "string" || value.length === 0) return null;
+    const [xRaw, yRaw, zRaw] = value.split(",");
+    const x = Number(xRaw);
+    const y = Number(yRaw);
+    const z = Number(zRaw);
+    if (![x, y, z].every(Number.isFinite)) return null;
+    return { x, y, z };
+}
+
+function readConveyorChunkIndexMeta(dimId) {
+    const meta = readWorldJsonProperty(getConveyorChunkIndexMetaKey(dimId), null);
+    const pages = Math.max(0, Math.floor(Number(meta?.pages ?? 0)));
+    return { pages };
+}
+
+function writeConveyorChunkIndexMeta(dimId, meta) {
+    const pages = Math.max(0, Math.floor(Number(meta?.pages ?? 0)));
+    writeWorldJsonProperty(getConveyorChunkIndexMetaKey(dimId), { pages });
+}
+
+function readConveyorChunkIndexPage(dimId, page) {
+    const list = readWorldJsonProperty(getConveyorChunkIndexPageKey(dimId, page), null);
+    if (!Array.isArray(list)) return [];
+    return list.filter(entry => typeof entry === "string" && entry.length > 0);
+}
+
+function writeConveyorChunkIndexPage(dimId, page, list) {
+    if (!Array.isArray(list) || list.length === 0) {
+        world.setDynamicProperty(getConveyorChunkIndexPageKey(dimId, page), "");
+        return;
+    }
+    writeWorldJsonProperty(getConveyorChunkIndexPageKey(dimId, page), list);
+}
+
+function findConveyorChunkIndexPage(dimId, chunkKey, meta) {
+    const pages = Math.max(0, Math.floor(Number(meta?.pages ?? 0)));
+    for (let page = 0; page < pages; page++) {
+        const list = readConveyorChunkIndexPage(dimId, page);
+        if (list.includes(chunkKey)) return page;
+    }
+    return -1;
+}
+
+function addConveyorChunkToIndex(dimId, chunkKey) {
+    if (!dimId || !chunkKey) return;
+    const meta = readConveyorChunkIndexMeta(dimId);
+    if (findConveyorChunkIndexPage(dimId, chunkKey, meta) >= 0) return;
+
+    for (let page = 0; page < meta.pages; page++) {
+        const list = readConveyorChunkIndexPage(dimId, page);
+        if (list.length >= CONVEYOR_PERSIST_CHUNK_PAGE_SIZE) continue;
+        list.push(chunkKey);
+        writeConveyorChunkIndexPage(dimId, page, list);
+        return;
+    }
+
+    const newPage = meta.pages;
+    writeConveyorChunkIndexPage(dimId, newPage, [chunkKey]);
+    writeConveyorChunkIndexMeta(dimId, { pages: newPage + 1 });
+}
+
+function trimConveyorChunkIndex(dimId, meta) {
+    let pages = Math.max(0, Math.floor(Number(meta?.pages ?? 0)));
+    while (pages > 0) {
+        const list = readConveyorChunkIndexPage(dimId, pages - 1);
+        if (list.length > 0) break;
+        world.setDynamicProperty(getConveyorChunkIndexPageKey(dimId, pages - 1), "");
+        pages--;
+    }
+    writeConveyorChunkIndexMeta(dimId, { pages });
+}
+
+function removeConveyorChunkFromIndex(dimId, chunkKey) {
+    if (!dimId || !chunkKey) return;
+    const meta = readConveyorChunkIndexMeta(dimId);
+    const page = findConveyorChunkIndexPage(dimId, chunkKey, meta);
+    if (page < 0) return;
+    const list = readConveyorChunkIndexPage(dimId, page).filter(entry => entry !== chunkKey);
+    writeConveyorChunkIndexPage(dimId, page, list);
+    trimConveyorChunkIndex(dimId, meta);
+}
+
+function readConveyorChunkData(dimId, chunkKey) {
+    const list = readWorldJsonProperty(getConveyorChunkDataKey(dimId, chunkKey), null);
+    if (!Array.isArray(list)) return [];
+    return list.filter(entry => typeof entry === "string" && entry.length > 0);
+}
+
+function writeConveyorChunkData(dimId, chunkKey, list) {
+    if (!Array.isArray(list) || list.length === 0) {
+        world.setDynamicProperty(getConveyorChunkDataKey(dimId, chunkKey), "");
+        return;
+    }
+    writeWorldJsonProperty(getConveyorChunkDataKey(dimId, chunkKey), list);
+}
+
+function persistConveyorPosition(block) {
+    if (!block?.dimension || !block?.location) return;
+    if (!block.hasTag?.(CONVEYOR_TAG)) return;
+    const dimId = block.dimension.id;
+    const chunkKey = getConveyorChunkKeyFromPos(block.location);
+    const list = readConveyorChunkData(dimId, chunkKey);
+    const encoded = encodeConveyorPosKey(block.location);
+    if (!encoded) return;
+
+    if (!list.includes(encoded)) {
+        list.push(encoded);
+        writeConveyorChunkData(dimId, chunkKey, list);
+    }
+
+    addConveyorChunkToIndex(dimId, chunkKey);
+}
+
+function unpersistConveyorPosition(dimId, pos) {
+    if (!dimId || !pos) return;
+    const chunkKey = getConveyorChunkKeyFromPos(pos);
+    const list = readConveyorChunkData(dimId, chunkKey);
+    if (!list.length) return;
+
+    const encoded = encodeConveyorPosKey(pos);
+    const next = list.filter(entry => entry !== encoded);
+    writeConveyorChunkData(dimId, chunkKey, next);
+
+    if (next.length === 0) {
+        removeConveyorChunkFromIndex(dimId, chunkKey);
+    }
 }
 
 function getRegistryForDimension(dimId) {
@@ -440,6 +672,109 @@ function getConveyorNetworkCache(dim, registry) {
     CONVEYOR_NETWORK_CACHE.set(dimId, rebuilt);
     CONVEYOR_NETWORK_DIRTY.delete(dimId);
     return rebuilt;
+}
+
+let conveyorRestoreDone = false;
+let conveyorRestoreScheduled = false;
+
+function getConveyorRestoreDimensions() {
+    const dims = DoriosAPI?.constants?.dimensions;
+    if (dims && typeof dims === "object") {
+        return Object.values(dims)
+            .map(entry => entry?.id)
+            .filter(id => typeof id === "string" && id.length > 0);
+    }
+    return ["minecraft:overworld", "minecraft:nether", "minecraft:the_end"];
+}
+
+function restoreConveyorsFromPersistence() {
+    if (conveyorRestoreDone) return;
+    conveyorRestoreDone = true;
+
+    const dimIds = getConveyorRestoreDimensions();
+
+    for (const dimId of dimIds) {
+        const dim = world.getDimension(dimId);
+        if (!dim) continue;
+
+        const meta = readConveyorChunkIndexMeta(dimId);
+        if (!meta.pages) continue;
+
+        const transmitters = [];
+        const receivers = [];
+
+        for (let page = 0; page < meta.pages; page++) {
+            const chunkKeys = readConveyorChunkIndexPage(dimId, page);
+            if (!chunkKeys.length) continue;
+
+            for (const chunkKey of chunkKeys) {
+                const stored = readConveyorChunkData(dimId, chunkKey);
+                if (!stored.length) {
+                    removeConveyorChunkFromIndex(dimId, chunkKey);
+                    continue;
+                }
+
+                const next = [];
+                const seen = new Set();
+
+                for (const entry of stored) {
+                    if (seen.has(entry)) continue;
+                    seen.add(entry);
+
+                    const pos = decodeConveyorPosKey(entry);
+                    if (!pos) continue;
+
+                    const block = dim.getBlock(pos);
+                    if (!block?.hasTag?.(CONVEYOR_TAG)) continue;
+
+                    registerConveyor(block, null, { persist: false });
+                    next.push(entry);
+
+                    const blockMeta = getConveyorMeta(block.typeId);
+                    if (blockMeta?.shape === "bridge_transmitter") {
+                        transmitters.push({ block, meta: blockMeta });
+                    } else if (blockMeta?.shape === "bridge_receiver") {
+                        receivers.push({ block, meta: blockMeta });
+                    }
+                }
+
+                if (next.length !== stored.length) {
+                    writeConveyorChunkData(dimId, chunkKey, next);
+                }
+
+                if (next.length === 0) {
+                    removeConveyorChunkFromIndex(dimId, chunkKey);
+                }
+            }
+        }
+
+        for (const entry of transmitters) {
+            refreshBridgePathFromTransmitter(entry.block, entry.meta, null);
+        }
+
+        for (const entry of receivers) {
+            refreshBridgePathsForReceiver(dim, entry.block.location, entry.meta, null);
+        }
+    }
+}
+
+function scheduleConveyorRestore() {
+    if (conveyorRestoreDone || conveyorRestoreScheduled) return;
+    conveyorRestoreScheduled = true;
+    let attempts = 0;
+
+    const attemptRestore = () => {
+        if (conveyorRestoreDone) return;
+        if (!globalThis.worldLoaded && attempts < 25) {
+            attempts++;
+            system.runTimeout(attemptRestore, 20);
+            return;
+        }
+        conveyorRestoreScheduled = false;
+        restoreConveyorsFromPersistence();
+    };
+
+    system.runTimeout(attemptRestore, 20);
 }
 
 function notifyBridgeObstructed(player) {
@@ -1057,6 +1392,7 @@ function openUpgradePackageMenu(player, block, context) {
 }
 
 function handleUpgradePackageInteract(player, block, params) {
+    if (!ENABLE_CONVEYOR_UPGRADE_PACKAGE) return false;
     const held = getPlayerHeldItem(player);
     if (!held || held.typeId !== UPGRADE_PACKAGE_ID) return false;
 
@@ -1147,6 +1483,7 @@ function tryApplyUpgradePackageToNetwork(itemEntity, itemStack, networkId, netwo
 }
 
 function handleUpgradePackageItem(itemEntity, itemStack, block, context) {
+    if (!ENABLE_CONVEYOR_UPGRADE_PACKAGE) return false;
     if (!itemStack || itemStack.typeId !== UPGRADE_PACKAGE_ID) return false;
     const payload = absorbUpgradesIntoPackage(itemEntity, itemStack, block);
     return tryApplyUpgradePackageToNetwork(
@@ -1158,7 +1495,7 @@ function handleUpgradePackageItem(itemEntity, itemStack, block, context) {
     );
 }
 
-function registerConveyor(block, params) {
+function registerConveyor(block, params, options = {}) {
     if (!block?.dimension) return;
     const meta = getConveyorMeta(block.typeId, params);
     if (!meta) return;
@@ -1172,6 +1509,10 @@ function registerConveyor(block, params) {
         meta
     });
     markConveyorNetworkDirty(dimId);
+
+    if (options.persist === true) {
+        persistConveyorPosition(block);
+    }
 }
 
 function getConveyorNetworkContext(block, params) {
@@ -1181,7 +1522,7 @@ function getConveyorNetworkContext(block, params) {
     const key = posKey(block.location);
 
     if (!registry.has(key)) {
-        registerConveyor(block, params);
+        registerConveyor(block, params, { persist: true });
     }
 
     const entry = registry.get(key);
@@ -1278,7 +1619,7 @@ function collectConnectedConveyorsFromSeeds(dim, seeds, maxScan) {
 
         visited.add(key);
         scanned++;
-        registerConveyor(block, null);
+        registerConveyor(block, null, { persist: false });
 
         const meta = getConveyorMeta(block.typeId);
 
@@ -1330,7 +1671,7 @@ function unregisterConveyorAt(dimId, pos) {
     const key = posKey(pos);
     registry.delete(key);
     bridgeCache.delete(key);
-    routerCycleCache.delete(key);
+    routerDirectionCache.delete(key);
     overflowCycleCache.delete(key);
     underflowCycleCache.delete(key);
     markConveyorNetworkDirty(dimId);
@@ -1373,6 +1714,28 @@ function getFacingFromPermutation(permutation) {
     }
 }
 
+function getVerticalDirection(block) {
+    if (!block?.permutation) return "up";
+    try {
+        const state = block.permutation.getState(VERTICAL_DIRECTION_STATE);
+        return state === "down" ? "down" : "up";
+    } catch {
+        return "up";
+    }
+}
+
+function toggleVerticalDirection(block) {
+    if (!block?.permutation) return false;
+    const current = getVerticalDirection(block);
+    const next = current === "down" ? "up" : "down";
+    try {
+        block.setPermutation(block.permutation.withState(VERTICAL_DIRECTION_STATE, next));
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 function getSpeed(ips) {
     const normalized = Number.isFinite(ips) && ips > 0 ? ips : BASE_IPS;
     return Math.min(MAX_SPEED, BASE_SPEED * (normalized / BASE_IPS));
@@ -1381,6 +1744,18 @@ function getSpeed(ips) {
 function getVerticalSpeed(ips) {
     const normalized = Number.isFinite(ips) && ips > 0 ? ips : BASE_IPS;
     return Math.min(MAX_VERTICAL_SPEED, BASE_VERTICAL_SPEED * (normalized / BASE_IPS));
+}
+
+function getConveyorSpeed(meta) {
+    const base = getSpeed(meta?.ips);
+    if (meta?.tier === "aetherium") return base * AETHERIUM_SPEED_MULTIPLIER;
+    return base;
+}
+
+function getConveyorVerticalSpeed(meta) {
+    const base = getVerticalSpeed(meta?.ips);
+    if (meta?.tier === "aetherium") return base * AETHERIUM_SPEED_MULTIPLIER;
+    return base;
 }
 
 function resolveOutputOffset(shape, facing) {
@@ -1404,6 +1779,17 @@ function getItemsNear(block, radius = 0.9) {
     });
 }
 
+function getCreaturesNear(block, radius = 0.9) {
+    const { x, y, z } = block.location;
+    const center = { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
+    return block.dimension.getEntities({
+        location: center,
+        maxDistance: radius,
+        excludeTypes: CONVEYOR_CREATURE_EXCLUDED_TYPES,
+        excludeFamilies: CONVEYOR_CREATURE_EXCLUDED_FAMILIES
+    });
+}
+
 function getItemStackFromEntity(item) {
     if (!item) return null;
     return item.getComponent("minecraft:item")?.itemStack ?? null;
@@ -1419,12 +1805,29 @@ function hasItemMovedThisTick(item) {
     return lastTick === getConveyorTick();
 }
 
+function hasEntityMovedThisTick(entity) {
+    if (!entity?.getDynamicProperty) return false;
+    const lastTick = Number(entity.getDynamicProperty(ENTITY_MOVE_TICK_PROP) ?? -1);
+    return lastTick === getConveyorTick();
+}
+
 function markItemMoved(item, blockKey) {
     if (!item?.setDynamicProperty) return;
     const tick = getConveyorTick();
     try {
         item.setDynamicProperty(ITEM_MOVE_TICK_PROP, tick);
         if (blockKey) item.setDynamicProperty(ITEM_MOVE_KEY_PROP, blockKey);
+    } catch {
+        // ignore dynamic property failures
+    }
+}
+
+function markEntityMoved(entity, blockKey) {
+    if (!entity?.setDynamicProperty) return;
+    const tick = getConveyorTick();
+    try {
+        entity.setDynamicProperty(ENTITY_MOVE_TICK_PROP, tick);
+        if (blockKey) entity.setDynamicProperty(ENTITY_MOVE_KEY_PROP, blockKey);
     } catch {
         // ignore dynamic property failures
     }
@@ -1483,6 +1886,27 @@ function getNetworkEnergySources(block, network) {
     network.energySources = sources;
     network.energyTick = tick;
     return sources;
+}
+
+function canConsumeConveyorEnergy(block, network, amount) {
+    if (!amount || amount <= 0) return true;
+    if (!block?.dimension || !network) return false;
+
+    const sources = getNetworkEnergySources(block, network);
+    if (!sources.length) return false;
+
+    let total = 0;
+    for (const source of sources) {
+        const entity = getEnergySourceEntityAt(block.dimension, source.pos);
+        if (!entity) continue;
+
+        const energy = new Energy(entity);
+        const available = energy.get();
+        if (available > 0) total += available;
+        if (total >= amount) return true;
+    }
+
+    return total >= amount;
 }
 
 function consumeConveyorEnergy(block, network, amount) {
@@ -1565,6 +1989,30 @@ function moveItem(item, delta, block, centerStrength = 0) {
     item.teleport(target);
 }
 
+function moveEntity(entity, delta, block, centerStrength = 0) {
+    if (!entity || !delta) return;
+
+    const current = entity.location;
+    const target = {
+        x: current.x + delta.x,
+        y: current.y + delta.y,
+        z: current.z + delta.z
+    };
+
+    if (centerStrength > 0 && block) {
+        const centerX = block.location.x + 0.5;
+        const centerZ = block.location.z + 0.5;
+        target.x += (centerX - target.x) * centerStrength;
+        target.z += (centerZ - target.z) * centerStrength;
+    }
+
+    try {
+        entity.teleport(target);
+    } catch {
+        // ignore teleport errors
+    }
+}
+
 function getRelativeDirections(facing) {
     return {
         front: facing,
@@ -1602,15 +2050,89 @@ function isOutputPassable(block, direction) {
     return false;
 }
 
+function hasContainerAt(block, direction) {
+    const target = getTargetBlock(block, direction);
+    if (!target) return false;
+    if (target.getComponent("minecraft:inventory")?.container) return true;
+
+    const entities = block.dimension.getEntitiesAtBlockLocation(target.location);
+    for (const entity of entities) {
+        if (entity?.getComponent("minecraft:inventory")?.container) return true;
+    }
+
+    return false;
+}
+
+function pickRandomDirection(options) {
+    if (!Array.isArray(options) || options.length === 0) return null;
+    const index = Math.floor(Math.random() * options.length);
+    return options[index] ?? null;
+}
+
+function resolveRouterDirection(block, key, options) {
+    if (!block || !key || !Array.isArray(options) || options.length === 0) return null;
+    const tick = getConveyorTick();
+    const passableOptions = options.filter(dir => isOutputPassable(block, dir));
+    if (passableOptions.length === 0) {
+        routerDirectionCache.delete(key);
+        return null;
+    }
+    const cached = routerDirectionCache.get(key);
+    const cachedDir = cached?.dir ?? null;
+    const shouldSwitch =
+        !cached ||
+        tick >= (cached?.nextSwitchTick ?? 0) ||
+        (cachedDir && !passableOptions.includes(cachedDir));
+
+    if (!shouldSwitch && cachedDir) return cachedDir;
+
+    let nextDir = passableOptions[0] ?? null;
+    if (cachedDir) {
+        const idx = passableOptions.indexOf(cachedDir);
+        if (idx >= 0) {
+            nextDir = passableOptions[(idx + 1) % passableOptions.length] ?? nextDir;
+        }
+    }
+
+    if (nextDir) {
+        routerDirectionCache.set(key, {
+            dir: nextDir,
+            nextSwitchTick: tick + ROUTER_DIRECTION_CHANGE_DELAY
+        });
+    }
+
+    return nextDir;
+}
+
 function moveItemInDirection(item, block, meta, direction) {
     const offset = CARDINAL_OFFSETS[direction];
     if (!offset) return;
 
-    const speed = getSpeed(meta.ips);
+    const speed = getConveyorSpeed(meta);
     const delta = { x: offset.x * speed, y: 0, z: offset.z * speed };
     const outputOffset = resolveOutputOffset("horizontal", direction);
     if (tryInsertIntoContainer(item, block, outputOffset)) return;
     moveItem(item, delta, block);
+}
+
+function teleportItemToDirection(item, block, direction) {
+    if (!item || !block || !direction) return;
+    const offset = CARDINAL_OFFSETS[direction];
+    if (!offset) return;
+    const target = {
+        x: block.location.x + offset.x + 0.5,
+        y: block.location.y + 0.1,
+        z: block.location.z + offset.z + 0.5
+    };
+    item.teleport(target);
+}
+
+function trySendItemInstant(item, block, direction) {
+    if (!item || !block || !direction) return false;
+    const outputOffset = resolveOutputOffset("horizontal", direction);
+    if (tryInsertIntoContainer(item, block, outputOffset)) return true;
+    teleportItemToDirection(item, block, direction);
+    return true;
 }
 
 function getCycleIndex(cache, key, max) {
@@ -1710,10 +2232,11 @@ function processRouterConveyor(block, meta, facing, context = {}) {
     const key = posKey(block.location);
     const dirs = getRelativeDirections(facing);
     const options = [dirs.front, dirs.right, dirs.left].filter(Boolean);
-    let cycleIndex = getCycleIndex(routerCycleCache, key, options.length - 1);
+    const selected = resolveRouterDirection(block, key, options);
+    if (!selected) return;
 
     const items = getItemsNear(block, 0.9);
-    if (!items?.length) return;
+    if (!items?.length && meta?.tier !== "aetherium") return;
 
     for (const item of items) {
         if (hasItemMovedThisTick(item)) continue;
@@ -1721,24 +2244,12 @@ function processRouterConveyor(block, meta, facing, context = {}) {
         if (!stack) continue;
         if (handleUpgradePackageItem(item, stack, block, context)) continue;
         if (shouldHoldAetheriumItem(meta, item)) continue;
-        let selected = null;
-        for (let i = 0; i < options.length; i++) {
-            const idx = (cycleIndex + i) % options.length;
-            const dir = options[idx];
-            if (isOutputPassable(block, dir)) {
-                selected = dir;
-                cycleIndex = (idx + 1) % options.length;
-                break;
-            }
-        }
-        if (!selected) selected = dirs.front;
+        if (!isOutputPassable(block, selected)) continue;
         if (!canMoveItemWithSpacing(item, items, selected)) continue;
         if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        moveItemInDirection(item, block, meta, selected);
+        trySendItemInstant(item, block, selected);
         markItemMoved(item, key);
     }
-
-    setCycleIndex(routerCycleCache, key, cycleIndex, options.length - 1);
 }
 
 function processSmartRouterConveyor(block, meta, facing, context = {}) {
@@ -1767,7 +2278,7 @@ function processSmartRouterConveyor(block, meta, facing, context = {}) {
         const selected = candidates.find(dir => isOutputPassable(block, dir)) ?? dirs.front;
         if (!canMoveItemWithSpacing(item, items, selected)) continue;
         if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        moveItemInDirection(item, block, meta, selected);
+        trySendItemInstant(item, block, selected);
         markItemMoved(item, key);
     }
 }
@@ -1789,7 +2300,7 @@ function processOverflowConveyor(block, meta, facing, context = {}) {
         if (isOutputPassable(block, dirs.front)) {
             if (!canMoveItemWithSpacing(item, items, dirs.front)) continue;
             if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-            moveItemInDirection(item, block, meta, dirs.front);
+            trySendItemInstant(item, block, dirs.front);
             markItemMoved(item, key);
             continue;
         }
@@ -1810,7 +2321,7 @@ function processOverflowConveyor(block, meta, facing, context = {}) {
 
         if (!canMoveItemWithSpacing(item, items, selected)) continue;
         if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        moveItemInDirection(item, block, meta, selected);
+        trySendItemInstant(item, block, selected);
         markItemMoved(item, key);
     }
 
@@ -1833,21 +2344,34 @@ function processUnderflowConveyor(block, meta, facing, context = {}) {
         if (shouldHoldAetheriumItem(meta, item)) continue;
         const primary = cycleIndex === 0 ? dirs.right : dirs.left;
         const secondary = cycleIndex === 0 ? dirs.left : dirs.right;
-        let selected = null;
+        let injected = false;
 
-        if (primary && isOutputPassable(block, primary)) {
-            selected = primary;
-            cycleIndex = 1 - cycleIndex;
-        } else if (secondary && isOutputPassable(block, secondary)) {
-            selected = secondary;
-            cycleIndex = 1 - cycleIndex;
-        } else {
-            selected = dirs.front;
+        if (primary && hasContainerAt(block, primary) && canConsumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) {
+            const outputOffset = resolveOutputOffset("horizontal", primary);
+            if (tryInsertIntoContainer(item, block, outputOffset)) {
+                consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST);
+                cycleIndex = 1 - cycleIndex;
+                markItemMoved(item, key);
+                injected = true;
+            }
         }
 
-        if (!canMoveItemWithSpacing(item, items, selected)) continue;
+        if (!injected && secondary && hasContainerAt(block, secondary) && canConsumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) {
+            const outputOffset = resolveOutputOffset("horizontal", secondary);
+            if (tryInsertIntoContainer(item, block, outputOffset)) {
+                consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST);
+                cycleIndex = 1 - cycleIndex;
+                markItemMoved(item, key);
+                injected = true;
+            }
+        }
+
+        if (injected) continue;
+
+        if (!dirs.front || !isOutputPassable(block, dirs.front)) continue;
+        if (!canMoveItemWithSpacing(item, items, dirs.front)) continue;
         if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        moveItemInDirection(item, block, meta, selected);
+        trySendItemInstant(item, block, dirs.front);
         markItemMoved(item, key);
     }
 
@@ -1866,6 +2390,19 @@ function isItemInsideBlock(item, block) {
 
 function resolveJunctionDirection(block, item, facing) {
     if (!item?.location || !block?.location) return facing;
+    const lastKey = item?.getDynamicProperty?.(ITEM_MOVE_KEY_PROP);
+    const lastPos = parsePosKey(lastKey);
+    if (lastPos) {
+        const dx = lastPos.x - block.location.x;
+        const dy = lastPos.y - block.location.y;
+        const dz = lastPos.z - block.location.z;
+        if (dy === 0 && Math.abs(dx) + Math.abs(dz) === 1) {
+            if (dx === 1) return "west";
+            if (dx === -1) return "east";
+            if (dz === 1) return "north";
+            if (dz === -1) return "south";
+        }
+    }
     const centerX = block.location.x + 0.5;
     const centerZ = block.location.z + 0.5;
     const dx = item.location.x - centerX;
@@ -1877,23 +2414,42 @@ function resolveJunctionDirection(block, item, facing) {
     return dz >= 0 ? "north" : "south";
 }
 
+function clearJunctionItemCache(item) {
+    try {
+        item?.setDynamicProperty?.(ITEM_JUNCTION_BLOCK_PROP, "");
+        item?.setDynamicProperty?.(ITEM_JUNCTION_DIR_PROP, "");
+    } catch {
+        // ignore
+    }
+}
+
 function getJunctionDirectionForItem(block, item, facing) {
     const blockKey = posKey(block.location);
     const storedKey = item?.getDynamicProperty?.(ITEM_JUNCTION_BLOCK_PROP);
     const storedDir = item?.getDynamicProperty?.(ITEM_JUNCTION_DIR_PROP);
 
-    if (storedKey === blockKey && typeof storedDir === "string") {
-        return storedDir;
+    if (storedKey === blockKey && typeof storedDir === "string" && storedDir.length > 0) {
+        if (isOutputPassable(block, storedDir)) return storedDir;
+        clearJunctionItemCache(item);
     }
 
     const resolved = resolveJunctionDirection(block, item, facing);
+    if (!resolved) return null;
+
+    let chosen = resolved;
+    if (!isOutputPassable(block, chosen)) {
+        const opposite = OPPOSITE_CARDINAL[chosen];
+        chosen = opposite && isOutputPassable(block, opposite) ? opposite : null;
+    }
+
+    if (!chosen) return null;
     try {
         item?.setDynamicProperty?.(ITEM_JUNCTION_BLOCK_PROP, blockKey);
-        item?.setDynamicProperty?.(ITEM_JUNCTION_DIR_PROP, resolved);
+        item?.setDynamicProperty?.(ITEM_JUNCTION_DIR_PROP, chosen);
     } catch {
         // ignore dynamic property issues
     }
-    return resolved;
+    return chosen;
 }
 
 function processJunctionConveyor(block, meta, facing, context = {}) {
@@ -1910,19 +2466,15 @@ function processJunctionConveyor(block, meta, facing, context = {}) {
         if (!isItemInsideBlock(item, block)) {
             const blockKey = posKey(block.location);
             if (item?.getDynamicProperty?.(ITEM_JUNCTION_BLOCK_PROP) === blockKey) {
-                try {
-                    item?.setDynamicProperty?.(ITEM_JUNCTION_BLOCK_PROP, "");
-                    item?.setDynamicProperty?.(ITEM_JUNCTION_DIR_PROP, "");
-                } catch {
-                    // ignore
-                }
+                clearJunctionItemCache(item);
             }
         }
 
         const direction = getJunctionDirectionForItem(block, item, facing);
+        if (!direction) continue;
         if (!canMoveItemWithSpacing(item, items, direction)) continue;
         if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        moveItemInDirection(item, block, meta, direction);
+        trySendItemInstant(item, block, direction);
         markItemMoved(item, key);
     }
 }
@@ -1995,6 +2547,17 @@ function createBridgePath(block, tier, facing, steps) {
     if (!offset) return;
     const pathId = getBridgePathBlockId(tier);
 
+    const applyBridgePathDirection = target => {
+        if (!target) return;
+        try {
+            if (target.permutation?.getState(BRIDGE_PATH_DIRECTION_STATE) !== undefined) {
+                target.setPermutation(target.permutation.withState(BRIDGE_PATH_DIRECTION_STATE, facing));
+            }
+        } catch {
+            // ignore permutation errors
+        }
+    };
+
     for (let step = 1; step < steps; step++) {
         const pos = {
             x: block.location.x + offset.x * step,
@@ -2011,6 +2574,7 @@ function createBridgePath(block, tier, facing, steps) {
 
         if (isAirLike(target) || isBridgePathBlock(target, tier) || isLegacyBridgePathBlock(target)) {
             target.setType(pathId);
+            applyBridgePathDirection(target);
         }
     }
 }
@@ -2095,7 +2659,7 @@ function processBridgeTransmitter(block, meta, facing, context = {}) {
     updateBridgeNetworkCache(block, link.receiver);
 
     const items = getItemsNear(block, 0.9);
-    if (!items?.length) return;
+    if (!items?.length && meta?.tier !== "aetherium") return;
 
     const receiverCenter = {
         x: link.receiver.location.x + 0.5,
@@ -2104,14 +2668,31 @@ function processBridgeTransmitter(block, meta, facing, context = {}) {
     };
 
     const key = posKey(block.location);
-    for (const item of items) {
-        if (hasItemMovedThisTick(item)) continue;
-        const stack = getItemStackFromEntity(item);
-        if (!stack) continue;
-        if (handleUpgradePackageItem(item, stack, block, context)) continue;
-        if (shouldHoldAetheriumItem(meta, item)) continue;
-        item.teleport(receiverCenter);
-        markItemMoved(item, key);
+    if (items?.length) {
+        for (const item of items) {
+            if (hasItemMovedThisTick(item)) continue;
+            const stack = getItemStackFromEntity(item);
+            if (!stack) continue;
+            if (handleUpgradePackageItem(item, stack, block, context)) continue;
+            if (shouldHoldAetheriumItem(meta, item)) continue;
+            item.teleport(receiverCenter);
+            markItemMoved(item, key);
+        }
+    }
+
+    if (meta?.tier === "aetherium") {
+        const creatures = getCreaturesNear(block, 0.9);
+        if (!creatures?.length) return;
+        for (const entity of creatures) {
+            if (entity?.isValid === false) continue;
+            if (hasEntityMovedThisTick(entity)) continue;
+            try {
+                entity.teleport(receiverCenter);
+            } catch {
+                // ignore teleport errors
+            }
+            markEntityMoved(entity, key);
+        }
     }
 }
 
@@ -2119,8 +2700,9 @@ function processStandardConveyor(block, meta, facing, forcedShape = null, contex
     const shape = forcedShape ?? meta.shape;
     const baseOffset = CARDINAL_OFFSETS[facing] ?? { x: 0, y: 0, z: 0 };
 
-    const speed = getSpeed(meta.ips);
-    const verticalSpeed = getVerticalSpeed(meta.ips);
+    const speed = getConveyorSpeed(meta);
+    const verticalSpeed = getConveyorVerticalSpeed(meta);
+    const verticalDirection = shape === "vertical" ? getVerticalDirection(block) : "up";
 
     let delta = { x: 0, y: 0, z: 0 };
     let centerStrength = 0;
@@ -2137,33 +2719,49 @@ function processStandardConveyor(block, meta, facing, forcedShape = null, contex
             delta = { x: baseOffset.x * speed, y: -verticalSpeed, z: baseOffset.z * speed };
             break;
         case "vertical":
-            delta = { x: 0, y: verticalSpeed, z: 0 };
+            delta = { x: 0, y: verticalDirection === "down" ? -verticalSpeed : verticalSpeed, z: 0 };
             centerStrength = 0.35;
             break;
         default:
             return;
     }
 
-    const outputOffset = resolveOutputOffset(shape, facing);
-    const items = getItemsNear(block, 0.9);
-    if (!items?.length) return;
+    let outputOffset = resolveOutputOffset(shape, facing);
+    if (shape === "vertical" && verticalDirection === "down") {
+        outputOffset = { x: 0, y: -1, z: 0 };
+    }
+    const detectionRadius = shape === "inclined" || shape === "declined" ? INCLINED_DETECTION_RADIUS : 0.9;
+    const items = getItemsNear(block, detectionRadius);
 
-    const moveDirection = shape === "vertical" ? "up" : facing;
+    const moveDirection = shape === "vertical" ? verticalDirection : facing;
     const blockKey = posKey(block.location);
 
-    for (const item of items) {
-        if (hasItemMovedThisTick(item)) continue;
-        const stack = getItemStackFromEntity(item);
-        if (!stack) continue;
-        if (handleUpgradePackageItem(item, stack, block, context)) continue;
-        if (shouldHoldAetheriumItem(meta, item)) continue;
-        if (!canMoveItemWithSpacing(item, items, moveDirection)) continue;
-        if (tryInsertIntoContainer(item, block, outputOffset)) {
+    if (items?.length) {
+        for (const item of items) {
+            if (hasItemMovedThisTick(item)) continue;
+            const stack = getItemStackFromEntity(item);
+            if (!stack) continue;
+            if (handleUpgradePackageItem(item, stack, block, context)) continue;
+            if (shouldHoldAetheriumItem(meta, item)) continue;
+            if (!canMoveItemWithSpacing(item, items, moveDirection)) continue;
+            if (tryInsertIntoContainer(item, block, outputOffset)) {
+                markItemMoved(item, blockKey);
+                continue;
+            }
+            moveItem(item, delta, block, centerStrength);
             markItemMoved(item, blockKey);
-            continue;
         }
-        moveItem(item, delta, block, centerStrength);
-        markItemMoved(item, blockKey);
+    }
+
+    if (meta?.tier === "aetherium") {
+        const creatures = getCreaturesNear(block, detectionRadius);
+        if (!creatures?.length) return;
+        for (const entity of creatures) {
+            if (entity?.isValid === false) continue;
+            if (hasEntityMovedThisTick(entity)) continue;
+            moveEntity(entity, delta, block, centerStrength);
+            markEntityMoved(entity, blockKey);
+        }
     }
 }
 
@@ -2218,7 +2816,7 @@ function processAllConveyors() {
             if (!block?.hasTag?.(CONVEYOR_TAG)) {
                 registry.delete(key);
                 bridgeCache.delete(key);
-                routerCycleCache.delete(key);
+                routerDirectionCache.delete(key);
                 overflowCycleCache.delete(key);
                 underflowCycleCache.delete(key);
                 if (entry.meta?.shape === "smart_router") {
@@ -2232,7 +2830,7 @@ function processAllConveyors() {
             if (!meta) {
                 registry.delete(key);
                 bridgeCache.delete(key);
-                routerCycleCache.delete(key);
+                routerDirectionCache.delete(key);
                 overflowCycleCache.delete(key);
                 underflowCycleCache.delete(key);
                 markConveyorNetworkDirty(dimId);
@@ -2250,15 +2848,61 @@ function processAllConveyors() {
     }
 }
 
+function applyPackageUpgradesToConveyorNetwork(block, upgradesByType = {}) {
+    if (!block) return { applied: {}, networkId: null };
+    const context = getConveyorNetworkContext(block, null);
+    if (!context?.networkId) return { applied: {}, networkId: null };
+
+    const current = getConveyorUpgrades(context.networkId, context.network);
+    const next = { ...current };
+    const applied = {};
+
+    for (const [type, rawAmount] of Object.entries(upgradesByType ?? {})) {
+        if (!CONVEYOR_UPGRADE_TYPES.has(type)) continue;
+        const amount = Math.max(0, Math.floor(Number(rawAmount) || 0));
+        if (amount <= 0) continue;
+
+        const currentValue = Math.max(0, Math.floor(Number(next[type]) || 0));
+        const desired = Math.min(UPGRADE_PACKAGE_MAX, currentValue + amount);
+        const appliedAmount = Math.max(0, desired - currentValue);
+        if (appliedAmount <= 0) continue;
+
+        next[type] = desired;
+        applied[type] = appliedAmount;
+    }
+
+    if (Object.keys(applied).length === 0) {
+        return { applied: {}, networkId: context.networkId };
+    }
+
+    saveConveyorUpgrades(context.networkId, next, context.network);
+    return { applied, networkId: context.networkId };
+}
+
+globalThis.utilitycraftConveyorUpgrades = globalThis.utilitycraftConveyorUpgrades ?? {};
+globalThis.utilitycraftConveyorUpgrades.applyPackageUpgrades = applyPackageUpgradesToConveyorNetwork;
+globalThis.utilitycraftConveyorUpgrades.isConveyorBlock = block => block?.hasTag?.(CONVEYOR_TAG) ?? false;
+globalThis.utilitycraftConveyorUpgrades.getUpgradeTypes = () => CONVEYOR_UPGRADE_TYPES;
+
 DoriosAPI.register.blockComponent("conveyor", {
     beforeOnPlayerPlace(e, { params }) {
         system.run(() => {
-            registerConveyor(e.block, params);
+            registerConveyor(e.block, params, { persist: true });
             updatePipes(e.block, "energy");
         });
     },
     onPlayerInteract(e, { params }) {
         if (!e?.player || !e.block) return;
+        const held = getPlayerHeldItem(e.player);
+        if (held?.typeId === WRENCH_ITEM_ID) {
+            const meta = getConveyorMeta(e.block.typeId, params);
+            if (meta?.shape === "vertical") {
+                system.run(() => {
+                    toggleVerticalDirection(e.block);
+                });
+                return;
+            }
+        }
         if (handleUpgradePackageInteract(e.player, e.block, params)) return;
         if (params?.shape !== "smart_router") return;
         if (e.player.isSneaking) return;
@@ -2270,6 +2914,7 @@ DoriosAPI.register.blockComponent("conveyor", {
         const dimId = e.block.dimension?.id;
         if (dimId) {
             unregisterConveyorAt(dimId, e.block.location);
+            unpersistConveyorPosition(dimId, e.block.location);
         }
         system.run(() => {
             refreshEnergyAround(e.block);
@@ -2287,7 +2932,7 @@ DoriosAPI.register.blockComponent("conveyor_network_updater", {
 world.afterEvents.playerPlaceBlock.subscribe(({ block, player }) => {
     if (!block?.hasTag?.(CONVEYOR_TAG)) return;
     system.run(() => {
-        registerConveyor(block);
+        registerConveyor(block, null, { persist: true });
         updatePipes(block, "energy");
 
         const meta = getConveyorMeta(block.typeId);
@@ -2304,6 +2949,9 @@ world.afterEvents.playerPlaceBlock.subscribe(({ block, player }) => {
 world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation, player }) => {
     if (!brokenBlockPermutation?.hasTag?.(CONVEYOR_TAG)) return;
     unregisterConveyorAt(block.dimension?.id, block.location);
+    if (block.dimension?.id) {
+        unpersistConveyorPosition(block.dimension.id, block.location);
+    }
     system.run(() => {
         const meta = getConveyorMeta(brokenBlockPermutation.type.id);
         const facing = getFacingFromPermutation(brokenBlockPermutation);
@@ -2322,6 +2970,15 @@ world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation, p
 
         refreshEnergyAround(block);
     });
+});
+
+world.afterEvents.worldLoad.subscribe(() => {
+    scheduleConveyorRestore();
+});
+
+world.afterEvents.playerSpawn.subscribe(({ initialSpawn }) => {
+    if (!initialSpawn) return;
+    scheduleConveyorRestore();
 });
 
 system.runInterval(() => {

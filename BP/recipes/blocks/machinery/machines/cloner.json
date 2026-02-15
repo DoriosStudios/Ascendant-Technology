@@ -2,7 +2,7 @@
     "format_version": "1.20.80",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "utilitycraft:cloner"
+            "identifier": "utilitycraft:duplicator"
         },
         "tags": [
             "utilitycraft_workbench"
@@ -33,7 +33,7 @@
             }
         },
         "result": {
-            "item": "utilitycraft:cloner",
+            "item": "utilitycraft:duplicator",
             "count": 1
         },
         "unlock": [

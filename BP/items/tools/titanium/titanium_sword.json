@@ -10,22 +10,22 @@
         },
         "components": {
             "minecraft:icon": "utilitycraft_titanium_sword",
-            "minecraft:hand_equipped": true,
-            "minecraft:max_stack_size": 1,
             "minecraft:tags": {
                 "tags": [
                     "minecraft:is_sword",
                     "minecraft:is_tool"
                 ]
             },
-            "minecraft:enchantable": {
-                "value": 20,
-                "slot": "sword"
-            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:hand_equipped": true,
             "minecraft:durability": {
                 "max_durability": 1561
             },
             "minecraft:damage": 7,
+            "minecraft:enchantable": {
+                "value": 20,
+                "slot": "sword"
+            },
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [

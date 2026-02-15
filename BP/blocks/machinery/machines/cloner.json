@@ -2,7 +2,7 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:cloner",
+			"identifier": "utilitycraft:duplicator",
 			"menu_category": {
 				"category": "construction",
 				"group": "dorios:itemGroup.name.machines"
@@ -29,7 +29,7 @@
 			}
 		},
 		"components": {
-			"utilitycraft:cloner": {
+			"utilitycraft:duplicator": {
 				"rotation": "facing",
 				"entity": {
 					"input_type": "complex",
@@ -64,7 +64,7 @@
 				"Template": 3
 			},
 			"utilitycraft:machine_recipes": {
-				"type": "cloner"
+				"type": "duplicator"
 			},
 			"minecraft:geometry": "geometry.utilitycraft_block_2",
 			"minecraft:material_instances": {

@@ -75,135 +75,45 @@ const MODULE_ENCHANT_TARGETS = Object.freeze([
 ])
 
 const ENCHANTMENT_SOURCES = [
-    {
-        kind: 'group',
-        entries: [
-            'minecraft:protection',
-            'minecraft:fire_protection',
-            'minecraft:blast_protection',
-            'minecraft:projectile_protection'
-        ]
-    },
-    {
-        kind: 'group',
-        entries: [
-            'minecraft:sharpness',
-            'minecraft:smite',
-            'minecraft:bane_of_arthropods'
-        ]
-    },
-    {
-        kind: 'group',
-        entries: [
-            'minecraft:silk_touch',
-            'minecraft:fortune'
-        ]
-    },
-    {
-        kind: 'group',
-        entries: [
-            'minecraft:depth_strider',
-            'minecraft:frost_walker'
-        ]
-    },
-    {
-        kind: 'group',
-        entries: [
-            'minecraft:multishot',
-            'minecraft:piercing'
-        ]
-    },
-    {
-        kind: 'group',
-        entries: [
-            'minecraft:loyalty',
-            'minecraft:riptide'
-        ]
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:unbreaking']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:mending']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:efficiency']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:respiration']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:aqua_affinity']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:thorns']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:feather_falling']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:fire_aspect']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:knockback']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:looting']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:power']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:punch']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:flame']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:infinity']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:quick_charge']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:impaling']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:channeling']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:lure']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:luck_of_the_sea']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:soul_speed']
-    },
-    {
-        kind: 'single',
-        entries: ['minecraft:swift_sneak']
-    }
+    { kind: 'group', entries: [
+        'minecraft:protection', 'minecraft:fire_protection', 'minecraft:blast_protection', 'minecraft:projectile_protection'
+    ] },
+    { kind: 'group', entries: [
+        'minecraft:sharpness', 'minecraft:smite', 'minecraft:bane_of_arthropods'
+    ] },
+    { kind: 'group', entries: [
+        'minecraft:silk_touch', 'minecraft:fortune'
+    ] },
+    { kind: 'group', entries: [
+        'minecraft:depth_strider', 'minecraft:frost_walker'
+    ] },
+    { kind: 'group', entries: [
+        'minecraft:multishot', 'minecraft:piercing'
+    ] },
+    { kind: 'group', entries: [
+        'minecraft:loyalty', 'minecraft:riptide'
+    ] },
+    { kind: 'single', entries: ['minecraft:unbreaking'] },
+    { kind: 'single', entries: ['minecraft:mending'] },
+    { kind: 'single', entries: ['minecraft:efficiency'] },
+    { kind: 'single', entries: ['minecraft:respiration'] },
+    { kind: 'single', entries: ['minecraft:aqua_affinity'] },
+    { kind: 'single', entries: ['minecraft:thorns'] },
+    { kind: 'single', entries: ['minecraft:feather_falling'] },
+    { kind: 'single', entries: ['minecraft:fire_aspect'] },
+    { kind: 'single', entries: ['minecraft:knockback'] },
+    { kind: 'single', entries: ['minecraft:looting'] },
+    { kind: 'single', entries: ['minecraft:power'] },
+    { kind: 'single', entries: ['minecraft:punch'] },
+    { kind: 'single', entries: ['minecraft:flame'] },
+    { kind: 'single', entries: ['minecraft:infinity'] },
+    { kind: 'single', entries: ['minecraft:quick_charge'] },
+    { kind: 'single', entries: ['minecraft:impaling'] },
+    { kind: 'single', entries: ['minecraft:channeling'] },
+    { kind: 'single', entries: ['minecraft:lure'] },
+    { kind: 'single', entries: ['minecraft:luck_of_the_sea'] },
+    { kind: 'single', entries: ['minecraft:soul_speed'] },
+    { kind: 'single', entries: ['minecraft:swift_sneak'] }
 ]
 
 const PROGRESS_STYLE = {
@@ -211,7 +121,7 @@ const PROGRESS_STYLE = {
     color: null
 }
 
-DoriosAPI.register.blockComponent('ascane_engine', {
+DoriosAPI.register.blockComponent('enchantment_station', {
     beforeOnPlayerPlace(e, { params: settings }) {
         Machine.spawnMachineEntity(e, settings, () => {
             const machine = new Machine(e.block, settings, true)
@@ -240,12 +150,12 @@ DoriosAPI.register.blockComponent('ascane_engine', {
         if (!machine?.entity || !machine.inv) return
 
         const tickSpeed = Math.max(1, Number(globalThis.tickSpeed ?? 1))
-
         const modules = getModuleLevels(machine.inv)
         const xpTank = getAscaneXpTank(machine, settings)
         const results = []
 
         results.push(processDisenchantSlot(machine, DISENCHANT_SLOT, settings, tickSpeed))
+
         for (const slot of GRID_SLOTS) {
             results.push(processSlot(machine, slot, modules, settings, tickSpeed, xpTank))
         }
@@ -266,7 +176,7 @@ function getModuleLevels(inv) {
     }
 
     for (const slot of MODULE_SLOTS) {
-        const stack = inv?.getItem(slot)
+        const stack = inv.getItem(slot)
         if (!stack) continue
         const resolved = resolveModuleLevel(stack.typeId)
         if (!resolved?.type) continue
@@ -1026,7 +936,7 @@ function applyEnchantmentsToStack(targetStack, enchantments) {
         const signature = buildEnchantmentSignature(sanitized)
         setStoredEnchantSignature(targetStack, signature)
     } catch (error) {
-        console.warn('[ascane_engine] Failed to apply enchantments:', error)
+        console.warn('[enchantment_station] Failed to apply enchantments:', error)
     }
 }
 
@@ -1171,16 +1081,22 @@ function updateHud(machine, results, modules) {
         : Energy.formatEnergyToText(BASE_COST)
 
     const lore = [
-        `§7Slots: ${summary.processing} active, ${summary.ready} ready, ${summary.error} blocked`,
-        `§7Modules: Enchant ${modules.enchantability}, Reinforce ${modules.reinforcement}, Curse ${modules.curseProtection}`,
-        `§7Cost: ${costText}`
+        `§bSlots: `,
+        `§i- ${summary.processing} active`, 
+        `§i- ${summary.ready} ready`, 
+        `§i- ${summary.error} blocked`,
+        `§bModules: `,
+        `§i- Enchant ${modules.enchantability}`,
+        `§i- Reinforce ${modules.reinforcement}`,
+        `§i- Curse ${modules.curseProtection}`,
+        `§aCost: ${costText}`
     ]
 
     const overclockLine = buildOverclockLoreLine(machine)
     if (overclockLine) lore.push(overclockLine)
 
     machine.setLabel({
-        title: '§6Ascane Engine',
+        title: '§r§6Ascane Engine',
         lore
     }, STATUS_SLOT)
 }

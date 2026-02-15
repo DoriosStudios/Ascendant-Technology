@@ -10,8 +10,8 @@ tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena iten
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
-tile.utilitycraft:ascane_engine.name=Ascane Engine\n§7- Repara, encanta e reforça equipamentos\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicador\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7- Repara, encanta e reforça equipamentos\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:duplicator.name=Duplicador\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Câmara Criogênica\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7\n§7- 3 modos:\n  Estabilizador,\n  Resfrigerador,\n  Gerador de Criofluido
 tile.utilitycraft:energizer.name=Energizador\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:liquifier.name=Liquefator\n§7- Aceita melhorias:\n    §a§7, §b§7, §d§7
@@ -31,33 +31,33 @@ tile.utilitycraft:mob_magnet.name=Ímã de Mobs \n§7 Atrai mobs em um raio conf
 tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser
 tile.utilitycraft:reinforced_cable.name=Cabo Reforçado\n§7- Espinha dorsal de alta capacidade para energia, fluidos e overclock
 
-tile.utilitycraft:copper_conveyor_horizontal.name=Esteira de Cobre (Horizontal)
-tile.utilitycraft:copper_conveyor_inclined.name=Esteira de Cobre (Inclinada)
-tile.utilitycraft:copper_conveyor_declined.name=Esteira de Cobre (Declinada)
-tile.utilitycraft:copper_conveyor_vertical.name=Esteira de Cobre (Vertical)
-tile.utilitycraft:copper_conveyor_bridge_transmitter.name=Ponte de Esteira de Cobre (Transmissor)
-tile.utilitycraft:copper_conveyor_bridge_receiver.name=Ponte de Esteira de Cobre (Receptor)
+tile.utilitycraft:copper_conveyor_horizontal.name=§vCopper Conveyor\n§8- Horizontal\n- Speed: 1.0 m/s
+tile.utilitycraft:copper_conveyor_inclined.name=§vCopper Conveyor\n§8- Inclined\n- Speed: 1.0 m/s
+tile.utilitycraft:copper_conveyor_declined.name=§vCopper Conveyor\n§8- Declined\n- Speed: 1.0 m/s
+tile.utilitycraft:copper_conveyor_vertical.name=§vCopper Conveyor\n§8- Vertical\n- Speed: 2.4 m/s
+tile.utilitycraft:copper_conveyor_bridge_transmitter.name=§vCopper Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
+tile.utilitycraft:copper_conveyor_bridge_receiver.name=§vCopper Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
 
-tile.utilitycraft:titanium_conveyor_horizontal.name=Esteira de Titânio (Horizontal)
-tile.utilitycraft:titanium_conveyor_inclined.name=Esteira de Titânio (Inclinada)
-tile.utilitycraft:titanium_conveyor_declined.name=Esteira de Titânio (Declinada)
-tile.utilitycraft:titanium_conveyor_vertical.name=Esteira de Titânio (Vertical)
-tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=Ponte de Esteira de Titânio (Transmissor)
-tile.utilitycraft:titanium_conveyor_bridge_receiver.name=Ponte de Esteira de Titânio (Receptor)
+tile.utilitycraft:titanium_conveyor_horizontal.name=§tTitanium Conveyor\n§8- Horizontal\n- Speed: 2.2 m/s
+tile.utilitycraft:titanium_conveyor_inclined.name=§tTitanium Conveyor\n§8- Inclined\n- Speed: 2.2 m/s
+tile.utilitycraft:titanium_conveyor_declined.name=§tTitanium Conveyor\n§8- Declined\n- Speed: 2.2 m/s
+tile.utilitycraft:titanium_conveyor_vertical.name=§tTitanium Conveyor\n§8- Vertical\n- Speed: 5.3 m/s
+tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=§tTitanium Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
+tile.utilitycraft:titanium_conveyor_bridge_receiver.name=§tTitanium Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
 
-tile.utilitycraft:aetherium_conveyor_horizontal.name=Esteira de Aetherium (Horizontal)
-tile.utilitycraft:aetherium_conveyor_inclined.name=Esteira de Aetherium (Inclinada)
-tile.utilitycraft:aetherium_conveyor_declined.name=Esteira de Aetherium (Declinada)
-tile.utilitycraft:aetherium_conveyor_vertical.name=Esteira de Aetherium (Vertical)
-tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=Ponte de Esteira de Aetherium (Transmissor)
-tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=Ponte de Esteira de Aetherium (Receptor)
+tile.utilitycraft:aetherium_conveyor_horizontal.name=§dAetherium Conveyor\n§8- Horizontal\n- Speed: 20.0 m/s
+tile.utilitycraft:aetherium_conveyor_inclined.name=§dAetherium Conveyor\n§8- Inclined\n- Speed: 20.0 m/s
+tile.utilitycraft:aetherium_conveyor_declined.name=§dAetherium Conveyor\n§8- Declined\n- Speed: 20.0 m/s
+tile.utilitycraft:aetherium_conveyor_vertical.name=§dAetherium Conveyor\n§8- Vertical\n- Speed: 30.0 m/s
+tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=§dAetherium Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
+tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=§dAetherium Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
 
-tile.utilitycraft:conveyor_router.name=Roteador de Esteira
-tile.utilitycraft:conveyor_smart_router.name=Roteador Inteligente de Esteira
-tile.utilitycraft:conveyor_overflow.name=Esteira de Overflow
-tile.utilitycraft:conveyor_underflow.name=Esteira de Underflow
-tile.utilitycraft:conveyor_junction.name=Junção de Esteira
-tile.utilitycraft:conveyor_network_updater.name=Atualizador de Rede de Esteiras
+tile.utilitycraft:conveyor_router.name=§aConveyor Router\n§8- Teleports items to a random output\n- Slightly longer delay before switching direction
+tile.utilitycraft:conveyor_smart_router.name=§aConveyor Smart Router\n§8- Routes items by assigned filters\n- Hold an item to configure
+tile.utilitycraft:conveyor_overflow.name=§aConveyor Overflow\n§8- Sends items forward first\n- Diverts overflow to the sides
+tile.utilitycraft:conveyor_underflow.name=§aConveyor Underflow\n§8- Diverts items to the sides first\n- Sends remaining items forward
+tile.utilitycraft:conveyor_junction.name=§aConveyor Junction\n§8- Splits items based on entry position
+tile.utilitycraft:conveyor_network_updater.name=§aConveyor Network Updater\n§8- Refreshes adjacent conveyor networks
 
 tile.utilitycraft:copper_conveyor_bridge_path.name=Caminho da Ponte de Cobre
 tile.utilitycraft:titanium_conveyor_bridge_path.name=Caminho da Ponte de Titânio
@@ -134,15 +134,15 @@ item.utilitycraft:size_upgrade=Módulo de Melhoria de §gTamanho§7\n- Aumenta a
 item.utilitycraft:hyper_processing_upgrade=Módulo de Melhoria de §dHyper Processamento§7\n- Aumenta a velocidade das máquinas\n- Não aumenta o consumo de energia\n- Exclusivo para máquinas AT
 item.utilitycraft:upgrade_package=§6Pacote de Melhorias§7\n- Armazena melhorias de esteira para instalar na rede
 item.utilitycraft:ascane_module_base=§7Base do Módulo Ascano
-item.utilitycraft:enchantability_module=Módulo de §bEncantamento I§7\n- Adiciona e melhora encantamentos na Ascane Engine
-item.utilitycraft:enchantability_module_2=Módulo de §bEncantamento II§7\n- Adiciona e melhora encantamentos na Ascane Engine
-item.utilitycraft:enchantability_module_3=Módulo de §bEncantamento III§7\n- Adiciona e melhora encantamentos na Ascane Engine
-item.utilitycraft:enchantability_module_4=Módulo de §bEncantamento IV§7\n- Adiciona e melhora encantamentos na Ascane Engine
-item.utilitycraft:enchantability_module_5=Módulo de §bEncantamento V§7\n- Adiciona e melhora encantamentos na Ascane Engine
-item.utilitycraft:reinforcement_module=Módulo de §6Reforço I§7\n- Aumenta a capacidade de reforço na Ascane Engine
-item.utilitycraft:reinforcement_module_2=Módulo de §6Reforço II§7\n- Aumenta a capacidade de reforço na Ascane Engine
-item.utilitycraft:reinforcement_module_3=Módulo de §6Reforço III§7\n- Aumenta a capacidade de reforço na Ascane Engine
-item.utilitycraft:curse_protection_module=Módulo de §5Proteção contra Maldição§7\n- Impede maldição na Ascane Engine
+item.utilitycraft:enchantability_module=Módulo de §bEncantamento I§7\n- Adiciona e melhora encantamentos na Enchantment Station
+item.utilitycraft:enchantability_module_2=Módulo de §bEncantamento II§7\n- Adiciona e melhora encantamentos na Enchantment Station
+item.utilitycraft:enchantability_module_3=Módulo de §bEncantamento III§7\n- Adiciona e melhora encantamentos na Enchantment Station
+item.utilitycraft:enchantability_module_4=Módulo de §bEncantamento IV§7\n- Adiciona e melhora encantamentos na Enchantment Station
+item.utilitycraft:enchantability_module_5=Módulo de §bEncantamento V§7\n- Adiciona e melhora encantamentos na Enchantment Station
+item.utilitycraft:reinforcement_module=Módulo de §6Reforço I§7\n- Aumenta a capacidade de reforço na Enchantment Station
+item.utilitycraft:reinforcement_module_2=Módulo de §6Reforço II§7\n- Aumenta a capacidade de reforço na Enchantment Station
+item.utilitycraft:reinforcement_module_3=Módulo de §6Reforço III§7\n- Aumenta a capacidade de reforço na Enchantment Station
+item.utilitycraft:curse_protection_module=Módulo de §5Proteção contra Maldição§7\n- Impede maldição na Enchantment Station
 
 ### Malhas & Redes
 item.utilitycraft:lucky_mesh=§aMalha da Sorte\n§7- Tier Máx: Diamante\n§7- Multiplicador de Itens: 2x
@@ -191,14 +191,14 @@ item.utilitycraft:xp_capsule_infinite=Cápsula de XP \n§7(Infinito)
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCâmara Catalisadora
-entity.utilitycraft:cloner.name=Duplicador
+entity.utilitycraft:duplicator.name=Duplicador
 entity.utilitycraft:cryo_chamber.name=§fCâmara Criogênica
 entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade
 entity.utilitycraft:liquifier.name=Liquefator
 entity.utilitycraft:laser_barrier.name=Barreira de Laser
 entity.utilitycraft:residue_processor.name=Processador de Resíduos
 entity.utilitycraft:energizer.name=Energizador
-entity.utilitycraft:ascane_engine.name=Ascane Engine
+entity.utilitycraft:enchantment_station.name=Enchantment Station
 entity.utilitycraft:network_center.name=§fCentro de Rede
 entity.utilitycraft:tabs_test_machine.name=§fMáquina de Teste (Tabs)
 entity.utilitycraft:absolute_container.name=§fContainer Absoluto
@@ -220,6 +220,7 @@ at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)
 at:itemGroup.name.capsules=Cápsulas de Fluidos §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armaduras §u(Ascendant Technology)
+at:itemGroup.name.conveyors=Conveyors §u(Ascendant Technology)
 
 at:ui.h=A
 at:ui.l=L

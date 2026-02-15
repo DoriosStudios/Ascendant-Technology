@@ -2,10 +2,10 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:copper_conveyor_declined",
+			"identifier": "utilitycraft:conveyor_underflow",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			},
 			"traits": {
 				"minecraft:placement_direction": {
@@ -25,14 +25,14 @@
 		},
 		"components": {
 			"utilitycraft:conveyor": {
-				"tier": "copper",
-				"shape": "declined",
+				"tier": "universal",
+				"shape": "underflow",
 				"ips": 5
 			},
-			"minecraft:geometry": "geometry.utilitycraft_conveyor_declined",
+			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_inclined_2",
+					"texture": "utilitycraft_conveyor_1",
 					"render_method": "alpha_test"
 				}
 			},

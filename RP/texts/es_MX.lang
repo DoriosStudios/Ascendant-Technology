@@ -9,7 +9,7 @@ tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena has
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:duplicator.name=Duplicador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Cámara Criogénica\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- 3 modos:\n  Estabilizador,\n  Refrigerador,\n  Generador de Criolíquido
 tile.utilitycraft:energizer.name=Energizador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Energiza lingotes, polvos y bloques con un enorme costo de DE
 tile.utilitycraft:liquifier.name=Licuefactor\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Convierte sólidos en fluidos procesables
@@ -29,33 +29,33 @@ tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
 tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7  Atrae mobs en un radio configurable
 tile.utilitycraft:laser_barrier_field.name=Campo de Barrera Láser\n§7  Zona activa proyectada por la barrera
 tile.utilitycraft:reinforced_cable.name=Cable Reforzado\n§7- Espina dorsal reforzada para energía, fluidos y overclock
-tile.utilitycraft:copper_conveyor_horizontal.name=Cinta Transportadora de Cobre (Horizontal)
-tile.utilitycraft:copper_conveyor_inclined.name=Cinta Transportadora de Cobre (Inclinada)
-tile.utilitycraft:copper_conveyor_declined.name=Cinta Transportadora de Cobre (Descendente)
-tile.utilitycraft:copper_conveyor_vertical.name=Cinta Transportadora de Cobre (Vertical)
-tile.utilitycraft:copper_conveyor_bridge_transmitter.name=Puente de Cinta de Cobre (Transmisor)
-tile.utilitycraft:copper_conveyor_bridge_receiver.name=Puente de Cinta de Cobre (Receptor)
+tile.utilitycraft:copper_conveyor_horizontal.name=§vCopper Conveyor\n§8- Horizontal\n- Speed: 1.0 m/s
+tile.utilitycraft:copper_conveyor_inclined.name=§vCopper Conveyor\n§8- Inclined\n- Speed: 1.0 m/s
+tile.utilitycraft:copper_conveyor_declined.name=§vCopper Conveyor\n§8- Declined\n- Speed: 1.0 m/s
+tile.utilitycraft:copper_conveyor_vertical.name=§vCopper Conveyor\n§8- Vertical\n- Speed: 2.4 m/s
+tile.utilitycraft:copper_conveyor_bridge_transmitter.name=§vCopper Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
+tile.utilitycraft:copper_conveyor_bridge_receiver.name=§vCopper Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
 
-tile.utilitycraft:titanium_conveyor_horizontal.name=Cinta Transportadora de Titanio (Horizontal)
-tile.utilitycraft:titanium_conveyor_inclined.name=Cinta Transportadora de Titanio (Inclinada)
-tile.utilitycraft:titanium_conveyor_declined.name=Cinta Transportadora de Titanio (Descendente)
-tile.utilitycraft:titanium_conveyor_vertical.name=Cinta Transportadora de Titanio (Vertical)
-tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=Puente de Cinta de Titanio (Transmisor)
-tile.utilitycraft:titanium_conveyor_bridge_receiver.name=Puente de Cinta de Titanio (Receptor)
+tile.utilitycraft:titanium_conveyor_horizontal.name=§tTitanium Conveyor\n§8- Horizontal\n- Speed: 2.2 m/s
+tile.utilitycraft:titanium_conveyor_inclined.name=§tTitanium Conveyor\n§8- Inclined\n- Speed: 2.2 m/s
+tile.utilitycraft:titanium_conveyor_declined.name=§tTitanium Conveyor\n§8- Declined\n- Speed: 2.2 m/s
+tile.utilitycraft:titanium_conveyor_vertical.name=§tTitanium Conveyor\n§8- Vertical\n- Speed: 5.3 m/s
+tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=§tTitanium Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
+tile.utilitycraft:titanium_conveyor_bridge_receiver.name=§tTitanium Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
 
-tile.utilitycraft:aetherium_conveyor_horizontal.name=Cinta Transportadora de Aetherium (Horizontal)
-tile.utilitycraft:aetherium_conveyor_inclined.name=Cinta Transportadora de Aetherium (Inclinada)
-tile.utilitycraft:aetherium_conveyor_declined.name=Cinta Transportadora de Aetherium (Descendente)
-tile.utilitycraft:aetherium_conveyor_vertical.name=Cinta Transportadora de Aetherium (Vertical)
-tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=Puente de Cinta de Aetherium (Transmisor)
-tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=Puente de Cinta de Aetherium (Receptor)
+tile.utilitycraft:aetherium_conveyor_horizontal.name=§dAetherium Conveyor\n§8- Horizontal\n- Speed: 20.0 m/s
+tile.utilitycraft:aetherium_conveyor_inclined.name=§dAetherium Conveyor\n§8- Inclined\n- Speed: 20.0 m/s
+tile.utilitycraft:aetherium_conveyor_declined.name=§dAetherium Conveyor\n§8- Declined\n- Speed: 20.0 m/s
+tile.utilitycraft:aetherium_conveyor_vertical.name=§dAetherium Conveyor\n§8- Vertical\n- Speed: 30.0 m/s
+tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=§dAetherium Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
+tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=§dAetherium Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
 
-tile.utilitycraft:conveyor_router.name=Enrutador de Cinta
-tile.utilitycraft:conveyor_smart_router.name=Enrutador Inteligente de Cinta
-tile.utilitycraft:conveyor_overflow.name=Cinta de Desbordamiento
-tile.utilitycraft:conveyor_underflow.name=Cinta de Subflujo
-tile.utilitycraft:conveyor_junction.name=Unión de Cinta
-tile.utilitycraft:conveyor_network_updater.name=Actualizador de Red de Cintas
+tile.utilitycraft:conveyor_router.name=§aConveyor Router\n§8- Teleports items to a random output\n- Slightly longer delay before switching direction
+tile.utilitycraft:conveyor_smart_router.name=§aConveyor Smart Router\n§8- Routes items by assigned filters\n- Hold an item to configure
+tile.utilitycraft:conveyor_overflow.name=§aConveyor Overflow\n§8- Sends items forward first\n- Diverts overflow to the sides
+tile.utilitycraft:conveyor_underflow.name=§aConveyor Underflow\n§8- Diverts items to the sides first\n- Sends remaining items forward
+tile.utilitycraft:conveyor_junction.name=§aConveyor Junction\n§8- Splits items based on entry position
+tile.utilitycraft:conveyor_network_updater.name=§aConveyor Network Updater\n§8- Refreshes adjacent conveyor networks
 
 tile.utilitycraft:copper_conveyor_bridge_path.name=Camino del Puente de Cobre
 tile.utilitycraft:titanium_conveyor_bridge_path.name=Camino del Puente de Titanio
@@ -175,7 +175,7 @@ item.utilitycraft:xp_capsule_infinite=Cápsula de XP (Infinito)
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCámara Catalizadora
-entity.utilitycraft:cloner.name=Duplicador
+entity.utilitycraft:duplicator.name=Duplicador
 entity.utilitycraft:cryo_chamber.name=§fCámara Criogénica
 entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad
 entity.utilitycraft:liquifier.name=Licuefactor
@@ -203,6 +203,7 @@ at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)
 at:itemGroup.name.capsules=Cápsulas de Fluidos §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armaduras §u(Ascendant Technology)
+at:itemGroup.name.conveyors=Conveyors §u(Ascendant Technology)
 
 at:ui.h=A
 at:ui.l=L

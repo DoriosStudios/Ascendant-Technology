@@ -10,27 +10,35 @@
 		"components": {
 			"utilitycraft:hoe": {
 				"size": 3,
-				"runTractor": true
+				"runTractor": true,
+				"sneakingMode": false
+			},
+			"utilitycraft:shovel": {
+				"size": 3,
+				"sneakingMode": true
 			},
 			"minecraft:tags": {
 				"tags": [
 					"minecraft:is_axe",
 					"minecraft:is_pickaxe",
-                    "minecraft:is_sword",
+					"minecraft:is_shovel",
+					"minecraft:is_hoe",
+					"minecraft:is_sword",
+					"minecraft:is_tool",
 					"utilitycraft:is_aiot",
 					"minecraft:netherite_tier"
 				]
 			},
-			"minecraft:fire_resistant": {
-				"value": true
-			},
+			"minecraft:icon": "utilitycraft_lucky_aiot",
 			"minecraft:max_stack_size": 1,
 			"minecraft:hand_equipped": true,
 			"minecraft:durability": {
 				"max_durability": 7805
 			},
+			"minecraft:fire_resistant": {
+				"value": true
+			},
 			"minecraft:damage": 9,
-			"minecraft:icon": "utilitycraft_lucky_aiot",
 			"minecraft:enchantable": {
 				"value": 50,
 				"slot": "axe"

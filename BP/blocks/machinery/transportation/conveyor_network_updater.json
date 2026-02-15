@@ -5,18 +5,22 @@
 			"identifier": "utilitycraft:conveyor_network_updater",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			}
 		},
 		"components": {
 			"utilitycraft:conveyor_network_updater": {},
-			"minecraft:geometry": "minecraft:geometry.full_block",
+			"minecraft:geometry": "geometry.utilitycraft_updater",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_1",
-					"render_method": "alpha_test"
+					"texture": "utilitycraft_updater",
+					"render_method": "alpha_test",
+					"ambient_occlusion": true,
+					"face_dimming": true
 				}
 			},
+			"minecraft:light_dampening": 15,
+			"minecraft:light_emission": 1,
 			"minecraft:tick": {
 				"interval_range": [1, 1]
 			},

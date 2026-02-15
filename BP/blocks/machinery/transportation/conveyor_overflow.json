@@ -2,10 +2,10 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:conveyor_junction",
+			"identifier": "utilitycraft:conveyor_overflow",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			},
 			"traits": {
 				"minecraft:placement_direction": {
@@ -26,7 +26,7 @@
 		"components": {
 			"utilitycraft:conveyor": {
 				"tier": "universal",
-				"shape": "junction",
+				"shape": "overflow",
 				"ips": 5
 			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",

@@ -3,7 +3,7 @@ import { system } from "@minecraft/server";
 const KDE = 1000;
 const DEFAULT_FLUID_TYPE = 'liquified_aetherium';
 const FLUID_PER_SECOND = 50; // mB per second (significant long-term drain)
-const CLONER_BLOCK_ID = 'utilitycraft:cloner';
+const CLONER_BLOCK_ID = 'utilitycraft:duplicator';
 
 /**
  * @typedef {Object} ClonerRecipeDefinition
@@ -377,6 +377,8 @@ export function getSingularityRecipes() {
     return [...nativeSingularityRecipes, ...registeredSingularityRecipes];
 }
 
+globalThis.utilitycraftGetSingularityRecipes = getSingularityRecipes;
+
 // Backwards compatibility for older integrations.
 export function registerClonerRecipe(recipe) {
     return registerSingularityRecipe(recipe);
@@ -503,10 +505,11 @@ function isClonerItemId(id) {
     return id.toLowerCase() === CLONER_BLOCK_ID;
 }
 
-const CLONER_EVENT_ID = 'utilitycraft:register_cloner_recipe';
+const DUPLICATOR_EVENT_ID = 'utilitycraft:register_duplicator_recipe';
+const LEGACY_CLONER_EVENT_ID = 'utilitycraft:register_cloner_recipe';
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
-    if (id !== CLONER_EVENT_ID) return;
+    if (id !== DUPLICATOR_EVENT_ID && id !== LEGACY_CLONER_EVENT_ID) return;
 
     try {
         const payload = JSON.parse(message);

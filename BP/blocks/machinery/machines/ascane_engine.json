@@ -2,7 +2,7 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:ascane_engine",
+			"identifier": "utilitycraft:enchantment_station",
 			"menu_category": {
 				"category": "construction",
 				"group": "dorios:itemGroup.name.machines"
@@ -14,12 +14,12 @@
 			}
 		},
 		"components": {
-			"utilitycraft:ascane_engine": {
+			"utilitycraft:enchantment_station": {
 				"rotation": "facing",
 				"entity": {
 					"input_type": "simple",
 					"output_type": "simple",
-					"inventory_size": 27,
+					"inventory_size": 28,
 					"fluid": true
 				},
 				"machine": {
@@ -29,15 +29,14 @@
 					"dynamic_rate": true,
 					"fluid_cap": 128000,
 					"fluid_rate": 128000,
-					"upgrades": [16, 17],
-					"hidden_slots": [18, 19, 20, 21, 22, 23, 24, 25, 26]
+					"upgrades": [3, 4, 5],
+					"hidden_slots": [27]
 				}
 			},
 			"utilitycraft:special_container": {
-				"Ascane Disenchant": [12],
-				"Ascane Grid": [3, 4, 5, 6, 7, 8, 9, 10, 11],
-				"Ascane Modules": [13, 14, 15],
-				"Ascane Upgrades": [16, 17]
+				"Disenchant Input": [18],
+				"Disenchant Catalyst": [19],
+				"Enchantment Grid": [6, 7, 8, 9, 10, 11, 12, 13, 14]
 			},
 			"minecraft:geometry": "geometry.utilitycraft_block_2",
 			"minecraft:material_instances": {

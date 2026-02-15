@@ -10,6 +10,34 @@ Machine status:
 
 ---
 
+# Summary
+Simple state of these blocks and items, with "checked" meaning added/implemented and "unchecked" meaning To-Do/In Progress.
+
+- [x] **Absolute Container**
+- [x] **Enchantment Station**
+- [x] **Catalyst Weaver**
+- [x] **Cryo Chamber**
+- [ ] **Cryo Reservoir**
+- [ ] **Dimensional Teleporter**
+- [x] **Duplicator**
+	- [x] **Singularity Fabricator** (variant)
+- [x] **Energizer**
+- [ ] **Interdimensional Infuser**
+- [ ] **Item Energizer Pad**
+- [x] **Laser Barrier**
+- [ ] **Mob Temporal Chamber**
+- [x] **Network Center**
+- [x] **Overclock Boost Network**
+- [x] **Overclock Tower**
+- [ ] **Portable Power Cell**
+- [x] **Reinforced Cable**
+- [x] **Residue Processor**
+- [x] **Vaporworks Processor**
+- [ ] **Water Wheel**
+
+
+---
+
 - 🟢 **Absolute Container**
 	- **Purpose:** Singular vault that layers massive item, energy, and fluid storage without automated upgrades or informational clutter.
 	- **Operating Mode:** 14×12 item grid with HUD indicators for energy and fluid levels (no label display); energy/fluid caps sit at 25.6 M each and integrate with Dorios energy/fluid systems.
@@ -81,7 +109,7 @@ Machine status:
 		- **Notes:** Cryofluid can be used in other machines or crafting recipes.
 		- **Operating Mode:** Uses fluid input/output ports to convert water into Cryofluid over time. Is a machine with 2 fluid tanks (input and output) and do not accept items as input for this function.
 
-- 🟢 **Ascane Engine (formerly Synthesis Crucible)**
+- 🟢 **Enchantment Station (formerly Ascane Engine / Synthesis Crucible)**
 	- **Purpose:** High-tier repair, enchantment, and reinforcement hub for equipment.
 	- **Operating Mode:** 3×3 equipment grid; repairs always run, while enchant and reinforcement run when their modules are installed.
 	- **Modules:** Enchantment Module (levels 1–5) and Reinforcement Module (levels 1–3).

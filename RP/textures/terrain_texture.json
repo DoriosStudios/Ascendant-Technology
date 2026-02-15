@@ -139,23 +139,53 @@
 		"utilitycraft_conveyor_1": {
 			"textures": "textures/blocks/transportation/conveyor_1"
 		},
+		"utilitycraft_conveyor_copper": {
+			"textures": "textures/blocks/transportation/conveyor_copper"
+		},
+		"utilitycraft_conveyor_titanium": {
+			"textures": "textures/blocks/transportation/conveyor_titanium"
+		},
+		"utilitycraft_conveyor_aetherium": {
+			"textures": "textures/blocks/transportation/conveyor_aetherium"
+		},
 		"utilitycraft_conveyor_inclined": {
 			"textures": "textures/blocks/transportation/conveyor_inclined"
 		},
 		"utilitycraft_conveyor_inclined_2": {
 			"textures": "textures/blocks/transportation/conveyor_inclined"
 		},
+		"utilitycraft_conveyor_copper_inclined": {
+			"textures": "textures/blocks/transportation/conveyor_copper_inclined"
+		},
+		"utilitycraft_conveyor_copper_inclined_2": {
+			"textures": "textures/blocks/transportation/conveyor_copper_inclined"
+		},
+		"utilitycraft_conveyor_titanium_inclined": {
+			"textures": "textures/blocks/transportation/conveyor_titanium_inclined"
+		},
+		"utilitycraft_conveyor_titanium_inclined_2": {
+			"textures": "textures/blocks/transportation/conveyor_titanium_inclined"
+		},
+		"utilitycraft_conveyor_aetherium_inclined": {
+			"textures": "textures/blocks/transportation/conveyor_aetherium_inclined"
+		},
+		"utilitycraft_conveyor_aetherium_inclined_2": {
+			"textures": "textures/blocks/transportation/conveyor_aetherium_inclined"
+		},
 		"utilitycraft_conveyor_bridge_path": {
 			"textures": "textures/blocks/laser_barrier_field"
 		},
 		"utilitycraft_conveyor_bridge_path_copper": {
-			"textures": "textures/blocks/laser_barrier_field"
+			"textures": "textures/blocks/transportation/copper_bridge_path"
 		},
 		"utilitycraft_conveyor_bridge_path_titanium": {
-			"textures": "textures/blocks/laser_barrier_field"
+			"textures": "textures/blocks/transportation/titanium_bridge_path"
 		},
 		"utilitycraft_conveyor_bridge_path_aetherium": {
-			"textures": "textures/blocks/laser_barrier_field"
+			"textures": "textures/blocks/transportation/aetherium_bridge_path"
+		},
+		"utilitycraft_updater": {
+			"textures": "textures/blocks/transportation/updater"
 		},
 		"utilitycraft_reinforced_cable": {
 			"textures": "textures/blocks/pipes/reinforced_cable"

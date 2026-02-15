@@ -2,10 +2,10 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:aetherium_conveyor_declined",
+			"identifier": "utilitycraft:aetherium_conveyor_horizontal",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			},
 			"traits": {
 				"minecraft:placement_direction": {
@@ -26,13 +26,13 @@
 		"components": {
 			"utilitycraft:conveyor": {
 				"tier": "aetherium",
-				"shape": "declined",
+				"shape": "horizontal",
 				"ips": 64
 			},
-			"minecraft:geometry": "geometry.utilitycraft_conveyor_declined",
+			"minecraft:geometry": "geometry.utilitycraft_aetherium_conveyor_horizontal",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_inclined_2",
+					"texture": "utilitycraft_conveyor_aetherium",
 					"render_method": "alpha_test"
 				}
 			},

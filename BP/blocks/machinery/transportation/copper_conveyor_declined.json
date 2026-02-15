@@ -2,10 +2,10 @@
 	"format_version": "1.21.100",
 	"minecraft:block": {
 		"description": {
-			"identifier": "utilitycraft:copper_conveyor_horizontal",
+			"identifier": "utilitycraft:copper_conveyor_declined",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.transportation"
+				"group": "at:itemGroup.name.conveyors"
 			},
 			"traits": {
 				"minecraft:placement_direction": {
@@ -26,13 +26,13 @@
 		"components": {
 			"utilitycraft:conveyor": {
 				"tier": "copper",
-				"shape": "horizontal",
+				"shape": "declined",
 				"ips": 5
 			},
-			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
+			"minecraft:geometry": "geometry.utilitycraft_conveyor_declined",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_1",
+					"texture": "utilitycraft_conveyor_copper_inclined_2",
 					"render_method": "alpha_test"
 				}
 			},

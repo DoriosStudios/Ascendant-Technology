@@ -9,7 +9,7 @@ Every processing machine now listens for `system` script events so you can regis
 | Liquifier | `utilitycraft:register_liquifier_recipe` | recipe ID string | Provide `input`, `fluid`, optional `byproduct`, and timing/energy overrides. |
 | Residue Processor | `utilitycraft:register_residue_processor_recipe` | recipe ID string | Supply `input`, `output`, and optional `byproduct`. |
 | Catalyst Weaver | `utilitycraft:register_catalyst_weaver_recipe` | recipe ID string | Accepts up to six `catalysts`, optional `fluid`, `byproduct`, and `speedModifier`. |
-| Cloner | `utilitycraft:register_cloner_recipe` | recipe ID string | Supports `rarity`, `time`, template `input`/`output`, energy cost overrides, and optional `fluid`. |
+| Duplicator | `utilitycraft:register_duplicator_recipe` | recipe ID string | Supports `rarity`, `time`, template `input`/`output`, energy cost overrides, and optional `fluid`. Legacy alias: `utilitycraft:register_cloner_recipe`. |
 
 **Example command (Energizer):**
 

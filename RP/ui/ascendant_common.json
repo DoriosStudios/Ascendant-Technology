@@ -2089,6 +2089,10 @@
 		"$cell_image_size|default": "$slot_panel_size",
 		"$slot_bg_variant|default": "gray",
 		"$slot_color|default": "gray",
+		"$slot_surface|default": "cell",
+		"$slot_panel_texture|default": "",
+		"$slot_panel_alpha|default": 1,
+		"$slot_panel_layer|default": 0,
 		"$cell_color|default": [1, 1, 1],
 		"$cell_texture|default": "textures/ui/cell_image",
 		"$cell_custom_enabled|default": false,
@@ -2189,6 +2193,9 @@
 		},
 		"$slot_color|pink": {
 			"$cell_image_ref": "ascendant_common.cell_pink"
+		},
+		"$slot_surface|panel": {
+			"$cell_image_ref": "ascendant_common.panel_no_close"
 		},
 		"$outline_variant|none": {
 			"$outline_texture": "",
@@ -2308,6 +2315,11 @@
 								"anchor_to": "top_left",
 								"offset": [0, 0],
 								"size": "$cell_image_size",
+								"$panel_size": "$cell_image_size",
+								"$panel_color": "$slot_color",
+								"$panel_texture": "$slot_panel_texture",
+								"$panel_alpha": "$slot_panel_alpha",
+								"$panel_layer": "$slot_panel_layer",
 								"layer": 1,
 								"visible": "(not $cell_custom_enabled)"
 							}
@@ -2539,56 +2551,123 @@
 		]
 	},
 
-	/* ELEMENT: slot_blue
-	 * Special slot with a blue background.
+	/* ELEMENT: slot_white
+	 * Slot base variant using the white cell texture.
 	 */
-	"slot_blue": {
-		"type": "panel",
-		"size": [18, 18],
-		"$slot_index|default": 0,
-		"controls": [
-			{
-				"slot_bg@ascendant_common.panel_bg_blue": {
-					"size": [18, 18],
-					"layer": 0
-				}
-			},
-			{
-				"item@common.container_item": {
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"$item_collection_name": "container_items",
-					"$collection_index": "$slot_index",
-					"layer": 1
-				}
-			}
-		]
+	"slot_white@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_white"
+	},
+
+	/* ELEMENT: slot_light_gray
+	 * Slot base variant using the light gray cell texture.
+	 */
+	"slot_light_gray@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_light_gray"
+	},
+
+	/* ELEMENT: slot_gray
+	 * Slot base variant using the gray cell texture.
+	 */
+	"slot_gray@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_gray"
+	},
+
+	/* ELEMENT: slot_black
+	 * Slot base variant using the black cell texture.
+	 */
+	"slot_black@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_black"
+	},
+
+	/* ELEMENT: slot_brown
+	 * Slot base variant using the brown cell texture.
+	 */
+	"slot_brown@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_brown"
+	},
+
+	/* ELEMENT: slot_red
+	 * Slot base variant using the red cell texture.
+	 */
+	"slot_red@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_red"
+	},
+
+	/* ELEMENT: slot_orange
+	 * Slot base variant using the orange cell texture.
+	 */
+	"slot_orange@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_orange"
+	},
+
+	/* ELEMENT: slot_yellow
+	 * Slot base variant using the yellow cell texture.
+	 */
+	"slot_yellow@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_yellow"
+	},
+
+	/* ELEMENT: slot_lime
+	 * Slot base variant using the lime cell texture.
+	 */
+	"slot_lime@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_lime"
+	},
+
+	/* ELEMENT: slot_green
+	 * Slot base variant using the green cell texture.
+	 */
+	"slot_green@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_green"
+	},
+
+	/* ELEMENT: slot_cyan
+	 * Slot base variant using the cyan cell texture.
+	 */
+	"slot_cyan@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_cyan"
+	},
+
+	/* ELEMENT: slot_light_blue
+	 * Slot base variant using the light blue cell texture.
+	 */
+	"slot_light_blue@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_light_blue"
+	},
+
+	/* ELEMENT: slot_blue
+	 * Slot base variant using the blue cell texture.
+	 */
+	"slot_blue@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_blue"
+	},
+
+	/* ELEMENT: slot_purple
+	 * Slot base variant using the purple cell texture.
+	 */
+	"slot_purple@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_purple"
+	},
+
+	/* ELEMENT: slot_magenta
+	 * Slot base variant using the magenta cell texture.
+	 */
+	"slot_magenta@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_magenta"
+	},
+
+	/* ELEMENT: slot_pink
+	 * Slot base variant using the pink cell texture.
+	 */
+	"slot_pink@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.cell_pink"
 	},
 
 	/* ELEMENT: slot_dark
-	 * Dark slot variant using dark_cell_image.
+	 * Slot base variant using the dark cell texture.
 	 */
-	"slot_dark": {
-		"type": "panel",
-		"size": [18, 18],
-		"$slot_index|default": 0,
-		"controls": [
-			{
-				"slot_bg@ascendant_common.dark_cell_image": {
-					"size": [18, 18],
-					"layer": 0
-				}
-			},
-			{
-				"item@common.container_item": {
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"$item_collection_name": "container_items",
-					"$collection_index": "$slot_index",
-					"layer": 1
-				}
-			}
-		]
+	"slot_dark@ascendant_common.slot_base": {
+		"$cell_image_ref": "ascendant_common.dark_cell_image"
 	},
 
 	/* SUBSECTION: SLOT OVERLAYS AND IMAGES

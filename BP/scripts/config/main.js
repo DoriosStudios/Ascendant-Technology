@@ -18,7 +18,7 @@
 //   └─ recipes/plants.js
 // ==================================================
 
-import './recipes/cloner.js';
+import './recipes/duplicator.js';
 import './recipes/catalyst_weaver.js';
 import './recipes/liquifier.js';
 import './recipes/energizer.js';

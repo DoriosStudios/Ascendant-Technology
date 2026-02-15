@@ -28,13 +28,13 @@
 	"utilitycraft:catalyst_weaver": {
 		"sound": "metal"
 	},
-	"utilitycraft:cloner": {
+	"utilitycraft:duplicator": {
 		"sound": "metal"
 	},
 	"utilitycraft:cryo_chamber": {
 		"sound": "metal"
 	},
-	"utilitycraft:ascane_engine": {
+	"utilitycraft:enchantment_station": {
 		"sound": "metal"
 	},
 	"utilitycraft:energizer": {

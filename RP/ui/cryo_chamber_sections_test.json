@@ -554,7 +554,7 @@
 				"tanks_water_bar@machineryCommon.vertical_single": {
 					"$is_fluid": true,
 					"$has_bg": false,
-					"collection_index": 11,
+					"collection_index": 7,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"offset": [110, 30],
@@ -574,7 +574,7 @@
 				"tanks_cryo_bar@machineryCommon.vertical_single": {
 					"$is_fluid": true,
 					"$has_bg": false,
-					"collection_index": 13,
+					"collection_index": 18,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"offset": [158, 30],

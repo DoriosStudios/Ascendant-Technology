@@ -9,28 +9,45 @@
             }
         },
         "components": {
-            "minecraft:icon": "utilitycraft_titanium_hammer",
-            "minecraft:hand_equipped": true,
-            "minecraft:max_stack_size": 1,
+            "utilitycraft:hammer": {
+                "tier": 5
+            },
+            "utilitycraft:dig_pebble": {},
             "minecraft:tags": {
                 "tags": [
                     "minecraft:is_pickaxe",
                     "minecraft:is_tool",
-                    "utilitycraft:is_hammer"
+                    "utilitycraft:is_hammer",
+                    "minecraft:diamond_tier"
                 ]
             },
-            "minecraft:enchantable": {
-                "value": 20,
-                "slot": "pickaxe"
-            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:hand_equipped": true,
             "minecraft:durability": {
                 "max_durability": 1561
             },
             "minecraft:damage": 8,
-            "utilitycraft:hammer": {
-                "tier": 5
+            "minecraft:icon": "utilitycraft_titanium_hammer",
+            "minecraft:enchantable": {
+                "value": 20,
+                "slot": "pickaxe"
             },
-            "utilitycraft:dig_pebble":{ },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": [
+                            "utilitycraft:titanium"
+                        ],
+                        "repair_amount": 553
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:titanium_hammer"
+                        ],
+                        "repair_amount": 1561
+                    }
+                ]
+            },
             "minecraft:digger": {
                 "use_efficiency": true,
                 "destroy_speeds": [

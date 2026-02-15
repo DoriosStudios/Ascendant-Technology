@@ -13,7 +13,7 @@
                         "items": [
                             "utilitycraft:catalyst_weaver", 
                             "utilitycraft:cryo_chamber",
-                            "utilitycraft:cloner",
+                            "utilitycraft:duplicator",
                             "utilitycraft:energizer",
                             "utilitycraft:laser_barrier",
                             "utilitycraft:liquifier",
@@ -31,6 +31,38 @@
                             "name": "at:itemGroup.name.experimental"
                         },
                         "items": ["utilitycraft:reinforced_extractor"]
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:copper_conveyor_horizontal",
+                            "name": "at:itemGroup.name.conveyors"
+                        },
+                        "items": [
+                            "utilitycraft:conveyor_junction",
+                            "utilitycraft:conveyor_network_updater",
+                            "utilitycraft:conveyor_overflow",
+                            "utilitycraft:conveyor_router",
+                            "utilitycraft:conveyor_smart_router",
+                            "utilitycraft:conveyor_underflow",
+                            "utilitycraft:aetherium_conveyor_bridge_receiver",
+                            "utilitycraft:aetherium_conveyor_bridge_transmitter",
+                            "utilitycraft:aetherium_conveyor_declined",
+                            "utilitycraft:aetherium_conveyor_horizontal",
+                            "utilitycraft:aetherium_conveyor_inclined",
+                            "utilitycraft:aetherium_conveyor_vertical",
+                            "utilitycraft:copper_conveyor_bridge_receiver",
+                            "utilitycraft:copper_conveyor_bridge_transmitter",
+                            "utilitycraft:copper_conveyor_declined",
+                            "utilitycraft:copper_conveyor_horizontal",
+                            "utilitycraft:copper_conveyor_inclined",
+                            "utilitycraft:copper_conveyor_vertical",
+                            "utilitycraft:titanium_conveyor_bridge_receiver",
+                            "utilitycraft:titanium_conveyor_bridge_transmitter",
+                            "utilitycraft:titanium_conveyor_declined",
+                            "utilitycraft:titanium_conveyor_horizontal",
+                            "utilitycraft:titanium_conveyor_inclined",
+                            "utilitycraft:titanium_conveyor_vertical"
+                        ]
                     }
                 ]
             },{

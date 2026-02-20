@@ -147,47 +147,56 @@ item.utilitycraft:curse_protection_module=Módulo de §5Proteção contra Maldi�
 ### Malhas & Redes
 item.utilitycraft:lucky_mesh=§aMalha da Sorte\n§7- Tier Máx: Diamante\n§7- Multiplicador de Itens: 2x
 item.utilitycraft:lucky_fishing_net=§aRede de Pesca da Sorte\n§7- Nível de Velocidade: 10\n§7- Multiplicador de Itens: 2x
-item.utilitycraft:aetherium_mesh=Malha de §uAetherium\n§7- Tier Máx: Interdimensional\n§7- Multiplicador de Itens: 1.5x
+item.utilitycraft:aetherium_mesh=Malha de §uAetherium\n§7- Tier Máx: Diamante\n§7- Multiplicador de Itens: 1.5x
 item.utilitycraft:aetherium_fishing_net=Rede de Pesca de §uAetherium\n§7- Nível de Velocidade: 8\n§7- Multiplicador de Itens: 1.5x
 item.utilitycraft:titanium_mesh=Malha de §3Titânio\n§7- Tier Máx: Diamante
 item.utilitycraft:titanium_fishing_net=Rede de Pesca de §3Titânio\n§7- Nível de Velocidade: 6
 
 ## Cápsulas de Líquidos
 item.utilitycraft:empty_liquid_capsule=Cápsula de Líquido Vazia
-item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido \n§7(1 Balde)
-item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido \n§7(2 Baldes)
-item.utilitycraft:aetherium_liquid_capsule_3=Cápsula de Aetherium Líquido \n§7(3 Baldes)
-item.utilitycraft:aetherium_liquid_capsule_4=Cápsula de Aetherium Líquido \n§7(4 Baldes)
-item.utilitycraft:aetherium_liquid_capsule_5=Cápsula de Aetherium Líquido \n§7(5 Baldes)
-item.utilitycraft:aetherium_liquid_capsule_6=Cápsula de Aetherium Líquido \n§7(6 Baldes)
-item.utilitycraft:aetherium_liquid_capsule_7=Cápsula de Aetherium Líquido \n§7(7 Baldes)
-item.utilitycraft:aetherium_liquid_capsule_8=Cápsula de Aetherium Líquido \n§7(8 Baldes)
+item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido \n§7- (1 Balde)
+item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido \n§7- (2 Baldes)
+item.utilitycraft:aetherium_liquid_capsule_3=Cápsula de Aetherium Líquido \n§7- (3 Baldes)
+item.utilitycraft:aetherium_liquid_capsule_4=Cápsula de Aetherium Líquido \n§7- (4 Baldes)
+item.utilitycraft:aetherium_liquid_capsule_5=Cápsula de Aetherium Líquido \n§7- (5 Baldes)
+item.utilitycraft:aetherium_liquid_capsule_6=Cápsula de Aetherium Líquido \n§7- (6 Baldes)
+item.utilitycraft:aetherium_liquid_capsule_7=Cápsula de Aetherium Líquido \n§7- (7 Baldes)
+item.utilitycraft:aetherium_liquid_capsule_8=Cápsula de Aetherium Líquido \n§7- (8 Baldes)
 
-item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Matéria Escura \n§7(1 Balde)
-item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Matéria Escura \n§7(2 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Matéria Escura \n§7(3 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_4=Cápsula de Matéria Escura \n§7(4 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_5=Cápsula de Matéria Escura \n§7(5 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Matéria Escura \n§7(6 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Matéria Escura \n§7(7 Baldes)
-item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Matéria Escura \n§7(8 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Matéria Escura \n§7- (1 Balde)
+item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Matéria Escura \n§7- (2 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Matéria Escura \n§7- (3 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_4=Cápsula de Matéria Escura \n§7- (4 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_5=Cápsula de Matéria Escura \n§7- (5 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Matéria Escura \n§7- (6 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Matéria Escura \n§7- (7 Baldes)
+item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Matéria Escura \n§7- (8 Baldes)
 
-item.utilitycraft:cryofluid_capsule_1=Cápsula de Criofluido \n§7(1 Balde)
-item.utilitycraft:cryofluid_capsule_2=Cápsula de Criofluido \n§7(2 Baldes)
-item.utilitycraft:cryofluid_capsule_3=Cápsula de Criofluido \n§7(3 Baldes)
-item.utilitycraft:cryofluid_capsule_4=Cápsula de Criofluido \n§7(4 Baldes)
-item.utilitycraft:cryofluid_capsule_5=Cápsula de Criofluido \n§7(5 Baldes)
-item.utilitycraft:cryofluid_capsule_6=Cápsula de Criofluido \n§7(6 Baldes)
-item.utilitycraft:cryofluid_capsule_7=Cápsula de Criofluido \n§7(7 Baldes)
-item.utilitycraft:cryofluid_capsule_8=Cápsula de Criofluido \n§7(8 Baldes)
+item.utilitycraft:cryofluid_capsule_1=Cápsula de Criofluido \n§7- (1 Balde)
+item.utilitycraft:cryofluid_capsule_2=Cápsula de Criofluido \n§7- (2 Baldes)
+item.utilitycraft:cryofluid_capsule_3=Cápsula de Criofluido \n§7- (3 Baldes)
+item.utilitycraft:cryofluid_capsule_4=Cápsula de Criofluido \n§7- (4 Baldes)
+item.utilitycraft:cryofluid_capsule_5=Cápsula de Criofluido \n§7- (5 Baldes)
+item.utilitycraft:cryofluid_capsule_6=Cápsula de Criofluido \n§7- (6 Baldes)
+item.utilitycraft:cryofluid_capsule_7=Cápsula de Criofluido \n§7- (7 Baldes)
+item.utilitycraft:cryofluid_capsule_8=Cápsula de Criofluido \n§7- (8 Baldes)
 
-item.utilitycraft:aetherium_liquid_capsule_infinite=Cápsula de Aetherium Líquido \n§7(Infinito)
-item.utilitycraft:dark_matter_liquid_capsule_infinite=Cápsula de Matéria Escura \n§7(Infinito)
-item.utilitycraft:cryofluid_capsule_infinite=Cápsula de Criofluido \n§7(Infinito)
-item.utilitycraft:water_capsule_infinite=Cápsula de Água \n§7(Infinito)
-item.utilitycraft:lava_capsule_infinite=Cápsula de Lava \n§7(Infinito)
-item.utilitycraft:milk_capsule_infinite=Cápsula de Leite \n§7(Infinito)
-item.utilitycraft:xp_capsule_infinite=Cápsula de XP \n§7(Infinito)
+item.utilitycraft:steam_capsule_1=Cápsula de Vapor \n§7- (1 Balde)
+item.utilitycraft:steam_capsule_2=Cápsula de Vapor \n§7- (2 Baldes)
+item.utilitycraft:steam_capsule_3=Cápsula de Vapor \n§7- (3 Baldes)
+item.utilitycraft:steam_capsule_4=Cápsula de Vapor \n§7- (4 Baldes)
+item.utilitycraft:steam_capsule_5=Cápsula de Vapor \n§7- (5 Baldes)
+item.utilitycraft:steam_capsule_6=Cápsula de Vapor \n§7- (6 Baldes)
+item.utilitycraft:steam_capsule_7=Cápsula de Vapor \n§7- (7 Baldes)
+item.utilitycraft:steam_capsule_8=Cápsula de Vapor \n§7- (8 Baldes)
+
+item.utilitycraft:aetherium_liquid_capsule_infinite=Cápsula de Aetherium Líquido \n§7- (Infinito)
+item.utilitycraft:dark_matter_liquid_capsule_infinite=Cápsula de Matéria Escura \n§7- (Infinito)
+item.utilitycraft:cryofluid_capsule_infinite=Cápsula de Criofluido \n§7- (Infinito)
+item.utilitycraft:water_capsule_infinite=Cápsula de Água \n§7- (Infinito)
+item.utilitycraft:lava_capsule_infinite=Cápsula de Lava \n§7- (Infinito)
+item.utilitycraft:milk_capsule_infinite=Cápsula de Leite \n§7- (Infinito)
+item.utilitycraft:xp_capsule_infinite=Cápsula de XP \n§7- (Infinito)
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCâmara Catalisadora

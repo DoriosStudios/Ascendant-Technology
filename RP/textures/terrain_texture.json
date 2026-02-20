@@ -219,6 +219,12 @@
 		},
 		"utilitycraft_overclock_relay_off": {
 			"textures": "textures/blocks/machines/overclock_tower_off"
+		},
+		"utilitycraft_vaporworks_processor_on": {
+			"textures": "textures/blocks/machines/vaporworks_processor_on"
+		},
+		"utilitycraft_vaporworks_processor_off": {
+			"textures": "textures/blocks/machines/vaporworks_processor_off"
 		}
 	}
 }

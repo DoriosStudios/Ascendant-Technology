@@ -254,6 +254,30 @@
 		"utilitycraft_dark_matter_liquid_capsule_8": {
 			"textures": "textures/items/misc/dark_matter_liquid_capsule_8"
 		},
+		"utilitycraft_steam_capsule_1": {
+			"textures": "textures/items/tools/capsules/steam_capsule_1"
+		},
+		"utilitycraft_steam_capsule_2": {
+			"textures": "textures/items/tools/capsules/steam_capsule_2"
+		},
+		"utilitycraft_steam_capsule_3": {
+			"textures": "textures/items/tools/capsules/steam_capsule_3"
+		},
+		"utilitycraft_steam_capsule_4": {
+			"textures": "textures/items/tools/capsules/steam_capsule_4"
+		},
+		"utilitycraft_steam_capsule_5": {
+			"textures": "textures/items/tools/capsules/steam_capsule_5"
+		},
+		"utilitycraft_steam_capsule_6": {
+			"textures": "textures/items/tools/capsules/steam_capsule_6"
+		},
+		"utilitycraft_steam_capsule_7": {
+			"textures": "textures/items/tools/capsules/steam_capsule_7"
+		},
+		"utilitycraft_steam_capsule_8": {
+			"textures": "textures/items/tools/capsules/steam_capsule_8"
+		},
 		"utilitycraft_liquified_aetherium_bar_00": {
 			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_00"
 		},

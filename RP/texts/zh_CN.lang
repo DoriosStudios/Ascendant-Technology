@@ -10,7 +10,7 @@ tile.utilitycraft:absolute_container.name=绝对容器\n§7- 最多存储10.7K�
 
 ## 机器
 tile.utilitycraft:catalyst_weaver.name=催化剂编织者\n§7- 接受的升级: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=复制器\n§7- 接受的升级: \n   §a§7, §d§7
+tile.utilitycraft:cloner.name=复制器\n§7- 接受的升级: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=低温室\n§7- 接受的升级: \n   §a§7, §b§7, §d§7\n§7- 3种模式:\n 稳定器,\n 冷冻器,\n 低温发电机
 tile.utilitycraft:energizer.name=充能器\n§7- 接受的升级: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:liquifier.name=液化器\n§7- 接受的升级: \n   §a§7, §b§7, §d§7

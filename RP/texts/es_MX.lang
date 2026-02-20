@@ -9,7 +9,7 @@ tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena has
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicador\n§7- Acepta mejoras:\n    §a§7, §d§7
+tile.utilitycraft:cloner.name=Duplicador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Cámara Criogénica\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- 3 modos:\n  Estabilizador,\n  Refrigerador,\n  Generador de Criolíquido
 tile.utilitycraft:energizer.name=Energizador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Energiza lingotes, polvos y bloques con un enorme costo de DE
 tile.utilitycraft:liquifier.name=Licuefactor\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Convierte sólidos en fluidos procesables

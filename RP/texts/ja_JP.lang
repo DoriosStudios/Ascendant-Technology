@@ -10,7 +10,7 @@ tile.utilitycraft:absolute_container.name=アブソリュートコンテナ\n§7
 
 ## 機械
 tile.utilitycraft:catalyst_weaver.name=触媒ウィーバー\n§7- 対応アップグレード: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=デュプリケーター\n§7- 対応アップグレード: \n   §a§7, §d§7
+tile.utilitycraft:cloner.name=デュプリケーター\n§7- 対応アップグレード: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=クライオチャンバー\n§7- 対応アップグレード: \n   §a§7, §b§7, §d§7\n§7- 3モード:\n スタビライザー,\n フリーザー,\n クライオジェネレーター
 tile.utilitycraft:energizer.name=エナジャイザー\n§7- 対応アップグレード: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:liquifier.name=液化装置\n§7- 対応アップグレード: \n   §a§7, §b§7, §d§7

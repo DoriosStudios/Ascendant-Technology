@@ -10,7 +10,7 @@ tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 
 
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicator\n§7- Accepted upgrades: \n   §a§7, §d§7
+tile.utilitycraft:cloner.name=Duplicator\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7\n§7- 3 Modes:\n Stabilizer,\n Freezer,\n Cryo Generator
 tile.utilitycraft:energizer.name=Energizer\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:liquifier.name=Liquifier\n§7- Accepted upgrades: \n   §a§7, §b§7, §d§7

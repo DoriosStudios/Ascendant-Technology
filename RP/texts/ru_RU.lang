@@ -10,7 +10,7 @@ tile.utilitycraft:absolute_container.name=Абсолютный Контейне�
 
 ## Машины
 tile.utilitycraft:catalyst_weaver.name=Катализаторный Ткач\n§7- Принимаемые улучшения: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Дупликатор\n§7- Принимаемые улучшения: \n   §a§7, §d§7
+tile.utilitycraft:cloner.name=Дупликатор\n§7- Принимаемые улучшения: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Криокамера\n§7- Принимаемые улучшения: \n   §a§7, §b§7, §d§7\n§7- 3 Режима:\n Стабилизатор,\n Морозильник,\n Криогенератор
 tile.utilitycraft:energizer.name=Энергизатор\n§7- Принимаемые улучшения: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:liquifier.name=Ожижитель\n§7- Принимаемые улучшения: \n   §a§7, §b§7, §d§7

@@ -10,7 +10,7 @@ tile.utilitycraft:absolute_container.name=Conteneur Absolu\n§7- Stocke jusqu'à
 
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Tisseur de Catalyseur\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicateur\n§7- Améliorations acceptées: \n   §a§7, §d§7
+tile.utilitycraft:cloner.name=Duplicateur\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Chambre Cryogénique\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7\n§7- 3 Modes:\n Stabilisateur,\n Congélateur,\n Générateur Cryo
 tile.utilitycraft:energizer.name=Énergiseur\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:liquifier.name=Liquéfieur\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7

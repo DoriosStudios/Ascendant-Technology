@@ -10,7 +10,7 @@ tile.utilitycraft:absolute_container.name=Absoluter Container\n§7- Speichert bi
 
 ## Maschinen
 tile.utilitycraft:catalyst_weaver.name=Katalysatorweber\n§7- Akzeptierte Upgrades: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplikator\n§7- Akzeptierte Upgrades: \n   §a§7, §d§7
+tile.utilitycraft:cloner.name=Duplikator\n§7- Akzeptierte Upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Kryokammer\n§7- Akzeptierte Upgrades: \n   §a§7, §b§7, §d§7\n§7- 3 Modi:\n Stabilisator,\n Gefrierschrank,\n Kryogenerator
 tile.utilitycraft:energizer.name=Energisierer\n§7- Akzeptierte Upgrades: \n   §a§7, §b§7, §d§7
 tile.utilitycraft:liquifier.name=Verflüssiger\n§7- Akzeptierte Upgrades: \n   §a§7, §b§7, §d§7

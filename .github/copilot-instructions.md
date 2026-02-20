@@ -17,7 +17,7 @@ Process (must be followed in order):
 1. Understand: identify system responsibilities, data flow, and constraints.
 2. Validate: analyze impact and risks of the requested change.
 3. Propose: explain the approach before implementation.
-4. Implement only after the above steps are satisfied.
+4. Implement only after the above steps are satisfied. It's recommended to use the "Ask" feature to clarify any uncertainties before proceeding.
 
 Constraints:
 - Respect existing architecture, naming, and structure.

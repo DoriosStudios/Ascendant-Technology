@@ -1,21 +1,37 @@
 import { ItemStack, EnchantmentTypes, world } from '@minecraft/server'
 import { Machine, Energy, FluidManager } from '../AscendantMachinery/core.js'
 
+// ==================== SLOT LAYOUT (32 total) ====================
+// Fixed slots: 0=Energy, 1=Status, 2=Progress
+// Upgrade slots: 3-5 (MUST remain here)
+// Main grid: 6-14 (9 slots)
+// Module slots: 15-17 (3 slots)
+// Disenchant section: 18-21 (source, catalyst, book storage, progress)
+// Disenchant outputs: 22-30 (9 slots - expanded from 7)
+// Disenchant status: 31 (for HUD updates)
 const ENERGY_SLOT = 0
 const STATUS_SLOT = 1
 const PROGRESS_SLOT = 2
+const UPGRADE_SLOTS = [3, 4, 5]
 const GRID_SLOTS = [6, 7, 8, 9, 10, 11, 12, 13, 14]
+const MODULE_SLOTS = [15, 16, 17]
 const DISENCHANT_SOURCE_SLOT = 18
 const DISENCHANT_CATALYST_SLOT = 19
-const DISENCHANT_OUTPUT_SLOTS = [20, 21, 22, 23, 24, 25, 26]
-const MODULE_SLOTS = [15, 16, 17]
-const UPGRADE_SLOTS = [3, 4, 5]
+const DISENCHANT_BOOK_STORAGE_SLOT = 20
+const DISENCHANT_PROGRESS_SLOT = 21
+const DISENCHANT_OUTPUT_SLOTS = [22, 23, 24, 25, 26, 27, 28, 29, 30]
+const DISENCHANT_STATUS_SLOT = 31
 
-const BASE_COST = 8000
-const INDUCTION_ANVIL_DIVISOR = 10
-const REPAIR_MULTIPLIER = 2.5
+// ==================== ENERGY CONFIG ====================
+const ENERGY_CONFIG = Object.freeze({
+    BASE_COST: 8000,
+    INDUCTION_ANVIL_DIVISOR: 10,
+    REPAIR_MULTIPLIER: 2.5,
+    ENCHANT_OPERATION_COST: 8000
+})
 
-const MODULE_LEVELS = Object.freeze({
+// ==================== MODULE CONFIG ====================
+const MODULE_IDS = Object.freeze({
     base: 'utilitycraft:ascane_module_base',
     enchantability: [
         null,
@@ -36,33 +52,51 @@ const MODULE_LEVELS = Object.freeze({
     ]
 })
 
-const REINFORCEMENT_RATIOS = [0, 0.25, 0.5, 1]
-const REINFORCEMENT_PROP = 'utilitycraft:reinforcement'
-const REINFORCEMENT_LORE_PATTERN = /Reinforcement\s*:\s*(\d+)/i
-const REINFORCEMENT_LORE_PREFIX = '§r§9Reinforcement: '
-const ENCHANT_SIGNATURE_PROP = 'utilitycraft:ascane_enchant_signature'
-const ENCHANT_PLAN_PROP = 'utilitycraft:ascane_enchant_plan'
+// ==================== REINFORCEMENT CONFIG ====================
+const REINFORCEMENT_CONFIG = Object.freeze({
+    RATIOS: [0, 0.25, 0.5, 1],
+    PROP: 'utilitycraft:reinforcement',
+    LORE_PATTERN: /Reinforcement\s*:\s*(\d+)/i,
+    LORE_PREFIX: '§r§9Reinforcement: '
+})
 
-const CURSE_ENCHANT_IDS = ['minecraft:binding', 'minecraft:vanishing']
-const CURSE_CHANCE_BASE = 0.15
-const CURSE_CHANCE_PER_ENCHANT = 0.01
-const CURSE_CHANCE_PER_PROTECTION = 0.05
-const CURSE_PROTECTION_COST_MULTIPLIER = 8
+// ==================== ENCHANTMENT CONFIG ====================
+const ENCHANT_CONFIG = Object.freeze({
+    SIGNATURE_PROP: 'utilitycraft:ascane_enchant_signature',
+    PLAN_PROP: 'utilitycraft:ascane_enchant_plan'
+})
 
-const ENCHANT_SECONDS_PER_CHANGE = 2
-const REPAIR_SECONDS = 1
-const REINFORCEMENT_SECONDS = 1
-const MIN_PROCESS_SECONDS = 1
-const ENCHANT_OPERATION_COST = BASE_COST
+// ==================== CURSE CONFIG ====================
+const CURSE_CONFIG = Object.freeze({
+    ENCHANT_IDS: ['minecraft:binding', 'minecraft:vanishing'],
+    CHANCE_BASE: 0.15,
+    CHANCE_PER_ENCHANT: 0.01,
+    CHANCE_PER_PROTECTION: 0.05,
+    PROTECTION_COST_MULTIPLIER: 8
+})
 
-const XP_TANK_TYPE = 'xp'
-const XP_TANK_CAP_DEFAULT = 128000
-const XP_PER_ENCHANT = 1000
+// ==================== TIME CONFIG ====================
+const TIME_CONFIG = Object.freeze({
+    ENCHANT_SECONDS_PER_CHANGE: 2,
+    REPAIR_SECONDS: 1,
+    REINFORCEMENT_SECONDS: 1,
+    MIN_PROCESS_SECONDS: 1
+})
 
-const DISENCHANT_CATALYST_IDS = Object.freeze([
-    'utilitycraft:refined_aetherium_shard',
-    'utilitycraft:refined_aetherium'
-])
+// ==================== XP CONFIG ====================
+const XP_CONFIG = Object.freeze({
+    TANK_TYPE: 'xp',
+    TANK_CAP_DEFAULT: 128000,
+    PER_ENCHANT: 1000
+})
+
+// ==================== DISENCHANT CONFIG ====================
+const DISENCHANT_CONFIG = Object.freeze({
+    CATALYST_IDS: [
+        'utilitycraft:refined_aetherium_shard',
+        'utilitycraft:refined_aetherium'
+    ]
+})
 
 /**
  * Module-tier target levels for enchant upgrades (array-based mapping).
@@ -133,7 +167,7 @@ DoriosAPI.register.blockComponent('enchantment_station', {
             const machine = new Machine(e.block, settings, true)
             if (!machine?.entity) return
 
-            machine.setEnergyCost(BASE_COST)
+            machine.setEnergyCost(ENERGY_CONFIG.BASE_COST)
             machine.displayEnergy()
             displayProgress(machine, 0, 1)
             getAscaneXpTank(machine, settings)
@@ -145,6 +179,12 @@ DoriosAPI.register.blockComponent('enchantment_station', {
                     '§7Modules control enchanting and reinforcement.'
                 ]
             }, STATUS_SLOT)
+
+            // Initialize disenchant status slot
+            machine.setLabel({
+                title: '',
+                lore: ['§7Waiting for item...']
+            }, DISENCHANT_STATUS_SLOT)
         })
     },
 
@@ -160,6 +200,7 @@ DoriosAPI.register.blockComponent('enchantment_station', {
         const gridSlots = resolveAvailableSlots(machine.inv, GRID_SLOTS)
         const canUseDisenchantSlot = isSlotAvailable(machine.inv, DISENCHANT_SOURCE_SLOT)
             && isSlotAvailable(machine.inv, DISENCHANT_CATALYST_SLOT)
+            && isSlotAvailable(machine.inv, DISENCHANT_BOOK_STORAGE_SLOT)
             && DISENCHANT_OUTPUT_SLOTS.some(slot => isSlotAvailable(machine.inv, slot))
 
         const modules = getModuleLevels(machine.inv, moduleSlots)
@@ -167,7 +208,9 @@ DoriosAPI.register.blockComponent('enchantment_station', {
         const results = []
 
         if (canUseDisenchantSlot) {
-            results.push(processDisenchantSlot(machine, settings, tickSpeed))
+            const disenchantResult = processDisenchantSlot(machine, settings, tickSpeed)
+            results.push(disenchantResult)
+            updateDisenchantHud(machine, disenchantResult)
         }
 
         for (const slot of gridSlots) {
@@ -245,21 +288,21 @@ function safeGetItem(inv, slot) {
 function resolveModuleLevel(typeId) {
     if (!typeId) return null
 
-    const enchantIndex = MODULE_LEVELS.enchantability.indexOf(typeId)
+    const enchantIndex = MODULE_IDS.enchantability.indexOf(typeId)
     if (enchantIndex > 0) {
         return { type: 'enchantability', level: enchantIndex }
     }
 
-    const reinforceIndex = MODULE_LEVELS.reinforcement.indexOf(typeId)
+    const reinforceIndex = MODULE_IDS.reinforcement.indexOf(typeId)
     if (reinforceIndex > 0) {
         return { type: 'reinforcement', level: reinforceIndex }
     }
 
-    if (MODULE_LEVELS.curseProtection.includes(typeId)) {
+    if (MODULE_IDS.curseProtection.includes(typeId)) {
         return { type: 'curseProtection', level: 1 }
     }
 
-    if (typeId === MODULE_LEVELS.base) {
+    if (typeId === MODULE_IDS.base) {
         return { type: 'base', level: 1 }
     }
 
@@ -271,15 +314,15 @@ function getAscaneXpTank(machine, settings) {
     if (!settings?.machine?.fluid_cap) return null
 
     const tank = FluidManager.initializeSingle(machine.entity)
-    const cap = Number(settings?.machine?.fluid_cap ?? XP_TANK_CAP_DEFAULT)
+    const cap = Number(settings?.machine?.fluid_cap ?? XP_CONFIG.TANK_CAP_DEFAULT)
     if (Number.isFinite(cap) && cap > 0 && tank.getCap() <= 0) {
         tank.setCap(cap)
     }
     if (tank.getType() === 'empty') {
-        tank.setType(XP_TANK_TYPE)
+        tank.setType(XP_CONFIG.TANK_TYPE)
     }
     try {
-        machine.entity.setDynamicProperty('dorios:fluid_whitelist', XP_TANK_TYPE)
+        machine.entity.setDynamicProperty('dorios:fluid_whitelist', XP_CONFIG.TANK_TYPE)
     } catch { }
     return tank
 }
@@ -288,6 +331,7 @@ function processDisenchantSlot(machine, settings, tickSpeed) {
     const slot = DISENCHANT_SOURCE_SLOT
     const stack = safeGetItem(machine.inv, slot)
     const catalyst = safeGetItem(machine.inv, DISENCHANT_CATALYST_SLOT)
+    const bookStorage = safeGetItem(machine.inv, DISENCHANT_BOOK_STORAGE_SLOT)
     const outputSlots = resolveDisenchantOutputSlots(machine.inv)
 
     const fail = (state, message, resetProgress = true) => {
@@ -320,11 +364,16 @@ function processDisenchantSlot(machine, settings, tickSpeed) {
         return fail('waiting', 'Need Catalyst')
     }
 
+    const bookAmount = getDisenchantBookAmount(bookStorage)
+    if (bookAmount <= 0) {
+        return fail('waiting', 'Need Books')
+    }
+
     if (outputSlots.length <= 0) {
         return fail('waiting', 'No Output Space')
     }
 
-    const extractCount = Math.min(enchantCount, outputSlots.length, catalystAmount)
+    const extractCount = Math.min(enchantCount, outputSlots.length, catalystAmount, bookAmount)
     if (extractCount <= 0) {
         return fail('waiting', 'No Output Space')
     }
@@ -345,9 +394,11 @@ function processDisenchantSlot(machine, settings, tickSpeed) {
             sourceStack: stack,
             sourceSlot: slot,
             catalystSlot: DISENCHANT_CATALYST_SLOT,
+            bookStorageSlot: DISENCHANT_BOOK_STORAGE_SLOT,
             outputSlots,
             extractCount,
-            catalystStack: catalyst
+            catalystStack: catalyst,
+            bookStorageStack: bookStorage
         })
 
         if (!applied.ok) {
@@ -386,7 +437,7 @@ function resolveDisenchantOutputSlots(inv) {
 
 function isDisenchantCatalyst(stack) {
     if (!stack?.typeId) return false
-    return DISENCHANT_CATALYST_IDS.includes(stack.typeId)
+    return DISENCHANT_CONFIG.CATALYST_IDS.includes(stack.typeId)
 }
 
 function getCatalystAmount(stack) {
@@ -394,7 +445,16 @@ function getCatalystAmount(stack) {
     return Math.max(0, Math.floor(Number(stack.amount) || 0))
 }
 
-function applyDisenchantOperation({ machine, sourceStack, sourceSlot, catalystSlot, outputSlots, extractCount, catalystStack }) {
+function isDisenchantBookFuel(stack) {
+    return stack?.typeId === 'minecraft:book'
+}
+
+function getDisenchantBookAmount(stack) {
+    if (!isDisenchantBookFuel(stack)) return 0
+    return Math.max(0, Math.floor(Number(stack.amount) || 0))
+}
+
+function applyDisenchantOperation({ machine, sourceStack, sourceSlot, catalystSlot, bookStorageSlot, outputSlots, extractCount, catalystStack, bookStorageStack }) {
     if (!sourceStack || !Array.isArray(outputSlots) || outputSlots.length <= 0 || extractCount <= 0) {
         return { ok: false, message: 'Invalid State' }
     }
@@ -438,11 +498,23 @@ function applyDisenchantOperation({ machine, sourceStack, sourceSlot, catalystSl
         return { ok: false, message: 'Catalyst Missing' }
     }
 
+    const bookAmount = getDisenchantBookAmount(bookStorageStack)
+    if (bookAmount < spent) {
+        return { ok: false, message: 'Books Missing' }
+    }
+
     if (catalystAmount === spent) {
         machine.inv.setItem(catalystSlot, undefined)
     } else {
         catalystStack.amount = catalystAmount - spent
         machine.inv.setItem(catalystSlot, catalystStack)
+    }
+
+    if (bookAmount === spent) {
+        machine.inv.setItem(bookStorageSlot, undefined)
+    } else {
+        bookStorageStack.amount = bookAmount - spent
+        machine.inv.setItem(bookStorageSlot, bookStorageStack)
     }
 
     setStoredEnchantPlan(updatedSource, null)
@@ -513,14 +585,14 @@ function processSlot(machine, slot, modules, settings, tickSpeed, xpTank) {
     const enchantPlan = buildEnchantPlan(stack, enchantComp, modules)
     const enchantNeeded = enchantPlan.changed
     const enchantChangeCount = Math.max(0, Math.floor(enchantPlan.changeCount ?? 0))
-    const xpNeeded = enchantNeeded ? (XP_PER_ENCHANT * Math.max(1, enchantChangeCount)) : 0
+    const xpNeeded = enchantNeeded ? (XP_CONFIG.PER_ENCHANT * Math.max(1, enchantChangeCount)) : 0
 
     if (!repairNeeded && !enchantNeeded && !reinforcementNeeded) {
         return fail('ready', 'Ready')
     }
 
     if (xpNeeded > 0) {
-        if (!xpTank || xpTank.getType() !== XP_TANK_TYPE) {
+        if (!xpTank || xpTank.getType() !== XP_CONFIG.TANK_TYPE) {
             return buildSlotResult(slot, 'waiting', 'Need XP', getSlotProgress(machine, slot), getSlotEnergyCost(machine, slot))
         }
         if (xpTank.get() < xpNeeded) {
@@ -581,19 +653,19 @@ function processSlot(machine, slot, modules, settings, tickSpeed, xpTank) {
 }
 
 function computeEnergyCost({ enchantNeeded, reinforcementNeeded, modules, enchantChangeCount }) {
-    let cost = BASE_COST
+    let cost = ENERGY_CONFIG.BASE_COST
 
     if (enchantNeeded && modules.enchantability > 0) {
-        cost += BASE_COST * modules.enchantability
-        cost += ENCHANT_OPERATION_COST * Math.max(1, enchantChangeCount || 0)
+        cost += ENERGY_CONFIG.BASE_COST * modules.enchantability
+        cost += ENERGY_CONFIG.ENCHANT_OPERATION_COST * Math.max(1, enchantChangeCount || 0)
     }
 
     if (reinforcementNeeded && modules.reinforcement > 0) {
-        cost += BASE_COST * modules.reinforcement
+        cost += ENERGY_CONFIG.BASE_COST * modules.reinforcement
     }
 
     if (enchantNeeded && modules.curseProtection > 0) {
-        cost += BASE_COST * CURSE_PROTECTION_COST_MULTIPLIER * modules.curseProtection
+        cost += ENERGY_CONFIG.BASE_COST * CURSE_CONFIG.PROTECTION_COST_MULTIPLIER * modules.curseProtection
     }
 
     return Math.max(1, Math.floor(cost))
@@ -601,21 +673,21 @@ function computeEnergyCost({ enchantNeeded, reinforcementNeeded, modules, enchan
 
 function computeDisenchantCost(enchantCount) {
     const count = Math.max(1, Math.floor(Number(enchantCount) || 0))
-    return Math.max(1, Math.floor(BASE_COST * count))
+    return Math.max(1, Math.floor(ENERGY_CONFIG.BASE_COST * count))
 }
 
 function computeTimeSeconds({ enchantChangeCount, reinforcementNeeded, repairNeeded }) {
     let total = 0
-    if (repairNeeded) total += REPAIR_SECONDS
-    if (reinforcementNeeded) total += REINFORCEMENT_SECONDS
-    if (enchantChangeCount > 0) total += ENCHANT_SECONDS_PER_CHANGE * enchantChangeCount
-    return Math.max(MIN_PROCESS_SECONDS, Math.floor(total) || 0)
+    if (repairNeeded) total += TIME_CONFIG.REPAIR_SECONDS
+    if (reinforcementNeeded) total += TIME_CONFIG.REINFORCEMENT_SECONDS
+    if (enchantChangeCount > 0) total += TIME_CONFIG.ENCHANT_SECONDS_PER_CHANGE * enchantChangeCount
+    return Math.max(TIME_CONFIG.MIN_PROCESS_SECONDS, Math.floor(total) || 0)
 }
 
 function computeDisenchantTime(enchantCount) {
     const count = Math.max(1, Math.floor(Number(enchantCount) || 0))
-    const total = ENCHANT_SECONDS_PER_CHANGE * count
-    return Math.max(MIN_PROCESS_SECONDS, Math.floor(total) || 0)
+    const total = TIME_CONFIG.ENCHANT_SECONDS_PER_CHANGE * count
+    return Math.max(TIME_CONFIG.MIN_PROCESS_SECONDS, Math.floor(total) || 0)
 }
 
 function resolveSlotRate(machine, energyCost, timeSeconds, settings, tickSpeed) {
@@ -633,7 +705,7 @@ function resolveSlotRate(machine, energyCost, timeSeconds, settings, tickSpeed) 
 }
 
 function applySlotOperations({ machine, slot, stack, durability, repairNeeded, reinforcementTarget, reinforcementNeeded, enchantPlan, xpTank, xpNeeded }) {
-    const repairAmount = Math.max(1, Math.floor((BASE_COST / INDUCTION_ANVIL_DIVISOR) * REPAIR_MULTIPLIER))
+    const repairAmount = Math.max(1, Math.floor((ENERGY_CONFIG.BASE_COST / ENERGY_CONFIG.INDUCTION_ANVIL_DIVISOR) * ENERGY_CONFIG.REPAIR_MULTIPLIER))
 
     if (repairNeeded && stack?.durability?.repair) {
         stack.durability.repair(repairAmount)
@@ -769,7 +841,7 @@ function resolveCurseChance(modules) {
     if (protectionLevel > 0) return 0
 
     const enchantLevel = Math.max(0, modules.enchantability)
-    const reduced = CURSE_CHANCE_BASE - (CURSE_CHANCE_PER_ENCHANT * enchantLevel)
+    const reduced = CURSE_CONFIG.CHANCE_BASE - (CURSE_CONFIG.CHANCE_PER_ENCHANT * enchantLevel)
     return Math.max(0, Math.min(1, reduced))
 }
 
@@ -834,7 +906,7 @@ function pickWeightedSource(pool) {
 
 function resolveCurseCandidates(enchantComp) {
     const resolved = []
-    for (const id of CURSE_ENCHANT_IDS) {
+    for (const id of CURSE_CONFIG.ENCHANT_IDS) {
         const type = resolveEnchantmentType(id)
         if (!type) continue
         if (canApplyEnchantment(enchantComp, type)) {
@@ -988,7 +1060,7 @@ function buildEnchantmentSignature(list) {
 
 function getStoredEnchantSignature(stack) {
     try {
-        const stored = stack?.getDynamicProperty?.(ENCHANT_SIGNATURE_PROP)
+        const stored = stack?.getDynamicProperty?.(ENCHANT_CONFIG.SIGNATURE_PROP)
         return typeof stored === 'string' ? stored : ''
     } catch {
         return ''
@@ -999,13 +1071,13 @@ function setStoredEnchantSignature(stack, signature) {
     if (!stack || typeof stack.setDynamicProperty !== 'function') return
     try {
         const value = typeof signature === 'string' ? signature : ''
-        stack.setDynamicProperty(ENCHANT_SIGNATURE_PROP, value)
+        stack.setDynamicProperty(ENCHANT_CONFIG.SIGNATURE_PROP, value)
     } catch { }
 }
 
 function getStoredEnchantPlan(stack) {
     try {
-        const raw = stack?.getDynamicProperty?.(ENCHANT_PLAN_PROP)
+        const raw = stack?.getDynamicProperty?.(ENCHANT_CONFIG.PLAN_PROP)
         if (!raw || typeof raw !== 'string') return null
         const parsed = JSON.parse(raw)
         return parsed && typeof parsed === 'object' ? parsed : null
@@ -1018,10 +1090,10 @@ function setStoredEnchantPlan(stack, plan) {
     if (!stack || typeof stack.setDynamicProperty !== 'function') return
     try {
         if (!plan) {
-            stack.setDynamicProperty(ENCHANT_PLAN_PROP, '')
+            stack.setDynamicProperty(ENCHANT_CONFIG.PLAN_PROP, '')
             return
         }
-        stack.setDynamicProperty(ENCHANT_PLAN_PROP, JSON.stringify(plan))
+        stack.setDynamicProperty(ENCHANT_CONFIG.PLAN_PROP, JSON.stringify(plan))
     } catch { }
 }
 
@@ -1157,7 +1229,7 @@ function getReinforcementPoints(stack) {
 
     try {
         if (typeof stack.getDynamicProperty === 'function') {
-            const value = Number(stack.getDynamicProperty(REINFORCEMENT_PROP) ?? 0)
+            const value = Number(stack.getDynamicProperty(REINFORCEMENT_CONFIG.PROP) ?? 0)
             if (Number.isFinite(value)) return Math.max(0, value)
         }
     } catch { }
@@ -1166,7 +1238,7 @@ function getReinforcementPoints(stack) {
     if (!Array.isArray(lore)) return 0
 
     for (const line of lore) {
-        const match = typeof line === 'string' ? line.match(REINFORCEMENT_LORE_PATTERN) : null
+        const match = typeof line === 'string' ? line.match(REINFORCEMENT_CONFIG.LORE_PATTERN) : null
         if (match) {
             return Math.max(0, Number(match[1]) || 0)
         }
@@ -1181,17 +1253,17 @@ function setReinforcementPoints(stack, points) {
 
     try {
         if (typeof stack.setDynamicProperty === 'function') {
-            stack.setDynamicProperty(REINFORCEMENT_PROP, clamped)
+            stack.setDynamicProperty(REINFORCEMENT_CONFIG.PROP, clamped)
         }
     } catch { }
 
     const lore = typeof stack.getLore === 'function' ? stack.getLore() : []
     const updated = Array.isArray(lore)
-        ? lore.filter(line => typeof line !== 'string' || !REINFORCEMENT_LORE_PATTERN.test(line))
+        ? lore.filter(line => typeof line !== 'string' || !REINFORCEMENT_CONFIG.LORE_PATTERN.test(line))
         : []
 
     if (clamped > 0) {
-        updated.push(`${REINFORCEMENT_LORE_PREFIX}${clamped}`)
+        updated.push(`${REINFORCEMENT_CONFIG.LORE_PREFIX}${clamped}`)
     }
 
     if (typeof stack.setLore === 'function') {
@@ -1200,8 +1272,8 @@ function setReinforcementPoints(stack, points) {
 }
 
 function resolveReinforcementTarget(durability, level) {
-    const ratioIndex = Math.max(0, Math.min(REINFORCEMENT_RATIOS.length - 1, Math.floor(level)))
-    const ratio = Number(REINFORCEMENT_RATIOS[ratioIndex]) || 0
+    const ratioIndex = Math.max(0, Math.min(REINFORCEMENT_CONFIG.RATIOS.length - 1, Math.floor(level)))
+    const ratio = Number(REINFORCEMENT_CONFIG.RATIOS[ratioIndex]) || 0
     const maxDurability = Number(durability?.maxDurability ?? 0)
     if (!Number.isFinite(maxDurability) || maxDurability <= 0) return 0
     return Math.max(0, Math.floor(maxDurability * ratio))
@@ -1226,7 +1298,7 @@ function addSlotProgress(machine, slot, delta) {
 }
 
 function getSlotEnergyCost(machine, slot) {
-    return Number(machine.entity.getDynamicProperty(`${slotKey(slot)}:energy_cost`)) || BASE_COST
+    return Number(machine.entity.getDynamicProperty(`${slotKey(slot)}:energy_cost`)) || ENERGY_CONFIG.BASE_COST
 }
 
 function setSlotEnergyCost(machine, slot, value) {
@@ -1235,6 +1307,64 @@ function setSlotEnergyCost(machine, slot, value) {
 
 function buildSlotResult(slot, state, message, progress, energyCost) {
     return { slot, state, message, progress, energyCost }
+}
+
+function updateDisenchantHud(machine, result) {
+    if (!machine?.inv || !result) return
+    
+    const stack = safeGetItem(machine.inv, DISENCHANT_SOURCE_SLOT)
+    const catalyst = safeGetItem(machine.inv, DISENCHANT_CATALYST_SLOT)
+    const books = safeGetItem(machine.inv, DISENCHANT_BOOK_STORAGE_SLOT)
+    
+    if (!stack) {
+        machine.setLabel({
+            title: '',
+            lore: ['§7Waiting for item...']
+        }, DISENCHANT_STATUS_SLOT)
+        return
+    }
+    
+    const itemName = formatIdentifier(stack.typeId)
+    const enchantments = readEnchantments(stack)
+    const enchantCount = enchantments.length
+    const catalystAmount = getCatalystAmount(catalyst)
+    const bookAmount = getDisenchantBookAmount(books)
+    const energyCost = result.energyCost || 0
+    const progress = result.progress || 0
+    const ratio = energyCost > 0 ? Math.min(1, progress / energyCost) : 0
+    const percent = Math.floor(ratio * 100)
+    
+    const lore = []
+    lore.push(`§f${itemName}`)
+    lore.push(`§7Enchantments: §b${enchantCount}`)
+    lore.push(`§7Catalyst: §e${catalystAmount}x`)
+    lore.push(`§7Books: §6${bookAmount}x`)
+    lore.push(`§7Energy: §c${Energy.formatEnergyToText(energyCost)}`)
+    lore.push(`§7Progress: §a${percent}%`)
+    
+    let statusColor = '§7'
+    let statusText = 'Idle'
+    
+    if (result.state === 'processing') {
+        statusColor = '§a'
+        statusText = 'Processing'
+    } else if (result.state === 'waiting') {
+        statusColor = '§e'
+        statusText = result.message || 'Waiting'
+    } else if (result.state === 'error') {
+        statusColor = '§c'
+        statusText = result.message || 'Error'
+    } else if (result.state === 'ready') {
+        statusColor = '§b'
+        statusText = 'Ready'
+    }
+    
+    lore.push(`${statusColor}${statusText}`)
+    
+    machine.setLabel({
+        title: '',
+        lore
+    }, DISENCHANT_STATUS_SLOT)
 }
 
 function updateHud(machine, results, modules, xpTank) {
@@ -1258,7 +1388,7 @@ function updateHud(machine, results, modules, xpTank) {
 
     const costText = active
         ? Energy.formatEnergyToText(active.energyCost)
-        : Energy.formatEnergyToText(BASE_COST)
+        : Energy.formatEnergyToText(ENERGY_CONFIG.BASE_COST)
 
     const lore = buildDiagnosticLore(machine, results, modules, xpTank, active, summary, costText)
 
@@ -1330,6 +1460,7 @@ function buildDiagnosticLore(machine, results, modules, xpTank, active, summary,
     lore.push('§dDisenchant:')
     lore.push(`§7- Source: §f${disenchantInfo.source}`)
     lore.push(`§7- Catalyst: §f${disenchantInfo.catalyst}`)
+    lore.push(`§7- Books: §f${disenchantInfo.books}`)
     lore.push(`§7- Free Output: §f${disenchantInfo.freeOutputs}/${DISENCHANT_OUTPUT_SLOTS.length}`)
 
     if (active) {
@@ -1379,6 +1510,7 @@ function summarizeBlockers(results) {
 function getDisenchantDiagnostics(inv) {
     const source = safeGetItem(inv, DISENCHANT_SOURCE_SLOT)
     const catalyst = safeGetItem(inv, DISENCHANT_CATALYST_SLOT)
+    const books = safeGetItem(inv, DISENCHANT_BOOK_STORAGE_SLOT)
     const freeOutputs = resolveDisenchantOutputSlots(inv).length
 
     const sourceText = source
@@ -1392,9 +1524,15 @@ function getDisenchantDiagnostics(inv) {
         catalystText = `${base} x${amount}`
     }
 
+    const booksAmount = getDisenchantBookAmount(books)
+    const booksText = booksAmount > 0
+        ? `Book x${booksAmount}`
+        : 'None'
+
     return {
         source: sourceText,
         catalyst: catalystText,
+        books: booksText,
         freeOutputs
     }
 }
@@ -1442,8 +1580,11 @@ function buildPrimaryHelper(blockers, modules, summary, disenchantInfo) {
     if (top.includes('Need Catalyst')) {
         return 'Put Refined Aetherium Shards in slot 19 to enable disenchanting.'
     }
+    if (top.includes('Need Books')) {
+        return 'Put normal Books in slot 20 (1 book per extracted enchantment).'
+    }
     if (top.includes('No Output Space')) {
-        return 'Free at least one disenchant output slot (20-26).' 
+        return 'Free at least one disenchant output slot (22-30).' 
     }
     if (top.includes('Split Stack')) {
         return 'Use single-item stacks in processing slots to prevent conflicts.'

@@ -3,6 +3,7 @@ import './DoriosAPI/main.js'
 import './config/main.js'
 import './drops/drop_system.js'
 import './transmutable_injection_ascendant.js'
+import './insight_injectors.js'
 
 // Machines
 import './machinery/machines/catalyst_weaver.js'
@@ -19,6 +20,7 @@ import './machinery/machines/network_center.js'
 import './machinery/machines/tabs_test_machine.js'
 
 // Generators
+// import './machinery/generators/water_wheel.js'
 
 // Components
 import './items/upgrade_package.js'

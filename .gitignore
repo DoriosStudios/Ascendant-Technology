@@ -6,6 +6,9 @@ Desktop.ini
 !.bridge/extensions
 
 /.vscode
+!/.vscode/
+/.vscode/*
+!/.vscode/tasks.json
 /.bridge
 /.venv
 .env

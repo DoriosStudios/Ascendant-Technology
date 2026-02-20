@@ -49,10 +49,12 @@
 		"components": {
 			"minecraft:type_family": {
 				"family": [
-					"Blastling",
-					"Snareling",
-					"Watchling",
-					"monster"
+					"blastling",
+					"monster",
+					"enderman",
+					"enderling",
+					"mob",
+					"end_monster"
 				]
 			},
 			"minecraft:nameable": {
@@ -245,6 +247,7 @@
 				"value": 1
 			},
 			"minecraft:behavior.ranged_attack": {
+				"priority": 2,
 				"attack_interval_min": 0.5,
 				"attack_interval_max": 1.0,
 				"attack_radius": 15,

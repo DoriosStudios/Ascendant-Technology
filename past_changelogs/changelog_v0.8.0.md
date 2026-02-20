@@ -165,6 +165,8 @@ Stability and correctness updates for the Overclock system, improved machine upg
   - Updated identifiers to `utilitycraft:*`, refreshed format versions, and added spawn rules + loot tables.
 - Updated Enderling entity and projectile components to current schemas.
   - Aligned `minecraft:hurt_when_wet`, `minecraft:shooter`, `minecraft:spawn_entity`, and projectile field naming for newer format validation.
+- Normalized Enderling `type_family` tags and added missing ranged-attack priorities.
+  - Snareling and Blastling now use canonical lowercase families and explicit `minecraft:behavior.ranged_attack` priorities for more consistent projectile combat behavior.
 - Added Enderling client assets (textures, spawn-egg icons, and sound definitions) from the End Expansion reference pack.
 
 ### HUD & UI Assets

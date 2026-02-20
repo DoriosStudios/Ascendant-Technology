@@ -49,9 +49,12 @@
 		"components": {
 			"minecraft:type_family": {
 				"family": [
-					"Snareling",
-					"Watchling",
-					"monster"
+					"snareling",
+					"monster",
+					"enderman",
+					"enderling",
+					"mob",
+					"end_monster"
 				]
 			},
 			"minecraft:nameable": {
@@ -251,6 +254,7 @@
 			},
 			"minecraft:hurt_when_wet": {},
 			"minecraft:behavior.ranged_attack": {
+				"priority": 2,
 				"attack_interval_min": 1,
 				"attack_interval_max": 1.0,
 				"attack_radius": 15,

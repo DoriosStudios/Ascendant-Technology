@@ -49,11 +49,12 @@
 		"components": {
 			"minecraft:type_family": {
 				"family": [
-					"Watchling",
+					"watchling",
 					"monster",
 					"enderman",
-					"Blastling",
-					"Snareling"
+					"enderling",
+					"mob",
+					"end_monster"
 				]
 			},
 			"minecraft:nameable": {

@@ -271,6 +271,13 @@
 			},
 			"minecraft:type_family": {
 				"family": [
+					"endersent",
+					"monster",
+					"enderman",
+					"enderling",
+					"mob",
+					"end_monster",
+					"boss",
 					"robot"
 				]
 			},

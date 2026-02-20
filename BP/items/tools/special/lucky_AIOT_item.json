@@ -2,7 +2,7 @@
 	"format_version": "1.21.10",
 	"minecraft:item": {
 		"description": {
-			"identifier": "utilitycraft:lucky_AIOT_item",
+			"identifier": "utilitycraft:lucky_aiot_item",
 			"menu_category": {
 				"category": "equipment",
 				"group": "dorios:itemGroup.name.aiots"

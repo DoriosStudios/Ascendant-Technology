@@ -102,6 +102,8 @@ Stability and correctness updates for the Overclock system, improved machine upg
 - Changed Cryofluid recipe
   - You must now use Titanium alongside 8 Lapis Lazuli OR 16 Lapis Lazuli Dust per 1000 mB of water processed. This change was made to make the recipe more expensive and to give more use to Lapis, which is currently underused in the addon.
 ## UI/UX
+- Expanded localization coverage from 3 to 8 languages (`en_US`, `pt_BR`, `es_MX`, `fr_FR`, `de_DE`, `ru_RU`, `ja_JP`, `zh_CN`).
+- Reviewed and aligned translation formatting/parity across existing languages (`en_US`, `pt_BR`, `es_MX`), including capsule formatting and missing UI/block entries.
 - Fixed Mob Magnet value placeholders so subtitles render correctly in all languages.
 - Fixed panel textures and background sizing for new panels.
 - Moved Mob Magnet filter controls into the main settings panel and stabilized filter mode labels.

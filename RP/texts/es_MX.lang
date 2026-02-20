@@ -9,14 +9,14 @@ tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena has
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
-tile.utilitycraft:duplicator.name=Duplicador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
+tile.utilitycraft:cloner.name=Duplicador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
 tile.utilitycraft:cryo_chamber.name=Cámara Criogénica\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- 3 modos:\n  Estabilizador,\n  Refrigerador,\n  Generador de Criolíquido
 tile.utilitycraft:energizer.name=Energizador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Energiza lingotes, polvos y bloques con un enorme costo de DE
 tile.utilitycraft:liquifier.name=Licuefactor\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Convierte sólidos en fluidos procesables
 tile.utilitycraft:laser_barrier.name=Barrera Láser\n§7- Acepta mejoras:\n    §b§7, §g§7
 tile.utilitycraft:residue_processor.name=Procesador de Residuos\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Recupera valor de desechos y subproductos
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad
-tile.utilitycraft:network_center.name=Centro de Red
+tile.utilitycraft:network_center.name=Centro de Red\n§7- Muestra estadísticas de red
 tile.utilitycraft:tabs_test_machine.name=Máquina de Prueba (Pestañas)\n§7- Bloque de prueba de pestañas
 tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Genera carga de overclock (Titanio + energía)
 tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica la carga de la torre en la red
@@ -29,51 +29,6 @@ tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
 tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7  Atrae mobs en un radio configurable
 tile.utilitycraft:laser_barrier_field.name=Campo de Barrera Láser\n§7  Zona activa proyectada por la barrera
 tile.utilitycraft:reinforced_cable.name=Cable Reforzado\n§7- Espina dorsal reforzada para energía, fluidos y overclock
-tile.utilitycraft:copper_conveyor_horizontal.name=§vCopper Conveyor\n§8- Horizontal\n- Speed: 1.0 m/s
-tile.utilitycraft:copper_conveyor_inclined.name=§vCopper Conveyor\n§8- Inclined\n- Speed: 1.0 m/s
-tile.utilitycraft:copper_conveyor_declined.name=§vCopper Conveyor\n§8- Declined\n- Speed: 1.0 m/s
-tile.utilitycraft:copper_conveyor_vertical.name=§vCopper Conveyor\n§8- Vertical\n- Speed: 2.4 m/s
-tile.utilitycraft:copper_conveyor_bridge_transmitter.name=§vCopper Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
-tile.utilitycraft:copper_conveyor_bridge_receiver.name=§vCopper Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
-
-tile.utilitycraft:titanium_conveyor_horizontal.name=§tTitanium Conveyor\n§8- Horizontal\n- Speed: 2.2 m/s
-tile.utilitycraft:titanium_conveyor_inclined.name=§tTitanium Conveyor\n§8- Inclined\n- Speed: 2.2 m/s
-tile.utilitycraft:titanium_conveyor_declined.name=§tTitanium Conveyor\n§8- Declined\n- Speed: 2.2 m/s
-tile.utilitycraft:titanium_conveyor_vertical.name=§tTitanium Conveyor\n§8- Vertical\n- Speed: 5.3 m/s
-tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=§tTitanium Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
-tile.utilitycraft:titanium_conveyor_bridge_receiver.name=§tTitanium Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
-
-tile.utilitycraft:aetherium_conveyor_horizontal.name=§dAetherium Conveyor\n§8- Horizontal\n- Speed: 20.0 m/s
-tile.utilitycraft:aetherium_conveyor_inclined.name=§dAetherium Conveyor\n§8- Inclined\n- Speed: 20.0 m/s
-tile.utilitycraft:aetherium_conveyor_declined.name=§dAetherium Conveyor\n§8- Declined\n- Speed: 20.0 m/s
-tile.utilitycraft:aetherium_conveyor_vertical.name=§dAetherium Conveyor\n§8- Vertical\n- Speed: 30.0 m/s
-tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=§dAetherium Conveyor Bridge\n§8- Transmitter\n- Sends items across the bridge path
-tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=§dAetherium Conveyor Bridge\n§8- Receiver\n- Receives items from a bridge transmitter
-
-tile.utilitycraft:conveyor_router.name=§aConveyor Router\n§8- Teleports items to a random output\n- Slightly longer delay before switching direction
-tile.utilitycraft:conveyor_smart_router.name=§aConveyor Smart Router\n§8- Routes items by assigned filters\n- Hold an item to configure
-tile.utilitycraft:conveyor_overflow.name=§aConveyor Overflow\n§8- Sends items forward first\n- Diverts overflow to the sides
-tile.utilitycraft:conveyor_underflow.name=§aConveyor Underflow\n§8- Diverts items to the sides first\n- Sends remaining items forward
-tile.utilitycraft:conveyor_junction.name=§aConveyor Junction\n§8- Splits items based on entry position
-tile.utilitycraft:conveyor_network_updater.name=§aConveyor Network Updater\n§8- Refreshes adjacent conveyor networks
-
-tile.utilitycraft:copper_conveyor_bridge_path.name=Camino del Puente de Cobre
-tile.utilitycraft:titanium_conveyor_bridge_path.name=Camino del Puente de Titanio
-tile.utilitycraft:aetherium_conveyor_bridge_path.name=Camino del Puente de Aetherium
-
-ui.utilitycraft.smart_router.title=Enrutador Inteligente
-ui.utilitycraft.smart_router.body_empty=Sostén un objeto para asignarlo a una dirección.
-ui.utilitycraft.smart_router.body_held=En mano: %s
-ui.utilitycraft.smart_router.button.assign_left=Asignar a la Izquierda
-ui.utilitycraft.smart_router.button.assign_front=Asignar al Frente
-ui.utilitycraft.smart_router.button.assign_right=Asignar a la Derecha
-ui.utilitycraft.smart_router.button.remove_item=Quitar objeto en mano
-ui.utilitycraft.smart_router.button.view=Ver asignaciones
-ui.utilitycraft.smart_router.button.clear_all=Limpiar todo
-ui.utilitycraft.smart_router.button.close=Cerrar
-ui.utilitycraft.smart_router.saved=Guardado.
-ui.utilitycraft.smart_router.removed=Eliminado.
-ui.utilitycraft.smart_router.cleared=Limpiado.
 tile.utilitycraft:aetherium_block.name=Bloque de Aetherium
 tile.utilitycraft:titanium_block.name=Bloque de Titanio
 tile.utilitycraft:raw_titanium_block.name=Bloque de Titanio en bruto
@@ -87,7 +42,6 @@ item.utilitycraft:titanium=Lingote de Titanio
 item.utilitycraft:raw_titanium=Titanio en bruto
 item.utilitycraft:titanium_nugget=Pepita de Titanio
 item.utilitycraft:titanium_chunk=Pedazo de Titanio
-item.utilitycraft:liquified_aetherium_bucket=Cubeta de Aetherium Liquefactado
 item.utilitycraft:aetherium_helmet=Casco de Aetherium
 item.utilitycraft:aetherium_chestplate=Coraza de Aetherium
 item.utilitycraft:aetherium_leggings=Grebas de Aetherium
@@ -116,13 +70,10 @@ item.utilitycraft:aetherium_shard=Fragmento de Aetherium
 item.utilitycraft:refined_aetherium_shard=Fragmento de Aetherium Refinado
 item.utilitycraft:void_essence=Esencia del Vacío
 item.utilitycraft:liquid_void=Ampolla de Vacío Líquido
-item.utilitycraft:enderling_tear=Lágrima de Enderling
-item.utilitycraft:pure_enderling_tear=Lágrima de Enderling Pura
 
 ## Módulos
 item.utilitycraft:size_upgrade=Mejora de §gTamaño§7\n- Aumenta el área de la Barrera Láser
 item.utilitycraft:hyper_processing_upgrade=Mejora de §dProcesamiento Híper§7\n- Aumenta la velocidad de operación de las máquinas\n- No aumenta el consumo de energía
-item.utilitycraft:upgrade_package=§6Paquete de Mejoras§7\n- Guarda mejoras de cintas para instalar en la red
 
 ## Mallas y Redes
 item.utilitycraft:lucky_mesh=§aMalla de la Suerte\n§7- Nivel Máx: Diamante\n§7- Multiplicador de Ítems: 2x
@@ -138,44 +89,36 @@ item.utilitycraft:lucky_aiot=§aAiOT de la Suerte
 ## Cápsulas de Líquidos
 item.utilitycraft:empty_liquid_capsule=Cápsula de Líquido Vacía
 
-item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido (1 Cubo)
-item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido (2 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_3=Cápsula de Aetherium Líquido (3 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_4=Cápsula de Aetherium Líquido (4 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_5=Cápsula de Aetherium Líquido (5 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_6=Cápsula de Aetherium Líquido (6 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_7=Cápsula de Aetherium Líquido (7 Cubos)
-item.utilitycraft:aetherium_liquid_capsule_8=Cápsula de Aetherium Líquido (8 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido §7\n- (1 Cubo)
+item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido §7\n- (2 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_3=Cápsula de Aetherium Líquido §7\n- (3 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_4=Cápsula de Aetherium Líquido §7\n- (4 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_5=Cápsula de Aetherium Líquido §7\n- (5 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_6=Cápsula de Aetherium Líquido §7\n- (6 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_7=Cápsula de Aetherium Líquido §7\n- (7 Cubos)
+item.utilitycraft:aetherium_liquid_capsule_8=Cápsula de Aetherium Líquido §7\n- (8 Cubos)
 
-item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Materia Oscura (1 Cubo)
-item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Materia Oscura (2 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Materia Oscura (3 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_4=Cápsula de Materia Oscura (4 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_5=Cápsula de Materia Oscura (5 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Materia Oscura (6 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Materia Oscura (7 Cubos)
-item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Materia Oscura (8 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_1=Cápsula de Materia Oscura §7\n- (1 Cubo)
+item.utilitycraft:dark_matter_liquid_capsule_2=Cápsula de Materia Oscura §7\n- (2 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_3=Cápsula de Materia Oscura §7\n- (3 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_4=Cápsula de Materia Oscura §7\n- (4 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_5=Cápsula de Materia Oscura §7\n- (5 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_6=Cápsula de Materia Oscura §7\n- (6 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_7=Cápsula de Materia Oscura §7\n- (7 Cubos)
+item.utilitycraft:dark_matter_liquid_capsule_8=Cápsula de Materia Oscura §7\n- (8 Cubos)
 
-item.utilitycraft:cryofluid_capsule_1=Cápsula de Criolíquido (1 Cubo)
-item.utilitycraft:cryofluid_capsule_2=Cápsula de Criolíquido (2 Cubos)
-item.utilitycraft:cryofluid_capsule_3=Cápsula de Criolíquido (3 Cubos)
-item.utilitycraft:cryofluid_capsule_4=Cápsula de Criolíquido (4 Cubos)
-item.utilitycraft:cryofluid_capsule_5=Cápsula de Criolíquido (5 Cubos)
-item.utilitycraft:cryofluid_capsule_6=Cápsula de Criolíquido (6 Cubos)
-item.utilitycraft:cryofluid_capsule_7=Cápsula de Criolíquido (7 Cubos)
-item.utilitycraft:cryofluid_capsule_8=Cápsula de Criolíquido (8 Cubos)
-
-item.utilitycraft:aetherium_liquid_capsule_infinite=Cápsula de Aetherium Líquido (Infinito)
-item.utilitycraft:dark_matter_liquid_capsule_infinite=Cápsula de Materia Oscura (Infinito)
-item.utilitycraft:cryofluid_capsule_infinite=Cápsula de Criolíquido (Infinito)
-item.utilitycraft:water_capsule_infinite=Cápsula de Agua (Infinito)
-item.utilitycraft:lava_capsule_infinite=Cápsula de Lava (Infinito)
-item.utilitycraft:milk_capsule_infinite=Cápsula de Leche (Infinito)
-item.utilitycraft:xp_capsule_infinite=Cápsula de XP (Infinito)
+item.utilitycraft:cryofluid_capsule_1=Cápsula de Criolíquido §7\n- (1 Cubo)
+item.utilitycraft:cryofluid_capsule_2=Cápsula de Criolíquido §7\n- (2 Cubos)
+item.utilitycraft:cryofluid_capsule_3=Cápsula de Criolíquido §7\n- (3 Cubos)
+item.utilitycraft:cryofluid_capsule_4=Cápsula de Criolíquido §7\n- (4 Cubos)
+item.utilitycraft:cryofluid_capsule_5=Cápsula de Criolíquido §7\n- (5 Cubos)
+item.utilitycraft:cryofluid_capsule_6=Cápsula de Criolíquido §7\n- (6 Cubos)
+item.utilitycraft:cryofluid_capsule_7=Cápsula de Criolíquido §7\n- (7 Cubos)
+item.utilitycraft:cryofluid_capsule_8=Cápsula de Criolíquido §7\n- (8 Cubos)
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCámara Catalizadora
-entity.utilitycraft:duplicator.name=Duplicador
+entity.utilitycraft:cloner.name=Duplicador
 entity.utilitycraft:cryo_chamber.name=§fCámara Criogénica
 entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad
 entity.utilitycraft:liquifier.name=Licuefactor
@@ -188,40 +131,18 @@ entity.utilitycraft:absolute_container.name=§fContenedor Absoluto
 entity.utilitycraft:overclock_tower.name=§fTorre de Overclock
 entity.utilitycraft:overclock_relay.name=§fRelé de Overclock
 entity.utilitycraft:overclock_injector.name=§fInyector de Overclock
-entity.utilitycraft:snareling.name=Snareling
-entity.utilitycraft:watchling.name=Watchling
-entity.utilitycraft:blastling.name=Blastling
-entity.utilitycraft:endersent.name=Endersent
-
-item.spawn_egg.entity.utilitycraft:snareling.name=Huevo Generador de Snareling
-item.spawn_egg.entity.utilitycraft:watchling.name=Huevo Generador de Watchling
-item.spawn_egg.entity.utilitycraft:blastling.name=Huevo Generador de Blastling
-item.spawn_egg.entity.utilitycraft:endersent.name=Huevo Generador de Endersent
 
 ## UI Texts
-at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)
-at:itemGroup.name.capsules=Cápsulas de Fluidos §u(Ascendant Technology)
-at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
-at:itemGroup.name.armor=Armaduras §u(Ascendant Technology)
-at:itemGroup.name.conveyors=Conveyors §u(Ascendant Technology)
+at:itemGroup.name.machines=Máquinas (Ascendant Technology)
+at:itemGroup.name.capsules=Cápsulas de Líquidos (Ascendant Technology)
+at:itemGroup.name.experimental=Experimental
+at:itemGroup.name.armor=Armaduras (Ascendant Technology)
 
 at:ui.h=A
 at:ui.l=L
 at:ui.e=E
 
 ui.utilitycraft:status_label_container=Información del Contenedor
-ui.utilitycraft.conveyor.bridge_obstructed=§cCamino del puente obstruido
-ui.utilitycraft.conveyor.upgrade_package.title=Paquete de Mejoras
-ui.utilitycraft.conveyor.upgrade_package.body=Elige dónde aplicar las mejoras almacenadas.
-ui.utilitycraft.conveyor.upgrade_package.body_empty=No hay mejoras guardadas en este paquete.
-ui.utilitycraft.conveyor.upgrade_package.button.network=Aplicar a la Red
-ui.utilitycraft.conveyor.upgrade_package.button.network_type=Aplicar a la Red (Este Tipo)
-ui.utilitycraft.conveyor.upgrade_package.button.type=Aplicar a Todos de Este Tipo
-ui.utilitycraft.conveyor.upgrade_package.button.block=Aplicar a Esta Cinta
-ui.utilitycraft.conveyor.upgrade_package.button.global=Aplicar Globalmente
-ui.utilitycraft.conveyor.upgrade_package.button.cancel=Cancelar
-ui.utilitycraft.conveyor.upgrade_package.applied=Mejoras aplicadas.
-ui.utilitycraft.conveyor.upgrade_package.failed=No se pudieron aplicar las mejoras.
 
 ui.utilitycraft.water_label=§9Agua
 ui.utilitycraft.cryofluid_label=§bCriolíquido
@@ -234,27 +155,17 @@ ui.utilitycraft.mob_magnet.menu.body=Selecciona una opción
 ui.utilitycraft.mob_magnet.menu.configure=Configurar Imán
 ui.utilitycraft.mob_magnet.menu.filter=Filtrado de Mobs
 ui.utilitycraft.mob_magnet.settings.title=Configuración del Imán de Mobs
-ui.utilitycraft.mob_magnet.settings.body=Usa los botones para alternar cada valor.\n\n- Para aumentar el alcance, usa Módulos de Mejora de Alcance
 ui.utilitycraft.mob_magnet.settings.toggle=Activado
-ui.utilitycraft.mob_magnet.settings.range=§9Nivel de Alcance
-ui.utilitycraft.mob_magnet.settings.range_option=§b%s§7 bloques §r§t(Nivel %s)
+ui.utilitycraft.mob_magnet.settings.range=§9Nivel §rde Alcance
+ui.utilitycraft.mob_magnet.settings.range_option=§b{0}§7 bloques §r(Nivel {1})
 ui.utilitycraft.mob_magnet.settings.cooldown=Reutilización de Teletransporte
-ui.utilitycraft.mob_magnet.settings.cooldown_option=%s ticks
-ui.utilitycraft.mob_magnet.settings.button.toggle_on=Activado\n§aEncendido
-ui.utilitycraft.mob_magnet.settings.button.toggle_off=Activado\n§4Apagado
-ui.utilitycraft.mob_magnet.settings.button.range=Alcance\n§b%s bloques (Nivel %s)
-ui.utilitycraft.mob_magnet.settings.button.cooldown=Reutilización\n§g%s ticks
-ui.utilitycraft.mob_magnet.settings.button.back=Volver
+ui.utilitycraft.mob_magnet.settings.cooldown_option={0} ticks
 ui.utilitycraft.mob_magnet.filter.title=Filtrado de Mobs
-ui.utilitycraft.mob_magnet.filter.body=Modo actual: %s
-ui.utilitycraft.mob_magnet.filter.body.whitelist=Modo actual: Lista Blanca
-ui.utilitycraft.mob_magnet.filter.body.blacklist=Modo actual: Lista Negra
+ui.utilitycraft.mob_magnet.filter.body=Modo actual: {0}
 ui.utilitycraft.mob_magnet.filter.add=Añadir Mob
-ui.utilitycraft.mob_magnet.filter.list=Lista de Mobs Filtrados (%s)
+ui.utilitycraft.mob_magnet.filter.list=Lista de Mobs Filtrados ({0})
 ui.utilitycraft.mob_magnet.filter.remove=Eliminar Mob
-ui.utilitycraft.mob_magnet.filter.mode_button=Modo: %s
-ui.utilitycraft.mob_magnet.filter.mode_button.whitelist=Modo: Lista Blanca
-ui.utilitycraft.mob_magnet.filter.mode_button.blacklist=Modo: Lista Negra
+ui.utilitycraft.mob_magnet.filter.mode_button=Modo: {0}
 ui.utilitycraft.mob_magnet.filter.list_title=Lista de Mobs Filtrados
 ui.utilitycraft.mob_magnet.filter.list_empty=No hay mobs configurados.
 ui.utilitycraft.mob_magnet.filter.list_body=Mobs filtrados actualmente:
@@ -262,16 +173,14 @@ ui.utilitycraft.mob_magnet.filter.add.title=Añadir Mob
 ui.utilitycraft.mob_magnet.filter.add.field=Identificador de entidad (ej.: minecraft:zombie)
 ui.utilitycraft.mob_magnet.filter.add.placeholder=minecraft:zombie
 ui.utilitycraft.mob_magnet.filter.add.invalid=§cIdentificador de mob inválido
-ui.utilitycraft.mob_magnet.filter.add.success=§aSe añadió %s
+ui.utilitycraft.mob_magnet.filter.add.success=§aSe añadió {0}
 ui.utilitycraft.mob_magnet.filter.add.duplicate=§eEl mob ya está en la lista
 ui.utilitycraft.mob_magnet.filter.remove.title=Eliminar Mob
 ui.utilitycraft.mob_magnet.filter.remove.body=Selecciona un mob para eliminar
-ui.utilitycraft.mob_magnet.filter.remove.success=§cSe eliminó %s
+ui.utilitycraft.mob_magnet.filter.remove.success=§cSe eliminó {0}
 ui.utilitycraft.mob_magnet.filter.mode.whitelist=Lista Blanca
 ui.utilitycraft.mob_magnet.filter.mode.blacklist=Lista Negra
-ui.utilitycraft.mob_magnet.filter.mode_switched=§bModo cambiado a %s
-ui.utilitycraft.mob_magnet.filter.mode_switched.whitelist=§bModo cambiado a Lista Blanca
-ui.utilitycraft.mob_magnet.filter.mode_switched.blacklist=§bModo cambiado a Lista Negra
+ui.utilitycraft.mob_magnet.filter.mode_switched=§bModo cambiado a {0}
 
 ## Placeholders
 item.utilitycraft:overclock_00=Overclock

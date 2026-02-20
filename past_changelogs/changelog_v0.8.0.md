@@ -108,6 +108,8 @@ Stability and correctness updates for the Overclock system, improved machine upg
 - Updated Cryo Chamber UI layout and improved several machine panels.
 - Updated machine UI accents to match the refreshed texture set.
 - Updated Mob Magnet settings to use button-based controls with inline value subtitles.
+- Updated toggle button states to render with panel-based surfaces (normal, hover, and locked) for more consistent UI styling.
+- Adjusted Enchantment Station tab toggles to avoid forced per-open state reset, allowing binding-driven tab state restore when available.
 - Enchantment Station status panel now shows diagnostic helpers (power/XP, disenchant readiness, active task ETA, blocker summary, and corrective hints).
 - Added a simple `Main/Dis` toggle to switch visibility between Enchantment Station top panels.
 

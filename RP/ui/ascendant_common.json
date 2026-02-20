@@ -30,7 +30,7 @@
 	 */
 	"cell_white": {
 		"type": "image",
-		"texture": "textures/ui/cells/white_cell"
+		"texture": "textures/ui/cells/white_cell_image"
 	},
 
 	/* ELEMENT: cell_white_hover
@@ -54,7 +54,7 @@
 	 */
 	"cell_light_gray": {
 		"type": "image",
-		"texture": "textures/ui/cells/light_gray_cell"
+		"texture": "textures/ui/cells/light_gray_cell_image"
 	},
 
 	/* ELEMENT: cell_light_gray_hover
@@ -78,7 +78,7 @@
 	 */
 	"cell_gray": {
 		"type": "image",
-		"texture": "textures/ui/cells/gray_cell"
+		"texture": "textures/ui/cells/gray_cell_image"
 	},
 
 	/* ELEMENT: cell_gray_hover
@@ -102,7 +102,7 @@
 	 */
 	"cell_black": {
 		"type": "image",
-		"texture": "textures/ui/cells/black_cell"
+		"texture": "textures/ui/cells/black_cell_image"
 	},
 
 	/* ELEMENT: cell_black_hover
@@ -126,7 +126,7 @@
 	 */
 	"cell_brown": {
 		"type": "image",
-		"texture": "textures/ui/cells/brown_cell"
+		"texture": "textures/ui/cells/brown_cell_image"
 	},
 
 	/* ELEMENT: cell_brown_hover
@@ -150,7 +150,7 @@
 	 */
 	"cell_red": {
 		"type": "image",
-		"texture": "textures/ui/cells/red_cell"
+		"texture": "textures/ui/cells/red_cell_image"
 	},
 
 	/* ELEMENT: cell_red_hover
@@ -174,7 +174,7 @@
 	 */
 	"cell_orange": {
 		"type": "image",
-		"texture": "textures/ui/cells/orange_cell"
+		"texture": "textures/ui/cells/orange_cell_image"
 	},
 
 	/* ELEMENT: cell_orange_hover
@@ -198,7 +198,7 @@
 	 */
 	"cell_yellow": {
 		"type": "image",
-		"texture": "textures/ui/cells/yellow_cell"
+		"texture": "textures/ui/cells/yellow_cell_image"
 	},
 
 	/* ELEMENT: cell_yellow_hover
@@ -222,7 +222,7 @@
 	 */
 	"cell_lime": {
 		"type": "image",
-		"texture": "textures/ui/cells/lime_cell"
+		"texture": "textures/ui/cells/lime_cell_image"
 	},
 
 	/* ELEMENT: cell_lime_hover
@@ -246,7 +246,7 @@
 	 */
 	"cell_green": {
 		"type": "image",
-		"texture": "textures/ui/cells/green_cell"
+		"texture": "textures/ui/cells/green_cell_image"
 	},
 
 	/* ELEMENT: cell_green_hover
@@ -270,7 +270,7 @@
 	 */
 	"cell_cyan": {
 		"type": "image",
-		"texture": "textures/ui/cells/cyan_cell"
+		"texture": "textures/ui/cells/cyan_cell_image"
 	},
 
 	/* ELEMENT: cell_cyan_hover
@@ -294,7 +294,7 @@
 	 */
 	"cell_light_blue": {
 		"type": "image",
-		"texture": "textures/ui/cells/light_blue_cell"
+		"texture": "textures/ui/cells/light_blue_cell_image"
 	},
 
 	/* ELEMENT: cell_light_blue_hover
@@ -318,7 +318,7 @@
 	 */
 	"cell_blue": {
 		"type": "image",
-		"texture": "textures/ui/cells/blue_cell"
+		"texture": "textures/ui/cells/blue_cell_image"
 	},
 
 	/* ELEMENT: cell_blue_hover
@@ -342,7 +342,7 @@
 	 */
 	"cell_purple": {
 		"type": "image",
-		"texture": "textures/ui/cells/purple_cell"
+		"texture": "textures/ui/cells/purple_cell_image"
 	},
 
 	/* ELEMENT: cell_purple_hover
@@ -366,7 +366,7 @@
 	 */
 	"cell_magenta": {
 		"type": "image",
-		"texture": "textures/ui/cells/magenta_cell"
+		"texture": "textures/ui/cells/magenta_cell_image"
 	},
 
 	/* ELEMENT: cell_magenta_hover
@@ -390,7 +390,7 @@
 	 */
 	"cell_pink": {
 		"type": "image",
-		"texture": "textures/ui/cells/pink_cell"
+		"texture": "textures/ui/cells/pink_cell_image"
 	},
 
 	/* ELEMENT: cell_pink_hover
@@ -2809,7 +2809,9 @@
 		"type": "panel",
 		"size": "$tab_button_size",
 		"$tab_button_size|default": [36, 20],
-		"$tab_button_texture|default": "textures/ui/button_borderless_dark",
+		"$tab_button_panel_color|default": "dark",
+		"$tab_button_panel_texture|default": "",
+		"$tab_button_panel_alpha|default": 1,
 		"$tab_button_text|default": "Tab",
 		"$tab_button_text_color|default": [1, 1, 1],
 		"$tab_button_text_scale|default": 0.6,
@@ -2819,10 +2821,14 @@
 		"$tab_button_icon_color|default": [1, 1, 1],
 		"controls": [
 			{
-				"bg": {
-					"type": "image",
-					"texture": "$tab_button_texture",
+				"tab_surface@ascendant_common.panel": {
 					"size": "$tab_button_size",
+					"$panel_size": "$tab_button_size",
+					"$panel_color": "$tab_button_panel_color",
+					"$panel_texture": "$tab_button_panel_texture",
+					"$panel_alpha": "$tab_button_panel_alpha",
+					"$has_container_label": false,
+					"$has_close_button": false,
 					"layer": 0
 				}
 			},
@@ -2858,20 +2864,24 @@
 	 * Checked visual state for a tab toggle.
 	 */
 	"tab_button_state_checked@ascendant_common.tab_button_state_base": {
-		"$tab_button_texture": "textures/ui/button_borderless_darkpressednohover"
+		"$tab_button_panel_color": "black",
+		"$tab_button_panel_alpha": 0.95
 	},
 
 	/* ELEMENT: tab_button_state_unchecked_hover
 	 * Hover visual state for an unchecked tab toggle.
 	 */
 	"tab_button_state_unchecked_hover@ascendant_common.tab_button_state_base": {
-		"$tab_button_texture": "textures/ui/button_borderless_darkpressednohover"
+		"$tab_button_panel_color": "gray",
+		"$tab_button_panel_alpha": 1
 	},
 
 	/* ELEMENT: tab_button_state_checked_hover
 	 * Hover visual state for a checked tab toggle.
 	 */
-	"tab_button_state_checked_hover@ascendant_common.tab_button_state_checked": {},
+	"tab_button_state_checked_hover@ascendant_common.tab_button_state_checked": {
+		"$tab_button_panel_alpha": 1
+	},
 
 	/* SUBSECTION: TAB BUTTONS
 	 * Toggle controls that select the active tab.
@@ -2892,6 +2902,9 @@
 		"$tab_group_name|default": "tabs_group",
 		"$tab_index|default": 0,
 		"$toggle_state_binding_name|default": "#toggle_state",
+		"$toggle_property_bag|default": {
+			"#toggle_state": false
+		},
 		"$active_tab_index|default": 0,
 		"$unchecked_control|default": "ascendant_common.tab_button_state_base",
 		"$checked_control|default": "ascendant_common.tab_button_state_checked",
@@ -3680,15 +3693,34 @@
 	 * Visual state for unchecked toggles.
 	 */
 	"toggle_state_unchecked": {
-		"type": "image",
-		"texture": "textures/ui/button_borderless_dark",
+		"type": "panel",
 		"size": ["100%", "100%"],
+		"$toggle_state_panel_color|default": "dark",
+		"$toggle_state_panel_texture|default": "",
+		"$toggle_state_panel_alpha|default": 1,
+		"$toggle_state_icon_size|default": [8, 8],
+		"$toggle_state_icon_offset|default": [0, 0],
+		"$toggle_state_icon_color|default": [1, 1, 1],
 		"controls": [
+			{
+				"bg@ascendant_common.panel": {
+					"size": ["100%", "100%"],
+					"$panel_size": ["100%", "100%"],
+					"$panel_color": "$toggle_state_panel_color",
+					"$panel_texture": "$toggle_state_panel_texture",
+					"$panel_alpha": "$toggle_state_panel_alpha",
+					"$has_container_label": false,
+					"$has_close_button": false,
+					"layer": 0
+				}
+			},
 			{
 				"plus": {
 					"type": "image",
 					"texture": "textures/ui/plus",
-					"size": [8, 8],
+					"size": "$toggle_state_icon_size",
+					"offset": "$toggle_state_icon_offset",
+					"color": "$toggle_state_icon_color",
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"layer": 1
@@ -3701,22 +3733,114 @@
 	 * Visual state for checked toggles.
 	 */
 	"toggle_state_checked": {
-		"type": "image",
-		"texture": "textures/ui/button_borderless_darkpressednohover",
+		"type": "panel",
 		"size": ["100%", "100%"],
-		"alpha": 0.9,
+		"$toggle_state_panel_color|default": "black",
+		"$toggle_state_panel_texture|default": "",
+		"$toggle_state_panel_alpha|default": 0.95,
+		"$toggle_state_icon_size|default": [8, 8],
+		"$toggle_state_icon_offset|default": [0, 0],
+		"$toggle_state_icon_color|default": [1, 1, 1],
 		"controls": [
+			{
+				"bg@ascendant_common.panel": {
+					"size": ["100%", "100%"],
+					"$panel_size": ["100%", "100%"],
+					"$panel_color": "$toggle_state_panel_color",
+					"$panel_texture": "$toggle_state_panel_texture",
+					"$panel_alpha": "$toggle_state_panel_alpha",
+					"$has_container_label": false,
+					"$has_close_button": false,
+					"layer": 0
+				}
+			},
 			{
 				"minus": {
 					"type": "image",
 					"texture": "textures/ui/minus",
-					"size": [8, 8],
+					"size": "$toggle_state_icon_size",
+					"offset": "$toggle_state_icon_offset",
+					"color": "$toggle_state_icon_color",
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"layer": 1
 				}
 			}
 		]
+	},
+
+	/* ELEMENT: toggle_state_unchecked_hover
+	 * Visual state for unchecked toggles on hover.
+	 */
+	"toggle_state_unchecked_hover@ascendant_common.toggle_state_unchecked": {
+		"alpha": 1,
+		"$toggle_state_panel_alpha": 1
+	},
+
+	/* ELEMENT: toggle_state_checked_hover
+	 * Visual state for checked toggles on hover.
+	 */
+	"toggle_state_checked_hover@ascendant_common.toggle_state_checked": {
+		"alpha": 1,
+		"$toggle_state_panel_alpha": 1
+	},
+
+	/* ELEMENT: toggle_state_unchecked_locked
+	 * Visual state for unchecked toggles when disabled.
+	 */
+	"toggle_state_unchecked_locked@ascendant_common.toggle_state_unchecked": {
+		"alpha": 0.45
+	},
+
+	/* ELEMENT: toggle_state_checked_locked
+	 * Visual state for checked toggles when disabled.
+	 */
+	"toggle_state_checked_locked@ascendant_common.toggle_state_checked": {
+		"alpha": 0.45
+	},
+
+	/* SUBSECTION: TOGGLE BASE
+	 * Wrapper around common.toggle with Ascendant defaults and vanilla-compatible options.
+	 */
+
+	/* ELEMENT: toggle_base
+	 * Reusable toggle control exposing common.toggle features with Ascendant visual defaults.
+	 */
+	"toggle_base@common.toggle": {
+		"$toggle_name|default": "default_toggle",
+		"$toggle_default_state|default": false,
+		"$toggle_binding_type|default": "global",
+		"$toggle_binding_condition|default": "visible",
+		"$toggle_state_binding_name|default": "#toggle_state",
+		"$toggle_enabled_binding_type|default": "none",
+		"$toggle_enabled_binding_condition|default": "visible",
+		"$toggle_enabled_binding_name|default": "#toggle_enabled",
+		"$radio_toggle_group|default": false,
+		"$toggle_group_forced_index|default": -1,
+		"$toggle_group_default_selected|default": 0,
+		"$allow_controller_back_button_mapping|default": false,
+		"$enable_directional_toggling|default": false,
+		"$toggle_on_button|default": "toggle.toggle_on",
+		"$toggle_off_button|default": "toggle.toggle_off",
+		"$toggle_tts_name|default": "accessibility.toggle.tts.title",
+		"$toggle_tts_toggle_on_text|default": "accessibility.state.on",
+		"$toggle_tts_toggle_off_text|default": "accessibility.state.off",
+		"$toggle_tts_override_toggle_value|default": "",
+		"$toggle_tts_type_priority|default": -100,
+		"$toggle_tts_index_priority|default": 150,
+		"$toggle_tts_inherit_siblings|default": false,
+		"$tts_section_header|default": "",
+		"$toggle_property_bag|default": {
+			"#toggle_state": false
+		},
+		"$unchecked_control|default": "ascendant_common.toggle_state_unchecked",
+		"$checked_control|default": "ascendant_common.toggle_state_checked",
+		"$unchecked_hover_control|default": "ascendant_common.toggle_state_unchecked_hover",
+		"$checked_hover_control|default": "ascendant_common.toggle_state_checked_hover",
+		"$unchecked_locked_control|default": "ascendant_common.toggle_state_unchecked_locked",
+		"$checked_locked_control|default": "ascendant_common.toggle_state_checked_locked",
+		"$unchecked_locked_hover_control|default": "ascendant_common.toggle_state_unchecked_locked",
+		"$checked_locked_hover_control|default": "ascendant_common.toggle_state_checked_locked"
 	},
 
 	/* SUBSECTION: TOGGLE BUTTONS
@@ -3730,13 +3854,54 @@
 		"type": "panel",
 		"size": ["100%", "100%"],
 		"$toggle_name|default": "default_toggle",
-		"$toggle_texture|default": "textures/ui/cell_image",
+		"$toggle_texture|default": "",
 		"$toggle_icon|default": "",
+		"$toggle_label|default": "",
+		"$toggle_label_color|default": [1, 1, 1],
+		"$toggle_label_font_scale|default": 0.7,
+		"$toggle_label_anchor|default": "center_right",
+		"$toggle_label_offset|default": [8, 0],
+		"$toggle_default_state|default": false,
+		"$toggle_binding_type|default": "global",
+		"$toggle_binding_condition|default": "visible",
+		"$toggle_state_binding_name|default": "#toggle_state",
+		"$toggle_enabled_binding_type|default": "none",
+		"$toggle_enabled_binding_condition|default": "visible",
+		"$toggle_enabled_binding_name|default": "#toggle_enabled",
+		"$toggle_property_bag|default": {
+			"#toggle_state": false
+		},
+		"$radio_toggle_group|default": false,
+		"$toggle_group_forced_index|default": -1,
+		"$toggle_group_default_selected|default": 0,
+		"$allow_controller_back_button_mapping|default": false,
+		"$enable_directional_toggling|default": false,
+		"$toggle_on_button|default": "toggle.toggle_on",
+		"$toggle_off_button|default": "toggle.toggle_off",
+		"$toggle_tts_name|default": "accessibility.toggle.tts.title",
+		"$toggle_tts_toggle_on_text|default": "accessibility.state.on",
+		"$toggle_tts_toggle_off_text|default": "accessibility.state.off",
+		"$toggle_tts_override_toggle_value|default": "",
+		"$toggle_tts_type_priority|default": -100,
+		"$toggle_tts_index_priority|default": 150,
+		"$toggle_tts_inherit_siblings|default": false,
+		"$tts_section_header|default": "",
+		"$unchecked_control|default": "ascendant_common.toggle_state_unchecked",
+		"$checked_control|default": "ascendant_common.toggle_state_checked",
+		"$unchecked_hover_control|default": "ascendant_common.toggle_state_unchecked_hover",
+		"$checked_hover_control|default": "ascendant_common.toggle_state_checked_hover",
+		"$unchecked_locked_control|default": "ascendant_common.toggle_state_unchecked_locked",
+		"$checked_locked_control|default": "ascendant_common.toggle_state_checked_locked",
+		"$unchecked_locked_hover_control|default": "ascendant_common.toggle_state_unchecked_locked",
+		"$checked_locked_hover_control|default": "ascendant_common.toggle_state_checked_locked",
 		"controls": [
 			{
-				"toggle_bg@ascendant_common.panel_bg": {
+				"toggle_bg@ascendant_common.panel": {
 					"size": ["100%", "100%"],
-					"alpha": 0.9,
+					"$panel_color": "gray",
+					"$panel_texture": "$toggle_texture",
+					"$has_container_label": false,
+					"$has_close_button": false,
 					"layer": 0
 				}
 			},
@@ -3752,32 +3917,56 @@
 				}
 			},
 			{
-				"toggle@common.toggle": {
+				"toggle@ascendant_common.toggle_base": {
 					"size": ["100%", "100%"],
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"layer": 2,
 					"$toggle_name": "$toggle_name",
-					"$unchecked_control": "ascendant_common.toggle_state_unchecked",
-					"$checked_control": "ascendant_common.toggle_state_checked",
-					"$unchecked_hover_control": "ascendant_common.toggle_state_unchecked",
-					"$checked_hover_control": "ascendant_common.toggle_state_checked",
-					"$unchecked_locked_control": "ascendant_common.toggle_state_unchecked",
-					"$checked_locked_control": "ascendant_common.toggle_state_checked",
-					"$unchecked_locked_hover_control": "ascendant_common.toggle_state_unchecked",
-					"$checked_locked_hover_control": "ascendant_common.toggle_state_checked",
-					"button_mappings": [
-						{
-							"from_button_id": "button.menu_select",
-							"to_button_id": "button.menu_select",
-							"mapping_type": "pressed"
-						},
-						{
-							"from_button_id": "button.menu_ok",
-							"to_button_id": "button.menu_select",
-							"mapping_type": "pressed"
-						}
-					]
+					"$toggle_default_state": "$toggle_default_state",
+					"$toggle_binding_type": "$toggle_binding_type",
+					"$toggle_binding_condition": "$toggle_binding_condition",
+					"$toggle_state_binding_name": "$toggle_state_binding_name",
+					"$toggle_enabled_binding_type": "$toggle_enabled_binding_type",
+					"$toggle_enabled_binding_condition": "$toggle_enabled_binding_condition",
+					"$toggle_enabled_binding_name": "$toggle_enabled_binding_name",
+					"$toggle_property_bag": "$toggle_property_bag",
+					"$radio_toggle_group": "$radio_toggle_group",
+					"$toggle_group_forced_index": "$toggle_group_forced_index",
+					"$toggle_group_default_selected": "$toggle_group_default_selected",
+					"$allow_controller_back_button_mapping": "$allow_controller_back_button_mapping",
+					"$enable_directional_toggling": "$enable_directional_toggling",
+					"$toggle_on_button": "$toggle_on_button",
+					"$toggle_off_button": "$toggle_off_button",
+					"$toggle_tts_name": "$toggle_tts_name",
+					"$toggle_tts_toggle_on_text": "$toggle_tts_toggle_on_text",
+					"$toggle_tts_toggle_off_text": "$toggle_tts_toggle_off_text",
+					"$toggle_tts_override_toggle_value": "$toggle_tts_override_toggle_value",
+					"$toggle_tts_type_priority": "$toggle_tts_type_priority",
+					"$toggle_tts_index_priority": "$toggle_tts_index_priority",
+					"$toggle_tts_inherit_siblings": "$toggle_tts_inherit_siblings",
+					"$tts_section_header": "$tts_section_header",
+					"$unchecked_control": "$unchecked_control",
+					"$checked_control": "$checked_control",
+					"$unchecked_hover_control": "$unchecked_hover_control",
+					"$checked_hover_control": "$checked_hover_control",
+					"$unchecked_locked_control": "$unchecked_locked_control",
+					"$checked_locked_control": "$checked_locked_control",
+					"$unchecked_locked_hover_control": "$unchecked_locked_hover_control",
+					"$checked_locked_hover_control": "$checked_locked_hover_control"
+				}
+			},
+			{
+				"toggle_label": {
+					"type": "label",
+					"text": "$toggle_label",
+					"color": "$toggle_label_color",
+					"font_scale_factor": "$toggle_label_font_scale",
+					"anchor_from": "$toggle_label_anchor",
+					"anchor_to": "$toggle_label_anchor",
+					"offset": "$toggle_label_offset",
+					"layer": 3,
+					"ignored": "($toggle_label = '')"
 				}
 			}
 		]

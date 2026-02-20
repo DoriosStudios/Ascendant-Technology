@@ -19,7 +19,7 @@
 				"entity": {
 					"input_type": "simple",
 					"output_type": "simple",
-					"inventory_size": 28,
+					"inventory_size": 32,
 					"fluid": true
 				},
 				"machine": {
@@ -30,12 +30,13 @@
 					"fluid_cap": 128000,
 					"fluid_rate": 128000,
 					"upgrades": [3, 4, 5],
-					"hidden_slots": [27]
+					"hidden_slots": []
 				}
 			},
 			"utilitycraft:special_container": {
 				"Disenchant Input": [18],
-				"Disenchant Catalyst": [19],
+				"Catalyst": [19],
+				"Disenchant Books": [20],
 				"Enchantment Grid": [6, 7, 8, 9, 10, 11, 12, 13, 14]
 			},
 			"minecraft:geometry": "geometry.utilitycraft_block_2",

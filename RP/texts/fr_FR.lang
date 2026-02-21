@@ -9,13 +9,14 @@ tile.utilitycraft:absolute_wind_turbine.name=Éolienne Absolue\n§7  Taux de Bas
 tile.utilitycraft:absolute_container.name=Conteneur Absolu\n§7- Stocke jusqu'à 10.7K objets\n- Peut stocker des fluides\n- Peut stocker de l'énergie
 
 ## Machines
-tile.utilitycraft:catalyst_weaver.name=Tisseur de Catalyseur\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicateur\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:cryo_chamber.name=Chambre Cryogénique\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7\n§7- 3 Modes:\n Stabilisateur,\n Congélateur,\n Générateur Cryo
-tile.utilitycraft:energizer.name=Énergiseur\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:liquifier.name=Liquéfieur\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7
-tile.utilitycraft:laser_barrier.name=Barrière Laser\n§7- Améliorations acceptées: \n   §b§7, §g§7
-tile.utilitycraft:residue_processor.name=Processeur de Résidus\n§7- Améliorations acceptées: \n   §a§7, §b§7, §d§7
+tile.utilitycraft:catalyst_weaver.name=Tisseur de Catalyseur
+tile.utilitycraft:cryo_chamber.name=Chambre Cryogénique
+tile.utilitycraft:duplicator.name=Duplicateur\n§7- Duplique les objets en utilisant la matière noire\n- Accepte les améliorations: §d§7, §e§7
+tile.utilitycraft:enchantment_station.name=Station d'Enchantement\n§7- Répare, enchante, renforce l'équipement\n- Accepte les améliorations: §c§7, §d§7, §e§7
+tile.utilitycraft:energizer.name=Énergiseur
+tile.utilitycraft:liquifier.name=Liquéfieur
+tile.utilitycraft:laser_barrier.name=Barrière Laser
+tile.utilitycraft:residue_processor.name=Processeur de Résidus
 tile.utilitycraft:singularity_fabricator.name=Fabricateur de Singularité
 tile.utilitycraft:network_center.name=Centre Réseau\n§7- Affiche les statistiques du réseau
 tile.utilitycraft:tabs_test_machine.name=Machine de Test d'Onglets\n§7- Bloc de test d'interface
@@ -436,3 +437,91 @@ item.utilitycraft:cryofluid_45=Cryofluide
 item.utilitycraft:cryofluid_46=Cryofluide
 item.utilitycraft:cryofluid_47=Cryofluide
 item.utilitycraft:cryofluid_48=Cryofluide
+
+## Steam Placeholders (UI)
+item.utilitycraft:steam_00=Steam
+item.utilitycraft:steam_01=Steam
+item.utilitycraft:steam_02=Steam
+item.utilitycraft:steam_03=Steam
+item.utilitycraft:steam_04=Steam
+item.utilitycraft:steam_05=Steam
+item.utilitycraft:steam_06=Steam
+item.utilitycraft:steam_07=Steam
+item.utilitycraft:steam_08=Steam
+item.utilitycraft:steam_09=Steam
+item.utilitycraft:steam_10=Steam
+item.utilitycraft:steam_11=Steam
+item.utilitycraft:steam_12=Steam
+item.utilitycraft:steam_13=Steam
+item.utilitycraft:steam_14=Steam
+item.utilitycraft:steam_15=Steam
+item.utilitycraft:steam_16=Steam
+item.utilitycraft:steam_17=Steam
+item.utilitycraft:steam_18=Steam
+item.utilitycraft:steam_19=Steam
+item.utilitycraft:steam_20=Steam
+item.utilitycraft:steam_21=Steam
+item.utilitycraft:steam_22=Steam
+item.utilitycraft:steam_23=Steam
+item.utilitycraft:steam_24=Steam
+item.utilitycraft:steam_25=Steam
+item.utilitycraft:steam_26=Steam
+item.utilitycraft:steam_27=Steam
+item.utilitycraft:steam_28=Steam
+item.utilitycraft:steam_29=Steam
+item.utilitycraft:steam_30=Steam
+item.utilitycraft:steam_31=Steam
+item.utilitycraft:steam_32=Steam
+item.utilitycraft:steam_33=Steam
+item.utilitycraft:steam_34=Steam
+item.utilitycraft:steam_35=Steam
+item.utilitycraft:steam_36=Steam
+item.utilitycraft:steam_37=Steam
+item.utilitycraft:steam_38=Steam
+item.utilitycraft:steam_39=Steam
+item.utilitycraft:steam_40=Steam
+item.utilitycraft:steam_41=Steam
+item.utilitycraft:steam_42=Steam
+item.utilitycraft:steam_43=Steam
+item.utilitycraft:steam_44=Steam
+item.utilitycraft:steam_45=Steam
+item.utilitycraft:steam_46=Steam
+item.utilitycraft:steam_47=Steam
+item.utilitycraft:steam_48=Steam
+
+## Arcane Placeholders (UI)
+item.utilitycraft:arcane_00=Arcane Energy
+item.utilitycraft:arcane_01=Arcane Energy
+item.utilitycraft:arcane_02=Arcane Energy
+item.utilitycraft:arcane_03=Arcane Energy
+item.utilitycraft:arcane_04=Arcane Energy
+item.utilitycraft:arcane_05=Arcane Energy
+item.utilitycraft:arcane_06=Arcane Energy
+item.utilitycraft:arcane_07=Arcane Energy
+item.utilitycraft:arcane_08=Arcane Energy
+item.utilitycraft:arcane_09=Arcane Energy
+item.utilitycraft:arcane_10=Arcane Energy
+item.utilitycraft:arcane_11=Arcane Energy
+item.utilitycraft:arcane_12=Arcane Energy
+item.utilitycraft:arcane_13=Arcane Energy
+item.utilitycraft:arcane_14=Arcane Energy
+item.utilitycraft:arcane_15=Arcane Energy
+item.utilitycraft:arcane_16=Arcane Energy
+
+## Infinite Capsules
+item.utilitycraft:aetherium_liquid_capsule_infinite=Infinite Liquified Aetherium Capsule\n§7- Holds unlimited liquified aetherium
+item.utilitycraft:cryofluid_capsule_infinite=Infinite Cryofluid Capsule\n§7- Holds unlimited cryofluid
+item.utilitycraft:dark_matter_liquid_capsule_infinite=Infinite Dark Matter Capsule\n§7- Holds unlimited dark matter
+item.utilitycraft:lava_capsule_infinite=Infinite Lava Capsule\n§7- Holds unlimited lava
+item.utilitycraft:milk_capsule_infinite=Infinite Milk Capsule\n§7- Holds unlimited milk
+item.utilitycraft:water_capsule_infinite=Infinite Water Capsule\n§7- Holds unlimited water
+item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited liquid XP
+
+## Modules
+item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules
+## Transportation - Bridge Path
+tile.utilitycraft:conveyor_bridge_path.name=§aConveyor Bridge Path\n§7- Active bridge connection between transmitter and receiver
+
+## Machines - Fixed Identifiers
+tile.utilitycraft:duplicator.name=Duplicator\n§7- Duplicates items using dark matter\n- Accepted upgrades: §a§7, §b§7, §d§7
+tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7- Repairs, enchants, reinforces gear\n- Module-controlled boosts

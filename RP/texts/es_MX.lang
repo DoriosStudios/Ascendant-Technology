@@ -8,16 +8,18 @@ tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velo
 tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena hasta 10.7K ítems\n- Almacena energía\n- Almacena fluidos
 
 ## Máquinas
-tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
-tile.utilitycraft:cloner.name=Duplicador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7
-tile.utilitycraft:cryo_chamber.name=Cámara Criogénica\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- 3 modos:\n  Estabilizador,\n  Refrigerador,\n  Generador de Criolíquido
-tile.utilitycraft:energizer.name=Energizador\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Energiza lingotes, polvos y bloques con un enorme costo de DE
-tile.utilitycraft:liquifier.name=Licuefactor\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Convierte sólidos en fluidos procesables
-tile.utilitycraft:laser_barrier.name=Barrera Láser\n§7- Acepta mejoras:\n    §b§7, §g§7
-tile.utilitycraft:residue_processor.name=Procesador de Residuos\n§7- Acepta mejoras:\n    §a§7, §b§7, §d§7\n§7- Recupera valor de desechos y subproductos
+tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora
+tile.utilitycraft:cryo_chamber.name=Cámara Criogénica
+tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica ítems usando materia oscura\n- Acepta mejoras: §d§7, §e§7
+tile.utilitycraft:enchantment_station.name=Estación de Encantamiento\n§7- Repara, encanta, refuerza equipamiento\n- Acepta mejoras: §c§7, §d§7, §e§7
+tile.utilitycraft:energizer.name=Energizador
+tile.utilitycraft:liquifier.name=Licuefactor
+tile.utilitycraft:laser_barrier.name=Barrera Láser
+tile.utilitycraft:residue_processor.name=Procesador de Residuos
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad
 tile.utilitycraft:network_center.name=Centro de Red\n§7- Muestra estadísticas de red
 tile.utilitycraft:tabs_test_machine.name=Máquina de Prueba (Pestañas)\n§7- Bloque de prueba de pestañas
+tile.utilitycraft:vaporworks_processor.name=Procesador de Vapor\n§7- Genera Vapor desde agua\n- Usa fuente de combustible y energía
 tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Genera carga de overclock (Titanio + energía)
 tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica la carga de la torre en la red
 tile.utilitycraft:overclock_injector.name=Inyector de Overclock\n§7- Aplica overclock a la máquina frente a él
@@ -29,7 +31,50 @@ tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
 tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7  Atrae mobs en un radio configurable
 tile.utilitycraft:laser_barrier_field.name=Campo de Barrera Láser\n§7  Zona activa proyectada por la barrera
 tile.utilitycraft:reinforced_cable.name=Cable Reforzado\n§7- Espina dorsal reforzada para energía, fluidos y overclock
-tile.utilitycraft:aetherium_block.name=Bloque de Aetherium
+
+## Transporte - Transportadores
+tile.utilitycraft:copper_conveyor_horizontal.name=§vTransportador de Cobre\n§7  Velocidad: 1 bloque/s
+tile.utilitycraft:copper_conveyor_vertical.name=§vTransportador de Cobre (Vertical)\n§7  Velocidad: 1 bloque/s
+tile.utilitycraft:copper_conveyor_inclined.name=§vTransportador de Cobre (Inclinado)\n§7  Velocidad: 1 bloque/s
+tile.utilitycraft:copper_conveyor_declined.name=§vTransportador de Cobre (Declinado)\n§7  Velocidad: 1 bloque/s
+
+tile.utilitycraft:titanium_conveyor_horizontal.name=§tTransportador de Titanio\n§7  Velocidad: 2 bloques/s
+tile.utilitycraft:titanium_conveyor_vertical.name=§tTransportador de Titanio (Vertical)\n§7  Velocidad: 2 bloques/s
+tile.utilitycraft:titanium_conveyor_inclined.name=§tTransportador de Titanio (Inclinado)\n§7  Velocidad: 2 bloques/s
+tile.utilitycraft:titanium_conveyor_declined.name=§tTransportador de Titanio (Declinado)\n§7  Velocidad: 2 bloques/s
+
+tile.utilitycraft:aetherium_conveyor_horizontal.name=§uTransportador de Aetherium\n§7  Velocidad: 5 bloques/s\n  Transporta mobs
+tile.utilitycraft:aetherium_conveyor_vertical.name=§uTransportador de Aetherium (Vertical)\n§7  Velocidad: 5 bloques/s\n  Transporta mobs
+tile.utilitycraft:aetherium_conveyor_inclined.name=§uTransportador de Aetherium (Inclinado)\n§7  Velocidad: 5 bloques/s\n  Transporta mobs
+tile.utilitycraft:aetherium_conveyor_declined.name=§uTransportador de Aetherium (Declinado)\n§7  Velocidad: 5 bloques/s\n  Transporta mobs
+
+## Transporte - Transportadores Puente
+tile.utilitycraft:copper_conveyor_bridge_transmitter.name=§vTransmisor de Puente de Cobre\n§7  Alcance: 8 bloques
+tile.utilitycraft:copper_conveyor_bridge_receiver.name=§vReceptor de Puente de Cobre\n§7  Alcance: 8 bloques
+tile.utilitycraft:copper_conveyor_bridge_path.name=§vRuta de Puente de Cobre
+
+tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=§tTransmisor de Puente de Titanio\n§7  Alcance: 16 bloques
+tile.utilitycraft:titanium_conveyor_bridge_receiver.name=§tReceptor de Puente de Titanio\n§7  Alcance: 16 bloques
+tile.utilitycraft:titanium_conveyor_bridge_path.name=§tRuta de Puente de Titanio
+
+tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=§uTransmisor de Puente de Aetherium\n§7  Alcance: 32 bloques
+tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=§uReceptor de Puente de Aetherium\n§7  Alcance: 32 bloques
+tile.utilitycraft:aetherium_conveyor_bridge_path.name=§uRuta de Puente de Aetherium
+
+## Transporte - Transportadores Especiales
+tile.utilitycraft:conveyor_junction.name=Unión de Transportador\n§7- Permite que las líneas se crucen
+tile.utilitycraft:conveyor_overflow.name=Transportador de Desbordamiento\n§7- Avanza primero; alterna salidas laterales
+tile.utilitycraft:conveyor_router.name=Enrutador de Transportador\n§7- Enruta a salida aleatoria
+tile.utilitycraft:conveyor_smart_router.name=Enrutador Inteligente\n§7- Enruta basado en asignaciones de ítems
+tile.utilitycraft:conveyor_underflow.name=Transportador de Subdesbordamiento\n§7- Prioriza salidas laterales
+
+## Transporte - Utilidades
+tile.utilitycraft:conveyor_bridge_path.name=§aCamino Puente de Transportador\n§7- Conexión de puente activa entre transmisor y receptor
+tile.utilitycraft:conveyor_network_updater.name=Actualizador de Red de Transportador\n§7- Reconstruye caché de red
+tile.utilitycraft:gas_tube.name=Tubo de Gas\n§7- Tubería para enrutador redes de gas
+
+## Otros Bloques
+tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
 tile.utilitycraft:titanium_block.name=Bloque de Titanio
 tile.utilitycraft:raw_titanium_block.name=Bloque de Titanio en bruto
 tile.utilitycraft:deepslate_aetherium_ore.name=Mineral de Aetherium de Pizarra Profunda
@@ -70,10 +115,22 @@ item.utilitycraft:aetherium_shard=Fragmento de Aetherium
 item.utilitycraft:refined_aetherium_shard=Fragmento de Aetherium Refinado
 item.utilitycraft:void_essence=Esencia del Vacío
 item.utilitycraft:liquid_void=Ampolla de Vacío Líquido
+item.utilitycraft:enderling_tear=Lágrima de Enderling\n§7- Caída de mobs Enderling\n- Usada para craft Interdimensional
+item.utilitycraft:pure_enderling_tear=Lágrima Pura de Enderling\n§7- Caída rara de Enderlings\n- Material de craft premium
 
 ## Módulos
 item.utilitycraft:size_upgrade=Mejora de §gTamaño§7\n- Aumenta el área de la Barrera Láser
 item.utilitycraft:hyper_processing_upgrade=Mejora de §dProcesamiento Híper§7\n- Aumenta la velocidad de operación de las máquinas\n- No aumenta el consumo de energía
+item.utilitycraft:curse_protection_module=§dMódulo de Protección contra Maldiciones§7\n- Reduce probabilidad de maldición
+item.utilitycraft:enchantability_module=§dMódulo de Encantabilidad §r(Tier I)§7\n- Desbloquea encantamiento\n- Nivel máx: 1
+item.utilitycraft:enchantability_module_2=§dMódulo de Encantabilidad §r(Tier II)§7\n- Nivel de encantamiento máx: 2
+item.utilitycraft:enchantability_module_3=§dMódulo de Encantabilidad §r(Tier III)§7\n- Nivel de encantamiento máx: 3\n- Encantamientos mid-tier disponibles
+item.utilitycraft:enchantability_module_4=§dMódulo de Encantabilidad §r(Tier IV)§7\n- Nivel de encantamiento máx: 4
+item.utilitycraft:enchantability_module_5=§dMódulo de Encantabilidad §r(Tier V)§7\n- Nivel de encantamiento máx: 5\n- Mending, Infinity disponibles
+item.utilitycraft:reinforcement_module=§dMódulo de Refuerzo §r(Tier I)§7\n- Desbloquea refuerzo de armadura
+item.utilitycraft:reinforcement_module_2=§dMódulo de Refuerzo §r(Tier II)§7\n- Bonificación de durabilidad mejorada
+item.utilitycraft:reinforcement_module_3=§dMódulo de Refuerzo §r(Tier III)§7\n- Bonificación de durabilidad máxima
+item.utilitycraft:upgrade_package=§aPaquete de Mejora§7\n- Almacena múltiples mejoras\n- Aplicar en masa a máquinas/transportadores
 
 ## Mallas y Redes
 item.utilitycraft:lucky_mesh=§aMalla de la Suerte\n§7- Nivel Máx: Diamante\n§7- Multiplicador de Ítems: 2x
@@ -88,6 +145,22 @@ item.utilitycraft:lucky_aiot=§aAiOT de la Suerte
 
 ## Cápsulas de Líquidos
 item.utilitycraft:empty_liquid_capsule=Cápsula de Líquido Vacía
+
+## Cápsulas Infinitas
+item.utilitycraft:water_infinite_capsule=Cápsula Infinita de Agua\n§7- Almacena agua ilimitada
+item.utilitycraft:lava_infinite_capsule=Cápsula Infinita de Lava\n§7- Almacena lava ilimitada
+item.utilitycraft:milk_infinite_capsule=Cápsula Infinita de Leche\n§7- Almacena leche ilimitada
+item.utilitycraft:xp_infinite_capsule=Cápsula Infinita de XP Líquido\n§7- Almacena XP ilimitado
+
+## Cápsulas de Vapor
+item.utilitycraft:steam_capsule_1=Cápsula de Vapor \n§7(1 Cubo)
+item.utilitycraft:steam_capsule_2=Cápsula de Vapor \n§7(2 Cubos)
+item.utilitycraft:steam_capsule_3=Cápsula de Vapor \n§7(3 Cubos)
+item.utilitycraft:steam_capsule_4=Cápsula de Vapor \n§7(4 Cubos)
+item.utilitycraft:steam_capsule_5=Cápsula de Vapor \n§7(5 Cubos)
+item.utilitycraft:steam_capsule_6=Cápsula de Vapor \n§7(6 Cubos)
+item.utilitycraft:steam_capsule_7=Cápsula de Vapor \n§7(7 Cubos)
+item.utilitycraft:steam_capsule_8=Cápsula de Vapor \n§7(8 Cubos)
 
 item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido §7\n- (1 Cubo)
 item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido §7\n- (2 Cubos)
@@ -118,19 +191,21 @@ item.utilitycraft:cryofluid_capsule_8=Cápsula de Criolíquido §7\n- (8 Cubos)
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCámara Catalizadora
-entity.utilitycraft:cloner.name=Duplicador
+entity.utilitycraft:cloner.name=§fDuplicador
 entity.utilitycraft:cryo_chamber.name=§fCámara Criogénica
-entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad
-entity.utilitycraft:liquifier.name=Licuefactor
-entity.utilitycraft:laser_barrier.name=Barrera Láser
-entity.utilitycraft:residue_processor.name=Procesador de Residuos
-entity.utilitycraft:energizer.name=Energizador
+entity.utilitycraft:singularity_fabricator.name=§fFabricador de Singularidad
+entity.utilitycraft:liquifier.name=§fLicuefactor
+entity.utilitycraft:laser_barrier.name=§fBarrera Láser
+entity.utilitycraft:residue_processor.name=§fProcesador de Residuos
+entity.utilitycraft:energizer.name=§fEnergizador
 entity.utilitycraft:network_center.name=§fCentro de Red
 entity.utilitycraft:tabs_test_machine.name=§fMáquina de Prueba (Pestañas)
 entity.utilitycraft:absolute_container.name=§fContenedor Absoluto
 entity.utilitycraft:overclock_tower.name=§fTorre de Overclock
 entity.utilitycraft:overclock_relay.name=§fRelé de Overclock
 entity.utilitycraft:overclock_injector.name=§fInyector de Overclock
+entity.utilitycraft:ascane_engine.name=§fEstación de Encantamiento
+entity.utilitycraft:vaporworks_processor.name=§fProcesador de Vapor
 
 ## UI Texts
 at:itemGroup.name.machines=Máquinas (Ascendant Technology)
@@ -431,3 +506,85 @@ item.utilitycraft:cryofluid_45=Criolíquido
 item.utilitycraft:cryofluid_46=Criolíquido
 item.utilitycraft:cryofluid_47=Criolíquido
 item.utilitycraft:cryofluid_48=Criolíquido
+
+## Placeholders de Vapor (UI)
+item.utilitycraft:steam_00=Vapor
+item.utilitycraft:steam_01=Vapor
+item.utilitycraft:steam_02=Vapor
+item.utilitycraft:steam_03=Vapor
+item.utilitycraft:steam_04=Vapor
+item.utilitycraft:steam_05=Vapor
+item.utilitycraft:steam_06=Vapor
+item.utilitycraft:steam_07=Vapor
+item.utilitycraft:steam_08=Vapor
+item.utilitycraft:steam_09=Vapor
+item.utilitycraft:steam_10=Vapor
+item.utilitycraft:steam_11=Vapor
+item.utilitycraft:steam_12=Vapor
+item.utilitycraft:steam_13=Vapor
+item.utilitycraft:steam_14=Vapor
+item.utilitycraft:steam_15=Vapor
+item.utilitycraft:steam_16=Vapor
+item.utilitycraft:steam_17=Vapor
+item.utilitycraft:steam_18=Vapor
+item.utilitycraft:steam_19=Vapor
+item.utilitycraft:steam_20=Vapor
+item.utilitycraft:steam_21=Vapor
+item.utilitycraft:steam_22=Vapor
+item.utilitycraft:steam_23=Vapor
+item.utilitycraft:steam_24=Vapor
+item.utilitycraft:steam_25=Vapor
+item.utilitycraft:steam_26=Vapor
+item.utilitycraft:steam_27=Vapor
+item.utilitycraft:steam_28=Vapor
+item.utilitycraft:steam_29=Vapor
+item.utilitycraft:steam_30=Vapor
+item.utilitycraft:steam_31=Vapor
+item.utilitycraft:steam_32=Vapor
+item.utilitycraft:steam_33=Vapor
+item.utilitycraft:steam_34=Vapor
+item.utilitycraft:steam_35=Vapor
+item.utilitycraft:steam_36=Vapor
+item.utilitycraft:steam_37=Vapor
+item.utilitycraft:steam_38=Vapor
+item.utilitycraft:steam_39=Vapor
+item.utilitycraft:steam_40=Vapor
+item.utilitycraft:steam_41=Vapor
+item.utilitycraft:steam_42=Vapor
+item.utilitycraft:steam_43=Vapor
+item.utilitycraft:steam_44=Vapor
+item.utilitycraft:steam_45=Vapor
+item.utilitycraft:steam_46=Vapor
+item.utilitycraft:steam_47=Vapor
+item.utilitycraft:steam_48=Vapor
+
+## Placeholders de Energía Arcana (UI)
+item.utilitycraft:arcane_00=Energía Arcana
+item.utilitycraft:arcane_01=Energía Arcana
+item.utilitycraft:arcane_02=Energía Arcana
+item.utilitycraft:arcane_03=Energía Arcana
+item.utilitycraft:arcane_04=Energía Arcana
+item.utilitycraft:arcane_05=Energía Arcana
+item.utilitycraft:arcane_06=Energía Arcana
+item.utilitycraft:arcane_07=Energía Arcana
+item.utilitycraft:arcane_08=Energía Arcana
+item.utilitycraft:arcane_09=Energía Arcana
+item.utilitycraft:arcane_10=Energía Arcana
+item.utilitycraft:arcane_11=Energía Arcana
+item.utilitycraft:arcane_12=Energía Arcana
+item.utilitycraft:arcane_13=Energía Arcana
+item.utilitycraft:arcane_14=Energía Arcana
+item.utilitycraft:arcane_15=Energía Arcana
+item.utilitycraft:arcane_16=Energía Arcana
+
+## Cápsulas Infinitas (Faltantes)
+item.utilitycraft:aetherium_liquid_capsule_infinite=Cápsula de Aetherium Licuado Infinita\n§7- Contiene aetherium licuado ilimitado
+item.utilitycraft:cryofluid_capsule_infinite=Cápsula de Criolíquido Infinita\n§7- Contiene criolíquido ilimitado
+item.utilitycraft:dark_matter_liquid_capsule_infinite=Cápsula de Materia Oscura Infinita\n§7- Contiene materia oscura ilimitada
+item.utilitycraft:lava_capsule_infinite=Cápsula de Lava Infinita\n§7- Contiene lava ilimitada
+item.utilitycraft:milk_capsule_infinite=Cápsula de Leche Infinita\n§7- Contiene leche ilimitada
+item.utilitycraft:water_capsule_infinite=Cápsula de Agua Infinita\n§7- Contiene agua ilimitada
+item.utilitycraft:xp_capsule_infinite=Cápsula de XP Infinita\n§7- Contiene XP líquido ilimitado
+
+## Módulos (Faltantes)
+item.utilitycraft:ascane_module_base=§dBase de Módulo Arcano§7\n- Componente base para crear módulos

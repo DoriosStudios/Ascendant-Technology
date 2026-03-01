@@ -36,3 +36,5 @@ import './machinery/overclock/reinforced_extractor.js'
 
 // Conveyors
 import './machinery/transportation/conveyors.js'
+import './insight_registry_injector.generated.js'
+

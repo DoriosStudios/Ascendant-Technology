@@ -14,11 +14,11 @@ Slots (inventory_size: 20)
 - [0] HUD de energia (machine.displayEnergy padrão).
 - [1] Indicador de status/seta (STATUS_SLOT).
 - [3] Entrada de fluido (FLUID_INPUT_SLOT).
-- [4,5] Slots de upgrades (de acordo com settings.machine.upgrades).
+- [4,5,6] Slots de upgrades (de acordo com settings.machine.upgrades).
 - [10] Display do tanque de entrada (INPUT_DISPLAY_SLOT) — bloqueado para o jogador.
 - [11] Display do tanque de saída (OUTPUT_DISPLAY_SLOT) — bloqueado para o jogador.
 - [19] Saída de fluido (FLUID_OUTPUT_SLOT).
-Slots escondidos: [6, 7, 8, 9, 12, 13, 14, 15, 16, 17, 18] (preenchimento/UI, não utilizáveis pelo jogador).
+Slots escondidos: [7, 8, 9, 12, 13, 14, 15, 16, 17, 18] (preenchimento/UI, não utilizáveis pelo jogador).
 */
 
 DoriosAPI.register.blockComponent('vaporworks_processor', {

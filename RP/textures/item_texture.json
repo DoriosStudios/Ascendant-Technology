@@ -159,16 +159,16 @@
 			"textures": "textures/items/machinery/modules/ench_mod_5"
 		},
 		"utilitycraft_reinforcement_module": {
-			"textures": "textures/items/machinery/hyper_processing_upgrade"
+			"textures": "textures/items/machinery/modules/reinforce_mod_1"
 		},
 		"utilitycraft_reinforcement_module_2": {
-			"textures": "textures/items/machinery/hyper_processing_upgrade"
+			"textures": "textures/items/machinery/modules/reinforce_mod_2"
 		},
 		"utilitycraft_reinforcement_module_3": {
-			"textures": "textures/items/machinery/hyper_processing_upgrade"
+			"textures": "textures/items/machinery/modules/reinforce_mod_3"
 		},
 		"utilitycraft_curse_protection_module": {
-			"textures": "textures/items/machinery/size_upgrade"
+			"textures": "textures/items/machinery/modules/curs_prot_mod_2"
 		},
 		"utilitycraft_lucky_mesh":{
 			"textures": "textures/items/meshes/lucky_mesh"

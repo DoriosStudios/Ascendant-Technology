@@ -39,10 +39,10 @@
 				"Disenchant Books": [20],
 				"Enchantment Grid": [6, 7, 8, 9, 10, 11, 12, 13, 14]
 			},
-			"minecraft:geometry": "geometry.utilitycraft_block_2",
+			"minecraft:geometry": "geometry.utilitycraft_enchantment_station",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_ascane_engine_off",
+					"texture": "utilitycraft_enchantment_station",
 					"render_method": "alpha_test"
 				}
 			},
@@ -65,7 +65,7 @@
 				"components": {
 					"minecraft:material_instances": {
 						"*": {
-							"texture": "utilitycraft_ascane_engine_on",
+							"texture": "utilitycraft_enchantment_station",
 							"render_method": "alpha_test"
 						}
 					},

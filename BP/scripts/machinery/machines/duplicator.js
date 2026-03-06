@@ -9,7 +9,7 @@ const OUTPUT_SLOT_COPY = 19
 const DEFAULT_FLUID_TYPE = 'liquified_aetherium'
 const FLUID_PER_SECOND = 50
 const TICKS_PER_SECOND = 20
-const UPGRADE_SLOTS = [4, 5]
+const UPGRADE_SLOTS = [4, 5, 6]
 const LEGACY_UPGRADE_SLOTS = [16, 17]
 const CLONER_BASE_TIME_SECONDS = 30 * 60
 const CLONER_ENERGY_COST = 1_000_000
@@ -35,7 +35,7 @@ const MIN_CLONER_RATE = 1
  * @property {string|string[]} warn - Warning text (single line or multiple) displayed to the player.
  */
 
-const clonerExceptions = (() => {
+const duplicatorExceptions = (() => {
     /** @type {ClonerException[]} */
     const entries = []
 
@@ -93,12 +93,12 @@ Slots (inventory_size: 20)
 - [0] HUD de energia (machine.displayEnergy padrão).
 - [1] Indicador de status/seta (STATUS_SLOT).
 - [3] Input de template (INPUT_SLOT).
-- [4,5] Slots de upgrades (UPGRADE_SLOTS); 16,17 são slots legados migrados.
+- [4,5,6] Slots de upgrades (UPGRADE_SLOTS); 16,17 são slots legados migrados.
 - [10] Entrada de fluido (FLUID_INPUT_SLOT) — bloqueada ao jogador.
 - [11] Display do tanque (FLUID_DISPLAY_SLOT) — bloqueado ao jogador.
 - [18] Slot do original/entrada a ser clonado (OUTPUT_SLOT_ORIGINAL).
 - [19] Slot da cópia/clonado (OUTPUT_SLOT_COPY).
-Slots escondidos: [6, 7, 8, 9, 12, 13, 14, 15, 16, 17] (preenchimento/UI, não utilizáveis; 16/17 usados apenas para migração legada).
+Slots escondidos: [7, 8, 9, 12, 13, 14, 15, 16, 17] (preenchimento/UI, não utilizáveis; 16/17 usados apenas para migração legada).
 */
 
 doriosRegister()
@@ -157,7 +157,7 @@ function doriosRegister() {
 
             const templateMeta = captureTemplateMetadata(inputStack)
 
-            const exception = clonerExceptions.find(inputStack.typeId)
+            const exception = duplicatorExceptions.find(inputStack.typeId)
             if (exception) {
                 fail(formatExceptionWarning(exception))
                 return
@@ -677,7 +677,7 @@ function applyClonerRuntime(machine, recipe) {
 
     machine.rate = desiredRate
     machine.baseRate = desiredRate
-    machine.clonerTargetSeconds = targetSeconds
+    machine.duplicatorTargetSeconds = targetSeconds
 }
 
 function getClonerSpeedLevel(machine) {

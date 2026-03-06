@@ -26,7 +26,8 @@
                     "$has_bg": true,
                     "$collection_index_first": 6,
                     "$collection_index_second": 7,
-                    "$has_third": false,
+                    "$collection_index_third": 8,
+                    "$has_third": true,
                     "offset": [102, 0]
                 }
             },

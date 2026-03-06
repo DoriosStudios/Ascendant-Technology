@@ -1,11 +1,21 @@
 {
 	"namespace": "cryo_chamber_sections_test",
 
-	// SECTION: Button styles
-	"section_button_state_unchecked@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_light_blue" },
-	"section_button_state_checked@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_dark" },
-	"section_button_state_unchecked_hover@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_blue" },
-	"section_button_state_checked_hover@ascendant_common.tab_button_state_base": { "$tab_button_texture": "textures/ui/panels/background_panel_blue" },
+	// ==========================================
+	// BUTTON STYLES
+	// ==========================================
+	"section_button_state_unchecked@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/panels/background_panel_light_blue"
+	},
+	"section_button_state_checked@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/panels/background_panel_dark"
+	},
+	"section_button_state_unchecked_hover@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/panels/background_panel_blue"
+	},
+	"section_button_state_checked_hover@ascendant_common.tab_button_state_base": {
+		"$tab_button_texture": "textures/ui/panels/background_panel_blue"
+	},
 	"section_button_base@ascendant_common.tab_button_toggle": {
 		"$tab_button_size": [28, 28],
 		"$tab_button_text_scale": 0.5,
@@ -22,7 +32,13 @@
 		"$unchecked_locked_hover_control": "cryo_chamber_sections_test.section_button_state_unchecked_hover",
 		"$checked_locked_hover_control": "cryo_chamber_sections_test.section_button_state_checked_hover"
 	},
-	"cryo_chamber_sections_top": {
+
+	// ==========================================
+	// PERSISTENT HUD
+	// Energy bar, upgrades, title, guide instructions
+	// Always visible regardless of active tab
+	// ==========================================
+	"cryo_persistent_top": {
 		"type": "collection_panel",
 		"anchor_from": "center",
 		"anchor_to": "center",
@@ -32,123 +48,12 @@
 		"$item_collection_name": "container_items",
 		"controls": [
 			{
-				"layout_root": {
-					"type": "panel",
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"size": [176, 166],
-					"offset": [0, 0],
-					"controls": [
-						{
-							"section_button_stabilizer@cryo_chamber_sections_test.section_button_base": {
-								"anchor_from": "top_left",
-								"anchor_to": "top_left",
-								"offset": [68, 16],
-								"layer": -5,
-								"$tab_group_name": "cryo_sections",
-								"$tab_index": 0,
-								"$toggle_property_bag": {
-									"#toggle_state": true
-								},
-								"$active_tab_index": 0,
-								"$tab_button_text": "",
-								"$tab_button_icon": "textures/ui/at_icons/titanium_stabilized"
-							}
-						},
-						{
-							"section_button_cooling@cryo_chamber_sections_test.section_button_base": {
-								"anchor_from": "top_left",
-								"anchor_to": "top_left",
-								"offset": [96, 16],
-								"layer": -5,
-								"$tab_group_name": "cryo_sections",
-								"$tab_index": 1,
-								"$toggle_property_bag": {
-									"#toggle_state": false
-								},
-								"$active_tab_index": 0,
-								"$tab_button_text": "",
-								"$tab_button_icon": "textures/ui/at_icons/ice_cube"
-							}
-						},
-						{
-							"section_button_generator@cryo_chamber_sections_test.section_button_base": {
-								"anchor_from": "top_left",
-								"anchor_to": "top_left",
-								"offset": [124, 16],
-								"layer": -5,
-								"$tab_group_name": "cryo_sections",
-								"$tab_index": 2,
-								"$toggle_property_bag": {
-									"#toggle_state": false
-								},
-								"$active_tab_index": 0,
-								"$tab_button_text": "",
-								"$tab_button_icon": "textures/ui/at_icons/cryofluid_icon",
-								"$tab_button_icon_size": ["100% - 12px", "100% - 12px"]
-							}
-						},
-						{
-							"section_button_guide@cryo_chamber_sections_test.section_button_base": {
-								"anchor_from": "top_left",
-								"anchor_to": "top_left",
-								"offset": [152, 16],
-								"layer": -5,
-								"$tab_group_name": "cryo_sections",
-								"$tab_index": 3,
-								"$toggle_property_bag": {
-									"#toggle_state": false
-								},
-								"$active_tab_index": 0,
-								"$tab_button_text": "?",
-								"$tab_button_text_scale": 0.9
-							}
-						},
-						{
-							"stabilizer_section@cryo_chamber_sections_test.section_stabilizer": {
-								"anchor_from": "top_left",
-								"anchor_to": "top_left",
-								"offset": [6, 40],
-								"layer": 2
-							}
-						},
-						{
-							"cooling_section@cryo_chamber_sections_test.section_cooling": {
-								"anchor_from": "top_left",
-								"anchor_to": "top_left",
-								"offset": [6, 40],
-								"layer": 2
-							}
-						},
-						{
-							"generator_section@cryo_chamber_sections_test.section_generator": {
-								"anchor_from": "top_left",
-								"anchor_to": "top_left",
-								"offset": [6, 40],
-								"layer": 2
-							}
-						},
-						{
-							"guide_section@cryo_chamber_sections_test.section_guide": {
-								"anchor_from": "top_left",
-								"anchor_to": "top_left",
-								"offset": [6, 40],
-								"layer": 2
-							}
-						}
-					]
-				}
-			},
-			// SECTION: Persistent HUD
-			{
 				"energy_bar@machineryCommon.vertical_single": {
 					"$is_energy": true,
 					"$has_bg": false,
-					"collection_index": 0,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [116, 8],
-					"layer": 20
+					"offset": [116, 8]
 				}
 			},
 			{
@@ -159,490 +64,52 @@
 					"anchor_to": "top_left",
 					"offset": [184, 12],
 					"size": [44, 166],
-					"layer": -5
+					"layer": -1
 				}
 			},
 			{
-				"upgrades_slot_1@ascendant_common.slot_base": {
+				"upgrade_slot_1@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"offset": [198, 114],
-					"$slot_index": 4,
-					"layer": 20
+					"$slot_index": 4
 				}
 			},
 			{
-				"upgrades_slot_2@ascendant_common.slot_base": {
+				"upgrade_slot_2@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"offset": [198, 96],
-					"$slot_index": 5,
-					"layer": 20
+					"$slot_index": 5
 				}
 			},
 			{
-				"upgrades_slot_3@ascendant_common.slot_base": {
+				"upgrade_slot_3@ascendant_common.slot_base": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"offset": [198, 78],
-					"$slot_index": 9,
-					"layer": 20
+					"$slot_index": 9
 				}
 			},
-			// SECTION: Stacked Labels (Main UI style)
 			{
-				"labels_bg@ascendant_common.info_panel": { 
-				"anchor_from": "top_left",
-				"anchor_to": "top_left",
-				"offset": [-74, 12]
-			}
-			},
-			{
-				"labels_stack_stabilizer@machineryCommon.item_label": {
-					"collection_index": 1,
+				"guide_bg@ascendant_common.info_panel": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"$text_scale": 0.55,
+					"offset": [-74, 12]
+				}
+			},
+			{
+				"guide_label": {
+					"type": "label",
+					"text": "§r§bCryo Chamber\n\n§fStabilizer\n§7Stabilizes volatile\nmaterials\n\n§bCooling\n§7Freezes items in\na 3x3 grid\n\n§3Generator\n§7Converts water\nto cryofluid",
+					"localize": false,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
 					"offset": [-64, 24],
-					"layer": 11
-				}
-			},
-			{
-				"labels_stack_cooling@machineryCommon.item_label": {
-					"collection_index": 18,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"$text_scale": 0.52,
-					"offset": [-64, 56],
-					"size": [78, 64],
-					"layer": 11
-				}
-			},
-			{
-				"labels_stack_generator@machineryCommon.item_label": {
-					"collection_index": 20,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"$text_scale": 0.5,
-					"offset": [-64, 88],
-					"layer": 11
-				}
-			},
-			// SECTION: Stabilizer
-			{
-				"stabilizer_label@cryo_chamber_sections_test.stabilizer_status": {}
-			},
-			{
-				"stabilizer_input_slot@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [112, 32],
-					"size": [22, 22],
-					"$cell_image_size": [22, 22],
-					"$slot_index": 3,
-					"$has_outline": true,
-					"$outline_size": [30, 30],
-					"$outline_variant": "orange",
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_stabilizer",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"stabilizer_progress_bar@machineryCommon.progress_bar": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [134, 36],
-					"collection_index": 2,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_stabilizer",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"stabilizer_output_slot@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [156, 32],
-					"size": [22, 22],
-					"$cell_image_size": [22, 22],
-					"$slot_index": 14,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_stabilizer",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			// SECTION: Cooling
-			{
-				"cooling_label@cryo_chamber_sections_test.cooling_status": {}
-			},
-			{
-				"cooling_slot_6@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [110, 28],
-					"$slot_index": 6,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_cooling",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"cooling_slot_7@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [128, 28],
-					"$slot_index": 7,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_cooling",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"cooling_slot_8@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [146, 28],
-					"$slot_index": 8,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_cooling",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"cooling_slot_15@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [110, 46],
-					"$slot_index": 15,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_cooling",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"cooling_slot_16@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [128, 46],
-					"$slot_index": 16,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_cooling",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"cooling_slot_17@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [146, 46],
-					"$slot_index": 17,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_cooling",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"cooling_slot_24@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [110, 64],
-					"$slot_index": 24,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_cooling",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"cooling_slot_25@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [128, 64],
-					"$slot_index": 25,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_cooling",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"cooling_slot_26@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [146, 64],
-					"$slot_index": 26,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_cooling",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			// SECTION: Generator
-			{
-				"generator_label@cryo_chamber_sections_test.generator_status": {}
-			},
-			{
-				"generator_water_input@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [110, 34],
-					"$slot_index": 10,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_generator",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"generator_titanium_input@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [138, 34],
-					"$slot_index": 19,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_generator",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"generator_lapis_input@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [138, 52],
-					"$slot_index": 21,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_generator",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"generator_cryofluid_output@machineryCommon.vertical_single": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"$is_liquid": true,
-					"$has_bg": false,
-					"offset": [166, 34],
-					"collection_index": 12,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_generator",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			// SECTION: Cryofluid
-			{
-				"tanks_label@ascendant_common.item_label_view": {
-					"collection_index": 11,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [24, 20],
-					"$visible_source_control_name": "section_button_generator",
+					"size": [78, 140],
 					"font_scale_factor": 0.55,
-					"layer": 2,
-					"size": [72, 68]
-				}
-			},
-			{
-				"tanks_water_bar@machineryCommon.vertical_single": {
-					"$is_fluid": true,
-					"$has_bg": false,
-					"collection_index": 7,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [110, 30],
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_generator",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"tanks_cryo_bar@machineryCommon.vertical_single": {
-					"$is_fluid": true,
-					"$has_bg": false,
-					"collection_index": 18,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [158, 30],
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_generator",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"water_label@ascendant_common.item_label_view": {
-					"collection_index": 11,
-					"$visible_source_control_name": "section_button_generator",
-					"font_scale_factor": 0.55,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [110, 62],
-					"size": [84, 14],
-					"layer": 2
-				}
-			},
-			{
-				"cryofluid_label@ascendant_common.item_label_view": {
-					"collection_index": 13,
-					"$visible_source_control_name": "section_button_generator",
-					"font_scale_factor": 0.55,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [110, 76],
-					"size": [84, 14],
-					"layer": 2
-				}
-			},
-			// SECTION: Guide
-			{
-				"guide_label@ascendant_common.item_label_view": {
-					"collection_index": 23,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [24, 20],
-					"$visible_source_control_name": "section_button_guide",
-					"font_scale_factor": 0.55,
-					"size": [72, 68],
-					"layer": 5
-				}
-			},
-			{
-				"guide_slot@ascendant_common.slot_base": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [110, 34],
-					"$slot_index": 23,
-					"layer": 20,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_guide",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
+					"color": [1, 1, 1],
+					"layer": 1
 				}
 			},
 			{
@@ -663,146 +130,27 @@
 			}
 		]
 	},
-	"section_buttons_panel": {
-		"type": "stack_panel",
-		"orientation": "horizontal",
-		"anchor_from": "top_left",
-		"anchor_to": "top_left",
-		"offset": [0, 100],
-		"size": [220, 20],
-		"controls": [
-			{
-				"section_button_stabilizer@cryo_chamber_sections_test.section_button_base": {
-					"$tab_group_name": "cryo_sections",
-					"$tab_index": 0,
-					"$toggle_property_bag": {
-						"#toggle_state": true
-					},
-					"$active_tab_index": 0,
-					"$tab_button_size": [14, 14],
-					"$tab_button_text_scale": 0.5,
-					"$tab_button_text": "",
-					"$tab_button_icon": "textures/ui/at_icons/titanium_stabilized",
-					"toggle_default_state": true
-				}
-			},
-			{
-				"spacing_stabilizer@ascendant_common.tab_button_spacing": {
-					"$tab_button_spacing": [0, 0]
-				}
-			},
-			{
-				"section_button_cooling@cryo_chamber_sections_test.section_button_base": {
-					"$tab_group_name": "cryo_sections",
-					"$tab_index": 1,
-					"$toggle_property_bag": {
-						"#toggle_state": false
-					},
-					"$active_tab_index": 0,
-					"$tab_button_size": [14, 14],
-					"$tab_button_text_scale": 0.5,
-					"$tab_button_text": "",
-					"$tab_button_icon": "textures/ui/at_icons/ice_cube"
-				}
-			},
-			{
-				"spacing_cooling@ascendant_common.tab_button_spacing": {
-					"$tab_button_spacing": [0, 0]
-				}
-			},
-			{
-				"section_button_generator@cryo_chamber_sections_test.section_button_base": {
-					"$tab_group_name": "cryo_sections",
-					"$tab_index": 2,
-					"$toggle_property_bag": {
-						"#toggle_state": false
-					},
-					"$active_tab_index": 0,
-					"$tab_button_size": [14, 14],
-					"$tab_button_text_scale": 0.5,
-					"$tab_button_text": "",
-					"$tab_button_icon": "textures/ui/at_icons/cryofluid_icon"
-				}
-			},
-			{
-				"spacing_generator@ascendant_common.tab_button_spacing": {
-					"$tab_button_spacing": [0, 0]
-				}
-			},
-			{
-				"section_button_guide@cryo_chamber_sections_test.section_button_base": {
-					"$tab_group_name": "cryo_sections",
-					"$tab_index": 3,
-					"$toggle_property_bag": {
-						"#toggle_state": false
-					},
-					"$tab_button_text": "?",
-					"$active_tab_index": 0,
-					"$tab_button_size": [14, 14],
-					"$tab_button_text_scale": 1.2
-				}
-			}
-		]
-	},
-	"section_content_panel": {
-		"type": "panel",
-		"anchor_from": "top_left",
-		"anchor_to": "top_left",
-		"size": [176, 166],
-		"controls": [
-			{
-				"stabilizer_section@cryo_chamber_sections_test.section_stabilizer": {
-				}
-			},
-			{
-				"cooling_section@cryo_chamber_sections_test.section_cooling": {
-				}
-			},
-			{
-				"generator_section@cryo_chamber_sections_test.section_generator": {
-				}
-			},
-			{
-				"guide_section@cryo_chamber_sections_test.section_guide": { "layer": 8 }
-			}
-		]
-	},
-	// SECTION: Stabilizer
-	"section_stabilizer": {
-		"type": "panel",
+
+	// ==========================================
+	// STABILIZER SECTION (Tab 0 — default)
+	// Layout from Energizer: [162, 72] at [-10, -40]
+	// Slots: 1 (status), 2 (progress), 3 (input), 14 (output)
+	// ==========================================
+	"cryo_stabilizer_top": {
+		"type": "collection_panel",
 		"anchor_from": "center",
 		"anchor_to": "center",
-		"size": [176, 166],
-		"bindings": [
-			{
-				"binding_type": "view",
-				"source_control_name": "section_button_stabilizer",
-				"source_property_name": "#toggle_state",
-				"target_property_name": "#visible",
-				"resolve_sibling_scope": true
-			}
-		],
+		"size": [162, 72],
+		"offset": [-10, -40],
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
 		"controls": [
 			{
 				"stabilizer_bg@ascendant_common.panel": {
 					"$panel_size": [176, 166],
-					"$has_close_button": true,
+					"$has_close_button": false,
 					"$has_container_label": false,
-					"layer": -6
-				}
-			},
-			{
-				"stabilizer_info_panel@ascendant_common.info_panel": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 0],
-					"$index": 1,
-					"$bg_size": [80, 76],
-					"$info_size": [72, 68],
-					"$text_borders": [72, 68],
-					"$background_color": "gray",
-					"$has_bg": false,
-					"layer": -5
+					"layer": -1
 				}
 			},
 			{
@@ -810,57 +158,89 @@
 					"$label_text": "Stabilizer",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [86, 0],
-					"layer": -4
+					"offset": [86, 0]
+				}
+			},
+			// Status info panel — from Energizer screen offset
+			{
+				"info_bg": {
+					"type": "image",
+					"texture": "textures/ui/panels/half_long_panel_classic",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"size": [90, 166],
+					"offset": [-88, -8],
+					"layer": -1
+				}
+			},
+			{
+				"status_label@machineryCommon.item_label": {
+					"collection_index": 1,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [-78, 2],
+					"size": [74, 140],
+					"$text_scale": 0.55,
+					"layer": 3
+				}
+			},
+			// Input — slot 3, Energizer offset [-32, 28] top_middle
+			{
+				"stabilizer_input@ascendant_common.slot_base": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [-32, 28],
+					"size": [24, 24],
+					"$cell_image_size": [24, 24],
+					"$slot_index": 3,
+					"$has_outline": true,
+					"$outline_size": [30, 30],
+					"$outline_variant": "orange"
+				}
+			},
+			// Progress — slot 2, Energizer offset [20, 30] top_middle
+			{
+				"stabilizer_progress@common_machines.machinery": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [20, 30],
+					"collection_index": 2
+				}
+			},
+			// Output — slot 14, Energizer offset [72, 30] top_middle
+			{
+				"stabilizer_output@ascendant_common.slot_base": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [72, 30],
+					"$slot_index": 14
 				}
 			}
 		]
 	},
-	"stabilizer_status@ascendant_common.item_label_view": {
-		"collection_index": 1,
-		"$visible_source_control_name": "section_button_stabilizer",
-		"font_scale_factor": 0.55,
+
+	// ==========================================
+	// COOLING SECTION (Tab 1)
+	// Layout from Ascane Engine: [176, 166] at [0, 0]
+	// Slots: 18 (status), 6-8/15-17/24-26 (3x3 grid)
+	// ==========================================
+	"cryo_cooling_top": {
+		"type": "collection_panel",
 		"anchor_from": "center",
 		"anchor_to": "center",
-		"offset": [-44, -4],
-		"size": [48, 48],
-		"layer": -4
-	},
-	// SECTION: Cooling
-	"section_cooling": {
-		"type": "panel",
-		"anchor_from": "center",
-		"anchor_to": "center",
-		"offset": [32, 0],
 		"size": [176, 166],
-		"bindings": [
-			{
-				"binding_type": "view",
-				"source_control_name": "section_button_cooling",
-				"source_property_name": "#toggle_state",
-				"target_property_name": "#visible",
-				"resolve_sibling_scope": true
-			}
-		],
+		"offset": [0, 0],
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
 		"controls": [
 			{
-				"cooling_section_bg@ascendant_common.panel": {
-					"$panel_size": [176, 86],
-					"offset": [0, 40],
-					"$has_close_button": true,
-					"$has_container_label": false,
-					"layer": -2
-				}
-			},
-			{
-				"inv_label_bg@ascendant_common.panel": {
-					"$panel_size": [72, 18],
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 72],
-					"layer": -2,
-					"$has_close_button": false,
-					"$has_container_label": false
+				"cooling_bg": {
+					"type": "image",
+					"texture": "textures/ui/frozen_panel_ls",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"size": [176, 166],
+					"layer": -1
 				}
 			},
 			{
@@ -868,89 +248,130 @@
 					"$label_text": "Cooling",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [86, 0],
-					"layer": -1
+					"offset": [86, 0]
+				}
+			},
+			// Status info panel — from Ascane Engine offset [-134, 4]
+			{
+				"info_bg@ascendant_common.info_panel": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-134, 4],
+					"$panel_color": "dark"
 				}
 			},
 			{
-				"cooling_bg": {
-					"type": "image",
-					"texture": "textures/ui/frozen_panel_ls",
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 0],
-					"size": [176, 80],
-					"layer": -3,
-					"controls": [
-						{
-							"close_button@common.close_button": {}
-						}
-					]
+				"status_label@machineryCommon.item_label": {
+					"collection_index": 18,
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-132, 2],
+					"size": [76, 148],
+					"$text_scale": 0.55,
+					"layer": 3
+				}
+			},
+			// 3x3 Grid — Ascane Engine offsets (center-anchored)
+			// Row 1
+			{
+				"grid_slot_6@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-18, -56],
+					"$slot_index": 6
 				}
 			},
 			{
-				"info_bg": {
-					"type": "image",
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [10, 12],
-					"layer": -2,
-					"texture": "textures/ui/panels/panel_classic_borderless",
-					"size": [56,56]
+				"grid_slot_7@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, -56],
+					"$slot_index": 7
+				}
+			},
+			{
+				"grid_slot_8@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [18, -56],
+					"$slot_index": 8
+				}
+			},
+			// Row 2
+			{
+				"grid_slot_15@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-18, -38],
+					"$slot_index": 15
+				}
+			},
+			{
+				"grid_slot_16@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, -38],
+					"$slot_index": 16
+				}
+			},
+			{
+				"grid_slot_17@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [18, -38],
+					"$slot_index": 17
+				}
+			},
+			// Row 3
+			{
+				"grid_slot_24@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-18, -20],
+					"$slot_index": 24
+				}
+			},
+			{
+				"grid_slot_25@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, -20],
+					"$slot_index": 25
+				}
+			},
+			{
+				"grid_slot_26@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [18, -20],
+					"$slot_index": 26
 				}
 			}
 		]
 	},
-	"cooling_status@ascendant_common.item_label_view": {
-		"collection_index": 18,
-		"$visible_source_control_name": "section_button_cooling",
-		"font_scale_factor": 0.55,
+
+	// ==========================================
+	// GENERATOR SECTION (Tab 2)
+	// Layout from Vaporworks Processor: [200, 130] at [-10, -46]
+	// Slots: 20 (status), 10 (water in), 19 (titanium), 21 (lapis),
+	//        11 (water display), 13 (cryo display), 12 (capsule out)
+	// ==========================================
+	"cryo_generator_top": {
+		"type": "collection_panel",
 		"anchor_from": "center",
 		"anchor_to": "center",
-		"offset": [-44, -4],
-		"size": [48, 48],
-		"layer": -1
-	},
-	// SECTION: Generator
-	"section_generator": {
-		"type": "panel",
-		"anchor_from": "center",
-		"anchor_to": "center",
-		"size": [176, 166],
-		"bindings": [
-			{
-				"binding_type": "view",
-				"source_control_name": "section_button_generator",
-				"source_property_name": "#toggle_state",
-				"target_property_name": "#visible",
-				"resolve_sibling_scope": true
-			}
-		],
+		"size": [200, 130],
+		"offset": [-10, -46],
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
 		"controls": [
 			{
 				"generator_bg@ascendant_common.panel": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 0],
 					"$panel_size": [176, 166],
 					"$panel_color": "aqua",
-					"layer": 0,
-					"$has_close_button": true,
-					"$has_container_label": false
-				}
-			},
-			{
-				"generator_info_panel@ascendant_common.info_panel": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 0],
-					"$index": 20,
-					"$bg_size": [80, 76],
-					"$info_size": [72, 68],
-					"$text_borders": [72, 68],
-					"$background_color": "aqua",
-					"$has_bg": false,
-					"layer": 1
+					"$has_close_button": false,
+					"$has_container_label": false,
+					"layer": -1
 				}
 			},
 			{
@@ -958,142 +379,138 @@
 					"$label_text": "Generator",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [86, 0],
-					"layer": 2
+					"offset": [86, 0]
+				}
+			},
+			// Status info panel — from Vaporworks offset [-70, 28]
+			{
+				"info_bg@ascendant_common.info_panel": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [-70, 28],
+					"$panel_color": "aqua"
 				}
 			},
 			{
-				"water_icon": {
-					"type": "image",
-					"texture": "textures/ui//at_icons/water_icon",
+				"status_label@machineryCommon.item_label": {
+					"collection_index": 20,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [94, 6],
-					"size": [12, 12],
-					"layer": 1
+					"offset": [-60, 38],
+					"size": [96, 90],
+					"$text_scale": 0.55,
+					"layer": 3
+				}
+			},
+			// Water input — slot 10, from Vaporworks fluid_injector [-36, 2]
+			{
+				"water_input@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-36, 2],
+					"$slot_index": 10
+				}
+			},
+			// Water tank display — slot 11, from Vaporworks fluid_input [-20, 0]
+			{
+				"water_tank@ascendant_common.liquid_display": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-20, 0],
+					"$fluid_slot_index": 11
+				}
+			},
+			// Titanium catalyst — slot 19
+			{
+				"titanium_input@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, -10],
+					"$slot_index": 19,
+					"$has_outline": true,
+					"$outline_size": [20, 20],
+					"$outline_variant": "orange"
+				}
+			},
+			// Lapis input — slot 21
+			{
+				"lapis_input@ascendant_common.slot_base": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, 10],
+					"$slot_index": 21
+				}
+			},
+			// Cryofluid tank display — slot 13, from Vaporworks gas_output [20, 0]
+			{
+				"cryofluid_tank@ascendant_common.liquid_display": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [20, 0],
+					"$fluid_slot_index": 13
+				}
+			},
+			// Cryofluid capsule output — slot 12, from Vaporworks fluid_receptor [54, 2]
+			{
+				"cryofluid_output@machineryCommon.vertical_single": {
+					"$is_liquid": true,
+					"$has_bg": false,
+					"$collection_index": 12,
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [54, 2]
+				}
+			},
+			// Tank labels
+			{
+				"water_label@ascendant_common.item_label_view": {
+					"collection_index": 11,
+					"font_scale_factor": 0.55,
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-20, 30],
+					"size": [40, 14]
+				}
+			},
+			{
+				"cryofluid_label@ascendant_common.item_label_view": {
+					"collection_index": 13,
+					"font_scale_factor": 0.55,
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [20, 30],
+					"size": [40, 14]
+				}
+			},
+			// Tank icons (paths corrected — no double slashes)
+			{
+				"water_icon": {
+					"type": "image",
+					"texture": "textures/ui/at_icons/water_icon",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-20, -24],
+					"size": [12, 12]
 				}
 			},
 			{
 				"cryo_icon": {
 					"type": "image",
-					"texture": "textures/ui//at_icons/cryofluid_icon",
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [150, 6],
-					"size": [12, 12],
-					"layer": 1
-				}
-			},
-			{
-				"titanium_input_outline": {
-					"type": "image",
-					"texture": "textures/ui/orange_outline",
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [114, 20],
-					"size": [20, 20],
-					"layer": 1
-				}
-			},
-			{
-				"cryofluid_output_outline": {
-					"type": "image",
-					"texture": "textures/ui/frozen_outline",
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [142, 20],
-					"size": [20, 20],
-					"layer": 1
-				}
-			}
-		]
-	},
-	"generator_status@ascendant_common.item_label_view": {
-		"collection_index": 20,
-		"$visible_source_control_name": "section_button_generator",
-		"font_scale_factor": 0.55,
-		"anchor_from": "center",
-		"anchor_to": "center",
-		"offset": [-44, -4],
-		"size": [48, 48],
-		"layer": 2
-	},
-	// SECTION: Guide
-	"section_guide": {
-		"type": "panel",
-		"anchor_from": "center",
-		"anchor_to": "center",
-		"size": [176, 166],
-		"bindings": [
-			{
-				"binding_type": "view",
-				"source_control_name": "section_button_guide",
-				"source_property_name": "#toggle_state",
-				"target_property_name": "#visible",
-				"resolve_sibling_scope": true
-			}
-		],
-		"controls": [
-			{
-				"guide_section_bg@ascendant_common.panel": {
+					"texture": "textures/ui/at_icons/cryofluid_icon",
 					"anchor_from": "center",
 					"anchor_to": "center",
-					"offset": [0, 0],
-					"$panel_size": [176, 166],
-					"$panel_color": "aqua",
-					"layer": 3,
-					"$has_close_button": true,
-					"$has_container_label": false,
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "section_button_guide",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					]
-				}
-			},
-			{
-				"guide_info_panel@ascendant_common.info_panel": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [0, 0],
-					"$index": 23,
-					"$bg_size": [80, 76],
-					"$info_size": [72, 68],
-					"$text_borders": [72, 68],
-					"$background_color": "aqua",
-					"$has_bg": false,
-					"layer": 4
-				}
-			},
-			{
-				"title@ascendant_common.section_label": {
-					"$label_text": "Guide",
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [86, 0],
-					"layer": 5
-				}
-			},
-			{
-				"guide_hint": {
-					"type": "label",
-					"text": "Open this item to read the layout",
-					"localize": false,
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [86, 52],
-					"size": [88, 14],
-					"color": [1, 1, 1],
-					"font_scale_factor": 0.5,
-					"layer": 5
+					"offset": [20, -24],
+					"size": [12, 12]
 				}
 			}
 		]
 	},
+
+	// ==========================================
+	// UTILITY PANEL (main container)
+	// 3-tab system: Stabilizer (default) / Cooling / Generator
+	// Guide section removed — permanent guide in persistent HUD
+	// ==========================================
 	"utility_panel": {
 		"type": "panel",
 		"controls": [
@@ -1101,12 +518,10 @@
 				"container_gamepad_helpers@common.container_gamepad_helpers": {}
 			},
 			{
-				"flying_item_renderer@common.flying_item_renderer": {
-				}
+				"flying_item_renderer@common.flying_item_renderer": {}
 			},
 			{
-				"selected_item_details_factory@common.selected_item_details_factory": {
-				}
+				"selected_item_details_factory@common.selected_item_details_factory": {}
 			},
 			{
 				"item_lock_notification_factory@common.item_lock_notification_factory": {}
@@ -1119,37 +534,138 @@
 							"chest_panel": {
 								"type": "panel",
 								"offset": [32, 0],
-								"layer": 5,
 								"controls": [
+									// Tab: Stabilizer (tab 0, default active)
 									{
-										"cryo_chamber_sections_top@cryo_chamber_sections_test.cryo_chamber_sections_top": {
-										"layer": -1
+										"section_button_stabilizer@cryo_chamber_sections_test.section_button_base": {
+											"anchor_from": "top_middle",
+											"anchor_to": "top_middle",
+											"offset": [60, -20],
+											"$tab_group_name": "cryo_sections",
+											"$tab_index": 0,
+											"$toggle_property_bag": {
+												"#toggle_state": true
+											},
+											"$active_tab_index": 0,
+											"$tab_button_text": "",
+											"$tab_button_icon": "textures/ui/at_icons/titanium_stabilized"
 										}
 									},
+									// Tab: Cooling (tab 1)
 									{
-										"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
-											"layer": 30
+										"section_button_cooling@cryo_chamber_sections_test.section_button_base": {
+											"anchor_from": "top_middle",
+											"anchor_to": "top_middle",
+											"offset": [84, -20],
+											"$tab_group_name": "cryo_sections",
+											"$tab_index": 1,
+											"$toggle_property_bag": {
+												"#toggle_state": false
+											},
+											"$active_tab_index": 0,
+											"$tab_button_text": "",
+											"$tab_button_icon": "textures/ui/at_icons/ice_cube"
 										}
 									},
+									// Tab: Generator (tab 2)
 									{
-										"hotbar_grid@common.hotbar_grid_template": {
-											"layer": 30
+										"section_button_generator@cryo_chamber_sections_test.section_button_base": {
+											"anchor_from": "top_middle",
+											"anchor_to": "top_middle",
+											"offset": [108, -20],
+											"$tab_group_name": "cryo_sections",
+											"$tab_index": 2,
+											"$toggle_property_bag": {
+												"#toggle_state": false
+											},
+											"$active_tab_index": 0,
+											"$tab_button_text": "",
+											"$tab_button_icon": "textures/ui/at_icons/cryofluid_icon",
+											"$tab_button_icon_size": ["100% - 12px", "100% - 12px"]
 										}
 									},
+									// Persistent HUD (always visible)
 									{
-										"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {
+										"persistent@cryo_chamber_sections_test.cryo_persistent_top": {}
+									},
+									// Stabilizer wrapper (visibility bound to tab 0)
+									{
+										"stabilizer_panel": {
+											"type": "panel",
+											"bindings": [
+												{
+													"binding_type": "view",
+													"source_control_name": "section_button_stabilizer",
+													"source_property_name": "#toggle_state",
+													"target_property_name": "#visible",
+													"resolve_sibling_scope": true
+												}
+											],
+											"controls": [
+												{
+													"content@cryo_chamber_sections_test.cryo_stabilizer_top": {}
+												}
+											]
 										}
+									},
+									// Cooling wrapper (visibility bound to tab 1)
+									{
+										"cooling_panel": {
+											"type": "panel",
+											"bindings": [
+												{
+													"binding_type": "view",
+													"source_control_name": "section_button_cooling",
+													"source_property_name": "#toggle_state",
+													"target_property_name": "#visible",
+													"resolve_sibling_scope": true
+												}
+											],
+											"controls": [
+												{
+													"content@cryo_chamber_sections_test.cryo_cooling_top": {}
+												}
+											]
+										}
+									},
+									// Generator wrapper (visibility bound to tab 2)
+									{
+										"generator_panel": {
+											"type": "panel",
+											"bindings": [
+												{
+													"binding_type": "view",
+													"source_control_name": "section_button_generator",
+													"source_property_name": "#toggle_state",
+													"target_property_name": "#visible",
+													"resolve_sibling_scope": true
+												}
+											],
+											"controls": [
+												{
+													"content@cryo_chamber_sections_test.cryo_generator_top": {}
+												}
+											]
+										}
+									},
+									// Standard inventory
+									{
+										"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+									},
+									{
+										"hotbar_grid@common.hotbar_grid_template": {}
+									},
+									{
+										"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
 									}
 								]
 							}
 						},
 						{
-							"inventory_selected_icon_button@common.inventory_selected_icon_button": {
-							}
+							"inventory_selected_icon_button@common.inventory_selected_icon_button": {}
 						},
 						{
-							"gamepad_cursor@common.gamepad_cursor_button": {
-							}
+							"gamepad_cursor@common.gamepad_cursor_button": {}
 						}
 					]
 				}

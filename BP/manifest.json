@@ -18,7 +18,7 @@
 		"version": [
 			0,
 			8,
-			0
+			1
 		]
 	},
 	"modules": [
@@ -57,8 +57,20 @@
 			"version": [
 				0,
 				8,
-				0
+				1
 			]
+		}
+	],
+	"subpacks": [
+		{
+			"folder_name": "subpacks/single_uis",
+			"name": "Single UIs",
+			"description": "UI interfaces using a single interface without toggles or tabs"
+		},
+		{
+			"folder_name": "subpacks/tabs_ui",
+			"name": "Tabs UI",
+			"description": "UI interfaces with tabs and tab navigation"
 		}
 	]
 }

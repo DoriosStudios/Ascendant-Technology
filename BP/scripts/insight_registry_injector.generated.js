@@ -280,7 +280,6 @@ const ADDON_CONTENT = Object.freeze({
     "utilitycraft:lucky_aiot_item",
     "utilitycraft:lucky_fishing_net",
     "utilitycraft:lucky_mesh",
-    "utilitycraft:machine",
     "utilitycraft:milk_capsule_infinite",
     "utilitycraft:mob_magnet",
     "utilitycraft:network_center",

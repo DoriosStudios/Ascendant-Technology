@@ -521,6 +521,7 @@ function applyDisenchantOperation({ machine, sourceStack, sourceSlot, catalystSl
     setStoredEnchantSignature(updatedSource, '')
     machine.inv.setItem(sourceSlot, updatedSource)
     playMachineSound(machine, 'enchanting_table.use', { volume: 0.85, pitch: 0.95 })
+    machine.runCommand(`playsound enchanting_table.use @a`)
     return { ok: true }
 }
 

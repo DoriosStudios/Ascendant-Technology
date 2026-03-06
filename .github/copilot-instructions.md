@@ -12,6 +12,7 @@ Rules:
 - Do not modify or implement anything before reading all provided relevant files.
 - Do not infer behavior that is not explicitly defined in the code.
 - Prefer delaying a response over making speculative changes.
+- Always start a new terminal if the current one is executing a `dash_compiler` task.
 
 Process (must be followed in order):
 1. Understand: identify system responsibilities, data flow, and constraints.

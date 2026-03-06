@@ -389,7 +389,7 @@ export function getClonerRecipes() {
 }
 
 /**
- * Normalizes a cloner recipe definition object.
+ * Normalizes a duplicator recipe definition object.
  * @param {ClonerRecipeDefinition} definition
  * @returns {ClonerRecipe | null}
  */
@@ -506,7 +506,7 @@ function isClonerItemId(id) {
 }
 
 const DUPLICATOR_EVENT_ID = 'utilitycraft:register_duplicator_recipe';
-const LEGACY_CLONER_EVENT_ID = 'utilitycraft:register_cloner_recipe';
+const LEGACY_CLONER_EVENT_ID = 'utilitycraft:register_duplicator_recipe';
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (id !== DUPLICATOR_EVENT_ID && id !== LEGACY_CLONER_EVENT_ID) return;
@@ -520,7 +520,7 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
 
         for (const [recipeId, definition] of Object.entries(payload)) {
             if (!definition || typeof definition !== 'object') {
-                console.warn(`[UtilityCraft] Ignored invalid cloner recipe '${recipeId}'.`);
+                console.warn(`[UtilityCraft] Ignored invalid duplicator recipe '${recipeId}'.`);
                 continue;
             }
 

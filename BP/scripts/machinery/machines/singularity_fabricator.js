@@ -184,7 +184,7 @@ function doriosRegister() {
 function resolveFabricatorRecipes(block) {
     const component = block.getComponent('utilitycraft:machine_recipes')?.customComponentParameters?.params
 
-    if (!component || component.type === COMPONENT_ID) {
+    if (!component || component.type === COMPONENT_ID || component.type === 'duplicator') {
         return { recipes: toRecipeArray(getSingularityRecipes()) }
     }
 

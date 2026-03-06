@@ -1,9 +1,22 @@
 import { system } from "@minecraft/server";
-import { Energy } from "./machinery/AscendantMachinery/core.js";
+import { Energy, FluidManager, GasManager } from "./machinery/AscendantMachinery/core.js";
 
 const REGISTRATION_MARKER = "__insightInjectorsAscendantRegistered";
 const REGISTRATION_RETRY_TICKS = 20;
 const MAX_REGISTRATION_ATTEMPTS = 180;
+const INSIGHT_PROVIDER_NAME = "Ascendant Technology";
+const INSIGHT_CUSTOM_COMPONENT_KEYS = Object.freeze([
+    "customEnergyInfo",
+    "customRotationInfo",
+    "customMachineProgress",
+    "customFluidInfo",
+    "customGasInfo",
+    "customVariantPreview"
+]);
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
 
 function safeGetBlockStates(block) {
     try {
@@ -33,6 +46,39 @@ function formatEnergy(value) {
     return `${Math.max(0, Math.floor(Number(value) || 0))}`;
 }
 
+function formatPercent(current, max) {
+    if (!Number.isFinite(current) || !Number.isFinite(max) || max <= 0) return "";
+    const ratio = Math.max(0, Math.min(1, current / max));
+    return ` (${(ratio * 100).toFixed(1)}%)`;
+}
+
+function formatFluid(value) {
+    try {
+        if (typeof FluidManager?.formatFluid === "function") {
+            return FluidManager.formatFluid(value);
+        }
+    } catch { /* fallback */ }
+    return `${Math.max(0, Math.floor(Number(value) || 0))} mB`;
+}
+
+function formatGas(value) {
+    try {
+        if (typeof GasManager?.formatGas === "function") {
+            return GasManager.formatGas(value);
+        }
+    } catch { /* fallback */ }
+    return `${Math.max(0, Math.floor(Number(value) || 0))} mB`;
+}
+
+function capitalize(str) {
+    if (!str) return str;
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// ---------------------------------------------------------------------------
+// Field producers
+// ---------------------------------------------------------------------------
+
 function getEnergyLine(context) {
     if (!context.playerSettings?.showCustomEnergyInfo) {
         return undefined;
@@ -56,10 +102,78 @@ function getEnergyLine(context) {
             return undefined;
         }
 
-        return `Energy: ${formatEnergy(stored)} / ${formatEnergy(cap)}`;
+        return `Energy: ${formatEnergy(stored)} / ${formatEnergy(cap)}${formatPercent(stored, cap)}`;
     } catch {
         return undefined;
     }
+}
+
+function getFluidLines(context, machineEntity) {
+    if (!context.playerSettings?.showCustomFluidInfo || !machineEntity) {
+        return [];
+    }
+
+    if (!context.block?.hasTag?.("dorios:fluid")) {
+        return [];
+    }
+
+    const lines = [];
+
+    try {
+        for (let i = 0; ; i++) {
+            const fm = FluidManager.findType(machineEntity, i);
+            if (!fm) break;
+
+            const stored = fm.get();
+            const cap = fm.getCap();
+            const type = fm.getType();
+
+            if (cap <= 0) break;
+
+            const typeLabel = (!type || type === "empty") ? "Empty" : capitalize(type);
+            const prefix = i > 0 ? `Fluid [${i}]` : "Fluid";
+
+            lines.push(`${prefix} (${typeLabel}): ${formatFluid(stored)} / ${formatFluid(cap)}${formatPercent(stored, cap)}`);
+        }
+    } catch {
+        // FluidManager unavailable or entity incompatible — skip silently.
+    }
+
+    return lines;
+}
+
+function getGasLines(context, machineEntity) {
+    if (!context.playerSettings?.showCustomGasInfo || !machineEntity) {
+        return [];
+    }
+
+    if (!context.block?.hasTag?.("dorios:gas")) {
+        return [];
+    }
+
+    const lines = [];
+
+    try {
+        for (let i = 0; ; i++) {
+            const gm = GasManager.findType(machineEntity, i);
+            if (!gm) break;
+
+            const stored = gm.get();
+            const cap = gm.getCap();
+            const type = gm.getType();
+
+            if (cap <= 0) break;
+
+            const typeLabel = (!type || type === "empty") ? "Empty" : capitalize(type);
+            const prefix = i > 0 ? `Gas [${i}]` : "Gas";
+
+            lines.push(`${prefix} (${typeLabel}): ${formatGas(stored)} / ${formatGas(cap)}${formatPercent(stored, cap)}`);
+        }
+    } catch {
+        // GasManager unavailable or entity incompatible — skip silently.
+    }
+
+    return lines;
 }
 
 function getRotationLine(context, states) {
@@ -155,6 +269,10 @@ function getVariantLine(context, states) {
     return `Variant: ${Math.max(0, currentVariant)}`;
 }
 
+// ---------------------------------------------------------------------------
+// Collector
+// ---------------------------------------------------------------------------
+
 function collectAscendantBlockFields(context) {
     if (!context?.playerSettings?.showCustomFields || !context.block) {
         return undefined;
@@ -168,6 +286,12 @@ function collectAscendantBlockFields(context) {
     const energyLine = getEnergyLine(context);
     if (energyLine) lines.push(energyLine);
 
+    const fluidLines = getFluidLines(context, machineEntity);
+    for (const fl of fluidLines) lines.push(fl);
+
+    const gasLines = getGasLines(context, machineEntity);
+    for (const gl of gasLines) lines.push(gl);
+
     const rotationLine = getRotationLine(context, states);
     if (rotationLine) lines.push(rotationLine);
 
@@ -180,6 +304,10 @@ function collectAscendantBlockFields(context) {
     return lines.length ? lines : undefined;
 }
 
+// ---------------------------------------------------------------------------
+// Registration
+// ---------------------------------------------------------------------------
+
 function tryRegisterInjectors() {
     if (globalThis[REGISTRATION_MARKER]) {
         return true;
@@ -190,7 +318,10 @@ function tryRegisterInjectors() {
         return false;
     }
 
-    api.registerBlockFieldInjector(collectAscendantBlockFields);
+    api.registerBlockFieldInjector(collectAscendantBlockFields, {
+        provider: INSIGHT_PROVIDER_NAME,
+        components: INSIGHT_CUSTOM_COMPONENT_KEYS
+    });
     globalThis[REGISTRATION_MARKER] = true;
     return true;
 }

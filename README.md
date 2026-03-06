@@ -12,7 +12,7 @@ Here, you have:
 - A bigger chest
 And lots of more content.
 
-See every planned feature [here](./Machines_roadmap.md)
+See every planned feature [here](./Machine_roadmap.md)
 
 Anyway, it's on beta right now, so expect bugs and stuff not working properly.
 

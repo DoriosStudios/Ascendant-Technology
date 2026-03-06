@@ -84,11 +84,24 @@
 				"entity_types": [
 					{
 						"filters": {
-							"any_of": [
+							"all_of": [
 								{
 									"subject": "other",
 									"test": "is_family",
 									"value": "player"
+								},
+								{
+									"test": "has_equipment",
+									"domain": "head",
+									"subject": "other",
+									"operator": "not",
+									"value": "carved_pumpkin"
+								},
+								{
+									"test": "has_mob_effect",
+									"subject": "other",
+									"operator": "not",
+									"value": "invisibility"
 								}
 							]
 						},
@@ -98,6 +111,8 @@
 				],
 				"must_reach": true,
 				"must_see": false,
+				"reselect_targets": true,
+				"must_see_forget_duration": 15,
 				"priority": 3,
 				"within_radius": 16
 			},
@@ -129,7 +144,7 @@
 				"width": 1.4
 			},
 			"minecraft:experience_reward": {
-				"on_death": "query.last_hit_by_player ? 50 : 0"
+				"on_death": "query.last_hit_by_player ? 65 : 2"
 			},
 			"minecraft:fall_damage": {
 				"value": 0

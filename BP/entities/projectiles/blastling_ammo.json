@@ -6,42 +6,73 @@
 			"is_spawnable": false,
 			"is_summonable": true,
 			"is_experimental": false,
-			"runtime_identifier": "minecraft:snowball"
+			"runtime_identifier": "minecraft:arrow"
 		},
 		"component_groups": {
 			"exploding": {
 				"minecraft:explode": {
-					"fuse_length": 2,
-					"power": 4,
+					"fuse_length": 0,
+					"power": 1.0,
 					"fuse_lit": true,
-					"causes_fire": false
+					"causes_fire": false,
+					"destroy_affected_by_griefing": false
 				}
 			}
 		},
 		"components": {
 			"minecraft:collision_box": {
-				"width": 0.25,
-				"height": 0.25
+				"width": 0.28,
+				"height": 0.28
 			},
 			"minecraft:projectile": {
 				"on_hit": {
 					"impact_damage": {
-						"damage": 8,
+						"damage": 13,
 						"knockback": true,
-						"semi_random_diff_damage": false,
-						"destroy_on_hit": true
+						"catch_fire": true,
+						"semi_random_diff_damage": false
 					},
-					"stick_in_ground": {
-						"shake_time": 0.35
+					"definition_event": {
+						"affect_projectile": true,
+						"event_trigger": {
+							"event": "blastling_explode",
+							"target": "self"
+						}
 					},
-					"arrow_effect": {}
+					"remove_on_hit": {}
 				},
-				"power": 1.5,
-				"gravity": 0.03,
-				"angle_offset": 0.0
+				"power": 3.5,
+				"gravity": 0.08,
+				"inertia": 1,
+				"liquid_inertia": 1,
+				"anchor": 2,
+				"offset": [
+					0,
+					0.5,
+					0
+				],
+				"semi_random_diff_damage": true,
+				"uncertainty_base": 10,
+				"reflect_on_hurt": true,
+				"hit_sound": "bullet.hit",
+				"multiple_targets": true,
+				"is_dangerous": true,
+				"crit_particle_on_hurt": true
 			},
-			"minecraft:physics": {}
+			"minecraft:physics": {},
+			"minecraft:pushable": {
+				"is_pushable": true,
+				"is_pushable_by_piston": true
+			}
 		},
-		"events": {}
+		"events": {
+			"blastling_explode": {
+				"add": {
+					"component_groups": [
+						"exploding"
+					]
+				}
+			}
+		}
 	}
 }

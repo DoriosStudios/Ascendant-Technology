@@ -9,23 +9,23 @@ tile.utilitycraft:absolute_wind_turbine.name=Абсолютная Ветряна
 tile.utilitycraft:absolute_container.name=Абсолютный Контейнер\n§7- Хранит до 10.7K предметов\n- Может хранить жидкости\n- Может хранить энергию
 
 ## Машины
-tile.utilitycraft:catalyst_weaver.name=Катализаторный Ткач
-tile.utilitycraft:cryo_chamber.name=Криокамера
-tile.utilitycraft:duplicator.name=Дупликатор\n§7- Дублирует предметы с помощью тёмной материи\n- Принимает улучшения: §d§7, §e§7
-tile.utilitycraft:enchantment_station.name=Станция Зачарования\n§7- Ремонтирует, зачаровывает, усиливает снаряжение\n- Принимает улучшения: §c§7, §d§7, §e§7
-tile.utilitycraft:energizer.name=Энергизатор
-tile.utilitycraft:liquifier.name=Ожижитель
-tile.utilitycraft:laser_barrier.name=Лазерный Барьер
-tile.utilitycraft:residue_processor.name=Процессор Остатков
+tile.utilitycraft:catalyst_weaver.name=Катализаторный Ткач\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_chamber.name=Криокамера\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:duplicator.name=Дупликатор\n§7- Дублирует предметы с помощью тёмной материи\n- Принимает улучшения: §a§r, §b§r, §d§r
+tile.utilitycraft:enchantment_station.name=Станция Зачарования\n§7- Ремонтирует, зачаровывает, усиливает снаряжение\n- Принимает улучшения: §a§r, §b§r, §d§r
+tile.utilitycraft:energizer.name=Энергизатор\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:liquifier.name=Ожижитель\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:laser_barrier.name=Лазерный Барьер\n§7Принимает улучшения:\n  §a§r, §e§r
+tile.utilitycraft:residue_processor.name=Процессор Остатков\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:singularity_fabricator.name=Фабрикатор Сингулярности
-tile.utilitycraft:network_center.name=Сетевой Центр\n§7- Показывает сетевую статистику
-tile.utilitycraft:tabs_test_machine.name=Тестовая Машина Вкладок\n§7- Блок тестирования вкладок UI
-tile.utilitycraft:overclock_tower.name=Башня Разгона\n§7- Генерирует заряд разгона (Титан + энергия)
+tile.utilitycraft:network_center.name=Сетевой Центр\n§7- Показывает сетевую статистику\n- Принимает улучшения: §a§r, §b§r, §d§r
+tile.utilitycraft:tabs_test_machine.name=Тестовая Машина Вкладок\n§7- Блок тестирования вкладок UI\n- Принимает улучшения: §a§r, §b§r, §d§r
+tile.utilitycraft:overclock_tower.name=Башня Разгона\n§7- Генерирует заряд разгона (Титан + энергия)\n- Принимает улучшения: §a§r, §b§r, §d§r
 tile.utilitycraft:overclock_relay.name=Реле Разгона\n§7- Отражает заряд башни в сеть
-tile.utilitycraft:overclock_injector.name=Инжектор Разгона\n§7- Применяет разгон к обращенной машине
-tile.utilitycraft:reinforced_extractor.name=Усиленный Экстрактор
-tile.utilitycraft:smart_importer.name=Умный Импортер
-tile.utilitycraft:reinforced_cable.name=Усиленный Кабель\n§7- Высокоемкостная основа энергии/жидкости/разгона
+tile.utilitycraft:overclock_injector.name=Инжектор Разгона\n§7- Применяет разгон к обращенной машине\n- Принимает улучшения: §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_extractor.name=Усиленный Экстрактор\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:smart_importer.name=Умный Импортер\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_cable.name=Усиленный Кабель\n§7- Высокоемкостная основа энергии/жидкости/разгона\n- Принимает улучшения: §a§r, §b§r, §d§r
 
 ## Другие Блоки
 tile.utilitycraft:flat_conduit.name=Плоский Канал\n§7  Эстетическая Версия
@@ -80,6 +80,16 @@ item.utilitycraft:liquid_void=Капсула Жидкой Пустоты
 ## Модули
 item.utilitycraft:size_upgrade=§gУлучшение Размера§7\n- Увеличивает область Лазерного Барьера
 item.utilitycraft:hyper_processing_upgrade=§dУлучшение Гиперобработки§7\n- Увеличивает скорость работы машин\n- Без дополнительных энергозатрат
+item.utilitycraft:curse_protection_module=§dМодуль Защиты от Проклятий§7\n- Снижает шанс проклятия при зачаровании
+item.utilitycraft:enchantability_module=§dМодуль Зачаровываемости §r(Tier I)§7\n- Открывает зачарование\n- Макс. уровень: 1
+item.utilitycraft:enchantability_module_2=§dМодуль Зачаровываемости §r(Tier II)§7\n- Макс. уровень зачарования: 2
+item.utilitycraft:enchantability_module_3=§dМодуль Зачаровываемости §r(Tier III)§7\n- Макс. уровень зачарования: 3\n- Доступны зачарования среднего уровня
+item.utilitycraft:enchantability_module_4=§dМодуль Зачаровываемости §r(Tier IV)§7\n- Макс. уровень зачарования: 4
+item.utilitycraft:enchantability_module_5=§dМодуль Зачаровываемости §r(Tier V)§7\n- Макс. уровень зачарования: 5\n- Доступны Починка и Бесконечность
+item.utilitycraft:reinforcement_module=§dМодуль Усиления §r(Tier I)§7\n- Открывает усиление брони
+item.utilitycraft:reinforcement_module_2=§dМодуль Усиления §r(Tier II)§7\n- Улучшенный бонус прочности
+item.utilitycraft:reinforcement_module_3=§dМодуль Усиления §r(Tier III)§7\n- Максимальный бонус прочности
+item.utilitycraft:upgrade_package=§aПакет Улучшений§7\n- Хранит несколько улучшений\n- Массовое применение к машинам/конвейерам
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aУдачная Сетка\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
@@ -125,7 +135,7 @@ item.utilitycraft:cryofluid_capsule_8=Криожидкость Capsule §7\n- (8
 ## Сущности
 entity.utilitycraft:absolute_container.name=§fАбсолютный Контейнер
 entity.utilitycraft:catalyst_weaver.name=§fКатализаторный Ткач
-entity.utilitycraft:cloner.name=Дупликатор
+entity.utilitycraft:duplicator.name=Дупликатор
 entity.utilitycraft:cryo_chamber.name=§fКриокамера
 entity.utilitycraft:singularity_fabricator.name=Фабрикатор Сингулярности
 entity.utilitycraft:liquifier.name=Ожижитель
@@ -518,9 +528,3 @@ item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited 
 
 ## Modules
 item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules
-## Transportation - Bridge Path
-tile.utilitycraft:conveyor_bridge_path.name=§aConveyor Bridge Path\n§7- Active bridge connection between transmitter and receiver
-
-## Machines - Fixed Identifiers
-tile.utilitycraft:duplicator.name=Duplicator\n§7- Duplicates items using dark matter\n- Accepted upgrades: §a§7, §b§7, §d§7
-tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7- Repairs, enchants, reinforces gear\n- Module-controlled boosts

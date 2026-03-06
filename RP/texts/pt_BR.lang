@@ -9,29 +9,29 @@ tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta \n§7  Vel
 tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena itens (168 espaços)\n- Armazena energia\n- Armazena líquidos
 
 ## Máquinas
-tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora
-tile.utilitycraft:cryo_chamber.name=Câmara Criogênica
-tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica itens usando matéria escura\n- Aceita melhorias: §d§7, §e§7
-tile.utilitycraft:enchantment_station.name=Estação de Encantamento\n§7- Repara, encanta, reforça equipamentos\n- Aceita melhorias: §c§7, §d§7, §e§7
-tile.utilitycraft:energizer.name=Energizador
-tile.utilitycraft:liquifier.name=Liquefator
-tile.utilitycraft:laser_barrier.name=Barreira de Laser
-tile.utilitycraft:residue_processor.name=Processador de Resíduos
+tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_chamber.name=Câmara Criogênica\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica itens usando matéria escura\n- Aceita melhorias: §a§r, §b§r, §d§r
+tile.utilitycraft:enchantment_station.name=Estação de Encantamento\n§7- Repara, encanta, reforça equipamentos\n- Aceita melhorias: §a§r, §b§r, §d§r
+tile.utilitycraft:energizer.name=Energizador\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:liquifier.name=Liquefator\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:laser_barrier.name=Barreira de Laser\n§7Aceita melhorias:\n  §a§r, §e§r
+tile.utilitycraft:residue_processor.name=Processador de Resíduos\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade
 tile.utilitycraft:network_center.name=Centro de Rede\n§7- Mostra estatísticas da rede
-tile.utilitycraft:tabs_test_machine.name=Máquina de Teste (Tabs)\n§7- Bloco de teste de abas
-tile.utilitycraft:vaporworks_processor.name=Processador de Vapor\n§7- Gera Vapor a partir de água\n- Usa fonte de combustível e energia
-tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Gera carga de overclock (Titânio + energia)
+tile.utilitycraft:tabs_test_machine.name=Máquina de Teste (Tabs)\n§7- Bloco de teste de abas\n- Aceita melhorias: §a§r, §b§r, §d§r
+tile.utilitycraft:vaporworks_processor.name=Processador de Vapor\n§7- Gera Vapor a partir de água\n- Usa fonte de combustível e energia\n- Aceita melhorias: §a§r, §b§r, §d§r
+tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Gera carga de overclock (Titânio + energia)\n- Aceita melhorias: §a§r, §b§r, §d§r
 tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica a carga da torre na rede
-tile.utilitycraft:overclock_injector.name=Injetor de Overclock\n§7- Aplica overclock na máquina à frente
-tile.utilitycraft:reinforced_extractor.name=Extrator Reforçado
-tile.utilitycraft:smart_importer.name=Importador Inteligente
+tile.utilitycraft:overclock_injector.name=Injetor de Overclock\n§7- Aplica overclock na máquina à frente\n- Aceita melhorias: §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_extractor.name=Extrator Reforçado\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:smart_importer.name=Importador Inteligente\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r
 
 ## Outros Blocos
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versão Estética
 tile.utilitycraft:mob_magnet.name=Ímã de Mobs \n§7 Atrai mobs em um raio configurável
 tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser\n§7  Área ativa projetada pela barreira
-tile.utilitycraft:reinforced_cable.name=Cabo Reforçado\n§7- Espinha dorsal de alta capacidade para energia, fluidos e overclock
+tile.utilitycraft:reinforced_cable.name=Cabo Reforçado\n§7- Espinha dorsal de alta capacidade para energia, fluidos e overclock\n- Aceita melhorias: §a§r, §b§r, §d§r
 
 ## Transportação - Esteiras
 tile.utilitycraft:copper_conveyor_horizontal.name=§vEsteira de Cobre\n§7  Velocidade: 1 bloco/s
@@ -193,21 +193,21 @@ item.utilitycraft:cryofluid_capsule_8=Cápsula de Criofluido \n§7(8 Baldes)
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCâmara Catalisadora
-entity.utilitycraft:cloner.name=§fDuplicador
+entity.utilitycraft:duplicator.name=Duplicador
 entity.utilitycraft:cryo_chamber.name=§fCâmara Criogênica
-entity.utilitycraft:singularity_fabricator.name=§fFabricador de Singularidade
-entity.utilitycraft:liquifier.name=§fLiquefator
-entity.utilitycraft:laser_barrier.name=§fBarreira de Laser
-entity.utilitycraft:residue_processor.name=§fProcessador de Resíduos
-entity.utilitycraft:energizer.name=§fEnergizador
+entity.utilitycraft:singularity_fabricator.name=Fabricador de Singularidade
+entity.utilitycraft:liquifier.name=Liquefator
+entity.utilitycraft:laser_barrier.name=Barreira de Laser
+entity.utilitycraft:residue_processor.name=Processador de Resíduos
+entity.utilitycraft:energizer.name=Energizador
 entity.utilitycraft:network_center.name=§fCentro de Rede
 entity.utilitycraft:tabs_test_machine.name=§fMáquina de Teste (Tabs)
 entity.utilitycraft:absolute_container.name=§fContainer Absoluto
 entity.utilitycraft:overclock_tower.name=§fTorre de Overclock
 entity.utilitycraft:overclock_relay.name=§fRelé de Overclock
 entity.utilitycraft:overclock_injector.name=§fInjetor de Overclock
-entity.utilitycraft:ascane_engine.name=§fEstação de Encantamento
-entity.utilitycraft:vaporworks_processor.name=§fProcessador de Vapor
+entity.utilitycraft:ascane_engine.name=§5Estação de Encantamento
+entity.utilitycraft:vaporworks_processor.name=§vProcessador de Vapor
 
 ## UI
 at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)

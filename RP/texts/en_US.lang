@@ -8,47 +8,58 @@ tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Ra
 
 tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 10.7K items\n- Can store fluids\n- Can store energy
 
+## Upgrades
+§a§r - Speed Upgrade -------------------------------- (UtilityCraft)
+§b§r - Efficiency Upgrade --------------------------- (UtilityCraft)
+§d§r - Hyper Processing Upgrade ------------- (Ascendant Technology)
+§e§r - Size Upgrade ------------------------- (Ascendant Technology)
+§s§r - Quantity Upgrade ----------------------------- (UtilityCraft)
+§3§r - Range Upgrade -------------------------------- (UtilityCraft)
+§c§r - Damage Upgrade ------------------------------- (UtilityCraft)
+§f§r - Filter Upgrade ------------------------------- (UtilityCraft)
+§g§r - Smart Filter Upgrade ------------------------- (UtilityCraft)
+
 ## Machines
-tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver
-tile.utilitycraft:cryo_chamber.name=Cryo Chamber
-tile.utilitycraft:duplicator.name=Duplicator\n§7- Duplicates items using dark matter\n- Accepted upgrades: §d§7, §e§7
-tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7- Repairs, enchants, reinforces gear\n- Accepted upgrades: §c§7, §d§7, §e§7
-tile.utilitycraft:energizer.name=Energizer
-tile.utilitycraft:liquifier.name=Liquifier
-tile.utilitycraft:laser_barrier.name=Laser Barrier
-tile.utilitycraft:residue_processor.name=Residue Processor
-tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator
-tile.utilitycraft:network_center.name=Network Center\n§7- Shows network stats
-tile.utilitycraft:tabs_test_machine.name=Tabs Test Machine\n§7- UI tabs testing block
-tile.utilitycraft:overclock_tower.name=Overclock Tower\n§7- Generates overclock charge (Titanium + energy)
-tile.utilitycraft:overclock_relay.name=Overclock Relay\n§7- Mirrors tower charge into the network
-tile.utilitycraft:overclock_injector.name=Overclock Injector\n§7- Applies overclock to the facing machine
-tile.utilitycraft:vaporworks_processor.name=Vaporworks Processor\n§7- Generates Steam from water\n- Uses fuel source and energy
-tile.utilitycraft:reinforced_extractor.name=Reinforced Extractor
-tile.utilitycraft:smart_importer.name=Smart Importer
-tile.utilitycraft:reinforced_cable.name=Reinforced Cable\n§7- High-capacity energy/fluid/overclock backbone
+tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:duplicator.name=Duplicator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:energizer.name=Energizer\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:liquifier.name=Liquifier\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7Accepts upgrades:\n  §a§r, §e§r
+tile.utilitycraft:residue_processor.name=Residue Processor\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:singularity_fabricator.name=Singularity Fabricator\n§7- Special duplicator, capable of du-\n-plicating rare items.
+tile.utilitycraft:network_center.name=Network Center\n§7\n- Shows advanced stats from\n  the current network.
+tile.utilitycraft:tabs_test_machine.name=Tabs Test Machine\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:overclock_tower.name=Overclock Tower\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:overclock_relay.name=Overclock Relay\n§7- Mirrors the overclock to the network\n- Mandatory.
+tile.utilitycraft:overclock_injector.name=Overclock Injector\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:vaporworks_processor.name=Vaporworks Processor\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_extractor.name=Reinforced Extractor\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:smart_importer.name=Smart Importer\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_cable.name=Reinforced Cable\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 
 ## Transportation - Conveyors
-tile.utilitycraft:copper_conveyor_horizontal.name=§vCopper Conveyor\n§7  Speed: 1 block/sec
-tile.utilitycraft:copper_conveyor_vertical.name=§vCopper Conveyor (Vertical)\n§7  Speed: 1 block/sec
-tile.utilitycraft:copper_conveyor_inclined.name=§vCopper Conveyor (Inclined)\n§7  Speed: 1 block/sec
-tile.utilitycraft:copper_conveyor_declined.name=§vCopper Conveyor (Declined)\n§7  Speed: 1 block/sec
+tile.utilitycraft:copper_conveyor_horizontal.name=§vCopper Conveyor\n§7  Speed: 1 block/s
+tile.utilitycraft:copper_conveyor_vertical.name=§vCopper Conveyor (Vertical)\n§7  Speed: 1 block/s
+tile.utilitycraft:copper_conveyor_inclined.name=§vCopper Conveyor (Inclined)\n§7  Speed: 1 block/s
+tile.utilitycraft:copper_conveyor_declined.name=§vCopper Conveyor (Declined)\n§7  Speed: 1 block/s
 tile.utilitycraft:copper_conveyor_bridge_transmitter.name=§vCopper Bridge Transmitter\n§7  Range: 8 blocks
 tile.utilitycraft:copper_conveyor_bridge_receiver.name=§vCopper Bridge Receiver\n§7  Range: 8 blocks
 tile.utilitycraft:copper_conveyor_bridge_path.name=§vCopper Bridge Path
 
-tile.utilitycraft:titanium_conveyor_horizontal.name=§tTitanium Conveyor\n§7  Speed: 2 blocks/sec
-tile.utilitycraft:titanium_conveyor_vertical.name=§tTitanium Conveyor (Vertical)\n§7  Speed: 2 blocks/sec
-tile.utilitycraft:titanium_conveyor_inclined.name=§tTitanium Conveyor (Inclined)\n§7  Speed: 2 blocks/sec
-tile.utilitycraft:titanium_conveyor_declined.name=§tTitanium Conveyor (Declined)\n§7  Speed: 2 blocks/sec
+tile.utilitycraft:titanium_conveyor_horizontal.name=§tTitanium Conveyor\n§7  Speed: 2 blocks/s
+tile.utilitycraft:titanium_conveyor_vertical.name=§tTitanium Conveyor (Vertical)\n§7  Speed: 2 blocks/s
+tile.utilitycraft:titanium_conveyor_inclined.name=§tTitanium Conveyor (Inclined)\n§7  Speed: 2 blocks/s
+tile.utilitycraft:titanium_conveyor_declined.name=§tTitanium Conveyor (Declined)\n§7  Speed: 2 blocks/s
 tile.utilitycraft:titanium_conveyor_bridge_transmitter.name=§tTitanium Bridge Transmitter\n§7  Range: 16 blocks
 tile.utilitycraft:titanium_conveyor_bridge_receiver.name=§tTitanium Bridge Receiver\n§7  Range: 16 blocks
 tile.utilitycraft:titanium_conveyor_bridge_path.name=§tTitanium Bridge Path
 
-tile.utilitycraft:aetherium_conveyor_horizontal.name=§uAetherium Conveyor\n§7  Speed: 5 blocks/sec\n  Transports mobs
-tile.utilitycraft:aetherium_conveyor_vertical.name=§uAetherium Conveyor (Vertical)\n§7  Speed: 5 blocks/sec\n  Transports mobs
-tile.utilitycraft:aetherium_conveyor_inclined.name=§uAetherium Conveyor (Inclined)\n§7  Speed: 5 blocks/sec\n  Transports mobs
-tile.utilitycraft:aetherium_conveyor_declined.name=§uAetherium Conveyor (Declined)\n§7  Speed: 5 blocks/sec\n  Transports mobs
+tile.utilitycraft:aetherium_conveyor_horizontal.name=§uAetherium Conveyor\n§7  Speed: 5 blocks/s\n  Transports mobs
+tile.utilitycraft:aetherium_conveyor_vertical.name=§uAetherium Conveyor (Vertical)\n§7  Speed: 5 blocks/s\n  Transports mobs
+tile.utilitycraft:aetherium_conveyor_inclined.name=§uAetherium Conveyor (Inclined)\n§7  Speed: 5 blocks/s\n  Transports mobs
+tile.utilitycraft:aetherium_conveyor_declined.name=§uAetherium Conveyor (Declined)\n§7  Speed: 5 blocks/s\n  Transports mobs
 tile.utilitycraft:aetherium_conveyor_bridge_transmitter.name=§uAetherium Bridge Transmitter\n§7  Range: 32 blocks
 tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=§uAetherium Bridge Receiver\n§7  Range: 32 blocks
 tile.utilitycraft:aetherium_conveyor_bridge_path.name=§uAetherium Bridge Path
@@ -191,19 +202,19 @@ item.utilitycraft:cryofluid_capsule_8=Cryofluid Capsule §7\n- (8 Buckets)
 ## Entities
 entity.utilitycraft:absolute_container.name=§fAbsolute Container
 entity.utilitycraft:catalyst_weaver.name=§fCatalyst Weaver
-entity.utilitycraft:cloner.name=§fDuplicator
+entity.utilitycraft:duplicator.name=Duplicator
 entity.utilitycraft:cryo_chamber.name=§fCryo Chamber
-entity.utilitycraft:singularity_fabricator.name=§fSingularity Fabricator
-entity.utilitycraft:liquifier.name=§fLiquifier
-entity.utilitycraft:laser_barrier.name=§fLaser Barrier
-entity.utilitycraft:residue_processor.name=§fResidue Processor
-entity.utilitycraft:energizer.name=§fEnergizer
-entity.utilitycraft:network_center.name=§fNetwork Center
-entity.utilitycraft:tabs_test_machine.name=§fTabs Test Machine
-entity.utilitycraft:overclock_tower.name=§fOverclock Tower
-entity.utilitycraft:overclock_relay.name=§fOverclock Relay
+entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator
+entity.utilitycraft:liquifier.name=Liquifier
+entity.utilitycraft:laser_barrier.name=Laser Barrier
+entity.utilitycraft:residue_processor.name=Residue Processor
+entity.utilitycraft:energizer.name=Energizer
+entity.utilitycraft:network_center.name=Network Center
+entity.utilitycraft:tabs_test_machine.name=Tabs Test Machine
+entity.utilitycraft:overclock_tower.name=§6Overclock Tower
+entity.utilitycraft:overclock_relay.name=§6Overclock Relay
 entity.utilitycraft:overclock_injector.name=§fOverclock Injector
-entity.utilitycraft:ascane_engine.name=§fEnchantment Station
+entity.utilitycraft:enchantment_station.name=§fEnchantment Station
 entity.utilitycraft:vaporworks_processor.name=§fVaporworks Processor
 
 ## UI Texts

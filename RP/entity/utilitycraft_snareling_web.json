@@ -10,7 +10,7 @@
         "default": "textures/entity/projectiles/snareling_web"
       },
       "geometry": {
-        "default": "geometry.utilitycraft_projectile"
+  		"default": "geometry.utilitycraft_snareling_web"
       },
       "render_controllers": [
         "controller.render.slime"

@@ -238,7 +238,7 @@
 				"value": 64
 			},
 			"minecraft:experience_reward": {
-				"on_death": "query.last_hit_by_player ? 10 : 0"
+				"on_death": "query.last_hit_by_player ? 24 : 2"
 			},
 			"minecraft:underwater_movement": {
 				"value": 0.02
@@ -256,10 +256,10 @@
 			"minecraft:behavior.ranged_attack": {
 				"priority": 2,
 				"attack_interval_min": 1,
-				"attack_interval_max": 1.0,
+				"attack_interval_max": 1,
 				"attack_radius": 15,
-				"burst_shots": 1,
-				"burst_interval": 0.15
+				"burst_shots": 2,
+				"burst_interval": 0.3
 			},
 			"minecraft:shooter": {
 				"def": "utilitycraft:snareling_web"

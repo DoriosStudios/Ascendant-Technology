@@ -9,23 +9,23 @@ tile.utilitycraft:absolute_wind_turbine.name=Éolienne Absolue\n§7  Taux de Bas
 tile.utilitycraft:absolute_container.name=Conteneur Absolu\n§7- Stocke jusqu'à 10.7K objets\n- Peut stocker des fluides\n- Peut stocker de l'énergie
 
 ## Machines
-tile.utilitycraft:catalyst_weaver.name=Tisseur de Catalyseur
-tile.utilitycraft:cryo_chamber.name=Chambre Cryogénique
-tile.utilitycraft:duplicator.name=Duplicateur\n§7- Duplique les objets en utilisant la matière noire\n- Accepte les améliorations: §d§7, §e§7
-tile.utilitycraft:enchantment_station.name=Station d'Enchantement\n§7- Répare, enchante, renforce l'équipement\n- Accepte les améliorations: §c§7, §d§7, §e§7
-tile.utilitycraft:energizer.name=Énergiseur
-tile.utilitycraft:liquifier.name=Liquéfieur
-tile.utilitycraft:laser_barrier.name=Barrière Laser
-tile.utilitycraft:residue_processor.name=Processeur de Résidus
+tile.utilitycraft:catalyst_weaver.name=Tisseur de Catalyseur\n§7Accepte les améliorations:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_chamber.name=Chambre Cryogénique\n§7Accepte les améliorations:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:duplicator.name=Duplicateur\n§7- Duplique les objets en utilisant la matière noire\n- Accepte les améliorations: §a§r, §b§r, §d§r
+tile.utilitycraft:enchantment_station.name=Station d'Enchantement\n§7- Répare, enchante, renforce l'équipement\n- Accepte les améliorations: §a§r, §b§r, §d§r
+tile.utilitycraft:energizer.name=Énergiseur\n§7Accepte les améliorations:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:liquifier.name=Liquéfieur\n§7Accepte les améliorations:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:laser_barrier.name=Barrière Laser\n§7Accepte les améliorations:\n  §a§r, §e§r
+tile.utilitycraft:residue_processor.name=Processeur de Résidus\n§7Accepte les améliorations:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:singularity_fabricator.name=Fabricateur de Singularité
-tile.utilitycraft:network_center.name=Centre Réseau\n§7- Affiche les statistiques du réseau
-tile.utilitycraft:tabs_test_machine.name=Machine de Test d'Onglets\n§7- Bloc de test d'interface
-tile.utilitycraft:overclock_tower.name=Tour d'Overclocking\n§7- Génère une charge d'overclocking (Titane + énergie)
+tile.utilitycraft:network_center.name=Centre Réseau\n§7- Affiche les statistiques du réseau\n- Accepte les améliorations: §a§r, §b§r, §d§r
+tile.utilitycraft:tabs_test_machine.name=Machine de Test d'Onglets\n§7- Bloc de test d'interface\n- Accepte les améliorations: §a§r, §b§r, §d§r
+tile.utilitycraft:overclock_tower.name=Tour d'Overclocking\n§7- Génère une charge d'overclocking (Titane + énergie)\n- Accepte les améliorations: §a§r, §b§r, §d§r
 tile.utilitycraft:overclock_relay.name=Relais d'Overclocking\n§7- Reflète la charge de la tour dans le réseau
-tile.utilitycraft:overclock_injector.name=Injecteur d'Overclocking\n§7- Applique l'overclocking à la machine face à lui
-tile.utilitycraft:reinforced_extractor.name=Extracteur Renforcé
-tile.utilitycraft:smart_importer.name=Importateur Intelligent
-tile.utilitycraft:reinforced_cable.name=Câble Renforcé\n§7- Épine dorsale haute capacité pour énergie/fluides/overclocking
+tile.utilitycraft:overclock_injector.name=Injecteur d'Overclocking\n§7- Applique l'overclocking à la machine face à lui\n- Accepte les améliorations: §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_extractor.name=Extracteur Renforcé\n§7Accepte les améliorations:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:smart_importer.name=Importateur Intelligent\n§7Accepte les améliorations:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_cable.name=Câble Renforcé\n§7- Épine dorsale haute capacité pour énergie/fluides/overclocking\n- Accepte les améliorations: §a§r, §b§r, §d§r
 
 ## Autres Blocs
 tile.utilitycraft:flat_conduit.name=Conduit Plat\n§7  Version Esthétique
@@ -80,6 +80,16 @@ item.utilitycraft:liquid_void=Capsule de Vide Liquide
 ## Modules
 item.utilitycraft:size_upgrade=§gAmélioration de Taille§7\n- Augmente la zone de la Barrière Laser
 item.utilitycraft:hyper_processing_upgrade=§dAmélioration de Traitement Hyper§7\n- Augmente la vitesse d'opération des machines\n- Aucun coût énergétique supplémentaire
+item.utilitycraft:curse_protection_module=§dModule de Protection contre les Malédictions§7\n- Réduit le risque de malédiction pendant l'enchantement
+item.utilitycraft:enchantability_module=§dModule d'Enchantabilité §r(Palier I)§7\n- Débloque l'enchantement\n- Niveau max: 1
+item.utilitycraft:enchantability_module_2=§dModule d'Enchantabilité §r(Palier II)§7\n- Niveau d'enchantement max: 2
+item.utilitycraft:enchantability_module_3=§dModule d'Enchantabilité §r(Palier III)§7\n- Niveau d'enchantement max: 3\n- Enchantements intermédiaires disponibles
+item.utilitycraft:enchantability_module_4=§dModule d'Enchantabilité §r(Palier IV)§7\n- Niveau d'enchantement max: 4
+item.utilitycraft:enchantability_module_5=§dModule d'Enchantabilité §r(Palier V)§7\n- Niveau d'enchantement max: 5\n- Rapiéçage, Infinité disponibles
+item.utilitycraft:reinforcement_module=§dModule de Renforcement §r(Palier I)§7\n- Débloque le renforcement d'armure
+item.utilitycraft:reinforcement_module_2=§dModule de Renforcement §r(Palier II)§7\n- Bonus de durabilité amélioré
+item.utilitycraft:reinforcement_module_3=§dModule de Renforcement §r(Palier III)§7\n- Bonus de durabilité maximal
+item.utilitycraft:upgrade_package=§aPack d'Améliorations§7\n- Stocke plusieurs améliorations\n- Application en masse aux machines/convoyeurs
 
 ## Filets & Mailles
 item.utilitycraft:lucky_mesh=§aMaille Chanceuse\n§7- Niveau Max de Butin: Diamant\n§7- Multiplicateur d'Objets: 2x
@@ -125,7 +135,7 @@ item.utilitycraft:cryofluid_capsule_8=Capsule de Cryofluide §7\n- (8 Seaux)
 ## Entités
 entity.utilitycraft:absolute_container.name=§fConteneur Absolu
 entity.utilitycraft:catalyst_weaver.name=§fTisseur de Catalyseur
-entity.utilitycraft:cloner.name=Duplicateur
+entity.utilitycraft:duplicator.name=Duplicateur
 entity.utilitycraft:cryo_chamber.name=§fChambre Cryogénique
 entity.utilitycraft:singularity_fabricator.name=Fabricateur de Singularité
 entity.utilitycraft:liquifier.name=Liquéfieur
@@ -519,9 +529,3 @@ item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited 
 
 ## Modules
 item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules
-## Transportation - Bridge Path
-tile.utilitycraft:conveyor_bridge_path.name=§aConveyor Bridge Path\n§7- Active bridge connection between transmitter and receiver
-
-## Machines - Fixed Identifiers
-tile.utilitycraft:duplicator.name=Duplicator\n§7- Duplicates items using dark matter\n- Accepted upgrades: §a§7, §b§7, §d§7
-tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7- Repairs, enchants, reinforces gear\n- Module-controlled boosts

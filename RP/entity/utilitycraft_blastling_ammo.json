@@ -10,7 +10,15 @@
         "default": "textures/entity/projectiles/blastling_ammo"
       },
       "geometry": {
-        "default": "geometry.utilitycraft_projectile"
+  		"default": "geometry.utilitycraft_blastling_ammo"
+      },
+      "animations": {
+        "spin": "animation.utilitycraft_projectile.spin"
+      },
+      "scripts": {
+        "animate": [
+          "spin"
+        ]
       },
       "render_controllers": [
         "controller.render.slime"

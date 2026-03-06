@@ -38,8 +38,13 @@
 						"volume": 1.0,
 						"pitch": 1.0
 					},
-					"throw": {
+					"attack": {
 						"sound": "mob.irongolem.throw",
+						"volume": 1.0,
+						"pitch": 1.0
+					},
+					"mad": {
+						"sound": "mob.utilitycraft_watchling.say",
 						"volume": 1.0,
 						"pitch": 1.0
 					}
@@ -60,8 +65,18 @@
 						"volume": 1.0,
 						"pitch": 1.0
 					},
-					"throw": {
-						"sound": "mob.irongolem.throw",
+					"attack": {
+						"sound": "utilitycraft.blastling_ammo_shot",
+						"volume": 1.0,
+						"pitch": 1.0
+					},
+					"shoot": {
+						"sound": "utilitycraft.blastling_ammo_shot",
+						"volume": 1.0,
+						"pitch": 1.0
+					},
+					"mad": {
+						"sound": "mob.utilitycraft_blastling.say",
 						"volume": 1.0,
 						"pitch": 1.0
 					}

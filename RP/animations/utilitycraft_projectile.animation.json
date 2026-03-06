@@ -1,0 +1,17 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.utilitycraft_projectile.spin": {
+      "loop": true,
+      "bones": {
+        "root": {
+          "rotation": [
+            "query.life_time * 960.0",
+            "query.life_time * 220.0",
+            0
+          ]
+        }
+      }
+    }
+  }
+}

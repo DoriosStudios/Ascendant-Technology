@@ -8,29 +8,29 @@ tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velo
 tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena hasta 10.7K ítems\n- Almacena energía\n- Almacena fluidos
 
 ## Máquinas
-tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora
-tile.utilitycraft:cryo_chamber.name=Cámara Criogénica
-tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica ítems usando materia oscura\n- Acepta mejoras: §d§7, §e§7
-tile.utilitycraft:enchantment_station.name=Estación de Encantamiento\n§7- Repara, encanta, refuerza equipamiento\n- Acepta mejoras: §c§7, §d§7, §e§7
-tile.utilitycraft:energizer.name=Energizador
-tile.utilitycraft:liquifier.name=Licuefactor
-tile.utilitycraft:laser_barrier.name=Barrera Láser
-tile.utilitycraft:residue_processor.name=Procesador de Residuos
+tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_chamber.name=Cámara Criogénica\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica ítems usando materia oscura\n- Acepta mejoras: §a§r, §b§r, §d§r
+tile.utilitycraft:enchantment_station.name=Estación de Encantamiento\n§7- Repara, encanta, refuerza equipamiento\n- Acepta mejoras: §a§r, §b§r, §d§r
+tile.utilitycraft:energizer.name=Energizador\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:liquifier.name=Licuefactor\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:laser_barrier.name=Barrera Láser\n§7Acepta mejoras:\n  §a§r, §e§r
+tile.utilitycraft:residue_processor.name=Procesador de Residuos\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad
-tile.utilitycraft:network_center.name=Centro de Red\n§7- Muestra estadísticas de red
-tile.utilitycraft:tabs_test_machine.name=Máquina de Prueba (Pestañas)\n§7- Bloque de prueba de pestañas
-tile.utilitycraft:vaporworks_processor.name=Procesador de Vapor\n§7- Genera Vapor desde agua\n- Usa fuente de combustible y energía
-tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Genera carga de overclock (Titanio + energía)
+tile.utilitycraft:network_center.name=Centro de Red\n§7- Muestra estadísticas de red\n- Acepta mejoras: §a§r, §b§r, §d§r
+tile.utilitycraft:tabs_test_machine.name=Máquina de Prueba (Pestañas)\n§7- Bloque de prueba de pestañas\n- Acepta mejoras: §a§r, §b§r, §d§r
+tile.utilitycraft:vaporworks_processor.name=Procesador de Vapor\n§7- Genera Vapor desde agua\n- Usa fuente de combustible y energía\n- Acepta mejoras: §a§r, §b§r, §d§r
+tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Genera carga de overclock (Titanio + energía)\n- Acepta mejoras: §a§r, §b§r, §d§r
 tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica la carga de la torre en la red
-tile.utilitycraft:overclock_injector.name=Inyector de Overclock\n§7- Aplica overclock a la máquina frente a él
-tile.utilitycraft:reinforced_extractor.name=Extractor Reforzado
-tile.utilitycraft:smart_importer.name=Importador Inteligente
+tile.utilitycraft:overclock_injector.name=Inyector de Overclock\n§7- Aplica overclock a la máquina frente a él\n- Acepta mejoras: §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_extractor.name=Extractor Reforzado\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:smart_importer.name=Importador Inteligente\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
 
 ## Otros Bloques
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
 tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7  Atrae mobs en un radio configurable
 tile.utilitycraft:laser_barrier_field.name=Campo de Barrera Láser\n§7  Zona activa proyectada por la barrera
-tile.utilitycraft:reinforced_cable.name=Cable Reforzado\n§7- Espina dorsal reforzada para energía, fluidos y overclock
+tile.utilitycraft:reinforced_cable.name=Cable Reforzado\n§7- Espina dorsal reforzada para energía, fluidos y overclock\n- Acepta mejoras: §a§r, §b§r, §d§r
 
 ## Transporte - Transportadores
 tile.utilitycraft:copper_conveyor_horizontal.name=§vTransportador de Cobre\n§7  Velocidad: 1 bloque/s
@@ -191,7 +191,7 @@ item.utilitycraft:cryofluid_capsule_8=Cápsula de Criolíquido §7\n- (8 Cubos)
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCámara Catalizadora
-entity.utilitycraft:cloner.name=§fDuplicador
+entity.utilitycraft:duplicator.name=§fDuplicador
 entity.utilitycraft:cryo_chamber.name=§fCámara Criogénica
 entity.utilitycraft:singularity_fabricator.name=§fFabricador de Singularidad
 entity.utilitycraft:liquifier.name=§fLicuefactor

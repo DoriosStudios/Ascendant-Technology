@@ -5,72 +5,221 @@
 			"identifier": "utilitycraft:blastling",
 			"is_spawnable": true,
 			"is_summonable": true,
-			"is_experimental": false
+			"is_experimental": false,
+			"runtime_identifier": "minecraft:enderman"
 		},
 		"component_groups": {
-			"minecraft:player_created": {
-				"minecraft:behavior.hurt_by_target": {
-					"priority": 2,
-					"entity_types": {
-						"filters": {
-							"all_of": [
-								{
-									"test": "is_family",
-									"subject": "other",
-									"operator": "!=",
-									"value": "player"
-								},
-								{
-									"test": "is_family",
-									"subject": "other",
-									"operator": "!=",
-									"value": "creeper"
-								}
-							]
-						}
-					}
+			"utilitycraft:enderman_calm": {
+				"minecraft:on_target_acquired": {
+					"event": "utilitycraft:become_angry",
+					"target": "self"
+				},
+				"minecraft:movement": {
+					"value": 0.30
 				}
 			},
-			"minecraft:village_created": {
-				"minecraft:behavior.defend_village_target": {
-					"priority": 1
+			"utilitycraft:enderman_angry": {
+				"minecraft:angry": {
+					"duration": 60,
+					"calm_event": {
+						"event": "utilitycraft:on_calm",
+						"target": "self"
+					},
+					"broadcast_anger": true,
+					"broadcast_anger_on_attack": true,
+					"broadcast_anger_on_being_attacked": true,
+					"angry_sound": "mad",
+					"sound_interval": {
+						"range_min": 4,
+						"range_max": 4
+					},
+					"broadcast_filters": {
+						"all_of": [
+							{
+								"any_of": [
+									{
+										"test": "is_family",
+										"operator": "==",
+										"value": "blastling"
+									}
+								]
+							}
+						]
+					}
 				},
-				"minecraft:dweller": {
-					"dwelling_type": "village",
-					"dweller_role": "defender",
-					"update_interval_base": 60,
-					"update_interval_variant": 40,
-					"can_find_poi": false,
-					"can_migrate": true,
-					"first_founding_reward": 0
+				"minecraft:movement": {
+					"value": 0.45
+				},
+				"minecraft:behavior.nearest_attackable_target": {
+					"priority": 2,
+					"must_see": true,
+					"reselect_targets": true,
+					"within_radius": 40,
+					"must_see_forget_duration": 15,
+					"entity_types": [
+						{
+							"max_dist": 40,
+							"filters": {
+								"all_of": [
+									{
+										"subject": "other",
+										"test": "is_family",
+										"value": "player"
+									},
+									{
+										"test": "has_equipment",
+										"domain": "head",
+										"subject": "other",
+										"operator": "not",
+										"value": "carved_pumpkin"
+									},
+									{
+										"test": "has_mob_effect",
+										"subject": "other",
+										"operator": "not",
+										"value": "invisibility"
+									}
+								]
+							}
+						}
+					]
+				},
+				"minecraft:behavior.ranged_attack": {
+					"priority": 4,
+					"burst_shots": 2,
+					"burst_interval": 1,
+					"charge_charged_trigger": 0,
+					"charge_shoot_trigger": 0.1,
+					"attack_interval_min": 1,
+					"attack_interval_max": 1,
+					"attack_radius": 16,
+					"speed_multiplier": 1
+				},
+				"minecraft:shooter": {
+					"def": "utilitycraft:blastling_ammo"
+				},
+				"minecraft:behavior.avoid_mob_type": {
+					"entity_types": [
+						{
+							"filters": {
+								"subject": "other",
+								"test": "is_family",
+								"value": "player"
+							},
+							"max_dist": 4,
+							"sprint_speed_multiplier": 1.3,
+							"walk_speed_multiplier": 1.3
+						}
+					],
+					"priority": 3
 				}
 			}
 		},
 		"components": {
+			"minecraft:is_hidden_when_invisible": {},
+			"minecraft:experience_reward": {
+				"on_death": "query.last_hit_by_player ? 10 : 0"
+			},
 			"minecraft:type_family": {
 				"family": [
-					"blastling",
-					"monster",
 					"enderman",
-					"enderling",
+					"monster",
 					"mob",
+					"blastling",
+					"enderling",
 					"end_monster"
 				]
 			},
-			"minecraft:nameable": {
-				"always_show": false,
-				"allow_name_tag_renaming": false
+			"minecraft:breathable": {
+				"total_supply": 15,
+				"suffocate_time": 0
 			},
-			"minecraft:collision_box": {
-				"height": 2.9,
-				"width": 1.4
+			"minecraft:nameable": {},
+			"minecraft:loot": {
+				"table": "loot_tables/entities/blastling.json"
 			},
 			"minecraft:health": {
 				"value": 70,
 				"max": 70
 			},
-			"minecraft:movement": {
-				"value": 0.55
+			"minecraft:knockback_resistance": {
+				"value": 0.2,
+				"max": 1
+			},
+			"minecraft:hurt_on_condition": {
+				"damage_conditions": [
+					{
+						"filters": {
+							"test": "in_lava",
+							"subject": "self",
+							"operator": "==",
+							"value": true
+						},
+						"cause": "lava",
+						"damage_per_tick": 4
+					},
+					{
+						"filters": {
+							"test": "in_contact_with_water",
+							"operator": "==",
+							"value": true
+						},
+						"cause": "drowning",
+						"damage_per_tick": 1
+					}
+				]
+			},
+			"minecraft:attack": {
+				"damage": 12
+			},
+			"minecraft:follow_range": {
+				"value": 48,
+				"max": 48
+			},
+			"minecraft:collision_box": {
+				"width": 1.3,
+				"height": 2.9
+			},
+			"minecraft:looked_at": {
+				"search_radius": 64,
+				"set_target": "once_and_stop_scanning",
+				"looked_at_cooldown": 5,
+				"filters": [
+					{
+						"all_of": [
+							{
+								"subject": "other",
+								"test": "is_family",
+								"value": "player"
+							},
+							{
+								"test": "has_equipment",
+								"domain": "head",
+								"subject": "other",
+								"operator": "not",
+								"value": "carved_pumpkin"
+							}
+						]
+					},
+					{
+						"all_of": [
+							{
+								"subject": "other",
+								"test": "is_family",
+								"value": "player"
+							},
+							{
+								"test": "has_mob_effect",
+								"subject": "other",
+								"operator": "not",
+								"value": "invisibility"
+							}
+						]
+					}
+				]
+			},
+			"minecraft:despawn": {
+				"despawn_from_distance": {}
 			},
 			"minecraft:navigation.walk": {
 				"can_path_over_water": false,
@@ -80,206 +229,87 @@
 			"minecraft:movement.basic": {},
 			"minecraft:jump.static": {},
 			"minecraft:can_climb": {},
-			"minecraft:attack": {
-				"damage": 20
-			},
-			"minecraft:fall_damage": {
-				"value": 0.0
-			},
-			"minecraft:knockback_resistance": {
-				"value": 1.0,
-				"max": 1.0
-			},
-			"minecraft:leashable": {
-				"soft_distance": 4.0,
-				"hard_distance": 6.0,
-				"max_distance": 10.0
-			},
-			"minecraft:balloonable": {},
-			"minecraft:preferred_path": {
-				"max_fall_blocks": 1,
-				"jump_cost": 5,
-				"default_block_cost": 1.5,
-				"preferred_path_blocks": [
-					{
-						"cost": 0,
-						"blocks": [
-							"grass_path"
-						]
-					},
-					{
-						"cost": 1,
-						"blocks": [
-							"cobblestone",
-							"stone",
-							"stonebrick",
-							"sandstone",
-							"mossy_cobblestone",
-							"stone_slab",
-							"stone_slab2",
-							"stone_slab3",
-							"stone_slab4",
-							"double_stone_slab",
-							"double_stone_slab2",
-							"double_stone_slab3",
-							"double_stone_slab4",
-							"wooden_slab",
-							"double_wooden_slab",
-							"planks",
-							"brick_block",
-							"nether_brick",
-							"red_nether_brick",
-							"end_bricks",
-							"red_sandstone",
-							"stained_glass",
-							"glass",
-							"glowstone",
-							"prismarine",
-							"emerald_block",
-							"diamond_block",
-							"lapis_block",
-							"gold_block",
-							"redstone_block",
-							"purple_glazed_terracotta",
-							"white_glazed_terracotta",
-							"orange_glazed_terracotta",
-							"magenta_glazed_terracotta",
-							"light_blue_glazed_terracotta",
-							"yellow_glazed_terracotta",
-							"lime_glazed_terracotta",
-							"pink_glazed_terracotta",
-							"gray_glazed_terracotta",
-							"silver_glazed_terracotta",
-							"cyan_glazed_terracotta",
-							"blue_glazed_terracotta",
-							"brown_glazed_terracotta",
-							"green_glazed_terracotta",
-							"red_glazed_terracotta",
-							"black_glazed_terracotta"
-						]
-					},
-					{
-						"cost": 50,
-						"blocks": [
-							"bed",
-							"lectern",
-							"composter",
-							"grindstone",
-							"blast_furnace",
-							"smoker",
-							"fletching_table",
-							"cartography_table",
-							"brewing_stand",
-							"smithing_table",
-							"cauldron",
-							"barrel",
-							"loom",
-							"stonecutter"
-						]
-					}
-				]
-			},
-			"minecraft:behavior.move_towards_target": {
-				"priority": 2,
-				"speed_multiplier": 0.9,
-				"within_radius": 32
-			},
-			"minecraft:behavior.move_through_village": {
-				"priority": 3,
-				"speed_multiplier": 0.6,
-				"only_at_night": true
-			},
-			"minecraft:behavior.move_towards_restriction": {
-				"priority": 4,
-				"speed_multiplier": 1
-			},
-			"minecraft:behavior.offer_flower": {
-				"priority": 5
+			"minecraft:behavior.float": {
+				"priority": 0
 			},
 			"minecraft:behavior.random_stroll": {
-				"priority": 6,
-				"speed_multiplier": 1,
-				"xz_dist": 16
+				"priority": 7,
+				"speed_multiplier": 1
 			},
 			"minecraft:behavior.look_at_player": {
-				"priority": 7,
-				"look_distance": 6.0,
-				"probability": 0.02
+				"priority": 8,
+				"look_distance": 8,
+				"probability": 0.08
 			},
 			"minecraft:behavior.random_look_around": {
 				"priority": 8
 			},
-			"minecraft:behavior.nearest_attackable_target": {
-				"priority": 3,
-				"entity_types": [
-					{
-						"filters": {
-							"any_of": [
-								{
-									"test": "is_family",
-									"subject": "other",
-									"value": "player"
-								}
-							]
-						},
-						"max_dist": 70,
-						"must_see": false
-					}
-				],
-				"must_see": false,
-				"must_reach": true,
-				"within_radius": 16
-			},
 			"minecraft:behavior.hurt_by_target": {
 				"priority": 3
 			},
+			"minecraft:behavior.avoid_mob_type": {
+				"entity_types": [
+					{
+						"filters": {
+							"subject": "other",
+							"test": "is_family",
+							"value": "player"
+						},
+						"max_dist": 5,
+						"sprint_speed_multiplier": 1.3,
+						"walk_speed_multiplier": 1.3
+					}
+				],
+				"priority": 3
+			},
 			"minecraft:physics": {},
-			"minecraft:follow_range": {
-				"value": 64
+			"minecraft:pushable": {
+				"is_pushable": true,
+				"is_pushable_by_piston": true
 			},
-			"minecraft:experience_reward": {
-				"on_death": "query.last_hit_by_player ? 10 : 0"
-			},
-			"minecraft:underwater_movement": {
-				"value": 0.02
-			},
-			"minecraft:scale": {
-				"value": 1
-			},
-			"minecraft:behavior.ranged_attack": {
-				"priority": 2,
-				"attack_interval_min": 0.5,
-				"attack_interval_max": 1.0,
-				"attack_radius": 15,
-				"burst_shots": 4,
-				"burst_interval": 0.15
-			},
-			"minecraft:shooter": {
-				"def": "utilitycraft:blastling_ammo"
-			},
-			"minecraft:behavior.owner_hurt_by_target": {
-				"priority": 1
-			},
-			"minecraft:behavior.owner_hurt_target": {
-				"priority": 2
-			},
-			"minecraft:hurt_when_wet": {},
-			"minecraft:loot": {
-				"table": "loot_tables/entities/blastling.json"
+			"minecraft:teleport": {
+				"random_teleports": true,
+				"max_random_teleport_time": 30,
+				"random_teleport_cube": [
+					8,
+					6,
+					8
+				],
+				"target_distance": 8,
+				"target_teleport_chance": 0.01,
+				"light_teleport_chance": 0.05,
+				"min_random_teleport_time": 10
 			}
 		},
 		"events": {
-			"minecraft:from_player": {
+			"minecraft:entity_spawned": {
 				"add": {
 					"component_groups": [
-						"minecraft:player_created"
+						"utilitycraft:enderman_calm"
 					]
 				}
 			},
-			"minecraft:from_village": {
+			"utilitycraft:become_angry": {
+				"remove": {
+					"component_groups": [
+						"utilitycraft:enderman_calm"
+					]
+				},
 				"add": {
 					"component_groups": [
-						"minecraft:village_created"
+						"utilitycraft:enderman_angry"
+					]
+				}
+			},
+			"utilitycraft:on_calm": {
+				"remove": {
+					"component_groups": [
+						"utilitycraft:enderman_angry"
+					]
+				},
+				"add": {
+					"component_groups": [
+						"utilitycraft:enderman_calm"
 					]
 				}
 			}

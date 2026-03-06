@@ -9,23 +9,23 @@ tile.utilitycraft:absolute_wind_turbine.name=绝对风力涡轮机\n§7  Base �
 tile.utilitycraft:absolute_container.name=绝对容器\n§7- 最多存储10.7K物品\n- 可以存储流体\n- 可以存储能量
 
 ## 机器
-tile.utilitycraft:catalyst_weaver.name=催化剂编织者
-tile.utilitycraft:cryo_chamber.name=低温室
-tile.utilitycraft:duplicator.name=复制器\n§7- 使用暗物质复制物品\n- 接受的升级: §d§7, §e§7
-tile.utilitycraft:enchantment_station.name=附魔站\n§7- 修理、附魔、强化装备\n- 接受的升级: §c§7, §d§7, §e§7
-tile.utilitycraft:energizer.name=充能器
-tile.utilitycraft:liquifier.name=液化器
-tile.utilitycraft:laser_barrier.name=激光屏障
-tile.utilitycraft:residue_processor.name=残渣处理器
+tile.utilitycraft:catalyst_weaver.name=催化剂编织者\n§7接受的升级:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_chamber.name=低温室\n§7接受的升级:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:duplicator.name=复制器\n§7- 使用暗物质复制物品\n- 接受的升级: §a§r, §b§r, §d§r
+tile.utilitycraft:enchantment_station.name=附魔站\n§7- 修理、附魔、强化装备\n- 接受的升级: §a§r, §b§r, §d§r
+tile.utilitycraft:energizer.name=充能器\n§7接受的升级:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:liquifier.name=液化器\n§7接受的升级:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:laser_barrier.name=激光屏障\n§7接受的升级:\n  §a§r, §e§r
+tile.utilitycraft:residue_processor.name=残渣处理器\n§7接受的升级:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:singularity_fabricator.name=奇点制造器
-tile.utilitycraft:network_center.name=网络中心\n§7- 显示网络统计
-tile.utilitycraft:tabs_test_machine.name=标签测试机\n§7- UI标签测试方块
-tile.utilitycraft:overclock_tower.name=超频塔\n§7- 生成超频充能 (钛 + 能量)
+tile.utilitycraft:network_center.name=网络中心\n§7- 显示网络统计\n- 接受的升级: §a§r, §b§r, §d§r
+tile.utilitycraft:tabs_test_machine.name=标签测试机\n§7- UI标签测试方块\n- 接受的升级: §a§r, §b§r, §d§r
+tile.utilitycraft:overclock_tower.name=超频塔\n§7- 生成超频充能 (钛 + 能量)\n- 接受的升级: §a§r, §b§r, §d§r
 tile.utilitycraft:overclock_relay.name=超频中继器\n§7- 将塔的充能镜像到网络
-tile.utilitycraft:overclock_injector.name=超频注入器\n§7- 对面向的机器应用超频
-tile.utilitycraft:reinforced_extractor.name=强化提取器
-tile.utilitycraft:smart_importer.name=智能导入器
-tile.utilitycraft:reinforced_cable.name=强化电缆\n§7- 高容量能量/流体/超频主干
+tile.utilitycraft:overclock_injector.name=超频注入器\n§7- 对面向的机器应用超频\n- 接受的升级: §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_extractor.name=强化提取器\n§7接受的升级:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:smart_importer.name=智能导入器\n§7接受的升级:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_cable.name=强化电缆\n§7- 高容量能量/流体/超频主干\n- 接受的升级: §a§r, §b§r, §d§r
 
 ## 其他方块
 tile.utilitycraft:flat_conduit.name=平面管道\n§7  美观版本
@@ -80,6 +80,16 @@ item.utilitycraft:liquid_void=液态虚空胶囊
 ## 模块
 item.utilitycraft:size_upgrade=§g大小升级§7\n- 增加激光屏障区域
 item.utilitycraft:hyper_processing_upgrade=§d超级处理升级§7\n- 提高机器运行速度\n- 无额外能量消耗
+item.utilitycraft:curse_protection_module=§d诅咒保护模块§7\n- 降低附魔时出现诅咒的概率
+item.utilitycraft:enchantability_module=§d附魔能力模块 §r(Tier I)§7\n- 解锁附魔功能\n- 最大等级: 1
+item.utilitycraft:enchantability_module_2=§d附魔能力模块 §r(Tier II)§7\n- 最大附魔等级: 2
+item.utilitycraft:enchantability_module_3=§d附魔能力模块 §r(Tier III)§7\n- 最大附魔等级: 3\n- 可用中阶附魔
+item.utilitycraft:enchantability_module_4=§d附魔能力模块 §r(Tier IV)§7\n- 最大附魔等级: 4
+item.utilitycraft:enchantability_module_5=§d附魔能力模块 §r(Tier V)§7\n- 最大附魔等级: 5\n- 可用经验修补与无限
+item.utilitycraft:reinforcement_module=§d强化模块 §r(Tier I)§7\n- 解锁护甲强化
+item.utilitycraft:reinforcement_module_2=§d强化模块 §r(Tier II)§7\n- 提升耐久加成
+item.utilitycraft:reinforcement_module_3=§d强化模块 §r(Tier III)§7\n- 最大耐久加成
+item.utilitycraft:upgrade_package=§a升级包§7\n- 存储多个升级\n- 可批量应用到机器/传送带
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§a幸运网格\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
@@ -125,7 +135,7 @@ item.utilitycraft:cryofluid_capsule_8=低温液 Capsule §7\n- (8 Buckets)
 ## 实体
 entity.utilitycraft:absolute_container.name=§f绝对容器
 entity.utilitycraft:catalyst_weaver.name=§f催化剂编织者
-entity.utilitycraft:cloner.name=复制器
+entity.utilitycraft:duplicator.name=复制器
 entity.utilitycraft:cryo_chamber.name=§f低温室
 entity.utilitycraft:singularity_fabricator.name=奇点制造器
 entity.utilitycraft:liquifier.name=液化器
@@ -518,9 +528,3 @@ item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited 
 
 ## Modules
 item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules
-## Transportation - Bridge Path
-tile.utilitycraft:conveyor_bridge_path.name=§aConveyor Bridge Path\n§7- Active bridge connection between transmitter and receiver
-
-## Machines - Fixed Identifiers
-tile.utilitycraft:duplicator.name=Duplicator\n§7- Duplicates items using dark matter\n- Accepted upgrades: §a§7, §b§7, §d§7
-tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7- Repairs, enchants, reinforces gear\n- Module-controlled boosts

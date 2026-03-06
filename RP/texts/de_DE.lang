@@ -9,23 +9,23 @@ tile.utilitycraft:absolute_wind_turbine.name=Absolute Windturbine\n§7  Basisrat
 tile.utilitycraft:absolute_container.name=Absoluter Container\n§7- Speichert bis zu 10,7K Gegenstände\n- Kann Flüssigkeiten speichern\n- Kann Energie speichern
 
 ## Maschinen
-tile.utilitycraft:catalyst_weaver.name=Katalysatorweber
-tile.utilitycraft:cryo_chamber.name=Kryokammer
-tile.utilitycraft:duplicator.name=Duplikator\n§7- Dupliziert Gegenstände mit Dunkler Materie\n- Akzeptiert Upgrades: §d§7, §e§7
-tile.utilitycraft:enchantment_station.name=Verzauberungsstation\n§7- Repariert, verzaubert, verstärkt Ausrüstung\n- Akzeptiert Upgrades: §c§7, §d§7, §e§7
-tile.utilitycraft:energizer.name=Energisierer
-tile.utilitycraft:liquifier.name=Verflüssiger
-tile.utilitycraft:laser_barrier.name=Laserbarriere
-tile.utilitycraft:residue_processor.name=Rückstandsprozessor
+tile.utilitycraft:catalyst_weaver.name=Katalysatorweber\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_chamber.name=Kryokammer\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:duplicator.name=Duplikator\n§7- Dupliziert Gegenstände mit Dunkler Materie\n- Akzeptiert Upgrades: §a§r, §b§r, §d§r
+tile.utilitycraft:enchantment_station.name=Verzauberungsstation\n§7- Repariert, verzaubert, verstärkt Ausrüstung\n- Akzeptiert Upgrades: §a§r, §b§r, §d§r
+tile.utilitycraft:energizer.name=Energisierer\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:liquifier.name=Verflüssiger\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:laser_barrier.name=Laserbarriere\n§7Akzeptiert Upgrades:\n  §a§r, §e§r
+tile.utilitycraft:residue_processor.name=Rückstandsprozessor\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:singularity_fabricator.name=Singularitätsfabrikator
-tile.utilitycraft:network_center.name=Netzwerkzentrum\n§7- Zeigt Netzwerkstatistiken
-tile.utilitycraft:tabs_test_machine.name=Tabs-Testmaschine\n§7- UI-Tabs-Testblock
-tile.utilitycraft:overclock_tower.name=Übertaktungsturm\n§7- Erzeugt Übertaktungsladung (Titan + Energie)
+tile.utilitycraft:network_center.name=Netzwerkzentrum\n§7- Zeigt Netzwerkstatistiken\n- Akzeptiert Upgrades: §a§r, §b§r, §d§r
+tile.utilitycraft:tabs_test_machine.name=Tabs-Testmaschine\n§7- UI-Tabs-Testblock\n- Akzeptiert Upgrades: §a§r, §b§r, §d§r
+tile.utilitycraft:overclock_tower.name=Übertaktungsturm\n§7- Erzeugt Übertaktungsladung (Titan + Energie)\n- Akzeptiert Upgrades: §a§r, §b§r, §d§r
 tile.utilitycraft:overclock_relay.name=Übertaktungsrelais\n§7- Spiegelt Turmladung ins Netzwerk
-tile.utilitycraft:overclock_injector.name=Übertaktungsinjektor\n§7- Wendet Übertaktung auf die zugewandte Maschine an
-tile.utilitycraft:reinforced_extractor.name=Verstärkter Extraktor
-tile.utilitycraft:smart_importer.name=Intelligenter Importeur
-tile.utilitycraft:reinforced_cable.name=Verstärktes Kabel\n§7- Hochkapazitäts-Energie/Flüssigkeits/Übertaktungs-Rückgrat
+tile.utilitycraft:overclock_injector.name=Übertaktungsinjektor\n§7- Wendet Übertaktung auf die zugewandte Maschine an\n- Akzeptiert Upgrades: §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_extractor.name=Verstärkter Extraktor\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:smart_importer.name=Intelligenter Importeur\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_cable.name=Verstärktes Kabel\n§7- Hochkapazitäts-Energie/Flüssigkeits/Übertaktungs-Rückgrat\n- Akzeptiert Upgrades: §a§r, §b§r, §d§r
 
 ## Andere Blöcke
 tile.utilitycraft:flat_conduit.name=Flache Leitung\n§7  Ästhetische Version
@@ -80,6 +80,16 @@ item.utilitycraft:liquid_void=Flüssige-Leere-Kapsel
 ## Modules
 item.utilitycraft:size_upgrade=§gGrößen-Upgrade§7\n- Vergrößert Laserbarrierebereich
 item.utilitycraft:hyper_processing_upgrade=§dHyper-Verarbeitungs-Upgrade§7\n- Erhöht Maschinengeschwindigkeit\n- Keine zusätzlichen Energiekosten
+item.utilitycraft:curse_protection_module=§dFluchschutz-Modul§7\n- Verringert die Fluchchance beim Verzaubern
+item.utilitycraft:enchantability_module=§dVerzauberbarkeits-Modul §r(Stufe I)§7\n- Schaltet Verzauberung frei\n- Max. Stufe: 1
+item.utilitycraft:enchantability_module_2=§dVerzauberbarkeits-Modul §r(Stufe II)§7\n- Max. Verzauberungsstufe: 2
+item.utilitycraft:enchantability_module_3=§dVerzauberbarkeits-Modul §r(Stufe III)§7\n- Max. Verzauberungsstufe: 3\n- Verzauberungen mittlerer Stufe verfügbar
+item.utilitycraft:enchantability_module_4=§dVerzauberbarkeits-Modul §r(Stufe IV)§7\n- Max. Verzauberungsstufe: 4
+item.utilitycraft:enchantability_module_5=§dVerzauberbarkeits-Modul §r(Stufe V)§7\n- Max. Verzauberungsstufe: 5\n- Mending, Infinity verfügbar
+item.utilitycraft:reinforcement_module=§dVerstärkungs-Modul §r(Stufe I)§7\n- Schaltet Rüstungsverstärkung frei
+item.utilitycraft:reinforcement_module_2=§dVerstärkungs-Modul §r(Stufe II)§7\n- Verbesserter Haltbarkeitsbonus
+item.utilitycraft:reinforcement_module_3=§dVerstärkungs-Modul §r(Stufe III)§7\n- Maximaler Haltbarkeitsbonus
+item.utilitycraft:upgrade_package=§aUpgrade-Paket§7\n- Speichert mehrere Upgrades\n- Massenanwendung auf Maschinen/Förderbänder
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aGlücksgitter\n§7- Max. Drop-Stufe: Diamant\n§7- Gegenstandsmultiplikator: 2x
@@ -125,7 +135,7 @@ item.utilitycraft:cryofluid_capsule_8=Kryofluid-Kapsel §7\n- (8 Eimer)
 ## Entities
 entity.utilitycraft:absolute_container.name=§fAbsoluter Container
 entity.utilitycraft:catalyst_weaver.name=§fKatalysatorweber
-entity.utilitycraft:cloner.name=Duplikator
+entity.utilitycraft:duplicator.name=Duplikator
 entity.utilitycraft:cryo_chamber.name=§fKryokammer
 entity.utilitycraft:singularity_fabricator.name=Singularitätsfabrikator
 entity.utilitycraft:liquifier.name=Verflüssiger
@@ -518,9 +528,3 @@ item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited 
 
 ## Modules
 item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules
-## Transportation - Bridge Path
-tile.utilitycraft:conveyor_bridge_path.name=§aConveyor Bridge Path\n§7- Active bridge connection between transmitter and receiver
-
-## Machines - Fixed Identifiers
-tile.utilitycraft:duplicator.name=Duplicator\n§7- Duplicates items using dark matter\n- Accepted upgrades: §a§7, §b§7, §d§7
-tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7- Repairs, enchants, reinforces gear\n- Module-controlled boosts

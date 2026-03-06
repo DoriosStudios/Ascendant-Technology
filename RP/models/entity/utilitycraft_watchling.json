@@ -1,215 +1,98 @@
 {
-  "format_version": "1.12.0",
-  "minecraft:geometry": [
-    {
-      "description": {
-        "identifier": "geometry.utilitycraft_watchling",
-        "texture_width": 128,
-        "texture_height": 128,
-        "visible_bounds_width": 3,
-        "visible_bounds_height": 4.5,
-        "visible_bounds_offset": [
-          0,
-          1.75,
-          0
-        ]
-      },
-      "bones": [
-        {
-          "name": "Watchling",
-          "pivot": [
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "name": "Body",
-          "pivot": [
-            0,
-            31,
-            0
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -7.0,
-                19.0,
-                -4.0
-              ],
-              "size": [
-                14.0,
-                18.0,
-                6.0
-              ],
-              "uv": [
-                46,
-                0
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Watchling"
-        },
-        {
-          "name": "Head",
-          "pivot": [
-            0,
-            39,
-            -2
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -6.0,
-                37.0,
-                -7.0
-              ],
-              "size": [
-                12.0,
-                12.0,
-                11.0
-              ],
-              "uv": [
-                0,
-                0
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Body"
-        },
-        {
-          "name": "Arms",
-          "pivot": [
-            0,
-            34,
-            -1
-          ],
-          "parent": "Body"
-        },
-        {
-          "name": "Arm0",
-          "pivot": [
-            -9,
-            31,
-            -1
-          ],
-          "cubes": [
-            {
-              "origin": [
-                7.0,
-                2.0,
-                -4.0
-              ],
-              "size": [
-                6.0,
-                35.0,
-                6.0
-              ],
-              "uv": [
-                0,
-                23
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Arms"
-        },
-        {
-          "name": "Arm1",
-          "pivot": [
-            9,
-            31,
-            -1
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -13.0,
-                2.0,
-                -4.0
-              ],
-              "size": [
-                6.0,
-                35.0,
-                6.0
-              ],
-              "uv": [
-                24,
-                23
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Arms"
-        },
-        {
-          "name": "Legs",
-          "pivot": [
-            0,
-            20,
-            0
-          ],
-          "parent": "Watchling"
-        },
-        {
-          "name": "Leg0",
-          "pivot": [
-            -4,
-            17,
-            -1
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -5.0,
-                0.0,
-                -2.0
-              ],
-              "size": [
-                2.0,
-                19.0,
-                2.0
-              ],
-              "uv": [
-                48,
-                45
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Legs"
-        },
-        {
-          "name": "Leg1",
-          "pivot": [
-            4,
-            17,
-            -1
-          ],
-          "cubes": [
-            {
-              "origin": [
-                3.0,
-                0.0,
-                -2.0
-              ],
-              "size": [
-                2.0,
-                19.0,
-                2.0
-              ],
-              "uv": [
-                48,
-                24
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Legs"
-        }
-      ]
-    }
-  ]
+	"format_version": "1.10.0",
+	"geometry.utilitycraft_watchling": {
+		"texturewidth": 128,
+		"textureheight": 128,
+		"visible_bounds_width": 3,
+		"visible_bounds_height": 4,
+		"visible_bounds_offset": [0, 2, 0],
+		"bones": [
+			{
+				"name": "body",
+				"pivot": [0, 38, -0.5],
+				"rotation": [-180, 0, 180],
+				"reset": true,
+				"cubes": [
+					{
+						"origin": [-6, 18, -4.5],
+						"size": [12, 15, 6],
+						"uv": [0, 0]
+					}
+				]
+			},
+			{
+				"name": "head",
+				"parent": "body",
+				"pivot": [0, 33, -1.5],
+				"cubes": [
+					{
+						"origin": [-4.5, 33, -6.1],
+						"size": [9, 8, 9],
+						"uv": [37, 0]
+					}
+				]
+			},
+			{
+				"name": "rightArm",
+				"parent": "body",
+				"pivot": [-8, 31, -1.5],
+				"reset": true,
+				"cubes": [
+					{
+						"origin": [-10, 3, -3.5],
+						"size": [4, 30, 4],
+						"uv": [21, 22]
+					}
+				]
+			},
+			{
+				"name": "rightItem",
+				"parent": "rightArm",
+				"pivot": [-6, 15, 0.5]
+			},
+			{
+				"name": "leftArm",
+				"parent": "body",
+				"pivot": [8, 31, -1.5],
+				"reset": true,
+				"mirror": true,
+				"cubes": [
+					{
+						"origin": [6, 3, -3.5],
+						"size": [4, 30, 4],
+						"uv": [0, 22],
+						"mirror": false
+					}
+				]
+			},
+			{
+				"name": "rightLeg",
+				"parent": "body",
+				"pivot": [-2, 18, -0.9],
+				"reset": true,
+				"cubes": [
+					{
+						"origin": [-4, 0, -2.5],
+						"size": [2, 18, 2],
+						"uv": [42, 39]
+					}
+				]
+			},
+			{
+				"name": "leftLeg",
+				"parent": "body",
+				"pivot": [2, 18, -1.5],
+				"reset": true,
+				"mirror": true,
+				"cubes": [
+					{
+						"origin": [2, 0, -2],
+						"size": [2, 18, 2],
+						"uv": [42, 18],
+						"mirror": false
+					}
+				]
+			}
+		]
+	}
 }

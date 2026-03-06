@@ -21,54 +21,30 @@ Machine status legend:
 
 ---
 
-# Summary checklist
+# Summary by implementation rationale (4 categories)
 
-- [x] **Absolute Container**
-- [ ] **Abyssal Auto-Fisher**
-- [ ] **Adaptive Assembler**
-- [ ] **Arc-Press Forge**
-- [ ] **Atmospheric Synchronizer**
-- [x] **Catalyst Weaver**
-- [ ] **Centrifugal Siever**
-- [ ] **Chrono Harvester**
-- [ ] **Cold Fusion Reactor**
-- [ ] **Complex Siever line**
-- [x] **Cryo Chamber**
-- [ ] **Cryo Reservoir**
-- [ ] **Dimensional Teleporter**
-- [ ] **Dual Complex Siever**
-- [x] **Duplicator**
-- [x] **Enchantment Station**
-- [x] **Energizer**
-- [ ] **Genetic Seed Synthesizer**
-- [ ] **Impact Crusher**
-- [ ] **Induction Matrix Anvil**
-- [ ] **Industrial Burner**
-- [ ] **Interdimensional Infuser**
-- [ ] **Item Energizer Pad**
-- [x] **Laser Barrier**
-- [x] **Liquifier (Flux Crucible)**
-- [ ] **Magmatic Reactor Chamber**
-- [ ] **Mob Temporal Chamber**
-- [x] **Network Center**
-- [ ] **Nitrogen Collector (Nytrogen Collector)**
-- [ ] **Orbital Command Terminal**
-- [x] **Overclock Boost Network**
-- [x] **Overclock Relay**
-- [x] **Overclock Tower**
-- [ ] **Pattern Placer**
-- [ ] **Portable Power Cell**
-- [ ] **Pulverizer**
-- [ ] **Quantum Digitizer**
-- [x] **Reinforced Cable**
-- [x] **Residue Processor**
-- [ ] **Rift Anchor**
-- [ ] **Seismic Breaker**
-- [x] **Singularity Fabricator** (Duplicator variant)
-- [ ] **Tier 6 Dense Generators**
-- [ ] **Tungsten Gear Program**
-- [x] **Vaporworks Processor**
-- [ ] **Water Wheel**
+Status in title: **✔ Implemented** | **🔺 Not Implemented**
+
+| New Machines | Upgraded Machines | Items & Gear | Infrastructure & Systems |
+|---|---|---|---|
+| ✔ **Absolute Container** | 🔺 **Abyssal Auto-Fisher** | 🔺 **Item Energizer Pad** | 🔺 **Cryo Reservoir** |
+| 🔺 **Atmospheric Synchronizer** | 🔺 **Adaptive Assembler** | 🔺 **Portable Power Cell** | 🔺 **Dimensional Teleporter** |
+| ✔ **Catalyst Weaver** | 🔺 **Arc-Press Forge** | 🔺 **Tungsten Gear Program** | ✔ **Network Center** |
+| 🔺 **Cold Fusion Reactor** | 🔺 **Centrifugal Siever** | — | ✔ **Overclock Boost Network** |
+| ✔ **Cryo Chamber** | 🔺 **Chrono Harvester** | — | ✔ **Overclock Relay** |
+| ✔ **Duplicator** | 🔺 **Complex Siever line** | — | ✔ **Overclock Tower** |
+| ✔ **Enchantment Station** | 🔺 **Dual Complex Siever** | — | ✔ **Reinforced Cable** |
+| ✔ **Energizer** | 🔺 **Genetic Seed Synthesizer** | — | 🔺 **Rift Anchor** |
+| ✔ **Laser Barrier** | 🔺 **Impact Crusher** | — | 🔺 **Tier 6 Dense Generators** |
+| ✔ **Liquifier (Flux Crucible)** | 🔺 **Induction Matrix Anvil** | — | — |
+| 🔺 **Mob Temporal Chamber** | 🔺 **Industrial Burner** | — | — |
+| 🔺 **Nitrogen Collector (Nytrogen Collector)** | 🔺 **Interdimensional Infuser** | — | — |
+| 🔺 **Orbital Command Terminal** | 🔺 **Magmatic Reactor Chamber** | — | — |
+| ✔ **Residue Processor** | 🔺 **Pattern Placer** | — | — |
+| ✔ **Singularity Fabricator** | 🔺 **Pulverizer** | — | — |
+| ✔ **Vaporworks Processor** | 🔺 **Quantum Digitizer** | — | — |
+| — | 🔺 **Seismic Breaker** | — | — |
+| — | 🔺 **Water Wheel** | — | — |
 
 ---
 

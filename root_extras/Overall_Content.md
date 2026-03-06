@@ -27,6 +27,19 @@ Aqui, listarei os conteúdos principais presentes no ecossistema UtilityCraft, p
 - Estanho
 - Bronze
 - Darloonite Crystal
+### Energy Amplified Expansion
+- Zinco (Zinc | Não implementado ainda)
+- Boro (Boron | Não implementado ainda)
+- Magnésio (Magnesium | Não implementado ainda)
+- Adamantium (Não implementado ainda)
+- Urânio (Uranium | Não implementado ainda)
+- Chumbo (Lead | Não implementado ainda)
+- Tório (Thorium | Não implementado ainda)
+
+### Alltheaddonium Expansion
+- Vibranium
+- Alltheaddonium
+- Unobtainium
 
 ## Fluidos
 ### Vanilla
@@ -60,13 +73,21 @@ None
 ---
 
 Com isso, temos os seguintes dados:
-- Infundir a Gema Interdimensional **SEM** o Heavy Machinery Expansion e **SEM** o Energy Amplified Expansion usaria:
-    - Minérios, Cristais e Ligas: 13,
-    - Fluidos: 7,
-    - Gases: 1 (Vapor)
-- Infundir a Gema Interdimensional **COM** o Heavy Machinery Expansion e **COM** o Energy Amplified Expansion usaria:
-    - Minérios, Cristais e Ligas: 16,
-    - Fluidos: 9,
-    - Gases: 2 (Vapor, Amônia)
+- Infundir a Gema Interdimensional:
+    - **COM**: *
+    - **SEM**: Heavy Machinery, Energy Amplified, Alltheaddonium
+    - **Consumo**:
+        - Minérios, Cristais e Ligas: 13,
+        - Fluidos: 7,
+        - Gases: 1 (Vapor)
+    - **Total**: 21
+- Infundir a Gema Interdimensional:
+    - **COM**: Heavy Machinery, Energy Amplified, Alltheaddonium
+    - **SEM**: *
+    - **Consumo**:
+        - Minérios, Cristais e Ligas: 26,
+        - Fluidos: 9,
+        - Gases: 2 (Vapor, Amônia)
+    - **Total**: 37
 
 Inclusive, com isso, vemos que vai ser caro para um caralho. Terei que fazer ele [Interdimensional Infuser] ser multiblock.

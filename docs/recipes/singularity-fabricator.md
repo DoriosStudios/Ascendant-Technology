@@ -15,4 +15,4 @@ The result always includes the original item + one copy (total ×2), with output
 - Wither Skeleton Skull
 - Dragon Head
 
-For rarity/time details, see the [Cloner recipe page](cloner.md).
+For rarity/time details, see the [Cloner recipe page](duplicator.md).

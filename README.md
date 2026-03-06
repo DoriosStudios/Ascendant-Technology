@@ -7,7 +7,7 @@ Here, you have:
 - Cool UI
 - Cool Armor
 - More content to grind
-- Better versions of UitlityCraft machines
+- Better versions of UtilityCraft machines
 - Way more stuff to do and store
 - A bigger chest
 And lots of more content.

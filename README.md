@@ -12,6 +12,8 @@ Here, you have:
 - A bigger chest
 And lots of more content.
 
+See every planned feature [here](./Machines_roadmap.md)
+
 Anyway, it's on beta right now, so expect bugs and stuff not working properly.
 
 ## [ [Download](https://github.com/DoriosStudios/Ascendant-Technology/releases) ]   

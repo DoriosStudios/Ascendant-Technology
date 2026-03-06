@@ -104,6 +104,8 @@ Stability and correctness updates for the Overclock system, improved machine upg
 ## UI/UX
 - Expanded localization coverage from 3 to 8 languages (`en_US`, `pt_BR`, `es_MX`, `fr_FR`, `de_DE`, `ru_RU`, `ja_JP`, `zh_CN`).
 - Reviewed and aligned translation formatting/parity across existing languages (`en_US`, `pt_BR`, `es_MX`), including capsule formatting and missing UI/block entries.
+- Standardized Ascane Engine module/upgrade localization entries across remaining locales (`de_DE`, `fr_FR`, `ja_JP`, `ru_RU`, `zh_CN`) for Curse Protection, Enchantability (Tier I-V), Reinforcement (Tier I-III), and Upgrade Package.
+- Added localized "supported upgrades" listings to machine block names across non-English locales (`pt_BR`, `es_MX`, `de_DE`, `fr_FR`, `ja_JP`, `ru_RU`, `zh_CN`) to match `en_US` tooltip behavior.
 - Fixed Mob Magnet value placeholders so subtitles render correctly in all languages.
 - Fixed panel textures and background sizing for new panels.
 - Moved Mob Magnet filter controls into the main settings panel and stabilized filter mode labels.
@@ -167,7 +169,22 @@ Stability and correctness updates for the Overclock system, improved machine upg
   - Aligned `minecraft:hurt_when_wet`, `minecraft:shooter`, `minecraft:spawn_entity`, and projectile field naming for newer format validation.
 - Normalized Enderling `type_family` tags and added missing ranged-attack priorities.
   - Snareling and Blastling now use canonical lowercase families and explicit `minecraft:behavior.ranged_attack` priorities for more consistent projectile combat behavior.
+- Fixed Enderling projectile runtime behavior and combat presentation.
+  - Snareling web now triggers an impact event that applies an AoE root-like slow field (`slowness` 255 in radius) instead of only direct-hit damage.
+  - Blastling ammo now correctly triggers its splash explosion event on impact with non-griefing settings.
+  - Snareling/Blastling ranged attack sounds are now mapped to custom projectile shot SFX.
+  - Enderling client entities now keep the `mad` animation active whenever they are angry, including while stationary.
+- Refined Enderling combat follow-up and projectile presentation.
+  - Watchling melee now keeps target tracking after the first hit (reduced stop stalls + enabled attack tracking).
+  - Blastling projectile explosion power was reduced from `1.5` to `1.0` for a tighter blast radius.
+  - Projectile visuals now use an improved dart-like model inspired by End Expansion reference assets.
+  - Enderling client entities now also trigger `mad` during active attacks via `query.is_delayed_attacking`.
 - Added Enderling client assets (textures, spawn-egg icons, and sound definitions) from the End Expansion reference pack.
+- Reworked Enderling creature baselines using Ender Awakening v1.0.3.3 references (aggressive remap profile).
+  - `utilitycraft:blastling` now uses the Ender Awakening blastling calm/angry state machine and goo-style projectile profile (`utilitycraft:blastling_ammo`).
+  - `utilitycraft:watchling` now uses the Ender Awakening watchling aggression flow (calm → angry) with attack-driven client animation.
+  - `utilitycraft:snareling` and `utilitycraft:endersent` retained the original Ascendant Technology baselines (no Ender Awakening counterparts).
+  - RP models/animations for Blastling and Watchling were replaced with Ender Awakening-derived rigs and animation sets while preserving `utilitycraft:*` identifiers; Snareling and Endersent remain on original rigs/animations.
 
 ### HUD & UI Assets
 - HUD and lore fluid display now uses bucket-based units: `mB → B → KB → MB → GB → TB → PB` (decimal scaling).

@@ -11,7 +11,7 @@ All language files are located in `/RP/texts/` and follow the Minecraft Bedrock 
 The following languages are currently supported (defined in `languages.json`):
 
 - **en_US** - English (United States) - Base language
-- **pt_BR** - Portuguese (Brazil)
+- **pt_BR** - Portuguese (Brazil) - Base language
 - **es_MX** - Spanish (Mexico)
 - **fr_FR** - French (France)
 - **de_DE** - German (Germany)
@@ -68,19 +68,28 @@ Minecraft uses special formatting codes prefixed with `§` to control text color
 - `§e` - Yellow
 - `§f` - White
 - `§g` - Minecoin Gold (special)
-- `§u` - Custom color used by this pack's font palette
+- `§h` - Minecoin Silver (special)
+- `§i` - Iron (special)
+- `§j` - Netherite (special)
+- `§m` - Redstone (special)
+- `§n` - Cocoa (special)
+- `§p` - Resin (special)
+- `§q` - Emerald (special)
+- `§s` - Diamond (special)
+- `§t` - Lapis (special)
+- `§u` - Amethyst (special)
+- `§v` - Copper (special)
+
 
 ### Format Codes
 - `§r` - Reset formatting
 - `§l` - Bold
 - `§o` - Italic
-- `§n` - Underline
-- `§m` - Strikethrough
-- `§k` - Obfuscated
+- `§k` - Obfuscated (random characters)
 
 ### Special Characters in Translations
 
-Some translations include special Unicode characters (e.g., `\uf5f0`, `\uf5f1`, `\uf5e1`) that represent custom symbols or upgrade icons. These should be preserved exactly as they appear in the English version.
+Some translations include special Unicode characters (e.g., [`\uf5f0`, `\uf5f1`, `\uf5e1`], which appear in `en_US.lang` as glyphs like ``, ``, ``) that represent custom symbols or upgrade icons. These should be preserved exactly as they appear in the English version.
 
 ## Translation Guidelines
 

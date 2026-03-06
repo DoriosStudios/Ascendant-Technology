@@ -31,7 +31,7 @@ This document summarizes the localization expansion completed for Ascendant Tech
 - ✅ Added missing `water_label` UI text
 - ✅ Added missing `cryofluid_label` UI text
 - ✅ Added missing `flat_conduit` block entry
-- ✅ Confirmed `cloner` upgrade list includes §b (Efficiency) for parity
+- ✅ Confirmed `duplicator` upgrade list includes §b (Efficiency) for parity
 - ✅ Added description to `network_center` block
 - ✅ Fixed `mob_magnet.settings.range` formatting code (added §r)
 - ✅ Added description to `laser_barrier_field` block
@@ -39,7 +39,7 @@ This document summarizes the localization expansion completed for Ascendant Tech
 ### Spanish-Mexico (es_MX)
 - ✅ Removed non-existent `liquified_aetherium_bucket` entry
 - ✅ Fixed all capsule entries (24 items) to include proper §7 formatting and \n- separators
-- ✅ Confirmed `cloner` upgrade list includes §b (Efficiency) for parity
+- ✅ Confirmed `duplicator` upgrade list includes §b (Efficiency) for parity
 - ✅ Added description to `network_center` block
 - ✅ Fixed `mob_magnet.settings.range` formatting code (added §r)
 

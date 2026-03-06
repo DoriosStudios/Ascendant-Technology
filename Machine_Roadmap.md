@@ -12,9 +12,9 @@ Machine status legend:
 
 # Executive update (2026-03)
 
-- `Water Wheel` is no longer part of Ascendant Technology's generator line.
-  - Status in Ascendant: `🔴 On Hold / Cut`
-  - Marker: `Planned for other expansion`
+- **Water Wheel** is no longer part of Ascendant Technology's generator line.
+  - Status in Ascendant: *🔴 On Hold / Cut*
+  - Marker: *Planned for other expansion*
 - Ascendant will keep machine inspiration from UtilityCraft, but with stronger identity and functionality upgrades.
 - Tungsten-focused industrial content is now prioritized (durability, heat handling, dense machinery casing).
 - Steam and nitrogen are treated as practical industrial resources, not decorative side systems.

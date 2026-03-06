@@ -257,7 +257,7 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
 Steam and cooling resources must be mechanically relevant, not cosmetic.
 
 - 🟡 **Steam practical roles**
-  - Pressure-assisted throughput in **Pulverizer** and **Industrial Burner**.
+  - Pressure-assisted throughput in **Pulverizer** and **Industrial Burner** or other machines.
   - Steam-conditioned cycles for selected siever variants.
   - Temporary thermal acceleration mode with energy premium.
 

@@ -21,8 +21,8 @@ This addon is on beta right now, so you may find bugs and features that does not
 ---
 
 See also:
+- **[UtilityCraft](https://github.com/DoriosStudios/UtilityCraft)** *(Main Add-on)*
 - **[Heavy Machinery Expansion](https://github.com/DoriosStudios/UtilityCraft-Heavy-Machinery)**
-- **[UtilityCraft](https://github.com/DoriosStudios/UtilityCraft)**
 - [Known Bugs](./bugs.md).
 
 ---

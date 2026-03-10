@@ -379,23 +379,26 @@ const coolingRecipes = [
         output: { id: 'minecraft:ice', amount: 1 },
         fluid: { type: 'water', amount: 100, source: 'water', label: 'Water' },
         energyCost: 16000,
-        time: 1
+        time: 60,
+        seconds: 3
     }),
     defineCryoRecipe({
         id: 'utilitycraft:ice_to_packed_ice',
         category: CATEGORY.COOLING,
         input: { id: 'minecraft:ice', amount: 1 },
         output: { id: 'minecraft:packed_ice', amount: 1 },
-        energyCost: 4000,
-        time: 100
+        energyCost: 16000,
+        time: 100,
+        seconds: 5
     }),
     defineCryoRecipe({
         id: 'utilitycraft:packed_ice_to_blue_ice',
         category: CATEGORY.COOLING,
         input: { id: 'minecraft:packed_ice', amount: 1 },
         output: { id: 'minecraft:blue_ice', amount: 1 },
-        energyCost: 8000,
-        time: 200
+        energyCost: 16000,
+        time: 300,
+        seconds: 15
     })
 ];
 

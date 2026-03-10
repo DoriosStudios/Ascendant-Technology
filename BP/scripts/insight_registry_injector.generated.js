@@ -220,7 +220,6 @@ const ADDON_CONTENT = Object.freeze({
     "utilitycraft:fluid_tank_cryofluid",
     "utilitycraft:fluid_tank_dark_matter",
     "utilitycraft:fluid_tank_liquified_aetherium",
-    "utilitycraft:gas_tube",
     "utilitycraft:hyper_processing_upgrade",
     "utilitycraft:laser_barrier",
     "utilitycraft:laser_barrier_field",

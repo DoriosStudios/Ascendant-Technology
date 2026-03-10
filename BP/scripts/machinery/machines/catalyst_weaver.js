@@ -122,7 +122,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         // Priority 4: Check fluid requirements with specific messages
         if (recipe && recipe.fluid?.type) {
             const tankType = tank.getType()
-            const fluidName = DoriosAPI.utils.capitalizeFirst(recipe.fluid.type)
+            const fluidName = DoriosAPI.utils.formatIdToText(recipe.fluid.type)
             
             if (tankType !== 'empty' && tankType !== recipe.fluid.type) {
                 showMachineWarning(machine, tank, `Wrong Fluid\n§7Need ${fluidName}`, { lore: sharedLore })

@@ -104,8 +104,6 @@ Stability and correctness updates for the Overclock system, improved machine upg
 ## UI/UX
 - Expanded localization coverage from 3 to 8 languages (`en_US`, `pt_BR`, `es_MX`, `fr_FR`, `de_DE`, `ru_RU`, `ja_JP`, `zh_CN`).
 - Reviewed and aligned translation formatting/parity across existing languages (`en_US`, `pt_BR`, `es_MX`), including capsule formatting and missing UI/block entries.
-- Standardized Ascane Engine module/upgrade localization entries across remaining locales (`de_DE`, `fr_FR`, `ja_JP`, `ru_RU`, `zh_CN`) for Curse Protection, Enchantability (Tier I-V), Reinforcement (Tier I-III), and Upgrade Package.
-- Added localized "supported upgrades" listings to machine block names across non-English locales (`pt_BR`, `es_MX`, `de_DE`, `fr_FR`, `ja_JP`, `ru_RU`, `zh_CN`) to match `en_US` tooltip behavior.
 - Fixed Mob Magnet value placeholders so subtitles render correctly in all languages.
 - Fixed panel textures and background sizing for new panels.
 - Moved Mob Magnet filter controls into the main settings panel and stabilized filter mode labels.

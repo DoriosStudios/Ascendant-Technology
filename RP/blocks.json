@@ -62,9 +62,6 @@
 	"utilitycraft:reinforced_cable": {
 		"sound": "metal"
 	},
-	"utilitycraft:gas_tube": {
-		"sound": "metal"
-	},
 	"utilitycraft:overclock_tower": {
 		"sound": "metal"
 	},

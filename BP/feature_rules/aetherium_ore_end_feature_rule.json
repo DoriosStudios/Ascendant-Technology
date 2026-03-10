@@ -3,7 +3,7 @@
   "minecraft:feature_rules": {
     "description": {
       "identifier": "utilitycraft:aetherium_ore_end_feature_rule",
-      "places_feature": "utilitycraft:aetherium_ore_feature"
+      "places_feature": "utilitycraft:aetherium_ore_end_feature"
     },
     "conditions": {
       "placement_pass": "underground_pass",

@@ -1,5 +1,5 @@
 import { system } from "@minecraft/server";
-import { Energy, FluidManager, GasManager } from "./machinery/AscendantMachinery/core.js";
+import { Energy, FluidManager } from "./machinery/AscendantMachinery/core.js";
 
 const REGISTRATION_MARKER = "__insightInjectorsAscendantRegistered";
 const REGISTRATION_RETRY_TICKS = 20;
@@ -10,7 +10,6 @@ const INSIGHT_CUSTOM_COMPONENT_KEYS = Object.freeze([
     "customRotationInfo",
     "customMachineProgress",
     "customFluidInfo",
-    "customGasInfo",
     "customVariantPreview"
 ]);
 
@@ -56,15 +55,6 @@ function formatFluid(value) {
     try {
         if (typeof FluidManager?.formatFluid === "function") {
             return FluidManager.formatFluid(value);
-        }
-    } catch { /* fallback */ }
-    return `${Math.max(0, Math.floor(Number(value) || 0))} mB`;
-}
-
-function formatGas(value) {
-    try {
-        if (typeof GasManager?.formatGas === "function") {
-            return GasManager.formatGas(value);
         }
     } catch { /* fallback */ }
     return `${Math.max(0, Math.floor(Number(value) || 0))} mB`;
@@ -137,40 +127,6 @@ function getFluidLines(context, machineEntity) {
         }
     } catch {
         // FluidManager unavailable or entity incompatible — skip silently.
-    }
-
-    return lines;
-}
-
-function getGasLines(context, machineEntity) {
-    if (!context.playerSettings?.showCustomGasInfo || !machineEntity) {
-        return [];
-    }
-
-    if (!context.block?.hasTag?.("dorios:gas")) {
-        return [];
-    }
-
-    const lines = [];
-
-    try {
-        for (let i = 0; ; i++) {
-            const gm = GasManager.findType(machineEntity, i);
-            if (!gm) break;
-
-            const stored = gm.get();
-            const cap = gm.getCap();
-            const type = gm.getType();
-
-            if (cap <= 0) break;
-
-            const typeLabel = (!type || type === "empty") ? "Empty" : capitalize(type);
-            const prefix = i > 0 ? `Gas [${i}]` : "Gas";
-
-            lines.push(`${prefix} (${typeLabel}): ${formatGas(stored)} / ${formatGas(cap)}${formatPercent(stored, cap)}`);
-        }
-    } catch {
-        // GasManager unavailable or entity incompatible — skip silently.
     }
 
     return lines;
@@ -288,9 +244,6 @@ function collectAscendantBlockFields(context) {
 
     const fluidLines = getFluidLines(context, machineEntity);
     for (const fl of fluidLines) lines.push(fl);
-
-    const gasLines = getGasLines(context, machineEntity);
-    for (const gl of gasLines) lines.push(gl);
 
     const rotationLine = getRotationLine(context, states);
     if (rotationLine) lines.push(rotationLine);

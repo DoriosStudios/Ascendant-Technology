@@ -40,7 +40,6 @@
 					"energy_cap": 256000000,
 					"energy_cost": 9600,
 					"rate_speed_base": 24000,
-					"dynamic_rate": true,
 					"upgrades": [
 						6,
 						7,

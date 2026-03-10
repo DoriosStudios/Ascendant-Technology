@@ -181,7 +181,8 @@ const nativeCatalystWeaverRecipes = [
         speedModifier: 0.5
     }),
     defineWeaverRecipe({
-        input: {id: 'minecraft:amethyst_shard', amount: 1},
+        input: {id: 'utilitycraft:aetherium_shard', amount: 1},
+        catalysts: [ {id: 'minecraft:amethyst_shard', amount: 1} ],
         fluid: {type: 'dark_matter', amount: 800},
         output: {id: 'utilitycraft:refined_aetherium_shard', amount: 1}
     })

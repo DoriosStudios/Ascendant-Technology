@@ -22,18 +22,18 @@
       "animations": {
         "walk": "animation.utilitycraft_endersent.walk",
         "idle": "animation.utilitycraft_endersent.idle",
-        "mad": "animation.utilitycraft_endersent.mad"
+        "attack": "animation.utilitycraft_endersent.attack"
       },
       "scripts": {
         "animate": [
           {
-    		"walk": "query.is_moving && !query.has_target"
+            "attack": "query.property('utilitycraft:endersent_attack_state') > 0"
           },
           {
-    		"mad": "query.has_target"
+            "walk": "query.property('utilitycraft:endersent_attack_state') == 0 && (query.has_target || query.is_moving)"
           },
           {
-    		"idle": "!query.is_moving && !query.has_target"
+            "idle": "!query.is_moving && !query.has_target && query.property('utilitycraft:endersent_attack_state') == 0"
           }
         ]
       }

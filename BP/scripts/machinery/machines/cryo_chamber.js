@@ -1,5 +1,5 @@
 import { ItemStack } from "@minecraft/server";
-import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../AscendantMachinery/core.js';
+import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js';
 import { tickCoolingAuras, stopCoolingAuraAt } from '../multi_core.js';
 import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../config/recipes/cryo_chamber.js';
 
@@ -16,18 +16,18 @@ import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../confi
  * - [1] Stabilizer status label
  * - [2] Stabilizer progress indicator
  * - [3] Stabilizer input
- * - [4,5,9] Upgrade slots (energy, speed)
- * - [6-8,15-17,24-26] Cooling grid (inputs/outputs share slot)
- * - [10] Water input slot (generator)
- * - [11] Water tank display
- * - [12] Cryofluid capsule slot (output)
- * - [13] Cryofluid tank display
- * - [14] Stabilizer output slot
- * - [19] Titanium catalyst slot (generator)
- * - [21] Lapis slot (generator)
- * - [18] Cooling status label
- * - [20] Generator status label
- * - [23] Layout guide indicator
+ * - [4-12] Cooling grid (inputs/outputs share slot)
+ * - [13] Water input slot (generator)
+ * - [14] Water tank display
+ * - [15] Cryofluid capsule slot (output)
+ * - [16] Cryofluid tank display
+ * - [17] Titanium catalyst slot (generator)
+ * - [18] Lapis slot (generator)
+ * - [19-21] Upgrade slots (energy, speed)
+ * - [22] Cooling status label
+ * - [23] Generator status label
+ * - [24] Stabilizer output slot
+ * - [25] Layout guide indicator
  */
 
 // Slot constants
@@ -35,18 +35,18 @@ const ENERGY_SLOT = 0;
 const STABILIZER_STATUS_SLOT = 1;
 const STABILIZER_PROGRESS_SLOT = 2;
 const STABILIZER_INPUT_SLOT = 3;
-const UPGRADE_SLOTS = [4, 5, 9];
-const COOLING_STATUS_SLOT = 18;
-const WATER_SLOT = 10;
-const WATER_DISPLAY_SLOT = 11;
-const CRYOFLUID_SLOT = 12;
-const CRYOFLUID_DISPLAY_SLOT = 13;
-const TITANIUM_SLOT = 19;
-const LAPIS_SLOT = 21;
-const STABILIZER_OUTPUT_SLOT = 14;
-const FREEZER_GRID_SLOTS = [6, 7, 8, 15, 16, 17, 24, 25, 26];
-const GENERATOR_STATUS_SLOT = 20;
-const GUIDE_SLOT = 23;
+const UPGRADE_SLOTS = [19, 20, 21];
+const COOLING_STATUS_SLOT = 22;
+const WATER_SLOT = 13;
+const WATER_DISPLAY_SLOT = 14;
+const CRYOFLUID_SLOT = 15;
+const CRYOFLUID_DISPLAY_SLOT = 16;
+const TITANIUM_SLOT = 17;
+const LAPIS_SLOT = 18;
+const STABILIZER_OUTPUT_SLOT = 24;
+const FREEZER_GRID_SLOTS = [4, 5, 6, 7, 8, 9, 10, 11, 12];
+const GENERATOR_STATUS_SLOT = 23;
+const GUIDE_SLOT = 25;
 
 const MODULE_LABELS = {
     stabilizer: 'Cryo Stabilizer',
@@ -290,9 +290,7 @@ function processItemRecipe(machine, tanks, recipes, settings, moduleConfig) {
 
     const consumption = machine.boosts.consumption;
     const needed = energyCost - progress;
-    const rate = Number.isFinite(machine.processingRate) && machine.processingRate > 0
-        ? machine.processingRate
-        : machine.rate;
+    const rate = resolveModuleSpendRate(machine, recipe, settings, energyCost);
     const spendable = Math.min(machine.energy.get(), rate, needed * consumption);
 
     if (spendable > 0) {
@@ -388,9 +386,7 @@ function processCoolingSlot(machine, settings, recipes, slot, tanks) {
 
     const consumption = machine.boosts.consumption;
     const needed = energyCost - progress;
-    const rate = Number.isFinite(machine.processingRate) && machine.processingRate > 0
-        ? machine.processingRate
-        : machine.rate;
+    const rate = resolveModuleSpendRate(machine, recipe, settings, energyCost, { timeMultiplier: batchCount });
     const spendable = Math.min(machine.energy.get(), rate, needed * consumption);
 
     if (spendable > 0) {
@@ -1036,4 +1032,68 @@ function getRecipeIndicator(recipe, fallback) {
         return recipe.ui.indicator;
     }
     return fallback;
+}
+
+function resolveRecipeSecondsForDynamicRate(recipe) {
+    if (!recipe || typeof recipe !== 'object') return null;
+
+    const candidates = [
+        recipe.timeSeconds,
+        recipe.seconds,
+        recipe.processingTimeSeconds
+    ];
+
+    for (const candidate of candidates) {
+        const seconds = Number(candidate);
+        if (Number.isFinite(seconds) && seconds > 0) {
+            return seconds;
+        }
+    }
+
+    return null;
+}
+
+function resolveModuleSpendRate(machine, recipe, settings, energyCost, options = {}) {
+    const defaultRate = Number.isFinite(machine.processingRate) && machine.processingRate > 0
+        ? machine.processingRate
+        : machine.rate;
+
+    if (settings?.machine?.dynamic_rate !== true) {
+        return defaultRate;
+    }
+
+    const baseSeconds = resolveRecipeSecondsForDynamicRate(recipe);
+    if (!baseSeconds) {
+        return defaultRate;
+    }
+
+    const multiplier = Math.max(1, Number(options.timeMultiplier) || 1);
+    const targetSeconds = Math.max(Number.EPSILON, baseSeconds * multiplier);
+
+    const originalBaseRate = machine.baseRate;
+    const originalRate = machine.rate;
+    const originalProcessingRate = machine.processingRate;
+
+    const applied = applyDynamicRecipeRate(
+        machine,
+        {
+            ...recipe,
+            timeSeconds: targetSeconds
+        },
+        {
+            energyCost,
+            speedMultiplier: machine.boosts?.speed ?? 1,
+            consumptionMultiplier: machine.boosts?.consumption ?? 1
+        }
+    );
+
+    const derivedRate = applied && Number.isFinite(machine.processingRate) && machine.processingRate > 0
+        ? machine.processingRate
+        : defaultRate;
+
+    machine.baseRate = originalBaseRate;
+    machine.rate = originalRate;
+    machine.processingRate = originalProcessingRate;
+
+    return derivedRate;
 }

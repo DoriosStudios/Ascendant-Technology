@@ -2,9 +2,9 @@
   "format_version": "1.17.0",
   "minecraft:ore_feature": {
     "description": {
-      "identifier": "utilitycraft:aetherium_ore_feature"
+      "identifier": "utilitycraft:aetherium_ore_end_feature"
     },
-    "count": 3,
+    "count": 7,
     "replace_rules": [
       {
         "places_block": "utilitycraft:deepslate_aetherium_ore",

@@ -26,16 +26,19 @@
 					"energy_cap": 128000000,
 					"energy_cost": 4000,
 					"rate_speed_base": 2400,
+					"dynamic_rate": true,
 					"fluid_cap": 64000,
 					"fluid_rate": 64000,
-					"upgrades": [4, 5, 9],
-					"hidden_slots": [22]
+					"upgrades": [19, 20, 21],
+					"hidden_slots": [26]
 				}
 			},
 			"utilitycraft:special_container":{
-				"Cooling Chamber": [6, 7, 8, 15, 16, 17, 24, 25, 26],
 				"Stabilizer": 3,
-				"Cryofluid Generator": [19, 21]
+				"Cooling Chamber": [4, 5, 6, 7, 8, 9, 10, 11, 12],
+				"Cryofluid Generator": [13, 17, 18],
+				"Upgrades": [19, 20, 21],
+				"Output": [24]
 			},
 			"utilitycraft:machine_recipes": {
 				"type": "cryo_chamber"

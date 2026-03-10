@@ -1,118 +1,28 @@
-import { ItemStack, EnchantmentTypes, world } from '@minecraft/server'
+import { ItemStack, EnchantmentTypes, world, system } from '@minecraft/server'
 import { Machine, Energy, FluidManager } from '../AscendantMachinery/core.js'
 
 // ==================== SLOT LAYOUT (32 total) ====================
 // Fixed slots: 0=Energy, 1=Status, 2=Progress
-// Upgrade slots: 3-5 (MUST remain here)
-// Main grid: 6-14 (9 slots)
-// Module slots: 15-17 (3 slots)
-// Disenchant section: 18-21 (source, catalyst, book storage, progress)
+// Main grid: 3-11 (9 slots)
+// Module slots: 12-14 (3 slots)
+// Disenchant section: 15-18 (source, catalyst, book storage, progress)
+// Upgrade slots: 19-21
 // Disenchant outputs: 22-30 (9 slots - expanded from 7)
 // Disenchant status: 31 (for HUD updates)
 const ENERGY_SLOT = 0
 const STATUS_SLOT = 1
 const PROGRESS_SLOT = 2
-const UPGRADE_SLOTS = [3, 4, 5]
-const GRID_SLOTS = [6, 7, 8, 9, 10, 11, 12, 13, 14]
-const MODULE_SLOTS = [15, 16, 17]
-const DISENCHANT_SOURCE_SLOT = 18
-const DISENCHANT_CATALYST_SLOT = 19
-const DISENCHANT_BOOK_STORAGE_SLOT = 20
-const DISENCHANT_PROGRESS_SLOT = 21
+const UPGRADE_SLOTS = [19, 20, 21]
+const GRID_SLOTS = [3, 4, 5, 6, 7, 8, 9, 10, 11]
+const MODULE_SLOTS = [12, 13, 14]
+const DISENCHANT_SOURCE_SLOT = 15
+const DISENCHANT_CATALYST_SLOT = 16
+const DISENCHANT_BOOK_STORAGE_SLOT = 17
+const DISENCHANT_PROGRESS_SLOT = 18
 const DISENCHANT_OUTPUT_SLOTS = [22, 23, 24, 25, 26, 27, 28, 29, 30]
 const DISENCHANT_STATUS_SLOT = 31
 
-// ==================== ENERGY CONFIG ====================
-const ENERGY_CONFIG = Object.freeze({
-    BASE_COST: 8000,
-    INDUCTION_ANVIL_DIVISOR: 10,
-    REPAIR_MULTIPLIER: 2.5,
-    ENCHANT_OPERATION_COST: 8000
-})
-
-// ==================== MODULE CONFIG ====================
-const MODULE_IDS = Object.freeze({
-    base: 'utilitycraft:ascane_module_base',
-    enchantability: [
-        null,
-        'utilitycraft:enchantability_module',
-        'utilitycraft:enchantability_module_2',
-        'utilitycraft:enchantability_module_3',
-        'utilitycraft:enchantability_module_4',
-        'utilitycraft:enchantability_module_5'
-    ],
-    reinforcement: [
-        null,
-        'utilitycraft:reinforcement_module',
-        'utilitycraft:reinforcement_module_2',
-        'utilitycraft:reinforcement_module_3'
-    ],
-    curseProtection: [
-        'utilitycraft:curse_protection_module'
-    ]
-})
-
-// ==================== REINFORCEMENT CONFIG ====================
-const REINFORCEMENT_CONFIG = Object.freeze({
-    RATIOS: [0, 0.25, 0.5, 1],
-    PROP: 'utilitycraft:reinforcement',
-    LORE_PATTERN: /Reinforcement\s*:\s*(\d+)/i,
-    LORE_PREFIX: '§r§9Reinforcement: '
-})
-
-// ==================== ENCHANTMENT CONFIG ====================
-const ENCHANT_CONFIG = Object.freeze({
-    SIGNATURE_PROP: 'utilitycraft:ascane_enchant_signature',
-    PLAN_PROP: 'utilitycraft:ascane_enchant_plan'
-})
-
-// ==================== CURSE CONFIG ====================
-const CURSE_CONFIG = Object.freeze({
-    ENCHANT_IDS: ['minecraft:binding', 'minecraft:vanishing'],
-    CHANCE_BASE: 0.15,
-    CHANCE_PER_ENCHANT: 0.01,
-    CHANCE_PER_PROTECTION: 0.05,
-    PROTECTION_COST_MULTIPLIER: 8
-})
-
-// ==================== TIME CONFIG ====================
-const TIME_CONFIG = Object.freeze({
-    ENCHANT_SECONDS_PER_CHANGE: 2,
-    REPAIR_SECONDS: 1,
-    REINFORCEMENT_SECONDS: 1,
-    MIN_PROCESS_SECONDS: 1
-})
-
-// ==================== XP CONFIG ====================
-const XP_CONFIG = Object.freeze({
-    TANK_TYPE: 'xp',
-    TANK_CAP_DEFAULT: 128000,
-    PER_ENCHANT: 1000
-})
-
-// ==================== DISENCHANT CONFIG ====================
-const DISENCHANT_CONFIG = Object.freeze({
-    CATALYST_IDS: [
-        'utilitycraft:refined_aetherium_shard',
-        'utilitycraft:refined_aetherium'
-    ]
-})
-
-/**
- * Module-tier target levels for enchant upgrades (array-based mapping).
- * - MODULE_ENCHANT_LEVELS: enchantment maxLevel buckets.
- * - MODULE_ENCHANT_MODULES: module tier indices.
- * - MODULE_ENCHANT_TARGETS: matrix[ moduleIndex ][ levelIndex ] => target level (0 = not allowed).
- */
-const MODULE_ENCHANT_LEVELS = Object.freeze([5, 4, 3, 2, 1])
-const MODULE_ENCHANT_MODULES = Object.freeze([1, 2, 3, 4, 5])
-const MODULE_ENCHANT_TARGETS = Object.freeze([
-    [1, 1, 1, 0, 0], // Module 1: 5/4/3 -> 1
-    [2, 2, 0, 0, 0], // Module 2: 5/4 -> 2
-    [3, 3, 2, 1, 0], // Module 3: 5/4 -> 3, 3 -> 2, 2 -> 1
-    [4, 0, 0, 0, 0], // Module 4: 5 -> 4
-    [5, 4, 3, 2, 1]  // Module 5: max level for all
-])
+// Station defaults are centralized in STATION_DEFAULT below.
 
 const ENCHANTMENT_SOURCES = [
     { kind: 'group', entries: [
@@ -156,18 +66,201 @@ const ENCHANTMENT_SOURCES = [
     { kind: 'single', entries: ['minecraft:swift_sneak'] }
 ]
 
-const PROGRESS_STYLE = {
-    type: 'arcane',
-    color: null
+/**
+ * @description Unified nested default configuration object for the enchantment station.
+ * This keeps all tunables in one place, including time scaling through `station.time.full_time`.
+ * Runtime overrides can be provided via `settings.machine.station`.
+ */
+const STATION_DEFAULT = Object.freeze({
+    curse: Object.freeze({
+        chance_base: 0.15,
+        chance_per_enchant: 0.01,
+        enchant_ids: ['minecraft:binding', 'minecraft:vanishing'],
+        protection_modifier: 0
+    }),
+    disenchant: Object.freeze({
+        catalyst_ids: [
+            'utilitycraft:refined_aetherium_shard'
+        ],
+        delay_ticks: 100, // 5 seconds
+        pending_property: 'utilitycraft:ascane_absorb_pending',
+        token_property: 'utilitycraft:ascane_absorb_token',
+        uses_property: 'utilitycraft:ascane_absorb_uses',
+        xp_total_property: 'utilitycraft:ascane_absorb_xp_total',
+        book_cap: 64,
+    }),
+    enchant: Object.freeze({
+        plan_prop: 'utilitycraft:ascane_enchant_plan',
+        signature_prop: 'utilitycraft:ascane_enchant_signature',
+        sources: ENCHANTMENT_SOURCES
+    }),
+    energy: Object.freeze({
+        base_cost: 8000,
+        enchant_operation_cost: 8000,
+        inflation: Object.freeze({
+            base: 8,
+            curse_protection_module_per_level: 12,
+            disenchant_per_enchant: 10,
+            enchant_change: 16,
+            enchantability_module_per_level: 10,
+            reinforcement_module_per_level: 8
+        }),
+        limits: Object.freeze({
+            min_cost: 1
+        }),
+        repair: Object.freeze({
+            induction_anvil_divisor: 10,
+            multiplier: 2.5
+        })
+    }),
+    modules: Object.freeze({
+        enchant_targets: Object.freeze({
+            levels: [5, 4, 3, 2, 1],
+            matrix: [
+                [1, 1, 1, 0, 0],
+                [2, 2, 0, 0, 0],
+                [3, 3, 2, 1, 0],
+                [4, 0, 0, 0, 0],
+                [5, 4, 3, 2, 1]
+            ],
+            modules: [1, 2, 3, 4, 5]
+        }),
+        ids: Object.freeze({
+            base: 'utilitycraft:ascane_module_base',
+            curseProtection: [
+                'utilitycraft:curse_protection_module'
+            ],
+            enchantability: [
+                null,
+                'utilitycraft:enchantability_module',
+                'utilitycraft:enchantability_module_2',
+                'utilitycraft:enchantability_module_3',
+                'utilitycraft:enchantability_module_4',
+                'utilitycraft:enchantability_module_5'
+            ],
+            reinforcement: [
+                null,
+                'utilitycraft:reinforcement_module',
+                'utilitycraft:reinforcement_module_2',
+                'utilitycraft:reinforcement_module_3'
+            ]
+        })
+    }),
+    progress: Object.freeze({
+        color: null,
+        frame_count: 16,
+        type: 'arcane'
+    }),
+    reinforcement: Object.freeze({
+        pattern: /Reinforcement\s*:\s*(\d+)(?:\s*\/\s*(\d+))?/i,
+        prefix: '§r§9Reinforcement: ',
+        property: 'utilitycraft:reinforcement',
+        RATIOS: [0, 0.25, 0.5, 1]
+    }),
+    slots: Object.freeze({
+        disenchant: Object.freeze({
+            books: DISENCHANT_BOOK_STORAGE_SLOT,
+            catalyst: DISENCHANT_CATALYST_SLOT,
+            outputs: DISENCHANT_OUTPUT_SLOTS,
+            progress: DISENCHANT_PROGRESS_SLOT,
+            source: DISENCHANT_SOURCE_SLOT,
+            status: DISENCHANT_STATUS_SLOT
+        }),
+        energy: ENERGY_SLOT,
+        grid: GRID_SLOTS,
+        modules: MODULE_SLOTS,
+        progress: PROGRESS_SLOT,
+        status: STATUS_SLOT,
+        upgrades: UPGRADE_SLOTS
+    }),
+    time: Object.freeze({
+        enchant_seconds_per_change: 5,
+        full_time: 10,
+        min_process_seconds: 3,
+        repair_seconds: 3,
+        reinforcement_seconds: 10,
+        ticks_per_second: 20
+    }),
+    xp: Object.freeze({
+        per_enchant: 1000,
+        tank_cap_default: 128000,
+        tank_type: 'xp'
+    })
+})
+
+let station = STATION_DEFAULT
+let stationSettingsCacheKey = ''
+const REINFORCEMENT_SYNC_VERSION_PROP = 'utilitycraft:reinforcement_sync_version'
+const REINFORCEMENT_MAX_PROP = 'utilitycraft:reinforcement_max'
+const REINFORCEMENT_SYNC_VERSION = 1
+const REINFORCEMENT_DELAY_TICKS = 3
+
+function isPlainObject(value) {
+    return Object.prototype.toString.call(value) === '[object Object]'
+}
+
+function deepMergeObjects(base, override) {
+    if (Array.isArray(base)) {
+        return Array.isArray(override) ? [...override] : [...base]
+    }
+
+    if (!isPlainObject(base)) {
+        return override
+    }
+
+    const result = { ...base }
+    if (!isPlainObject(override)) return result
+
+    for (const [key, overrideValue] of Object.entries(override)) {
+        const baseValue = base[key]
+        if (isPlainObject(baseValue) && isPlainObject(overrideValue)) {
+            result[key] = deepMergeObjects(baseValue, overrideValue)
+            continue
+        }
+
+        if (Array.isArray(baseValue) && Array.isArray(overrideValue)) {
+            result[key] = [...overrideValue]
+            continue
+        }
+
+        result[key] = overrideValue
+    }
+
+    return result
+}
+
+function resolveStationConfig(settings) {
+    const stationOverride = settings?.machine?.station
+    if (!isPlainObject(stationOverride)) {
+        station = STATION_DEFAULT
+        stationSettingsCacheKey = ''
+        return station
+    }
+
+    let nextKey = ''
+    try {
+        nextKey = JSON.stringify(stationOverride)
+    } catch {
+        nextKey = ''
+    }
+
+    if (nextKey && nextKey === stationSettingsCacheKey) {
+        return station
+    }
+
+    station = deepMergeObjects(STATION_DEFAULT, stationOverride)
+    stationSettingsCacheKey = nextKey
+    return station
 }
 
 DoriosAPI.register.blockComponent('enchantment_station', {
     beforeOnPlayerPlace(e, { params: settings }) {
+        resolveStationConfig(settings)
         Machine.spawnMachineEntity(e, settings, () => {
             const machine = new Machine(e.block, settings, true)
             if (!machine?.entity) return
 
-            machine.setEnergyCost(ENERGY_CONFIG.BASE_COST)
+            machine.setEnergyCost(getBaseOperationCost())
             machine.displayEnergy()
             displayProgress(machine, 0, 1)
             getAscaneXpTank(machine, settings)
@@ -190,6 +283,7 @@ DoriosAPI.register.blockComponent('enchantment_station', {
 
     onTick(e, { params: settings }) {
         if (!globalThis.worldLoaded) return
+        resolveStationConfig(settings)
 
         const { block } = e
         const machine = new Machine(block, settings, true)
@@ -208,9 +302,9 @@ DoriosAPI.register.blockComponent('enchantment_station', {
         const results = []
 
         if (canUseDisenchantSlot) {
-            const disenchantResult = processDisenchantSlot(machine, settings, tickSpeed)
+            const disenchantResult = processDisenchantSlot(machine, settings, tickSpeed, xpTank)
             results.push(disenchantResult)
-            updateDisenchantHud(machine, disenchantResult)
+            updateDisenchantHud(machine, disenchantResult, modules, xpTank)
         }
 
         for (const slot of gridSlots) {
@@ -288,21 +382,21 @@ function safeGetItem(inv, slot) {
 function resolveModuleLevel(typeId) {
     if (!typeId) return null
 
-    const enchantIndex = MODULE_IDS.enchantability.indexOf(typeId)
+    const enchantIndex = station.modules.ids.enchantability.indexOf(typeId)
     if (enchantIndex > 0) {
         return { type: 'enchantability', level: enchantIndex }
     }
 
-    const reinforceIndex = MODULE_IDS.reinforcement.indexOf(typeId)
+    const reinforceIndex = station.modules.ids.reinforcement.indexOf(typeId)
     if (reinforceIndex > 0) {
         return { type: 'reinforcement', level: reinforceIndex }
     }
 
-    if (MODULE_IDS.curseProtection.includes(typeId)) {
+    if (station.modules.ids.curseProtection.includes(typeId)) {
         return { type: 'curseProtection', level: 1 }
     }
 
-    if (typeId === MODULE_IDS.base) {
+    if (typeId === station.modules.ids.base) {
         return { type: 'base', level: 1 }
     }
 
@@ -314,32 +408,38 @@ function getAscaneXpTank(machine, settings) {
     if (!settings?.machine?.fluid_cap) return null
 
     const tank = FluidManager.initializeSingle(machine.entity)
-    const cap = Number(settings?.machine?.fluid_cap ?? XP_CONFIG.TANK_CAP_DEFAULT)
+    const cap = Number(settings?.machine?.fluid_cap ?? station.xp.tank_cap_default)
     if (Number.isFinite(cap) && cap > 0 && tank.getCap() <= 0) {
         tank.setCap(cap)
     }
     if (tank.getType() === 'empty') {
-        tank.setType(XP_CONFIG.TANK_TYPE)
+        tank.setType(station.xp.tank_type)
     }
     try {
-        machine.entity.setDynamicProperty('dorios:fluid_whitelist', XP_CONFIG.TANK_TYPE)
+        machine.entity.setDynamicProperty('dorios:fluid_whitelist', station.xp.tank_type)
     } catch { }
     return tank
 }
 
-function processDisenchantSlot(machine, settings, tickSpeed) {
+function processDisenchantSlot(machine, settings, tickSpeed, xpTank) {
     const slot = DISENCHANT_SOURCE_SLOT
     const stack = safeGetItem(machine.inv, slot)
     const catalyst = safeGetItem(machine.inv, DISENCHANT_CATALYST_SLOT)
     const bookStorage = safeGetItem(machine.inv, DISENCHANT_BOOK_STORAGE_SLOT)
     const outputSlots = resolveDisenchantOutputSlots(machine.inv)
 
-    const fail = (state, message, resetProgress = true) => {
+    const fail = (state, message, resetProgress = true, details = null) => {
         if (resetProgress) setSlotProgress(machine, slot, 0)
-        return buildSlotResult(slot, state, message, 0, getSlotEnergyCost(machine, slot))
+        return buildSlotResult(slot, state, message, 0, getSlotEnergyCost(machine, slot), {
+            slotType: 'disenchant',
+            disenchantExtracting: false,
+            disenchantAbsorbing: false,
+            ...(details && typeof details === 'object' ? details : {})
+        })
     }
 
     if (!stack) {
+        setDisenchantAbsorbPending(machine.entity, false)
         return fail('empty', 'Empty')
     }
 
@@ -356,26 +456,51 @@ function processDisenchantSlot(machine, settings, tickSpeed) {
     const enchantCount = current.length
 
     if (enchantCount <= 0) {
-        return fail('ready', 'Ready')
+        setDisenchantAbsorbPending(machine.entity, false)
+        return fail('ready', 'No Enchantments Detected')
     }
 
     const catalystAmount = getCatalystAmount(catalyst)
-    if (catalystAmount <= 0) {
-        return fail('waiting', 'Need Catalyst')
+    const bookAmount = getDisenchantBookAmount(bookStorage)
+
+    const hasCatalyst = catalystAmount > 0
+    const hasBooks = bookAmount > 0
+    const useStandardDisenchant = hasCatalyst && hasBooks
+
+    if (!useStandardDisenchant) {
+        return processDisenchantAbsorbMode({
+            machine,
+            settings,
+            sourceSlot: slot,
+            sourceStack: stack,
+            enchantments: current,
+            xpTank,
+            hasCatalyst,
+            hasBooks
+        })
     }
 
-    const bookAmount = getDisenchantBookAmount(bookStorage)
-    if (bookAmount <= 0) {
-        return fail('waiting', 'Need Books')
+    if (isDisenchantAbsorbPending(machine.entity)) {
+        setDisenchantAbsorbPending(machine.entity, false)
     }
 
     if (outputSlots.length <= 0) {
-        return fail('waiting', 'No Output Space')
+        return fail('waiting', 'No Output Space', true, {
+            disenchantExtracting: true,
+            disenchantAbsorbing: false,
+            absorbMode: false,
+            absorbPending: false
+        })
     }
 
     const extractCount = Math.min(enchantCount, outputSlots.length, catalystAmount, bookAmount)
     if (extractCount <= 0) {
-        return fail('waiting', 'No Output Space')
+        return fail('waiting', 'No Output Space', true, {
+            disenchantExtracting: true,
+            disenchantAbsorbing: false,
+            absorbMode: false,
+            absorbPending: false
+        })
     }
 
     const energyCost = computeDisenchantCost(extractCount)
@@ -383,9 +508,23 @@ function processDisenchantSlot(machine, settings, tickSpeed) {
 
     setSlotEnergyCost(machine, slot, energyCost)
     const progress = getSlotProgress(machine, slot)
+    const consumption = Math.max(Number.EPSILON, Number(machine.boosts?.consumption ?? 1))
+    const resolvedRate = resolveSlotRate(machine, energyCost, timeSeconds, settings, tickSpeed) ?? machine.rate
+    const rate = Math.max(0, Number(resolvedRate) || 0)
+    const progressPerTick = rate / consumption
 
     if (machine.energy.get() <= 0) {
-        return buildSlotResult(slot, 'waiting', 'No Energy', progress, energyCost)
+        return buildSlotResult(slot, 'waiting', 'No Energy', progress, energyCost, {
+            slotType: 'disenchant',
+            disenchantExtracting: true,
+            disenchantAbsorbing: false,
+            absorbMode: false,
+            absorbPending: false,
+            rate,
+            consumption,
+            progressPerTick,
+            timeSeconds
+        })
     }
 
     if (progress >= energyCost) {
@@ -406,12 +545,20 @@ function processDisenchantSlot(machine, settings, tickSpeed) {
         }
 
         setSlotProgress(machine, slot, 0)
-        return buildSlotResult(slot, 'processing', 'Updated', 0, energyCost)
+        return buildSlotResult(slot, 'processing', 'Updated', 0, energyCost, {
+            slotType: 'disenchant',
+            disenchantExtracting: true,
+            disenchantAbsorbing: false,
+            absorbMode: false,
+            absorbPending: false,
+            rate,
+            consumption,
+            progressPerTick,
+            timeSeconds
+        })
     }
 
-    const consumption = machine.boosts.consumption
     const needed = energyCost - progress
-    const rate = resolveSlotRate(machine, energyCost, timeSeconds, settings, tickSpeed) ?? machine.rate
     const spendable = Math.min(machine.energy.get(), rate, needed * consumption)
 
     if (spendable > 0) {
@@ -420,7 +567,233 @@ function processDisenchantSlot(machine, settings, tickSpeed) {
     }
 
     const updatedProgress = getSlotProgress(machine, slot)
-    return buildSlotResult(slot, 'processing', 'Processing', updatedProgress, energyCost)
+    return buildSlotResult(slot, 'processing', 'Processing', updatedProgress, energyCost, {
+        slotType: 'disenchant',
+        disenchantExtracting: true,
+        disenchantAbsorbing: false,
+        absorbMode: false,
+        absorbPending: false,
+        rate,
+        consumption,
+        progressPerTick,
+        timeSeconds
+    })
+}
+
+function processDisenchantAbsorbMode({ machine, settings, sourceSlot, sourceStack, enchantments, xpTank, hasCatalyst, hasBooks }) {
+    const enchantCount = Array.isArray(enchantments) ? enchantments.length : 0
+    const estimatedXpGain = computeAbsorbXpGain(enchantments)
+    const resultCost = getSlotEnergyCost(machine, sourceSlot)
+
+    if (!xpTank || xpTank.getType() !== station.xp.tank_type) {
+        setSlotProgress(machine, sourceSlot, 0)
+        return buildSlotResult(sourceSlot, 'waiting', 'Need XP Tank', 0, resultCost, {
+            slotType: 'disenchant',
+            disenchantExtracting: false,
+            disenchantAbsorbing: true,
+            absorbMode: true,
+            absorbPending: false,
+            xpGainEstimate: estimatedXpGain
+        })
+    }
+
+    const freeSpace = Math.max(0, Number(xpTank.getCap?.() ?? 0) - Number(xpTank.get?.() ?? 0))
+    if (freeSpace <= 0) {
+        setSlotProgress(machine, sourceSlot, 0)
+        return buildSlotResult(sourceSlot, 'waiting', 'XP Tank Full', 0, resultCost, {
+            slotType: 'disenchant',
+            disenchantExtracting: false,
+            disenchantAbsorbing: true,
+            absorbMode: true,
+            absorbPending: false,
+            xpGainEstimate: estimatedXpGain
+        })
+    }
+
+    if (enchantCount <= 0) {
+        setDisenchantAbsorbPending(machine.entity, false)
+        setSlotProgress(machine, sourceSlot, 0)
+        return buildSlotResult(sourceSlot, 'ready', 'Ready', 0, resultCost, {
+            slotType: 'disenchant',
+            disenchantExtracting: false,
+            disenchantAbsorbing: false,
+            absorbMode: true,
+            absorbPending: false,
+            xpGainEstimate: 0
+        })
+    }
+
+    if (hasCatalyst && hasBooks) {
+        setDisenchantAbsorbPending(machine.entity, false)
+        return buildSlotResult(sourceSlot, 'waiting', 'Standard Mode Available', 0, resultCost, {
+            slotType: 'disenchant',
+            disenchantExtracting: true,
+            disenchantAbsorbing: false,
+            absorbMode: false,
+            absorbPending: false,
+            xpGainEstimate: estimatedXpGain
+        })
+    }
+
+    if (!isDisenchantAbsorbPending(machine.entity)) {
+        queueDisenchantAbsorb(machine, settings)
+    }
+
+    setSlotProgress(machine, sourceSlot, 0)
+    return buildSlotResult(sourceSlot, 'waiting', 'Absorb Pending', 0, resultCost, {
+        slotType: 'disenchant',
+        disenchantExtracting: false,
+        disenchantAbsorbing: true,
+        absorbMode: true,
+        absorbPending: true,
+        xpGainEstimate: Math.min(estimatedXpGain, freeSpace)
+    })
+}
+
+function isDisenchantAbsorbPending(entity) {
+    const key = getDisenchantPendingPropertyKey()
+    try {
+        return Number(entity?.getDynamicProperty?.(key) ?? 0) === 1
+    } catch {
+        return false
+    }
+}
+
+function setDisenchantAbsorbPending(entity, value) {
+    if (!entity || typeof entity.setDynamicProperty !== 'function') return
+    const key = getDisenchantPendingPropertyKey()
+    try {
+        entity.setDynamicProperty(key, value ? 1 : 0)
+    } catch { }
+}
+
+function nextDisenchantAbsorbToken(entity) {
+    const key = getDisenchantTokenPropertyKey()
+    try {
+        const current = Number(entity?.getDynamicProperty?.(key) ?? 0)
+        const next = Number.isFinite(current) ? current + 1 : 1
+        entity?.setDynamicProperty?.(key, next)
+        return next
+    } catch {
+        return Date.now()
+    }
+}
+
+function queueDisenchantAbsorb(machine, settings) {
+    if (!machine?.entity) return false
+    const entity = machine.entity
+    const tokenKey = getDisenchantTokenPropertyKey()
+    if (isDisenchantAbsorbPending(entity)) return true
+
+    setDisenchantAbsorbPending(entity, true)
+    const token = nextDisenchantAbsorbToken(entity)
+
+    system.runTimeout(() => {
+        try {
+            const currentToken = Number(entity?.getDynamicProperty?.(tokenKey) ?? 0)
+            if (currentToken !== token) return
+            executeDisenchantAbsorb(entity, settings)
+        } finally {
+            try {
+                const latest = Number(entity?.getDynamicProperty?.(tokenKey) ?? 0)
+                if (latest === token) {
+                    setDisenchantAbsorbPending(entity, false)
+                }
+            } catch {
+                setDisenchantAbsorbPending(entity, false)
+            }
+        }
+    }, getDisenchantDelayTicks())
+
+    return true
+}
+
+function ensureDisenchantXpTank(entity, settings) {
+    if (!entity) return null
+    const tank = FluidManager.initializeSingle(entity)
+    const cap = Number(settings?.machine?.fluid_cap ?? station.xp.tank_cap_default)
+    if (Number.isFinite(cap) && cap > 0 && tank.getCap() <= 0) {
+        tank.setCap(cap)
+    }
+    if (tank.getType() === 'empty') {
+        tank.setType(station.xp.tank_type)
+    }
+    try {
+        entity.setDynamicProperty('dorios:fluid_whitelist', station.xp.tank_type)
+    } catch { }
+    return tank
+}
+
+function computeAbsorbXpGain(enchantments) {
+    if (!Array.isArray(enchantments) || enchantments.length <= 0) return 0
+
+    const validLevels = enchantments
+        .map(entry => Math.max(0, Math.floor(Number(entry?.level ?? 0))))
+        .filter(level => level > 0)
+
+    if (validLevels.length <= 0) return 0
+
+    const count = validLevels.length
+    const sumLevels = validLevels.reduce((sum, level) => sum + level, 0)
+    const averageLevel = sumLevels / count
+    const avgRecipeXp = Number(station?.xp?.per_enchant ?? 1000) * averageLevel
+    return Math.max(1, Math.floor(avgRecipeXp * count))
+}
+
+function registerDisenchantAbsorbUsage(entity, gainedXp) {
+    if (!entity || typeof entity.setDynamicProperty !== 'function') return
+    const usesKey = getDisenchantUsesPropertyKey()
+    const xpTotalKey = getDisenchantXpTotalPropertyKey()
+    try {
+        const uses = Number(entity.getDynamicProperty(usesKey) ?? 0)
+        const totalXp = Number(entity.getDynamicProperty(xpTotalKey) ?? 0)
+        entity.setDynamicProperty(usesKey, Math.max(0, Math.floor(uses) + 1))
+        entity.setDynamicProperty(xpTotalKey, Math.max(0, Math.floor(totalXp + Math.max(0, gainedXp))))
+    } catch { }
+}
+
+function executeDisenchantAbsorb(entity, settings) {
+    const inv = entity?.getComponent?.('inventory')?.container
+    if (!inv) return false
+
+    const sourceStack = safeGetItem(inv, DISENCHANT_SOURCE_SLOT)
+    if (!sourceStack || sourceStack.amount !== 1) return false
+    if (!getEnchantableComponent(sourceStack)) return false
+
+    const enchantments = readEnchantments(sourceStack)
+    if (!Array.isArray(enchantments) || enchantments.length <= 0) return false
+
+    const catalyst = safeGetItem(inv, DISENCHANT_CATALYST_SLOT)
+    const books = safeGetItem(inv, DISENCHANT_BOOK_STORAGE_SLOT)
+    if (getCatalystAmount(catalyst) > 0 && getDisenchantBookAmount(books) > 0) {
+        return false
+    }
+
+    const xpTank = ensureDisenchantXpTank(entity, settings)
+    if (!xpTank || xpTank.getType() !== station.xp.tank_type) return false
+
+    const xpGain = computeAbsorbXpGain(enchantments)
+    const freeSpace = Math.max(0, Number(xpTank.getCap?.() ?? 0) - Number(xpTank.get?.() ?? 0))
+    const finalGain = Math.max(0, Math.min(xpGain, freeSpace))
+    if (finalGain <= 0) return false
+
+    const updatedSource = rebuildDisenchantSourceStack(sourceStack, [])
+    if (!updatedSource) return false
+
+    setStoredEnchantPlan(updatedSource, null)
+    setStoredEnchantSignature(updatedSource, '')
+    inv.setItem(DISENCHANT_SOURCE_SLOT, updatedSource)
+    xpTank.add(finalGain)
+    registerDisenchantAbsorbUsage(entity, finalGain)
+
+    try {
+        const pos = entity.location ?? entity.getHeadLocation?.() ?? null
+        if (pos) {
+            entity.dimension?.playSound?.('random.levelup', pos, { volume: 0.6, pitch: 1.2 })
+        }
+    } catch { }
+
+    return true
 }
 
 function resolveDisenchantOutputSlots(inv) {
@@ -437,7 +810,7 @@ function resolveDisenchantOutputSlots(inv) {
 
 function isDisenchantCatalyst(stack) {
     if (!stack?.typeId) return false
-    return DISENCHANT_CONFIG.CATALYST_IDS.includes(stack.typeId)
+    return station.disenchant.catalyst_ids.includes(stack.typeId)
 }
 
 function getCatalystAmount(stack) {
@@ -451,7 +824,40 @@ function isDisenchantBookFuel(stack) {
 
 function getDisenchantBookAmount(stack) {
     if (!isDisenchantBookFuel(stack)) return 0
-    return Math.max(0, Math.floor(Number(stack.amount) || 0))
+    const rawAmount = Math.max(0, Math.floor(Number(stack.amount) || 0))
+    const cap = Math.max(1, Math.floor(Number(station?.disenchant?.book_cap ?? 64) || 64))
+    return Math.min(rawAmount, cap)
+}
+
+function resolveDisenchantSettingString(key, fallback) {
+    const value = station?.disenchant?.[key]
+    return typeof value === 'string' && value.length > 0 ? value : fallback
+}
+
+function resolveDisenchantSettingNumber(key, fallback) {
+    const value = Number(station?.disenchant?.[key])
+    if (!Number.isFinite(value)) return fallback
+    return value
+}
+
+function getDisenchantPendingPropertyKey() {
+    return resolveDisenchantSettingString('pending_property', 'utilitycraft:ascane_absorb_pending')
+}
+
+function getDisenchantTokenPropertyKey() {
+    return resolveDisenchantSettingString('token_property', 'utilitycraft:ascane_absorb_token')
+}
+
+function getDisenchantUsesPropertyKey() {
+    return resolveDisenchantSettingString('uses_property', 'utilitycraft:ascane_absorb_uses')
+}
+
+function getDisenchantXpTotalPropertyKey() {
+    return resolveDisenchantSettingString('xp_total_property', 'utilitycraft:ascane_absorb_xp_total')
+}
+
+function getDisenchantDelayTicks() {
+    return Math.max(1, Math.floor(resolveDisenchantSettingNumber('delay_ticks', 60)))
 }
 
 function applyDisenchantOperation({ machine, sourceStack, sourceSlot, catalystSlot, bookStorageSlot, outputSlots, extractCount, catalystStack, bookStorageStack }) {
@@ -520,8 +926,7 @@ function applyDisenchantOperation({ machine, sourceStack, sourceSlot, catalystSl
     setStoredEnchantPlan(updatedSource, null)
     setStoredEnchantSignature(updatedSource, '')
     machine.inv.setItem(sourceSlot, updatedSource)
-    playMachineSound(machine, 'enchanting_table.use', { volume: 0.85, pitch: 0.95 })
-    machine.runCommand(`playsound enchanting_table.use @a`)
+    playMachineSound(machine, 'random.levelup', { volume: 0.65, pitch: 1.2 })
     return { ok: true }
 }
 
@@ -558,9 +963,21 @@ function processSlot(machine, slot, modules, settings, tickSpeed, xpTank) {
     const stack = safeGetItem(machine.inv, slot)
     const key = slotKey(slot)
 
+    const safeModules = {
+        enchantability: Math.max(0, Number(modules?.enchantability ?? 0)),
+        reinforcement: Math.max(0, Number(modules?.reinforcement ?? 0)),
+        curseProtection: Math.max(0, Number(modules?.curseProtection ?? 0))
+    }
+
     const fail = (state, message, resetProgress = true) => {
         if (resetProgress) setSlotProgress(machine, slot, 0)
-        return buildSlotResult(slot, state, message, 0, getSlotEnergyCost(machine, slot))
+        return buildSlotResult(slot, state, message, 0, getSlotEnergyCost(machine, slot), {
+            slotType: 'main',
+            enchantingNeeded: false,
+            curatingNeeded: false,
+            repairingNeeded: false,
+            reinforcingNeeded: false
+        })
     }
 
     if (!stack) {
@@ -576,36 +993,62 @@ function processSlot(machine, slot, modules, settings, tickSpeed, xpTank) {
         return fail('error', 'Invalid Item')
     }
 
+    const legacySync = reconcileLegacyReinforcementDurability(stack, durability)
+    if (legacySync.updated) {
+        machine.inv.setItem(slot, stack)
+    }
+
     const enchantComp = getEnchantableComponent(stack)
     const repairNeeded = durability.damage > 0
 
-    const reinforcementTarget = resolveReinforcementTarget(durability, modules.reinforcement)
+    const reinforcementTarget = resolveReinforcementTarget(durability, safeModules.reinforcement)
     const reinforcementCurrent = getReinforcementPoints(stack)
     const reinforcementNeeded = reinforcementTarget > reinforcementCurrent
 
-    const enchantPlan = buildEnchantPlan(stack, enchantComp, modules)
-    const enchantNeeded = enchantPlan.changed
+    const enchantPlan = buildEnchantPlan(stack, enchantComp, safeModules)
+    const enchantOperationNeeded = Boolean(enchantPlan.changed)
+    const enchantNeeded = Boolean(enchantPlan.enchantingChanged)
+    const curatingNeeded = Boolean(enchantPlan.curatingChanged)
     const enchantChangeCount = Math.max(0, Math.floor(enchantPlan.changeCount ?? 0))
-    const xpNeeded = enchantNeeded ? (XP_CONFIG.PER_ENCHANT * Math.max(1, enchantChangeCount)) : 0
+    const xpNeeded = enchantNeeded ? (station.xp.per_enchant * Math.max(1, enchantChangeCount)) : 0
+    const operationDetails = {
+        slotType: 'main',
+        enchantingNeeded: enchantNeeded,
+        curatingNeeded,
+        repairingNeeded: repairNeeded,
+        reinforcingNeeded: reinforcementNeeded
+    }
 
-    if (!repairNeeded && !enchantNeeded && !reinforcementNeeded) {
-        return fail('ready', 'Ready')
+    if (!repairNeeded && !enchantOperationNeeded && !reinforcementNeeded) {
+        const alreadyEnchanted = safeModules.enchantability > 0
+            && Boolean(enchantComp)
+            && enchantNeeded === false
+            && curatingNeeded === false
+        return buildSlotResult(
+            slot,
+            'ready',
+            alreadyEnchanted ? 'Already Enchanted' : 'Ready',
+            0,
+            getSlotEnergyCost(machine, slot),
+            operationDetails
+        )
     }
 
     if (xpNeeded > 0) {
-        if (!xpTank || xpTank.getType() !== XP_CONFIG.TANK_TYPE) {
-            return buildSlotResult(slot, 'waiting', 'Need XP', getSlotProgress(machine, slot), getSlotEnergyCost(machine, slot))
+        if (!xpTank || xpTank.getType() !== station.xp.tank_type) {
+            return buildSlotResult(slot, 'waiting', 'Need XP', getSlotProgress(machine, slot), getSlotEnergyCost(machine, slot), operationDetails)
         }
         if (xpTank.get() < xpNeeded) {
-            return buildSlotResult(slot, 'waiting', 'Need XP', getSlotProgress(machine, slot), getSlotEnergyCost(machine, slot))
+            return buildSlotResult(slot, 'waiting', 'Need XP', getSlotProgress(machine, slot), getSlotEnergyCost(machine, slot), operationDetails)
         }
     }
 
     const energyCost = computeEnergyCost({
-        enchantNeeded,
+        enchantNeeded: enchantOperationNeeded,
         reinforcementNeeded,
-        modules,
-        enchantChangeCount
+        modules: safeModules,
+        enchantChangeCount,
+        curatingNeeded
     })
 
     const timeSeconds = computeTimeSeconds({
@@ -616,9 +1059,19 @@ function processSlot(machine, slot, modules, settings, tickSpeed, xpTank) {
 
     setSlotEnergyCost(machine, slot, energyCost)
     const progress = getSlotProgress(machine, slot)
+    const consumption = Math.max(Number.EPSILON, Number(machine.boosts?.consumption ?? 1))
+    const resolvedRate = resolveSlotRate(machine, energyCost, timeSeconds, settings, tickSpeed) ?? machine.rate
+    const rate = Math.max(0, Number(resolvedRate) || 0)
+    const progressPerTick = rate / consumption
 
     if (machine.energy.get() <= 0) {
-        return buildSlotResult(slot, 'waiting', 'No Energy', progress, energyCost)
+        return buildSlotResult(slot, 'waiting', 'No Energy', progress, energyCost, {
+            ...operationDetails,
+            rate,
+            consumption,
+            progressPerTick,
+            timeSeconds
+        })
     }
 
     if (progress >= energyCost) {
@@ -636,12 +1089,16 @@ function processSlot(machine, slot, modules, settings, tickSpeed, xpTank) {
         })
 
         setSlotProgress(machine, slot, 0)
-        return buildSlotResult(slot, 'processing', 'Updated', 0, energyCost)
+        return buildSlotResult(slot, 'processing', 'Updated', 0, energyCost, {
+            ...operationDetails,
+            rate,
+            consumption,
+            progressPerTick,
+            timeSeconds
+        })
     }
 
-    const consumption = machine.boosts.consumption
     const needed = energyCost - progress
-    const rate = resolveSlotRate(machine, energyCost, timeSeconds, settings, tickSpeed) ?? machine.rate
     const spendable = Math.min(machine.energy.get(), rate, needed * consumption)
 
     if (spendable > 0) {
@@ -650,45 +1107,74 @@ function processSlot(machine, slot, modules, settings, tickSpeed, xpTank) {
     }
 
     const updatedProgress = getSlotProgress(machine, slot)
-    return buildSlotResult(slot, 'processing', 'Processing', updatedProgress, energyCost)
+    return buildSlotResult(slot, 'processing', 'Processing', updatedProgress, energyCost, {
+        ...operationDetails,
+        rate,
+        consumption,
+        progressPerTick,
+        timeSeconds
+    })
 }
 
-function computeEnergyCost({ enchantNeeded, reinforcementNeeded, modules, enchantChangeCount }) {
-    let cost = ENERGY_CONFIG.BASE_COST
+function normalizeEnergyCost(value) {
+    return Math.max(station.energy.limits.min_cost, Math.floor(Number(value) || 0))
+}
+
+function clampUnitInterval(value) {
+    return Math.max(0, Math.min(1, Number(value) || 0))
+}
+
+function getBaseOperationCost() {
+    return normalizeEnergyCost(station.energy.base_cost * station.energy.inflation.base)
+}
+
+function computeEnergyCost({ enchantNeeded, reinforcementNeeded, modules, enchantChangeCount, curatingNeeded = false }) {
+    const baseCost = getBaseOperationCost()
+    let cost = baseCost
 
     if (enchantNeeded && modules.enchantability > 0) {
-        cost += ENERGY_CONFIG.BASE_COST * modules.enchantability
-        cost += ENERGY_CONFIG.ENCHANT_OPERATION_COST * Math.max(1, enchantChangeCount || 0)
+        cost += baseCost
+            * station.energy.inflation.enchantability_module_per_level
+            * modules.enchantability
+        cost += station.energy.enchant_operation_cost
+            * station.energy.inflation.enchant_change
+            * Math.max(1, enchantChangeCount || 0)
     }
 
     if (reinforcementNeeded && modules.reinforcement > 0) {
-        cost += ENERGY_CONFIG.BASE_COST * modules.reinforcement
+        cost += baseCost
+            * station.energy.inflation.reinforcement_module_per_level
+            * modules.reinforcement
     }
 
-    if (enchantNeeded && modules.curseProtection > 0) {
-        cost += ENERGY_CONFIG.BASE_COST * CURSE_CONFIG.PROTECTION_COST_MULTIPLIER * modules.curseProtection
+    if ((enchantNeeded || curatingNeeded) && modules.curseProtection > 0) {
+        cost += baseCost
+            * station.energy.inflation.curse_protection_module_per_level
+            * modules.curseProtection
     }
 
-    return Math.max(1, Math.floor(cost))
+    return normalizeEnergyCost(cost)
 }
 
 function computeDisenchantCost(enchantCount) {
     const count = Math.max(1, Math.floor(Number(enchantCount) || 0))
-    return Math.max(1, Math.floor(ENERGY_CONFIG.BASE_COST * count))
+    return normalizeEnergyCost(getBaseOperationCost() * station.energy.inflation.disenchant_per_enchant * count)
 }
 
 function computeTimeSeconds({ enchantChangeCount, reinforcementNeeded, repairNeeded }) {
     let total = 0
-    if (repairNeeded) total += TIME_CONFIG.REPAIR_SECONDS
-    if (reinforcementNeeded) total += TIME_CONFIG.REINFORCEMENT_SECONDS
-    if (enchantChangeCount > 0) total += TIME_CONFIG.ENCHANT_SECONDS_PER_CHANGE * enchantChangeCount
-    return Math.max(TIME_CONFIG.MIN_PROCESS_SECONDS, Math.floor(total) || 0)
+    if (repairNeeded) total += station.time.repair_seconds
+    if (reinforcementNeeded) total += station.time.reinforcement_seconds
+    if (enchantChangeCount > 0) total += station.time.enchant_seconds_per_change * enchantChangeCount
+    const scaled = total * Math.max(Number.EPSILON, Number(station.time.full_time) || 1)
+    return Math.max(station.time.min_process_seconds, scaled)
 }
 
 function computeDisenchantTime(enchantCount) {
     const count = Math.max(1, Math.floor(Number(enchantCount) || 0))
-    const total = TIME_CONFIG.ENCHANT_SECONDS_PER_CHANGE * count
-    return Math.max(TIME_CONFIG.MIN_PROCESS_SECONDS, Math.floor(total) || 0)
+    const total = station.time.enchant_seconds_per_change * count
+    const scaled = total * Math.max(Number.EPSILON, Number(station.time.full_time) || 1)
+    return Math.max(station.time.min_process_seconds, scaled)
 }
 
 function resolveSlotRate(machine, energyCost, timeSeconds, settings, tickSpeed) {
@@ -700,13 +1186,13 @@ function resolveSlotRate(machine, energyCost, timeSeconds, settings, tickSpeed) 
     const consumptionMultiplier = Math.max(Number.EPSILON, Number(machine.boosts?.consumption ?? 1))
     const progressPerSecond = (energyCost / timeSeconds) * (Number.isFinite(speedMultiplier) ? speedMultiplier : 1)
     const energyPerSecond = progressPerSecond * consumptionMultiplier
-    const baseRate = Math.max(1, energyPerSecond / 20)
+    const baseRate = Math.max(1, energyPerSecond / Math.max(1, Number(station.time.ticks_per_second) || 20))
     const tickRate = Math.max(1, Number(tickSpeed) || 1)
     return baseRate * tickRate
 }
 
 function applySlotOperations({ machine, slot, stack, durability, repairNeeded, reinforcementTarget, reinforcementNeeded, enchantPlan, xpTank, xpNeeded }) {
-    const repairAmount = Math.max(1, Math.floor((ENERGY_CONFIG.BASE_COST / ENERGY_CONFIG.INDUCTION_ANVIL_DIVISOR) * ENERGY_CONFIG.REPAIR_MULTIPLIER))
+    const repairAmount = Math.max(1, Math.floor((station.energy.base_cost / station.energy.repair.induction_anvil_divisor) * station.energy.repair.multiplier))
 
     if (repairNeeded && stack?.durability?.repair) {
         stack.durability.repair(repairAmount)
@@ -715,15 +1201,17 @@ function applySlotOperations({ machine, slot, stack, durability, repairNeeded, r
     }
 
     if (enchantPlan.changed && Array.isArray(enchantPlan.enchantments)) {
-        applyEnchantmentsToStack(stack, enchantPlan.enchantments)
-        if (xpTank && xpNeeded > 0 && typeof xpTank.add === 'function') {
-            xpTank.add(-xpNeeded)
+        const applied = applyEnchantmentPlanToStack(stack, enchantPlan.enchantments)
+        if (applied) {
+            if (xpTank && xpNeeded > 0 && typeof xpTank.add === 'function') {
+                xpTank.add(-xpNeeded)
+            }
+            playMachineSound(machine, 'block.enchanting_table.use', { volume: 0.9, pitch: 1.1 })
         }
-        playMachineSound(machine, 'enchanting_table.use', { volume: 0.9, pitch: 1.1 })
     }
 
     if (reinforcementNeeded && reinforcementTarget > 0) {
-        setReinforcementPoints(stack, reinforcementTarget)
+        setReinforcementPoints(stack, reinforcementTarget, reinforcementTarget)
     }
 
     machine.inv.setItem(slot, stack)
@@ -747,20 +1235,82 @@ function playMachineSound(machine, soundId, options) {
 
 function buildEnchantPlan(stack, enchantComp, modules) {
     const level = Math.max(0, modules.enchantability)
-    if (!enchantComp || level <= 0 || !canWriteEnchantments(enchantComp)) {
-        return { changed: false, enchantments: null, changeCount: 0 }
+    if (!enchantComp || !canWriteEnchantments(enchantComp)) {
+        return {
+            changed: false,
+            enchantingChanged: false,
+            curatingChanged: false,
+            curatedCount: 0,
+            enchantments: null,
+            changeCount: 0
+        }
     }
 
     const current = readEnchantments(stack)
-    const existingIds = new Set(current.map(entry => normalizeEnchantmentId(entry?.type)).filter(Boolean))
+    const curation = curateCursedEnchantments(current, modules)
+    const curatedEnchantments = curation.enchantments
+    const curatingChanged = curation.removedCount > 0
+
+    if (level <= 0) {
+        const changed = hasEnchantmentsChanged(current, curatedEnchantments)
+        return {
+            changed,
+            enchantingChanged: false,
+            curatingChanged,
+            curatedCount: curation.removedCount,
+            enchantments: curatedEnchantments,
+            changeCount: 0
+        }
+    }
+
+    const existingIds = new Set(curatedEnchantments.map(entry => normalizeEnchantmentId(entry?.type)).filter(Boolean))
     const planIds = resolveEnchantPlanIds(stack, enchantComp, level, existingIds)
-    const withAdditions = addMissingEnchantments(enchantComp, current, level, planIds)
+    const upgraded = upgradeEnchantments(curatedEnchantments, level)
+    const withAdditions = addMissingEnchantments(enchantComp, upgraded, level, planIds)
     const withCurses = applyCurseChance(enchantComp, withAdditions, modules)
 
-    const additions = getEnchantmentAdditions(current, withCurses)
-    const changeCount = additions.length
-    const changed = changeCount > 0
-    return { changed, enchantments: additions, changeCount }
+    const enchantingChangeCount = countEnchantmentChanges(curatedEnchantments, withCurses)
+    const enchantingChanged = enchantingChangeCount > 0
+    const changed = hasEnchantmentsChanged(current, withCurses)
+    return {
+        changed,
+        enchantingChanged,
+        curatingChanged,
+        curatedCount: curation.removedCount,
+        enchantments: withCurses,
+        changeCount: enchantingChangeCount
+    }
+}
+
+function curateCursedEnchantments(enchantments, modules) {
+    const list = Array.isArray(enchantments) ? [...enchantments] : []
+    const protectionLevel = Math.max(0, Number(modules?.curseProtection ?? 0))
+    if (protectionLevel <= 0 || list.length <= 0) {
+        return { enchantments: list, removedCount: 0 }
+    }
+
+    const curseIds = new Set(
+        (Array.isArray(station?.curse?.enchant_ids) ? station.curse.enchant_ids : [])
+            .map(id => String(id ?? '').toLowerCase())
+            .filter(Boolean)
+    )
+
+    if (!curseIds.size) {
+        return { enchantments: list, removedCount: 0 }
+    }
+
+    const curated = []
+    let removedCount = 0
+    for (const enchantment of list) {
+        const id = normalizeEnchantmentId(enchantment?.type)
+        if (id && curseIds.has(id)) {
+            removedCount += 1
+            continue
+        }
+        curated.push(enchantment)
+    }
+
+    return { enchantments: curated, removedCount }
 }
 
 function clampLevel(value, min, max) {
@@ -769,12 +1319,15 @@ function clampLevel(value, min, max) {
 }
 
 function resolveModuleEnchantTarget(moduleLevel, enchantMaxLevel) {
-    const moduleKey = clampLevel(moduleLevel, 1, MODULE_ENCHANT_MODULES.length)
-    const maxKey = clampLevel(enchantMaxLevel, 1, MODULE_ENCHANT_LEVELS.length)
-    const moduleIndex = MODULE_ENCHANT_MODULES.indexOf(moduleKey)
-    const levelIndex = MODULE_ENCHANT_LEVELS.indexOf(maxKey)
+    const moduleLevels = station.modules.enchant_targets.modules
+    const enchantLevels = station.modules.enchant_targets.levels
+    const targetTable = station.modules.enchant_targets.matrix
+    const moduleKey = clampLevel(moduleLevel, 1, moduleLevels.length)
+    const maxKey = clampLevel(enchantMaxLevel, 1, enchantLevels.length)
+    const moduleIndex = moduleLevels.indexOf(moduleKey)
+    const levelIndex = enchantLevels.indexOf(maxKey)
     if (moduleIndex < 0 || levelIndex < 0) return 0
-    const target = MODULE_ENCHANT_TARGETS[moduleIndex]?.[levelIndex] ?? 0
+    const target = targetTable[moduleIndex]?.[levelIndex] ?? 0
     return Math.max(0, Math.min(target, maxKey))
 }
 
@@ -838,18 +1391,18 @@ function applyCurseChance(enchantComp, existing, modules) {
 }
 
 function resolveCurseChance(modules) {
-    const protectionLevel = Math.max(0, modules.curseProtection)
-    if (protectionLevel > 0) return 0
-
     const enchantLevel = Math.max(0, modules.enchantability)
-    const reduced = CURSE_CONFIG.CHANCE_BASE - (CURSE_CONFIG.CHANCE_PER_ENCHANT * enchantLevel)
-    return Math.max(0, Math.min(1, reduced))
+    const protectionLevel = Math.max(0, modules.curseProtection)
+    const baseChance = station.curse.chance_base - (station.curse.chance_per_enchant * enchantLevel)
+    const protectionModifier = clampUnitInterval(station.curse.protection_modifier)
+    const protectedChance = baseChance * Math.pow(protectionModifier, protectionLevel)
+    return clampUnitInterval(protectedChance)
 }
 
 function buildEnchantCandidatePool(enchantComp) {
     const pool = []
 
-    for (const source of ENCHANTMENT_SOURCES) {
+    for (const source of station.enchant.sources) {
         if (!source?.entries?.length) continue
 
         const options = source.entries
@@ -907,7 +1460,7 @@ function pickWeightedSource(pool) {
 
 function resolveCurseCandidates(enchantComp) {
     const resolved = []
-    for (const id of CURSE_CONFIG.ENCHANT_IDS) {
+    for (const id of station.curse.enchant_ids) {
         const type = resolveEnchantmentType(id)
         if (!type) continue
         if (canApplyEnchantment(enchantComp, type)) {
@@ -990,16 +1543,20 @@ function readEnchantments(stack) {
 }
 
 function hasEnchantmentsChanged(before, after) {
-    if (!Array.isArray(after) || after.length === 0) return false
-    if (!Array.isArray(before) || before.length === 0) return true
+    const beforeNormalized = normalizeEnchantmentList(before)
+    const afterNormalized = normalizeEnchantmentList(after)
 
-    const beforeMap = new Map(before.map(entry => [normalizeEnchantmentId(entry?.type), entry?.level]))
-    for (const entry of after) {
-        const id = normalizeEnchantmentId(entry?.type)
-        const beforeLevel = beforeMap.get(id)
-        if (!beforeMap.has(id)) return true
-        if (Number(entry?.level ?? 0) !== Number(beforeLevel ?? 0)) return true
+    if (beforeNormalized.length !== afterNormalized.length) {
+        return true
     }
+
+    for (let i = 0; i < beforeNormalized.length; i += 1) {
+        const previous = beforeNormalized[i]
+        const next = afterNormalized[i]
+        if (previous?.id !== next?.id) return true
+        if (Number(previous?.level ?? 0) !== Number(next?.level ?? 0)) return true
+    }
+
     return false
 }
 
@@ -1061,7 +1618,7 @@ function buildEnchantmentSignature(list) {
 
 function getStoredEnchantSignature(stack) {
     try {
-        const stored = stack?.getDynamicProperty?.(ENCHANT_CONFIG.SIGNATURE_PROP)
+        const stored = stack?.getDynamicProperty?.(station.enchant.signature_prop)
         return typeof stored === 'string' ? stored : ''
     } catch {
         return ''
@@ -1072,13 +1629,13 @@ function setStoredEnchantSignature(stack, signature) {
     if (!stack || typeof stack.setDynamicProperty !== 'function') return
     try {
         const value = typeof signature === 'string' ? signature : ''
-        stack.setDynamicProperty(ENCHANT_CONFIG.SIGNATURE_PROP, value)
+        stack.setDynamicProperty(station.enchant.signature_prop, value)
     } catch { }
 }
 
 function getStoredEnchantPlan(stack) {
     try {
-        const raw = stack?.getDynamicProperty?.(ENCHANT_CONFIG.PLAN_PROP)
+        const raw = stack?.getDynamicProperty?.(station.enchant.plan_prop)
         if (!raw || typeof raw !== 'string') return null
         const parsed = JSON.parse(raw)
         return parsed && typeof parsed === 'object' ? parsed : null
@@ -1091,10 +1648,10 @@ function setStoredEnchantPlan(stack, plan) {
     if (!stack || typeof stack.setDynamicProperty !== 'function') return
     try {
         if (!plan) {
-            stack.setDynamicProperty(ENCHANT_CONFIG.PLAN_PROP, '')
+            stack.setDynamicProperty(station.enchant.plan_prop, '')
             return
         }
-        stack.setDynamicProperty(ENCHANT_CONFIG.PLAN_PROP, JSON.stringify(plan))
+        stack.setDynamicProperty(station.enchant.plan_prop, JSON.stringify(plan))
     } catch { }
 }
 
@@ -1193,6 +1750,31 @@ function applyEnchantmentsToStack(targetStack, enchantments) {
     }
 }
 
+function applyEnchantmentPlanToStack(targetStack, enchantments) {
+    if (!targetStack || !Array.isArray(enchantments)) return false
+
+    const current = readEnchantments(targetStack)
+    if (!hasEnchantmentsChanged(current, enchantments)) {
+        return false
+    }
+
+    const removed = removeAllEnchantmentsFromStack(targetStack)
+    if (!removed) {
+        if (enchantments.length === 0) {
+            return false
+        }
+        // Fallback for components that do not expose bulk removal.
+        return applyEnchantmentsToStack(targetStack, enchantments)
+    }
+
+    if (enchantments.length === 0) {
+        setStoredEnchantSignature(targetStack, '')
+        return true
+    }
+
+    return applyEnchantmentsToStack(targetStack, enchantments)
+}
+
 function removeAllEnchantmentsFromStack(targetStack) {
     const comp = getEnchantableComponent(targetStack)
     if (!comp) return false
@@ -1230,7 +1812,7 @@ function getReinforcementPoints(stack) {
 
     try {
         if (typeof stack.getDynamicProperty === 'function') {
-            const value = Number(stack.getDynamicProperty(REINFORCEMENT_CONFIG.PROP) ?? 0)
+            const value = Number(stack.getDynamicProperty(station.reinforcement.property) ?? 0)
             if (Number.isFinite(value)) return Math.max(0, value)
         }
     } catch { }
@@ -1239,7 +1821,7 @@ function getReinforcementPoints(stack) {
     if (!Array.isArray(lore)) return 0
 
     for (const line of lore) {
-        const match = typeof line === 'string' ? line.match(REINFORCEMENT_CONFIG.LORE_PATTERN) : null
+        const match = typeof line === 'string' ? line.match(station.reinforcement.pattern) : null
         if (match) {
             return Math.max(0, Number(match[1]) || 0)
         }
@@ -1248,33 +1830,149 @@ function getReinforcementPoints(stack) {
     return 0
 }
 
-function setReinforcementPoints(stack, points) {
+function getReinforcementMaxPoints(stack) {
+    if (!stack) return 0
+
+    try {
+        if (typeof stack.getDynamicProperty === 'function') {
+            const value = Number(stack.getDynamicProperty(REINFORCEMENT_MAX_PROP) ?? 0)
+            if (Number.isFinite(value) && value > 0) return Math.max(0, Math.floor(value))
+        }
+    } catch { }
+
+    const lore = typeof stack.getLore === 'function' ? stack.getLore() : []
+    if (Array.isArray(lore)) {
+        for (const line of lore) {
+            const match = typeof line === 'string' ? line.match(station.reinforcement.pattern) : null
+            if (!match) continue
+            const maxValue = Number(match[2] ?? NaN)
+            if (Number.isFinite(maxValue) && maxValue > 0) {
+                return Math.max(0, Math.floor(maxValue))
+            }
+        }
+    }
+
+    return Math.max(0, Math.floor(getReinforcementPoints(stack)))
+}
+
+function getReinforcementSyncVersion(stack) {
+    if (!stack || typeof stack.getDynamicProperty !== 'function') return 0
+    try {
+        const value = Number(stack.getDynamicProperty(REINFORCEMENT_SYNC_VERSION_PROP) ?? 0)
+        return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0
+    } catch {
+        return 0
+    }
+}
+
+function markReinforcementSyncVersion(stack, version = REINFORCEMENT_SYNC_VERSION) {
+    if (!stack || typeof stack.setDynamicProperty !== 'function') return
+    try {
+        stack.setDynamicProperty(REINFORCEMENT_SYNC_VERSION_PROP, Math.max(0, Math.floor(Number(version) || 0)))
+    } catch { }
+}
+
+function repairDurabilityWithRemainingReinforcement(stack, durability, requestedAmount = Number.POSITIVE_INFINITY) {
+    if (!stack || !durability) {
+        return { repaired: 0, spent: 0, remaining: 0 }
+    }
+
+    const points = getReinforcementPoints(stack)
+    if (points <= 0) {
+        return { repaired: 0, spent: 0, remaining: 0 }
+    }
+
+    const damage = Math.max(0, Math.floor(Number(durability.damage ?? 0) || 0))
+    if (damage <= 0) {
+        return { repaired: 0, spent: 0, remaining: points }
+    }
+
+    const cap = Number.isFinite(requestedAmount)
+        ? Math.max(0, Math.floor(Number(requestedAmount) || 0))
+        : damage
+
+    if (cap <= 0) {
+        return { repaired: 0, spent: 0, remaining: points }
+    }
+
+    const spent = Math.min(points, damage, cap)
+    if (spent <= 0) {
+        return { repaired: 0, spent: 0, remaining: points }
+    }
+
+    if (stack?.durability?.repair) {
+        stack.durability.repair(spent)
+    } else {
+        durability.damage = Math.max(damage - spent, 0)
+    }
+
+    const remaining = Math.max(0, points - spent)
+    setReinforcementPoints(stack, remaining)
+
+    return {
+        repaired: spent,
+        spent,
+        remaining
+    }
+}
+
+function reconcileLegacyReinforcementDurability(stack, durability) {
+    if (!stack || !durability) {
+        return { repaired: 0, spent: 0, remaining: getReinforcementPoints(stack), updated: false }
+    }
+
+    const syncVersion = getReinforcementSyncVersion(stack)
+    if (syncVersion >= REINFORCEMENT_SYNC_VERSION) {
+        return { repaired: 0, spent: 0, remaining: getReinforcementPoints(stack), updated: false }
+    }
+
+    const result = repairDurabilityWithRemainingReinforcement(stack, durability)
+    markReinforcementSyncVersion(stack, REINFORCEMENT_SYNC_VERSION)
+    return {
+        ...result,
+        updated: true
+    }
+}
+
+function setReinforcementPoints(stack, points, maxPoints = null) {
     if (!stack) return
-    const clamped = Math.max(0, Math.floor(points))
+    const currentValue = Math.max(0, Math.floor(points))
+    const existingMax = getReinforcementMaxPoints(stack)
+    const requestedMax = Number(maxPoints)
+
+    const capacity = Number.isFinite(requestedMax) && requestedMax > 0
+        ? Math.max(0, Math.floor(requestedMax))
+        : Math.max(existingMax, currentValue)
+
+    const clamped = Math.min(currentValue, Math.max(0, capacity))
 
     try {
         if (typeof stack.setDynamicProperty === 'function') {
-            stack.setDynamicProperty(REINFORCEMENT_CONFIG.PROP, clamped)
+            stack.setDynamicProperty(station.reinforcement.property, clamped)
+            stack.setDynamicProperty(REINFORCEMENT_MAX_PROP, Math.max(0, capacity))
         }
     } catch { }
 
     const lore = typeof stack.getLore === 'function' ? stack.getLore() : []
     const updated = Array.isArray(lore)
-        ? lore.filter(line => typeof line !== 'string' || !REINFORCEMENT_CONFIG.LORE_PATTERN.test(line))
+        ? lore.filter(line => typeof line !== 'string' || !station.reinforcement.pattern.test(line))
         : []
 
-    if (clamped > 0) {
-        updated.push(`${REINFORCEMENT_CONFIG.LORE_PREFIX}${clamped}`)
+    if (capacity > 0) {
+        updated.push(`${station.reinforcement.prefix}${clamped} / ${capacity}`)
     }
 
     if (typeof stack.setLore === 'function') {
         stack.setLore(updated)
     }
+
+    markReinforcementSyncVersion(stack, REINFORCEMENT_SYNC_VERSION)
 }
 
 function resolveReinforcementTarget(durability, level) {
-    const ratioIndex = Math.max(0, Math.min(REINFORCEMENT_CONFIG.RATIOS.length - 1, Math.floor(level)))
-    const ratio = Number(REINFORCEMENT_CONFIG.RATIOS[ratioIndex]) || 0
+    const ratios = station.reinforcement.RATIOS
+    const ratioIndex = Math.max(0, Math.min(ratios.length - 1, Math.floor(level)))
+    const ratio = Number(ratios[ratioIndex]) || 0
     const maxDurability = Number(durability?.maxDurability ?? 0)
     if (!Number.isFinite(maxDurability) || maxDurability <= 0) return 0
     return Math.max(0, Math.floor(maxDurability * ratio))
@@ -1299,80 +1997,268 @@ function addSlotProgress(machine, slot, delta) {
 }
 
 function getSlotEnergyCost(machine, slot) {
-    return Number(machine.entity.getDynamicProperty(`${slotKey(slot)}:energy_cost`)) || ENERGY_CONFIG.BASE_COST
+    return Number(machine.entity.getDynamicProperty(`${slotKey(slot)}:energy_cost`)) || getBaseOperationCost()
 }
 
 function setSlotEnergyCost(machine, slot, value) {
-    machine.entity.setDynamicProperty(`${slotKey(slot)}:energy_cost`, Math.max(1, Number(value) || 1))
+    machine.entity.setDynamicProperty(`${slotKey(slot)}:energy_cost`, normalizeEnergyCost(value))
 }
 
-function buildSlotResult(slot, state, message, progress, energyCost) {
-    return { slot, state, message, progress, energyCost }
+function buildSlotResult(slot, state, message, progress, energyCost, details = null) {
+    const result = { slot, state, message, progress, energyCost }
+    if (details && typeof details === 'object') {
+        Object.assign(result, details)
+    }
+    return result
 }
 
-function updateDisenchantHud(machine, result) {
+function updateDisenchantHud(machine, result, modules = { enchantability: 0, reinforcement: 0, curseProtection: 0 }, xpTank = null) {
     if (!machine?.inv || !result) return
     
     const stack = safeGetItem(machine.inv, DISENCHANT_SOURCE_SLOT)
     const catalyst = safeGetItem(machine.inv, DISENCHANT_CATALYST_SLOT)
     const books = safeGetItem(machine.inv, DISENCHANT_BOOK_STORAGE_SLOT)
-    
-    if (!stack) {
-        machine.setLabel({
-            title: '',
-            lore: ['§7Waiting for item...']
-        }, DISENCHANT_STATUS_SLOT)
-        return
-    }
-    
-    const itemName = formatIdentifier(stack.typeId)
-    const enchantments = readEnchantments(stack)
+
+    const itemName = stack ? formatIdentifier(stack.typeId) : 'None'
+    const enchantments = stack ? readEnchantments(stack) : []
     const enchantCount = enchantments.length
     const catalystAmount = getCatalystAmount(catalyst)
     const bookAmount = getDisenchantBookAmount(books)
     const energyCost = result.energyCost || 0
-    const progress = result.progress || 0
-    const ratio = energyCost > 0 ? Math.min(1, progress / energyCost) : 0
-    const percent = Math.floor(ratio * 100)
+    const energyNow = Energy.formatEnergyToText(Math.max(0, Number(machine?.energy?.get?.() ?? 0)))
+    const energyCap = Energy.formatEnergyToText(Math.max(0, Number(machine?.energy?.getCap?.() ?? 0)))
+    const statusLabel = resolveDisenchantHudStatus(result)
+    const catalystLabel = resolveDisenchantCatalystLabel(catalyst)
+    const absorbModeHint = shouldShowAbsorbModeHint({
+        hasSource: Boolean(stack),
+        enchantCount,
+        catalystAmount,
+        bookAmount
+    })
+    const pendingHelpers = buildDisenchantPendingHelpers({
+        stack,
+        enchantCount,
+        catalyst,
+        catalystAmount,
+        catalystLabel,
+        books,
+        bookAmount,
+        freeOutputs: resolveDisenchantOutputSlots(machine.inv).length,
+        hasEnergy: Number(machine?.energy?.get?.() ?? 0) > 0
+    })
+
+    const statusHeaderColor = statusLabel.kind === 'error'
+        ? '§c'
+        : statusLabel.kind === 'waiting'
+            ? '§e'
+            : statusLabel.kind === 'ready'
+                ? '§b'
+                : statusLabel.kind === 'processing'
+                    ? '§a'
+                    : statusLabel.kind === 'absorbing'
+                        ? '§d'
+                        : '§2'
+
+    const labelText = `
+§r${statusHeaderColor}${statusLabel.title}
+
+§r§aDisenchant Section
+§r§aCost ${Energy.formatEnergyToText(Math.max(0, Number(energyCost) || 0))}
+     
+`.trim()
     
     const lore = []
-    lore.push(`§f${itemName}`)
+    lore.push(`§fItem: ${itemName}`)
     lore.push(`§7Enchantments: §b${enchantCount}`)
-    lore.push(`§7Catalyst: §e${catalystAmount}x`)
+    lore.push(`§7Catalyst: §e${catalystLabel} §7x${catalystAmount}`)
     lore.push(`§7Books: §6${bookAmount}x`)
-    lore.push(`§7Energy: §c${Energy.formatEnergyToText(energyCost)}`)
-    lore.push(`§7Progress: §a${percent}%`)
-    
-    let statusColor = '§7'
-    let statusText = 'Idle'
-    
-    if (result.state === 'processing') {
-        statusColor = '§a'
-        statusText = 'Processing'
-    } else if (result.state === 'waiting') {
-        statusColor = '§e'
-        statusText = result.message || 'Waiting'
-    } else if (result.state === 'error') {
-        statusColor = '§c'
-        statusText = result.message || 'Error'
-    } else if (result.state === 'ready') {
-        statusColor = '§b'
-        statusText = 'Ready'
+    lore.push('§bOperation:')
+    lore.push(`§7State: §f${statusLabel.title}`)
+    lore.push(`§7Mode: §f${statusLabel.mode}`)
+    if (statusLabel.subtitle) {
+        lore.push(`§7Detail: §f${statusLabel.subtitle}`)
     }
-    
-    lore.push(`${statusColor}${statusText}`)
-    
+    lore.push('§bNetwork:')
+    lore.push(`§7Power: §f${energyNow} §7/ §f${energyCap}`)
+    lore.push(`§7XP Tank: §f${formatXpTankText(xpTank)}`)
+    lore.push(`§7Modules: §fE${modules.enchantability ?? 0} §7R${modules.reinforcement ?? 0} §7C${modules.curseProtection ?? 0}`)
+
+    if (absorbModeHint) {
+        lore.push('§7---')
+        lore.push('§cWarning!')
+        lore.push('- §fUsing the "Absorb" mode. Gaining XP instead.')
+        lore.push('§7---')
+    }
+
+    for (const item of pendingHelpers) {
+        lore.push(item)
+    }
+
     machine.setLabel({
-        title: '',
+        rawText: labelText,
         lore
     }, DISENCHANT_STATUS_SLOT)
 }
 
-function updateHud(machine, results, modules, xpTank) {
-    const summary = summarizeResults(results)
-    const active = pickActiveProgress(results)
+function resolveDisenchantHudStatus(result) {
+    const state = String(result?.state ?? '').toLowerCase()
+    const message = String(result?.message ?? '').trim()
+    const absorbMode = result?.absorbMode === true || result?.disenchantAbsorbing === true
+    const absorbPending = result?.absorbPending === true
 
-    if (summary.processing > 0) {
+    if (state === 'empty') {
+        return { title: 'Waiting for Item', mode: 'Idle', subtitle: 'Insert an enchanted source item', kind: 'ready' }
+    }
+
+    if (state === 'error') {
+        return {
+            title: 'Error',
+            mode: 'Error',
+            subtitle: message || 'Check input and resources',
+            kind: 'error'
+        }
+    }
+
+    if (absorbMode && (absorbPending || state === 'processing')) {
+        return {
+            title: 'Disenchanting & Absorbing',
+            mode: 'Absorbing',
+            subtitle: absorbPending ? 'Queued absorb release (3s)' : 'Converting enchantments into XP',
+            kind: 'absorbing'
+        }
+    }
+
+    if (state === 'processing') {
+        return {
+            title: 'Disenchanting & Extracting',
+            mode: 'Extracting',
+            subtitle: 'Extracting enchantments into books',
+            kind: 'processing'
+        }
+    }
+
+    if (state === 'ready') {
+        if (message === 'No Enchantments Detected') {
+            return {
+                title: 'No Enchantments Detected',
+                mode: 'Ready',
+                subtitle: 'Source has no removable enchantments',
+                kind: 'ready'
+            }
+        }
+        return { title: 'Waiting for Item', mode: 'Idle', subtitle: 'Insert an enchanted source item', kind: 'ready' }
+    }
+
+    if (state === 'waiting') {
+        if (absorbMode) {
+            return {
+                title: 'Disenchanting & Absorbing',
+                mode: absorbPending ? 'Absorbing' : 'Absorb Ready',
+                subtitle: absorbPending
+                    ? 'Queue running'
+                    : (message || 'Missing catalyst/books: XP absorb mode'),
+                kind: 'absorbing'
+            }
+        }
+        if (message === 'No Output Space') {
+            return {
+                title: 'Disenchanting & Extracting',
+                mode: 'Extract Ready',
+                subtitle: 'No output space available',
+                kind: 'waiting'
+            }
+        }
+        return {
+            title: 'Disenchanting & Extracting',
+            mode: 'Extract Ready',
+            subtitle: message || 'Awaiting catalyst/books/output',
+            kind: 'waiting'
+        }
+    }
+
+    return { title: 'Idle', mode: 'Idle', subtitle: '', kind: 'idle' }
+}
+
+function resolveDisenchantCatalystCandidates() {
+    const ids = Array.isArray(station?.disenchant?.catalyst_ids)
+        ? station.disenchant.catalyst_ids
+        : []
+    const labels = ids
+        .map(id => formatIdentifier(id))
+        .filter(Boolean)
+    return labels.length ? labels : ['Refined Aetherium Shard']
+}
+
+function resolveDisenchantCatalystLabel(catalystStack) {
+    if (catalystStack?.typeId) {
+        return formatIdentifier(catalystStack.typeId)
+    }
+    return resolveDisenchantCatalystCandidates().join(' / ')
+}
+
+function shouldShowAbsorbModeHint({ hasSource, enchantCount, catalystAmount, bookAmount }) {
+    if (!hasSource) return false
+    if (!Number.isFinite(enchantCount) || enchantCount <= 0) return false
+    const hasCatalyst = (Number(catalystAmount) || 0) > 0
+    const hasBooks = (Number(bookAmount) || 0) > 0
+    return !(hasCatalyst && hasBooks)
+}
+
+function buildDisenchantPendingHelpers({
+    stack,
+    enchantCount,
+    catalyst,
+    catalystAmount,
+    catalystLabel,
+    books,
+    bookAmount,
+    freeOutputs,
+    hasEnergy
+}) {
+    const missing = []
+
+    if (!stack) {
+        missing.push(`- §fItem §7(Enchanted item/book in slot ${DISENCHANT_SOURCE_SLOT})`)
+    } else if (Number(stack.amount ?? 0) > 1) {
+        missing.push(`- §fSingle Item §7(Use one item only)`)
+    } else if (!getEnchantableComponent(stack) || enchantCount <= 0) {
+        missing.push('- §fEnchantments §7(At least one required)')
+    }
+
+    const hasCatalyst = isDisenchantCatalyst(catalyst) && catalystAmount > 0
+    const hasBooks = isDisenchantBookFuel(books) && bookAmount > 0
+    const standardMode = hasCatalyst && hasBooks
+
+    if (!hasCatalyst) {
+        missing.push(`- §fCatalyst §7(${catalystLabel})`)
+    }
+
+    if (!hasBooks) {
+        missing.push('- §fBooks §7')
+    }
+
+    if (standardMode && (Number(freeOutputs) || 0) <= 0) {
+        missing.push(`- §fOutput Space §7(${DISENCHANT_OUTPUT_SLOTS[0]}-${DISENCHANT_OUTPUT_SLOTS[DISENCHANT_OUTPUT_SLOTS.length - 1]})`)
+    }
+
+    if (!hasEnergy) {
+        missing.push('- §fEnergy §7')
+    }
+
+    if (!missing.length) {
+        return ['§aMissing §7(None)']
+    }
+
+    return ['§cMissing', ...missing.slice(0, 4)]
+}
+
+function updateHud(machine, results, modules, xpTank) {
+    const visualResults = getMainSectionResults(results)
+    const summary = summarizeResults(visualResults)
+    const active = pickActiveProgress(visualResults)
+    const allSummary = summarizeResults(results)
+
+    if ((allSummary.processing ?? 0) > 0) {
         machine.on()
     } else {
         machine.off()
@@ -1389,11 +2275,11 @@ function updateHud(machine, results, modules, xpTank) {
 
     const costText = active
         ? Energy.formatEnergyToText(active.energyCost)
-        : Energy.formatEnergyToText(ENERGY_CONFIG.BASE_COST)
+        : Energy.formatEnergyToText(getBaseOperationCost())
 
-    const lore = buildDiagnosticLore(machine, results, modules, xpTank, active, summary, costText)
+    const lore = buildDiagnosticLore(machine, visualResults, modules, xpTank, active, summary, costText)
 
-    const alert = resolveAlertDisplay(summary, results)
+    const alert = resolveAlertDisplay(summary, visualResults)
     if (alert.mode === 'warning') {
         machine.showWarning(alert.message, false, lore, { footerLines: alert.footerLines })
     } else {
@@ -1401,44 +2287,89 @@ function updateHud(machine, results, modules, xpTank) {
     }
 }
 
-function resolveAlertDisplay(summary, results) {
-    const blockers = summarizeBlockers(results)
-    const blockedCount = (summary.waiting ?? 0) + (summary.error ?? 0)
+function getMainSectionResults(results) {
+    return (results ?? []).filter(result => {
+        if (!result || typeof result !== 'object') return false
+        if (result.slotType === 'main') return true
+        return GRID_SLOTS.includes(Number(result.slot))
+    })
+}
+
+function getReadyHighlights(results) {
+    const ignored = new Set(['Ready', 'Empty'])
+    const entries = new Set(
+        (results ?? [])
+            .filter(result => String(result?.state ?? '').toLowerCase() === 'ready')
+            .map(result => typeof result?.message === 'string' ? result.message.trim() : '')
+            .filter(message => message.length > 0 && !ignored.has(message))
+    )
+    return [...entries]
+}
+
+function resolveAlertDisplay(summary, results = []) {
+    const waitingCount = summary.waiting ?? 0
+    const errorCount = summary.error ?? 0
+    const operationSummary = summarizeOperationStates(results, false)
+    const runningHighlights = buildOperationHighlights(operationSummary, 'running', false)
+    const pendingHighlights = buildOperationHighlights(operationSummary, 'pending', false)
+    const readyHighlights = getReadyHighlights(results)
 
     if ((summary.processing ?? 0) > 0) {
+        const header = runningHighlights.length > 0
+            ? `Running: ${runningHighlights[0]}`
+            : 'Running Operations'
+        const extra = runningHighlights.slice(1, 3)
         return {
             mode: 'status',
-            message: 'Running',
+            message: header,
             footerLines: [
                 `Active: ${summary.processing}`,
-                `Ready: ${summary.ready ?? 0} | Blocked: ${blockedCount}`
+                `Ready: ${summary.ready ?? 0} | Waiting: ${waitingCount} | Errors: ${errorCount}`,
+                ...extra.map(line => `Also: ${line}`)
             ]
         }
     }
 
-    if (blockers.length > 0) {
-        const top = blockers[0]
+    if (errorCount > 0) {
         return {
             mode: 'warning',
-            message: top.message,
+            message: 'Attention Required',
             footerLines: [
-                `Affecting ${top.count} slot(s)`,
-                `Ready: ${summary.ready ?? 0} | Blocked: ${blockedCount}`
+                `Errors: ${errorCount}`,
+                `Ready: ${summary.ready ?? 0} | Waiting: ${waitingCount}`
+            ]
+        }
+    }
+
+    if (waitingCount > 0) {
+        const header = pendingHighlights.length > 0
+            ? `Standby: ${pendingHighlights[0]}`
+            : 'Standby - Awaiting Resources'
+        return {
+            mode: 'status',
+            message: header,
+            footerLines: [
+                `Waiting slots: ${waitingCount}`,
+                `Ready: ${summary.ready ?? 0}`,
+                ...pendingHighlights.slice(1, 3).map(line => `Queued: ${line}`)
             ]
         }
     }
 
     if ((summary.ready ?? 0) > 0) {
+        const header = readyHighlights.length > 0
+            ? `Ready: ${readyHighlights[0]}`
+            : 'Ready - Buffered'
         return {
             mode: 'status',
-            message: 'Ready',
-            footerLines: [`Ready slots: ${summary.ready}`]
+            message: header,
+            footerLines: [`Ready slots: ${summary.ready}`, ...readyHighlights.slice(1, 3)]
         }
     }
 
     return {
         mode: 'status',
-        message: 'Idle',
+        message: 'Idle - Awaiting Input',
         footerLines: ['Insert item(s) to start processing']
     }
 }
@@ -1448,64 +2379,172 @@ function buildDiagnosticLore(machine, results, modules, xpTank, active, summary,
 
     const energyNow = Energy.formatEnergyToText(Math.max(0, Number(machine?.energy?.get?.() ?? 0)))
     const energyCap = Energy.formatEnergyToText(Math.max(0, Number(machine?.energy?.getCap?.() ?? 0)))
-    const rateText = Energy.formatEnergyToText(Math.max(0, Number(machine?.rate ?? 0)))
-    const consumption = Math.max(Number.EPSILON, Number(machine?.boosts?.consumption ?? 1))
 
     lore.push('§bDiagnostics:')
     lore.push(`§7- Power: §f${energyNow} §7/ §f${energyCap}`)
-    lore.push(`§7- Input Rate: §f${rateText}/t`) 
     lore.push(`§7- XP Tank: §f${formatXpTankText(xpTank)}`)
     lore.push(`§7- Modules: §fE${modules.enchantability} §7R${modules.reinforcement} §7C${modules.curseProtection}`)
+    lore.push(...buildOperationStateLore(results, false))
 
-    const disenchantInfo = getDisenchantDiagnostics(machine?.inv)
-    lore.push('§dDisenchant:')
-    lore.push(`§7- Source: §f${disenchantInfo.source}`)
-    lore.push(`§7- Catalyst: §f${disenchantInfo.catalyst}`)
-    lore.push(`§7- Books: §f${disenchantInfo.books}`)
-    lore.push(`§7- Free Output: §f${disenchantInfo.freeOutputs}/${DISENCHANT_OUTPUT_SLOTS.length}`)
-
-    if (active) {
-        const ratio = active.energyCost > 0 ? Math.max(0, Math.min(1, active.progress / active.energyCost)) : 0
-        const percent = Math.floor(ratio * 100)
-        const eta = estimateActiveEtaSeconds(active, machine, consumption)
-        lore.push('§aActive Task:')
-        lore.push(`§7- Slot §f${active.slot} §7(${percent}%)`)
-        lore.push(`§7- ETA: §f${formatDuration(eta)}`)
-    }
-
-    lore.push('§cLikely Blockers:')
-    const blockers = summarizeBlockers(results)
-    if (!blockers.length) {
-        lore.push('§7- None (ready/running)')
-    } else {
-        for (const blocker of blockers.slice(0, 4)) {
-            lore.push(`§7- ${blocker.message} §8(x${blocker.count})`)
-        }
-    }
-
-    const helper = buildPrimaryHelper(blockers, modules, summary, disenchantInfo)
-    lore.push('§6Helper:')
-    lore.push(`§e${helper}`)
-    lore.push(`§aCurrent Cost: ${costText}`)
+    const helperLines = buildMainPendingHelpers(results, modules, summary)
+    lore.push(...helperLines)
 
     return lore
 }
 
-function summarizeBlockers(results) {
-    const ignored = new Set(['Empty', 'Ready', 'Processing', 'Updated'])
-    const counts = new Map()
-
-    for (const result of results ?? []) {
-        if (!result) continue
-        if (result.state !== 'waiting' && result.state !== 'error') continue
-        const message = typeof result.message === 'string' ? result.message.trim() : ''
-        if (!message || ignored.has(message)) continue
-        counts.set(message, (counts.get(message) ?? 0) + 1)
+function summarizeOperationStates(results, includeDisenchant = true) {
+    const makeBucket = () => ({ running: 0, pending: 0 })
+    const summary = {
+        enchanting: makeBucket(),
+        repairing: makeBucket(),
+        reinforcing: makeBucket(),
+        curating: makeBucket(),
+        disenchantExtracting: makeBucket(),
+        disenchantAbsorbing: makeBucket()
     }
 
-    return [...counts.entries()]
-        .map(([message, count]) => ({ message, count }))
-        .sort((a, b) => b.count - a.count || a.message.localeCompare(b.message))
+    const track = (bucket, result, treatPendingAsRunning = false) => {
+        if (!bucket || !result) return
+        const state = String(result.state ?? '').toLowerCase()
+        const pending = state === 'waiting' || state === 'ready'
+        const running = state === 'processing' || (treatPendingAsRunning && result?.absorbPending === true)
+        if (running) {
+            bucket.running += 1
+            return
+        }
+        if (pending) {
+            bucket.pending += 1
+        }
+    }
+
+    for (const result of results ?? []) {
+        if (!result || typeof result !== 'object') continue
+
+        if (includeDisenchant) {
+            if (result.disenchantExtracting === true) {
+                track(summary.disenchantExtracting, result)
+            }
+            if (result.disenchantAbsorbing === true) {
+                track(summary.disenchantAbsorbing, result, true)
+            }
+        }
+
+        if (result.enchantingNeeded === true) {
+            track(summary.enchanting, result)
+        }
+        if (result.repairingNeeded === true) {
+            track(summary.repairing, result)
+        }
+        if (result.reinforcingNeeded === true) {
+            track(summary.reinforcing, result)
+        }
+        if (result.curatingNeeded === true) {
+            track(summary.curating, result)
+        }
+    }
+
+    return summary
+}
+
+function formatOperationBucket(bucket) {
+    const running = Math.max(0, Number(bucket?.running ?? 0))
+    const pending = Math.max(0, Number(bucket?.pending ?? 0))
+
+    if (running > 0 && pending > 0) {
+        return `§aRunning §7(${running}) §8/ §eQueued §7(${pending})`
+    }
+    if (running > 0) {
+        return `§aRunning §7(${running})`
+    }
+    if (pending > 0) {
+        return `§eQueued §7(${pending})`
+    }
+    return '§8Idle'
+}
+
+function buildOperationStateLore(results, includeDisenchant = true) {
+    const summary = summarizeOperationStates(results, includeDisenchant)
+    const lines = [
+        '§bOperation States:',
+        `§7- Enchanting: ${formatOperationBucket(summary.enchanting)}`,
+        `§7- Repairing: ${formatOperationBucket(summary.repairing)}`,
+        `§7- Reinforcing: ${formatOperationBucket(summary.reinforcing)}`,
+        `§7- Curating: ${formatOperationBucket(summary.curating)}`
+    ]
+
+    if (includeDisenchant) {
+        lines.push(`§7- Disenchant & Extract: ${formatOperationBucket(summary.disenchantExtracting)}`)
+        lines.push(`§7- Disenchant & Absorb: ${formatOperationBucket(summary.disenchantAbsorbing)}`)
+    }
+
+    return lines
+}
+
+function buildOperationHighlights(summary, mode = 'running', includeDisenchant = true) {
+    const entries = [
+        ['Enchanting', summary?.enchanting],
+        ['Repairing', summary?.repairing],
+        ['Reinforcing', summary?.reinforcing],
+        ['Curating', summary?.curating]
+    ]
+
+    if (includeDisenchant) {
+        entries.push(['Disenchant & Extract', summary?.disenchantExtracting])
+        entries.push(['Disenchant & Absorb', summary?.disenchantAbsorbing])
+    }
+
+    return entries
+        .map(([name, bucket]) => {
+            const running = Math.max(0, Number(bucket?.running ?? 0))
+            const pending = Math.max(0, Number(bucket?.pending ?? 0))
+            if (mode === 'running') {
+                if (running <= 0) return null
+                return pending > 0 ? `${name} (${running} active, ${pending} queued)` : `${name} (${running} active)`
+            }
+            if (pending <= 0) return null
+            return running > 0 ? `${name} (${pending} queued, ${running} active)` : `${name} (${pending} queued)`
+        })
+        .filter(Boolean)
+}
+
+function buildMainPendingHelpers(results, modules, summary) {
+    const messages = new Set(
+        (results ?? [])
+            .map(result => typeof result?.message === 'string' ? result.message.trim() : '')
+            .filter(Boolean)
+    )
+
+    const missing = []
+
+    if (messages.has('No Energy')) {
+        missing.push('- §fEnergy §7')
+    }
+
+    if (messages.has('Need XP')) {
+        missing.push('- §fXP §7')
+    }
+
+    if (messages.has('Split Stack')) {
+        missing.push('- §fSingle Item §7')
+    }
+
+    if (messages.has('Invalid Item')) {
+        missing.push('- §fValid Item §7')
+    }
+
+    if ((modules?.enchantability ?? 0) <= 0) {
+        missing.push('- §fEnchantability Module §7')
+    }
+
+    if ((summary?.waiting ?? 0) > 0 && missing.length <= 0) {
+        missing.push('- §fResources §7')
+    }
+
+    if (!missing.length) {
+        return ['§aMissing §7(None)']
+    }
+
+    return ['§cMissing', ...missing.slice(0, 4)]
 }
 
 function getDisenchantDiagnostics(inv) {
@@ -1551,10 +2590,25 @@ function formatIdentifier(id) {
 function estimateActiveEtaSeconds(active, machine, consumption) {
     const remaining = Math.max(0, Number(active?.energyCost ?? 0) - Number(active?.progress ?? 0))
     if (remaining <= 0) return 0
-    const progressPerTick = Math.max(0, Number(machine?.rate ?? 0)) / Math.max(Number.EPSILON, consumption)
-    if (progressPerTick <= 0) return null
-    const ticks = remaining / progressPerTick
-    return Math.max(0, ticks / 20)
+
+    const ticksPerSecond = Math.max(1, Number(station.time.ticks_per_second) || 20)
+    const resultProgressPerTick = Math.max(0, Number(active?.progressPerTick ?? 0))
+    if (resultProgressPerTick > 0) {
+        const ticks = remaining / resultProgressPerTick
+        return Math.max(0, ticks / ticksPerSecond)
+    }
+
+    const resultConsumption = Math.max(Number.EPSILON, Number(active?.consumption ?? consumption ?? 1))
+    const resultRateProgressPerTick = Math.max(0, Number(active?.rate ?? 0)) / resultConsumption
+    if (resultRateProgressPerTick > 0) {
+        const ticks = remaining / resultRateProgressPerTick
+        return Math.max(0, ticks / ticksPerSecond)
+    }
+
+    const machineProgressPerTick = Math.max(0, Number(machine?.rate ?? 0)) / Math.max(Number.EPSILON, Number(consumption ?? 1))
+    if (machineProgressPerTick <= 0) return null
+    const ticks = remaining / machineProgressPerTick
+    return Math.max(0, ticks / ticksPerSecond)
 }
 
 function formatDuration(seconds) {
@@ -1564,45 +2618,6 @@ function formatDuration(seconds) {
     const secs = total % 60
     if (minutes <= 0) return `${secs}s`
     return `${minutes}m ${secs}s`
-}
-
-function buildPrimaryHelper(blockers, modules, summary, disenchantInfo) {
-    if (summary.processing > 0 && blockers.length === 0) {
-        return 'Machine is running. Keep energy and XP stocked to avoid stalls.'
-    }
-
-    const top = blockers[0]?.message ?? ''
-    if (top.includes('No Energy')) {
-        return 'Connect energy cables or increase power supply to the station.'
-    }
-    if (top.includes('Need XP')) {
-        return 'Insert XP fluid containers to refill the internal XP tank.'
-    }
-    if (top.includes('Need Catalyst')) {
-        return 'Put Refined Aetherium Shards in slot 19 to enable disenchanting.'
-    }
-    if (top.includes('Need Books')) {
-        return 'Put normal Books in slot 20 (1 book per extracted enchantment).'
-    }
-    if (top.includes('No Output Space')) {
-        return 'Free at least one disenchant output slot (22-30).' 
-    }
-    if (top.includes('Split Stack')) {
-        return 'Use single-item stacks in processing slots to prevent conflicts.'
-    }
-    if (top.includes('Invalid Item')) {
-        return 'Only durable/equippable items and enchanted books are valid here.'
-    }
-
-    if (modules.enchantability <= 0) {
-        return 'Install an Enchantability Module to unlock enchant upgrades.'
-    }
-
-    if (disenchantInfo.source === 'None') {
-        return 'Place one enchanted item/book in slot 18 to start disenchanting.'
-    }
-
-    return 'Check slot messages above and fix the first repeated blocker.'
 }
 
 function formatXpTankText(xpTank) {
@@ -1633,73 +2648,54 @@ function pickActiveProgress(results) {
 }
 
 function displayProgress(machine, progress, energyCost) {
-    const normalized = energyCost > 0 ? Math.min(16, Math.floor((progress / energyCost) * 16)) : 0
+    const frames = Math.max(1, Math.floor(Number(station.progress.frame_count) || 16))
+    const normalized = energyCost > 0 ? Math.min(frames, Math.floor((progress / energyCost) * frames)) : 0
     const frame = normalized.toString().padStart(2, '0')
     const itemId = resolveProgressItemId(frame)
     machine.inv.setItem(PROGRESS_SLOT, new ItemStack(itemId, 1))
 }
 
 function resolveProgressItemId(frame) {
-    const type = PROGRESS_STYLE.type
-    const color = PROGRESS_STYLE.color
+    const type = station.progress.type
+    const color = station.progress.color
     if (color) {
         return `utilitycraft:${type}_${color}_${frame}`
     }
     return `utilitycraft:${type}_${frame}`
 }
 
-function applyReinforcementBuffer(entity, damageValue) {
+function queueReinforcementUsageBuffer(entity, slotName, usageAmount = 1) {
+    if (!entity) return
+    const normalizedUsage = Math.max(1, Math.floor(Number(usageAmount) || 0))
+    system.runTimeout(() => {
+        applyReinforcementUsageBuffer(entity, slotName, normalizedUsage)
+    }, REINFORCEMENT_DELAY_TICKS)
+}
+
+function queueReinforcementArmorBuffer(entity, usageAmount = 1) {
+    if (!entity) return
+    const normalizedUsage = Math.max(1, Math.floor(Number(usageAmount) || 0))
+    system.runTimeout(() => {
+        applyReinforcementBuffer(entity, normalizedUsage)
+    }, REINFORCEMENT_DELAY_TICKS)
+}
+
+function applyReinforcementBuffer(entity, usageAmount = 1) {
     if (!entity?.getComponent) return
     const equip = entity.getComponent('equippable')
     if (!equip) return
 
-    const rawDamage = Number(damageValue)
-    if (!Number.isFinite(rawDamage) || rawDamage <= 0) return
-    const damagePoints = Math.max(1, Math.ceil(rawDamage))
-
+    const normalizedUsage = Math.max(1, Math.floor(Number(usageAmount) || 0))
     const slots = ['Head', 'Chest', 'Legs', 'Feet']
-    const entries = []
 
+    let depleted = false
     for (const slot of slots) {
-        const item = equip.getEquipment(slot)
-        if (!item) continue
-
-        const points = getReinforcementPoints(item)
-        if (points <= 0) continue
-
-        const durability = item.getComponent?.('minecraft:durability') ?? item.getComponent?.('durability')
-        if (!durability) continue
-
-        entries.push({ slot, item, points, durability, startPoints: points })
-    }
-
-    if (!entries.length) return
-
-    for (let i = 0; i < damagePoints; i += 1) {
-        let applied = false
-        for (const entry of entries) {
-            if (entry.points <= 0) continue
-
-            if (entry.item?.durability?.repair) {
-                entry.item.durability.repair(1)
-            } else {
-                entry.durability.damage = Math.max(entry.durability.damage - 1, 0)
-            }
-            entry.points -= 1
-            applied = true
+        const result = applyReinforcementUsageBuffer(entity, slot, normalizedUsage)
+        if (result?.depleted) {
+            depleted = true
         }
-
-        if (!applied) break
     }
 
-    for (const entry of entries) {
-        setReinforcementPoints(entry.item, entry.points)
-        try {
-            equip.setEquipment(entry.slot, entry.item)
-        } catch { }
-    }
-
-    const depleted = entries.some(entry => entry.startPoints > 0 && entry.points <= 0)
     if (depleted) {
         try {
             const pos = entity.location ?? entity.getHeadLocation?.() ?? null
@@ -1710,6 +2706,46 @@ function applyReinforcementBuffer(entity, damageValue) {
     }
 }
 
+function applyReinforcementUsageBuffer(entity, slotName, usageAmount = 1) {
+    if (!entity?.getComponent) {
+        return { applied: false, spent: 0, depleted: false }
+    }
+    const equip = entity.getComponent('equippable')
+    if (!equip) {
+        return { applied: false, spent: 0, depleted: false }
+    }
+
+    const item = equip.getEquipment(slotName)
+    if (!item) {
+        return { applied: false, spent: 0, depleted: false }
+    }
+
+    const durability = item.getComponent?.('minecraft:durability') ?? item.getComponent?.('durability')
+    if (!durability) {
+        return { applied: false, spent: 0, depleted: false }
+    }
+
+    const pointsBefore = getReinforcementPoints(item)
+
+    const legacySync = reconcileLegacyReinforcementDurability(item, durability)
+
+    const result = repairDurabilityWithRemainingReinforcement(item, durability)
+    if (result.spent <= 0 && !legacySync.updated) {
+        return { applied: false, spent: 0, depleted: false }
+    }
+
+    try {
+        equip.setEquipment(slotName, item)
+    } catch { }
+
+    const pointsAfter = getReinforcementPoints(item)
+    return {
+        applied: true,
+        spent: Math.max(0, Number(result.spent) || 0),
+        depleted: pointsBefore > 0 && pointsAfter <= 0
+    }
+}
+
 if (!globalThis.__ascaneReinforcementHooked) {
     globalThis.__ascaneReinforcementHooked = true
     const hurtEvents = world?.afterEvents?.entityHurt ?? world?.beforeEvents?.entityHurt
@@ -1717,13 +2753,80 @@ if (!globalThis.__ascaneReinforcementHooked) {
         hurtEvents.subscribe(event => {
             const target = event?.hurtEntity ?? event?.entity
             if (!target) return
-            applyReinforcementBuffer(target, event?.damage)
+            queueReinforcementArmorBuffer(target, 1)
+        })
+    }
+
+    const hitEvents = world?.afterEvents?.entityHitEntity ?? world?.beforeEvents?.entityHitEntity
+    if (hitEvents?.subscribe) {
+        hitEvents.subscribe(event => {
+            const attacker = event?.damagingEntity ?? event?.entity
+            if (!attacker) return
+            queueReinforcementUsageBuffer(attacker, 'Mainhand', 1)
+        })
+    }
+
+    const breakEvents = world?.afterEvents?.playerBreakBlock ?? world?.beforeEvents?.playerBreakBlock
+    if (breakEvents?.subscribe) {
+        breakEvents.subscribe(event => {
+            const player = event?.player
+            if (!player) return
+            queueReinforcementUsageBuffer(player, 'Mainhand', 1)
+        })
+    }
+
+    const itemUseEvents = world?.afterEvents?.itemUse ?? world?.beforeEvents?.itemUse
+    if (itemUseEvents?.subscribe) {
+        itemUseEvents.subscribe(event => {
+            const player = event?.source ?? event?.player
+            if (!player) return
+            queueReinforcementUsageBuffer(player, 'Mainhand', 1)
         })
     }
 }
 
+/*
+Future hook for API 2.6.0+ (pre-release): reinforce can also reduce incoming damage.
+Reference:
+https://learn.microsoft.com/pt-br/minecraft/creator/scriptapi/minecraft/server/entityhurtbeforeevent?view=minecraft-bedrock-experimental
+
+Behavior idea (including shield): each reinforced equipped piece reduces damage by X%.
+Keep this block commented until the API is stable on the target runtime.
+
+if (!globalThis.__ascaneReinforcementMitigationHooked && world?.beforeEvents?.entityHurt?.subscribe) {
+    globalThis.__ascaneReinforcementMitigationHooked = true
+
+    const mitigationPerPiece = 0.04 // 4% per reinforced piece
+    const maxMitigation = 0.60     // cap at 60%
+
+    world.beforeEvents.entityHurt.subscribe(event => {
+        const target = event?.hurtEntity
+        if (!target?.getComponent) return
+
+        const equip = target.getComponent('equippable')
+        if (!equip) return
+
+        const slots = ['Head', 'Chest', 'Legs', 'Feet', 'Offhand'] // include shield in Offhand
+        let reinforcedPieces = 0
+
+        for (const slot of slots) {
+            const item = equip.getEquipment(slot)
+            if (!item) continue
+            if (getReinforcementPoints(item) > 0) {
+                reinforcedPieces += 1
+            }
+        }
+
+        if (reinforcedPieces <= 0) return
+
+        const reduction = Math.min(maxMitigation, reinforcedPieces * mitigationPerPiece)
+        event.damage = Math.max(0, event.damage * (1 - reduction))
+    })
+}
+*/
+
 function rollChance(chance) {
-    const normalized = Math.max(0, Math.min(1, Number(chance) || 0))
+    const normalized = clampUnitInterval(chance)
     if (normalized <= 0) return false
     if (normalized >= 1) return true
     return Math.random() <= normalized

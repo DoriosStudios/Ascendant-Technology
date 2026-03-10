@@ -1,0 +1,19 @@
+{
+  "format_version": "1.17.0",
+  "minecraft:ore_feature": {
+    "description": {
+      "identifier": "utilitycraft:aetherium_ore_overworld_feature"
+    },
+    "count": 3,
+    "replace_rules": [
+      {
+        "places_block": "utilitycraft:deepslate_aetherium_ore",
+        "may_replace": ["minecraft:deepslate"]
+      },
+      {
+        "places_block": "utilitycraft:end_aetherium_ore",
+        "may_replace": ["minecraft:end_stone"]
+      }
+    ]
+  }
+}

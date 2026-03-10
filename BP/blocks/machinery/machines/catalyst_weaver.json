@@ -38,9 +38,9 @@
 					"fluid": true
 				},
 				"machine": {
-					"energy_cap": 256800000,
+					"energy_cap": 128000000, // 128 MDE
 					"energy_cost": 6400,
-					"rate_speed_base": 180,
+					"rate_speed_base": 6400,
 					"dynamic_rate": true,
 					"fluid_cap": 128000,
 					"upgrades": [

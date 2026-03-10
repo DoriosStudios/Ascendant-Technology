@@ -39,8 +39,9 @@
 				},
 				"machine": {
 					"energy_cap": 512000000,
-					"energy_cost": 128000,
-					"rate_speed_base": 400,
+					"energy_cost": 256000,
+					"rate_speed_base": 800,
+					"dynamic_rate": true,
 					"fluid_cap": 512000,
 					"upgrades": [
 						4,

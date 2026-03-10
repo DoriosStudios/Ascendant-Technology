@@ -68,7 +68,6 @@ tile.utilitycraft:conveyor_underflow.name=Esteira de Subtransbordamento\n§7- Pr
 ## Transportação - Utilitários
 tile.utilitycraft:conveyor_bridge_path.name=§aCaminho de Ponte de Esteira\n§7- Conexão de ponte ativa entre transmissor e receptor
 tile.utilitycraft:conveyor_network_updater.name=Atualizador de Rede de Esteiras\n§7- Reconstrói caches da rede
-tile.utilitycraft:gas_tube.name=Tubo de Gás\n§7- Tubo para rotear redes de gás
 
 ## Outros Blocos
 tile.utilitycraft:flat_conduit.name=Condutor Plano\n§7  Versão Estética

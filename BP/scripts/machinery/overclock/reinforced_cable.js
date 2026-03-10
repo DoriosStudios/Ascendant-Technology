@@ -17,7 +17,6 @@ const ENERGY_TUBE_TYPES = new Set([
 
 const TUBE_GEOMETRY_TYPES = new Set([
     "utilitycraft:reinforced_cable",
-    "utilitycraft:gas_tube",
 ]);
 
 const MAX_ENERGY_SCAN = 2048;
@@ -287,7 +286,6 @@ function refreshNeighbors(block) {
         if (!neighbor) continue;
         if (neighbor.hasTag("dorios:energy")) updatePipes(neighbor, "energy");
         if (neighbor.hasTag("dorios:fluid")) updatePipes(neighbor, "fluid");
-        if (neighbor.hasTag("dorios:gas")) updatePipes(neighbor, "gas");
 
         if (!energySeed && neighbor.hasTag?.("dorios:energy")) {
             energySeed = neighbor;
@@ -363,19 +361,6 @@ DoriosAPI.register.blockComponent("reinforced_cable", {
     },
     onPlayerBreak(e) {
         // On break, refresh neighbors to prune paths
-        system.run(() => {
-            refreshNeighbors(e.block);
-        });
-    }
-});
-
-DoriosAPI.register.blockComponent("gas_tube", {
-    beforeOnPlayerPlace(e) {
-        system.run(() => {
-            refreshNeighbors(e.block);
-        });
-    },
-    onPlayerBreak(e) {
         system.run(() => {
             refreshNeighbors(e.block);
         });

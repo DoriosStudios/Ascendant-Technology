@@ -71,7 +71,6 @@ tile.utilitycraft:conveyor_underflow.name=Transportador de Subdesbordamiento\n§
 ## Transporte - Utilidades
 tile.utilitycraft:conveyor_bridge_path.name=§aCamino Puente de Transportador\n§7- Conexión de puente activa entre transmisor y receptor
 tile.utilitycraft:conveyor_network_updater.name=Actualizador de Red de Transportador\n§7- Reconstruye caché de red
-tile.utilitycraft:gas_tube.name=Tubo de Gas\n§7- Tubería para enrutador redes de gas
 
 ## Otros Bloques
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética

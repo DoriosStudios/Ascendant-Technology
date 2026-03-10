@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, GasManager, updatePipes, buildOverclockLoreLine } from '../AscendantMachinery/core.js';
+import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine } from '../AscendantMachinery/core.js';
 import { getVaporworksProcessorRecipes } from '../../config/recipes/vaporworks_processor.js';
 
 const FLUID_INPUT_SLOT = 3;
@@ -7,7 +7,6 @@ const OUTPUT_DISPLAY_SLOT = 11;
 const FLUID_OUTPUT_SLOT = 19;
 const STATUS_SLOT = 1;
 const DEFAULT_FLUID_CAP = 64000;
-const DEFAULT_GAS_CAP = 64000;
 
 /*
 Slots (inventory_size: 20)
@@ -51,40 +50,27 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
         const recipes = resolveRecipes(block, settings);
 
         if (tickGate(machine.entity, 'vw:fluids_cd', 4)) {
+            const nodes = resolveFluidNodes(machine, block);
             const available = tankOutput.get();
+
             if (available > 0) {
-                // Ensure network cache exists when we have fluid to send
-                let nodes = [];
-                try {
-                    const cached = machine.entity.getDynamicProperty('dorios:gas_nodes');
-                    if (cached) nodes = JSON.parse(cached);
-                } catch { /* ignore */ }
-
-                if (!Array.isArray(nodes) || nodes.length === 0) {
-                    updatePipes(block, 'gas');
-                    try {
-                        const cached = machine.entity.getDynamicProperty('dorios:gas_nodes');
-                        if (cached) nodes = JSON.parse(cached);
-                    } catch { /* ignore */ }
-                }
-
                 // Direct adjacent push
-                tankOutput.transferGases(block, available, { useFacing: true });
+                tankOutput.transferFluids(block, available, { useFacing: true });
 
                 // Network push
-                if (Array.isArray(nodes) && nodes.length) {
+                if (nodes.length) {
                     tankOutput.transferToNetwork(available, 'nearest', nodes);
                 }
             }
 
-            pullFluidFromNetwork(machine, block, tankInput, recipes, settings);
+            pullFluidFromNetwork(machine, block, tankInput, recipes, settings, nodes);
         }
 
         // Handle fluid input slot (capsule draining)
         feedFluidSlot(machine, tankInput, FLUID_INPUT_SLOT);
         
         // Handle fluid output slot (capsule filling)
-        fillGasSlot(machine, tankOutput, FLUID_OUTPUT_SLOT);
+        fillFluidSlot(machine, tankOutput, FLUID_OUTPUT_SLOT);
 
         const fail = (message, reset = true) => {
             machine.showWarning(message, reset);
@@ -170,14 +156,6 @@ function resolveFluidCap(settings) {
     return DEFAULT_FLUID_CAP;
 }
 
-function resolveGasCap(settings) {
-    const configured = Number(settings?.machine?.gas_cap);
-    if (Number.isFinite(configured) && configured > 0) {
-        return configured;
-    }
-    return DEFAULT_GAS_CAP;
-}
-
 function resolveInputRate(settings, recipes) {
     const configured = Number(settings?.machine?.fluid_rate);
     if (Number.isFinite(configured) && configured > 0) {
@@ -211,7 +189,27 @@ function getAllowedInputFluidTypes(recipes) {
     return allowed;
 }
 
-function pullFluidFromNetwork(machine, block, tank, recipes, settings) {
+function parseCachedNodes(entity, propertyId = 'dorios:fluid_nodes') {
+    if (!entity) return [];
+    try {
+        const cached = entity.getDynamicProperty(propertyId);
+        if (!cached) return [];
+        const parsed = JSON.parse(cached);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+}
+
+function resolveFluidNodes(machine, block) {
+    const nodes = parseCachedNodes(machine?.entity, 'dorios:fluid_nodes');
+    if (nodes.length) return nodes;
+
+    updatePipes(block, 'fluid');
+    return parseCachedNodes(machine?.entity, 'dorios:fluid_nodes');
+}
+
+function pullFluidFromNetwork(machine, block, tank, recipes, settings, fluidNodes = []) {
     if (!machine?.entity || !tank || !block) return;
 
     const freeSpace = tank.getFreeSpace();
@@ -229,27 +227,17 @@ function pullFluidFromNetwork(machine, block, tank, recipes, settings) {
     const maxPull = Math.min(freeSpace, resolveInputRate(settings, recipes));
     if (maxPull <= 0) return;
 
-    let nodes = [];
-    try {
-        const cached = machine.entity.getDynamicProperty('dorios:fluid_nodes');
-        if (cached) nodes = JSON.parse(cached);
-    } catch { /* ignore */ }
-
-    if (!Array.isArray(nodes) || nodes.length === 0) {
-        updatePipes(block, 'fluid');
-        try {
-            const cached = machine.entity.getDynamicProperty('dorios:fluid_nodes');
-            if (cached) nodes = JSON.parse(cached);
-        } catch { /* ignore */ }
-    }
+    const nodes = Array.isArray(fluidNodes) ? fluidNodes : [];
 
     if (!Array.isArray(nodes) || nodes.length === 0) return;
 
     const dim = block.dimension;
     const origin = block.location;
-    const orderedTargets = [...nodes].sort((a, b) =>
-        DoriosAPI.math.distanceBetween(origin, a) - DoriosAPI.math.distanceBetween(origin, b)
-    );
+    const orderedTargets = nodes.length > 1
+        ? [...nodes].sort((a, b) =>
+            DoriosAPI.math.distanceBetween(origin, a) - DoriosAPI.math.distanceBetween(origin, b)
+        )
+        : nodes;
 
     let remaining = maxPull;
 
@@ -284,11 +272,9 @@ function ensureTankCap(tank, cap) {
 
 function getVaporworksTanks(machine, settings) {
     if (!machine?.entity) return [null, null];
-    const tankInput = FluidManager.initializeSingle(machine.entity);
-    const tankOutput = GasManager.initializeSingle(machine.entity);
+    const [tankInput, tankOutput] = FluidManager.initializeMultiple(machine.entity, 2);
     const fluidCap = resolveFluidCap(settings);
-    const gasCap = resolveGasCap(settings);
-    return [ensureTankCap(tankInput, fluidCap), ensureTankCap(tankOutput, gasCap)];
+    return [ensureTankCap(tankInput, fluidCap), ensureTankCap(tankOutput, fluidCap)];
 }
 
 function resolveRecipes(block, settings) {
@@ -353,13 +339,13 @@ function updateHud(machine, recipe, tankInput, tankOutput, maxCrafts) {
     
     const inputAmount = FluidManager.formatFluid(tankInput.get());
     const inputCap = FluidManager.formatFluid(tankInput.getCap());
-    const outputAmount = GasManager.formatGas(tankOutput.get());
-    const outputCap = GasManager.formatGas(tankOutput.getCap());
+    const outputAmount = FluidManager.formatFluid(tankOutput.get());
+    const outputCap = FluidManager.formatFluid(tankOutput.getCap());
     
     const lore = [
         `§bInput: §f${formatFluidDisplayName(inputType)}`,
         `§7In Tank: §f${inputAmount} §7/ §f${inputCap}`,
-        `§dGas Output: §f${formatFluidDisplayName(outputType)}`,
+        `§dFluid Output: §f${formatFluidDisplayName(outputType)}`,
         `§7Out Tank: §f${outputAmount} §7/ §f${outputCap}`,
         `§7Yield: §f${FluidManager.formatFluid(outputPerCraft)} each`,
         `§cCost: §f${Energy.formatEnergyToText(machine.getEnergyCost())}`,
@@ -407,14 +393,14 @@ function feedFluidSlot(machine, tank, slotIndex) {
     }
 }
 
-function fillGasSlot(machine, tank, slotIndex) {
+function fillFluidSlot(machine, tank, slotIndex) {
     const slotItem = machine.inv.getItem(slotIndex);
     if (!slotItem) return;
 
-    const fillDefinition = GasManager.getGasFillDefinition?.(slotItem.typeId);
+    const fillDefinition = FluidManager.getFluidFillDefinition?.(slotItem.typeId);
     if (!fillDefinition) return;
 
-    const result = tank.gasItem(slotItem.typeId);
+    const result = tank.fluidItem(slotItem.typeId);
     if (result === false) return;
 
     machine.entity.changeItemAmount(slotIndex, -1);

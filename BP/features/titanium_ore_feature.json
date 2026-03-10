@@ -4,7 +4,7 @@
     "description": {
       "identifier": "utilitycraft:titanium_ore_feature"
     },
-    "count": 8,
+    "count": 5,
     "replace_rules": [
       {
         "places_block": "utilitycraft:deepslate_titanium_ore",

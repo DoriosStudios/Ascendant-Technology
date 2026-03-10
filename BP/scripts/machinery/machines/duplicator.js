@@ -1,4 +1,5 @@
-import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../AscendantMachinery/core.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
+import { getClonerBlockProfile } from '../../config/recipes/duplicator.js'
 
 const INPUT_SLOT = 3
 const STATUS_SLOT = 1
@@ -12,9 +13,10 @@ const TICKS_PER_SECOND = 20
 const UPGRADE_SLOTS = [4, 5, 6]
 const LEGACY_UPGRADE_SLOTS = [16, 17]
 const CLONER_BASE_TIME_SECONDS = 30 * 60
-const CLONER_ENERGY_COST = 1_000_000
+const CLONER_UNDECLARED_BASE_TIME_SECONDS = 60
+const CLONER_ENERGY_COST = 1_600_000
 const KDE = 1000
-const CLONER_COST_KDE = Math.round(CLONER_ENERGY_COST / KDE)
+const CLONER_DEFAULT_COST_KDE = Math.max(1, CLONER_ENERGY_COST / KDE)
 const CLONER_BLOCK_ID = 'utilitycraft:duplicator'
 const CLONER_SPEED_DURATION_SECONDS = [
     CLONER_BASE_TIME_SECONDS,
@@ -28,6 +30,16 @@ const CLONER_SPEED_DURATION_SECONDS = [
     1 * 60
 ]
 const MIN_CLONER_RATE = 1
+const DEFAULT_RARITY = 'common'
+const RARITY_PROFILES = Object.freeze({
+    common: { timeMultiplier: 1, costMultiplier: 1 },
+    uncommon: { timeMultiplier: 1.75, costMultiplier: 2 },
+    rare: { timeMultiplier: 3.5, costMultiplier: 3.5 },
+    epic: { timeMultiplier: 6, costMultiplier: 5 },
+    legendary: { timeMultiplier: 8.25, costMultiplier: 10 },
+    mythic: { timeMultiplier: 10, costMultiplier: 15 },
+    transcendent: { timeMultiplier: 12.5, costMultiplier: 25 }
+})
 
 /**
  * @typedef {Object} ClonerException
@@ -71,6 +83,10 @@ const duplicatorExceptions = (() => {
         id: ['minecraft:banner', 'minecraft:potion'],
         warn: "Can't duplicate items with data!"
     })
+    defineException({
+        id: ['minecraft:shulker_box'],
+        warn: "Can't duplicate shulker boxes!"
+    })
 
     return { defineException, find }
 })()
@@ -109,7 +125,7 @@ function doriosRegister() {
             Machine.spawnMachineEntity(e, settings, () => {
                 const machine = new Machine(e.block, settings, true)
                 if (!machine?.entity) return
-                machine.setEnergyCost(settings.machine.energy_cost ?? 1000)
+                machine.setEnergyCost(settings.machine.energy_cost ?? CLONER_ENERGY_COST)
                 machine.displayProgress()
                 machine.displayEnergy()
                 machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '')
@@ -263,6 +279,19 @@ function createGenericRecipeFromInput(stack) {
         return null
     }
 
+    const rarityProfileData = getClonerBlockProfile(stack.typeId)
+    const rarity = rarityProfileData.rarity
+    const rarityProfile = getRarityProfile(rarity)
+    const baseTimeSeconds = rarityProfileData.declared
+        ? CLONER_BASE_TIME_SECONDS
+        : CLONER_UNDECLARED_BASE_TIME_SECONDS
+    const timeSeconds = Math.max(1, Math.round(baseTimeSeconds * rarityProfile.timeMultiplier))
+    const costKDE = Math.max(1, Math.round(CLONER_DEFAULT_COST_KDE * rarityProfile.costMultiplier))
+    const energyModel = deriveClonerEnergyModel({
+        timeSeconds,
+        costKDE
+    })
+
     const input = {
         id: stack.typeId,
         amount: 1
@@ -275,16 +304,18 @@ function createGenericRecipeFromInput(stack) {
 
     return {
         id: `generic:${stack.typeId}`,
+        rarity,
+        rarityDeclared: rarityProfileData.declared,
         input,
         output,
-        timeSeconds: CLONER_BASE_TIME_SECONDS,
-        ticks: Math.max(1, Math.round(CLONER_BASE_TIME_SECONDS * TICKS_PER_SECOND)),
-        perSecondKDE: CLONER_COST_KDE / CLONER_BASE_TIME_SECONDS,
-        costKDE: CLONER_COST_KDE,
-        energyCost: CLONER_ENERGY_COST,
+        timeSeconds: energyModel.timeSeconds,
+        ticks: energyModel.ticks,
+        perSecondKDE: energyModel.perSecondKDE,
+        costKDE: energyModel.costKDE,
+        energyCost: energyModel.energyCost,
         fluid: {
             type: DEFAULT_FLUID_TYPE,
-            amount: Math.max(1, Math.round(CLONER_BASE_TIME_SECONDS * FLUID_PER_SECOND))
+            amount: Math.max(1, Math.round(energyModel.timeSeconds * FLUID_PER_SECOND))
         }
     }
 }
@@ -383,15 +414,34 @@ function updateHud(machine, recipe, tank, crafted) {
 
     machine.on()
 
+    const rawRarityName = capitalize(recipe?.rarity ?? DEFAULT_RARITY)
+    let rarityName = rawRarityName
+    if (rawRarityName.toLowerCase() === 'uncommon') {
+        rarityName = '§aUncommon'
+    } else if (rawRarityName.toLowerCase() === 'rare') {
+        rarityName = '§bRare'
+    } else if (rawRarityName.toLowerCase() === 'epic') {
+        rarityName = '§5Epic'
+    } else if (rawRarityName.toLowerCase() === 'legendary') {
+        rarityName = '§6Legendary'
+    } else if (rawRarityName.toLowerCase() === 'mythic') {
+        rarityName = '§dMythic'
+    } else if (rawRarityName.toLowerCase() === 'transcendent') {
+        rarityName = '§cTranscendent'
+    }
     const action = crafted ? 'Duplication Ready' : 'Duplicating'
     const etaDisplay = formatEta(machine, recipe)
     const fluidLines = formatFluidBlock(recipe?.fluid, tank)
     const overclockLine = buildOverclockLoreLine(machine)
+    const modeName = recipe?.rarityDeclared === false
+        ? `(Unknown)`
+        : rarityName
     const lore = [
         `§7Template: §b${formatName(recipe.input.id)}`,
-        '§7Mode: §fUniversal',
+        `§7Rarity: §f${modeName}`,
         `§7ETA: §f${etaDisplay}`,
-        `§cCost: §f${Energy.formatEnergyToText(recipe.energyCost)}`
+        `§cCost: §f${Energy.formatEnergyToText(recipe.energyCost)}`,
+        `§6Rate: §f${Energy.formatEnergyToText(recipe.perSecondKDE * KDE)}/s`
     ]
 
     if (Array.isArray(fluidLines) && fluidLines.length) {
@@ -401,7 +451,7 @@ function updateHud(machine, recipe, tank, crafted) {
     if (overclockLine) lore.push(overclockLine)
 
     machine.setLabel({
-        title: `§6${action}`,
+        title: `§r§6${action}`,
         lore
     })
 }
@@ -651,39 +701,108 @@ function canAcceptSlotItem(slot, expectedId) {
 function applyClonerRuntime(machine, recipe) {
     if (!machine || !recipe) return
 
+    const rarityProfile = getRarityProfile(recipe?.rarity)
+    const baseRaritySeconds = Math.max(
+        1,
+        Math.round(
+            Number(recipe?.timeSeconds)
+            || (CLONER_BASE_TIME_SECONDS * rarityProfile.timeMultiplier)
+        )
+    )
+    const baseCostKDE = Math.max(
+        1,
+        Number(recipe?.costKDE)
+        || (CLONER_DEFAULT_COST_KDE * rarityProfile.costMultiplier)
+    )
+
     const speedLevel = getClonerSpeedLevel(machine)
-    const baseSeconds = CLONER_SPEED_DURATION_SECONDS[speedLevel] ?? CLONER_BASE_TIME_SECONDS
+    const speedScale = getClonerSpeedDurationScale(speedLevel)
+    const baseSeconds = Math.max(1, Math.round(baseRaritySeconds * speedScale))
     const overclockClock = Number(machine.boosts?.overclockClock ?? 1)
     const timeScale = Number.isFinite(overclockClock) && overclockClock > 0 ? overclockClock : 1
     const targetSeconds = Math.max(1, baseSeconds / timeScale)
-    const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
-    const updatesPerSecond = TICKS_PER_SECOND / tickSpeed
+    const runtimeEnergy = deriveClonerEnergyModel({
+        timeSeconds: targetSeconds,
+        costKDE: baseCostKDE
+    })
 
-    recipe.timeSeconds = targetSeconds
-    recipe.ticks = Math.max(1, Math.round(targetSeconds * TICKS_PER_SECOND))
-    recipe.costKDE = CLONER_COST_KDE
-    recipe.perSecondKDE = recipe.costKDE / targetSeconds
-    recipe.energyCost = CLONER_ENERGY_COST
+    recipe.timeSeconds = runtimeEnergy.timeSeconds
+    recipe.ticks = runtimeEnergy.ticks
+    recipe.energyCost = runtimeEnergy.energyCost
+    recipe.costKDE = runtimeEnergy.costKDE
+    recipe.perSecondKDE = runtimeEnergy.perSecondKDE
     if (recipe.fluid) {
-        recipe.fluid.amount = Math.max(1, Math.round(targetSeconds * FLUID_PER_SECOND))
+        recipe.fluid.amount = Math.max(1, Math.round(runtimeEnergy.timeSeconds * FLUID_PER_SECOND))
     }
 
     machine.boosts.speed = 1
     machine.boosts.consumption = 1
 
-    const progressPerSecond = recipe.energyCost / targetSeconds
-    const progressPerUpdate = progressPerSecond / updatesPerSecond
-    const desiredRate = Math.max(MIN_CLONER_RATE, progressPerUpdate)
+    const applied = applyDynamicRecipeRate(
+        machine,
+        {
+            ...recipe,
+            timeSeconds: runtimeEnergy.timeSeconds
+        },
+        {
+            energyCost: recipe.energyCost,
+            speedMultiplier: 1,
+            consumptionMultiplier: 1
+        }
+    )
 
-    machine.rate = desiredRate
-    machine.baseRate = desiredRate
-    machine.duplicatorTargetSeconds = targetSeconds
+    if (!applied) {
+        const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
+        const updatesPerSecond = TICKS_PER_SECOND / tickSpeed
+        const progressPerSecond = recipe.energyCost / runtimeEnergy.timeSeconds
+        const progressPerUpdate = progressPerSecond / Math.max(updatesPerSecond, Number.EPSILON)
+        const desiredRate = Math.max(MIN_CLONER_RATE, progressPerUpdate)
+        machine.rate = desiredRate
+        machine.baseRate = desiredRate
+        machine.processingRate = desiredRate
+    }
+
+    machine.duplicatorTargetSeconds = runtimeEnergy.timeSeconds
+}
+
+function deriveClonerEnergyModel(options = {}) {
+    const resolvedSeconds = Math.max(1, Number(options.timeSeconds ?? CLONER_BASE_TIME_SECONDS) || CLONER_BASE_TIME_SECONDS)
+
+    const explicitCostKDE = Number(options.costKDE)
+    const explicitEnergyCost = Number(options.energyCost)
+
+    const resolvedCostKDE = Number.isFinite(explicitCostKDE) && explicitCostKDE > 0
+        ? explicitCostKDE
+        : (Number.isFinite(explicitEnergyCost) && explicitEnergyCost > 0
+            ? explicitEnergyCost / KDE
+            : CLONER_DEFAULT_COST_KDE)
+
+    const normalizedCostKDE = Math.max(1, resolvedCostKDE)
+    const energyCost = Math.max(1, Math.round(normalizedCostKDE * KDE))
+
+    return {
+        timeSeconds: resolvedSeconds,
+        ticks: Math.max(1, Math.round(resolvedSeconds * TICKS_PER_SECOND)),
+        costKDE: normalizedCostKDE,
+        energyCost,
+        perSecondKDE: normalizedCostKDE / resolvedSeconds,
+        energyPerTick: energyCost / (resolvedSeconds * TICKS_PER_SECOND)
+    }
 }
 
 function getClonerSpeedLevel(machine) {
     const speed = machine?.upgrades?.speed ?? 0
     const clamped = Math.max(0, Math.floor(speed))
     return Math.min(CLONER_SPEED_DURATION_SECONDS.length - 1, clamped)
+}
+
+function getClonerSpeedDurationScale(speedLevel) {
+    const resolved = CLONER_SPEED_DURATION_SECONDS[speedLevel] ?? CLONER_BASE_TIME_SECONDS
+    return Math.max(Number.EPSILON, resolved / CLONER_BASE_TIME_SECONDS)
+}
+
+function getRarityProfile(rarity) {
+    return RARITY_PROFILES[rarity] ?? RARITY_PROFILES[DEFAULT_RARITY]
 }
 
 function isSingularityFabricatorTemplate(itemId) {

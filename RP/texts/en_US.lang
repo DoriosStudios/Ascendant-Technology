@@ -74,7 +74,6 @@ tile.utilitycraft:conveyor_underflow.name=§aUnderflow Conveyor\n§7- Prioritize
 ## Transportation - Utilities
 tile.utilitycraft:conveyor_bridge_path.name=§aConveyor Bridge Path\n§7- Active bridge connection between transmitter and receiver
 tile.utilitycraft:conveyor_network_updater.name=Conveyor Network Updater\n§7- Rebuilds conveyor network caches
-tile.utilitycraft:gas_tube.name=Gas Tube\n§7- Pipe for routing gas networks
 
 ## Other Blocks
 tile.utilitycraft:flat_conduit.name=Flat Conduit\n§7  Aesthetic Version

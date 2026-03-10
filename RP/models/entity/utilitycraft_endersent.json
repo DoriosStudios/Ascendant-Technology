@@ -1,305 +1,97 @@
 {
-  "format_version": "1.12.0",
-  "minecraft:geometry": [
-    {
-      "description": {
-        "identifier": "geometry.utilitycraft_endersent",
-        "texture_width": 128,
-        "texture_height": 128,
-        "visible_bounds_width": 3,
-        "visible_bounds_height": 6.5,
-        "visible_bounds_offset": [
-          0,
-          2.75,
-          0
-        ]
-      },
-      "bones": [
-        {
-          "name": "Endersent",
-          "pivot": [
-            0,
-            0,
-            0
-          ]
-        },
-        {
-          "name": "Body",
-          "pivot": [
-            0,
-            51,
-            0
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -6.0,
-                35.0,
-                -3.0
-              ],
-              "size": [
-                12.0,
-                26.0,
-                6.0
-              ],
-              "uv": [
-                0,
-                0
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Endersent"
-        },
-        {
-          "name": "Head",
-          "pivot": [
-            0,
-            61,
-            -6
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -5.0,
-                57.0,
-                -9.0
-              ],
-              "size": [
-                10.0,
-                16.0,
-                6.0
-              ],
-              "uv": [
-                46,
-                0
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Body"
-        },
-        {
-          "name": "Arms",
-          "pivot": [
-            0,
-            57,
-            0
-          ],
-          "parent": "Body"
-        },
-        {
-          "name": "Arm0",
-          "pivot": [
-            -7,
-            59,
-            -1
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -9.0,
-                34.0,
-                -2.0
-              ],
-              "size": [
-                3.0,
-                28.0,
-                3.0
-              ],
-              "uv": [
-                0,
-                60
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Arms"
-        },
-        {
-          "name": "Bone0",
-          "pivot": [
-            -7,
-            33,
-            0
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -9.0,
-                12.0,
-                -2.0
-              ],
-              "size": [
-                3.0,
-                22.0,
-                3.0
-              ],
-              "uv": [
-                24,
-                60
-              ],
-              "inflate": 0
-            },
-            {
-              "origin": [
-                -10.0,
-                5.0,
-                -3.0
-              ],
-              "size": [
-                5.0,
-                14.0,
-                13.0
-              ],
-              "uv": [
-                0,
-                33
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Arm0"
-        },
-        {
-          "name": "Arm1",
-          "pivot": [
-            8,
-            59,
-            -1
-          ],
-          "cubes": [
-            {
-              "origin": [
-                6.0,
-                34.0,
-                -2.0
-              ],
-              "size": [
-                3.0,
-                28.0,
-                3.0
-              ],
-              "uv": [
-                52,
-                46
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Arms"
-        },
-        {
-          "name": "Bone1",
-          "pivot": [
-            8,
-            33,
-            0
-          ],
-          "cubes": [
-            {
-              "origin": [
-                6.0,
-                12.0,
-                -2.0
-              ],
-              "size": [
-                3.0,
-                22.0,
-                3.0
-              ],
-              "uv": [
-                12,
-                60
-              ],
-              "inflate": 0
-            },
-            {
-              "origin": [
-                5.0,
-                5.0,
-                -3.0
-              ],
-              "size": [
-                5.0,
-                14.0,
-                13.0
-              ],
-              "uv": [
-                23,
-                19
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Arm1"
-        },
-        {
-          "name": "Legs",
-          "pivot": [
-            0,
-            35,
-            0
-          ],
-          "parent": "Endersent"
-        },
-        {
-          "name": "Leg0",
-          "pivot": [
-            -4,
-            34,
-            0
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -5.0,
-                0.0,
-                -1.0
-              ],
-              "size": [
-                2.0,
-                35.0,
-                2.0
-              ],
-              "uv": [
-                44,
-                46
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Legs"
-        },
-        {
-          "name": "Leg1",
-          "pivot": [
-            4,
-            34,
-            0
-          ],
-          "cubes": [
-            {
-              "origin": [
-                3.0,
-                0.0,
-                -1.0
-              ],
-              "size": [
-                2.0,
-                35.0,
-                2.0
-              ],
-              "uv": [
-                36,
-                46
-              ],
-              "inflate": 0
-            }
-          ],
-          "parent": "Legs"
-        }
-      ]
-    }
-  ]
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.utilitycraft_endersent",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 6.5,
+				"visible_bounds_offset": [0, 2.75, 0]
+			},
+			"bones": [
+				{
+					"name": "Endersent",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "Body",
+					"parent": "Endersent",
+					"pivot": [0, 51, 0],
+					"cubes": [
+						{"origin": [-6, 35, -3], "size": [12, 26, 6], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "Head",
+					"parent": "Body",
+					"pivot": [0, 61, -6],
+					"cubes": [
+						{"origin": [-5, 57, -9], "size": [10, 16, 6], "uv": [46, 0]}
+					]
+				},
+				{
+					"name": "Arms",
+					"parent": "Body",
+					"pivot": [0, 57, 0]
+				},
+				{
+					"name": "ArmRight",
+					"parent": "Arms",
+					"pivot": [-7, 59, -1],
+					"cubes": [
+						{"origin": [-9, 34, -2], "size": [3, 28, 3], "uv": [0, 60]}
+					]
+				},
+				{
+					"name": "HandRight",
+					"parent": "ArmRight",
+					"pivot": [-7, 33, 0],
+					"cubes": [
+						{"origin": [-9, 12, -2], "size": [3, 22, 3], "uv": [24, 60]},
+						{"origin": [-10, 5, -3], "size": [5, 14, 13], "uv": [0, 33]}
+					]
+				},
+				{
+					"name": "ArmLeft",
+					"parent": "Arms",
+					"pivot": [8, 59, -1],
+					"cubes": [
+						{"origin": [6, 34, -2], "size": [3, 28, 3], "uv": [52, 46]}
+					]
+				},
+				{
+					"name": "HandLeft",
+					"parent": "ArmLeft",
+					"pivot": [8, 33, 0],
+					"cubes": [
+						{"origin": [6, 12, -2], "size": [3, 22, 3], "uv": [12, 60]},
+						{"origin": [5, 5, -3], "size": [5, 14, 13], "uv": [23, 19]}
+					]
+				},
+				{
+					"name": "Legs",
+					"parent": "Endersent",
+					"pivot": [0, 35, 0]
+				},
+				{
+					"name": "Leg0",
+					"parent": "Legs",
+					"pivot": [-4, 34, 0],
+					"cubes": [
+						{"origin": [-5, 0, -1], "size": [2, 35, 2], "uv": [44, 46]}
+					]
+				},
+				{
+					"name": "Leg1",
+					"parent": "Legs",
+					"pivot": [4, 34, 0],
+					"cubes": [
+						{"origin": [3, 0, -1], "size": [2, 35, 2], "uv": [36, 46]}
+					]
+				}
+			]
+		}
+	]
 }

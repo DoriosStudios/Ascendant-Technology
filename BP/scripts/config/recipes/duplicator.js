@@ -1,4 +1,10 @@
 import { system } from "@minecraft/server";
+import {
+    CLONER_RARITIES,
+    CLONER_BLOCK_RARITY_MAP,
+    CLONER_ITEM_RARITY_MAP,
+    getClonerItemProfile as resolveClonerItemProfile
+} from "./duplicator_list.js";
 
 const KDE = 1000;
 const DEFAULT_FLUID_TYPE = 'liquified_aetherium';
@@ -41,256 +47,27 @@ const CLONER_BLOCK_ID = 'utilitycraft:duplicator';
  * Total energy cost for a recipe is derived as:
  *   (rarityRateKDE * timeSeconds + recipe.cost) * 1 000
  */
-export const CLONER_RARITIES = [
-    "common",
-    "uncommon",
-    "rare",
-    "epic",
-    "legendary",
-    "mythic"
-];
-
 const RARITY_BASE_RATE_KDE = {
     common:      10,
     uncommon:    48,
     rare:        240,
     epic:        1200,
     legendary:   6000,
-    mythic:      30000
+    mythic:      30000,
+    transcendent: 150000
 };
+export { CLONER_RARITIES, CLONER_BLOCK_RARITY_MAP, CLONER_ITEM_RARITY_MAP } from "./duplicator_list.js";
 
-const ASCENDANT_BLOCK_RARITIES = Object.freeze({
-    "utilitycraft:absolute_battery": "legendary",
-    "utilitycraft:absolute_container": "legendary",
-    "utilitycraft:absolute_furnator": "legendary",
-    "utilitycraft:absolute_magmator": "legendary",
-    "utilitycraft:absolute_solar_panel": "legendary",
-    "utilitycraft:absolute_thermo_generator": "legendary",
-    "utilitycraft:absolute_wind_turbine": "legendary",
-    "utilitycraft:aetherium_block": "epic",
-    "utilitycraft:raw_titanium_block": "uncommon",
-    "utilitycraft:titanium_block": "rare",
-    "utilitycraft:deepslate_titanium_ore": "rare",
-    "utilitycraft:deepslate_aetherium_ore": "epic",
-    "utilitycraft:end_aetherium_ore": "legendary",
-    "utilitycraft:catalyst_weaver": "epic",
-    "utilitycraft:cryo_chamber": "epic",
-    "utilitycraft:energizer": "rare",
-    "utilitycraft:laser_barrier": "rare",
-    "utilitycraft:laser_barrier_field": "rare",
-    "utilitycraft:liquifier": "rare",
-    "utilitycraft:mob_magnet": "rare",
-    "utilitycraft:network_center": "rare",
-    "utilitycraft:overclock_relay": "epic",
-    "utilitycraft:overclock_tower": "legendary",
-    "utilitycraft:reinforced_cable": "rare",
-    "utilitycraft:reinforced_extractor": "epic",
-    "utilitycraft:residue_processor": "rare",
-    "utilitycraft:singularity_fabricator": "mythic",
-    "utilitycraft:tabs_test_machine": "common"
-});
-
-const VANILLA_MYTHIC_BLOCKS = new Set([
-    "minecraft:barrier",
-    "minecraft:bedrock",
-    "minecraft:chain_command_block",
-    "minecraft:command_block",
-    "minecraft:dragon_egg",
-    "minecraft:end_portal_frame",
-    "minecraft:reinforced_deepslate",
-    "minecraft:repeating_command_block",
-    "minecraft:spawner",
-    "minecraft:structure_block"
-]);
-
-const VANILLA_LEGENDARY_BLOCKS = new Set([
-    "minecraft:ancient_debris",
-    "minecraft:beacon",
-    "minecraft:conduit",
-    "minecraft:end_gateway",
-    "minecraft:lodestone",
-    "minecraft:netherite_block",
-    "minecraft:respawn_anchor"
-]);
-
-const VANILLA_EPIC_BLOCKS = new Set([
-    "minecraft:diamond_block",
-    "minecraft:diamond_ore",
-    "minecraft:deepslate_diamond_ore",
-    "minecraft:deepslate_emerald_ore",
-    "minecraft:emerald_block",
-    "minecraft:emerald_ore",
-    "minecraft:enchanting_table",
-    "minecraft:ender_chest"
-]);
-
-const VANILLA_RARE_BLOCKS = new Set([
-    "minecraft:crying_obsidian",
-    "minecraft:glowstone",
-    "minecraft:gold_block",
-    "minecraft:gold_ore",
-    "minecraft:deepslate_gold_ore",
-    "minecraft:obsidian",
-    "minecraft:sculk",
-    "minecraft:sculk_catalyst",
-    "minecraft:sculk_sensor",
-    "minecraft:sculk_shrieker",
-    "minecraft:sea_lantern",
-    "minecraft:spore_blossom"
-]);
-
-const VANILLA_UNCOMMON_BLOCKS = new Set([
-    "minecraft:amethyst_block",
-    "minecraft:budding_amethyst",
-    "minecraft:calcite",
-    "minecraft:coal_block",
-    "minecraft:coal_ore",
-    "minecraft:deepslate_coal_ore",
-    "minecraft:copper_block",
-    "minecraft:copper_ore",
-    "minecraft:deepslate_copper_ore",
-    "minecraft:cut_copper",
-    "minecraft:exposed_copper",
-    "minecraft:weathered_copper",
-    "minecraft:oxidized_copper",
-    "minecraft:iron_block",
-    "minecraft:iron_ore",
-    "minecraft:deepslate_iron_ore",
-    "minecraft:lapis_block",
-    "minecraft:lapis_ore",
-    "minecraft:deepslate_lapis_ore",
-    "minecraft:nether_gold_ore",
-    "minecraft:nether_quartz_ore",
-    "minecraft:raw_copper_block",
-    "minecraft:raw_gold_block",
-    "minecraft:raw_iron_block",
-    "minecraft:redstone_block",
-    "minecraft:redstone_ore",
-    "minecraft:deepslate_redstone_ore",
-    "minecraft:tuff",
-    "minecraft:dripstone_block"
-]);
-
-const VANILLA_COMMON_BLOCKS = new Set([
-    "minecraft:clay",
-    "minecraft:cobblestone",
-    "minecraft:coarse_dirt",
-    "minecraft:dirt",
-    "minecraft:grass_block",
-    "minecraft:gravel",
-    "minecraft:ice",
-    "minecraft:packed_ice",
-    "minecraft:blue_ice",
-    "minecraft:mycelium",
-    "minecraft:rooted_dirt",
-    "minecraft:sand",
-    "minecraft:red_sand",
-    "minecraft:snow_block",
-    "minecraft:stone",
-    "minecraft:glass"
-]);
-
-const VANILLA_COMMON_PATTERNS = [
-    /^minecraft:.*_planks$/,
-    /^minecraft:.*_log$/,
-    /^minecraft:.*_wood$/,
-    /^minecraft:stripped_.*_(log|wood)$/,
-    /^minecraft:.*_stem$/,
-    /^minecraft:.*_hyphae$/,
-    /^minecraft:.*_slab$/,
-    /^minecraft:.*_stairs$/,
-    /^minecraft:.*_wall$/,
-    /^minecraft:.*_fence$/,
-    /^minecraft:.*_fence_gate$/,
-    /^minecraft:.*_door$/,
-    /^minecraft:.*_trapdoor$/,
-    /^minecraft:.*_button$/,
-    /^minecraft:.*_pressure_plate$/,
-    /^minecraft:.*_sign$/,
-    /^minecraft:.*_hanging_sign$/,
-    /^minecraft:.*_carpet$/,
-    /^minecraft:.*_wool$/,
-    /^minecraft:.*_concrete$/,
-    /^minecraft:.*_concrete_powder$/,
-    /^minecraft:.*_terracotta$/,
-    /^minecraft:.*_glazed_terracotta$/,
-    /^minecraft:.*_glass_pane$/,
-    /^minecraft:.*_glass$/,
-    /^minecraft:.*_leaves$/,
-    /^minecraft:.*_sapling$/,
-    /^minecraft:.*_bricks$/,
-    /^minecraft:.*_tiles$/,
-    /^minecraft:.*_sandstone$/,
-    /^minecraft:.*_stone$/,
-    /^minecraft:.*_cobblestone$/,
-    /^minecraft:.*_deepslate$/,
-    /^minecraft:.*_basalt$/,
-    /^minecraft:.*_blackstone$/,
-    /^minecraft:.*_prismarine$/,
-    /^minecraft:.*_purpur$/,
-    /^minecraft:.*_quartz$/,
-    /^minecraft:.*_mud$/,
-    /^minecraft:.*_granite$/,
-    /^minecraft:.*_diorite$/,
-    /^minecraft:.*_andesite$/
-];
-
-function normalizeBlockId(value) {
-    if (typeof value !== "string") return "";
-    return value.trim().toLowerCase();
+export function getClonerItemProfile(id) {
+    return resolveClonerItemProfile(id);
 }
 
-function isCommonConstructionBlock(id) {
-    if (!id.startsWith("minecraft:")) return false;
-    if (VANILLA_COMMON_BLOCKS.has(id)) return true;
-    return VANILLA_COMMON_PATTERNS.some(pattern => pattern.test(id));
+export function getClonerBlockProfile(id) {
+    return resolveClonerItemProfile(id);
 }
-
-function resolveVanillaBlockRarity(id) {
-    if (!id.startsWith("minecraft:")) return null;
-    if (VANILLA_MYTHIC_BLOCKS.has(id)) return "mythic";
-    if (VANILLA_LEGENDARY_BLOCKS.has(id)) return "legendary";
-    if (VANILLA_EPIC_BLOCKS.has(id)) return "epic";
-    if (VANILLA_RARE_BLOCKS.has(id)) return "rare";
-    if (VANILLA_UNCOMMON_BLOCKS.has(id)) return "uncommon";
-    if (/_shulker_box$/.test(id)) return "rare";
-    if (/_ore$/.test(id) || /:deepslate_.*_ore$/.test(id)) return "uncommon";
-    if (/^minecraft:raw_.*_block$/.test(id)) return "uncommon";
-    if (isCommonConstructionBlock(id)) return "common";
-    return null;
-}
-
-function addBlocksToMap(target, blocks, rarity) {
-    for (const id of blocks) {
-        target[id] = rarity;
-    }
-}
-
-function buildClonerBlockRarityMap() {
-    const map = {};
-    addBlocksToMap(map, VANILLA_COMMON_BLOCKS, "common");
-    addBlocksToMap(map, VANILLA_UNCOMMON_BLOCKS, "uncommon");
-    addBlocksToMap(map, VANILLA_RARE_BLOCKS, "rare");
-    addBlocksToMap(map, VANILLA_EPIC_BLOCKS, "epic");
-    addBlocksToMap(map, VANILLA_LEGENDARY_BLOCKS, "legendary");
-    addBlocksToMap(map, VANILLA_MYTHIC_BLOCKS, "mythic");
-    Object.assign(map, ASCENDANT_BLOCK_RARITIES);
-    return map;
-}
-
-export const CLONER_BLOCK_RARITY_MAP = Object.freeze(buildClonerBlockRarityMap());
 
 export function getClonerBlockRarity(id) {
-    const normalized = normalizeBlockId(id);
-    if (!normalized) return "common";
-
-    const ascendantRarity = ASCENDANT_BLOCK_RARITIES[normalized];
-    if (ascendantRarity) return ascendantRarity;
-
-    const vanillaRarity = resolveVanillaBlockRarity(normalized);
-    if (vanillaRarity) return vanillaRarity;
-
-    return "common";
+    return resolveClonerItemProfile(id).rarity;
 }
 
 const nativeSingularityRecipes = [

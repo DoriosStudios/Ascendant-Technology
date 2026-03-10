@@ -7,7 +7,7 @@ const DEFAULT_PROCESS_SECONDS = 4;
 
 /**
  * Native Vaporworks Processor recipes shipped with the add-on.
- * Each entry defines the fluid input, the amount of gas/steam produced,
+ * Each entry defines the fluid input, the amount of output fluid produced,
  * and metadata that the machine script can use to describe the recipe to the player.
  *
  * @type {VaporworksRecipe[]}

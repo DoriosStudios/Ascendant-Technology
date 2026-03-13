@@ -63,9 +63,7 @@ const ASCENDANT_BLOCK_RARITIES = Object.freeze({
     "utilitycraft:absolute_magmator": "legendary",
     "utilitycraft:absolute_solar_panel": "legendary",
     "utilitycraft:absolute_thermo_generator": "legendary",
-    "utilitycraft:absolute_wind_turbine": "legendary",
-
-    "utilitycraft:tabs_test_machine": "common"
+    "utilitycraft:absolute_wind_turbine": "legendary"
 });
 
 // Ascendant items

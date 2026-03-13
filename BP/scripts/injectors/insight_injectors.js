@@ -1,5 +1,5 @@
 import { system } from "@minecraft/server";
-import { Energy, FluidManager } from "./machinery/AscendantMachinery/core.js";
+import { Energy, FluidManager } from "../DoriosCore/index.js";
 
 const REGISTRATION_MARKER = "__insightInjectorsAscendantRegistered";
 const REGISTRATION_RETRY_TICKS = 20;

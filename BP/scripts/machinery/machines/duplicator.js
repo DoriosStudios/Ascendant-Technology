@@ -1,46 +1,118 @@
-import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, formatItemName, capitalize, formatSeconds, formatEta, calculateEtaSeconds, getProgressPerSecond, formatFluidDisplayName, computeSlotCapacity, addItemsToSlot, captureItemMetadata } from '../../DoriosCore/index.js'
 import { getClonerBlockProfile } from '../../config/recipes/duplicator.js'
 
-const INPUT_SLOT = 3
-const STATUS_SLOT = 1
-const FLUID_INPUT_SLOT = 10
-const FLUID_DISPLAY_SLOT = 11
-const OUTPUT_SLOT_ORIGINAL = 18
-const OUTPUT_SLOT_COPY = 19
-const DEFAULT_FLUID_TYPE = 'liquified_aetherium'
-const FLUID_PER_SECOND = 50
-const TICKS_PER_SECOND = 20
-const UPGRADE_SLOTS = [4, 5, 6]
-const LEGACY_UPGRADE_SLOTS = [16, 17]
-const CLONER_BASE_TIME_SECONDS = 30 * 60
-const CLONER_UNDECLARED_BASE_TIME_SECONDS = 60
-const CLONER_ENERGY_COST = 1_600_000
-const KDE = 1000
-const CLONER_DEFAULT_COST_KDE = Math.max(1, CLONER_ENERGY_COST / KDE)
-const CLONER_BLOCK_ID = 'utilitycraft:duplicator'
-const CLONER_SPEED_DURATION_SECONDS = [
-    CLONER_BASE_TIME_SECONDS,
-    20 * 60,
-    15 * 60,
-    10 * 60,
-    8 * 60,
-    6 * 60,
-    4 * 60,
-    2 * 60,
-    1 * 60
-]
-const MIN_CLONER_RATE = 1
-const DEFAULT_RARITY = 'common'
-const RARITY_PROFILES = Object.freeze({
-    common: { timeMultiplier: 1, costMultiplier: 1 },
-    uncommon: { timeMultiplier: 1.75, costMultiplier: 2 },
-    rare: { timeMultiplier: 3.5, costMultiplier: 3.5 },
-    epic: { timeMultiplier: 6, costMultiplier: 5 },
-    legendary: { timeMultiplier: 8.25, costMultiplier: 10 },
-    mythic: { timeMultiplier: 10, costMultiplier: 15 },
-    transcendent: { timeMultiplier: 12.5, costMultiplier: 25 }
+const config = Object.freeze({
+    slots: Object.freeze({
+        input: 3,
+        status: 1,
+        fluidInput: 10,
+        fluidDisplay: 11,
+        outputOriginal: 18,
+        outputCopy: 19,
+        upgrades: Object.freeze([4, 5, 6]),
+        legacyUpgradeSlots: Object.freeze([16, 17])
+    }),
+    fluid: Object.freeze({
+        type: 'liquified_aetherium',
+        perSecond: 50
+    }),
+    cloner: Object.freeze({
+        baseTimeSeconds: 30 * 60,
+        undeclaredBaseTimeSeconds: 60,
+        energyCost: 1_600_000,
+        kde: 1000,
+        ticksPerSecond: 20,
+        blockId: 'utilitycraft:duplicator',
+        speedDurationSeconds: Object.freeze([
+            30 * 60,
+            20 * 60,
+            15 * 60,
+            10 * 60,
+            8 * 60,
+            6 * 60,
+            4 * 60,
+            2 * 60,
+            1 * 60
+        ]),
+        minRate: 1,
+        rarityBase: 'common',
+        rarityProfiles: Object.freeze({
+            common: Object.freeze({ timeMultiplier: 1, costMultiplier: 1 }),
+            uncommon: Object.freeze({ timeMultiplier: 1.75, costMultiplier: 2 }),
+            rare: Object.freeze({ timeMultiplier: 3.5, costMultiplier: 3.5 }),
+            epic: Object.freeze({ timeMultiplier: 6, costMultiplier: 5 }),
+            legendary: Object.freeze({ timeMultiplier: 8.25, costMultiplier: 10 }),
+            mythic: Object.freeze({ timeMultiplier: 10, costMultiplier: 15 }),
+            transcendent: Object.freeze({ timeMultiplier: 12.5, costMultiplier: 25 })
+        })
+    })
 })
 
+let duplicator = config
+let duplicatorSettingsCacheKey = ''
+
+function isPlainObject(value) {
+    return Object.prototype.toString.call(value) === '[object Object]'
+}
+
+function deepMergeObjects(base, override) {
+    if (Array.isArray(base)) {
+        return Array.isArray(override) ? [...override] : [...base]
+    }
+
+    if (!isPlainObject(base)) {
+        return override
+    }
+
+    const result = { ...base }
+    if (!isPlainObject(override)) return result
+
+    for (const [key, overrideValue] of Object.entries(override)) {
+        const baseValue = base[key]
+        if (isPlainObject(baseValue) && isPlainObject(overrideValue)) {
+            result[key] = deepMergeObjects(baseValue, overrideValue)
+            continue
+        }
+
+        if (Array.isArray(baseValue) && Array.isArray(overrideValue)) {
+            result[key] = [...overrideValue]
+            continue
+        }
+
+        result[key] = overrideValue
+    }
+
+    return result
+}
+
+function applyDuplicatorConfig(nextConfig) {
+    duplicator = isPlainObject(nextConfig) ? nextConfig : config
+}
+
+function resolveDuplicatorConfig(settings) {
+    const duplicatorOverride = settings?.machine?.duplicator ?? settings?.machine?.config?.duplicator
+    if (!isPlainObject(duplicatorOverride)) {
+        applyDuplicatorConfig(config)
+        duplicatorSettingsCacheKey = ''
+        return duplicator
+    }
+
+    let nextKey = ''
+    try {
+        nextKey = JSON.stringify(duplicatorOverride)
+    } catch {
+        nextKey = ''
+    }
+
+    if (nextKey && nextKey === duplicatorSettingsCacheKey) {
+        return duplicator
+    }
+
+    const merged = deepMergeObjects(config, duplicatorOverride)
+    applyDuplicatorConfig(merged)
+    duplicatorSettingsCacheKey = nextKey
+    return duplicator
+}
 /**
  * @typedef {Object} ClonerException
  * @property {string[]} ids - Lowercased identifiers blocked from cloning.
@@ -107,13 +179,13 @@ function formatExceptionWarning(exception) {
 /*
 Slots (inventory_size: 20)
 - [0] HUD de energia (machine.displayEnergy padrão).
-- [1] Indicador de status/seta (STATUS_SLOT).
-- [3] Input de template (INPUT_SLOT).
-- [4,5,6] Slots de upgrades (UPGRADE_SLOTS); 16,17 são slots legados migrados.
-- [10] Entrada de fluido (FLUID_INPUT_SLOT) — bloqueada ao jogador.
-- [11] Display do tanque (FLUID_DISPLAY_SLOT) — bloqueado ao jogador.
-- [18] Slot do original/entrada a ser clonado (OUTPUT_SLOT_ORIGINAL).
-- [19] Slot da cópia/clonado (OUTPUT_SLOT_COPY).
+- [1] Indicador de status/seta (`duplicator.slots.status`).
+- [3] Input de template (`duplicator.slots.input`).
+- [4,5,6] Slots de upgrades (`duplicator.slots.upgrades`); 16,17 são slots legados migrados.
+- [10] Entrada de fluido (`duplicator.slots.fluidInput`) — bloqueada ao jogador.
+- [11] Display do tanque (`duplicator.slots.fluidDisplay`) — bloqueado ao jogador.
+- [18] Slot do original/entrada a ser clonado (`duplicator.slots.outputOriginal`).
+- [19] Slot da cópia/clonado (`duplicator.slots.outputCopy`).
 Slots escondidos: [7, 8, 9, 12, 13, 14, 15, 16, 17] (preenchimento/UI, não utilizáveis; 16/17 usados apenas para migração legada).
 */
 
@@ -122,32 +194,34 @@ doriosRegister()
 function doriosRegister() {
     DoriosAPI.register.blockComponent('duplicator', {
         beforeOnPlayerPlace(e, { params: settings }) {
+            resolveDuplicatorConfig(settings)
             Machine.spawnMachineEntity(e, settings, () => {
                 const machine = new Machine(e.block, settings, true)
                 if (!machine?.entity) return
-                machine.setEnergyCost(settings.machine.energy_cost ?? CLONER_ENERGY_COST)
+                machine.setEnergyCost(settings.machine.energy_cost ?? duplicator.cloner.energyCost)
                 machine.displayProgress()
                 machine.displayEnergy()
-                machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '')
-                machine.blockSlots([FLUID_DISPLAY_SLOT, FLUID_INPUT_SLOT])
+                machine.entity.setItem(duplicator.slots.status, 'utilitycraft:arrow_indicator_90', 1, '')
+                machine.blockSlots([duplicator.slots.fluidDisplay, duplicator.slots.fluidInput])
                 migrateLegacyUpgradeSlots(machine)
 
-                machine.entity.addTag(`fluidWhitelist:${DEFAULT_FLUID_TYPE}`)
-                machine.entity.setDynamicProperty?.('dorios:fluid_whitelist', DEFAULT_FLUID_TYPE)
+                machine.entity.addTag(`fluidWhitelist:${duplicator.fluid.type}`)
+                machine.entity.setDynamicProperty?.('dorios:fluid_whitelist', duplicator.fluid.type)
 
                 const tank = FluidManager.initializeSingle(machine.entity)
-                tank.display(FLUID_DISPLAY_SLOT)
+                tank.display(duplicator.slots.fluidDisplay)
             })
         },
 
         onTick(e, { params: settings }) {
             if (!globalThis.worldLoaded) return
+            resolveDuplicatorConfig(settings)
             const { block } = e
             const machine = new Machine(block, settings)
             if (!machine.valid) return
 
-            machine.entity?.addTag?.(`fluidWhitelist:${DEFAULT_FLUID_TYPE}`)
-            machine.entity?.setDynamicProperty?.('dorios:fluid_whitelist', DEFAULT_FLUID_TYPE)
+            machine.entity?.addTag?.(`fluidWhitelist:${duplicator.fluid.type}`)
+            machine.entity?.setDynamicProperty?.('dorios:fluid_whitelist', duplicator.fluid.type)
 
             migrateLegacyUpgradeSlots(machine)
 
@@ -162,16 +236,16 @@ function doriosRegister() {
 
             const fail = (message, reset = true) => {
                 machine.showWarning(message, reset)
-                tank.display(FLUID_DISPLAY_SLOT)
+                tank.display(duplicator.slots.fluidDisplay)
             }
 
-            const inputStack = machine.inv.getItem(INPUT_SLOT)
+            const inputStack = machine.inv.getItem(duplicator.slots.input)
             if (!inputStack) {
                 fail('Insert Template')
                 return
             }
 
-            const templateMeta = captureTemplateMetadata(inputStack)
+            const templateMeta = captureItemMetadata(inputStack)
 
             const exception = duplicatorExceptions.find(inputStack.typeId)
             if (exception) {
@@ -195,7 +269,7 @@ function doriosRegister() {
             const requiredFluid = getRecipeFluid(recipe)
             if (requiredFluid) {
                 const tankType = tank.getType()
-                const neededType = requiredFluid.type ?? DEFAULT_FLUID_TYPE
+                const neededType = requiredFluid.type ?? duplicator.fluid.type
                 const fluidName = formatFluidDisplayName(neededType)
 
                 if (tankType !== 'empty' && tankType !== neededType) {
@@ -213,8 +287,8 @@ function doriosRegister() {
                 }
             }
 
-            const originalSlot = machine.inv.getItem(OUTPUT_SLOT_ORIGINAL)
-            const copySlot = machine.inv.getItem(OUTPUT_SLOT_COPY)
+            const originalSlot = machine.inv.getItem(duplicator.slots.outputOriginal)
+            const copySlot = machine.inv.getItem(duplicator.slots.outputCopy)
             const copyPerCraft = getCopyAmountPerCraft(recipe)
 
             if (!canAcceptSlotItem(originalSlot, recipe.input?.id)) {
@@ -275,7 +349,7 @@ function doriosRegister() {
 function createGenericRecipeFromInput(stack) {
     if (!stack?.typeId) return null
 
-    if (stack.typeId.toLowerCase() === CLONER_BLOCK_ID) {
+    if (stack.typeId.toLowerCase() === duplicator.cloner.blockId) {
         return null
     }
 
@@ -283,10 +357,11 @@ function createGenericRecipeFromInput(stack) {
     const rarity = rarityProfileData.rarity
     const rarityProfile = getRarityProfile(rarity)
     const baseTimeSeconds = rarityProfileData.declared
-        ? CLONER_BASE_TIME_SECONDS
-        : CLONER_UNDECLARED_BASE_TIME_SECONDS
+        ? duplicator.cloner.baseTimeSeconds
+        : duplicator.cloner.undeclaredBaseTimeSeconds
     const timeSeconds = Math.max(1, Math.round(baseTimeSeconds * rarityProfile.timeMultiplier))
-    const costKDE = Math.max(1, Math.round(CLONER_DEFAULT_COST_KDE * rarityProfile.costMultiplier))
+    const clonerCostKDEBase = Math.max(1, duplicator.cloner.energyCost / duplicator.cloner.kde)
+    const costKDE = Math.max(1, Math.round(clonerCostKDEBase * rarityProfile.costMultiplier))
     const energyModel = deriveClonerEnergyModel({
         timeSeconds,
         costKDE
@@ -314,33 +389,23 @@ function createGenericRecipeFromInput(stack) {
         costKDE: energyModel.costKDE,
         energyCost: energyModel.energyCost,
         fluid: {
-            type: DEFAULT_FLUID_TYPE,
-            amount: Math.max(1, Math.round(energyModel.timeSeconds * FLUID_PER_SECOND))
+            type: duplicator.fluid.type,
+            amount: Math.max(1, Math.round(energyModel.timeSeconds * duplicator.fluid.perSecond))
         }
     }
 }
-
-    function tickGate(entity, key, interval) {
-        const cd = Number(entity.getDynamicProperty(key)) || 0
-        if (cd > 0) {
-            entity.setDynamicProperty(key, cd - 1)
-            return false
-        }
-        entity.setDynamicProperty(key, interval)
-        return true
-    }
 function getRecipeFluid(recipe) {
     if (!recipe) return null
     if (recipe.fluid && typeof recipe.fluid === 'object') {
-        recipe.fluid.type = recipe.fluid.type ?? DEFAULT_FLUID_TYPE
+        recipe.fluid.type = recipe.fluid.type ?? duplicator.fluid.type
         recipe.fluid.amount = Math.max(1, Math.round(recipe.fluid.amount ?? 0))
         return recipe.fluid
     }
 
-    const timeSeconds = recipe.timeSeconds ?? CLONER_BASE_TIME_SECONDS
+    const timeSeconds = recipe.timeSeconds ?? duplicator.cloner.baseTimeSeconds
     recipe.fluid = {
-        type: DEFAULT_FLUID_TYPE,
-        amount: Math.max(1, Math.round(timeSeconds * FLUID_PER_SECOND))
+        type: duplicator.fluid.type,
+        amount: Math.max(1, Math.round(timeSeconds * duplicator.fluid.perSecond))
     }
     return recipe.fluid
 }
@@ -390,7 +455,7 @@ function applyCraft(machine, recipe, crafts, tank, templateMeta) {
     if (crafts <= 0) return
 
     const inputQty = (recipe.input.amount ?? 1) * crafts
-    machine.entity.changeItemAmount(INPUT_SLOT, -inputQty)
+    machine.entity.changeItemAmount(duplicator.slots.input, -inputQty)
 
     if (recipe?.fluid?.amount && tank) {
         const totalFluid = recipe.fluid.amount * crafts
@@ -399,22 +464,28 @@ function applyCraft(machine, recipe, crafts, tank, templateMeta) {
     }
 
     const originalAmount = getOriginalAmountPerCraft(recipe) * crafts
-    addItemsToSlot(machine, OUTPUT_SLOT_ORIGINAL, recipe.input.id, originalAmount, templateMeta)
+    addItemsToSlot(machine, duplicator.slots.outputOriginal, recipe.input.id, originalAmount, {
+        metadata: templateMeta,
+        applyMetadataOnMerge: true
+    })
 
     const copyAmount = getCopyAmountPerCraft(recipe) * crafts
     if (copyAmount > 0) {
-        addItemsToSlot(machine, OUTPUT_SLOT_COPY, recipe.output.id, copyAmount, templateMeta)
+        addItemsToSlot(machine, duplicator.slots.outputCopy, recipe.output.id, copyAmount, {
+            metadata: templateMeta,
+            applyMetadataOnMerge: true
+        })
     }
 }
 
 function updateHud(machine, recipe, tank, crafted) {
     machine.displayEnergy()
     machine.displayProgress()
-    tank?.display(FLUID_DISPLAY_SLOT)
+    tank?.display(duplicator.slots.fluidDisplay)
 
     machine.on()
 
-    const rawRarityName = capitalize(recipe?.rarity ?? DEFAULT_RARITY)
+    const rawRarityName = capitalize(recipe?.rarity ?? duplicator.cloner.rarityBase)
     let rarityName = rawRarityName
     if (rawRarityName.toLowerCase() === 'uncommon') {
         rarityName = '§aUncommon'
@@ -437,11 +508,11 @@ function updateHud(machine, recipe, tank, crafted) {
         ? `(Unknown)`
         : rarityName
     const lore = [
-        `§7Template: §b${formatName(recipe.input.id)}`,
+        `§7Template: §b${formatItemName(recipe.input.id)}`,
         `§7Rarity: §f${modeName}`,
         `§7ETA: §f${etaDisplay}`,
         `§cCost: §f${Energy.formatEnergyToText(recipe.energyCost)}`,
-        `§6Rate: §f${Energy.formatEnergyToText(recipe.perSecondKDE * KDE)}/s`
+        `§6Rate: §f${Energy.formatEnergyToText(recipe.perSecondKDE * duplicator.cloner.kde)}/s`
     ]
 
     if (Array.isArray(fluidLines) && fluidLines.length) {
@@ -456,85 +527,6 @@ function updateHud(machine, recipe, tank, crafted) {
     })
 }
 
-function formatName(id) {
-    const [, name = id] = id.split(':')
-    return name.split('_').map(capitalize).join(' ')
-}
-
-function capitalize(text) {
-    if (!text) return ''
-    return text[0].toUpperCase() + text.slice(1)
-}
-
-function formatSeconds(totalSeconds = 0) {
-    const seconds = Math.floor(totalSeconds)
-    const hours = Math.floor(seconds / 3600)
-    const minutes = Math.floor((seconds % 3600) / 60)
-    const remaining = seconds % 60
-
-    const parts = []
-    if (hours > 0) parts.push(`${hours}h`)
-    if (minutes > 0 || hours > 0) parts.push(`${minutes}m`)
-    parts.push(`${remaining}s`)
-    return parts.join(' ')
-}
-
-function formatEta(machine, recipe) {
-    const seconds = calculateEtaSeconds(machine, recipe)
-    if (seconds === null || !isFinite(seconds)) {
-        if (typeof recipe?.timeSeconds === 'number') {
-            return formatSeconds(recipe.timeSeconds)
-        }
-        return '---'
-    }
-    return formatSeconds(seconds)
-}
-
-function calculateEtaSeconds(machine, recipe) {
-    const cost = recipe?.energyCost ?? machine.getEnergyCost()
-    if (!cost || cost <= 0) return null
-
-    const remaining = Math.max(0, cost - machine.getProgress())
-    if (remaining <= 0) return 0
-
-    const progressPerSecond = getProgressPerSecond(machine)
-    if (progressPerSecond <= 0) return null
-
-    return remaining / progressPerSecond
-}
-
-function getProgressPerSecond(machine) {
-    const progress = machine.getProgress()
-    const tickCount = globalThis.tickCount ?? 0
-
-    const lastProgress = machine.entity.getDynamicProperty('dorios:last_progress_sample')
-    const lastTick = machine.entity.getDynamicProperty('dorios:last_progress_tick')
-
-    let perSecond = 0
-    if (typeof lastProgress === 'number' && typeof lastTick === 'number' && tickCount > lastTick) {
-        const deltaProgress = progress - lastProgress
-        const deltaTicks = Math.max(1, tickCount - lastTick)
-        if (deltaProgress > 0) {
-            perSecond = (deltaProgress * TICKS_PER_SECOND) / deltaTicks
-        }
-    }
-
-    machine.entity.setDynamicProperty('dorios:last_progress_sample', progress)
-    machine.entity.setDynamicProperty('dorios:last_progress_tick', tickCount)
-
-    if (perSecond > 0) {
-        return perSecond
-    }
-
-    const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
-    const updatesPerSecond = TICKS_PER_SECOND / tickSpeed
-    const theoreticalPerUpdate = machine.rate / Math.max(machine.boosts.consumption, Number.EPSILON)
-
-    if (theoreticalPerUpdate <= 0 || updatesPerSecond <= 0) return 0
-
-    return theoreticalPerUpdate * updatesPerSecond
-}
-
 function formatFluidBlock(fluid, tank) {
     if (!fluid || !tank) return null
     const perCraft = FluidManager.formatFluid(Math.max(1, fluid.amount ?? 0))
@@ -546,140 +538,6 @@ function formatFluidBlock(fluid, tank) {
         `§7Need: §f${perCraft}`,
         `§7Tank: §f${tankAmount} §7/ §f${tankCap}`
     ]
-}
-
-function formatFluidDisplayName(type) {
-    if (!type || type === 'empty') return 'Empty'
-    const pretty = formatName(type)
-    const cleaned = pretty.replace(/Liquified\s*/i, '').replace(/\s{2,}/g, ' ').trim()
-    return cleaned.length ? cleaned : pretty
-}
-
-function addItemsToSlot(machine, slotIndex, itemId, amount, templateMeta) {
-    if (!amount || amount <= 0 || !itemId) return
-    const slot = machine.inv.getItem(slotIndex)
-
-    if (!slot) {
-        machine.entity.setItem(slotIndex, itemId, amount)
-        applyTemplateMetadataToSlot(machine, slotIndex, templateMeta)
-        return
-    }
-
-    if (slot.typeId !== itemId) {
-        machine.entity.setItem(slotIndex, itemId, amount)
-        applyTemplateMetadataToSlot(machine, slotIndex, templateMeta)
-        return
-    }
-
-    machine.entity.changeItemAmount(slotIndex, amount)
-    applyTemplateMetadataToSlot(machine, slotIndex, templateMeta)
-}
-
-function applyTemplateMetadataToSlot(machine, slotIndex, templateMeta) {
-    if (!templateMeta || !machine?.inv) return
-    const stack = machine.inv.getItem(slotIndex)
-    if (!stack || stack.typeId !== templateMeta.typeId) return
-    applyTemplateMetadata(stack, templateMeta)
-    machine.inv.setItem(slotIndex, stack)
-}
-
-function captureTemplateMetadata(stack) {
-    if (!stack) return null
-    const lore = typeof stack.getLore === 'function' ? stack.getLore() : []
-    const enchantments = extractEnchantments(stack)
-    const meta = {
-        typeId: stack.typeId,
-        nameTag: typeof stack.nameTag === 'string' && stack.nameTag.length > 0 ? stack.nameTag : undefined,
-        lore: Array.isArray(lore) && lore.length ? [...lore] : undefined,
-        enchantments: enchantments.length ? enchantments : undefined
-    }
-    return meta
-}
-
-function applyTemplateMetadata(targetStack, templateMeta) {
-    if (!targetStack || !templateMeta) return
-    if (typeof templateMeta.nameTag === 'string') {
-        targetStack.nameTag = templateMeta.nameTag
-    }
-    if (Array.isArray(templateMeta.lore)) {
-        targetStack.setLore(templateMeta.lore)
-    }
-    applyEnchantmentsToStack(targetStack, templateMeta.enchantments)
-}
-
-function applyEnchantmentsToStack(targetStack, enchantments) {
-    if (!Array.isArray(enchantments) || enchantments.length === 0) return
-    const comp = getEnchantableComponent(targetStack)
-    if (!comp || typeof comp.addEnchantments !== 'function') return
-
-    const sanitized = enchantments
-        .map(entry => {
-            const level = Number(entry?.level) || 0
-            if (!entry?.type || level <= 0) return null
-            return { type: entry.type, level }
-        })
-        .filter(Boolean)
-
-    if (!sanitized.length) return
-
-    try {
-        comp.removeAllEnchantments?.()
-    } catch { }
-
-    try {
-        comp.addEnchantments(sanitized)
-    } catch (error) {
-        console.warn('[duplicator] Failed to copy enchantments:', error)
-    }
-}
-
-function extractEnchantments(stack) {
-    const comp = getEnchantableComponent(stack)
-    if (!comp) return []
-
-    let list = []
-    try {
-        if (typeof comp.getEnchantments === 'function') {
-            list = comp.getEnchantments()
-        } else if (Array.isArray(comp.enchantments)) {
-            list = comp.enchantments
-        }
-    } catch (error) {
-        console.warn('[duplicator] Failed to read enchantments:', error)
-        return []
-    }
-
-    if (!Array.isArray(list)) return []
-
-    return list
-        .map(entry => {
-            if (!entry?.type) return null
-            const level = Number(entry.level ?? entry.lvl ?? entry.amount ?? 0)
-            if (level <= 0) return null
-            return { type: entry.type, level }
-        })
-        .filter(Boolean)
-}
-
-function getEnchantableComponent(stack) {
-    if (!stack || typeof stack.getComponent !== 'function') return null
-    return stack.getComponent('minecraft:enchantable')
-        ?? stack.getComponent('minecraft:enchantments')
-        ?? stack.getComponent('enchantments')
-        ?? null
-}
-
-function computeSlotCapacity(slot, expectedId, perCraft) {
-    if (perCraft <= 0) return Number.MAX_SAFE_INTEGER
-    if (!expectedId) return 0
-
-    if (!slot) {
-        return Math.floor(64 / perCraft)
-    }
-
-    if (slot.typeId !== expectedId) return 0
-    const remaining = (slot.maxAmount ?? 64) - slot.amount
-    return Math.floor(Math.max(0, remaining) / perCraft)
 }
 
 function getOriginalAmountPerCraft(recipe) {
@@ -706,13 +564,14 @@ function applyClonerRuntime(machine, recipe) {
         1,
         Math.round(
             Number(recipe?.timeSeconds)
-            || (CLONER_BASE_TIME_SECONDS * rarityProfile.timeMultiplier)
+            || (duplicator.cloner.baseTimeSeconds * rarityProfile.timeMultiplier)
         )
     )
+    const clonerCostKDEBase = Math.max(1, duplicator.cloner.energyCost / duplicator.cloner.kde)
     const baseCostKDE = Math.max(
         1,
         Number(recipe?.costKDE)
-        || (CLONER_DEFAULT_COST_KDE * rarityProfile.costMultiplier)
+        || (clonerCostKDEBase * rarityProfile.costMultiplier)
     )
 
     const speedLevel = getClonerSpeedLevel(machine)
@@ -732,7 +591,7 @@ function applyClonerRuntime(machine, recipe) {
     recipe.costKDE = runtimeEnergy.costKDE
     recipe.perSecondKDE = runtimeEnergy.perSecondKDE
     if (recipe.fluid) {
-        recipe.fluid.amount = Math.max(1, Math.round(runtimeEnergy.timeSeconds * FLUID_PER_SECOND))
+        recipe.fluid.amount = Math.max(1, Math.round(runtimeEnergy.timeSeconds * duplicator.fluid.perSecond))
     }
 
     machine.boosts.speed = 1
@@ -753,10 +612,10 @@ function applyClonerRuntime(machine, recipe) {
 
     if (!applied) {
         const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
-        const updatesPerSecond = TICKS_PER_SECOND / tickSpeed
+        const updatesPerSecond = duplicator.cloner.ticksPerSecond / tickSpeed
         const progressPerSecond = recipe.energyCost / runtimeEnergy.timeSeconds
         const progressPerUpdate = progressPerSecond / Math.max(updatesPerSecond, Number.EPSILON)
-        const desiredRate = Math.max(MIN_CLONER_RATE, progressPerUpdate)
+        const desiredRate = Math.max(duplicator.cloner.minRate, progressPerUpdate)
         machine.rate = desiredRate
         machine.baseRate = desiredRate
         machine.processingRate = desiredRate
@@ -766,7 +625,7 @@ function applyClonerRuntime(machine, recipe) {
 }
 
 function deriveClonerEnergyModel(options = {}) {
-    const resolvedSeconds = Math.max(1, Number(options.timeSeconds ?? CLONER_BASE_TIME_SECONDS) || CLONER_BASE_TIME_SECONDS)
+    const resolvedSeconds = Math.max(1, Number(options.timeSeconds ?? duplicator.cloner.baseTimeSeconds) || duplicator.cloner.baseTimeSeconds)
 
     const explicitCostKDE = Number(options.costKDE)
     const explicitEnergyCost = Number(options.energyCost)
@@ -774,35 +633,35 @@ function deriveClonerEnergyModel(options = {}) {
     const resolvedCostKDE = Number.isFinite(explicitCostKDE) && explicitCostKDE > 0
         ? explicitCostKDE
         : (Number.isFinite(explicitEnergyCost) && explicitEnergyCost > 0
-            ? explicitEnergyCost / KDE
-            : CLONER_DEFAULT_COST_KDE)
+            ? explicitEnergyCost / duplicator.cloner.kde
+            : Math.max(1, duplicator.cloner.energyCost / duplicator.cloner.kde))
 
     const normalizedCostKDE = Math.max(1, resolvedCostKDE)
-    const energyCost = Math.max(1, Math.round(normalizedCostKDE * KDE))
+    const energyCost = Math.max(1, Math.round(normalizedCostKDE * duplicator.cloner.kde))
 
     return {
         timeSeconds: resolvedSeconds,
-        ticks: Math.max(1, Math.round(resolvedSeconds * TICKS_PER_SECOND)),
+        ticks: Math.max(1, Math.round(resolvedSeconds * duplicator.cloner.ticksPerSecond)),
         costKDE: normalizedCostKDE,
         energyCost,
         perSecondKDE: normalizedCostKDE / resolvedSeconds,
-        energyPerTick: energyCost / (resolvedSeconds * TICKS_PER_SECOND)
+        energyPerTick: energyCost / (resolvedSeconds * duplicator.cloner.ticksPerSecond)
     }
 }
 
 function getClonerSpeedLevel(machine) {
     const speed = machine?.upgrades?.speed ?? 0
     const clamped = Math.max(0, Math.floor(speed))
-    return Math.min(CLONER_SPEED_DURATION_SECONDS.length - 1, clamped)
+    return Math.min(duplicator.cloner.speedDurationSeconds.length - 1, clamped)
 }
 
 function getClonerSpeedDurationScale(speedLevel) {
-    const resolved = CLONER_SPEED_DURATION_SECONDS[speedLevel] ?? CLONER_BASE_TIME_SECONDS
-    return Math.max(Number.EPSILON, resolved / CLONER_BASE_TIME_SECONDS)
+    const resolved = duplicator.cloner.speedDurationSeconds[speedLevel] ?? duplicator.cloner.baseTimeSeconds
+    return Math.max(Number.EPSILON, resolved / duplicator.cloner.baseTimeSeconds)
 }
 
 function getRarityProfile(rarity) {
-    return RARITY_PROFILES[rarity] ?? RARITY_PROFILES[DEFAULT_RARITY]
+    return duplicator.cloner.rarityProfiles[rarity] ?? duplicator.cloner.rarityProfiles[duplicator.cloner.rarityBase]
 }
 
 function isSingularityFabricatorTemplate(itemId) {
@@ -831,12 +690,12 @@ function getKnownSingularityRecipes() {
 
 function migrateLegacyUpgradeSlots(machine) {
     if (!machine?.inv) return
-    for (const legacySlot of LEGACY_UPGRADE_SLOTS) {
+    for (const legacySlot of duplicator.slots.legacyUpgradeSlots) {
         const item = machine.inv.getItem(legacySlot)
         if (!item) continue
         if (typeof item.hasTag === 'function' && !item.hasTag('utilitycraft:is_upgrade')) continue
 
-        const target = UPGRADE_SLOTS.find(slot => !machine.inv.getItem(slot))
+        const target = duplicator.slots.upgrades.find(slot => !machine.inv.getItem(slot))
         if (target === undefined) continue
         machine.inv.setItem(target, item)
         machine.inv.setItem(legacySlot, undefined)

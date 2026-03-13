@@ -1,5 +1,5 @@
 import { ItemStack } from '@minecraft/server'
-import { Machine, FluidManager, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
+import { Machine, FluidManager, applyDynamicRecipeRate, tickGate, formatItemName, feedFluidSlot } from '../../DoriosCore/index.js'
 import { getCatalystWeaverRecipes } from '../../config/recipes/catalyst_weaver.js'
 
 const INPUT_SLOT = 3
@@ -11,10 +11,16 @@ const UPGRADE_SLOTS = [15, 16, 17]
 const BYPRODUCT_SLOT = 18
 const OUTPUT_SLOT_INDEX = 19
 
-const RECIPE_PREVIEW_DEFAULT_LIMIT = 5
-const RECIPE_PREVIEW_CHAR_BUDGET = 240
-const RECIPE_PREVIEW_MAX_LENGTH = 24
-const HELPER_MAX_POOL_ENTRIES = 5
+const config = Object.freeze({
+    preview: Object.freeze({
+        limit: 5,
+        charBudget: 240,
+        maxLength: 24
+    }),
+    helper: Object.freeze({
+        maxPoolEntries: 5
+    })
+})
 
 /*
 Slots (inventory_size: 20)
@@ -67,7 +73,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         const tank = FluidManager.initializeSingle(machine.entity)
         if (tickGate(machine.entity, 'cw:fluids_cd', 4)) {
             tank.transferFluids(block)
-            feedFluidSlot(machine, tank)
+            feedFluidSlot(machine, tank, FLUID_SLOT)
         }
 
         const inv = machine.inv
@@ -331,9 +337,9 @@ function buildRecipePreviewLore(
     recipes,
     inputStack,
     catalystStacks,
-    limit = RECIPE_PREVIEW_DEFAULT_LIMIT,
-    maxLength = RECIPE_PREVIEW_MAX_LENGTH,
-    charBudget = RECIPE_PREVIEW_CHAR_BUDGET
+    limit = config.preview.limit,
+    maxLength = config.preview.maxLength,
+    charBudget = config.preview.charBudget
 ) {
     if (!Array.isArray(recipes) || recipes.length === 0) return []
     if (!inputStack) return []
@@ -422,7 +428,7 @@ function buildCatalystHelperLore(recipes, inputStack, catalystStacks) {
 
     if (catalystOptions.length) {
         lore.push('§bCatalyst Options:')
-        const limited = catalystOptions.slice(0, HELPER_MAX_POOL_ENTRIES)
+        const limited = catalystOptions.slice(0, config.helper.maxPoolEntries)
         for (const entry of limited) {
             lore.push(`§7- ${entry.name}`)
         }
@@ -481,7 +487,7 @@ function collectFirstCatalystOptions(recipes, insertedTotals) {
         } else {
             pool.set(next.id, {
                 id: next.id,
-                name: next.name ?? humanizeIdentifier(next.id),
+                name: next.name ?? formatItemName(next.id),
                 amount
             })
         }
@@ -509,7 +515,7 @@ function findNextCatalystHint(recipe, insertedTotals) {
         return {
             next: {
                 id: entry.id,
-                name: humanizeIdentifier(entry.id),
+                name: formatItemName(entry.id),
                 amount: missing
             },
             hasFollowing
@@ -537,7 +543,7 @@ function buildCatalystFluidLore(recipe, recipes, inputStack) {
         const type = recipe?.fluid?.type
         if (!type) return [header, bulletNone]
 
-        const name = humanizeIdentifier(type)
+        const name = formatItemName(type)
         const amount = recipe?.fluid?.amount
         if (amount === undefined || amount === null) return [header, `§7- ${name}`]
         return [header, `§7- ${name}`, `§7   Amount: ${amount}mB`]
@@ -563,7 +569,7 @@ function buildCatalystFluidLore(recipe, recipes, inputStack) {
     const firstAmount = fluidDefs[0].amount
     const sameAmount = fluidDefs.every(f => (f.amount ?? null) === (firstAmount ?? null))
 
-    const lines = [header, `§7- ${humanizeIdentifier(firstType)}`]
+    const lines = [header, `§7- ${formatItemName(firstType)}`]
     if (sameAmount && firstAmount !== undefined && firstAmount !== null) {
         lines.push(`§7   Amount: ${firstAmount}mB`)
     }
@@ -608,7 +614,7 @@ function formatRecipePreviewName(recipe) {
     if (recipe?.output?.name) return recipe.output.name
     const amount = recipe?.output?.amount ?? 1
     const baseId = recipe?.output?.id ?? recipe?.id
-    const readable = humanizeIdentifier(baseId)
+    const readable = formatItemName(baseId)
     return amount > 1 ? `${readable} x${amount}` : readable
 }
 
@@ -617,16 +623,6 @@ function getRecipePreviewKey(recipe) {
     const amount = recipe?.output?.amount ?? 1
     const name = recipe?.output?.name ?? ''
     return `${id}|${amount}|${name}`
-}
-
-function humanizeIdentifier(identifier) {
-    if (typeof identifier !== 'string' || identifier.length === 0) return 'Unknown'
-    const [, raw = identifier] = identifier.split(':')
-    return raw
-        .split(/[_\s]+/)
-        .filter(Boolean)
-        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-        .join(' ')
 }
 
 function truncatePreviewText(text, limit = 32) {
@@ -756,36 +752,6 @@ function isValidItemId(id) {
     }
 }
 
-function feedFluidSlot(machine, tank) {
-    const slotItem = machine.inv.getItem(FLUID_SLOT)
-    if (!slotItem) return
-
-    // Prevent empty containers from draining the tank (input-only behavior)
-    const fillDefinition = FluidManager.getFluidFillDefinition?.(slotItem.typeId)
-    if (fillDefinition) return
-
-    // Allow any fluid-type container to be inserted into the tank
-
-    const result = tank.fluidItem(slotItem.typeId)
-    if (result === false) return
-
-    machine.entity.changeItemAmount(FLUID_SLOT, -1)
-
-    if (!result) return
-
-    const updated = machine.inv.getItem(FLUID_SLOT)
-    if (!updated) {
-        machine.entity.setItem(FLUID_SLOT, result, 1)
-        return
-    }
-
-    if (updated.typeId === result && updated.amount < updated.maxAmount) {
-        machine.entity.changeItemAmount(FLUID_SLOT, 1)
-    } else {
-        machine.entity.addItem(result, 1)
-    }
-}
-
 function getCatalystRequirementTotals(requirements = []) {
     return aggregateCatalystEntries(requirements?.filter(Boolean) ?? [], req => req.id, req => req.amount ?? 1)
 }
@@ -849,12 +815,4 @@ function transferSlotForward(machine, slotIndex) {
     return true
 }
 
-function tickGate(entity, key, interval) {
-    const cd = Number(entity.getDynamicProperty(key)) || 0
-    if (cd > 0) {
-        entity.setDynamicProperty(key, cd - 1)
-        return false
-    }
-    entity.setDynamicProperty(key, interval)
-    return true
-}
+

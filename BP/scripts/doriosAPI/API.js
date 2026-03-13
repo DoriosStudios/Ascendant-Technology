@@ -33,13 +33,13 @@ const NAMESPACE = 'utilitycraft'
  *
  * ----------------------------------------------------
  * @namespace DoriosAPI
- * @version 1.0.0
+ * @version 1.1.0
  * @author Milo504
  * @studio Dorios Studios
  * @license All Rights Reserved
  * @repository 
  * @docs 
- * @lastUpdate 2025-09-27
+ * @lastUpdate 2026-03-01
  * -----------------------------------------------------
  */
 globalThis.DoriosAPI = {
@@ -1479,7 +1479,7 @@ globalThis.DoriosAPI = {
          * @constant
          */
         textColors: {
-            // Colors
+            // Simple Colors
             black: "§0",
             darkBlue: "§1",
             darkGreen: "§2",
@@ -1497,13 +1497,27 @@ globalThis.DoriosAPI = {
             yellow: "§e",
             white: "§f",
 
-            // Styles
-            obfuscated: "§k",
+            // Complex Colors
+            minecoinGold: "§g",
+            quartz: "§h",
+            iron: "§i",
+            netherite: "§j",
+            redstone: "§m",
+            copper: "§n",
+            gold: "§p",
+            emerald: "§q",
+            diamond: "§s",
+            lapis: "§t",
+            amethyst: "§u",
+            resin: "§v",
+            
+            
+            // Formatters
             bold: "§l",
-            strikethrough: "§m",
-            underline: "§n",
+            reset: "§r",
             italic: "§o",
-            reset: "§r"
+            obfuscated: "§k",
+
         },
 
         /**

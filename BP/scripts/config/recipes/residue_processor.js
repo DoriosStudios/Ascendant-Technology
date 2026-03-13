@@ -33,8 +33,8 @@ const nativeResidueRecipes = [
         input: { id: 'utilitycraft:void_essence', amount: 1 },
         output: { id: 'utilitycraft:aetherium_shard', amount: 2 },
         byproduct: { id: 'minecraft:iron_nugget', amount: 2, chance: 0.35 },
-        energyCost: 5200,
-        seconds: 5,
+        energyCost: 6400,
+        seconds: 6,
         description: 'Break down condensed void essence into usable shards with a chance to sift iron grit.'
     }),
     defineResidueRecipe({
@@ -42,26 +42,35 @@ const nativeResidueRecipes = [
         input: { id: 'utilitycraft:void_essence', amount: 3 },
         output: { id: 'utilitycraft:aetherium', amount: 1 },
         byproduct: { id: 'utilitycraft:aetherium_shard', amount: 1, chance: 0.5 },
-        energyCost: 7800,
-        seconds: 7,
+        energyCost: 12800,
+        seconds: 10,
         description: 'Compress excess residue into aetherium with shard feedback for automation loops.'
     }),
     defineResidueRecipe({
-        id: 'utilitycraft:void_reclaimer',
-        input: { id: 'minecraft:rotten_flesh', amount: 3 },
-        output: { id: 'utilitycraft:void_essence', amount: 1 },
-        energyCost: 2600,
-        seconds: 4,
-        description: 'Reclaim trace void essence from organic scraps instead of trashing them.'
+        id: 'utilitycraft:podzol_composting',
+        input: { id: 'minecraft:podzol', amount: 1 },
+        output: { id: 'minecraft:bone_meal', amount: 2 },
+        byproduct: { id: 'minecraft:rotten_flesh', amount: 1, chance: 0.65 },
+        energyCost: 2200,
+        seconds: 3,
+        description: 'Composts podzol into fertilizer and can expose decayed organic residue.'
     }),
     defineResidueRecipe({
         id: 'utilitycraft:bone_block_pulp',
         input: { id: 'minecraft:bone_block', amount: 1 },
         output: { id: 'minecraft:bone_meal', amount: 9 },
-        byproduct: { id: 'utilitycraft:void_essence', amount: 1, chance: 0.2 },
         energyCost: 2600,
         seconds: 4,
-        description: 'Pulverizes bone blocks back into meal with a slim chance of void residue.'
+        description: 'Pulverizes bone blocks back into meal for compact fertilizer loops.'
+    }),
+    defineResidueRecipe({
+        id: 'utilitycraft:rotten_flesh_tanning',
+        input: { id: 'minecraft:rotten_flesh', amount: 4 },
+        output: { id: 'minecraft:leather', amount: 1 },
+        byproduct: { id: 'minecraft:bone_meal', amount: 1, chance: 0.35 },
+        energyCost: 3400,
+        seconds: 5,
+        description: 'Stabilizes rotten flesh into usable leather with occasional nutrient residue.'
     }),
     defineResidueRecipe({
         id: 'utilitycraft:ender_dust_reconstitution',

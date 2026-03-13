@@ -28,6 +28,7 @@ import './recipes/added/insert_sieve.js';
 import './recipes/added/insert_infuser.js';
 import './recipes/added/insert_crusher.js';
 import './recipes/added/insert_incinerator.js';
+import './recipes/added/insert_press.js';
 
 import './fluids/items.js';
 import './fluids/coolant_register.js';

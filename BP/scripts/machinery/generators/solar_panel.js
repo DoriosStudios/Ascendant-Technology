@@ -1,5 +1,5 @@
 import { world } from '@minecraft/server';
-import { Generator, Energy } from '../AscendantMachinery/core.js';
+import { Generator, Energy } from '../../DoriosCore/index.js';
 
 DoriosAPI.register.blockComponent('solar_panel', {
     /**

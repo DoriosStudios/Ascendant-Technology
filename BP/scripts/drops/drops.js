@@ -1,11 +1,15 @@
 /// <reference path="./drops_guide.js" />
 import { ItemStack, world } from '@minecraft/server';
+export { DROPS_PARTICLES, particle } from './particle_catalog.js';
 
 export const DROPS_SETTINGS = {
 	xpMode: 'auto',
 	replaceSearchRadius: 2.5,
 	excavateBridge: {
 		enabled: true,
+		// Modes: 'loot_table' | 'destroy_command' | 'break_then_regen_loot_table'
+		vanillaDropMode: 'loot_table',
+		// Legacy compatibility fallback.
 		useLootTables: true
 	}
 };

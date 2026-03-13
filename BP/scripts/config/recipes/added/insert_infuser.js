@@ -11,10 +11,6 @@ world.afterEvents.worldLoad.subscribe(() => {
             output: "minecraft:crying_obsidian",
             required: 1
         },
-        "utilitycraft:void_essence|minecraft:ender_pearl": {
-            output: "utilitycraft:ender_pearl_dust",
-            required: 2
-        },
         "minecraft:ender_eye|utilitycraft:chip": {
             output: "utilitycraft:way_chip",
             required: 1

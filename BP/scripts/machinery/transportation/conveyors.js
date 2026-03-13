@@ -1,6 +1,6 @@
 import { system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import { updatePipes, Energy } from "../AscendantMachinery/core.js";
+import { updatePipes, Energy } from "../../DoriosCore/index.js";
 
 const CONVEYOR_TAG = "dorios:conveyor";
 const BRIDGE_TAG = "dorios:conveyor_bridge";
@@ -142,16 +142,11 @@ const CONVEYOR_NETWORK_UPDATER_MAX_SCAN = 4096;
 const VERTICAL_DIRECTION_STATE = "utilitycraft:vertical_direction";
 const WRENCH_ITEM_ID = "utilitycraft:wrench";
 
-const UPGRADE_PACKAGE_ID = "utilitycraft:upgrade_package";
-const UPGRADE_PACKAGE_PROP = "utilitycraft:upgrade_package";
-const UPGRADE_PACKAGE_MAX = 64;
-const ENABLE_CONVEYOR_UPGRADE_PACKAGE = false;
+const CONVEYOR_UPGRADE_MAX = 64;
 const CONVEYOR_UPGRADE_KEY_PREFIX = "utilitycraft:conveyor_upgrade";
 const CONVEYOR_UPGRADE_TYPE_KEY_PREFIX = "utilitycraft:conveyor_upgrade_type";
 const CONVEYOR_UPGRADE_BLOCK_KEY_PREFIX = "utilitycraft:conveyor_upgrade_block";
 const GLOBAL_CONVEYOR_UPGRADE_KEY = "utilitycraft:conveyor_upgrade_global";
-const UPGRADE_PACKAGE_LORE_HEADER = "§7Upgrades:";
-const UPGRADE_PACKAGE_LORE_PREFIX = "§7- ";
 const SMART_ROUTER_KEY_PREFIX = "smart_router";
 const SMART_ROUTER_DEFAULT = Object.freeze({ left: [], front: [], right: [] });
 const SMART_ROUTER_DIRS = ["left", "front", "right"];
@@ -971,7 +966,7 @@ function normalizeConveyorUpgrades(raw) {
         for (const [type, value] of Object.entries(raw)) {
             if (!CONVEYOR_UPGRADE_TYPES.has(type)) continue;
             const numeric = Math.max(0, Math.floor(Number(value) || 0));
-            levels[type] = Math.min(UPGRADE_PACKAGE_MAX, numeric);
+            levels[type] = Math.min(CONVEYOR_UPGRADE_MAX, numeric);
         }
     }
 
@@ -986,7 +981,7 @@ function mergeUpgradeLevels(...levels) {
             if (!CONVEYOR_UPGRADE_TYPES.has(type)) continue;
             const add = Math.max(0, Math.floor(Number(value) || 0));
             if (add <= 0) continue;
-            merged[type] = Math.min(UPGRADE_PACKAGE_MAX, (merged[type] ?? 0) + add);
+            merged[type] = Math.min(CONVEYOR_UPGRADE_MAX, (merged[type] ?? 0) + add);
         }
     }
     return merged;
@@ -1103,133 +1098,6 @@ function applyConveyorUpgrades(meta, upgrades) {
     };
 }
 
-function getUpgradeTypeFromItem(itemStack) {
-    if (!itemStack?.hasTag?.("utilitycraft:is_upgrade")) return null;
-    const [, raw] = itemStack.typeId.split(":");
-    const type = raw?.split("_")?.[0];
-    if (!type || !CONVEYOR_UPGRADE_TYPES.has(type)) return null;
-    return type;
-}
-
-function normalizeUpgradePackage(payload) {
-    const upgrades = {};
-    let total = 0;
-
-    if (payload?.upgrades && typeof payload.upgrades === "object") {
-        for (const [type, value] of Object.entries(payload.upgrades)) {
-            if (!CONVEYOR_UPGRADE_TYPES.has(type)) continue;
-            const amount = Math.max(0, Math.floor(Number(value) || 0));
-            if (amount <= 0) continue;
-            const clamped = Math.min(UPGRADE_PACKAGE_MAX, amount);
-            upgrades[type] = clamped;
-            total += clamped;
-        }
-    }
-
-    return { upgrades, total };
-}
-
-function getUpgradeItemIdForType(type) {
-    if (!type) return null;
-    switch (type) {
-        case "hyper":
-            return "utilitycraft:hyper_processing_upgrade";
-        case "size":
-            return "utilitycraft:size_upgrade";
-        default:
-            return `utilitycraft:${type}_upgrade`;
-    }
-}
-
-function formatUpgradeTypeLabel(type) {
-    const id = getUpgradeItemIdForType(type);
-    return formatItemLabel(id ?? type);
-}
-
-function getUpgradePackagePayloadFromStack(stack) {
-    if (!stack || typeof stack.getDynamicProperty !== "function") {
-        return normalizeUpgradePackage(null);
-    }
-    let payload = null;
-    try {
-        const raw = stack.getDynamicProperty(UPGRADE_PACKAGE_PROP);
-        if (typeof raw === "string" && raw.length > 0) {
-            payload = JSON.parse(raw);
-        }
-    } catch {
-        payload = null;
-    }
-
-    return normalizeUpgradePackage(payload);
-}
-
-function buildUpgradePackageLore(payload) {
-    if (!payload?.total) return [];
-    const lines = [UPGRADE_PACKAGE_LORE_HEADER];
-    const entries = Object.entries(payload.upgrades ?? {})
-        .filter(([, value]) => Number(value) > 0)
-        .sort(([a], [b]) => a.localeCompare(b));
-
-    for (const [type, value] of entries) {
-        lines.push(`${UPGRADE_PACKAGE_LORE_PREFIX}${formatUpgradeTypeLabel(type)}: ${value}`);
-    }
-
-    return lines;
-}
-
-function setUpgradePackagePayloadOnStack(stack, payload) {
-    if (!stack || typeof stack.setDynamicProperty !== "function") return normalizeUpgradePackage(payload);
-    const normalized = normalizeUpgradePackage(payload);
-    try {
-        stack.setDynamicProperty(UPGRADE_PACKAGE_PROP, JSON.stringify(normalized));
-    } catch {
-        // ignore dynamic property errors
-    }
-
-    try {
-        const lore = buildUpgradePackageLore(normalized);
-        if (typeof stack.setLore === "function") {
-            stack.setLore(lore);
-        }
-    } catch {
-        // ignore lore errors
-    }
-
-    return normalized;
-}
-
-function updateItemEntityStack(itemEntity, stack) {
-    if (!itemEntity || !stack) return;
-    try {
-        const itemComp = itemEntity.getComponent("minecraft:item");
-        if (itemComp) {
-            itemComp.itemStack = stack;
-            return;
-        }
-    } catch {
-        // fallback below
-    }
-
-    try {
-        const spawnLoc = itemEntity.location;
-        const dim = itemEntity.dimension;
-        itemEntity.remove();
-        dim.spawnItem(stack, spawnLoc);
-    } catch {
-        // ignore spawn errors
-    }
-}
-
-function updatePlayerHeldItem(player, stack) {
-    if (!player || !stack) return;
-    try {
-        const equip = player.getComponent("equippable");
-        equip?.setEquipment("Mainhand", stack);
-    } catch {
-        // ignore equipment failures
-    }
-}
-
 function getPlayerHeldItem(player) {
     if (!player) return null;
     const inv = player.getComponent("inventory")?.container;
@@ -1238,263 +1106,6 @@ function getPlayerHeldItem(player) {
     if (slot === undefined || slot === null) return null;
     return inv.getItem(slot);
 }
-
-function setPlayerHeldItem(player, stack) {
-    if (!player) return;
-    const inv = player.getComponent("inventory")?.container;
-    const slot = player.selectedSlot;
-    if (inv && slot !== undefined && slot !== null) {
-        inv.setItem(slot, stack);
-        return;
-    }
-    if (stack) updatePlayerHeldItem(player, stack);
-}
-
-function notifyUpgradePackageStatus(player, key) {
-    if (!player?.onScreenDisplay) return;
-    const message = tr(key);
-    try {
-        player.onScreenDisplay.setActionBar(message);
-    } catch {
-        system.run(() => {
-            player.onScreenDisplay.setActionBar(message);
-        });
-    }
-}
-
-function applyUpgradePackageToKey(key, payload) {
-    if (!key || !payload?.total) return false;
-    const current = getConveyorUpgradesForKey(key);
-    const updated = mergeUpgradeLevels(current, payload.upgrades ?? {});
-    saveConveyorUpgradesForKey(key, updated);
-    return true;
-}
-
-function applyUpgradePackageToScope(scope, block, context, payload) {
-    if (!payload?.total) return false;
-    const typeId = block?.typeId ?? context?.meta?.typeId;
-
-    switch (scope) {
-        case "network": {
-            const networkId = context?.networkId ?? null;
-            if (!networkId) return false;
-            const current = getConveyorUpgrades(networkId, context?.network ?? null);
-            const updated = mergeUpgradeLevels(current, payload.upgrades ?? {});
-            saveConveyorUpgrades(networkId, updated, context?.network ?? null);
-            return true;
-        }
-        case "network_type": {
-            const networkId = context?.networkId ?? null;
-            if (!typeId || !networkId) return false;
-            const key = getConveyorTypeUpgradeKey(typeId, networkId);
-            return applyUpgradePackageToKey(key, payload);
-        }
-        case "type": {
-            if (!typeId) return false;
-            const key = getConveyorTypeUpgradeKey(typeId);
-            return applyUpgradePackageToKey(key, payload);
-        }
-        case "block": {
-            const key = getConveyorBlockUpgradeKey(block);
-            return applyUpgradePackageToKey(key, payload);
-        }
-        case "global":
-            return applyUpgradePackageToKey(GLOBAL_CONVEYOR_UPGRADE_KEY, payload);
-        default:
-            return false;
-    }
-}
-
-function buildUpgradePackageFormBody(payload) {
-    const rawtext = [{ translate: "ui.utilitycraft.conveyor.upgrade_package.body" }];
-    if (!payload?.total) {
-        rawtext.push({ text: "\n" }, { translate: "ui.utilitycraft.conveyor.upgrade_package.body_empty" });
-        return { rawtext };
-    }
-
-    const details = buildUpgradePackageLore(payload);
-    if (details.length) {
-        rawtext.push({ text: "\n" + details.join("\n") });
-    }
-
-    return { rawtext };
-}
-
-function openUpgradePackageMenu(player, block, context) {
-    if (!player || !block) return;
-    const inv = player.getComponent("inventory")?.container;
-    const slot = player.selectedSlot;
-    if (!inv || slot === undefined || slot === null) return;
-
-    const held = inv.getItem(slot);
-    if (!held || held.typeId !== UPGRADE_PACKAGE_ID) return;
-
-    const payload = getUpgradePackagePayloadFromStack(held);
-    if (!payload?.total) {
-        notifyUpgradePackageStatus(player, "ui.utilitycraft.conveyor.upgrade_package.body_empty");
-        return;
-    }
-
-    const form = new ActionFormData()
-        .title(tr("ui.utilitycraft.conveyor.upgrade_package.title"))
-        .body(buildUpgradePackageFormBody(payload));
-
-    const actions = [];
-    const typeId = block.typeId;
-
-    if (context?.networkId) {
-        form.button(tr("ui.utilitycraft.conveyor.upgrade_package.button.network"));
-        actions.push("network");
-        if (typeId) {
-            form.button(tr("ui.utilitycraft.conveyor.upgrade_package.button.network_type"));
-            actions.push("network_type");
-        }
-    }
-
-    if (typeId) {
-        form.button(tr("ui.utilitycraft.conveyor.upgrade_package.button.type"));
-        actions.push("type");
-    }
-
-    form.button(tr("ui.utilitycraft.conveyor.upgrade_package.button.block"));
-    actions.push("block");
-
-    form.button(tr("ui.utilitycraft.conveyor.upgrade_package.button.global"));
-    actions.push("global");
-
-    form.button(tr("ui.utilitycraft.conveyor.upgrade_package.button.cancel"));
-    actions.push("cancel");
-
-    form.show(player).then(response => {
-        if (response.canceled || response.selection === undefined) return;
-        const action = actions[response.selection];
-        if (!action || action === "cancel") return;
-
-        const current = inv.getItem(slot);
-        if (!current || current.typeId !== UPGRADE_PACKAGE_ID) return;
-
-        const currentPayload = getUpgradePackagePayloadFromStack(current);
-        if (!currentPayload?.total) {
-            notifyUpgradePackageStatus(player, "ui.utilitycraft.conveyor.upgrade_package.body_empty");
-            return;
-        }
-
-        const applied = applyUpgradePackageToScope(action, block, context, currentPayload);
-        if (!applied) {
-            notifyUpgradePackageStatus(player, "ui.utilitycraft.conveyor.upgrade_package.failed");
-            return;
-        }
-
-        setUpgradePackagePayloadOnStack(current, { upgrades: {} });
-        inv.setItem(slot, current);
-        notifyUpgradePackageStatus(player, "ui.utilitycraft.conveyor.upgrade_package.applied");
-    });
-}
-
-function handleUpgradePackageInteract(player, block, params) {
-    if (!ENABLE_CONVEYOR_UPGRADE_PACKAGE) return false;
-    const held = getPlayerHeldItem(player);
-    if (!held || held.typeId !== UPGRADE_PACKAGE_ID) return false;
-
-    const payload = getUpgradePackagePayloadFromStack(held);
-    if (!payload?.total) {
-        notifyUpgradePackageStatus(player, "ui.utilitycraft.conveyor.upgrade_package.body_empty");
-        return true;
-    }
-
-    const context = getConveyorNetworkContext(block, params);
-    if (player?.isSneaking) {
-        const applied = applyUpgradePackageToScope("block", block, context, payload);
-        if (!applied) {
-            notifyUpgradePackageStatus(player, "ui.utilitycraft.conveyor.upgrade_package.failed");
-            return true;
-        }
-
-        setUpgradePackagePayloadOnStack(held, { upgrades: {} });
-        setPlayerHeldItem(player, held);
-        notifyUpgradePackageStatus(player, "ui.utilitycraft.conveyor.upgrade_package.applied");
-        return true;
-    }
-
-    openUpgradePackageMenu(player, block, context);
-    return true;
-}
-
-function absorbUpgradesIntoPackage(itemEntity, itemStack, block) {
-    if (!itemEntity || !itemStack || !block?.dimension) return null;
-    let payload = getUpgradePackagePayloadFromStack(itemStack);
-    if (!payload) payload = { upgrades: {}, total: 0 };
-
-    const remaining = () => Math.max(0, UPGRADE_PACKAGE_MAX - payload.total);
-    if (remaining() <= 0) return payload;
-
-    const nearby = getItemsNear(block, 0.9);
-    for (const other of nearby) {
-        if (!other || other === itemEntity) continue;
-        const otherStack = getItemStackFromEntity(other);
-        if (!otherStack) continue;
-
-        const type = getUpgradeTypeFromItem(otherStack);
-        if (!type) continue;
-
-        const space = remaining();
-        if (space <= 0) break;
-
-        const moved = Math.min(space, otherStack.amount);
-        payload.upgrades[type] = (payload.upgrades[type] ?? 0) + moved;
-        payload.total += moved;
-
-        const leftoverAmount = otherStack.amount - moved;
-        const spawnLoc = other.location;
-        other.remove();
-
-        if (leftoverAmount > 0) {
-            const leftover = typeof otherStack.clone === "function" ? otherStack.clone() : otherStack;
-            leftover.amount = leftoverAmount;
-            block.dimension.spawnItem(leftover, spawnLoc);
-        }
-    }
-
-    const normalized = setUpgradePackagePayloadOnStack(itemStack, payload);
-    updateItemEntityStack(itemEntity, itemStack);
-    return normalized;
-}
-
-function tryApplyUpgradePackageToNetwork(itemEntity, itemStack, networkId, network, payloadOverride = null) {
-    if (!networkId) return false;
-    const payload = payloadOverride ?? getUpgradePackagePayloadFromStack(itemStack);
-    if (!payload?.total) return false;
-
-    const current = getConveyorUpgrades(networkId, network);
-    const updated = { ...current };
-    for (const [type, amount] of Object.entries(payload.upgrades ?? {})) {
-        if (!CONVEYOR_UPGRADE_TYPES.has(type)) continue;
-        const next = (updated[type] ?? 0) + amount;
-        updated[type] = Math.min(UPGRADE_PACKAGE_MAX, next);
-    }
-
-    saveConveyorUpgrades(networkId, updated, network);
-
-    const cleared = setUpgradePackagePayloadOnStack(itemStack, { upgrades: {} });
-    if (itemEntity) {
-        updateItemEntityStack(itemEntity, itemStack);
-    }
-    return cleared.total <= 0;
-}
-
-function handleUpgradePackageItem(itemEntity, itemStack, block, context) {
-    if (!ENABLE_CONVEYOR_UPGRADE_PACKAGE) return false;
-    if (!itemStack || itemStack.typeId !== UPGRADE_PACKAGE_ID) return false;
-    const payload = absorbUpgradesIntoPackage(itemEntity, itemStack, block);
-    return tryApplyUpgradePackageToNetwork(
-        itemEntity,
-        itemStack,
-        context?.networkId ?? null,
-        context?.network ?? null,
-        payload
-    );
-}
-
 function registerConveyor(block, params, options = {}) {
     if (!block?.dimension) return;
     const meta = getConveyorMeta(block.typeId, params);
@@ -2242,7 +1853,6 @@ function processRouterConveyor(block, meta, facing, context = {}) {
         if (hasItemMovedThisTick(item)) continue;
         const stack = getItemStackFromEntity(item);
         if (!stack) continue;
-        if (handleUpgradePackageItem(item, stack, block, context)) continue;
         if (shouldHoldAetheriumItem(meta, item)) continue;
         if (!isOutputPassable(block, selected)) continue;
         if (!canMoveItemWithSpacing(item, items, selected)) continue;
@@ -2264,7 +1874,6 @@ function processSmartRouterConveyor(block, meta, facing, context = {}) {
         if (hasItemMovedThisTick(item)) continue;
         const stack = getItemStackFromEntity(item);
         if (!stack) continue;
-        if (handleUpgradePackageItem(item, stack, block, context)) continue;
         if (shouldHoldAetheriumItem(meta, item)) continue;
 
         const preferred = resolveSmartRouterOutput(config, stack.typeId);
@@ -2295,7 +1904,6 @@ function processOverflowConveyor(block, meta, facing, context = {}) {
         if (hasItemMovedThisTick(item)) continue;
         const stack = getItemStackFromEntity(item);
         if (!stack) continue;
-        if (handleUpgradePackageItem(item, stack, block, context)) continue;
         if (shouldHoldAetheriumItem(meta, item)) continue;
         if (isOutputPassable(block, dirs.front)) {
             if (!canMoveItemWithSpacing(item, items, dirs.front)) continue;
@@ -2340,7 +1948,6 @@ function processUnderflowConveyor(block, meta, facing, context = {}) {
         if (hasItemMovedThisTick(item)) continue;
         const stack = getItemStackFromEntity(item);
         if (!stack) continue;
-        if (handleUpgradePackageItem(item, stack, block, context)) continue;
         if (shouldHoldAetheriumItem(meta, item)) continue;
         const primary = cycleIndex === 0 ? dirs.right : dirs.left;
         const secondary = cycleIndex === 0 ? dirs.left : dirs.right;
@@ -2461,7 +2068,6 @@ function processJunctionConveyor(block, meta, facing, context = {}) {
         if (hasItemMovedThisTick(item)) continue;
         const stack = getItemStackFromEntity(item);
         if (!stack) continue;
-        if (handleUpgradePackageItem(item, stack, block, context)) continue;
         if (shouldHoldAetheriumItem(meta, item)) continue;
         if (!isItemInsideBlock(item, block)) {
             const blockKey = posKey(block.location);
@@ -2673,7 +2279,6 @@ function processBridgeTransmitter(block, meta, facing, context = {}) {
             if (hasItemMovedThisTick(item)) continue;
             const stack = getItemStackFromEntity(item);
             if (!stack) continue;
-            if (handleUpgradePackageItem(item, stack, block, context)) continue;
             if (shouldHoldAetheriumItem(meta, item)) continue;
             item.teleport(receiverCenter);
             markItemMoved(item, key);
@@ -2741,7 +2346,6 @@ function processStandardConveyor(block, meta, facing, forcedShape = null, contex
             if (hasItemMovedThisTick(item)) continue;
             const stack = getItemStackFromEntity(item);
             if (!stack) continue;
-            if (handleUpgradePackageItem(item, stack, block, context)) continue;
             if (shouldHoldAetheriumItem(meta, item)) continue;
             if (!canMoveItemWithSpacing(item, items, moveDirection)) continue;
             if (tryInsertIntoContainer(item, block, outputOffset)) {
@@ -2848,39 +2452,7 @@ function processAllConveyors() {
     }
 }
 
-function applyPackageUpgradesToConveyorNetwork(block, upgradesByType = {}) {
-    if (!block) return { applied: {}, networkId: null };
-    const context = getConveyorNetworkContext(block, null);
-    if (!context?.networkId) return { applied: {}, networkId: null };
-
-    const current = getConveyorUpgrades(context.networkId, context.network);
-    const next = { ...current };
-    const applied = {};
-
-    for (const [type, rawAmount] of Object.entries(upgradesByType ?? {})) {
-        if (!CONVEYOR_UPGRADE_TYPES.has(type)) continue;
-        const amount = Math.max(0, Math.floor(Number(rawAmount) || 0));
-        if (amount <= 0) continue;
-
-        const currentValue = Math.max(0, Math.floor(Number(next[type]) || 0));
-        const desired = Math.min(UPGRADE_PACKAGE_MAX, currentValue + amount);
-        const appliedAmount = Math.max(0, desired - currentValue);
-        if (appliedAmount <= 0) continue;
-
-        next[type] = desired;
-        applied[type] = appliedAmount;
-    }
-
-    if (Object.keys(applied).length === 0) {
-        return { applied: {}, networkId: context.networkId };
-    }
-
-    saveConveyorUpgrades(context.networkId, next, context.network);
-    return { applied, networkId: context.networkId };
-}
-
 globalThis.utilitycraftConveyorUpgrades = globalThis.utilitycraftConveyorUpgrades ?? {};
-globalThis.utilitycraftConveyorUpgrades.applyPackageUpgrades = applyPackageUpgradesToConveyorNetwork;
 globalThis.utilitycraftConveyorUpgrades.isConveyorBlock = block => block?.hasTag?.(CONVEYOR_TAG) ?? false;
 globalThis.utilitycraftConveyorUpgrades.getUpgradeTypes = () => CONVEYOR_UPGRADE_TYPES;
 
@@ -2903,7 +2475,6 @@ DoriosAPI.register.blockComponent("conveyor", {
                 return;
             }
         }
-        if (handleUpgradePackageInteract(e.player, e.block, params)) return;
         if (params?.shape !== "smart_router") return;
         if (e.player.isSneaking) return;
         system.run(() => {

@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, rollByproduct, clampChance, addItemsToSlot, getOutputCapacity, formatItemName } from '../../DoriosCore/index.js'
 import { getResidueProcessorRecipes } from '../../config/recipes/residue_processor.js'
 
 const INPUT_SLOT = 3
@@ -161,13 +161,6 @@ function computeMaxCrafts(recipe, inputSlot, outputSlot, byproductSlot, yieldBoo
     return { max }
 }
 
-function getOutputCapacity(slot, perCraft, yieldBoost = 1) {
-    const space = slot ? (slot.maxAmount ?? 64) - slot.amount : 64
-    if (space <= 0) return 0
-    const effectivePerCraft = Math.max(1, perCraft * yieldBoost)
-    return Math.floor(space / effectivePerCraft)
-}
-
 function processCraft(machine, recipe, crafts) {
     const inputPer = Math.max(1, recipe.input.amount ?? 1)
     const totalInput = inputPer * crafts
@@ -195,38 +188,10 @@ function processCraft(machine, recipe, crafts) {
     }
 }
 
-function rollByproduct(byproduct, crafts) {
-    const chance = clampChance(byproduct.chance ?? 1)
-    let total = 0
-    for (let i = 0; i < crafts; i++) {
-        if (Math.random() <= chance) total += Math.max(1, byproduct.amount ?? 1)
-    }
-    return total
-}
-
-function tickGate(entity, key, interval) {
-    const cd = Number(entity.getDynamicProperty(key)) || 0
-    if (cd > 0) {
-        entity.setDynamicProperty(key, cd - 1)
-        return false
-    }
-    entity.setDynamicProperty(key, interval)
-    return true
-}
-
-function addItemsToSlot(machine, slot, id, amount) {
-    const existing = machine.inv.getItem(slot)
-    if (!existing) {
-        machine.entity.setItem(slot, id, amount)
-    } else {
-        machine.entity.changeItemAmount(slot, amount)
-    }
-}
-
 function updateHud(machine, recipe, maxCrafts) {
     const costText = Energy.formatEnergyToText(machine.getEnergyCost())
-    const inputName = formatName(recipe.input.id)
-    const outputName = formatName(recipe.output.id)
+    const inputName = formatItemName(recipe.input.id)
+    const outputName = formatItemName(recipe.output.id)
     const desc = recipe.description ? `§7${recipe.description}` : null
 
     const lore = [
@@ -236,7 +201,7 @@ function updateHud(machine, recipe, maxCrafts) {
 
     if (recipe.byproduct) {
         const chancePct = Math.round(clampChance(recipe.byproduct.chance ?? 1) * 100)
-        lore.push(`§7Residue: §f${formatName(recipe.byproduct.id)} (${chancePct}% chance)`) 
+        lore.push(`§7Residue: §f${formatItemName(recipe.byproduct.id)} (${chancePct}% chance)`) 
     } else {
         lore.push('§7Residue: §fNone')
     }
@@ -256,19 +221,4 @@ function updateHud(machine, recipe, maxCrafts) {
         title: '§6Residue Processor',
         lore
     })
-}
-
-function formatName(id) {
-    const [, raw = id] = id.split(':')
-    return raw
-        .split(/[_\s]+/)
-        .filter(Boolean)
-        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-        .join(' ')
-}
-
-function clampChance(value) {
-    const numeric = Number(value)
-    if (!Number.isFinite(numeric)) return 0
-    return Math.min(1, Math.max(0, numeric))
 }

@@ -1,5 +1,5 @@
 import { ItemStack } from "@minecraft/server";
-import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js';
+import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, formatItemName } from '../../DoriosCore/index.js';
 import { tickCoolingAuras, stopCoolingAuraAt } from '../multi_core.js';
 import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../config/recipes/cryo_chamber.js';
 
@@ -643,16 +643,6 @@ function updateOperationGuide(machine) {
     machine.inv.setItem(GUIDE_SLOT, item);
 }
 
-function tickGate(entity, key, interval) {
-    const cd = Number(entity.getDynamicProperty(key)) || 0;
-    if (cd > 0) {
-        entity.setDynamicProperty(key, cd - 1);
-        return false;
-    }
-    entity.setDynamicProperty(key, interval);
-    return true;
-}
-
 function moduleSlotKey(moduleKey, slot) {
     return `${moduleKey}:${slot}`;
 }
@@ -764,17 +754,6 @@ function renderModuleStatus(machine, moduleConfig, status, waterTank, cryofluidT
     if (overclockLine) lines.push(overclockLine);
 
     machine.setLabel({ rawText: lines.join('\n') }, slot);
-}
-
-function formatItemName(itemId) {
-    if (typeof itemId !== 'string' || itemId.length === 0) {
-        return 'item';
-    }
-    const base = itemId.split(':').pop() ?? itemId;
-    return base
-        .split('_')
-        .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1))
-        .join(' ');
 }
 
 /**

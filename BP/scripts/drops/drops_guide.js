@@ -8,6 +8,7 @@
  * Notas rápidas:
  * - chances aceitam 0–1 ou 0–100 (ex.: 0.25 ou 25).
  * - timeRange usa ticks (0–23999). Se min > max, atravessa a meia-noite.
+ * - para referência/autocomplete de partículas, use `DROPS_PARTICLES` de `particle_catalog.js`.
  * - clima ainda não é exposto pela API → não há propriedade weather aqui.
  */
 
@@ -40,6 +41,13 @@
  */
 
 /**
+ * @typedef {Object} ExcavateBridgeSettings
+ * @property {boolean=} enabled - Ativa o bridge por script event.
+ * @property {'loot_table'|'destroy_command'|'break_then_regen_loot_table'=} vanillaDropMode - Método vanilla para obter drops no bridge.
+ * @property {boolean=} useLootTables - Legado. `true` => loot_table, `false` => destroy_command.
+ */
+
+/**
  * @typedef {Object} FortuneTier
  * @property {number} level - Nível exato de Fortune. Ex: `3`.
  * @property {[number, number]} range - Quantidade mínima/máxima. Ex: `[2, 5]`.
@@ -67,7 +75,7 @@
 
 /**
  * @typedef {Object} DropParticle
- * @property {string} id - Partícula. Ex: `"minecraft:basic_smoke_particle"`.
+ * @property {string} id - Partícula. Ex: `"minecraft:basic_smoke_particle"` ou `DROPS_PARTICLES.BASIC_SMOKE`.
  * @property {number=} count - Quantas vezes spawnar (default: 1).
  * @property {number=} chance - Chance 0–1 ou 0–100.
  * @property {{x:number,y:number,z:number}=} offset - Offset fixo. Ex: `{ x: 0, y: 0.2, z: 0 }`.

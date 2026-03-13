@@ -1,5 +1,5 @@
 import { ItemStack, EnchantmentTypes, world, system } from '@minecraft/server'
-import { Machine, Energy, FluidManager } from '../AscendantMachinery/core.js'
+import { Machine, Energy, FluidManager } from '../../DoriosCore/index.js'
 
 // ==================== SLOT LAYOUT (32 total) ====================
 // Fixed slots: 0=Energy, 1=Status, 2=Progress
@@ -22,7 +22,7 @@ const DISENCHANT_PROGRESS_SLOT = 18
 const DISENCHANT_OUTPUT_SLOTS = [22, 23, 24, 25, 26, 27, 28, 29, 30]
 const DISENCHANT_STATUS_SLOT = 31
 
-// Station defaults are centralized in STATION_DEFAULT below.
+// Station configuration is centralized in `config` below.
 
 const ENCHANTMENT_SOURCES = [
     { kind: 'group', entries: [
@@ -71,7 +71,7 @@ const ENCHANTMENT_SOURCES = [
  * This keeps all tunables in one place, including time scaling through `station.time.full_time`.
  * Runtime overrides can be provided via `settings.machine.station`.
  */
-const STATION_DEFAULT = Object.freeze({
+const config = Object.freeze({
     curse: Object.freeze({
         chance_base: 0.15,
         chance_per_enchant: 0.01,
@@ -183,12 +183,12 @@ const STATION_DEFAULT = Object.freeze({
     }),
     xp: Object.freeze({
         per_enchant: 1000,
-        tank_cap_default: 128000,
+        tank_cap: 128000,
         tank_type: 'xp'
     })
 })
 
-let station = STATION_DEFAULT
+let station = config
 let stationSettingsCacheKey = ''
 const REINFORCEMENT_SYNC_VERSION_PROP = 'utilitycraft:reinforcement_sync_version'
 const REINFORCEMENT_MAX_PROP = 'utilitycraft:reinforcement_max'
@@ -230,9 +230,9 @@ function deepMergeObjects(base, override) {
 }
 
 function resolveStationConfig(settings) {
-    const stationOverride = settings?.machine?.station
+    const stationOverride = settings?.machine?.station ?? settings?.machine?.config?.station
     if (!isPlainObject(stationOverride)) {
-        station = STATION_DEFAULT
+        station = config
         stationSettingsCacheKey = ''
         return station
     }
@@ -248,7 +248,7 @@ function resolveStationConfig(settings) {
         return station
     }
 
-    station = deepMergeObjects(STATION_DEFAULT, stationOverride)
+    station = deepMergeObjects(config, stationOverride)
     stationSettingsCacheKey = nextKey
     return station
 }
@@ -408,7 +408,7 @@ function getAscaneXpTank(machine, settings) {
     if (!settings?.machine?.fluid_cap) return null
 
     const tank = FluidManager.initializeSingle(machine.entity)
-    const cap = Number(settings?.machine?.fluid_cap ?? station.xp.tank_cap_default)
+    const cap = Number(settings?.machine?.fluid_cap ?? station.xp.tank_cap)
     if (Number.isFinite(cap) && cap > 0 && tank.getCap() <= 0) {
         tank.setCap(cap)
     }
@@ -711,7 +711,7 @@ function queueDisenchantAbsorb(machine, settings) {
 function ensureDisenchantXpTank(entity, settings) {
     if (!entity) return null
     const tank = FluidManager.initializeSingle(entity)
-    const cap = Number(settings?.machine?.fluid_cap ?? station.xp.tank_cap_default)
+    const cap = Number(settings?.machine?.fluid_cap ?? station.xp.tank_cap)
     if (Number.isFinite(cap) && cap > 0 && tank.getCap() <= 0) {
         tank.setCap(cap)
     }

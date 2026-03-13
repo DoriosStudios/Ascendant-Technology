@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js';
+import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, feedFluidSlot, rollByproduct, clampChance, addItemsToSlot, formatItemName, formatFluidDisplayName } from '../../DoriosCore/index.js';
 import { getLiquifierRecipes } from '../../config/recipes/liquifier.js';
 
 const INPUT_SLOT = 3;
@@ -73,7 +73,7 @@ DoriosAPI.register.blockComponent('liquifier', {
                 }
             }
         }
-        feedFluidSlot(machine, tank);
+        feedFluidSlot(machine, tank, FLUID_SLOT);
 
         const fail = (message, reset = true) => {
             machine.showWarning(message, reset);
@@ -231,34 +231,13 @@ function processCraft(machine, recipe, crafts, tank) {
     }
 }
 
-function rollByproduct(byproduct, crafts) {
-    const chance = clampChance(byproduct.chance ?? 1);
-    let total = 0;
-    for (let i = 0; i < crafts; i++) {
-        if (Math.random() <= chance) {
-            total += Math.max(1, byproduct.amount ?? 1);
-        }
-    }
-    return total;
-}
-
-function tickGate(entity, key, interval) {
-    const cd = Number(entity.getDynamicProperty(key)) || 0;
-    if (cd > 0) {
-        entity.setDynamicProperty(key, cd - 1);
-        return false;
-    }
-    entity.setDynamicProperty(key, interval);
-    return true;
-}
-
 function updateHud(machine, recipe, tank, maxCrafts) {
     const fluidType = recipe.fluid.type ?? DEFAULT_FLUID_TYPE;
     const fluidPerCraft = recipe.fluid.amount;
     const tankAmount = FluidManager.formatFluid(tank.get());
     const tankCap = FluidManager.formatFluid(tank.getCap());
     const lore = [
-        `§bInput: §f${formatName(recipe.input.id)}`,
+        `§bInput: §f${formatItemName(recipe.input.id)}`,
         `§dMelt: §f${formatFluidDisplayName(fluidType)}`,
         `§7Yield: §f${FluidManager.formatFluid(fluidPerCraft)} each`,
         `§7Tank: §f${tankAmount} §7/ §f${tankCap}`,
@@ -274,66 +253,4 @@ function updateHud(machine, recipe, tank, maxCrafts) {
         lore,
         rawText: undefined
     });
-}
-
-function feedFluidSlot(machine, tank) {
-    const slotItem = machine.inv.getItem(FLUID_SLOT);
-    if (!slotItem) return;
-
-    const fillDefinition = FluidManager.getFluidFillDefinition?.(slotItem.typeId);
-    if (fillDefinition) return;
-
-    const result = tank.fluidItem(slotItem.typeId);
-    if (result === false) return;
-
-    machine.entity.changeItemAmount(FLUID_SLOT, -1);
-
-    if (!result) return;
-
-    const updated = machine.inv.getItem(FLUID_SLOT);
-    if (!updated) {
-        machine.entity.setItem(FLUID_SLOT, result, 1);
-        return;
-    }
-
-    if (updated.typeId === result && updated.amount < updated.maxAmount) {
-        machine.entity.changeItemAmount(FLUID_SLOT, 1);
-    } else {
-        machine.entity.addItem(result, 1);
-    }
-}
-
-function addItemsToSlot(machine, slotIndex, itemId, amount) {
-    if (!itemId || amount <= 0) return;
-
-    const slot = machine.inv.getItem(slotIndex);
-    if (!slot) {
-        machine.entity.setItem(slotIndex, itemId, amount);
-        return;
-    }
-
-    if (slot.typeId !== itemId) {
-        machine.entity.setItem(slotIndex, itemId, amount);
-        return;
-    }
-
-    machine.entity.changeItemAmount(slotIndex, amount);
-}
-
-function formatName(id) {
-    const [, name = id] = id.split(':');
-    return name.split('_').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
-}
-
-function formatFluidDisplayName(type) {
-    if (!type || type === 'empty') return 'Empty';
-    const pretty = formatName(type);
-    const cleaned = pretty.replace(/Liquified\s*/i, '').replace(/Dark\s*Matter/i, 'Dark Matter');
-    return cleaned.length ? cleaned : pretty;
-}
-
-function clampChance(value) {
-    const parsed = Number(value);
-    if (!Number.isFinite(parsed)) return 1;
-    return Math.max(0, Math.min(1, parsed));
 }

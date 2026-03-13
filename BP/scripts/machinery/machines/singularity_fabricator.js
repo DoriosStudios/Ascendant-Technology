@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, buildOverclockLoreLine } from '../AscendantMachinery/core.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine, formatItemName, capitalize, formatSeconds, formatEta, calculateEtaSeconds, getProgressPerSecond, formatFluidDisplayName, addItemsToSlot, computeSlotCapacity } from '../../DoriosCore/index.js'
 import { getSingularityRecipes } from '../../config/recipes/duplicator.js'
 
 const COMPONENT_ID = 'singularity_fabricator'
@@ -329,92 +329,13 @@ function updateHud(machine, recipe, tank, crafted) {
     machine.setLabel(`
 §r§5${action}
 §r§7Blueprint:
-    §b${formatName(recipe.input.id)}
+    §b${formatItemName(recipe.input.id)}
 §r§7Rarity: §d${capitalize(recipe.rarity ?? 'unknown')}
 §r§7ETA: §f${etaDisplay}
 §r§cCost: §f${Energy.formatEnergyToText(recipe.energyCost)}
 ${fluidBlock}
 ${overclockLine ? overclockLine : ''}
     `)
-}
-
-function formatName(id) {
-    const [, name = id] = id.split(':')
-    return name.split('_').map(capitalize).join(' ')
-}
-
-function capitalize(text) {
-    if (!text) return ''
-    return text[0].toUpperCase() + text.slice(1)
-}
-
-function formatSeconds(totalSeconds = 0) {
-    const seconds = Math.floor(totalSeconds)
-    const hours = Math.floor(seconds / 3600)
-    const minutes = Math.floor((seconds % 3600) / 60)
-    const remaining = seconds % 60
-
-    const parts = []
-    if (hours > 0) parts.push(`${hours}h`)
-    if (minutes > 0 || hours > 0) parts.push(`${minutes}m`)
-    parts.push(`${remaining}s`)
-    return parts.join(' ')
-}
-
-function formatEta(machine, recipe) {
-    const seconds = calculateEtaSeconds(machine, recipe)
-    if (seconds === null || !isFinite(seconds)) {
-        if (typeof recipe?.timeSeconds === 'number') {
-            return formatSeconds(recipe.timeSeconds)
-        }
-        return '---'
-    }
-    return formatSeconds(seconds)
-}
-
-function calculateEtaSeconds(machine, recipe) {
-    const cost = recipe?.energyCost ?? machine.getEnergyCost()
-    if (!cost || cost <= 0) return null
-
-    const remaining = Math.max(0, cost - machine.getProgress())
-    if (remaining <= 0) return 0
-
-    const progressPerSecond = getProgressPerSecond(machine)
-    if (progressPerSecond <= 0) return null
-
-    return remaining / progressPerSecond
-}
-
-function getProgressPerSecond(machine) {
-    const progress = machine.getProgress()
-    const tickCount = globalThis.tickCount ?? 0
-
-    const lastProgress = machine.entity.getDynamicProperty('dorios:last_progress_sample')
-    const lastTick = machine.entity.getDynamicProperty('dorios:last_progress_tick')
-
-    let perSecond = 0
-    if (typeof lastProgress === 'number' && typeof lastTick === 'number' && tickCount > lastTick) {
-        const deltaProgress = progress - lastProgress
-        const deltaTicks = Math.max(1, tickCount - lastTick)
-        if (deltaProgress > 0) {
-            perSecond = (deltaProgress * TICKS_PER_SECOND) / deltaTicks
-        }
-    }
-
-    machine.entity.setDynamicProperty('dorios:last_progress_sample', progress)
-    machine.entity.setDynamicProperty('dorios:last_progress_tick', tickCount)
-
-    if (perSecond > 0) {
-        return perSecond
-    }
-
-    const tickSpeed = Math.max(1, globalThis.tickSpeed ?? 1)
-    const updatesPerSecond = TICKS_PER_SECOND / Math.max(1, tickSpeed)
-    const theoreticalPerUpdate = machine.rate / Math.max(machine.boosts.consumption, Number.EPSILON)
-
-    if (theoreticalPerUpdate <= 0 || updatesPerSecond <= 0) return 0
-
-    return theoreticalPerUpdate * updatesPerSecond
 }
 
 function formatFluidBlock(fluid, tank) {
@@ -433,42 +354,6 @@ function formatFluidBlock(fluid, tank) {
         `§r${indent}§f${perCraft} §7per craft`,
         `§r${indent}§f${tankAmount} §7in tank`
     ].join('\n')
-}
-
-function formatFluidDisplayName(type) {
-    if (!type || type === 'empty') return 'Empty'
-    const pretty = formatName(type)
-    const cleaned = pretty.replace(/Liquified\s*/i, '').replace(/\s{2,}/g, ' ').trim()
-    return cleaned.length ? cleaned : pretty
-}
-
-function addItemsToSlot(machine, slotIndex, itemId, amount) {
-    if (!amount || amount <= 0 || !itemId) return
-    const slot = machine.inv.getItem(slotIndex)
-    if (!slot) {
-        machine.entity.setItem(slotIndex, itemId, amount)
-        return
-    }
-
-    if (slot.typeId !== itemId) {
-        machine.entity.setItem(slotIndex, itemId, amount)
-        return
-    }
-
-    machine.entity.changeItemAmount(slotIndex, amount)
-}
-
-function computeSlotCapacity(slot, expectedId, perCraft) {
-    if (perCraft <= 0) return Number.MAX_SAFE_INTEGER
-    if (!expectedId) return 0
-
-    if (!slot) {
-        return Math.floor(64 / perCraft)
-    }
-
-    if (slot.typeId !== expectedId) return 0
-    const remaining = (slot.maxAmount ?? 64) - slot.amount
-    return Math.floor(Math.max(0, remaining) / perCraft)
 }
 
 function getOriginalAmountPerCraft(recipe) {

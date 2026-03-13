@@ -1,5 +1,5 @@
 import { system } from '@minecraft/server'
-import { Machine, Energy, FluidManager, Rotation, buildOverclockLoreLine } from '../AscendantMachinery/core.js'
+import { Machine, Energy, FluidManager, Rotation, buildOverclockLoreLine } from '../../DoriosCore/index.js'
 
 // ──────────────────────────────────────────────────────
 // CONFIGURAÇÃO

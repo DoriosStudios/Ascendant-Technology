@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine } from '../AscendantMachinery/core.js';
+import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, tickGate, feedFluidSlot, formatFluidDisplayName } from '../../DoriosCore/index.js';
 import { getVaporworksProcessorRecipes } from '../../config/recipes/vaporworks_processor.js';
 
 const FLUID_INPUT_SLOT = 3;
@@ -321,16 +321,6 @@ function processCraft(machine, recipe, crafts, tankInput, tankOutput) {
     tankOutput.add(Math.floor(outputAmount));
 }
 
-function tickGate(entity, key, interval) {
-    const cd = Number(entity.getDynamicProperty(key)) || 0;
-    if (cd > 0) {
-        entity.setDynamicProperty(key, cd - 1);
-        return false;
-    }
-    entity.setDynamicProperty(key, interval);
-    return true;
-}
-
 function updateHud(machine, recipe, tankInput, tankOutput, maxCrafts) {
     const inputType = recipe.inputFluid.type;
     const outputType = recipe.outputFluid.type;
@@ -366,33 +356,6 @@ function updateHud(machine, recipe, tankInput, tankOutput, maxCrafts) {
     });
 }
 
-function feedFluidSlot(machine, tank, slotIndex) {
-    const slotItem = machine.inv.getItem(slotIndex);
-    if (!slotItem) return;
-
-    const fillDefinition = FluidManager.getFluidFillDefinition?.(slotItem.typeId);
-    if (fillDefinition) return;
-
-    const result = tank.fluidItem(slotItem.typeId);
-    if (result === false) return;
-
-    machine.entity.changeItemAmount(slotIndex, -1);
-
-    if (!result) return;
-
-    const updated = machine.inv.getItem(slotIndex);
-    if (!updated) {
-        machine.entity.setItem(slotIndex, result, 1);
-        return;
-    }
-
-    if (updated.typeId === result && updated.amount < updated.maxAmount) {
-        machine.entity.changeItemAmount(slotIndex, 1);
-    } else {
-        machine.entity.addItem(result, 1);
-    }
-}
-
 function fillFluidSlot(machine, tank, slotIndex) {
     const slotItem = machine.inv.getItem(slotIndex);
     if (!slotItem) return;
@@ -418,15 +381,4 @@ function fillFluidSlot(machine, tank, slotIndex) {
     } else {
         machine.entity.addItem(result, 1);
     }
-}
-
-function formatName(id) {
-    const [, name = id] = id.split(':');
-    return name.split('_').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
-}
-
-function formatFluidDisplayName(type) {
-    if (!type || type === 'empty') return 'Empty';
-    const pretty = formatName(type);
-    return pretty;
 }

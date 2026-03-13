@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine } from '../AscendantMachinery/core.js'
+import { Machine, Energy, buildOverclockLoreLine } from '../../DoriosCore/index.js'
 import { ItemStack } from '@minecraft/server'
 
 const DEFAULT_COST = 800
@@ -9,6 +9,45 @@ const COOLDOWN_TICKS = 4
 const MAX_SIZE_LEVEL = 8
 const FIELD_ID = 'utilitycraft:laser_barrier_field'
 const FIELD_REFRESH_TICKS = 10 // only rebuild the wall a few times per second
+const AIR_BLOCK_IDS = new Set(['minecraft:air', 'minecraft:cave_air', 'minecraft:void_air'])
+const FIELD_CLEARABLE_BLOCKS = new Set([
+    'minecraft:snow',
+    'minecraft:snow_layer',
+    'minecraft:grass',
+    'minecraft:tallgrass',
+    'minecraft:short_grass',
+    'minecraft:tall_grass',
+    'minecraft:fern',
+    'minecraft:large_fern',
+    'minecraft:deadbush',
+    'minecraft:dandelion',
+    'minecraft:poppy',
+    'minecraft:blue_orchid',
+    'minecraft:allium',
+    'minecraft:azure_bluet',
+    'minecraft:oxeye_daisy',
+    'minecraft:cornflower',
+    'minecraft:lily_of_the_valley',
+    'minecraft:wither_rose',
+    'minecraft:sunflower',
+    'minecraft:lilac',
+    'minecraft:rose_bush',
+    'minecraft:peony',
+    'minecraft:seagrass',
+    'minecraft:tall_seagrass',
+    'minecraft:kelp',
+    'minecraft:kelp_plant',
+    'minecraft:waterlily',
+    'minecraft:vine',
+    'minecraft:glow_lichen',
+    'minecraft:cave_vines',
+    'minecraft:cave_vines_body_with_berries',
+    'minecraft:cave_vines_head_with_berries',
+    'minecraft:small_dripleaf',
+    'minecraft:big_dripleaf',
+    'minecraft:big_dripleaf_stem'
+])
+const FIELD_CLEARABLE_SUFFIXES = ['_sapling', '_fungus', '_mushroom', '_flower', '_tulip']
 
 const DP_LEN = 'laser:len'
 const DP_HEI = 'laser:hei'
@@ -31,6 +70,10 @@ DoriosAPI.register.blockComponent('laser_barrier', {
 
             const defaultCost = settings?.machine?.energy_cost ?? DEFAULT_COST
             machine.setEnergyCost(defaultCost)
+            machine.entity.setDynamicProperty(DP_LEN, BASE_LENGTH)
+            machine.entity.setDynamicProperty(DP_HEI, BASE_HEIGHT)
+            machine.entity.setDynamicProperty(DP_LAST_SPAN, Math.max(BASE_LENGTH, BASE_HEIGHT))
+            machine.entity.setDynamicProperty(DP_REFRESH_CD, 0)
             machine.displayEnergy()
             machine.displayProgress()
         })
@@ -119,9 +162,14 @@ function maintainField(machine, length, height, prevLen, prevHei) {
         const block = dim.getBlock(pos)
         if (!block) continue
 
-        if (block.typeId === 'minecraft:air' || block.typeId === FIELD_ID || block.isWaterlogged) {
-            block.setType(FIELD_ID)
+        if (!canPlaceFieldAt(block)) continue
+
+        // Break light environment blocks first so the laser field can replace them.
+        if (isEnvironmentClearableBlock(block) && block.typeId !== FIELD_ID) {
+            block.setType('minecraft:air')
         }
+
+        block.setType(FIELD_ID)
     }
 }
 
@@ -132,11 +180,15 @@ function clearField(machine, keep = new Set(), positions = null, prevLen = null,
     const currHei = readDP(machine, DP_HEI, BASE_HEIGHT)
     const lastLen = prevLen ?? currLen
     const lastHei = prevHei ?? currHei
+    const lastSpan = readDP(machine, DP_LAST_SPAN, Math.max(currLen, currHei, lastLen, lastHei))
+    const sweepLen = Math.max(currLen, lastLen, lastSpan)
+    const sweepHei = Math.max(currHei, lastHei, lastSpan)
 
     const boxes = [
         positions?.length ? getBoundingBox(positions, { x, y, z }) : null,
         buildWallBox(machine.block, currLen, currHei, 1),
-        buildWallBox(machine.block, lastLen, lastHei, 1)
+        buildWallBox(machine.block, lastLen, lastHei, 1),
+        buildWallBox(machine.block, sweepLen, sweepHei, 1)
     ].filter(Boolean)
 
     const bbox = boxes.reduce(mergeBoxes)
@@ -207,13 +259,13 @@ function computeWall(block, length, height) {
 function getForward(block) {
     const axis = block.permutation?.getState('utilitycraft:axis') ?? 'north'
     switch (axis) {
-        case 'south': return { x: 0, y: 0, z: -1 }
+        case 'south': return { x: 0, y: 0, z: 1 }
         case 'east': return { x: 1, y: 0, z: 0 }
         case 'west': return { x: -1, y: 0, z: 0 }
         case 'up': return { x: 0, y: 1, z: 0 }
         case 'down': return { x: 0, y: -1, z: 0 }
         case 'north':
-        default: return { x: 0, y: 0, z: 1 }
+        default: return { x: 0, y: 0, z: -1 }
     }
 }
 
@@ -224,6 +276,44 @@ function getRight(forward) {
     if (forward.z === 1) return { x: -1, y: 0, z: 0 }
     if (forward.z === -1) return { x: 1, y: 0, z: 0 }
     return { x: 1, y: 0, z: 0 }
+}
+
+function matchesClearableSuffix(typeId) {
+    if (typeof typeId !== 'string') return false
+    return FIELD_CLEARABLE_SUFFIXES.some(suffix => typeId.endsWith(suffix))
+}
+
+function isAirLike(block) {
+    if (!block) return false
+    if (block.isAir === true) return true
+    return AIR_BLOCK_IDS.has(block.typeId)
+}
+
+function isEnvironmentClearableBlock(block) {
+    if (!block) return false
+    if (isAirLike(block)) return false
+    if (block.typeId === FIELD_ID) return false
+
+    const typeId = block.typeId
+    const unbreakables = DoriosAPI?.constants?.unbreakableBlocks
+    if (Array.isArray(unbreakables) && unbreakables.includes(typeId)) return false
+
+    if (block.hasTag?.('minecraft:replaceable')) return true
+    if (block.hasTag?.('minecraft:replaceable_plants')) return true
+    if (block.hasTag?.('minecraft:plant')) return true
+
+    if (FIELD_CLEARABLE_BLOCKS.has(typeId)) return true
+    if (matchesClearableSuffix(typeId)) return true
+
+    return false
+}
+
+function canPlaceFieldAt(block) {
+    if (!block) return false
+    if (block.typeId === FIELD_ID) return true
+    if (isAirLike(block)) return true
+    if (block.isWaterlogged) return true
+    return isEnvironmentClearableBlock(block)
 }
 
 const keyOf = (pos) => `${pos.x}|${pos.y}|${pos.z}`
@@ -299,7 +389,10 @@ function forEachPos(bbox, fn) {
     }
 }
 
-const readDP = (machine, key, fallback) => Number(machine.entity?.getDynamicProperty(key)) || fallback
+const readDP = (machine, key, fallback) => {
+    const value = Number(machine.entity?.getDynamicProperty(key))
+    return Number.isFinite(value) ? value : fallback
+}
 
 function getBarrierLevels(machine) {
     const slots = machine.settings?.machine?.upgrades ?? [4, 5, 6]
@@ -328,13 +421,12 @@ function getBarrierLevels(machine) {
 }
 
 function syncCachedSpan(machine, length, height) {
-    const cachedLen = Number(machine.entity?.getDynamicProperty(DP_LEN)) || length
-    const cachedHei = Number(machine.entity?.getDynamicProperty(DP_HEI)) || height
+    const cachedLen = readDP(machine, DP_LEN, length)
+    const cachedHei = readDP(machine, DP_HEI, height)
     const changed = cachedLen !== length || cachedHei !== height
-    if (changed) {
-        machine.entity.setDynamicProperty(DP_LEN, length)
-        machine.entity.setDynamicProperty(DP_HEI, height)
-    }
+    // Keep cache always in sync so downsizing cleanup can reliably compare spans.
+    machine.entity.setDynamicProperty(DP_LEN, length)
+    machine.entity.setDynamicProperty(DP_HEI, height)
     return {
         changed,
         prevLen: cachedLen,

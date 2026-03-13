@@ -1,4 +1,4 @@
-import { updatePipes } from "../AscendantMachinery/core.js";
+import { updatePipes } from "../../DoriosCore/index.js";
 import { system, world } from "@minecraft/server";
 
 const OFFSETS = [

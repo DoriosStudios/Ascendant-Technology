@@ -1,4 +1,4 @@
-import { Generator, Energy, FluidManager } from '../AscendantMachinery/core.js';
+import { Generator, Energy, FluidManager } from '../../DoriosCore/index.js';
 
 export const heatSources = {
     'utilitycraft:blaze_block': 1.5,

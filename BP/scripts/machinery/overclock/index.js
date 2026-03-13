@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager } from "../AscendantMachinery/core.js";
+import { Machine, Energy, FluidManager } from "../../DoriosCore/index.js";
 
 const OFFSETS = [
     { x: 1, y: 0, z: 0 },

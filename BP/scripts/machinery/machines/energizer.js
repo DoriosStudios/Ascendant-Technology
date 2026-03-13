@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate } from '../AscendantMachinery/core.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, formatItemName } from '../../DoriosCore/index.js'
 import { startHeaterAura, tickHeaterAura, stopHeaterAuraAt } from '../multi_core.js'
 import { getEnergizerRecipes } from '../../config/recipes/energizer.js'
 
@@ -214,8 +214,8 @@ function updateHud(machine, channel, status = 'Running') {
     const recipe = channel.recipe
     const slotName = slotTitle(channel.slot)
     const costText = Energy.formatEnergyToText(machine.getEnergyCost())
-    const inputName = formatName(recipe.input.id)
-    const outputName = formatName(recipe.output.id)
+    const inputName = formatItemName(recipe.input.id)
+    const outputName = formatItemName(recipe.output.id)
     const desc = recipe.description ? `\n§7${recipe.description}` : ''
 
     const rateText = Energy.formatEnergyToText(Math.floor(machine.rate))
@@ -245,13 +245,4 @@ function updateHud(machine, channel, status = 'Running') {
 
 function slotTitle(slot) {
     return SLOT_TITLES[slot] ?? 'Primary'
-}
-
-function formatName(id) {
-    const [, raw = id] = id.split(':')
-    return raw
-        .split(/[_\s]+/)
-        .filter(Boolean)
-        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-        .join(' ')
 }

@@ -72,6 +72,7 @@ const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
  * 
  * Add a new entry to the `nativeCatalystWeaverRecipes` array using `defineWeaverRecipe()`:
  * 
+ * ```
  * defineWeaverRecipe({
  *   id: 'namespace:recipe_name',
  *   input: { id: 'namespace:item_id', amount: 1 },
@@ -86,7 +87,7 @@ const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
  *   cost: 3200,           // optional (defaults to 6400 DE)
  *   speedModifier: 1.5    // optional (defaults to 1.0)
  * })
- * 
+ * ```
  * 
  * @type {CatalystWeaverRecipe[]}
  */
@@ -103,27 +104,11 @@ const nativeCatalystWeaverRecipes = [
             null,
             null
         ],
-        fluid: { type: 'lava', amount: 10000 },
+        fluid: { type: 'lava', amount: 8000 },
         output: { id: 'utilitycraft:aetherium', amount: 1 },
         byproduct: { id: 'utilitycraft:stabilized_obsidian_dust', amount: [0, 2], chance: 0.05 },
         cost: 12000,
         speedModifier: 0.5
-    }),
-    defineWeaverRecipe({
-        id: 'utilitycraft:aetherium_from_shards',
-        input: { id: 'utilitycraft:aetherium_shard', amount: 4 },
-        catalysts: [
-            { id: 'utilitycraft:energized_iron_ingot', amount: 1 },
-            { id: 'utilitycraft:steel_ingot', amount: 1 },
-            { id: 'minecraft:quartz', amount: 2 },
-            null,
-            null,
-            null
-        ],
-        output: { id: 'utilitycraft:aetherium', amount: 1 },
-        byproduct: { id: 'minecraft:gold_nugget', amount: [1, 3], chance: 0.35 },
-        cost: 6200,
-        speedModifier: 1.2
     }),
     defineWeaverRecipe({
         id: 'at:easier_aetherium',
@@ -185,6 +170,15 @@ const nativeCatalystWeaverRecipes = [
         catalysts: [ {id: 'minecraft:amethyst_shard', amount: 1} ],
         fluid: {type: 'dark_matter', amount: 800},
         output: {id: 'utilitycraft:refined_aetherium_shard', amount: 1}
+    }),
+    defineWeaverRecipe({
+        input: {id: 'minecraft:water_bottle', amount: 1},
+        catalysts: [ {id: 'utilitycraft:crushed_endstone', amount: 1}
+        ],
+        fluid: {type: 'dark_matter', amount: 100},
+        output: {id: 'utilitycraft:void_essence'},
+        cost: 32000,
+        speedModifier: 0.5
     })
 ]
 

@@ -72,7 +72,7 @@
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"offset": [198, 114],
-					"$slot_index": 4
+					"$slot_index": 19
 				}
 			},
 			{
@@ -80,7 +80,7 @@
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"offset": [198, 96],
-					"$slot_index": 5
+					"$slot_index": 20
 				}
 			},
 			{
@@ -88,7 +88,7 @@
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"offset": [198, 78],
-					"$slot_index": 9
+					"$slot_index": 21
 				}
 			},
 			{
@@ -134,7 +134,7 @@
 	// ==========================================
 	// STABILIZER SECTION (Tab 0 — default)
 	// Layout from Energizer: [162, 72] at [-10, -40]
-	// Slots: 1 (status), 2 (progress), 3 (input), 14 (output)
+	// Slots: 1 (status), 2 (progress), 3 (input), 24 (output)
 	// ==========================================
 	"cryo_stabilizer_top": {
 		"type": "collection_panel",
@@ -207,13 +207,13 @@
 					"collection_index": 2
 				}
 			},
-			// Output — slot 14, Energizer offset [72, 30] top_middle
+			// Output — slot 24, Energizer offset [72, 30] top_middle
 			{
 				"stabilizer_output@ascendant_common.slot_base": {
 					"anchor_from": "top_middle",
 					"anchor_to": "top_middle",
 					"offset": [72, 30],
-					"$slot_index": 14
+					"$slot_index": 24
 				}
 			}
 		]
@@ -222,7 +222,7 @@
 	// ==========================================
 	// COOLING SECTION (Tab 1)
 	// Layout from Ascane Engine: [176, 166] at [0, 0]
-	// Slots: 18 (status), 6-8/15-17/24-26 (3x3 grid)
+	// Slots: 22 (status), 4-12 (3x3 grid)
 	// ==========================================
 	"cryo_cooling_top": {
 		"type": "collection_panel",
@@ -262,7 +262,7 @@
 			},
 			{
 				"status_label@machineryCommon.item_label": {
-					"collection_index": 18,
+					"collection_index": 22,
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [-132, 2],
@@ -278,7 +278,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [-18, -56],
-					"$slot_index": 6
+					"$slot_index": 4
 				}
 			},
 			{
@@ -286,7 +286,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [0, -56],
-					"$slot_index": 7
+					"$slot_index": 5
 				}
 			},
 			{
@@ -294,7 +294,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [18, -56],
-					"$slot_index": 8
+					"$slot_index": 6
 				}
 			},
 			// Row 2
@@ -303,7 +303,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [-18, -38],
-					"$slot_index": 15
+					"$slot_index": 7
 				}
 			},
 			{
@@ -311,7 +311,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [0, -38],
-					"$slot_index": 16
+					"$slot_index": 8
 				}
 			},
 			{
@@ -319,7 +319,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [18, -38],
-					"$slot_index": 17
+					"$slot_index": 9
 				}
 			},
 			// Row 3
@@ -328,7 +328,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [-18, -20],
-					"$slot_index": 24
+					"$slot_index": 10
 				}
 			},
 			{
@@ -336,7 +336,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [0, -20],
-					"$slot_index": 25
+					"$slot_index": 11
 				}
 			},
 			{
@@ -344,7 +344,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [18, -20],
-					"$slot_index": 26
+					"$slot_index": 12
 				}
 			}
 		]
@@ -353,8 +353,8 @@
 	// ==========================================
 	// GENERATOR SECTION (Tab 2)
 	// Layout from Vaporworks Processor: [200, 130] at [-10, -46]
-	// Slots: 20 (status), 10 (water in), 19 (titanium), 21 (lapis),
-	//        11 (water display), 13 (cryo display), 12 (capsule out)
+	// Slots: 23 (status), 13 (water in), 17 (titanium), 18 (lapis),
+	//        14 (water display), 16 (cryo display), 15 (capsule out)
 	// ==========================================
 	"cryo_generator_top": {
 		"type": "collection_panel",
@@ -393,7 +393,7 @@
 			},
 			{
 				"status_label@machineryCommon.item_label": {
-					"collection_index": 20,
+					"collection_index": 23,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"offset": [-60, 38],
@@ -402,60 +402,60 @@
 					"layer": 3
 				}
 			},
-			// Water input — slot 10, from Vaporworks fluid_injector [-36, 2]
+			// Water input — slot 13, from Vaporworks fluid_injector [-36, 2]
 			{
 				"water_input@ascendant_common.slot_base": {
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [-36, 2],
-					"$slot_index": 10
+					"$slot_index": 13
 				}
 			},
-			// Water tank display — slot 11, from Vaporworks fluid_input [-20, 0]
+			// Water tank display — slot 14, from Vaporworks fluid_input [-20, 0]
 			{
 				"water_tank@ascendant_common.liquid_display": {
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [-20, 0],
-					"$fluid_slot_index": 11
+					"$fluid_slot_index": 14
 				}
 			},
-			// Titanium catalyst — slot 19
+			// Titanium catalyst — slot 17
 			{
 				"titanium_input@ascendant_common.slot_base": {
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [0, -10],
-					"$slot_index": 19,
+					"$slot_index": 17,
 					"$has_outline": true,
 					"$outline_size": [20, 20],
 					"$outline_variant": "orange"
 				}
 			},
-			// Lapis input — slot 21
+			// Lapis input — slot 18
 			{
 				"lapis_input@ascendant_common.slot_base": {
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [0, 10],
-					"$slot_index": 21
+					"$slot_index": 18
 				}
 			},
-			// Cryofluid tank display — slot 13, from Vaporworks gas_output [20, 0]
+			// Cryofluid tank display — slot 16, from Vaporworks gas_output [20, 0]
 			{
 				"cryofluid_tank@ascendant_common.liquid_display": {
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [20, 0],
-					"$fluid_slot_index": 13
+					"$fluid_slot_index": 16
 				}
 			},
-			// Cryofluid capsule output — slot 12, from Vaporworks fluid_receptor [54, 2]
+			// Cryofluid capsule output — slot 15, from Vaporworks fluid_receptor [54, 2]
 			{
 				"cryofluid_output@machineryCommon.vertical_single": {
 					"$is_liquid": true,
 					"$has_bg": false,
-					"$collection_index": 12,
+					"$collection_index": 15,
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [54, 2]
@@ -464,7 +464,7 @@
 			// Tank labels
 			{
 				"water_label@ascendant_common.item_label_view": {
-					"collection_index": 11,
+					"collection_index": 14,
 					"font_scale_factor": 0.55,
 					"anchor_from": "center",
 					"anchor_to": "center",
@@ -474,7 +474,7 @@
 			},
 			{
 				"cryofluid_label@ascendant_common.item_label_view": {
-					"collection_index": 13,
+					"collection_index": 16,
 					"font_scale_factor": 0.55,
 					"anchor_from": "center",
 					"anchor_to": "center",

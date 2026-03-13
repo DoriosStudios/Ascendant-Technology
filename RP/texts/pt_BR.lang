@@ -80,6 +80,7 @@ tile.utilitycraft:end_aetherium_ore.name=Minério de Aetherium do Fim
 
 ## Itens
 ### Aetherium
+item.utilitycraft:aetherium_dust=Pó de Aetherium
 item.utilitycraft:aetherium=Barra de Aetherium
 item.utilitycraft:aetherium_shard=Fragmento de Aetherium
 item.utilitycraft:refined_aetherium_shard=Aetherium Refinado
@@ -100,6 +101,8 @@ item.utilitycraft:titanium=Barra de Titânio
 item.utilitycraft:raw_titanium=Titânio Bruto
 item.utilitycraft:titanium_nugget=Pepita de Titânio
 item.utilitycraft:titanium_chunk=Pedaço de Titânio
+item.utilitycraft:titanium_dust=Pó de Titânio
+item.utilitycraft:titanium_plate=Placa de Titânio
 item.utilitycraft:titanium_helmet=Capacete de Titânio
 item.utilitycraft:titanium_chestplate=Peitoral de Titânio
 item.utilitycraft:titanium_leggings=Calças de Titânio
@@ -134,7 +137,6 @@ item.utilitycraft:enchantability_module_5=§dMódulo de Encantabilidade §r(Tier
 item.utilitycraft:reinforcement_module=§dMódulo de Reforço §r(Tier I)§7\n- Desbloqueia reforço de armadura
 item.utilitycraft:reinforcement_module_2=§dMódulo de Reforço §r(Tier II)§7\n- Bônus de durabilidade aprimorado
 item.utilitycraft:reinforcement_module_3=§dMódulo de Reforço §r(Tier III)§7\n- Bônus de durabilidade máximo
-item.utilitycraft:upgrade_package=§aPacote de Melhoria§7\n- Armazena múltiplas melhorias\n- Aplicar em massa a máquinas/esteiras
 
 ### Malhas & Redes
 item.utilitycraft:lucky_mesh=§aMalha da Sorte\n§7- Tier Máx: Diamante\n§7- Multiplicador de Itens: 2x
@@ -213,6 +215,7 @@ at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)
 at:itemGroup.name.capsules=Cápsulas de Líquidos §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armaduras §u(Ascendant Technology)
+at:itemGroup.name.materials_resources=Materiais e Recursos §u(Ascendant Technology)
 
 at:ui.h=A
 at:ui.l=L

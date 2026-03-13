@@ -81,6 +81,114 @@
 			}
 		]
 	},
+	"disenchant_button_state_unchecked": {
+		"type": "panel",
+		"$tab_button_size|default": [ 18, 18 ],
+		"size": [ 18, 18 ],
+		"controls": [
+			{
+				"tab_surface@ascendant_common.panel": {
+					"size": [ 18, 18 ],
+					"$panel_size": [ 18, 18 ],
+					"$panel_texture": "textures/ui/button_borderless_dark",
+					"$has_container_label": false,
+					"$has_close_button": false,
+					"layer": 0
+				}
+			},
+			{
+				"icon": {
+					"type": "image",
+					"texture": "textures/items/book_normal",
+					"size": [ 16, 16 ],
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 2
+				}
+			}
+		]
+	},
+	"disenchant_button_state_unchecked_hover": {
+		"type": "panel",
+		"$tab_button_size|default": [ 18, 18 ],
+		"size": [ 18, 18 ],
+		"controls": [
+			{
+				"tab_surface@ascendant_common.panel": {
+					"size": [ 18, 18 ],
+					"$panel_size": [ 18, 18 ],
+					"$panel_texture": "textures/ui/button_borderless_darkhover",
+					"$has_container_label": false,
+					"$has_close_button": false,
+					"layer": 0
+				}
+			},
+			{
+				"icon": {
+					"type": "image",
+					"texture": "textures/items/book_normal",
+					"size": [ 16, 16 ],
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 2
+				}
+			}
+		]
+	},
+	"disenchant_button_state_checked": {
+		"type": "panel",
+		"$tab_button_size|default": [ 18, 18 ],
+		"size": [ 18, 18 ],
+		"controls": [
+			{
+				"tab_surface@ascendant_common.panel": {
+					"size": [ 18, 18 ],
+					"$panel_size": [ 18, 18 ],
+					"$panel_texture": "textures/ui/button_borderless_darkpressednohover",
+					"$has_container_label": false,
+					"$has_close_button": false,
+					"layer": 0
+				}
+			},
+			{
+				"icon": {
+					"type": "image",
+					"texture": "textures/items/book_enchanted",
+					"size": [ 16, 16 ],
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 2
+				}
+			}
+		]
+	},
+	"disenchant_button_state_checked_hover": {
+		"type": "panel",
+		"$tab_button_size|default": [ 18, 18 ],
+		"size": [ 18, 18 ],
+		"controls": [
+			{
+				"tab_surface@ascendant_common.panel": {
+					"size": [ 18, 18 ],
+					"$panel_size": [ 18, 18 ],
+					"$panel_texture": "textures/ui/button_borderless_darkpressed",
+					"$has_container_label": false,
+					"$has_close_button": false,
+					"layer": 0
+				}
+			},
+			{
+				"icon": {
+					"type": "image",
+					"texture": "textures/items/book_enchanted",
+					"size": [ 16, 16 ],
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 2
+				}
+			}
+		]
+	},
 	"enchantment_station_top": {
 		"type": "collection_panel",
 		"anchor_from": "center",
@@ -91,11 +199,20 @@
 		"$item_collection_name": "container_items",
 		"controls": [
 			{
+				"label": {
+					"type": "label",
+					"text": "entity.utilitycraft:enchantment_station.name",
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [ 0, -10 ]
+				}
+			},
+			{
 				"bg@ascendant_common.panel": {
 					"$panel_color": "dark",
 					"$panel_size": [ 176, 166 ],
 					"offset": [ 0, 4 ],
-					"$has_container_label": true,
+					"$has_container_label": false,
 					"$has_close_button": false,
 					"$label_color": "light",
 					"$label_anchor": "top_middle",
@@ -124,7 +241,7 @@
 			{
 				"info_panel@ascendant_common.info_panel": {
 					"offset": [ -134, 4 ],
-					"$panel_color": "dark"
+					"$panel_color": "black"
 				}
 			},
 			{
@@ -195,7 +312,7 @@
 								"$slot_bg_variant": "dark",
 								"anchor_from": "center",
 								"anchor_to": "center",
-								   "offset": [ -18, -38 ],
+								"offset": [ -18, -38 ],
 								"$slot_index": 6
 							}
 						},
@@ -204,7 +321,7 @@
 								"$slot_bg_variant": "dark",
 								"anchor_from": "center",
 								"anchor_to": "center",
-								   "offset": [ 0, -38 ],
+								"offset": [ 0, -38 ],
 								"$slot_index": 7
 							}
 						},
@@ -213,7 +330,7 @@
 								"$slot_bg_variant": "dark",
 								"anchor_from": "center",
 								"anchor_to": "center",
-								   "offset": [ 18, -38 ],
+								"offset": [ 18, -38 ],
 								"$slot_index": 8
 							}
 						},
@@ -222,7 +339,7 @@
 								"$slot_bg_variant": "dark",
 								"anchor_from": "center",
 								"anchor_to": "center",
-								   "offset": [ -18, -20 ],
+								"offset": [ -18, -20 ],
 								"$slot_index": 9
 							}
 						},
@@ -231,7 +348,7 @@
 								"$slot_bg_variant": "dark",
 								"anchor_from": "center",
 								"anchor_to": "center",
-								   "offset": [ 0, -20 ],
+								"offset": [ 0, -20 ],
 								"$slot_index": 10
 							}
 						},
@@ -240,7 +357,7 @@
 								"$slot_bg_variant": "dark",
 								"anchor_from": "center",
 								"anchor_to": "center",
-								   "offset": [ 18, -20 ],
+								"offset": [ 18, -20 ],
 								"$slot_index": 11
 							}
 						}
@@ -252,7 +369,7 @@
 					"$slot_index": 12,
 					"anchor_from": "center",
 					"anchor_to": "center",
-					"offset": [ 98, -36 ],
+					"offset": [ 98, -24 ],
 					"size": [ 18, 18 ]
 				}
 			},
@@ -261,7 +378,7 @@
 					"$slot_index": 13,
 					"anchor_from": "center",
 					"anchor_to": "center",
-					"offset": [ 98, -18 ],
+					"offset": [ 98, -6 ],
 					"size": [ 18, 18 ]
 				}
 			},
@@ -270,7 +387,7 @@
 					"$slot_index": 14,
 					"anchor_from": "center",
 					"anchor_to": "center",
-					"offset": [ 98, 0 ],
+					"offset": [ 98, 12 ],
 					"size": [ 18, 18 ]
 				}
 			},
@@ -282,7 +399,7 @@
 					"$outline_size": [ 20, 20 ],
 					"anchor_from": "center",
 					"anchor_to": "center",
-					"offset": [ 98, 24 ],
+					"offset": [ 98, 36 ],
 					"size": [ 18, 18 ]
 				}
 			},
@@ -294,7 +411,7 @@
 					"$outline_size": [ 20, 20 ],
 					"anchor_from": "center",
 					"anchor_to": "center",
-					"offset": [ 98, 42 ],
+					"offset": [ 98, 54 ],
 					"size": [ 18, 18 ]
 				}
 			},
@@ -306,12 +423,12 @@
 					"$outline_size": [ 20, 20 ],
 					"anchor_from": "center",
 					"anchor_to": "center",
-					"offset": [ 98, 60 ],
+					"offset": [ 98, 72 ],
 					"size": [ 18, 18 ]
 				}
 			},
 			{
-				"module_and_upg_bg@ascendant_common.panel":{
+				"module_and_upg_bg@ascendant_common.panel": {
 					"$panel_color": "black",
 					"$panel_size": [ 28, 166 ],
 					"anchor_from": "center",
@@ -345,14 +462,14 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"$text_scale": 0.55,
-					"offset": [ -132, 0 ],
+					"offset": [ -132, 2 ],
 					"size": [ 76, 148 ],
 					"layer": 4
 				}
 			},
 			{
 				"bg@ascendant_common.panel": {
-					"$panel_color": "dark",
+					"$panel_color": "black",
 					"$panel_size": [ 176, 166 ],
 					"offset": [ 0, 4 ],
 					"$has_container_label": false,
@@ -492,10 +609,12 @@
 		"type": "panel",
 		"controls": [
 			{
-				"container_gamepad_helpers@common.container_gamepad_helpers": {}
+				"container_gamepad_helpers@common.container_gamepad_helpers": { }
 			},
 			{
-				"flying_item_renderer@common.flying_item_renderer": {}
+				"flying_item_renderer@common.flying_item_renderer": {
+					"layer": 10
+				}
 			},
 			{
 				"selected_item_details_factory@common.selected_item_details_factory": {
@@ -516,14 +635,21 @@
 								"controls": [
 									{
 										"top_mode_disenchant_toggle@ascendant_common.tab_button_toggle": {
-											"anchor_from": "top_middle",
-											"anchor_to": "top_middle",
-											"offset": [ 108, -20 ],
+											"anchor_from": "center",
+											"anchor_to": "center",
+											"offset": [ 134, -46 ],
 											"$tab_group_name": "enchantment_station_disenchant_toggle",
 											"$tab_index": 0,
-											"$tab_button_text": "Dis",
-											"$tab_button_size": [ 24, 24 ],
-											"$tab_button_text_scale": 0.5,
+											"$tab_button_text": "",
+											"$tab_button_size": [ 18, 18 ],
+											"$unchecked_control": "enchantment_station.disenchant_button_state_unchecked",
+											"$checked_control": "enchantment_station.disenchant_button_state_checked",
+											"$unchecked_hover_control": "enchantment_station.disenchant_button_state_unchecked_hover",
+											"$checked_hover_control": "enchantment_station.disenchant_button_state_checked_hover",
+											"$unchecked_locked_control": "enchantment_station.disenchant_button_state_unchecked",
+											"$checked_locked_control": "enchantment_station.disenchant_button_state_checked",
+											"$unchecked_locked_hover_control": "enchantment_station.disenchant_button_state_unchecked_hover",
+											"$checked_locked_hover_control": "enchantment_station.disenchant_button_state_checked_hover",
 											"$radio_toggle_group": false,
 											"$toggle_property_bag": {
 												"#toggle_state": false
@@ -574,33 +700,22 @@
 										}
 									},
 									{
-										"label": {
-											"type": "label",
-											"text": "container.inventory",
-											"color": [1, 1, 1],
-											"anchor_from": "left_middle",
-											"anchor_to": "top_left",
-											"offset": [ 44, -6 ],
-											"layer": 5
-										}
-									},
-									{
 										"hotbar_grid@common.hotbar_grid_template": {
 											"offset": [ 36, 0 ],
 											"layer": 4
 										}
 									},
 									{
-										"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+										"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": { }
 									}
 								]
 							}
 						},
 						{
-							"inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+							"inventory_selected_icon_button@common.inventory_selected_icon_button": { }
 						},
 						{
-							"gamepad_cursor@common.gamepad_cursor_button": {}
+							"gamepad_cursor@common.gamepad_cursor_button": { }
 						}
 					]
 				}

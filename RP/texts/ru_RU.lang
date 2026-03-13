@@ -43,6 +43,7 @@ tile.utilitycraft:end_aetherium_ore.name=End Aetherium Ore
 
 ## Предметы
 ### Aetherium
+item.utilitycraft:aetherium_dust=Пыль эфириума
 item.utilitycraft:aetherium=Слиток Эфириума
 item.utilitycraft:aetherium_shard=Осколок Эфириума
 item.utilitycraft:refined_aetherium_shard=Refined Осколок Эфириума
@@ -63,6 +64,8 @@ item.utilitycraft:titanium=Слиток Титана
 item.utilitycraft:raw_titanium=Сырой Титан
 item.utilitycraft:titanium_nugget=Самородок Титана
 item.utilitycraft:titanium_chunk=Кусок Титана
+item.utilitycraft:titanium_dust=Титановая пыль
+item.utilitycraft:titanium_plate=Титановая пластина
 item.utilitycraft:titanium_helmet=Титан Helmet
 item.utilitycraft:titanium_chestplate=Титан Chestplate
 item.utilitycraft:titanium_leggings=Титан Leggings
@@ -89,7 +92,6 @@ item.utilitycraft:enchantability_module_5=§dМодуль Зачаровывае
 item.utilitycraft:reinforcement_module=§dМодуль Усиления §r(Tier I)§7\n- Открывает усиление брони
 item.utilitycraft:reinforcement_module_2=§dМодуль Усиления §r(Tier II)§7\n- Улучшенный бонус прочности
 item.utilitycraft:reinforcement_module_3=§dМодуль Усиления §r(Tier III)§7\n- Максимальный бонус прочности
-item.utilitycraft:upgrade_package=§aПакет Улучшений§7\n- Хранит несколько улучшений\n- Массовое применение к машинам/конвейерам
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aУдачная Сетка\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
@@ -153,6 +155,7 @@ at:itemGroup.name.machines=Машины §u(Ascendant Technology)
 at:itemGroup.name.capsules=Жидкостные Капсулы §u(Ascendant Technology)
 at:itemGroup.name.experimental=Экспериментальный §u(Ascendant Technology)
 at:itemGroup.name.armor=Броня §u(Ascendant Technology)
+at:itemGroup.name.materials_resources=Материалы и ресурсы §u(Ascendant Technology)
 
 at:ui.h=H
 at:ui.l=L

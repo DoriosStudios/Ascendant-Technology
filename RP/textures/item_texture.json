@@ -5,6 +5,9 @@
 		"utilitycraft_aetherium": {
 			"textures": "textures/items/ores/aetherium_ingot"
 		},
+		"utilitycraft_aetherium_dust": {
+			"textures": "textures/items/ores/aetherium_dust"
+		},
 		"utilitycraft_aetherium_shard": {
 			"textures": "textures/items/ores/aetherium_shard"
 		},
@@ -20,8 +23,14 @@
 		"utilitycraft_titanium_ingot": {
 			"textures": "textures/items/ores/titanium_ingot"
 		},
+		"utilitycraft_titanium_dust": {
+			"textures": "textures/items/ores/titanium_dust"
+		},
 		"utilitycraft_titanium_nugget": {
 			"textures": "textures/items/ores/titanium_nugget"
+		},
+		"utilitycraft_titanium_plate": {
+			"textures": "textures/items/ores/titanium_plate"
 		},
 		"utilitycraft_aetherium_helmet": {
 			"textures": "textures/items/armor/aetherium_helmet"
@@ -114,10 +123,10 @@
 			"textures": "textures/items/misc/liquid_void"
 		},
 		"utilitycraft_enderling_tear": {
-			"textures": "textures/items/misc/void_essence"
+			"textures": "textures/items/misc/enderling_tear"
 		},
 		"utilitycraft_pure_enderling_tear": {
-			"textures": "textures/items/misc/liquid_void"
+			"textures": "textures/items/misc/pure_enderling_tear"
 		},
 		"utilitycraft:snareling": {
 			"textures": "textures/items/mobs/snareling"
@@ -137,11 +146,8 @@
 		"utilitycraft_hyper_processing_upgrade": {
 			"textures": "textures/items/machinery/hyper_processing_upgrade"
 		},
-		"utilitycraft_upgrade_package": {
-			"textures": "textures/items/machinery/size_upgrade"
-		},
 		"utilitycraft_ascane_module_base": {
-			"textures": "textures/items/machinery/size_upgrade"
+			"textures": "textures/items/machinery/modules/base_mod"
 		},
 		"utilitycraft_enchantability_module": {
 			"textures": "textures/items/machinery/modules/ench_mod_1"

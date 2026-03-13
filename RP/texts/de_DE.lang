@@ -43,6 +43,7 @@ tile.utilitycraft:end_aetherium_ore.name=End-Aetherium-Erz
 
 ## Gegenstände
 ### Aetherium
+item.utilitycraft:aetherium_dust=Aetheriumstaub
 item.utilitycraft:aetherium=Aetherium-Barren
 item.utilitycraft:aetherium_shard=Aetherium-Scherbe
 item.utilitycraft:refined_aetherium_shard=Refined Aetherium-Scherbe
@@ -63,6 +64,8 @@ item.utilitycraft:titanium=Titan-Barren
 item.utilitycraft:raw_titanium=Rohtitan
 item.utilitycraft:titanium_nugget=Titan-Nugget
 item.utilitycraft:titanium_chunk=Titan-Brocken
+item.utilitycraft:titanium_dust=Titanstaub
+item.utilitycraft:titanium_plate=Titanplatte
 item.utilitycraft:titanium_helmet=Titan-Helm
 item.utilitycraft:titanium_chestplate=Titan-Brustplatte
 item.utilitycraft:titanium_leggings=Titan-Beinschutz
@@ -89,7 +92,6 @@ item.utilitycraft:enchantability_module_5=§dVerzauberbarkeits-Modul §r(Stufe V
 item.utilitycraft:reinforcement_module=§dVerstärkungs-Modul §r(Stufe I)§7\n- Schaltet Rüstungsverstärkung frei
 item.utilitycraft:reinforcement_module_2=§dVerstärkungs-Modul §r(Stufe II)§7\n- Verbesserter Haltbarkeitsbonus
 item.utilitycraft:reinforcement_module_3=§dVerstärkungs-Modul §r(Stufe III)§7\n- Maximaler Haltbarkeitsbonus
-item.utilitycraft:upgrade_package=§aUpgrade-Paket§7\n- Speichert mehrere Upgrades\n- Massenanwendung auf Maschinen/Förderbänder
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aGlücksgitter\n§7- Max. Drop-Stufe: Diamant\n§7- Gegenstandsmultiplikator: 2x
@@ -153,6 +155,7 @@ at:itemGroup.name.machines=Maschinen §u(Ascendant Technology)
 at:itemGroup.name.capsules=Flüssigkeitskapseln §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimentell §u(Ascendant Technology)
 at:itemGroup.name.armor=Rüstung §u(Ascendant Technology)
+at:itemGroup.name.materials_resources=Materialien und Ressourcen §u(Ascendant Technology)
 
 at:ui.h=H
 at:ui.l=L

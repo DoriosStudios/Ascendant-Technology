@@ -76,7 +76,7 @@
 					"pivot": [0, 35, 0]
 				},
 				{
-					"name": "Leg0",
+					"name": "LegRight",
 					"parent": "Legs",
 					"pivot": [-4, 34, 0],
 					"cubes": [
@@ -84,7 +84,7 @@
 					]
 				},
 				{
-					"name": "Leg1",
+					"name": "LegLeft",
 					"parent": "Legs",
 					"pivot": [4, 34, 0],
 					"cubes": [

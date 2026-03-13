@@ -22,7 +22,7 @@
         "value": [
           {
             "requires": "($temp_container_title = 'entity.utilitycraft:cryo_chamber_sections_test.name')",
-            "$screen_content": "cryo_chamber_sections_test.utility_panel",
+            "$screen_content": "cryo_chamber.utility_panel",
             "$screen_bg_content": "common.screen_background"
           }
         ]
@@ -46,7 +46,7 @@
         "value": [
           {
             "requires": "($temp_container_title = 'entity.utilitycraft:cryo_chamber.name')",
-            "$screen_content": "cryo_chamber_sections_test.utility_panel",
+            "$screen_content": "cryo_chamber_top.utility_panel",
             "$screen_bg_content": "common.screen_background"
           }
         ]

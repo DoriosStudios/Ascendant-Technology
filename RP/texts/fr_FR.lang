@@ -43,6 +43,7 @@ tile.utilitycraft:end_aetherium_ore.name=Minerai d'Aetherium de l'End
 
 ## Objets
 ### Aetherium
+item.utilitycraft:aetherium_dust=Poudre d'Aetherium
 item.utilitycraft:aetherium=Lingot d'Aetherium
 item.utilitycraft:aetherium_shard=Fragment d'Aetherium
 item.utilitycraft:refined_aetherium_shard=Fragment d'Aetherium Raffiné
@@ -63,6 +64,8 @@ item.utilitycraft:titanium=Lingot de Titane
 item.utilitycraft:raw_titanium=Titane Brut
 item.utilitycraft:titanium_nugget=Pépite de Titane
 item.utilitycraft:titanium_chunk=Morceau de Titane
+item.utilitycraft:titanium_dust=Poudre de Titane
+item.utilitycraft:titanium_plate=Plaque de Titane
 item.utilitycraft:titanium_helmet=Casque en Titane
 item.utilitycraft:titanium_chestplate=Plastron en Titane
 item.utilitycraft:titanium_leggings=Jambières en Titane
@@ -89,7 +92,6 @@ item.utilitycraft:enchantability_module_5=§dModule d'Enchantabilité §r(Palier
 item.utilitycraft:reinforcement_module=§dModule de Renforcement §r(Palier I)§7\n- Débloque le renforcement d'armure
 item.utilitycraft:reinforcement_module_2=§dModule de Renforcement §r(Palier II)§7\n- Bonus de durabilité amélioré
 item.utilitycraft:reinforcement_module_3=§dModule de Renforcement §r(Palier III)§7\n- Bonus de durabilité maximal
-item.utilitycraft:upgrade_package=§aPack d'Améliorations§7\n- Stocke plusieurs améliorations\n- Application en masse aux machines/convoyeurs
 
 ## Filets & Mailles
 item.utilitycraft:lucky_mesh=§aMaille Chanceuse\n§7- Niveau Max de Butin: Diamant\n§7- Multiplicateur d'Objets: 2x
@@ -153,6 +155,7 @@ at:itemGroup.name.machines=Machines §u(Ascendant Technology)
 at:itemGroup.name.capsules=Capsules de Liquides §u(Ascendant Technology)
 at:itemGroup.name.experimental=Expérimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armures §u(Ascendant Technology)
+at:itemGroup.name.materials_resources=Matériaux et Ressources §u(Ascendant Technology)
 
 at:ui.h=H
 at:ui.l=L

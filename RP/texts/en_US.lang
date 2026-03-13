@@ -91,6 +91,7 @@ tile.utilitycraft:end_aetherium_ore.name=End Aetherium Ore
 
 ## Items
 ### Aetherium
+item.utilitycraft:aetherium_dust=Aetherium Dust
 item.utilitycraft:aetherium=Aetherium Ingot
 item.utilitycraft:aetherium_shard=Aetherium Shard
 item.utilitycraft:refined_aetherium_shard=Refined Aetherium Shard
@@ -111,6 +112,8 @@ item.utilitycraft:titanium=Titanium Ingot
 item.utilitycraft:raw_titanium=Raw Titanium
 item.utilitycraft:titanium_nugget=Titanium Nugget
 item.utilitycraft:titanium_chunk=Titanium Chunk
+item.utilitycraft:titanium_dust=Titanium Dust
+item.utilitycraft:titanium_plate=Titanium Plate
 item.utilitycraft:titanium_helmet=Titanium Helmet
 item.utilitycraft:titanium_chestplate=Titanium Chestplate
 item.utilitycraft:titanium_leggings=Titanium Leggings
@@ -139,7 +142,6 @@ item.utilitycraft:enchantability_module_5=§dEnchantability Module §r(Tier V)§
 item.utilitycraft:reinforcement_module=§dReinforcement Module §r(Tier I)§7\n- Enables armor reinforcement
 item.utilitycraft:reinforcement_module_2=§dReinforcement Module §r(Tier II)§7\n- Enhanced durability bonus
 item.utilitycraft:reinforcement_module_3=§dReinforcement Module §r(Tier III)§7\n- Maximum durability bonus
-item.utilitycraft:upgrade_package=§aUpgrade Package§7\n- Stores multiple upgrades\n- Mass apply to machines/conveyors
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aLucky Mesh\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
@@ -214,6 +216,7 @@ entity.utilitycraft:overclock_tower.name=§6Overclock Tower
 entity.utilitycraft:overclock_relay.name=§6Overclock Relay
 entity.utilitycraft:overclock_injector.name=§fOverclock Injector
 entity.utilitycraft:enchantment_station.name=§fEnchantment Station
+ui.utilitycraft:disenchantment_station.name=§fDisenchantment Section
 entity.utilitycraft:vaporworks_processor.name=§fVaporworks Processor
 
 ## UI Texts
@@ -221,6 +224,7 @@ at:itemGroup.name.machines=Machines §u(Ascendant Technology)
 at:itemGroup.name.capsules=Liquid Capsules §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armor §u(Ascendant Technology)
+at:itemGroup.name.materials_resources=Materials and Resources §u(Ascendant Technology)
 
 at:ui.h=H
 at:ui.l=L

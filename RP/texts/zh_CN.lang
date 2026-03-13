@@ -43,6 +43,7 @@ tile.utilitycraft:end_aetherium_ore.name=End Aetherium Ore
 
 ## 物品
 ### Aetherium
+item.utilitycraft:aetherium_dust=以太粉末
 item.utilitycraft:aetherium=以太锭
 item.utilitycraft:aetherium_shard=以太碎片
 item.utilitycraft:refined_aetherium_shard=Refined 以太碎片
@@ -63,6 +64,8 @@ item.utilitycraft:titanium=钛锭
 item.utilitycraft:raw_titanium=粗钛
 item.utilitycraft:titanium_nugget=钛粒
 item.utilitycraft:titanium_chunk=钛块
+item.utilitycraft:titanium_dust=钛粉
+item.utilitycraft:titanium_plate=钛板
 item.utilitycraft:titanium_helmet=钛 Helmet
 item.utilitycraft:titanium_chestplate=钛 Chestplate
 item.utilitycraft:titanium_leggings=钛 Leggings
@@ -89,7 +92,6 @@ item.utilitycraft:enchantability_module_5=§d附魔能力模块 §r(Tier V)§7\n
 item.utilitycraft:reinforcement_module=§d强化模块 §r(Tier I)§7\n- 解锁护甲强化
 item.utilitycraft:reinforcement_module_2=§d强化模块 §r(Tier II)§7\n- 提升耐久加成
 item.utilitycraft:reinforcement_module_3=§d强化模块 §r(Tier III)§7\n- 最大耐久加成
-item.utilitycraft:upgrade_package=§a升级包§7\n- 存储多个升级\n- 可批量应用到机器/传送带
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§a幸运网格\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
@@ -153,6 +155,7 @@ at:itemGroup.name.machines=机器 §u(Ascendant Technology)
 at:itemGroup.name.capsules=液体胶囊 §u(Ascendant Technology)
 at:itemGroup.name.experimental=实验性 §u(Ascendant Technology)
 at:itemGroup.name.armor=盔甲 §u(Ascendant Technology)
+at:itemGroup.name.materials_resources=材料与资源 §u(Ascendant Technology)
 
 at:ui.h=H
 at:ui.l=L

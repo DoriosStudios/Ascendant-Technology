@@ -96,7 +96,7 @@
 			{
 				"water_icon": {
 					"type": "image",
-					"texture": "textures/ui//at_icons/water_icon",
+					"texture": "textures/ui/at_icons/water_icon",
 					"offset": [-120, -12],
 					"size": [16, 16],
 					"anchor_from": "center",
@@ -138,7 +138,7 @@
 			{
 				"cryofluid_icon": {
 					"type": "image",
-					"texture": "textures/ui//at_icons/cryofluid_icon",
+					"texture": "textures/ui/at_icons/cryofluid_icon",
 					"size": [16, 16],
 					"anchor_from": "center",
 					"anchor_to": "center",
@@ -193,14 +193,8 @@
 				}
 			},
 			{
-				"screen": {
-					"type": "image",
-					"texture": "textures/ui/panels/half_long_panel_classic",
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"size": [90, 166],
-					"offset": [-138, -3],
-					"layer": 0
+				"panel": {
+					"$panel_color": "light_blue"a
 				}
 			},
 			{
@@ -336,7 +330,7 @@
 					"texture": "textures/ui/frozen_outline",
 					"anchor_from": "center",
 					"anchor_to": "center",
-					"offset": [-94, 64],
+					"offset": [-116, 42],
 					"size": [22, 22],
 					"$cell_image_size": [22, 22]
 				}
@@ -345,7 +339,7 @@
 				"lapis_input@common.container_item": {
 					"anchor_from": "center",
 					"anchor_to": "center",
-					"offset": [-94, 64],
+					"offset": [-116, 42],
 					"collection_index": 18
 				}
 			},

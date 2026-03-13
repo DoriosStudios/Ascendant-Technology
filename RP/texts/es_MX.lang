@@ -81,11 +81,14 @@ tile.utilitycraft:deepslate_titanium_ore.name=Mineral de Titanio de Pizarra Prof
 tile.utilitycraft:end_aetherium_ore.name=Mineral de Aetherium del End
 
 ## Ítems
+item.utilitycraft:aetherium_dust=Polvo de Aetherium
 item.utilitycraft:aetherium=Lingote de Aetherium
 item.utilitycraft:titanium=Lingote de Titanio
 item.utilitycraft:raw_titanium=Titanio en bruto
 item.utilitycraft:titanium_nugget=Pepita de Titanio
 item.utilitycraft:titanium_chunk=Pedazo de Titanio
+item.utilitycraft:titanium_dust=Polvo de Titanio
+item.utilitycraft:titanium_plate=Placa de Titanio
 item.utilitycraft:aetherium_helmet=Casco de Aetherium
 item.utilitycraft:aetherium_chestplate=Coraza de Aetherium
 item.utilitycraft:aetherium_leggings=Grebas de Aetherium
@@ -129,7 +132,6 @@ item.utilitycraft:enchantability_module_5=§dMódulo de Encantabilidad §r(Tier 
 item.utilitycraft:reinforcement_module=§dMódulo de Refuerzo §r(Tier I)§7\n- Desbloquea refuerzo de armadura
 item.utilitycraft:reinforcement_module_2=§dMódulo de Refuerzo §r(Tier II)§7\n- Bonificación de durabilidad mejorada
 item.utilitycraft:reinforcement_module_3=§dMódulo de Refuerzo §r(Tier III)§7\n- Bonificación de durabilidad máxima
-item.utilitycraft:upgrade_package=§aPaquete de Mejora§7\n- Almacena múltiples mejoras\n- Aplicar en masa a máquinas/transportadores
 
 ## Mallas y Redes
 item.utilitycraft:lucky_mesh=§aMalla de la Suerte\n§7- Nivel Máx: Diamante\n§7- Multiplicador de Ítems: 2x
@@ -211,6 +213,7 @@ at:itemGroup.name.machines=Máquinas (Ascendant Technology)
 at:itemGroup.name.capsules=Cápsulas de Líquidos (Ascendant Technology)
 at:itemGroup.name.experimental=Experimental
 at:itemGroup.name.armor=Armaduras (Ascendant Technology)
+at:itemGroup.name.materials_resources=Materiales y Recursos §u(Ascendant Technology)
 
 at:ui.h=A
 at:ui.l=L

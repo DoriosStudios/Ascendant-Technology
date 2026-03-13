@@ -27,13 +27,13 @@
       "scripts": {
         "animate": [
           {
-    		"walk": "query.is_moving && !query.has_target"
+		"walk": "query.modified_move_speed > 0.03"
           },
           {
-    		"mad": "query.has_target"
+		"mad": "query.has_target && (query.is_charged || query.modified_move_speed <= 0.03)"
           },
           {
-    		"idle": "!query.is_moving && !query.has_target"
+		"idle": "!query.has_target && query.modified_move_speed <= 0.03"
           }
         ]
       }

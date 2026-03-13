@@ -43,6 +43,7 @@ tile.utilitycraft:end_aetherium_ore.name=End Aetherium Ore
 
 ## アイテム
 ### Aetherium
+item.utilitycraft:aetherium_dust=エーテリウムの粉
 item.utilitycraft:aetherium=エーテリウムインゴット
 item.utilitycraft:aetherium_shard=エーテリウムシャード
 item.utilitycraft:refined_aetherium_shard=Refined エーテリウムシャード
@@ -63,6 +64,8 @@ item.utilitycraft:titanium=チタンインゴット
 item.utilitycraft:raw_titanium=粗チタン
 item.utilitycraft:titanium_nugget=チタンナゲット
 item.utilitycraft:titanium_chunk=チタンチャンク
+item.utilitycraft:titanium_dust=チタンの粉
+item.utilitycraft:titanium_plate=チタンプレート
 item.utilitycraft:titanium_helmet=チタン Helmet
 item.utilitycraft:titanium_chestplate=チタン Chestplate
 item.utilitycraft:titanium_leggings=チタン Leggings
@@ -89,7 +92,6 @@ item.utilitycraft:enchantability_module_5=§dエンチャント適性モジュ�
 item.utilitycraft:reinforcement_module=§d強化モジュール §r(Tier I)§7\n- 防具強化を解放
 item.utilitycraft:reinforcement_module_2=§d強化モジュール §r(Tier II)§7\n- 耐久ボーナスを強化
 item.utilitycraft:reinforcement_module_3=§d強化モジュール §r(Tier III)§7\n- 最大耐久ボーナス
-item.utilitycraft:upgrade_package=§aアップグレードパッケージ§7\n- 複数のアップグレードを保存\n- 機械/コンベアへ一括適用
 
 ## Meshes & Nets
 item.utilitycraft:lucky_mesh=§aラッキーメッシュ\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x
@@ -153,6 +155,7 @@ at:itemGroup.name.machines=機械 §u(Ascendant Technology)
 at:itemGroup.name.capsules=液体カプセル §u(Ascendant Technology)
 at:itemGroup.name.experimental=実験的 §u(Ascendant Technology)
 at:itemGroup.name.armor=防具 §u(Ascendant Technology)
+at:itemGroup.name.materials_resources=素材と資源 §u(Ascendant Technology)
 
 at:ui.h=H
 at:ui.l=L

@@ -17,21 +17,21 @@
           "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 28.65;"
         ],
         "animate": [
-          "move",
-          "look_at_target_default",
-          "bob",
-          "flame",
           {
-            "shoot": "query.is_charged && query.has_target"
+            "walk": "query.modified_move_speed > 0.03 && !query.is_charged"
+          },
+          {
+            "mad": "query.has_target && (query.is_charged || query.modified_move_speed <= 0.03)"
+          },
+          {
+            "idle": "!query.has_target && query.modified_move_speed <= 0.03"
           }
         ]
       },
       "animations": {
-        "look_at_target_default": "animation.humanoid.look_at_target.default",
-        "move": "animation.humanoid.move",
-        "bob": "animation.humanoid.bob",
-        "flame": "animation.utilitycraft_blastling.flame",
-        "shoot": "animation.utilitycraft_blastling.shoot"
+        "walk": "animation.utilitycraft_blastling.walk",
+        "idle": "animation.utilitycraft_blastling.idle",
+        "mad": "animation.utilitycraft_blastling.mad"
       },
       "render_controllers": [
         "controller.render.default"

@@ -30,10 +30,10 @@
             "attack": "query.property('utilitycraft:endersent_attack_state') > 0"
           },
           {
-            "walk": "query.property('utilitycraft:endersent_attack_state') == 0 && (query.has_target || query.is_moving)"
+            "walk": "query.property('utilitycraft:endersent_attack_state') == 0 && query.modified_move_speed > 0.03"
           },
           {
-            "idle": "!query.is_moving && !query.has_target && query.property('utilitycraft:endersent_attack_state') == 0"
+            "idle": "query.property('utilitycraft:endersent_attack_state') == 0 && query.modified_move_speed <= 0.03"
           }
         ]
       }

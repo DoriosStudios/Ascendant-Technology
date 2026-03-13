@@ -48,15 +48,17 @@
 					},
 					"arrow_effect": {}
 				},
-				"power": 1.2,
-				"gravity": 0.06,
+				"power": 1.45,
+				"gravity": 0.045,
 				"anchor": 2,
 				"offset": [
 					0,
-					0.85,
-					0
+					0.95,
+					0.2
 				],
-				"angle_offset": 8.0
+				"angle_offset": 2.0,
+				"uncertainty_base": 4,
+				"uncertainty_multiplier": 1.2
 			},
 			"minecraft:physics": {}
 		},
@@ -65,7 +67,7 @@
 				"sequence": [
 					{
 						"queue_command": {
-							"command": "effect @a[r=3] slowness 4 2 true"
+							"command": "effect @a[r=3] slowness 3 255 true"
 						}
 					}
 				],

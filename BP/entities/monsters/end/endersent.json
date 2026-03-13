@@ -452,9 +452,30 @@
 				}
 			},
 			"utilitycraft:update_phase_state": {
-				"set_property": {
-					"utilitycraft:endersent_phase_two": "q.health <= (q.max_health * 0.5)"
-				}
+				"sequence": [
+					{
+						"filters": {
+							"test": "actor_health",
+							"subject": "self",
+							"operator": "<=",
+							"value": 150
+						},
+						"set_property": {
+							"utilitycraft:endersent_phase_two": true
+						}
+					},
+					{
+						"filters": {
+							"test": "actor_health",
+							"subject": "self",
+							"operator": ">",
+							"value": 150
+						},
+						"set_property": {
+							"utilitycraft:endersent_phase_two": false
+						}
+					}
+				]
 			},
 			"utilitycraft:choose_attack": {
 				"sequence": [

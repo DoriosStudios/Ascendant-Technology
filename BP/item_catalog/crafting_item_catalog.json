@@ -115,6 +115,21 @@
                             "utilitycraft:milk_capsule_infinite",
                             "utilitycraft:xp_capsule_infinite"
                         ]
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:aetherium",
+                            "name": "at:itemGroup.name.materials_resources"
+                        },
+                        "items": [
+                            "utilitycraft:aetherium",
+                            "utilitycraft:aetherium_shard",
+                            "utilitycraft:refined_aetherium_shard",
+                            "utilitycraft:raw_titanium",
+
+                            "utilitycraft:titanium",
+                            "utilitycraft:titanium_nugget"
+                        ]
                     }
                 ]
             }

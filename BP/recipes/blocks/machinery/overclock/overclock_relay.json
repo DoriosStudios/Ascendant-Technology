@@ -10,7 +10,7 @@
         ],
         "key": {
             "S": { "item": "utilitycraft:reinforced_cable" },
-            "C": { "item": "utilitycraft:titanium" },
+            "C": { "item": "utilitycraft:titanium_plate" },
             "A": { "item": "utilitycraft:ultimate_chip" },
             "M": { "item": "utilitycraft:machine_case" }
         },

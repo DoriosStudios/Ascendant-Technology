@@ -5,6 +5,7 @@ For UI, read `.github/ui_instructions.md` for better understanding.
 For changelogs, read `../past_changelogs/changelog_format.md` for proper formatting.
   - After successfully implementing a feature or fix, update the changelog accordingly.
   - If a bug fix doesn't have an issue, it is a dev bug. Do not include it in the main "BUG FIXES" field.
+  - Always check for a release for the version you're working on. If there is none, do not create another version header in the changelog.
   
 Rules:
 - Every text for comments or variable names must be in English.

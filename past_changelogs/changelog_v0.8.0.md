@@ -153,10 +153,14 @@ Stability and correctness updates for the Overclock system, improved machine upg
 ### Core Utilities
 - Improved time/format helpers, numeric scaling, and fluid/energy parsing utilities.
 - Extended command helpers and block-lookup APIs used across scripts.
+- Added global item metadata utilities to machine helpers, including capture/apply flows for name tag, lore, can-place/can-destroy lists, enchantments, durability, lock mode, keep-on-death, and supported dynamic properties.
+- Upgraded global `addItemsToSlot` to support metadata-aware insertion/stacking with optional source-stack capture.
 - Updated the drop system to support `dropMode` (replace/supplement/vanilla) and broader tool tag matching.
 - Added non-cancel replacement support via `originalDropId` → `replaceDropId` for intrusive drop swaps that preserve vanilla break effects.
 - Added drop system XP delivery control (`xpMode`) with player, orb, auto, or disabled modes.
+- Added a centralized drop particle catalog in `BP/scripts/drops/particle_catalog.js` and exposed it through `drops.js` for easier reference and autocomplete (`DROPS_PARTICLES`).
 - Added a Dorios Excavate compatibility bridge that listens for `dorios:blockLoot` and `dorios:hammerBlock` ScriptEvents, using loot-table fallback when custom drops are not defined.
+- Extended Excavate bridge vanilla-drop handling with `excavateBridge.vanillaDropMode`, including a third mode (`break_then_regen_loot_table`) that breaks the block via command, intercepts newly spawned vanilla item entities, and regenerates output from `LootTableManager`.
 - Updated Titanium-related drops to use non-cancel swap logic for hammer and smelting-pickaxe outcomes, keeping break effects while replacing the raw drops.
 - Excavate bridge now favors swap-based drops first and falls back to `setblock ... destroy` when loot-table access is disabled.
 
@@ -203,6 +207,11 @@ Stability and correctness updates for the Overclock system, improved machine upg
 - Added `utilitycraft:debug_energy` ScriptEvent toggle to enable energy network debug logs (including `updatePipes` and rescan traces).
 
 ### Runtime Registration
+- Refactored machine-local defaults into local `config` objects (instead of `*_DEFAULT` naming) for the new machine helper pipeline.
+- Enchantment Station now uses a top-level `config` object and accepts overrides via `settings.machine.station` and `settings.machine.config.station`.
+- Added `machine.config` payloads in machine block JSONs (`duplicator` and `enchantment_station`) to align script/runtime configuration channels.
+- Migrated Insight injector runtime imports from legacy `AscendantMachinery/core.js` to `DoriosCore` exports and removed the obsolete legacy core file.
+- Moved deprecated Tabs Test Machine assets to `references/AT Deprecated` and removed runtime bootstrap import to keep production registration clean.
 - Fixed Enchantment Station slot mapping collision between disenchant processing and XP fluid-bar rendering.
   - XP tank tracking is now shown in status HUD text so disenchant outputs remain exclusive.
   - Disenchant source slot in the UI is now aligned with machine logic.

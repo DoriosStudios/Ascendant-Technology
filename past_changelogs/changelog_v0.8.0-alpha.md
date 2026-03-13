@@ -1,4 +1,33 @@
-# v0.8.0 Alpha Build 4 (Current)
+# v0.8.0 Alpha Build 5 (Current)
+## ITEMS
+### General
+- Added new resource items:
+  - Aetherium Dust
+  - Titanium Dust
+  - Titanium Plate
+- Added a new Materials and Resources item group for Ascendant Technology with localized names across supported languages.
+- The following items had their textures updated:
+  - Enchantment Module (All levels)
+  - Enderling Tear
+  - Pure Enderling Tear
+  - Reinforcement Module (All levels)
+  - Void Essence
+## RECIPES
+- Catalyst Weaver
+  - Added a new recipe for Void Essence. It uses an Empty Bottle, Crushed Endstone, and Dark Matter.
+- Residue Processor
+  - Added a new recipe: Podzol now processes into Bone Meal with a chance for Rotten Flesh.
+  - Added Rotten Flesh processing into Leather with a chance for Bone Meal.
+  - Removed the old recipe that generated Void Essence.
+## UI/UX
+- Restored Cryo Chamber classic UI.
+
+## BUG FIXES
+- Laser Barrier no longer leaves behind orphan blocks when size upgrades are removed.
+- Laser Barrier now properly clears light environment blocks (e.g., vegetation, snow) before projecting the wall, allowing it to form fully in natural terrain.
+- Fixed Laser Barrier orientation so that North/South placement projects the wall in the same direction as the machine front, while East/West behavior remains unchanged.
+
+# v0.8.0 Alpha Build 4
 
 ## BLOCKS
 ### Machines

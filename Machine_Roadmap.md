@@ -35,18 +35,16 @@ Status in title: **✔ Implemented** | **🔺 Not Implemented**
 | ✔ **Duplicator** | 🔺 **Complex Siever line** | — | ✔ **Overclock Tower** |
 | ✔ **Enchantment Station** | 🔺 **Dual Complex Siever** | — | ✔ **Reinforced Cable** |
 | ✔ **Energizer** | 🔺 **Genetic Seed Synthesizer** | — | 🔺 **Rift Anchor** |
-| 🔺 **Essence Collector** | — | — | — |
-| 🔺 **Fluid Crystallizer** | — | — | — |
-| ✔ **Laser Barrier** | 🔺 **Impact Crusher** | — | 🔺 **Tier 6 Dense Generators** |
-| ✔ **Liquifier (Flux Crucible)** | 🔺 **Induction Matrix Anvil** | — | — |
-| 🔺 **Mob Temporal Chamber** | 🔺 **Industrial Burner** | — | — |
-| 🔺 **Nitrogen Collector (Nytrogen Collector)** | 🔺 **Interdimensional Infuser** | — | — |
-| 🔺 **Orbital Command Terminal** | 🔺 **Magmatic Reactor Chamber** | — | — |
-| ✔ **Residue Processor** | 🔺 **Pattern Placer** | — | — |
-| ✔ **Singularity Fabricator** | 🔺 **Pulverizer** | — | — |
-| ✔ **Vaporworks Processor** | 🔺 **Quantum Digitizer** | — | — |
-| — | 🔺 **Seismic Breaker** | — | — |
-| — | 🔺 **Water Wheel** | — | — |
+| 🔺 **Essence Collector** | 🔺 **Impact Crusher** | — | 🔺 **Tier 6 Dense Generators** |
+| 🔺 **Fluid Crystallizer** | 🔺 **Induction Matrix Anvil** | — | — |
+| 🔺 **Interdimensional Infuser** | 🔺 **Industrial Burner** | — | — |
+| ✔ **Laser Barrier** | 🔺 **Magmatic Reactor Chamber** | — | — |
+| ✔ **Liquifier (Flux Crucible)** | 🔺 **Pattern Placer** | — | — |
+| 🔺 **Mob Temporal Chamber** | 🔺 **Pulverizer** | — | — |
+| 🔺 **Orbital Command Terminal** | 🔺 **Quantum Digitizer** | — | — |
+| ✔ **Residue Processor** | 🔺 **Seismic Breaker** | — | — |
+| ✔ **Singularity Fabricator** | — | — | — |
+| ✔ **Vaporworks Processor** | — | — | — |
 
 ---
 

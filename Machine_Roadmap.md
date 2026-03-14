@@ -29,7 +29,7 @@ Status in title: **✔ Implemented** | **🔺 Not Implemented**
 |---|---|---|---|
 | ✔ **Absolute Container** | 🔺 **Abyssal Auto-Fisher** | 🔺 **Item Energizer Pad** | 🔺 **Cryo Reservoir** |
 | 🔺 **Atmospheric Synchronizer** | 🔺 **Adaptive Assembler** | 🔺 **Portable Power Cell** | 🔺 **Dimensional Teleporter** |
-| ✔ **Catalyst Weaver** | 🔺 **Arc-Press Forge** | 🔺 **Tungsten Gear Program** | ✔ **Network Center** |
+| ✔ **Catalyst Weaver** | 🔺 **Arc-Press Forge** | 🔺 **The Ascendant's Tool** | ✔ **Network Center** |
 | 🔺 **Cold Fusion Reactor** | 🔺 **Centrifugal Siever** | — | ✔ **Overclock Boost Network** |
 | ✔ **Cryo Chamber** | 🔺 **Chrono Harvester** | — | ✔ **Overclock Relay** |
 | ✔ **Duplicator** | 🔺 **Complex Siever line** | — | ✔ **Overclock Tower** |
@@ -227,21 +227,43 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
     - Optional lava injection to increase burn/smelting volume per cycle.
   - **Practical Role:** High-volume trash-to-value and high-heat pre-processing block for late automation.
 
-- 🟡 **Nitrogen Collector (Nytrogen Collector)**
-  - **Description:** Passive atmospheric nitrogen collector.
+- 🟡 **The Ascendant's Tool**
+  - **Description:** The ultimate tool, merging every single tool on Minecraft into one. Cannot be compared to AIOTs, that are the combination of the five main tools. This tool combinates even shears and flint and steel, with every aspect of it configurable.
   - **Operating Mode:**
-    - Gains collection efficiency at higher Y-levels.
-    - Stores gas in an internal "vault".
-    - Compresses collected gas into liquid nitrogen over time.
-  - **Practical Role:** Sustainable input source for cooling-heavy machines and future chemical chains.
-
-- 🟡 **Tier 6 Generators: Dense**
-  - **Description:** Post-tier-5 generator architecture with massive scaling.
-  - **Multiplier Rules:**
-    - **Passive (Solar, Wind):** `16x` tier-5 generation.
-    - **Active (Furnator, Thermo):** `64x` tier-5 generation.
-    - **Magmator + Battery capacity:** `128x` tier-5 baseline.
-  - **Notes:** Must remain expensive and infrastructure-gated.
+    - Multiple tool functions in one item. These are:
+      - Pickaxe
+      - Axe
+      - Shovel
+      - Hoe
+      - Sword
+      - Shears
+      - Flint and Steel
+      - Blazing Pickaxe (UtilityCraft)
+      - Hammer (UtilityCraft)
+      - Knife (UtilityCraft)
+    - High durability and efficiency.
+    - Unique abilities (e.g., auto-smelt, silk touch toggle, area mining mode).
+  - **Configurable Traits:**
+    - Base tool mode:
+      - When using in Dirt, Grass, Podzol, Mycelium or Rooted Dirt:
+        - Shovel, Hoe or Tractor mode.
+      - When using in Stone variants:
+        - Pickaxe, Hammer or Blazing Pickaxe mode.
+      - When using in leaves:
+        - Hoe, Shears or Knife mode.
+      - When using in Ores:
+        - Pickaxe or Blazing Pickaxe mode.
+      - When using in Sand:
+        - Shovel, Hammer or Blazing Pickaxe mode.
+      - When using in Gravel:
+        - Shovel or Hammer mode.
+    - Ability toggles
+      - Auto-Smelt (on/off)
+      - Silk Touch (on/off)
+    - Efficiency settings
+      - 1x1 (Default): Haste effect with base Gold tool speed.
+      - 3x3: Base Gold speed.
+      - 5x5: Base Gold speed.
 
 ---
 

@@ -35,6 +35,8 @@ Status in title: **✔ Implemented** | **🔺 Not Implemented**
 | ✔ **Duplicator** | 🔺 **Complex Siever line** | — | ✔ **Overclock Tower** |
 | ✔ **Enchantment Station** | 🔺 **Dual Complex Siever** | — | ✔ **Reinforced Cable** |
 | ✔ **Energizer** | 🔺 **Genetic Seed Synthesizer** | — | 🔺 **Rift Anchor** |
+| 🔺 **Essence Collector** | — | — | — |
+| 🔺 **Fluid Crystallizer** | — | — | — |
 | ✔ **Laser Barrier** | 🔺 **Impact Crusher** | — | 🔺 **Tier 6 Dense Generators** |
 | ✔ **Liquifier (Flux Crucible)** | 🔺 **Induction Matrix Anvil** | — | — |
 | 🔺 **Mob Temporal Chamber** | 🔺 **Industrial Burner** | — | — |
@@ -194,9 +196,24 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
   - **Role:** Industrial thermal chamber for heat-intensive processes.
   - **System Hook:** Exposes process heat as reusable thermal output (not only energy).
 
+- 🟡 **Fluid Crystallizer**
+  - **Role:** Reverse fluid processing by converting stored liquids back into solid resources.
+  - **Operating Mode:** Tank-fed crystallization with continuous DE draw and recipe-defined cycle timing.
+  - **Example Paths:** `Lava -> Obsidian / Magma Block`, `Water -> Prismarine Shard`, `XP Fluid -> Bottle o' Enchanting`.
+  - **Value Hook:** Closes the fluid loop for high-volume liquid networks.
+
 - 🟡 **Abyssal Auto-Fisher** *(from `autofisher`)*
   - **Rule:** Environmental conditions affect loot tier.
   - **Modes:** `Expedition` (long cycle, higher loot) and `Mass` (short cycle, bulk output).
+
+## Mob and essence automation line
+
+- 🟡 **Essence Collector**
+  - **Role:** Late-game automation block for recovering mob essence near grinder setups.
+  - **Placement Rule:** Must be placed within active collection range of a Mob Grinder zone.
+  - **Balance Rules:** Netherite-tier crafting cost, slower than manual offhand collection, and requires DE to operate.
+  - **Automation Hooks:** Fills Essence Vessels over time and supports routing/filter behavior through existing Filter Upgrade flow.
+  - **Target Loop:** `Mechanical Spawner -> Mob Grinder -> Essence Collector -> Spawner`.
 
 ---
 
@@ -229,17 +246,6 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
 ---
 
 # Tungsten program (dense and heat-resistant)
-
-- 🟡 **Tungsten Armor Set**
-  - **Identity:** Dense, industrial, heat-resistant line.
-  - **Set Bonus:** Full set grants significant heat resistance.
-  - **Balance Directive:**
-    - Protection below Aetherium.
-    - Durability far above Aetherium.
-
-- 🟡 **Aetherium Armor Balance Adjustment**
-  - **Directive:** Increase total protection from `28` to `32`.
-  - **Per-piece Rule:** `+1 protection` each piece.
 
 - 🟡 **Tungsten Tools**
   - **Directive:** Tool damage equal to Netherite values.
@@ -292,7 +298,8 @@ Steam and cooling resources must be mechanically relevant, not cosmetic.
   - Expanded tank architecture + additional infusion stages for true late-game scaling.
   - Extreme energy + fluid logistics requirement.
 
-- 🟡 **Mob Temporal Chamber** *(Multiblock 5×5×5 core design)*
+- 🟡 **Mob Temporal Chamber**
+  - Multiblock.
   - Simulates mob kill/drop loops from essence and energy.
   - Includes XP fluid tank for enchant-oriented progression.
 
@@ -319,7 +326,7 @@ The following concepts were migrated and normalized into roadmap format.
   - **Purpose:** Massive stable power when thermals are controlled.
   - **Constraint:** Needs strict cooling and heat-feed balancing.
 
-- 🟡 **Liquid Nitrogen Program**
+- 🔴 **Liquid Nitrogen Program** *(Discontinued)*
   - **Purpose:** High-tier coolant chain for advanced systems.
   - **Pipeline:** Catalyst Weaver + Liquifier heavy-energy production path.
 

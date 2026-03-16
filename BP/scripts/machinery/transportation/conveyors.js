@@ -1833,31 +1833,38 @@ function openSorterMenu(player, block, meta) {
     const held = player.getComponent("equippable")?.getEquipment("Mainhand");
     const heldId = held?.typeId ?? "";
     const currentFilter = readSorterFilter(block);
-    const modeLabel = meta.shape === "inverted_sorter" ? "Inverted Sorter" : "Sorter";
+    const modeKey =
+        meta.shape === "inverted_sorter"
+            ? "ui.utilitycraft.conveyor.sorter.mode.inverted"
+            : "ui.utilitycraft.conveyor.sorter.mode.standard";
 
-    const bodyLines = [
-        `Mode: ${modeLabel}`,
-        `Current Filter: ${currentFilter ? formatItemLabel(currentFilter) : "None"}`
+    const bodyRawtext = [
+        tr("ui.utilitycraft.conveyor.sorter.mode_label", [tr(modeKey)]),
+        { text: "\n" },
+        tr("ui.utilitycraft.conveyor.sorter.current_filter", [
+            currentFilter ? formatItemLabel(currentFilter) : tr("ui.utilitycraft.conveyor.sorter.current_filter.none")
+        ])
     ];
 
     if (heldId) {
-        bodyLines.push(`Held Item: ${formatItemLabel(heldId)}`);
+        bodyRawtext.push({ text: "\n" });
+        bodyRawtext.push(tr("ui.utilitycraft.conveyor.sorter.held_item", [formatItemLabel(heldId)]));
     }
 
     const form = new ActionFormData()
-        .title("Conveyor Filter")
-        .body(bodyLines.join("\n"));
+        .title(tr("ui.utilitycraft.conveyor.sorter.title"))
+        .body({ rawtext: bodyRawtext });
 
     const actions = [];
     if (heldId) {
-        form.button(`Set filter to ${formatItemLabel(heldId)}`);
+        form.button(tr("ui.utilitycraft.conveyor.sorter.button.set_filter", [formatItemLabel(heldId)]));
         actions.push("set");
     }
     if (currentFilter) {
-        form.button("Clear filter");
+        form.button(tr("ui.utilitycraft.conveyor.sorter.button.clear_filter"));
         actions.push("clear");
     }
-    form.button("Close");
+    form.button(tr("ui.utilitycraft.conveyor.sorter.button.close"));
     actions.push("close");
 
     form.show(player).then(response => {
@@ -1867,13 +1874,15 @@ function openSorterMenu(player, block, meta) {
 
         if (action === "set" && heldId) {
             saveSorterFilter(block, heldId);
-            player.onScreenDisplay?.setActionBar(`§aFilter set to ${formatItemLabel(heldId)}`);
+            player.onScreenDisplay?.setActionBar(
+                tr("ui.utilitycraft.conveyor.sorter.filter_set", [formatItemLabel(heldId)])
+            );
             return;
         }
 
         if (action === "clear") {
             clearSorterFilter(block);
-            player.onScreenDisplay?.setActionBar("§eSorter filter cleared.");
+            player.onScreenDisplay?.setActionBar(tr("ui.utilitycraft.conveyor.sorter.filter_cleared"));
         }
     });
 }
@@ -2657,7 +2666,7 @@ DoriosAPI.register.blockComponent("conveyor", {
             if (e.player.isSneaking) {
                 system.run(() => {
                     clearSorterFilter(e.block);
-                    e.player.onScreenDisplay?.setActionBar("§eSorter filter cleared.");
+                    e.player.onScreenDisplay?.setActionBar(tr("ui.utilitycraft.conveyor.sorter.filter_cleared"));
                 });
                 return;
             }

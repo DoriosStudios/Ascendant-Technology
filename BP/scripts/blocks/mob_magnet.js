@@ -2,7 +2,7 @@ import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { system, world } from "@minecraft/server";
 
 const RANGE_LEVELS = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24];
-const COOLDOWN_OPTIONS = [5, 10, 15, 20, 30, 40];
+const COOLDOWN_OPTIONS = [0, 5, 10, 15, 20, 30, 40];
 
 const EXCLUDED_TYPES = [
 	"minecraft:player",
@@ -79,6 +79,20 @@ function normalizeCooldownGate(nextAllowed, now) {
 	return nextAllowed;
 }
 
+function isEntityStillValid(entity) {
+	if (!entity) return false;
+	const validity = entity.isValid;
+	if (typeof validity === "function") {
+		try {
+			return Boolean(validity.call(entity));
+		} catch {
+			return false;
+		}
+	}
+	if (typeof validity === "boolean") return validity;
+	return true;
+}
+
 
 DoriosAPI.register.blockComponent("mob_magnet", {
 	onTick({ block }) {
@@ -109,7 +123,7 @@ DoriosAPI.register.blockComponent("mob_magnet", {
 		const filteredEntities = applyEntityFilters(entities, filterConfig);
 
 		for (const entity of filteredEntities) {
-			if (!entity?.isValid) continue;
+			if (!isEntityStillValid(entity)) continue;
 			if (entity.hasTag(IMMUNE_TAG)) continue;
 
 			let nextAllowed = Number(entity.getDynamicProperty(MAGNET_COOLDOWN_PROP)) || 0;
@@ -173,7 +187,7 @@ function openSettingsMenu(player, block, magnetId, returnToMenu) {
 		.title(tr("ui.utilitycraft.mob_magnet.settings.title"))
 		.body(tr("ui.utilitycraft.mob_magnet.settings.body"))
 		.button(tr(toggleKey))
-		.button(tr("ui.utilitycraft.mob_magnet.settings.button.range", [rangeValue, rangeSelected]))
+		.button(tr("ui.utilitycraft.mob_magnet.settings.button.range", [rangeValue, rangeSelected + 1]))
 		.button(tr("ui.utilitycraft.mob_magnet.settings.button.cooldown", [cooldownTicks]));
 
 	const actions = ["toggle", "range", "cooldown"];

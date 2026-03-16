@@ -5,6 +5,17 @@ import { FluidManager, GasManager } from "./fluidStorage.js";
 import { Machine, updatePipes, applyLabelToSlot, applyLabels } from "./machine.js";
 import { getTickSpeed } from "./machine.js";
 
+const normalizeRawMessageArg = value => {
+    if (value === undefined || value === null) return "";
+    if (typeof value === "object") return value;
+    return String(value);
+};
+
+const tr = (key, withArgs = []) => ({
+    translate: key,
+    with: withArgs.map(normalizeRawMessageArg)
+});
+
 /**
  * Generator class for energy-producing blocks.
  */
@@ -237,22 +248,31 @@ export class Generator {
         if (!entity || !player) return;
 
         const mode = entity.getDynamicProperty('transferMode') ?? 'nearest';
-        const modes = ['Nearest', 'Farthest', 'Round'];
-        const currentIndex = modes.findIndex(m => m.toLowerCase() === mode);
+        const modeOptions = [
+            { key: 'nearest', label: tr('ui.utilitycraft.generator.transfer.mode.nearest') },
+            { key: 'farthest', label: tr('ui.utilitycraft.generator.transfer.mode.farthest') },
+            { key: 'round', label: tr('ui.utilitycraft.generator.transfer.mode.round') }
+        ];
+        const currentIndex = modeOptions.findIndex(option => option.key === mode);
         const defaultIndex = currentIndex >= 0 ? currentIndex : 0;
 
         const modal = new ModalFormData()
-            .title('Generator Transfer Mode')
-            .dropdown('Select how this generator distributes its output:', modes, { defaultValueIndex: defaultIndex });
+            .title(tr('ui.utilitycraft.generator.transfer.title'))
+            .dropdown(
+                tr('ui.utilitycraft.generator.transfer.body'),
+                modeOptions.map(option => option.label),
+                { defaultValueIndex: defaultIndex }
+            );
 
         modal.show(player).then(result => {
             if (result.canceled) return;
 
             const [selection] = result.formValues;
-            const newMode = modes[selection]?.toLowerCase() ?? 'nearest';
+            const newMode = modeOptions[selection]?.key ?? 'nearest';
+            const modeLabel = modeOptions.find(option => option.key === newMode)?.label ?? modeOptions[0].label;
 
             entity.setDynamicProperty('transferMode', newMode);
-            player.onScreenDisplay.setActionBar(`§7Transfer mode set to: §e${DoriosAPI.utils.capitalizeFirst(newMode)}`);
+            player.onScreenDisplay.setActionBar(tr('ui.utilitycraft.generator.transfer.set', [modeLabel]));
         });
     }
 

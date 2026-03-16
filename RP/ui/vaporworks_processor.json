@@ -13,7 +13,7 @@
                 "chest_label@chest.chest_label": { 
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [62, -58]
+                    "offset": [48, -52]
                 }
             },
             {
@@ -66,22 +66,13 @@
                 }
             },
             {
-                "item_label@machineryCommon.item_label": {
-                    "collection_index": 1,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "$text_scale": 0.55,
-                    "offset": [-60, 38],
-                    "size": [96, 90],
-                    "layer": 4
-                }
-            },
-            {
                 "info_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [-70, 28],
-                    "$panel_color": "orange"
+                    "$panel_color": "orange",
+                    "$has_text": true,
+                    "$text_borders": [72, 150]
                 }
             },
             {

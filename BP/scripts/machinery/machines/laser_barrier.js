@@ -54,6 +54,17 @@ const DP_HEI = 'laser:hei'
 const DP_LAST_SPAN = 'laser:last_span'
 const DP_REFRESH_CD = 'laser:refresh_cd'
 
+const normalizeRawMessageArg = value => {
+    if (value === undefined || value === null) return ''
+    if (typeof value === 'object') return value
+    return String(value)
+}
+
+const tr = (key, withArgs = []) => ({
+    translate: key,
+    with: withArgs.map(normalizeRawMessageArg)
+})
+
 /*
 Slots (inventory_size: 7)
 - [4] Upgrade de comprimento (size_upgrade) — aumenta o comprimento da barreira.
@@ -485,7 +496,7 @@ function tryApplyUpgrade(machine, player) {
 
     const current = container.getItem(targetSlot)
     if (current && current.typeId !== held.typeId) {
-        player.sendMessage('§cSlot já ocupado por outro tipo de melhoria.')
+        player.sendMessage(tr('ui.utilitycraft.laser_barrier.upgrade.slot_occupied'))
         return true
     }
 
@@ -509,7 +520,7 @@ function tryApplyUpgrade(machine, player) {
         playerInv.setItem(handSlot, undefined)
     }
 
-    player.sendMessage('§aMelhoria instalada.')
+    player.sendMessage(tr('ui.utilitycraft.laser_barrier.upgrade.installed'))
     return true
 }
 

@@ -1,0 +1,28 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_conveyor_declined"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "A  ",
+            "CA ",
+            "BCA"
+        ],
+        "key": {
+            "A": { "item": "utilitycraft:aetherium" },
+            "B": { "item": "minecraft:redstone" },
+            "C": { "item": "utilitycraft:energized_iron_dust" }
+        },
+        "result": {
+            "item": "utilitycraft:aetherium_conveyor_declined",
+            "count": 1
+        },
+        "unlock": [
+            { "item": "utilitycraft:aetherium" }
+        ]
+    }
+}

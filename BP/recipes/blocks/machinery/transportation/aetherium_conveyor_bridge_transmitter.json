@@ -1,0 +1,28 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_conveyor_bridge_transmitter"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "ADA",
+            "DBD",
+            "ADA"
+        ],
+        "key": {
+            "A": { "item": "utilitycraft:aetherium" },
+            "B": { "item": "minecraft:redstone" },
+            "D": { "item": "minecraft:redstone_block" }
+        },
+        "result": {
+            "item": "utilitycraft:aetherium_conveyor_bridge_transmitter",
+            "count": 1
+        },
+        "unlock": [
+            { "item": "utilitycraft:aetherium" }
+        ]
+    }
+}

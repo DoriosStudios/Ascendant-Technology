@@ -1,0 +1,28 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:titanium_conveyor_vertical"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            " AB",
+            " AC",
+            " AB"
+        ],
+        "key": {
+            "A": { "item": "utilitycraft:titanium" },
+            "B": { "item": "minecraft:redstone" },
+            "C": { "item": "utilitycraft:energized_iron_dust" }
+        },
+        "result": {
+            "item": "utilitycraft:titanium_conveyor_vertical",
+            "count": 1
+        },
+        "unlock": [
+            { "item": "utilitycraft:titanium" }
+        ]
+    }
+}

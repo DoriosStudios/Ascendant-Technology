@@ -19,7 +19,7 @@
         },
         "result": {
             "item": "utilitycraft:titanium_conveyor_inclined",
-            "count": 1
+            "count": 16
         },
         "unlock": [
             { "item": "utilitycraft:titanium" }

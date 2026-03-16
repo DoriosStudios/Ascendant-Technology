@@ -32,7 +32,7 @@
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_1",
+					"texture": "utilitycraft_router",
 					"render_method": "alpha_test"
 				}
 			},

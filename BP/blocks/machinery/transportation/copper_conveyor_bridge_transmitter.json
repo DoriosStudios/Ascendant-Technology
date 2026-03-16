@@ -30,10 +30,10 @@
 				"ips": 5,
 				"bridge_range": 8
 			},
-			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
+			"minecraft:geometry": "geometry.utilitycraft_conveyor_bridge_controller",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_copper",
+					"texture": "utilitycraft_copper_bridge_controller",
 					"render_method": "alpha_test"
 				}
 			},
@@ -43,7 +43,7 @@
 			},
 			"minecraft:selection_box": {
 				"origin": [-8, 0, -8],
-				"size": [16, 3, 16]
+				"size": [16, 16, 16]
 			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 0.4

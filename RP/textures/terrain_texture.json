@@ -133,9 +133,42 @@
 		"utilitycraft_item_conduit": {
 			"textures": "textures/blocks/pipes/flat_conduit"
 		},
+		// Special Conveyors: Router, Smart Router, Sorter, Junction, Inverted Sorter, Underflow Conveyor, Overflow Conveyor
 		"utilitycraft_conveyor_1": {
 			"textures": "textures/blocks/transportation/conveyor_1"
 		},
+		"utilitycraft_router": {
+			"textures": "textures/blocks/transportation/router"
+		},
+		"utilitycraft_smart_router": {
+			"textures": "textures/blocks/transportation/smart_router"
+		},
+		"utilitycraft_sorter": {
+			"textures": "textures/blocks/transportation/sorter"
+		},
+		"utilitycraft_inverted_sorter": {
+			"textures": "textures/blocks/transportation/inverted_sorter"
+		},
+		"utilitycraft_junction": {
+			"textures": "textures/blocks/transportation/junction"
+		},
+		"utilitycraft_underflow_conveyor": {
+			"textures": "textures/blocks/transportation/underflow_conveyor"
+		},
+		"utilitycraft_overflow_conveyor": {
+			"textures": "textures/blocks/transportation/overflow_conveyor"
+		},
+		// Conveyor Bridges
+		"utilitycraft_copper_bridge_controller": {
+			"textures": "textures/blocks/transportation/conveyor_copper_bridge"
+		},
+		"utilitycraft_titanium_bridge_controller": {
+			"textures": "textures/blocks/transportation/conveyor_titanium_bridge"
+		},
+		"utilitycraft_aetherium_bridge_controller": {
+			"textures": "textures/blocks/transportation/conveyor_aetherium_bridge"
+		},
+		// Regular Conveyors: Plain and Inclined | Copper, Titanium and Aetherium
 		"utilitycraft_conveyor_copper": {
 			"textures": "textures/blocks/transportation/conveyor_copper"
 		},

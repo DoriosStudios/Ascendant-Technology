@@ -27,12 +27,12 @@
 			"utilitycraft:conveyor": {
 				"tier": "universal",
 				"shape": "sorter",
-				"ips": 5
+				"ips": 20
 			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_conveyor_1",
+					"texture": "utilitycraft_sorter",
 					"render_method": "alpha_test"
 				}
 			},

@@ -18,7 +18,7 @@
         },
         "result": {
             "item": "utilitycraft:aetherium_conveyor_horizontal",
-            "count": 1
+            "count": 16
         },
         "unlock": [
             { "item": "utilitycraft:aetherium" }

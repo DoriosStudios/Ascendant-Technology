@@ -18,7 +18,7 @@
         },
         "result": {
             "item": "utilitycraft:copper_conveyor_horizontal",
-            "count": 1
+            "count": 16
         },
         "unlock": [
             { "item": "minecraft:copper_ingot" }

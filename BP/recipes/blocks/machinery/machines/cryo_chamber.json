@@ -13,12 +13,12 @@
             "SAS"
         ],
         "key": {
-            "I": { "item": "minecraft:blue_ice" },
+            "I": { "item": "minecraft:packed_ice" },
             "B": { "item": "utilitycraft:ultimate_chip" },
             "M": { "item": "utilitycraft:advanced_fluid_tank" },
             "C": { "item": "utilitycraft:machine_case" },
             "S": { "item": "utilitycraft:compressed_steel_block" },
-            "A": { "item": "utilitycraft:aetherium_block" }
+            "A": { "item": "utilitycraft:titanium_block" }
         },
         "result": {
             "item": "utilitycraft:cryo_chamber",

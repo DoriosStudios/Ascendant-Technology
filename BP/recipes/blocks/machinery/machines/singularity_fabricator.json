@@ -8,24 +8,29 @@
             "utilitycraft_workbench"
         ],
         "pattern": [
-            "NBN",
+            "UBU",
             "CLC",
-            "UWU"
+            "NWN"
         ],
         "key": {
             "N": { "item": "minecraft:netherite_block" },
             "B": { "item": "minecraft:beacon" },
-            "C": { "item": "utilitycraft:cryo_chamber" },
-            "L": { "item": "utilitycraft:liquifier" },
-            "U": { "item": "utilitycraft:ultimate_chip" },
-            "W": { "item": "utilitycraft:catalyst_weaver" }
+            "C": { "item": "utilitycraft:compressed_redstone_block_4" },
+            "L": { "item": "utilitycraft:duplicator" },
+            "U": { "item": "utilitycraft:aetherium" },
+            "W": { "item": "utilitycraft:ultimate_tank" }
         },
         "result": {
             "item": "utilitycraft:singularity_fabricator",
             "count": 1
         },
         "unlock": [
-            { "item": "minecraft:beacon" }
+            { "item": "minecraft:beacon" },
+            { "item": "utilitycraft:duplicator" },
+            { "item": "utilitycraft:ultimate_tank" },
+            { "item": "utilitycraft:aetherium" },
+            { "item": "minecraft:netherite_block" },
+            { "item": "utilitycraft:compressed_redstone_block_4" }
         ]
     }
 }

@@ -1,0 +1,48 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:enchantment_station"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "SNS",
+            "GEG",
+            "DAD"
+        ],
+        "key": {
+            "S":{
+                "item": "minecraft:echo_shard"
+            },
+            "N":{
+                "item": "minecraft:nether_star"
+            },
+            "G":{
+                "item": "utilitycraft:compressed_gold_block"
+            },
+            "E":{
+                "item": "minecraft:enchanting_table"
+            },
+            "D":{
+                "item": "utilitycraft:compressed_diamond_block"
+            },
+            "A":{
+                "item": "utilitycraft:aetherium_block"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:enchantment_station",
+            "count": 1
+        },
+        "unlock": [
+            { "item": "minecraft:enchanting_table" },
+            { "item": "utilitycraft:aetherium_block" },
+            { "item": "utilitycraft:compressed_diamond_block" },
+            { "item": "utilitycraft:compressed_gold_block" },
+            { "item": "minecraft:nether_star" },
+            { "item": "minecraft:echo_shard" }
+        ]
+    }
+}

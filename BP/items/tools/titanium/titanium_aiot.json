@@ -9,12 +9,12 @@
             }
         },
         "components": {
-            "utilitycraft:hoe": {
+            "utilitycraft:at_hoe": {
                 "size": 1,
                 "runTractor": true,
                 "sneakingMode": false
             },
-            "utilitycraft:shovel": {
+            "utilitycraft:at_shovel": {
                 "size": 1,
                 "sneakingMode": true
             },
@@ -22,8 +22,6 @@
                 "tags": [
                     "minecraft:is_pickaxe",
                     "minecraft:is_axe",
-                    "minecraft:is_shovel",
-                    "minecraft:is_hoe",
                     "minecraft:is_sword",
                     "minecraft:is_tool",
                     "utilitycraft:is_aiot"
@@ -44,14 +42,22 @@
                 "use_efficiency": true,
                 "destroy_speeds": [
                     {
-                        "speed": 12,
+                        "speed": 22,
                         "block": {
                             "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible', 'minecraft:is_shovel_item_destructible', 'minecraft:is_axe_item_destructible', 'minecraft:is_hoe_item_destructible')"
                         }
                     },
                     {
-                        "speed": 12,
+                        "speed": 30,
                         "block": "minecraft:web"
+                    },
+                    {
+                        "block": "minecraft:bamboo",
+                        "speed": 30
+                    },
+                    {
+                        "block": "minecraft:honeycomb_block",
+                        "speed": 30
                     }
                 ]
             }

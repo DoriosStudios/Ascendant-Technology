@@ -4,8 +4,7 @@
 		"description": {
 			"identifier": "utilitycraft:overclock_relay",
 			"menu_category": {
-				"category": "construction",
-				"group": "dorios:itemGroup.name.machines"
+				"category": "construction"
 			},
 			"states": {
 				"utilitycraft:on": [false, true],

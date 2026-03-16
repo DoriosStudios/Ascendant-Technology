@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.80",
+    "format_version": "1.21.90",
     "minecraft:item": {
         "description": {
             "identifier": "utilitycraft:titanium_sword",
@@ -18,6 +18,7 @@
             },
             "minecraft:max_stack_size": 1,
             "minecraft:hand_equipped": true,
+            "minecraft:can_destroy_in_creative": false,
             "minecraft:durability": {
                 "max_durability": 1561
             },
@@ -25,6 +26,22 @@
             "minecraft:enchantable": {
                 "value": 20,
                 "slot": "sword"
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["utilitycraft:titanium"],
+                        "repair_amount": "(q.max_durability * 0.25)"
+                    },
+                    {
+                        "items": ["utilitycraft:titanium_plate"],
+                        "repair_amount": "(q.max_durability * 0.33)"
+                    },
+                    {
+                        "items": ["utilitycraft:titanium_sword"],
+                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2)"
+                    }
+                ]
             },
             "minecraft:digger": {
                 "use_efficiency": true,

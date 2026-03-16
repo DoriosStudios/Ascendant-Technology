@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.80",
+    "format_version": "1.21.90",
     "minecraft:item": {
         "description": {
             "identifier": "utilitycraft:aetherium_hammer",
@@ -39,16 +39,16 @@
             "minecraft:repairable": {
                 "repair_items": [
                     {
-                        "items": [
-                            "utilitycraft:aetherium"
-                        ],
-                        "repair_amount": 1199
+                        "items": ["utilitycraft:aetherium_shard"],
+                        "repair_amount": "(q.max_durability * 0.25)"
                     },
                     {
-                        "items": [
-                            "utilitycraft:aetherium_hammer"
-                        ],
-                        "repair_amount": 3579
+                        "items": ["utilitycraft:aetherium"],
+                        "repair_amount": "(q.max_durability * 0.333)"
+                    },
+                    {
+                        "items": ["utilitycraft:aetherium_hammer"],
+                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2)"
                     }
                 ]
             },

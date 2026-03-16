@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.80",
+    "format_version": "1.21.90",
     "minecraft:item": {
         "description": {
             "identifier": "utilitycraft:aetherium_aiot",
@@ -9,12 +9,12 @@
             }
         },
         "components": {
-            "utilitycraft:at_hoe": {
+            "utilitycraft:hoe": {
                 "size": 3,
                 "runTractor": true,
                 "sneakingMode": false
             },
-            "utilitycraft:at_shovel": {
+            "utilitycraft:shovel": {
                 "size": 3,
                 "sneakingMode": true
             },
@@ -23,8 +23,6 @@
                     "minecraft:is_pickaxe",
                     "minecraft:is_axe",
                     "minecraft:is_sword",
-                    "minecraft:is_hoe",
-                    "minecraft:is_shovel",
                     "minecraft:is_tool",
                     "utilitycraft:is_aiot",
                     "minecraft:netherite_tier",
@@ -44,6 +42,22 @@
             "minecraft:enchantable": {
                 "value": 40,
                 "slot": "all"
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["utilitycraft:aetherium_shard"],
+                        "repair_amount": "(q.max_durability * 0.25)"
+                    },
+                    {
+                        "items": ["utilitycraft:aetherium"],
+                        "repair_amount": "(q.max_durability * 0.333)"
+                    },
+                    {
+                        "items": ["utilitycraft:aetherium_aiot"],
+                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2)"
+                    }
+                ]
             },
             "minecraft:digger": {
                 "use_efficiency": true,

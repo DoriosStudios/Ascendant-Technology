@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.80",
+    "format_version": "1.21.90",
     "minecraft:item": {
         "description": {
             "identifier": "utilitycraft:titanium_pickaxe",
@@ -25,6 +25,22 @@
             "minecraft:enchantable": {
                 "value": 20,
                 "slot": "pickaxe"
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["utilitycraft:titanium"],
+                        "repair_amount": "(q.max_durability * 0.25)"
+                    },
+                    {
+                        "items": ["utilitycraft:titanium_plate"],
+                        "repair_amount": "(q.max_durability * 0.33)"
+                    },
+                    {
+                        "items": ["utilitycraft:titanium_pickaxe"],
+                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2)"
+                    }
+                ]
             },
             "minecraft:digger": {
                 "use_efficiency": true,

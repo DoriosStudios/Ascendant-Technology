@@ -14,6 +14,7 @@
                             "utilitycraft:catalyst_weaver", 
                             "utilitycraft:cryo_chamber",
                             "utilitycraft:duplicator",
+                            "utilitycraft:enchantment_station",
                             "utilitycraft:energizer",
                             "utilitycraft:laser_barrier",
                             "utilitycraft:liquifier",
@@ -22,15 +23,9 @@
                             "utilitycraft:overclock_tower",
                             "utilitycraft:overclock_relay",
                             "utilitycraft:residue_processor",
-                            "utilitycraft:singularity_fabricator"
+                            "utilitycraft:singularity_fabricator",
+                            "utilitycraft:vaporworks_processor"
                         ]
-                    },
-                    {
-                        "group_identifier": {
-                            "icon": "minecraft:command_block",
-                            "name": "at:itemGroup.name.experimental"
-                        },
-                        "items": ["utilitycraft:reinforced_extractor"]
                     },
                     {
                         "group_identifier": {
@@ -42,7 +37,9 @@
                             "utilitycraft:conveyor_network_updater",
                             "utilitycraft:conveyor_overflow",
                             "utilitycraft:conveyor_router",
+                            "utilitycraft:conveyor_sorter",
                             "utilitycraft:conveyor_smart_router",
+                            "utilitycraft:conveyor_inverted_sorter",
                             "utilitycraft:conveyor_underflow",
                             "utilitycraft:aetherium_conveyor_bridge_receiver",
                             "utilitycraft:aetherium_conveyor_bridge_transmitter",
@@ -75,6 +72,30 @@
                         },
                         "items": [
                             "utilitycraft:empty_liquid_capsule",
+                            "utilitycraft:water_capsule_1",
+                            "utilitycraft:water_capsule_2",
+                            "utilitycraft:water_capsule_3",
+                            "utilitycraft:water_capsule_4",
+                            "utilitycraft:water_capsule_5",
+                            "utilitycraft:water_capsule_6",
+                            "utilitycraft:water_capsule_7",
+                            "utilitycraft:water_capsule_8",
+                            "utilitycraft:lava_capsule_1",
+                            "utilitycraft:lava_capsule_2",
+                            "utilitycraft:lava_capsule_3",
+                            "utilitycraft:lava_capsule_4",
+                            "utilitycraft:lava_capsule_5",
+                            "utilitycraft:lava_capsule_6",
+                            "utilitycraft:lava_capsule_7",
+                            "utilitycraft:lava_capsule_8",
+                            "utilitycraft:xp_capsule_1",
+                            "utilitycraft:xp_capsule_2",
+                            "utilitycraft:xp_capsule_3",
+                            "utilitycraft:xp_capsule_4",
+                            "utilitycraft:xp_capsule_5",
+                            "utilitycraft:xp_capsule_6",
+                            "utilitycraft:xp_capsule_7",
+                            "utilitycraft:xp_capsule_8",
                             "utilitycraft:cryofluid_capsule_1",
                             "utilitycraft:cryofluid_capsule_2",
                             "utilitycraft:cryofluid_capsule_3",

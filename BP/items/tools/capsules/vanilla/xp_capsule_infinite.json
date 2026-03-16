@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.80",
+  "format_version": "1.21.90",
   "minecraft:item": {
     "description": {
       "identifier": "utilitycraft:xp_capsule_infinite",

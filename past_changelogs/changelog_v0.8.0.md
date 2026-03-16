@@ -104,9 +104,16 @@ Stability and correctness updates for the Overclock system, improved machine upg
 ## UI/UX
 - Expanded localization coverage from 3 to 8 languages (`en_US`, `pt_BR`, `es_MX`, `fr_FR`, `de_DE`, `ru_RU`, `ja_JP`, `zh_CN`).
 - Reviewed and aligned translation formatting/parity across existing languages (`en_US`, `pt_BR`, `es_MX`), including capsule formatting and missing UI/block entries.
-- Fixed Mob Magnet value placeholders so subtitles render correctly in all languages.
+- Updated Mob Magnet and Smart Router value placeholders to JSON-style `%` variables so dynamic text renders correctly in all supported languages.
+- Added Smart Router localization coverage (menu text, assignment actions, and status messages) across all supported languages.
+- Added localization coverage for Sorter Conveyor UI/actions (mode, filter labels, set/clear actions, and close button) across all supported languages.
+- Localized Generator transfer mode selection text and Laser Barrier upgrade feedback messages across all supported languages.
+- Added missing bridge obstruction message and Enchantment Station entity name mapping in non-English locales to prevent raw key text in UI and labels.
+- Replaced hardcoded Cryo Chamber freezer title text with localized key mapping.
 - Fixed panel textures and background sizing for new panels.
 - Moved Mob Magnet filter controls into the main settings panel and stabilized filter mode labels.
+- Added missing Mob Magnet localization coverage for the new settings buttons and filter mode variants across all supported languages.
+- Added missing item-group localization entries for Conveyors and Mob Grinding to avoid raw key text in category labels.
 - Updated Cryo Chamber UI layout and improved several machine panels.
 - Updated machine UI accents to match the refreshed texture set.
 - Updated Mob Magnet settings to use button-based controls with inline value subtitles.
@@ -195,6 +202,7 @@ Stability and correctness updates for the Overclock system, improved machine upg
 - Added nine-slice JSON definitions for all cell textures (`{color}_cell_image.json`), enabling proper scaling and rendering.
 - Extended `ascendant_common.slot_base` with panel-style slot surfaces, allowing dark/custom-colored slots with configurable texture and alpha.
 - Added fixed-image slot variants for all 16 colors (`slot_white`, `slot_light_gray`, `slot_gray`, `slot_black`, `slot_brown`, `slot_red`, `slot_orange`, `slot_yellow`, `slot_lime`, `slot_green`, `slot_cyan`, `slot_light_blue`, `slot_blue`, `slot_purple`, `slot_magenta`, `slot_pink`) plus `slot_dark`, mapping directly to cell textures for parameter-free slot styling.
+- Aligned Cryo Chamber UI slot bindings with runtime script indices, including explicit hidden guide-slot reservation (`25`) and clearer stabilizer input slot naming (`3`).
 
 ### Overclock & Energy Network
 - Tower charging is now gated by the TOWER_NEED_PROP constant (`dorios:oc_energy_need`); overclock relays and reinforced cables only push charge when the recipient's stored energy is below the declared need.
@@ -223,8 +231,11 @@ Stability and correctness updates for the Overclock system, improved machine upg
 - Fixed Ascane Engine XP tracking so it no longer occupies disenchant output slots.
 - Machine spawns now honor `entity.identifier` from machine definitions; Cryo Chamber is the first machine explicitly migrated.
 - Removed the UtilityCraft-only `fluid_container` script from the expansion pack.
+- Mob Magnet now validates entities safely across API variants and defaults to a stronger baseline pull cadence (0-tick cooldown option available by default).
+- Mob Magnet range level display in the settings menu is now shown as 1-based levels for clearer player-facing values.
 - Fixed Vaporworks Processor tanks sometimes initializing incorrectly.
 - Fixed Vaporworks Processor failing to load in some cases.
+- Normalized Vaporworks Processor crafting recipe key descriptors to object form to prevent load-time unknown ingredient parsing.
 - Fixed a generator destruction crash caused by a duplicate `gas` declaration in `BP/scripts/machinery/AscendantMachinery/core.js`.
 - Fixed startup errors caused by duplicate custom component registrations (`utilitycraft:thermo_generator`, `utilitycraft:solar_panel`, `utilitycraft:fluid_container`) in the expansion pack.
 

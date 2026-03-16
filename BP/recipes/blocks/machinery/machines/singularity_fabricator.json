@@ -18,7 +18,7 @@
             "C": { "item": "utilitycraft:compressed_redstone_block_4" },
             "L": { "item": "utilitycraft:duplicator" },
             "U": { "item": "utilitycraft:aetherium" },
-            "W": { "item": "utilitycraft:ultimate_tank" }
+            "W": { "item": "utilitycraft:ultimate_fluid_tank" }
         },
         "result": {
             "item": "utilitycraft:singularity_fabricator",
@@ -27,7 +27,7 @@
         "unlock": [
             { "item": "minecraft:beacon" },
             { "item": "utilitycraft:duplicator" },
-            { "item": "utilitycraft:ultimate_tank" },
+            { "item": "utilitycraft:ultimate_fluid_tank" },
             { "item": "utilitycraft:aetherium" },
             { "item": "minecraft:netherite_block" },
             { "item": "utilitycraft:compressed_redstone_block_4" }

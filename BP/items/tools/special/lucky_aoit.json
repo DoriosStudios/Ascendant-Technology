@@ -21,8 +21,6 @@
 				"tags": [
 					"minecraft:is_axe",
 					"minecraft:is_pickaxe",
-					"minecraft:is_shovel",
-					"minecraft:is_hoe",
 					"minecraft:is_sword",
 					"minecraft:is_tool",
 					"utilitycraft:is_aiot",
@@ -71,6 +69,14 @@
 					{
 						"speed": 30,
 						"block": "minecraft:web"
+					},
+					{
+						"block": "minecraft:bamboo",
+						"speed": 30
+					},
+					{
+						"block": "minecraft:honeycomb_block",
+						"speed": 30
 					}
 				]
 			}

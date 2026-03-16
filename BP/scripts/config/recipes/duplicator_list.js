@@ -18,7 +18,9 @@ const ASCENDANT_BLOCK_RARITIES = Object.freeze({
     "utilitycraft:conveyor_overflow": "uncommon",
     "utilitycraft:conveyor_underflow": "uncommon",
     "utilitycraft:conveyor_router": "rare",
+    "utilitycraft:conveyor_sorter": "rare",
     "utilitycraft:conveyor_smart_router": "rare",
+    "utilitycraft:conveyor_inverted_sorter": "rare",
     "utilitycraft:conveyor_bridge_path": "uncommon",
 
     "utilitycraft:copper_conveyor_horizontal": "uncommon",

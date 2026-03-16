@@ -88,6 +88,7 @@ const BRIDGE_CLEARABLE_SUFFIXES = ["_sapling", "_fungus", "_mushroom", "_flower"
 const SPECIAL_CONVEYOR_TIER = "universal";
 const SPECIAL_CONVEYOR_IPS = 5;
 const SPECIAL_CONVEYOR_ENERGY_COST = 10;
+const ROUTER_CYCLE_TICKS = 10;
 const ITEM_SPACING = 0.35;
 const INCLINED_DETECTION_RADIUS = 0.75;
 
@@ -148,6 +149,7 @@ const CONVEYOR_UPGRADE_TYPE_KEY_PREFIX = "utilitycraft:conveyor_upgrade_type";
 const CONVEYOR_UPGRADE_BLOCK_KEY_PREFIX = "utilitycraft:conveyor_upgrade_block";
 const GLOBAL_CONVEYOR_UPGRADE_KEY = "utilitycraft:conveyor_upgrade_global";
 const SMART_ROUTER_KEY_PREFIX = "smart_router";
+const SORTER_FILTER_KEY_PREFIX = "conveyor_sorter_filter";
 const SMART_ROUTER_DEFAULT = Object.freeze({ left: [], front: [], right: [] });
 const SMART_ROUTER_DIRS = ["left", "front", "right"];
 
@@ -172,7 +174,6 @@ const BASE_VERTICAL_SPEED = 0.12;
 const MAX_SPEED = 0.2;
 const MAX_VERTICAL_SPEED = 0.3;
 const AETHERIUM_SPEED_MULTIPLIER = 5;
-const ROUTER_DIRECTION_CHANGE_DELAY = 6;
 
 const CARDINAL_OFFSETS = Object.freeze({
     north: { x: 0, y: 0, z: -1 },
@@ -214,6 +215,7 @@ const LEFT_CARDINAL = Object.freeze({
 const conveyorRegistry = new Map();
 const bridgeCache = new Map();
 const routerDirectionCache = new Map();
+const sorterSideCycleCache = new Map();
 const overflowCycleCache = new Map();
 const underflowCycleCache = new Map();
 const CONVEYOR_META_BY_TYPE = new Map();
@@ -252,6 +254,24 @@ for (const tier of TIERS) {
         shape: "bridge_receiver",
         ips: tier.ips,
         bridgeRange: tier.bridgeRange
+    });
+}
+
+for (const specialTypeId of [
+    "utilitycraft:conveyor_junction",
+    "utilitycraft:conveyor_overflow",
+    "utilitycraft:conveyor_router",
+    "utilitycraft:conveyor_smart_router",
+    "utilitycraft:conveyor_underflow",
+    "utilitycraft:conveyor_sorter",
+    "utilitycraft:conveyor_inverted_sorter"
+]) {
+    const shape = specialTypeId.replace("utilitycraft:conveyor_", "");
+    defineConveyorType(specialTypeId, {
+        tier: SPECIAL_CONVEYOR_TIER,
+        shape,
+        ips: SPECIAL_CONVEYOR_IPS,
+        bridgeRange: 0
     });
 }
 
@@ -853,6 +873,41 @@ function getSmartRouterId(block) {
     return `${SMART_ROUTER_KEY_PREFIX}_${dimId}_${x}_${y}_${z}`;
 }
 
+function getSorterFilterKey(block) {
+    if (!block?.dimension || !block?.location) return null;
+    const { x, y, z } = block.location;
+    const dimId = block.dimension?.id ?? "unknown";
+    return `${SORTER_FILTER_KEY_PREFIX}_${dimId}_${x}_${y}_${z}`;
+}
+
+function readSorterFilter(block) {
+    const key = getSorterFilterKey(block);
+    if (!key) return "";
+    const raw = world.getDynamicProperty(key);
+    if (typeof raw !== "string") return "";
+    return raw.trim().toLowerCase();
+}
+
+function saveSorterFilter(block, itemId) {
+    const key = getSorterFilterKey(block);
+    if (!key) return;
+    const normalized = String(itemId ?? "").trim().toLowerCase();
+    world.setDynamicProperty(key, normalized);
+}
+
+function clearSorterFilter(block) {
+    const key = getSorterFilterKey(block);
+    if (!key) return;
+    world.setDynamicProperty(key, "");
+}
+
+function clearSorterFilterAt(dimId, pos) {
+    if (!dimId || !pos) return;
+    const { x, y, z } = pos;
+    const key = `${SORTER_FILTER_KEY_PREFIX}_${dimId}_${x}_${y}_${z}`;
+    world.setDynamicProperty(key, "");
+}
+
 function getSmartRouterConfig(id) {
     const raw = world.getDynamicProperty(id);
     if (typeof raw !== "string" || raw.length === 0) {
@@ -1283,6 +1338,7 @@ function unregisterConveyorAt(dimId, pos) {
     registry.delete(key);
     bridgeCache.delete(key);
     routerDirectionCache.delete(key);
+    sorterSideCycleCache.delete(key);
     overflowCycleCache.delete(key);
     underflowCycleCache.delete(key);
     markConveyorNetworkDirty(dimId);
@@ -1682,37 +1738,46 @@ function pickRandomDirection(options) {
 
 function resolveRouterDirection(block, key, options) {
     if (!block || !key || !Array.isArray(options) || options.length === 0) return null;
-    const tick = getConveyorTick();
     const passableOptions = options.filter(dir => isOutputPassable(block, dir));
     if (passableOptions.length === 0) {
         routerDirectionCache.delete(key);
         return null;
     }
+
+    const tick = getConveyorTick();
     const cached = routerDirectionCache.get(key);
-    const cachedDir = cached?.dir ?? null;
-    const shouldSwitch =
-        !cached ||
-        tick >= (cached?.nextSwitchTick ?? 0) ||
-        (cachedDir && !passableOptions.includes(cachedDir));
+    const cachedDirection = typeof cached?.direction === "string" ? cached.direction : null;
+    const cycleEndTick = Number(cached?.cycleEndTick ?? -1);
 
-    if (!shouldSwitch && cachedDir) return cachedDir;
+    if (cachedDirection && passableOptions.includes(cachedDirection) && tick < cycleEndTick) {
+        return cachedDirection;
+    }
 
-    let nextDir = passableOptions[0] ?? null;
-    if (cachedDir) {
-        const idx = passableOptions.indexOf(cachedDir);
-        if (idx >= 0) {
-            nextDir = passableOptions[(idx + 1) % passableOptions.length] ?? nextDir;
+    let nextIndex = 0;
+
+    if (cachedDirection && passableOptions.includes(cachedDirection)) {
+        const currentIndex = passableOptions.indexOf(cachedDirection);
+        nextIndex = (currentIndex + 1) % passableOptions.length;
+    } else {
+        const fallbackIndex = Number(cached?.nextIndex);
+        if (Number.isFinite(fallbackIndex)) {
+            nextIndex = Math.max(0, Math.min(Math.floor(fallbackIndex), passableOptions.length - 1));
         }
     }
 
-    if (nextDir) {
-        routerDirectionCache.set(key, {
-            dir: nextDir,
-            nextSwitchTick: tick + ROUTER_DIRECTION_CHANGE_DELAY
-        });
-    }
+    const selected = passableOptions[nextIndex] ?? passableOptions[0] ?? null;
+    if (!selected) return null;
 
-    return nextDir;
+    const selectedIndex = passableOptions.indexOf(selected);
+    const following = (selectedIndex + 1) % passableOptions.length;
+
+    routerDirectionCache.set(key, {
+        direction: selected,
+        cycleEndTick: tick + ROUTER_CYCLE_TICKS,
+        nextIndex: following
+    });
+
+    return selected;
 }
 
 function moveItemInDirection(item, block, meta, direction) {
@@ -1761,6 +1826,56 @@ function formatItemLabel(id) {
     if (!id) return "";
     if (DoriosAPI?.utils?.formatIdToText) return DoriosAPI.utils.formatIdToText(id);
     return String(id);
+}
+
+function openSorterMenu(player, block, meta) {
+    if (!player || !block || !meta) return;
+    const held = player.getComponent("equippable")?.getEquipment("Mainhand");
+    const heldId = held?.typeId ?? "";
+    const currentFilter = readSorterFilter(block);
+    const modeLabel = meta.shape === "inverted_sorter" ? "Inverted Sorter" : "Sorter";
+
+    const bodyLines = [
+        `Mode: ${modeLabel}`,
+        `Current Filter: ${currentFilter ? formatItemLabel(currentFilter) : "None"}`
+    ];
+
+    if (heldId) {
+        bodyLines.push(`Held Item: ${formatItemLabel(heldId)}`);
+    }
+
+    const form = new ActionFormData()
+        .title("Conveyor Filter")
+        .body(bodyLines.join("\n"));
+
+    const actions = [];
+    if (heldId) {
+        form.button(`Set filter to ${formatItemLabel(heldId)}`);
+        actions.push("set");
+    }
+    if (currentFilter) {
+        form.button("Clear filter");
+        actions.push("clear");
+    }
+    form.button("Close");
+    actions.push("close");
+
+    form.show(player).then(response => {
+        if (response.canceled || response.selection === undefined) return;
+        const action = actions[response.selection];
+        if (!action || action === "close") return;
+
+        if (action === "set" && heldId) {
+            saveSorterFilter(block, heldId);
+            player.onScreenDisplay?.setActionBar(`§aFilter set to ${formatItemLabel(heldId)}`);
+            return;
+        }
+
+        if (action === "clear") {
+            clearSorterFilter(block);
+            player.onScreenDisplay?.setActionBar("§eSorter filter cleared.");
+        }
+    });
 }
 
 function openSmartRouterMenu(player, block) {
@@ -1860,6 +1975,47 @@ function processRouterConveyor(block, meta, facing, context = {}) {
         trySendItemInstant(item, block, selected);
         markItemMoved(item, key);
     }
+}
+
+function processSorterConveyor(block, meta, facing, context = {}) {
+    const key = posKey(block.location);
+    const dirs = getRelativeDirections(facing);
+    let sideCycle = getCycleIndex(sorterSideCycleCache, key, 1);
+    const filterId = readSorterFilter(block);
+    const hasFilter = filterId.length > 0;
+    const inverted = meta.shape === "inverted_sorter";
+
+    const items = getItemsNear(block, 0.9);
+    if (!items?.length) return;
+
+    for (const item of items) {
+        if (hasItemMovedThisTick(item)) continue;
+        const stack = getItemStackFromEntity(item);
+        if (!stack) continue;
+        if (shouldHoldAetheriumItem(meta, item)) continue;
+
+        const matchesFilter = hasFilter && stack.typeId.toLowerCase() === filterId;
+        const prioritizeSides = hasFilter && (inverted ? matchesFilter : !matchesFilter);
+        const primarySide = sideCycle === 0 ? dirs.right : dirs.left;
+        const secondarySide = sideCycle === 0 ? dirs.left : dirs.right;
+        const candidates = prioritizeSides
+            ? [primarySide, secondarySide, dirs.front]
+            : [dirs.front, primarySide, secondarySide];
+
+        const selected = candidates.find(dir => dir && isOutputPassable(block, dir));
+        if (!selected) continue;
+        if (!canMoveItemWithSpacing(item, items, selected)) continue;
+        if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
+
+        trySendItemInstant(item, block, selected);
+        markItemMoved(item, key);
+
+        if (selected === dirs.right || selected === dirs.left) {
+            sideCycle = 1 - sideCycle;
+        }
+    }
+
+    setCycleIndex(sorterSideCycleCache, key, sideCycle, 1);
 }
 
 function processSmartRouterConveyor(block, meta, facing, context = {}) {
@@ -2388,6 +2544,11 @@ function processConveyor(block, meta, context = {}) {
         return;
     }
 
+    if (meta.shape === "sorter" || meta.shape === "inverted_sorter" || meta.shape === "filter") {
+        processSorterConveyor(block, meta, facing, context);
+        return;
+    }
+
     if (meta.shape === "overflow") {
         processOverflowConveyor(block, meta, facing, context);
         return;
@@ -2421,8 +2582,12 @@ function processAllConveyors() {
                 registry.delete(key);
                 bridgeCache.delete(key);
                 routerDirectionCache.delete(key);
+                sorterSideCycleCache.delete(key);
                 overflowCycleCache.delete(key);
                 underflowCycleCache.delete(key);
+                if (entry.meta?.shape === "sorter" || entry.meta?.shape === "inverted_sorter" || entry.meta?.shape === "filter") {
+                    clearSorterFilterAt(dimId, entry.pos);
+                }
                 if (entry.meta?.shape === "smart_router") {
                     removeSmartRouterConfig(getSmartRouterId({ location: entry.pos, dimension: dim }));
                 }
@@ -2435,8 +2600,12 @@ function processAllConveyors() {
                 registry.delete(key);
                 bridgeCache.delete(key);
                 routerDirectionCache.delete(key);
+                sorterSideCycleCache.delete(key);
                 overflowCycleCache.delete(key);
                 underflowCycleCache.delete(key);
+                if (entry.meta?.shape === "sorter" || entry.meta?.shape === "inverted_sorter" || entry.meta?.shape === "filter") {
+                    clearSorterFilterAt(dimId, entry.pos);
+                }
                 markConveyorNetworkDirty(dimId);
                 continue;
             }
@@ -2466,8 +2635,8 @@ DoriosAPI.register.blockComponent("conveyor", {
     onPlayerInteract(e, { params }) {
         if (!e?.player || !e.block) return;
         const held = getPlayerHeldItem(e.player);
+        const meta = getConveyorMeta(e.block.typeId, params);
         if (held?.typeId === WRENCH_ITEM_ID) {
-            const meta = getConveyorMeta(e.block.typeId, params);
             if (meta?.shape === "vertical") {
                 system.run(() => {
                     toggleVerticalDirection(e.block);
@@ -2475,14 +2644,35 @@ DoriosAPI.register.blockComponent("conveyor", {
                 return;
             }
         }
-        if (params?.shape !== "smart_router") return;
-        if (e.player.isSneaking) return;
-        system.run(() => {
-            openSmartRouterMenu(e.player, e.block);
-        });
+
+        if (meta?.shape === "smart_router") {
+            if (e.player.isSneaking) return;
+            system.run(() => {
+                openSmartRouterMenu(e.player, e.block);
+            });
+            return;
+        }
+
+        if (meta?.shape === "sorter" || meta?.shape === "inverted_sorter" || meta?.shape === "filter") {
+            if (e.player.isSneaking) {
+                system.run(() => {
+                    clearSorterFilter(e.block);
+                    e.player.onScreenDisplay?.setActionBar("§eSorter filter cleared.");
+                });
+                return;
+            }
+            system.run(() => {
+                openSorterMenu(e.player, e.block, meta);
+            });
+            return;
+        }
     },
     onPlayerBreak(e, { params }) {
         const dimId = e.block.dimension?.id;
+        const meta = getConveyorMeta(e.block.typeId, params);
+        if (meta?.shape === "sorter" || meta?.shape === "inverted_sorter" || meta?.shape === "filter") {
+            clearSorterFilter(e.block);
+        }
         if (dimId) {
             unregisterConveyorAt(dimId, e.block.location);
             unpersistConveyorPosition(dimId, e.block.location);
@@ -2537,6 +2727,10 @@ world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation, p
 
         if (meta?.shape === "smart_router") {
             removeSmartRouterConfig(getSmartRouterId(block));
+        }
+
+        if (meta?.shape === "sorter" || meta?.shape === "inverted_sorter" || meta?.shape === "filter") {
+            clearSorterFilterAt(block.dimension?.id, block.location);
         }
 
         refreshEnergyAround(block);

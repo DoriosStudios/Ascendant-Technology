@@ -61,8 +61,10 @@ tile.utilitycraft:aetherium_conveyor_bridge_path.name=§uCaminho da Ponte de Aet
 ## Transportação - Esteiras Especiais
 tile.utilitycraft:conveyor_junction.name=Junção de Esteiras\n§7- Permite que linhas se cruzem
 tile.utilitycraft:conveyor_overflow.name=Esteira de Transbordamento\n§7- Avança primeiro; alterna saídas laterais
-tile.utilitycraft:conveyor_router.name=Roteador de Esteira\n§7- Roteia para saída aleatória
+tile.utilitycraft:conveyor_router.name=Roteador de Esteira\n§7- Mantém uma saída e alterna a cada 10 ticks
+tile.utilitycraft:conveyor_sorter.name=Esteira Separadora\n§7- Itens filtrados seguem em frente; outros vão para os lados
 tile.utilitycraft:conveyor_smart_router.name=Roteador Inteligente\n§7- Roteia baseado em atribuições de itens
+tile.utilitycraft:conveyor_inverted_sorter.name=Esteira Separadora Invertida\n§7- Itens filtrados vão para os lados; outros seguem em frente
 tile.utilitycraft:conveyor_underflow.name=Esteira de Subtransbordamento\n§7- Prioriza saídas laterais
 
 ## Transportação - Utilitários
@@ -164,6 +166,33 @@ item.utilitycraft:steam_capsule_5=Cápsula de Vapor \n§7(5 Baldes)
 item.utilitycraft:steam_capsule_6=Cápsula de Vapor \n§7(6 Baldes)
 item.utilitycraft:steam_capsule_7=Cápsula de Vapor \n§7(7 Baldes)
 item.utilitycraft:steam_capsule_8=Cápsula de Vapor \n§7(8 Baldes)
+
+item.utilitycraft:water_capsule_1=Cápsula de Água \n§7(1 Balde)
+item.utilitycraft:water_capsule_2=Cápsula de Água \n§7(2 Baldes)
+item.utilitycraft:water_capsule_3=Cápsula de Água \n§7(3 Baldes)
+item.utilitycraft:water_capsule_4=Cápsula de Água \n§7(4 Baldes)
+item.utilitycraft:water_capsule_5=Cápsula de Água \n§7(5 Baldes)
+item.utilitycraft:water_capsule_6=Cápsula de Água \n§7(6 Baldes)
+item.utilitycraft:water_capsule_7=Cápsula de Água \n§7(7 Baldes)
+item.utilitycraft:water_capsule_8=Cápsula de Água \n§7(8 Baldes)
+
+item.utilitycraft:lava_capsule_1=Cápsula de Lava \n§7(1 Balde)
+item.utilitycraft:lava_capsule_2=Cápsula de Lava \n§7(2 Baldes)
+item.utilitycraft:lava_capsule_3=Cápsula de Lava \n§7(3 Baldes)
+item.utilitycraft:lava_capsule_4=Cápsula de Lava \n§7(4 Baldes)
+item.utilitycraft:lava_capsule_5=Cápsula de Lava \n§7(5 Baldes)
+item.utilitycraft:lava_capsule_6=Cápsula de Lava \n§7(6 Baldes)
+item.utilitycraft:lava_capsule_7=Cápsula de Lava \n§7(7 Baldes)
+item.utilitycraft:lava_capsule_8=Cápsula de Lava \n§7(8 Baldes)
+
+item.utilitycraft:xp_capsule_1=Cápsula de XP Líquido \n§7(1 Balde)
+item.utilitycraft:xp_capsule_2=Cápsula de XP Líquido \n§7(2 Baldes)
+item.utilitycraft:xp_capsule_3=Cápsula de XP Líquido \n§7(3 Baldes)
+item.utilitycraft:xp_capsule_4=Cápsula de XP Líquido \n§7(4 Baldes)
+item.utilitycraft:xp_capsule_5=Cápsula de XP Líquido \n§7(5 Baldes)
+item.utilitycraft:xp_capsule_6=Cápsula de XP Líquido \n§7(6 Baldes)
+item.utilitycraft:xp_capsule_7=Cápsula de XP Líquido \n§7(7 Baldes)
+item.utilitycraft:xp_capsule_8=Cápsula de XP Líquido \n§7(8 Baldes)
 
 item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido \n§7(1 Balde)
 item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido \n§7(2 Baldes)

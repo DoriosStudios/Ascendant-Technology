@@ -1,4 +1,13 @@
 # v0.8.0 Alpha Build 5 (Current)
+## BLOCKS
+### Transportation
+- Added Conveyor Sorter.
+  - Filtered items move forward; other items are diverted to side outputs.
+- Added Conveyor Inverted Sorter.
+  - Filtered items are diverted to side outputs; other items continue forward.
+- Conveyor Router now locks to one output for a short cycle and rotates direction every 10 ticks.
+- Sorter blocks now include per-block filter setup and quick filter clear while sneaking.
+
 ## ITEMS
 ### General
 - Added new resource items:
@@ -13,6 +22,14 @@
   - Reinforcement Module (All levels)
   - Void Essence
 ## RECIPES
+- Transportation
+  - Added crafting recipes for conveyor variants in all three tiers (Copper, Titanium, Aetherium):
+    - Horizontal Conveyor
+    - Vertical Conveyor
+    - Inclined Conveyor
+    - Declined Conveyor
+    - Bridge Transmitter
+    - Bridge Receiver
 - Catalyst Weaver
   - Added a new recipe for Void Essence. It uses an Empty Bottle, Crushed Endstone, and Dark Matter.
 - Residue Processor
@@ -22,10 +39,24 @@
 ## UI/UX
 - Restored Cryo Chamber classic UI.
 
+## FLUIDS
+- Added finite vanilla fluid capsules for Water, Lava, and Liquid XP (tiers from 1 to 8 buckets).
+- Milk capsule support is now infinite-only.
+- Water and Lava capsules now interact with world fluid blocks like buckets:
+  - Place fluid on empty spaces.
+  - Collect matching source blocks into capsules (up to 8 buckets).
+
 ## BUG FIXES
 - Laser Barrier no longer leaves behind orphan blocks when size upgrades are removed.
 - Laser Barrier now properly clears light environment blocks (e.g., vegetation, snow) before projecting the wall, allowing it to form fully in natural terrain.
 - Fixed Laser Barrier orientation so that North/South placement projects the wall in the same direction as the machine front, while East/West behavior remains unchanged.
+
+## TECHNICAL CHANGES
+- Normalized Titanium and Aetherium tool JSON schemas to `format_version` `1.21.90`.
+- Restored legacy hammer custom components (`utilitycraft:hammer` and `utilitycraft:dig_pebble`) for runtime compatibility with existing scripts.
+- Added/standardized `minecraft:repairable` entries for Titanium and Aetherium tool families and enforced `minecraft:can_destroy_in_creative: false` for swords.
+- Updated Duplicator fluid runtime behavior: progress can now charge before the full fluid requirement is available, and craft finalization now consumes a fixed `16B` per operation (no rarity/speed scaling).
+- Reworked capsule world-use flow for bucket parity: targeting now uses `itemUse` + `getBlockFromViewDirection` (including liquid blocks), fluid placement writes to the adjacent block space from the clicked face (with player-view fallback when face metadata is unavailable), and world/inventory mutation runs in `afterEvents` for stable transforms.
 
 # v0.8.0 Alpha Build 4
 

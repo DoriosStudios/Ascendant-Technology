@@ -14,7 +14,8 @@ const config = Object.freeze({
     }),
     fluid: Object.freeze({
         type: 'liquified_aetherium',
-        perSecond: 50
+        perSecond: 50,
+        perCraft: 16
     }),
     cloner: Object.freeze({
         baseTimeSeconds: 30 * 60,
@@ -277,11 +278,6 @@ function doriosRegister() {
                     return
                 }
 
-                if (tank.get() < requiredFluid.amount) {
-                    fail(`Need ${FluidManager.formatFluid(requiredFluid.amount)}\n§7${fluidName}`)
-                    return
-                }
-
                 if (tankType === 'empty') {
                     tank.setType(neededType)
                 }
@@ -315,7 +311,7 @@ function doriosRegister() {
                 }
             }
 
-            const maxCrafts = calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe, tank)
+            const maxCrafts = calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe)
             if (maxCrafts <= 0) {
                 if (inputStack.amount < (recipe.input.amount ?? 1)) {
                     fail('Missing Input')
@@ -390,27 +386,35 @@ function createGenericRecipeFromInput(stack) {
         energyCost: energyModel.energyCost,
         fluid: {
             type: duplicator.fluid.type,
-            amount: Math.max(1, Math.round(energyModel.timeSeconds * duplicator.fluid.perSecond))
+            amount: getFixedFluidPerCraftAmount()
         }
     }
 }
+
+function getFixedFluidPerCraftAmount() {
+    const configured = Number(duplicator?.fluid?.perCraft)
+    if (Number.isFinite(configured) && configured > 0) {
+        return Math.max(1, Math.round(configured))
+    }
+    return 16
+}
+
 function getRecipeFluid(recipe) {
     if (!recipe) return null
     if (recipe.fluid && typeof recipe.fluid === 'object') {
         recipe.fluid.type = recipe.fluid.type ?? duplicator.fluid.type
-        recipe.fluid.amount = Math.max(1, Math.round(recipe.fluid.amount ?? 0))
+        recipe.fluid.amount = getFixedFluidPerCraftAmount()
         return recipe.fluid
     }
 
-    const timeSeconds = recipe.timeSeconds ?? duplicator.cloner.baseTimeSeconds
     recipe.fluid = {
         type: duplicator.fluid.type,
-        amount: Math.max(1, Math.round(timeSeconds * duplicator.fluid.perSecond))
+        amount: getFixedFluidPerCraftAmount()
     }
     return recipe.fluid
 }
 
-function calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe, tank) {
+function calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe) {
     const perInput = Math.max(1, recipe.input.amount ?? 1)
     const inputAvailable = Math.floor(inputStack.amount / perInput)
     const originalCapacity = computeSlotCapacity(originalSlot, recipe.input?.id, getOriginalAmountPerCraft(recipe))
@@ -419,15 +423,16 @@ function calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe, tank) {
         ? computeSlotCapacity(copySlot, recipe.output?.id, copyPerCraft)
         : Number.MAX_SAFE_INTEGER
 
-    let max = Math.min(inputAvailable, originalCapacity, copyCapacity)
-
-    if (recipe?.fluid?.amount && tank) {
-        const perCraft = Math.max(1, recipe.fluid.amount)
-        const tankCapacity = Math.floor(tank.get() / perCraft)
-        max = Math.min(max, tankCapacity)
-    }
-
+    const max = Math.min(inputAvailable, originalCapacity, copyCapacity)
     return Math.max(0, max)
+}
+
+function calculateFluidCraftCapacity(recipe, tank) {
+    if (!recipe?.fluid?.amount) return Number.MAX_SAFE_INTEGER
+    if (!tank) return 0
+
+    const perCraft = Math.max(1, Number(recipe.fluid.amount) || getFixedFluidPerCraftAmount())
+    return Math.max(0, Math.floor(tank.get() / perCraft))
 }
 
 function handleProgress(machine, recipe, maxCrafts, tank, templateMeta) {
@@ -435,7 +440,10 @@ function handleProgress(machine, recipe, maxCrafts, tank, templateMeta) {
     const progress = machine.getProgress()
 
     if (progress >= energyCost) {
-        const crafts = Math.min(maxCrafts, Math.floor(progress / energyCost))
+        const byEnergy = Math.floor(progress / energyCost)
+        const byFluid = calculateFluidCraftCapacity(recipe, tank)
+        const crafts = Math.min(maxCrafts, byEnergy, byFluid)
+        if (crafts <= 0) return 0
         applyCraft(machine, recipe, crafts, tank, templateMeta)
         machine.addProgress(-(crafts * energyCost))
         return crafts
@@ -591,7 +599,7 @@ function applyClonerRuntime(machine, recipe) {
     recipe.costKDE = runtimeEnergy.costKDE
     recipe.perSecondKDE = runtimeEnergy.perSecondKDE
     if (recipe.fluid) {
-        recipe.fluid.amount = Math.max(1, Math.round(runtimeEnergy.timeSeconds * duplicator.fluid.perSecond))
+        recipe.fluid.amount = getFixedFluidPerCraftAmount()
     }
 
     machine.boosts.speed = 1

@@ -64,8 +64,10 @@ tile.utilitycraft:aetherium_conveyor_bridge_path.name=§uRuta de Puente de Aethe
 ## Transporte - Transportadores Especiales
 tile.utilitycraft:conveyor_junction.name=Unión de Transportador\n§7- Permite que las líneas se crucen
 tile.utilitycraft:conveyor_overflow.name=Transportador de Desbordamiento\n§7- Avanza primero; alterna salidas laterales
-tile.utilitycraft:conveyor_router.name=Enrutador de Transportador\n§7- Enruta a salida aleatoria
+tile.utilitycraft:conveyor_router.name=Enrutador de Transportador\n§7- Mantiene una salida y rota cada 10 ticks
+tile.utilitycraft:conveyor_sorter.name=Transportador Clasificador\n§7- Los ítems filtrados van al frente; los demás a los lados
 tile.utilitycraft:conveyor_smart_router.name=Enrutador Inteligente\n§7- Enruta basado en asignaciones de ítems
+tile.utilitycraft:conveyor_inverted_sorter.name=Transportador Clasificador Invertido\n§7- Los ítems filtrados van a los lados; los demás al frente
 tile.utilitycraft:conveyor_underflow.name=Transportador de Subdesbordamiento\n§7- Prioriza salidas laterales
 
 ## Transporte - Utilidades
@@ -162,6 +164,33 @@ item.utilitycraft:steam_capsule_5=Cápsula de Vapor \n§7(5 Cubos)
 item.utilitycraft:steam_capsule_6=Cápsula de Vapor \n§7(6 Cubos)
 item.utilitycraft:steam_capsule_7=Cápsula de Vapor \n§7(7 Cubos)
 item.utilitycraft:steam_capsule_8=Cápsula de Vapor \n§7(8 Cubos)
+
+item.utilitycraft:water_capsule_1=Cápsula de Agua \n§7(1 Cubo)
+item.utilitycraft:water_capsule_2=Cápsula de Agua \n§7(2 Cubos)
+item.utilitycraft:water_capsule_3=Cápsula de Agua \n§7(3 Cubos)
+item.utilitycraft:water_capsule_4=Cápsula de Agua \n§7(4 Cubos)
+item.utilitycraft:water_capsule_5=Cápsula de Agua \n§7(5 Cubos)
+item.utilitycraft:water_capsule_6=Cápsula de Agua \n§7(6 Cubos)
+item.utilitycraft:water_capsule_7=Cápsula de Agua \n§7(7 Cubos)
+item.utilitycraft:water_capsule_8=Cápsula de Agua \n§7(8 Cubos)
+
+item.utilitycraft:lava_capsule_1=Cápsula de Lava \n§7(1 Cubo)
+item.utilitycraft:lava_capsule_2=Cápsula de Lava \n§7(2 Cubos)
+item.utilitycraft:lava_capsule_3=Cápsula de Lava \n§7(3 Cubos)
+item.utilitycraft:lava_capsule_4=Cápsula de Lava \n§7(4 Cubos)
+item.utilitycraft:lava_capsule_5=Cápsula de Lava \n§7(5 Cubos)
+item.utilitycraft:lava_capsule_6=Cápsula de Lava \n§7(6 Cubos)
+item.utilitycraft:lava_capsule_7=Cápsula de Lava \n§7(7 Cubos)
+item.utilitycraft:lava_capsule_8=Cápsula de Lava \n§7(8 Cubos)
+
+item.utilitycraft:xp_capsule_1=Cápsula de XP Líquido \n§7(1 Cubo)
+item.utilitycraft:xp_capsule_2=Cápsula de XP Líquido \n§7(2 Cubos)
+item.utilitycraft:xp_capsule_3=Cápsula de XP Líquido \n§7(3 Cubos)
+item.utilitycraft:xp_capsule_4=Cápsula de XP Líquido \n§7(4 Cubos)
+item.utilitycraft:xp_capsule_5=Cápsula de XP Líquido \n§7(5 Cubos)
+item.utilitycraft:xp_capsule_6=Cápsula de XP Líquido \n§7(6 Cubos)
+item.utilitycraft:xp_capsule_7=Cápsula de XP Líquido \n§7(7 Cubos)
+item.utilitycraft:xp_capsule_8=Cápsula de XP Líquido \n§7(8 Cubos)
 
 item.utilitycraft:aetherium_liquid_capsule_1=Cápsula de Aetherium Líquido §7\n- (1 Cubo)
 item.utilitycraft:aetherium_liquid_capsule_2=Cápsula de Aetherium Líquido §7\n- (2 Cubos)

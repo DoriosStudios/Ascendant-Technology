@@ -172,13 +172,12 @@
                 }
             },
             {
-                "info_panel": {
-                    "type": "image",
-                    "texture": "textures/ui/panels/long_panel_classic",
+                "info_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "$cell_image_size": [104, 166],
-                    "size": [
+                    "$has_text": true,
+                    "$text_borders": [88, 150],
+                    "$bg_size": [
                         104,
                         166
                     ],

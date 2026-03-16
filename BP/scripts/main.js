@@ -22,12 +22,6 @@ import './machinery/machines/residue_processor.js'
 import './machinery/machines/vaporworks_processor.js'
 import './machinery/machines/network_center.js'
 
-// Items
-import './items/dig_pebble.js'
-import './items/hammer.js'
-import './items/hoe.js'
-import './items/shovel.js'
-
 // Blocks
 import './machinery/machines/absolute_container.js'
 import './blocks/mob_magnet.js'

@@ -58,7 +58,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
     },
 
     onTick(e, { params: settings }) {
-        if (!worldLoaded) return
+        if (!globalThis.worldLoaded) return
 
         const { block } = e
         const machine = new Machine(block, settings)

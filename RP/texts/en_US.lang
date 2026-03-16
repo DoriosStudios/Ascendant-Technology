@@ -67,8 +67,10 @@ tile.utilitycraft:aetherium_conveyor_bridge_path.name=§uAetherium Bridge Path
 ## Transportation - Special Conveyors
 tile.utilitycraft:conveyor_junction.name=§aConveyor Junction\n§7- Allows lines to cross
 tile.utilitycraft:conveyor_overflow.name=§aOverflow Conveyor\n§7- Forwards; alternates side outputs
-tile.utilitycraft:conveyor_router.name=§aConveyor Router\n§7- Routes to random output
+tile.utilitycraft:conveyor_router.name=§aConveyor Router\n§7- Locks one output and rotates every 10 ticks
+tile.utilitycraft:conveyor_sorter.name=§aConveyor Sorter\n§7- Matching items go forward; others go sideways
 tile.utilitycraft:conveyor_smart_router.name=§aSmart Router\n§7- Routes based on item assignments
+tile.utilitycraft:conveyor_inverted_sorter.name=§aConveyor Inverted Sorter\n§7- Filtered items go sideways; others go forward
 tile.utilitycraft:conveyor_underflow.name=§aUnderflow Conveyor\n§7- Prioritizes side outputs
 
 ## Transportation - Utilities
@@ -172,6 +174,33 @@ item.utilitycraft:steam_capsule_5=Steam Capsule §7\n- (5 Buckets)
 item.utilitycraft:steam_capsule_6=Steam Capsule §7\n- (6 Buckets)
 item.utilitycraft:steam_capsule_7=Steam Capsule §7\n- (7 Buckets)
 item.utilitycraft:steam_capsule_8=Steam Capsule §7\n- (8 Buckets)
+
+item.utilitycraft:water_capsule_1=Water Capsule §7\n- (1 Bucket)
+item.utilitycraft:water_capsule_2=Water Capsule §7\n- (2 Buckets)
+item.utilitycraft:water_capsule_3=Water Capsule §7\n- (3 Buckets)
+item.utilitycraft:water_capsule_4=Water Capsule §7\n- (4 Buckets)
+item.utilitycraft:water_capsule_5=Water Capsule §7\n- (5 Buckets)
+item.utilitycraft:water_capsule_6=Water Capsule §7\n- (6 Buckets)
+item.utilitycraft:water_capsule_7=Water Capsule §7\n- (7 Buckets)
+item.utilitycraft:water_capsule_8=Water Capsule §7\n- (8 Buckets)
+
+item.utilitycraft:lava_capsule_1=Lava Capsule §7\n- (1 Bucket)
+item.utilitycraft:lava_capsule_2=Lava Capsule §7\n- (2 Buckets)
+item.utilitycraft:lava_capsule_3=Lava Capsule §7\n- (3 Buckets)
+item.utilitycraft:lava_capsule_4=Lava Capsule §7\n- (4 Buckets)
+item.utilitycraft:lava_capsule_5=Lava Capsule §7\n- (5 Buckets)
+item.utilitycraft:lava_capsule_6=Lava Capsule §7\n- (6 Buckets)
+item.utilitycraft:lava_capsule_7=Lava Capsule §7\n- (7 Buckets)
+item.utilitycraft:lava_capsule_8=Lava Capsule §7\n- (8 Buckets)
+
+item.utilitycraft:xp_capsule_1=Liquid XP Capsule §7\n- (1 Bucket)
+item.utilitycraft:xp_capsule_2=Liquid XP Capsule §7\n- (2 Buckets)
+item.utilitycraft:xp_capsule_3=Liquid XP Capsule §7\n- (3 Buckets)
+item.utilitycraft:xp_capsule_4=Liquid XP Capsule §7\n- (4 Buckets)
+item.utilitycraft:xp_capsule_5=Liquid XP Capsule §7\n- (5 Buckets)
+item.utilitycraft:xp_capsule_6=Liquid XP Capsule §7\n- (6 Buckets)
+item.utilitycraft:xp_capsule_7=Liquid XP Capsule §7\n- (7 Buckets)
+item.utilitycraft:xp_capsule_8=Liquid XP Capsule §7\n- (8 Buckets)
 
 item.utilitycraft:aetherium_liquid_capsule_1=Liquified Aetherium Capsule §7\n- (1 Bucket)
 item.utilitycraft:aetherium_liquid_capsule_2=Liquified Aetherium Capsule §7\n- (2 Buckets)

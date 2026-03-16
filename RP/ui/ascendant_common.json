@@ -1308,14 +1308,18 @@
 	 * Basic machine info panel with customizable background.
 	 */
 	"info_panel": {
-		"type": "panel",
+		"type": "collection_panel",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
 		"$index|default": 0,
 		"size": "$bg_size",
 		"anchor_from": "center",
 		"anchor_to": "center",
 		"$has_bg|default": true,
+		"$has_text|default": false,
+		"$label_index|default": 1,
 		"$background_color|default": "gray",
-		"$text_borders|default": [76, 150],
+		"$text_borders|default": ["100% - 16px, 100% - 16px"],
 		"$info_size|default": ["100% - 8px", "100% - 8px"],
 		"$bg_size|default": [90, 166],
 		"$has_close_button|default": false,
@@ -1389,6 +1393,17 @@
 					"anchor_to": "center",
 					"size": "$info_size",
 					"layer": 2
+				}
+			},
+			{
+				"info@machineryCommon.item_label": {
+					"visible": "$has_text",
+					"$text_scale": 0.55,
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"size": "$text_borders",
+					"layer": 3,
+					"collection_index": "$label_index"
 				}
 			}
 		]

@@ -6,6 +6,7 @@ import { sanitizeTickSpeed, getTickSpeed } from "./machinery/machine.js";
 
 globalThis.tickCount ??= 0;
 globalThis.tickSpeed ??= 2;
+globalThis.worldLoaded ??= false;
 
 system.runInterval(() => {
     globalThis.tickCount += 2;
@@ -13,8 +14,6 @@ system.runInterval(() => {
 }, 2);
 
 // ─── World load ──────────────────────────────────────────────────────────────
-
-let worldLoaded = false;
 
 world.afterEvents.worldLoad.subscribe(() => {
     Energy.initializeObjectives();
@@ -35,11 +34,11 @@ world.afterEvents.worldLoad.subscribe(() => {
         }
     } catch { /* ignore dynamic property issues */ }
 
-    worldLoaded = world.getDynamicProperty("loaded");
+    globalThis.worldLoaded = world.getDynamicProperty("loaded");
 
     if (world.getDimension('overworld').getEntities()[0]) {
         world.setDynamicProperty("loaded", true);
-        worldLoaded = true;
+        globalThis.worldLoaded = true;
     }
 });
 
@@ -49,7 +48,7 @@ world.afterEvents.playerSpawn.subscribe(({ initialSpawn }) => {
     if (!initialSpawn) return;
     system.runTimeout(() => {
         world.setDynamicProperty("loaded", true);
-        worldLoaded = true;
+        globalThis.worldLoaded = true;
     }, 50);
 });
 

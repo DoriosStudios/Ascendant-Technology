@@ -113,7 +113,13 @@
 	"utilitycraft:conveyor_router": {
 		"sound": "metal"
 	},
+	"utilitycraft:conveyor_sorter": {
+		"sound": "metal"
+	},
 	"utilitycraft:conveyor_smart_router": {
+		"sound": "metal"
+	},
+	"utilitycraft:conveyor_inverted_sorter": {
 		"sound": "metal"
 	},
 	"utilitycraft:conveyor_overflow": {

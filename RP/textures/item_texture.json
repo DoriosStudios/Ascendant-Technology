@@ -188,6 +188,78 @@
 		"utilitycraft_empty_liquid_capsule": {
 			"textures": "textures/items/misc/liquid_capsule_0"
 		},
+		"utilitycraft_water_capsule_1": {
+			"textures": "textures/items/tools/capsules/water_capsule_1"
+		},
+		"utilitycraft_water_capsule_2": {
+			"textures": "textures/items/tools/capsules/water_capsule_2"
+		},
+		"utilitycraft_water_capsule_3": {
+			"textures": "textures/items/tools/capsules/water_capsule_3"
+		},
+		"utilitycraft_water_capsule_4": {
+			"textures": "textures/items/tools/capsules/water_capsule_4"
+		},
+		"utilitycraft_water_capsule_5": {
+			"textures": "textures/items/tools/capsules/water_capsule_5"
+		},
+		"utilitycraft_water_capsule_6": {
+			"textures": "textures/items/tools/capsules/water_capsule_6"
+		},
+		"utilitycraft_water_capsule_7": {
+			"textures": "textures/items/tools/capsules/water_capsule_7"
+		},
+		"utilitycraft_water_capsule_8": {
+			"textures": "textures/items/tools/capsules/water_capsule_8"
+		},
+		"utilitycraft_lava_capsule_1": {
+			"textures": "textures/items/tools/capsules/lava_capsule_1"
+		},
+		"utilitycraft_lava_capsule_2": {
+			"textures": "textures/items/tools/capsules/lava_capsule_2"
+		},
+		"utilitycraft_lava_capsule_3": {
+			"textures": "textures/items/tools/capsules/lava_capsule_3"
+		},
+		"utilitycraft_lava_capsule_4": {
+			"textures": "textures/items/tools/capsules/lava_capsule_4"
+		},
+		"utilitycraft_lava_capsule_5": {
+			"textures": "textures/items/tools/capsules/lava_capsule_5"
+		},
+		"utilitycraft_lava_capsule_6": {
+			"textures": "textures/items/tools/capsules/lava_capsule_6"
+		},
+		"utilitycraft_lava_capsule_7": {
+			"textures": "textures/items/tools/capsules/lava_capsule_7"
+		},
+		"utilitycraft_lava_capsule_8": {
+			"textures": "textures/items/tools/capsules/lava_capsule_8"
+		},
+		"utilitycraft_xp_capsule_1": {
+			"textures": "textures/items/tools/capsules/xp_capsule_1"
+		},
+		"utilitycraft_xp_capsule_2": {
+			"textures": "textures/items/tools/capsules/xp_capsule_2"
+		},
+		"utilitycraft_xp_capsule_3": {
+			"textures": "textures/items/tools/capsules/xp_capsule_3"
+		},
+		"utilitycraft_xp_capsule_4": {
+			"textures": "textures/items/tools/capsules/xp_capsule_4"
+		},
+		"utilitycraft_xp_capsule_5": {
+			"textures": "textures/items/tools/capsules/xp_capsule_5"
+		},
+		"utilitycraft_xp_capsule_6": {
+			"textures": "textures/items/tools/capsules/xp_capsule_6"
+		},
+		"utilitycraft_xp_capsule_7": {
+			"textures": "textures/items/tools/capsules/xp_capsule_7"
+		},
+		"utilitycraft_xp_capsule_8": {
+			"textures": "textures/items/tools/capsules/xp_capsule_8"
+		},
 		"utilitycraft_cryofluid_capsule_1": {
 			"textures": "textures/items/tools/capsules/cryofluid_capsule_1"
 		},

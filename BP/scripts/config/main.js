@@ -32,5 +32,6 @@ import './recipes/added/insert_press.js';
 
 import './fluids/items.js';
 import './fluids/coolant_register.js';
+import './fluids/capsule_world_interaction.js';
 
 // Dynamic properties used across the pack (overclock burn/power/eff etc.)

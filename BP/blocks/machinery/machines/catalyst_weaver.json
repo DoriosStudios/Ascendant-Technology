@@ -32,9 +32,12 @@
 			"utilitycraft:catalyst_weaver": {
 				"rotation": "facing",
 				"entity": {
+					"type": "machine",
 					"input_type": "complex",
 					"output_type": "simple",
 					"inventory_size": 20,
+					"input_range": [3, 10],
+					"output_range": [18, 19],
 					"fluid": true
 				},
 				"machine": {

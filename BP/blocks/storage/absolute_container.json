@@ -18,11 +18,14 @@
                 "rotation": "facing",
                 "entity": {
                     "id": "utilitycraft:storage_container",
+                    "type": "machine",
                     "skip_machine_event": false,
                     "skip_inventory_event": false,
-                    "input_type": null,
-                    "output_type": null,
-                    "inventory_size": 170
+                    "input_type": "none",
+                    "output_type": "none",
+                    "inventory_size": 170,
+                    "input_range": [0, 158],
+                    "output_range": [159, 167]
                 },
                 "machine": {
                     "energy_cap": 25600000,

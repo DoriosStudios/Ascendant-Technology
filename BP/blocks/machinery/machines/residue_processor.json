@@ -17,9 +17,12 @@
 			"utilitycraft:residue_processor": {
 				"rotation": "facing",
 				"entity": {
+					"type": "machine",
 					"input_type": "simple",
 					"output_type": "simple",
-					"inventory_size": 20
+					"inventory_size": 20,
+					"input_slot": 3,
+					"output_range": [18, 19]
 				},
 				"machine": {
 					"energy_cap": 12800000,

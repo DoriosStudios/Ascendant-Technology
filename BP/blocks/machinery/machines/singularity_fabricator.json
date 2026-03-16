@@ -32,9 +32,12 @@
 			"utilitycraft:singularity_fabricator": {
 				"rotation": "facing",
 				"entity": {
+					"type": "machine",
 					"input_type": "complex",
 					"output_type": "simple",
 					"inventory_size": 20,
+					"input_slot": 3,
+					"output_range": [18, 19],
 					"fluid": true
 				},
 				"machine": {

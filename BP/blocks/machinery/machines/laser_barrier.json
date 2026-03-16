@@ -17,6 +17,7 @@
             "utilitycraft:laser_barrier": {
                 "rotation": "facing",
                 "entity": {
+                    "type": "machine",
                     "input_type": "simple",
                     "output_type": "simple",
                     "inventory_size": 7

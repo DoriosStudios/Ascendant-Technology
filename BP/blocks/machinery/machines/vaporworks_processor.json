@@ -17,9 +17,12 @@
 			"utilitycraft:vaporworks_processor": {
 				"rotation": "facing",
 				"entity": {
+					"type": "machine",
 					"input_type": "fluid",
 					"output_type": "fluid",
-					"inventory_size": 20
+					"inventory_size": 20,
+					"input_slot": 3,
+					"output_slot": 19
 				},
 				"machine": {
 					"energy_cap": 9600000,

@@ -17,8 +17,9 @@
             "utilitycraft:network_center": {
                 "rotation": "facing",
                 "entity": {
-                    "input_type": null,
-                    "output_type": null,
+                    "type": "machine",
+                    "input_type": "none",
+                    "output_type": "none",
                     "inventory_size": 6
                 },
                 "machine": {

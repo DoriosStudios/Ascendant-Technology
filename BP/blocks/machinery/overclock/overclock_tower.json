@@ -17,9 +17,11 @@
 			"utilitycraft:overclock_tower": {
 				"rotation": "facing",
 				"entity": {
+					"type": "machine",
 					"input_type": "simple",
 					"output_type": "simple",
-					"inventory_size": 15
+					"inventory_size": 15,
+					"input_range": [2, 10]
 				},
 				"machine": {
 					"energy_cap": 102400000,

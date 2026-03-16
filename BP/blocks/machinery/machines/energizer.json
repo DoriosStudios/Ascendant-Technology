@@ -32,9 +32,12 @@
 			"utilitycraft:energizer": {
 				"rotation": "facing",
 				"entity": {
+					"type": "machine",
 					"input_type": "simple",
 					"output_type": "simple",
-					"inventory_size": 20
+					"inventory_size": 20,
+					"input_range": [3, 4],
+					"output_slot": 19
 				},
 				"machine": {
 					"energy_cap": 256000000,

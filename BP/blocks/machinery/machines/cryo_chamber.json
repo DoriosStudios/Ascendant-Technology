@@ -17,9 +17,12 @@
 			"utilitycraft:cryo_chamber": {
 				"rotation": "facing",
 				"entity": {
+					"type": "machine",
 					"input_type": "simple",
 					"output_type": "simple",
 					"inventory_size": 27,
+					"input_slot": 3,
+					"output_slot": 24,
 					"fluid": true
 				},
 				"machine": {

@@ -47,13 +47,25 @@
 						"items": [
 							"minecraft:experience_bottle"
 						],
-						"repair_amount": 1561
+						"repair_amount": "(q.max_durability * 0.04)"
+					},
+					{
+						"items": [
+							"minecraft:emerald", "minecraft:gold_ingot"
+						],
+						"repair_amount": "(q.max_durability * 0.8)"
+					},
+					{
+						"items": [ 
+							"minecraft:emerald_block", "minecraft:gold_block"
+						],
+						"repair_amount": "(q.max_durability * 0.333)"
 					},
 					{
 						"items": [
 							"utilitycraft:lucky_aiot"
 						],
-						"repair_amount": 7805
+						"repair_amount": "(q.max_durability)"
 					}
 				]
 			},

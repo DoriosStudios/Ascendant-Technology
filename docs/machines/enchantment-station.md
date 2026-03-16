@@ -38,9 +38,45 @@ Station for enchanting, curse curation, reinforcement management and disenchanti
 - **31**: Disenchant HUD status
 
 ## Modules
-- **Enchantability modules (Lv1-Lv5)**: control enchant plan size and target levels.
-- **Reinforcement modules (Lv1-Lv3)**: define reinforcement pool target.
-- **Curse Protection module**: enables curse curation and affects curse chance/cost behavior.
+### Enchantability Modules
+Controls enchanting behavior and available enchantments, with a total of 5 levels:
+- **Level 1 Enchantments**: 
+  - Sharpness, Smite, Bane of Arthropods, Impaling, Efficiency, Power, Density - I
+  - Protection, Fire Protection, Blast Protection, Projectile Protection, Feather Falling, Piercing, Breach - I
+  - Unbreaking, Fortune, Luck of the Sea, Lure, Loyalty, Quick Charge, Respiration, Thorns, Swift Sneak, Soul Speed, Wind Burst, Lunge, Depth Strider, Riptide, Looting - I
+- **Level 2 Enchantments**:
+  - Sharpness, Smite, Bane of Arthropods, Impaling, Efficiency, Power, Density - II
+  - Protection, Fire Protection, Blast Protection, Projectile Protection, Feather Falling, Piercing, Breach - II
+  - Unbreaking, Fortune, Luck of the Sea, Lure, Loyalty, Quick Charge, Respiration, Thorns, Swift Sneak, Soul Speed, Wind Burst, Lunge, Depth Strider, Riptide, Looting - I
+- **Level 3 Enchantments**:
+  - Sharpness, Smite, Bane of Arthropods, Impaling, Efficiency, Power, Density - III
+  - Protection, Fire Protection, Blast Protection, Projectile Protection, Feather Falling, Piercing, Breach - II
+  - Unbreaking, Fortune, Luck of the Sea, Lure, Loyalty, Quick Charge, Respiration, Thorns, Swift Sneak, Soul Speed, Wind Burst, Lunge, Depth Strider, Riptide, Looting - II
+  - Knockback, Fire Aspect, Punch, Frost Walker - I
+- **Level 4 Enchantments**:
+  - Sharpness, Smite, Bane of Arthropods, Impaling, Efficiency, Power, Density - IV
+  - Protection, Fire Protection, Blast Protection, Projectile Protection, Feather Falling, Piercing, Breach - III
+  - Unbreaking, Fortune, Luck of the Sea, Lure, Loyalty, Quick Charge, Respiration, Thorns, Swift Sneak, Soul Speed, Wind Burst, Lunge, Depth Strider, Riptide, Looting - II
+  - Knockback, Fire Aspect, Punch, Frost Walker - II
+- **Level 5 Enchantments**:
+  - Sharpness, Smite, Bane of Arthropods, Impaling, Efficiency, Power, Density - V
+  - Protection, Fire Protection, Blast Protection, Projectile Protection, Feather Falling, Piercing, Breach - IV
+  - Unbreaking, Fortune, Luck of the Sea, Lure, Loyalty, Quick Charge, Respiration, Thorns, Swift Sneak, Soul Speed, Wind Burst, Lunge, Depth Strider, Riptide, Looting - III
+  - Knockback, Fire Aspect, Punch, Frost Walker - II
+  - Mending, Silk Touch, Infinity, Multishot, Channeling, Aqua Affinity, Flame - I
+
+There is a chance of 15% per enchantment level to get a curse instead of a regular enchantment.
+
+### Reinforcement Modules
+Provides reinforcement points to increase item durability, with 3 levels:
+- **Level 1**: 25% reinforcement target
+- **Level 2**: 50% reinforcement target
+- **Level 3**: 100% reinforcement target
+
+Applies to armor and tools, but not to items with no durability or only enchantments (e.g., Elytra).
+
+### **Curse Protection module**
+Prevents application of curses during enchanting and allows removal of configured curses from items. Curse curation is available at all enchantability levels and does not require reinforcement modules.
 
 ## Reinforcement behavior
 

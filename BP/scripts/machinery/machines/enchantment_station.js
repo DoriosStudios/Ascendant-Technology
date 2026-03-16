@@ -29,7 +29,7 @@ const ENCHANTMENT_SOURCES = [
         'minecraft:protection', 'minecraft:fire_protection', 'minecraft:blast_protection', 'minecraft:projectile_protection'
     ] },
     { kind: 'group', entries: [
-        'minecraft:sharpness', 'minecraft:smite', 'minecraft:bane_of_arthropods'
+        'minecraft:sharpness', 'minecraft:smite', 'minecraft:bane_of_arthropods', 'minecraft:density'
     ] },
     { kind: 'group', entries: [
         'minecraft:silk_touch', 'minecraft:fortune'
@@ -38,7 +38,7 @@ const ENCHANTMENT_SOURCES = [
         'minecraft:depth_strider', 'minecraft:frost_walker'
     ] },
     { kind: 'group', entries: [
-        'minecraft:multishot', 'minecraft:piercing'
+        'minecraft:multishot', 'minecraft:piercing', 'minecraft:breach'
     ] },
     { kind: 'group', entries: [
         'minecraft:loyalty', 'minecraft:riptide'
@@ -63,7 +63,9 @@ const ENCHANTMENT_SOURCES = [
     { kind: 'single', entries: ['minecraft:lure'] },
     { kind: 'single', entries: ['minecraft:luck_of_the_sea'] },
     { kind: 'single', entries: ['minecraft:soul_speed'] },
-    { kind: 'single', entries: ['minecraft:swift_sneak'] }
+    { kind: 'single', entries: ['minecraft:swift_sneak'] },
+    { kind: 'single', entries: ['minecraft:wind_burst'] },
+    { kind: 'single', entries: ['minecraft:lunge'] }
 ]
 
 /**
@@ -118,9 +120,9 @@ const config = Object.freeze({
             levels: [5, 4, 3, 2, 1],
             matrix: [
                 [1, 1, 1, 0, 0],
-                [2, 2, 0, 0, 0],
-                [3, 3, 2, 1, 0],
-                [4, 0, 0, 0, 0],
+                [2, 2, 1, 0, 0],
+                [3, 2, 2, 1, 0],
+                [4, 3, 2, 2, 0],
                 [5, 4, 3, 2, 1]
             ],
             modules: [1, 2, 3, 4, 5]

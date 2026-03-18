@@ -601,6 +601,15 @@ export class Machine {
 
         if (entity.inventory_size) inventorySize = entity.inventory_size
 
+        if (!entity.input_slots) {
+            if (entity.input_range) entity.input_slots = entity.input_range;
+            else if (entity.input_slot !== undefined) entity.input_slots = [entity.input_slot, entity.input_slot];
+        }
+        if (!entity.output_slots) {
+            if (entity.output_range) entity.output_slots = entity.output_range;
+            else if (entity.output_slot !== undefined) entity.output_slots = [entity.output_slot, entity.output_slot];
+        }
+
         if (entity.input_slots || entity.output_slots) {
             const slotRegister = {};
             if (entity.input_slots) {

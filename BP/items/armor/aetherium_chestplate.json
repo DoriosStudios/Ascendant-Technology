@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.80",
+    "format_version": "1.21.90",
     "minecraft:item": {
         "description": {
             "identifier": "utilitycraft:aetherium_chestplate",
@@ -29,6 +29,28 @@
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 1387
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": [
+                            "utilitycraft:aetherium_shard"
+                        ],
+                        "repair_amount": "(q.max_durability*0.25)"
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:aetherium"
+                        ],
+                        "repair_amount": "(q.max_durability*0.333)"
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:aetherium_chestplate"
+                        ],
+                        "repair_amount": "(q.max_durability*0.5)"
+                    }
+                ]
             }
         }
     }

@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.80",
+    "format_version": "1.21.90",
     "minecraft:item": {
         "description": {
             "identifier": "utilitycraft:titanium_leggings",
@@ -21,6 +21,28 @@
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 495
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": [
+                            "utilitycraft:titanium"
+                        ],
+                        "repair_amount": "(q.max_durability*0.25)"
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:titanium_plate"
+                        ],
+                        "repair_amount": "(q.max_durability*0.333)"
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:titanium_leggings"
+                        ],
+                        "repair_amount": "(q.max_durability*0.5)"
+                    }
+                ]
             }
         }
     }

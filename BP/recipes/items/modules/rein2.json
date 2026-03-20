@@ -1,0 +1,41 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:reinforcement_module_2"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "MNM",
+            "MUM",
+            "MNM"
+        ],
+        "key": {
+            "M": {
+                "item": "minecraft:iron_block"
+            },
+            "N": {
+                "item": "utilitycraft:steel_block"
+            },
+            "U": {
+                "item": "utilitycraft:reinforcement_module"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:reinforcement_module_2"
+        },
+        "unlock": [
+            {
+                "item": "minecraft:iron_block"
+            },
+            {
+                "item": "utilitycraft:steel_block"
+            },
+            {
+                "item": "utilitycraft:reinforcement_module"
+            }
+        ]
+    }
+}

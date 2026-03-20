@@ -1,0 +1,47 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:base_enchantment_station_module"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "SIS",
+            "IEI",
+            "SUS"
+        ],
+        "key": {
+            "S": {
+                "item": "utilitycraft:steel_ingot"
+            },
+            "I": {
+                "item": "utilitycraft:iron_plate"
+            },
+            "E": {
+                "item": "utilitycraft:ender_pearl_dust"
+            },
+            "U": {
+                "item": "utilitycraft:base_upgrade"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:ascane_module_base"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:steel_ingot"
+            },
+            {
+                "item": "utilitycraft:iron_plate"
+            },
+            {
+                "item": "utilitycraft:ender_pearl_dust"
+            },
+            {
+                "item": "utilitycraft:base_upgrade"
+            }
+        ]
+    }
+}

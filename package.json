@@ -9,6 +9,7 @@
     }
   },
   "dependencies": {
+    "@minecraft/common": "^1.2.0",
     "@minecraft/server": "^2.5.0"
   }
 }

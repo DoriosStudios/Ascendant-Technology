@@ -1,0 +1,53 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:curse_protection_module"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "GTG",
+            "EBE",
+            "GUG"
+        ],
+        "key": {
+            "G": {
+                "item": "minecraft:gold_block"
+            },
+            "T":{
+                "item": "minecraft:totem_of_undying"
+            },
+            "E": {
+                "item": "utilitycraft:blaze_block"
+            },
+            "U": {
+                "item": "utilitycraft:ultimate_chip"
+            },
+            "B": {
+                "item": "utilitycraft:base_upgrade"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:curse_protection_module"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:blaze_block"
+            },
+            {
+                "item": "minecraft:gold_block"
+            },
+            {
+                "item": "utilitycraft:ultimate_chip"
+            },
+            {
+                "item": "utilitycraft:base_upgrade"
+            },
+            {
+                "item": "minecraft:totem_of_undying"
+            }
+        ]
+    }
+}

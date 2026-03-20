@@ -1,7 +1,7 @@
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { system, world } from "@minecraft/server";
 
-const RANGE_LEVELS = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24];
+const RANGE_LEVELS = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
 const COOLDOWN_OPTIONS = [0, 5, 10, 15, 20, 30, 40];
 
 const EXCLUDED_TYPES = [

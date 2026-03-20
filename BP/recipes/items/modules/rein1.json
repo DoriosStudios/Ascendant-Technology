@@ -1,0 +1,41 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:reinforcement_module"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "MNM",
+            "MUM",
+            "MNM"
+        ],
+        "key": {
+            "M": {
+                "item": "utilitycraft:iron_plate"
+            },
+            "N": {
+                "item": "utilitycraft:steel_plate"
+            },
+            "U": {
+                "item": "utilitycraft:ascane_module_base"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:reinforcement_module"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:iron_plate"
+            },
+            {
+                "item": "utilitycraft:steel_plate"
+            },
+            {
+                "item": "utilitycraft:ascane_module_base"
+            }
+        ]
+    }
+}

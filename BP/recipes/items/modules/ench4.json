@@ -1,0 +1,53 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:enchantability_module_4"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "CVC",
+            "AMA",
+            "CUC"
+        ],
+        "key": {
+            "C": {
+                "item": "minecraft:popped_chorus_fruit"
+            },
+            "V": {
+                "item": "utilitycraft:void_essence"
+            },
+            "A": {
+                "item": "minecraft:amethyst_shard"
+            },
+            "M": {
+                "item": "utilitycraft:compressed_energized_iron_block"
+            },
+            "U": {
+                "item": "utilitycraft:enchantability_module_3"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:enchantability_module_4"
+        },
+        "unlock": [
+            {
+                "item": "minecraft:popped_chorus_fruit"
+            },
+            {
+                "item": "utilitycraft:void_essence"
+            },
+            {
+                "item": "minecraft:amethyst_shard"
+            },
+            {
+                "item": "utilitycraft:compressed_energized_iron_block"
+            },
+            {
+                "item": "utilitycraft:enchantability_module_3"
+            }
+        ]
+    }
+}

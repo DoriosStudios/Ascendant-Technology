@@ -24,7 +24,7 @@
 
 /** Block-state: functional toggle of the block (false = off, true = on). */
 export const STATE_IS_ON = "utilitycraft:isOn";
-/** Block-state: upgrade level index for range (0-11). Higher index unlocks larger reach. */
+/** Block-state: upgrade level index for range (0-15). Higher index unlocks larger reach. */
 export const STATE_RANGE = "utilitycraft:range";
 /** Block-state: currently selected reach in meters (enumerated distances). */
 export const STATE_RANGE_SELECTED = "utilitycraft:rangeSelected";
@@ -49,10 +49,10 @@ export const PROPERTY_REGISTRY = {
   },
 
   [STATE_RANGE]: {
-    description: 'Range upgrade level index (0-11). Higher index unlocks a wider selectable reach.',
+    description: 'Range upgrade level index (0-15). Higher index unlocks a wider selectable reach.',
     kind: 'block_state',
     type: 'enum',
-    values: [0,1,2,3,4,5,6,7,8,9,10,11],
+    values: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
     default: 0,
     notes: 'Represents the maximum unlocked range tier. Actual selected distance is in utilitycraft:rangeSelected.',
     jsonPaths: ['BP/blocks/**']
@@ -62,7 +62,7 @@ export const PROPERTY_REGISTRY = {
     description: 'Currently selected reach in meters (from the predefined distances). Clamped by the upgrade level.',
     kind: 'block_state',
     type: 'enum',
-    values: [2,4,6,8,10,12,14,16,18,20,22,24],
+    values: [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32],
     default: 2,
     notes: 'Written by UI when the player picks a distance. Should not exceed the tier unlocked by utilitycraft:range.',
     jsonPaths: ['BP/blocks/**']

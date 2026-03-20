@@ -1,4 +1,85 @@
-# v0.8.0 Alpha Build 5 (Current)
+# v0.8.0 Alpha Build 6 (Current)
+## BLOCKS
+### Generators
+- Absolute Wind Turbine
+  - Decreased altitude modifier by 43%.
+> [!NOTE]
+> This change was made because this generator was simply the best version, surpassing event active generators while being a passive generator. The player now needs to go ~2.8 blocks high instead of ~1.5 blocks to gain +10% efficiency, which is a more meaningful difference and makes the generator less of a no-brainer in many cases.
+### Machines
+- Enchantment Station
+  - Changed which enchantments are applied by level. These changes are docummented in docs/machines/enchantment_station.md.
+- Mob Magnet
+  - Expanded range upgrade tiers from 12 to 16 levels (now supporting levels 0 to 15).
+### Transportation
+- Added Inverted Sorter
+  - Filtered items are diverted to side outputs; other items continue forward.
+- Added Sorter
+  - Filtered items move forward; other items are diverted to side outputs.
+- Bridge Conveyors (All)
+  - Path guides now clear small environmental blocks (plants, torches, snow layers) during projection setup.
+  - Now have their own textures and models.
+
+## ITEMS
+### Tools
+- Aetherium and Titanium Swords no longer breaks blocks in creative mode.
+- Aetherium AIOT can now be enchanted with sword enchantments.
+  - Due to Mojang's lazy ass, it also has the every enchantments. I don't recommend using it in a Enchanting Table.
+- AIOTs can now break honeycomb blocks and bamboo.
+- Fluid Capsules
+  - Added Capsules for Water, Lava and XP.
+  - Fluid Capsules can now place world fluids and pick up source blocks, similar to buckets. They can also be filled with steam from the Vaporworks Processor.
+  - Milk capsules are now infinite-only and cannot pick up milk from the world.
+
+## MOBS
+### General
+- Disabled the Enderling family spawn.
+> [!NOTE]
+> My sincerely apologies. These guys proved to be way worse than I thought they would be. Animations, behavior and everything else is far beyond my power and knowledge to create and it'll take a while. They're still available in creative mode, but I don't recommend trying them.
+## RECIPES
+### Machines
+- Added recipes for Conveyors, Inclined Conveyors, and Bridge Transmitters/Receivers across all three tiers (Copper, Titanium, Aetherium).
+- Added Mob Magnet recipe using Lodestone, Redstone, and Lapis Lazuli.
+- Updated machine crafting progression recipes:
+  - Cryo Chamber now uses Titanium Block and Packed Ice in the core recipe.
+  - Enchantment Station and Vaporworks Processor recipes were added.
+  - Singularity Fabricator ingredient progression was adjusted for better late-game flow.
+- Added Enchantment Station module recipes:
+  - Enchantability Module (Levels 1 to 5)
+  - Reinforcement Module (Levels 1 to 3)
+
+## UI/UX
+- Updated Mob Magnet and Smart Router placeholders to JSON-style `%` variables so dynamic values render correctly in all supported languages.
+- Added Smart Router localization coverage (menu text, assignment actions, and status feedback) across all supported languages.
+- Added Sorter Conveyor localization coverage (mode/filter labels, set/clear actions, and close button) across all supported languages.
+- Localized Generator transfer mode selection text and Laser Barrier upgrade feedback across all supported languages.
+- Added missing bridge obstruction feedback key and Enchantment Station entity name mapping in non-English locales to prevent raw key text.
+- Added missing Mob Magnet localization entries for new settings buttons and filter mode variants.
+- Added missing item-group localization entries for Conveyors and Mob Grinding.
+- Replaced hardcoded Cryo Chamber freezer title text with a localized key mapping.
+- Aligned Cryo Chamber UI slot bindings with script indices, including explicit hidden guide-slot reservation (`25`) and clearer stabilizer input slot naming (`3`).
+
+## BUG FIXES
+- Fixed Mob Magnet text rendering issues. [#36](https://github.com/DoriosStudios/Ascendant-Technology/issues/36)
+- Fixed Mob Magnet not pulling mobs in some cases after state updates. [#37](https://github.com/DoriosStudios/Ascendant-Technology/issues/37)
+- Fixed Aetherium and Titanium hammers not applying hammer recipes correctly. [#39](https://github.com/DoriosStudios/Ascendant-Technology/issues/39)
+- Fixed Aetherium and Titanium ores dropping nothing when mined by drills or command breaks. [#40](https://github.com/DoriosStudios/Ascendant-Technology/issues/40)
+
+## TECHNICAL CHANGES
+### Core Utilities
+- Added global metadata-aware machine item handling utilities (name, lore, enchantments, durability, lock mode, keep-on-death, and dynamic properties).
+- Upgraded shared item insertion logic to support metadata-aware stacking/capture flows.
+- Added centralized drop particle catalog exports for drop system usage.
+- Extended Dorios Excavate bridge vanilla-drop handling with additional regeneration mode support.
+
+### Runtime Registration
+- Refactored machine-local defaults into local `config` objects for the new machine helper pipeline.
+- Enchantment Station now supports runtime override channels via `settings.machine.station` and `settings.machine.config.station`.
+- Added `machine.config` payload support in machine block definitions to align runtime configuration channels.
+- Migrated Insight injector runtime imports to `DoriosCore` exports and removed obsolete legacy runtime dependencies.
+- Moved deprecated Tabs Test Machine assets out of production runtime bootstrap.
+- Improved Mob Magnet runtime safety for cross-API entity validation and clarified range display as 1-based levels in settings UI.
+
+# v0.8.0 Alpha Build 5
 ## BLOCKS
 ### Transportation
 - Added Conveyor Sorter.

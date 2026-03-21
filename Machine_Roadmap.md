@@ -23,7 +23,9 @@ Machine status legend:
 
 # Summary by implementation rationale (4 categories)
 
-Status in title: **✔ Implemented** | **🔺 Not Implemented**
+Status:
+- **✔: Implemented**
+- **🔺: Not Implemented**
 
 | New Machines | Upgraded Machines | Items & Gear | Infrastructure & Systems |
 |---|---|---|---|
@@ -45,10 +47,11 @@ Status in title: **✔ Implemented** | **🔺 Not Implemented**
 | ✔ **Residue Processor** | 🔺 **Seismic Breaker** | — | — |
 | ✔ **Singularity Fabricator** | — | — | — |
 | ✔ **Vaporworks Processor** | — | — | — |
+| 🔺 **Dismantler** | - | - | - |
 
 ---
 
-# Implemented systems (stable)
+# New Additions (Machines)
 
 - 🟢 **Absolute Container**
   - **Purpose:** Singular vault for high-capacity item, fluid, and energy storage.
@@ -67,6 +70,13 @@ Status in title: **✔ Implemented** | **🔺 Not Implemented**
     2. Cooling Chamber
     3. Cryofluid Generator
   - **Notes:** Core machine for future cold-chain industry.
+
+- 🟡 **Dismantler**
+  - **Purpose:** Disassemble and recover parts from previously created items.
+  - **Operating Mode:** It has an input with a 3x3 grid output, to retrieve the materials used in the crafting recipe. It uses energy and supports **4** upgrades, the additional upgrade being Quantity.
+    - Quantity Upgrades will have 4 levels, acting randomly based on the percentage of materials used. Each level will recover 25% of the materials.
+  - **Upgrades:** Efficiency, Speed, Hyper Processing, Quantity
+
 
 - 🟢 **Duplicator (Replication Matrix)**
   - **Purpose:** Late-game replication with high energy and fluid costs.

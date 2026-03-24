@@ -7,8 +7,10 @@ const BASE_HEIGHT = 3 // vertical blocks
 const DAMAGE = 4 // 2 hearts per pulse
 const COOLDOWN_TICKS = 4
 const MAX_SIZE_LEVEL = 8
+const DAMAGE_LATERAL_PADDING = 0.5 // extra hit width on each side of each barrier block
 const FIELD_ID = 'utilitycraft:laser_barrier_field'
 const FIELD_REFRESH_TICKS = 10 // only rebuild the wall a few times per second
+const ENERGY_UPGRADE_CYCLE_COSTS = [800, 720, 640, 560, 480, 400, 320, 240, 200]
 const AIR_BLOCK_IDS = new Set(['minecraft:air', 'minecraft:cave_air', 'minecraft:void_air'])
 const FIELD_CLEARABLE_BLOCKS = new Set([
     'minecraft:snow',
@@ -111,9 +113,12 @@ DoriosAPI.register.blockComponent('laser_barrier', {
         const machine = new Machine(block, settings)
         if (!machine.valid) return
 
+        const levels = getBarrierLevels(machine)
+
         // Energy upkeep
-        const energyCost = settings?.machine?.energy_cost ?? DEFAULT_COST
-        machine.setEnergyCost(energyCost)
+        const baseCost = settings?.machine?.energy_cost ?? DEFAULT_COST
+        const cycleCost = getCycleCostByEnergyUpgrade(levels.energyLevel, baseCost)
+        machine.setEnergyCost(cycleCost)
 
         const energy = machine.energy.get()
         if (energy <= 0) {
@@ -123,14 +128,13 @@ DoriosAPI.register.blockComponent('laser_barrier', {
         }
 
         // Drain energy continuously to keep the barrier active
-        const spend = Math.min(energy, machine.rate, energyCost)
+        const spend = Math.min(energy, machine.rate, cycleCost)
         if (spend > 0) {
             machine.energy.consume(spend)
             machine.addProgress(spend)
         }
 
         // Maintain wall and pulse damage
-        const levels = getBarrierLevels(machine)
         const length = BASE_LENGTH + levels.lengthLevel
         const height = BASE_HEIGHT + levels.heightLevel
 
@@ -141,8 +145,8 @@ DoriosAPI.register.blockComponent('laser_barrier', {
             machine.entity.setDynamicProperty(DP_REFRESH_CD, FIELD_REFRESH_TICKS)
         }
 
-        if (machine.getProgress() >= energyCost) {
-            machine.addProgress(-energyCost)
+        if (machine.getProgress() >= cycleCost) {
+            machine.addProgress(-cycleCost)
             pulseBarrier(machine, length, height)
         }
 
@@ -228,13 +232,18 @@ function clearFieldAroundBlock(block, radius = 10) {
 
 function pulseBarrier(machine, length, height) {
     const dim = machine.block.dimension
-    const center = machine.block.center()
-    center.y += 0.5
+    const positions = computeWall(machine.block, length, height)
+    const search = getSearchSphereFromPositions(positions)
+    if (!search) {
+        machine.holdTransfers(COOLDOWN_TICKS)
+        return
+    }
 
-    const radius = Math.max(length, height) / 2 + 1.5
+    const fieldPositions = new Set(positions.map(keyOf))
+    const fieldHitboxes = buildFieldDamageHitboxes(positions)
     const targets = dim.getEntities({
-        location: center,
-        maxDistance: radius,
+        location: search.center,
+        maxDistance: search.radius,
         excludeTypes: ['utilitycraft:machine', 'dorios:machine', 'minecraft:item', 'minecraft:xp_orb'],
         excludeFamilies: ['inanimate', 'projectile', 'item']
     })
@@ -542,4 +551,86 @@ function getHeldItem(player) {
     const slot = player.selectedSlot
     if (slot === undefined || slot === null) return null
     return inv.getItem(slot)
+}
+
+function getCycleCostByEnergyUpgrade(energyLevel, fallbackCost = DEFAULT_COST) {
+    const level = Math.max(0, Math.min(8, Math.floor(Number(energyLevel) || 0)))
+    const mapped = ENERGY_UPGRADE_CYCLE_COSTS[level]
+    return Number.isFinite(mapped) && mapped > 0 ? mapped : fallbackCost
+}
+
+function getSearchSphereFromPositions(positions) {
+    if (!Array.isArray(positions) || positions.length === 0) return null
+
+    let minX = Number.POSITIVE_INFINITY
+    let minY = Number.POSITIVE_INFINITY
+    let minZ = Number.POSITIVE_INFINITY
+    let maxX = Number.NEGATIVE_INFINITY
+    let maxY = Number.NEGATIVE_INFINITY
+    let maxZ = Number.NEGATIVE_INFINITY
+
+    for (const pos of positions) {
+        if (pos.x < minX) minX = pos.x
+        if (pos.y < minY) minY = pos.y
+        if (pos.z < minZ) minZ = pos.z
+        if (pos.x > maxX) maxX = pos.x
+        if (pos.y > maxY) maxY = pos.y
+        if (pos.z > maxZ) maxZ = pos.z
+    }
+
+    const center = {
+        x: (minX + maxX + 1) / 2,
+        y: (minY + maxY + 1) / 2,
+        z: (minZ + maxZ + 1) / 2
+    }
+
+    const dx = (maxX - minX + 1) / 2
+    const dy = (maxY - minY + 1) / 2
+    const dz = (maxZ - minZ + 1) / 2
+    const radius = Math.sqrt(dx * dx + dy * dy + dz * dz) + 1
+
+    return { center, radius }
+}
+
+function buildFieldDamageHitboxes(positions) {
+    if (!Array.isArray(positions) || positions.length === 0) return []
+    const pad = DAMAGE_LATERAL_PADDING
+
+    return positions.map(pos => ({
+        minX: pos.x - pad,
+        maxX: pos.x + 1 + pad,
+        minY: pos.y,
+        maxY: pos.y + 1,
+        minZ: pos.z - pad,
+        maxZ: pos.z + 1 + pad
+    }))
+}
+
+function isEntityInsideField(entity, fieldPositions, fieldHitboxes = []) {
+    if (!entity?.location || !fieldPositions?.size) return false
+
+    const baseX = Math.floor(entity.location.x)
+    const baseY = Math.floor(entity.location.y)
+    const baseZ = Math.floor(entity.location.z)
+
+    if (
+        fieldPositions.has(`${baseX}|${baseY}|${baseZ}`)
+        || fieldPositions.has(`${baseX}|${baseY + 1}|${baseZ}`)
+        || fieldPositions.has(`${baseX}|${baseY + 2}|${baseZ}`)
+    ) {
+        return true
+    }
+
+    if (!Array.isArray(fieldHitboxes) || fieldHitboxes.length === 0) return false
+
+    const sampleX = entity.location.x
+    const sampleZ = entity.location.z
+    const sampleY = [entity.location.y, entity.location.y + 0.9, entity.location.y + 1.8]
+
+    for (const box of fieldHitboxes) {
+        if (sampleX < box.minX || sampleX > box.maxX || sampleZ < box.minZ || sampleZ > box.maxZ) continue
+        if (sampleY.some(y => y >= box.minY && y <= box.maxY)) return true
+    }
+
+    return false
 }

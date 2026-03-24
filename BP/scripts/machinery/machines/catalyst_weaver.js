@@ -7,6 +7,7 @@ const CATALYST_SLOTS = [4, 5, 6, 7, 8, 9]
 const FLUID_SLOT = 10
 const FLUID_DISPLAY_SLOT = 11
 const FLUID_INFO_SLOT = 12
+const OUTPUT_PROBE_SLOT = 13
 const UPGRADE_SLOTS = [15, 16, 17]
 const BYPRODUCT_SLOT = 18
 const OUTPUT_SLOT_INDEX = 19
@@ -110,8 +111,9 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             : []
         const recipe = matchRecipe(recipes, inputStack, catalystStacks, tank)
         const helperLore = buildCatalystHelperLore(recipes, inputStack, catalystStacks)
+        const quantityHelperLore = buildInsufficientQuantityLore(recipes, inputStack, catalystStacks)
         const catalystFluidLore = buildCatalystFluidLore(recipe, recipes, inputStack)
-        const sharedLore = mergeLore(recipePreviewLore, helperLore, catalystFluidLore)
+        const sharedLore = mergeLore(recipePreviewLore, helperLore, quantityHelperLore, catalystFluidLore)
         updateFluidLabel(catalystFluidLore)
 
         const outputId = recipe?.output?.id
@@ -146,20 +148,17 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         
         // Priority 5: Invalid recipe (last resort)
         if (!recipe) {
-            const catalystStatus = recipes.some(r => matchesStack(r.input, inputStack)) 
-                ? analyzeCatalystStatus(recipes.find(r => matchesStack(r.input, inputStack)), catalystStacks)
-                : 'invalid'
+            const recipesForInput = getRecipesByInputType(recipes, inputStack)
+            const warningMessage = (() => {
+                if (recipesForInput.length === 0) return 'No Recipes Available'
 
-            let warningMessage = 'Invalid Recipe'
-            if (catalystStatus === 'missing_all') {
-                warningMessage = 'Missing Catalysts'
-            } else if (catalystStatus === 'missing_catalysts') {
-                warningMessage = 'Missing Some Catalysts'
-            } else if (catalystStatus === 'insufficient_catalysts') {
-                warningMessage = 'Insufficient Catalysts'
-            } else if (catalystStatus === 'wrong_catalysts' || catalystStatus === 'extra_catalysts') {
-                warningMessage = 'Wrong Catalysts'
-            }
+                const hasAvailableOutput = recipesForInput.some(candidate =>
+                    canProbeOutputInHiddenSlot(machine, candidate?.output?.id)
+                )
+
+                if (!hasAvailableOutput) return "Couldn't Find Output"
+                return 'Missing Materials'
+            })()
 
             showMachineWarning(machine, tank, warningMessage, { lore: sharedLore })
             return
@@ -175,24 +174,6 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
         if (outputSpace < (recipe.output?.amount ?? 1)) {
             showMachineWarning(machine, tank, 'Output Full', { lore: sharedLore })
             return
-        }
-
-        const byproductSlot = recipe.byproduct ? inv.getItem(BYPRODUCT_SLOT) : null
-        if (recipe.byproduct && byproductSlot && byproductSlot.typeId !== recipe.byproduct.id) {
-            showMachineWarning(machine, tank, 'Byproduct Full', { lore: sharedLore })
-            return
-        }
-
-        if (recipe.byproduct && byproductSlot && byproductSlot.typeId === recipe.byproduct.id) {
-            let requiredSpace = recipe.byproduct.amount ?? 1
-            if (Array.isArray(requiredSpace)) {
-                requiredSpace = requiredSpace[1] // Use max value for space check
-            }
-            const availableSpace = (byproductSlot.maxAmount ?? 64) - byproductSlot.amount
-            if (availableSpace < requiredSpace) {
-                showMachineWarning(machine, tank, 'Byproduct Slot Full', { lore: sharedLore })
-                return
-            }
         }
 
         const energyCost = recipe.cost ?? settings.machine.energy_cost
@@ -211,8 +192,7 @@ DoriosAPI.register.blockComponent('catalyst_weaver', {
             catalystStacks,
             recipe,
             outputSpace,
-            tank,
-            byproductSlot
+            tank
         })
         if (maxBatches <= 0) {
             showMachineWarning(machine, tank, 'Missing Materials', { lore: sharedLore })
@@ -265,53 +245,26 @@ function matchRecipe(recipes, inputStack, catalystStacks, tank) {
     return null
 }
 
+function matchesInputType(requirement, stack) {
+    if (!requirement?.id || !stack) return false
+    return stack.typeId === requirement.id
+}
+
 function matchesStack(requirement, stack) {
     if (!stack) return false
     return stack.typeId === requirement.id && stack.amount >= (requirement.amount ?? 1)
 }
 
-function countPotentialRecipes(recipes, inputStack) {
-    if (!inputStack) return 0
-    let count = 0
-    for (const recipe of recipes) {
-        if (!recipe?.input || !recipe.output) continue
-        if (matchesStack(recipe.input, inputStack)) count++
-    }
-    return count
+function getRecipesByInputType(recipes, inputStack) {
+    if (!Array.isArray(recipes) || !inputStack) return []
+    return recipes.filter(recipe => {
+        if (!recipe?.input || !recipe.output) return false
+        return matchesInputType(recipe.input, inputStack)
+    })
 }
 
-function analyzeCatalystStatus(recipe, catalystStacks) {
-    const requirementTotals = getCatalystRequirementTotals(recipe.catalysts)
-    const stackTotals = getCatalystStackTotals(catalystStacks)
-    
-    if (requirementTotals.size === 0) {
-        if (stackTotals.size > 0) return 'extra_catalysts'
-        return 'ok'
-    }
-    
-    if (stackTotals.size === 0) return 'missing_all'
-    
-    const missingTypes = []
-    const insufficientTypes = []
-    
-    for (const [type, needed] of requirementTotals.entries()) {
-        const available = stackTotals.get(type) ?? 0
-        if (available === 0) {
-            missingTypes.push(type)
-        } else if (available < needed) {
-            insufficientTypes.push(type)
-        }
-    }
-    
-    for (const type of stackTotals.keys()) {
-        if (!requirementTotals.has(type)) {
-            return 'wrong_catalysts'
-        }
-    }
-    
-    if (missingTypes.length > 0) return 'missing_catalysts'
-    if (insufficientTypes.length > 0) return 'insufficient_catalysts'
-    return 'ok'
+function countPotentialRecipes(recipes, inputStack) {
+    return getRecipesByInputType(recipes, inputStack).length
 }
 
 function matchesCatalysts(requirements = [], stacks) {
@@ -347,18 +300,15 @@ function buildRecipePreviewLore(
     const candidateMap = new Map()
     for (const recipe of recipes) {
         if (!recipe?.input || !recipe.output) continue
-        if (!matchesStack(recipe.input, inputStack)) continue
+        if (!matchesInputType(recipe.input, inputStack)) continue
 
         const key = getRecipePreviewKey(recipe)
-        const score = getCatalystMatchScore(recipe.catalysts, catalystStacks)
         const existing = candidateMap.get(key)
         if (existing) {
-            existing.score = Math.max(existing.score, score)
             existing.variants++
         } else {
             candidateMap.set(key, {
                 name: formatRecipePreviewName(recipe),
-                score,
                 variants: 1
             })
         }
@@ -366,11 +316,6 @@ function buildRecipePreviewLore(
 
     const candidates = Array.from(candidateMap.values())
     if (candidates.length === 0) return []
-
-    candidates.sort((a, b) => {
-        if (b.score !== a.score) return b.score - a.score
-        return a.name.localeCompare(b.name)
-    })
 
     const colors = DoriosAPI?.constants?.textColors ?? {}
     const gray = colors.gray ?? '§7'
@@ -387,7 +332,7 @@ function buildRecipePreviewLore(
 
         const truncated = truncatePreviewText(entry.name, maxLength)
         const variantSuffix = entry.variants > 1 ? ` (+${entry.variants - 1} alt)` : ''
-        const lineText = `${truncated}`
+        const lineText = `${truncated}${variantSuffix}`
         const line = `${reset}${gray}  ${lineText}`
         const potentialLength = currentLength + line.length
 
@@ -455,7 +400,7 @@ function buildCatalystHelperLore(recipes, inputStack, catalystStacks) {
 function getCompatibleRecipes(recipes, inputStack, catalystStacks) {
     const insertedTotals = getCatalystStackTotals(catalystStacks)
     return recipes.filter(recipe => {
-        if (!matchesStack(recipe.input, inputStack)) return false
+        if (!matchesInputType(recipe.input, inputStack)) return false
         return isCatalystPrefixCompatible(recipe, insertedTotals)
     })
 }
@@ -492,7 +437,62 @@ function collectFirstCatalystOptions(recipes, insertedTotals) {
             })
         }
     }
-    return Array.from(pool.values()).sort((a, b) => a.name.localeCompare(b.name))
+    return Array.from(pool.values())
+}
+
+function buildInsufficientQuantityLore(recipes, inputStack, catalystStacks) {
+    if (!Array.isArray(recipes) || recipes.length === 0) return []
+    if (!inputStack) return []
+
+    const recipesForInput = getRecipesByInputType(recipes, inputStack)
+    if (recipesForInput.length === 0) return []
+
+    const lore = []
+
+    const insufficientInputRecipe = recipesForInput.find(recipe => {
+        const required = recipe?.input?.amount ?? 1
+        return inputStack.amount < required
+    })
+
+    if (insufficientInputRecipe) {
+        const required = insufficientInputRecipe.input?.amount ?? 1
+        lore.push(`§7- Input: ${formatItemName(inputStack.typeId)} ${inputStack.amount}/${required}`)
+    }
+
+    const catalystTotals = getCatalystStackTotals(catalystStacks)
+    const catalystDeficits = findInsufficientCatalystEntries(recipesForInput, catalystTotals)
+    if (catalystDeficits.length > 0) {
+        const limitedDeficits = catalystDeficits.slice(0, config.helper.maxPoolEntries)
+        for (const deficit of limitedDeficits) {
+            lore.push(`§7- Catalyst: ${formatItemName(deficit.id)} ${deficit.have}/${deficit.need}`)
+        }
+        if (catalystDeficits.length > limitedDeficits.length) {
+            lore.push('§7- ...')
+        }
+    }
+
+    if (!lore.length) return []
+    return ['§6Insufficient Amount:', ...lore]
+}
+
+function findInsufficientCatalystEntries(recipesForInput, catalystTotals) {
+    for (const recipe of recipesForInput) {
+        const requirements = getCatalystRequirementTotals(recipe.catalysts)
+        const deficits = []
+
+        for (const [id, need] of requirements.entries()) {
+            const have = catalystTotals.get(id) ?? 0
+            if (have > 0 && have < need) {
+                deficits.push({ id, have, need })
+            }
+        }
+
+        if (deficits.length > 0) {
+            return deficits
+        }
+    }
+
+    return []
 }
 
 function findNextCatalystHint(recipe, insertedTotals) {
@@ -553,7 +553,7 @@ function buildCatalystFluidLore(recipe, recipes, inputStack) {
         return [header, bulletNone]
     }
 
-    const candidates = recipes.filter(r => r?.input && matchesStack(r.input, inputStack))
+    const candidates = recipes.filter(r => r?.input && matchesInputType(r.input, inputStack))
     if (!candidates.length) return [header, bulletNone]
 
     const fluidDefs = candidates
@@ -598,16 +598,34 @@ function showMachineWarning(machine, tank, message, { resetProgress = true, lore
     tank.display(FLUID_DISPLAY_SLOT)
 }
 
+function canProbeOutputInHiddenSlot(machine, itemId, slotIndex = OUTPUT_PROBE_SLOT) {
+    if (!machine?.entity || !machine?.inv || !itemId || typeof itemId !== 'string') return false
+
+    try {
+        machine.entity.setItem(slotIndex, itemId, 1, '')
+        const probe = machine.inv.getItem(slotIndex)
+        machine.inv.setItem(slotIndex)
+        return probe?.typeId === itemId
+    } catch {
+        try {
+            machine.inv.setItem(slotIndex)
+        } catch {
+            // no-op: keep failure isolated to probing
+        }
+        return false
+    }
+}
+
 /**
  * Mantém em um único local a lista de displays acionados enquanto a máquina roda.
  * Atualiza o tanque visual, energia HUD, barra de progresso e rótulo principal.
  */
-function showRunningDisplays(machine, tank, lore = []) {
+function showRunningDisplays(machine, tank, lore = [], statusMessage = 'Running') {
     tank.display(FLUID_DISPLAY_SLOT)
     machine.on()
     machine.displayEnergy()
     machine.displayProgress()
-    machine.showStatus('Running', lore)
+    machine.showStatus(statusMessage, lore)
 }
 
 function formatRecipePreviewName(recipe) {
@@ -633,20 +651,7 @@ function truncatePreviewText(text, limit = 32) {
     return `${text.slice(0, limit - 1)}...`
 }
 
-function getCatalystMatchScore(requirements = [], stacks = []) {
-    if (!Array.isArray(requirements) || !Array.isArray(stacks)) return 0
-    let score = 0
-    for (const requirement of requirements) {
-        if (!requirement?.id) continue
-        if (stacks.some(stack => stack?.typeId === requirement.id)) {
-            score++
-        }
-    }
-    return score
-}
-
-
-function calculateMaxBatches({ inputStack, catalystStacks, recipe, outputSpace, tank, byproductSlot }) {
+function calculateMaxBatches({ inputStack, catalystStacks, recipe, outputSpace, tank }) {
     let max = Infinity
     const inputRequired = recipe.input.amount ?? 1
     max = Math.min(max, Math.floor(inputStack.amount / inputRequired))
@@ -676,21 +681,6 @@ function calculateMaxBatches({ inputStack, catalystStacks, recipe, outputSpace, 
         max = Math.min(max, Math.floor(outputSpace / recipe.output.amount))
     }
 
-    if (recipe.byproduct) {
-        const slot = byproductSlot
-        let amount = recipe.byproduct.amount ?? 1
-        if (Array.isArray(amount)) {
-            amount = amount[1] // Use max value for capacity check
-        }
-        if (!slot) {
-            // ok, empty slot -> can accept at least one craft
-        } else if (slot.typeId !== recipe.byproduct.id) {
-            return 0
-        } else {
-            max = Math.min(max, Math.floor((slot.maxAmount - slot.amount) / amount))
-        }
-    }
-
     return Math.max(0, max)
 }
 
@@ -715,9 +705,27 @@ function applyCraft(machine, recipe, crafts, tank) {
 
     if (recipe.byproduct) {
         const chance = recipe.byproduct.chance ?? 1
+        let skippedByproduct = 0
+
         for (let i = 0; i < crafts; i++) {
             if (Math.random() > chance) continue
-            addByproduct(machine, recipe.byproduct)
+
+            try {
+                const added = addByproduct(machine, recipe.byproduct)
+                if (!added) skippedByproduct++
+            } catch (error) {
+                skippedByproduct++
+                console.warn(
+                    `[Catalyst Weaver] Failed to add byproduct '${recipe.byproduct.id}'.`,
+                    error
+                )
+            }
+        }
+
+        if (skippedByproduct > 0) {
+            console.warn(
+                `[Catalyst Weaver] Skipped ${skippedByproduct} byproduct drop(s) for '${recipe.byproduct.id}' because the byproduct slot was unavailable.`
+            )
         }
     }
 }
@@ -734,10 +742,14 @@ function addByproduct(machine, byproduct) {
     
     if (!slot) {
         machine.entity.setItem(BYPRODUCT_SLOT, byproduct.id, amount)
+        return true
     } else if (slot.typeId === byproduct.id) {
+        const availableSpace = (slot.maxAmount ?? 64) - slot.amount
+        if (availableSpace < amount) return false
         machine.entity.changeItemAmount(BYPRODUCT_SLOT, amount)
+        return true
     } else {
-        machine.entity.addItem(byproduct.id, amount)
+        return false
     }
 }
 

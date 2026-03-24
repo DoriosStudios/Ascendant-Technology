@@ -172,7 +172,7 @@ const nativeCatalystWeaverRecipes = [
         output: {id: 'utilitycraft:refined_aetherium_shard', amount: 1}
     }),
     defineWeaverRecipe({
-        input: {id: 'minecraft:water_bottle', amount: 1},
+        input: {id: 'minecraft:glass_bottle', amount: 1},
         catalysts: [ {id: 'utilitycraft:crushed_endstone', amount: 1}
         ],
         fluid: {type: 'dark_matter', amount: 100},

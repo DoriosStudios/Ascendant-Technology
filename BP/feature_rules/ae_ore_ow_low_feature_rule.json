@@ -2,8 +2,8 @@
 	"format_version": "1.13.0",
 	"minecraft:feature_rules": {
 		"description": {
-			"identifier": "utilitycraft:aetherium_ore_overworld_low_feature_rule",
-			"places_feature": "utilitycraft:aetherium_ore_overworld_feature"
+			"identifier": "utilitycraft:ae_ore_ow_low_feature_rule",
+			"places_feature": "utilitycraft:ae_ore_ow_feature"
 		},
 		"conditions": {
 			"placement_pass": "underground_pass",

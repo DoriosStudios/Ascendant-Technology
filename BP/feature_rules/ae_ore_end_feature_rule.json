@@ -2,34 +2,25 @@
   "format_version": "1.13.0",
   "minecraft:feature_rules": {
     "description": {
-      "identifier": "utilitycraft:titanium_ore_low_feature_rule",
-      "places_feature": "utilitycraft:titanium_ore_feature"
+      "identifier": "utilitycraft:ae_ore_end_feature_rule",
+      "places_feature": "utilitycraft:ae_ore_end_feature"
     },
     "conditions": {
       "placement_pass": "underground_pass",
       "minecraft:biome_filter": [
         {
-          "any_of": [
+          "all_of": [
             {
               "test": "has_biome_tag",
               "operator": "==",
-              "value": "overworld"
-            },
-            {
-              "test": "has_biome_tag",
-              "operator": "==",
-              "value": "overworld_generation"
+              "value": "the_end"
             }
           ]
         }
       ]
     },
     "distribution": {
-      "scatter_chance": {
-        "numerator": 1,
-        "denominator": 16
-      },
-      "iterations": 7,
+      "iterations": 40,
       "coordinate_eval_order": "zyx",
       "x": {
         "distribution": "uniform",
@@ -37,7 +28,7 @@
       },
       "y": {
         "distribution": "uniform",
-        "extent": [-64, -48]
+        "extent": [0, 80]
       },
       "z": {
         "distribution": "uniform",

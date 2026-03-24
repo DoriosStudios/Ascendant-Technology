@@ -21,7 +21,8 @@
 					"output_type": "fluid",
 					"inventory_size": 20,
 					"input_slot": 3,
-					"output_slot": 19
+					"output_slot": 19,
+					"fluid": true
 				},
 				"machine": {
 					"energy_cap": 9600000,

@@ -2,7 +2,7 @@
   "format_version": "1.17.0",
   "minecraft:ore_feature": {
     "description": {
-      "identifier": "utilitycraft:titanium_ore_feature"
+      "identifier": "utilitycraft:tt_ore_feature"
     },
     "count": 5,
     "replace_rules": [

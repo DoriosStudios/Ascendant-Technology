@@ -2,8 +2,8 @@
   "format_version": "1.13.0",
   "minecraft:feature_rules": {
     "description": {
-      "identifier": "utilitycraft:titanium_ore_mid_feature_rule",
-      "places_feature": "utilitycraft:titanium_ore_feature"
+      "identifier": "utilitycraft:tt_ore_mid_feature_rule",
+      "places_feature": "utilitycraft:tt_ore_feature"
     },
     "conditions": {
       "placement_pass": "underground_pass",

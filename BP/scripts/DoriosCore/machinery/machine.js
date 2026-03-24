@@ -570,9 +570,12 @@ export class Machine {
             machineEntity = dim.spawnEntity(fallbackId, { x, y, z });
         }
 
+        const isFluidMachine = entity?.fluid === true;
+
         let machineEvent;
+        let fallbackFluidEvent = undefined;
         let inventorySize = 2
-        if (!entity.fluid) {
+        if (!isFluidMachine) {
             if (entity.input_type === "simple" && entity.output_type === "simple") {
                 machineEvent = "utilitycraft:simple_machine";
                 inventorySize = 7
@@ -596,7 +599,11 @@ export class Machine {
                 machineEvent = "utilitycraft:simple_machine_fluid";
             } else if (entity.input_type === "complex") {
                 machineEvent = "utilitycraft:complex_machine_fluid";
+            } else {
+                machineEvent = "utilitycraft:simple_machine_fluid";
             }
+
+            fallbackFluidEvent = machineEvent;
         }
 
         if (entity.inventory_size) inventorySize = entity.inventory_size
@@ -620,7 +627,7 @@ export class Machine {
                 slotRegister.output = entity.output_slots;
             }
 
-            machineEvent = "utilitycraft:special_machine";
+            machineEvent = isFluidMachine ? "utilitycraft:special_machine_fluid" : "utilitycraft:special_machine";
             machineEntity.runCommand(`scriptevent dorios:special_container ${JSON.stringify(slotRegister)}`);
         }
 
@@ -628,6 +635,22 @@ export class Machine {
 
         if (!entity?.skip_machine_event && machineEvent) {
             try { machineEntity.triggerEvent(machineEvent); } catch { /* ignore invalid machine event */ }
+        }
+
+        if (isFluidMachine) {
+            let hasFluidFamily = false;
+            try {
+                const tf = machineEntity.getComponent("minecraft:type_family");
+                hasFluidFamily = tf?.hasTypeFamily("dorios:fluid_container") === true;
+            } catch { /* ignore */ }
+
+            if (!hasFluidFamily && fallbackFluidEvent && fallbackFluidEvent !== machineEvent) {
+                try {
+                    machineEntity.triggerEvent(fallbackFluidEvent);
+                } catch {
+                    // ignore fallback failure
+                }
+            }
         }
 
         if (!entity?.skip_inventory_event) {

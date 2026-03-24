@@ -71,6 +71,9 @@
 - Added centralized drop particle catalog exports for drop system usage.
 - Extended Dorios Excavate bridge vanilla-drop handling with additional regeneration mode support.
 
+### World Generation
+- Shortened ore feature and feature-rule filenames/identifiers using `ae` (Aetherium) and `tt` (Titanium) aliases while preserving the same generation behavior.
+
 ### Runtime Registration
 - Refactored machine-local defaults into local `config` objects for the new machine helper pipeline.
 - Enchantment Station now supports runtime override channels via `settings.machine.station` and `settings.machine.config.station`.

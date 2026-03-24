@@ -2,25 +2,34 @@
   "format_version": "1.13.0",
   "minecraft:feature_rules": {
     "description": {
-      "identifier": "utilitycraft:aetherium_ore_end_feature_rule",
-      "places_feature": "utilitycraft:aetherium_ore_end_feature"
+      "identifier": "utilitycraft:tt_ore_low_feature_rule",
+      "places_feature": "utilitycraft:tt_ore_feature"
     },
     "conditions": {
       "placement_pass": "underground_pass",
       "minecraft:biome_filter": [
         {
-          "all_of": [
+          "any_of": [
             {
               "test": "has_biome_tag",
               "operator": "==",
-              "value": "the_end"
+              "value": "overworld"
+            },
+            {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "overworld_generation"
             }
           ]
         }
       ]
     },
     "distribution": {
-      "iterations": 40,
+      "scatter_chance": {
+        "numerator": 1,
+        "denominator": 16
+      },
+      "iterations": 7,
       "coordinate_eval_order": "zyx",
       "x": {
         "distribution": "uniform",
@@ -28,7 +37,7 @@
       },
       "y": {
         "distribution": "uniform",
-        "extent": [0, 80]
+        "extent": [-64, -48]
       },
       "z": {
         "distribution": "uniform",

@@ -2,8 +2,8 @@
 	"format_version": "1.13.0",
 	"minecraft:feature_rules": {
 		"description": {
-			"identifier": "utilitycraft:aetherium_ore_overworld_high_feature_rule",
-			"places_feature": "utilitycraft:aetherium_ore_overworld_feature"
+			"identifier": "utilitycraft:ae_ore_ow_mid_feature_rule",
+			"places_feature": "utilitycraft:ae_ore_ow_feature"
 		},
 		"conditions": {
 			"placement_pass": "underground_pass",
@@ -29,7 +29,7 @@
 				"numerator": 1,
 				"denominator": 64
 			},
-			"iterations": 1,
+			"iterations": 2,
 			"coordinate_eval_order": "zyx",
 			"x": {
 				"distribution": "uniform",
@@ -37,7 +37,7 @@
 			},
 			"y": {
 				"distribution": "uniform",
-				"extent": [ -56, -54 ]
+				"extent": [ -58, -56 ]
 			},
 			"z": {
 				"distribution": "uniform",

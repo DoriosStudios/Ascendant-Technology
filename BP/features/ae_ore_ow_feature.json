@@ -2,7 +2,7 @@
   "format_version": "1.17.0",
   "minecraft:ore_feature": {
     "description": {
-      "identifier": "utilitycraft:aetherium_ore_overworld_feature"
+      "identifier": "utilitycraft:ae_ore_ow_feature"
     },
     "count": 3,
     "replace_rules": [

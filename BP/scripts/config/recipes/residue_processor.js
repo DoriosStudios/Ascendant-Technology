@@ -1,8 +1,10 @@
 import { system } from "@minecraft/server";
 
-const DEFAULT_ENERGY_COST = 5200;
-const DEFAULT_SECONDS = 5;
-const TICKS_PER_SECOND = 20;
+const RESIDUE_RECIPE_DEFAULTS = Object.freeze({
+    energyCost: 5200,
+    seconds: 5,
+    ticksPerSecond: 20
+});
 
 /**
  * @typedef {Object} ResidueRecipeDefinition
@@ -101,15 +103,15 @@ function defineResidueRecipe(payload) {
 
     const input = normalizeStack(payload.input, 1);
     const output = normalizeStack(payload.output, 1);
-    const seconds = clampSeconds(payload.seconds ?? DEFAULT_SECONDS);
+    const seconds = clampSeconds(payload.seconds ?? RESIDUE_RECIPE_DEFAULTS.seconds);
 
     return {
         id: typeof payload.id === 'string' && payload.id.length ? payload.id : input.id,
         input,
         output,
         byproduct: normalizeByproduct(payload.byproduct ?? null),
-        energyCost: Math.max(1, Math.floor(payload.energyCost ?? DEFAULT_ENERGY_COST)),
-        ticks: seconds * TICKS_PER_SECOND,
+        energyCost: Math.max(1, Math.floor(payload.energyCost ?? RESIDUE_RECIPE_DEFAULTS.energyCost)),
+        ticks: seconds * RESIDUE_RECIPE_DEFAULTS.ticksPerSecond,
         seconds,
         description: typeof payload.description === 'string' ? payload.description : null
     };
@@ -148,7 +150,7 @@ function clampChance(value) {
 
 function clampSeconds(value) {
     const parsed = Number(value);
-    if (!Number.isFinite(parsed) || parsed <= 0) return DEFAULT_SECONDS;
+    if (!Number.isFinite(parsed) || parsed <= 0) return RESIDUE_RECIPE_DEFAULTS.seconds;
     return Math.max(1, Math.floor(parsed));
 }
 

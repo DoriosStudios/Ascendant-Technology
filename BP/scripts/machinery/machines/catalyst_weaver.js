@@ -2,15 +2,29 @@ import { ItemStack } from '@minecraft/server'
 import { Machine, FluidManager, applyDynamicRecipeRate, tickGate, formatItemName, feedFluidSlot } from '../../DoriosCore/index.js'
 import { getCatalystWeaverRecipes } from '../../config/recipes/catalyst_weaver.js'
 
-const INPUT_SLOT = 3
-const CATALYST_SLOTS = [4, 5, 6, 7, 8, 9]
-const FLUID_SLOT = 10
-const FLUID_DISPLAY_SLOT = 11
-const FLUID_INFO_SLOT = 12
-const OUTPUT_PROBE_SLOT = 13
-const UPGRADE_SLOTS = [15, 16, 17]
-const BYPRODUCT_SLOT = 18
-const OUTPUT_SLOT_INDEX = 19
+const CATALYST_WEAVER_LAYOUT = Object.freeze({
+    slots: Object.freeze({
+        input: 3,
+        catalysts: Object.freeze([4, 5, 6, 7, 8, 9]),
+        fluid: 10,
+        fluidDisplay: 11,
+        fluidInfo: 12,
+        outputProbe: 13,
+        upgrades: Object.freeze([15, 16, 17]),
+        byproduct: 18,
+        output: 19
+    })
+})
+
+const INPUT_SLOT = CATALYST_WEAVER_LAYOUT.slots.input
+const CATALYST_SLOTS = CATALYST_WEAVER_LAYOUT.slots.catalysts
+const FLUID_SLOT = CATALYST_WEAVER_LAYOUT.slots.fluid
+const FLUID_DISPLAY_SLOT = CATALYST_WEAVER_LAYOUT.slots.fluidDisplay
+const FLUID_INFO_SLOT = CATALYST_WEAVER_LAYOUT.slots.fluidInfo
+const OUTPUT_PROBE_SLOT = CATALYST_WEAVER_LAYOUT.slots.outputProbe
+const UPGRADE_SLOTS = CATALYST_WEAVER_LAYOUT.slots.upgrades
+const BYPRODUCT_SLOT = CATALYST_WEAVER_LAYOUT.slots.byproduct
+const OUTPUT_SLOT_INDEX = CATALYST_WEAVER_LAYOUT.slots.output
 
 const config = Object.freeze({
     preview: Object.freeze({

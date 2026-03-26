@@ -1,10 +1,14 @@
 import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, rollByproduct, clampChance, addItemsToSlot, getOutputCapacity, formatItemName } from '../../DoriosCore/index.js'
 import { getResidueProcessorRecipes } from '../../config/recipes/residue_processor.js'
 
-const INPUT_SLOT = 3
-const OUTPUT_SLOT = 19
-const BYPRODUCT_SLOT = 18
-const STATUS_SLOT = 1
+const RESIDUE_PROCESSOR = Object.freeze({
+    slots: Object.freeze({
+        input: 3,
+        output: 19,
+        byproduct: 18,
+        status: 1
+    })
+})
 
 /*
 Slots (inventory_size: 20)
@@ -27,7 +31,7 @@ DoriosAPI.register.blockComponent('residue_processor', {
             machine.setEnergyCost(defaultCost)
             machine.displayEnergy()
             machine.displayProgress()
-            machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '')
+            machine.entity.setItem(RESIDUE_PROCESSOR.slots.status, 'utilitycraft:arrow_indicator_90', 1, '')
         })
     },
 
@@ -48,7 +52,7 @@ DoriosAPI.register.blockComponent('residue_processor', {
             return
         }
 
-        const inputStack = machine.inv.getItem(INPUT_SLOT)
+        const inputStack = machine.inv.getItem(RESIDUE_PROCESSOR.slots.input)
         if (!inputStack) {
             machine.showWarning('Insert Residue')
             return
@@ -60,13 +64,13 @@ DoriosAPI.register.blockComponent('residue_processor', {
             return
         }
 
-        const outputSlot = machine.inv.getItem(OUTPUT_SLOT)
+        const outputSlot = machine.inv.getItem(RESIDUE_PROCESSOR.slots.output)
         if (outputSlot && outputSlot.typeId !== recipe.output.id) {
             machine.showWarning('Output Conflict')
             return
         }
 
-        const byproductSlot = machine.inv.getItem(BYPRODUCT_SLOT)
+        const byproductSlot = machine.inv.getItem(RESIDUE_PROCESSOR.slots.byproduct)
         if (recipe.byproduct && byproductSlot && byproductSlot.typeId !== recipe.byproduct.id) {
             machine.showWarning('Residue Slot Busy')
             return
@@ -164,7 +168,7 @@ function computeMaxCrafts(recipe, inputSlot, outputSlot, byproductSlot, yieldBoo
 function processCraft(machine, recipe, crafts) {
     const inputPer = Math.max(1, recipe.input.amount ?? 1)
     const totalInput = inputPer * crafts
-    machine.entity.changeItemAmount(INPUT_SLOT, -totalInput)
+    machine.entity.changeItemAmount(RESIDUE_PROCESSOR.slots.input, -totalInput)
 
     const yieldBoost = machine.boosts.overclockYield ?? 1
     const outputPer = Math.max(1, recipe.output.amount ?? 1)
@@ -173,7 +177,7 @@ function processCraft(machine, recipe, crafts) {
     // Handle fractional output with accumulator
     const totalOutput = machine.addFractionalItem(recipe.output.id, totalOutputRaw)
     if (totalOutput > 0) {
-        addItemsToSlot(machine, OUTPUT_SLOT, recipe.output.id, totalOutput)
+        addItemsToSlot(machine, RESIDUE_PROCESSOR.slots.output, recipe.output.id, totalOutput)
     }
 
     if (recipe.byproduct) {
@@ -182,7 +186,7 @@ function processCraft(machine, recipe, crafts) {
             const byproductRaw = Math.floor(rolled * yieldBoost)
             const byproductFinal = machine.addFractionalItem(recipe.byproduct.id, byproductRaw)
             if (byproductFinal > 0) {
-                addItemsToSlot(machine, BYPRODUCT_SLOT, recipe.byproduct.id, byproductFinal)
+                addItemsToSlot(machine, RESIDUE_PROCESSOR.slots.byproduct, recipe.byproduct.id, byproductFinal)
             }
         }
     }

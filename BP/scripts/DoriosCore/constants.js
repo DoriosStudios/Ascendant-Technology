@@ -1,130 +1,66 @@
 
-/**
- * Default entity identifier used by machines.
- *
- * Machines spawn this entity to handle storage, processing,
- * and internal machine logic.
- *
- * @constant
- */
-export const DEFAULT_ENTITY_ID = "utilitycraft:machine";
-
-/**
- * Default machine processing interval.
- *
- * Represents the number of ticks between machine updates.
- * Minecraft runs at 20 ticks per second.
- *
- * @constant
- */
-export const DEFAULT_TICK_SPEED = 10;
-
-/**
- * Number of game ticks per second in Minecraft Bedrock.
- *
- * @constant
- */
-export const TICKS_PER_SECOND = 20;
-
-/**
- * Cardinal direction offsets as frozen vectors.
- *
- * @constant
- */
-export const CARDINAL_DIRECTION_OFFSETS = Object.freeze({
-    north: { x: 0, y: 0, z: -1 },
-    south: { x: 0, y: 0, z: 1 },
-    east: { x: 1, y: 0, z: 0 },
-    west: { x: -1, y: 0, z: 0 },
-    up: { x: 0, y: 1, z: 0 },
-    down: { x: 0, y: -1, z: 0 }
+export const CORE_CONSTANTS = Object.freeze({
+    machine: Object.freeze({
+        defaultEntityId: "utilitycraft:machine",
+        defaultTickSpeed: 10,
+        ticksPerSecond: 20
+    }),
+    directions: Object.freeze({
+        cardinalOffsets: Object.freeze({
+            north: { x: 0, y: 0, z: -1 },
+            south: { x: 0, y: 0, z: 1 },
+            east: { x: 1, y: 0, z: 0 },
+            west: { x: -1, y: 0, z: 0 },
+            up: { x: 0, y: 1, z: 0 },
+            down: { x: 0, y: -1, z: 0 }
+        }),
+        opposite: Object.freeze({
+            north: "south",
+            south: "north",
+            east: "west",
+            west: "east",
+            up: "down",
+            down: "up"
+        }),
+        leftOf: Object.freeze({
+            north: "west",
+            south: "east",
+            east: "north",
+            west: "south"
+        }),
+        rightOf: Object.freeze({
+            north: "east",
+            south: "west",
+            east: "south",
+            west: "north"
+        }),
+        validRelative: new Set(["front", "back", "left", "right", "up", "down"])
+    }),
+    labels: Object.freeze({
+        placeholderItem: "utilitycraft:arrow_indicator_90",
+        charLimit: 255,
+        hiddenSlotFillerItem: "utilitycraft:container_filler"
+    }),
+    energy: Object.freeze({
+        debugProp: "utilitycraft:debug_energy",
+        geometryTag: "dorios:energy",
+        geometrySkipTypes: new Set([
+            "utilitycraft:reinforced_cable"
+        ])
+    })
 });
 
-/**
- * Maps each cardinal direction to its opposite.
- *
- * @constant
- */
-export const OPPOSITE_DIRECTIONS = Object.freeze({
-    north: "south",
-    south: "north",
-    east: "west",
-    west: "east",
-    up: "down",
-    down: "up"
-});
-
-/**
- * Maps each horizontal direction to the one on its left.
- *
- * @constant
- */
-export const LEFT_OF_DIRECTION = Object.freeze({
-    north: "west",
-    south: "east",
-    east: "north",
-    west: "south"
-});
-
-/**
- * Maps each horizontal direction to the one on its right.
- *
- * @constant
- */
-export const RIGHT_OF_DIRECTION = Object.freeze({
-    north: "east",
-    south: "west",
-    east: "south",
-    west: "north"
-});
-
-/**
- * Valid relative direction strings for fluid transfer resolution.
- *
- * @constant
- */
-export const VALID_RELATIVE_DIRECTIONS = new Set(["front", "back", "left", "right", "up", "down"]);
-
-/**
- * Item used as a placeholder for label slots.
- *
- * @constant
- */
-export const LABEL_PLACEHOLDER_ITEM = "utilitycraft:arrow_indicator_90";
-
-/**
- * Character limit per label field (Minecraft name tag / lore line).
- *
- * @constant
- */
-export const LABEL_CHAR_LIMIT = 255;
-
-/**
- * Item used to fill hidden inventory slots so they can't be used by transfers.
- *
- * @constant
- */
-export const HIDDEN_SLOT_FILLER_ITEM = "utilitycraft:container_filler";
-
-/**
- * Dynamic property key for energy debug mode.
- *
- * @constant
- */
-export const ENERGY_DEBUG_PROP = "utilitycraft:debug_energy";
-
-/**
- * Block tag that identifies energy-connectable blocks.
- *
- * @constant
- */
-export const ENERGY_GEOMETRY_TAG = "dorios:energy";
-
-/**
- * Block types that should skip energy geometry updates.
- *
- * @constant
- */
-export const ENERGY_GEOMETRY_SKIP_TYPES = new Set([
-    "utilitycraft:reinforced_cable"
-]);
+export const DEFAULT_ENTITY_ID = CORE_CONSTANTS.machine.defaultEntityId;
+export const DEFAULT_TICK_SPEED = CORE_CONSTANTS.machine.defaultTickSpeed;
+export const TICKS_PER_SECOND = CORE_CONSTANTS.machine.ticksPerSecond;
+export const CARDINAL_DIRECTION_OFFSETS = CORE_CONSTANTS.directions.cardinalOffsets;
+export const OPPOSITE_DIRECTIONS = CORE_CONSTANTS.directions.opposite;
+export const LEFT_OF_DIRECTION = CORE_CONSTANTS.directions.leftOf;
+export const RIGHT_OF_DIRECTION = CORE_CONSTANTS.directions.rightOf;
+export const VALID_RELATIVE_DIRECTIONS = CORE_CONSTANTS.directions.validRelative;
+export const LABEL_PLACEHOLDER_ITEM = CORE_CONSTANTS.labels.placeholderItem;
+export const LABEL_CHAR_LIMIT = CORE_CONSTANTS.labels.charLimit;
+export const HIDDEN_SLOT_FILLER_ITEM = CORE_CONSTANTS.labels.hiddenSlotFillerItem;
+export const ENERGY_DEBUG_PROP = CORE_CONSTANTS.energy.debugProp;
+export const ENERGY_GEOMETRY_TAG = CORE_CONSTANTS.energy.geometryTag;
+export const ENERGY_GEOMETRY_SKIP_TYPES = CORE_CONSTANTS.energy.geometrySkipTypes;

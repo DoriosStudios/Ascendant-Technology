@@ -1,11 +1,15 @@
 import { system, world } from "@minecraft/server";
 
-const RegisterContainer = "utilitycraft:register_fluid_container";
-const RegisterOutput = "utilitycraft:register_fluid_output";
-const RegisterLegacyContainer = "utilitycraft:register_fluid_item";
-const RegisterLegacyHolder = "utilitycraft:register_fluid_holder";
+const FLUID_ITEM_EVENTS = Object.freeze({
+    registerContainer: "utilitycraft:register_fluid_container",
+    registerOutput: "utilitycraft:register_fluid_output",
+    registerLegacyContainer: "utilitycraft:register_fluid_item",
+    registerLegacyHolder: "utilitycraft:register_fluid_holder"
+});
 
-const INFINITE_CAPSULE_FALLBACK_MB = 512000;
+const FLUID_ITEM_DEFAULTS = Object.freeze({
+    infiniteCapsuleFallbackMb: 512000
+});
 
 const ATInfiniteCapsules = [
     {
@@ -28,25 +32,25 @@ const ATInfiniteCapsules = [
     },
     {
         id: "utilitycraft:water_capsule_infinite",
-        amount: INFINITE_CAPSULE_FALLBACK_MB,
+        amount: FLUID_ITEM_DEFAULTS.infiniteCapsuleFallbackMb,
         type: "water",
         output: "utilitycraft:water_capsule_infinite"
     },
     {
         id: "utilitycraft:lava_capsule_infinite",
-        amount: INFINITE_CAPSULE_FALLBACK_MB,
+        amount: FLUID_ITEM_DEFAULTS.infiniteCapsuleFallbackMb,
         type: "lava",
         output: "utilitycraft:lava_capsule_infinite"
     },
     {
         id: "utilitycraft:milk_capsule_infinite",
-        amount: INFINITE_CAPSULE_FALLBACK_MB,
+        amount: FLUID_ITEM_DEFAULTS.infiniteCapsuleFallbackMb,
         type: "milk",
         output: "utilitycraft:milk_capsule_infinite"
     },
     {
         id: "utilitycraft:xp_capsule_infinite",
-        amount: INFINITE_CAPSULE_FALLBACK_MB,
+        amount: FLUID_ITEM_DEFAULTS.infiniteCapsuleFallbackMb,
         type: "xp",
         output: "utilitycraft:xp_capsule_infinite"
     }
@@ -162,9 +166,9 @@ function sendRegistration(eventId, payload) {
 
 world.afterEvents.worldLoad.subscribe(() => {
     system.runTimeout(() => {
-        sendRegistration(RegisterContainer, ATNewCapsules);
-        sendRegistration(RegisterOutput, ATNewContainers);
-        sendRegistration(RegisterLegacyContainer, ATLegacyCapsules);
-        sendRegistration(RegisterLegacyHolder, ATLegacyHolders);
+        sendRegistration(FLUID_ITEM_EVENTS.registerContainer, ATNewCapsules);
+        sendRegistration(FLUID_ITEM_EVENTS.registerOutput, ATNewContainers);
+        sendRegistration(FLUID_ITEM_EVENTS.registerLegacyContainer, ATLegacyCapsules);
+        sendRegistration(FLUID_ITEM_EVENTS.registerLegacyHolder, ATLegacyHolders);
     }, 0);
 });

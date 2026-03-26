@@ -1,18 +1,27 @@
 import { system } from "@minecraft/server";
 import { FluidManager, Rotation } from "../../DoriosCore/index.js";
 
-const DEFAULT_RATE = 4000;
-const MAX_SCAN = 256;
-const DEFAULT_MODE = "nearest";
+const REINFORCED_EXTRACTOR = Object.freeze({
+    defaults: Object.freeze({
+        rate: 4000,
+        maxScan: 256,
+        mode: "nearest"
+    }),
+    offsets: Object.freeze([
+        { x: 1, y: 0, z: 0 },
+        { x: -1, y: 0, z: 0 },
+        { x: 0, y: 1, z: 0 },
+        { x: 0, y: -1, z: 0 },
+        { x: 0, y: 0, z: 1 },
+        { x: 0, y: 0, z: -1 },
+    ]),
+    sourceTankIndices: Object.freeze([0, 1])
+});
 
-const OFFSETS = [
-    { x: 1, y: 0, z: 0 },
-    { x: -1, y: 0, z: 0 },
-    { x: 0, y: 1, z: 0 },
-    { x: 0, y: -1, z: 0 },
-    { x: 0, y: 0, z: 1 },
-    { x: 0, y: 0, z: -1 },
-];
+const DEFAULT_RATE = REINFORCED_EXTRACTOR.defaults.rate;
+const MAX_SCAN = REINFORCED_EXTRACTOR.defaults.maxScan;
+const DEFAULT_MODE = REINFORCED_EXTRACTOR.defaults.mode;
+const OFFSETS = REINFORCED_EXTRACTOR.offsets;
 
 function findFacingOffset(block) {
     const facing = block.getState("utilitycraft:axis");
@@ -27,7 +36,7 @@ function findFacingOffset(block) {
     return map[facing] ?? { x: 0, y: 0, z: 1 };
 }
 
-const SOURCE_TANK_INDICES = [0, 1];
+const SOURCE_TANK_INDICES = REINFORCED_EXTRACTOR.sourceTankIndices;
 
 function resolveSourceTank(entity) {
     if (!entity) return null;

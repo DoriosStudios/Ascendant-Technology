@@ -1,9 +1,11 @@
 import { system } from "@minecraft/server";
 
-const DEFAULT_ENERGY_COST = 2400;
-const DEFAULT_FLUID_OUTPUT = 500;
-const TICKS_PER_SECOND = 20;
-const DEFAULT_PROCESS_SECONDS = 4;
+const VAPORWORKS_RECIPE_DEFAULTS = Object.freeze({
+    energyCost: 2400,
+    fluidOutput: 500,
+    ticksPerSecond: 20,
+    processSeconds: 4
+});
 
 /**
  * Native Vaporworks Processor recipes shipped with the add-on.
@@ -67,16 +69,16 @@ function defineVaporworksRecipe(recipe) {
     if (!recipe || typeof recipe !== "object") throw new TypeError("Invalid vaporworks recipe payload");
 
     const inputFluid = normalizeFluid(recipe.inputFluid, 1000);
-    const outputFluid = normalizeFluid(recipe.outputFluid, DEFAULT_FLUID_OUTPUT);
+    const outputFluid = normalizeFluid(recipe.outputFluid, VAPORWORKS_RECIPE_DEFAULTS.fluidOutput);
 
-    const seconds = Math.max(1, Math.floor(recipe.seconds ?? DEFAULT_PROCESS_SECONDS));
+    const seconds = Math.max(1, Math.floor(recipe.seconds ?? VAPORWORKS_RECIPE_DEFAULTS.processSeconds));
 
     return {
         id: typeof recipe.id === "string" && recipe.id.length ? recipe.id : inputFluid.type,
         inputFluid,
         outputFluid,
-        energyCost: Math.max(1, Math.floor(recipe.energyCost ?? DEFAULT_ENERGY_COST)),
-        ticks: Math.max(1, seconds * TICKS_PER_SECOND),
+        energyCost: Math.max(1, Math.floor(recipe.energyCost ?? VAPORWORKS_RECIPE_DEFAULTS.energyCost)),
+        ticks: Math.max(1, seconds * VAPORWORKS_RECIPE_DEFAULTS.ticksPerSecond),
         seconds,
         description: typeof recipe.description === "string" ? recipe.description : null
     };
@@ -94,10 +96,12 @@ function normalizeFluid(fluid, fallbackAmount) {
     return { type, amount };
 }
 
-const VAPORWORKS_EVENT_ID = "utilitycraft:register_vaporworks_processor_recipe";
+const VAPORWORKS_RECIPE_EVENTS = Object.freeze({
+    register: "utilitycraft:register_vaporworks_processor_recipe"
+});
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
-    if (id !== VAPORWORKS_EVENT_ID) return;
+    if (id !== VAPORWORKS_RECIPE_EVENTS.register) return;
 
     try {
         const payload = JSON.parse(message);

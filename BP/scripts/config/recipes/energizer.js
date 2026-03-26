@@ -1,8 +1,10 @@
 import { system } from "@minecraft/server";
 
-const DEFAULT_ENERGY_COST = 9600;
-const DEFAULT_SECONDS = 5;
-const TICKS_PER_SECOND = 20;
+const ENERGIZER_RECIPE_DEFAULTS = Object.freeze({
+    energyCost: 9600,
+    seconds: 5,
+    ticksPerSecond: 20
+});
 
 /**
  * @typedef {Object} EnergizerRecipeDefinition
@@ -94,14 +96,14 @@ function defineEnergizerRecipe(payload) {
 
     const input = normalizeStack(payload.input, 1);
     const output = normalizeStack(payload.output, 1);
-    const seconds = clampSeconds(payload.seconds ?? DEFAULT_SECONDS);
+    const seconds = clampSeconds(payload.seconds ?? ENERGIZER_RECIPE_DEFAULTS.seconds);
 
     return {
         id: typeof payload.id === "string" && payload.id.length ? payload.id : input.id,
         input,
         output,
-        energyCost: Math.max(1, Math.floor(payload.energyCost ?? DEFAULT_ENERGY_COST)),
-        ticks: seconds * TICKS_PER_SECOND,
+        energyCost: Math.max(1, Math.floor(payload.energyCost ?? ENERGIZER_RECIPE_DEFAULTS.energyCost)),
+        ticks: seconds * ENERGIZER_RECIPE_DEFAULTS.ticksPerSecond,
         seconds,
         description: typeof payload.description === "string" ? payload.description : null,
         preferredSlot: payload.preferredSlot === "aux" ? "aux" : "primary"
@@ -125,7 +127,7 @@ function normalizeStack(stack, fallbackAmount = 1) {
 
 function clampSeconds(value) {
     const parsed = Number(value);
-    if (!Number.isFinite(parsed) || parsed <= 0) return DEFAULT_SECONDS;
+    if (!Number.isFinite(parsed) || parsed <= 0) return ENERGIZER_RECIPE_DEFAULTS.seconds;
     return Math.max(1, Math.floor(parsed));
 }
 

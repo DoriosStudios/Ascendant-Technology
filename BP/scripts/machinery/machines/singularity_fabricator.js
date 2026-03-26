@@ -1,28 +1,53 @@
 import { Machine, Energy, FluidManager, buildOverclockLoreLine, formatItemName, capitalize, formatSeconds, formatEta, calculateEtaSeconds, getProgressPerSecond, formatFluidDisplayName, addItemsToSlot, computeSlotCapacity } from '../../DoriosCore/index.js'
 import { getSingularityRecipes } from '../../config/recipes/duplicator.js'
 
-const COMPONENT_ID = 'singularity_fabricator'
-const INPUT_SLOT = 3
-const STATUS_SLOT = 1
-const FLUID_INPUT_SLOT = 10
-const FLUID_DISPLAY_SLOT = 11
-const OUTPUT_SLOT_ORIGINAL = 18
-const OUTPUT_SLOT_COPY = 19
-const DEFAULT_FLUID_TYPE = 'dark_matter' || "Dark Matter"
-const FLUID_PER_SECOND = 80
-const TICKS_PER_SECOND = 20
-const UPGRADE_SLOTS = [4, 5]
-const LEGACY_UPGRADE_SLOTS = [16, 17]
-const FABRICATOR_RATE_SPEED_BASE = 2560000
-const ENERGY_USAGE_MULTIPLIER = 0.3
-const MAX_RUNTIME_SECONDS = 24 * 60 * 60
+const FABRICATOR = Object.freeze({
+    id: 'singularity_fabricator',
+    slots: Object.freeze({
+        input: 3,
+        status: 1,
+        fluidInput: 10,
+        fluidDisplay: 11,
+        outputOriginal: 18,
+        outputCopy: 19,
+        upgrades: Object.freeze([4, 5]),
+        legacyUpgrades: Object.freeze([16, 17])
+    }),
+    defaults: Object.freeze({
+        fluidType: 'dark_matter',
+        fluidPerSecond: 80,
+        ticksPerSecond: 20,
+        rateSpeedBase: 2560000,
+        energyUsageMultiplier: 0.3,
+        maxRuntimeSeconds: 24 * 60 * 60,
+        kde: 1000,
+        minTimeSeconds: 60 * 60,
+        minRate: 1
+    })
+})
+
+const COMPONENT_ID = FABRICATOR.id
+const INPUT_SLOT = FABRICATOR.slots.input
+const STATUS_SLOT = FABRICATOR.slots.status
+const FLUID_INPUT_SLOT = FABRICATOR.slots.fluidInput
+const FLUID_DISPLAY_SLOT = FABRICATOR.slots.fluidDisplay
+const OUTPUT_SLOT_ORIGINAL = FABRICATOR.slots.outputOriginal
+const OUTPUT_SLOT_COPY = FABRICATOR.slots.outputCopy
+const DEFAULT_FLUID_TYPE = FABRICATOR.defaults.fluidType
+const FLUID_PER_SECOND = FABRICATOR.defaults.fluidPerSecond
+const TICKS_PER_SECOND = FABRICATOR.defaults.ticksPerSecond
+const UPGRADE_SLOTS = FABRICATOR.slots.upgrades
+const LEGACY_UPGRADE_SLOTS = FABRICATOR.slots.legacyUpgrades
+const FABRICATOR_RATE_SPEED_BASE = FABRICATOR.defaults.rateSpeedBase
+const ENERGY_USAGE_MULTIPLIER = FABRICATOR.defaults.energyUsageMultiplier
+const MAX_RUNTIME_SECONDS = FABRICATOR.defaults.maxRuntimeSeconds
 const FABRICATOR_PROGRESS_PER_SECOND = FABRICATOR_RATE_SPEED_BASE * TICKS_PER_SECOND * ENERGY_USAGE_MULTIPLIER
-const KDE = 1000
+const KDE = FABRICATOR.defaults.kde
 const MAX_TOTAL_KDE = Math.floor((MAX_RUNTIME_SECONDS * FABRICATOR_PROGRESS_PER_SECOND) / KDE)
-const MIN_FABRICATOR_TIME_SECONDS = 60 * 60
+const MIN_FABRICATOR_TIME_SECONDS = FABRICATOR.defaults.minTimeSeconds
 const MIN_FABRICATOR_ENERGY_COST = Math.round(FABRICATOR_PROGRESS_PER_SECOND * MIN_FABRICATOR_TIME_SECONDS)
 const MIN_FABRICATOR_COST_KDE = MIN_FABRICATOR_ENERGY_COST / KDE
-const MIN_FABRICATOR_RATE = 1
+const MIN_FABRICATOR_RATE = FABRICATOR.defaults.minRate
 
 /*
 Slots (inventory_size: 20)

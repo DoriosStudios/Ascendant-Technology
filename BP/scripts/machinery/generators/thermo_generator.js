@@ -13,7 +13,9 @@ export const heatSources = {
     'minecraft:torch': 0.25
 };
 
-const ENERGY_PER_WATER_MB = 1;
+const THERMO_GENERATOR = Object.freeze({
+    energyPerWaterMb: 1
+});
 
 DoriosAPI.register.blockComponent('thermo_generator', {
     /**
@@ -119,10 +121,10 @@ DoriosAPI.register.blockComponent('thermo_generator', {
         burnSpeed = Math.min(
             burnSpeed,
             energy.getFreeSpace(),
-            fluid.get() * ENERGY_PER_WATER_MB
+            fluid.get() * THERMO_GENERATOR.energyPerWaterMb
         );
 
-        fluid.consume(burnSpeed / ENERGY_PER_WATER_MB);
+        fluid.consume(burnSpeed / THERMO_GENERATOR.energyPerWaterMb);
         energy.add(burnSpeed);
 
         generator.on();

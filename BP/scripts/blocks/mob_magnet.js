@@ -1,10 +1,13 @@
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { system, world } from "@minecraft/server";
 
-const RANGE_LEVELS = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
-const COOLDOWN_OPTIONS = [0, 5, 10, 15, 20, 30, 40];
-
-const EXCLUDED_TYPES = [
+const MAGNET = Object.freeze({
+	levels: Object.freeze({
+		range: Object.freeze([2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]),
+		cooldown: Object.freeze([0, 5, 10, 15, 20, 30, 40])
+	}),
+	filters: Object.freeze({
+		excludedTypes: Object.freeze([
 	"minecraft:player",
 	"minecraft:item",
 	"minecraft:xp_orb",
@@ -19,9 +22,8 @@ const EXCLUDED_TYPES = [
 	"minecraft:falling_block",
 	"utilitycraft:machine",
 	"dorios:machine"
-];
-
-const EXCLUDED_FAMILIES = [
+		]),
+		excludedFamilies: Object.freeze([
 	"player",
 	"inanimate",
 	"projectile",
@@ -29,23 +31,26 @@ const EXCLUDED_FAMILIES = [
 	"dorios:battery",
 	"dorios:energy_container",
 	"dorios:fluid_container"
-];
-
-const IMMUNE_TAG = "dorios:magnet_immune";
-const RANGE_STATE = "utilitycraft:range";
-const RANGE_SELECTED_STATE = "utilitycraft:rangeSelected";
-const FILTER_UPGRADE_STATE = "utilitycraft:filter";
-const LEGACY_FILTER_UPGRADE_STATE = "utilitycraft:filter_upgrade";
-const MAGNET_COOLDOWN_PROP = "utilitycraft:mob_magnet_cooldown";
-const FILTER_MODES = {
-	BLACKLIST: "blacklist",
-	WHITELIST: "whitelist"
-};
-
-const STATE_STORE_SUFFIX = "_state";
-
-const GLOBAL_TICK_KEY = "__utilitycraft_mob_magnet_tick__";
-const TICK_WRAP = 1_000_000_000;
+		]),
+		modes: Object.freeze({
+			blacklist: "blacklist",
+			whitelist: "whitelist"
+		})
+	}),
+	states: Object.freeze({
+		immuneTag: "dorios:magnet_immune",
+		range: "utilitycraft:range",
+		rangeSelected: "utilitycraft:rangeSelected",
+		filterUpgrade: "utilitycraft:filter",
+		legacyFilterUpgrade: "utilitycraft:filter_upgrade",
+		cooldownProp: "utilitycraft:mob_magnet_cooldown",
+		storeSuffix: "_state"
+	}),
+	runtime: Object.freeze({
+		globalTickKey: "__utilitycraft_mob_magnet_tick__",
+		tickWrap: 1_000_000_000
+	})
+});
 
 const normalizeRawMessageArg = value => {
 	if (value === undefined || value === null) return "";
@@ -59,23 +64,23 @@ const tr = (key, withArgs = []) => ({
 });
 const formatMobName = id => DoriosAPI.utils.formatIdToText(id);
 
-if (typeof globalThis[GLOBAL_TICK_KEY] !== "number") {
-	globalThis[GLOBAL_TICK_KEY] = 0;
+if (typeof globalThis[MAGNET.runtime.globalTickKey] !== "number") {
+	globalThis[MAGNET.runtime.globalTickKey] = 0;
 	system.runInterval(() => {
-		globalThis[GLOBAL_TICK_KEY] = (globalThis[GLOBAL_TICK_KEY] + 1) % TICK_WRAP;
+		globalThis[MAGNET.runtime.globalTickKey] = (globalThis[MAGNET.runtime.globalTickKey] + 1) % MAGNET.runtime.tickWrap;
 	}, 1);
 }
 
 const getCurrentTick = () => {
 	const systemTick = Number(system.currentTick);
 	if (Number.isFinite(systemTick)) return systemTick;
-	return globalThis[GLOBAL_TICK_KEY];
+	return globalThis[MAGNET.runtime.globalTickKey];
 };
 
 function normalizeCooldownGate(nextAllowed, now) {
 	if (!Number.isFinite(nextAllowed) || nextAllowed <= 0) return 0;
 	if (!Number.isFinite(now) || now < 0) return nextAllowed;
-	if (nextAllowed - now > TICK_WRAP / 2) return 0;
+	if (nextAllowed - now > MAGNET.runtime.tickWrap / 2) return 0;
 	return nextAllowed;
 }
 
@@ -96,14 +101,14 @@ function isEntityStillValid(entity) {
 
 DoriosAPI.register.blockComponent("mob_magnet", {
 	onTick({ block }) {
-		const rangeUpgrade = clampIndex(getBlockStateValue(block.permutation, RANGE_STATE), RANGE_LEVELS.length - 1);
-		const maxRangeIndex = Math.min(rangeUpgrade, RANGE_LEVELS.length - 1);
+		const rangeUpgrade = clampIndex(getBlockStateValue(block.permutation, MAGNET.states.range), MAGNET.levels.range.length - 1);
+		const maxRangeIndex = Math.min(rangeUpgrade, MAGNET.levels.range.length - 1);
 		const magnetId = getMagnetId(block.location);
 		const syncedState = syncMagnetState(block, magnetId, maxRangeIndex);
 		if (!syncedState.isOn) return;
 
 		const rangeSelected = syncedState.rangeIndex;
-		const trueRange = RANGE_LEVELS[rangeSelected] ?? RANGE_LEVELS[0];
+		const trueRange = MAGNET.levels.range[rangeSelected] ?? MAGNET.levels.range[0];
 		const cooldownTicks = getCooldownTicks(magnetId);
 		const now = getCurrentTick();
 
@@ -116,17 +121,17 @@ DoriosAPI.register.blockComponent("mob_magnet", {
 		const entities = block.dimension.getEntities({
 			location: center,
 			maxDistance: trueRange,
-			excludeTypes: EXCLUDED_TYPES,
-			excludeFamilies: EXCLUDED_FAMILIES
+			excludeTypes: MAGNET.filters.excludedTypes,
+			excludeFamilies: MAGNET.filters.excludedFamilies
 		});
 
 		const filteredEntities = applyEntityFilters(entities, filterConfig);
 
 		for (const entity of filteredEntities) {
 			if (!isEntityStillValid(entity)) continue;
-			if (entity.hasTag(IMMUNE_TAG)) continue;
+			if (entity.hasTag(MAGNET.states.immuneTag)) continue;
 
-			let nextAllowed = Number(entity.getDynamicProperty(MAGNET_COOLDOWN_PROP)) || 0;
+			let nextAllowed = Number(entity.getDynamicProperty(MAGNET.states.cooldownProp)) || 0;
 			nextAllowed = normalizeCooldownGate(nextAllowed, now);
 			if (cooldownTicks > 0 && nextAllowed > now) continue;
 
@@ -136,7 +141,7 @@ DoriosAPI.register.blockComponent("mob_magnet", {
 			);
 
 			if (cooldownTicks > 0) {
-				entity.setDynamicProperty(MAGNET_COOLDOWN_PROP, now + cooldownTicks);
+				entity.setDynamicProperty(MAGNET.states.cooldownProp, now + cooldownTicks);
 			}
 		}
 	},
@@ -168,14 +173,14 @@ function openEnhancedMenu(player, block, magnetId) {
 }
 
 function openSettingsMenu(player, block, magnetId, returnToMenu) {
-	const rangeUpgrade = clampIndex(getBlockStateValue(block.permutation, RANGE_STATE), RANGE_LEVELS.length - 1);
-	const maxRangeIndex = Math.min(rangeUpgrade, RANGE_LEVELS.length - 1);
+	const rangeUpgrade = clampIndex(getBlockStateValue(block.permutation, MAGNET.states.range), MAGNET.levels.range.length - 1);
+	const maxRangeIndex = Math.min(rangeUpgrade, MAGNET.levels.range.length - 1);
 	const syncedState = syncMagnetState(block, magnetId, maxRangeIndex);
 	const isOn = syncedState.isOn;
 	const rangeSelected = syncedState.rangeIndex;
 	const cooldownIndex = getCooldownIndex(magnetId);
-	const rangeValue = RANGE_LEVELS[rangeSelected] ?? RANGE_LEVELS[0];
-	const cooldownTicks = COOLDOWN_OPTIONS[cooldownIndex] ?? COOLDOWN_OPTIONS[0];
+	const rangeValue = MAGNET.levels.range[rangeSelected] ?? MAGNET.levels.range[0];
+	const cooldownTicks = MAGNET.levels.cooldown[cooldownIndex] ?? MAGNET.levels.cooldown[0];
 	const hasFilterUpgrade = hasFilterUpgradeInstalled(block);
 	const filterData = hasFilterUpgrade ? getFilterConfig(magnetId) : null;
 	const hasFilterEntries = Boolean(filterData?.list?.length);
@@ -230,13 +235,13 @@ function openSettingsMenu(player, block, magnetId, returnToMenu) {
 			case "range": {
 				const nextRangeIndex = rangeSelected >= maxRangeIndex ? 0 : rangeSelected + 1;
 				applyBlockStates(block, {
-					[RANGE_SELECTED_STATE]: getRangeStateValueFromIndex(nextRangeIndex)
+					[MAGNET.states.rangeSelected]: getRangeStateValueFromIndex(nextRangeIndex)
 				});
 				saveStoredMagnetState(magnetId, { isOn, rangeIndex: nextRangeIndex });
 				break;
 			}
 			case "cooldown": {
-				const nextCooldownIndex = (cooldownIndex + 1) % COOLDOWN_OPTIONS.length;
+				const nextCooldownIndex = (cooldownIndex + 1) % MAGNET.levels.cooldown.length;
 				setCooldownIndex(magnetId, nextCooldownIndex);
 				break;
 			}
@@ -398,9 +403,9 @@ function promptRemoveMob(player, block, magnetId, filterData, returnToMenu) {
 }
 
 function toggleFilterMode(player, block, magnetId, filterData, returnToMenu) {
-	filterData.mode = filterData.mode === FILTER_MODES.WHITELIST
-		? FILTER_MODES.BLACKLIST
-		: FILTER_MODES.WHITELIST;
+	filterData.mode = filterData.mode === MAGNET.filters.modes.whitelist
+		? MAGNET.filters.modes.blacklist
+		: MAGNET.filters.modes.whitelist;
 	saveFilterAndNotify(
 		player,
 		magnetId,
@@ -418,7 +423,7 @@ function saveFilterAndNotify(player, magnetId, filterData, message) {
 function applyEntityFilters(entities, filterConfig) {
 	if (!filterConfig || filterConfig.list.length === 0) return entities;
 	const filterSet = new Set(filterConfig.list);
-	if (filterConfig.mode === FILTER_MODES.WHITELIST) {
+	if (filterConfig.mode === MAGNET.filters.modes.whitelist) {
 		return entities.filter(entity => filterSet.has(entity.typeId));
 	}
 	return entities.filter(entity => !filterSet.has(entity.typeId));
@@ -427,23 +432,23 @@ function applyEntityFilters(entities, filterConfig) {
 function getFilterConfig(id) {
 	const raw = world.getDynamicProperty(getFilterKey(id));
 	if (typeof raw !== "string" || raw.length === 0) {
-		return { mode: FILTER_MODES.BLACKLIST, list: [] };
+		return { mode: MAGNET.filters.modes.blacklist, list: [] };
 	}
 	try {
 		const parsed = JSON.parse(raw);
-		const mode = parsed.mode === FILTER_MODES.WHITELIST ? FILTER_MODES.WHITELIST : FILTER_MODES.BLACKLIST;
+		const mode = parsed.mode === MAGNET.filters.modes.whitelist ? MAGNET.filters.modes.whitelist : MAGNET.filters.modes.blacklist;
 		const list = Array.isArray(parsed.list)
 			? [...new Set(parsed.list.map(normalizeMobId).filter(Boolean))]
 			: [];
 		return { mode, list };
 	} catch {
-		return { mode: FILTER_MODES.BLACKLIST, list: [] };
+		return { mode: MAGNET.filters.modes.blacklist, list: [] };
 	}
 }
 
 function saveFilterConfig(id, data) {
 	const payload = {
-		mode: data.mode === FILTER_MODES.WHITELIST ? FILTER_MODES.WHITELIST : FILTER_MODES.BLACKLIST,
+		mode: data.mode === MAGNET.filters.modes.whitelist ? MAGNET.filters.modes.whitelist : MAGNET.filters.modes.blacklist,
 		list: Array.from(new Set((data.list ?? []).map(normalizeMobId).filter(Boolean)))
 	};
 	world.setDynamicProperty(getFilterKey(id), JSON.stringify(payload));
@@ -465,17 +470,17 @@ function getMagnetId(location) {
 function getCooldownIndex(id) {
 	const stored = world.getDynamicProperty(getCooldownKey(id));
 	if (typeof stored === "number") {
-		return clampIndex(stored, COOLDOWN_OPTIONS.length - 1);
+		return clampIndex(stored, MAGNET.levels.cooldown.length - 1);
 	}
 	return 0;
 }
 
 function setCooldownIndex(id, index) {
-	world.setDynamicProperty(getCooldownKey(id), clampIndex(index, COOLDOWN_OPTIONS.length - 1));
+	world.setDynamicProperty(getCooldownKey(id), clampIndex(index, MAGNET.levels.cooldown.length - 1));
 }
 
 function getCooldownTicks(id) {
-	return COOLDOWN_OPTIONS[getCooldownIndex(id)] ?? COOLDOWN_OPTIONS[0];
+	return MAGNET.levels.cooldown[getCooldownIndex(id)] ?? MAGNET.levels.cooldown[0];
 }
 
 function clampIndex(value, max = Number.MAX_SAFE_INTEGER) {
@@ -485,12 +490,12 @@ function clampIndex(value, max = Number.MAX_SAFE_INTEGER) {
 
 function getRangeIndexFromStateValue(value) {
 	const numeric = Math.floor(Number(value) || 0);
-	const idx = RANGE_LEVELS.indexOf(numeric);
+	const idx = MAGNET.levels.range.indexOf(numeric);
 	return idx >= 0 ? idx : 0;
 }
 
 function getRangeStateValueFromIndex(index) {
-	return RANGE_LEVELS[clampIndex(index, RANGE_LEVELS.length - 1)] ?? RANGE_LEVELS[0];
+	return MAGNET.levels.range[clampIndex(index, MAGNET.levels.range.length - 1)] ?? MAGNET.levels.range[0];
 }
 
 function applyBlockStates(block, updates) {
@@ -505,11 +510,11 @@ function applyBlockStates(block, updates) {
 function hasFilterUpgradeInstalled(block) {
 	const permutation = block?.permutation;
 	if (!permutation) return false;
-	const currentValue = getBlockStateValue(permutation, FILTER_UPGRADE_STATE);
+	const currentValue = getBlockStateValue(permutation, MAGNET.states.filterUpgrade);
 	if (currentValue !== undefined && currentValue !== null) {
 		return Number(currentValue) > 0;
 	}
-	const legacyValue = getBlockStateValue(permutation, LEGACY_FILTER_UPGRADE_STATE);
+	const legacyValue = getBlockStateValue(permutation, MAGNET.states.legacyFilterUpgrade);
 	if (legacyValue !== undefined && legacyValue !== null) {
 		return Number(legacyValue) > 0;
 	}
@@ -532,32 +537,32 @@ function normalizeMobId(value) {
 
 function formatModeLabel(mode) {
 	return tr(
-		mode === FILTER_MODES.WHITELIST
+		mode === MAGNET.filters.modes.whitelist
 			? "ui.utilitycraft.mob_magnet.filter.mode.whitelist"
 			: "ui.utilitycraft.mob_magnet.filter.mode.blacklist"
 	);
 }
 
 function getFilterModeBodyKey(mode) {
-	return mode === FILTER_MODES.WHITELIST
+	return mode === MAGNET.filters.modes.whitelist
 		? "ui.utilitycraft.mob_magnet.filter.body.whitelist"
 		: "ui.utilitycraft.mob_magnet.filter.body.blacklist";
 }
 
 function getFilterModeButtonKey(mode) {
-	return mode === FILTER_MODES.WHITELIST
+	return mode === MAGNET.filters.modes.whitelist
 		? "ui.utilitycraft.mob_magnet.filter.mode_button.whitelist"
 		: "ui.utilitycraft.mob_magnet.filter.mode_button.blacklist";
 }
 
 function getFilterModeSwitchedKey(mode) {
-	return mode === FILTER_MODES.WHITELIST
+	return mode === MAGNET.filters.modes.whitelist
 		? "ui.utilitycraft.mob_magnet.filter.mode_switched.whitelist"
 		: "ui.utilitycraft.mob_magnet.filter.mode_switched.blacklist";
 }
 
 function getMagnetStateKey(id) {
-	return `${id}${STATE_STORE_SUFFIX}`;
+	return `${id}${MAGNET.states.storeSuffix}`;
 }
 
 function getStoredMagnetState(id) {
@@ -567,7 +572,7 @@ function getStoredMagnetState(id) {
 		const parsed = JSON.parse(raw);
 		return {
 			isOn: Boolean(parsed.isOn),
-			rangeIndex: clampIndex(parsed.rangeIndex ?? 0, RANGE_LEVELS.length - 1)
+			rangeIndex: clampIndex(parsed.rangeIndex ?? 0, MAGNET.levels.range.length - 1)
 		};
 	} catch {
 		return null;
@@ -577,7 +582,7 @@ function getStoredMagnetState(id) {
 function saveStoredMagnetState(id, state) {
 	const payload = {
 		isOn: Boolean(state.isOn),
-		rangeIndex: clampIndex(state.rangeIndex ?? 0, RANGE_LEVELS.length - 1)
+		rangeIndex: clampIndex(state.rangeIndex ?? 0, MAGNET.levels.range.length - 1)
 	};
 	world.setDynamicProperty(getMagnetStateKey(id), JSON.stringify(payload));
 }
@@ -586,7 +591,7 @@ function syncMagnetState(block, magnetId, maxRangeIndex) {
 	const stored = getStoredMagnetState(magnetId);
 	const permutation = block.permutation;
 	let isOn = Boolean(getBlockStateValue(permutation, "utilitycraft:isOn"));
-	const blockStateValue = getBlockStateValue(permutation, RANGE_SELECTED_STATE);
+	const blockStateValue = getBlockStateValue(permutation, MAGNET.states.rangeSelected);
 	let rangeIndex = clampIndex(getRangeIndexFromStateValue(blockStateValue), maxRangeIndex);
 
 	if (stored) {
@@ -604,7 +609,7 @@ function syncMagnetState(block, magnetId, maxRangeIndex) {
 	}
 	const desiredStateValue = getRangeStateValueFromIndex(rangeIndex);
 	if (blockStateValue !== desiredStateValue) {
-		updates[RANGE_SELECTED_STATE] = desiredStateValue;
+		updates[MAGNET.states.rangeSelected] = desiredStateValue;
 	}
 
 	if (Object.keys(updates).length > 0) {

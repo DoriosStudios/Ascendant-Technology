@@ -2,18 +2,33 @@ import { world, system, ItemStack } from "@minecraft/server";
 import { loadObjectives } from "../utils/scoreboards.js";
 
 // ─── Fluid/Gas registries ────────────────────────────────────────────────────
-const REGISTER_FLUID_CONTAINER_EVENT = "utilitycraft:register_fluid_container";
-const REGISTER_FLUID_OUTPUT_EVENT = "utilitycraft:register_fluid_output";
-const REGISTER_GAS_CONTAINER_EVENT = "utilitycraft:register_gas_container";
-const REGISTER_GAS_OUTPUT_EVENT = "utilitycraft:register_gas_output";
+const FLUID_STORAGE_EVENTS = Object.freeze({
+    fluid: Object.freeze({
+        registerContainer: "utilitycraft:register_fluid_container",
+        registerOutput: "utilitycraft:register_fluid_output"
+    }),
+    gas: Object.freeze({
+        registerContainer: "utilitycraft:register_gas_container",
+        registerOutput: "utilitycraft:register_gas_output"
+    })
+});
 
-const fluidContainerRegistry = Object.create(null);
-const fluidOutputRegistry = Object.create(null);
-const fluidHolderRegistry = Object.create(null);
-const gasContainerRegistry = fluidContainerRegistry;
-const gasOutputRegistry = fluidOutputRegistry;
-const gasHolderRegistry = fluidHolderRegistry;
-const INFINITE_FLUID_CAP_FALLBACK = 1_024_000;
+const FLUID_STORAGE_RUNTIME = {
+    fluidContainerRegistry: Object.create(null),
+    fluidOutputRegistry: Object.create(null),
+    fluidHolderRegistry: Object.create(null)
+};
+
+const fluidContainerRegistry = FLUID_STORAGE_RUNTIME.fluidContainerRegistry;
+const fluidOutputRegistry = FLUID_STORAGE_RUNTIME.fluidOutputRegistry;
+const fluidHolderRegistry = FLUID_STORAGE_RUNTIME.fluidHolderRegistry;
+const gasContainerRegistry = FLUID_STORAGE_RUNTIME.fluidContainerRegistry;
+const gasOutputRegistry = FLUID_STORAGE_RUNTIME.fluidOutputRegistry;
+const gasHolderRegistry = FLUID_STORAGE_RUNTIME.fluidHolderRegistry;
+
+const FLUID_STORAGE_DEFAULTS = Object.freeze({
+    infiniteFluidCapFallback: 1_024_000
+});
 
 // ─── Sanitizers ──────────────────────────────────────────────────────────────
 const sanitizeFluidType = (value) =>
@@ -517,21 +532,25 @@ import {
     OPPOSITE_DIRECTIONS,
 } from "../constants.js";
 
-const LEFT_OF_DIRECTION = Object.freeze({
-    north: "west",
-    south: "east",
-    east: "north",
-    west: "south"
+const FLUID_STORAGE_DIRECTIONS = Object.freeze({
+    leftOf: Object.freeze({
+        north: "west",
+        south: "east",
+        east: "north",
+        west: "south"
+    }),
+    rightOf: Object.freeze({
+        north: "east",
+        south: "west",
+        east: "south",
+        west: "north"
+    }),
+    validRelative: new Set(["front", "back", "left", "right", "up", "down"])
 });
 
-const RIGHT_OF_DIRECTION = Object.freeze({
-    north: "east",
-    south: "west",
-    east: "south",
-    west: "north"
-});
-
-const VALID_RELATIVE_DIRECTIONS = new Set(["front", "back", "left", "right", "up", "down"]);
+const LEFT_OF_DIRECTION = FLUID_STORAGE_DIRECTIONS.leftOf;
+const RIGHT_OF_DIRECTION = FLUID_STORAGE_DIRECTIONS.rightOf;
+const VALID_RELATIVE_DIRECTIONS = FLUID_STORAGE_DIRECTIONS.validRelative;
 
 const cloneOffsetVector = (vector) => ({ x: vector.x, y: vector.y, z: vector.z });
 
@@ -861,7 +880,7 @@ export class FluidManager {
                 let cap = this.getCap();
                 let effectiveCap = cap;
                 if (!Number.isFinite(effectiveCap) || effectiveCap <= 0) {
-                    effectiveCap = INFINITE_FLUID_CAP_FALLBACK;
+                    effectiveCap = FLUID_STORAGE_DEFAULTS.infiniteFluidCapFallback;
                     try {
                         this.setCap(effectiveCap);
                     } catch { /* ignore cap reset errors */ }

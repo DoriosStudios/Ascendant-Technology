@@ -10,8 +10,13 @@ export const HAS_ADVENTURE_CONDIMENT = (() => {
     }
 })();
 
-const COOLING_AURAS = new Map();
-const HEATER_AURAS = new Map();
+const MULTI_CORE_RUNTIME = {
+    coolingAuras: new Map(),
+    heaterAuras: new Map()
+};
+
+const COOLING_AURAS = MULTI_CORE_RUNTIME.coolingAuras;
+const HEATER_AURAS = MULTI_CORE_RUNTIME.heaterAuras;
 
 function getLocationKey(block) {
     const loc = block?.location;

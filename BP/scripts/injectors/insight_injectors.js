@@ -1,17 +1,26 @@
 import { system } from "@minecraft/server";
 import { Energy, FluidManager } from "../DoriosCore/index.js";
 
-const REGISTRATION_MARKER = "__insightInjectorsAscendantRegistered";
-const REGISTRATION_RETRY_TICKS = 20;
-const MAX_REGISTRATION_ATTEMPTS = 180;
-const INSIGHT_PROVIDER_NAME = "Ascendant Technology";
-const INSIGHT_CUSTOM_COMPONENT_KEYS = Object.freeze([
-    "customEnergyInfo",
-    "customRotationInfo",
-    "customMachineProgress",
-    "customFluidInfo",
-    "customVariantPreview"
-]);
+const INSIGHT_INJECTOR = Object.freeze({
+    runtime: Object.freeze({
+        registrationMarker: "__insightInjectorsAscendantRegistered",
+        registrationRetryTicks: 20,
+        maxRegistrationAttempts: 180
+    }),
+    provider: Object.freeze({
+        name: "Ascendant Technology",
+        customComponentKeys: Object.freeze([
+            "customEnergyInfo",
+            "customRotationInfo",
+            "customMachineProgress",
+            "customFluidInfo",
+            "customVariantPreview"
+        ])
+    })
+});
+
+const { registrationMarker: REGISTRATION_MARKER, registrationRetryTicks: REGISTRATION_RETRY_TICKS, maxRegistrationAttempts: MAX_REGISTRATION_ATTEMPTS } = INSIGHT_INJECTOR.runtime;
+const { name: INSIGHT_PROVIDER_NAME, customComponentKeys: INSIGHT_CUSTOM_COMPONENT_KEYS } = INSIGHT_INJECTOR.provider;
 
 // ---------------------------------------------------------------------------
 // Helpers

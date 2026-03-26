@@ -6,10 +6,12 @@ import {
     getClonerItemProfile as resolveClonerItemProfile
 } from "./duplicator_list.js";
 
-const KDE = 1000;
-const DEFAULT_FLUID_TYPE = 'liquified_aetherium';
-const FLUID_PER_SECOND = 50; // mB per second (significant long-term drain)
-const CLONER_BLOCK_ID = 'utilitycraft:duplicator';
+const CLONER_DEFAULTS = Object.freeze({
+    kde: 1000,
+    fluidType: 'liquified_aetherium',
+    fluidPerSecond: 50,
+    blockId: 'utilitycraft:duplicator'
+});
 
 /**
  * @typedef {Object} ClonerRecipeDefinition
@@ -47,7 +49,7 @@ const CLONER_BLOCK_ID = 'utilitycraft:duplicator';
  * Total energy cost for a recipe is derived as:
  *   (rarityRateKDE * timeSeconds + recipe.cost) * 1 000
  */
-const RARITY_BASE_RATE_KDE = {
+const RARITY_BASE_RATE_KDE = Object.freeze({
     common:      10,
     uncommon:    48,
     rare:        240,
@@ -55,7 +57,7 @@ const RARITY_BASE_RATE_KDE = {
     legendary:   6000,
     mythic:      30000,
     transcendent: 150000
-};
+});
 export { CLONER_RARITIES, CLONER_BLOCK_RARITY_MAP, CLONER_ITEM_RARITY_MAP } from "./duplicator_list.js";
 
 export function getClonerItemProfile(id) {
@@ -214,7 +216,7 @@ export function defineSingularityRecipe(definition) {
         ticks: Math.max(1, Math.round(timeSeconds * 20)),
         costKDE: totalCostKDE,
         perSecondKDE,
-        energyCost: Math.max(KDE, Math.round(totalCostKDE * KDE)),
+        energyCost: Math.max(CLONER_DEFAULTS.kde, Math.round(totalCostKDE * CLONER_DEFAULTS.kde)),
         fluid
     };
 }
@@ -250,23 +252,23 @@ function normalizeItemStack(stack) {
 function normalizeFluid(value, timeSeconds) {
     if (value === null) return null;
 
-    const baseAmount = Math.max(1, Math.round(timeSeconds * FLUID_PER_SECOND));
+    const baseAmount = Math.max(1, Math.round(timeSeconds * CLONER_DEFAULTS.fluidPerSecond));
 
     if (typeof value === 'object' && value !== null) {
-        const type = sanitizeFluidType(value.type) ?? DEFAULT_FLUID_TYPE;
+        const type = sanitizeFluidType(value.type) ?? CLONER_DEFAULTS.fluidType;
         const amount = normalizePositive(value.amount ?? baseAmount, baseAmount);
         return { type, amount };
     }
 
     if (typeof value === 'string') {
         return {
-            type: sanitizeFluidType(value) ?? DEFAULT_FLUID_TYPE,
+            type: sanitizeFluidType(value) ?? CLONER_DEFAULTS.fluidType,
             amount: baseAmount
         };
     }
 
     return {
-        type: DEFAULT_FLUID_TYPE,
+        type: CLONER_DEFAULTS.fluidType,
         amount: baseAmount
     };
 }
@@ -279,7 +281,7 @@ function sanitizeFluidType(type) {
 
 function isClonerItemId(id) {
     if (typeof id !== 'string') return false;
-    return id.toLowerCase() === CLONER_BLOCK_ID;
+    return id.toLowerCase() === CLONER_DEFAULTS.blockId;
 }
 
 const DUPLICATOR_EVENT_ID = 'utilitycraft:register_duplicator_recipe';

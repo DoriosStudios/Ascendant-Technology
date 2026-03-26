@@ -1,12 +1,18 @@
 import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, tickGate, feedFluidSlot, formatFluidDisplayName } from '../../DoriosCore/index.js';
 import { getVaporworksProcessorRecipes } from '../../config/recipes/vaporworks_processor.js';
 
-const FLUID_INPUT_SLOT = 3;
-const INPUT_DISPLAY_SLOT = 10;
-const OUTPUT_DISPLAY_SLOT = 11;
-const FLUID_OUTPUT_SLOT = 19;
-const STATUS_SLOT = 1;
-const DEFAULT_FLUID_CAP = 64000;
+const VAPORWORKS = Object.freeze({
+    slots: Object.freeze({
+        fluidInput: 3,
+        inputDisplay: 10,
+        outputDisplay: 11,
+        fluidOutput: 19,
+        status: 1
+    }),
+    defaults: Object.freeze({
+        fluidCap: 64000
+    })
+});
 
 /*
 Slots (inventory_size: 20)
@@ -29,13 +35,13 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
             machine.setEnergyCost(settings.machine.energy_cost ?? 2400);
             machine.displayProgress();
             machine.displayEnergy();
-            machine.blockSlots([INPUT_DISPLAY_SLOT, OUTPUT_DISPLAY_SLOT]);
+            machine.blockSlots([VAPORWORKS.slots.inputDisplay, VAPORWORKS.slots.outputDisplay]);
 
             const [tankInput, tankOutput] = getVaporworksTanks(machine, settings);
-            tankInput.display(INPUT_DISPLAY_SLOT);
-            tankOutput.display(OUTPUT_DISPLAY_SLOT);
+            tankInput.display(VAPORWORKS.slots.inputDisplay);
+            tankOutput.display(VAPORWORKS.slots.outputDisplay);
 
-            machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '');
+            machine.entity.setItem(VAPORWORKS.slots.status, 'utilitycraft:arrow_indicator_90', 1, '');
         });
     },
 
@@ -67,15 +73,15 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
         }
 
         // Handle fluid input slot (capsule draining)
-        feedFluidSlot(machine, tankInput, FLUID_INPUT_SLOT);
+        feedFluidSlot(machine, tankInput, VAPORWORKS.slots.fluidInput);
         
         // Handle fluid output slot (capsule filling)
-        fillFluidSlot(machine, tankOutput, FLUID_OUTPUT_SLOT);
+        fillFluidSlot(machine, tankOutput, VAPORWORKS.slots.fluidOutput);
 
         const fail = (message, reset = true) => {
             machine.showWarning(message, reset);
-            tankInput.display(INPUT_DISPLAY_SLOT);
-            tankOutput.display(OUTPUT_DISPLAY_SLOT);
+            tankInput.display(VAPORWORKS.slots.inputDisplay);
+            tankOutput.display(VAPORWORKS.slots.outputDisplay);
         };
 
         if (!recipes.length) {
@@ -136,8 +142,8 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
         }
 
         updateHud(machine, recipe, tankInput, tankOutput, crafts.max);
-        tankInput.display(INPUT_DISPLAY_SLOT);
-        tankOutput.display(OUTPUT_DISPLAY_SLOT);
+        tankInput.display(VAPORWORKS.slots.inputDisplay);
+        tankOutput.display(VAPORWORKS.slots.outputDisplay);
         machine.displayEnergy();
         machine.displayProgress();
         machine.on();
@@ -153,7 +159,7 @@ function resolveFluidCap(settings) {
     if (Number.isFinite(configured) && configured > 0) {
         return configured;
     }
-    return DEFAULT_FLUID_CAP;
+    return VAPORWORKS.defaults.fluidCap;
 }
 
 function resolveInputRate(settings, recipes) {

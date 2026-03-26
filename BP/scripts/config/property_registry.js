@@ -22,16 +22,23 @@
  * @property {string[]=} jsonPaths  Onde costuma aparecer (para referência).
  */
 
-/** Block-state: functional toggle of the block (false = off, true = on). */
-export const STATE_IS_ON = "utilitycraft:isOn";
-/** Block-state: upgrade level index for range (0-15). Higher index unlocks larger reach. */
-export const STATE_RANGE = "utilitycraft:range";
-/** Block-state: currently selected reach in meters (enumerated distances). */
-export const STATE_RANGE_SELECTED = "utilitycraft:rangeSelected";
-/** Block-state: filter upgrade toggle (0 = absent, 1 = installed/enabled). */
-export const STATE_FILTER = "utilitycraft:filter";
-/** Dynamic property (entity): per-entity cooldown applied to teleported mobs. */
-export const DYN_MAGNET_COOLDOWN = "utilitycraft:mob_magnet_cooldown";
+export const PROPERTY_IDS = Object.freeze({
+  states: Object.freeze({
+    isOn: "utilitycraft:isOn",
+    range: "utilitycraft:range",
+    rangeSelected: "utilitycraft:rangeSelected",
+    filter: "utilitycraft:filter"
+  }),
+  dynamic: Object.freeze({
+    magnetCooldown: "utilitycraft:mob_magnet_cooldown"
+  })
+});
+
+export const STATE_IS_ON = PROPERTY_IDS.states.isOn;
+export const STATE_RANGE = PROPERTY_IDS.states.range;
+export const STATE_RANGE_SELECTED = PROPERTY_IDS.states.rangeSelected;
+export const STATE_FILTER = PROPERTY_IDS.states.filter;
+export const DYN_MAGNET_COOLDOWN = PROPERTY_IDS.dynamic.magnetCooldown;
 
 /** @type {Record<string, PropertyMeta>} */
 export const PROPERTY_REGISTRY = {

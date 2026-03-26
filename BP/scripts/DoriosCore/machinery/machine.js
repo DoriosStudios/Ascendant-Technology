@@ -290,9 +290,13 @@ export function applyDynamicRecipeRate(machine, recipe, options = {}) {
 
 // ─── Label system ────────────────────────────────────────────────────────────
 
-const COLORS = DoriosAPI.constants.textColors;
+const MACHINE_LABELS = Object.freeze({
+    colors: DoriosAPI.constants.textColors,
+    splitRegex: /\r?\n/
+});
 
-const splitRegex = /\r?\n/;
+const COLORS = MACHINE_LABELS.colors;
+const splitRegex = MACHINE_LABELS.splitRegex;
 
 function normalizeLoreEntries(entries) {
     if (!Array.isArray(entries)) return [];

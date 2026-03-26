@@ -2,10 +2,40 @@ import { system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { updatePipes, Energy } from "../../DoriosCore/index.js";
 
-const CONVEYOR_TAG = "dorios:conveyor";
-const BRIDGE_TAG = "dorios:conveyor_bridge";
-const LEGACY_BRIDGE_PATH_BLOCK_ID = "utilitycraft:conveyor_bridge_path";
-const BRIDGE_PATH_BY_TIER = Object.freeze({
+const CONVEYOR_IDS = Object.freeze({
+    tags: Object.freeze({
+        conveyor: "dorios:conveyor",
+        bridge: "dorios:conveyor_bridge"
+    }),
+    states: Object.freeze({
+        bridgePathDirection: "utilitycraft:cardinal_direction",
+        verticalDirection: "utilitycraft:vertical_direction"
+    }),
+    items: Object.freeze({
+        wrench: "utilitycraft:wrench"
+    }),
+    props: Object.freeze({
+        itemMoveTick: "utilitycraft:conveyor_move_tick",
+        itemMoveKey: "utilitycraft:conveyor_move_key",
+        entityMoveTick: "utilitycraft:conveyor_entity_move_tick",
+        entityMoveKey: "utilitycraft:conveyor_entity_move_key",
+        persistChunkPrefix: "utilitycraft:conveyor_chunk",
+        persistChunkIndexMetaPrefix: "utilitycraft:conveyor_chunk_index",
+        persistChunkIndexPagePrefix: "utilitycraft:conveyor_chunk_index_page",
+        upgradeKeyPrefix: "utilitycraft:conveyor_upgrade",
+        upgradeTypeKeyPrefix: "utilitycraft:conveyor_upgrade_type",
+        upgradeBlockKeyPrefix: "utilitycraft:conveyor_upgrade_block",
+        globalUpgradeKey: "utilitycraft:conveyor_upgrade_global",
+        smartRouterKeyPrefix: "smart_router",
+        sorterFilterKeyPrefix: "conveyor_sorter_filter",
+        itemJunctionDir: "utilitycraft:junction_dir",
+        itemJunctionBlock: "utilitycraft:junction_block"
+    })
+});
+
+const CONVEYOR_BRIDGE = Object.freeze({
+    legacyPathBlockId: "utilitycraft:conveyor_bridge_path",
+    pathByTier: Object.freeze({
     copper: {
         id: "utilitycraft:copper_conveyor_bridge_path",
         tag: "dorios:conveyor_bridge_path_copper"
@@ -18,12 +48,9 @@ const BRIDGE_PATH_BY_TIER = Object.freeze({
         id: "utilitycraft:aetherium_conveyor_bridge_path",
         tag: "dorios:conveyor_bridge_path_aetherium"
     }
-});
-const AIR_BLOCK_IDS = new Set(["minecraft:air", "minecraft:cave_air", "minecraft:void_air"]);
-
-const BRIDGE_PATH_DIRECTION_STATE = "utilitycraft:cardinal_direction";
-
-const BRIDGE_CLEARABLE_BLOCKS = new Set([
+    }),
+    airBlockIds: new Set(["minecraft:air", "minecraft:cave_air", "minecraft:void_air"]),
+    clearableBlocks: new Set([
     "minecraft:snow",
     "minecraft:snow_layer",
     "minecraft:torch",
@@ -81,22 +108,35 @@ const BRIDGE_CLEARABLE_BLOCKS = new Set([
     "minecraft:weeping_vines_plant",
     "minecraft:twisting_vines_plant",
     "minecraft:bamboo_sapling"
-]);
+    ]),
+    clearableSuffixes: Object.freeze(["_sapling", "_fungus", "_mushroom", "_flower", "_tulip"])
+});
 
-const BRIDGE_CLEARABLE_SUFFIXES = ["_sapling", "_fungus", "_mushroom", "_flower", "_tulip"];
-
-const SPECIAL_CONVEYOR_TIER = "universal";
-const SPECIAL_CONVEYOR_IPS = 5;
-const SPECIAL_CONVEYOR_ENERGY_COST = 10;
-const ROUTER_CYCLE_TICKS = 10;
-const ITEM_SPACING = 0.35;
-const INCLINED_DETECTION_RADIUS = 0.75;
-
-const ITEM_MOVE_TICK_PROP = "utilitycraft:conveyor_move_tick";
-const ITEM_MOVE_KEY_PROP = "utilitycraft:conveyor_move_key";
-const ENTITY_MOVE_TICK_PROP = "utilitycraft:conveyor_entity_move_tick";
-const ENTITY_MOVE_KEY_PROP = "utilitycraft:conveyor_entity_move_key";
-const CONVEYOR_CREATURE_EXCLUDED_TYPES = [
+const CONVEYOR_DEFAULTS = Object.freeze({
+    special: Object.freeze({
+        tier: "universal",
+        ips: 5,
+        energyCost: 10
+    }),
+    timing: Object.freeze({
+        routerCycleTicks: 10,
+        processInterval: 2,
+        networkUpdaterIntervalDefault: 80,
+        networkUpdaterMaxScan: 4096,
+        persistChunkPageSize: 200
+    }),
+    movement: Object.freeze({
+        itemSpacing: 0.35,
+        inclinedDetectionRadius: 0.75,
+        baseIps: 5,
+        baseSpeed: 0.05,
+        baseVerticalSpeed: 0.12,
+        maxSpeed: 0.2,
+        maxVerticalSpeed: 0.3,
+        aetheriumSpeedMultiplier: 5
+    }),
+    routing: Object.freeze({
+        creatureExcludedTypes: Object.freeze([
     "minecraft:player",
     "minecraft:item",
     "minecraft:xp_orb",
@@ -111,8 +151,8 @@ const CONVEYOR_CREATURE_EXCLUDED_TYPES = [
     "minecraft:armor_stand",
     "minecraft:lightning_bolt",
     "minecraft:falling_block"
-];
-const CONVEYOR_CREATURE_EXCLUDED_FAMILIES = [
+        ]),
+        creatureExcludedFamilies: Object.freeze([
     "player",
     "inanimate",
     "projectile",
@@ -120,13 +160,8 @@ const CONVEYOR_CREATURE_EXCLUDED_FAMILIES = [
     "dorios:energy_container",
     "dorios:fluid_container",
     "dorios:battery"
-];
-const CONVEYOR_PERSIST_CHUNK_PREFIX = "utilitycraft:conveyor_chunk";
-const CONVEYOR_PERSIST_CHUNK_INDEX_META_PREFIX = "utilitycraft:conveyor_chunk_index";
-const CONVEYOR_PERSIST_CHUNK_INDEX_PAGE_PREFIX = "utilitycraft:conveyor_chunk_index_page";
-const CONVEYOR_PERSIST_CHUNK_PAGE_SIZE = 200;
-const MAX_CONVEYOR_ENERGY_SCAN = 2048;
-const CONVEYOR_UPGRADE_TYPES = new Set([
+        ]),
+        upgradeTypes: new Set([
     "energy",
     "filter",
     "hyper",
@@ -135,26 +170,111 @@ const CONVEYOR_UPGRADE_TYPES = new Set([
     "size",
     "speed",
     "ultimate"
-]);
-const CONVEYOR_NETWORK_DIRTY = new Set();
-const CONVEYOR_NETWORK_CACHE = new Map();
-const CONVEYOR_NETWORK_UPDATER_INTERVAL_DEFAULT = 80;
-const CONVEYOR_NETWORK_UPDATER_MAX_SCAN = 4096;
-const VERTICAL_DIRECTION_STATE = "utilitycraft:vertical_direction";
-const WRENCH_ITEM_ID = "utilitycraft:wrench";
+        ]),
+        smartRouterDefault: Object.freeze({ left: [], front: [], right: [] }),
+        smartRouterDirs: Object.freeze(["left", "front", "right"]),
+        upgradeMax: 64,
+        maxEnergyScan: 2048
+    }),
+    directions: Object.freeze({
+        cardinalOffsets: Object.freeze({
+            north: { x: 0, y: 0, z: -1 },
+            south: { x: 0, y: 0, z: 1 },
+            east: { x: 1, y: 0, z: 0 },
+            west: { x: -1, y: 0, z: 0 }
+        }),
+        energyOffsets: Object.freeze([
+            { x: 1, y: 0, z: 0 },
+            { x: -1, y: 0, z: 0 },
+            { x: 0, y: 1, z: 0 },
+            { x: 0, y: -1, z: 0 },
+            { x: 0, y: 0, z: 1 },
+            { x: 0, y: 0, z: -1 }
+        ]),
+        oppositeCardinal: Object.freeze({
+            north: "south",
+            south: "north",
+            east: "west",
+            west: "east"
+        }),
+        rightCardinal: Object.freeze({
+            north: "east",
+            east: "south",
+            south: "west",
+            west: "north"
+        }),
+        leftCardinal: Object.freeze({
+            north: "west",
+            west: "south",
+            south: "east",
+            east: "north"
+        })
+    }),
+    types: Object.freeze({
+        tiers: Object.freeze([
+            { tier: "copper", ips: 5, bridgeRange: 8 },
+            { tier: "titanium", ips: 11, bridgeRange: 16 },
+            { tier: "aetherium", ips: 128, bridgeRange: 32 }
+        ]),
+        shapes: Object.freeze(["horizontal", "inclined", "declined", "vertical"])
+    })
+});
 
-const CONVEYOR_UPGRADE_MAX = 64;
-const CONVEYOR_UPGRADE_KEY_PREFIX = "utilitycraft:conveyor_upgrade";
-const CONVEYOR_UPGRADE_TYPE_KEY_PREFIX = "utilitycraft:conveyor_upgrade_type";
-const CONVEYOR_UPGRADE_BLOCK_KEY_PREFIX = "utilitycraft:conveyor_upgrade_block";
-const GLOBAL_CONVEYOR_UPGRADE_KEY = "utilitycraft:conveyor_upgrade_global";
-const SMART_ROUTER_KEY_PREFIX = "smart_router";
-const SORTER_FILTER_KEY_PREFIX = "conveyor_sorter_filter";
-const SMART_ROUTER_DEFAULT = Object.freeze({ left: [], front: [], right: [] });
-const SMART_ROUTER_DIRS = ["left", "front", "right"];
+const CONVEYOR_RUNTIME = {
+    networkDirty: new Set(),
+    networkCache: new Map(),
+    registry: new Map(),
+    bridgeCache: new Map(),
+    routerDirectionCache: new Map(),
+    sorterSideCycleCache: new Map(),
+    overflowCycleCache: new Map(),
+    underflowCycleCache: new Map(),
+    metaByType: new Map()
+};
 
-const ITEM_JUNCTION_DIR_PROP = "utilitycraft:junction_dir";
-const ITEM_JUNCTION_BLOCK_PROP = "utilitycraft:junction_block";
+const CONVEYOR_TAG = CONVEYOR_IDS.tags.conveyor;
+const BRIDGE_TAG = CONVEYOR_IDS.tags.bridge;
+const LEGACY_BRIDGE_PATH_BLOCK_ID = CONVEYOR_BRIDGE.legacyPathBlockId;
+const BRIDGE_PATH_BY_TIER = CONVEYOR_BRIDGE.pathByTier;
+const AIR_BLOCK_IDS = CONVEYOR_BRIDGE.airBlockIds;
+const BRIDGE_PATH_DIRECTION_STATE = CONVEYOR_IDS.states.bridgePathDirection;
+const BRIDGE_CLEARABLE_BLOCKS = CONVEYOR_BRIDGE.clearableBlocks;
+const BRIDGE_CLEARABLE_SUFFIXES = CONVEYOR_BRIDGE.clearableSuffixes;
+const SPECIAL_CONVEYOR_TIER = CONVEYOR_DEFAULTS.special.tier;
+const SPECIAL_CONVEYOR_IPS = CONVEYOR_DEFAULTS.special.ips;
+const SPECIAL_CONVEYOR_ENERGY_COST = CONVEYOR_DEFAULTS.special.energyCost;
+const ROUTER_CYCLE_TICKS = CONVEYOR_DEFAULTS.timing.routerCycleTicks;
+const ITEM_SPACING = CONVEYOR_DEFAULTS.movement.itemSpacing;
+const INCLINED_DETECTION_RADIUS = CONVEYOR_DEFAULTS.movement.inclinedDetectionRadius;
+const ITEM_MOVE_TICK_PROP = CONVEYOR_IDS.props.itemMoveTick;
+const ITEM_MOVE_KEY_PROP = CONVEYOR_IDS.props.itemMoveKey;
+const ENTITY_MOVE_TICK_PROP = CONVEYOR_IDS.props.entityMoveTick;
+const ENTITY_MOVE_KEY_PROP = CONVEYOR_IDS.props.entityMoveKey;
+const CONVEYOR_CREATURE_EXCLUDED_TYPES = CONVEYOR_DEFAULTS.routing.creatureExcludedTypes;
+const CONVEYOR_CREATURE_EXCLUDED_FAMILIES = CONVEYOR_DEFAULTS.routing.creatureExcludedFamilies;
+const CONVEYOR_PERSIST_CHUNK_PREFIX = CONVEYOR_IDS.props.persistChunkPrefix;
+const CONVEYOR_PERSIST_CHUNK_INDEX_META_PREFIX = CONVEYOR_IDS.props.persistChunkIndexMetaPrefix;
+const CONVEYOR_PERSIST_CHUNK_INDEX_PAGE_PREFIX = CONVEYOR_IDS.props.persistChunkIndexPagePrefix;
+const CONVEYOR_PERSIST_CHUNK_PAGE_SIZE = CONVEYOR_DEFAULTS.timing.persistChunkPageSize;
+const MAX_CONVEYOR_ENERGY_SCAN = CONVEYOR_DEFAULTS.routing.maxEnergyScan;
+const CONVEYOR_UPGRADE_TYPES = CONVEYOR_DEFAULTS.routing.upgradeTypes;
+const CONVEYOR_NETWORK_DIRTY = CONVEYOR_RUNTIME.networkDirty;
+const CONVEYOR_NETWORK_CACHE = CONVEYOR_RUNTIME.networkCache;
+const CONVEYOR_NETWORK_UPDATER_INTERVAL_DEFAULT = CONVEYOR_DEFAULTS.timing.networkUpdaterIntervalDefault;
+const CONVEYOR_NETWORK_UPDATER_MAX_SCAN = CONVEYOR_DEFAULTS.timing.networkUpdaterMaxScan;
+const VERTICAL_DIRECTION_STATE = CONVEYOR_IDS.states.verticalDirection;
+const WRENCH_ITEM_ID = CONVEYOR_IDS.items.wrench;
+const CONVEYOR_UPGRADE_MAX = CONVEYOR_DEFAULTS.routing.upgradeMax;
+const CONVEYOR_UPGRADE_KEY_PREFIX = CONVEYOR_IDS.props.upgradeKeyPrefix;
+const CONVEYOR_UPGRADE_TYPE_KEY_PREFIX = CONVEYOR_IDS.props.upgradeTypeKeyPrefix;
+const CONVEYOR_UPGRADE_BLOCK_KEY_PREFIX = CONVEYOR_IDS.props.upgradeBlockKeyPrefix;
+const GLOBAL_CONVEYOR_UPGRADE_KEY = CONVEYOR_IDS.props.globalUpgradeKey;
+const SMART_ROUTER_KEY_PREFIX = CONVEYOR_IDS.props.smartRouterKeyPrefix;
+const SORTER_FILTER_KEY_PREFIX = CONVEYOR_IDS.props.sorterFilterKeyPrefix;
+const SMART_ROUTER_DEFAULT = CONVEYOR_DEFAULTS.routing.smartRouterDefault;
+const SMART_ROUTER_DIRS = CONVEYOR_DEFAULTS.routing.smartRouterDirs;
+const ITEM_JUNCTION_DIR_PROP = CONVEYOR_IDS.props.itemJunctionDir;
+const ITEM_JUNCTION_BLOCK_PROP = CONVEYOR_IDS.props.itemJunctionBlock;
 
 const normalizeRawMessageArg = value => {
     if (value === undefined || value === null) return "";
@@ -167,70 +287,32 @@ const tr = (key, withArgs = []) => ({
     with: withArgs.map(normalizeRawMessageArg)
 });
 
-const PROCESS_INTERVAL = 2;
-const BASE_IPS = 5;
-const BASE_SPEED = 0.05;
-const BASE_VERTICAL_SPEED = 0.12;
-const MAX_SPEED = 0.2;
-const MAX_VERTICAL_SPEED = 0.3;
-const AETHERIUM_SPEED_MULTIPLIER = 5;
-
-const CARDINAL_OFFSETS = Object.freeze({
-    north: { x: 0, y: 0, z: -1 },
-    south: { x: 0, y: 0, z: 1 },
-    east: { x: 1, y: 0, z: 0 },
-    west: { x: -1, y: 0, z: 0 }
-});
-
-const ENERGY_OFFSETS = Object.freeze([
-    { x: 1, y: 0, z: 0 },
-    { x: -1, y: 0, z: 0 },
-    { x: 0, y: 1, z: 0 },
-    { x: 0, y: -1, z: 0 },
-    { x: 0, y: 0, z: 1 },
-    { x: 0, y: 0, z: -1 }
-]);
-
-const OPPOSITE_CARDINAL = Object.freeze({
-    north: "south",
-    south: "north",
-    east: "west",
-    west: "east"
-});
-
-const RIGHT_CARDINAL = Object.freeze({
-    north: "east",
-    east: "south",
-    south: "west",
-    west: "north"
-});
-
-const LEFT_CARDINAL = Object.freeze({
-    north: "west",
-    west: "south",
-    south: "east",
-    east: "north"
-});
-
-const conveyorRegistry = new Map();
-const bridgeCache = new Map();
-const routerDirectionCache = new Map();
-const sorterSideCycleCache = new Map();
-const overflowCycleCache = new Map();
-const underflowCycleCache = new Map();
-const CONVEYOR_META_BY_TYPE = new Map();
+const PROCESS_INTERVAL = CONVEYOR_DEFAULTS.timing.processInterval;
+const BASE_IPS = CONVEYOR_DEFAULTS.movement.baseIps;
+const BASE_SPEED = CONVEYOR_DEFAULTS.movement.baseSpeed;
+const BASE_VERTICAL_SPEED = CONVEYOR_DEFAULTS.movement.baseVerticalSpeed;
+const MAX_SPEED = CONVEYOR_DEFAULTS.movement.maxSpeed;
+const MAX_VERTICAL_SPEED = CONVEYOR_DEFAULTS.movement.maxVerticalSpeed;
+const AETHERIUM_SPEED_MULTIPLIER = CONVEYOR_DEFAULTS.movement.aetheriumSpeedMultiplier;
+const CARDINAL_OFFSETS = CONVEYOR_DEFAULTS.directions.cardinalOffsets;
+const ENERGY_OFFSETS = CONVEYOR_DEFAULTS.directions.energyOffsets;
+const OPPOSITE_CARDINAL = CONVEYOR_DEFAULTS.directions.oppositeCardinal;
+const RIGHT_CARDINAL = CONVEYOR_DEFAULTS.directions.rightCardinal;
+const LEFT_CARDINAL = CONVEYOR_DEFAULTS.directions.leftCardinal;
+const conveyorRegistry = CONVEYOR_RUNTIME.registry;
+const bridgeCache = CONVEYOR_RUNTIME.bridgeCache;
+const routerDirectionCache = CONVEYOR_RUNTIME.routerDirectionCache;
+const sorterSideCycleCache = CONVEYOR_RUNTIME.sorterSideCycleCache;
+const overflowCycleCache = CONVEYOR_RUNTIME.overflowCycleCache;
+const underflowCycleCache = CONVEYOR_RUNTIME.underflowCycleCache;
+const CONVEYOR_META_BY_TYPE = CONVEYOR_RUNTIME.metaByType;
 
 function defineConveyorType(id, meta) {
     CONVEYOR_META_BY_TYPE.set(id, Object.freeze({ ...meta }));
 }
 
-const TIERS = [
-    { tier: "copper", ips: 5, bridgeRange: 8 },
-    { tier: "titanium", ips: 11, bridgeRange: 16 },
-    { tier: "aetherium", ips: 128, bridgeRange: 32 }
-];
-
-const SHAPES = ["horizontal", "inclined", "declined", "vertical"];
+const TIERS = CONVEYOR_DEFAULTS.types.tiers;
+const SHAPES = CONVEYOR_DEFAULTS.types.shapes;
 
 for (const tier of TIERS) {
     for (const shape of SHAPES) {

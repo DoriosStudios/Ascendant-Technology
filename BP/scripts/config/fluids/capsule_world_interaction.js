@@ -1,41 +1,46 @@
 import { ItemStack, world } from "@minecraft/server";
 
-const EMPTY_CAPSULE_ID = "utilitycraft:empty_liquid_capsule";
-const CAPSULE_MIN_TIER = 1;
-const CAPSULE_MAX_TIER = 8;
-
-const AIR_BLOCK_IDS = new Set([
-    "minecraft:air",
-    "minecraft:cave_air",
-    "minecraft:void_air"
-]);
-
-const CAPSULE_FLUID_BLOCK_BY_TYPE = Object.freeze({
+const CAPSULE = Object.freeze({
+    ids: Object.freeze({
+        empty: "utilitycraft:empty_liquid_capsule"
+    }),
+    tiers: Object.freeze({
+        min: 1,
+        max: 8
+    }),
+    world: Object.freeze({
+        airBlockIds: new Set([
+            "minecraft:air",
+            "minecraft:cave_air",
+            "minecraft:void_air"
+        ]),
+        faceOffsets: Object.freeze({
+            down: { x: 0, y: -1, z: 0 },
+            up: { x: 0, y: 1, z: 0 },
+            north: { x: 0, y: 0, z: -1 },
+            south: { x: 0, y: 0, z: 1 },
+            west: { x: -1, y: 0, z: 0 },
+            east: { x: 1, y: 0, z: 0 }
+        })
+    }),
+    fluids: Object.freeze({
+        blockByType: Object.freeze({
     water: "minecraft:water",
     lava: "minecraft:lava",
     // Future-ready mapping:
     // dark_matter: "utilitycraft:dark_matter_fluid_block"
-});
-
-const CAPSULE_FLUID_TYPE_BY_BLOCK = Object.freeze({
+        }),
+        typeByBlock: Object.freeze({
     "minecraft:water": "water",
     "minecraft:lava": "lava"
     // Future-ready mapping:
     // "utilitycraft:dark_matter_fluid_block": "dark_matter"
-});
-
-const CAPSULE_FLUID_TYPES = Object.freeze(Object.keys(CAPSULE_FLUID_BLOCK_BY_TYPE));
-const FLUID_CAPSULE_REGEX = new RegExp(
-    `^utilitycraft:(${CAPSULE_FLUID_TYPES.join("|")})_capsule_([${CAPSULE_MIN_TIER}-${CAPSULE_MAX_TIER}])$`
-);
-
-const FACE_OFFSETS = Object.freeze({
-    down: { x: 0, y: -1, z: 0 },
-    up: { x: 0, y: 1, z: 0 },
-    north: { x: 0, y: 0, z: -1 },
-    south: { x: 0, y: 0, z: 1 },
-    west: { x: -1, y: 0, z: 0 },
-    east: { x: 1, y: 0, z: 0 }
+        }),
+        types: Object.freeze(["water", "lava"])
+    }),
+    regex: new RegExp(
+        `^utilitycraft:(${["water", "lava"].join("|")})_capsule_([${1}-${8}])$`
+    )
 });
 
 function isCreativePlayer(player) {
@@ -49,11 +54,11 @@ function isCreativePlayer(player) {
 function parseCapsule(itemId) {
     if (!itemId) return null;
 
-    if (itemId === EMPTY_CAPSULE_ID) {
+    if (itemId === CAPSULE.ids.empty) {
         return { fluidType: null, tier: 0 };
     }
 
-    const match = itemId.match(FLUID_CAPSULE_REGEX);
+    const match = itemId.match(CAPSULE.regex);
     if (!match) return null;
 
     const tier = Number(match[2]);
@@ -65,19 +70,19 @@ function parseCapsule(itemId) {
 function clampTier(tier) {
     const value = Number(tier);
     if (!Number.isFinite(value)) return 0;
-    return Math.max(0, Math.min(CAPSULE_MAX_TIER, Math.floor(value)));
+    return Math.max(0, Math.min(CAPSULE.tiers.max, Math.floor(value)));
 }
 
 function getCapsuleId(fluidType, tier) {
     const normalizedTier = clampTier(tier);
-    if (normalizedTier <= 0) return EMPTY_CAPSULE_ID;
+    if (normalizedTier <= 0) return CAPSULE.ids.empty;
     return `utilitycraft:${fluidType}_capsule_${normalizedTier}`;
 }
 
 function isFullFluidSourceBlock(block) {
     if (!block) return false;
 
-    const fluidType = CAPSULE_FLUID_TYPE_BY_BLOCK[block.typeId];
+    const fluidType = CAPSULE.fluids.typeByBlock[block.typeId];
     if (!fluidType) return false;
 
     try {
@@ -93,7 +98,7 @@ function resolveOffset(face) {
     if (face === undefined || face === null) return null;
 
     const key = String(face).toLowerCase();
-    return FACE_OFFSETS[key] ?? null;
+    return CAPSULE.world.faceOffsets[key] ?? null;
 }
 
 function resolveOffsetFromViewDirection(player) {
@@ -105,14 +110,14 @@ function resolveOffsetFromViewDirection(player) {
     const absZ = Math.abs(view.z ?? 0);
 
     if (absY >= absX && absY >= absZ) {
-        return view.y >= 0 ? FACE_OFFSETS.up : FACE_OFFSETS.down;
+        return view.y >= 0 ? CAPSULE.world.faceOffsets.up : CAPSULE.world.faceOffsets.down;
     }
 
     if (absX >= absZ) {
-        return view.x >= 0 ? FACE_OFFSETS.east : FACE_OFFSETS.west;
+        return view.x >= 0 ? CAPSULE.world.faceOffsets.east : CAPSULE.world.faceOffsets.west;
     }
 
-    return view.z >= 0 ? FACE_OFFSETS.south : FACE_OFFSETS.north;
+    return view.z >= 0 ? CAPSULE.world.faceOffsets.south : CAPSULE.world.faceOffsets.north;
 }
 
 function getPlacementBlock(clickedBlock, blockFace, player) {
@@ -136,7 +141,7 @@ function getPlacementBlock(clickedBlock, blockFace, player) {
 
 function isValidPlacementTarget(block) {
     if (!block) return false;
-    return AIR_BLOCK_IDS.has(block.typeId);
+    return CAPSULE.world.airBlockIds.has(block.typeId);
 }
 
 function getSelectedInventoryItem(player) {
@@ -210,13 +215,13 @@ function setBlockTypeSafe(block, typeId) {
 }
 
 function tryPickupFluid(event, player, itemId, capsuleInfo, clickedBlock) {
-    const clickedFluidType = CAPSULE_FLUID_TYPE_BY_BLOCK[clickedBlock?.typeId];
+    const clickedFluidType = CAPSULE.fluids.typeByBlock[clickedBlock?.typeId];
     if (!clickedFluidType) return false;
     if (!isFullFluidSourceBlock(clickedBlock)) return false;
 
     const isEmptyCapsule = capsuleInfo.tier === 0;
     const isSameFluidCapsule = capsuleInfo.fluidType === clickedFluidType;
-    const canUpgrade = capsuleInfo.tier < CAPSULE_MAX_TIER;
+    const canUpgrade = capsuleInfo.tier < CAPSULE.tiers.max;
 
     if (!isEmptyCapsule && (!isSameFluidCapsule || !canUpgrade)) {
         return false;
@@ -245,9 +250,9 @@ function tryPlaceFluid(event, player, itemId, capsuleInfo, clickedBlock, blockFa
     const fluidType = capsuleInfo.fluidType;
     if (!fluidType || capsuleInfo.tier <= 0) return false;
 
-    if (AIR_BLOCK_IDS.has(clickedBlock?.typeId)) return false;
+    if (CAPSULE.world.airBlockIds.has(clickedBlock?.typeId)) return false;
 
-    const fluidBlockId = CAPSULE_FLUID_BLOCK_BY_TYPE[fluidType];
+    const fluidBlockId = CAPSULE.fluids.blockByType[fluidType];
     if (!fluidBlockId) return false;
 
     const placementBlock = getPlacementBlock(clickedBlock, blockFace, player);

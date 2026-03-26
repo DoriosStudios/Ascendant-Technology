@@ -30,67 +30,104 @@ import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../confi
  * - [25] Layout guide indicator
  */
 
-// Slot constants
-const ENERGY_SLOT = 0;
-const STABILIZER_STATUS_SLOT = 1;
-const STABILIZER_PROGRESS_SLOT = 2;
-const STABILIZER_INPUT_SLOT = 3;
-const UPGRADE_SLOTS = [19, 20, 21];
-const COOLING_STATUS_SLOT = 22;
-const WATER_SLOT = 13;
-const WATER_DISPLAY_SLOT = 14;
-const CRYOFLUID_SLOT = 15;
-const CRYOFLUID_DISPLAY_SLOT = 16;
-const TITANIUM_SLOT = 17;
-const LAPIS_SLOT = 18;
-const STABILIZER_OUTPUT_SLOT = 24;
-const FREEZER_GRID_SLOTS = [4, 5, 6, 7, 8, 9, 10, 11, 12];
-const GENERATOR_STATUS_SLOT = 23;
-const GUIDE_SLOT = 25;
+const CRYO_CHAMBER_LAYOUT = Object.freeze({
+    slots: Object.freeze({
+        energy: 0,
+        stabilizerStatus: 1,
+        stabilizerProgress: 2,
+        stabilizerInput: 3,
+        upgrades: Object.freeze([19, 20, 21]),
+        coolingStatus: 22,
+        water: 13,
+        waterDisplay: 14,
+        cryofluid: 15,
+        cryofluidDisplay: 16,
+        titanium: 17,
+        lapis: 18,
+        stabilizerOutput: 24,
+        freezerGrid: Object.freeze([4, 5, 6, 7, 8, 9, 10, 11, 12]),
+        generatorStatus: 23,
+        guide: 25
+    }),
+    defaults: Object.freeze({
+        tankCapacity: 64000
+    })
+});
 
-const MODULE_LABELS = {
-    stabilizer: 'Cryo Stabilizer',
-    cooling: 'Cooling Chamber',
-    generator: 'Cryofluid Generator'
-};
+const ENERGY_SLOT = CRYO_CHAMBER_LAYOUT.slots.energy;
+const STABILIZER_STATUS_SLOT = CRYO_CHAMBER_LAYOUT.slots.stabilizerStatus;
+const STABILIZER_PROGRESS_SLOT = CRYO_CHAMBER_LAYOUT.slots.stabilizerProgress;
+const STABILIZER_INPUT_SLOT = CRYO_CHAMBER_LAYOUT.slots.stabilizerInput;
+const UPGRADE_SLOTS = CRYO_CHAMBER_LAYOUT.slots.upgrades;
+const COOLING_STATUS_SLOT = CRYO_CHAMBER_LAYOUT.slots.coolingStatus;
+const WATER_SLOT = CRYO_CHAMBER_LAYOUT.slots.water;
+const WATER_DISPLAY_SLOT = CRYO_CHAMBER_LAYOUT.slots.waterDisplay;
+const CRYOFLUID_SLOT = CRYO_CHAMBER_LAYOUT.slots.cryofluid;
+const CRYOFLUID_DISPLAY_SLOT = CRYO_CHAMBER_LAYOUT.slots.cryofluidDisplay;
+const TITANIUM_SLOT = CRYO_CHAMBER_LAYOUT.slots.titanium;
+const LAPIS_SLOT = CRYO_CHAMBER_LAYOUT.slots.lapis;
+const STABILIZER_OUTPUT_SLOT = CRYO_CHAMBER_LAYOUT.slots.stabilizerOutput;
+const FREEZER_GRID_SLOTS = CRYO_CHAMBER_LAYOUT.slots.freezerGrid;
+const GENERATOR_STATUS_SLOT = CRYO_CHAMBER_LAYOUT.slots.generatorStatus;
+const GUIDE_SLOT = CRYO_CHAMBER_LAYOUT.slots.guide;
 
-const MODULE_CONFIG = {
-    stabilizer: {
-        key: 'stabilizer',
-        label: MODULE_LABELS.stabilizer,
-        statusSlot: STABILIZER_STATUS_SLOT,
-        inputSlot: STABILIZER_INPUT_SLOT,
-        outputSlot: STABILIZER_OUTPUT_SLOT,
-        progressSlot: STABILIZER_PROGRESS_SLOT,
-        indicatorType: 'arrow_right'
-    },
-    cooling: {
-        key: 'cooling',
-        label: MODULE_LABELS.cooling,
-        statusSlot: COOLING_STATUS_SLOT,
-        gridSlots: FREEZER_GRID_SLOTS
-    },
-    generator: {
-        key: 'generator',
-        label: MODULE_LABELS.generator,
-        statusSlot: GENERATOR_STATUS_SLOT,
-        inputSlot: TITANIUM_SLOT,
-        lapisSlot: LAPIS_SLOT
-    }
-};
+const CRYO_CHAMBER_DEFAULTS = (() => {
+    const indicatorType = 'arrow_right';
+    const colors = Object.freeze({
+        red: '§c',
+        green: '§a',
+        darkGreen: '§2',
+        yellow: '§e',
+        blue: '§b',
+        cyan: '§3',
+        gray: '§7',
+        white: '§f'
+    });
+    const labels = Object.freeze({
+        stabilizer: 'Cryo Stabilizer',
+        cooling: 'Cooling Chamber',
+        generator: 'Cryofluid Generator'
+    });
 
-const COLORS = {
-    red: '§c',
-    green: '§a',
-    darkGreen: '§2',
-    yellow: '§e',
-    blue: '§b',
-    cyan: '§3',
-    gray: '§7',
-    white: '§f'
-};
+    return Object.freeze({
+        modules: Object.freeze({
+            stabilizer: Object.freeze({
+                key: 'stabilizer',
+                label: labels.stabilizer,
+                statusSlot: STABILIZER_STATUS_SLOT,
+                inputSlot: STABILIZER_INPUT_SLOT,
+                outputSlot: STABILIZER_OUTPUT_SLOT,
+                progressSlot: STABILIZER_PROGRESS_SLOT,
+                indicatorType
+            }),
+            cooling: Object.freeze({
+                key: 'cooling',
+                label: labels.cooling,
+                statusSlot: COOLING_STATUS_SLOT,
+                gridSlots: FREEZER_GRID_SLOTS
+            }),
+            generator: Object.freeze({
+                key: 'generator',
+                label: labels.generator,
+                statusSlot: GENERATOR_STATUS_SLOT,
+                inputSlot: TITANIUM_SLOT,
+                lapisSlot: LAPIS_SLOT
+            })
+        }),
+        ui: Object.freeze({
+            colors,
+            indicatorType,
+            statusColors: Object.freeze({
+                processing: colors.darkGreen,
+                waiting: colors.yellow,
+                error: colors.red
+            }),
+            templateTokenPattern: /\{\{\s*(\w+)\s*\}\}/g
+        })
+    });
+})();
 
-const DEFAULT_TANK_CAPACITY = 64000;
+const DEFAULT_TANK_CAPACITY = CRYO_CHAMBER_LAYOUT.defaults.tankCapacity;
 
 function resolveTankCapacity(settings) {
     const configured = Number(settings?.machine?.fluid_cap);
@@ -203,7 +240,7 @@ DoriosAPI.register.blockComponent('cryo_chamber', {
  */
 function processStabilizer(machine, tanks, settings) {
     const recipes = getCryoChamberRecipes().stabilization;
-    return processItemRecipe(machine, tanks, recipes, settings, MODULE_CONFIG.stabilizer);
+    return processItemRecipe(machine, tanks, recipes, settings, CRYO_CHAMBER_DEFAULTS.modules.stabilizer);
 }
 
 /**
@@ -212,19 +249,31 @@ function processStabilizer(machine, tanks, settings) {
  */
 function processCooling(machine, settings, tanks) {
     const recipes = getCryoChamberRecipes().cooling;
-    const slotSummaries = MODULE_CONFIG.cooling.gridSlots.map(slot =>
+    const slotSummaries = CRYO_CHAMBER_DEFAULTS.modules.cooling.gridSlots.map(slot =>
         processCoolingSlot(machine, settings, recipes, slot, tanks)
     );
 
     const summary = summarizeCoolingSlots(slotSummaries);
-    return createModuleStatus(MODULE_CONFIG.cooling.key, MODULE_CONFIG.cooling.label, summary.state, summary.message);
+    return createModuleStatus(
+        CRYO_CHAMBER_DEFAULTS.modules.cooling.key,
+        CRYO_CHAMBER_DEFAULTS.modules.cooling.label,
+        summary.state,
+        summary.message
+    );
 }
 
 /**
  * Shared logic for processing item-based recipes.
  */
 function processItemRecipe(machine, tanks, recipes, settings, moduleConfig) {
-    const { key, label, inputSlot, outputSlot, progressSlot, indicatorType = 'arrow_right' } = moduleConfig;
+    const {
+        key,
+        label,
+        inputSlot,
+        outputSlot,
+        progressSlot,
+        indicatorType = CRYO_CHAMBER_DEFAULTS.ui.indicatorType
+    } = moduleConfig;
     let activeIndicator = indicatorType;
 
     const fail = (message, state = 'waiting', resetProgress = true) => {
@@ -311,7 +360,7 @@ function processItemRecipe(machine, tanks, recipes, settings, moduleConfig) {
 }
 
 function processCoolingSlot(machine, settings, recipes, slot, tanks) {
-    const moduleKey = moduleSlotKey(MODULE_CONFIG.cooling.key, slot);
+    const moduleKey = moduleSlotKey(CRYO_CHAMBER_DEFAULTS.modules.cooling.key, slot);
     const tag = formatCoolingSlotTag(slot);
 
     const fail = (message, state = 'waiting', resetProgress = true) => {
@@ -432,7 +481,7 @@ function summarizeCoolingSlots(slotSummaries) {
  */
 function processGenerator(machine, waterTank, cryofluidTank, settings) {
     const config = getCryofluidGenerationConfig();
-    const module = MODULE_CONFIG.generator;
+    const module = CRYO_CHAMBER_DEFAULTS.modules.generator;
     const key = module.key;
     const catalysts = resolveGeneratorCatalysts(config);
     const lapisRequirement = normalizeGeneratorSupplement(config?.lapisRequirement);
@@ -657,12 +706,6 @@ function formatCoolingSlotTag(slot) {
     return `R${row}C${col}`;
 }
 
-const STATUS_COLORS = {
-    processing: COLORS.darkGreen,
-    waiting: COLORS.yellow,
-    error: COLORS.red
-};
-
 function setModuleProgress(machine, key, value) {
     machine.entity.setDynamicProperty(`cryo:${key}:progress`, Math.max(0, Number(value) || 0));
 }
@@ -685,7 +728,7 @@ function getModuleEnergyCost(machine, key, fallback = 1) {
     return Number(machine.entity.getDynamicProperty(`cryo:${key}:energy_cost`)) || fallback;
 }
 
-function displayModuleProgress(machine, key, slot, indicatorType = 'arrow_right') {
+function displayModuleProgress(machine, key, slot, indicatorType = CRYO_CHAMBER_DEFAULTS.ui.indicatorType) {
     if (typeof slot !== 'number') return;
     const cost = getModuleEnergyCost(machine, key, 1);
     const progress = getModuleProgress(machine, key);
@@ -712,9 +755,9 @@ function updateMachineStatus(machine, statuses, waterTank, cryofluidTank) {
         machine.off();
     }
 
-    renderModuleStatus(machine, MODULE_CONFIG.stabilizer, map.stabilizer);
-    renderModuleStatus(machine, MODULE_CONFIG.cooling, map.cooling);
-    renderModuleStatus(machine, MODULE_CONFIG.generator, map.generator, waterTank, cryofluidTank);
+    renderModuleStatus(machine, CRYO_CHAMBER_DEFAULTS.modules.stabilizer, map.stabilizer);
+    renderModuleStatus(machine, CRYO_CHAMBER_DEFAULTS.modules.cooling, map.cooling);
+    renderModuleStatus(machine, CRYO_CHAMBER_DEFAULTS.modules.generator, map.generator, waterTank, cryofluidTank);
 }
 
 function renderModuleStatus(machine, moduleConfig, status, waterTank, cryofluidTank) {
@@ -722,31 +765,32 @@ function renderModuleStatus(machine, moduleConfig, status, waterTank, cryofluidT
     const slot = moduleConfig.statusSlot;
     if (typeof slot !== 'number') return;
 
-    const color = STATUS_COLORS[status?.state] ?? COLORS.gray;
+    const colors = CRYO_CHAMBER_DEFAULTS.ui.colors;
+    const color = CRYO_CHAMBER_DEFAULTS.ui.statusColors[status?.state] ?? colors.gray;
     const label = moduleConfig.label;
     const message = status?.message ?? 'Idle';
-    const lines = [`§r${color}${label}`, `§r${COLORS.white}${message}`];
+    const lines = [`§r${color}${label}`, `§r${colors.white}${message}`];
 
-    if (moduleConfig.key === MODULE_CONFIG.generator.key) {
+    if (moduleConfig.key === CRYO_CHAMBER_DEFAULTS.modules.generator.key) {
         const waterAmount = FluidManager.formatFluid(waterTank?.get() ?? 0);
         const cryoAmount = FluidManager.formatFluid(cryofluidTank?.get() ?? 0);
         const efficiency = ((1 / machine.boosts.consumption) * 100).toFixed(0);
         const rateText = Energy.formatEnergyToText(Math.floor(machine.baseRate));
         lines.push('');
-        lines.push(`§r${COLORS.gray}Water ${waterAmount}`);
-        lines.push(`§r${COLORS.cyan}Cryo ${cryoAmount}`);
-        lines.push(`§r${COLORS.green}Speed x${machine.boosts.speed.toFixed(2)}`);
-        lines.push(`§r${COLORS.green}Eff ${efficiency}%`);
-        lines.push(`§r${COLORS.red}Rate ${rateText}/t`);
+        lines.push(`§r${colors.gray}Water ${waterAmount}`);
+        lines.push(`§r${colors.cyan}Cryo ${cryoAmount}`);
+        lines.push(`§r${colors.green}Speed x${machine.boosts.speed.toFixed(2)}`);
+        lines.push(`§r${colors.green}Eff ${efficiency}%`);
+        lines.push(`§r${colors.red}Rate ${rateText}/t`);
         if (typeof moduleConfig.inputSlot === 'number') {
             const catalystStack = machine.inv.getItem(moduleConfig.inputSlot);
             const catalystLabel = catalystStack ? formatItemName(catalystStack.typeId) : 'Titanium';
-            lines.push(`§r${COLORS.white}${catalystLabel} x${catalystStack?.amount ?? 0}`);
+            lines.push(`§r${colors.white}${catalystLabel} x${catalystStack?.amount ?? 0}`);
         }
         if (typeof moduleConfig.lapisSlot === 'number') {
             const lapisStack = machine.inv.getItem(moduleConfig.lapisSlot);
             const lapisLabel = lapisStack ? formatItemName(lapisStack.typeId) : 'Lapis Lazuli';
-            lines.push(`§r${COLORS.white}${lapisLabel} x${lapisStack?.amount ?? 0}`);
+            lines.push(`§r${colors.white}${lapisLabel} x${lapisStack?.amount ?? 0}`);
         }
     }
 
@@ -893,8 +937,6 @@ function formatCatalystOptionsLabel(catalysts) {
     return names.length === 1 ? names[0] : names.join(' / ');
 }
 
-const TEMPLATE_TOKEN_PATTERN = /\{\{\s*(\w+)\s*\}\}/g;
-
 function matchRecipeForStack(recipes, stack) {
     if (!Array.isArray(recipes) || !stack) return null;
     for (const recipe of recipes) {
@@ -996,7 +1038,7 @@ function formatRecipeMessage(template, context, fallback) {
     }
 
     const safeContext = context ?? {};
-    return template.replace(TEMPLATE_TOKEN_PATTERN, (_, token) => {
+    return template.replace(CRYO_CHAMBER_DEFAULTS.ui.templateTokenPattern, (_, token) => {
         const key = token.trim();
         const value = safeContext[key];
         return value === undefined || value === null ? '' : String(value);

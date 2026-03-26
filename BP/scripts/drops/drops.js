@@ -4,11 +4,21 @@ export { DROPS_PARTICLES, particle } from './particle_catalog.js';
 
 export const DROPS_SETTINGS = {
 	xpMode: 'auto',
-	replaceSearchRadius: 2.5,
+	replaceSearchRadius: 1.25,
+	dropSpawnOffset: {
+		x: 0.5,
+		y: 0.5,
+		z: 0.5
+	},
 	excavateBridge: {
 		enabled: true,
 		// Modes: 'loot_table' | 'destroy_command' | 'break_then_regen_loot_table'
 		vanillaDropMode: 'loot_table',
+		// Fallbacks when loot-table generation yields nothing:
+		// 'block_item' | 'destroy_command' | 'none'
+		lootTableFallback: 'block_item',
+		// Removes transient vanilla item entities before regenerating manual drops.
+		removeFreshVanillaDrops: true,
 		// Legacy compatibility fallback.
 		useLootTables: true
 	}
@@ -95,18 +105,26 @@ export const DROPS_LIBRARY = {
 	})
 };
 
-const toolFetchedTags = new Set([
-	'minecraft:is_pickaxe',
-	'minecraft:is_axe',
-	'minecraft:is_shovel',
-	'minecraft:is_hoe',
-	'minecraft:is_sword',
-	'utilitycraft:is_aiot',
-	'utilitycraft:is_hammer',
-	'utilitycraft:is_paxel'
-]);
+const DROPS_RUNTIME = {
+	toolTagCache: new Map()
+};
 
-const toolTagCache = new Map();
+const DROPS_RULES = Object.freeze({
+	toolFetchedTags: new Set([
+		'minecraft:is_pickaxe',
+		'minecraft:is_axe',
+		'minecraft:is_shovel',
+		'minecraft:is_hoe',
+		'minecraft:is_sword',
+		'utilitycraft:is_aiot',
+		'utilitycraft:is_hammer',
+		'utilitycraft:is_paxel'
+	]),
+	dropModes: new Set(["replace", "supplement", "vanilla"])
+});
+
+const toolFetchedTags = DROPS_RULES.toolFetchedTags;
+const toolTagCache = DROPS_RUNTIME.toolTagCache;
 
 const normalizeRequiredTags = (requiredType) => {
 	if (!requiredType) return [];
@@ -327,7 +345,7 @@ function matchesConditions(ctx, conditions) {
 	return true;
 }
 
-const DROP_MODES = new Set(["replace", "supplement", "vanilla"]);
+const DROP_MODES = DROPS_RULES.dropModes;
 
 function resolveDropMode(config, usedSpecialOverride) {
 	const rawMode = typeof config?.dropMode === "string" ? config.dropMode.toLowerCase() : null;
@@ -431,6 +449,7 @@ function computeDrops(context, config) {
 		if (!drops.length && !hasExtras && !usedSpecialOverride) return null;
 
 		return {
+			mode: dropMode,
 			drops,
 			replaceVanilla,
 			sound,
@@ -451,6 +470,7 @@ function computeDrops(context, config) {
 	if (!baseDropEnabled || !config.dropId || !config.baseRange) {
 		if (!extraDrops.length && !hasExtras && !usedSpecialOverride) return null;
 		return {
+			mode: dropMode,
 			drops: extraDrops,
 			replaceVanilla,
 			sound,
@@ -471,6 +491,7 @@ function computeDrops(context, config) {
 	const amount = resolveAmount(config, context.fortuneLevel);
 	const drops = [new ItemStack(config.dropId, amount), ...extraDrops];
 	return {
+		mode: dropMode,
 		drops,
 		replaceVanilla,
 		sound,

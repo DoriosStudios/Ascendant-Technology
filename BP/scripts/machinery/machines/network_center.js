@@ -1,9 +1,13 @@
 import { Machine, Energy, buildOverclockLoreLine } from '../../DoriosCore/index.js'
 
-const ENERGY_COST = 400
-const SCAN_COOLDOWN_TICKS = 40 // scan every 2 seconds (20tps)
-const MAX_VISITED = 4096 // safety cap to avoid runaway graphs
-const MAX_LINES_SUMMARY = 10 // limitar detalhes para não poluir UI (agora mostrando até X máquinas)
+const NETWORK_CENTER = Object.freeze({
+    defaults: Object.freeze({
+        energyCost: 400,
+        scanCooldownTicks: 40,
+        maxVisited: 4096,
+        maxLinesSummary: 10
+    })
+})
 
 /*
 Slots (inventory_size: 6)
@@ -27,7 +31,7 @@ DoriosAPI.register.blockComponent('network_center', {
         Machine.spawnMachineEntity(e, settings, () => {
             const machine = new Machine(e.block, settings, true)
             if (!machine?.entity) return
-            machine.setEnergyCost(settings?.machine?.energy_cost ?? ENERGY_COST)
+            machine.setEnergyCost(settings?.machine?.energy_cost ?? NETWORK_CENTER.defaults.energyCost)
             machine.displayEnergy(5)
         })
     },
@@ -37,7 +41,7 @@ DoriosAPI.register.blockComponent('network_center', {
         const machine = new Machine(e.block, settings)
         if (!machine.valid) return
 
-        const cost = settings?.machine?.energy_cost ?? ENERGY_COST
+        const cost = settings?.machine?.energy_cost ?? NETWORK_CENTER.defaults.energyCost
         machine.setEnergyCost(cost)
 
         const energy = machine.energy.get()
@@ -59,7 +63,7 @@ DoriosAPI.register.blockComponent('network_center', {
             machine.entity.setDynamicProperty('nc:cooldown', currentCd - 1)
         } else {
             const summary = scanNetwork(machine)
-            machine.entity.setDynamicProperty('nc:cooldown', SCAN_COOLDOWN_TICKS)
+            machine.entity.setDynamicProperty('nc:cooldown', NETWORK_CENTER.defaults.scanCooldownTicks)
             renderPanels(machine, summary)
         }
 
@@ -114,7 +118,7 @@ function scanNetwork(machine) {
     }
 
     while (queue.length > 0) {
-        if (visited.size > MAX_VISITED) {
+        if (visited.size > NETWORK_CENTER.defaults.maxVisited) {
             summary.truncated = true
             break
         }
@@ -189,7 +193,7 @@ function renderPanels(machine, summary) {
     // Fluxo aproximado: diferença de energia entre scans / intervalo em ticks
     const prevStored = machine.entity.getDynamicProperty('nc:lastStored') ?? summary.stored
     const delta = summary.stored - prevStored
-    const netPerTick = delta / SCAN_COOLDOWN_TICKS
+    const netPerTick = delta / NETWORK_CENTER.defaults.scanCooldownTicks
     machine.entity.setDynamicProperty('nc:lastStored', summary.stored)
 
     let status = 'Stable'
@@ -288,7 +292,7 @@ function incrementCount(map, key) {
 function summarizeTopLines(map) {
     if (!map || map.size === 0) return []
     const sorted = [...map.entries()].sort((a, b) => b[1] - a[1])
-    const limited = sorted.slice(0, MAX_LINES_SUMMARY)
+    const limited = sorted.slice(0, NETWORK_CENTER.defaults.maxLinesSummary)
     return limited.map(([k, v]) => `§h- ${v}x ${formatBlockName(k)}`)
 }
 

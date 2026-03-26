@@ -2,13 +2,19 @@ import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, format
 import { startHeaterAura, tickHeaterAura, stopHeaterAuraAt } from '../multi_core.js'
 import { getEnergizerRecipes } from '../../config/recipes/energizer.js'
 
-const INPUT_SLOTS = [3, 4]
-const OUTPUT_SLOT = 19
-const STATUS_SLOT = 1
-const SLOT_TITLES = {
-    3: 'Primary',
-    4: 'Auxiliary'
-}
+const ENERGIZER = Object.freeze({
+    slots: Object.freeze({
+        inputs: Object.freeze([3, 4]),
+        output: 19,
+        status: 1
+    }),
+    labels: Object.freeze({
+        slotTitles: Object.freeze({
+            3: 'Primary',
+            4: 'Auxiliary'
+        })
+    })
+})
 
 /*
 Slots (inventory_size: 20)
@@ -30,7 +36,7 @@ DoriosAPI.register.blockComponent('energizer', {
             machine.setEnergyCost(settings.machine.energy_cost)
             machine.displayEnergy()
             machine.displayProgress()
-            machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '')
+            machine.entity.setItem(ENERGIZER.slots.status, 'utilitycraft:arrow_indicator_90', 1, '')
         })
     },
 
@@ -65,7 +71,7 @@ DoriosAPI.register.blockComponent('energizer', {
             return
         }
 
-        const outputSlot = machine.inv.getItem(OUTPUT_SLOT)
+        const outputSlot = machine.inv.getItem(ENERGIZER.slots.output)
         const expectedId = channel.recipe.output.id
         if (outputSlot && outputSlot.typeId !== expectedId) {
             machine.showWarning('Output Conflict')
@@ -138,7 +144,7 @@ function resolveRecipes(block, settings) {
 
 function pickActiveChannel(inv, recipes) {
     let fallback = null
-    for (const slot of INPUT_SLOTS) {
+    for (const slot of ENERGIZER.slots.inputs) {
         const stack = inv.getItem(slot)
         if (!stack) continue
         if (!fallback) fallback = { slot, stack }
@@ -196,16 +202,16 @@ function processCraft(machine, channel, crafts) {
     const totalOutput = machine.addFractionalItem(channel.recipe.output.id, totalOutputRaw)
     
     if (totalOutput > 0) {
-        const existing = machine.inv.getItem(OUTPUT_SLOT)
+        const existing = machine.inv.getItem(ENERGIZER.slots.output)
         const maxStack = resolveMaxStackSize(existing, channel.recipe.output.id)
         const available = existing ? Math.max(0, maxStack - existing.amount) : maxStack
         const toInsert = Math.min(totalOutput, available)
         if (toInsert <= 0) return
 
         if (!existing) {
-            machine.entity.setItem(OUTPUT_SLOT, channel.recipe.output.id, toInsert)
+            machine.entity.setItem(ENERGIZER.slots.output, channel.recipe.output.id, toInsert)
         } else {
-            machine.entity.changeItemAmount(OUTPUT_SLOT, toInsert)
+            machine.entity.changeItemAmount(ENERGIZER.slots.output, toInsert)
         }
     }
 }
@@ -244,5 +250,5 @@ function updateHud(machine, channel, status = 'Running') {
 }
 
 function slotTitle(slot) {
-    return SLOT_TITLES[slot] ?? 'Primary'
+    return ENERGIZER.labels.slotTitles[slot] ?? 'Primary'
 }

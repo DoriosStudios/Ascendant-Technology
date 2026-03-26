@@ -12,7 +12,7 @@
  * Example:
  * ```js
  * defineCryoRecipe({
- *   category: CATEGORY.COOLING,
+ *   category: CRYO_RECIPE_DEFAULTS.category.COOLING,
  *   inputs: [
  *     { id: 'minecraft:snow', amount: 1 },
  *     { id: 'minecraft:snow_block', amount: 1 }
@@ -40,15 +40,18 @@
  * - `{{category}}`
  */
 
-const CATEGORY = Object.freeze({
-    STABILIZATION: 'stabilization',
-    COOLING: 'cooling'
-});
-
-const DEFAULT_INDICATOR = 'arrow_right';
-const FLUID_SOURCE = Object.freeze({
-    WATER: 'water',
-    CRYOFLUID: 'cryofluid'
+const CRYO_RECIPE_DEFAULTS = Object.freeze({
+    category: Object.freeze({
+        STABILIZATION: 'stabilization',
+        COOLING: 'cooling'
+    }),
+    ui: Object.freeze({
+        defaultIndicator: 'arrow_right'
+    }),
+    fluidSource: Object.freeze({
+        WATER: 'water',
+        CRYOFLUID: 'cryofluid'
+    })
 });
 
 /**
@@ -135,7 +138,7 @@ function defineCryoRecipe(recipe) {
         energyCost,
         time,
         ui,
-        indicatorType: ui.indicator ?? DEFAULT_INDICATOR,
+        indicatorType: ui.indicator ?? CRYO_RECIPE_DEFAULTS.ui.defaultIndicator,
         tags
     };
 }
@@ -222,10 +225,12 @@ function normalizeFluid(fluid) {
 function normalizeFluidSource(source, typeHint) {
     if (typeof source === 'string') {
         const normalized = source.toLowerCase();
-        if (normalized === FLUID_SOURCE.WATER) return FLUID_SOURCE.WATER;
-        if (normalized === FLUID_SOURCE.CRYOFLUID) return FLUID_SOURCE.CRYOFLUID;
+        if (normalized === CRYO_RECIPE_DEFAULTS.fluidSource.WATER) return CRYO_RECIPE_DEFAULTS.fluidSource.WATER;
+        if (normalized === CRYO_RECIPE_DEFAULTS.fluidSource.CRYOFLUID) return CRYO_RECIPE_DEFAULTS.fluidSource.CRYOFLUID;
     }
-    return typeHint === 'water' ? FLUID_SOURCE.WATER : FLUID_SOURCE.CRYOFLUID;
+    return typeHint === 'water'
+        ? CRYO_RECIPE_DEFAULTS.fluidSource.WATER
+        : CRYO_RECIPE_DEFAULTS.fluidSource.CRYOFLUID;
 }
 
 function normalizeRecipeUI(raw) {
@@ -272,7 +277,7 @@ function normalizePositiveInteger(value, fallback = 1) {
 const stabilizationRecipes = [
     defineCryoRecipe({
         id: 'utilitycraft:stabilize_darloonite_crystal',
-        category: CATEGORY.STABILIZATION,
+        category: CRYO_RECIPE_DEFAULTS.category.STABILIZATION,
         input: { id: 'utilitycraft:charged_darloonite_crystal', amount: 1 },
         output: { id: 'utilitycraft:darloonite_crystal', amount: 1 },
         fluid: { type: 'cryofluid', amount: 1600, label: 'Cryofluid' },
@@ -282,7 +287,7 @@ const stabilizationRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:deenergize_iron_dust',
-        category: CATEGORY.STABILIZATION,
+        category: CRYO_RECIPE_DEFAULTS.category.STABILIZATION,
         input: { id: 'utilitycraft:energized_iron_dust', amount: 1 },
         output: { id: 'utilitycraft:iron_dust', amount: 1 },
         fluid: { type: 'cryofluid', amount: 250, label: 'Cryofluid' },
@@ -292,7 +297,7 @@ const stabilizationRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:deenergize_iron_ingot',
-        category: CATEGORY.STABILIZATION,
+        category: CRYO_RECIPE_DEFAULTS.category.STABILIZATION,
         input: { id: 'utilitycraft:energized_iron_ingot', amount: 1 },
         output: { id: 'minecraft:iron_ingot', amount: 1 },
         fluid: { type: 'cryofluid', amount: 500, label: 'Cryofluid' },
@@ -302,7 +307,7 @@ const stabilizationRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:deenergize_brute_iron',
-        category: CATEGORY.STABILIZATION,
+        category: CRYO_RECIPE_DEFAULTS.category.STABILIZATION,
         input: { id: 'utilitycraft:brute_energized_iron', amount: 1 },
         output: { id: 'minecraft:raw_iron', amount: 1 },
         fluid: { type: 'cryofluid', amount: 500, label: 'Cryofluid' },
@@ -312,7 +317,7 @@ const stabilizationRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:deenergize_iron_block',
-        category: CATEGORY.STABILIZATION,
+        category: CRYO_RECIPE_DEFAULTS.category.STABILIZATION,
         input: { id: 'utilitycraft:energized_iron_block', amount: 1 },
         output: { id: 'minecraft:iron_block', amount: 1 },
         fluid: { type: 'cryofluid', amount: 4000, label: 'Cryofluid' },
@@ -322,7 +327,7 @@ const stabilizationRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:deenergize_brute_iron_block',
-        category: CATEGORY.STABILIZATION,
+        category: CRYO_RECIPE_DEFAULTS.category.STABILIZATION,
         input: { id: 'utilitycraft:brute_energized_iron_block', amount: 1 },
         output: { id: 'minecraft:raw_iron_block', amount: 1 },
         fluid: { type: 'cryofluid', amount: 4000, label: 'Cryofluid' },
@@ -332,7 +337,7 @@ const stabilizationRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:refined_aetherium_shard_cooling',
-        category: CATEGORY.STABILIZATION,
+        category: CRYO_RECIPE_DEFAULTS.category.STABILIZATION,
         input: { id: 'utilitycraft:refined_aetherium_shard', amount: 1 },
         output: { id: 'utilitycraft:aetherium_shard', amount: 1 },
         fluid: { type: 'cryofluid', amount: 400, label: 'Cryofluid' },
@@ -350,7 +355,7 @@ const stabilizationRecipes = [
 const coolingRecipes = [
     defineCryoRecipe({
         id: 'utilitycraft:cool_cooked_beef',
-        category: CATEGORY.COOLING,
+        category: CRYO_RECIPE_DEFAULTS.category.COOLING,
         input: { id: 'minecraft:cooked_beef', amount: 1 },
         output: { id: 'minecraft:beef', amount: 1 },
         energyCost: 2400,
@@ -358,7 +363,7 @@ const coolingRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:cool_cooked_porkchop',
-        category: CATEGORY.COOLING,
+        category: CRYO_RECIPE_DEFAULTS.category.COOLING,
         input: { id: 'minecraft:cooked_porkchop', amount: 1 },
         output: { id: 'minecraft:porkchop', amount: 1 },
         energyCost: 2400,
@@ -366,7 +371,7 @@ const coolingRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:cool_cooked_chicken',
-        category: CATEGORY.COOLING,
+        category: CRYO_RECIPE_DEFAULTS.category.COOLING,
         input: { id: 'minecraft:cooked_chicken', amount: 1 },
         output: { id: 'minecraft:chicken', amount: 1 },
         energyCost: 2400,
@@ -374,7 +379,7 @@ const coolingRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:snow_block_to_ice',
-        category: CATEGORY.COOLING,
+        category: CRYO_RECIPE_DEFAULTS.category.COOLING,
         input: { id: 'minecraft:snow', amount: 1 },
         output: { id: 'minecraft:ice', amount: 1 },
         fluid: { type: 'water', amount: 100, source: 'water', label: 'Water' },
@@ -384,7 +389,7 @@ const coolingRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:ice_to_packed_ice',
-        category: CATEGORY.COOLING,
+        category: CRYO_RECIPE_DEFAULTS.category.COOLING,
         input: { id: 'minecraft:ice', amount: 1 },
         output: { id: 'minecraft:packed_ice', amount: 1 },
         energyCost: 16000,
@@ -393,7 +398,7 @@ const coolingRecipes = [
     }),
     defineCryoRecipe({
         id: 'utilitycraft:packed_ice_to_blue_ice',
-        category: CATEGORY.COOLING,
+        category: CRYO_RECIPE_DEFAULTS.category.COOLING,
         input: { id: 'minecraft:packed_ice', amount: 1 },
         output: { id: 'minecraft:blue_ice', amount: 1 },
         energyCost: 16000,

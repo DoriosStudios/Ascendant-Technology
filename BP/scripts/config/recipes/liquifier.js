@@ -1,10 +1,12 @@
 import { system } from "@minecraft/server";
 
-const DEFAULT_ENERGY_COST = 3600;
-const DEFAULT_FLUID_AMOUNT = 250;
-const DEFAULT_INPUT_AMOUNT = 1;
-const TICKS_PER_SECOND = 20;
-const DEFAULT_PROCESS_SECONDS = 6;
+const LIQUIFIER_RECIPE_DEFAULTS = Object.freeze({
+    energyCost: 3600,
+    fluidAmount: 250,
+    inputAmount: 1,
+    ticksPerSecond: 20,
+    processSeconds: 6
+});
 
 /**
  * Native Liquifier recipes shipped with the add-on.
@@ -142,17 +144,17 @@ export function getLiquifierRecipes() {
 function defineLiquifierRecipe(recipe) {
     if (!recipe || typeof recipe !== "object") throw new TypeError("Invalid liquifier recipe payload");
 
-    const input = normalizeStack(recipe.input, DEFAULT_INPUT_AMOUNT);
-    const fluid = normalizeFluid(recipe.fluid, DEFAULT_FLUID_AMOUNT);
+    const input = normalizeStack(recipe.input, LIQUIFIER_RECIPE_DEFAULTS.inputAmount);
+    const fluid = normalizeFluid(recipe.fluid, LIQUIFIER_RECIPE_DEFAULTS.fluidAmount);
 
-    const seconds = Math.max(1, Math.floor(recipe.seconds ?? DEFAULT_PROCESS_SECONDS));
+    const seconds = Math.max(1, Math.floor(recipe.seconds ?? LIQUIFIER_RECIPE_DEFAULTS.processSeconds));
 
     return {
         id: typeof recipe.id === "string" && recipe.id.length ? recipe.id : input.id,
         input,
         fluid,
-        energyCost: Math.max(1, Math.floor(recipe.energyCost ?? DEFAULT_ENERGY_COST)),
-        ticks: Math.max(1, seconds * TICKS_PER_SECOND),
+        energyCost: Math.max(1, Math.floor(recipe.energyCost ?? LIQUIFIER_RECIPE_DEFAULTS.energyCost)),
+        ticks: Math.max(1, seconds * LIQUIFIER_RECIPE_DEFAULTS.ticksPerSecond),
         seconds,
         byproduct: normalizeByproduct(recipe.byproduct),
         description: typeof recipe.description === "string" ? recipe.description : null
@@ -183,7 +185,7 @@ function normalizeFluid(fluid, fallbackAmount) {
     const type = typeof fluid.type === "string" ? fluid.type.toLowerCase() : null;
     if (!type) throw new TypeError("Liquifier fluid output requires a type");
 
-    const amount = Math.max(1, Math.floor(fluid.amount ?? fallbackAmount ?? DEFAULT_FLUID_AMOUNT));
+    const amount = Math.max(1, Math.floor(fluid.amount ?? fallbackAmount ?? LIQUIFIER_RECIPE_DEFAULTS.fluidAmount));
     return { type, amount };
 }
 

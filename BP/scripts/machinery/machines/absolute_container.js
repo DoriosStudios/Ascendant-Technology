@@ -5,31 +5,44 @@ import { Machine, Energy, FluidManager, Rotation, buildOverclockLoreLine } from 
 // CONFIGURAÇÃO
 // ──────────────────────────────────────────────────────
 
-// Capacidades
-const ENERGY_CAP = 25_600_000
-const FLUID_CAP = 25_600_000
-
-// Layout do inventário: 14×12 = 168 slots de storage + 2 HUD = 170 total
-const GRID_COLS = 14
-const GRID_ROWS = 12
-const STORAGE_SLOTS = GRID_COLS * GRID_ROWS  // 168
-const SLOT_ENERGY = STORAGE_SLOTS            // 168
-const SLOT_FLUID = STORAGE_SLOTS + 1         // 169
-const TOTAL_SLOTS = STORAGE_SLOTS + 2        // 170
-
-// Cooldowns (ticks)
-const CD_ITEM = 4
-const CD_FLUID = 4
-
-// Direções de transferência
-const OFFSETS = {
+const ABSOLUTE_CONTAINER = Object.freeze({
+    capacity: Object.freeze({
+        energy: 25_600_000,
+        fluid: 25_600_000
+    }),
+    layout: Object.freeze({
+        gridCols: 14,
+        gridRows: 12,
+        storageSlots: 14 * 12,
+        slotEnergy: 14 * 12,
+        slotFluid: (14 * 12) + 1,
+        totalSlots: (14 * 12) + 2
+    }),
+    cooldowns: Object.freeze({
+        item: 4,
+        fluid: 4
+    }),
+    offsets: Object.freeze({
     east:  [-1, 0, 0],
     west:  [1, 0, 0],
     north: [0, 0, 1],
     south: [0, 0, -1],
     up:    [0, -1, 0],
     down:  [0, 1, 0]
-}
+    })
+})
+
+const ENERGY_CAP = ABSOLUTE_CONTAINER.capacity.energy
+const FLUID_CAP = ABSOLUTE_CONTAINER.capacity.fluid
+const GRID_COLS = ABSOLUTE_CONTAINER.layout.gridCols
+const GRID_ROWS = ABSOLUTE_CONTAINER.layout.gridRows
+const STORAGE_SLOTS = ABSOLUTE_CONTAINER.layout.storageSlots
+const SLOT_ENERGY = ABSOLUTE_CONTAINER.layout.slotEnergy
+const SLOT_FLUID = ABSOLUTE_CONTAINER.layout.slotFluid
+const TOTAL_SLOTS = ABSOLUTE_CONTAINER.layout.totalSlots
+const CD_ITEM = ABSOLUTE_CONTAINER.cooldowns.item
+const CD_FLUID = ABSOLUTE_CONTAINER.cooldowns.fluid
+const OFFSETS = ABSOLUTE_CONTAINER.offsets
 
 // ──────────────────────────────────────────────────────
 // COMPONENTE DO BLOCO

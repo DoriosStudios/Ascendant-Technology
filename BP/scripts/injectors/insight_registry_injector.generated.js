@@ -1,8 +1,14 @@
 import { system } from "@minecraft/server";
 
-const REGISTRATION_MARKER = "__insightNamespaceRegistry_utilitycraft_ascendant_technology";
-const REGISTRATION_RETRY_TICKS = 20;
-const MAX_REGISTRATION_ATTEMPTS = 180;
+const INSIGHT_NAMESPACE_REGISTRY = Object.freeze({
+  runtime: Object.freeze({
+    registrationMarker: "__insightNamespaceRegistry_utilitycraft_ascendant_technology",
+    registrationRetryTicks: 20,
+    maxRegistrationAttempts: 180
+  })
+});
+
+const { registrationMarker: REGISTRATION_MARKER, registrationRetryTicks: REGISTRATION_RETRY_TICKS, maxRegistrationAttempts: MAX_REGISTRATION_ATTEMPTS } = INSIGHT_NAMESPACE_REGISTRY.runtime;
 
 const ADDON_CONTENT = Object.freeze({
   "key": "utilitycraft_ascendant_technology",

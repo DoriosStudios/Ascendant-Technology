@@ -131,25 +131,27 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
 ## Heavy processing line
 
 - 🟡 **Pulverizer** *(from `crusher`, stable path)*
-  - **Profile:** Linear and predictable throughput.
-  - **Operating Mode:** Mechanical impact + optional steam pressure enhancer.
+  - **Purpose:** Enchanced version of the Crusher, with more internal space and better operation speed.
+  - **Operating Mode:** It uses more energy and, additionally, steam, to process Crusher recipes at a faster rate.
 
 - 🔵 **Impact Crusher** *(from `crusher`, aggressive path)*
   - **Profile:** High production peaks under controlled risk.
-  - **Critical Constraint:** Requires continuous cooling while active.
-  - **Cooling Inputs:** Cryofluid / Liquid Nitrogen.
-  - **Fallback Rule:** If cooling drops, machine throttles before failure.
+  - **Operating Mode:** An even more powerful version of the Crusher, with dual processing. This version has 3 inputs on top, 3 on the bottom, a 7x3 output grid, a lava tank, and a cooler tank. It needs the lava to operate, and if too much heat accumulates, it stops working.
+  - **Cooling Inputs:** Cryofluid, Saline Coolant *(from Heavy Machinery)*
 
 - 🟡 **Industrial Burner** *(from `incinerator`)*
-  - **Operating Mode:** Multi-input / multi-output, parallel processing.
+  - **Purpose:** Multi-input / multi-output, parallel processing Incinerator.
+  -  **Operating Mode:** 3 inputs and 3 outputs, working at the same time.
   - **Booster:** Optional lava injection increases batch volume per cycle.
 
 - 🟡 **Arc-Press Forge** *(from `electro_press`)*
-  - **Role:** Electrothermal press with precision metallurgy path.
-  - **Profiles:** `High Speed` and `Low Loss` production modes.
+  - **Purpose:** Electrothermal press with precision metallurgy path.
+  - **Operating Mode:** `High Speed` and `Low Loss` production modes.
+    - **High Speed Mode:** It works by pressing in batches (4 items at a time, expandable with Quantity Upgrades), with about a 25% chance of losing one of the items produced.
+    - **Low Loss:** It works by pressing one item at a time, with a bit more speed.
 
 - 🟡 **Induction Matrix Anvil** *(from `induction_anvil`)*
-  - **Role:** Reinforcement and recomposition of advanced alloys.
+  - **Purpose:** Reinforcement and recomposition of advanced alloys.
   - **Synergy:** Direct interaction with modules/overclock at higher thermal cost.
 
 ## Block and world automation line

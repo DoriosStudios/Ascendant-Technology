@@ -9,64 +9,67 @@ import { Machine, Energy, FluidManager } from '../../DoriosCore/index.js'
 // Upgrade slots: 19-21
 // Disenchant outputs: 22-30 (9 slots - expanded from 7)
 // Disenchant status: 31 (for HUD updates)
-const ENERGY_SLOT = 0
-const STATUS_SLOT = 1
-const PROGRESS_SLOT = 2
-const UPGRADE_SLOTS = [19, 20, 21]
-const GRID_SLOTS = [3, 4, 5, 6, 7, 8, 9, 10, 11]
-const MODULE_SLOTS = [12, 13, 14]
-const DISENCHANT_SOURCE_SLOT = 15
-const DISENCHANT_CATALYST_SLOT = 16
-const DISENCHANT_BOOK_STORAGE_SLOT = 17
-const DISENCHANT_PROGRESS_SLOT = 18
-const DISENCHANT_OUTPUT_SLOTS = [22, 23, 24, 25, 26, 27, 28, 29, 30]
-const DISENCHANT_STATUS_SLOT = 31
+const DEFAULT_STATION_SLOTS = Object.freeze({
+    energy: 0,
+    status: 1,
+    progress: 2,
+    upgrades: Object.freeze([19, 20, 21]),
+    grid: Object.freeze([3, 4, 5, 6, 7, 8, 9, 10, 11]),
+    modules: Object.freeze([12, 13, 14]),
+    disenchant: Object.freeze({
+        source: 15,
+        catalyst: 16,
+        books: 17,
+        progress: 18,
+        outputs: Object.freeze([22, 23, 24, 25, 26, 27, 28, 29, 30]),
+        status: 31
+    })
+})
 
 // Station configuration is centralized in `config` below.
 
-const ENCHANTMENT_SOURCES = [
-    { kind: 'group', entries: [
-        'minecraft:protection', 'minecraft:fire_protection', 'minecraft:blast_protection', 'minecraft:projectile_protection'
-    ] },
-    { kind: 'group', entries: [
-        'minecraft:sharpness', 'minecraft:smite', 'minecraft:bane_of_arthropods', 'minecraft:density'
-    ] },
-    { kind: 'group', entries: [
-        'minecraft:silk_touch', 'minecraft:fortune'
-    ] },
-    { kind: 'group', entries: [
-        'minecraft:depth_strider', 'minecraft:frost_walker'
-    ] },
-    { kind: 'group', entries: [
-        'minecraft:multishot', 'minecraft:piercing', 'minecraft:breach'
-    ] },
-    { kind: 'group', entries: [
-        'minecraft:loyalty', 'minecraft:riptide'
-    ] },
-    { kind: 'single', entries: ['minecraft:unbreaking'] },
-    { kind: 'single', entries: ['minecraft:mending'] },
-    { kind: 'single', entries: ['minecraft:efficiency'] },
-    { kind: 'single', entries: ['minecraft:respiration'] },
-    { kind: 'single', entries: ['minecraft:aqua_affinity'] },
-    { kind: 'single', entries: ['minecraft:thorns'] },
-    { kind: 'single', entries: ['minecraft:feather_falling'] },
-    { kind: 'single', entries: ['minecraft:fire_aspect'] },
-    { kind: 'single', entries: ['minecraft:knockback'] },
-    { kind: 'single', entries: ['minecraft:looting'] },
-    { kind: 'single', entries: ['minecraft:power'] },
-    { kind: 'single', entries: ['minecraft:punch'] },
-    { kind: 'single', entries: ['minecraft:flame'] },
-    { kind: 'single', entries: ['minecraft:infinity'] },
-    { kind: 'single', entries: ['minecraft:quick_charge'] },
-    { kind: 'single', entries: ['minecraft:impaling'] },
-    { kind: 'single', entries: ['minecraft:channeling'] },
-    { kind: 'single', entries: ['minecraft:lure'] },
-    { kind: 'single', entries: ['minecraft:luck_of_the_sea'] },
-    { kind: 'single', entries: ['minecraft:soul_speed'] },
-    { kind: 'single', entries: ['minecraft:swift_sneak'] },
-    { kind: 'single', entries: ['minecraft:wind_burst'] },
-    { kind: 'single', entries: ['minecraft:lunge'] }
-]
+const ENCHANTMENT_DEFAULTS = Object.freeze({
+    sources: Object.freeze([
+        { kind: 'group', entries: ['minecraft:protection', 'minecraft:fire_protection', 'minecraft:blast_protection', 'minecraft:projectile_protection'] },
+        { kind: 'group', entries: ['minecraft:sharpness', 'minecraft:smite', 'minecraft:bane_of_arthropods', 'minecraft:density'] },
+        { kind: 'group', entries: ['minecraft:silk_touch', 'minecraft:fortune'] },
+        { kind: 'group', entries: ['minecraft:depth_strider', 'minecraft:frost_walker'] },
+        { kind: 'group', entries: ['minecraft:multishot', 'minecraft:piercing', 'minecraft:breach'] },
+        { kind: 'group', entries: ['minecraft:loyalty', 'minecraft:riptide'] },
+        { kind: 'single', entries: ['minecraft:unbreaking'] },
+        { kind: 'single', entries: ['minecraft:mending'] },
+        { kind: 'single', entries: ['minecraft:efficiency'] },
+        { kind: 'single', entries: ['minecraft:respiration'] },
+        { kind: 'single', entries: ['minecraft:aqua_affinity'] },
+        { kind: 'single', entries: ['minecraft:thorns'] },
+        { kind: 'single', entries: ['minecraft:feather_falling'] },
+        { kind: 'single', entries: ['minecraft:fire_aspect'] },
+        { kind: 'single', entries: ['minecraft:knockback'] },
+        { kind: 'single', entries: ['minecraft:looting'] },
+        { kind: 'single', entries: ['minecraft:power'] },
+        { kind: 'single', entries: ['minecraft:punch'] },
+        { kind: 'single', entries: ['minecraft:flame'] },
+        { kind: 'single', entries: ['minecraft:infinity'] },
+        { kind: 'single', entries: ['minecraft:quick_charge'] },
+        { kind: 'single', entries: ['minecraft:impaling'] },
+        { kind: 'single', entries: ['minecraft:channeling'] },
+        { kind: 'single', entries: ['minecraft:lure'] },
+        { kind: 'single', entries: ['minecraft:luck_of_the_sea'] },
+        { kind: 'single', entries: ['minecraft:soul_speed'] },
+        { kind: 'single', entries: ['minecraft:swift_sneak'] },
+        { kind: 'single', entries: ['minecraft:wind_burst'] },
+        { kind: 'single', entries: ['minecraft:lunge'] }
+    ])
+})
+
+const REINFORCEMENT_DEFAULTS = Object.freeze({
+    props: Object.freeze({
+        syncVersion: 'utilitycraft:reinforcement_sync_version',
+        max: 'utilitycraft:reinforcement_max'
+    }),
+    syncVersion: 1,
+    delayTicks: 3
+})
 
 /**
  * @description Unified nested default configuration object for the enchantment station.
@@ -94,7 +97,7 @@ const config = Object.freeze({
     enchant: Object.freeze({
         plan_prop: 'utilitycraft:ascane_enchant_plan',
         signature_prop: 'utilitycraft:ascane_enchant_signature',
-        sources: ENCHANTMENT_SOURCES
+        sources: ENCHANTMENT_DEFAULTS.sources
     }),
     energy: Object.freeze({
         base_cost: 8000,
@@ -159,22 +162,7 @@ const config = Object.freeze({
         property: 'utilitycraft:reinforcement',
         RATIOS: [0, 0.25, 0.5, 1]
     }),
-    slots: Object.freeze({
-        disenchant: Object.freeze({
-            books: DISENCHANT_BOOK_STORAGE_SLOT,
-            catalyst: DISENCHANT_CATALYST_SLOT,
-            outputs: DISENCHANT_OUTPUT_SLOTS,
-            progress: DISENCHANT_PROGRESS_SLOT,
-            source: DISENCHANT_SOURCE_SLOT,
-            status: DISENCHANT_STATUS_SLOT
-        }),
-        energy: ENERGY_SLOT,
-        grid: GRID_SLOTS,
-        modules: MODULE_SLOTS,
-        progress: PROGRESS_SLOT,
-        status: STATUS_SLOT,
-        upgrades: UPGRADE_SLOTS
-    }),
+    slots: DEFAULT_STATION_SLOTS,
     time: Object.freeze({
         enchant_seconds_per_change: 5,
         full_time: 10,
@@ -192,10 +180,6 @@ const config = Object.freeze({
 
 let station = config
 let stationSettingsCacheKey = ''
-const REINFORCEMENT_SYNC_VERSION_PROP = 'utilitycraft:reinforcement_sync_version'
-const REINFORCEMENT_MAX_PROP = 'utilitycraft:reinforcement_max'
-const REINFORCEMENT_SYNC_VERSION = 1
-const REINFORCEMENT_DELAY_TICKS = 3
 
 function isPlainObject(value) {
     return Object.prototype.toString.call(value) === '[object Object]'
@@ -273,13 +257,13 @@ DoriosAPI.register.blockComponent('enchantment_station', {
                     '§7Insert tools or armor into the grid.',
                     '§7Modules control enchanting and reinforcement.'
                 ]
-            }, STATUS_SLOT)
+            }, station.slots.status)
 
             // Initialize disenchant status slot
             machine.setLabel({
                 title: '',
                 lore: ['§7Waiting for item...']
-            }, DISENCHANT_STATUS_SLOT)
+            }, station.slots.disenchant.status)
         })
     },
 
@@ -292,12 +276,13 @@ DoriosAPI.register.blockComponent('enchantment_station', {
         if (!machine?.entity || !machine.inv) return
 
         const tickSpeed = Math.max(1, Number(globalThis.tickSpeed ?? 1))
-        const moduleSlots = resolveAvailableSlots(machine.inv, MODULE_SLOTS)
-        const gridSlots = resolveAvailableSlots(machine.inv, GRID_SLOTS)
-        const canUseDisenchantSlot = isSlotAvailable(machine.inv, DISENCHANT_SOURCE_SLOT)
-            && isSlotAvailable(machine.inv, DISENCHANT_CATALYST_SLOT)
-            && isSlotAvailable(machine.inv, DISENCHANT_BOOK_STORAGE_SLOT)
-            && DISENCHANT_OUTPUT_SLOTS.some(slot => isSlotAvailable(machine.inv, slot))
+        const moduleSlots = resolveAvailableSlots(machine.inv, station.slots.modules)
+        const gridSlots = resolveAvailableSlots(machine.inv, station.slots.grid)
+        const disenchantSlots = station.slots.disenchant
+        const canUseDisenchantSlot = isSlotAvailable(machine.inv, disenchantSlots.source)
+            && isSlotAvailable(machine.inv, disenchantSlots.catalyst)
+            && isSlotAvailable(machine.inv, disenchantSlots.books)
+            && disenchantSlots.outputs.some(slot => isSlotAvailable(machine.inv, slot))
 
         const modules = getModuleLevels(machine.inv, moduleSlots)
         const xpTank = getAscaneXpTank(machine, settings)
@@ -321,7 +306,7 @@ DoriosAPI.register.blockComponent('enchantment_station', {
     }
 })
 
-function getModuleLevels(inv, slots = MODULE_SLOTS) {
+function getModuleLevels(inv, slots = station.slots.modules) {
     const levels = {
         enchantability: 0,
         reinforcement: 0,
@@ -424,10 +409,10 @@ function getAscaneXpTank(machine, settings) {
 }
 
 function processDisenchantSlot(machine, settings, tickSpeed, xpTank) {
-    const slot = DISENCHANT_SOURCE_SLOT
+    const slot = station.slots.disenchant.source
     const stack = safeGetItem(machine.inv, slot)
-    const catalyst = safeGetItem(machine.inv, DISENCHANT_CATALYST_SLOT)
-    const bookStorage = safeGetItem(machine.inv, DISENCHANT_BOOK_STORAGE_SLOT)
+    const catalyst = safeGetItem(machine.inv, station.slots.disenchant.catalyst)
+    const bookStorage = safeGetItem(machine.inv, station.slots.disenchant.books)
     const outputSlots = resolveDisenchantOutputSlots(machine.inv)
 
     const fail = (state, message, resetProgress = true, details = null) => {
@@ -534,8 +519,8 @@ function processDisenchantSlot(machine, settings, tickSpeed, xpTank) {
             machine,
             sourceStack: stack,
             sourceSlot: slot,
-            catalystSlot: DISENCHANT_CATALYST_SLOT,
-            bookStorageSlot: DISENCHANT_BOOK_STORAGE_SLOT,
+            catalystSlot: station.slots.disenchant.catalyst,
+            bookStorageSlot: station.slots.disenchant.books,
             outputSlots,
             extractCount,
             catalystStack: catalyst,
@@ -758,15 +743,15 @@ function executeDisenchantAbsorb(entity, settings) {
     const inv = entity?.getComponent?.('inventory')?.container
     if (!inv) return false
 
-    const sourceStack = safeGetItem(inv, DISENCHANT_SOURCE_SLOT)
+    const sourceStack = safeGetItem(inv, station.slots.disenchant.source)
     if (!sourceStack || sourceStack.amount !== 1) return false
     if (!getEnchantableComponent(sourceStack)) return false
 
     const enchantments = readEnchantments(sourceStack)
     if (!Array.isArray(enchantments) || enchantments.length <= 0) return false
 
-    const catalyst = safeGetItem(inv, DISENCHANT_CATALYST_SLOT)
-    const books = safeGetItem(inv, DISENCHANT_BOOK_STORAGE_SLOT)
+    const catalyst = safeGetItem(inv, station.slots.disenchant.catalyst)
+    const books = safeGetItem(inv, station.slots.disenchant.books)
     if (getCatalystAmount(catalyst) > 0 && getDisenchantBookAmount(books) > 0) {
         return false
     }
@@ -784,7 +769,7 @@ function executeDisenchantAbsorb(entity, settings) {
 
     setStoredEnchantPlan(updatedSource, null)
     setStoredEnchantSignature(updatedSource, '')
-    inv.setItem(DISENCHANT_SOURCE_SLOT, updatedSource)
+    inv.setItem(station.slots.disenchant.source, updatedSource)
     xpTank.add(finalGain)
     registerDisenchantAbsorbUsage(entity, finalGain)
 
@@ -800,7 +785,7 @@ function executeDisenchantAbsorb(entity, settings) {
 
 function resolveDisenchantOutputSlots(inv) {
     const available = []
-    for (const slot of DISENCHANT_OUTPUT_SLOTS) {
+    for (const slot of station.slots.disenchant.outputs) {
         if (!isSlotAvailable(inv, slot)) continue
         const current = safeGetItem(inv, slot)
         if (!current) {
@@ -1837,7 +1822,7 @@ function getReinforcementMaxPoints(stack) {
 
     try {
         if (typeof stack.getDynamicProperty === 'function') {
-            const value = Number(stack.getDynamicProperty(REINFORCEMENT_MAX_PROP) ?? 0)
+            const value = Number(stack.getDynamicProperty(REINFORCEMENT_DEFAULTS.props.max) ?? 0)
             if (Number.isFinite(value) && value > 0) return Math.max(0, Math.floor(value))
         }
     } catch { }
@@ -1860,17 +1845,17 @@ function getReinforcementMaxPoints(stack) {
 function getReinforcementSyncVersion(stack) {
     if (!stack || typeof stack.getDynamicProperty !== 'function') return 0
     try {
-        const value = Number(stack.getDynamicProperty(REINFORCEMENT_SYNC_VERSION_PROP) ?? 0)
+        const value = Number(stack.getDynamicProperty(REINFORCEMENT_DEFAULTS.props.syncVersion) ?? 0)
         return Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0
     } catch {
         return 0
     }
 }
 
-function markReinforcementSyncVersion(stack, version = REINFORCEMENT_SYNC_VERSION) {
+function markReinforcementSyncVersion(stack, version = REINFORCEMENT_DEFAULTS.syncVersion) {
     if (!stack || typeof stack.setDynamicProperty !== 'function') return
     try {
-        stack.setDynamicProperty(REINFORCEMENT_SYNC_VERSION_PROP, Math.max(0, Math.floor(Number(version) || 0)))
+        stack.setDynamicProperty(REINFORCEMENT_DEFAULTS.props.syncVersion, Math.max(0, Math.floor(Number(version) || 0)))
     } catch { }
 }
 
@@ -1924,12 +1909,12 @@ function reconcileLegacyReinforcementDurability(stack, durability) {
     }
 
     const syncVersion = getReinforcementSyncVersion(stack)
-    if (syncVersion >= REINFORCEMENT_SYNC_VERSION) {
+    if (syncVersion >= REINFORCEMENT_DEFAULTS.syncVersion) {
         return { repaired: 0, spent: 0, remaining: getReinforcementPoints(stack), updated: false }
     }
 
     const result = repairDurabilityWithRemainingReinforcement(stack, durability)
-    markReinforcementSyncVersion(stack, REINFORCEMENT_SYNC_VERSION)
+    markReinforcementSyncVersion(stack, REINFORCEMENT_DEFAULTS.syncVersion)
     return {
         ...result,
         updated: true
@@ -1951,7 +1936,7 @@ function setReinforcementPoints(stack, points, maxPoints = null) {
     try {
         if (typeof stack.setDynamicProperty === 'function') {
             stack.setDynamicProperty(station.reinforcement.property, clamped)
-            stack.setDynamicProperty(REINFORCEMENT_MAX_PROP, Math.max(0, capacity))
+            stack.setDynamicProperty(REINFORCEMENT_DEFAULTS.props.max, Math.max(0, capacity))
         }
     } catch { }
 
@@ -1968,7 +1953,7 @@ function setReinforcementPoints(stack, points, maxPoints = null) {
         stack.setLore(updated)
     }
 
-    markReinforcementSyncVersion(stack, REINFORCEMENT_SYNC_VERSION)
+    markReinforcementSyncVersion(stack, REINFORCEMENT_DEFAULTS.syncVersion)
 }
 
 function resolveReinforcementTarget(durability, level) {
@@ -2017,9 +2002,9 @@ function buildSlotResult(slot, state, message, progress, energyCost, details = n
 function updateDisenchantHud(machine, result, modules = { enchantability: 0, reinforcement: 0, curseProtection: 0 }, xpTank = null) {
     if (!machine?.inv || !result) return
     
-    const stack = safeGetItem(machine.inv, DISENCHANT_SOURCE_SLOT)
-    const catalyst = safeGetItem(machine.inv, DISENCHANT_CATALYST_SLOT)
-    const books = safeGetItem(machine.inv, DISENCHANT_BOOK_STORAGE_SLOT)
+    const stack = safeGetItem(machine.inv, station.slots.disenchant.source)
+    const catalyst = safeGetItem(machine.inv, station.slots.disenchant.catalyst)
+    const books = safeGetItem(machine.inv, station.slots.disenchant.books)
 
     const itemName = stack ? formatIdentifier(stack.typeId) : 'None'
     const enchantments = stack ? readEnchantments(stack) : []
@@ -2099,7 +2084,7 @@ function updateDisenchantHud(machine, result, modules = { enchantability: 0, rei
     machine.setLabel({
         rawText: labelText,
         lore
-    }, DISENCHANT_STATUS_SLOT)
+    }, station.slots.disenchant.status)
 }
 
 function resolveDisenchantHudStatus(result) {
@@ -2220,7 +2205,7 @@ function buildDisenchantPendingHelpers({
     const missing = []
 
     if (!stack) {
-        missing.push(`- §fItem §7(Enchanted item/book in slot ${DISENCHANT_SOURCE_SLOT})`)
+        missing.push(`- §fItem §7(Enchanted item/book in slot ${station.slots.disenchant.source})`)
     } else if (Number(stack.amount ?? 0) > 1) {
         missing.push(`- §fSingle Item §7(Use one item only)`)
     } else if (!getEnchantableComponent(stack) || enchantCount <= 0) {
@@ -2240,7 +2225,7 @@ function buildDisenchantPendingHelpers({
     }
 
     if (standardMode && (Number(freeOutputs) || 0) <= 0) {
-        missing.push(`- §fOutput Space §7(${DISENCHANT_OUTPUT_SLOTS[0]}-${DISENCHANT_OUTPUT_SLOTS[DISENCHANT_OUTPUT_SLOTS.length - 1]})`)
+        missing.push(`- §fOutput Space §7(${station.slots.disenchant.outputs[0]}-${station.slots.disenchant.outputs[station.slots.disenchant.outputs.length - 1]})`)
     }
 
     if (!hasEnergy) {
@@ -2293,7 +2278,7 @@ function getMainSectionResults(results) {
     return (results ?? []).filter(result => {
         if (!result || typeof result !== 'object') return false
         if (result.slotType === 'main') return true
-        return GRID_SLOTS.includes(Number(result.slot))
+        return station.slots.grid.includes(Number(result.slot))
     })
 }
 
@@ -2550,9 +2535,9 @@ function buildMainPendingHelpers(results, modules, summary) {
 }
 
 function getDisenchantDiagnostics(inv) {
-    const source = safeGetItem(inv, DISENCHANT_SOURCE_SLOT)
-    const catalyst = safeGetItem(inv, DISENCHANT_CATALYST_SLOT)
-    const books = safeGetItem(inv, DISENCHANT_BOOK_STORAGE_SLOT)
+    const source = safeGetItem(inv, station.slots.disenchant.source)
+    const catalyst = safeGetItem(inv, station.slots.disenchant.catalyst)
+    const books = safeGetItem(inv, station.slots.disenchant.books)
     const freeOutputs = resolveDisenchantOutputSlots(inv).length
 
     const sourceText = source
@@ -2654,7 +2639,7 @@ function displayProgress(machine, progress, energyCost) {
     const normalized = energyCost > 0 ? Math.min(frames, Math.floor((progress / energyCost) * frames)) : 0
     const frame = normalized.toString().padStart(2, '0')
     const itemId = resolveProgressItemId(frame)
-    machine.inv.setItem(PROGRESS_SLOT, new ItemStack(itemId, 1))
+    machine.inv.setItem(station.slots.progress, new ItemStack(itemId, 1))
 }
 
 function resolveProgressItemId(frame) {
@@ -2671,7 +2656,7 @@ function queueReinforcementUsageBuffer(entity, slotName, usageAmount = 1) {
     const normalizedUsage = Math.max(1, Math.floor(Number(usageAmount) || 0))
     system.runTimeout(() => {
         applyReinforcementUsageBuffer(entity, slotName, normalizedUsage)
-    }, REINFORCEMENT_DELAY_TICKS)
+    }, REINFORCEMENT_DEFAULTS.delayTicks)
 }
 
 function queueReinforcementArmorBuffer(entity, usageAmount = 1) {
@@ -2679,7 +2664,7 @@ function queueReinforcementArmorBuffer(entity, usageAmount = 1) {
     const normalizedUsage = Math.max(1, Math.floor(Number(usageAmount) || 0))
     system.runTimeout(() => {
         applyReinforcementBuffer(entity, normalizedUsage)
-    }, REINFORCEMENT_DELAY_TICKS)
+    }, REINFORCEMENT_DEFAULTS.delayTicks)
 }
 
 function applyReinforcementBuffer(entity, usageAmount = 1) {

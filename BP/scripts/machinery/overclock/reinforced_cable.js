@@ -1,26 +1,33 @@
 import { updatePipes } from "../../DoriosCore/index.js";
 import { system, world } from "@minecraft/server";
 
-const OFFSETS = [
-    { x: 1, y: 0, z: 0 },
-    { x: -1, y: 0, z: 0 },
-    { x: 0, y: 1, z: 0 },
-    { x: 0, y: -1, z: 0 },
-    { x: 0, y: 0, z: 1 },
-    { x: 0, y: 0, z: -1 },
-];
+const REINFORCED_CABLE = Object.freeze({
+    offsets: Object.freeze([
+        { x: 1, y: 0, z: 0 },
+        { x: -1, y: 0, z: 0 },
+        { x: 0, y: 1, z: 0 },
+        { x: 0, y: -1, z: 0 },
+        { x: 0, y: 0, z: 1 },
+        { x: 0, y: 0, z: -1 },
+    ]),
+    tube: Object.freeze({
+        energyTypes: new Set([
+            "utilitycraft:energy_cable",
+            "utilitycraft:reinforced_cable",
+        ]),
+        geometryTypes: new Set([
+            "utilitycraft:reinforced_cable",
+        ]),
+        maxEnergyScan: 2048,
+        energyDebugProp: "utilitycraft:debug_energy"
+    })
+});
 
-const ENERGY_TUBE_TYPES = new Set([
-    "utilitycraft:energy_cable",
-    "utilitycraft:reinforced_cable",
-]);
-
-const TUBE_GEOMETRY_TYPES = new Set([
-    "utilitycraft:reinforced_cable",
-]);
-
-const MAX_ENERGY_SCAN = 2048;
-const ENERGY_DEBUG_PROP = "utilitycraft:debug_energy";
+const OFFSETS = REINFORCED_CABLE.offsets;
+const ENERGY_TUBE_TYPES = REINFORCED_CABLE.tube.energyTypes;
+const TUBE_GEOMETRY_TYPES = REINFORCED_CABLE.tube.geometryTypes;
+const MAX_ENERGY_SCAN = REINFORCED_CABLE.tube.maxEnergyScan;
+const ENERGY_DEBUG_PROP = REINFORCED_CABLE.tube.energyDebugProp;
 
 function energyDebugEnabled() {
     try {

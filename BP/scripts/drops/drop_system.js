@@ -1,4 +1,4 @@
-import { world, system, EffectTypes } from '@minecraft/server';
+import { world, system, EffectTypes, ItemStack } from '@minecraft/server';
 import './drops.js'; // ensures DoriosAPI is available globally when main.js loads
 import { DROPS_SETTINGS, getDropsForBlock } from './drops.js';
 
@@ -72,7 +72,36 @@ function damageHeldTool(player, tool, slot) {
   }
 }
 
-const XP_MODES = new Set(['auto', 'player', 'orb', 'none']);
+const DROP_SYSTEM_RULES = Object.freeze({
+  xpModes: new Set(['auto', 'player', 'orb', 'none']),
+  resultModes: new Set(['replace', 'supplement', 'vanilla']),
+  vanillaDropModes: Object.freeze({
+    LOOT_TABLE: 'loot_table',
+    DESTROY_COMMAND: 'destroy_command',
+    BREAK_THEN_REGEN_LOOT_TABLE: 'break_then_regen_loot_table'
+  }),
+  lootFallbackModes: Object.freeze({
+    BLOCK_ITEM: 'block_item',
+    DESTROY_COMMAND: 'destroy_command',
+    NONE: 'none'
+  }),
+  defaults: Object.freeze({
+    replaceSearchRadius: 1.25,
+    dropSpawnOffset: Object.freeze({
+      x: 0.5,
+      y: 0.5,
+      z: 0.5
+    })
+  }),
+  excavateEventIds: new Set(['dorios:blockloot', 'dorios:hammerblock'])
+});
+
+const XP_MODES = DROP_SYSTEM_RULES.xpModes;
+const RESULT_MODES = DROP_SYSTEM_RULES.resultModes;
+const VANILLA_DROP_MODES = DROP_SYSTEM_RULES.vanillaDropModes;
+const VALID_VANILLA_DROP_MODES = new Set(Object.values(VANILLA_DROP_MODES));
+const VANILLA_LOOT_FALLBACK_MODES = DROP_SYSTEM_RULES.lootFallbackModes;
+const VALID_VANILLA_LOOT_FALLBACK_MODES = new Set(Object.values(VANILLA_LOOT_FALLBACK_MODES));
 
 function resolveXpMode(explicitMode) {
   const raw = typeof explicitMode === 'string'
@@ -188,14 +217,6 @@ function destroyBlockWithDrops(dimension, loc) {
   return false;
 }
 
-const VANILLA_DROP_MODES = Object.freeze({
-  LOOT_TABLE: 'loot_table',
-  DESTROY_COMMAND: 'destroy_command',
-  BREAK_THEN_REGEN_LOOT_TABLE: 'break_then_regen_loot_table'
-});
-
-const VALID_VANILLA_DROP_MODES = new Set(Object.values(VANILLA_DROP_MODES));
-
 function resolveVanillaDropMode(bridgeSettings) {
   const rawMode = typeof bridgeSettings?.vanillaDropMode === 'string'
     ? bridgeSettings.vanillaDropMode.toLowerCase()
@@ -213,8 +234,46 @@ function resolveVanillaDropMode(bridgeSettings) {
   return VANILLA_DROP_MODES.LOOT_TABLE;
 }
 
-function toCenterPos(loc) {
-  return { x: loc.x + 0.5, y: loc.y + 0.5, z: loc.z + 0.5 };
+function resolveVanillaLootFallbackMode(bridgeSettings) {
+  const rawMode = typeof bridgeSettings?.lootTableFallback === 'string'
+    ? bridgeSettings.lootTableFallback.toLowerCase()
+    : '';
+
+  if (VALID_VANILLA_LOOT_FALLBACK_MODES.has(rawMode)) {
+    return rawMode;
+  }
+
+  return VANILLA_LOOT_FALLBACK_MODES.BLOCK_ITEM;
+}
+
+function resolveDropSearchRadius() {
+  const configured = Number(DROPS_SETTINGS?.replaceSearchRadius);
+  if (Number.isFinite(configured) && configured > 0) {
+    return configured;
+  }
+  return DROP_SYSTEM_RULES.defaults.replaceSearchRadius;
+}
+
+function resolveDropSpawnOffset() {
+  const configured = DROPS_SETTINGS?.dropSpawnOffset;
+  const defaults = DROP_SYSTEM_RULES.defaults.dropSpawnOffset;
+  const x = Number(configured?.x);
+  const y = Number(configured?.y);
+  const z = Number(configured?.z);
+  return {
+    x: Number.isFinite(x) ? x : defaults.x,
+    y: Number.isFinite(y) ? y : defaults.y,
+    z: Number.isFinite(z) ? z : defaults.z
+  };
+}
+
+function toDropSpawnPos(loc) {
+  const offset = resolveDropSpawnOffset();
+  return {
+    x: loc.x + offset.x,
+    y: loc.y + offset.y,
+    z: loc.z + offset.z
+  };
 }
 
 function getNearbyItemEntities(dimension, location, maxDistance) {
@@ -241,6 +300,7 @@ function snapshotNearbyItemEntityIds(dimension, location, maxDistance) {
 }
 
 function removeNewNearbyItemEntities(dimension, location, maxDistance, knownIds) {
+  let removedCount = 0;
   for (const entity of getNearbyItemEntities(dimension, location, maxDistance)) {
     const id = entity?.id;
     if (typeof id === 'string' && knownIds?.has(id)) {
@@ -249,35 +309,203 @@ function removeNewNearbyItemEntities(dimension, location, maxDistance, knownIds)
 
     try {
       entity.remove();
+      removedCount++;
     } catch {
       // ignore entity races
     }
   }
+  return removedCount;
 }
 
-function generateLootTableDrops(block, blockPermutation, tool) {
+function buildBlockItemFallbackDrops(block) {
+  if (!block?.typeId) return [];
+  try {
+    return [new ItemStack(block.typeId, 1)];
+  } catch {
+    return [];
+  }
+}
+
+function generateLootTableDropsDetailed(block, blockPermutation, tool) {
+  const result = {
+    drops: [],
+    source: 'none'
+  };
+
   try {
     const lootManager = world.getLootTableManager?.();
-    if (!lootManager) return [];
+    if (!lootManager) return result;
 
     if (blockPermutation && typeof lootManager.generateLootFromBlockPermutation === 'function') {
       const fromPermutation = lootManager.generateLootFromBlockPermutation(blockPermutation, tool);
       if (Array.isArray(fromPermutation)) {
-        return fromPermutation;
+        return {
+          drops: fromPermutation.filter(Boolean),
+          source: 'block_permutation'
+        };
       }
     }
 
     if (block && typeof lootManager.generateLootFromBlock === 'function') {
       const fromBlock = lootManager.generateLootFromBlock(block, tool);
       if (Array.isArray(fromBlock)) {
-        return fromBlock;
+        return {
+          drops: fromBlock.filter(Boolean),
+          source: 'block'
+        };
       }
     }
   } catch (error) {
     console.warn('[drops] Failed generating loot table drops for', block?.typeId, error);
   }
 
-  return [];
+  return result;
+}
+
+function normalizeDropResult(dropResult) {
+  if (!dropResult) return null;
+
+  const resolved = Array.isArray(dropResult)
+    ? { mode: 'supplement', drops: dropResult, replaceVanilla: false }
+    : dropResult;
+
+  const explicitMode = typeof resolved?.mode === 'string' ? resolved.mode.toLowerCase() : '';
+  const mode = RESULT_MODES.has(explicitMode)
+    ? explicitMode
+    : (resolved?.replaceVanilla === true
+      ? 'replace'
+      : (resolved?.replaceOriginalId && Array.isArray(resolved?.replaceDrops) && resolved.replaceDrops.length > 0
+        ? 'vanilla'
+        : 'supplement'));
+
+  return {
+    ...resolved,
+    mode,
+    drops: Array.isArray(resolved?.drops) ? resolved.drops.filter(Boolean) : [],
+    replaceVanilla: mode === 'replace',
+    replaceDrops: Array.isArray(resolved?.replaceDrops) ? resolved.replaceDrops.filter(Boolean) : []
+  };
+}
+
+function wantsVanillaFlow(mode) {
+  return mode === 'supplement' || mode === 'vanilla';
+}
+
+function applyReplacementToDrops(drops, replaceOriginalId, replaceDrops) {
+  if (!replaceOriginalId || !replaceDrops?.length) {
+    return Array.isArray(drops) ? drops.filter(Boolean) : [];
+  }
+
+  let replaced = false;
+  const nextDrops = [];
+  for (const stack of drops ?? []) {
+    if (!stack) continue;
+    if (!replaced && stack.typeId === replaceOriginalId) {
+      nextDrops.push(...replaceDrops.filter(Boolean));
+      replaced = true;
+      continue;
+    }
+    nextDrops.push(stack);
+  }
+
+  return nextDrops;
+}
+
+function resolveManualVanillaDrops({ block, blockPermutation, tool, fallbackMode }) {
+  const lootTableResult = generateLootTableDropsDetailed(block, blockPermutation, tool);
+  if (lootTableResult.drops.length) {
+    return lootTableResult;
+  }
+
+  if (fallbackMode === VANILLA_LOOT_FALLBACK_MODES.BLOCK_ITEM) {
+    return {
+      drops: buildBlockItemFallbackDrops(block),
+      source: 'block_item_fallback'
+    };
+  }
+
+  return {
+    drops: [],
+    source: fallbackMode === VANILLA_LOOT_FALLBACK_MODES.DESTROY_COMMAND
+      ? 'destroy_command_fallback'
+      : 'none'
+  };
+}
+
+function resolveExcavateVanillaPlan({ block, blockPermutation, tool, dimension, loc, bridgeSettings }) {
+  const fallbackMode = resolveVanillaLootFallbackMode(bridgeSettings);
+  const dropSearchRadius = resolveDropSearchRadius();
+  const blockCenter = toDropSpawnPos(loc);
+  const manualDrops = resolveManualVanillaDrops({ block, blockPermutation, tool, fallbackMode });
+  const vanillaDropMode = resolveVanillaDropMode(bridgeSettings);
+
+  if (vanillaDropMode === VANILLA_DROP_MODES.DESTROY_COMMAND) {
+    const knownNearbyItemIds = snapshotNearbyItemEntityIds(dimension, blockCenter, dropSearchRadius);
+    return {
+      drops: [],
+      blockDestroyed: destroyBlockWithDrops(dimension, loc),
+      removeBlock: false,
+      removeFreshVanillaEntities: false,
+      knownNearbyItemIds,
+      source: 'destroy_command'
+    };
+  }
+
+  if (vanillaDropMode === VANILLA_DROP_MODES.LOOT_TABLE) {
+    if (manualDrops.drops.length) {
+      return {
+        drops: manualDrops.drops,
+        blockDestroyed: false,
+        removeBlock: true,
+        removeFreshVanillaEntities: false,
+        knownNearbyItemIds: undefined,
+        source: manualDrops.source
+      };
+    }
+
+    if (fallbackMode === VANILLA_LOOT_FALLBACK_MODES.DESTROY_COMMAND) {
+      const knownNearbyItemIds = snapshotNearbyItemEntityIds(dimension, blockCenter, dropSearchRadius);
+      return {
+        drops: [],
+        blockDestroyed: destroyBlockWithDrops(dimension, loc),
+        removeBlock: false,
+        removeFreshVanillaEntities: false,
+        knownNearbyItemIds,
+        source: 'destroy_command_fallback'
+      };
+    }
+
+    return {
+      drops: [],
+      blockDestroyed: false,
+      removeBlock: true,
+      removeFreshVanillaEntities: false,
+      knownNearbyItemIds: undefined,
+      source: manualDrops.source
+    };
+  }
+
+  const knownNearbyItemIds = snapshotNearbyItemEntityIds(dimension, blockCenter, dropSearchRadius);
+  const blockDestroyed = destroyBlockWithDrops(dimension, loc);
+  if (!blockDestroyed) {
+    return {
+      drops: manualDrops.drops,
+      blockDestroyed: false,
+      removeBlock: true,
+      removeFreshVanillaEntities: false,
+      knownNearbyItemIds: undefined,
+      source: manualDrops.source
+    };
+  }
+
+  return {
+    drops: manualDrops.drops,
+    blockDestroyed: true,
+    removeBlock: false,
+    removeFreshVanillaEntities: manualDrops.drops.length > 0 && bridgeSettings?.removeFreshVanillaDrops !== false,
+    knownNearbyItemIds,
+    source: manualDrops.source
+  };
 }
 
 function executeDropActions({
@@ -301,7 +529,9 @@ function executeDropActions({
   commandTarget,
   replaceOriginalId,
   replaceDrops,
-  removeVanillaEntities
+  removeFreshVanillaEntities,
+  removeVanillaEntities,
+  knownNearbyItemIds
 }) {
   if (!dimension || !loc) return;
 
@@ -327,7 +557,7 @@ function executeDropActions({
       }
     }
 
-    const pos = { x: loc.x + 0.5, y: loc.y + 0.5, z: loc.z + 0.5 };
+    const pos = toDropSpawnPos(loc);
     if (resolvedSound) {
       const soundId = typeof resolvedSound === 'string' ? resolvedSound : resolvedSound?.id;
       const hasOptions = typeof resolvedSound === 'object' && resolvedSound !== null;
@@ -421,30 +651,48 @@ function executeDropActions({
       }
     }
 
-    if (removeVanillaEntities && replaceOriginalId && replaceDrops?.length) {
+    const maxDistance = resolveDropSearchRadius();
+
+    if (removeFreshVanillaEntities && knownNearbyItemIds?.size) {
       try {
-        const maxDistance = Number(DROPS_SETTINGS?.replaceSearchRadius) || 2.5;
+        removeNewNearbyItemEntities(dimension, pos, maxDistance, knownNearbyItemIds);
+      } catch (error) {
+        console.warn('[drops] Failed clearing transient vanilla drops for', blockId, error);
+      }
+    }
+
+    if (removeVanillaEntities && replaceOriginalId && replaceDrops?.length) {
+      let removedOriginalDrop = false;
+      try {
         const candidates = dimension.getEntities({
           type: 'item',
           maxDistance,
           location: pos
         });
         for (const entity of candidates) {
+          const entityId = entity?.id;
+          if (typeof entityId === 'string' && knownNearbyItemIds?.has(entityId)) {
+            continue;
+          }
+
           const item = entity?.getComponent('minecraft:item')?.itemStack;
           if (item?.typeId === replaceOriginalId) {
             entity.remove();
+            removedOriginalDrop = true;
           }
         }
       } catch (error) {
         console.warn('[drops] Failed replacing vanilla drops for', blockId, error);
       }
 
-      for (const stack of replaceDrops) {
-        if (!stack) continue;
-        try {
-          dimension.spawnItem(stack, pos);
-        } catch (error) {
-          console.warn('[drops] Failed spawning replacement drop for', blockId, error);
+      if (removedOriginalDrop) {
+        for (const stack of replaceDrops) {
+          if (!stack) continue;
+          try {
+            dimension.spawnItem(stack, pos);
+          } catch (error) {
+            console.warn('[drops] Failed spawning replacement drop for', blockId, error);
+          }
         }
       }
     }
@@ -492,14 +740,13 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     return; // Not a managed block
   }
 
-  const resolved = Array.isArray(dropResult)
-    ? { drops: dropResult, replaceVanilla: false }
-    : dropResult;
+  const resolved = normalizeDropResult(dropResult);
 
   const drops = resolved?.drops ?? [];
+  const mode = resolved?.mode ?? 'supplement';
   const replaceVanilla = Boolean(resolved?.replaceVanilla);
   const replaceOriginalId = resolved?.replaceOriginalId;
-  const replaceDrops = Array.isArray(resolved?.replaceDrops) ? resolved.replaceDrops : [];
+  const replaceDrops = resolved?.replaceDrops ?? [];
   const sound = resolved?.sound;
   const baseSound = resolved?.baseSound;
   const omitSpecialSound = Boolean(resolved?.omitSpecialSound);
@@ -512,7 +759,12 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const commandTarget = resolved?.commandTarget ?? 'dimension';
 
   const hasDrops = drops.length > 0;
-  const shouldReplaceOriginal = !replaceVanilla && Boolean(replaceOriginalId) && replaceDrops.length > 0;
+  const shouldReplaceOriginal = mode === 'vanilla' && Boolean(replaceOriginalId) && replaceDrops.length > 0;
+  const dropSearchRadius = resolveDropSearchRadius();
+  const blockCenter = toDropSpawnPos(block.location);
+  const knownItemEntityIds = shouldReplaceOriginal
+    ? snapshotNearbyItemEntityIds(dimension, blockCenter, dropSearchRadius)
+    : undefined;
   const hasExtras = Boolean(
     baseSound || sound ||
     particles.length ||
@@ -550,11 +802,13 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
     commandTarget,
     replaceOriginalId,
     replaceDrops,
-    removeVanillaEntities: shouldReplaceOriginal
+    removeFreshVanillaEntities: false,
+    removeVanillaEntities: shouldReplaceOriginal,
+    knownNearbyItemIds: knownItemEntityIds
   });
 });
 
-const EXCAVATE_EVENT_IDS = new Set(['dorios:blockloot', 'dorios:hammerblock']);
+const EXCAVATE_EVENT_IDS = DROP_SYSTEM_RULES.excavateEventIds;
 
 const scriptEventSignal =
   world.afterEvents?.scriptEventReceive ??
@@ -614,13 +868,11 @@ if (!scriptEventSignal?.subscribe) {
     hasSilkTouch,
   });
 
-  const resolved = Array.isArray(dropResult)
-    ? { drops: dropResult, replaceVanilla: false }
-    : dropResult;
-
+  const resolved = normalizeDropResult(dropResult);
+  const mode = resolved?.mode ?? 'supplement';
   const replaceVanilla = Boolean(resolved?.replaceVanilla);
   const replaceOriginalId = resolved?.replaceOriginalId;
-  const replaceDrops = Array.isArray(resolved?.replaceDrops) ? resolved.replaceDrops : [];
+  const replaceDrops = resolved?.replaceDrops ?? [];
   const sound = resolved?.sound;
   const baseSound = resolved?.baseSound;
   const omitSpecialSound = Boolean(resolved?.omitSpecialSound);
@@ -632,73 +884,60 @@ if (!scriptEventSignal?.subscribe) {
   const commands = resolved?.commands ?? [];
   const commandTarget = resolved?.commandTarget ?? 'dimension';
 
-  const vanillaDropMode = resolveVanillaDropMode(bridgeSettings);
-  const hasReplacement = Boolean(replaceOriginalId) && replaceDrops.length > 0;
-  const wantsVanillaDrops = !replaceVanilla && !hasReplacement;
-  const dropSearchRadius = Number(DROPS_SETTINGS?.replaceSearchRadius) || 2.5;
-  const blockCenter = toCenterPos(blockLoc);
-
-  let vanillaDrops = [];
-  let blockDestroyed = false;
-
-  if (wantsVanillaDrops) {
-    if (vanillaDropMode === VANILLA_DROP_MODES.LOOT_TABLE) {
-      vanillaDrops = generateLootTableDrops(block, blockPermutation, tool);
-    } else if (vanillaDropMode === VANILLA_DROP_MODES.DESTROY_COMMAND) {
-      blockDestroyed = destroyBlockWithDrops(dimension, loc);
-    } else if (vanillaDropMode === VANILLA_DROP_MODES.BREAK_THEN_REGEN_LOOT_TABLE) {
-      const previousItemIds = snapshotNearbyItemEntityIds(dimension, blockCenter, dropSearchRadius);
-      blockDestroyed = destroyBlockWithDrops(dimension, loc);
-
-      if (blockDestroyed) {
-        removeNewNearbyItemEntities(dimension, blockCenter, dropSearchRadius, previousItemIds);
-      }
-
-      vanillaDrops = generateLootTableDrops(block, blockPermutation, tool);
-    }
-  }
+  const hasReplacement = mode === 'vanilla' && Boolean(replaceOriginalId) && replaceDrops.length > 0;
+  const shouldRunVanillaFlow = !resolved || wantsVanillaFlow(mode);
+  const vanillaPlan = shouldRunVanillaFlow
+    ? resolveExcavateVanillaPlan({ block, blockPermutation, tool, dimension, loc, bridgeSettings })
+    : {
+        drops: [],
+        blockDestroyed: false,
+        removeBlock: false,
+        removeFreshVanillaEntities: false,
+        knownNearbyItemIds: undefined,
+        source: 'none'
+      };
 
   if (!resolved) {
-    if (vanillaDrops.length) {
+    if (vanillaPlan.drops.length || vanillaPlan.removeBlock || vanillaPlan.removeFreshVanillaEntities) {
       executeDropActions({
         block,
         blockId,
         dimension,
         player,
         loc: blockLoc,
-        drops: vanillaDrops.filter(Boolean),
+        drops: vanillaPlan.drops.filter(Boolean),
         replaceVanilla: false,
-        removeBlock: !blockDestroyed,
-        sound,
-        baseSound,
-        omitSpecialSound,
-        suppressVanillaSound,
+        removeBlock: vanillaPlan.removeBlock,
+        sound: undefined,
+        baseSound: undefined,
+        omitSpecialSound: false,
+        suppressVanillaSound: false,
         particles: [],
         statusEffects: [],
         xp: undefined,
         xpMode,
         commands: [],
         commandTarget: 'dimension',
-        replaceOriginalId,
-        replaceDrops,
-        removeVanillaEntities: false
+        replaceOriginalId: undefined,
+        replaceDrops: [],
+        removeFreshVanillaEntities: vanillaPlan.removeFreshVanillaEntities,
+        removeVanillaEntities: false,
+        knownNearbyItemIds: vanillaPlan.knownNearbyItemIds
       });
-    } else if (!blockDestroyed) {
+    } else if (!vanillaPlan.blockDestroyed) {
       destroyBlockWithDrops(dimension, loc);
     }
     return;
   }
 
   let drops = [];
+  const vanillaDrops = hasReplacement
+    ? applyReplacementToDrops(vanillaPlan.drops, replaceOriginalId, replaceDrops)
+    : vanillaPlan.drops;
   if (vanillaDrops.length) drops.push(...vanillaDrops);
   if (resolved?.drops?.length) drops.push(...resolved.drops);
-
-  if (!blockDestroyed && hasReplacement) {
-    drops = drops.filter(stack => stack?.typeId !== replaceOriginalId);
-    drops.push(...replaceDrops);
-  }
-
   drops = drops.filter(Boolean);
+  const shouldReplaceVanillaEntities = hasReplacement && vanillaPlan.blockDestroyed && vanillaDrops.length === 0;
 
   executeDropActions({
     block,
@@ -708,7 +947,7 @@ if (!scriptEventSignal?.subscribe) {
     loc: blockLoc,
     drops,
     replaceVanilla,
-    removeBlock: !blockDestroyed,
+    removeBlock: replaceVanilla ? true : vanillaPlan.removeBlock,
     sound,
     baseSound,
     omitSpecialSound,
@@ -721,6 +960,8 @@ if (!scriptEventSignal?.subscribe) {
     commandTarget,
     replaceOriginalId,
     replaceDrops,
-    removeVanillaEntities: blockDestroyed && hasReplacement
+    removeFreshVanillaEntities: vanillaPlan.removeFreshVanillaEntities,
+    removeVanillaEntities: shouldReplaceVanillaEntities,
+    knownNearbyItemIds: vanillaPlan.knownNearbyItemIds
   });
 });

@@ -1,5 +1,9 @@
 import { system, world, ItemStack, Player, Block, Entity, Container, CommandPermissionLevel, CustomCommandParamType, Dimension } from '@minecraft/server';
-const NAMESPACE = 'utilitycraft'
+const DORIOS_API = Object.freeze({
+    namespace: 'utilitycraft'
+})
+
+const { namespace: NAMESPACE } = DORIOS_API
 
 /**
  * ==================================================

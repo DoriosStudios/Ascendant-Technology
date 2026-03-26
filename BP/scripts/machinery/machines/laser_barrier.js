@@ -1,18 +1,24 @@
 import { Machine, Energy, buildOverclockLoreLine } from '../../DoriosCore/index.js'
 import { ItemStack } from '@minecraft/server'
 
-const DEFAULT_COST = 800
-const BASE_LENGTH = 3 // blocks along the horizontal (right) axis
-const BASE_HEIGHT = 3 // vertical blocks
-const DAMAGE = 4 // 2 hearts per pulse
-const COOLDOWN_TICKS = 4
-const MAX_SIZE_LEVEL = 8
-const DAMAGE_LATERAL_PADDING = 0.5 // extra hit width on each side of each barrier block
-const FIELD_ID = 'utilitycraft:laser_barrier_field'
-const FIELD_REFRESH_TICKS = 10 // only rebuild the wall a few times per second
-const ENERGY_UPGRADE_CYCLE_COSTS = [800, 720, 640, 560, 480, 400, 320, 240, 200]
-const AIR_BLOCK_IDS = new Set(['minecraft:air', 'minecraft:cave_air', 'minecraft:void_air'])
-const FIELD_CLEARABLE_BLOCKS = new Set([
+const LASER_BARRIER = Object.freeze({
+    defaultCost: 800,
+    geometry: Object.freeze({
+        baseLength: 3,
+        baseHeight: 3,
+        maxSizeLevel: 8,
+        damageLateralPadding: 0.5
+    }),
+    combat: Object.freeze({
+        damage: 4,
+        cooldownTicks: 4
+    }),
+    field: Object.freeze({
+        id: 'utilitycraft:laser_barrier_field',
+        refreshTicks: 10,
+        energyUpgradeCycleCosts: Object.freeze([800, 720, 640, 560, 480, 400, 320, 240, 200]),
+        airBlockIds: new Set(['minecraft:air', 'minecraft:cave_air', 'minecraft:void_air']),
+        clearableBlocks: new Set([
     'minecraft:snow',
     'minecraft:snow_layer',
     'minecraft:grass',
@@ -48,13 +54,16 @@ const FIELD_CLEARABLE_BLOCKS = new Set([
     'minecraft:small_dripleaf',
     'minecraft:big_dripleaf',
     'minecraft:big_dripleaf_stem'
-])
-const FIELD_CLEARABLE_SUFFIXES = ['_sapling', '_fungus', '_mushroom', '_flower', '_tulip']
-
-const DP_LEN = 'laser:len'
-const DP_HEI = 'laser:hei'
-const DP_LAST_SPAN = 'laser:last_span'
-const DP_REFRESH_CD = 'laser:refresh_cd'
+        ]),
+        clearableSuffixes: Object.freeze(['_sapling', '_fungus', '_mushroom', '_flower', '_tulip'])
+    }),
+    props: Object.freeze({
+        length: 'laser:len',
+        height: 'laser:hei',
+        lastSpan: 'laser:last_span',
+        refreshCooldown: 'laser:refresh_cd'
+    })
+})
 
 const normalizeRawMessageArg = value => {
     if (value === undefined || value === null) return ''
@@ -81,12 +90,12 @@ DoriosAPI.register.blockComponent('laser_barrier', {
             const machine = new Machine(e.block, settings, true)
             if (!machine?.entity) return
 
-            const defaultCost = settings?.machine?.energy_cost ?? DEFAULT_COST
+            const defaultCost = settings?.machine?.energy_cost ?? LASER_BARRIER.defaultCost
             machine.setEnergyCost(defaultCost)
-            machine.entity.setDynamicProperty(DP_LEN, BASE_LENGTH)
-            machine.entity.setDynamicProperty(DP_HEI, BASE_HEIGHT)
-            machine.entity.setDynamicProperty(DP_LAST_SPAN, Math.max(BASE_LENGTH, BASE_HEIGHT))
-            machine.entity.setDynamicProperty(DP_REFRESH_CD, 0)
+            machine.entity.setDynamicProperty(LASER_BARRIER.props.length, LASER_BARRIER.geometry.baseLength)
+            machine.entity.setDynamicProperty(LASER_BARRIER.props.height, LASER_BARRIER.geometry.baseHeight)
+            machine.entity.setDynamicProperty(LASER_BARRIER.props.lastSpan, Math.max(LASER_BARRIER.geometry.baseLength, LASER_BARRIER.geometry.baseHeight))
+            machine.entity.setDynamicProperty(LASER_BARRIER.props.refreshCooldown, 0)
             machine.displayEnergy()
             machine.displayProgress()
         })
@@ -116,7 +125,7 @@ DoriosAPI.register.blockComponent('laser_barrier', {
         const levels = getBarrierLevels(machine)
 
         // Energy upkeep
-        const baseCost = settings?.machine?.energy_cost ?? DEFAULT_COST
+        const baseCost = settings?.machine?.energy_cost ?? LASER_BARRIER.defaultCost
         const cycleCost = getCycleCostByEnergyUpgrade(levels.energyLevel, baseCost)
         machine.setEnergyCost(cycleCost)
 
@@ -135,14 +144,14 @@ DoriosAPI.register.blockComponent('laser_barrier', {
         }
 
         // Maintain wall and pulse damage
-        const length = BASE_LENGTH + levels.lengthLevel
-        const height = BASE_HEIGHT + levels.heightLevel
+        const length = LASER_BARRIER.geometry.baseLength + levels.lengthLevel
+        const height = LASER_BARRIER.geometry.baseHeight + levels.heightLevel
 
         const { changed: needsRebuild, prevLen, prevHei } = syncCachedSpan(machine, length, height)
         if (shouldRefreshField(machine, needsRebuild)) {
             maintainField(machine, length, height, prevLen, prevHei)
-            machine.entity.setDynamicProperty(DP_LAST_SPAN, Math.max(length, height))
-            machine.entity.setDynamicProperty(DP_REFRESH_CD, FIELD_REFRESH_TICKS)
+            machine.entity.setDynamicProperty(LASER_BARRIER.props.lastSpan, Math.max(length, height))
+            machine.entity.setDynamicProperty(LASER_BARRIER.props.refreshCooldown, LASER_BARRIER.field.refreshTicks)
         }
 
         if (machine.getProgress() >= cycleCost) {
@@ -180,22 +189,22 @@ function maintainField(machine, length, height, prevLen, prevHei) {
         if (!canPlaceFieldAt(block)) continue
 
         // Break light environment blocks first so the laser field can replace them.
-        if (isEnvironmentClearableBlock(block) && block.typeId !== FIELD_ID) {
+        if (isEnvironmentClearableBlock(block) && block.typeId !== LASER_BARRIER.field.id) {
             block.setType('minecraft:air')
         }
 
-        block.setType(FIELD_ID)
+        block.setType(LASER_BARRIER.field.id)
     }
 }
 
 function clearField(machine, keep = new Set(), positions = null, prevLen = null, prevHei = null) {
     const dim = machine.block.dimension
     const { x, y, z } = machine.block.location
-    const currLen = readDP(machine, DP_LEN, BASE_LENGTH)
-    const currHei = readDP(machine, DP_HEI, BASE_HEIGHT)
+    const currLen = readDP(machine, LASER_BARRIER.props.length, LASER_BARRIER.geometry.baseLength)
+    const currHei = readDP(machine, LASER_BARRIER.props.height, LASER_BARRIER.geometry.baseHeight)
     const lastLen = prevLen ?? currLen
     const lastHei = prevHei ?? currHei
-    const lastSpan = readDP(machine, DP_LAST_SPAN, Math.max(currLen, currHei, lastLen, lastHei))
+    const lastSpan = readDP(machine, LASER_BARRIER.props.lastSpan, Math.max(currLen, currHei, lastLen, lastHei))
     const sweepLen = Math.max(currLen, lastLen, lastSpan)
     const sweepHei = Math.max(currHei, lastHei, lastSpan)
 
@@ -212,7 +221,7 @@ function clearField(machine, keep = new Set(), positions = null, prevLen = null,
     forEachPos(bbox, pos => {
         if (keep.has(keyOf(pos))) return
         const blk = dim.getBlock(pos)
-        if (blk && blk.typeId === FIELD_ID) blk.setType('minecraft:air')
+        if (blk && blk.typeId === LASER_BARRIER.field.id) blk.setType('minecraft:air')
     })
 }
 
@@ -224,7 +233,7 @@ function clearFieldAroundBlock(block, radius = 10) {
             for (let dz = -radius; dz <= radius; dz++) {
                 const pos = { x: x + dx, y: y + dy, z: z + dz }
                 const blk = dim.getBlock(pos)
-                if (blk && blk.typeId === FIELD_ID) blk.setType('minecraft:air')
+                if (blk && blk.typeId === LASER_BARRIER.field.id) blk.setType('minecraft:air')
             }
         }
     }
@@ -235,7 +244,7 @@ function pulseBarrier(machine, length, height) {
     const positions = computeWall(machine.block, length, height)
     const search = getSearchSphereFromPositions(positions)
     if (!search) {
-        machine.holdTransfers(COOLDOWN_TICKS)
+        machine.holdTransfers(LASER_BARRIER.combat.cooldownTicks)
         return
     }
 
@@ -251,10 +260,10 @@ function pulseBarrier(machine, length, height) {
     for (const ent of targets) {
         if (!ent?.isValid) continue
         if (ent.typeId === 'minecraft:player' && ent.isSneaking) continue
-        ent.applyDamage(DAMAGE, { cause: 'contact' })
+        ent.applyDamage(LASER_BARRIER.combat.damage, { cause: 'contact' })
     }
 
-    machine.holdTransfers(COOLDOWN_TICKS)
+    machine.holdTransfers(LASER_BARRIER.combat.cooldownTicks)
 }
 
 function computeWall(block, length, height) {
@@ -300,19 +309,19 @@ function getRight(forward) {
 
 function matchesClearableSuffix(typeId) {
     if (typeof typeId !== 'string') return false
-    return FIELD_CLEARABLE_SUFFIXES.some(suffix => typeId.endsWith(suffix))
+    return LASER_BARRIER.field.clearableSuffixes.some(suffix => typeId.endsWith(suffix))
 }
 
 function isAirLike(block) {
     if (!block) return false
     if (block.isAir === true) return true
-    return AIR_BLOCK_IDS.has(block.typeId)
+    return LASER_BARRIER.field.airBlockIds.has(block.typeId)
 }
 
 function isEnvironmentClearableBlock(block) {
     if (!block) return false
     if (isAirLike(block)) return false
-    if (block.typeId === FIELD_ID) return false
+    if (block.typeId === LASER_BARRIER.field.id) return false
 
     const typeId = block.typeId
     const unbreakables = DoriosAPI?.constants?.unbreakableBlocks
@@ -322,7 +331,7 @@ function isEnvironmentClearableBlock(block) {
     if (block.hasTag?.('minecraft:replaceable_plants')) return true
     if (block.hasTag?.('minecraft:plant')) return true
 
-    if (FIELD_CLEARABLE_BLOCKS.has(typeId)) return true
+    if (LASER_BARRIER.field.clearableBlocks.has(typeId)) return true
     if (matchesClearableSuffix(typeId)) return true
 
     return false
@@ -330,7 +339,7 @@ function isEnvironmentClearableBlock(block) {
 
 function canPlaceFieldAt(block) {
     if (!block) return false
-    if (block.typeId === FIELD_ID) return true
+    if (block.typeId === LASER_BARRIER.field.id) return true
     if (isAirLike(block)) return true
     if (block.isWaterlogged) return true
     return isEnvironmentClearableBlock(block)
@@ -423,7 +432,7 @@ function getBarrierLevels(machine) {
         if (slot === undefined || !inv) return 0
         const item = inv.getItem(slot)
         if (!item || item.typeId !== expectedId) return 0
-        return Math.min(MAX_SIZE_LEVEL, item.amount)
+        return Math.min(LASER_BARRIER.geometry.maxSizeLevel, item.amount)
     }
 
     const lengthLevel = readLevel(lengthSlot, 'utilitycraft:size_upgrade')
@@ -441,12 +450,12 @@ function getBarrierLevels(machine) {
 }
 
 function syncCachedSpan(machine, length, height) {
-    const cachedLen = readDP(machine, DP_LEN, length)
-    const cachedHei = readDP(machine, DP_HEI, height)
+    const cachedLen = readDP(machine, LASER_BARRIER.props.length, length)
+    const cachedHei = readDP(machine, LASER_BARRIER.props.height, height)
     const changed = cachedLen !== length || cachedHei !== height
     // Keep cache always in sync so downsizing cleanup can reliably compare spans.
-    machine.entity.setDynamicProperty(DP_LEN, length)
-    machine.entity.setDynamicProperty(DP_HEI, height)
+    machine.entity.setDynamicProperty(LASER_BARRIER.props.length, length)
+    machine.entity.setDynamicProperty(LASER_BARRIER.props.height, height)
     return {
         changed,
         prevLen: cachedLen,
@@ -456,9 +465,9 @@ function syncCachedSpan(machine, length, height) {
 
 function shouldRefreshField(machine, needsRebuild) {
     if (needsRebuild) return true
-    const cd = Number(machine.entity?.getDynamicProperty(DP_REFRESH_CD)) || 0
+    const cd = Number(machine.entity?.getDynamicProperty(LASER_BARRIER.props.refreshCooldown)) || 0
     if (cd <= 0) return true
-    machine.entity.setDynamicProperty(DP_REFRESH_CD, cd - 1)
+    machine.entity.setDynamicProperty(LASER_BARRIER.props.refreshCooldown, cd - 1)
     return false
 }
 
@@ -553,9 +562,9 @@ function getHeldItem(player) {
     return inv.getItem(slot)
 }
 
-function getCycleCostByEnergyUpgrade(energyLevel, fallbackCost = DEFAULT_COST) {
+function getCycleCostByEnergyUpgrade(energyLevel, fallbackCost = LASER_BARRIER.defaultCost) {
     const level = Math.max(0, Math.min(8, Math.floor(Number(energyLevel) || 0)))
-    const mapped = ENERGY_UPGRADE_CYCLE_COSTS[level]
+    const mapped = LASER_BARRIER.field.energyUpgradeCycleCosts[level]
     return Number.isFinite(mapped) && mapped > 0 ? mapped : fallbackCost
 }
 
@@ -594,7 +603,7 @@ function getSearchSphereFromPositions(positions) {
 
 function buildFieldDamageHitboxes(positions) {
     if (!Array.isArray(positions) || positions.length === 0) return []
-    const pad = DAMAGE_LATERAL_PADDING
+    const pad = LASER_BARRIER.geometry.damageLateralPadding
 
     return positions.map(pos => ({
         minX: pos.x - pad,

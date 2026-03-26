@@ -1,29 +1,34 @@
 import { Machine, Energy, FluidManager } from "../../DoriosCore/index.js";
 
-const OFFSETS = [
-    { x: 1, y: 0, z: 0 },
-    { x: -1, y: 0, z: 0 },
-    { x: 0, y: 1, z: 0 },
-    { x: 0, y: -1, z: 0 },
-    { x: 0, y: 0, z: 1 },
-    { x: 0, y: 0, z: -1 },
-];
-
-const LEVEL_PROP = "dorios:overclock_level";
-const TTL_PROP = "dorios:overclock_ttl";
-const EFF_PROP = "dorios:overclock_eff";
-const HEAT_PROP = "dorios:overclock_heat";
-const FUEL_PROP = "dorios:oc_fuel";
-const TOWER_NEED_PROP = "dorios:oc_energy_need";
-
-const MAX_SCAN_NODES = 96;
-const OVERCLOCK_TTL = 6;
-
-const RELAY_ENERGY_TRANSFER = 20000; // DE/tick max sent from tower to each relay
-const RELAY_ENERGY_DISTRIBUTION = 20000; // DE/tick max sent from relay to network machines
-
-const TOWER_BASE_ENERGY_COST = 32000;
-const TOWER_FUEL_SLOTS = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+const OVERCLOCK = Object.freeze({
+    offsets: Object.freeze([
+        { x: 1, y: 0, z: 0 },
+        { x: -1, y: 0, z: 0 },
+        { x: 0, y: 1, z: 0 },
+        { x: 0, y: -1, z: 0 },
+        { x: 0, y: 0, z: 1 },
+        { x: 0, y: 0, z: -1 },
+    ]),
+    props: Object.freeze({
+        level: "dorios:overclock_level",
+        ttl: "dorios:overclock_ttl",
+        effectiveness: "dorios:overclock_eff",
+        heat: "dorios:overclock_heat",
+        fuel: "dorios:oc_fuel",
+        towerNeed: "dorios:oc_energy_need"
+    }),
+    limits: Object.freeze({
+        maxScanNodes: 96,
+        ttl: 6
+    }),
+    relay: Object.freeze({
+        energyTransfer: 20000,
+        energyDistribution: 20000
+    }),
+    tower: Object.freeze({
+        baseEnergyCost: 32000,
+        fuelSlots: Object.freeze([2, 3, 4, 5, 6, 7, 8, 9, 10])
+    }),
 
 /**
  * Fuel registry for the Overclock Tower. Extendable for future items.
@@ -31,7 +36,7 @@ const TOWER_FUEL_SLOTS = [2, 3, 4, 5, 6, 7, 8, 9, 10];
  * - power: overclock level contributed while burning.
  * - effectiveness: multiplier applied when this fuel is active.
  */
-const OVERCLOCK_FUELS = {
+    fuels: Object.freeze({
     "utilitycraft:titanium": {
         duration: 500,
         power: 1,
@@ -47,18 +52,20 @@ const OVERCLOCK_FUELS = {
         power: 3,
         effectiveness: 1.5,
     },
-};
-
-const CRYO_DRAIN_PER_TICK = 120;
-const WATER_DRAIN_PER_TICK = 240;
-const MELT_HEAT_THRESHOLD = 32;
+    }),
+    cooling: Object.freeze({
+        cryoDrainPerTick: 120,
+        waterDrainPerTick: 240,
+        meltHeatThreshold: 32
+    })
+});
 
 function key(pos) {
     return `${pos.x}|${pos.y}|${pos.z}`;
 }
 
 function getNeighbors(pos) {
-    return OFFSETS.map(off => ({ x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z }));
+    return OVERCLOCK.offsets.map(off => ({ x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z }));
 }
 
 function blockIsNetwork(block) {
@@ -75,8 +82,8 @@ function readBlockOverclock(block) {
     if (!block) return { level: 0, effectiveness: 0 };
     const entity = block.dimension.getEntitiesAtBlockLocation(block.location)[0];
     if (!entity?.isValid) return { level: 0, effectiveness: 0 };
-    const level = Number(entity.getDynamicProperty(LEVEL_PROP) ?? 0);
-    const effectiveness = Number(entity.getDynamicProperty(EFF_PROP) ?? 0);
+    const level = Number(entity.getDynamicProperty(OVERCLOCK.props.level) ?? 0);
+    const effectiveness = Number(entity.getDynamicProperty(OVERCLOCK.props.effectiveness) ?? 0);
     return { level, effectiveness };
 }
 
@@ -88,7 +95,7 @@ function scanForOverclockSource(block) {
     let best = { level: 0, effectiveness: 0, pos: null };
     let steps = 0;
 
-    while (queue.length && steps < MAX_SCAN_NODES) {
+    while (queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
         const pos = queue.shift();
         const k = key(pos);
         if (visited.has(k)) continue;
@@ -121,7 +128,7 @@ function collectOverclockTargets(startBlock) {
     const machines = [];
     let steps = 0;
 
-    while (queue.length && steps < MAX_SCAN_NODES) {
+    while (queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
         const pos = queue.shift();
         const k = key(pos);
         if (visited.has(k)) continue;
@@ -135,7 +142,7 @@ function collectOverclockTargets(startBlock) {
             if (!visited.has(key(next))) queue.push(next);
         }
 
-        for (const off of OFFSETS) {
+        for (const off of OVERCLOCK.offsets) {
             const adjPos = { x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z };
             const adjBlock = dim.getBlock(adjPos);
             if (!adjBlock?.hasTag("dorios:machine")) continue;
@@ -178,7 +185,7 @@ function collectEnergyTargets(startBlock, sourceEntity) {
     const targets = [];
     let steps = 0;
 
-    while (queue.length && steps < MAX_SCAN_NODES) {
+    while (queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
         const pos = queue.shift();
         const k = key(pos);
         if (visited.has(k)) continue;
@@ -192,7 +199,7 @@ function collectEnergyTargets(startBlock, sourceEntity) {
             if (!visited.has(key(next))) queue.push(next);
         }
 
-        for (const off of OFFSETS) {
+        for (const off of OVERCLOCK.offsets) {
             const adjPos = { x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z };
             const adjBlock = dim.getBlock(adjPos);
             if (!adjBlock?.hasTag("dorios:energy")) continue;
@@ -211,7 +218,7 @@ function collectEnergyTargets(startBlock, sourceEntity) {
                 if (adjBlock.typeId === "utilitycraft:overclock_tower") {
                     let shouldCharge = false;
                     try {
-                        const need = Number(entity.getDynamicProperty(TOWER_NEED_PROP) ?? 0);
+                        const need = Number(entity.getDynamicProperty(OVERCLOCK.props.towerNeed) ?? 0);
                         if (Number.isFinite(need) && need > 0) {
                             const towerEnergy = new Energy(entity);
                             shouldCharge = towerEnergy.get() < need;
@@ -240,7 +247,7 @@ function distributeRelayEnergy(relayEntity, block) {
     let available = relayEnergy.get();
     if (available <= 0) return 0;
 
-    let remaining = Math.min(available, RELAY_ENERGY_DISTRIBUTION);
+    let remaining = Math.min(available, OVERCLOCK.relay.energyDistribution);
     const targets = collectEnergyTargets(block, relayEntity);
     if (targets.length === 0) return 0;
 
@@ -272,7 +279,7 @@ function collectRelaysFrom(block) {
     const relays = [];
     let steps = 0;
 
-    while (queue.length && steps < MAX_SCAN_NODES) {
+    while (queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
         const pos = queue.shift();
         const k = key(pos);
         if (visited.has(k)) continue;
@@ -299,9 +306,9 @@ function setOverclockOnEntity(entity, level, effectiveness) {
     if (!entity) return;
     const eff = Math.max(0, effectiveness ?? 0);
     const lvl = Math.max(0, level ?? 0);
-    entity.setDynamicProperty(LEVEL_PROP, lvl);
-    entity.setDynamicProperty(EFF_PROP, eff);
-    entity.setDynamicProperty(TTL_PROP, OVERCLOCK_TTL);
+    entity.setDynamicProperty(OVERCLOCK.props.level, lvl);
+    entity.setDynamicProperty(OVERCLOCK.props.effectiveness, eff);
+    entity.setDynamicProperty(OVERCLOCK.props.ttl, OVERCLOCK.limits.ttl);
 }
 
 function findFacingOffset(block) {
@@ -331,7 +338,7 @@ function applyOverclockToTarget(block, level, effectiveness) {
     if (family?.hasTypeFamily("dorios:energy_source")) return false; // skip generators
     if (!entity) return false;
 
-    const current = Number(entity.getDynamicProperty(LEVEL_PROP) ?? 0);
+    const current = Number(entity.getDynamicProperty(OVERCLOCK.props.level) ?? 0);
     const nextLevel = Math.max(current, level * effectiveness);
     setOverclockOnEntity(entity, nextLevel, effectiveness);
     return true;
@@ -339,9 +346,9 @@ function applyOverclockToTarget(block, level, effectiveness) {
 
 function updateHeat(entity, delta) {
     if (!entity) return 0;
-    const current = Number(entity.getDynamicProperty(HEAT_PROP) ?? 0);
+    const current = Number(entity.getDynamicProperty(OVERCLOCK.props.heat) ?? 0);
     const next = Math.max(0, current + delta);
-    entity.setDynamicProperty(HEAT_PROP, next);
+    entity.setDynamicProperty(OVERCLOCK.props.heat, next);
     return next;
 }
 
@@ -457,13 +464,13 @@ function drainCoolant(entity, type) {
         if (current <= 0) return { ok: false, eff: 0 };
 
         if (type === "cryofluid") {
-            if (current < CRYO_DRAIN_PER_TICK) return { ok: false, eff: 0 };
-            fluid.add(-CRYO_DRAIN_PER_TICK);
+            if (current < OVERCLOCK.cooling.cryoDrainPerTick) return { ok: false, eff: 0 };
+            fluid.add(-OVERCLOCK.cooling.cryoDrainPerTick);
             return { ok: true, eff: 1 };
         }
         if (type === "water") {
-            if (current < WATER_DRAIN_PER_TICK) return { ok: false, eff: 0 };
-            fluid.add(-WATER_DRAIN_PER_TICK);
+            if (current < OVERCLOCK.cooling.waterDrainPerTick) return { ok: false, eff: 0 };
+            fluid.add(-OVERCLOCK.cooling.waterDrainPerTick);
             return { ok: true, eff: 0.5 };
         }
     } catch { /* ignore fluid errors */ }
@@ -473,8 +480,8 @@ function drainCoolant(entity, type) {
 DoriosAPI.register.blockComponent("overclock_tower", {
     beforeOnPlayerPlace(e, { params: settings }) {
         Machine.spawnMachineEntity(e, settings, (entity) => {
-            entity.setDynamicProperty(LEVEL_PROP, 0);
-            entity.setDynamicProperty(EFF_PROP, 0);
+            entity.setDynamicProperty(OVERCLOCK.props.level, 0);
+            entity.setDynamicProperty(OVERCLOCK.props.effectiveness, 0);
         });
     },
 
@@ -491,11 +498,11 @@ DoriosAPI.register.blockComponent("overclock_tower", {
         let activeBurns = 0;
         const activeFuelEntries = [];
 
-        for (const slot of TOWER_FUEL_SLOTS) {
+        for (const slot of OVERCLOCK.tower.fuelSlots) {
             const burnKey = `dorios:oc_burn_${slot}`;
             const powerKey = `dorios:oc_power_${slot}`;
             const effKey = `dorios:oc_eff_${slot}`;
-            const fuelIdKey = `${FUEL_PROP}_${slot}`;
+            const fuelIdKey = `${OVERCLOCK.props.fuel}_${slot}`;
 
             try {
                 let burn = Number(machine.entity.getDynamicProperty(burnKey) ?? 0);
@@ -515,7 +522,7 @@ DoriosAPI.register.blockComponent("overclock_tower", {
 
                 if (burn <= 0) {
                     const stack = inv.getItem(slot);
-                    const fuel = stack ? OVERCLOCK_FUELS[stack.typeId] : undefined;
+                    const fuel = stack ? OVERCLOCK.fuels[stack.typeId] : undefined;
 
                     if (!stack || stack.amount <= 0) {
                         machine.entity.setDynamicProperty(burnKey, 0);
@@ -590,18 +597,18 @@ DoriosAPI.register.blockComponent("overclock_tower", {
         }
 
         if (totalPower <= 0 || activeBurns <= 0) {
-            machine.showWarning("Insert Fuel", false, getPossibleFuels(OVERCLOCK_FUELS), { footerLines: ["Needs Overclock Fuel"] });
-            machine.entity.setDynamicProperty(LEVEL_PROP, 0);
-            machine.entity.setDynamicProperty(TOWER_NEED_PROP, 0);
+            machine.showWarning("Insert Fuel", false, getPossibleFuels(OVERCLOCK.fuels), { footerLines: ["Needs Overclock Fuel"] });
+            machine.entity.setDynamicProperty(OVERCLOCK.props.level, 0);
+            machine.entity.setDynamicProperty(OVERCLOCK.props.towerNeed, 0);
             machine.off();
             return;
         }
 
-        const energyCost = Math.ceil(TOWER_BASE_ENERGY_COST * Math.max(1, totalPower / 2));
-        machine.entity.setDynamicProperty(TOWER_NEED_PROP, energyCost);
+        const energyCost = Math.ceil(OVERCLOCK.tower.baseEnergyCost * Math.max(1, totalPower / 2));
+        machine.entity.setDynamicProperty(OVERCLOCK.props.towerNeed, energyCost);
         if (machine.energy.get() < energyCost) {
             machine.showWarning("Low Energy", false, [], { footerLines: ["Insufficient power"] });
-            machine.entity.setDynamicProperty(LEVEL_PROP, 0);
+            machine.entity.setDynamicProperty(OVERCLOCK.props.level, 0);
             machine.off();
             return;
         }
@@ -618,7 +625,7 @@ DoriosAPI.register.blockComponent("overclock_tower", {
                 const relayEnergy = new Energy(relay);
                 const free = relayEnergy.getFreeSpace();
                 if (free <= 0) continue;
-                const send = Math.min(RELAY_ENERGY_TRANSFER, free, available);
+                const send = Math.min(OVERCLOCK.relay.energyTransfer, free, available);
                 const sent = machine.energy.transferToEntity(relay, send);
                 available -= sent;
             }
@@ -641,8 +648,8 @@ DoriosAPI.register.blockComponent("overclock_tower", {
 DoriosAPI.register.blockComponent("overclock_relay", {
     beforeOnPlayerPlace(e, { params: settings }) {
         Machine.spawnMachineEntity(e, settings, (entity) => {
-            entity.setDynamicProperty(LEVEL_PROP, 0);
-            entity.setDynamicProperty(EFF_PROP, 0);
+            entity.setDynamicProperty(OVERCLOCK.props.level, 0);
+            entity.setDynamicProperty(OVERCLOCK.props.effectiveness, 0);
         });
     },
 

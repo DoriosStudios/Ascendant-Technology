@@ -1,7 +1,9 @@
 import { system } from "@minecraft/server";
 
-const FACING = ["up", "down", "north", "south", "east", "west"];
-const CARDINAL = ["north", "south", "east", "west"];
+const ROTATION_SETS = Object.freeze({
+    facing: Object.freeze(["up", "down", "north", "south", "east", "west"]),
+    cardinal: Object.freeze(["north", "south", "east", "west"])
+});
 const rotationMap = {
     up: {
         north: {
@@ -243,9 +245,9 @@ export class Rotation {
         try {
             const facingDir = block.permutation.getState("minecraft:facing_direction");
             if (facingDir !== undefined) {
-                const index = FACING.indexOf(facingDir);
-                const next = (index + 1) % FACING.length;
-                block.setPermutation(block.permutation.withState("minecraft:facing_direction", FACING[next]));
+                const index = ROTATION_SETS.facing.indexOf(facingDir);
+                const next = (index + 1) % ROTATION_SETS.facing.length;
+                block.setPermutation(block.permutation.withState("minecraft:facing_direction", ROTATION_SETS.facing[next]));
                 return;
             }
         } catch { }
@@ -254,9 +256,9 @@ export class Rotation {
         try {
             const cardDir = block.permutation.getState("minecraft:cardinal_direction");
             if (cardDir !== undefined) {
-                const index = CARDINAL.indexOf(cardDir);
-                const next = (index + 1) % CARDINAL.length;
-                block.setPermutation(block.permutation.withState("minecraft:cardinal_direction", CARDINAL[next]));
+                const index = ROTATION_SETS.cardinal.indexOf(cardDir);
+                const next = (index + 1) % ROTATION_SETS.cardinal.length;
+                block.setPermutation(block.permutation.withState("minecraft:cardinal_direction", ROTATION_SETS.cardinal[next]));
                 return;
             }
         } catch { }

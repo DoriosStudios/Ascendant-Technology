@@ -2,12 +2,14 @@ import { system } from "@minecraft/server"
 import { infuserRecipes } from './infuser_registry.js'
 import { defineSingularityRecipe } from "./duplicator.js"
 
-const WEAVER_DEFAULT_ENERGY_COST = 6400
-const WEAVER_RATE_PER_TICK = 180
-const TICKS_PER_SECOND = 20
-const INFUSER_SPEED_MULTIPLIER = 2.5
-const MAX_CATALYST_SLOTS = 6
-const ENERGY_PER_SECOND = WEAVER_RATE_PER_TICK * TICKS_PER_SECOND
+const CATALYST_WEAVER_DEFAULTS = Object.freeze({
+    energyCost: 6400,
+    ratePerTick: 180,
+    ticksPerSecond: 20,
+    infuserSpeedMultiplier: 2.5,
+    maxCatalystSlots: 6,
+    energyPerSecond: 180 * 20
+})
 
 /**
  * @typedef {Object} RecipeInput
@@ -189,7 +191,7 @@ const nativeCatalystWeaverRecipes = [
  * @returns {CatalystWeaverRecipe}
  */
 function defineWeaverRecipe(recipe, overrideCost) {
-    const cost = Math.max(1, overrideCost ?? recipe.cost ?? WEAVER_DEFAULT_ENERGY_COST)
+    const cost = Math.max(1, overrideCost ?? recipe.cost ?? CATALYST_WEAVER_DEFAULTS.energyCost)
     const speedModifier = normalizeSpeedModifier(recipe.speedModifier)
     const catalysts = normalizeCatalystSlots(recipe.catalysts)
     return {
@@ -202,7 +204,7 @@ function defineWeaverRecipe(recipe, overrideCost) {
 }
 
 function computeProcessingSeconds(cost, speedModifier = 1) {
-    const baseSeconds = cost / ENERGY_PER_SECOND
+    const baseSeconds = cost / CATALYST_WEAVER_DEFAULTS.energyPerSecond
     const normalizedSpeed = normalizeSpeedModifier(speedModifier)
     const adjusted = baseSeconds / Math.max(0.0001, normalizedSpeed)
     return Number(adjusted.toFixed(2))
@@ -236,10 +238,10 @@ function normalizeOutput(output, amountHint) {
 }
 
 function normalizeCatalystSlots(rawSlots) {
-    const slots = Array(MAX_CATALYST_SLOTS).fill(null)
+    const slots = Array(CATALYST_WEAVER_DEFAULTS.maxCatalystSlots).fill(null)
     if (!Array.isArray(rawSlots)) return slots
 
-    rawSlots.slice(0, MAX_CATALYST_SLOTS).forEach((entry, index) => {
+    rawSlots.slice(0, CATALYST_WEAVER_DEFAULTS.maxCatalystSlots).forEach((entry, index) => {
         const normalized = normalizeCatalystEntry(entry)
         if (normalized) slots[index] = normalized
     })
@@ -273,19 +275,19 @@ function translateInfuserRecipe(recipeKey, recipeDef) {
     const output = normalizeOutput(recipeDef.output, recipeDef.outputAmount)
     if (!output) return null
 
-    const catalysts = Array(MAX_CATALYST_SLOTS).fill(null)
+    const catalysts = Array(CATALYST_WEAVER_DEFAULTS.maxCatalystSlots).fill(null)
     const catalystAmount = normalizePositiveInteger(recipeDef.required ?? recipeDef.catalystAmount ?? 1)
     catalysts[0] = { id: catalystId, amount: catalystAmount }
 
-    const baseCost = recipeDef.cost ?? WEAVER_DEFAULT_ENERGY_COST
-    const adjustedCost = Math.max(1, Math.round(baseCost / INFUSER_SPEED_MULTIPLIER))
+    const baseCost = recipeDef.cost ?? CATALYST_WEAVER_DEFAULTS.energyCost
+    const adjustedCost = Math.max(1, Math.round(baseCost / CATALYST_WEAVER_DEFAULTS.infuserSpeedMultiplier))
 
     const translated = {
         id: `utilitycraft_infuser:${recipeKey}`,
         input: { id: inputId, amount: normalizePositiveInteger(recipeDef.inputAmount ?? 1) },
         catalysts,
         output,
-        speedModifier: normalizeSpeedModifier(recipeDef.speedModifier ?? INFUSER_SPEED_MULTIPLIER)
+        speedModifier: normalizeSpeedModifier(recipeDef.speedModifier ?? CATALYST_WEAVER_DEFAULTS.infuserSpeedMultiplier)
     }
 
     if (recipeDef.fluid) {
@@ -304,10 +306,12 @@ function buildInfuserWeaverRecipes() {
         .filter(Boolean)
 }
 
-const CATALYST_WEAVER_EVENT_ID = "utilitycraft:register_catalyst_weaver_recipe"
+const CATALYST_WEAVER_EVENTS = Object.freeze({
+    register: "utilitycraft:register_catalyst_weaver_recipe"
+})
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
-    if (id !== CATALYST_WEAVER_EVENT_ID) return
+    if (id !== CATALYST_WEAVER_EVENTS.register) return
 
     try {
         const payload = JSON.parse(message)

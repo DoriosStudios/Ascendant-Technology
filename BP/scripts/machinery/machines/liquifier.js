@@ -1,11 +1,17 @@
 import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, feedFluidSlot, rollByproduct, clampChance, addItemsToSlot, formatItemName, formatFluidDisplayName } from '../../DoriosCore/index.js';
 import { getLiquifierRecipes } from '../../config/recipes/liquifier.js';
 
-const INPUT_SLOT = 3;
-const FLUID_SLOT = 10;
-const FLUID_DISPLAY_SLOT = 11;
-const RESIDUE_SLOT = 19;
-const DEFAULT_FLUID_TYPE = 'liquified_aetherium';
+const LIQUIFIER = Object.freeze({
+    slots: Object.freeze({
+        input: 3,
+        fluid: 10,
+        fluidDisplay: 11,
+        residue: 19
+    }),
+    defaults: Object.freeze({
+        fluidType: 'liquified_aetherium'
+    })
+});
 
 /*
 Slots (inventory_size: 20)
@@ -27,10 +33,10 @@ DoriosAPI.register.blockComponent('liquifier', {
             machine.setEnergyCost(settings.machine.energy_cost ?? 2000);
             machine.displayProgress();
             machine.displayEnergy();
-            machine.blockSlots([FLUID_DISPLAY_SLOT]);
+            machine.blockSlots([LIQUIFIER.slots.fluidDisplay]);
 
             const tank = FluidManager.initializeSingle(machine.entity);
-            tank.display(FLUID_DISPLAY_SLOT);
+            tank.display(LIQUIFIER.slots.fluidDisplay);
         });
     },
 
@@ -73,11 +79,11 @@ DoriosAPI.register.blockComponent('liquifier', {
                 }
             }
         }
-        feedFluidSlot(machine, tank, FLUID_SLOT);
+        feedFluidSlot(machine, tank, LIQUIFIER.slots.fluid);
 
         const fail = (message, reset = true) => {
             machine.showWarning(message, reset);
-            tank.display(FLUID_DISPLAY_SLOT);
+            tank.display(LIQUIFIER.slots.fluidDisplay);
         };
 
         const recipes = resolveRecipes(block, settings);
@@ -86,7 +92,7 @@ DoriosAPI.register.blockComponent('liquifier', {
             return;
         }
 
-        const inputStack = machine.inv.getItem(INPUT_SLOT);
+        const inputStack = machine.inv.getItem(LIQUIFIER.slots.input);
         if (!inputStack) {
             fail('Insert Item');
             return;
@@ -98,7 +104,7 @@ DoriosAPI.register.blockComponent('liquifier', {
             return;
         }
 
-        const fluidType = recipe.fluid.type ?? DEFAULT_FLUID_TYPE;
+        const fluidType = recipe.fluid.type ?? LIQUIFIER.defaults.fluidType;
         const tankType = tank.getType();
 
         if (tankType !== 'empty' && tankType !== fluidType) {
@@ -106,7 +112,7 @@ DoriosAPI.register.blockComponent('liquifier', {
             return;
         }
 
-        const byproductSlot = machine.inv.getItem(RESIDUE_SLOT);
+        const byproductSlot = machine.inv.getItem(LIQUIFIER.slots.residue);
         if (recipe.byproduct && byproductSlot && byproductSlot.typeId !== recipe.byproduct.id) {
             fail('Residue Slot Busy');
             return;
@@ -149,7 +155,7 @@ DoriosAPI.register.blockComponent('liquifier', {
         }
 
         updateHud(machine, recipe, tank, crafts.max);
-        tank.display(FLUID_DISPLAY_SLOT);
+        tank.display(LIQUIFIER.slots.fluidDisplay);
         machine.displayEnergy();
         machine.displayProgress();
         machine.on();
@@ -209,10 +215,10 @@ function calculateCrafts(machine, tank, recipe, inputStack, byproductSlot, yield
 function processCraft(machine, recipe, crafts, tank) {
     const inputPerCraft = Math.max(1, recipe.input.amount ?? 1);
     const totalInput = inputPerCraft * crafts;
-    machine.entity.changeItemAmount(INPUT_SLOT, -totalInput);
+    machine.entity.changeItemAmount(LIQUIFIER.slots.input, -totalInput);
 
     const yieldBoost = machine.boosts.overclockYield ?? 1;
-    const fluidType = recipe.fluid.type ?? DEFAULT_FLUID_TYPE;
+    const fluidType = recipe.fluid.type ?? LIQUIFIER.defaults.fluidType;
     if (tank.getType() === 'empty') tank.setType(fluidType);
     
     // Fluid amounts are already integers in mB, but apply yield boost
@@ -225,14 +231,14 @@ function processCraft(machine, recipe, crafts, tank) {
             const byproductRaw = produced * yieldBoost;
             const byproductFinal = machine.addFractionalItem(recipe.byproduct.id, byproductRaw);
             if (byproductFinal > 0) {
-                addItemsToSlot(machine, RESIDUE_SLOT, recipe.byproduct.id, byproductFinal);
+                addItemsToSlot(machine, LIQUIFIER.slots.residue, recipe.byproduct.id, byproductFinal);
             }
         }
     }
 }
 
 function updateHud(machine, recipe, tank, maxCrafts) {
-    const fluidType = recipe.fluid.type ?? DEFAULT_FLUID_TYPE;
+    const fluidType = recipe.fluid.type ?? LIQUIFIER.defaults.fluidType;
     const fluidPerCraft = recipe.fluid.amount;
     const tankAmount = FluidManager.formatFluid(tank.get());
     const tankCap = FluidManager.formatFluid(tank.getCap());

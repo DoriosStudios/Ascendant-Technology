@@ -22,17 +22,25 @@ import { ENERGY_DEBUG_PROP } from "./constants.js";
 
 // ─── Event IDs ───────────────────────────────────────────────────────────────
 
-const REGISTER_FLUID_CONTAINER_EVENT = "utilitycraft:register_fluid_container";
-const REGISTER_FLUID_OUTPUT_EVENT = "utilitycraft:register_fluid_output";
-const REGISTER_GAS_CONTAINER_EVENT = "utilitycraft:register_gas_container";
-const REGISTER_GAS_OUTPUT_EVENT = "utilitycraft:register_gas_output";
-const LEGACY_FLUID_ITEM_EVENT = "utilitycraft:register_fluid_item";
-const LEGACY_FLUID_HOLDER_EVENT = "utilitycraft:register_fluid_holder";
-const LEGACY_GAS_ITEM_EVENT = "utilitycraft:register_gas_item";
-const LEGACY_GAS_HOLDER_EVENT = "utilitycraft:register_gas_holder";
-const LEGACY_TICK_SPEED_EVENT = "utilitycraft:set_tick_speed";
-const UPDATE_PIPES_EVENT = "dorios:updatePipes";
-const ENERGY_DEBUG_EVENT = "utilitycraft:debug_energy";
+const SCRIPT_EVENT_IDS = Object.freeze({
+    fluid: Object.freeze({
+        registerContainer: "utilitycraft:register_fluid_container",
+        registerOutput: "utilitycraft:register_fluid_output",
+        legacyItem: "utilitycraft:register_fluid_item",
+        legacyHolder: "utilitycraft:register_fluid_holder"
+    }),
+    gas: Object.freeze({
+        registerContainer: "utilitycraft:register_gas_container",
+        registerOutput: "utilitycraft:register_gas_output",
+        legacyItem: "utilitycraft:register_gas_item",
+        legacyHolder: "utilitycraft:register_gas_holder"
+    }),
+    machine: Object.freeze({
+        legacyTickSpeed: "utilitycraft:set_tick_speed",
+        updatePipes: "dorios:updatePipes",
+        energyDebug: "utilitycraft:debug_energy"
+    })
+});
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -67,7 +75,7 @@ const safeJsonParse = (payload) => {
 
 system.afterEvents.scriptEventReceive.subscribe(event => {
     const { id } = event;
-    if (id !== REGISTER_FLUID_CONTAINER_EVENT && id !== REGISTER_FLUID_OUTPUT_EVENT) {
+    if (id !== SCRIPT_EVENT_IDS.fluid.registerContainer && id !== SCRIPT_EVENT_IDS.fluid.registerOutput) {
         return;
     }
 
@@ -78,7 +86,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
     if (!payload) return;
 
     try {
-        if (id === REGISTER_FLUID_CONTAINER_EVENT) {
+        if (id === SCRIPT_EVENT_IDS.fluid.registerContainer) {
             const added = registerFluidContainerBatch(payload);
             if (added > 0) {
                 console.warn(`[UtilityCraft] Registered ${added} fluid container${added === 1 ? "" : "s"} via ScriptEvent.`);
@@ -98,7 +106,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
 
 system.afterEvents.scriptEventReceive.subscribe(event => {
     const { id } = event;
-    if (id !== REGISTER_GAS_CONTAINER_EVENT && id !== REGISTER_GAS_OUTPUT_EVENT) {
+    if (id !== SCRIPT_EVENT_IDS.gas.registerContainer && id !== SCRIPT_EVENT_IDS.gas.registerOutput) {
         return;
     }
 
@@ -109,7 +117,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
     if (!payload) return;
 
     try {
-        if (id === REGISTER_GAS_CONTAINER_EVENT) {
+        if (id === SCRIPT_EVENT_IDS.gas.registerContainer) {
             const added = registerGasContainerBatch(payload);
             if (added > 0) {
                 console.warn(`[UtilityCraft] Registered ${added} gas container${added === 1 ? "" : "s"} via ScriptEvent.`);
@@ -129,7 +137,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
 
 system.afterEvents.scriptEventReceive.subscribe(event => {
     const { id, message, sourceEntity } = event;
-    if (id !== UPDATE_PIPES_EVENT) return;
+    if (id !== SCRIPT_EVENT_IDS.machine.updatePipes) return;
 
     const text = typeof message === "string" ? message : "";
     const [rawType, rawCoords] = text.split("|");
@@ -167,7 +175,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
 
 system.afterEvents.scriptEventReceive.subscribe(event => {
     const { id, message } = event;
-    if (id !== ENERGY_DEBUG_EVENT) return;
+    if (id !== SCRIPT_EVENT_IDS.machine.energyDebug) return;
 
     const raw = typeof message === "string" ? message.trim().toLowerCase() : "";
     let nextState = null;
@@ -272,7 +280,7 @@ function normalizeLegacyGasHolder(entry) {
 system.afterEvents.scriptEventReceive.subscribe(event => {
     const { id, message } = event;
 
-    const isTickSpeedEvent = id === LEGACY_TICK_SPEED_EVENT || id === "dorios:set_tick_speed";
+    const isTickSpeedEvent = id === SCRIPT_EVENT_IDS.machine.legacyTickSpeed || id === "dorios:set_tick_speed";
     if (isTickSpeedEvent) {
         const parsed = safeJsonParse(message);
         const numeric = typeof parsed === "number" ? parsed : Number(message);
@@ -286,7 +294,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
         return;
     }
 
-    if (id === LEGACY_FLUID_ITEM_EVENT) {
+    if (id === SCRIPT_EVENT_IDS.fluid.legacyItem) {
         const payload = safeJsonParse(message);
         if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
 
@@ -336,7 +344,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
         return;
     }
 
-    if (id === LEGACY_FLUID_HOLDER_EVENT) {
+    if (id === SCRIPT_EVENT_IDS.fluid.legacyHolder) {
         const payload = safeJsonParse(message);
         if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
 
@@ -386,7 +394,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
         return;
     }
 
-    if (id === LEGACY_GAS_ITEM_EVENT) {
+    if (id === SCRIPT_EVENT_IDS.gas.legacyItem) {
         const payload = safeJsonParse(message);
         if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
 
@@ -436,7 +444,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
         return;
     }
 
-    if (id === LEGACY_GAS_HOLDER_EVENT) {
+    if (id === SCRIPT_EVENT_IDS.gas.legacyHolder) {
         const payload = safeJsonParse(message);
         if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
 

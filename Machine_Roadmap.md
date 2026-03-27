@@ -189,6 +189,8 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
 - 🟡 **Interdimensional Infuser** *(from `infuser`, main Ascendant line)*
   - **Profile:** Dynamic scaling based on active expansions.
   - **Escalation:** More tanks, more infusion stages, extreme late-game energy/fluid cost.
+  - **Clarification:** This is **not** the upgraded Infuser path. It is a standalone Ascendant machine focused on interdimensional-tier synthesis, especially the `Interdimensional Gem`.
+  - **Upgrade lineage note:** The real upgraded Infuser path was already implemented as the **Catalyst Weaver**.
 
 - 🟡 **Quantum Digitizer** *(from `digitizer`)*
   - **Role:** Advanced item serialization/profile capture.

@@ -5,7 +5,7 @@
 	============================================================================
 	Author: Kauziin - Dorios Studios
 	Made for: Ascendant Technology
-	Scope: Small, reusable UI component set.
+	Scope: Helpers with more fields and customization.
 	Usage: Reference as "component@ascendant_common.component_name".
 	============================================================================
 	*/
@@ -449,6 +449,8 @@
 	 * Energy and fluid visual components.
 	 */
 
+	// #region Display
+
 	/* SUBSECTION: ENERGY AND FLUID DISPLAYS
 	 * Wrappers around machineryCommon bars and indicators.
 	 */
@@ -583,6 +585,8 @@
 			}
 		]
 	},
+
+	// #endregion
 
 	/* SECTION: GRIDS
 	 * Grid layouts for item slots.
@@ -3986,6 +3990,20 @@
 			}
 		]
 	},
+
+	/* SECTION: INVENTORIES
+	 * Alternative for inventory panels, such as vertical inventories.
+	 */
+
+	"vertical_inventory_panel":{
+		"type": "grid",
+		"collection_name": "inventory_items",
+		"$item_collection_name": "inventory_items",
+		"anchor_from": "right_middle",
+		"anchor_to": "right_middle",
+		"grid_dimensions": [3, 9]
+	},
+
 
 	/* SECTION: VISUAL INDICATORS
 	 * Simple visual indicators such as arrows.

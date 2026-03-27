@@ -20,6 +20,8 @@
 
 import './recipes/duplicator.js';
 import './recipes/catalyst_weaver.js';
+import './recipes/arc_press_forge.js';
+import './recipes/industrial_burner.js';
 import './recipes/liquifier.js';
 import './recipes/energizer.js';
 import './recipes/residue_processor.js';

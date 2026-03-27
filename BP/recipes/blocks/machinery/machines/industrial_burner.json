@@ -1,0 +1,41 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:industrial_burner"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "key": {
+            "P": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "I": {
+                "item": "utilitycraft:incinerator"
+            },
+            "C": {
+                "item": "utilitycraft:machine_case"
+            },
+            "A": {
+                "item": "utilitycraft:advanced_chip"
+            },
+            "L": {
+                "item": "utilitycraft:lava_capsule_8"
+            }
+        },
+        "pattern": [
+            "PLP",
+            "CIC",
+            "LAL"
+        ],
+        "result": {
+            "item": "utilitycraft:industrial_burner"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:incinerator"
+            }
+        ]
+    }
+}

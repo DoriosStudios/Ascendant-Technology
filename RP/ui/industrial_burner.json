@@ -1,0 +1,211 @@
+{
+    "namespace": "industrial_burner",
+    "industrial_burner_top": {
+        "type": "collection_panel",
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "size": [206, 116],
+        "offset": [-10, -48],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "controls": [
+            {
+                "chest_label@chest.chest_label": {
+                    "offset": [10, 0]
+                }
+            },
+            {
+                "energy_bar@machineryCommon.vertical_single": {
+                    "$is_energy": true,
+                    "$has_bg": false,
+                    "offset": [-84, 4]
+                }
+            },
+            {
+                "upgrades@machineryCommon.vertical_interactive": {
+                    "$has_bg": false,
+                    "$collection_index_first": 6,
+                    "$collection_index_second": 7,
+                    "$collection_index_third": 8,
+                    "$has_third": true,
+                    "offset": [114, 40]
+                }
+            },
+            {
+                "screen": {
+                    "type": "image",
+                    "texture": "textures/ui/panels/half_long_panel_classic",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [96, 182],
+                    "offset": [-92, -10],
+                    "layer": 0
+                }
+            },
+            {
+                "item_label@machineryCommon.item_label": {
+                    "collection_index": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [82, 154],
+                    "$text_scale": 0.55,
+                    "offset": [-82, 2]
+                }
+            },
+            {
+                "burner_progress@common_machines.machinery": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [18, 4],
+                    "collection_index": 2
+                }
+            },
+            {
+                "lava_display@ascendant_common.liquid_display": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [80, -10],
+                    "$fluid_slot_index": 10
+                }
+            },
+            {
+                "lava_input@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [70, 48],
+                    "collection_index": 9
+                }
+            },
+            {
+                "input_slot_1@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-10, 10],
+                    "collection_index": 3
+                }
+            },
+            {
+                "input_slot_2@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-10, 38],
+                    "collection_index": 4
+                }
+            },
+            {
+                "input_slot_3@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-10, 66],
+                    "collection_index": 5
+                }
+            },
+            {
+                "lane_progress_1@common_machines.machinery": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [20, 10],
+                    "collection_index": 14,
+                    "focus_enabled": false
+                }
+            },
+            {
+                "lane_progress_2@common_machines.machinery": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [20, 38],
+                    "collection_index": 15,
+                    "focus_enabled": false
+                }
+            },
+            {
+                "lane_progress_3@common_machines.machinery": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [20, 66],
+                    "collection_index": 16,
+                    "focus_enabled": false
+                }
+            },
+            {
+                "output_slot_1@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [50, 10],
+                    "collection_index": 11
+                }
+            },
+            {
+                "output_slot_2@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [50, 38],
+                    "collection_index": 12
+                }
+            },
+            {
+                "output_slot_3@common.container_item": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [50, 66],
+                    "collection_index": 13
+                }
+            }
+        ]
+    },
+    "utility_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {}
+            },
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 14
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {}
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "common_panel@common.common_panel": {}
+                        },
+                        {
+                            "chest_panel": {
+                                "type": "panel",
+                                "layer": 5,
+                                "controls": [
+                                    {
+                                        "industrial_burner_top@industrial_burner.industrial_burner_top": {}
+                                    },
+                                    {
+                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+                                    },
+                                    {
+                                        "hotbar_grid@common.hotbar_grid_template": {}
+                                    },
+                                    {
+                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                        },
+                        {
+                            "gamepad_cursor@common.gamepad_cursor_button": {}
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -7,6 +7,16 @@
                 "groups": [
                     {
                         "group_identifier": {
+                            "icon": "utilitycraft:arc_press_forge",
+                            "name": "at:itemGroup.name.superior_machines"
+                        },
+                        "items": [
+                            "utilitycraft:arc_press_forge",
+                            "utilitycraft:industrial_burner"
+                        ]
+                    },
+                    {
+                        "group_identifier": {
                             "icon": "utilitycraft:singularity_fabricator",
                             "name": "at:itemGroup.name.machines"
                         },

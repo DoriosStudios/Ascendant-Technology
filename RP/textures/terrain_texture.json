@@ -61,6 +61,18 @@
 		"utilitycraft_catalyst_weaver_on": {
 			"textures": "textures/blocks/machines/catalyst_weaver_on"
 		},
+		"utilitycraft_arc_press_forge_off": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_off"
+		},
+		"utilitycraft_arc_press_forge_on": {
+			"textures": "textures/blocks/machines/superior/ar_press_forge_on"
+		},
+		"utilitycraft_industrial_burner_off": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_off"
+		},
+		"utilitycraft_industrial_burner_on": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_on"
+		},
 		"utilitycraft_energizer_off": {
 			"textures": "textures/blocks/machines/energizer_off"
 		},

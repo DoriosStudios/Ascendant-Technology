@@ -24,6 +24,8 @@ tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7Accepts upgrades:\n  
 tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:duplicator.name=Duplicator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:arc_press_forge.name=Arc-Press Forge\n§7- 4 > 4 pressing with pooled matching inputs\n- 4 upgrade slots with quantity support\n- Accepts: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:industrial_burner.name=Industrial Burner\n§7- 3 parallel lanes with lava-heated batches\n- Visible lava tank\n- Accepts: §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:energizer.name=Energizer\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:liquifier.name=Liquifier\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7Accepts upgrades:\n  §a§r, §e§r
@@ -228,6 +230,7 @@ item.utilitycraft:cryofluid_capsule_5=Cryofluid Capsule §7\n- (5 Buckets)
 item.utilitycraft:cryofluid_capsule_6=Cryofluid Capsule §7\n- (6 Buckets)
 item.utilitycraft:cryofluid_capsule_7=Cryofluid Capsule §7\n- (7 Buckets)
 item.utilitycraft:cryofluid_capsule_8=Cryofluid Capsule §7\n- (8 Buckets)
+item.utilitycraft:switch_button=Switch Button
 
 ## Entities
 entity.utilitycraft:absolute_container.name=§fAbsolute Container
@@ -238,6 +241,8 @@ entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator
 entity.utilitycraft:liquifier.name=Liquifier
 entity.utilitycraft:laser_barrier.name=Laser Barrier
 entity.utilitycraft:residue_processor.name=Residue Processor
+entity.utilitycraft:arc_press_forge.name=§fArc-Press Forge
+entity.utilitycraft:industrial_burner.name=§fIndustrial Burner
 entity.utilitycraft:energizer.name=Energizer
 entity.utilitycraft:network_center.name=Network Center
 entity.utilitycraft:tabs_test_machine.name=Tabs Test Machine
@@ -250,6 +255,7 @@ entity.utilitycraft:vaporworks_processor.name=§fVaporworks Processor
 
 ## UI Texts
 at:itemGroup.name.machines=Machines §u(Ascendant Technology)
+at:itemGroup.name.superior_machines=Superior Machines §u(Ascendant Technology)
 at:itemGroup.name.capsules=Liquid Capsules §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armor §u(Ascendant Technology)

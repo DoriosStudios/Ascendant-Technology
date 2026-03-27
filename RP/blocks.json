@@ -31,6 +31,12 @@
 	"utilitycraft:duplicator": {
 		"sound": "metal"
 	},
+	"utilitycraft:arc_press_forge": {
+		"sound": "metal"
+	},
+	"utilitycraft:industrial_burner": {
+		"sound": "metal"
+	},
 	"utilitycraft:cryo_chamber": {
 		"sound": "metal"
 	},

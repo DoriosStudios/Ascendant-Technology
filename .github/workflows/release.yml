@@ -45,7 +45,16 @@ jobs:
           subtitle="# $RELEASE_NAME"
           version_line="Version: $RELEASE_TAG"
 
-          raw_body="$RELEASE_BODY"
+          summary_file="past_changelogs/changelog_${RELEASE_TAG}_embed.md"
+          raw_body=""
+          if [ -f "$summary_file" ]; then
+            raw_body="$(cat "$summary_file")"
+          fi
+
+          if [ -z "$raw_body" ]; then
+            raw_body="$RELEASE_BODY"
+          fi
+
           if [ -z "$raw_body" ]; then
             raw_body="No release notes were provided."
           fi

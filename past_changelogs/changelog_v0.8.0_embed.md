@@ -1,0 +1,12 @@
+- Added the Enchantment Station for enchanting, repairing, reinforcing, and disenchanting gear.
+- Added the Vaporworks Processor to turn water into Steam.
+- Added Copper, Titanium, and Aetherium conveyor belts.
+- Added bridge conveyors and special routing blocks for smarter logistics.
+- Added capsules for Water, Lava, Steam, and XP, plus Infinite Capsules.
+- Added new Enchantment Station modules and recipes.
+- Added Steam as the first gas and expanded fluid progression.
+- Expanded localization from 3 to 8 languages and improved machine UI feedback.
+- Rebalanced several machines and expanded Overclock stat boosts.
+- Improved Aetherium and Titanium world generation balance.
+- Fixed many issues across conveyors, machine networks, drops, routing, and crafting.
+- And much more...

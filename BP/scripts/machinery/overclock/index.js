@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager } from "../../DoriosCore/index.js";
+import { Machine, Energy, FluidManager, getCachedBlockEntity } from "../../DoriosCore/index.js";
 
 const OVERCLOCK = Object.freeze({
     offsets: Object.freeze([
@@ -80,7 +80,7 @@ function blockIsSource(block) {
 
 function readBlockOverclock(block) {
     if (!block) return { level: 0, effectiveness: 0 };
-    const entity = block.dimension.getEntitiesAtBlockLocation(block.location)[0];
+    const entity = getCachedBlockEntity(block);
     if (!entity?.isValid) return { level: 0, effectiveness: 0 };
     const level = Number(entity.getDynamicProperty(OVERCLOCK.props.level) ?? 0);
     const effectiveness = Number(entity.getDynamicProperty(OVERCLOCK.props.effectiveness) ?? 0);
@@ -148,19 +148,17 @@ function collectOverclockTargets(startBlock) {
             if (!adjBlock?.hasTag("dorios:machine")) continue;
             if (adjBlock.hasTag("dorios:overclock_network")) continue;
 
-            const entities = dim.getEntitiesAtBlockLocation(adjPos);
-            if (!Array.isArray(entities) || entities.length === 0) continue;
+            const entity = getCachedBlockEntity(adjBlock);
+            if (!entity) continue;
 
-            for (const entity of entities) {
-                const tf = entity?.getComponent?.("minecraft:type_family");
-                if (!tf?.hasTypeFamily?.("dorios:machine")) continue;
-                if (tf.hasTypeFamily?.("dorios:energy_source")) continue;
+            const tf = entity.getComponent?.("minecraft:type_family");
+            if (!tf?.hasTypeFamily?.("dorios:machine")) continue;
+            if (tf.hasTypeFamily?.("dorios:energy_source")) continue;
 
-                const uniqueKey = entity.scoreboardIdentity?.id ?? key(adjPos);
-                if (machineKeys.has(uniqueKey)) continue;
-                machineKeys.add(uniqueKey);
-                machines.push(entity);
-            }
+            const uniqueKey = entity.scoreboardIdentity?.id ?? key(adjPos);
+            if (machineKeys.has(uniqueKey)) continue;
+            machineKeys.add(uniqueKey);
+            machines.push(entity);
         }
     }
 
@@ -206,35 +204,32 @@ function collectEnergyTargets(startBlock, sourceEntity) {
             const isTower = adjBlock.typeId === "utilitycraft:overclock_tower";
             if (adjBlock.hasTag("dorios:overclock_network") && !isTower) continue;
 
-            const entities = dim.getEntitiesAtBlockLocation(adjPos);
-            if (!Array.isArray(entities) || entities.length === 0) continue;
+            const entity = getCachedBlockEntity(adjBlock);
+            if (!entity || entity === sourceEntity) continue;
 
-            for (const entity of entities) {
-                if (!entity || entity === sourceEntity) continue;
-                const tf = entity.getComponent?.("minecraft:type_family");
-                if (!tf?.hasTypeFamily?.("dorios:energy_container")) continue;
-                if (tf.hasTypeFamily?.("dorios:energy_source")) continue;
+            const tf = entity.getComponent?.("minecraft:type_family");
+            if (!tf?.hasTypeFamily?.("dorios:energy_container")) continue;
+            if (tf.hasTypeFamily?.("dorios:energy_source")) continue;
 
-                if (adjBlock.typeId === "utilitycraft:overclock_tower") {
-                    let shouldCharge = false;
-                    try {
-                        const need = Number(entity.getDynamicProperty(OVERCLOCK.props.towerNeed) ?? 0);
-                        if (Number.isFinite(need) && need > 0) {
-                            const towerEnergy = new Energy(entity);
-                            shouldCharge = towerEnergy.get() < need;
-                        }
-                    } catch {
-                        shouldCharge = false;
+            if (adjBlock.typeId === "utilitycraft:overclock_tower") {
+                let shouldCharge = false;
+                try {
+                    const need = Number(entity.getDynamicProperty(OVERCLOCK.props.towerNeed) ?? 0);
+                    if (Number.isFinite(need) && need > 0) {
+                        const towerEnergy = new Energy(entity);
+                        shouldCharge = towerEnergy.get() < need;
                     }
-
-                    if (!shouldCharge) continue;
+                } catch {
+                    shouldCharge = false;
                 }
 
-                const uniqueKey = entity.scoreboardIdentity?.id ?? key(adjPos);
-                if (entityKeys.has(uniqueKey)) continue;
-                entityKeys.add(uniqueKey);
-                targets.push(entity);
+                if (!shouldCharge) continue;
             }
+
+            const uniqueKey = entity.scoreboardIdentity?.id ?? key(adjPos);
+            if (entityKeys.has(uniqueKey)) continue;
+            entityKeys.add(uniqueKey);
+            targets.push(entity);
         }
     }
 
@@ -290,7 +285,7 @@ function collectRelaysFrom(block) {
         if (!node || !blockIsNetwork(node)) continue;
 
         if (node.typeId === "utilitycraft:overclock_relay") {
-            const ent = dim.getEntitiesAtBlockLocation(pos)[0];
+            const ent = getCachedBlockEntity(node);
             if (ent) relays.push(ent);
         }
 
@@ -306,9 +301,21 @@ function setOverclockOnEntity(entity, level, effectiveness) {
     if (!entity) return;
     const eff = Math.max(0, effectiveness ?? 0);
     const lvl = Math.max(0, level ?? 0);
-    entity.setDynamicProperty(OVERCLOCK.props.level, lvl);
-    entity.setDynamicProperty(OVERCLOCK.props.effectiveness, eff);
-    entity.setDynamicProperty(OVERCLOCK.props.ttl, OVERCLOCK.limits.ttl);
+    const currentLevel = Number(entity.getDynamicProperty(OVERCLOCK.props.level) ?? 0);
+    const currentEffectiveness = Number(entity.getDynamicProperty(OVERCLOCK.props.effectiveness) ?? 0);
+    const currentTtl = Number(entity.getDynamicProperty(OVERCLOCK.props.ttl) ?? 0);
+
+    if (currentLevel !== lvl) {
+        entity.setDynamicProperty(OVERCLOCK.props.level, lvl);
+    }
+
+    if (currentEffectiveness !== eff) {
+        entity.setDynamicProperty(OVERCLOCK.props.effectiveness, eff);
+    }
+
+    if (currentLevel !== lvl || currentEffectiveness !== eff || currentTtl <= 2) {
+        entity.setDynamicProperty(OVERCLOCK.props.ttl, OVERCLOCK.limits.ttl);
+    }
 }
 
 function findFacingOffset(block) {
@@ -333,7 +340,7 @@ function applyOverclockToTarget(block, level, effectiveness) {
     const targetBlock = dim.getBlock(targetPos);
     if (!targetBlock?.hasTag("dorios:machine")) return false;
 
-    const entity = dim.getEntitiesAtBlockLocation(targetPos)[0];
+    const entity = getCachedBlockEntity(targetBlock);
     const family = entity?.getComponent("minecraft:type_family");
     if (family?.hasTypeFamily("dorios:energy_source")) return false; // skip generators
     if (!entity) return false;
@@ -348,7 +355,9 @@ function updateHeat(entity, delta) {
     if (!entity) return 0;
     const current = Number(entity.getDynamicProperty(OVERCLOCK.props.heat) ?? 0);
     const next = Math.max(0, current + delta);
-    entity.setDynamicProperty(OVERCLOCK.props.heat, next);
+    if (next !== current) {
+        entity.setDynamicProperty(OVERCLOCK.props.heat, next);
+    }
     return next;
 }
 

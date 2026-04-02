@@ -149,6 +149,29 @@ export class Energy {
     }
     //#endregion
 
+    static getItemLore(item) {
+        if (!item || typeof item.getLore !== "function") return [];
+        const lore = item.getLore();
+        return Array.isArray(lore) ? lore : [];
+    }
+
+    static shouldReplaceDisplayItem(current, next) {
+        if (!current) return true;
+        if (!next) return current !== undefined;
+        if (current.typeId !== next.typeId) return true;
+        if ((current.amount ?? 1) !== (next.amount ?? 1)) return true;
+        if ((current.nameTag ?? "") !== (next.nameTag ?? "")) return true;
+
+        const currentLore = Energy.getItemLore(current);
+        const nextLore = Energy.getItemLore(next);
+        if (currentLore.length !== nextLore.length) return true;
+        for (let index = 0; index < currentLore.length; index++) {
+            if (currentLore[index] !== nextLore[index]) return true;
+        }
+
+        return false;
+    }
+
     //#region Caps
     setCap(amount) {
         const { value, exp } = Energy.normalizeValue(amount);
@@ -239,14 +262,18 @@ export class Energy {
         const energy = this.get();
         const energyCap = this.getCap();
 
-        const energyP = Math.floor((energy / energyCap) * 48);
+        const safeEnergyCap = Math.max(1, energyCap || 1);
+        const energyP = Math.floor((energy / safeEnergyCap) * 48);
         const frame = Math.max(0, Math.min(48, energyP));
         const frameName = frame.toString().padStart(2, "0");
 
         const item = new ItemStack(`utilitycraft:energy_${frameName}`, 1);
         item.nameTag = `§rEnergy
-§r§7  Stored: ${Energy.formatEnergyToText(this.get())} / ${Energy.formatEnergyToText(this.cap)}
+    §r§7  Stored: ${Energy.formatEnergyToText(energy)} / ${Energy.formatEnergyToText(energyCap)}
 §r§7  Percentage: ${this.getPercent().toFixed(2)}%%`;
+
+        const current = container.getItem(slot);
+        if (!Energy.shouldReplaceDisplayItem(current, item)) return;
 
         container.setItem(slot, item);
     }

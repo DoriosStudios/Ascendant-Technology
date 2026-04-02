@@ -15,6 +15,7 @@ export const BUTTON_PANEL_DEFAULTS = Object.freeze({
 });
 
 const BUTTON_TYPES = new Set(["toggle", "cycle", "radio", "action", "page"]);
+const normalizedPanelCache = new WeakMap();
 
 function sanitizeKey(value, fallback = "panel") {
     const normalized = String(value ?? fallback)
@@ -93,10 +94,18 @@ function getDistanceSquared(a, b) {
 }
 
 function normalizePanel(panelDefinition) {
+    if (panelDefinition?.__normalizedButtonPanel === true) return panelDefinition;
+
     const panel = panelDefinition && typeof panelDefinition === "object" ? panelDefinition : {};
+    if (panelDefinition && typeof panelDefinition === "object") {
+        const cached = normalizedPanelCache.get(panelDefinition);
+        if (cached) return cached;
+    }
+
     const id = sanitizeKey(panel.id ?? panel.panelId ?? "panel");
-    return {
+    const normalized = {
         ...panel,
+        __normalizedButtonPanel: true,
         id,
         namespace: sanitizeKey(panel.namespace ?? BUTTON_PANEL_DEFAULTS.namespace, BUTTON_PANEL_DEFAULTS.namespace),
         cooldownTicks: Number.isFinite(Number(panel.cooldownTicks)) && Number(panel.cooldownTicks) > 0
@@ -105,11 +114,23 @@ function normalizePanel(panelDefinition) {
         defaultIconItemId: typeof panel.defaultIconItemId === "string" && panel.defaultIconItemId.length > 0
             ? panel.defaultIconItemId
             : BUTTON_PANEL_DEFAULTS.defaultIconItemId,
-        buttons: Array.isArray(panel.buttons) ? panel.buttons : []
+        buttons: []
     };
+
+    normalized.buttons = Array.isArray(panel.buttons)
+        ? panel.buttons.map((button, index) => normalizeButton(normalized, button, index))
+        : [];
+
+    if (panelDefinition && typeof panelDefinition === "object") {
+        normalizedPanelCache.set(panelDefinition, normalized);
+    }
+
+    return normalized;
 }
 
 function normalizeButton(panel, buttonDefinition, index) {
+    if (buttonDefinition?.__normalizedButton === true) return buttonDefinition;
+
     const button = buttonDefinition && typeof buttonDefinition === "object" ? buttonDefinition : {};
     const id = sanitizeKey(button.id ?? `button_${index}`);
     const type = BUTTON_TYPES.has(button.type) ? button.type : BUTTON_PANEL_DEFAULTS.defaultButtonType;
@@ -119,6 +140,7 @@ function normalizeButton(panel, buttonDefinition, index) {
 
     return {
         ...button,
+        __normalizedButton: true,
         id,
         type,
         slot,
@@ -197,6 +219,8 @@ export function setButtonPanelValue(machine, panelDefinition, property, value) {
     const panel = normalizePanel(panelDefinition);
     const key = getPanelPropertyKey(panel, property);
     const serialized = serializeDynamicValue(value);
+    const current = machine.entity.getDynamicProperty(key);
+    if (current === serialized) return serialized;
     machine.entity.setDynamicProperty(key, serialized);
     return serialized;
 }
@@ -419,7 +443,11 @@ function getRenderedButtonMarker(machine, panel, button) {
 
 function setRenderedButtonMarker(machine, panel, button, marker) {
     if (!machine?.entity) return;
-    machine.entity.setDynamicProperty(getButtonRenderKey(panel, button), marker || undefined);
+    const key = getButtonRenderKey(panel, button);
+    const nextValue = marker || undefined;
+    const current = machine.entity.getDynamicProperty(key);
+    if (current === nextValue) return;
+    machine.entity.setDynamicProperty(key, nextValue);
 }
 
 function isManagedButtonItem(item, panel, button) {
@@ -508,6 +536,7 @@ function getNearbyDroppedItems(machine, radius = 4) {
 
 function clearDroppedPanelItems(machine, itemIds, options = {}) {
     if (!machine || !Array.isArray(itemIds) || itemIds.length === 0) return;
+    const cleanupRawItemIds = options.cleanupRawItemIds === true;
 
     const entities = getNearbyDroppedItems(machine, options.dropCleanupRadius ?? 4);
     for (const entity of entities) {
@@ -515,7 +544,7 @@ function clearDroppedPanelItems(machine, itemIds, options = {}) {
         if (!stack) continue;
 
         const marker = getItemMarker(stack);
-        if (marker.startsWith(BUTTON_PANEL_DEFAULTS.markerPrefix) || itemIds.includes(stack.typeId)) {
+        if (marker.startsWith(BUTTON_PANEL_DEFAULTS.markerPrefix) || (cleanupRawItemIds && itemIds.includes(stack.typeId))) {
             try {
                 entity.remove();
             } catch {
@@ -525,8 +554,9 @@ function clearDroppedPanelItems(machine, itemIds, options = {}) {
     }
 }
 
-function clearLeakedButtonItems(player, itemIds) {
+function clearLeakedButtonItems(player, itemIds, options = {}) {
     if (!player || !Array.isArray(itemIds) || itemIds.length === 0) return;
+    const cleanupRawItemIds = options.cleanupRawItemIds === true;
 
     const inventory = player.getComponent?.("inventory")?.container;
     if (inventory) {
@@ -534,17 +564,9 @@ function clearLeakedButtonItems(player, itemIds) {
             const item = inventory.getItem(slot);
             if (!item) continue;
             const marker = getItemMarker(item);
-            if (marker.startsWith(BUTTON_PANEL_DEFAULTS.markerPrefix) || itemIds.includes(item.typeId)) {
+            if (marker.startsWith(BUTTON_PANEL_DEFAULTS.markerPrefix) || (cleanupRawItemIds && itemIds.includes(item.typeId))) {
                 inventory.setItem(slot, undefined);
             }
-        }
-    }
-
-    for (const itemId of itemIds) {
-        try {
-            player.runCommand(`clear @s ${itemId} 0 64`);
-        } catch {
-            // ignore clear failures; slot cleanup above already handles normal inventory
         }
     }
 }
@@ -558,7 +580,7 @@ function cleanupLeakedPanelItems(machine, panel, state, options = {}) {
 
     const players = getNearbyPlayers(machine, options.cleanupRadius ?? 10, options);
     for (const player of players) {
-        clearLeakedButtonItems(player, itemIds);
+        clearLeakedButtonItems(player, itemIds, options);
     }
 
     clearDroppedPanelItems(machine, itemIds, options);
@@ -723,8 +745,16 @@ export function renderButtonPanel(machine, panelDefinition, options = {}) {
             continue;
         }
 
+        const expectedItemId = resolveButtonItemId(panel, button, context);
+        const expectedMarker = buildButtonMarker(panel, button, context);
+        const currentItem = machine?.inv?.getItem(button.slot);
+        if (currentItem?.typeId === expectedItemId && getItemMarker(currentItem) === expectedMarker) {
+            setRenderedButtonMarker(machine, panel, button, expectedMarker);
+            continue;
+        }
+
         const expectedItem = createButtonItem(panel, button, context);
-        if (!matchesExpectedButtonItem(machine?.inv?.getItem(button.slot), expectedItem)) {
+        if (!matchesExpectedButtonItem(currentItem, expectedItem)) {
             machine.inv.setItem(button.slot, expectedItem);
         }
         setRenderedButtonMarker(machine, panel, button, getItemMarker(expectedItem));
@@ -754,9 +784,10 @@ export function syncButtonPanel(machine, panelDefinition, options = {}) {
             continue;
         }
 
-        const expectedItem = createButtonItem(panel, button, context);
-        if (matchesExpectedButtonItem(currentItem, expectedItem)) {
-            setRenderedButtonMarker(machine, panel, button, getItemMarker(expectedItem));
+        const expectedItemId = resolveButtonItemId(panel, button, context);
+        const expectedMarker = buildButtonMarker(panel, button, context);
+        if (currentItem?.typeId === expectedItemId && getItemMarker(currentItem) === expectedMarker) {
+            setRenderedButtonMarker(machine, panel, button, expectedMarker);
             continue;
         }
 

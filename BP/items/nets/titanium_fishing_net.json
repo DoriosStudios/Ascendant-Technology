@@ -10,6 +10,9 @@
 		},
 		"components": {
 			"minecraft:icon": "utilitycraft_titanium_fishing_net",
+			"minecraft:durability": {
+				"max_durability": 1561
+			},
 			"utilitycraft:fishing_net": {
 				"tier": 5,
 				"speed": 2.4,

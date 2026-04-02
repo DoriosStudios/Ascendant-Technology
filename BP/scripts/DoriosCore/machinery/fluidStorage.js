@@ -741,6 +741,29 @@ export class FluidManager {
         return `${prefix}_${frameSuffix}`;
     }
 
+    static getItemLore(item) {
+        if (!item || typeof item.getLore !== "function") return [];
+        const lore = item.getLore();
+        return Array.isArray(lore) ? lore : [];
+    }
+
+    static shouldReplaceDisplayItem(current, next) {
+        if (!current) return true;
+        if (!next) return current !== undefined;
+        if (current.typeId !== next.typeId) return true;
+        if ((current.amount ?? 1) !== (next.amount ?? 1)) return true;
+        if ((current.nameTag ?? "") !== (next.nameTag ?? "")) return true;
+
+        const currentLore = FluidManager.getItemLore(current);
+        const nextLore = FluidManager.getItemLore(next);
+        if (currentLore.length !== nextLore.length) return true;
+        for (let index = 0; index < currentLore.length; index++) {
+            if (currentLore[index] !== nextLore[index]) return true;
+        }
+
+        return false;
+    }
+
     // ─── Normalization utilities ─────────────────────────────────────────────
 
     static normalizeValue(amount) {
@@ -1190,6 +1213,8 @@ export class FluidManager {
         if (type === "empty") {
             let emptyBar = new ItemStack("utilitycraft:empty_fluid_bar")
             emptyBar.nameTag = '§rEmpty'
+            const current = inv.getItem(slot)
+            if (!FluidManager.shouldReplaceDisplayItem(current, emptyBar)) return
             inv.setItem(slot, emptyBar)
             return;
         }
@@ -1211,6 +1236,9 @@ export class FluidManager {
         item.nameTag = `§r${DoriosAPI.utils.formatIdToText(type)}
     §r§7  Stored: ${FluidManager.formatFluid(fluid)} / ${FluidManager.formatFluid(cap)}
     §r§7  Percentage: ${percentFilled.toFixed(2)}%`;
+
+        const current = inv.getItem(slot)
+        if (!FluidManager.shouldReplaceDisplayItem(current, item)) return
 
         inv.setItem(slot, item);
     }

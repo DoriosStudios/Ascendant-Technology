@@ -131,7 +131,7 @@
             {
                 "screen": {
                     "type": "image",
-                    "texture": "textures/ui/panels/background_panel",
+                    "texture": "textures/ui/background_panel",
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "$cell_image_size": [254, 166],

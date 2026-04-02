@@ -12,7 +12,13 @@
                         },
                         "items": [
                             "utilitycraft:arc_press_forge",
-                            "utilitycraft:industrial_burner"
+							"utilitycraft:industrial_burner",
+							"utilitycraft:pulverizer",
+                            "utilitycraft:centrifugal_siever",
+                            "utilitycraft:abysall_fisher",
+                            "utilitycraft:genetic_seed_synthesizer",
+                            "utilitycraft:seismic_breaker",
+                            "utilitycraft:pattern_placer"
                         ]
                     },
                     {

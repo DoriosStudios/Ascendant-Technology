@@ -37,6 +37,24 @@
 	"utilitycraft:industrial_burner": {
 		"sound": "metal"
 	},
+	"utilitycraft:pulverizer": {
+		"sound": "metal"
+	},
+	"utilitycraft:centrifugal_siever": {
+		"sound": "metal"
+	},
+	"utilitycraft:abysall_fisher": {
+		"sound": "metal"
+	},
+	"utilitycraft:genetic_seed_synthesizer": {
+		"sound": "metal"
+	},
+	"utilitycraft:seismic_breaker": {
+		"sound": "metal"
+	},
+	"utilitycraft:pattern_placer": {
+		"sound": "metal"
+	},
 	"utilitycraft:cryo_chamber": {
 		"sound": "metal"
 	},

@@ -22,13 +22,58 @@
                 }
             },
             {
-                "upgrades@machineryCommon.vertical_interactive": {
-                    "$has_bg": false,
-                    "$collection_index_first": 6,
-                    "$collection_index_second": 7,
-                    "$collection_index_third": 8,
-                    "$has_third": true,
-                    "offset": [114, 40]
+                "upgrades@ascendant_common.panel": {
+                    "type": "collection_panel",
+                    "collection_name": "container_items",
+                    "$item_collection_name": "container_items",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "$has_container_label": false,
+                    "$has_close_button": false,
+                    "$panel_size": [24, 96],
+                    "offset": [104, 42],
+                    "controls": [
+                        {
+                            "upgrade_1@ascendant_common.slot_base": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$slot_index": 6,
+                                "$slot_size":[18, 18],
+                                "layer": 3,
+                                "offset": [0, 0]
+                            }
+                        },
+                        {
+                            "upgrade_2@ascendant_common.slot_base": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$slot_index": 7,
+                                "$slot_size":[18, 18],
+                                "layer": 3,
+                                "offset": [0, 18]
+                            }
+                        },
+                        {
+                            "upgrade_3@ascendant_common.slot_base": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$slot_index": 8,
+                                "$slot_size":[18, 18],
+                                "layer": 3,
+                                "offset": [0, 36]
+                            }
+                        },
+                        {
+                            "upgrade_4@ascendant_common.slot_base": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$slot_index": 17,
+                                "$slot_size":[18, 18],
+                                "layer": 3,
+                                "offset": [0, 54]
+                            }
+                        }
+                    ]
                 }
             },
             {

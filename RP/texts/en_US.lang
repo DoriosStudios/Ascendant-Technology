@@ -8,24 +8,19 @@ tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Ra
 
 tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 10.7K items\n- Can store fluids\n- Can store energy
 
-## Upgrades
-# §a§r - Speed Upgrade -------------------------------- (UtilityCraft)
-# §b§r - Efficiency Upgrade --------------------------- (UtilityCraft)
-# §d§r - Hyper Processing Upgrade ------------- (Ascendant Technology)
-# §e§r - Size Upgrade ------------------------- (Ascendant Technology)
-# §s§r - Quantity Upgrade ----------------------------- (UtilityCraft)
-# §3§r - Range Upgrade -------------------------------- (UtilityCraft)
-# §c§r - Damage Upgrade ------------------------------- (UtilityCraft)
-# §f§r - Filter Upgrade ------------------------------- (UtilityCraft)
-# §g§r - Smart Filter Upgrade ------------------------- (UtilityCraft)
-
 ## Machines
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:duplicator.name=Duplicator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:arc_press_forge.name=Arc-Press Forge\n§7- 4 > 4 pressing with pooled matching inputs\n- 4 upgrade slots with quantity support\n- Accepts: §a§r, §b§r, §d§r, §s§r
-tile.utilitycraft:industrial_burner.name=Industrial Burner\n§7- 3 parallel lanes with lava-heated batches\n- Visible lava tank\n- Accepts: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:industrial_burner.name=Industrial Burner\n§7- 3 parallel processing lanes\n- Optional lava boost increases batch size\n- Visible lava tank\n- Accepts: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:pulverizer.name=Pulverizer\n§7- 4 > 4 crushing with pooled matching inputs\n- Optional steam boost accelerates each batch\n- 4 upgrade slots with quantity support\n- Accepts: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:centrifugal_siever.name=Centrifugal Siever\n§7- Bulk sieves one material type per spin cycle\n- Uses one active mesh chamber and 15 output slots\n- Optional steam boost accelerates grouped batches\n- Accepts: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:abysall_fisher.name=Abysall Fisher\n§7- Batch-casts fishing nets with an internal water tank\n- Expedition favors higher loot tiers; Mass favors throughput\n- Environment quality adds abyssal bonus tiers\n- Accepts: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:genetic_seed_synthesizer.name=Genetic Seed Synthesizer\n§7- 4 buffered seed lanes with 9 output slots\n- Cycles Growth, Resilience, and Yield profiles\n- Uses Cryofluid to stabilize advanced synthesis\n- Accepts: §a§r, §b§r, §d§r
+tile.utilitycraft:seismic_breaker.name=Seismic Breaker\n§7- Breaks blocks in 1x1, 3x3, 3x3x3, or Line mode\n- Grid modes start 1 block above the machine center\n- Precision mode preserves special drops when possible\n- Accepts: §a§r, §b§r, §d§r
+tile.utilitycraft:pattern_placer.name=Pattern Placer\n§7- Places blocks in 1x1, 3x3, 3x3x3, or Line mode\n- Grid modes start 1 block above the machine center\n- Accepts: §a§r, §b§r, §d§r
 tile.utilitycraft:energizer.name=Energizer\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:liquifier.name=Liquifier\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7Accepts upgrades:\n  §a§r, §e§r
@@ -243,6 +238,12 @@ entity.utilitycraft:laser_barrier.name=Laser Barrier
 entity.utilitycraft:residue_processor.name=Residue Processor
 entity.utilitycraft:arc_press_forge.name=§fArc-Press Forge
 entity.utilitycraft:industrial_burner.name=§fIndustrial Burner
+entity.utilitycraft:pulverizer.name=§fPulverizer
+entity.utilitycraft:centrifugal_siever.name=§fCentrifugal Siever
+entity.utilitycraft:abysall_fisher.name=§fAbysall Fisher
+entity.utilitycraft:genetic_seed_synthesizer.name=§fGenetic Seed Synthesizer
+entity.utilitycraft:seismic_breaker.name=§fSeismic Breaker
+entity.utilitycraft:pattern_placer.name=§fPattern Placer
 entity.utilitycraft:energizer.name=Energizer
 entity.utilitycraft:network_center.name=Network Center
 entity.utilitycraft:tabs_test_machine.name=Tabs Test Machine

@@ -16,19 +16,24 @@
                 "hides_player_location": true
             },
             "minecraft:damage_absorption": {
-                "absorbable_causes": ["magic", "sonic_boom"]
+                "absorbable_causes": [ "magic", "sonic_boom" ]
             },
             "minecraft:enchantable": {
                 "slot": "armor_torso",
                 "value": 30
             },
-            "minecraft:fire_resistant": {},
+            "minecraft:fire_resistant": { },
             "minecraft:knockback_resistance": {
                 "value": 1
             },
             "minecraft:max_stack_size": 1,
             "minecraft:durability": {
                 "max_durability": 1387
+            },
+            "utilitycraft:armor": {
+                "damage_reduction": 0.075,
+                "damage_negation": 0.025,
+                "reduces": "all"
             },
             "minecraft:repairable": {
                 "repair_items": [

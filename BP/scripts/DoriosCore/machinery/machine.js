@@ -441,6 +441,68 @@ export function buildOverclockLoreLine(machine) {
     return `§r§6Overclocked x${clock.toFixed(2)}`;
 }
 
+function getStackLore(item) {
+    if (!item || typeof item.getLore !== "function") return [];
+    const lore = item.getLore();
+    return Array.isArray(lore) ? lore : [];
+}
+
+function shouldReplaceContainerItem(container, slot, nextItem) {
+    if (!container || !nextItem) return true;
+
+    const current = container.getItem(slot);
+    if (!current) return true;
+    if (current.typeId !== nextItem.typeId) return true;
+    if ((current.amount ?? 1) !== (nextItem.amount ?? 1)) return true;
+    if ((current.nameTag ?? "") !== (nextItem.nameTag ?? "")) return true;
+
+    const currentLore = getStackLore(current);
+    const nextLore = getStackLore(nextItem);
+    if (currentLore.length !== nextLore.length) return true;
+    for (let index = 0; index < currentLore.length; index++) {
+        if (currentLore[index] !== nextLore[index]) return true;
+    }
+
+    return false;
+}
+
+const BLOCK_ENTITY_CACHE = new Map();
+
+function getBlockEntityCacheKey(block) {
+    if (!block?.dimension || !block?.location) return null;
+    const dimensionId = block.dimension.id ?? "unknown";
+    const { x, y, z } = block.location;
+    return `${dimensionId}:${x},${y},${z}`;
+}
+
+export function getCachedBlockEntity(block) {
+    const cacheKey = getBlockEntityCacheKey(block);
+    if (!cacheKey) return undefined;
+
+    const cachedEntity = BLOCK_ENTITY_CACHE.get(cacheKey);
+    if (cachedEntity?.isValid) {
+        return cachedEntity;
+    }
+
+    const entity = typeof block.getEntity === "function"
+        ? block.getEntity()
+        : block.dimension.getEntitiesAtBlockLocation(block.location)[0];
+
+    if (entity?.isValid) {
+        BLOCK_ENTITY_CACHE.set(cacheKey, entity);
+        return entity;
+    }
+
+    BLOCK_ENTITY_CACHE.delete(cacheKey);
+    return undefined;
+}
+
+function clearCachedBlockEntity(block) {
+    const cacheKey = getBlockEntityCacheKey(block);
+    if (!cacheKey) return;
+    BLOCK_ENTITY_CACHE.delete(cacheKey);
+}
+
 /**
  * Applies the normalized label content to an inventory slot.
  */
@@ -450,6 +512,7 @@ export function applyLabelToSlot(container, slot, content) {
     const baseItem = new ItemStack(LABEL_PLACEHOLDER_ITEM);
     baseItem.nameTag = nameTag;
     baseItem.setLore(lore);
+    if (!shouldReplaceContainerItem(container, slot, baseItem)) return;
     container.setItem(slot, baseItem);
 }
 
@@ -482,7 +545,7 @@ export class Machine {
         this.settings = settings
         this.dim = block.dimension
         this.block = block
-        this.entity = this.dim.getEntitiesAtBlockLocation(block.location)[0]
+        this.entity = getCachedBlockEntity(block)
         if (!this.entity) return null
         if (!this.entity.scoreboardIdentity) {
             Energy.initialize(this.entity)
@@ -681,8 +744,10 @@ export class Machine {
 
     static onDestroy(e) {
         const { block, brokenBlockPermutation, player, dimension: dim } = e;
-        const entity = dim.getEntitiesAtBlockLocation(block.location)[0];
+        const entity = getCachedBlockEntity(block);
         if (!entity) return false;
+
+        clearCachedBlockEntity(block);
 
         const energy = new Energy(entity);
         const fluid = new FluidManager(entity)
@@ -923,7 +988,11 @@ export class Machine {
     }
 
     setProgress(value, slot = 2, type = "arrow_right", display = true) {
-        this.entity.setDynamicProperty("dorios:progress", Math.max(0, value));
+        const nextValue = Math.max(0, value);
+        const currentValue = this.entity.getDynamicProperty("dorios:progress") ?? 0;
+        if (currentValue !== nextValue) {
+            this.entity.setDynamicProperty("dorios:progress", nextValue);
+        }
         if (display) this.displayProgress(slot, type)
     }
 
@@ -932,7 +1001,11 @@ export class Machine {
     }
 
     setEnergyCost(value) {
-        this.entity.setDynamicProperty("dorios:energy_cost", Math.max(1, value));
+        const nextValue = Math.max(1, value);
+        const currentValue = this.entity.getDynamicProperty("dorios:energy_cost") ?? 800;
+        if (currentValue !== nextValue) {
+            this.entity.setDynamicProperty("dorios:energy_cost", nextValue);
+        }
     }
 
     getEnergyCost() {
@@ -944,10 +1017,13 @@ export class Machine {
         if (!inv) return;
 
         const progress = this.getProgress();
-        const max = this.getEnergyCost();
+        const max = Math.max(1, this.getEnergyCost());
         const normalized = Math.min(16, Math.floor((progress / max) * 16));
 
         const itemId = `utilitycraft:${type}_${normalized}`;
+        const current = inv.getItem(slot);
+        if (current?.typeId === itemId && (current.amount ?? 1) === 1) return;
+
         inv.setItem(slot, new ItemStack(itemId, 1));
     }
 
@@ -1024,6 +1100,8 @@ export class Machine {
 
         const item = new ItemStack(`utilitycraft:overclock_${frameName}`, 1);
         item.nameTag = `§r§5Overclock\n§r§6Clock: ${formatClock(clock)}x\n§r§7State: ${state}`;
+
+        if (!shouldReplaceContainerItem(container, slot, item)) return;
 
         container.setItem(slot, item);
     }
@@ -1274,11 +1352,7 @@ ${overclockLine}
     applyOverclockBoosts(settings) {
         if (!this.overclock || this.overclock.level <= 0 || this.overclock.effectiveness <= 0) {
             this.boosts.overclockClock = 1;
-            if (!this.boosts.hyperYield) {
-                this.boosts.overclockYield = 1;
-            } else {
-                this.boosts.overclockYield = this.boosts.hyperYield;
-            }
+            this.boosts.overclockYield = 1;
             this.restoreBaseEnergyCap(settings);
             this.restoreBaseFluidCap(settings);
             return;
@@ -1287,11 +1361,7 @@ ${overclockLine}
         const strength = Math.max(0, this.overclock.level * this.overclock.effectiveness);
         if (strength <= 0) {
             this.boosts.overclockClock = 1;
-            if (!this.boosts.hyperYield) {
-                this.boosts.overclockYield = 1;
-            } else {
-                this.boosts.overclockYield = this.boosts.hyperYield;
-            }
+            this.boosts.overclockYield = 1;
             this.restoreBaseEnergyCap(settings);
             this.restoreBaseFluidCap(settings);
             return;
@@ -1316,9 +1386,10 @@ ${overclockLine}
         this.boosts.consumption = (this.boosts.consumption ?? 1) * consumptionMult;
         this.boosts.overclockCapacity = capacityMult;
         this.boosts.overclockClock = theoreticalClock;
-        
-        const hyperYield = this.boosts.hyperYield ?? 1;
-        this.boosts.overclockYield = yieldMult * hyperYield;
+
+        // Hyper Processing must only affect processing speed (progress gain).
+        // Output yield multiplier is reserved for high-clock overclock states.
+        this.boosts.overclockYield = yieldMult;
 
         this.applyEnergyCapBoost(capacityMult, settings);
         this.applyFluidCapBoost(capacityMult, settings);

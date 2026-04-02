@@ -84,14 +84,15 @@ These are the best candidates because the base UtilityCraft role has clear room 
 
 #### Resource / Synthesis
 
-- `autosieve -> Complex Siever`
-  - Strong as a control-heavy, stable branch.
 - `autosieve -> Centrifugal Siever`
-  - Strong as a split-lane branch.
-- `autosieve -> Dual Complex Siever`
-  - Best used only after Complex Siever proves stable.
+  - Strong as the batch-processing industrial branch.
+- `autosieve -> Dual Siever`
+  - Strong as the split-lane branch, but should wait for dedicated assets.
 - `seed_synthesizer -> Genetic Seed Synthesizer`
   - Good if profile buttons and recipe gating are implemented cleanly.
+  - Implemented v1 around a single Cryofluid tank with `Growth`, `Resilience`, and `Yield` profile cycling.
+  - Current superior layout uses 30 slots: 4 seed input lanes, 1 soil slot, 1 profile button, 1 Cryofluid input, 1 Cryofluid display, 4 upgrade slots, and outputs `15-29`.
+  - Occupied seed lanes now synthesize together in a shared cycle instead of selecting only one active lane.
 - `digitizer -> Quantum Digitizer`
   - Strong infrastructure node rather than simple processor.
 - `assembler -> Adaptive Assembler`
@@ -119,8 +120,8 @@ These make sense, but should come after the button system and heavy processing f
 These should wait until mode/buttons, routing, and machine profile infrastructure are proven.
 
 - `Adaptive Assembler`
+- `Dual Siever`
 - `Impact Crusher`
-- `Dual Complex Siever`
 
 ---
 
@@ -177,24 +178,23 @@ Reason:
 ## Wave 2: first modal processing machines
 
 - Arc-Press Forge
-- Complex Siever
+- Centrifugal Siever
 - Chrono Harvester
 - Genetic Seed Synthesizer
 
 Reason:
 
-- introduces profile/mode switching without extreme thermal complexity
+- introduces profile/mode switching and batch logic without extreme thermal complexity
 
 ## Wave 3: high-complexity industrial machines
 
 - Impact Crusher
 - Induction Matrix Anvil
-- Centrifugal Siever
 - Magmatic Reactor Chamber
 
 ## Wave 4: infrastructure-scale orchestration
 
-- Dual Complex Siever
+- Dual Siever
 - Quantum Digitizer
 - Adaptive Assembler
 - Abyssal Auto-Fisher
@@ -229,7 +229,9 @@ Reason:
 - Suggested mechanics:
   - lava input required for operation
   - internal heat meter
+    - look at UtilityCraft-Heavy-Machinery for the heat meter.
   - coolant tank with tiered coolants
+    - Cryofluid (Ascendant Technology) and Saline Coolant (Heavy Machinery)
   - `Balanced`, `Overdrive`, `Emergency Cooldown` modes
   - shutdown / stall penalties if heat exceeds safe range
 - Important note:
@@ -244,7 +246,7 @@ Reason:
   - all lanes process together
   - optional lava injection raises batch count per cycle
   - ash/byproduct lane for selected recipes
-  - `Clean Burn` vs `Mass Burn` modes
+  - `Clean Burn` vs `Mass Burn` modes // Not necessary
 - Why it is a priority:
   - high utility
   - low UI ambiguity
@@ -270,14 +272,108 @@ Reason:
 ### Induction Matrix Anvil
 
 - Base identity:
-  - alloy reinforcement and recomposition hub
+  - Repairs and reinforces gear with direct module interaction.
 - Suggested mechanics:
-  - direct interaction with reinforcement systems/modules
-  - recipe classes: reshape, reinforce, rebind, stabilize
-  - thermal overhead grows with operation class
-  - `Precision`, `Recompose`, `Reinforce` modes
-- Risk:
-  - needs clear recipes and good mode messaging to avoid confusion
+  - Direct interaction with reinforcement systems/modules. Especifically, the Reinforcement Module from Enchantment Station.
+  - Repairs instantly, but requires a cooldown between operations. Can use an inverted progress bar using regular arrows to indicate the cooldown meter.
+  - Can use the same button system to switch between `Repair` and `Reinforce` modes, with `Reinforce` mode only being available when a reinforcement module is present.
+- Risk: None.
+
+## Resource / Synthesis Line
+
+### Centrifugal Siever
+
+- Base identity:
+  - industrial batch-focused autosieve upgrade
+  - one material stream processed in grouped cycles
+  - optional steam-fed throughput boost
+- Suggested mechanics:
+  - one shared input flow feeding a reinforced sieve chamber
+  - one active mesh chamber per cycle, designed for bulk runs instead of dual lanes
+  - grouped processing that turns stacked inputs into burst-style result output
+  - optional steam injection that shortens cycle time while increasing DE cost
+  - larger shared output buffer to absorb batch spikes
+- Why this naming fits:
+  - it mirrors the upgraded-machine naming logic already used by Pulverizer and Industrial Burner
+  - it gives the autosieve line a clear industrial identity without overlapping the future dual-lane machine
+
+#### Centrifugal Siever v1 implementation draft
+
+- Scope guardrails:
+  - keep `sieveRecipes` compatibility as the base behavior
+  - keep `utilitycraft:mesh` tier and multiplier rules intact
+  - do not introduce dual-lane logic in v1
+  - do not require a button panel for the first release; the identity should come from batch logic + optional steam
+
+- Recommended inventory layout (29-slot superior machine profile):
+  - `0`: energy HUD
+  - `1`: status label
+  - `2`: progress meter
+  - `3-6`: shared input buffer
+  - `7`: mesh slot
+  - `8`: steam input
+  - `9`: steam tank display / fluid HUD
+  - `10-13`: upgrade slots
+  - `14-28`: shared output buffer (15 slots)
+
+- Recommended upgrade package:
+  - **Speed** for shorter spin-up time
+  - **Efficiency** for lower DE cost per batch
+  - **Hyper Processing** for better throughput scaling without changing drop logic
+  - **Quantity** as the signature upgrade that raises the batch cap
+
+- Suggested first-pass tuning:
+  - base batch cap: `8` items per completed cycle
+  - Quantity Upgrades: `+4` items to the cap per level
+  - steam boost: reduce cycle time by roughly `30%` while increasing DE draw by roughly `25%`
+  - steam remains optional; the machine must still function without it
+
+- Recommended cycle logic:
+  1. Scan the shared input buffer for the first valid item with a registered sieve recipe.
+  2. Lock the cycle to that item type until the batch is resolved.
+  3. Validate the mesh slot and read its `tier` and `multiplier`.
+  4. Determine the batch size from available items, batch cap, and output headroom.
+  5. Charge energy over time; if steam is available, apply the steam throughput modifier.
+  6. On completion, consume the batch input and run the existing sieve loot table logic once per processed item.
+  7. Aggregate the generated items and insert them into the shared output buffer.
+
+- Output and automation rules:
+  - output storage should be treated as one shared buffer, not lane-specific output groups
+  - automation should be able to push into the input range and pull from the output range using the existing special-machine conventions
+  - compressed sieve materials should stay compatible with the current recipe table instead of using a custom shortcut system
+
+- Failure states that should be visible to the player:
+  - `No Input`
+  - `No Mesh`
+  - `Invalid Material`
+  - `Mesh Too Weak`
+  - `Output Full`
+  - `No Energy`
+
+- Nice-to-have only after the first version is stable:
+  - profile buttons such as `Balanced` and `Turbo`
+  - steam-specific HUD indicators beyond the standard fluid display
+  - recipe groups with custom centrifugal-only bonus rolls
+
+### Dual Siever
+
+- Base identity:
+  - split-lane autosieve upgrade stored for future dedicated assets
+- Preserved profile:
+  - two independent sieve lanes
+  - one mesh slot per lane
+  - one input type per lane
+    - if the opposite lane 1 is idle, it pulls half of lane 2 input to keep both lanes active and vice versa.
+  - shared output logistics
+  - autosieve-compatible baseline behavior first
+  - optional steam boost once implemented
+- Preserved arbitration model:
+  - each lane should be able to pull from the same shared input pool when idle
+  - each lane keeps its own progress state and mesh validation
+  - both lanes deposit into the same output buffer to keep logistics compact
+- Important note:
+  - this is the branch that had previously been mislabeled as `Centrifugal Siever`
+  - it should stay parked until the proper block assets are available
 
 ---
 

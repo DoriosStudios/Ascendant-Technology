@@ -73,6 +73,42 @@
 		"utilitycraft_industrial_burner_on": {
 			"textures": "textures/blocks/machines/superior/industrial_burner_on"
 		},
+		"utilitycraft_pulverizer_off": {
+			"textures": "textures/blocks/machines/superior/pulverizer_off"
+		},
+		"utilitycraft_pulverizer_on": {
+			"textures": "textures/blocks/machines/superior/pulverizer_on"
+		},
+		"utilitycraft_centrifugal_siever_off": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_off"
+		},
+		"utilitycraft_centrifugal_siever_on": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_on"
+		},
+		"utilitycraft_abysall_fisher_off": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_off"
+		},
+		"utilitycraft_abysall_fisher_on": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_on"
+		},
+		"utilitycraft_genetic_seed_synthesizer_off": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_off"
+		},
+		"utilitycraft_genetic_seed_synthesizer_on": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_on"
+		},
+		"utilitycraft_seismic_breaker_off": {
+			"textures": "textures/blocks/machines/superior/seismic_breaker"
+		},
+		"utilitycraft_seismic_breaker_on": {
+			"textures": "textures/blocks/machines/superior/seismic_breaker_on"
+		},
+		"utilitycraft_pattern_placer_off": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_off"
+		},
+		"utilitycraft_pattern_placer_on": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_on"
+		},
 		"utilitycraft_energizer_off": {
 			"textures": "textures/blocks/machines/energizer_off"
 		},

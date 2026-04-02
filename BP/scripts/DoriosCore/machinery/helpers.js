@@ -5,6 +5,8 @@
 import { FluidManager } from './fluidStorage.js'
 import { TICKS_PER_SECOND } from '../constants.js'
 
+const RECIPE_LOOKUP_CACHE = new WeakMap()
+
 // ──────────────────────────────────────────────────────
 // COOLDOWN / TICK GATE
 // ──────────────────────────────────────────────────────
@@ -14,13 +16,54 @@ import { TICKS_PER_SECOND } from '../constants.js'
  * Returns `true` once every `interval` ticks, `false` otherwise.
  */
 export function tickGate(entity, key, interval) {
-    const cd = Number(entity.getDynamicProperty(key)) || 0
-    if (cd > 0) {
-        entity.setDynamicProperty(key, cd - 1)
+    const normalizedInterval = Math.max(0, Math.floor(Number(interval) || 0))
+    if (normalizedInterval <= 0) return true
+
+    const tickCount = Number(globalThis.tickCount ?? 0)
+    const tickStep = Math.floor(tickCount / 2)
+    const tickStepCycle = 500
+    const lastTriggeredStep = Number(entity.getDynamicProperty(key))
+
+    if (!Number.isFinite(lastTriggeredStep)) {
+        entity.setDynamicProperty(key, tickStep)
+        return true
+    }
+
+    const elapsedSteps = tickStep >= lastTriggeredStep
+        ? tickStep - lastTriggeredStep
+        : (tickStepCycle - lastTriggeredStep) + tickStep
+
+    if (elapsedSteps <= normalizedInterval) {
         return false
     }
-    entity.setDynamicProperty(key, interval)
+
+    entity.setDynamicProperty(key, tickStep)
     return true
+}
+
+/**
+ * Resolves the first recipe that matches a direct `recipe.input.id` lookup.
+ * Memoizes the lookup table by recipe-array identity to avoid repeated scans.
+ */
+export function findRecipeByInputId(recipes, inputId) {
+    if (!Array.isArray(recipes) || !inputId) return null
+
+    let lookupState = RECIPE_LOOKUP_CACHE.get(recipes)
+    if (!lookupState || lookupState.size !== recipes.length) {
+        const lookup = new Map()
+        for (const recipe of recipes) {
+            const recipeInputId = recipe?.input?.id
+            if (!recipeInputId || lookup.has(recipeInputId)) continue
+            lookup.set(recipeInputId, recipe)
+        }
+        lookupState = {
+            size: recipes.length,
+            lookup
+        }
+        RECIPE_LOOKUP_CACHE.set(recipes, lookupState)
+    }
+
+    return lookupState.lookup.get(inputId) ?? null
 }
 
 // ──────────────────────────────────────────────────────

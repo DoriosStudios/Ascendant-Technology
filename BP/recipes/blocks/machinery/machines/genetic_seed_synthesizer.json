@@ -1,0 +1,41 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:genetic_seed_synthesizer"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "key": {
+            "P": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "F": {
+                "item": "utilitycraft:advanced_fluid_tank"
+            },
+            "C": {
+                "item": "utilitycraft:machine_case"
+            },
+            "B": {
+                "item": "utilitycraft:seed_synthesizer"
+            },
+            "A": {
+                "item": "utilitycraft:advanced_chip"
+            }
+        },
+        "pattern": [
+            "PFP",
+            "BCB",
+            "PAP"
+        ],
+        "result": {
+            "item": "utilitycraft:genetic_seed_synthesizer"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:seed_synthesizer"
+            }
+        ]
+    }
+}

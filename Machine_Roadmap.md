@@ -29,22 +29,22 @@ Status:
 
 | New Machines | Upgraded Machines | Items & Gear | Infrastructure & Systems |
 |---|---|---|---|
-| ✔ **Absolute Container** | 🔺 **Abyssal Auto-Fisher** | 🔺 **Item Energizer Pad** | 🔺 **Cryo Reservoir** |
+| ✔ **Absolute Container** | 🔺 **Abysall Fisher** | 🔺 **Item Energizer Pad** | 🔺 **Cryo Reservoir** |
 | 🔺 **Atmospheric Synchronizer** | 🔺 **Adaptive Assembler** | 🔺 **Portable Power Cell** | 🔺 **Dimensional Teleporter** |
-| ✔ **Catalyst Weaver** | 🔺 **Arc-Press Forge** | 🔺 **The Ascendant's Tool** | ✔ **Network Center** |
+| ✔ **Catalyst Weaver** | ✔ **Arc-Press Forge** | 🔺 **The Ascendant's Tool** | ✔ **Network Center** |
 | 🔺 **Cold Fusion Reactor** | 🔺 **Centrifugal Siever** | — | ✔ **Overclock Boost Network** |
 | ✔ **Cryo Chamber** | 🔺 **Chrono Harvester** | — | ✔ **Overclock Relay** |
-| ✔ **Duplicator** | 🔺 **Complex Siever line** | — | ✔ **Overclock Tower** |
-| ✔ **Enchantment Station** | 🔺 **Dual Complex Siever** | — | ✔ **Reinforced Cable** |
+| ✔ **Duplicator** | 🔺 **Dual Siever** | — | ✔ **Overclock Tower** |
+| ✔ **Enchantment Station** | — | — | ✔ **Reinforced Cable** |
 | ✔ **Energizer** | 🔺 **Genetic Seed Synthesizer** | — | 🔺 **Rift Anchor** |
 | 🔺 **Essence Collector** | 🔺 **Impact Crusher** | — | 🔺 **Tier 6 Dense Generators** |
 | 🔺 **Fluid Crystallizer** | 🔺 **Induction Matrix Anvil** | — | — |
-| 🔺 **Interdimensional Infuser** | 🔺 **Industrial Burner** | — | — |
+| 🔺 **Interdimensional Infuser** | ✔ **Industrial Burner** | — | — |
 | ✔ **Laser Barrier** | 🔺 **Magmatic Reactor Chamber** | — | — |
 | ✔ **Liquifier (Flux Crucible)** | 🔺 **Pattern Placer** | — | — |
-| 🔺 **Mob Temporal Chamber** | 🔺 **Pulverizer** | — | — |
+| 🔺 **Mob Temporal Chamber** | ✔ **Pulverizer** | — | — |
 | 🔺 **Orbital Command Terminal** | 🔺 **Quantum Digitizer** | — | — |
-| ✔ **Residue Processor** | 🔺 **Seismic Breaker** | — | — |
+| ✔ **Residue Processor** | ✔ **Seismic Breaker** | — | — |
 | ✔ **Singularity Fabricator** | — | — | — |
 | ✔ **Vaporworks Processor** | — | — | — |
 | 🔺 **Dismantler** | - | - | - |
@@ -130,7 +130,7 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
 
 ## Heavy processing line
 
-- 🟡 **Pulverizer** *(from `crusher`, stable path)*
+- 🟢 **Pulverizer** *(from `crusher`, stable path)*
   - **Purpose:** Enchanced version of the Crusher, with more internal space and better operation speed.
   - **Operating Mode:** It uses more energy and, additionally, steam, to process Crusher recipes at a faster rate.
 
@@ -139,12 +139,12 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
   - **Operating Mode:** An even more powerful version of the Crusher, with dual processing. This version has 3 inputs on top, 3 on the bottom, a 7x3 output grid, a lava tank, and a cooler tank. It needs the lava to operate, and if too much heat accumulates, it stops working.
   - **Cooling Inputs:** Cryofluid, Saline Coolant *(from Heavy Machinery)*
 
-- 🟡 **Industrial Burner** *(from `incinerator`)*
+- 🟢 **Industrial Burner** *(from `incinerator`)*
   - **Purpose:** Multi-input / multi-output, parallel processing Incinerator.
   -  **Operating Mode:** 3 inputs and 3 outputs, working at the same time.
   - **Booster:** Optional lava injection increases batch volume per cycle.
 
-- 🟡 **Arc-Press Forge** *(from `electro_press`)*
+- 🟢 **Arc-Press Forge** *(from `electro_press`)*
   - **Purpose:** Electrothermal press with precision metallurgy path.
   - **Operating Mode:** `High Speed` and `Low Loss` production modes.
     - **High Speed Mode:** It works by pressing in batches (4 items at a time, expandable with Quantity Upgrades), with about a 25% chance of losing one of the items produced.
@@ -156,12 +156,12 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
 
 ## Block and world automation line
 
-- 🟡 **Seismic Breaker** *(from `block_breaker`)*
+- 🟢 **Seismic Breaker** *(from `block_breaker`)*
   - **Modes:** `1x1`, `3x3`, `Line`.
   - **Precision Mode:** Preserves special drops when possible.
   - **Scaling Rule:** Energy cost scales with affected area.
 
-- 🟡 **Pattern Placer** *(from `block_placer`)*
+- 🟢 **Pattern Placer** *(from `block_placer`)*
   - **Placement Modes:** Grid, line, alternation patterns.
   - **Control Layer:** Tag filters + block blacklist.
 
@@ -171,34 +171,34 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
 
 ## Resource and synthesis line
 
-- 🟡 **Complex Siever** *(from `autosieve`, control path)*
-  - **Purpose:** Higher consistency and finer filtration control.
-  - **Operating Mode:** Multi-stage filtering with optional catalyst lane.
+- 🟢 **Centrifugal Siever** *(from `autosieve`, batch path)*
+  - **Purpose:** High-throughput bulk sifting for one material stream at a time.
+  - **Operating Mode:** Spins one shared input flow through a reinforced sieve chamber, converting stacked materials in batches instead of one item at a time.
+  - **Booster:** Optional steam injection accelerates batch spin-up and cycle throughput.
+  - **Identity:** This is the industrial bulk-processing branch, not the dual-lane branch.
+  - **Planned v1 layout:** Four shared input slots, one mesh chamber, optional steam input/tank, four upgrade slots, and an enlarged shared output buffer.
+  - **Planned v1 rule:** Each cycle locks onto one valid input type and resolves autosieve-compatible rolls in grouped bursts instead of item-by-item ticks.
 
-- 🟡 **Centrifugal Siever** *(from `autosieve`, split path)*
-  - **Purpose:** Two independent sieve lines with balancing logic.
+- 🟡 **Dual Siever** *(from `autosieve`, split path; pending dedicated assets)*
+  - **Purpose:** Run two independent sieve lanes inside one machine while keeping logistics compact.
+  - **Operating Mode:** Two separate lanes, each with its own mesh and processing state, feeding a shared input/output logistics layer.
+  - **Stored profile for future implementation:**
+    - One mesh per lane.
+    - Separate input and shared outputs.
+    - Autosieve-compatible recipe baseline.
+    - Optional steam boost once the dedicated block assets exist.
 
-- 🟡 **Dual Complex Siever** *(advanced `autosieve` variant)*
-  - **Purpose:** +1 or +2 extra processing lines over baseline Complex Siever.
-  - **Operating Mode:** Shared energy bus with separated material channels.
-
-- 🟡 **Genetic Seed Synthesizer** *(from `seed_synthesizer`)*
+- 🟢 **Genetic Seed Synthesizer** *(from `seed_synthesizer`)*
   - **Profiles:** Growth, resilience, and yield optimization profiles.
   - **Constraint:** Requires higher-tier reagents + thermal stability.
 
-- 🟡 **Interdimensional Infuser** *(from `infuser`, main Ascendant line)*
-  - **Profile:** Dynamic scaling based on active expansions.
-  - **Escalation:** More tanks, more infusion stages, extreme late-game energy/fluid cost.
-  - **Clarification:** This is **not** the upgraded Infuser path. It is a standalone Ascendant machine focused on interdimensional-tier synthesis, especially the `Interdimensional Gem`.
-  - **Upgrade lineage note:** The real upgraded Infuser path was already implemented as the **Catalyst Weaver**.
-
 - 🟡 **Quantum Digitizer** *(from `digitizer`)*
-  - **Role:** Advanced item serialization/profile capture.
+  - **Role:** Advanced item serialization/profile capture. Needs to be restudied since it doesn't really seems to be that useful.
   - **Constraint:** Blueprint cache capacity scales by machine tier.
   - **Use Case:** Infrastructure support for manufacturing lines.
 
 - 🟡 **Adaptive Assembler** *(from `assembler`)*
-  - **Role:** Adaptive recipe execution by priority.
+  - **Role:** Adaptive recipe execution by priority. Same as Quantum Digitizer.
   - **Modes:** Continuous pipeline + smart queue orchestration.
   - **Use Case:** Core manufacturing node for very large networks.
 
@@ -214,9 +214,10 @@ These are not simple ports. They must provide mechanical upgrades, denser workfl
   - **Example Paths:** `Lava -> Obsidian / Magma Block`, `Water -> Prismarine Shard`, `XP Fluid -> Bottle o' Enchanting`.
   - **Value Hook:** Closes the fluid loop for high-volume liquid networks.
 
-- 🟡 **Abyssal Auto-Fisher** *(from `autofisher`)*
+- 🟠 **Abysall Fisher** *(from `autofisher`)*
   - **Rule:** Environmental conditions affect loot tier.
   - **Modes:** `Expedition` (long cycle, higher loot) and `Mass` (short cycle, bulk output).
+  - **Implementation v0:** Native superior-machine batch casting with water tank, fishing-net slot, and mode button.
 
 ## Mob and essence automation line
 
@@ -378,7 +379,7 @@ Based on current behavior from both packs (machine templates, wrench patterns, u
 - 🟡 **One additional upgrade lane: `Automation Core Upgrade`**
   - **Goal:** reduce per-machine micro-management.
   - **Effects:** auto-input routing, auto-output routing, byproduct-safe output, optional redstone compatibility hooks.
-  - **Scope:** starts on Pulverizer, Complex Siever line, Industrial Burner, then expands.
+  - **Scope:** starts on Pulverizer, the Siever line, Industrial Burner, then expands.
 
 - 🟡 **Upgrade model normalization**
   - Keep machine-specific special upgrades only when identity requires it.
@@ -405,13 +406,12 @@ Based on current behavior from both packs (machine templates, wrench patterns, u
 
 # Near-term implementation order
 
-1. **Industrial Burner**
+1. **Seismic Breaker**
 2. **Nitrogen Collector**
-3. **Pulverizer**
-4. **Impact Crusher + cooling safety loop**
-5. **Complex Siever / Centrifugal Siever (dual path)**
-6. **Tungsten armor + tools baseline**
-7. **Tier 6 Dense generators**
+3. **Impact Crusher + cooling safety loop**
+4. **Centrifugal Siever**
+5. **Tungsten armor + tools baseline**
+6. **Tier 6 Dense generators**
 
 ---
 

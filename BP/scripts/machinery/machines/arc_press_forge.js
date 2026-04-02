@@ -3,6 +3,7 @@ import {
     Machine,
     applyDynamicRecipeRate,
     buildOverclockLoreLine,
+    findRecipeByInputId,
     formatItemName,
     syncButtonPanel,
     tickGate
@@ -88,6 +89,8 @@ const ARC_PRESS_MODE_BUTTONS = Object.freeze({
     ])
 })
 
+const MAX_STACK_SIZE_CACHE = new Map()
+
 DoriosAPI.register.blockComponent('arc_press_forge', {
     beforeOnPlayerPlace(e, { params: settings }) {
         Machine.spawnMachineEntity(e, settings, () => {
@@ -101,7 +104,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
             syncButtonPanel(machine, ARC_PRESS_MODE_BUTTONS, {
                 detectPresses: false,
                 cleanupRadius: 12,
-                cleanupIntervalTicks: 2,
+                cleanupIntervalTicks: 20,
                 dropCleanupRadius: 8
             })
         })
@@ -115,7 +118,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
 
         const panelState = syncButtonPanel(machine, ARC_PRESS_MODE_BUTTONS, {
             cleanupRadius: 12,
-            cleanupIntervalTicks: 2,
+            cleanupIntervalTicks: 20,
             dropCleanupRadius: 8
         })
         const mode = getMode(panelState.mode)
@@ -225,7 +228,7 @@ function resolveRecipes(block, settings) {
 
 function matchRecipe(recipes, itemId) {
     if (!itemId) return null
-    return recipes.find(recipe => recipe?.input?.id === itemId) ?? null
+    return findRecipeByInputId(recipes, itemId)
 }
 
 function getMode(modeId) {
@@ -474,15 +477,25 @@ function resolveMaxStackSize(slot, outputId) {
     if (slot?.maxAmount) return slot.maxAmount
     if (!outputId) return 64
 
+    const cached = MAX_STACK_SIZE_CACHE.get(outputId)
+    if (cached) return cached
+
     try {
         const probe = new ItemStack(outputId, 1)
-        if (probe?.maxAmount) return probe.maxAmount
+        if (probe?.maxAmount) {
+            MAX_STACK_SIZE_CACHE.set(outputId, probe.maxAmount)
+            return probe.maxAmount
+        }
         const component = probe?.getComponent?.('minecraft:max_stack_size')
-        if (typeof component?.value === 'number') return component.value
+        if (typeof component?.value === 'number') {
+            MAX_STACK_SIZE_CACHE.set(outputId, component.value)
+            return component.value
+        }
     } catch {
         // ignore invalid probes and fall back to a standard stack size
     }
 
+    MAX_STACK_SIZE_CACHE.set(outputId, 64)
     return 64
 }
 

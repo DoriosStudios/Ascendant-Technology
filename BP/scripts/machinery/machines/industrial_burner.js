@@ -3,6 +3,8 @@ import {
     Machine,
     Energy,
     FluidManager,
+    findRecipeByInputId,
+    resolveRecipeTimeSeconds,
     buildOverclockLoreLine,
     tickGate,
     feedFluidSlot,
@@ -17,24 +19,27 @@ const INDUSTRIAL_BURNER = Object.freeze({
         status: 1,
         progress: 2,
         inputs: Object.freeze([3, 4, 5]),
-        upgrades: Object.freeze([6, 7, 8]),
+        upgrades: Object.freeze([6, 7, 8, 17]),
         lavaInput: 9,
         lavaDisplay: 10,
         outputs: Object.freeze([11, 12, 13]),
         laneProgress: Object.freeze([14, 15, 16]),
-        hidden: Object.freeze([17, 18, 19])
+        hidden: Object.freeze([18, 19])
     }),
     defaults: Object.freeze({
         energyCost: 800,
         fluidCap: 32000,
-        lavaType: "lava"
+        lavaType: "lava",
+        baseBatchWithoutLava: 2,
+        baseRecipeSeconds: 4,
+        tickIntervalTicks: 2
     }),
     transfer: Object.freeze({
         itemIntervalTicks: 4
     }),
     quantity: Object.freeze({
         maxLevel: 4,
-        batchSizes: Object.freeze([2, 4, 6, 8, 10])
+        batchSizes: Object.freeze([2, 4, 6, 8, 12])
     }),
     progress: Object.freeze({
         indicator: "arrow_right"
@@ -42,6 +47,7 @@ const INDUSTRIAL_BURNER = Object.freeze({
 });
 
 const LANE_PROGRESS_KEYS = INDUSTRIAL_BURNER.slots.inputs.map((_, index) => `industrial_burner:lane_progress_${index}`);
+const MAX_STACK_SIZE_CACHE = new Map();
 
 DoriosAPI.register.blockComponent("industrial_burner", {
     beforeOnPlayerPlace(e, { params: settings }) {
@@ -166,10 +172,12 @@ DoriosAPI.register.blockComponent("industrial_burner", {
             if (remainingActive > 0 && lane.progress < lane.energyCost) {
                 const consumption = machine.boosts.consumption;
                 const progressNeeded = lane.energyCost - lane.progress;
+                const laneChargeCap = resolveLaneEnergyChargeCap(lane, machine);
                 const laneBudget = Math.min(
                     availableEnergy / remainingActive,
                     rateBudget / remainingActive,
-                    progressNeeded * consumption
+                    progressNeeded * consumption,
+                    laneChargeCap
                 );
 
                 if (laneBudget > 0) {
@@ -292,6 +300,9 @@ function createLaneState(machine, recipes, tank, batchSize, yieldBoost, settings
         outputAmount: 0,
         energyCost: 0,
         lavaNeeded: 0,
+        boostedCrafts: 0,
+        maxBoostCrafts: 0,
+        recipeSeconds: INDUSTRIAL_BURNER.defaults.baseRecipeSeconds,
         batchSize
     };
 
@@ -318,15 +329,6 @@ function createLaneState(machine, recipes, tank, batchSize, yieldBoost, settings
         return state;
     }
 
-    const outputFitsSingle = canOutputFit(state.outputStack, recipe.output.id, estimateBatchOutput(recipe, 1, yieldBoost));
-    if (!outputFitsSingle) {
-        state.color = "§e";
-        state.message = "Output Full";
-        state.energyCost = estimateBatchEnergy(recipe, 1, settings);
-        state.progress = Math.min(state.progress, state.energyCost);
-        return state;
-    }
-
     const baseAvailableCrafts = Math.floor(inputStack.amount / Math.max(1, recipe.input.amount));
     if (baseAvailableCrafts <= 0) {
         state.progress = 0;
@@ -335,38 +337,57 @@ function createLaneState(machine, recipes, tank, batchSize, yieldBoost, settings
         return state;
     }
 
-    for (let crafts = Math.min(batchSize, baseAvailableCrafts); crafts >= 1; crafts--) {
-        const outputAmount = estimateBatchOutput(recipe, crafts, yieldBoost);
-        const lavaNeeded = estimateBatchLava(recipe, crafts);
-        if (!canOutputFit(state.outputStack, recipe.output.id, outputAmount)) continue;
-        if (tank.get() < lavaNeeded) continue;
-
-        state.availableCrafts = baseAvailableCrafts;
-        state.craftCount = crafts;
-        state.inputNeeded = recipe.input.amount * crafts;
-        state.outputAmount = outputAmount;
-        state.energyCost = estimateBatchEnergy(recipe, crafts, settings);
-        state.lavaNeeded = lavaNeeded;
-        state.ready = true;
-        state.color = "§a";
-        state.message = state.progress > 0 ? "Heating Batch" : "Ready";
+    const maxCraftsByOutput = resolveMaxCraftsByOutput(
+        state.outputStack,
+        recipe,
+        baseAvailableCrafts,
+        batchSize,
+        yieldBoost
+    );
+    if (maxCraftsByOutput <= 0) {
+        state.color = "§e";
+        state.message = "Output Full";
+        state.energyCost = estimateBatchEnergy(recipe, 1, settings);
         state.progress = Math.min(state.progress, state.energyCost);
         return state;
     }
 
-    state.availableCrafts = baseAvailableCrafts;
-    state.energyCost = estimateBatchEnergy(recipe, 1, settings);
-    state.progress = Math.min(state.progress, state.energyCost);
-    state.lavaNeeded = estimateBatchLava(recipe, 1);
+    const baseCraftCap = resolveBaseCraftCap(settings, batchSize);
+    const craftsWithoutLava = Math.max(1, Math.min(maxCraftsByOutput, baseCraftCap));
+    const lavaPerBoostCraft = estimateBatchLava(recipe, 1);
+    const maxBoostCraftsByCap = Math.max(0, maxCraftsByOutput - craftsWithoutLava);
+    const maxBoostCraftsByLava = lavaPerBoostCraft > 0
+        ? Math.floor(Math.max(0, tank.get()) / lavaPerBoostCraft)
+        : maxBoostCraftsByCap;
+    const boostedCrafts = Math.max(0, Math.min(maxBoostCraftsByCap, maxBoostCraftsByLava));
+    const selectedCrafts = craftsWithoutLava + boostedCrafts;
 
-    if (tank.get() < state.lavaNeeded) {
-        state.color = "§6";
-        state.message = "Need Lava";
-        return state;
+    state.availableCrafts = baseAvailableCrafts;
+    state.craftCount = selectedCrafts;
+    state.inputNeeded = recipe.input.amount * selectedCrafts;
+    state.outputAmount = estimateBatchOutput(recipe, selectedCrafts, yieldBoost);
+    state.energyCost = estimateBatchEnergy(recipe, selectedCrafts, settings);
+    state.lavaNeeded = boostedCrafts * lavaPerBoostCraft;
+    state.boostedCrafts = boostedCrafts;
+    state.maxBoostCrafts = maxBoostCraftsByCap;
+    state.recipeSeconds = Math.max(
+        Number.EPSILON,
+        Number(resolveRecipeTimeSeconds(recipe) ?? INDUSTRIAL_BURNER.defaults.baseRecipeSeconds)
+    );
+    state.ready = true;
+    state.color = boostedCrafts > 0 ? "§2" : "§a";
+
+    if (state.progress > 0) {
+        state.message = boostedCrafts > 0 ? "Heating Boosted Batch" : "Heating Batch";
+    } else if (boostedCrafts > 0) {
+        state.message = "Boosted Ready";
+    } else if (maxBoostCraftsByCap > 0) {
+        state.message = "Ready (No Lava Boost)";
+    } else {
+        state.message = "Ready";
     }
 
-    state.color = "§e";
-    state.message = "Output Full";
+    state.progress = Math.min(state.progress, state.energyCost);
     return state;
 }
 
@@ -392,7 +413,9 @@ function craftLane(machine, lane, tank, yieldBoost) {
     }
 
     machine.entity.changeItemAmount(lane.inputSlot, -lane.inputNeeded);
-    tank.consume(lane.lavaNeeded);
+    if (lane.lavaNeeded > 0) {
+        tank.consume(lane.lavaNeeded);
+    }
 
     const rawOutput = (lane.recipe.output.amount ?? 1) * lane.craftCount * yieldBoost;
     const produced = machine.addFractionalItem(lane.recipe.output.id, rawOutput);
@@ -429,7 +452,7 @@ function addToOutputSlot(machine, slotIndex, itemId, amount) {
 
 function matchRecipe(recipes, inputId) {
     if (!inputId) return null;
-    return recipes.find(recipe => recipe?.input?.id === inputId) ?? null;
+    return findRecipeByInputId(recipes, inputId);
 }
 
 function estimateBatchEnergy(recipe, crafts, settings) {
@@ -445,18 +468,65 @@ function estimateBatchOutput(recipe, crafts, yieldBoost = 1) {
     return Math.max(1, Math.ceil((recipe?.output?.amount ?? 1) * Math.max(1, crafts) * Math.max(1, yieldBoost)));
 }
 
+function resolveMaxCraftsByOutput(outputStack, recipe, availableCrafts, batchSize, yieldBoost) {
+    const maxCrafts = Math.max(0, Math.min(Math.max(0, availableCrafts), Math.max(1, batchSize)));
+    for (let crafts = maxCrafts; crafts >= 1; crafts--) {
+        const outputAmount = estimateBatchOutput(recipe, crafts, yieldBoost);
+        if (canOutputFit(outputStack, recipe.output.id, outputAmount)) {
+            return crafts;
+        }
+    }
+
+    return 0;
+}
+
+function resolveBaseCraftCap(settings, batchSize) {
+    const configured = Number(settings?.machine?.base_batch_without_lava);
+    const maxBatch = Math.max(1, Number(batchSize) || 1);
+    if (Number.isFinite(configured) && configured > 0) {
+        return Math.max(1, Math.min(maxBatch, Math.floor(configured)));
+    }
+
+    return Math.max(1, Math.min(maxBatch, INDUSTRIAL_BURNER.defaults.baseBatchWithoutLava));
+}
+
+function resolveLaneEnergyChargeCap(lane, machine) {
+    const seconds = Math.max(
+        Number.EPSILON,
+        Number(lane?.recipeSeconds ?? INDUSTRIAL_BURNER.defaults.baseRecipeSeconds)
+    );
+    const energyCost = Math.max(1, Number(lane?.energyCost) || 1);
+    const speedMultiplier = Math.max(Number.EPSILON, Number(machine?.boosts?.speed ?? 1));
+    const consumptionMultiplier = Math.max(Number.EPSILON, Number(machine?.boosts?.consumption ?? 1));
+
+    const progressPerSecond = (energyCost / seconds) * speedMultiplier;
+    const energyPerSecond = progressPerSecond * consumptionMultiplier;
+    const intervalTicks = Math.max(1, INDUSTRIAL_BURNER.defaults.tickIntervalTicks);
+    return Math.max(0, (energyPerSecond / 20) * intervalTicks);
+}
+
 function resolveMaxStackSize(slot, itemId) {
     if (slot?.maxAmount) return slot.maxAmount;
 
+    const cached = MAX_STACK_SIZE_CACHE.get(itemId);
+    if (cached) return cached;
+
     try {
         const probe = new ItemStack(itemId, 1);
-        if (probe?.maxAmount) return probe.maxAmount;
+        if (probe?.maxAmount) {
+            MAX_STACK_SIZE_CACHE.set(itemId, probe.maxAmount);
+            return probe.maxAmount;
+        }
         const component = probe?.getComponent?.("minecraft:max_stack_size");
-        if (typeof component?.value === "number") return component.value;
+        if (typeof component?.value === "number") {
+            MAX_STACK_SIZE_CACHE.set(itemId, component.value);
+            return component.value;
+        }
     } catch {
         // fall through to vanilla-like default
     }
 
+    MAX_STACK_SIZE_CACHE.set(itemId, 64);
     return 64;
 }
 
@@ -502,13 +572,19 @@ function getLaneProgress(entity, laneIndex) {
 }
 
 function setLaneProgress(entity, laneIndex, value) {
-    entity.setDynamicProperty(LANE_PROGRESS_KEYS[laneIndex], Math.max(0, Number(value) || 0));
+    const nextValue = Math.max(0, Number(value) || 0);
+    const currentValue = Number(entity.getDynamicProperty(LANE_PROGRESS_KEYS[laneIndex])) || 0;
+    if (currentValue === nextValue) return;
+    entity.setDynamicProperty(LANE_PROGRESS_KEYS[laneIndex], nextValue);
 }
 
 function setProgressArrow(inv, slotIndex, ratio) {
     const clampedRatio = Math.max(0, Math.min(1, Number(ratio) || 0));
     const frame = Math.max(0, Math.min(16, Math.floor(clampedRatio * 16)));
-    inv.setItem(slotIndex, new ItemStack(`utilitycraft:${INDUSTRIAL_BURNER.progress.indicator}_${frame}`, 1));
+    const itemId = `utilitycraft:${INDUSTRIAL_BURNER.progress.indicator}_${frame}`;
+    const current = inv.getItem(slotIndex);
+    if (current?.typeId === itemId && (current.amount ?? 1) === 1) return;
+    inv.setItem(slotIndex, new ItemStack(itemId, 1));
 }
 
 function finalizeLane(machine, lane) {
@@ -561,12 +637,14 @@ function buildLaneMessage(lane) {
     const detail = lane.ready && lane.craftCount > 0
         ? `${lane.message} x${lane.craftCount}`
         : lane.message;
-    return `${lane.color}[${laneNumber}] ${detail}`;
+    const boostSuffix = lane.ready && lane.boostedCrafts > 0
+        ? ` §6(+${lane.boostedCrafts} lava)`
+        : "";
+    return `${lane.color}[${laneNumber}] ${detail}${boostSuffix}`;
 }
 
 function inferHeader(laneStates, energy) {
     if (energy <= 0 && laneStates.some(lane => lane.typeId)) return "No Energy";
-    if (laneStates.some(lane => lane.message === "Need Lava")) return "Need Lava";
     if (laneStates.some(lane => lane.message === "Output Conflict")) return "Output Conflict";
     if (laneStates.some(lane => lane.message === "Output Full")) return "Output Full";
     if (laneStates.some(lane => lane.message === "Invalid Recipe")) return "Invalid Recipe";
@@ -576,7 +654,6 @@ function inferHeader(laneStates, energy) {
 
 function inferHeaderColor(laneStates, energy) {
     if (energy <= 0 && laneStates.some(lane => lane.typeId)) return "§c";
-    if (laneStates.some(lane => lane.message === "Need Lava")) return "§6";
     if (laneStates.some(lane => lane.message === "Invalid Recipe" || lane.message === "Output Conflict")) return "§c";
     if (laneStates.some(lane => lane.message === "Output Full")) return "§e";
     if (laneStates.some(lane => lane.typeId)) return "§e";
@@ -592,9 +669,9 @@ function renderStatus(machine, context) {
         : FluidManager.formatFluid(250);
     const lore = [
         `${context.headerColor}${context.header}`,
-        `§7Fuel: §f${formatFluidDisplayName("lava")} ${tankAmount} §7/ §f${tankCap}`,
+        `§7Lava Boost: §f${formatFluidDisplayName("lava")} ${tankAmount} §7/ §f${tankCap}`,
         `§7Batch Cap: §f${context.batchSize} §7(Q${context.quantityLevel})`,
-        `§7Heat Cost: §f${focusHeat} §7per craft`,
+        `§7Boost Cost: §f${focusHeat} §7per extra craft`,
         `§7Speed: §f${machine.boosts.speed.toFixed(2)}x`,
         `§7Efficiency: §f${((1 / machine.boosts.consumption) * 100).toFixed(0)}%`,
         `§7Rate: §f${Energy.formatEnergyToText(Math.floor(machine.baseRate))}/t`
@@ -603,6 +680,9 @@ function renderStatus(machine, context) {
     if (focusLane?.recipe) {
         lore.push(`§7Focus: §f${formatItemName(focusLane.recipe.input.id)} -> ${formatItemName(focusLane.recipe.output.id)}`);
         lore.push(`§7Batch Output: §f${focusLane.outputAmount}`);
+        if (focusLane.maxBoostCrafts > 0) {
+            lore.push(`§7Lava Bonus: §f+${focusLane.boostedCrafts}§7/§f${focusLane.maxBoostCrafts} crafts`);
+        }
     }
 
     lore.push(...context.laneMessages);

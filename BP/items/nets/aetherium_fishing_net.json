@@ -10,6 +10,9 @@
 		},
 		"components": {
 			"minecraft:icon": "utilitycraft_aetherium_fishing_net",
+			"minecraft:durability": {
+				"max_durability": 3579
+			},
 			"utilitycraft:fishing_net": {
 				"tier": 8,
 				"speed": 8,

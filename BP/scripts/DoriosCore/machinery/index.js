@@ -4,6 +4,7 @@
 export {
     Machine,
     Container,
+    getCachedBlockEntity,
     updatePipes,
     applyDynamicRecipeRate,
     buildOverclockLoreLine,
@@ -41,6 +42,7 @@ export {
 
 export {
     tickGate,
+    findRecipeByInputId,
     formatItemName,
     capitalize,
     formatFluidDisplayName,

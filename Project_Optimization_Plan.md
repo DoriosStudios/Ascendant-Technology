@@ -21,11 +21,11 @@ Many machines already carry their own:
 - recipe normalization quirks
 - transfer cadence logic
 
-That is manageable for a few machines, but expensive for a full upgraded line.
+That is manageable for a few machines, but expensive for a full superior line.
 
 ### 2. UI logic is about to multiply
 
-The upcoming upgraded machines need:
+The upcoming superior machines need:
 
 - multiple modes
 - multiple button slots
@@ -48,7 +48,7 @@ That creates:
 
 ### 4. Recipes are normalized in many places
 
-This is workable now, but it will become a maintenance burden once upgraded machines add:
+This is workable now, but it will become a maintenance burden once superior machines add:
 
 - multi-lane recipes
 - batch sizes
@@ -102,7 +102,7 @@ Suggested file:
 
 - `BP/scripts/DoriosCore/machinery/buttonPanel.js`
 
-This is the highest-priority optimization because it prevents every upgraded machine from becoming a UI snowflake.
+This is the highest-priority optimization because it prevents every superior machine from becoming a UI snowflake.
 
 Value:
 
@@ -206,7 +206,7 @@ Value:
 
 ### Config-side organization
 
-- `BP/scripts/config/machines/upgraded/`
+- `BP/scripts/config/machines/superior/`
 - `BP/scripts/config/recipes/shared/`
 
 ### Documentation
@@ -232,7 +232,7 @@ Even if those exact paths change later, the repo needs a clearer split between:
 - standardize property namespaces for mode/button state
 - define slot-layout conventions
 
-This phase should happen before the first heavy upgraded machine is implemented for real.
+This phase should happen before the first heavy superior machine is implemented for real.
 
 ## Phase 2: reduce duplication in existing machines
 

@@ -15,7 +15,7 @@ Machine status legend:
 - **Water Wheel** is no longer part of Ascendant Technology's generator line.
   - Status in Ascendant: *🔴 On Hold / Cut*
   - Marker: *Planned for other expansion*
-- Ascendant will keep machine inspiration from UtilityCraft, but with stronger identity and functionality upgrades.
+- Ascendant will keep machine inspiration from UtilityCraft, but express that growth through a unified **Superior Machines** program with stronger identity and functionality upgrades.
 - Tungsten-focused industrial content is now prioritized (durability, heat handling, dense machinery casing).
 - Steam and nitrogen are treated as practical industrial resources, not decorative side systems.
 
@@ -23,31 +23,27 @@ Machine status legend:
 
 # Summary by implementation rationale (4 categories)
 
-Status:
-- **✔: Implemented**
-- **🔺: Not Implemented**
-
-| New Machines | Upgraded Machines | Items & Gear | Infrastructure & Systems |
+| New Machines | Superior Machines | Items & Gear | Infrastructure & Systems |
 |---|---|---|---|
-| ✔ **Absolute Container** | 🔺 **Abysall Fisher** | 🔺 **Item Energizer Pad** | 🔺 **Cryo Reservoir** |
-| 🔺 **Atmospheric Synchronizer** | 🔺 **Adaptive Assembler** | 🔺 **Portable Power Cell** | 🔺 **Dimensional Teleporter** |
+| ✔ **Absolute Container** | 🟠 **Abyssal Fisher** | 🔺 **Item Energizer Pad** | 🔺 **Cryo Reservoir** |
+| 🔺 **Atmospheric Synchronizer** | 🟡 **Arcane Imprinter** | 🔺 **Portable Power Cell** | 🔺 **Dimensional Teleporter** |
 | ✔ **Catalyst Weaver** | ✔ **Arc-Press Forge** | 🔺 **The Ascendant's Tool** | ✔ **Network Center** |
-| 🔺 **Cold Fusion Reactor** | 🔺 **Centrifugal Siever** | — | ✔ **Overclock Boost Network** |
-| ✔ **Cryo Chamber** | 🔺 **Chrono Harvester** | — | ✔ **Overclock Relay** |
-| ✔ **Duplicator** | 🔺 **Dual Siever** | — | ✔ **Overclock Tower** |
-| ✔ **Enchantment Station** | — | — | ✔ **Reinforced Cable** |
-| ✔ **Energizer** | 🔺 **Genetic Seed Synthesizer** | — | 🔺 **Rift Anchor** |
-| 🔺 **Essence Collector** | 🔺 **Impact Crusher** | — | 🔺 **Tier 6 Dense Generators** |
-| 🔺 **Fluid Crystallizer** | 🔺 **Induction Matrix Anvil** | — | — |
-| 🔺 **Interdimensional Infuser** | ✔ **Industrial Burner** | — | — |
-| ✔ **Laser Barrier** | 🔺 **Magmatic Reactor Chamber** | — | — |
-| ✔ **Liquifier (Flux Crucible)** | 🔺 **Pattern Placer** | — | — |
-| 🔺 **Mob Temporal Chamber** | ✔ **Pulverizer** | — | — |
-| 🔺 **Orbital Command Terminal** | 🔺 **Quantum Digitizer** | — | — |
-| ✔ **Residue Processor** | ✔ **Seismic Breaker** | — | — |
-| ✔ **Singularity Fabricator** | — | — | — |
-| ✔ **Vaporworks Processor** | — | — | — |
-| 🔺 **Dismantler** | - | - | - |
+| 🔺 **Cold Fusion Reactor** | 🟠 **Centrifugal Siever** | — | ✔ **Overclock Boost Network** |
+| ✔ **Cryo Chamber** | 🟡 **Cryo Cooling Bay** | — | ✔ **Overclock Relay** |
+| 🔺 **Dismantler** | 🟡 **Cryofluid Condenser** | — | ✔ **Overclock Tower** |
+| ✔ **Duplicator** | 🟡 **Cryo Stabilizer Rack** | — | ✔ **Reinforced Cable** |
+| ✔ **Enchantment Station** | 🟡 **Dense Active Generators** | — | 🔺 **Rift Anchor** |
+| ✔ **Energizer** | 🟡 **Disenchanter Array** | — | — |
+| 🔺 **Essence Collector** | 🟡 **Dual Siever** | — | — |
+| 🔺 **Fluid Crystallizer** | 🟠 **Genetic Seed Synthesizer** | — | — |
+| 🔺 **Interdimensional Infuser** | 🔵 **Impact Crusher** | — | — |
+| ✔ **Laser Barrier** | 🟡 **Induction Matrix Anvil** | — | — |
+| ✔ **Liquifier (Flux Crucible)** | ✔ **Industrial Burner** | — | — |
+| 🔺 **Mob Temporal Chamber** | 🟡 **Magmatic Reactor Chamber** | — | — |
+| 🔺 **Orbital Command Terminal** | ✔ **Pattern Placer** | — | — |
+| ✔ **Residue Processor** | ✔ **Pulverizer** | — | — |
+| ✔ **Singularity Fabricator** | ✔ **Seismic Breaker** | — | — |
+| ✔ **Vaporworks Processor** | 🟡 **Verdant Cultivator** | — | — |
 
 ---
 
@@ -124,100 +120,131 @@ Status:
 
 ---
 
-# UtilityCraft-inspired machine line (Ascendant variants)
+# Superior Machines program
 
-These are not simple ports. They must provide mechanical upgrades, denser workflows, and stronger identity.
+Superior Machines are now treated as one unified program.
 
-## Heavy processing line
+A superior block can come from:
 
-- 🟢 **Pulverizer** *(from `crusher`, stable path)*
-  - **Purpose:** Enchanced version of the Crusher, with more internal space and better operation speed.
-  - **Operating Mode:** It uses more energy and, additionally, steam, to process Crusher recipes at a faster rate.
+- a UtilityCraft machine upgraded into a denser industrial branch
+- a standalone branch extracted from a complex Ascendant machine with multiple sections
+- a dense generator branch that gains machine-grade internal state instead of only larger numbers
 
-- 🔵 **Impact Crusher** *(from `crusher`, aggressive path)*
-  - **Profile:** High production peaks under controlled risk.
-  - **Operating Mode:** An even more powerful version of the Crusher, with dual processing. This version has 3 inputs on top, 3 on the bottom, a 7x3 output grid, a lava tank, and a cooler tank. It needs the lava to operate, and if too much heat accumulates, it stops working.
-  - **Cooling Inputs:** Cryofluid, Saline Coolant *(from Heavy Machinery)*
+All superior machines are listed below in **alphabetical order**.
 
-- 🟢 **Industrial Burner** *(from `incinerator`)*
-  - **Purpose:** Multi-input / multi-output, parallel processing Incinerator.
-  -  **Operating Mode:** 3 inputs and 3 outputs, working at the same time.
-  - **Booster:** Optional lava injection increases batch volume per cycle.
+- 🟠 **Abyssal Fisher** *(from `autofisher`; runtime IDs can stay `abysall_*` for now)*
+  - **Purpose:** Remote batch fishing machine with internal water logistics and abyssal loot scaling.
+  - **Operating Mode:** `Expedition` favors longer casts and higher loot tiers, while `Mass` shortens the cycle for bulk output; both use fishing nets and an internal water tank instead of a nearby source block.
+  - **Environment Hook:** Water quality, dimension context, and abyssal bonus rules can affect the loot table.
+
+- 🟡 **Arcane Imprinter** *(from `Enchantment Station`, standalone enchanting branch)*
+  - **Purpose:** Dedicated enchanting machine that exists purely to remove the repair and disenchant clutter from the Enchantment Station.
+  - **Operating Mode:** Uses a focused gear grid and module lane for enchanting only, keeping the same core module logic while running faster than the Enchantment Station.
+  - **Identity:** Its value comes from specialization and speed, not from a giant new profile tree.
 
 - 🟢 **Arc-Press Forge** *(from `electro_press`)*
-  - **Purpose:** Electrothermal press with precision metallurgy path.
-  - **Operating Mode:** `High Speed` and `Low Loss` production modes.
-    - **High Speed Mode:** It works by pressing in batches (4 items at a time, expandable with Quantity Upgrades), with about a 25% chance of losing one of the items produced.
-    - **Low Loss:** It works by pressing one item at a time, with a bit more speed.
+  - **Purpose:** Electrothermal press with a meaningful split between safe precision and risky throughput.
+  - **Operating Mode:** `High Speed` presses items in batches with higher energy draw and loss risk, while `Low Loss` presses fewer items with safer yield and steadier operation.
+  - **Upgrade Rule:** Quantity Upgrades expand the batch cap only on the high-speed path.
 
-- 🟡 **Induction Matrix Anvil** *(from `induction_anvil`)*
-  - **Purpose:** Reinforcement and recomposition of advanced alloys.
-  - **Synergy:** Direct interaction with modules/overclock at higher thermal cost.
+- 🟠 **Centrifugal Siever** *(from `autosieve`, batch path)*
+  - **Purpose:** Industrial bulk-processing siever focused on one material stream at a time.
+  - **Operating Mode:** Four shared input slots feed one reinforced mesh chamber; each cycle locks onto one valid material type, resolves grouped sieve rolls, and deposits everything into one enlarged shared output buffer.
+  - **Booster:** Optional steam injection accelerates spin-up and batch throughput.
+  - **Rule:** The first release stays focused on batch logic and steam only, without extra preset layers.
 
-## Block and world automation line
+- 🟡 **Cryo Cooling Bay** *(from `Cryo Chamber`, standalone cooling branch)*
+  - **Purpose:** Dedicated freezing and cooling machine for recipes that should not compete with stabilization or Cryofluid generation.
+  - **Operating Mode:** Runs a cooling grid with independent recipe checks, using water or Cryofluid-backed chains for food reversal, freezing, and cold crafting.
+  - **Identity:** This is the pure cooling branch extracted out of the Cryo Chamber.
 
-- 🟢 **Seismic Breaker** *(from `block_breaker`)*
-  - **Modes:** `1x1`, `3x3`, `Line`.
-  - **Precision Mode:** Preserves special drops when possible.
-  - **Scaling Rule:** Energy cost scales with affected area.
+- 🟡 **Cryofluid Condenser** *(from `Cryo Chamber`, standalone generator branch)*
+  - **Purpose:** Dedicated industrial Cryofluid production for bases that outgrow the shared Cryo Chamber generator lane.
+  - **Operating Mode:** `Stable` processes one cycle at a time with normal upgrade behavior, while `Impulse` processes in batches, ramps production up to `800%`, and ignores Speed/Hyper boosts while active.
+  - **Separation Rule:** Exists to scale Cryofluid generation without forcing the player to scale the whole Cryo Chamber.
 
-- 🟢 **Pattern Placer** *(from `block_placer`)*
-  - **Placement Modes:** Grid, line, alternation patterns.
-  - **Control Layer:** Tag filters + block blacklist.
+- 🟡 **Cryo Stabilizer Rack** *(from `Cryo Chamber`, standalone stabilizer branch)*
+  - **Purpose:** Dedicated stabilization machine for volatile materials that should be handled separately from cooling and Cryofluid generation.
+  - **Operating Mode:** Focuses only on stabilization recipes, running a dedicated catalyst/fluid-backed stabilization lane instead of sharing space with other cryogenic roles.
+  - **Identity:** This is strictly the stabilizer branch; cooling now belongs to its own superior machine.
 
-- 🟡 **Chrono Harvester** *(from `harvester`)*
-  - **Role:** Growth-stage harvesting with internal buffer handling.
-  - **Modes:** `Non-Destructive` and `Total Uproot` (higher yield).
+- 🟡 **Dense Active Generators** *(from the `Absolute` generator line)*
+  - **Purpose:** Tier 6 active generator family that turns absolute generators into machine-grade power systems with state, safety, and multi-input behavior.
+  - **Operating Mode:** The dense line is now limited to the active generators only:
+    1. `Dense Furnator Array` — dedicated multi-input burn windows with batch ignition.
+    2. `Dense Magmator Core` — larger lava tank, but each generation step resolves only `4000 mB` at a time.
+    3. `Dense Thermo Matrix` — requires `Cryofluid` or `Saline Coolant` instead of water, stores heat and steam internally, and gains efficiency while staying below dangerous temperature.
+  - **Scope Rule:** Passive generators are out of this superior branch for now.
 
-## Resource and synthesis line
-
-- 🟢 **Centrifugal Siever** *(from `autosieve`, batch path)*
-  - **Purpose:** High-throughput bulk sifting for one material stream at a time.
-  - **Operating Mode:** Spins one shared input flow through a reinforced sieve chamber, converting stacked materials in batches instead of one item at a time.
-  - **Booster:** Optional steam injection accelerates batch spin-up and cycle throughput.
-  - **Identity:** This is the industrial bulk-processing branch, not the dual-lane branch.
-  - **Planned v1 layout:** Four shared input slots, one mesh chamber, optional steam input/tank, four upgrade slots, and an enlarged shared output buffer.
-  - **Planned v1 rule:** Each cycle locks onto one valid input type and resolves autosieve-compatible rolls in grouped bursts instead of item-by-item ticks.
+- 🟡 **Disenchanter Array** *(from `Enchantment Station`, standalone disenchant branch)*
+  - **Purpose:** Specialist machine for enchant extraction and XP-fluid absorption at scale.
+  - **Operating Mode:** `Extraction` converts enchantments into enchanted books, while `Absorption` liquefies them into XP fluid; both modes share a Curse Protection module slot.
+  - **Identity:** It exists to separate disenchant logistics from the Enchantment Station instead of inflating the station further.
 
 - 🟡 **Dual Siever** *(from `autosieve`, split path; pending dedicated assets)*
   - **Purpose:** Run two independent sieve lanes inside one machine while keeping logistics compact.
-  - **Operating Mode:** Two separate lanes, each with its own mesh and processing state, feeding a shared input/output logistics layer.
-  - **Stored profile for future implementation:**
-    - One mesh per lane.
-    - Separate input and shared outputs.
-    - Autosieve-compatible recipe baseline.
-    - Optional steam boost once the dedicated block assets exist.
+  - **Operating Mode:** Each lane keeps its own mesh identity and processing logic, but core resources such as energy, upgrades, and output buffering stay shared.
+  - **Shared Basics:** Shared energy and shared outputs stay mandatory to avoid pointless logistics sprawl.
 
-- 🟢 **Genetic Seed Synthesizer** *(from `seed_synthesizer`)*
-  - **Profiles:** Growth, resilience, and yield optimization profiles.
-  - **Constraint:** Requires higher-tier reagents + thermal stability.
+- 🟠 **Genetic Seed Synthesizer** *(from `seed_synthesizer`)*
+  - **Purpose:** Agricultural synthesis machine for higher-tier seed improvement and controlled crop mutation.
+  - **Operating Mode:** Four seed lanes synthesize together in a shared cycle with one soil slot, one Cryofluid lane, and a profile button whose exact `Growth` / `Resilience` / `Yield` effects still need a cleaner differentiation pass.
+  - **Constraint:** Higher-tier reagents and thermal stability should remain part of its identity.
 
-- 🟡 **Quantum Digitizer** *(from `digitizer`)*
-  - **Role:** Advanced item serialization/profile capture. Needs to be restudied since it doesn't really seems to be that useful.
-  - **Constraint:** Blueprint cache capacity scales by machine tier.
-  - **Use Case:** Infrastructure support for manufacturing lines.
+- 🔵 **Impact Crusher** *(from `crusher`, aggressive path)*
+  - **Purpose:** High-risk crusher branch built for peak output under controlled thermal danger.
+  - **Operating Mode:** Dual processing lanes draw on lava, build heat, and consume coolant while pushing much harder than the Pulverizer.
+  - **Failure State:** If it overheats, it stops, burns half of the current inputs and buffered outputs, plays burning-item feedback, and stays locked until temperature fully drops and the player reseats the input.
 
-- 🟡 **Adaptive Assembler** *(from `assembler`)*
-  - **Role:** Adaptive recipe execution by priority. Same as Quantum Digitizer.
-  - **Modes:** Continuous pipeline + smart queue orchestration.
-  - **Use Case:** Core manufacturing node for very large networks.
+- 🟡 **Induction Matrix Anvil** *(from `induction_anvil`)*
+  - **Purpose:** Advanced repair and reinforcement machine for dense metallurgy and gear recovery.
+  - **Operating Mode:** Switches between `Repair` and `Reinforce`, with reinforcement behavior tied to Enchantment Station modules and a cooldown-based reuse window.
+  - **Reinforcement Ladder:** Supports `Reinforcement Module IV` and `V` for `150%` and `200%` reinforcement targets.
 
-## Thermal and fluid line
+- 🟢 **Industrial Burner** *(from `incinerator`)*
+  - **Purpose:** Multi-input and multi-output incineration machine for high-volume trash-to-value and high-heat pre-processing.
+  - **Operating Mode:** Three input lanes and three output lanes process at the same time, with optional lava injection increasing batch volume per cycle.
+  - **Byproduct Hook:** Selected recipes can route ash or residue into a dedicated result lane instead of deleting it.
 
 - 🟡 **Magmatic Reactor Chamber** *(from `magmatic_chamber`)*
-  - **Role:** Industrial thermal chamber for heat-intensive processes.
-  - **System Hook:** Exposes process heat as reusable thermal output (not only energy).
+  - **Purpose:** Thermal chamber for heat-intensive industrial work where process heat matters as a reusable resource.
+  - **Operating Mode:** Stores heat and steam internally, gains efficiency while working inside a healthy thermal window, and loses that efficiency when pushed too close to unsafe temperature.
+  - **Thermal Role:** Heat should both power the machine and become a stored resource for adjacent industrial systems.
 
-- 🟡 **Fluid Crystallizer**
-  - **Role:** Reverse fluid processing by converting stored liquids back into solid resources.
-  - **Operating Mode:** Tank-fed crystallization with continuous DE draw and recipe-defined cycle timing.
-  - **Example Paths:** `Lava -> Obsidian / Magma Block`, `Water -> Prismarine Shard`, `XP Fluid -> Bottle o' Enchanting`.
-  - **Value Hook:** Closes the fluid loop for high-volume liquid networks.
+- 🟢 **Pattern Placer** *(from `block_placer`)*
+  - **Purpose:** Placement machine for world automation patterns that are too complex for a simple block placer.
+  - **Operating Mode:** Supports `Grid`, `Line`, and `Alternation` placement logic with tag filters and block blacklist control.
+  - **Placement Identity:** Complexity comes from deterministic layout logic, not just larger inventory size.
 
-- 🟠 **Abysall Fisher** *(from `autofisher`)*
-  - **Rule:** Environmental conditions affect loot tier.
-  - **Modes:** `Expedition` (long cycle, higher loot) and `Mass` (short cycle, bulk output).
-  - **Implementation v0:** Native superior-machine batch casting with water tank, fishing-net slot, and mode button.
+- 🟢 **Pulverizer** *(from `crusher`, stable path)*
+  - **Purpose:** Stable industrial crusher upgrade with stronger buffers and steam-assisted acceleration.
+  - **Operating Mode:** Processes crusher recipes with higher energy draw and optional steam-fed throughput increase while keeping a safer operating profile than the Impact Crusher.
+  - **Industrial Hook:** Larger internal space and batch-friendly routing are part of the appeal, not just speed.
+
+- 🟢 **Seismic Breaker** *(from `block_breaker`)*
+  - **Purpose:** Area-mining automation machine with controllable excavation patterns.
+  - **Operating Mode:** Supports `1x1`, `3x3`, and `Line` modes, with a Precision toggle for preserving special drops where possible.
+  - **Scaling Rule:** Energy cost scales with the selected affected area.
+
+- 🟡 **Verdant Cultivator** *(from `harvester`; replaces the old `Chrono Harvester` name)*
+  - **Purpose:** Large-scale crop automation machine that plants, fertilizes, harvests, and buffers produce in one superior agricultural block.
+  - **Operating Mode:** Accepts a Pedestal Clock in a dedicated slot to pulse bonemeal periodically, scales range from `3x3` up to `17x17`, uses Quantity level `1-4` as a fortune-style harvest bonus, plants from a `2x2` seed grid, and stores harvests in an internal `3x3` buffer when no rear container is attached.
+  - **Biome Hook:** Can gain crop-specific bonuses from the biome where it is working.
+
+## Locked design decisions from review (2026-04)
+
+- **Abyssal Fisher** is the correct player-facing name; internal `abysall_*` identifiers can stay until a runtime migration is worth the churn.
+- **Adaptive Assembler** and **Quantum Digitizer** are out of the current superior roster because neither one has a strong enough gameplay justification right now.
+- **Arcane Imprinter** stays simple: dedicated enchanting plus a speed advantage is enough.
+- **Centrifugal Siever v1** stays batch + steam only.
+- **Cryo Chamber** now branches into three separate superior specialists: **Cryo Cooling Bay**, **Cryofluid Condenser**, and **Cryo Stabilizer Rack**.
+- **Dense Active Generators** are limited to active generators only.
+- **Disenchanter Array** keeps only `Extraction` and `Absorption`, both with a Curse Protection module slot.
+- **Dual Siever** lanes should feel distinct, but shared energy/output remain mandatory.
+- **Genetic Seed Synthesizer** keeps its current profile labels for now, but their exact distinctions still need a later balance pass.
+- **Impact Crusher** uses a destructive overheat failure state instead of self-damage or passive venting.
+- **Induction Matrix Anvil** can grow into higher reinforcement tiers through Module IV/V.
+- **Magmatic Reactor Chamber** should reward healthy heat management with both efficiency and stored thermal resources.
 
 ## Mob and essence automation line
 
@@ -411,7 +438,7 @@ Based on current behavior from both packs (machine templates, wrench patterns, u
 3. **Impact Crusher + cooling safety loop**
 4. **Centrifugal Siever**
 5. **Tungsten armor + tools baseline**
-6. **Tier 6 Dense generators**
+6. **Dense active generators**
 
 ---
 

@@ -1,6 +1,8 @@
 {
   "version": "5",
   "specifiers": {
+    "npm:@minecraft/common@^1.2.0": "1.2.0",
+    "npm:@minecraft/server@^2.6.0": "2.6.0_@minecraft+common@1.2.0_@minecraft+vanilla-data@1.26.13",
     "npm:commitizen@^4.3.1": "4.3.1",
     "npm:cz-conventional-changelog@^3.3.0": "3.3.0"
   },
@@ -58,6 +60,19 @@
         "@types/conventional-commits-parser",
         "chalk@5.6.2"
       ]
+    },
+    "@minecraft/common@1.2.0": {
+      "integrity": "sha512-JdmEq4P3Z/FtoBzhLijFgMSVFnFRrUoLwY8DHHrgtFo0mfLTOLTB1RErYjLMsA6b7BGVNxkX/pfFRiH7QZ0XwQ=="
+    },
+    "@minecraft/server@2.6.0_@minecraft+common@1.2.0_@minecraft+vanilla-data@1.26.13": {
+      "integrity": "sha512-/l1gbUHcTl/3gb3cB7Ilb8pfW1QytoAc+iMXUPSzvv8cxGluf6M635jl29P8Bid3iVmUB9hWyCUZtRUVVlk5ew==",
+      "dependencies": [
+        "@minecraft/common",
+        "@minecraft/vanilla-data"
+      ]
+    },
+    "@minecraft/vanilla-data@1.26.13": {
+      "integrity": "sha512-Mll1g5vX84iJ2PjJM5KKJ9V9gH8haJtIhSqywn/FlZN9IN0fn4MFWyjC43xNLh/COWgZfVgB7XAA7fGsEt60MQ=="
     },
     "@types/conventional-commits-parser@5.0.2": {
       "integrity": "sha512-BgT2szDXnVypgpNxOK8aL5SGjUdaQbC++WZNjF1Qge3Og2+zhHj+RWhmehLhYyvQwqAmvezruVfOf8+3m74W+g==",
@@ -789,6 +804,8 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
+        "npm:@minecraft/common@^1.2.0",
+        "npm:@minecraft/server@^2.6.0",
         "npm:commitizen@^4.3.1",
         "npm:cz-conventional-changelog@^3.3.0"
       ]

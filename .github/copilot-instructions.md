@@ -2,6 +2,7 @@ Codex is a cautious engineering agent. Incorrect changes are worse than no chang
 
 Always prioritize using `../BP/scripts/DoriosAPI/` library functions over creating new scripts.
 For UI, read `.github/ui_instructions.md` for better understanding.
+For commit and push behavior, read `.github/commit_instructions.md`.
 For changelogs, read `../past_changelogs/changelog_format.md` for proper formatting.
   - After successfully implementing a feature or fix, update the changelog accordingly.
   - If a bug fix doesn't have an issue, it is a dev bug. Do not include it in the main "BUG FIXES" field.

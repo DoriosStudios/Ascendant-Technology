@@ -10,11 +10,11 @@ import {
     formatItemName,
     syncButtonPanel,
     tickGate
-} from "../../DoriosCore/index.js";
+} from "../../../DoriosCore/index.js";
 import {
     GENETIC_ACCEPTED_SOILS,
     getGeneticSeedPlantRecipe
-} from "../../config/recipes/genetic_seed_synthesizer.js";
+} from "../../../config/recipes/genetic_seed_synthesizer.js";
 
 const GENETIC_SEED_SYNTHESIZER = Object.freeze({
     slots: Object.freeze({
@@ -133,10 +133,7 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
             machine.entity.setItem(GENETIC_SEED_SYNTHESIZER.slots.status, "utilitycraft:arrow_indicator_90", 1, "");
 
             syncButtonPanel(machine, PROFILE_BUTTONS, {
-                detectPresses: false,
-                cleanupRadius: 10,
-                cleanupIntervalTicks: 20,
-                dropCleanupRadius: 6
+                detectPresses: false
             });
         });
     },
@@ -148,11 +145,7 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
         if (!machine.valid || !machine.entity || !machine.inv) return;
 
         const tank = getCryofluidTank(machine, settings);
-        const panelState = syncButtonPanel(machine, PROFILE_BUTTONS, {
-            cleanupRadius: 10,
-            cleanupIntervalTicks: 20,
-            dropCleanupRadius: 6
-        });
+        const panelState = syncButtonPanel(machine, PROFILE_BUTTONS);
         const profile = getProfile(panelState.profile);
 
         if (tickGate(machine.entity, "genetic_seed:transfer_cd", GENETIC_SEED_SYNTHESIZER.transfer.outputIntervalTicks)) {

@@ -5,7 +5,7 @@ import {
     buildOverclockLoreLine,
     formatItemName,
     syncButtonPanel
-} from '../../DoriosCore/index.js'
+} from '../../../DoriosCore/index.js'
 
 const SEISMIC_BREAKER = Object.freeze({
     slots: Object.freeze({
@@ -113,10 +113,7 @@ DoriosAPI.register.blockComponent('seismic_breaker', {
             machine.displayProgress(SEISMIC_BREAKER.slots.progress)
             machine.blockSlots(SEISMIC_BREAKER.slots.hidden)
             syncButtonPanel(machine, SEISMIC_BREAKER_BUTTONS, {
-                detectPresses: false,
-                cleanupRadius: 12,
-                cleanupIntervalTicks: 20,
-                dropCleanupRadius: 8
+                detectPresses: false
             })
         })
     },
@@ -127,11 +124,7 @@ DoriosAPI.register.blockComponent('seismic_breaker', {
         const machine = new Machine(e.block, settings)
         if (!machine.valid || !machine.entity || !machine.inv) return
 
-        const panelState = syncButtonPanel(machine, SEISMIC_BREAKER_BUTTONS, {
-            cleanupRadius: 12,
-            cleanupIntervalTicks: 20,
-            dropCleanupRadius: 8
-        })
+        const panelState = syncButtonPanel(machine, SEISMIC_BREAKER_BUTTONS)
 
         const mode = getMode(panelState.mode)
         const precision = panelState.precision === true

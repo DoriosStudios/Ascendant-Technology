@@ -9,8 +9,8 @@ import {
     formatFluidDisplayName,
     formatItemName,
     tickGate
-} from "../../DoriosCore/index.js";
-import { getCentrifugalSieveRecipe } from "../../config/recipes/centrifugal_siever.js";
+} from "../../../DoriosCore/index.js";
+import { getCentrifugalSieveRecipe } from "../../../config/recipes/centrifugal_siever.js";
 
 const CENTRIFUGAL_SIEVER = Object.freeze({
     slots: Object.freeze({

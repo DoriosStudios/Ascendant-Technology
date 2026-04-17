@@ -7,8 +7,8 @@ import {
     formatItemName,
     syncButtonPanel,
     tickGate
-} from '../../DoriosCore/index.js'
-import { getArcPressForgeRecipes } from '../../config/recipes/arc_press_forge.js'
+} from '../../../DoriosCore/index.js'
+import { getArcPressForgeRecipes } from '../../../config/recipes/arc_press_forge.js'
 
 const ARC_PRESS_FORGE = Object.freeze({
     slots: Object.freeze({
@@ -102,10 +102,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
             machine.displayProgress(ARC_PRESS_FORGE.slots.progress)
             machine.entity.setItem(ARC_PRESS_FORGE.slots.status, 'utilitycraft:arrow_indicator_90', 1, '')
             syncButtonPanel(machine, ARC_PRESS_MODE_BUTTONS, {
-                detectPresses: false,
-                cleanupRadius: 12,
-                cleanupIntervalTicks: 20,
-                dropCleanupRadius: 8
+                detectPresses: false
             })
         })
     },
@@ -116,11 +113,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
         const machine = new Machine(e.block, settings)
         if (!machine.valid) return
 
-        const panelState = syncButtonPanel(machine, ARC_PRESS_MODE_BUTTONS, {
-            cleanupRadius: 12,
-            cleanupIntervalTicks: 20,
-            dropCleanupRadius: 8
-        })
+        const panelState = syncButtonPanel(machine, ARC_PRESS_MODE_BUTTONS)
         const mode = getMode(panelState.mode)
         const quantityLevel = getQuantityUpgradeLevel(machine)
         const modeProfile = getModeProfile(mode, quantityLevel)

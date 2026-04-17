@@ -5,7 +5,7 @@ import {
     buildOverclockLoreLine,
     formatItemName,
     syncButtonPanel
-} from '../../DoriosCore/index.js'
+} from '../../../DoriosCore/index.js'
 
 const PATTERN_PLACER = Object.freeze({
     slots: Object.freeze({
@@ -92,10 +92,7 @@ DoriosAPI.register.blockComponent('pattern_placer', {
             machine.displayProgress(PATTERN_PLACER.slots.progress)
             machine.blockSlots(PATTERN_PLACER.slots.hidden)
             syncButtonPanel(machine, PATTERN_PLACER_BUTTONS, {
-                detectPresses: false,
-                cleanupRadius: 12,
-                cleanupIntervalTicks: 20,
-                dropCleanupRadius: 8
+                detectPresses: false
             })
         })
     },
@@ -106,11 +103,7 @@ DoriosAPI.register.blockComponent('pattern_placer', {
         const machine = new Machine(e.block, settings)
         if (!machine.valid || !machine.entity || !machine.inv) return
 
-        const panelState = syncButtonPanel(machine, PATTERN_PLACER_BUTTONS, {
-            cleanupRadius: 12,
-            cleanupIntervalTicks: 20,
-            dropCleanupRadius: 8
-        })
+        const panelState = syncButtonPanel(machine, PATTERN_PLACER_BUTTONS)
 
         const mode = getMode(panelState.mode)
         const operation = buildOperation(machine, mode, settings)

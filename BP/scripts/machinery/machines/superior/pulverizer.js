@@ -10,8 +10,8 @@ import {
     formatFluidDisplayName,
     formatItemName,
     tickGate
-} from "../../DoriosCore/index.js";
-import { getPulverizerRecipes } from "../../config/recipes/pulverizer.js";
+} from "../../../DoriosCore/index.js";
+import { getPulverizerRecipes } from "../../../config/recipes/pulverizer.js";
 
 const PULVERIZER = Object.freeze({
     slots: Object.freeze({

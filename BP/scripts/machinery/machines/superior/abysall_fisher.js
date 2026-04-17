@@ -11,8 +11,8 @@ import {
     formatItemName,
     syncButtonPanel,
     tickGate
-} from "../../DoriosCore/index.js";
-import { abysallFisherConfig, abysallFisherLoot } from "../../config/recipes/abysall_fisher.js";
+} from "../../../DoriosCore/index.js";
+import { abysallFisherConfig, abysallFisherLoot } from "../../../config/recipes/abysall_fisher.js";
 
 const ABYSALL_FISHER = Object.freeze({
     slots: Object.freeze({
@@ -177,10 +177,7 @@ DoriosAPI.register.blockComponent("abysall_fisher", {
             machine.entity.setItem(ABYSALL_FISHER.slots.status, "utilitycraft:arrow_indicator_90", 1, "");
 
             syncButtonPanel(machine, ABYSALL_FISHER_BUTTONS, {
-                detectPresses: false,
-                cleanupRadius: 10,
-                cleanupIntervalTicks: 20,
-                dropCleanupRadius: 6
+                detectPresses: false
             });
         });
     },
@@ -192,11 +189,7 @@ DoriosAPI.register.blockComponent("abysall_fisher", {
         if (!machine.valid || !machine.entity || !machine.inv) return;
 
         const tank = getWaterTank(machine, settings);
-        const panelState = syncButtonPanel(machine, ABYSALL_FISHER_BUTTONS, {
-            cleanupRadius: 10,
-            cleanupIntervalTicks: 20,
-            dropCleanupRadius: 6
-        });
+        const panelState = syncButtonPanel(machine, ABYSALL_FISHER_BUTTONS);
         const mode = getMode(panelState.mode);
         const environment = resolveEnvironmentContext(machine.block);
         const quantityLevel = getQuantityUpgradeLevel(machine);

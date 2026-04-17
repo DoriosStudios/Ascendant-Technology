@@ -1,6 +1,7 @@
-import { system, world } from "@minecraft/server";
+import { ItemStack, system, world } from "@minecraft/server";
 import { Energy } from "./machinery/energyStorage.js";
 import { sanitizeTickSpeed, getTickSpeed } from "./machinery/machine.js";
+import { loadButtonItemStack } from "./buttons/index.js";
 
 // ─── Tick counter ────────────────────────────────────────────────────────────
 
@@ -17,6 +18,8 @@ system.runInterval(() => {
 
 world.afterEvents.worldLoad.subscribe(() => {
     Energy.initializeObjectives();
+
+    loadButtonItemStack("utilitycraft:ui_filler", ItemStack);
 
     if (world.getDynamicProperty("loaded") === undefined) {
         world.setDynamicProperty("loaded", false);

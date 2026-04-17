@@ -61,23 +61,21 @@
                 }
             },
             {
-                "mode_button@common.container_item": {
+                "mode_button@machineryCommon.machine_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [18, 12],
-                    "collection_index": 3,
-                    "$cell_image_size": [16, 16],
-                    "size": [16, 16]
+                    "$index": 3,
+                    "$button_size": [16, 16]
                 }
             },
             {
-                "precision_button@common.container_item": {
+                "precision_button@machineryCommon.machine_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [50, 12],
-                    "collection_index": 4,
-                    "$cell_image_size": [16, 16],
-                    "size": [16, 16]
+                    "$index": 4,
+                    "$button_size": [16, 16]
                 }
             },
             {

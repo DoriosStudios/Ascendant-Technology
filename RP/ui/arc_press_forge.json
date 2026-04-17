@@ -194,19 +194,15 @@
                 }
             },
             {
-                "mode_button@common.container_item": {
+                "mode_button@machineryCommon.machine_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
                         18,
                         62
                     ],
-                    "collection_index": 8,
-                    "$cell_image_size": [
-                        16,
-                        16
-                    ],
-                    "size": [
+                    "$index": 8,
+                    "$button_size": [
                         16,
                         16
                     ]

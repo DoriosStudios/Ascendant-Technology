@@ -63,6 +63,9 @@ export {
 } from "./helpers.js";
 
 export {
+    ButtonItemStack,
+    loadButtonItemStack,
+    ButtonManager,
     BUTTON_PANEL_DEFAULTS,
     getButtonPanelState,
     getButtonPanelValue,
@@ -71,4 +74,4 @@ export {
     clearButtonPanel,
     renderButtonPanel,
     syncButtonPanel,
-} from "./buttonPanel.js";
+} from "../buttons/index.js";

@@ -116,13 +116,12 @@
                 }
             },
             {
-                "profile_button@common.container_item": {
+                "profile_button@machineryCommon.machine_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [18, 20],
-                    "collection_index": 8,
-                    "$cell_image_size": [16, 16],
-                    "size": [16, 16]
+                    "$index": 8,
+                    "$button_size": [16, 16]
                 }
             },
             {

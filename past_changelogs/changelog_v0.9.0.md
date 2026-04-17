@@ -37,6 +37,8 @@ Heavy processing and block automation take center stage in this draft, with new 
     - Instantly smelt items into their molten forms, using lava as an optional booster.
     - Accepts four upgrades.
     - Supports Quantity Upgrades for larger grouped batches.
+- Removed **Dismantler** from this draft scope.
+  - The machine and its recovery flow were discontinued before release.
 - Added **Pattern Placer**
   - Superior version of Block Placer with 4 input slots and different modes.
   - Has four modes:
@@ -63,6 +65,8 @@ Heavy processing and block automation take center stage in this draft, with new 
 ## TECHNICAL CHANGES
 ### Runtime Registration
 - Added native runtime registration for Pulverizer, Centrifugal Siever, Genetic Seed Synthesizer, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
+- Removed the native Dismantler runtime stack (block, recipe, machine script, UI definition, textures, item catalog entry, and related localization entries).
+- Removed the generated Dismantler reverse-recipe registry and its supporting generation tooling from the active runtime.
 - Added a native Pulverizer crusher-recipe registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_crusher_recipe` custom insertions.
 - Added a native Centrifugal Siever sieve-recipe registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_sieve_drop` custom insertions.
 - Added a native Genetic Seed Synthesizer plant registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_plant` and `utilitycraft:register_bonsai` custom insertions.
@@ -72,6 +76,10 @@ Heavy processing and block automation take center stage in this draft, with new 
   - It now affects processing speed only, preventing output inflation without matching input consumption.
 - Industrial Burner charging now respects per-recipe time windows when calculating progress gain.
   - Speed-related boosts now change throughput more consistently instead of collapsing into near-constant craft timing.
+- Migrated superior machine button runtime to the shared global button pipeline in `DoriosCore/buttons/index.js`.
+  - Removed the deprecated legacy runtime module at `BP/scripts/DoriosCore/machinery/buttonPanel.js`.
+  - Updated superior machine scripts to the simplified `syncButtonPanel` usage expected by the global runtime.
+  - Updated superior machine UI button slots to `machineryCommon.machine_button` and explicitly loaded `ui/machineryCommon.json` in `_ui_defs.json`.
 - Added shared runtime optimizations for high-traffic machine loops.
   - Reduced redundant block-entity lookups through cached machine entity resolution.
   - Reduced repeated direct recipe-array scans in Arc-Press Forge, Industrial Burner, and Pulverizer.

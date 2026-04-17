@@ -30,7 +30,7 @@ Machine status legend:
 | ✔ **Catalyst Weaver** | ✔ **Arc-Press Forge** | 🔺 **The Ascendant's Tool** | ✔ **Network Center** |
 | 🔺 **Cold Fusion Reactor** | 🟠 **Centrifugal Siever** | — | ✔ **Overclock Boost Network** |
 | ✔ **Cryo Chamber** | 🟡 **Cryo Cooling Bay** | — | ✔ **Overclock Relay** |
-| 🔺 **Dismantler** | 🟡 **Cryofluid Condenser** | — | ✔ **Overclock Tower** |
+| 🔴 **Dismantler** | 🟡 **Cryofluid Condenser** | — | ✔ **Overclock Tower** |
 | ✔ **Duplicator** | 🟡 **Cryo Stabilizer Rack** | — | ✔ **Reinforced Cable** |
 | ✔ **Enchantment Station** | 🟡 **Dense Active Generators** | — | 🔺 **Rift Anchor** |
 | ✔ **Energizer** | 🟡 **Disenchanter Array** | — | — |
@@ -67,11 +67,10 @@ Machine status legend:
     3. Cryofluid Generator
   - **Notes:** Core machine for future cold-chain industry.
 
-- 🟡 **Dismantler**
-  - **Purpose:** Disassemble and recover parts from previously created items.
-  - **Operating Mode:** It has an input with a 3x3 grid output, to retrieve the materials used in the crafting recipe. It uses energy and supports **4** upgrades, the additional upgrade being Quantity.
-    - Quantity Upgrades will have 4 levels, acting randomly based on the percentage of materials used. Each level will recover 25% of the materials.
-  - **Upgrades:** Efficiency, Speed, Hyper Processing, Quantity
+- 🔴 **Dismantler** *(Discontinued)*
+  - **Status:** Removed from active implementation scope in Ascendant Technology.
+  - **Reason:** Reverse-crafting recovery was cut from the current superior machines rollout.
+  - **Note:** Existing runtime implementation and related assets were removed from the pack.
 
 
 - 🟢 **Duplicator (Replication Matrix)**

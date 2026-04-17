@@ -61,12 +61,15 @@
                 }
             },
             {
-                "mode_button@machineryCommon.machine_button": {
+                "mode_button@uc.machine_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [18, 12],
                     "$index": 3,
-                    "$button_size": [16, 16]
+                    "$button_size": [16, 16],
+                    "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
+                    "$hover_texture": "textures/ui/cells/orange_cell_image",
+                    "$pressed_texture": "textures/ui/cells/orange_cell_image"
                 }
             },
             {
@@ -148,9 +151,6 @@
                                     },
                                     {
                                         "hotbar_grid@common.hotbar_grid_template": {}
-                                    },
-                                    {
-                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
                                     }
                                 ]
                             }

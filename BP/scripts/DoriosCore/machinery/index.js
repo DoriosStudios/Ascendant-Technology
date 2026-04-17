@@ -42,9 +42,14 @@ export {
 
 export {
     tickGate,
+    ADAPTIVE_CHECK_RESULT,
+    runAdaptiveTickGate,
+    resetAdaptiveTickGate,
     findRecipeByInputId,
     formatItemName,
     capitalize,
+    formatLoreMetric,
+    appendLoreSection,
     formatFluidDisplayName,
     clampChance,
     captureItemMetadata,

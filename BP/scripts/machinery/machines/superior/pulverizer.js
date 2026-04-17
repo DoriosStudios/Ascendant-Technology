@@ -1,17 +1,23 @@
 import { ItemStack } from "@minecraft/server";
 import {
     Machine,
-    Energy,
     FluidManager,
     applyDynamicRecipeRate,
     buildOverclockLoreLine,
-    feedFluidSlot,
+    appendLoreSection,
     findRecipeByInputId,
-    formatFluidDisplayName,
     formatItemName,
     tickGate
 } from "../../../DoriosCore/index.js";
 import { getPulverizerRecipes } from "../../../config/recipes/pulverizer.js";
+import {
+    formatBatchWithQuantity,
+    formatEnergyCost,
+    formatFluidNeedValue,
+    formatFluidTankBuffer,
+    formatMachineEnergyBuffer,
+    formatOptionalFluidSuffix
+} from "./utils.js";
 
 const PULVERIZER = Object.freeze({
     slots: Object.freeze({
@@ -57,7 +63,7 @@ DoriosAPI.register.blockComponent("pulverizer", {
             machine.setEnergyCost(settings?.machine?.energy_cost ?? PULVERIZER.defaults.energyCost);
             machine.displayEnergy(PULVERIZER.slots.energy);
             machine.displayProgress(PULVERIZER.slots.progress);
-            machine.blockSlots([PULVERIZER.slots.steamDisplay, ...PULVERIZER.slots.hidden]);
+            machine.blockSlots([PULVERIZER.slots.steamDisplay, PULVERIZER.slots.steamInput, ...PULVERIZER.slots.hidden]);
 
             const tank = getSteamTank(machine, settings);
             tank.display(PULVERIZER.slots.steamDisplay);
@@ -85,10 +91,7 @@ DoriosAPI.register.blockComponent("pulverizer", {
             for (const slot of PULVERIZER.slots.inputs) {
                 machine.pullItemsFromAbove(slot);
             }
-            machine.pullItemsFromAbove(PULVERIZER.slots.steamInput);
         }
-
-        feedFluidSlot(machine, tank, PULVERIZER.slots.steamInput);
 
         if (!recipes.length) {
             showMachineWarning(machine, tank, "No Recipes", {
@@ -594,57 +597,90 @@ function isQuantityUpgradeItem(item) {
 }
 
 function buildMachineLore(machine, tank, context = {}) {
-    const tankAmount = FluidManager.formatFluid(tank?.get() ?? 0);
-    const tankCap = FluidManager.formatFluid(tank?.getCap() ?? 0);
     const focusGroup = context.focusGroup ?? null;
     const desiredBatch = Number(context.desiredBatch ?? 1);
     const steamActive = context.steamActive === true;
-    const lines = [
-        `§7Steam Tank: §f${formatFluidDisplayName(PULVERIZER.steam.type)} ${tankAmount} §7/ §f${tankCap}`,
-        `§7Batch Cap: §f${desiredBatch} §7(Q${context.quantityLevel ?? 0})`,
-        `§7Steam Boost: ${steamActive ? "§bActive" : "§7Standby"}`,
-        `§7Boost Cost: §f${FluidManager.formatFluid(PULVERIZER.steam.perCraft)} §7per craft`,
-        `§7Speed: §f${machine.boosts.speed.toFixed(2)}x`,
-        `§7Efficiency: §f${((1 / machine.boosts.consumption) * 100).toFixed(0)}%`,
-        `§7Rate: §f${Energy.formatEnergyToText(Math.floor(machine.baseRate))}/t`
-    ];
+    const lines = [];
+    const overclockLine = buildOverclockLoreLine(machine)?.replace(/^§r/, "");
 
+    const machineInfo = [
+        {
+            label: "Energy",
+            value: formatMachineEnergyBuffer(machine)
+        },
+        {
+            label: "Steam",
+            value: formatFluidTankBuffer(tank, PULVERIZER.steam.type)
+        },
+        {
+            label: "Batch",
+            value: formatBatchWithQuantity(desiredBatch, context.quantityLevel ?? 0)
+        },
+        {
+            label: "Mode",
+            value: steamActive ? "Boost" : "Base",
+            valueColor: steamActive ? "§b" : "§7"
+        }
+    ];
+    if (overclockLine) machineInfo.push(overclockLine);
+
+    appendLoreSection(lines, "Machine Information", machineInfo, {
+        spacing: false
+    });
+
+    const operationInfo = [];
     if (context.operation?.inputGroupCount > 1) {
-        lines.push(`§7Queued Types: §f${context.operation.inputGroupCount}`);
+        operationInfo.push({
+            label: "Queued Types",
+            value: context.operation.inputGroupCount
+        });
     }
 
     if (focusGroup?.recipe) {
-        lines.push(`§7Focus: §f${formatItemName(focusGroup.recipe.input.id)} -> ${formatItemName(focusGroup.recipe.output.id)}`);
-        lines.push(`§7Crafts: §f${focusGroup.craftCount} §7/ §f${desiredBatch}`);
-        lines.push(`§7Batch Output: §f${focusGroup.outputAmount}`);
-        lines.push(`§7Output Space: §f${focusGroup.outputPlan?.totalSpace ?? 0}`);
+        operationInfo.push(
+            {
+                label: "Focus",
+                value: `${formatItemName(focusGroup.recipe.input.id)} -> ${formatItemName(focusGroup.recipe.output.id)}`
+            },
+            {
+                label: "Crafts",
+                value: `${focusGroup.craftCount} / ${desiredBatch}`
+            },
+            {
+                label: "Cost",
+                value: `${formatEnergyCost(focusGroup.energyCost ?? 0)}${formatOptionalFluidSuffix(focusGroup.steamBoostActive, focusGroup.steamNeeded, "Steam")}`
+            }
+        );
 
-        if (focusGroup.steamBoostActive) {
-            lines.push(`§7Steam Use: §f${FluidManager.formatFluid(focusGroup.steamNeeded)}`);
-            lines.push(`§7Boost Speed: §f${PULVERIZER.steam.speedMultiplier.toFixed(2)}x`);
-        } else {
+        if (!focusGroup.steamBoostActive) {
             const availableSteam = tank?.get() ?? 0;
             const steamNeeded = PULVERIZER.steam.perCraft * Math.max(1, focusGroup.craftCount || 1);
             const shortage = Math.max(0, steamNeeded - availableSteam);
             if (shortage > 0) {
-                lines.push(`§7Boost Need: §f${FluidManager.formatFluid(shortage)} more steam`);
+                operationInfo.push({
+                    label: "Need Steam",
+                    value: formatFluidNeedValue(shortage)
+                });
             }
         }
     }
 
-    if (context.lastCraft?.produced > 0 && context.lastCraft?.outputId) {
-        lines.push(`§8Produced ${context.lastCraft.produced} ${formatItemName(context.lastCraft.outputId)}`);
+    if (operationInfo.length > 0) {
+        appendLoreSection(lines, "Crushing Operation", operationInfo);
     }
 
-    const overclockLine = buildOverclockLoreLine(machine);
-    if (overclockLine) lines.push(overclockLine.replace(/^§r/, ""));
+    if (context.lastCraft?.produced > 0 && context.lastCraft?.outputId) {
+        appendLoreSection(lines, "Last Batch", [
+            `§7Produced: §f${context.lastCraft.produced} ${formatItemName(context.lastCraft.outputId)}`
+        ]);
+    }
 
     return lines;
 }
 
 function buildFooterLines(machine, context = {}) {
     const lines = [
-        `Batch: ${context.desiredBatch ?? 1}`,
+        `Batch: ${formatBatchWithQuantity(context.desiredBatch ?? 1, context.quantityLevel ?? 0)}`,
         `Steam: ${context.steamActive ? "Boost" : "Base"}`
     ];
 
@@ -668,7 +704,10 @@ function showMachineWarning(machine, tank, message, context = {}, resetProgress 
         message,
         resetProgress,
         buildMachineLore(machine, tank, context),
-        { footerLines: buildFooterLines(machine, context) }
+        {
+            footerLines: buildFooterLines(machine, context),
+            displayModel: "minimal"
+        }
     );
     updateDisplays(machine, tank);
 }
@@ -678,7 +717,10 @@ function showMachineStatus(machine, tank, message, context = {}) {
     machine.showStatus(
         message,
         buildMachineLore(machine, tank, context),
-        { footerLines: buildFooterLines(machine, context) }
+        {
+            footerLines: buildFooterLines(machine, context),
+            displayModel: "minimal"
+        }
     );
     updateDisplays(machine, tank);
 }

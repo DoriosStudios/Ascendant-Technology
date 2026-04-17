@@ -87,6 +87,18 @@
           }
         ]
       },
+      // Dual Siever
+      {
+        "array_name": "variables",
+        "operation": "insert_back",
+        "value": [
+          {
+            "requires": "($temp_container_title = 'entity.utilitycraft:dual_siever.name')",
+            "$screen_content": "dual_siever.utility_panel",
+            "$screen_bg_content": "common.screen_background"
+          }
+        ]
+      },
       // Abysall Fisher
       {
         "array_name": "variables",

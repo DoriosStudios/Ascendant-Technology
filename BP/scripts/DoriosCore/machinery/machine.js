@@ -428,6 +428,49 @@ function appendLabelFooterSections(labelText, lines) {
     return `${base}\n\n${sanitized.join("\n")}`.trim();
 }
 
+function resolveTelemetryDisplayModel(extraLore, options) {
+    const explicitModel = options?.displayModel;
+    if (explicitModel === "legacy" || explicitModel === "minimal") {
+        return explicitModel;
+    }
+
+    if (Array.isArray(extraLore) && extraLore.length > 0) {
+        return "minimal";
+    }
+
+    return "legacy";
+}
+
+function buildMachineLabelText(machine, {
+    title,
+    titleColor,
+    costText,
+    displayModel
+}) {
+    const overclockClock = Number(machine?.boosts?.overclockClock ?? 1);
+    const overclockLine = overclockClock > 1
+        ? `\n§r§6Overclocked x${overclockClock.toFixed(2)}`
+        : "";
+
+    if (displayModel === "minimal") {
+        return `§r${titleColor}${title}!${overclockLine}`.trim();
+    }
+
+    const efficiency = ((1 / machine.boosts.consumption) * 100).toFixed(0);
+    const rateText = Energy.formatEnergyToText(Math.floor(machine.baseRate));
+
+    return `
+§r${titleColor}${title}!
+
+§r${COLORS.green}Speed x${machine.boosts.speed.toFixed(2)}
+§r${COLORS.green}Efficiency ${efficiency}%%
+§r${COLORS.green}Cost ${costText}
+
+§r${COLORS.red}Rate ${rateText}/t
+${overclockLine}
+    `.trim();
+}
+
 /**
  * Builds a formatted overclock line for HUD/lore when the machine is overclocked.
  *
@@ -913,8 +956,29 @@ export class Machine {
             range = this.inv.size - 1;
         }
 
+        const normalizedRange = typeof range === "number" ? [range, range] : range;
+        if (!Array.isArray(normalizedRange) || normalizedRange.length !== 2) return false;
+
+        const [startSlot, endSlot] = normalizedRange;
+        const readSourceSignature = () => {
+            const signature = [];
+            for (let slot = startSlot; slot <= endSlot; slot++) {
+                const item = this.inv.getItem(slot);
+                signature.push(item ? `${item.typeId}:${item.amount}` : "");
+            }
+            return signature;
+        };
+
+        const before = readSourceSignature();
+
         DoriosAPI.containers.transferItemsAt(this.inv, targetLoc, this.dim, range);
-        return true;
+
+        const after = readSourceSignature();
+        for (let index = 0; index < before.length; index++) {
+            if (before[index] !== after[index]) return true;
+        }
+
+        return false;
     }
 
     pullItemsFromAbove(targetSlot) {
@@ -930,7 +994,6 @@ export class Machine {
         if (!inputContainer) return false;
 
         const targetItem = inv.getItem(targetSlot);
-        let transferred = false;
         for (let i = 0; i < inputContainer.size; i++) {
             const inputItem = inputContainer.getItem(i);
             if (!inputItem) continue;
@@ -939,7 +1002,7 @@ export class Machine {
 
             if (!targetItem) {
                 inv.setItem(targetSlot, inputItem)
-                inputContainer.setItem(i,);
+                inputContainer.setItem(i, undefined);
                 return true
             }
 
@@ -951,14 +1014,16 @@ export class Machine {
             targetItem.amount += amount;
             inv.setItem(targetSlot, targetItem);
             if (inputItem.amount - amount <= 0) {
-                inputContainer.setItem(i,);
+                inputContainer.setItem(i, undefined);
             } else {
                 inputItem.amount -= amount
                 inputContainer.setItem(i, inputItem);
             }
 
-            return transferred;
+            return true;
         }
+
+        return false;
     }
 
     setLabel(content, slot = 1) {
@@ -1114,27 +1179,21 @@ export class Machine {
         this.displayEnergy();
         this.off()
         const { title, requirements } = extractMessageParts(message, "Warning");
-        const efficiency = ((1 / this.boosts.consumption) * 100).toFixed(0);
-        const rateText = Energy.formatEnergyToText(Math.floor(this.baseRate));
-        const overclockClock = Number(this.boosts.overclockClock ?? 1);
-        const overclockLine = overclockClock > 1 ? `\n§r§6Overclocked x${overclockClock.toFixed(2)}` : "";
+        const displayModel = resolveTelemetryDisplayModel(extraLore, options);
 
-        let labelText = `
-§r${COLORS.yellow}${title}!
-
-§r${COLORS.green}Speed x${this.boosts.speed.toFixed(2)}
-§r${COLORS.green}Efficiency ${efficiency}%%
-§r${COLORS.green}Cost ---
-
-§r${COLORS.red}Rate ${rateText}/t
-${overclockLine}
-        `.trim();
+        let labelText = buildMachineLabelText(this, {
+            title,
+            titleColor: COLORS.yellow,
+            costText: "---",
+            displayModel
+        });
 
         if (options?.footerLines) {
             labelText = appendLabelFooterSections(labelText, options.footerLines);
         }
 
-        const lore = buildRequirementLore(requirements);
+        const includeRequirementLore = options?.includeRequirementLore === true;
+        const lore = includeRequirementLore ? buildRequirementLore(requirements) : [];
         if (Array.isArray(extraLore) && extraLore.length) {
             if (lore.length > 0) lore.push(" ");
             lore.push(...extraLore);
@@ -1151,22 +1210,15 @@ ${overclockLine}
         this.displayEnergy();
         this.displayOverclock();
         const { title, requirements } = extractMessageParts(message, "Operational");
-        const efficiency = ((1 / this.boosts.consumption) * 100).toFixed(0);
+        const displayModel = resolveTelemetryDisplayModel(extraLore, options);
         const costText = Energy.formatEnergyToText(this.getEnergyCost() * this.boosts.consumption);
-        const rateText = Energy.formatEnergyToText(Math.floor(this.baseRate));
-        const overclockClock = Number(this.boosts.overclockClock ?? 1);
-        const overclockLine = overclockClock > 1 ? `\n§r§6Overclocked x${overclockClock.toFixed(2)}` : "";
 
-        let labelText = `
-§r${COLORS.darkGreen}${title}!
-
-§r${COLORS.green}Speed x${this.boosts.speed.toFixed(2)}
-§r${COLORS.green}Efficiency ${efficiency}%%
-§r${COLORS.green}Cost ${costText}
-
-§r${COLORS.red}Rate ${rateText}/t
-    ${overclockLine}
-        `.trim();
+        let labelText = buildMachineLabelText(this, {
+            title,
+            titleColor: COLORS.darkGreen,
+            costText,
+            displayModel
+        });
 
         if (options?.footerLines) {
             labelText = appendLabelFooterSections(labelText, options.footerLines);

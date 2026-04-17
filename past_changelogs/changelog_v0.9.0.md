@@ -24,6 +24,10 @@ Heavy processing and block automation take center stage in this draft, with new 
   - Superior version of Autosieve with 4 input slots, 1 mesh chamber, and 15 output slots.
   - Processes one material stream in grouped spin cycles instead of single-item sieving.
   - Can optionally consume Steam to accelerate larger sieve batches.
+- Added **Dual Siever**
+  - Superior split-path siever with two independent mesh lanes in one machine.
+  - Shares energy, upgrades, steam tank, and output buffering across both lanes.
+  - Can process both lanes in the same cycle when resources are available.
 - Added **Genetic Seed Synthesizer**
   - Superior version of Seed Synthesizer with 4 seed input lanes and 15 output slots.
   - Can switch between Growth, Resilience, and Yield profiles.
@@ -37,8 +41,6 @@ Heavy processing and block automation take center stage in this draft, with new 
     - Instantly smelt items into their molten forms, using lava as an optional booster.
     - Accepts four upgrades.
     - Supports Quantity Upgrades for larger grouped batches.
-- Removed **Dismantler** from this draft scope.
-  - The machine and its recovery flow were discontinued before release.
 - Added **Pattern Placer**
   - Superior version of Block Placer with 4 input slots and different modes.
   - Has four modes:
@@ -64,7 +66,7 @@ Heavy processing and block automation take center stage in this draft, with new 
 
 ## TECHNICAL CHANGES
 ### Runtime Registration
-- Added native runtime registration for Pulverizer, Centrifugal Siever, Genetic Seed Synthesizer, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
+- Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
 - Removed the native Dismantler runtime stack (block, recipe, machine script, UI definition, textures, item catalog entry, and related localization entries).
 - Removed the generated Dismantler reverse-recipe registry and its supporting generation tooling from the active runtime.
 - Added a native Pulverizer crusher-recipe registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_crusher_recipe` custom insertions.
@@ -76,11 +78,39 @@ Heavy processing and block automation take center stage in this draft, with new 
   - It now affects processing speed only, preventing output inflation without matching input consumption.
 - Industrial Burner charging now respects per-recipe time windows when calculating progress gain.
   - Speed-related boosts now change throughput more consistently instead of collapsing into near-constant craft timing.
-- Migrated superior machine button runtime to the shared global button pipeline in `DoriosCore/buttons/index.js`.
-  - Removed the deprecated legacy runtime module at `BP/scripts/DoriosCore/machinery/buttonPanel.js`.
-  - Updated superior machine scripts to the simplified `syncButtonPanel` usage expected by the global runtime.
-  - Updated superior machine UI button slots to `machineryCommon.machine_button` and explicitly loaded `ui/machineryCommon.json` in `_ui_defs.json`.
 - Added shared runtime optimizations for high-traffic machine loops.
   - Reduced redundant block-entity lookups through cached machine entity resolution.
   - Reduced repeated direct recipe-array scans in Arc-Press Forge, Industrial Burner, and Pulverizer.
   - Reduced redundant overclock property writes across towers, relays, and connected machines.
+- Optimized Absolute Container runtime behavior under sustained full-output conditions.
+  - Added cached block-context and entity-runtime state to reduce repeated lookup and manager initialization cost.
+  - Replaced per-tick capacity rewrites with one-time runtime initialization.
+  - Added adaptive output-transfer backoff with consecutive-failure escalation (drastic cooldown after repeated failed sends) and throttled HUD display refreshes.
+- Expanded adaptive machine I/O throttling to additional high-traffic runtime loops.
+  - Industrial Burner, Centrifugal Siever, Genetic Seed Synthesizer, and Vaporworks Processor now use movement-aware adaptive gates for repeated item/fluid checks.
+  - Repeated failed checks now back off more aggressively, while successful movement restores responsive polling.
+- Updated core machine transfer helpers to report real movement outcomes for adaptive control flow.
+  - Item pulls from above and side transfers now return accurate moved/not-moved state for downstream scheduling logic.
+- Optimized reinforced cable / overclock network scan paths and refresh scheduling.
+  - Replaced shift-based BFS queue traversal with index-based scans in reinforced cable, overclock, and reinforced extractor network walkers.
+  - Added tick-level deduplication for reinforced cable geometry and energy rescan scheduling to avoid duplicate recomputes in dense placement/break events.
+- Updated Dual Siever batch drop flow to use mapped autosieve-style rolls before batch expansion.
+  - The machine now simulates normal autosieve rolls per consumed input (independent roll + chance per roll), stores mapped results, then applies batch expansion to the mapped output.
+  - Batch processing no longer mutates base drop entry values directly.
+- Updated Abyssal Fisher and Centrifugal Siever output handling to clamp rolled results against live output capacity before insertion.
+  - Prevents full-stack edge cases from forcing avoidable `Output Full` stalls when only part of a batch can be stored.
+  - Reduces emergency spill behavior by reserving valid output space first, then inserting only the reservable portion.
+- Removed manual fluid item input slots from superior-machine UIs and runtime container mappings.
+  - Abyssal Fisher (`Water Input`), Centrifugal Siever / Dual Siever / Pulverizer (`Steam Input`), Genetic Seed Synthesizer (`Cryofluid Input`), and Industrial Burner (`Lava Input`) now use tank/network flow paths without dedicated item input cells.
+  - Updated script-side slot blocking and block `hidden_slots` metadata so deprecated fluid-input indices no longer appear as active operator slots.
+- Refactored superior-machine status lore into structured display sections.
+  - Added shared lore section helpers in DoriosCore to keep heading/metric formatting consistent across machines.
+  - Arc-Press Forge, Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Abyssal Fisher, Pattern Placer, and Seismic Breaker now separate machine telemetry, operation context, and last-batch/action feedback into distinct categories.
+  - Dual Siever now presents per-lane information in dedicated lane sections, improving readability in Individual mode.
+  - Reduced lore verbosity by removing repeated machine telemetry and long descriptions, keeping only core operational metrics per section.
+  - Removed duplicated generic warning text from superior lore sections and standardized section titles to cyan (`§b`) across all superior machines.
+  - Added a shared superior utility module (`machines/superior/utils.js`) to centralize non-essential conversion/format helpers used by lore and footer displays.
+  - Migrated superior machine scripts to use the shared conversion helpers for energy buffers, tank buffers, batch labels, percentage formatting, cycle-time text, and mixed energy+fluid cost lines.
+  - Converted superior status/warning labels to the minimal structured model and removed the legacy generic telemetry group (`Speed`, `Efficiency`, `Cost`, `Rate`) from those displays.
+- Added missing nineslice JSON metadata for inverted UI cell texture variants used by superior machine buttons.
+- Updated superior machine button states to swap base and hover cell imagery while keeping dedicated button textures through UtilityCraft UI Core controls.

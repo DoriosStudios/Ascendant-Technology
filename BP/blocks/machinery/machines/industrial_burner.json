@@ -28,17 +28,16 @@
 					"rate_speed_base": 9600,
 					"fluid_cap": 32000,
 					"upgrades": [6, 7, 8, 17],
-					"hidden_slots": [18, 19]
+					"hidden_slots": [9, 18, 19]
 				}
 			},
 			"utilitycraft:special_container": {
 				"Input Lanes": [3, 4, 5],
 				"Upgrade Slots": [6, 7, 8, 17],
-				"Lava Input": 9,
 				"Lava Tank": 10,
 				"Output Lanes": [11, 12, 13],
 				"Lane Progress": [14, 15, 16],
-				"Hidden Slots": [18, 19]
+				"Hidden Slots": [9, 18, 19]
 			},
 			"utilitycraft:machine_recipes": {
 				"type": "industrial_burner"

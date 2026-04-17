@@ -91,12 +91,13 @@ function scanForOverclockSource(block) {
     const dim = block.dimension;
     const start = block.location;
     const queue = [start];
+    let queueIndex = 0;
     const visited = new Set();
     let best = { level: 0, effectiveness: 0, pos: null };
     let steps = 0;
 
-    while (queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
-        const pos = queue.shift();
+    while (queueIndex < queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
+        const pos = queue[queueIndex++];
         const k = key(pos);
         if (visited.has(k)) continue;
         visited.add(k);
@@ -123,13 +124,14 @@ function collectOverclockTargets(startBlock) {
     const dim = startBlock.dimension;
     const start = startBlock.location;
     const queue = [start];
+    let queueIndex = 0;
     const visited = new Set();
     const machineKeys = new Set();
     const machines = [];
     let steps = 0;
 
-    while (queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
-        const pos = queue.shift();
+    while (queueIndex < queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
+        const pos = queue[queueIndex++];
         const k = key(pos);
         if (visited.has(k)) continue;
         visited.add(k);
@@ -178,13 +180,14 @@ function collectEnergyTargets(startBlock, sourceEntity) {
     const dim = startBlock.dimension;
     const start = startBlock.location;
     const queue = [start];
+    let queueIndex = 0;
     const visited = new Set();
     const entityKeys = new Set();
     const targets = [];
     let steps = 0;
 
-    while (queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
-        const pos = queue.shift();
+    while (queueIndex < queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
+        const pos = queue[queueIndex++];
         const k = key(pos);
         if (visited.has(k)) continue;
         visited.add(k);
@@ -270,12 +273,13 @@ function collectRelaysFrom(block) {
     const dim = block.dimension;
     const start = block.location;
     const queue = [start];
+    let queueIndex = 0;
     const visited = new Set();
     const relays = [];
     let steps = 0;
 
-    while (queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
-        const pos = queue.shift();
+    while (queueIndex < queue.length && steps < OVERCLOCK.limits.maxScanNodes) {
+        const pos = queue[queueIndex++];
         const k = key(pos);
         if (visited.has(k)) continue;
         visited.add(k);

@@ -1,18 +1,24 @@
 import { EnchantmentTypes, ItemStack } from "@minecraft/server";
 import {
     Machine,
-    Energy,
     FluidManager,
     applyDynamicRecipeRate,
     buildOverclockLoreLine,
+    appendLoreSection,
     extractEnchantments,
-    feedFluidSlot,
-    formatFluidDisplayName,
     formatItemName,
     syncButtonPanel,
     tickGate
 } from "../../../DoriosCore/index.js";
 import { abysallFisherConfig, abysallFisherLoot } from "../../../config/recipes/abysall_fisher.js";
+import {
+    formatBatchWithQuantity,
+    formatEnergyWithFluidCost,
+    formatFluidNeedValue,
+    formatFluidTankBuffer,
+    formatMachineEnergyBuffer,
+    formatSecondsLabel
+} from "./utils.js";
 
 const ABYSALL_FISHER = Object.freeze({
     slots: Object.freeze({
@@ -170,7 +176,7 @@ DoriosAPI.register.blockComponent("abysall_fisher", {
             machine.setEnergyCost(settings?.machine?.energy_cost ?? ABYSALL_FISHER.defaults.energyCost);
             machine.displayEnergy(ABYSALL_FISHER.slots.energy);
             machine.displayProgress(ABYSALL_FISHER.slots.progress);
-            machine.blockSlots([ABYSALL_FISHER.slots.waterDisplay]);
+            machine.blockSlots([ABYSALL_FISHER.slots.waterDisplay, ABYSALL_FISHER.slots.waterInput]);
 
             const tank = getWaterTank(machine, settings);
             tank.display(ABYSALL_FISHER.slots.waterDisplay);
@@ -200,10 +206,7 @@ DoriosAPI.register.blockComponent("abysall_fisher", {
 
         if (tickGate(machine.entity, "abysall_fisher:inputs_cd", ABYSALL_FISHER.transfer.inputPullIntervalTicks)) {
             machine.pullItemsFromAbove(ABYSALL_FISHER.slots.net);
-            machine.pullItemsFromAbove(ABYSALL_FISHER.slots.waterInput);
         }
-
-        feedFluidSlot(machine, tank, ABYSALL_FISHER.slots.waterInput);
 
         const netItem = machine.inv.getItem(ABYSALL_FISHER.slots.net);
         const netData = resolveNetParams(netItem);
@@ -629,7 +632,21 @@ function buildReferenceRecipe(energyCost, cycleSeconds) {
 
 function processBatch(machine, operation, tank) {
     const drops = rollBatchDrops(operation);
-    const preview = simulateDropStorage(machine?.inv, drops, ABYSALL_FISHER.slots.outputs);
+    const cappedDrops = clampDropStacksToAvailableCapacity(machine?.inv, drops, ABYSALL_FISHER.slots.outputs);
+    if (drops.length > 0 && cappedDrops.length <= 0) {
+        return {
+            completed: false,
+            preventedOverflow: true,
+            message: "Output Full",
+            produced: 0,
+            uniqueOutputs: 0,
+            overflow: drops.reduce((sum, stack) => sum + Math.max(0, Number(stack?.amount) || 0), 0),
+            waterUsed: 0,
+            rolledStacks: drops.length
+        };
+    }
+
+    const preview = simulateDropStorage(machine?.inv, cappedDrops, ABYSALL_FISHER.slots.outputs);
     if (!preview.completed) {
         return {
             completed: false,
@@ -639,7 +656,7 @@ function processBatch(machine, operation, tank) {
             uniqueOutputs: 0,
             overflow: preview.overflowCount,
             waterUsed: 0,
-            rolledStacks: drops.length
+            rolledStacks: cappedDrops.length
         };
     }
 
@@ -647,7 +664,7 @@ function processBatch(machine, operation, tank) {
         tank.consume(operation.waterCost);
     }
 
-    const distribution = storeDropsInMachine(machine, drops, machine.block.center());
+    const distribution = storeDropsInMachine(machine, cappedDrops, machine.block.center());
 
     return {
         completed: true,
@@ -655,7 +672,7 @@ function processBatch(machine, operation, tank) {
         uniqueOutputs: distribution.uniqueTypes,
         overflow: distribution.overflowCount,
         waterUsed: operation.waterCost,
-        rolledStacks: drops.length
+        rolledStacks: cappedDrops.length
     };
 }
 
@@ -953,6 +970,36 @@ function storeDropsInMachine(machine, drops, overflowLoc) {
         overflowCount,
         uniqueTypes: insertedTypes.size
     };
+}
+
+function clampDropStacksToAvailableCapacity(container, drops, slots) {
+    if (!container || !Array.isArray(drops) || !Array.isArray(slots)) {
+        return [];
+    }
+
+    const slotStates = slots.map(slot => {
+        const stack = container.getItem(slot);
+        return {
+            slot,
+            stack: stack ? cloneItemStack(stack, stack.amount) : null
+        };
+    });
+
+    const clamped = [];
+    for (const stack of drops) {
+        if (!stack?.typeId || !Number.isFinite(stack.amount) || stack.amount <= 0) continue;
+
+        const requestedAmount = Math.max(0, Math.floor(Number(stack.amount) || 0));
+        if (requestedAmount <= 0) continue;
+
+        const simulatedStack = cloneItemStack(stack, requestedAmount);
+        const insertableAmount = insertItemIntoSlotStates(slotStates, simulatedStack);
+        if (insertableAmount <= 0) continue;
+
+        clamped.push(cloneItemStack(stack, insertableAmount));
+    }
+
+    return clamped;
 }
 
 function simulateDropStorage(container, drops, slots) {
@@ -1633,10 +1680,8 @@ function isQuantityUpgradeItem(item) {
 function buildModeButtonLore(mode) {
     return [
         `§7${mode.summary}`,
-        `§7Batch Casts: §f${mode.batchSizes[0]}-${mode.batchSizes[mode.batchSizes.length - 1]}`,
-        `§7Water per Cast: §f${FluidManager.formatFluid(mode.waterPerCast)}`,
-        `§7Tier Bonus: §f+${mode.tierBonus}`,
-        `§7Luck Bonus: §f+${mode.luckBonus}`
+        `§7Casts: §f${mode.batchSizes[0]}-${mode.batchSizes[mode.batchSizes.length - 1]}`,
+        `§7Water/Cast: §f${formatFluidNeedValue(mode.waterPerCast)}`
     ];
 }
 
@@ -1650,59 +1695,87 @@ function buildMachineLore(machine, tank, context = {}) {
     const quantityLevel = Number(context.quantityLevel ?? 0);
     const castCount = Number(context.castCount ?? getCastCount(mode, quantityLevel));
     const totalRolls = Number(context.totalRolls ?? 0);
-    const outputPlan = context.outputPlan ?? null;
     const lastBatch = context.lastBatch ?? null;
-    const tankAmount = FluidManager.formatFluid(tank?.get() ?? 0);
-    const tankCap = FluidManager.formatFluid(tank?.getCap() ?? 0);
-    const lines = [
-        `§7Water Tank: §f${formatFluidDisplayName(ABYSALL_FISHER.water.type)} ${tankAmount} §7/ §f${tankCap}`,
-        `§7Mode: §f${mode.title}`,
-        `§7Focus: §f${mode.summary}`,
-        `§7Environment: §f${environment.label}`,
-        `§7Nearby Water: §f${environment.nearbyWater}`,
-        `§7Depth: §fY${environment.depth}`,
-        `§7Dimension: §f${environment.dimensionId.replace("minecraft:", "")}`,
-        `§7Net: §f${context.netItemId ? formatItemName(context.netItemId) : "None"}`,
-        `§7Effective Tier: §f${context.effectiveTier ?? 0}`,
-        `§7Effective Luck: §f${Math.round(context.effectiveLuck ?? 0)}`,
-        `§7Luck of Sea Eq.: §f${Number(context.luckOfTheSeaEquivalent ?? 0).toFixed(2)}`,
-        `§7Category Bias: §fF ${Math.round((context.categoryWeights?.fish ?? 0) * 100)}% §7/ J ${Math.round((context.categoryWeights?.junk ?? 0) * 100)}% §7/ T ${Math.round((context.categoryWeights?.treasure ?? 0) * 100)}%`,
-        `§7Batch Casts: §f${castCount} §7(Q${quantityLevel})`,
-        `§7Total Rolls: §f${totalRolls}`,
-        `§7Catch Attempts/Roll: §f${Number(context.averageLootAttemptsPerRoll ?? 0).toFixed(2)}`,
-        `§7Eligible Loot: §f${context.eligibleLoot?.length ?? 0}`,
-        `§7Expected Yield: §f${context.expectedOutputs ?? 0}`,
-        `§7Water Cost: §f${FluidManager.formatFluid(context.waterCost ?? 0)}`,
-        `§7Energy Cost: §f${Energy.formatEnergyToText(context.energyCost ?? 0)}`,
-        `§7Cycle Time: §f${Number(context.cycleSeconds ?? 0).toFixed(2)}s`,
-        `§7Output Space: §f${outputPlan?.totalSpace ?? 0}`,
-        `§7Speed: §f${machine.boosts.speed.toFixed(2)}x`,
-        `§7Efficiency: §f${((1 / machine.boosts.consumption) * 100).toFixed(0)}%`,
-        `§7Rate: §f${Energy.formatEnergyToText(Math.floor(machine.baseRate ?? 0))}/t`
+    const lines = [];
+    const overclockLine = buildOverclockLoreLine(machine)?.replace(/^§r/, "");
+
+    const machineInfo = [
+        {
+            label: "Energy",
+            value: formatMachineEnergyBuffer(machine)
+        },
+        {
+            label: "Mode",
+            value: mode.title
+        },
+        {
+            label: "Net",
+            value: context.netItemId ? formatItemName(context.netItemId) : "None"
+        },
+        {
+            label: "Water",
+            value: formatFluidTankBuffer(tank, ABYSALL_FISHER.water.type)
+        },
+        {
+            label: "Casts",
+            value: formatBatchWithQuantity(castCount, quantityLevel)
+        }
+    ];
+    if (overclockLine) machineInfo.push(overclockLine);
+
+    appendLoreSection(lines, "Machine Information", machineInfo, {
+        spacing: false
+    });
+
+    appendLoreSection(lines, "Environment Information", [
+        {
+            label: "Environment",
+            value: environment.label
+        },
+        {
+            label: "Tier",
+            value: context.effectiveTier ?? 0
+        },
+        {
+            label: "Luck",
+            value: Math.round(context.effectiveLuck ?? 0)
+        }
+    ]);
+
+    const operationInfo = [
+        {
+            label: "Expected",
+            value: context.expectedOutputs ?? 0
+        },
+        {
+            label: "Cost",
+            value: formatEnergyWithFluidCost(context.energyCost ?? 0, context.waterCost ?? 0, "Water")
+        },
+        {
+            label: "Cycle",
+            value: formatSecondsLabel(context.cycleSeconds ?? 0)
+        },
+        {
+            label: "Rolls",
+            value: totalRolls
+        }
     ];
 
-    if (context.message === "Low Water") {
-        const shortage = Math.max(0, Number(context.waterCost ?? 0) - (tank?.get() ?? 0));
-        lines.push(`§7Water Missing: §f${FluidManager.formatFluid(shortage)}`);
-    }
+    appendLoreSection(lines, "Fishing Operation", operationInfo);
 
-    if (context.message === "Net Too Weak") {
-        lines.push("§7A better fishing net or a stronger environment bonus is required.");
-    } else if (environment.description) {
-        lines.push(`§8${environment.description}`);
-    }
-
+    const batchInfo = [];
     if (lastBatch?.produced > 0) {
-        lines.push(`§8Batch stored ${lastBatch.produced} items across ${lastBatch.uniqueOutputs} outputs`);
+        batchInfo.push(`§7Stored: §f${lastBatch.produced} items §7(${lastBatch.uniqueOutputs} outputs)`);
     }
     if (lastBatch?.preventedOverflow && lastBatch.overflow > 0) {
-        lines.push(`§8Batch paused to prevent overflow of ${lastBatch.overflow} items`);
+        batchInfo.push(`§6Paused to prevent overflow: §f${lastBatch.overflow}`);
     } else if (lastBatch?.overflow > 0) {
-        lines.push(`§8Overflow dropped ${lastBatch.overflow} items`);
+        batchInfo.push(`§6Overflow dropped: §f${lastBatch.overflow}`);
     }
 
-    const overclockLine = buildOverclockLoreLine(machine);
-    if (overclockLine) lines.push(overclockLine.replace(/^§r/, ""));
+    if (batchInfo.length > 0) {
+        appendLoreSection(lines, "Last Batch", batchInfo);
+    }
 
     return lines;
 }
@@ -1713,7 +1786,7 @@ function buildFooterLines(context = {}) {
     return [
         `Mode: ${mode.title}`,
         `Env: ${environment.label}`,
-        `Casts: ${context.castCount ?? 1}`
+        `Casts: ${formatBatchWithQuantity(context.castCount ?? 1, context.quantityLevel ?? 0)}`
     ];
 }
 
@@ -1729,7 +1802,10 @@ function showMachineWarning(machine, tank, message, context = {}, resetProgress 
         message,
         resetProgress,
         buildMachineLore(machine, tank, { ...context, message }),
-        { footerLines: buildFooterLines(context) }
+        {
+            footerLines: buildFooterLines(context),
+            displayModel: "minimal"
+        }
     );
     updateDisplays(machine, tank);
 }
@@ -1739,7 +1815,10 @@ function showMachineStatus(machine, tank, message, context = {}) {
     machine.showStatus(
         message,
         buildMachineLore(machine, tank, context),
-        { footerLines: buildFooterLines(context) }
+        {
+            footerLines: buildFooterLines(context),
+            displayModel: "minimal"
+        }
     );
     updateDisplays(machine, tank);
 }

@@ -1,18 +1,16 @@
 import { system } from '@minecraft/server'
-import { Machine, Energy, FluidManager, Rotation, buildOverclockLoreLine } from '../../DoriosCore/index.js'
+import { Machine, Energy, FluidManager, Rotation, tickGate } from '../../DoriosCore/index.js'
 
 // ──────────────────────────────────────────────────────
 // CONFIGURAÇÃO
 // ──────────────────────────────────────────────────────
 
-const ABSOLUTE_CONTAINER = Object.freeze({
+const AbsoluteContainer = Object.freeze({
     capacity: Object.freeze({
         energy: 25_600_000,
         fluid: 25_600_000
     }),
     layout: Object.freeze({
-        gridCols: 14,
-        gridRows: 12,
         storageSlots: 14 * 12,
         slotEnergy: 14 * 12,
         slotFluid: (14 * 12) + 1,
@@ -22,27 +20,31 @@ const ABSOLUTE_CONTAINER = Object.freeze({
         item: 4,
         fluid: 4
     }),
+    runtime: Object.freeze({
+        hudRefreshTicks: 8,
+        gates: Object.freeze({
+            item: 'ac:item_gate',
+            fluid: 'ac:fluid_gate'
+        }),
+        itemBackoff: Object.freeze({
+            stallTicks: 12,
+            emptyTicks: 6,
+            failureEscalationThreshold: 2,
+            drasticTicks: 80
+        })
+    }),
     offsets: Object.freeze({
-    east:  [-1, 0, 0],
-    west:  [1, 0, 0],
-    north: [0, 0, 1],
-    south: [0, 0, -1],
-    up:    [0, -1, 0],
-    down:  [0, 1, 0]
+        east:  [-1, 0, 0],
+        west:  [1, 0, 0],
+        north: [0, 0, 1],
+        south: [0, 0, -1],
+        up:    [0, -1, 0],
+        down:  [0, 1, 0]
     })
 })
 
-const ENERGY_CAP = ABSOLUTE_CONTAINER.capacity.energy
-const FLUID_CAP = ABSOLUTE_CONTAINER.capacity.fluid
-const GRID_COLS = ABSOLUTE_CONTAINER.layout.gridCols
-const GRID_ROWS = ABSOLUTE_CONTAINER.layout.gridRows
-const STORAGE_SLOTS = ABSOLUTE_CONTAINER.layout.storageSlots
-const SLOT_ENERGY = ABSOLUTE_CONTAINER.layout.slotEnergy
-const SLOT_FLUID = ABSOLUTE_CONTAINER.layout.slotFluid
-const TOTAL_SLOTS = ABSOLUTE_CONTAINER.layout.totalSlots
-const CD_ITEM = ABSOLUTE_CONTAINER.cooldowns.item
-const CD_FLUID = ABSOLUTE_CONTAINER.cooldowns.fluid
-const OFFSETS = ABSOLUTE_CONTAINER.offsets
+const BLOCK_CONTEXT_CACHE = new Map()
+const ENTITY_RUNTIME_CACHE = new Map()
 
 // ──────────────────────────────────────────────────────
 // COMPONENTE DO BLOCO
@@ -77,11 +79,10 @@ DoriosAPI.register.blockComponent('absolute_container', {
         if (ctx) tick(ctx)
     },
 
-    onPlayerInteract() {
-        // Reservado para interações futuras
-    },
-
     onPlayerBreak(e) {
+        const ctx = getContext(e.block)
+        if (ctx) clearCachedState(e.block, ctx.entity)
+        else clearCachedState(e.block)
         Machine.onDestroy(e)
     }
 })
@@ -106,20 +107,20 @@ function spawnEntity(block, savedEnergy = 0, savedFluid = null) {
     // Inicializa energia
     Energy.initialize(entity)
     const energy = new Energy(entity)
-    energy.setCap(ENERGY_CAP)
+    energy.setCap(AbsoluteContainer.capacity.energy)
     if (savedEnergy > 0) energy.set(savedEnergy)
 
     // Inicializa fluido
     const fluid = FluidManager.initializeSingle(entity)
-    fluid.setCap(FLUID_CAP)
+    fluid.setCap(AbsoluteContainer.capacity.fluid)
     if (savedFluid?.amount > 0) {
         fluid.setType(savedFluid.type)
         fluid.set(savedFluid.amount)
     }
 
     // Exibe barras de HUD
-    energy.display(SLOT_ENERGY)
-    fluid.display(SLOT_FLUID)
+    energy.display(AbsoluteContainer.layout.slotEnergy)
+    fluid.display(AbsoluteContainer.layout.slotFluid)
 
     entity.nameTag = 'entity.utilitycraft:absolute_container.name'
 }
@@ -131,11 +132,31 @@ function spawnEntity(block, savedEnergy = 0, savedFluid = null) {
 function getContext(block) {
     if (!block) return null
 
+    const blockKey = getBlockKey(block)
+    const cachedEntity = BLOCK_CONTEXT_CACHE.get(blockKey)
+
+    if (cachedEntity?.isValid) {
+        const cachedInv = cachedEntity.getComponent('inventory')?.container
+        if (cachedInv && cachedInv.size >= AbsoluteContainer.layout.totalSlots) {
+            return { block, entity: cachedEntity, inv: cachedInv, dim: block.dimension }
+        }
+
+        clearCachedState(block, cachedEntity)
+    }
+
     const entity = block.dimension.getEntitiesAtBlockLocation(block.location)[0]
-    if (!entity?.isValid) return null
+    if (!entity?.isValid) {
+        BLOCK_CONTEXT_CACHE.delete(blockKey)
+        return null
+    }
 
     const inv = entity.getComponent('inventory')?.container
-    if (!inv || inv.size < TOTAL_SLOTS) return null
+    if (!inv || inv.size < AbsoluteContainer.layout.totalSlots) {
+        clearCachedState(block, entity)
+        return null
+    }
+
+    BLOCK_CONTEXT_CACHE.set(blockKey, entity)
 
     return { block, entity, inv, dim: block.dimension }
 }
@@ -143,27 +164,72 @@ function getContext(block) {
 function tick(ctx) {
     const { block, entity, inv, dim } = ctx
 
-    // Energia e Fluido
-    const energy = new Energy(entity)
-    const fluid = FluidManager.initializeSingle(entity)
-
-    // Garante capacidades
-    energy.setCap(ENERGY_CAP)
-    fluid.setCap(FLUID_CAP)
-
-    // Transferência de itens (últimos 9 slots)
-    if (cooldown(entity, 'ac:item', CD_ITEM)) {
-        transferItems(block, inv, dim)
+    if (!entity?.isValid) {
+        clearCachedState(block, entity)
+        return
     }
 
-    // Transferência de fluidos
-    if (cooldown(entity, 'ac:fluid', CD_FLUID)) {
-        fluid.transferFluids(block)
+    const state = getRuntimeState(entity)
+    if (!state) return
+
+    if (!state.capsInitialized) {
+        state.energy.setCap(AbsoluteContainer.capacity.energy)
+        state.fluid.setCap(AbsoluteContainer.capacity.fluid)
+        state.capsInitialized = true
+        state.hudCooldown = 0
     }
 
-    // Atualiza displays de HUD
-    energy.display(SLOT_ENERGY)
-    fluid.display(SLOT_FLUID)
+    let hudDirty = false
+
+    if (state.itemBackoff > 0) {
+        state.itemBackoff--
+    } else if (tickGate(entity, AbsoluteContainer.runtime.gates.item, AbsoluteContainer.cooldowns.item)) {
+        const outputStart = AbsoluteContainer.layout.storageSlots - 9
+        const outputEnd = AbsoluteContainer.layout.storageSlots - 1
+        let hasOutputItems = false
+
+        for (let slot = outputStart; slot <= outputEnd; slot++) {
+            if (inv.getItem(slot)) {
+                hasOutputItems = true
+                break
+            }
+        }
+
+        if (!hasOutputItems) {
+            state.itemFailStreak = 0
+            state.itemBackoff = AbsoluteContainer.runtime.itemBackoff.emptyTicks
+        } else {
+            const movedItems = transferItems(block, inv, dim)
+            hudDirty ||= movedItems
+
+            if (movedItems) {
+                state.itemFailStreak = 0
+                state.itemBackoff = 0
+            } else {
+                state.itemFailStreak = Math.max(0, Math.floor(Number(state.itemFailStreak) || 0) + 1)
+                state.itemBackoff = state.itemFailStreak >= AbsoluteContainer.runtime.itemBackoff.failureEscalationThreshold
+                    ? AbsoluteContainer.runtime.itemBackoff.drasticTicks
+                    : AbsoluteContainer.runtime.itemBackoff.stallTicks
+            }
+        }
+    }
+
+    if (tickGate(entity, AbsoluteContainer.runtime.gates.fluid, AbsoluteContainer.cooldowns.fluid)) {
+        const hasFluid = state.fluid.getType() !== 'empty' && state.fluid.get() > 0
+        if (hasFluid) {
+            const movedFluid = state.fluid.transferFluids(block)
+            hudDirty ||= movedFluid
+        }
+    }
+
+    if (hudDirty || state.hudCooldown <= 0) {
+        state.energy.display(AbsoluteContainer.layout.slotEnergy)
+        state.fluid.display(AbsoluteContainer.layout.slotFluid)
+        state.hudCooldown = AbsoluteContainer.runtime.hudRefreshTicks
+    } else {
+        state.hudCooldown--
+    }
+
     // Estado visual "ligado"
     setOn(block, true)
 }
@@ -172,26 +238,93 @@ function tick(ctx) {
 // UTILIDADES
 // ──────────────────────────────────────────────────────
 
-function cooldown(entity, key, ticks) {
-    const cd = entity.getDynamicProperty(key) ?? 0
-    if (cd > 0) {
-        entity.setDynamicProperty(key, cd - 1)
-        return false
+function getBlockKey(block) {
+    const { x, y, z } = block.location
+    return `${block.dimension.id}:${x},${y},${z}`
+}
+
+function getEntityKey(entity) {
+    if (!entity) return ''
+    if (typeof entity.id === 'string' && entity.id.length) return entity.id
+
+    const fallbackId = entity.scoreboardIdentity?.id
+    if (Number.isFinite(fallbackId)) return `score:${fallbackId}`
+
+    return ''
+}
+
+function clearCachedState(block, entity) {
+    if (block) {
+        BLOCK_CONTEXT_CACHE.delete(getBlockKey(block))
     }
-    entity.setDynamicProperty(key, ticks)
-    return true
+
+    const key = getEntityKey(entity)
+    if (key) {
+        ENTITY_RUNTIME_CACHE.delete(key)
+    }
+}
+
+function getRuntimeState(entity) {
+    const key = getEntityKey(entity)
+    if (!key) return null
+
+    let state = ENTITY_RUNTIME_CACHE.get(key)
+    if (state) return state
+
+    try {
+        state = {
+            energy: new Energy(entity),
+            fluid: FluidManager.initializeSingle(entity),
+            capsInitialized: false,
+            hudCooldown: 0,
+            itemBackoff: 0,
+            itemFailStreak: 0
+        }
+    } catch {
+        return null
+    }
+
+    ENTITY_RUNTIME_CACHE.set(key, state)
+    return state
 }
 
 function transferItems(block, inv, dim) {
     const facing = block.getState?.('utilitycraft:axis')
-    const off = OFFSETS[facing]
-    if (!off) return
+    const off = AbsoluteContainer.offsets[facing]
+    if (!off) return false
 
     const loc = block.location
     const target = { x: loc.x + off[0], y: loc.y + off[1], z: loc.z + off[2] }
 
-    // Transfere slots 159-167 (últimos 9 do grid)
-    DoriosAPI.containers.transferItemsAt(inv, target, dim, [STORAGE_SLOTS - 9, STORAGE_SLOTS - 1])
+    const targetData = DoriosAPI.containers.getContainerAt(target, dim)
+    if (!targetData?.container) return false
+
+    const transferTarget = targetData.entity ?? targetData.block ?? targetData.container
+    if (!transferTarget) return false
+
+    const range = [
+        AbsoluteContainer.layout.storageSlots - 9,
+        AbsoluteContainer.layout.storageSlots - 1
+    ]
+
+    const before = []
+    for (let slot = range[0]; slot <= range[1]; slot++) {
+        const item = inv.getItem(slot)
+        before.push(item ? `${item.typeId}:${item.amount}` : '')
+    }
+
+    // Transfer slots 159-167 (last 9 of the storage grid)
+    DoriosAPI.containers.transferItems(inv, transferTarget, range)
+
+    let index = 0
+    for (let slot = range[0]; slot <= range[1]; slot++) {
+        const item = inv.getItem(slot)
+        const after = item ? `${item.typeId}:${item.amount}` : ''
+        if (after !== before[index]) return true
+        index++
+    }
+
+    return false
 }
 
 function setOn(block, on) {

@@ -6,8 +6,8 @@ import {
     findRecipeByInputId,
     resolveRecipeTimeSeconds,
     buildOverclockLoreLine,
-    tickGate,
-    feedFluidSlot,
+    ADAPTIVE_CHECK_RESULT,
+    runAdaptiveTickGate,
     formatItemName,
     formatFluidDisplayName
 } from "../../DoriosCore/index.js";
@@ -35,7 +35,14 @@ const INDUSTRIAL_BURNER = Object.freeze({
         tickIntervalTicks: 2
     }),
     transfer: Object.freeze({
-        itemIntervalTicks: 4
+        itemIntervalTicks: 4,
+        itemAdaptive: Object.freeze({
+            interval: 4,
+            idleBackoffTicks: 8,
+            stallBackoffTicks: 12,
+            failureEscalationThreshold: 2,
+            drasticBackoffTicks: 48
+        })
     }),
     quantity: Object.freeze({
         maxLevel: 4,
@@ -58,6 +65,7 @@ DoriosAPI.register.blockComponent("industrial_burner", {
             machine.setEnergyCost(settings?.machine?.energy_cost ?? INDUSTRIAL_BURNER.defaults.energyCost);
             machine.displayEnergy(INDUSTRIAL_BURNER.slots.energy);
             machine.blockSlots([
+                INDUSTRIAL_BURNER.slots.lavaInput,
                 INDUSTRIAL_BURNER.slots.lavaDisplay,
                 ...INDUSTRIAL_BURNER.slots.laneProgress,
                 ...INDUSTRIAL_BURNER.slots.hidden
@@ -99,15 +107,31 @@ DoriosAPI.register.blockComponent("industrial_burner", {
         const batchSize = getBatchSize(quantityLevel);
         const yieldBoost = Math.max(1, machine.boosts.overclockYield ?? 1);
 
-        if (tickGate(machine.entity, "industrial_burner:items_cd", INDUSTRIAL_BURNER.transfer.itemIntervalTicks)) {
-            for (const slot of INDUSTRIAL_BURNER.slots.inputs) {
-                machine.pullItemsFromAbove(slot);
-            }
-            machine.pullItemsFromAbove(INDUSTRIAL_BURNER.slots.lavaInput);
-            transferOutputLanes(machine);
-        }
+        runAdaptiveTickGate(
+            machine.entity,
+            "industrial_burner:item_io",
+            INDUSTRIAL_BURNER.transfer.itemAdaptive,
+            () => {
+                const hasOutputItems = INDUSTRIAL_BURNER.slots.outputs.some(slot => !!machine.inv.getItem(slot));
+                const hasInputRoom = INDUSTRIAL_BURNER.slots.inputs.some(slot => {
+                    const stack = machine.inv.getItem(slot);
+                    return !stack || stack.amount < stack.maxAmount;
+                });
 
-        feedFluidSlot(machine, tank, INDUSTRIAL_BURNER.slots.lavaInput);
+                if (!hasOutputItems && !hasInputRoom) {
+                    return ADAPTIVE_CHECK_RESULT.idle;
+                }
+
+                let moved = transferOutputLanes(machine);
+                for (const slot of INDUSTRIAL_BURNER.slots.inputs) {
+                    moved = machine.pullItemsFromAbove(slot) || moved;
+                }
+
+                return moved
+                    ? ADAPTIVE_CHECK_RESULT.moved
+                    : ADAPTIVE_CHECK_RESULT.stalled;
+            }
+        );
         tank.display(INDUSTRIAL_BURNER.slots.lavaDisplay);
         machine.displayEnergy(INDUSTRIAL_BURNER.slots.energy);
 

@@ -43,6 +43,9 @@
 	"utilitycraft:centrifugal_siever": {
 		"sound": "metal"
 	},
+	"utilitycraft:dual_siever": {
+		"sound": "metal"
+	},
 	"utilitycraft:abysall_fisher": {
 		"sound": "metal"
 	},

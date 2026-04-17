@@ -1,11 +1,15 @@
 import { BlockPermutation } from '@minecraft/server'
 import {
     Machine,
-    Energy,
     buildOverclockLoreLine,
+    appendLoreSection,
     formatItemName,
     syncButtonPanel
 } from '../../../DoriosCore/index.js'
+import {
+    formatEnergyCost,
+    formatMachineEnergyBuffer
+} from './utils.js'
 
 const PATTERN_PLACER = Object.freeze({
     slots: Object.freeze({
@@ -442,66 +446,107 @@ function executeOperation(operation) {
 
 function buildModeButtonLore(mode) {
     const lines = [
-        `§7${mode.description}`
+        `§7Pattern: §f${mode.title}`
     ]
 
     if (mode.id === PATTERN_PLACER.modes.line.id) {
-        lines.push(`§7Forward Length: §f${mode.length ?? PATTERN_PLACER.defaults.lineLength}`)
+        lines.push(`§7Length: §f${mode.length ?? PATTERN_PLACER.defaults.lineLength}`)
     } else if (mode.id === PATTERN_PLACER.modes.cube3x3x3.id) {
-        lines.push('§7Placement Volume: §f27 blocks')
-        lines.push('§7Grid Offset: §f+1Y')
+        lines.push('§7Area: §f3x3x3')
     } else if (mode.id === PATTERN_PLACER.modes.plane3x3.id) {
-        lines.push('§7Placement Face: §f9 blocks')
-        lines.push('§7Grid Offset: §f+1Y')
+        lines.push('§7Area: §f3x3')
     } else {
-        lines.push('§7Placement Face: §f1 block')
+        lines.push('§7Area: §f1x1')
     }
-
-    lines.push('§7Energy cost scales with the amount of blocks placed.')
     return lines
 }
 
 function buildMachineLore(operation = {}) {
     const machine = operation.machine
-    const lines = [
-        `§bMode: §f${operation.mode?.title ?? '1x1'}`,
-        `§7${operation.mode?.description ?? ''}`,
-        `§7Available Blocks: §f${operation.availableInputCount ?? 0}`,
-        `§7Target Slots: §f${operation.placeableTargets?.length ?? 0}`,
-        `§7Blocked Positions: §f${operation.blockedCount ?? 0}`,
-        `§7Placements Ready: §f${operation.placeCount ?? 0}`,
-        `§cCost: §f${Energy.formatEnergyToText(operation.energyCost ?? 0)}`,
-        `§7Speed: §f${machine?.boosts?.speed?.toFixed?.(2) ?? '1.00'}x`,
-        `§7Efficiency: §f${(((1 / (machine?.boosts?.consumption ?? 1)) * 100)).toFixed(0)}%`,
-        `§7Rate: §f${Energy.formatEnergyToText(Math.floor(machine?.baseRate ?? 0))}/t`
+    const lines = []
+    const overclockLine = buildOverclockLoreLine(machine)?.replace(/^§r/, '')
+
+    const machineInfo = [
+        {
+            label: 'Energy',
+            value: formatMachineEnergyBuffer(machine)
+        },
+        {
+            label: 'Mode',
+            value: operation.mode?.title ?? '1x1'
+        }
+    ]
+    if (overclockLine) machineInfo.push(overclockLine)
+
+    appendLoreSection(lines, 'Machine Information', machineInfo, {
+        spacing: false
+    })
+
+    const placementInfo = [
+        {
+            label: 'Available',
+            value: operation.availableInputCount ?? 0
+        },
+        {
+            label: 'Targets',
+            value: operation.placeableTargets?.length ?? 0
+        },
+        {
+            label: 'To Place',
+            value: operation.placeCount ?? 0
+        },
+        {
+            label: 'Cost',
+            value: formatEnergyCost(operation.energyCost ?? 0)
+        }
     ]
 
-    if (operation.mode?.id === PATTERN_PLACER.modes.line.id) {
-        lines.push(`§7Line Length: §f${operation.lineLength}`)
-    } else if (
-        operation.mode?.id === PATTERN_PLACER.modes.plane3x3.id ||
-        operation.mode?.id === PATTERN_PLACER.modes.cube3x3x3.id
-    ) {
-        lines.push('§7Grid Offset: §f+1Y')
+    if ((operation.blockedCount ?? 0) > 0) {
+        placementInfo.push({
+            label: 'Blocked',
+            value: operation.blockedCount
+        })
     }
 
+    if (operation.mode?.id === PATTERN_PLACER.modes.line.id) {
+        placementInfo.push({
+            label: 'Length',
+            value: operation.lineLength
+        })
+    }
+
+    appendLoreSection(lines, 'Placement Information', placementInfo)
+
+    const targetInfo = []
     if (operation.inputStack?.typeId) {
-        lines.push(`§7Input Block: §f${formatItemName(operation.inputStack.typeId)}`)
+        targetInfo.push({
+            label: 'Input Block',
+            value: formatItemName(operation.inputStack.typeId)
+        })
     }
 
     if (operation.anchorBlock?.typeId) {
-        lines.push(`§7Front Block: §f${formatItemName(operation.anchorBlock.typeId)}`)
+        targetInfo.push({
+            label: 'Front Block',
+            value: formatItemName(operation.anchorBlock.typeId)
+        })
     }
 
+    if (targetInfo.length > 0) {
+        appendLoreSection(lines, 'Target Information', targetInfo)
+    }
+
+    const lastAction = []
     if (operation.result?.failedCount > 0) {
-        lines.push(`§6Skipped Positions: §f${operation.result.failedCount}`)
+        lastAction.push(`§6Skipped Positions: §f${operation.result.failedCount}`)
     }
     if (operation.result?.placedCount > 0) {
-        lines.push(`§8Placed ${operation.result.placedCount} block(s)`)
+        lastAction.push(`§7Placed: §f${operation.result.placedCount} block(s)`)
     }
 
-    const overclockLine = buildOverclockLoreLine(machine)
-    if (overclockLine) lines.push(overclockLine.replace(/^§r/, ''))
+    if (lastAction.length > 0) {
+        appendLoreSection(lines, 'Last Action', lastAction)
+    }
 
     return lines
 }
@@ -513,11 +558,6 @@ function buildFooterLines(operation = {}) {
 
     if (operation.mode?.id === PATTERN_PLACER.modes.line.id) {
         lines.push(`Length: ${operation.lineLength}`)
-    } else if (
-        operation.mode?.id === PATTERN_PLACER.modes.plane3x3.id ||
-        operation.mode?.id === PATTERN_PLACER.modes.cube3x3x3.id
-    ) {
-        lines.push('Grid: +1Y')
     }
 
     return lines
@@ -534,7 +574,10 @@ function showMachineWarning(machine, message, operation = {}, resetProgress = fa
         message,
         resetProgress,
         buildMachineLore(operation),
-        { footerLines: buildFooterLines(operation) }
+        {
+            footerLines: buildFooterLines(operation),
+            displayModel: 'minimal'
+        }
     )
     updateDisplays(machine)
 }
@@ -544,7 +587,10 @@ function showMachineStatus(machine, message, operation = {}) {
     machine.showStatus(
         message,
         buildMachineLore(operation),
-        { footerLines: buildFooterLines(operation) }
+        {
+            footerLines: buildFooterLines(operation),
+            displayModel: 'minimal'
+        }
     )
     updateDisplays(machine)
 }

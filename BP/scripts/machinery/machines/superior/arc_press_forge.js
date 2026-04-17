@@ -3,12 +3,19 @@ import {
     Machine,
     applyDynamicRecipeRate,
     buildOverclockLoreLine,
+    appendLoreSection,
     findRecipeByInputId,
     formatItemName,
     syncButtonPanel,
     tickGate
 } from '../../../DoriosCore/index.js'
 import { getArcPressForgeRecipes } from '../../../config/recipes/arc_press_forge.js'
+import {
+    formatBatchWithQuantity,
+    formatEnergyCost,
+    formatMachineEnergyBuffer,
+    formatPercentFromRatio
+} from './utils.js'
 
 const ARC_PRESS_FORGE = Object.freeze({
     slots: Object.freeze({
@@ -606,61 +613,94 @@ function isQuantityUpgradeItem(item) {
 function buildModeButtonLore(mode) {
     if (mode.id === ARC_PRESS_FORGE.modes.low_loss.id) {
         return [
-            '§72.0x base speed.',
-            '§7Treats matching inputs as one combined pool.',
-            '§7Processes one craft at a time with no loss chance.'
+            '§7One craft per cycle.',
+            '§7No loss chance.'
         ]
     }
 
     return [
-        '§7Treats matching inputs as one combined pool.',
-        '§7Q0: 2 crafts, 50% loss chance.',
-        '§7Q1-3: 4 / 6 / 8 crafts, 25% loss chance.',
-        '§7Q4: 4 crafts, 0% loss chance.'
+        '§7Batch crafting with possible loss.',
+        '§7Quantity upgrades reduce waste.'
     ]
 }
 
-function buildMachineLore(mode, context = {}) {
-    const lines = [
-        `§bMode: §f${mode.title}`,
-        `§7${mode.description}`
-    ]
-
+function buildMachineLore(machine, mode, context = {}) {
+    const lines = []
     const quantityLevel = Number(context.quantityLevel ?? 0)
     const modeProfile = context.modeProfile ?? getModeProfile(mode, quantityLevel)
     const operation = context.operation
     const focusGroup = context.focusGroup
 
-    lines.push(`§7Batch Size: §f${modeProfile.batchSize}`)
-    lines.push(`§7Loss Chance: §f${Math.round(modeProfile.lossChance * 100)}%`)
+    const overclockLine = buildOverclockLoreLine(machine)?.replace(/^§r/, '')
+    const machineInfo = [
+        {
+            label: 'Energy',
+            value: formatMachineEnergyBuffer(machine)
+        },
+        {
+            label: 'Mode',
+            value: mode.title
+        },
+        {
+            label: 'Batch',
+            value: formatBatchWithQuantity(modeProfile.batchSize, quantityLevel)
+        },
+        {
+            label: 'Loss',
+            value: formatPercentFromRatio(modeProfile.lossChance)
+        }
+    ]
+    if (overclockLine) machineInfo.push(overclockLine)
+    appendLoreSection(lines, 'Machine Information', machineInfo, {
+        spacing: false
+    })
 
-    if (mode.id === ARC_PRESS_FORGE.modes.low_loss.id) {
-        lines.push('§72.00x base speed')
-    } else {
-        lines.push(`§7Quantity Level: §f${quantityLevel}`)
-    }
+    const inputInfo = []
 
     if (operation?.inputGroupCount > 1) {
-        lines.push(`§7Queued Types: §f${operation.inputGroupCount}`)
+        inputInfo.push({
+            label: 'Queued Types',
+            value: operation.inputGroupCount
+        })
     }
 
     if (focusGroup?.recipe) {
-        lines.push(`§7Input Pool: §f${formatItemName(focusGroup.typeId)} x${focusGroup.totalAmount}`)
-        lines.push(`§7Input Need: §f${focusGroup.inputNeeded}`)
-        lines.push(`§7Recipe: §f${formatItemName(focusGroup.recipe.input.id)} -> ${formatItemName(focusGroup.recipe.output.id)}`)
-        if (focusGroup.outputPlan) {
-            lines.push(`§7Output Space: §f${focusGroup.outputPlan.totalSpace}`)
-        }
+        inputInfo.push(
+            {
+                label: 'Recipe',
+                value: `${formatItemName(focusGroup.recipe.input.id)} -> ${formatItemName(focusGroup.recipe.output.id)}`
+            },
+            {
+                label: 'Input Need',
+                value: focusGroup.inputNeeded
+            },
+            {
+                label: 'Cost',
+                value: formatEnergyCost(operation?.energyCost ?? focusGroup.energyCost ?? 0)
+            }
+        )
     } else if (focusGroup?.typeId) {
-        lines.push(`§7Input Pool: §f${formatItemName(focusGroup.typeId)} x${focusGroup.totalAmount}`)
+        inputInfo.push({
+            label: 'Input Pool',
+            value: `${formatItemName(focusGroup.typeId)} x${focusGroup.totalAmount}`
+        })
     }
 
+    if (inputInfo.length > 0) {
+        appendLoreSection(lines, 'Press Operation', inputInfo)
+    }
+
+    const batchInfo = []
     if (context.lastCraft?.lostItems > 0) {
-        lines.push(`§6Batch loss: §f-${context.lastCraft.lostItems} item`)
+        batchInfo.push(`§6Batch loss: §f-${context.lastCraft.lostItems} item`)
     }
 
     if (context.lastCraft?.produced > 0 && context.lastCraft?.outputId) {
-        lines.push(`§8Produced ${context.lastCraft.produced} ${formatItemName(context.lastCraft.outputId)}`)
+        batchInfo.push(`§7Produced: §f${context.lastCraft.produced} ${formatItemName(context.lastCraft.outputId)}`)
+    }
+
+    if (batchInfo.length > 0) {
+        appendLoreSection(lines, 'Last Batch', batchInfo)
     }
 
     return lines
@@ -670,8 +710,8 @@ function buildFooterLines(machine, mode, quantityLevel) {
     const modeProfile = getModeProfile(mode, quantityLevel)
     const lines = [
         `Mode: ${mode.title}`,
-        `Batch: ${modeProfile.batchSize}`,
-        `Loss: ${Math.round(modeProfile.lossChance * 100)}%`
+        `Batch: ${formatBatchWithQuantity(modeProfile.batchSize, quantityLevel)}`,
+        `Loss: ${formatPercentFromRatio(modeProfile.lossChance)}`
     ]
 
     const overclockLine = buildOverclockLoreLine(machine)
@@ -686,8 +726,11 @@ function showMachineWarning(machine, message, mode, context = {}, resetProgress 
     machine.showWarning(
         message,
         resetProgress,
-        buildMachineLore(mode, context),
-        { footerLines: buildFooterLines(machine, mode, context.quantityLevel ?? 0) }
+        buildMachineLore(machine, mode, context),
+        {
+            footerLines: buildFooterLines(machine, mode, context.quantityLevel ?? 0),
+            displayModel: 'minimal'
+        }
     )
 }
 
@@ -697,8 +740,11 @@ function showMachineStatus(machine, message, mode, context = {}) {
     machine.displayProgress(ARC_PRESS_FORGE.slots.progress)
     machine.showStatus(
         message,
-        buildMachineLore(mode, context),
-        { footerLines: buildFooterLines(machine, mode, context.quantityLevel ?? 0) }
+        buildMachineLore(machine, mode, context),
+        {
+            footerLines: buildFooterLines(machine, mode, context.quantityLevel ?? 0),
+            displayModel: 'minimal'
+        }
     )
 }
 

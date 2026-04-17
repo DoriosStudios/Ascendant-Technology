@@ -1,11 +1,15 @@
 import { ItemStack, world } from '@minecraft/server'
 import {
     Machine,
-    Energy,
     buildOverclockLoreLine,
+    appendLoreSection,
     formatItemName,
     syncButtonPanel
 } from '../../../DoriosCore/index.js'
+import {
+    formatEnergyCost,
+    formatMachineEnergyBuffer
+} from './utils.js'
 
 const SEISMIC_BREAKER = Object.freeze({
     slots: Object.freeze({
@@ -644,80 +648,112 @@ function toSpawnPos(loc) {
 
 function buildModeButtonLore(mode) {
     const lines = [
-        `§7${mode.description}`
+        `§7Pattern: §f${mode.title}`
     ]
 
     if (mode.id === SEISMIC_BREAKER.modes.line.id) {
-        lines.push(`§7Forward Length: §f${mode.length ?? SEISMIC_BREAKER.defaults.lineLength}`)
+        lines.push(`§7Length: §f${mode.length ?? SEISMIC_BREAKER.defaults.lineLength}`)
     } else if (mode.id === SEISMIC_BREAKER.modes.cube3x3x3.id) {
-        lines.push('§7Affected Volume: §f27 blocks')
-        lines.push('§7Grid Offset: §f+1Y')
+        lines.push('§7Area: §f3x3x3')
     } else if (mode.id === SEISMIC_BREAKER.modes.plane3x3.id) {
-        lines.push('§7Affected Face: §f9 blocks')
-        lines.push('§7Grid Offset: §f+1Y')
+        lines.push('§7Area: §f3x3')
     } else {
-        lines.push('§7Affected Face: §f1 block')
+        lines.push('§7Area: §f1x1')
     }
-
-    lines.push('§7Energy cost scales with the amount of blocks broken.')
     return lines
 }
 
 function buildPrecisionButtonLore(active) {
     return [
         `§7Status: ${active ? '§bEnabled' : '§7Disabled'}`,
-        '§7When enabled, the machine tries to preserve loot-table drops before removing the block.',
-        '§7Falls back to normal destroy-mode breaking if precision loot cannot be generated.'
+        '§7Preserves loot-table drops when possible.'
     ]
 }
 
 function buildMachineLore(operation = {}) {
     const machine = operation.machine
-    const lines = [
-        `§bMode: §f${operation.mode?.title ?? '1x1'}`,
-        `§7${operation.mode?.description ?? ''}`,
-        `§7Precision: ${operation.precision ? '§bEnabled' : '§7Disabled'}`,
-        `§7Target Blocks: §f${operation.breakableTargets?.length ?? 0}`,
-        `§7Blocked Blocks: §f${operation.blockedCount ?? 0}`,
-        `§cCost: §f${Energy.formatEnergyToText(operation.energyCost ?? 0)}`,
-        `§7Speed: §f${machine?.boosts?.speed?.toFixed?.(2) ?? '1.00'}x`,
-        `§7Efficiency: §f${(((1 / (machine?.boosts?.consumption ?? 1)) * 100)).toFixed(0)}%`,
-        `§7Rate: §f${Energy.formatEnergyToText(Math.floor(machine?.baseRate ?? 0))}/t`
+    const lines = []
+    const overclockLine = buildOverclockLoreLine(machine)?.replace(/^§r/, '')
+
+    const machineInfo = [
+        {
+            label: 'Energy',
+            value: formatMachineEnergyBuffer(machine)
+        },
+        {
+            label: 'Mode',
+            value: operation.mode?.title ?? '1x1'
+        },
+        {
+            label: 'Precision',
+            value: operation.precision ? 'Enabled' : 'Disabled',
+            valueColor: operation.precision ? '§b' : '§7'
+        }
+    ]
+    if (overclockLine) machineInfo.push(overclockLine)
+
+    appendLoreSection(lines, 'Machine Information', machineInfo, {
+        spacing: false
+    })
+
+    const operationInfo = [
+        {
+            label: 'Targets',
+            value: operation.breakableTargets?.length ?? 0
+        },
+        {
+            label: 'Blocked',
+            value: operation.blockedCount ?? 0
+        },
+        {
+            label: 'Cost',
+            value: formatEnergyCost(operation.energyCost ?? 0)
+        }
     ]
 
     if (operation.mode?.id === SEISMIC_BREAKER.modes.line.id) {
-        lines.push(`§7Line Length: §f${operation.lineLength}`)
-    } else if (
-        operation.mode?.id === SEISMIC_BREAKER.modes.plane3x3.id ||
-        operation.mode?.id === SEISMIC_BREAKER.modes.cube3x3x3.id
-    ) {
-        lines.push('§7Grid Offset: §f+1Y')
+        operationInfo.push({
+            label: 'Length',
+            value: operation.lineLength
+        })
     }
 
+    appendLoreSection(lines, 'Breaking Operation', operationInfo)
+
+    const targetInfo = []
     if (operation.firstBreakable?.typeId) {
-        lines.push(`§7Front Block: §f${formatItemName(operation.firstBreakable.typeId)}`)
+        targetInfo.push({
+            label: 'Front Block',
+            value: formatItemName(operation.firstBreakable.typeId)
+        })
     } else if (operation.anchorBlock?.typeId) {
-        lines.push(`§7Front Block: §f${formatItemName(operation.anchorBlock.typeId)}`)
+        targetInfo.push({
+            label: 'Front Block',
+            value: formatItemName(operation.anchorBlock.typeId)
+        })
     }
 
-    if (operation.result?.preservedCount > 0) {
-        lines.push(`§7Precision Drops: §f${operation.result.preservedCount}`)
+    if (targetInfo.length > 0) {
+        appendLoreSection(lines, 'Target Information', targetInfo)
     }
-    if (operation.result?.fallbackCount > 0) {
-        lines.push(`§6Fallback Breaks: §f${operation.result.fallbackCount}`)
+
+    const lastAction = []
+    if (operation.result?.preservedCount > 0) {
+        lastAction.push(`§7Precision Drops: §f${operation.result.preservedCount}`)
     }
     if (operation.result?.collectedCount > 0) {
-        lines.push(`§7Collected Items: §f${operation.result.collectedCount}`)
+        lastAction.push(`§7Collected Items: §f${operation.result.collectedCount}`)
     }
     if (operation.result?.overflowCount > 0) {
-        lines.push(`§6Dropped Overflow: §f${operation.result.overflowCount}`)
+        lastAction.push(`§6Dropped Overflow: §f${operation.result.overflowCount}`)
     }
     if (operation.result?.brokenCount > 0) {
-        lines.push(`§8Broken ${operation.result.brokenCount} block(s)`) 
+        lastAction.push(`§7Broken: §f${operation.result.brokenCount} block(s)`)
     }
 
-    const overclockLine = buildOverclockLoreLine(machine)
-    if (overclockLine) lines.push(overclockLine.replace(/^§r/, ''))
+    if (lastAction.length > 0) {
+        appendLoreSection(lines, 'Last Action', lastAction)
+    }
 
     return lines
 }
@@ -730,11 +766,6 @@ function buildFooterLines(operation = {}) {
 
     if (operation.mode?.id === SEISMIC_BREAKER.modes.line.id) {
         lines.push(`Length: ${operation.lineLength}`)
-    } else if (
-        operation.mode?.id === SEISMIC_BREAKER.modes.plane3x3.id ||
-        operation.mode?.id === SEISMIC_BREAKER.modes.cube3x3x3.id
-    ) {
-        lines.push('Grid: +1Y')
     }
 
     return lines
@@ -751,7 +782,10 @@ function showMachineWarning(machine, message, operation = {}, resetProgress = tr
         message,
         resetProgress,
         buildMachineLore(operation),
-        { footerLines: buildFooterLines(operation) }
+        {
+            footerLines: buildFooterLines(operation),
+            displayModel: 'minimal'
+        }
     )
     updateDisplays(machine)
 }
@@ -761,7 +795,10 @@ function showMachineStatus(machine, message, operation = {}) {
     machine.showStatus(
         message,
         buildMachineLore(operation),
-        { footerLines: buildFooterLines(operation) }
+        {
+            footerLines: buildFooterLines(operation),
+            displayModel: 'minimal'
+        }
     )
     updateDisplays(machine)
 }

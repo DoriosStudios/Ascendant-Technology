@@ -1,0 +1,41 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:dual_siever"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "key": {
+            "P": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "M": {
+                "item": "utilitycraft:titanium_mesh"
+            },
+            "S": {
+                "item": "utilitycraft:steam_capsule_8"
+            },
+            "C": {
+                "item": "utilitycraft:centrifugal_siever"
+            },
+            "A": {
+                "item": "utilitycraft:advanced_chip"
+            }
+        },
+        "pattern": [
+            "PMP",
+            "SCS",
+            "PAP"
+        ],
+        "result": {
+            "item": "utilitycraft:dual_siever"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:centrifugal_siever"
+            }
+        ]
+    }
+}

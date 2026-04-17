@@ -1,4 +1,14 @@
-import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, tickGate, feedFluidSlot, formatFluidDisplayName } from '../../DoriosCore/index.js';
+import {
+    Machine,
+    Energy,
+    FluidManager,
+    updatePipes,
+    buildOverclockLoreLine,
+    ADAPTIVE_CHECK_RESULT,
+    runAdaptiveTickGate,
+    feedFluidSlot,
+    formatFluidDisplayName
+} from '../../DoriosCore/index.js';
 import { getVaporworksProcessorRecipes } from '../../config/recipes/vaporworks_processor.js';
 
 const VAPORWORKS = Object.freeze({
@@ -11,6 +21,15 @@ const VAPORWORKS = Object.freeze({
     }),
     defaults: Object.freeze({
         fluidCap: 64000
+    }),
+    transfer: Object.freeze({
+        fluidAdaptive: Object.freeze({
+            interval: 4,
+            idleBackoffTicks: 8,
+            stallBackoffTicks: 12,
+            failureEscalationThreshold: 2,
+            drasticBackoffTicks: 48
+        })
     })
 });
 
@@ -55,22 +74,48 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
         const [tankInput, tankOutput] = getVaporworksTanks(machine, settings);
         const recipes = resolveRecipes(block, settings);
 
-        if (tickGate(machine.entity, 'vw:fluids_cd', 4)) {
-            const nodes = resolveFluidNodes(machine, block);
-            const available = tankOutput.get();
-
-            if (available > 0) {
-                // Direct adjacent push
-                tankOutput.transferFluids(block, available, { useFacing: true });
-
-                // Network push
-                if (nodes.length) {
-                    tankOutput.transferToNetwork(available, 'nearest', nodes);
+        runAdaptiveTickGate(
+            machine.entity,
+            'vaporworks:fluid_io',
+            VAPORWORKS.transfer.fluidAdaptive,
+            () => {
+                const availableOutput = tankOutput.get();
+                const freeInput = tankInput.getFreeSpace();
+                if (availableOutput <= 0 && freeInput <= 0) {
+                    return ADAPTIVE_CHECK_RESULT.idle;
                 }
-            }
 
-            pullFluidFromNetwork(machine, block, tankInput, recipes, settings, nodes);
-        }
+                const nodes = resolveFluidNodes(machine, block);
+                let moved = false;
+
+                if (availableOutput > 0) {
+                    const beforeOutput = tankOutput.get();
+
+                    // Direct adjacent push
+                    tankOutput.transferFluids(block, availableOutput, { useFacing: true });
+
+                    // Network push
+                    if (nodes.length) {
+                        const remainingOutput = tankOutput.get();
+                        if (remainingOutput > 0) {
+                            tankOutput.transferToNetwork(remainingOutput, 'nearest', nodes);
+                        }
+                    }
+
+                    moved = tankOutput.get() < beforeOutput;
+                }
+
+                if (freeInput > 0) {
+                    const beforeInput = tankInput.get();
+                    pullFluidFromNetwork(machine, block, tankInput, recipes, settings, nodes);
+                    moved = tankInput.get() > beforeInput || moved;
+                }
+
+                return moved
+                    ? ADAPTIVE_CHECK_RESULT.moved
+                    : ADAPTIVE_CHECK_RESULT.stalled;
+            }
+        );
 
         // Handle fluid input slot (capsule draining)
         feedFluidSlot(machine, tankInput, VAPORWORKS.slots.fluidInput);

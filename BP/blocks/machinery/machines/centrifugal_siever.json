@@ -29,13 +29,12 @@
                     "dynamic_rate": true,
                     "fluid_cap": 32000,
                     "upgrades": [10, 11, 12, 13],
-                    "hidden_slots": []
+                    "hidden_slots": [8]
                 }
             },
             "utilitycraft:special_container": {
                 "Input Lanes": [3, 4, 5, 6],
                 "Mesh Slot": 7,
-                "Steam Input": 8,
                 "Steam Tank": 9,
                 "Upgrade Slots": [10, 11, 12, 13],
                 "Output Lanes": [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]

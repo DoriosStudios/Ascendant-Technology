@@ -116,12 +116,15 @@
                 }
             },
             {
-                "profile_button@machineryCommon.machine_button": {
+                "profile_button@uc.machine_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [18, 20],
                     "$index": 8,
-                    "$button_size": [16, 16]
+                    "$button_size": [16, 16],
+                    "$default_texture": "textures/ui/cells/inverted_green_cell_image",
+                    "$hover_texture": "textures/ui/cells/green_cell_image",
+                    "$pressed_texture": "textures/ui/cells/green_cell_image"
                 }
             },
             {
@@ -130,14 +133,6 @@
                     "anchor_to": "top_middle",
                     "offset": [18, 38],
                     "collection_index": 7
-                }
-            },
-            {
-                "cryofluid_input@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [18, 56],
-                    "collection_index": 9
                 }
             },
             {
@@ -339,9 +334,6 @@
                                     },
                                     {
                                         "hotbar_grid@common.hotbar_grid_template": {}
-                                    },
-                                    {
-                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
                                     }
                                 ]
                             }

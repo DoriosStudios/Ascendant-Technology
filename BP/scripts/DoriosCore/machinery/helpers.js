@@ -6,6 +6,21 @@ import { FluidManager } from './fluidStorage.js'
 import { TICKS_PER_SECOND } from '../constants.js'
 
 const RECIPE_LOOKUP_CACHE = new WeakMap()
+const ADAPTIVE_CHECK_STATE = new WeakMap()
+
+export const ADAPTIVE_CHECK_RESULT = Object.freeze({
+    moved: 'moved',
+    idle: 'idle',
+    stalled: 'stalled'
+})
+
+const ADAPTIVE_CHECK_DEFAULTS = Object.freeze({
+    interval: 4,
+    idleBackoffTicks: 6,
+    stallBackoffTicks: 12,
+    failureEscalationThreshold: 2,
+    drasticBackoffTicks: 40
+})
 
 // ──────────────────────────────────────────────────────
 // COOLDOWN / TICK GATE
@@ -39,6 +54,112 @@ export function tickGate(entity, key, interval) {
 
     entity.setDynamicProperty(key, tickStep)
     return true
+}
+
+function normalizeAdaptiveCheckResult(value) {
+    if (value === ADAPTIVE_CHECK_RESULT.moved || value === true) {
+        return ADAPTIVE_CHECK_RESULT.moved
+    }
+
+    if (value === ADAPTIVE_CHECK_RESULT.idle) {
+        return ADAPTIVE_CHECK_RESULT.idle
+    }
+
+    return ADAPTIVE_CHECK_RESULT.stalled
+}
+
+function resolveAdaptiveCheckOptions(options = {}) {
+    const interval = Math.max(0, Math.floor(Number(options.interval) || ADAPTIVE_CHECK_DEFAULTS.interval))
+    const idleBackoffTicks = Math.max(0, Math.floor(Number(options.idleBackoffTicks) || ADAPTIVE_CHECK_DEFAULTS.idleBackoffTicks))
+    const stallBackoffTicks = Math.max(0, Math.floor(Number(options.stallBackoffTicks) || ADAPTIVE_CHECK_DEFAULTS.stallBackoffTicks))
+    const failureEscalationThreshold = Math.max(1, Math.floor(Number(options.failureEscalationThreshold) || ADAPTIVE_CHECK_DEFAULTS.failureEscalationThreshold))
+    const drasticBackoffTicks = Math.max(0, Math.floor(Number(options.drasticBackoffTicks) || ADAPTIVE_CHECK_DEFAULTS.drasticBackoffTicks))
+
+    return {
+        interval,
+        idleBackoffTicks,
+        stallBackoffTicks,
+        failureEscalationThreshold,
+        drasticBackoffTicks
+    }
+}
+
+function getAdaptiveCheckChannelState(entity, channel) {
+    let entityState = ADAPTIVE_CHECK_STATE.get(entity)
+    if (!entityState) {
+        entityState = new Map()
+        ADAPTIVE_CHECK_STATE.set(entity, entityState)
+    }
+
+    let channelState = entityState.get(channel)
+    if (!channelState) {
+        channelState = {
+            backoff: 0,
+            failStreak: 0
+        }
+        entityState.set(channel, channelState)
+    }
+
+    return channelState
+}
+
+export function runAdaptiveTickGate(entity, channel, options, evaluate) {
+    if (!entity || typeof channel !== 'string' || channel.length <= 0) return null
+
+    const settings = resolveAdaptiveCheckOptions(options)
+    const state = getAdaptiveCheckChannelState(entity, channel)
+
+    if (state.backoff > 0) {
+        state.backoff--
+        return null
+    }
+
+    const gateKey = `${channel}:gate`
+    if (!tickGate(entity, gateKey, settings.interval)) {
+        return null
+    }
+
+    const rawResult = typeof evaluate === 'function'
+        ? evaluate()
+        : ADAPTIVE_CHECK_RESULT.stalled
+    const result = normalizeAdaptiveCheckResult(rawResult)
+
+    if (result === ADAPTIVE_CHECK_RESULT.moved) {
+        state.failStreak = 0
+        state.backoff = 0
+        return result
+    }
+
+    if (result === ADAPTIVE_CHECK_RESULT.idle) {
+        state.failStreak = 0
+        state.backoff = settings.idleBackoffTicks
+        return result
+    }
+
+    state.failStreak = Math.max(0, state.failStreak + 1)
+    state.backoff = state.failStreak >= settings.failureEscalationThreshold
+        ? settings.drasticBackoffTicks
+        : settings.stallBackoffTicks
+
+    return ADAPTIVE_CHECK_RESULT.stalled
+}
+
+export function resetAdaptiveTickGate(entity, channel) {
+    if (!entity) return
+
+    const entityState = ADAPTIVE_CHECK_STATE.get(entity)
+    if (!entityState) return
+
+    if (typeof channel !== 'string' || channel.length <= 0) {
+        entityState.clear()
+        ADAPTIVE_CHECK_STATE.delete(entity)
+        return
+    }
+
+    entityState.delete(channel)
+    if (entityState.size <= 0) {
+        ADAPTIVE_CHECK_STATE.delete(entity)
+    }
 }
 
 /**
@@ -91,6 +212,89 @@ export function formatItemName(id) {
 export function capitalize(text) {
     if (!text) return ''
     return text[0].toUpperCase() + text.slice(1)
+}
+
+function normalizeLoreValue(value, fallback = '---') {
+    if (value === null || value === undefined) return fallback
+
+    if (typeof value === 'number') {
+        if (!Number.isFinite(value)) return fallback
+        return String(value)
+    }
+
+    const text = String(value).trim()
+    return text.length ? text : fallback
+}
+
+/**
+ * Formats a single metric line for machine lore.
+ * Example: "  §7Energy: §f12.4kDE / 64kDE"
+ */
+export function formatLoreMetric(label, value, options = {}) {
+    const indent = typeof options.indent === 'string' ? options.indent : '  '
+    const labelColor = typeof options.labelColor === 'string' ? options.labelColor : '§7'
+    const valueColor = typeof options.valueColor === 'string' ? options.valueColor : '§f'
+    const suffix = typeof options.suffix === 'string' ? options.suffix : ''
+    const emptyValue = typeof options.emptyValue === 'string' ? options.emptyValue : '---'
+
+    const safeLabel = typeof label === 'string' && label.trim().length
+        ? label.trim()
+        : 'Info'
+    const safeValue = normalizeLoreValue(value, emptyValue)
+
+    return `${indent}${labelColor}${safeLabel}: ${valueColor}${safeValue}${suffix}`
+}
+
+/**
+ * Appends a visual lore section with an optional list of metric/text rows.
+ */
+export function appendLoreSection(lines, title, entries = [], options = {}) {
+    if (!Array.isArray(lines)) return lines
+
+    const safeTitle = typeof title === 'string' ? title.trim() : ''
+    if (!safeTitle.length) return lines
+
+    const headerColor = typeof options.headerColor === 'string' ? options.headerColor : '§b'
+    const rowPrefix = typeof options.rowPrefix === 'string' ? options.rowPrefix : '  '
+    const rowColor = typeof options.rowColor === 'string' ? options.rowColor : '§7'
+    const addSpacing = options.spacing !== false
+
+    if (addSpacing && lines.length > 0) {
+        lines.push(' ')
+    }
+
+    lines.push(`${headerColor}${safeTitle}`)
+
+    const normalizedEntries = Array.isArray(entries)
+        ? entries
+        : [entries]
+
+    for (const entry of normalizedEntries) {
+        if (entry === null || entry === undefined || entry === false) continue
+
+        if (typeof entry === 'string') {
+            const text = entry.trim()
+            if (!text.length) continue
+
+            lines.push(
+                text.startsWith('§')
+                    ? `${rowPrefix}${text}`
+                    : `${rowPrefix}${rowColor}${text}`
+            )
+            continue
+        }
+
+        if (typeof entry === 'object') {
+            lines.push(formatLoreMetric(entry.label, entry.value, {
+                indent: rowPrefix,
+                labelColor: entry.labelColor ?? options.labelColor,
+                valueColor: entry.valueColor ?? options.valueColor,
+                emptyValue: entry.emptyValue
+            }))
+        }
+    }
+
+    return lines
 }
 
 /**

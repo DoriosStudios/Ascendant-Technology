@@ -9,6 +9,7 @@
         "ui/industrial_burner.json",
         "ui/pulverizer.json",
         "ui/centrifugal_siever.json",
+        "ui/dual_siever.json",
         "ui/abysall_fisher.json",
         "ui/genetic_seed_synthesizer.json",
         "ui/seismic_breaker.json",

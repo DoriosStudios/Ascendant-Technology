@@ -114,14 +114,6 @@
                 }
             },
             {
-                "lava_input@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [70, 48],
-                    "collection_index": 9
-                }
-            },
-            {
                 "input_slot_1@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
@@ -235,9 +227,6 @@
                                     },
                                     {
                                         "hotbar_grid@common.hotbar_grid_template": {}
-                                    },
-                                    {
-                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
                                     }
                                 ]
                             }

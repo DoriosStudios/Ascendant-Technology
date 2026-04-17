@@ -108,13 +108,14 @@ function isTubeBlock(block) {
 function scanFluidTargets(startBlock, sourcePos) {
     const dim = startBlock.dimension;
     const queue = [startBlock.location];
+    let queueIndex = 0;
     const visited = new Set();
     const rawTargets = [];
     const blockedTargets = new Set();
     let steps = 0;
 
-    while (queue.length && steps < MAX_SCAN) {
-        const pos = queue.shift();
+    while (queueIndex < queue.length && steps < MAX_SCAN) {
+        const pos = queue[queueIndex++];
         const key = posKey(pos);
         if (visited.has(key)) continue;
         visited.add(key);

@@ -1,20 +1,27 @@
 import { ItemStack } from "@minecraft/server";
 import {
     Machine,
-    Energy,
     FluidManager,
     applyDynamicRecipeRate,
     buildOverclockLoreLine,
-    feedFluidSlot,
-    formatFluidDisplayName,
+    appendLoreSection,
     formatItemName,
     syncButtonPanel,
-    tickGate
+    ADAPTIVE_CHECK_RESULT,
+    runAdaptiveTickGate
 } from "../../../DoriosCore/index.js";
 import {
     GENETIC_ACCEPTED_SOILS,
     getGeneticSeedPlantRecipe
 } from "../../../config/recipes/genetic_seed_synthesizer.js";
+import {
+    formatEnergyWithFluidCost,
+    formatFluidNeedValue,
+    formatFluidTankBuffer,
+    formatMachineEnergyBuffer,
+    formatPercentFromRatio,
+    formatSecondsLabel
+} from "./utils.js";
 
 const GENETIC_SEED_SYNTHESIZER = Object.freeze({
     slots: Object.freeze({
@@ -32,7 +39,21 @@ const GENETIC_SEED_SYNTHESIZER = Object.freeze({
     transfer: Object.freeze({
         outputIntervalTicks: 4,
         inputPullIntervalTicks: 4,
-        fluidIntervalTicks: 4
+        fluidIntervalTicks: 4,
+        itemAdaptive: Object.freeze({
+            interval: 4,
+            idleBackoffTicks: 8,
+            stallBackoffTicks: 12,
+            failureEscalationThreshold: 2,
+            drasticBackoffTicks: 48
+        }),
+        fluidAdaptive: Object.freeze({
+            interval: 4,
+            idleBackoffTicks: 10,
+            stallBackoffTicks: 12,
+            failureEscalationThreshold: 2,
+            drasticBackoffTicks: 40
+        })
     }),
     cryofluid: Object.freeze({
         type: "cryofluid"
@@ -126,7 +147,7 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
             machine.setEnergyCost(settings?.machine?.energy_cost ?? GENETIC_SEED_SYNTHESIZER.defaults.energyCost);
             machine.displayEnergy(GENETIC_SEED_SYNTHESIZER.slots.energy);
             machine.displayProgress(GENETIC_SEED_SYNTHESIZER.slots.progress);
-            machine.blockSlots([GENETIC_SEED_SYNTHESIZER.slots.cryofluidDisplay]);
+            machine.blockSlots([GENETIC_SEED_SYNTHESIZER.slots.cryofluidDisplay, GENETIC_SEED_SYNTHESIZER.slots.cryofluidInput]);
 
             const tank = getCryofluidTank(machine, settings);
             tank.display(GENETIC_SEED_SYNTHESIZER.slots.cryofluidDisplay);
@@ -148,22 +169,49 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
         const panelState = syncButtonPanel(machine, PROFILE_BUTTONS);
         const profile = getProfile(panelState.profile);
 
-        if (tickGate(machine.entity, "genetic_seed:transfer_cd", GENETIC_SEED_SYNTHESIZER.transfer.outputIntervalTicks)) {
-            transferOutputSlots(machine);
-        }
+        runAdaptiveTickGate(
+            machine.entity,
+            "genetic_seed:item_io",
+            GENETIC_SEED_SYNTHESIZER.transfer.itemAdaptive,
+            () => {
+                const hasOutputItems = getAvailableOutputSlots(machine).some(slot => !!machine.inv.getItem(slot));
+                const hasInputRoom = [...GENETIC_SEED_SYNTHESIZER.slots.inputs, GENETIC_SEED_SYNTHESIZER.slots.soil].some(slot => {
+                    const stack = machine.inv.getItem(slot);
+                    return !stack || stack.amount < stack.maxAmount;
+                });
 
-        if (tickGate(machine.entity, "genetic_seed:inputs_cd", GENETIC_SEED_SYNTHESIZER.transfer.inputPullIntervalTicks)) {
-            for (const slot of GENETIC_SEED_SYNTHESIZER.slots.inputs) {
-                machine.pullItemsFromAbove(slot);
+                if (!hasOutputItems && !hasInputRoom) {
+                    return ADAPTIVE_CHECK_RESULT.idle;
+                }
+
+                let moved = transferOutputSlots(machine);
+                for (const slot of GENETIC_SEED_SYNTHESIZER.slots.inputs) {
+                    moved = machine.pullItemsFromAbove(slot) || moved;
+                }
+                moved = machine.pullItemsFromAbove(GENETIC_SEED_SYNTHESIZER.slots.soil) || moved;
+
+                return moved
+                    ? ADAPTIVE_CHECK_RESULT.moved
+                    : ADAPTIVE_CHECK_RESULT.stalled;
             }
-            machine.pullItemsFromAbove(GENETIC_SEED_SYNTHESIZER.slots.soil);
-            machine.pullItemsFromAbove(GENETIC_SEED_SYNTHESIZER.slots.cryofluidInput);
-        }
+        );
 
-        if (tickGate(machine.entity, "genetic_seed:fluids_cd", GENETIC_SEED_SYNTHESIZER.transfer.fluidIntervalTicks)) {
-            tank.transferFluids(machine.block);
-        }
-        feedFluidSlot(machine, tank, GENETIC_SEED_SYNTHESIZER.slots.cryofluidInput);
+        runAdaptiveTickGate(
+            machine.entity,
+            "genetic_seed:fluid_io",
+            GENETIC_SEED_SYNTHESIZER.transfer.fluidAdaptive,
+            () => {
+                const hasCryofluid = tank.getType() !== "empty" && tank.get() > 0;
+                if (!hasCryofluid) {
+                    return ADAPTIVE_CHECK_RESULT.idle;
+                }
+
+                const moved = tank.transferFluids(machine.block);
+                return moved
+                    ? ADAPTIVE_CHECK_RESULT.moved
+                    : ADAPTIVE_CHECK_RESULT.stalled;
+            }
+        );
 
         const soilStack = machine.inv.getItem(GENETIC_SEED_SYNTHESIZER.slots.soil);
         if (!soilStack) {
@@ -922,10 +970,8 @@ function clearLockedOperation(machine) {
 function buildProfileButtonLore(profile) {
     return [
         `§7${profile.summary}`,
-        `§7Speed Multiplier: §f${profile.speedMultiplier.toFixed(2)}x`,
-        `§7Cryofluid Load: §f${profile.cryoMultiplier.toFixed(2)}x`,
-        `§7Yield Bonus: §f${profile.bonusRollChance > 0 ? `${Math.round(profile.bonusRollChance * 100)}% extra roll` : "None"}`,
-        `§7Low-Cryo Retention: ${profile.preserveProgressOnLowCryofluid ? "§bEnabled" : "§7Disabled"}`
+        `§7Speed: §f${profile.speedMultiplier.toFixed(2)}x §7| Cryo: §f${profile.cryoMultiplier.toFixed(2)}x`,
+        `§7Yield: §f${profile.bonusRollChance > 0 ? `${formatPercentFromRatio(profile.bonusRollChance)} bonus` : "None"}`
     ];
 }
 
@@ -945,48 +991,89 @@ function buildMachineLore(machine, tank, context = {}) {
             ? [focusGroup]
             : [];
     const lastBatch = context.lastBatch ?? null;
-    const tankAmount = FluidManager.formatFluid(tank?.get() ?? 0);
-    const tankCap = FluidManager.formatFluid(tank?.getCap() ?? 0);
-    const lines = [
-        `§7Cryofluid Tank: §f${formatFluidDisplayName(GENETIC_SEED_SYNTHESIZER.cryofluid.type)} ${tankAmount} §7/ §f${tankCap}`,
-        `§7Profile: §f${profile.title}`,
-        `§7Focus: §f${profile.summary}`,
-        `§7Soil: §f${soil?.typeId ? formatItemName(soil.typeId) : "None"}`,
-        `§7Active Lanes: §f${selectedGroups.length || 0}`,
-        `§7Speed: §f${machine.boosts.speed.toFixed(2)}x`,
-        `§7Efficiency: §f${((1 / machine.boosts.consumption) * 100).toFixed(0)}%`,
-        `§7Rate: §f${Energy.formatEnergyToText(Math.floor(machine.baseRate))}/t`
-    ];
+    const lines = [];
+    const overclockLine = buildOverclockLoreLine(machine)?.replace(/^§r/, "");
 
-    if (selectedGroups.length > 1) {
-        const preview = selectedGroups.slice(0, 3).map(group => formatItemName(group.typeId)).join(", ");
-        lines.push(`§7Parallel Seeds: §f${preview}${selectedGroups.length > 3 ? "..." : ""}`);
-    }
+    const machineInfo = [
+        {
+            label: "Energy",
+            value: formatMachineEnergyBuffer(machine)
+        },
+        {
+            label: "Profile",
+            value: profile.title
+        },
+        {
+            label: "Soil",
+            value: soil?.typeId ? formatItemName(soil.typeId) : "None"
+        },
+        {
+            label: "Cryofluid",
+            value: formatFluidTankBuffer(tank, GENETIC_SEED_SYNTHESIZER.cryofluid.type)
+        },
+        {
+            label: "Lanes",
+            value: selectedGroups.length || 0
+        }
+    ];
+    if (overclockLine) machineInfo.push(overclockLine);
+
+    appendLoreSection(lines, "Machine Information", machineInfo, {
+        spacing: false
+    });
+
+    const operationInfo = [];
 
     if (focusGroup?.typeId) {
-        lines.push(`§7Focus Seed: §f${formatItemName(focusGroup.typeId)}`);
-        lines.push(`§7Energy Cost: §f${Energy.formatEnergyToText(focusGroup.energyCost ?? 0)}`);
-        lines.push(`§7Cryo Use: §f${FluidManager.formatFluid(focusGroup.cryofluidCost ?? 0)}`);
-        lines.push(`§7Cycle Time: §f${(focusGroup.cycleSeconds ?? 0).toFixed(2)}s`);
-        lines.push(`§7Expected Yield: §f${focusGroup.estimatedOutputs ?? 0}`);
-        lines.push(`§7Output Space: §f${focusGroup.outputPlan?.totalSpace ?? 0}`);
-        lines.push(`§7Output Slots: §f${getAvailableOutputSlots(machine).length}`);
+        if (selectedGroups.length > 1) {
+            operationInfo.push({
+                label: "Parallel",
+                value: `${selectedGroups.length} lanes`
+            });
+        }
+
+        operationInfo.push(
+            {
+                label: "Focus",
+                value: formatItemName(focusGroup.typeId)
+            },
+            {
+                label: "Cost",
+                value: formatEnergyWithFluidCost(focusGroup.energyCost ?? 0, focusGroup.cryofluidCost ?? 0, "Cryofluid")
+            },
+            {
+                label: "Cycle",
+                value: formatSecondsLabel(focusGroup.cycleSeconds ?? 0)
+            },
+            {
+                label: "Expected",
+                value: focusGroup.estimatedOutputs ?? 0
+            }
+        );
 
         if (focusGroup.lowCryofluid) {
             const shortage = Math.max(0, (focusGroup.cryofluidCost ?? 0) - (tank?.get() ?? 0));
-            lines.push(`§7Cryo Missing: §f${FluidManager.formatFluid(shortage)}`);
+            operationInfo.push({
+                label: "Need Cryo",
+                value: formatFluidNeedValue(shortage)
+            });
         }
     }
 
-    if (lastBatch?.produced > 0) {
-        lines.push(`§8Synthesis produced ${lastBatch.produced} items across ${lastBatch.uniqueOutputs} outputs${lastBatch.processedGroups > 1 ? ` on ${lastBatch.processedGroups} lanes` : ""}`);
-    }
-    if (lastBatch?.overflow > 0) {
-        lines.push(`§8Overflow dropped ${lastBatch.overflow} items`);
+    if (operationInfo.length > 0) {
+        appendLoreSection(lines, "Synthesis Operation", operationInfo);
     }
 
-    const overclockLine = buildOverclockLoreLine(machine);
-    if (overclockLine) lines.push(overclockLine.replace(/^§r/, ""));
+    const batchInfo = [];
+    if (lastBatch?.produced > 0) {
+        batchInfo.push(`§7Produced: §f${lastBatch.produced} items §7(${lastBatch.uniqueOutputs} outputs${lastBatch.processedGroups > 1 ? `, ${lastBatch.processedGroups} lanes` : ""})`);
+    }
+    if (lastBatch?.overflow > 0) {
+        batchInfo.push(`§6Overflow: §f${lastBatch.overflow} dropped`);
+    }
+    if (batchInfo.length > 0) {
+        appendLoreSection(lines, "Last Batch", batchInfo);
+    }
 
     return lines;
 }
@@ -1012,7 +1099,10 @@ function showMachineWarning(machine, tank, message, context = {}, resetProgress 
         message,
         resetProgress,
         buildMachineLore(machine, tank, context),
-        { footerLines: buildFooterLines(context) }
+        {
+            footerLines: buildFooterLines(context),
+            displayModel: "minimal"
+        }
     );
     updateDisplays(machine, tank);
 }
@@ -1022,7 +1112,10 @@ function showMachineStatus(machine, tank, message, context = {}) {
     machine.showStatus(
         message,
         buildMachineLore(machine, tank, context),
-        { footerLines: buildFooterLines(context) }
+        {
+            footerLines: buildFooterLines(context),
+            displayModel: "minimal"
+        }
     );
     updateDisplays(machine, tank);
 }

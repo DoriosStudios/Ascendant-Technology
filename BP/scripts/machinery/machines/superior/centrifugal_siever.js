@@ -1,16 +1,23 @@
 import { ItemStack } from "@minecraft/server";
 import {
     Machine,
-    Energy,
     FluidManager,
     applyDynamicRecipeRate,
     buildOverclockLoreLine,
-    feedFluidSlot,
-    formatFluidDisplayName,
+    appendLoreSection,
     formatItemName,
-    tickGate
+    ADAPTIVE_CHECK_RESULT,
+    runAdaptiveTickGate
 } from "../../../DoriosCore/index.js";
 import { getCentrifugalSieveRecipe } from "../../../config/recipes/centrifugal_siever.js";
+import {
+    formatBatchWithQuantity,
+    formatEnergyCost,
+    formatFluidNeedValue,
+    formatFluidTankBuffer,
+    formatMachineEnergyBuffer,
+    formatOptionalFluidSuffix
+} from "./utils.js";
 
 const CENTRIFUGAL_SIEVER = Object.freeze({
     slots: Object.freeze({
@@ -26,7 +33,14 @@ const CENTRIFUGAL_SIEVER = Object.freeze({
     }),
     transfer: Object.freeze({
         outputIntervalTicks: 4,
-        inputPullIntervalTicks: 4
+        inputPullIntervalTicks: 4,
+        itemAdaptive: Object.freeze({
+            interval: 4,
+            idleBackoffTicks: 8,
+            stallBackoffTicks: 12,
+            failureEscalationThreshold: 2,
+            drasticBackoffTicks: 48
+        })
     }),
     quantity: Object.freeze({
         maxLevel: 4,
@@ -62,7 +76,7 @@ DoriosAPI.register.blockComponent("centrifugal_siever", {
             machine.setEnergyCost(settings?.machine?.energy_cost ?? CENTRIFUGAL_SIEVER.defaults.energyCostPerInput);
             machine.displayEnergy(CENTRIFUGAL_SIEVER.slots.energy);
             machine.displayProgress(CENTRIFUGAL_SIEVER.slots.progress);
-            machine.blockSlots([CENTRIFUGAL_SIEVER.slots.steamDisplay]);
+            machine.blockSlots([CENTRIFUGAL_SIEVER.slots.steamDisplay, CENTRIFUGAL_SIEVER.slots.steamInput]);
 
             const tank = getSteamTank(machine, settings);
             tank.display(CENTRIFUGAL_SIEVER.slots.steamDisplay);
@@ -81,19 +95,32 @@ DoriosAPI.register.blockComponent("centrifugal_siever", {
         const quantityLevel = getQuantityUpgradeLevel(machine);
         const desiredBatch = getBatchSize(quantityLevel);
 
-        if (tickGate(machine.entity, "centrifugal_siever:transfer_cd", CENTRIFUGAL_SIEVER.transfer.outputIntervalTicks)) {
-            transferOutputSlots(machine);
-        }
+        runAdaptiveTickGate(
+            machine.entity,
+            "centrifugal_siever:item_io",
+            CENTRIFUGAL_SIEVER.transfer.itemAdaptive,
+            () => {
+                const hasOutputItems = getAvailableOutputSlots(machine).some(slot => !!machine.inv.getItem(slot));
+                const hasInputRoom = [...CENTRIFUGAL_SIEVER.slots.inputs, CENTRIFUGAL_SIEVER.slots.mesh].some(slot => {
+                    const stack = machine.inv.getItem(slot);
+                    return !stack || stack.amount < stack.maxAmount;
+                });
 
-        if (tickGate(machine.entity, "centrifugal_siever:inputs_cd", CENTRIFUGAL_SIEVER.transfer.inputPullIntervalTicks)) {
-            for (const slot of CENTRIFUGAL_SIEVER.slots.inputs) {
-                machine.pullItemsFromAbove(slot);
+                if (!hasOutputItems && !hasInputRoom) {
+                    return ADAPTIVE_CHECK_RESULT.idle;
+                }
+
+                let moved = transferOutputSlots(machine);
+                for (const slot of CENTRIFUGAL_SIEVER.slots.inputs) {
+                    moved = machine.pullItemsFromAbove(slot) || moved;
+                }
+                moved = machine.pullItemsFromAbove(CENTRIFUGAL_SIEVER.slots.mesh) || moved;
+
+                return moved
+                    ? ADAPTIVE_CHECK_RESULT.moved
+                    : ADAPTIVE_CHECK_RESULT.stalled;
             }
-            machine.pullItemsFromAbove(CENTRIFUGAL_SIEVER.slots.mesh);
-            machine.pullItemsFromAbove(CENTRIFUGAL_SIEVER.slots.steamInput);
-        }
-
-        feedFluidSlot(machine, tank, CENTRIFUGAL_SIEVER.slots.steamInput);
+        );
 
         const meshStack = machine.inv.getItem(CENTRIFUGAL_SIEVER.slots.mesh);
         const meshData = resolveMeshData(meshStack);
@@ -434,6 +461,7 @@ function buildGroupPlan(machine, group, desiredBatch, meshData, baseEnergyCost, 
         baseEnergyCost: 0,
         cycleSeconds: 0,
         eligibleDrops: [],
+        producibleDrops: [],
         estimatedOutputs: 0,
         outputPlan: null
     };
@@ -449,7 +477,13 @@ function buildGroupPlan(machine, group, desiredBatch, meshData, baseEnergyCost, 
         return plan;
     }
 
-    plan.outputPlan = buildOutputPlan(machine, plan.eligibleDrops.map(entry => entry.item));
+    plan.producibleDrops = filterDropsByOutputCapacity(machine, plan.eligibleDrops);
+    if (!plan.producibleDrops.length) {
+        plan.outputFull = true;
+        return plan;
+    }
+
+    plan.outputPlan = buildOutputPlan(machine, plan.producibleDrops.map(entry => entry.item));
     plan.outputConflict = plan.outputPlan.compatibleSlotCount <= 0;
     plan.outputFull = !plan.outputPlan.hasSpace;
     plan.batchCount = Math.max(0, Math.min(group.totalAmount, desiredBatch));
@@ -464,7 +498,7 @@ function buildGroupPlan(machine, group, desiredBatch, meshData, baseEnergyCost, 
     plan.steamBoostActive = (tank?.get() ?? 0) >= plan.steamNeeded;
     plan.energyCost = Math.max(1, Math.ceil(plan.baseEnergyCost * (plan.steamBoostActive ? CENTRIFUGAL_SIEVER.steam.energyMultiplier : 1)));
     plan.cycleSeconds = computeCycleSeconds(plan.batchCount);
-    plan.estimatedOutputs = estimateExpectedOutputs(plan.eligibleDrops, plan.batchCount, meshData);
+    plan.estimatedOutputs = estimateExpectedOutputs(plan.producibleDrops, plan.batchCount, meshData);
     plan.ready = true;
 
     return plan;
@@ -475,6 +509,39 @@ function canMeshRollEntry(meshData, entry) {
     if (meshData.tier < (entry.tier ?? 0)) return false;
     if (meshData.tier >= 7 && entry.item === CENTRIFUGAL_SIEVER.mesh.boostIgnoreOutput) return false;
     return isValidItemId(entry.item);
+}
+
+function filterDropsByOutputCapacity(machine, entries) {
+    if (!Array.isArray(entries) || entries.length <= 0) return [];
+
+    return entries.filter(entry => {
+        const itemId = entry?.item;
+        if (!itemId) return false;
+        return getOutputInsertCapacity(machine, itemId) > 0;
+    });
+}
+
+function getOutputInsertCapacity(machine, itemId) {
+    if (!itemId) return 0;
+
+    const availableOutputSlots = getAvailableOutputSlots(machine);
+    const maxStack = Math.max(1, resolveMaxStackSize(null, itemId));
+    let total = 0;
+
+    for (const slot of availableOutputSlots) {
+        const stack = machine.inv.getItem(slot);
+        if (!stack) {
+            total += maxStack;
+            continue;
+        }
+
+        if (stack.typeId !== itemId) continue;
+
+        const stackMax = Math.max(1, resolveMaxStackSize(stack, itemId));
+        total += Math.max(0, stackMax - stack.amount);
+    }
+
+    return Math.max(0, total);
 }
 
 function buildOutputPlan(machine, candidateOutputIds) {
@@ -582,8 +649,12 @@ function processBatch(machine, operation, tank) {
         tank.consume(group.steamNeeded);
     }
 
-    const rolledOutputs = rollBatchOutputs(group.eligibleDrops, group.batchCount, operation.meshData);
-    const distribution = distributeOutputs(machine, rolledOutputs);
+    const sourceDrops = (group.producibleDrops?.length ?? 0) > 0
+        ? group.producibleDrops
+        : group.eligibleDrops;
+    const rolledOutputs = rollBatchOutputs(sourceDrops, group.batchCount, operation.meshData);
+    const cappedOutputs = clampOutputsToAvailableCapacity(machine, rolledOutputs);
+    const distribution = distributeOutputs(machine, cappedOutputs);
 
     if (countItemsAcrossSlots(machine, CENTRIFUGAL_SIEVER.slots.inputs, group.typeId) <= 0) {
         clearLockedInput(machine);
@@ -619,6 +690,86 @@ function rollBatchOutputs(entries, batchCount, meshData) {
     }
 
     return rolled;
+}
+
+function clampOutputsToAvailableCapacity(machine, rolledOutputs) {
+    const capped = new Map();
+    if (!(rolledOutputs instanceof Map) || rolledOutputs.size <= 0) return capped;
+
+    const reservationState = createOutputReservationState(machine);
+    const ordered = [...rolledOutputs.entries()].sort((left, right) => left[0].localeCompare(right[0]));
+
+    for (const [itemId, amount] of ordered) {
+        const desiredAmount = Math.max(0, Math.floor(Number(amount) || 0));
+        if (!itemId || desiredAmount <= 0) continue;
+
+        const reservableAmount = reserveOutputAmount(reservationState, itemId, desiredAmount);
+        if (reservableAmount <= 0) continue;
+
+        capped.set(itemId, reservableAmount);
+    }
+
+    return capped;
+}
+
+function createOutputReservationState(machine) {
+    const slots = [];
+
+    for (const slot of getAvailableOutputSlots(machine)) {
+        const stack = machine.inv.getItem(slot);
+        if (!stack) {
+            slots.push({
+                slot,
+                itemId: null,
+                amount: 0,
+                maxAmount: 0
+            });
+            continue;
+        }
+
+        slots.push({
+            slot,
+            itemId: stack.typeId,
+            amount: stack.amount,
+            maxAmount: Math.max(1, resolveMaxStackSize(stack, stack.typeId))
+        });
+    }
+
+    return { slots };
+}
+
+function reserveOutputAmount(reservationState, itemId, amount) {
+    if (!reservationState?.slots?.length || !itemId || amount <= 0) return 0;
+
+    let remaining = Math.max(0, Math.floor(amount));
+
+    for (const slot of reservationState.slots) {
+        if (remaining <= 0) break;
+        if (slot.itemId !== itemId) continue;
+
+        const space = Math.max(0, slot.maxAmount - slot.amount);
+        if (space <= 0) continue;
+
+        const inserted = Math.min(space, remaining);
+        slot.amount += inserted;
+        remaining -= inserted;
+    }
+
+    const maxAmount = Math.max(1, resolveMaxStackSize(null, itemId));
+    for (const slot of reservationState.slots) {
+        if (remaining <= 0) break;
+        if (slot.itemId !== null) continue;
+
+        const inserted = Math.min(maxAmount, remaining);
+        if (inserted <= 0) continue;
+
+        slot.itemId = itemId;
+        slot.maxAmount = maxAmount;
+        slot.amount = inserted;
+        remaining -= inserted;
+    }
+
+    return Math.max(0, amount - remaining);
 }
 
 function resolveEntryAmount(amount) {
@@ -837,63 +988,102 @@ function isQuantityUpgradeItem(item) {
 }
 
 function buildMachineLore(machine, tank, context = {}) {
-    const tankAmount = FluidManager.formatFluid(tank?.get() ?? 0);
-    const tankCap = FluidManager.formatFluid(tank?.getCap() ?? 0);
     const focusGroup = context.focusGroup ?? null;
     const desiredBatch = Number(context.desiredBatch ?? 1);
     const steamActive = context.steamActive === true;
     const meshData = context.meshData ?? null;
-    const lines = [
-        `§7Steam Tank: §f${formatFluidDisplayName(CENTRIFUGAL_SIEVER.steam.type)} ${tankAmount} §7/ §f${tankCap}`,
-        `§7Mesh Tier: §f${meshData?.tier ?? 0} §7(${formatItemName(meshData?.name ?? "utilitycraft:string_mesh")})`,
-        `§7Batch Cap: §f${desiredBatch} §7(Q${context.quantityLevel ?? 0})`,
-        `§7Steam Boost: ${steamActive ? "§bActive" : "§7Standby"}`,
-        `§7Speed: §f${machine.boosts.speed.toFixed(2)}x`,
-        `§7Efficiency: §f${((1 / machine.boosts.consumption) * 100).toFixed(0)}%`,
-        `§7Rate: §f${Energy.formatEnergyToText(Math.floor(machine.baseRate))}/t`
-    ];
+    const lines = [];
+    const overclockLine = buildOverclockLoreLine(machine)?.replace(/^§r/, "");
 
+    const machineInfo = [
+        {
+            label: "Energy",
+            value: formatMachineEnergyBuffer(machine)
+        },
+        {
+            label: "Mesh",
+            value: meshData?.name
+                ? `${formatItemName(meshData.name)} (T${meshData.tier ?? 0})`
+                : "None"
+        },
+        {
+            label: "Steam",
+            value: formatFluidTankBuffer(tank, CENTRIFUGAL_SIEVER.steam.type)
+        },
+        {
+            label: "Batch",
+            value: formatBatchWithQuantity(desiredBatch, context.quantityLevel ?? 0)
+        }
+    ];
+    if (overclockLine) machineInfo.push(overclockLine);
+
+    appendLoreSection(lines, "Machine Information", machineInfo, {
+        spacing: false
+    });
+
+    const operationInfo = [];
     if (context.operation?.inputGroupCount > 1) {
-        lines.push(`§7Queued Types: §f${context.operation.inputGroupCount}`);
+        operationInfo.push({
+            label: "Queued Types",
+            value: context.operation.inputGroupCount
+        });
     }
 
     if (focusGroup?.typeId) {
-        lines.push(`§7Focus Input: §f${formatItemName(focusGroup.typeId)}`);
+        operationInfo.push({
+            label: "Input",
+            value: formatItemName(focusGroup.typeId)
+        });
     }
 
     if (focusGroup?.eligibleDrops?.length) {
-        lines.push(`§7Eligible Drops: §f${focusGroup.eligibleDrops.length}`);
-        lines.push(`§7Batch Size: §f${focusGroup.batchCount} §7/ §f${desiredBatch}`);
-        lines.push(`§7Expected Yield: §f${focusGroup.estimatedOutputs}`);
-        lines.push(`§7Output Space: §f${focusGroup.outputPlan?.totalSpace ?? 0}`);
+        operationInfo.push(
+            {
+                label: "Batch",
+                value: `${focusGroup.batchCount} / ${desiredBatch}`
+            },
+            {
+                label: "Expected",
+                value: focusGroup.estimatedOutputs
+            },
+            {
+                label: "Cost",
+                value: `${formatEnergyCost(focusGroup.energyCost ?? 0)}${formatOptionalFluidSuffix(focusGroup.steamBoostActive, focusGroup.steamNeeded, "Steam")}`
+            }
+        );
 
-        if (focusGroup.steamBoostActive) {
-            lines.push(`§7Steam Use: §f${FluidManager.formatFluid(focusGroup.steamNeeded)}`);
-            lines.push(`§7Boost Speed: §f${CENTRIFUGAL_SIEVER.steam.speedMultiplier.toFixed(2)}x`);
-        } else {
+        if (!focusGroup.steamBoostActive) {
             const shortage = Math.max(0, (focusGroup.steamNeeded ?? 0) - (tank?.get() ?? 0));
             if (shortage > 0 && focusGroup.steamNeeded > 0) {
-                lines.push(`§7Boost Need: §f${FluidManager.formatFluid(shortage)} more steam`);
+                operationInfo.push({
+                    label: "Need Steam",
+                    value: formatFluidNeedValue(shortage)
+                });
             }
         }
     }
 
-    if (context.lastBatch?.produced > 0) {
-        lines.push(`§8Batch produced ${context.lastBatch.produced} items across ${context.lastBatch.uniqueOutputs} outputs`);
-    }
-    if (context.lastBatch?.overflow > 0) {
-        lines.push(`§8Overflow dropped ${context.lastBatch.overflow} items`);
+    if (operationInfo.length > 0) {
+        appendLoreSection(lines, "Sieve Operation", operationInfo);
     }
 
-    const overclockLine = buildOverclockLoreLine(machine);
-    if (overclockLine) lines.push(overclockLine.replace(/^§r/, ""));
+    const batchInfo = [];
+    if (context.lastBatch?.produced > 0) {
+        batchInfo.push(`§7Produced: §f${context.lastBatch.produced} items §7(${context.lastBatch.uniqueOutputs} outputs)`);
+    }
+    if (context.lastBatch?.overflow > 0) {
+        batchInfo.push(`§6Overflow: §f${context.lastBatch.overflow} dropped`);
+    }
+    if (batchInfo.length > 0) {
+        appendLoreSection(lines, "Last Batch", batchInfo);
+    }
 
     return lines;
 }
 
 function buildFooterLines(machine, context = {}) {
     const lines = [
-        `Batch: ${context.desiredBatch ?? 1}`,
+        `Batch: ${formatBatchWithQuantity(context.desiredBatch ?? 1, context.quantityLevel ?? 0)}`,
         `Steam: ${context.steamActive ? "Boost" : "Base"}`
     ];
 
@@ -917,7 +1107,10 @@ function showMachineWarning(machine, tank, message, context = {}, resetProgress 
         message,
         resetProgress,
         buildMachineLore(machine, tank, context),
-        { footerLines: buildFooterLines(machine, context) }
+        {
+            footerLines: buildFooterLines(machine, context),
+            displayModel: "minimal"
+        }
     );
     updateDisplays(machine, tank);
 }
@@ -927,7 +1120,10 @@ function showMachineStatus(machine, tank, message, context = {}) {
     machine.showStatus(
         message,
         buildMachineLore(machine, tank, context),
-        { footerLines: buildFooterLines(machine, context) }
+        {
+            footerLines: buildFooterLines(machine, context),
+            displayModel: "minimal"
+        }
     );
     updateDisplays(machine, tank);
 }

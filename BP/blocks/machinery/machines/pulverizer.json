@@ -29,16 +29,15 @@
                     "dynamic_rate": true,
                     "fluid_cap": 32000,
                     "upgrades": [10, 11, 12, 13],
-                    "hidden_slots": [9, 14, 15]
+                    "hidden_slots": [7, 9, 14, 15]
                 }
             },
             "utilitycraft:special_container": {
                 "Input Lanes": [3, 4, 5, 6],
-                "Steam Input": 7,
                 "Steam Tank": 8,
                 "Upgrade Slots": [10, 11, 12, 13],
                 "Output Lanes": [16, 17, 18, 19],
-                "Hidden Slots": [9, 14, 15]
+                "Hidden Slots": [7, 9, 14, 15]
             },
             "utilitycraft:machine_recipes": {
                 "type": "pulverizer"

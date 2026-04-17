@@ -45,42 +45,42 @@
                         },
                         {
                             "upgrade_1@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
+                                "anchor_from": "center",
+                                "anchor_to": "center",
                                 "$slot_index": 7,
                                 "$slot_size": [18, 18],
                                 "layer": 3,
-                                "offset": [0, 0]
+                                "offset": [0, -24]
                             }
                         },
                         {
                             "upgrade_2@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
+                                "anchor_from": "center",
+                                "anchor_to": "center",
                                 "$slot_index": 8,
                                 "$slot_size": [18, 18],
                                 "layer": 3,
-                                "offset": [0, 18]
+                                "offset": [0, -6]
                             }
                         },
                         {
                             "upgrade_3@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
+                                "anchor_from": "center",
+                                "anchor_to": "center",
                                 "$slot_index": 9,
                                 "$slot_size": [18, 18],
                                 "layer": 3,
-                                "offset": [0, 36]
+                                "offset": [0, 12]
                             }
                         },
                         {
                             "upgrade_4@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
+                                "anchor_from": "center",
+                                "anchor_to": "center",
                                 "$slot_index": 10,
                                 "$slot_size": [18, 18],
                                 "layer": 3,
-                                "offset": [0, 54]
+                                "offset": [0, 30]
                             }
                         }
                     ]
@@ -116,12 +116,15 @@
                 }
             },
             {
-                "mode_button@machineryCommon.machine_button": {
+                "mode_button@uc.machine_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [18, 20],
                     "$index": 3,
-                    "$button_size": [16, 16]
+                    "$button_size": [16, 16],
+                    "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
+                    "$hover_texture": "textures/ui/cells/hover_inverted_orange_image",
+                    "$pressed_texture": "textures/ui/cells/orange_cell_image"
                 }
             },
             {
@@ -130,14 +133,6 @@
                     "anchor_to": "top_middle",
                     "offset": [18, 38],
                     "collection_index": 4
-                }
-            },
-            {
-                "water_input@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [18, 56],
-                    "collection_index": 5
                 }
             },
             {
@@ -331,9 +326,6 @@
                                     },
                                     {
                                         "hotbar_grid@common.hotbar_grid_template": {}
-                                    },
-                                    {
-                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
                                     }
                                 ]
                             }

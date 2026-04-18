@@ -63,10 +63,16 @@ Heavy processing and block automation take center stage in this draft, with new 
     - **Line (1x5)**: Breaks a line of 5 blocks in front of it, consuming more energy and taking longer.
   - Drops are pulled into the internal storage slots when possible.
     - If the storage fills up, excess items are dropped normally in the world.
+- Added **Verdant Cultivator**
+  - Superior version of Harvester with a repeated 2x2 seed grid and a 9-slot internal harvest buffer.
+  - Range Upgrades expand its working field from 3x3 up to 17x17.
+  - A dedicated Pedestal Clock slot pulses crop growth while Quantity Upgrades add extra harvest rolls.
+  - Supports vanilla field crops and UtilityCraft seed crops, then exports buffered harvests from the rear when possible.
 
 ## TECHNICAL CHANGES
 ### Runtime Registration
-- Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
+- Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Verdant Cultivator, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
+- Added Verdant Cultivator crop-field runtime handling for repeated seed patterns, Pedestal Clock growth pulses, buffered harvest collection, and quantity-based bonus harvest rolls.
 - Removed the native Dismantler runtime stack (block, recipe, machine script, UI definition, textures, item catalog entry, and related localization entries).
 - Removed the generated Dismantler reverse-recipe registry and its supporting generation tooling from the active runtime.
 - Added a native Pulverizer crusher-recipe registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_crusher_recipe` custom insertions.

@@ -31,6 +31,7 @@ import './machinery/machines/superior/centrifugal_siever.js'
 import './machinery/machines/superior/dual_siever.js'
 import './machinery/machines/superior/abysall_fisher.js'
 import './machinery/machines/superior/superior_seed_synth.js'
+import './machinery/machines/superior/verdant_cultivator.js'
 import './machinery/machines/superior/seismic_breaker.js'
 import './machinery/machines/superior/pattern_placer.js'
 

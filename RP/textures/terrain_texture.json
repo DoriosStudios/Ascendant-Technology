@@ -103,6 +103,12 @@
 		"utilitycraft_genetic_seed_synthesizer_on": {
 			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_on"
 		},
+		"utilitycraft_verdant_cultivator_off": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_off"
+		},
+		"utilitycraft_verdant_cultivator_on": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_on"
+		},
 		"utilitycraft_seismic_breaker_off": {
 			"textures": "textures/blocks/machines/superior/seismic_breaker"
 		},

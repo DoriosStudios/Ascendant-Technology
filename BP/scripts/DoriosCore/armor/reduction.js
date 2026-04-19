@@ -1,16 +1,74 @@
 import { system, world } from "@minecraft/server";
 
+// ==================================================
+// EXAMPLES – How to register armor mitigation entries
+// ==================================================
+/*
+import { system, world } from "@minecraft/server";
+
+world.afterEvents.worldLoad.subscribe(() => {
+    // 1) Single entry object with an explicit item id
+    const helmetEntry = {
+        id: "otheraddon:steel_helmet",
+        damage_reduction: 0.08,
+        damage_negation: 0.03,
+        reduces: "all"
+    };
+
+    // 2) Batch object keyed by item id (similar to Ascendant recipe registries)
+    const armorBatch = {
+        "otheraddon:steel_chestplate": {
+            damage_reduction: 0.12,
+            reduces: ["entity_attack", "projectile"]
+        },
+        "otheraddon:steel_boots": {
+            damage_negation: 0.05,
+            cases: {
+                fall: {
+                    damage_reduction: 0.20,
+                    damage_negation: 0.10
+                }
+            }
+        }
+    };
+
+    // 3) Array batch for addons that already build entry lists dynamically
+    const arrayBatch = [
+        {
+            id: "otheraddon:steel_leggings",
+            damage_reduction: 0.10,
+            reduces: "all"
+        },
+        {
+            id: "otheraddon:steel_boots",
+            damage_negation: 0.05,
+            reduces: ["fall", "fire"]
+        }
+    ];
+
+    system.sendScriptEvent("utilitycraft:register_armor_mitigation", JSON.stringify(helmetEntry));
+    system.sendScriptEvent("utilitycraft:register_armor_mitigation", JSON.stringify(armorBatch));
+    system.sendScriptEvent("utilitycraft:register_armor_mitigation", JSON.stringify(arrayBatch));
+});
+
+// You can also do this directly with commands inside Minecraft:
+Command:
+/scriptevent utilitycraft:register_armor_mitigation {"id":"otheraddon:steel_helmet","damage_reduction":0.08,"damage_negation":0.03,"reduces":"all"}
+
+/scriptevent utilitycraft:register_armor_mitigation {"otheraddon:steel_chestplate":{"damage_reduction":0.12,"reduces":["entity_attack","projectile"]},"otheraddon:steel_boots":{"damage_negation":0.05,"cases":{"fall":{"damage_reduction":0.2,"damage_negation":0.1}}}}
+*/
+
 // New armor component system (utilitycraft:armor)
 // Aggregates per-piece damage reduction and negation chance.
 // Defaults:
 //  - damage_reduction default fraction when boolean true: 0.05 (5%)
 //  - damage_negation default when boolean true: 0.025 (2.5%)
-//  - reductions sum across pieces and are clamped to 90% max
+//  - reductions sum across pieces and are clamped to 99% max
 //  - negation chances combine as independent probabilities
 
 const DEFAULT_DAMAGE_REDUCTION = 0.05; // 5%
 const DEFAULT_DAMAGE_NEGATION = 0.025; // 2.5%
-const MAX_TOTAL_REDUCTION = 0.9; // 90%
+const MAX_TOTAL_REDUCTION = 0.99; // 99%
 const ARMOR_SLOTS = ['Head', 'Chest', 'Legs', 'Feet'];
 const externalArmorMitigationRegistry = new Map();
 

@@ -11,6 +11,7 @@ import { system, world } from "@minecraft/server";
 const DEFAULT_DAMAGE_REDUCTION = 0.05; // 5%
 const DEFAULT_DAMAGE_NEGATION = 0.025; // 2.5%
 const MAX_TOTAL_REDUCTION = 0.9; // 90%
+const ARMOR_SLOTS = ['Head', 'Chest', 'Legs', 'Feet'];
 
 function toFraction(val, fallback) {
     if (val === undefined || val === null || val === false) return null;
@@ -41,65 +42,90 @@ function damageTypeFromEvent(event) {
     }
 }
 
+function getArmorEquipmentComponent(entity) {
+    return entity?.getComponent?.('equippable');
+}
+
+function resolveEffectiveArmorConfig(item, damageType) {
+    if (!item) return null;
+
+    const id = item?.typeId ?? item?.type ?? '';
+    const comp = item.getComponent?.('utilitycraft:armor')?.customComponentParameters?.params ?? null;
+
+    const effective = comp ? { ...comp } : (typeof id === 'string' && id.includes('aetherium') ? {
+        damage_reduction: 0.075,
+        damage_negation: 0.025,
+        reduces: 'all'
+    } : null);
+
+    if (!effective) return null;
+
+    const cases = effective.cases ?? {};
+    const override = (cases && typeof cases === 'object') ? (cases[damageType] ?? null) : null;
+    const merged = { ...effective, ...(override || {}) };
+
+    const reducesField = merged.reduces ?? (merged.damage_reduction || merged.damage_negation ? 'all' : 'none');
+    if (reducesField === 'none') return null;
+
+    if (Array.isArray(reducesField)) {
+        const lowered = reducesField.map((value) => String(value).toLowerCase());
+        if (!lowered.includes(damageType) && !lowered.includes('all')) return null;
+    } else if (typeof reducesField === 'string') {
+        const lowered = reducesField.toLowerCase();
+        if (lowered !== 'all' && lowered !== damageType) return null;
+    }
+
+    return merged;
+}
+
+export function getPlayerArmorMitigationProfile(player, damageType = 'all') {
+    if (!player || player.typeId !== 'minecraft:player') return undefined;
+
+    const equipComp = getArmorEquipmentComponent(player);
+    if (!equipComp) return undefined;
+
+    const normalizedDamageType = String(damageType || 'all').toLowerCase();
+    const reductions = [];
+    const negations = [];
+    let pieceCount = 0;
+
+    for (const slot of ARMOR_SLOTS) {
+        const item = equipComp.getEquipment(slot);
+        if (!item) continue;
+
+        const effective = resolveEffectiveArmorConfig(item, normalizedDamageType);
+        if (!effective) continue;
+
+        pieceCount += 1;
+
+        const dr = toFraction(effective.damage_reduction, DEFAULT_DAMAGE_REDUCTION);
+        const dn = toFraction(effective.damage_negation, DEFAULT_DAMAGE_NEGATION);
+
+        if (dr && dr > 0) reductions.push(dr);
+        if (dn && dn > 0) negations.push(dn);
+    }
+
+    return {
+        damageType: normalizedDamageType,
+        pieceCount,
+        reductionValues: reductions,
+        negationValues: negations,
+        totalReduction: Math.min(MAX_TOTAL_REDUCTION, reductions.reduce((sum, value) => sum + value, 0)),
+        totalNegation: combinesNegation(negations)
+    };
+}
+
 world.beforeEvents.entityHurt.subscribe((event) => {
     try {
         const target = event?.hurtEntity;
         if (!target || target.typeId !== 'minecraft:player') return;
 
-        const equipComp = target.getComponent?.('equippable');
-        if (!equipComp) return;
-
-        const slots = ['Head', 'Chest', 'Legs', 'Feet'];
-
         const damageType = damageTypeFromEvent(event);
 
-        const reductions = [];
-        const negations = [];
+        const profile = getPlayerArmorMitigationProfile(target, damageType);
+        if (!profile || (profile.reductionValues.length === 0 && profile.negationValues.length === 0)) return;
 
-        for (const slot of slots) {
-            const item = equipComp.getEquipment(slot);
-            if (!item) continue;
-
-            const id = item?.typeId ?? item?.type ?? '';
-
-            // Read the armor component if present
-            const comp = item.getComponent?.('utilitycraft:armor')?.customComponentParameters?.params ?? null;
-
-            // Backwards compatibility: treat items with 'aetherium' in id as armor with aetherium defaults
-            const effective = comp ? { ...comp } : (typeof id === 'string' && id.includes('aetherium') ? {
-                damage_reduction: 0.075,
-                damage_negation: 0.025,
-                reduces: 'all'
-            } : null);
-
-            if (!effective) continue;
-
-            // If the component has cases, allow damage-type-specific overrides
-            const cases = effective.cases ?? {};
-            const override = (cases && typeof cases === 'object') ? (cases[damageType] ?? null) : null;
-            const merged = { ...effective, ...(override || {}) };
-
-            // Determine whether this piece applies to the current damage type
-            const reducesField = merged.reduces ?? (merged.damage_reduction || merged.damage_negation ? 'all' : 'none');
-            if (reducesField === 'none') continue;
-
-            // supports reduces as array or 'all'
-            if (Array.isArray(reducesField)) {
-                const lowered = reducesField.map(x => String(x).toLowerCase());
-                if (!lowered.includes(damageType) && !lowered.includes('all')) continue;
-            }
-
-            const dr = toFraction(merged.damage_reduction, DEFAULT_DAMAGE_REDUCTION);
-            const dn = toFraction(merged.damage_negation, DEFAULT_DAMAGE_NEGATION);
-
-            if (dr && dr > 0) reductions.push(dr);
-            if (dn && dn > 0) negations.push(dn);
-        }
-
-        if (reductions.length === 0 && negations.length === 0) return;
-
-        const combinedNegation = combinesNegation(negations);
-        if (Math.random() < combinedNegation) {
+        if (Math.random() < profile.totalNegation) {
             // Negates all damage
             event.cancel = true;
             try {
@@ -116,9 +142,8 @@ world.beforeEvents.entityHurt.subscribe((event) => {
             return;
         }
 
-        const totalReduction = Math.min(MAX_TOTAL_REDUCTION, reductions.reduce((s, v) => s + v, 0));
         const original = Number(event.damage ?? 0) || 0;
-        event.damage = original * (1 - totalReduction);
+        event.damage = original * (1 - profile.totalReduction);
     } catch (err) {
         console.warn && console.warn('Armor reduction hook error:', err);
     }

@@ -1,5 +1,6 @@
 import { system } from "@minecraft/server";
 import { Energy, FluidManager } from "../DoriosCore/index.js";
+import { getPlayerArmorMitigationProfile } from "../DoriosCore/armor/reduction.js";
 
 const INSIGHT_INJECTOR = Object.freeze({
     runtime: Object.freeze({
@@ -9,18 +10,26 @@ const INSIGHT_INJECTOR = Object.freeze({
     }),
     provider: Object.freeze({
         name: "Ascendant Technology",
-        customComponentKeys: Object.freeze([
+        blockComponentKeys: Object.freeze([
             "customEnergyInfo",
             "customRotationInfo",
             "customMachineProgress",
             "customFluidInfo",
             "customVariantPreview"
+        ]),
+        entityComponentKeys: Object.freeze([
+            "customFields",
+            "armor"
         ])
     })
 });
 
 const { registrationMarker: REGISTRATION_MARKER, registrationRetryTicks: REGISTRATION_RETRY_TICKS, maxRegistrationAttempts: MAX_REGISTRATION_ATTEMPTS } = INSIGHT_INJECTOR.runtime;
-const { name: INSIGHT_PROVIDER_NAME, customComponentKeys: INSIGHT_CUSTOM_COMPONENT_KEYS } = INSIGHT_INJECTOR.provider;
+const {
+    name: INSIGHT_PROVIDER_NAME,
+    blockComponentKeys: INSIGHT_BLOCK_COMPONENT_KEYS,
+    entityComponentKeys: INSIGHT_ENTITY_COMPONENT_KEYS
+} = INSIGHT_INJECTOR.provider;
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -72,6 +81,28 @@ function formatFluid(value) {
 function capitalize(str) {
     if (!str) return str;
     return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function formatChance(value) {
+    const normalized = Math.max(0, Number(value) || 0);
+    return `${(normalized * 100).toFixed(1)}%`;
+}
+
+function resolveInsightComponentKeys(api, preferredKeys) {
+    const keys = Array.isArray(preferredKeys)
+        ? preferredKeys.filter((key) => typeof key === "string" && key.trim().length > 0)
+        : [];
+
+    if (!api || typeof api.getSupportedComponentKeys !== "function") {
+        return keys;
+    }
+
+    try {
+        const supportedKeys = new Set(api.getSupportedComponentKeys());
+        return keys.filter((key) => supportedKeys.has(key));
+    } catch {
+        return keys;
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -234,6 +265,33 @@ function getVariantLine(context, states) {
     return `Variant: ${Math.max(0, currentVariant)}`;
 }
 
+function collectAscendantEntityFields(context) {
+    if (!context?.playerSettings?.showCustomFields || !context?.playerSettings?.showArmor) {
+        return undefined;
+    }
+
+    if (context?.entity?.typeId !== "minecraft:player") {
+        return undefined;
+    }
+
+    const profile = getPlayerArmorMitigationProfile(context.entity, "all");
+    if (!profile) {
+        return undefined;
+    }
+
+    const lines = [];
+
+    if (profile.totalReduction > 0) {
+        lines.push(`Armor Reduction: ${formatChance(profile.totalReduction)}`);
+    }
+
+    if (profile.totalNegation > 0) {
+        lines.push(`Negation Chance: ${formatChance(profile.totalNegation)}`);
+    }
+
+    return lines.length ? lines : undefined;
+}
+
 // ---------------------------------------------------------------------------
 // Collector
 // ---------------------------------------------------------------------------
@@ -280,10 +338,21 @@ function tryRegisterInjectors() {
         return false;
     }
 
+    const blockComponentKeys = resolveInsightComponentKeys(api, INSIGHT_BLOCK_COMPONENT_KEYS);
+    const entityComponentKeys = resolveInsightComponentKeys(api, INSIGHT_ENTITY_COMPONENT_KEYS);
+
     api.registerBlockFieldInjector(collectAscendantBlockFields, {
         provider: INSIGHT_PROVIDER_NAME,
-        components: INSIGHT_CUSTOM_COMPONENT_KEYS
+        components: blockComponentKeys
     });
+
+    if (typeof api.registerEntityFieldInjector === "function") {
+        api.registerEntityFieldInjector(collectAscendantEntityFields, {
+            provider: INSIGHT_PROVIDER_NAME,
+            components: entityComponentKeys
+        });
+    }
+
     globalThis[REGISTRATION_MARKER] = true;
     return true;
 }

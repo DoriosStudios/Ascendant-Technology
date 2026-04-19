@@ -19,6 +19,9 @@ import {
 import { Machine, updatePipes, sanitizeTickSpeed } from "./machinery/machine.js";
 import { Generator } from "./machinery/generator.js";
 import { ENERGY_DEBUG_PROP } from "./constants.js";
+import {
+    registerArmorMitigationDefinitionsFromScriptEvent
+} from "./armor/reduction.js";
 
 // ─── Event IDs ───────────────────────────────────────────────────────────────
 
@@ -39,6 +42,9 @@ const SCRIPT_EVENT_IDS = Object.freeze({
         legacyTickSpeed: "utilitycraft:set_tick_speed",
         updatePipes: "dorios:updatePipes",
         energyDebug: "utilitycraft:debug_energy"
+    }),
+    armor: Object.freeze({
+        registerMitigation: "utilitycraft:register_armor_mitigation"
     })
 });
 
@@ -198,6 +204,30 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
         console.warn(`[EnergyDebug] ${nextState ? "Enabled" : "Disabled"} (ScriptEvent).`);
     } catch (error) {
         console.warn(`[EnergyDebug] Failed to set ${ENERGY_DEBUG_PROP} (ScriptEvent).`, error);
+    }
+});
+
+// ─── Armor mitigation registration via ScriptEvent ──────────────────────────
+
+system.afterEvents.scriptEventReceive.subscribe(event => {
+    const { id } = event;
+    if (id !== SCRIPT_EVENT_IDS.armor.registerMitigation) {
+        return;
+    }
+
+    const trimmedMessage = typeof event.message === "string" ? event.message.trim() : "";
+    if (!trimmedMessage) return;
+
+    const payload = safeJsonParse(trimmedMessage);
+    if (!payload) return;
+
+    try {
+        const applied = registerArmorMitigationDefinitionsFromScriptEvent(payload);
+        if (applied > 0) {
+            console.warn(`[UtilityCraft] Registered ${applied} armor mitigation definition${applied === 1 ? "" : "s"} via ScriptEvent.`);
+        }
+    } catch (error) {
+        console.warn(`[UtilityCraft] Failed to process ${id} payload:`, error);
     }
 });
 

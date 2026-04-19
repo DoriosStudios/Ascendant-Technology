@@ -70,6 +70,10 @@ Heavy processing and block automation take center stage in this draft, with new 
   - Supports vanilla field crops and UtilityCraft seed crops, then exports buffered harvests from the rear when possible.
 
 ## TECHNICAL CHANGES
+### Compatibility
+- Added `utilitycraft:register_armor_mitigation` as a ScriptEvent-based registry for external armor items that cannot use the native `utilitycraft:armor` component.
+  - The registry accepts per-item mitigation definitions with damage reduction, damage negation chance, and optional damage-type overrides.
+
 ### Runtime Registration
 - Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Verdant Cultivator, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
 - Added Verdant Cultivator crop-field runtime handling for repeated seed patterns, Pedestal Clock growth pulses, buffered harvest collection, and quantity-based bonus harvest rolls.

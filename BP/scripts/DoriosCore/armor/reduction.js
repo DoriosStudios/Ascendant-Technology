@@ -12,6 +12,110 @@ const DEFAULT_DAMAGE_REDUCTION = 0.05; // 5%
 const DEFAULT_DAMAGE_NEGATION = 0.025; // 2.5%
 const MAX_TOTAL_REDUCTION = 0.9; // 90%
 const ARMOR_SLOTS = ['Head', 'Chest', 'Legs', 'Feet'];
+const externalArmorMitigationRegistry = new Map();
+
+function normalizeArmorItemId(value) {
+    if (typeof value !== "string") return "";
+    return value.trim().toLowerCase();
+}
+
+function cloneArmorMitigationDefinition(definition) {
+    if (!definition || typeof definition !== "object" || Array.isArray(definition)) {
+        return null;
+    }
+
+    const cloned = { ...definition };
+    if (cloned.cases && typeof cloned.cases === "object" && !Array.isArray(cloned.cases)) {
+        cloned.cases = { ...cloned.cases };
+    }
+
+    return cloned;
+}
+
+function extractArmorItemId(entry) {
+    if (!entry || typeof entry !== "object") return "";
+
+    return normalizeArmorItemId(
+        entry.id
+        ?? entry.itemId
+        ?? entry.typeId
+        ?? entry.item
+        ?? entry.target
+    );
+}
+
+function registerArmorMitigationDefinition(itemId, definition) {
+    const normalizedItemId = normalizeArmorItemId(itemId);
+    if (!normalizedItemId) return false;
+
+    const clonedDefinition = cloneArmorMitigationDefinition(definition);
+    if (!clonedDefinition) return false;
+
+    externalArmorMitigationRegistry.set(normalizedItemId, clonedDefinition);
+    return true;
+}
+
+function registerArmorMitigationBatch(payload) {
+    if (!payload) return 0;
+
+    const entries = [];
+
+    if (Array.isArray(payload)) {
+        for (const entry of payload) {
+            if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+                continue;
+            }
+
+            const itemId = extractArmorItemId(entry);
+            if (!itemId) {
+                continue;
+            }
+
+            const { id, itemId: ignoredItemId, typeId, item, target, ...definition } = entry;
+            entries.push([itemId, definition]);
+        }
+
+        return entries.reduce((count, [itemId, definition]) => count + (registerArmorMitigationDefinition(itemId, definition) ? 1 : 0), 0);
+    }
+
+    if (typeof payload !== "object" || Array.isArray(payload)) {
+        return 0;
+    }
+
+    const directItemId = extractArmorItemId(payload);
+    if (directItemId) {
+        const { id, itemId, typeId, item, target, ...definition } = payload;
+        return registerArmorMitigationDefinition(directItemId, definition) ? 1 : 0;
+    }
+
+    for (const [itemId, definition] of Object.entries(payload)) {
+        if (registerArmorMitigationDefinition(itemId, definition)) {
+            entries.push([itemId, definition]);
+        }
+    }
+
+    return entries.length;
+}
+
+export function getRegisteredArmorMitigationDefinition(itemId) {
+    const normalizedItemId = normalizeArmorItemId(itemId);
+    if (!normalizedItemId) return undefined;
+
+    const definition = externalArmorMitigationRegistry.get(normalizedItemId);
+    return definition ? cloneArmorMitigationDefinition(definition) : undefined;
+}
+
+export function clearRegisteredArmorMitigationDefinitions() {
+    externalArmorMitigationRegistry.clear();
+}
+
+export function registerArmorMitigationDefinitionFromScriptEvent(itemId, definition) {
+    return registerArmorMitigationDefinition(itemId, definition);
+}
+
+export function registerArmorMitigationDefinitionsFromScriptEvent(payload) {
+    return registerArmorMitigationBatch(payload);
+}
 
 function toFraction(val, fallback) {
     if (val === undefined || val === null || val === false) return null;
@@ -50,9 +154,10 @@ function resolveEffectiveArmorConfig(item, damageType) {
     if (!item) return null;
 
     const id = item?.typeId ?? item?.type ?? '';
+    const external = getRegisteredArmorMitigationDefinition(id);
     const comp = item.getComponent?.('utilitycraft:armor')?.customComponentParameters?.params ?? null;
 
-    const effective = comp ? { ...comp } : (typeof id === 'string' && id.includes('aetherium') ? {
+    const effective = external ?? comp ?? (typeof id === 'string' && id.includes('aetherium') ? {
         damage_reduction: 0.075,
         damage_negation: 0.025,
         reduces: 'all'

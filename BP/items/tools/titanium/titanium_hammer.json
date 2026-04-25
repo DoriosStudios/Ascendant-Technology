@@ -56,6 +56,12 @@
                         "block": {
                             "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible')"
                         }
+                    },
+                    {
+                        "speed": 10,
+                        "block": {
+                            "tags": "query.any_tag( 'utilitycraft:compressed_siftable' )"
+                        }
                     }
                 ]
             }

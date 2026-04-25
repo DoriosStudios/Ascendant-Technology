@@ -50,7 +50,7 @@
                 "use_efficiency": true,
                 "destroy_speeds": [
                     {
-                        "speed": 16,
+                        "speed": 20,
                         "block": {
                             "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible')"
                         }

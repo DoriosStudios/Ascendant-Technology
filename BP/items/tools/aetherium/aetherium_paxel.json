@@ -53,7 +53,7 @@
                 "use_efficiency": true,
                 "destroy_speeds": [
                     {
-                        "speed": 16,
+                        "speed": 24,
                         "block": {
                             "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible', 'minecraft:is_shovel_item_destructible', 'minecraft:is_axe_item_destructible')"
                         }

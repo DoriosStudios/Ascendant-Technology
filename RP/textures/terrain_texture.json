@@ -73,6 +73,12 @@
 		"utilitycraft_industrial_burner_on": {
 			"textures": "textures/blocks/machines/superior/industrial_burner_on"
 		},
+		"utilitycraft_impact_crusher_off": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_off"
+		},
+		"utilitycraft_impact_crusher_on": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_on"
+		},
 		"utilitycraft_pulverizer_off": {
 			"textures": "textures/blocks/machines/superior/pulverizer_off"
 		},

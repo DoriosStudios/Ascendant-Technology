@@ -41,6 +41,11 @@ Heavy processing and block automation take center stage in this draft, with new 
     - Instantly smelt items into their molten forms, using lava as an optional booster.
     - Accepts four upgrades.
     - Supports Quantity Upgrades for larger grouped batches.
+- Added **Impact Crusher**
+  - Superior multi-lane crusher with 4 input slots and 4 output slots.
+  - Uses Lava for impact cycles and accepts Water, Cryofluid, or Saline Coolant for thermal control.
+  - Supports grouped crushing runs for larger processing batches.
+  - Base crushing cycles now cost more energy, but complete much faster than before.
 - Added **Pattern Placer**
   - Superior version of Block Placer with 4 input slots and different modes.
   - Has four modes:
@@ -69,13 +74,20 @@ Heavy processing and block automation take center stage in this draft, with new 
   - A dedicated Pedestal Clock slot pulses crop growth while Quantity Upgrades add extra harvest rolls.
   - Supports vanilla field crops and UtilityCraft seed crops, then exports buffered harvests from the rear when possible.
 
+## UI/UX
+- Impact Crusher now shows a dedicated temperature bar in its menu.
+  - The heat display now matches the machine's live thermal state, making coolant use and overheat risk easier to read at a glance.
+- Superior machine names now use consistent subtitle formatting across all supported languages.
+- Superior machine menus now follow the world's refresh speed setting.
+  - Progress arrows, status panels, tank displays, and mode panels now refresh on the same cadence as the configured world update speed.
+
 ## TECHNICAL CHANGES
 ### Compatibility
 - Added `utilitycraft:register_armor_mitigation` as a ScriptEvent-based registry for external armor items that cannot use the native `utilitycraft:armor` component.
   - The registry accepts per-item mitigation definitions with damage reduction, damage negation chance, and optional damage-type overrides.
 
 ### Runtime Registration
-- Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Verdant Cultivator, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
+- Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Impact Crusher, Verdant Cultivator, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
 - Added Verdant Cultivator crop-field runtime handling for repeated seed patterns, Pedestal Clock growth pulses, buffered harvest collection, and quantity-based bonus harvest rolls.
 - Removed the native Dismantler runtime stack (block, recipe, machine script, UI definition, textures, item catalog entry, and related localization entries).
 - Removed the generated Dismantler reverse-recipe registry and its supporting generation tooling from the active runtime.
@@ -122,5 +134,13 @@ Heavy processing and block automation take center stage in this draft, with new 
   - Added a shared superior utility module (`machines/superior/utils.js`) to centralize non-essential conversion/format helpers used by lore and footer displays.
   - Migrated superior machine scripts to use the shared conversion helpers for energy buffers, tank buffers, batch labels, percentage formatting, cycle-time text, and mixed energy+fluid cost lines.
   - Converted superior status/warning labels to the minimal structured model and removed the legacy generic telemetry group (`Speed`, `Efficiency`, `Cost`, `Rate`) from those displays.
+- Updated Impact Crusher fluid routing to resolve Lava and coolant roles by stored fluid type instead of fixed tank positions.
+  - The machine now accepts direct fluid-item insertion and keeps its Lava / coolant logic aligned with its live tank contents.
+- Updated Impact Crusher batch scaling to remap inherited crusher recipe costs and timings to the machine's own balance profile.
+  - The machine now applies its superior baseline cost and speed consistently instead of inheriting Pulverizer defaults during lane processing.
+- Updated Impact Crusher thermal display to use UtilityCraft's `temperature_00` through `temperature_31` UI items.
+  - Keeps the heat slot aligned with the machine's live thermal buffer instead of reusing the generic lane-progress arrow frames.
 - Added missing nineslice JSON metadata for inverted UI cell texture variants used by superior machine buttons.
 - Updated superior machine button states to swap base and hover cell imagery while keeping dedicated button textures through UtilityCraft UI Core controls.
+- Added a shared superior UI refresh gate for display and panel rendering.
+  - Superior machine status panels, tank bars, progress arrows, and button panels now throttle against the world's configured refresh cadence instead of updating immediately on every local render path.

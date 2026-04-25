@@ -7,6 +7,7 @@
         "ui/catalyst_weaver.json",
         "ui/arc_press_forge.json",
         "ui/industrial_burner.json",
+        "ui/impact_crusher.json",
         "ui/pulverizer.json",
         "ui/centrifugal_siever.json",
         "ui/dual_siever.json",

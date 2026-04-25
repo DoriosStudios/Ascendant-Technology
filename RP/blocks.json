@@ -37,6 +37,9 @@
 	"utilitycraft:industrial_burner": {
 		"sound": "metal"
 	},
+	"utilitycraft:impact_crusher": {
+		"sound": "metal"
+	},
 	"utilitycraft:pulverizer": {
 		"sound": "metal"
 	},

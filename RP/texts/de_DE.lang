@@ -27,6 +27,19 @@ tile.utilitycraft:reinforced_extractor.name=Verstärkter Extraktor\n§7Akzeptier
 tile.utilitycraft:smart_importer.name=Intelligenter Importeur\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:reinforced_cable.name=Verstärktes Kabel\n§7- Hochkapazitäts-Energie/Flüssigkeits/Übertaktungs-Rückgrat\n- Akzeptiert Upgrades: §a§r, §b§r, §d§r
 
+## Superior-Maschinen
+tile.utilitycraft:abyssal_fisher.name=Abgrundfischer\n§9Verbesserter Automatenfischer\n§7- Akzeptierte Upgrades: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:arc_press_forge.name=Lichtbogen-Pressschmiede\n§9Verbesserte Elektropresse\n§7- Akzeptierte Upgrades: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:dual_siever.name=Doppelsieb\n§9Verbessertes Automatiksieb B\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:centrifugal_siever.name=Zentrifugalsieb\n§9Verbessertes Automatiksieb A\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:industrial_burner.name=Industrieverbrenner\n§9Verbesserte Verbrennungsanlage\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:impact_crusher.name=Aufprallbrecher\n§9Verbesserter Brecher B\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:genetic_seed_synthesizer.name=Genetischer Saatgut-Synthesizer\n§9Verbesserter Saatgut-Synthesizer\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:pattern_placer.name=Mustersetzer\n§9Verbesserter Blocksetzer\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:pulverizer.name=Pulverisierer\n§9Verbesserter Brecher A\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:seismic_breaker.name=Seismischer Brecher\n§9Verbesserter Blockbrecher\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:verdant_cultivator.name=Üppiger Kultivator\n§9Verbesserte Erntemaschine\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r, §s§r
+
 ## Andere Blöcke
 tile.utilitycraft:flat_conduit.name=Flache Leitung\n§7  Ästhetische Version
 tile.utilitycraft:laser_barrier_field.name=Laserbarriere Field\n§7  Aktiver Bereich, der von der Barriere projiziert wird
@@ -143,6 +156,17 @@ entity.utilitycraft:singularity_fabricator.name=Singularitätsfabrikator
 entity.utilitycraft:liquifier.name=Verflüssiger
 entity.utilitycraft:laser_barrier.name=Laserbarriere
 entity.utilitycraft:residue_processor.name=Rückstandsprozessor
+entity.utilitycraft:arc_press_forge.name=§fLichtbogen-Pressschmiede
+entity.utilitycraft:industrial_burner.name=§fIndustrieverbrenner
+entity.utilitycraft:impact_crusher.name=§fAufprallbrecher
+entity.utilitycraft:pulverizer.name=§fPulverisierer
+entity.utilitycraft:centrifugal_siever.name=§fZentrifugalsieb
+entity.utilitycraft:dual_siever.name=§fDoppelsieb
+entity.utilitycraft:abyssal_fisher.name=§fAbgrundfischer
+entity.utilitycraft:genetic_seed_synthesizer.name=§fGenetischer Saatgut-Synthesizer
+entity.utilitycraft:verdant_cultivator.name=§fÜppiger Kultivator
+entity.utilitycraft:seismic_breaker.name=§fSeismischer Brecher
+entity.utilitycraft:pattern_placer.name=§fMustersetzer
 entity.utilitycraft:energizer.name=Energisierer
 entity.utilitycraft:enchantment_station.name=§fVerzauberungsstation
 entity.utilitycraft:network_center.name=§fNetzwerkzentrum

@@ -27,6 +27,19 @@ tile.utilitycraft:reinforced_extractor.name=強化エクストラクター\n§7�
 tile.utilitycraft:smart_importer.name=スマートインポーター\n§7対応アップグレード:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:reinforced_cable.name=強化ケーブル\n§7- 高容量エネルギー/液体/オーバークロックバックボーン\n- 対応アップグレード: §a§r, §b§r, §d§r
 
+## 上位機械
+tile.utilitycraft:abyssal_fisher.name=アビサルフィッシャー\n§9上位Auto Fisher\n§7- 受け入れられたアップグレード: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:arc_press_forge.name=アークプレス・フォージ\n§9上位Electro Press\n§7- 受け入れられたアップグレード: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:dual_siever.name=デュアルシーバー\n§9上位Autosieve B\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:centrifugal_siever.name=遠心シーバー\n§9上位Autosieve A\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:industrial_burner.name=インダストリアルバーナー\n§9上位焼却炉\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:impact_crusher.name=インパクトクラッシャー\n§9上位クラッシャー B\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:genetic_seed_synthesizer.name=ジェネティック・シード シンセサイザー\n§9上位シード シンセサイザー\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:pattern_placer.name=パターンプレーサー\n§9上位ブロック配置者\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:pulverizer.name=パルバライザー\n§9上位クラッシャー A\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:seismic_breaker.name=シーズミックブレーカー\n§9上位ブロック ブレーカー\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:verdant_cultivator.name=ヴァーダント・カルティベーター\n§9上位ハーベスター\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r
+
 ## その他のブロック
 tile.utilitycraft:flat_conduit.name=フラットコンジット\n§7  美観バージョン
 tile.utilitycraft:laser_barrier_field.name=レーザーバリア Field\n§7  バリアによって投影されるアクティブエリア
@@ -143,6 +156,17 @@ entity.utilitycraft:singularity_fabricator.name=特異点製造機
 entity.utilitycraft:liquifier.name=液化装置
 entity.utilitycraft:laser_barrier.name=レーザーバリア
 entity.utilitycraft:residue_processor.name=残留物プロセッサー
+entity.utilitycraft:arc_press_forge.name=§fアークプレス・フォージ
+entity.utilitycraft:industrial_burner.name=§fインダストリアルバーナー
+entity.utilitycraft:impact_crusher.name=§fインパクトクラッシャー
+entity.utilitycraft:pulverizer.name=§fパルバライザー
+entity.utilitycraft:centrifugal_siever.name=§f遠心シーバー
+entity.utilitycraft:dual_siever.name=§fデュアルシーバー
+entity.utilitycraft:abyssal_fisher.name=§fアビサルフィッシャー
+entity.utilitycraft:genetic_seed_synthesizer.name=§fジェネティック・シード シンセサイザー
+entity.utilitycraft:verdant_cultivator.name=§fヴァーダント・カルティベーター
+entity.utilitycraft:seismic_breaker.name=§fシーズミックブレーカー
+entity.utilitycraft:pattern_placer.name=§fパターンプレーサー
 entity.utilitycraft:energizer.name=エナジャイザー
 entity.utilitycraft:enchantment_station.name=§fエンチャントステーション
 entity.utilitycraft:network_center.name=§fネットワークセンター

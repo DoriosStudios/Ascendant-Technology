@@ -26,6 +26,19 @@ tile.utilitycraft:overclock_injector.name=Inyector de Overclock\n§7- Aplica ove
 tile.utilitycraft:reinforced_extractor.name=Extractor Reforzado\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:smart_importer.name=Importador Inteligente\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
 
+## Máquinas Superiores
+tile.utilitycraft:abyssal_fisher.name=Pescador Abisal\n§9Pescador Automático Superior\n§7- Acepta mejoras: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:arc_press_forge.name=Forja Arco-Prensa\n§9Prensa Eléctrica Superior\n§7- Acepta mejoras: §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:dual_siever.name=Tamiz Doble\n§9Tamiz Automático Superior B\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:centrifugal_siever.name=Tamiz Centrífugo\n§9Tamiz Automático Superior A\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:industrial_burner.name=Incinerador Industrial\n§9Incinerador Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:impact_crusher.name=Triturador de Impacto\n§9Triturador Superior B\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:genetic_seed_synthesizer.name=Sintetizador Genético de Semillas\n§9Sintetizador de Semillas Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:pattern_placer.name=Colocador de Patrones\n§9Colocador de Bloques Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:pulverizer.name=Pulverizador\n§9Triturador Superior A\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:seismic_breaker.name=Quebrador Sísmico\n§9Rompe Bloques Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:verdant_cultivator.name=Cultivador Verdante\n§9Cosechador Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
+
 ## Otros Bloques
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética
 tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7  Atrae mobs en un radio configurable
@@ -226,6 +239,17 @@ entity.utilitycraft:singularity_fabricator.name=§fFabricador de Singularidad
 entity.utilitycraft:liquifier.name=§fLicuefactor
 entity.utilitycraft:laser_barrier.name=§fBarrera Láser
 entity.utilitycraft:residue_processor.name=§fProcesador de Residuos
+entity.utilitycraft:arc_press_forge.name=§fForja Arco-Prensa
+entity.utilitycraft:industrial_burner.name=§fIncinerador Industrial
+entity.utilitycraft:impact_crusher.name=§fTriturador de Impacto
+entity.utilitycraft:pulverizer.name=§fPulverizador
+entity.utilitycraft:centrifugal_siever.name=§fTamiz Centrífugo
+entity.utilitycraft:dual_siever.name=§fTamiz Doble
+entity.utilitycraft:abyssal_fisher.name=§fPescador Abisal
+entity.utilitycraft:genetic_seed_synthesizer.name=§fSintetizador Genético de Semillas
+entity.utilitycraft:verdant_cultivator.name=§fCultivador Verdante
+entity.utilitycraft:seismic_breaker.name=§fQuebrador Sísmico
+entity.utilitycraft:pattern_placer.name=§fColocador de Patrones
 entity.utilitycraft:energizer.name=§fEnergizador
 entity.utilitycraft:network_center.name=§fCentro de Red
 entity.utilitycraft:tabs_test_machine.name=§fMáquina de Prueba (Pestañas)

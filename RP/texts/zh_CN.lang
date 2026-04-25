@@ -27,6 +27,19 @@ tile.utilitycraft:reinforced_extractor.name=强化提取器\n§7接受的升级:
 tile.utilitycraft:smart_importer.name=智能导入器\n§7接受的升级:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:reinforced_cable.name=强化电缆\n§7- 高容量能量/流体/超频主干\n- 接受的升级: §a§r, §b§r, §d§r
 
+## 高级机器
+tile.utilitycraft:abyssal_fisher.name=深渊渔机\n§9高级自动钓鱼\n§7- 接受的升级： §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:arc_press_forge.name=电弧压锻炉\n§9高级Electro Press\n§7- 接受的升级： §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:dual_siever.name=双联筛机\n§9高级Autosieve B\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:centrifugal_siever.name=离心筛机\n§9高级Autosieve A\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:industrial_burner.name=工业焚化炉\n§9高级焚化炉\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:impact_crusher.name=冲击破碎机\n§9高级破碎机 B\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:genetic_seed_synthesizer.name=基因种子合成器\n§9高级种子合成器\n§7- 接受的升级：\n  §a§r, §b§r, §d§r
+tile.utilitycraft:pattern_placer.name=图样放置器\n§9高级块放置器\n§7- 接受的升级：\n  §a§r, §b§r, §d§r
+tile.utilitycraft:pulverizer.name=粉碎机\n§9高级破碎机 A\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:seismic_breaker.name=地震破碎机\n§9高级Block Breaker\n§7- 接受的升级：\n  §a§r, §b§r, §d§r
+tile.utilitycraft:verdant_cultivator.name=翠绿培植机\n§9高级收割机\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r
+
 ## 其他方块
 tile.utilitycraft:flat_conduit.name=平面管道\n§7  美观版本
 tile.utilitycraft:laser_barrier_field.name=激光屏障 Field\n§7  由屏障投射的活跃区域
@@ -143,6 +156,17 @@ entity.utilitycraft:singularity_fabricator.name=奇点制造器
 entity.utilitycraft:liquifier.name=液化器
 entity.utilitycraft:laser_barrier.name=激光屏障
 entity.utilitycraft:residue_processor.name=残渣处理器
+entity.utilitycraft:arc_press_forge.name=§f电弧压锻炉
+entity.utilitycraft:industrial_burner.name=§f工业焚化炉
+entity.utilitycraft:impact_crusher.name=§f冲击破碎机
+entity.utilitycraft:pulverizer.name=§f粉碎机
+entity.utilitycraft:centrifugal_siever.name=§f离心筛机
+entity.utilitycraft:dual_siever.name=§f双联筛机
+entity.utilitycraft:abyssal_fisher.name=§f深渊渔机
+entity.utilitycraft:genetic_seed_synthesizer.name=§f基因种子合成器
+entity.utilitycraft:verdant_cultivator.name=§f翠绿培植机
+entity.utilitycraft:seismic_breaker.name=§f地震破碎机
+entity.utilitycraft:pattern_placer.name=§f图样放置器
 entity.utilitycraft:energizer.name=充能器
 entity.utilitycraft:enchantment_station.name=§f附魔站
 entity.utilitycraft:network_center.name=§f网络中心

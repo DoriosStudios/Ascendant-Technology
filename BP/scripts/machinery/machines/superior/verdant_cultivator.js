@@ -7,11 +7,12 @@ import {
     formatItemName,
     ADAPTIVE_CHECK_RESULT,
     runAdaptiveTickGate
-} from "../../../DoriosCore/index.js";
+} from "../../../DoriosCore/main.js";
 import {
     formatEnergyCost,
     formatMachineEnergyBuffer,
-    formatSecondsLabel
+    formatSecondsLabel,
+    shouldRefreshSuperiorUi
 } from "./utils.js";
 
 const VERDANT_CULTIVATOR = Object.freeze({
@@ -278,6 +279,7 @@ DoriosAPI.register.blockComponent("verdant_cultivator", {
 
         const machine = new Machine(e.block, settings);
         if (!machine.valid || !machine.entity || !machine.inv) return;
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, "verdant_cultivator:ui");
 
         runAdaptiveTickGate(
             machine.entity,
@@ -310,13 +312,13 @@ DoriosAPI.register.blockComponent("verdant_cultivator", {
 
         if (!operation.supportedFacing) {
             clearConfigSignature(machine);
-            showMachineWarning(machine, "Horizontal Only", operation, true);
+            showMachineWarning(machine, "Horizontal Only", operation, true, shouldRefreshUi);
             return;
         }
 
         if (!operation.hasValidSeeds) {
             clearConfigSignature(machine);
-            showMachineWarning(machine, operation.message ?? "Insert Seeds", operation, true);
+            showMachineWarning(machine, operation.message ?? "Insert Seeds", operation, true, shouldRefreshUi);
             return;
         }
 
@@ -325,9 +327,9 @@ DoriosAPI.register.blockComponent("verdant_cultivator", {
         if (!operation.ready) {
             machine.setProgress(0, VERDANT_CULTIVATOR.slots.progress);
             if (operation.message === "Monitoring") {
-                showMachineStatus(machine, operation.message, operation);
+                showMachineStatus(machine, operation.message, operation, shouldRefreshUi);
             } else {
-                showMachineWarning(machine, operation.message ?? "Monitoring", operation, true);
+                showMachineWarning(machine, operation.message ?? "Monitoring", operation, true, shouldRefreshUi);
             }
             return;
         }
@@ -336,7 +338,7 @@ DoriosAPI.register.blockComponent("verdant_cultivator", {
         applyOperationRate(machine, operation);
 
         if (machine.energy.get() <= 0) {
-            showMachineWarning(machine, "No Energy", operation, false);
+            showMachineWarning(machine, "No Energy", operation, false, shouldRefreshUi);
             return;
         }
 
@@ -347,7 +349,7 @@ DoriosAPI.register.blockComponent("verdant_cultivator", {
             showMachineStatus(machine, resolveCompletedMessage(lastCycle), {
                 ...operation,
                 lastCycle
-            });
+            }, shouldRefreshUi);
             return;
         }
 
@@ -363,7 +365,7 @@ DoriosAPI.register.blockComponent("verdant_cultivator", {
             machine.addProgress(energyToConsume / Math.max(consumption, Number.EPSILON));
         }
 
-        showMachineStatus(machine, resolveChargingMessage(operation), operation);
+        showMachineStatus(machine, resolveChargingMessage(operation), operation, shouldRefreshUi);
     },
 
     onPlayerBreak(e) {
@@ -1669,13 +1671,17 @@ function buildFooterLines(context = {}) {
     return lines;
 }
 
-function updateDisplays(machine) {
+function updateDisplays(machine, refreshUi = true) {
+    if (!refreshUi) return;
+
     machine.displayEnergy(VERDANT_CULTIVATOR.slots.energy);
     machine.displayProgress(VERDANT_CULTIVATOR.slots.progress);
 }
 
-function showMachineWarning(machine, message, context = {}, resetProgress = true) {
+function showMachineWarning(machine, message, context = {}, resetProgress = true, refreshUi = true) {
     machine.off();
+    if (!refreshUi) return;
+
     machine.showWarning(
         message,
         resetProgress,
@@ -1685,11 +1691,13 @@ function showMachineWarning(machine, message, context = {}, resetProgress = true
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine);
+    updateDisplays(machine, true);
 }
 
-function showMachineStatus(machine, message, context = {}) {
+function showMachineStatus(machine, message, context = {}, refreshUi = true) {
     machine.on();
+    if (!refreshUi) return;
+
     machine.showStatus(
         message,
         buildMachineLore(machine, context),
@@ -1698,5 +1706,5 @@ function showMachineStatus(machine, message, context = {}) {
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine);
+    updateDisplays(machine, true);
 }

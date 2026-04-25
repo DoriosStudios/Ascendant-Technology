@@ -1,8 +1,13 @@
+import { system } from '@minecraft/server'
 import {
     Energy,
     FluidManager,
-    formatFluidDisplayName
-} from '../../../DoriosCore/index.js'
+    formatFluidDisplayName,
+    getTickSpeed,
+    syncButtonPanel
+} from '../../../DoriosCore/main.js'
+
+const superiorUiRefreshCache = new Map()
 
 /**
  * Converts unknown numeric input to a finite number.
@@ -161,4 +166,64 @@ export function formatOptionalFluidSuffix(isActive, fluidAmount, fluidLabel = 'F
  */
 export function formatFluidNeedValue(shortage) {
     return FluidManager.formatFluid(Math.max(0, toFiniteNumber(shortage, 0)))
+}
+
+/**
+ * Returns the world-configured UI refresh speed used by superior machines.
+ *
+ * @returns {number}
+ */
+export function getSuperiorUiRefreshSpeed() {
+    return Math.max(1, toInteger(getTickSpeed(), 1))
+}
+
+/**
+ * Determines whether a superior machine UI surface should refresh on this tick.
+ *
+ * @param {{ entity?: { id?: string } } | { id?: string } | null | undefined} machineOrEntity
+ * @param {string} [channel='ui']
+ * @param {boolean} [force=false]
+ * @returns {boolean}
+ */
+export function shouldRefreshSuperiorUi(machineOrEntity, channel = 'ui', force = false) {
+    if (force === true) return true
+
+    const entityId = machineOrEntity?.entity?.id ?? machineOrEntity?.id
+    if (!entityId) return true
+
+    const currentTick = Math.max(0, toInteger(system.currentTick, 0))
+    const refreshSpeed = getSuperiorUiRefreshSpeed()
+    const normalizedChannel = typeof channel === 'string' && channel.length > 0
+        ? channel
+        : 'ui'
+    const cacheKey = `${entityId}:${normalizedChannel}`
+    const lastTick = superiorUiRefreshCache.get(cacheKey)
+
+    if (typeof lastTick !== 'number' || currentTick - lastTick >= refreshSpeed) {
+        superiorUiRefreshCache.set(cacheKey, currentTick)
+        return true
+    }
+
+    return false
+}
+
+/**
+ * Synchronizes a superior-machine button panel while allowing render throttling.
+ *
+ * @param {unknown} machine
+ * @param {unknown} panelDefinition
+ * @param {Record<string, unknown>} [options={}]
+ * @returns {Record<string, unknown>}
+ */
+export function syncSuperiorButtonPanel(machine, panelDefinition, options = {}) {
+    const shouldRender = options.forceRender === true
+        ? true
+        : options.render === false
+            ? false
+            : shouldRefreshSuperiorUi(machine, options.refreshKey ?? 'button_panel')
+
+    return syncButtonPanel(machine, panelDefinition, {
+        ...options,
+        render: shouldRender
+    })
 }

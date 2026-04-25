@@ -6,10 +6,9 @@ import {
     buildOverclockLoreLine,
     appendLoreSection,
     formatItemName,
-    syncButtonPanel,
     ADAPTIVE_CHECK_RESULT,
     runAdaptiveTickGate
-} from "../../../DoriosCore/index.js";
+} from "../../../DoriosCore/main.js";
 import {
     GENETIC_ACCEPTED_SOILS,
     getGeneticSeedPlantRecipe
@@ -20,7 +19,9 @@ import {
     formatFluidTankBuffer,
     formatMachineEnergyBuffer,
     formatPercentFromRatio,
-    formatSecondsLabel
+    formatSecondsLabel,
+    shouldRefreshSuperiorUi,
+    syncSuperiorButtonPanel
 } from "./utils.js";
 
 const GENETIC_SEED_SYNTHESIZER = Object.freeze({
@@ -153,8 +154,9 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
             tank.display(GENETIC_SEED_SYNTHESIZER.slots.cryofluidDisplay);
             machine.entity.setItem(GENETIC_SEED_SYNTHESIZER.slots.status, "utilitycraft:arrow_indicator_90", 1, "");
 
-            syncButtonPanel(machine, PROFILE_BUTTONS, {
-                detectPresses: false
+            syncSuperiorButtonPanel(machine, PROFILE_BUTTONS, {
+                detectPresses: false,
+                forceRender: true
             });
         });
     },
@@ -166,7 +168,10 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
         if (!machine.valid || !machine.entity || !machine.inv) return;
 
         const tank = getCryofluidTank(machine, settings);
-        const panelState = syncButtonPanel(machine, PROFILE_BUTTONS);
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, "superior_seed_synth:ui");
+        const panelState = syncSuperiorButtonPanel(machine, PROFILE_BUTTONS, {
+            forceRender: shouldRefreshUi
+        });
         const profile = getProfile(panelState.profile);
 
         runAdaptiveTickGate(
@@ -216,7 +221,7 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
         const soilStack = machine.inv.getItem(GENETIC_SEED_SYNTHESIZER.slots.soil);
         if (!soilStack) {
             clearLockedOperation(machine);
-            showMachineWarning(machine, tank, "Insert Soil", { profile, soil: null, focusGroup: null });
+            showMachineWarning(machine, tank, "Insert Soil", { profile, soil: null, focusGroup: null }, true, shouldRefreshUi);
             return;
         }
 
@@ -227,14 +232,14 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
                 profile,
                 soil: { typeId: soilStack.typeId, cost: null },
                 focusGroup: null
-            });
+            }, true, shouldRefreshUi);
             return;
         }
 
         const operation = buildOperationPlan({ machine, tank, soil, profile });
         if (!operation.hasCandidateInput) {
             clearLockedOperation(machine);
-            showMachineWarning(machine, tank, operation.message ?? "Insert Seeds", operation);
+            showMachineWarning(machine, tank, operation.message ?? "Insert Seeds", operation, true, shouldRefreshUi);
             return;
         }
 
@@ -243,7 +248,7 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
             if (resetProgress) {
                 clearLockedOperation(machine);
             }
-            showMachineWarning(machine, tank, operation.message ?? "Insert Seeds", operation, resetProgress);
+            showMachineWarning(machine, tank, operation.message ?? "Insert Seeds", operation, resetProgress, shouldRefreshUi);
             return;
         }
 
@@ -254,7 +259,7 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
         });
 
         if (machine.energy.get() <= 0) {
-            showMachineWarning(machine, tank, "No Energy", operation, false);
+            showMachineWarning(machine, tank, "No Energy", operation, false, shouldRefreshUi);
             return;
         }
 
@@ -280,7 +285,7 @@ DoriosAPI.register.blockComponent("genetic_seed_synthesizer", {
         showMachineStatus(machine, tank, lastBatch ? "Synthesized" : getProcessingVerb(operation.profile), {
             ...operation,
             lastBatch
-        });
+        }, shouldRefreshUi);
     },
 
     onPlayerBreak(e) {
@@ -1087,14 +1092,18 @@ function buildFooterLines(context = {}) {
     ];
 }
 
-function updateDisplays(machine, tank) {
+function updateDisplays(machine, tank, refreshUi = true) {
+    if (!refreshUi) return;
+
     tank.display(GENETIC_SEED_SYNTHESIZER.slots.cryofluidDisplay);
     machine.displayEnergy(GENETIC_SEED_SYNTHESIZER.slots.energy);
     machine.displayProgress(GENETIC_SEED_SYNTHESIZER.slots.progress);
 }
 
-function showMachineWarning(machine, tank, message, context = {}, resetProgress = true) {
+function showMachineWarning(machine, tank, message, context = {}, resetProgress = true, refreshUi = true) {
     machine.off();
+    if (!refreshUi) return;
+
     machine.showWarning(
         message,
         resetProgress,
@@ -1104,11 +1113,13 @@ function showMachineWarning(machine, tank, message, context = {}, resetProgress 
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank);
+    updateDisplays(machine, tank, true);
 }
 
-function showMachineStatus(machine, tank, message, context = {}) {
+function showMachineStatus(machine, tank, message, context = {}, refreshUi = true) {
     machine.on();
+    if (!refreshUi) return;
+
     machine.showStatus(
         message,
         buildMachineLore(machine, tank, context),
@@ -1117,5 +1128,5 @@ function showMachineStatus(machine, tank, message, context = {}) {
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank);
+    updateDisplays(machine, tank, true);
 }

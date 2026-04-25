@@ -4,11 +4,12 @@ import {
     buildOverclockLoreLine,
     appendLoreSection,
     formatItemName,
-    syncButtonPanel
-} from '../../../DoriosCore/index.js'
+} from '../../../DoriosCore/main.js'
 import {
     formatEnergyCost,
-    formatMachineEnergyBuffer
+    formatMachineEnergyBuffer,
+    shouldRefreshSuperiorUi,
+    syncSuperiorButtonPanel
 } from './utils.js'
 
 const SEISMIC_BREAKER = Object.freeze({
@@ -116,8 +117,9 @@ DoriosAPI.register.blockComponent('seismic_breaker', {
             machine.displayEnergy(SEISMIC_BREAKER.slots.energy)
             machine.displayProgress(SEISMIC_BREAKER.slots.progress)
             machine.blockSlots(SEISMIC_BREAKER.slots.hidden)
-            syncButtonPanel(machine, SEISMIC_BREAKER_BUTTONS, {
-                detectPresses: false
+            syncSuperiorButtonPanel(machine, SEISMIC_BREAKER_BUTTONS, {
+                detectPresses: false,
+                forceRender: true
             })
         })
     },
@@ -128,26 +130,29 @@ DoriosAPI.register.blockComponent('seismic_breaker', {
         const machine = new Machine(e.block, settings)
         if (!machine.valid || !machine.entity || !machine.inv) return
 
-        const panelState = syncButtonPanel(machine, SEISMIC_BREAKER_BUTTONS)
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, 'seismic_breaker:ui')
+        const panelState = syncSuperiorButtonPanel(machine, SEISMIC_BREAKER_BUTTONS, {
+            forceRender: shouldRefreshUi
+        })
 
         const mode = getMode(panelState.mode)
         const precision = panelState.precision === true
         const operation = buildOperation(machine, mode, precision, settings)
 
         if (!operation.anchorBlock) {
-            showMachineWarning(machine, 'No Target', operation, true)
+            showMachineWarning(machine, 'No Target', operation, true, shouldRefreshUi)
             return
         }
 
         if (!operation.breakableTargets.length) {
-            showMachineWarning(machine, operation.hasPotentialTarget ? 'Nothing to Break' : 'No Target', operation, true)
+            showMachineWarning(machine, operation.hasPotentialTarget ? 'Nothing to Break' : 'No Target', operation, true, shouldRefreshUi)
             return
         }
 
         machine.setEnergyCost(operation.energyCost)
 
         if (machine.energy.get() <= 0) {
-            showMachineWarning(machine, 'No Energy', operation, false)
+            showMachineWarning(machine, 'No Energy', operation, false, shouldRefreshUi)
             return
         }
 
@@ -159,7 +164,7 @@ DoriosAPI.register.blockComponent('seismic_breaker', {
                 showMachineWarning(machine, 'Nothing to Break', {
                     ...operation,
                     result
-                }, true)
+                }, true, shouldRefreshUi)
                 return
             }
 
@@ -167,7 +172,7 @@ DoriosAPI.register.blockComponent('seismic_breaker', {
             showMachineStatus(machine, precision ? 'Precision' : 'Running', {
                 ...operation,
                 result
-            })
+            }, shouldRefreshUi)
             return
         }
 
@@ -183,7 +188,7 @@ DoriosAPI.register.blockComponent('seismic_breaker', {
             machine.addProgress(energyToConsume / Math.max(consumption, Number.EPSILON))
         }
 
-        showMachineStatus(machine, 'Charging', operation)
+        showMachineStatus(machine, 'Charging', operation, shouldRefreshUi)
     },
 
     onPlayerBreak(e) {
@@ -771,13 +776,17 @@ function buildFooterLines(operation = {}) {
     return lines
 }
 
-function updateDisplays(machine) {
+function updateDisplays(machine, refreshUi = true) {
+    if (!refreshUi) return
+
     machine.displayEnergy(SEISMIC_BREAKER.slots.energy)
     machine.displayProgress(SEISMIC_BREAKER.slots.progress)
 }
 
-function showMachineWarning(machine, message, operation = {}, resetProgress = true) {
+function showMachineWarning(machine, message, operation = {}, resetProgress = true, refreshUi = true) {
     machine.off()
+    if (!refreshUi) return
+
     machine.showWarning(
         message,
         resetProgress,
@@ -787,11 +796,13 @@ function showMachineWarning(machine, message, operation = {}, resetProgress = tr
             displayModel: 'minimal'
         }
     )
-    updateDisplays(machine)
+    updateDisplays(machine, true)
 }
 
-function showMachineStatus(machine, message, operation = {}) {
+function showMachineStatus(machine, message, operation = {}, refreshUi = true) {
     machine.on()
+    if (!refreshUi) return
+
     machine.showStatus(
         message,
         buildMachineLore(operation),
@@ -800,5 +811,5 @@ function showMachineStatus(machine, message, operation = {}) {
             displayModel: 'minimal'
         }
     )
-    updateDisplays(machine)
+    updateDisplays(machine, true)
 }

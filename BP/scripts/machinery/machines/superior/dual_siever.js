@@ -6,16 +6,17 @@ import {
     buildOverclockLoreLine,
     appendLoreSection,
     formatItemName,
-    syncButtonPanel,
     tickGate
-} from "../../../DoriosCore/index.js";
+} from "../../../DoriosCore/main.js";
 import { getCentrifugalSieveRecipe } from "../../../config/recipes/centrifugal_siever.js";
 import {
     formatBatchWithQuantity,
     formatEnergyCost,
     formatFluidTankBuffer,
     formatMachineEnergyBuffer,
-    formatOptionalFluidSuffix
+    formatOptionalFluidSuffix,
+    shouldRefreshSuperiorUi,
+    syncSuperiorButtonPanel
 } from "./utils.js";
 
 const DUAL_SIEVER = Object.freeze({
@@ -149,8 +150,9 @@ DoriosAPI.register.blockComponent("dual_siever", {
             const tank = getSteamTank(machine, settings);
             tank.display(DUAL_SIEVER.slots.steamDisplay);
 
-            syncButtonPanel(machine, DUAL_SIEVER_MODE_BUTTONS, {
-                detectPresses: false
+            syncSuperiorButtonPanel(machine, DUAL_SIEVER_MODE_BUTTONS, {
+                detectPresses: false,
+                forceRender: true
             });
         });
     },
@@ -161,7 +163,10 @@ DoriosAPI.register.blockComponent("dual_siever", {
         const machine = new Machine(e.block, settings);
         if (!machine.valid) return;
 
-        const panelState = syncButtonPanel(machine, DUAL_SIEVER_MODE_BUTTONS);
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, "dual_siever:ui");
+        const panelState = syncSuperiorButtonPanel(machine, DUAL_SIEVER_MODE_BUTTONS, {
+            forceRender: shouldRefreshUi
+        });
         const mode = getDualMode(panelState.mode);
 
         const tank = getSteamTank(machine, settings);
@@ -207,7 +212,8 @@ DoriosAPI.register.blockComponent("dual_siever", {
                     operation,
                     batchResults: []
                 },
-                resetProgress
+                resetProgress,
+                shouldRefreshUi
             );
             return;
         }
@@ -237,7 +243,8 @@ DoriosAPI.register.blockComponent("dual_siever", {
                     operation,
                     batchResults: []
                 },
-                false
+                false,
+                shouldRefreshUi
             );
             return;
         }
@@ -306,7 +313,7 @@ DoriosAPI.register.blockComponent("dual_siever", {
             desiredBatch,
             operation,
             batchResults
-        });
+        }, shouldRefreshUi);
     },
 
     onPlayerBreak(e) {
@@ -1428,7 +1435,9 @@ function clearProgressVisual(machine, slot) {
     machine.inv.setItem(slot, undefined);
 }
 
-function updateDualProgressDisplays(machine, context = {}) {
+function updateDualProgressDisplays(machine, context = {}, refreshUi = true) {
+    if (!refreshUi) return;
+
     const mode = getDualMode(context.mode?.id ?? context.mode);
     if (mode.id === DUAL_SIEVER.modes.shared.id) {
         machine.displayProgress(DUAL_SIEVER.slots.progress);
@@ -1591,14 +1600,18 @@ function buildFooterLines(machine, context = {}) {
     return lines;
 }
 
-function updateDisplays(machine, tank, context = {}) {
+function updateDisplays(machine, tank, context = {}, refreshUi = true) {
+    if (!refreshUi) return;
+
     tank.display(DUAL_SIEVER.slots.steamDisplay);
     machine.displayEnergy(DUAL_SIEVER.slots.energy);
-    updateDualProgressDisplays(machine, context);
+    updateDualProgressDisplays(machine, context, true);
 }
 
-function showMachineWarning(machine, tank, message, context = {}, resetProgress = true) {
+function showMachineWarning(machine, tank, message, context = {}, resetProgress = true, refreshUi = true) {
     machine.off();
+    if (!refreshUi) return;
+
     machine.showWarning(
         message,
         resetProgress,
@@ -1608,11 +1621,13 @@ function showMachineWarning(machine, tank, message, context = {}, resetProgress 
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank, context);
+    updateDisplays(machine, tank, context, true);
 }
 
-function showMachineStatus(machine, tank, message, context = {}) {
+function showMachineStatus(machine, tank, message, context = {}, refreshUi = true) {
     machine.on();
+    if (!refreshUi) return;
+
     machine.showStatus(
         message,
         buildMachineLore(machine, tank, context),
@@ -1621,7 +1636,7 @@ function showMachineStatus(machine, tank, message, context = {}) {
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank, context);
+    updateDisplays(machine, tank, context, true);
 }
 
 function isValidItemId(id) {

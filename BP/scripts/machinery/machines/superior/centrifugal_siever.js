@@ -8,7 +8,7 @@ import {
     formatItemName,
     ADAPTIVE_CHECK_RESULT,
     runAdaptiveTickGate
-} from "../../../DoriosCore/index.js";
+} from "../../../DoriosCore/main.js";
 import { getCentrifugalSieveRecipe } from "../../../config/recipes/centrifugal_siever.js";
 import {
     formatBatchWithQuantity,
@@ -16,7 +16,8 @@ import {
     formatFluidNeedValue,
     formatFluidTankBuffer,
     formatMachineEnergyBuffer,
-    formatOptionalFluidSuffix
+    formatOptionalFluidSuffix,
+    shouldRefreshSuperiorUi
 } from "./utils.js";
 
 const CENTRIFUGAL_SIEVER = Object.freeze({
@@ -94,6 +95,7 @@ DoriosAPI.register.blockComponent("centrifugal_siever", {
         const tank = getSteamTank(machine, settings);
         const quantityLevel = getQuantityUpgradeLevel(machine);
         const desiredBatch = getBatchSize(quantityLevel);
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, "centrifugal_siever:ui");
 
         runAdaptiveTickGate(
             machine.entity,
@@ -133,7 +135,7 @@ DoriosAPI.register.blockComponent("centrifugal_siever", {
                 focusGroup: null,
                 steamActive: false,
                 meshData: null
-            });
+            }, true, shouldRefreshUi);
             return;
         }
 
@@ -155,7 +157,7 @@ DoriosAPI.register.blockComponent("centrifugal_siever", {
                 focusGroup: null,
                 steamActive: false,
                 meshData
-            });
+            }, true, shouldRefreshUi);
             return;
         }
 
@@ -171,7 +173,7 @@ DoriosAPI.register.blockComponent("centrifugal_siever", {
                 focusGroup: operation.focusGroup,
                 steamActive: operation.focusGroup?.steamBoostActive === true,
                 meshData
-            }, resetProgress);
+            }, resetProgress, shouldRefreshUi);
             return;
         }
 
@@ -192,7 +194,7 @@ DoriosAPI.register.blockComponent("centrifugal_siever", {
                 focusGroup: operation.selectedGroup,
                 steamActive: operation.selectedGroup?.steamBoostActive === true,
                 meshData
-            }, false);
+            }, false, shouldRefreshUi);
             return;
         }
 
@@ -229,7 +231,8 @@ DoriosAPI.register.blockComponent("centrifugal_siever", {
                 steamActive: operation.selectedGroup?.steamBoostActive === true,
                 lastBatch,
                 meshData
-            }
+            },
+            shouldRefreshUi
         );
     },
 
@@ -1095,14 +1098,18 @@ function buildFooterLines(machine, context = {}) {
     return lines;
 }
 
-function updateDisplays(machine, tank) {
+function updateDisplays(machine, tank, refreshUi = true) {
+    if (!refreshUi) return;
+
     tank.display(CENTRIFUGAL_SIEVER.slots.steamDisplay);
     machine.displayEnergy(CENTRIFUGAL_SIEVER.slots.energy);
     machine.displayProgress(CENTRIFUGAL_SIEVER.slots.progress);
 }
 
-function showMachineWarning(machine, tank, message, context = {}, resetProgress = true) {
+function showMachineWarning(machine, tank, message, context = {}, resetProgress = true, refreshUi = true) {
     machine.off();
+    if (!refreshUi) return;
+
     machine.showWarning(
         message,
         resetProgress,
@@ -1112,11 +1119,13 @@ function showMachineWarning(machine, tank, message, context = {}, resetProgress 
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank);
+    updateDisplays(machine, tank, true);
 }
 
-function showMachineStatus(machine, tank, message, context = {}) {
+function showMachineStatus(machine, tank, message, context = {}, refreshUi = true) {
     machine.on();
+    if (!refreshUi) return;
+
     machine.showStatus(
         message,
         buildMachineLore(machine, tank, context),
@@ -1125,7 +1134,7 @@ function showMachineStatus(machine, tank, message, context = {}) {
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank);
+    updateDisplays(machine, tank, true);
 }
 
 function isValidItemId(id) {

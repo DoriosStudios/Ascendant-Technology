@@ -8,7 +8,7 @@ import {
     findRecipeByInputId,
     formatItemName,
     tickGate
-} from "../../../DoriosCore/index.js";
+} from "../../../DoriosCore/main.js";
 import { getPulverizerRecipes } from "../../../config/recipes/pulverizer.js";
 import {
     formatBatchWithQuantity,
@@ -16,7 +16,8 @@ import {
     formatFluidNeedValue,
     formatFluidTankBuffer,
     formatMachineEnergyBuffer,
-    formatOptionalFluidSuffix
+    formatOptionalFluidSuffix,
+    shouldRefreshSuperiorUi
 } from "./utils.js";
 
 const PULVERIZER = Object.freeze({
@@ -82,6 +83,7 @@ DoriosAPI.register.blockComponent("pulverizer", {
         const recipes = resolveRecipes(e.block, settings);
         const quantityLevel = getQuantityUpgradeLevel(machine);
         const desiredBatch = getBatchSize(quantityLevel);
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, "pulverizer:ui");
 
         if (tickGate(machine.entity, "pulverizer:transfer_cd", PULVERIZER.transfer.outputIntervalTicks)) {
             transferOutputLanes(machine);
@@ -100,7 +102,7 @@ DoriosAPI.register.blockComponent("pulverizer", {
                 operation: null,
                 focusGroup: null,
                 steamActive: false
-            });
+            }, true, shouldRefreshUi);
             return;
         }
 
@@ -120,7 +122,7 @@ DoriosAPI.register.blockComponent("pulverizer", {
                 operation,
                 focusGroup: null,
                 steamActive: false
-            });
+            }, true, shouldRefreshUi);
             return;
         }
 
@@ -132,7 +134,7 @@ DoriosAPI.register.blockComponent("pulverizer", {
                 operation,
                 focusGroup: operation.focusGroup,
                 steamActive: operation.focusGroup?.steamBoostActive === true
-            }, resetProgress);
+            }, resetProgress, shouldRefreshUi);
             return;
         }
 
@@ -152,7 +154,7 @@ DoriosAPI.register.blockComponent("pulverizer", {
                 operation,
                 focusGroup: operation.selectedGroup,
                 steamActive: operation.selectedGroup?.steamBoostActive === true
-            }, false);
+            }, false, shouldRefreshUi);
             return;
         }
 
@@ -188,7 +190,8 @@ DoriosAPI.register.blockComponent("pulverizer", {
                 focusGroup: operation.selectedGroup,
                 steamActive: operation.selectedGroup?.steamBoostActive === true,
                 lastCraft
-            }
+            },
+            shouldRefreshUi
         );
     },
 
@@ -692,14 +695,18 @@ function buildFooterLines(machine, context = {}) {
     return lines;
 }
 
-function updateDisplays(machine, tank) {
+function updateDisplays(machine, tank, refreshUi = true) {
+    if (!refreshUi) return;
+
     tank.display(PULVERIZER.slots.steamDisplay);
     machine.displayEnergy(PULVERIZER.slots.energy);
     machine.displayProgress(PULVERIZER.slots.progress);
 }
 
-function showMachineWarning(machine, tank, message, context = {}, resetProgress = true) {
+function showMachineWarning(machine, tank, message, context = {}, resetProgress = true, refreshUi = true) {
     machine.off();
+    if (!refreshUi) return;
+
     machine.showWarning(
         message,
         resetProgress,
@@ -709,11 +716,13 @@ function showMachineWarning(machine, tank, message, context = {}, resetProgress 
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank);
+    updateDisplays(machine, tank, true);
 }
 
-function showMachineStatus(machine, tank, message, context = {}) {
+function showMachineStatus(machine, tank, message, context = {}, refreshUi = true) {
     machine.on();
+    if (!refreshUi) return;
+
     machine.showStatus(
         message,
         buildMachineLore(machine, tank, context),
@@ -722,7 +731,7 @@ function showMachineStatus(machine, tank, message, context = {}) {
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank);
+    updateDisplays(machine, tank, true);
 }
 
 function transferOutputLanes(machine) {

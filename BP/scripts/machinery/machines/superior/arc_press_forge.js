@@ -6,15 +6,16 @@ import {
     appendLoreSection,
     findRecipeByInputId,
     formatItemName,
-    syncButtonPanel,
     tickGate
-} from '../../../DoriosCore/index.js'
+} from '../../../DoriosCore/main.js'
 import { getArcPressForgeRecipes } from '../../../config/recipes/arc_press_forge.js'
 import {
     formatBatchWithQuantity,
     formatEnergyCost,
     formatMachineEnergyBuffer,
-    formatPercentFromRatio
+    formatPercentFromRatio,
+    shouldRefreshSuperiorUi,
+    syncSuperiorButtonPanel
 } from './utils.js'
 
 const ARC_PRESS_FORGE = Object.freeze({
@@ -108,8 +109,9 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
             machine.displayEnergy()
             machine.displayProgress(ARC_PRESS_FORGE.slots.progress)
             machine.entity.setItem(ARC_PRESS_FORGE.slots.status, 'utilitycraft:arrow_indicator_90', 1, '')
-            syncButtonPanel(machine, ARC_PRESS_MODE_BUTTONS, {
-                detectPresses: false
+            syncSuperiorButtonPanel(machine, ARC_PRESS_MODE_BUTTONS, {
+                detectPresses: false,
+                forceRender: true
             })
         })
     },
@@ -120,7 +122,10 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
         const machine = new Machine(e.block, settings)
         if (!machine.valid) return
 
-        const panelState = syncButtonPanel(machine, ARC_PRESS_MODE_BUTTONS)
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, 'arc_press_forge:ui')
+        const panelState = syncSuperiorButtonPanel(machine, ARC_PRESS_MODE_BUTTONS, {
+            forceRender: shouldRefreshUi
+        })
         const mode = getMode(panelState.mode)
         const quantityLevel = getQuantityUpgradeLevel(machine)
         const modeProfile = getModeProfile(mode, quantityLevel)
@@ -134,7 +139,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
             showMachineWarning(machine, 'No Recipes', mode, {
                 quantityLevel,
                 modeProfile
-            })
+            }, true, shouldRefreshUi)
             return
         }
 
@@ -151,7 +156,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
                 quantityLevel,
                 modeProfile,
                 operation
-            })
+            }, true, shouldRefreshUi)
             return
         }
 
@@ -162,7 +167,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
                 modeProfile,
                 operation,
                 focusGroup: operation.focusGroup
-            }, resetProgress)
+            }, resetProgress, shouldRefreshUi)
             return
         }
 
@@ -172,7 +177,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
                 modeProfile,
                 operation,
                 focusGroup: operation.selectedGroup
-            }, false)
+            }, false, shouldRefreshUi)
             return
         }
 
@@ -210,7 +215,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
             operation,
             focusGroup: operation.selectedGroup,
             lastCraft
-        })
+        }, shouldRefreshUi)
     },
 
     onPlayerBreak(e) {
@@ -722,7 +727,10 @@ function buildFooterLines(machine, mode, quantityLevel) {
     return lines
 }
 
-function showMachineWarning(machine, message, mode, context = {}, resetProgress = true) {
+function showMachineWarning(machine, message, mode, context = {}, resetProgress = true, refreshUi = true) {
+    machine.off()
+    if (!refreshUi) return
+
     machine.showWarning(
         message,
         resetProgress,
@@ -734,8 +742,10 @@ function showMachineWarning(machine, message, mode, context = {}, resetProgress 
     )
 }
 
-function showMachineStatus(machine, message, mode, context = {}) {
+function showMachineStatus(machine, message, mode, context = {}, refreshUi = true) {
     machine.on()
+    if (!refreshUi) return
+
     machine.displayEnergy()
     machine.displayProgress(ARC_PRESS_FORGE.slots.progress)
     machine.showStatus(

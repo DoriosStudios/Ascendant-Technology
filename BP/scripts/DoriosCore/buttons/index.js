@@ -882,10 +882,12 @@ export function syncButtonPanel(machine, panelDefinition, options = {}) {
 	}
 
 	const state = getButtonPanelState(machine, panel);
-	renderButtonPanel(machine, panel, {
-		...options,
-		state
-	});
+	if (options.render !== false) {
+		renderButtonPanel(machine, panel, {
+			...options,
+			state
+		});
+	}
 
 	return state;
 }

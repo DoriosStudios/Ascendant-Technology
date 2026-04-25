@@ -3,12 +3,13 @@ import {
     Machine,
     buildOverclockLoreLine,
     appendLoreSection,
-    formatItemName,
-    syncButtonPanel
-} from '../../../DoriosCore/index.js'
+    formatItemName
+} from '../../../DoriosCore/main.js'
 import {
     formatEnergyCost,
-    formatMachineEnergyBuffer
+    formatMachineEnergyBuffer,
+    shouldRefreshSuperiorUi,
+    syncSuperiorButtonPanel
 } from './utils.js'
 
 const PATTERN_PLACER = Object.freeze({
@@ -95,8 +96,9 @@ DoriosAPI.register.blockComponent('pattern_placer', {
             machine.displayEnergy(PATTERN_PLACER.slots.energy)
             machine.displayProgress(PATTERN_PLACER.slots.progress)
             machine.blockSlots(PATTERN_PLACER.slots.hidden)
-            syncButtonPanel(machine, PATTERN_PLACER_BUTTONS, {
-                detectPresses: false
+            syncSuperiorButtonPanel(machine, PATTERN_PLACER_BUTTONS, {
+                detectPresses: false,
+                forceRender: true
             })
         })
     },
@@ -107,35 +109,38 @@ DoriosAPI.register.blockComponent('pattern_placer', {
         const machine = new Machine(e.block, settings)
         if (!machine.valid || !machine.entity || !machine.inv) return
 
-        const panelState = syncButtonPanel(machine, PATTERN_PLACER_BUTTONS)
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, 'pattern_placer:ui')
+        const panelState = syncSuperiorButtonPanel(machine, PATTERN_PLACER_BUTTONS, {
+            forceRender: shouldRefreshUi
+        })
 
         const mode = getMode(panelState.mode)
         const operation = buildOperation(machine, mode, settings)
 
         if (!operation.anchorBlock) {
-            showMachineWarning(machine, 'No Target', operation, true)
+            showMachineWarning(machine, 'No Target', operation, true, shouldRefreshUi)
             return
         }
 
         if (!operation.hasAnyInput) {
-            showMachineWarning(machine, 'No Block', operation, false)
+            showMachineWarning(machine, 'No Block', operation, false, shouldRefreshUi)
             return
         }
 
         if (!operation.inputPermutation) {
-            showMachineWarning(machine, 'Invalid Block', operation, false)
+            showMachineWarning(machine, 'Invalid Block', operation, false, shouldRefreshUi)
             return
         }
 
         if (!operation.placeableTargets.length || operation.placeCount <= 0) {
-            showMachineWarning(machine, operation.hasPotentialTarget ? 'No Space' : 'No Target', operation, false)
+            showMachineWarning(machine, operation.hasPotentialTarget ? 'No Space' : 'No Target', operation, false, shouldRefreshUi)
             return
         }
 
         machine.setEnergyCost(operation.energyCost)
 
         if (machine.energy.get() <= 0) {
-            showMachineWarning(machine, 'No Energy', operation, false)
+            showMachineWarning(machine, 'No Energy', operation, false, shouldRefreshUi)
             return
         }
 
@@ -147,7 +152,7 @@ DoriosAPI.register.blockComponent('pattern_placer', {
                 showMachineWarning(machine, 'No Space', {
                     ...operation,
                     result
-                }, false)
+                }, false, shouldRefreshUi)
                 return
             }
 
@@ -156,7 +161,7 @@ DoriosAPI.register.blockComponent('pattern_placer', {
             showMachineStatus(machine, 'Placing', {
                 ...operation,
                 result
-            })
+            }, shouldRefreshUi)
             return
         }
 
@@ -172,7 +177,7 @@ DoriosAPI.register.blockComponent('pattern_placer', {
             machine.addProgress(energyToConsume / Math.max(consumption, Number.EPSILON))
         }
 
-        showMachineStatus(machine, 'Charging', operation)
+        showMachineStatus(machine, 'Charging', operation, shouldRefreshUi)
     },
 
     onPlayerBreak(e) {
@@ -563,13 +568,17 @@ function buildFooterLines(operation = {}) {
     return lines
 }
 
-function updateDisplays(machine) {
+function updateDisplays(machine, refreshUi = true) {
+    if (!refreshUi) return
+
     machine.displayEnergy(PATTERN_PLACER.slots.energy)
     machine.displayProgress(PATTERN_PLACER.slots.progress)
 }
 
-function showMachineWarning(machine, message, operation = {}, resetProgress = false) {
+function showMachineWarning(machine, message, operation = {}, resetProgress = false, refreshUi = true) {
     machine.off()
+    if (!refreshUi) return
+
     machine.showWarning(
         message,
         resetProgress,
@@ -579,11 +588,13 @@ function showMachineWarning(machine, message, operation = {}, resetProgress = fa
             displayModel: 'minimal'
         }
     )
-    updateDisplays(machine)
+    updateDisplays(machine, true)
 }
 
-function showMachineStatus(machine, message, operation = {}) {
+function showMachineStatus(machine, message, operation = {}, refreshUi = true) {
     machine.on()
+    if (!refreshUi) return
+
     machine.showStatus(
         message,
         buildMachineLore(operation),
@@ -592,5 +603,5 @@ function showMachineStatus(machine, message, operation = {}) {
             displayModel: 'minimal'
         }
     )
-    updateDisplays(machine)
+    updateDisplays(machine, true)
 }

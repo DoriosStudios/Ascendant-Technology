@@ -10,8 +10,9 @@ import {
     runAdaptiveTickGate,
     formatItemName,
     formatFluidDisplayName
-} from "../../DoriosCore/index.js";
-import { getIndustrialBurnerRecipes } from "../../config/recipes/industrial_burner.js";
+} from "../../../DoriosCore/main.js";
+import { getIndustrialBurnerRecipes } from "../../../config/recipes/industrial_burner.js";
+import { shouldRefreshSuperiorUi } from "./utils.js";
 
 const INDUSTRIAL_BURNER = Object.freeze({
     slots: Object.freeze({
@@ -106,6 +107,7 @@ DoriosAPI.register.blockComponent("industrial_burner", {
         const quantityLevel = getQuantityUpgradeLevel(machine);
         const batchSize = getBatchSize(quantityLevel);
         const yieldBoost = Math.max(1, machine.boosts.overclockYield ?? 1);
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, "industrial_burner:ui");
 
         runAdaptiveTickGate(
             machine.entity,
@@ -132,11 +134,13 @@ DoriosAPI.register.blockComponent("industrial_burner", {
                     : ADAPTIVE_CHECK_RESULT.stalled;
             }
         );
-        tank.display(INDUSTRIAL_BURNER.slots.lavaDisplay);
-        machine.displayEnergy(INDUSTRIAL_BURNER.slots.energy);
+        if (shouldRefreshUi) {
+            tank.display(INDUSTRIAL_BURNER.slots.lavaDisplay);
+            machine.displayEnergy(INDUSTRIAL_BURNER.slots.energy);
+        }
 
         if (!recipes.length) {
-            resetProgressIndicators(machine);
+            resetProgressIndicators(machine, shouldRefreshUi);
             renderStatus(machine, {
                 header: "No Recipes",
                 headerColor: "§c",
@@ -148,7 +152,7 @@ DoriosAPI.register.blockComponent("industrial_burner", {
                     "§c[2] No Furnace Recipes",
                     "§c[3] No Furnace Recipes"
                 ]
-            });
+            }, shouldRefreshUi);
             machine.off();
             return;
         }
@@ -176,7 +180,7 @@ DoriosAPI.register.blockComponent("industrial_burner", {
         for (let index = 0; index < laneStates.length; index++) {
             const lane = laneStates[index];
             if (!lane.ready) {
-                finalizeLane(machine, lane);
+                finalizeLane(machine, lane, shouldRefreshUi);
                 continue;
             }
 
@@ -188,7 +192,7 @@ DoriosAPI.register.blockComponent("industrial_burner", {
                     lane.message = "Holding Charge";
                     lane.color = "§e";
                 }
-                finalizeLane(machine, lane);
+                finalizeLane(machine, lane, shouldRefreshUi);
                 continue;
             }
 
@@ -233,14 +237,16 @@ DoriosAPI.register.blockComponent("industrial_burner", {
                 lane.color = "§a";
             }
 
-            finalizeLane(machine, lane);
+            finalizeLane(machine, lane, shouldRefreshUi);
         }
 
-        tank.display(INDUSTRIAL_BURNER.slots.lavaDisplay);
-        machine.displayEnergy(INDUSTRIAL_BURNER.slots.energy);
+        if (shouldRefreshUi) {
+            tank.display(INDUSTRIAL_BURNER.slots.lavaDisplay);
+            machine.displayEnergy(INDUSTRIAL_BURNER.slots.energy);
+        }
 
         const progressSummary = summarizeOverallProgress(laneStates);
-        setOverallProgress(machine, progressSummary.ratio);
+        setOverallProgress(machine, progressSummary.ratio, shouldRefreshUi);
 
         const header = craftedAnything
             ? "Running"
@@ -257,7 +263,7 @@ DoriosAPI.register.blockComponent("industrial_burner", {
             batchSize,
             laneMessages: laneStates.map(buildLaneMessage),
             focusLane: laneStates.find(lane => lane.ready) ?? laneStates.find(lane => lane.typeId) ?? null
-        });
+        }, shouldRefreshUi);
 
         if (active || craftedAnything) {
             machine.on();
@@ -611,18 +617,22 @@ function setProgressArrow(inv, slotIndex, ratio) {
     inv.setItem(slotIndex, new ItemStack(itemId, 1));
 }
 
-function finalizeLane(machine, lane) {
+function finalizeLane(machine, lane, refreshUi = true) {
     const energyCost = Math.max(1, lane.energyCost || 1);
     lane.progress = Math.min(Math.max(0, lane.progress), energyCost);
     setLaneProgress(machine.entity, lane.laneIndex, lane.progress);
-    setProgressArrow(machine.inv, INDUSTRIAL_BURNER.slots.laneProgress[lane.laneIndex], lane.progress / energyCost);
+    if (refreshUi) {
+        setProgressArrow(machine.inv, INDUSTRIAL_BURNER.slots.laneProgress[lane.laneIndex], lane.progress / energyCost);
+    }
 }
 
-function resetProgressIndicators(machine) {
-    setOverallProgress(machine, 0);
+function resetProgressIndicators(machine, refreshUi = true) {
+    setOverallProgress(machine, 0, refreshUi);
     for (let laneIndex = 0; laneIndex < INDUSTRIAL_BURNER.slots.laneProgress.length; laneIndex++) {
         setLaneProgress(machine.entity, laneIndex, 0);
-        setProgressArrow(machine.inv, INDUSTRIAL_BURNER.slots.laneProgress[laneIndex], 0);
+        if (refreshUi) {
+            setProgressArrow(machine.inv, INDUSTRIAL_BURNER.slots.laneProgress[laneIndex], 0);
+        }
     }
 }
 
@@ -641,7 +651,8 @@ function summarizeOverallProgress(laneStates) {
     };
 }
 
-function setOverallProgress(machine, ratio) {
+function setOverallProgress(machine, ratio, refreshUi = true) {
+    if (!refreshUi) return;
     setProgressArrow(machine.inv, INDUSTRIAL_BURNER.slots.progress, ratio);
 }
 
@@ -684,7 +695,9 @@ function inferHeaderColor(laneStates, energy) {
     return "§7";
 }
 
-function renderStatus(machine, context) {
+function renderStatus(machine, context, refreshUi = true) {
+    if (!refreshUi) return;
+
     const tankAmount = FluidManager.formatFluid(context.tank?.get() ?? 0);
     const tankCap = FluidManager.formatFluid(context.tank?.getCap() ?? 0);
     const focusLane = context.focusLane;

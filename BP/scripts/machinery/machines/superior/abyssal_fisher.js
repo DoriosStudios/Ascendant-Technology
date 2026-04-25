@@ -7,9 +7,8 @@ import {
     appendLoreSection,
     extractEnchantments,
     formatItemName,
-    syncButtonPanel,
     tickGate
-} from "../../../DoriosCore/index.js";
+} from "../../../DoriosCore/main.js";
 import { abyssalFisherConfig, abyssalFisherLoot } from "../../../config/recipes/abyssal_fisher.js";
 import {
     formatBatchWithQuantity,
@@ -17,7 +16,9 @@ import {
     formatFluidNeedValue,
     formatFluidTankBuffer,
     formatMachineEnergyBuffer,
-    formatSecondsLabel
+    formatSecondsLabel,
+    shouldRefreshSuperiorUi,
+    syncSuperiorButtonPanel
 } from "./utils.js";
 
 const ABYSALL_FISHER = Object.freeze({
@@ -182,8 +183,9 @@ DoriosAPI.register.blockComponent("abyssal_fisher", {
             tank.display(ABYSALL_FISHER.slots.waterDisplay);
             machine.entity.setItem(ABYSALL_FISHER.slots.status, "utilitycraft:arrow_indicator_90", 1, "");
 
-            syncButtonPanel(machine, ABYSALL_FISHER_BUTTONS, {
-                detectPresses: false
+            syncSuperiorButtonPanel(machine, ABYSALL_FISHER_BUTTONS, {
+                detectPresses: false,
+                forceRender: true
             });
         });
     },
@@ -195,7 +197,10 @@ DoriosAPI.register.blockComponent("abyssal_fisher", {
         if (!machine.valid || !machine.entity || !machine.inv) return;
 
         const tank = getWaterTank(machine, settings);
-        const panelState = syncButtonPanel(machine, ABYSALL_FISHER_BUTTONS);
+        const shouldRefreshUi = shouldRefreshSuperiorUi(machine, "abyssal_fisher:ui");
+        const panelState = syncSuperiorButtonPanel(machine, ABYSALL_FISHER_BUTTONS, {
+            forceRender: shouldRefreshUi
+        });
         const mode = getMode(panelState.mode);
         const environment = resolveEnvironmentContext(machine.block);
         const quantityLevel = getQuantityUpgradeLevel(machine);
@@ -217,7 +222,7 @@ DoriosAPI.register.blockComponent("abyssal_fisher", {
                 quantityLevel,
                 castCount: getCastCount(mode, quantityLevel),
                 netItemId: null
-            }, shouldResetProgress("Insert Net"));
+            }, shouldResetProgress("Insert Net"), shouldRefreshUi);
             return;
         }
 
@@ -233,7 +238,7 @@ DoriosAPI.register.blockComponent("abyssal_fisher", {
         });
 
         if (!operation.ready) {
-            showMachineWarning(machine, tank, operation.message ?? "Standby", operation, shouldResetProgress(operation.message));
+            showMachineWarning(machine, tank, operation.message ?? "Standby", operation, shouldResetProgress(operation.message), shouldRefreshUi);
             return;
         }
 
@@ -244,7 +249,7 @@ DoriosAPI.register.blockComponent("abyssal_fisher", {
         });
 
         if (machine.energy.get() <= 0) {
-            showMachineWarning(machine, tank, "No Energy", operation, false);
+            showMachineWarning(machine, tank, "No Energy", operation, false, shouldRefreshUi);
             return;
         }
 
@@ -261,7 +266,8 @@ DoriosAPI.register.blockComponent("abyssal_fisher", {
                         ...operation,
                         lastBatch
                     },
-                    shouldResetProgress(lastBatch.message ?? "Output Full")
+                    shouldResetProgress(lastBatch.message ?? "Output Full"),
+                    shouldRefreshUi
                 );
                 return;
             }
@@ -315,7 +321,8 @@ DoriosAPI.register.blockComponent("abyssal_fisher", {
             {
                 ...operation,
                 lastBatch
-            }
+            },
+            shouldRefreshUi
         );
     },
 
@@ -1790,14 +1797,18 @@ function buildFooterLines(context = {}) {
     ];
 }
 
-function updateDisplays(machine, tank) {
+function updateDisplays(machine, tank, refreshUi = true) {
+    if (!refreshUi) return;
+
     tank.display(ABYSALL_FISHER.slots.waterDisplay);
     machine.displayEnergy(ABYSALL_FISHER.slots.energy);
     machine.displayProgress(ABYSALL_FISHER.slots.progress);
 }
 
-function showMachineWarning(machine, tank, message, context = {}, resetProgress = true) {
+function showMachineWarning(machine, tank, message, context = {}, resetProgress = true, refreshUi = true) {
     machine.off();
+    if (!refreshUi) return;
+
     machine.showWarning(
         message,
         resetProgress,
@@ -1807,11 +1818,13 @@ function showMachineWarning(machine, tank, message, context = {}, resetProgress 
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank);
+    updateDisplays(machine, tank, true);
 }
 
-function showMachineStatus(machine, tank, message, context = {}) {
+function showMachineStatus(machine, tank, message, context = {}, refreshUi = true) {
     machine.on();
+    if (!refreshUi) return;
+
     machine.showStatus(
         message,
         buildMachineLore(machine, tank, context),
@@ -1820,7 +1833,7 @@ function showMachineStatus(machine, tank, message, context = {}) {
             displayModel: "minimal"
         }
     );
-    updateDisplays(machine, tank);
+    updateDisplays(machine, tank, true);
 }
 
 function clamp(value, min, max) {

@@ -16,7 +16,7 @@ This program now covers three valid origins:
 
 - `Upgraded Machines` becomes `Superior Machines` in roadmap and design language.
 - `Superior` is the canonical term for planning, UI grouping, documentation, and future implementation checklists.
-- Player-facing design language should use `Abyssal Fisher`; internal `abysall_*` runtime identifiers can stay until a real migration is worth the churn.
+- Player-facing design language should use `Abyssal Fisher`; internal `abyssal_*` runtime identifiers can stay until a real migration is worth the churn.
 
 ---
 
@@ -268,7 +268,7 @@ Reason:
 
 ## Locked decisions from April 2026 review
 
-- **Abyssal Fisher** is the correct player-facing name; internal `abysall_*` IDs can remain until a runtime migration is worth it.
+- **Abyssal Fisher** is the correct player-facing name; internal `abyssal_*` IDs can remain until a runtime migration is worth it.
 - **Arcane Imprinter** should stay simple: dedicated enchanting plus a speed bonus is enough.
 - **Centrifugal Siever v1** stays batch + steam only.
 - **Verdant Cultivator** replaces the old `Chrono Harvester` name and should combine planting, bonemeal support, harvesting, and buffering.

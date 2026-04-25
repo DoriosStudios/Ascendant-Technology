@@ -99,14 +99,14 @@
           }
         ]
       },
-      // Abysall Fisher
+      // Abyssal Fisher
       {
         "array_name": "variables",
         "operation": "insert_back",
         "value": [
           {
-            "requires": "($temp_container_title = 'entity.utilitycraft:abysall_fisher.name')",
-            "$screen_content": "abysall_fisher.utility_panel",
+            "requires": "($temp_container_title = 'entity.utilitycraft:abyssal_fisher.name')",
+            "$screen_content": "abyssal_fisher.utility_panel",
             "$screen_bg_content": "common.screen_background"
           }
         ]

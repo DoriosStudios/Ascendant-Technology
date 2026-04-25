@@ -2,14 +2,14 @@ import { system } from "@minecraft/server";
 
 const REGISTER_FISHER_DROP_EVENT_IDS = Object.freeze([
     "utilitycraft:register_autofisher_drop",
-    "utilitycraft:register_abysall_fisher_drop"
+    "utilitycraft:register_abyssal_fisher_drop"
 ]);
 
 /**
  * Main configuration of Abyssal Fisher loot and enchantment mechanics.
  * Includes parameters for luck effects, book enchantments, and equipment enchantments.
  */
-export const abysallFisherConfig = Object.freeze({
+export const abyssalFisherConfig = Object.freeze({
     fishingCategories: Object.freeze({
         defaultCategory: "junk",
         baseWeights: Object.freeze({
@@ -58,7 +58,7 @@ export const abysallFisherConfig = Object.freeze({
     })
 });
 
-export const abysallFisherLoot = [
+export const abyssalFisherLoot = [
     { item: "minecraft:cod", amount: [1, 3], chance: 0.45, tier: 0, category: "fish" },
     { item: "minecraft:salmon", amount: [1, 2], chance: 0.25, tier: 0, category: "fish" },
     { item: "minecraft:tropical_fish", amount: 1, chance: 0.10, tier: 1, category: "fish" },
@@ -83,10 +83,10 @@ export const abysallFisherLoot = [
         chance: 0.004,
         tier: 2,
         category: "treasure",
-        durabilityDamageRange: abysallFisherConfig.equipment.durabilityDamageRange,
+        durabilityDamageRange: abyssalFisherConfig.equipment.durabilityDamageRange,
         randomEnchant: {
-            chance: abysallFisherConfig.equipment.enchantChance,
-            count: abysallFisherConfig.equipment.enchantCount
+            chance: abyssalFisherConfig.equipment.enchantChance,
+            count: abyssalFisherConfig.equipment.enchantCount
         }
     },
     {
@@ -95,10 +95,10 @@ export const abysallFisherLoot = [
         chance: 0.0008,
         tier: 3,
         category: "treasure",
-        durabilityDamageRange: abysallFisherConfig.equipment.durabilityDamageRange,
+        durabilityDamageRange: abyssalFisherConfig.equipment.durabilityDamageRange,
         randomEnchant: {
-            chance: abysallFisherConfig.equipment.enchantChance,
-            count: abysallFisherConfig.equipment.enchantCount
+            chance: abyssalFisherConfig.equipment.enchantChance,
+            count: abyssalFisherConfig.equipment.enchantCount
         }
     },
     { item: "minecraft:trident", amount: 1, chance: 0.0005, tier: 6, category: "treasure" },
@@ -110,10 +110,10 @@ export const abysallFisherLoot = [
         chance: 0.0008,
         tier: 2,
         category: "junk",
-        durabilityDamageRange: abysallFisherConfig.equipment.durabilityDamageRange,
+        durabilityDamageRange: abyssalFisherConfig.equipment.durabilityDamageRange,
         randomEnchant: {
-            chance: abysallFisherConfig.equipment.enchantChance,
-            count: abysallFisherConfig.equipment.enchantCount
+            chance: abyssalFisherConfig.equipment.enchantChance,
+            count: abyssalFisherConfig.equipment.enchantCount
         }
     },
     { item: "utilitycraft:empty_liquid_capsule", amount: 1, chance: 0.004, tier: 5, category: "treasure" },
@@ -245,7 +245,7 @@ function makeLootSignature(entry) {
 }
 
 function appendLootEntries(entries) {
-    const currentSignatures = new Set(abysallFisherLoot.map(makeLootSignature));
+    const currentSignatures = new Set(abyssalFisherLoot.map(makeLootSignature));
     let added = 0;
 
     for (const rawEntry of entries) {
@@ -256,7 +256,7 @@ function appendLootEntries(entries) {
         if (currentSignatures.has(signature)) continue;
 
         currentSignatures.add(signature);
-        abysallFisherLoot.push(entry);
+        abyssalFisherLoot.push(entry);
         added += 1;
     }
 
@@ -272,9 +272,9 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
         const added = appendLootEntries(entries);
 
         if (added > 0) {
-            console.warn(`[Abysall Fisher] Registered ${added} extra fishing loot entries.`);
+            console.warn(`[Abyssal Fisher] Registered ${added} extra fishing loot entries.`);
         }
     } catch (error) {
-        console.warn("[Abysall Fisher] Failed to parse fisher loot payload:", error);
+        console.warn("[Abyssal Fisher] Failed to parse fisher loot payload:", error);
     }
 });

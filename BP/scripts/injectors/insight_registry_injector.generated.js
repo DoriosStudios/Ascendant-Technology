@@ -13,6 +13,7 @@ const { registrationMarker: REGISTRATION_MARKER, registrationRetryTicks: REGISTR
 const ADDON_CONTENT = Object.freeze({
   "key": "utilitycraft_ascendant_technology",
   "name": "UtilityCraft: Ascendant Technology",
+  "identifier": "AT",
   "type": "expansion",
   "namespace": "utilitycraft",
   "content": [

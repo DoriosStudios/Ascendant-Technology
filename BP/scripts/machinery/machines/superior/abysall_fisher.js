@@ -10,7 +10,7 @@ import {
     syncButtonPanel,
     tickGate
 } from "../../../DoriosCore/index.js";
-import { abysallFisherConfig, abysallFisherLoot } from "../../../config/recipes/abysall_fisher.js";
+import { abyssalFisherConfig, abyssalFisherLoot } from "../../../config/recipes/abyssal_fisher.js";
 import {
     formatBatchWithQuantity,
     formatEnergyWithFluidCost,
@@ -129,17 +129,17 @@ const MULTIPLIER_LOCKED_ITEM_IDS = new Set([
     "minecraft:saddle"
 ]);
 
-const LUCK_CONFIG = abysallFisherConfig?.luck ?? {};
-const BOOK_ENCHANT_CONFIG = abysallFisherConfig?.bookEnchant ?? {};
-const EQUIPMENT_CONFIG = abysallFisherConfig?.equipment ?? {};
-const FISHING_CATEGORY_CONFIG = abysallFisherConfig?.fishingCategories ?? {};
+const LUCK_CONFIG = abyssalFisherConfig?.luck ?? {};
+const BOOK_ENCHANT_CONFIG = abyssalFisherConfig?.bookEnchant ?? {};
+const EQUIPMENT_CONFIG = abyssalFisherConfig?.equipment ?? {};
+const FISHING_CATEGORY_CONFIG = abyssalFisherConfig?.fishingCategories ?? {};
 const DEFAULT_LUCK = LUCK_CONFIG.default ?? 0;
 const FISHING_CATEGORY_KEYS = Object.freeze(["fish", "junk", "treasure"]);
 let cachedEnchantmentTypes = null;
 
 const ABYSALL_FISHER_BUTTONS = Object.freeze({
-    id: "abysall_fisher_mode",
-    namespace: "ascendant:abysall_fisher",
+    id: "abyssal_fisher_mode",
+    namespace: "ascendant:abyssal_fisher",
     cooldownTicks: 6,
     defaultIconItemId: "utilitycraft:switch_button",
     defaults: Object.freeze({
@@ -167,7 +167,7 @@ const ABYSALL_FISHER_BUTTONS = Object.freeze({
     ])
 });
 
-DoriosAPI.register.blockComponent("abysall_fisher", {
+DoriosAPI.register.blockComponent("abyssal_fisher", {
     beforeOnPlayerPlace(e, { params: settings }) {
         Machine.spawnMachineEntity(e, settings, () => {
             const machine = new Machine(e.block, settings, true);
@@ -200,11 +200,11 @@ DoriosAPI.register.blockComponent("abysall_fisher", {
         const environment = resolveEnvironmentContext(machine.block);
         const quantityLevel = getQuantityUpgradeLevel(machine);
 
-        if (tickGate(machine.entity, "abysall_fisher:transfer_cd", ABYSALL_FISHER.transfer.outputIntervalTicks)) {
+        if (tickGate(machine.entity, "abyssal_fisher:transfer_cd", ABYSALL_FISHER.transfer.outputIntervalTicks)) {
             transferOutputSlots(machine);
         }
 
-        if (tickGate(machine.entity, "abysall_fisher:inputs_cd", ABYSALL_FISHER.transfer.inputPullIntervalTicks)) {
+        if (tickGate(machine.entity, "abyssal_fisher:inputs_cd", ABYSALL_FISHER.transfer.inputPullIntervalTicks)) {
             machine.pullItemsFromAbove(ABYSALL_FISHER.slots.net);
         }
 
@@ -473,7 +473,7 @@ function buildOperationPlan({ machine, tank, settings, mode, environment, quanti
     const totalRolls = castCount * Math.max(1, netData.rolls);
     const effectiveTier = Math.max(0, netData.tier + mode.tierBonus + environment.tierBonus);
     const effectiveLuck = Math.max(0, netData.luck + mode.luckBonus + environment.luckBonus);
-    const eligibleLoot = abysallFisherLoot.filter(entry => effectiveTier >= Math.max(0, Number(entry?.tier) || 0));
+    const eligibleLoot = abyssalFisherLoot.filter(entry => effectiveTier >= Math.max(0, Number(entry?.tier) || 0));
     const eligibleLootByCategory = groupLootByCategory(eligibleLoot);
     const luckOfTheSeaEquivalent = resolveLuckOfTheSeaEquivalent(effectiveLuck);
     const categoryWeights = resolveFishingCategoryWeights(eligibleLootByCategory, luckOfTheSeaEquivalent);

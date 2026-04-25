@@ -2,7 +2,7 @@
     "format_version": "1.20.80",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "utilitycraft:abysall_fisher"
+            "identifier": "utilitycraft:abyssal_fisher"
         },
         "tags": [
             "utilitycraft_workbench"
@@ -30,7 +30,7 @@
             "PAP"
         ],
         "result": {
-            "item": "utilitycraft:abysall_fisher"
+            "item": "utilitycraft:abyssal_fisher"
         },
         "unlock": [
             {

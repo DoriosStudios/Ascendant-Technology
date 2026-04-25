@@ -2,11 +2,10 @@
 
 Machine status legend:
 - 🟢 Implemented (in-game)
-- 🟠 In Development (actively being built)
-- 🟡 Planned (approved direction, not started)
-- 🔵 Prototype (may change / experimental)
-- 🟣 Needs Design (idea exists, spec missing)
-- 🔴 On Hold / Cut (paused or removed from this expansion)
+- 🔵 In Development (actively being built)
+- 🟡 Planned (Not started or confirmed)
+- 🟣 Needs Design (Missing assets)
+- 🔴 On Hold / Cut (Paused or no longer planned)
 
 ---
 
@@ -131,7 +130,7 @@ A superior block can come from:
 
 All superior machines are listed below in **alphabetical order**.
 
-- 🟠 **Abyssal Fisher** *(from `autofisher`; runtime IDs can stay `abysall_*` for now)*
+- 🟠 **Abyssal Fisher** *(from `autofisher`; runtime IDs can stay `abyssal_*` for now)*
   - **Purpose:** Remote batch fishing machine with internal water logistics and abyssal loot scaling.
   - **Operating Mode:** `Expedition` favors longer casts and higher loot tiers, while `Mass` shortens the cycle for bulk output; both use fishing nets and an internal water tank instead of a nearby source block.
   - **Environment Hook:** Water quality, dimension context, and abyssal bonus rules can affect the loot table.
@@ -232,7 +231,7 @@ All superior machines are listed below in **alphabetical order**.
 
 ## Locked design decisions from review (2026-04)
 
-- **Abyssal Fisher** is the correct player-facing name; internal `abysall_*` identifiers can stay until a runtime migration is worth the churn.
+- **Abyssal Fisher** is the correct player-facing name; internal `abyssal_*` identifiers can stay until a runtime migration is worth the churn.
 - **Adaptive Assembler** and **Quantum Digitizer** are out of the current superior roster because neither one has a strong enough gameplay justification right now.
 - **Arcane Imprinter** stays simple: dedicated enchanting plus a speed advantage is enough.
 - **Centrifugal Siever v1** stays batch + steam only.
@@ -376,8 +375,11 @@ The following concepts were migrated and normalized into roadmap format.
   - **Role:** Rare drop ecosystems without classic kill farms.
 
 - 🟣 **Rift Anchor**
-  - **Purpose:** Cross-dimensional item/fluid teleportation in paired frequencies.
-  - **Risk Hook:** Energy collapse during transfer can trigger unstable rift events.
+  - **Purpose:** Cross-dimensional item/fluid/energy transportation in paired frequencies.
+  - **Operating Mode:** Requires two anchors, one for sending and one for receiving; linked by a unique frequency code.
+    - **Rift Sender:**  Sends everything that can be put on pipes or ducts, such as items, fluids, overclock and energy.
+    - **Rift Receiver:**  Receives the load sent by the sender and outputs it omnidirectionally.
+  - **Notes:** Will need some sort of Chunk Loader integration to keep the receiver/sender active.
 
 - 🟣 **Orbital Command Terminal**
   - **Purpose:** Climate/prospecting intervention layer.

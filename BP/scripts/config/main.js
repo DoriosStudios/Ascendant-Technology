@@ -24,7 +24,7 @@ import './recipes/arc_press_forge.js';
 import './recipes/industrial_burner.js';
 import './recipes/pulverizer.js';
 import './recipes/centrifugal_siever.js';
-import './recipes/abysall_fisher.js';
+import './recipes/abyssal_fisher.js';
 import './recipes/genetic_seed_synthesizer.js';
 import './recipes/liquifier.js';
 import './recipes/energizer.js';

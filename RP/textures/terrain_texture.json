@@ -86,15 +86,15 @@
 			"textures": "textures/blocks/machines/superior/centrifugal_siever_on"
 		},
 		"utilitycraft_dual_siever_off": {
-			"textures": "textures/blocks/machines/superior/dual-sieve_off"
+			"textures": "textures/blocks/machines/superior/dual_sieve_off"
 		},
 		"utilitycraft_dual_siever_on": {
-			"textures": "textures/blocks/machines/superior/dual-sieve_on"
+			"textures": "textures/blocks/machines/superior/dual_sieve_on"
 		},
-		"utilitycraft_abysall_fisher_off": {
+		"utilitycraft_abyssal_fisher_off": {
 			"textures": "textures/blocks/machines/superior/abyssal_autofisher_off"
 		},
-		"utilitycraft_abysall_fisher_on": {
+		"utilitycraft_abyssal_fisher_on": {
 			"textures": "textures/blocks/machines/superior/abyssal_autofisher_on"
 		},
 		"utilitycraft_genetic_seed_synthesizer_off": {

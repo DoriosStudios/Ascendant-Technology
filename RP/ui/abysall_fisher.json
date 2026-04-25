@@ -1,6 +1,6 @@
 {
-    "namespace": "abysall_fisher",
-    "abysall_fisher_top": {
+    "namespace": "abyssal_fisher",
+    "abyssal_fisher_top": {
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
@@ -319,7 +319,7 @@
                                 "layer": 5,
                                 "controls": [
                                     {
-                                        "abysall_fisher_top@abysall_fisher.abysall_fisher_top": {}
+                                        "abyssal_fisher_top@abyssal_fisher.abyssal_fisher_top": {}
                                     },
                                     {
                                         "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}

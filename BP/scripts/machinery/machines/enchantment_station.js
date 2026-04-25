@@ -1,5 +1,5 @@
 import { ItemStack, EnchantmentTypes, world, system } from '@minecraft/server'
-import { Machine, Energy, FluidManager } from '../../DoriosCore/index.js'
+import { Machine, Energy, FluidManager } from '../../DoriosCore/main.js'
 
 // ==================== SLOT LAYOUT (32 total) ====================
 // Fixed slots: 0=Energy, 1=Status, 2=Progress

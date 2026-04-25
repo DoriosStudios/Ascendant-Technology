@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine } from '../../DoriosCore/index.js'
+import { Machine, Energy, buildOverclockLoreLine } from '../../DoriosCore/main.js'
 
 const NETWORK_CENTER = Object.freeze({
     defaults: Object.freeze({

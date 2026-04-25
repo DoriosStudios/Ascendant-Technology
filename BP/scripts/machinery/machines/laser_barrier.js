@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine } from '../../DoriosCore/index.js'
+import { Machine, Energy, buildOverclockLoreLine } from '../../DoriosCore/main.js'
 import { ItemStack } from '@minecraft/server'
 
 const LASER_BARRIER = Object.freeze({

@@ -1,5 +1,5 @@
 import { system } from "@minecraft/server";
-import { FluidManager, Rotation } from "../../DoriosCore/index.js";
+import { FluidManager, Rotation } from "../../DoriosCore/main.js";
 
 const REINFORCED_EXTRACTOR = Object.freeze({
     defaults: Object.freeze({

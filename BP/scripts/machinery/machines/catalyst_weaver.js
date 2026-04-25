@@ -1,5 +1,5 @@
 import { ItemStack } from '@minecraft/server'
-import { Machine, FluidManager, applyDynamicRecipeRate, tickGate, formatItemName, feedFluidSlot } from '../../DoriosCore/index.js'
+import { Machine, FluidManager, applyDynamicRecipeRate, tickGate, formatItemName, feedFluidSlot } from '../../DoriosCore/main.js'
 import { getCatalystWeaverRecipes } from '../../config/recipes/catalyst_weaver.js'
 
 const CATALYST_WEAVER_LAYOUT = Object.freeze({

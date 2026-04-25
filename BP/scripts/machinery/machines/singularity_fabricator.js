@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, buildOverclockLoreLine, formatItemName, capitalize, formatSeconds, formatEta, calculateEtaSeconds, getProgressPerSecond, formatFluidDisplayName, addItemsToSlot, computeSlotCapacity } from '../../DoriosCore/index.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine, formatItemName, capitalize, formatSeconds, formatEta, calculateEtaSeconds, getProgressPerSecond, formatFluidDisplayName, addItemsToSlot, computeSlotCapacity } from '../../DoriosCore/main.js'
 import { getSingularityRecipes } from '../../config/recipes/duplicator.js'
 
 const FABRICATOR = Object.freeze({

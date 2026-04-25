@@ -1,5 +1,5 @@
 import { system } from '@minecraft/server'
-import { Machine, Energy, FluidManager, Rotation, tickGate } from '../../DoriosCore/index.js'
+import { Machine, Energy, FluidManager, Rotation, tickGate } from '../../DoriosCore/main.js'
 
 // ──────────────────────────────────────────────────────
 // CONFIGURAÇÃO

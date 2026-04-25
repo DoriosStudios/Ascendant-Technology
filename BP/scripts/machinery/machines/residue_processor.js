@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, rollByproduct, clampChance, addItemsToSlot, getOutputCapacity, formatItemName } from '../../DoriosCore/index.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, rollByproduct, clampChance, addItemsToSlot, getOutputCapacity, formatItemName } from '../../DoriosCore/main.js'
 import { getResidueProcessorRecipes } from '../../config/recipes/residue_processor.js'
 
 const RESIDUE_PROCESSOR = Object.freeze({

@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, formatItemName, capitalize, formatSeconds, formatEta, calculateEtaSeconds, getProgressPerSecond, formatFluidDisplayName, computeSlotCapacity, addItemsToSlot, captureItemMetadata } from '../../DoriosCore/index.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, formatItemName, capitalize, formatSeconds, formatEta, calculateEtaSeconds, getProgressPerSecond, formatFluidDisplayName, computeSlotCapacity, addItemsToSlot, captureItemMetadata } from '../../DoriosCore/main.js'
 import { getClonerBlockProfile } from '../../config/recipes/duplicator.js'
 
 const config = Object.freeze({

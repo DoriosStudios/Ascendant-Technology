@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, formatItemName } from '../../DoriosCore/index.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, formatItemName } from '../../DoriosCore/main.js'
 import { startHeaterAura, tickHeaterAura, stopHeaterAuraAt } from '../multi_core.js'
 import { getEnergizerRecipes } from '../../config/recipes/energizer.js'
 

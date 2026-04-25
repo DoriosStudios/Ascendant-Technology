@@ -1,5 +1,5 @@
 import { system } from "@minecraft/server";
-import { Energy, FluidManager } from "../DoriosCore/index.js";
+import { Energy, FluidManager } from "../DoriosCore/main.js";
 import { getPlayerArmorMitigationProfile } from "../DoriosCore/armor/reduction.js";
 
 const INSIGHT_INJECTOR = Object.freeze({

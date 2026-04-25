@@ -8,7 +8,7 @@ import {
     runAdaptiveTickGate,
     feedFluidSlot,
     formatFluidDisplayName
-} from '../../DoriosCore/index.js';
+} from '../../DoriosCore/main.js';
 import { getVaporworksProcessorRecipes } from '../../config/recipes/vaporworks_processor.js';
 
 const VAPORWORKS = Object.freeze({

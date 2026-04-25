@@ -1,4 +1,4 @@
-import { updatePipes } from "../../DoriosCore/index.js";
+import { updatePipes } from "../../DoriosCore/main.js";
 import { system, world } from "@minecraft/server";
 
 const REINFORCED_CABLE = Object.freeze({

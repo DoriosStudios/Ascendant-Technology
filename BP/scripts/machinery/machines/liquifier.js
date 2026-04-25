@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, feedFluidSlot, rollByproduct, clampChance, addItemsToSlot, formatItemName, formatFluidDisplayName } from '../../DoriosCore/index.js';
+import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, feedFluidSlot, rollByproduct, clampChance, addItemsToSlot, formatItemName, formatFluidDisplayName } from '../../DoriosCore/main.js';
 import { getLiquifierRecipes } from '../../config/recipes/liquifier.js';
 
 const LIQUIFIER = Object.freeze({

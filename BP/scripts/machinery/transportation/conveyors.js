@@ -1,6 +1,6 @@
 import { system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import { updatePipes, Energy } from "../../DoriosCore/index.js";
+import { updatePipes, Energy } from "../../DoriosCore/main.js";
 
 const CONVEYOR_IDS = Object.freeze({
     tags: Object.freeze({

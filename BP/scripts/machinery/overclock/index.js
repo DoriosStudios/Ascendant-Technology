@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, getCachedBlockEntity } from "../../DoriosCore/index.js";
+import { Machine, Energy, FluidManager, getCachedBlockEntity } from "../../DoriosCore/main.js";
 
 const OVERCLOCK = Object.freeze({
     offsets: Object.freeze([

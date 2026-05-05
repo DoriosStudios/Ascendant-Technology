@@ -7,7 +7,9 @@ import {
     appendLoreSection,
     extractEnchantments,
     formatItemName,
-    tickGate
+    tickGate,
+    normalizeEnchantmentId,
+    normalizeEnchantmentList
 } from "../../../DoriosCore/main.js";
 import { abyssalFisherConfig, abyssalFisherLoot } from "../../../config/recipes/abyssal_fisher.js";
 import {
@@ -1171,25 +1173,6 @@ function getDurabilityDamage(stack) {
 function areStringArraysEqual(left, right) {
     if (left.length !== right.length) return false;
     return left.every((value, index) => value === right[index]);
-}
-
-function normalizeEnchantmentId(type) {
-    if (!type) return "";
-    const id = type.id ?? type.identifier ?? type.typeId ?? type.name ?? "";
-    return typeof id === "string" ? id.toLowerCase() : "";
-}
-
-function normalizeEnchantmentList(list) {
-    if (!Array.isArray(list)) return [];
-    return list
-        .map(entry => {
-            const id = normalizeEnchantmentId(entry?.type);
-            const level = Math.floor(Number(entry?.level ?? 0));
-            if (!id || level <= 0) return null;
-            return { id, level };
-        })
-        .filter(Boolean)
-        .sort((a, b) => a.id.localeCompare(b.id) || a.level - b.level);
 }
 
 function buildEnchantmentSignature(list) {

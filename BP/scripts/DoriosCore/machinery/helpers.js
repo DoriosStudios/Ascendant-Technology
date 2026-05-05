@@ -324,6 +324,48 @@ export function clampChance(value) {
     return Math.max(0, Math.min(1, parsed))
 }
 
+/**
+ * Reads a cached JSON array of network nodes from an entity dynamic property.
+ */
+export function parseCachedNodes(entity, propertyId = 'dorios:fluid_nodes') {
+    if (!entity) return []
+
+    try {
+        const cached = entity.getDynamicProperty(propertyId)
+        if (!cached) return []
+        const parsed = JSON.parse(cached)
+        return Array.isArray(parsed) ? parsed : []
+    } catch {
+        return []
+    }
+}
+
+/**
+ * Normalizes an enchantment type reference into a lowercase identifier string.
+ */
+export function normalizeEnchantmentId(type) {
+    if (!type) return ''
+    const id = type.id ?? type.identifier ?? type.typeId ?? type.name ?? ''
+    return typeof id === 'string' ? id.toLowerCase() : ''
+}
+
+/**
+ * Normalizes and sorts an enchantment list for deterministic comparisons.
+ */
+export function normalizeEnchantmentList(list) {
+    if (!Array.isArray(list)) return []
+
+    return list
+        .map(entry => {
+            const id = normalizeEnchantmentId(entry?.type)
+            const level = Math.floor(Number(entry?.level ?? 0))
+            if (!id || level <= 0) return null
+            return { id, level }
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.id.localeCompare(b.id) || a.level - b.level)
+}
+
 function getEnchantableComponent(stack) {
     if (!stack || typeof stack.getComponent !== 'function') return null
     return stack.getComponent('minecraft:enchantable')

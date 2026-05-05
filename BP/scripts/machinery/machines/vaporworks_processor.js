@@ -7,7 +7,8 @@ import {
     ADAPTIVE_CHECK_RESULT,
     runAdaptiveTickGate,
     feedFluidSlot,
-    formatFluidDisplayName
+    formatFluidDisplayName,
+    parseCachedNodes
 } from '../../DoriosCore/main.js';
 import { getVaporworksProcessorRecipes } from '../../config/recipes/vaporworks_processor.js';
 
@@ -238,18 +239,6 @@ function getAllowedInputFluidTypes(recipes) {
     }
 
     return allowed;
-}
-
-function parseCachedNodes(entity, propertyId = 'dorios:fluid_nodes') {
-    if (!entity) return [];
-    try {
-        const cached = entity.getDynamicProperty(propertyId);
-        if (!cached) return [];
-        const parsed = JSON.parse(cached);
-        return Array.isArray(parsed) ? parsed : [];
-    } catch {
-        return [];
-    }
 }
 
 function resolveFluidNodes(machine, block) {

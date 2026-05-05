@@ -1,5 +1,11 @@
 import { ItemStack, EnchantmentTypes, world, system } from '@minecraft/server'
-import { Machine, Energy, FluidManager } from '../../DoriosCore/main.js'
+import {
+    Machine,
+    Energy,
+    FluidManager,
+    normalizeEnchantmentId,
+    normalizeEnchantmentList
+} from '../../DoriosCore/main.js'
 
 // ==================== SLOT LAYOUT (32 total) ====================
 // Fixed slots: 0=Energy, 1=Status, 2=Progress
@@ -1576,25 +1582,6 @@ function getEnchantmentAdditions(before, after) {
         const id = normalizeEnchantmentId(entry?.type)
         return id && !existingIds.has(id)
     })
-}
-
-function normalizeEnchantmentId(type) {
-    if (!type) return ''
-    const id = type.id ?? type.identifier ?? type.typeId ?? type.name ?? ''
-    return typeof id === 'string' ? id.toLowerCase() : ''
-}
-
-function normalizeEnchantmentList(list) {
-    if (!Array.isArray(list)) return []
-    return list
-        .map(entry => {
-            const id = normalizeEnchantmentId(entry?.type)
-            const level = Math.floor(Number(entry?.level ?? 0))
-            if (!id || level <= 0) return null
-            return { id, level }
-        })
-        .filter(Boolean)
-        .sort((a, b) => a.id.localeCompare(b.id) || a.level - b.level)
 }
 
 function buildEnchantmentSignature(list) {

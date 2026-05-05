@@ -13,7 +13,7 @@ import {
 } from '../../StatsCore/main.js'
 import { collectStatsAbilityNames } from '../../StatsCore/core/abilities.js'
 import { resolveStatsAttributes } from '../../StatsCore/attributes/resolve.js'
-import { safeJsonParse, titleCaseIdentifier } from '../../StatsCore/utils.js'
+import { normalizeId, safeJsonParse, titleCaseIdentifier } from '../../StatsCore/utils.js'
 import {
     formatEnergyCost,
     formatFluidTankBuffer,
@@ -340,10 +340,6 @@ DoriosAPI.register.blockComponent('refining_table', {
     },
 })
 
-function normalizeKey(value) {
-    return typeof value === 'string' ? value.trim().toLowerCase() : ''
-}
-
 function getRefiningXpTank(machine) {
     if (!machine?.entity) return null
 
@@ -402,15 +398,15 @@ function clearPendingRefinement(machine) {
 }
 
 function getChipConfig(typeId) {
-    return REFINING_TABLE.chips[normalizeKey(typeId)] ?? null
+    return REFINING_TABLE.chips[normalizeId(typeId)] ?? null
 }
 
 function getIngotConfig(typeId) {
-    return REFINING_TABLE.ingots[normalizeKey(typeId)] ?? null
+    return REFINING_TABLE.ingots[normalizeId(typeId)] ?? null
 }
 
 function getTierScale(definition) {
-    return REFINING_TABLE.tierScales[normalizeKey(definition?.tier)] ?? 1
+    return REFINING_TABLE.tierScales[normalizeId(definition?.tier)] ?? 1
 }
 
 function getTemplate(definition) {
@@ -436,7 +432,7 @@ function buildDefinitionAbilityNames(definition, state) {
 
 function hasTotemAbilityLock(definition, state, abilityNames = buildDefinitionAbilityNames(definition, state)) {
     if (!definition || abilityNames.length <= 0) return false
-    if (normalizeKey(definition?.uniqueAbilityUnlock) !== 'totem') return false
+    if (normalizeId(definition?.uniqueAbilityUnlock) !== 'totem') return false
     return state?.abilityData?.uniqueUnlocked !== true
 }
 
@@ -517,7 +513,7 @@ function buildRefiningPreview(machine, tracked = syncTrackedEquipment(machine)) 
     const potentialAbilityNames = buildDefinitionAbilityNames(definition, state)
     const abilityUnlocked = !definition || !hasTotemAbilityLock(definition, { ...state, abilityData: { ...state?.abilityData, uniqueUnlocked: true } }, potentialAbilityNames)
     const requiresTotem = hasTotemAbilityLock(definition, state, potentialAbilityNames)
-    const totemPresent = normalizeKey(totemStack?.typeId) === normalizeKey(REFINING_TABLE.defaults.unlockCatalystId)
+    const totemPresent = normalizeId(totemStack?.typeId) === normalizeId(REFINING_TABLE.defaults.unlockCatalystId)
     const effectiveIngots = ingotConfig
         ? Math.min(REFINING_TABLE.defaults.maxIngotsPerRoll, Math.max(0, Number(ingotStack?.amount ?? 0)))
         : 0
@@ -725,7 +721,7 @@ function applyRefinement(machine, preview) {
 
     if (preview.requiresTotem) {
         const totemStack = machine?.inv?.getItem?.(REFINING_TABLE.slots.totem)
-        if (normalizeKey(totemStack?.typeId) !== normalizeKey(REFINING_TABLE.defaults.unlockCatalystId)) {
+        if (normalizeId(totemStack?.typeId) !== normalizeId(REFINING_TABLE.defaults.unlockCatalystId)) {
             return { success: false, message: 'Insert Runic Core' }
         }
     }
@@ -845,7 +841,7 @@ function buildAbilityNames(attributes, state) {
 }
 
 function normalizeAbilityDescriptionKey(value) {
-    const normalized = normalizeKey(value)
+    const normalized = normalizeId(value)
     if (!normalized) return ''
     if (normalized.endsWith(' operator')) return 'operator'
     return normalized
@@ -1110,7 +1106,7 @@ function formatRefineProfile(type) {
 }
 
 function formatRefineGrade(grade) {
-    const key = normalizeKey(grade)
+    const key = normalizeId(grade)
     if (key === 'transcendent') return 'Transcendent'
     if (key === 'masterwork') return 'Masterwork'
     if (key === 'exceptional') return 'Exceptional'

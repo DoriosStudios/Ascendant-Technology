@@ -178,6 +178,10 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Reduced redundant block-entity lookups through cached machine entity resolution.
   - Reduced repeated direct recipe-array scans in Arc-Press Forge, Industrial Burner, and Pulverizer.
   - Reduced redundant overclock property writes across towers, relays, and connected machines.
+- Consolidated more single-use script helpers into shared DoriosCore / StatsCore utilities.
+  - Vaporworks Processor and Impact Crusher now share one cached fluid-node parser instead of maintaining local copies.
+  - Abyssal Fisher and Enchantment Station now reuse shared enchantment normalization helpers for deterministic enchant comparison flows.
+  - Refining Table and StatsCore utility interactions now reuse shared identifier normalization helpers instead of redefining local lowercase wrappers.
 - Optimized Absolute Container runtime behavior under sustained full-output conditions.
   - Added cached block-context and entity-runtime state to reduce repeated lookup and manager initialization cost.
   - Replaced per-tick capacity rewrites with one-time runtime initialization.

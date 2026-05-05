@@ -4,6 +4,7 @@ import { resolveStatsAttributes } from "../attributes/resolve.js";
 import { getEquipment, persistEquipmentItem } from "../core/equipment.js";
 import { getStatsCoreDefinition } from "../core/registry.js";
 import { readStatsState, writeStatsState } from "../core/state.js";
+import { normalizeId } from "../utils.js";
 
 const operatorToggleTicks = new Map();
 const WORM_SOIL_CYCLE = Object.freeze([
@@ -22,10 +23,6 @@ const WORM_DIG_DROPS = Object.freeze([
     "minecraft:pumpkin_seeds",
     "minecraft:torchflower_seeds",
 ]);
-
-function normalizeId(value) {
-    return typeof value === "string" ? value.trim().toLowerCase() : "";
-}
 
 function resolveEffectType(id) {
     if (!id) return undefined;

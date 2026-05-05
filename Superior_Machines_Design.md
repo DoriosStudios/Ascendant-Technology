@@ -104,9 +104,9 @@ Before the mode-heavy wave is expanded, Ascendant should standardize:
 - `Arcane Imprinter`
 - `Arc-Press Forge`
 - `Centrifugal Siever`
-- `Cryo Cooling Bay`
-- `Cryofluid Condenser`
-- `Cryo Stabilizer Rack`
+- `Cryo Freezer`
+- `Cryofluid Synthesizer`
+- `Cryo Stabilizer`
 - `Dense Active Generators`
 - `Disenchanter Array`
 - `Dual Siever`
@@ -131,21 +131,21 @@ Before the mode-heavy wave is expanded, Ascendant should standardize:
 - **Operating Mode:** Focused enchanting-only grid with the familiar module lane, plus a faster base cycle than the Enchantment Station.
 - **Why it belongs here:** It is valuable because it is specialized and faster, not because it grows a giant extra mode tree.
 
-### Cryo Cooling Bay
+### Cryo Freezer
 
-- **Source:** `Cryo Chamber` cooling branch
-- **Purpose:** Dedicated freezing and cooling machine for recipe chains that should not compete with stabilization or Cryofluid generation.
-- **Operating Mode:** Runs a cooling grid with independent slot processing, using water or Cryofluid-backed recipes for food reversal, freezing, and cold crafting.
-- **Why it belongs here:** Cooling is already a distinct role inside the Cryo Chamber and deserves its own superior branch.
+- **Source:** `Cryo Chamber` freezing branch
+- **Purpose:** Dedicated freezing and cold-crafting machine for recipe chains that should not compete with stabilization or Cryofluid generation.
+- **Operating Mode:** Runs a freezing grid with independent slot processing, using water or Cryofluid-backed recipes for food reversal, freezing, and cold crafting.
+- **Why it belongs here:** Freezing is already a distinct role inside the Cryo Chamber and deserves its own superior branch.
 
-### Cryofluid Condenser
+### Cryofluid Synthesizer
 
 - **Source:** `Cryo Chamber` generator branch
 - **Purpose:** Dedicated industrial Cryofluid production for bases that outgrow the shared Cryo Chamber generator lane.
 - **Operating Mode:** `Stable` processes one cycle at a time with normal upgrade behavior, while `Impulse` runs in batches, ramps production up to `800%`, and ignores Speed/Hyper boosts while active.
 - **Why it belongs here:** It extracts the fluid-production role into a specialist machine that can scale independently from stabilization and cooling.
 
-### Cryo Stabilizer Rack
+### Cryo Stabilizer
 
 - **Source:** `Cryo Chamber` stabilization branch
 - **Purpose:** Dedicated handling platform for volatile materials that need strict stabilization.
@@ -247,9 +247,9 @@ Reason:
 ### Wave 3: standalone superior branches
 
 - Arcane Imprinter
-- Cryo Cooling Bay
-- Cryofluid Condenser
-- Cryo Stabilizer Rack
+- Cryo Freezer
+- Cryofluid Synthesizer
+- Cryo Stabilizer
 - Disenchanter Array
 - Induction Matrix Anvil
 
@@ -272,7 +272,7 @@ Reason:
 - **Arcane Imprinter** should stay simple: dedicated enchanting plus a speed bonus is enough.
 - **Centrifugal Siever v1** stays batch + steam only.
 - **Verdant Cultivator** replaces the old `Chrono Harvester` name and should combine planting, bonemeal support, harvesting, and buffering.
-- **Cryo Chamber** now splits cleanly into **Cryo Cooling Bay**, **Cryofluid Condenser**, and **Cryo Stabilizer Rack**.
+- **Cryo Chamber** now splits cleanly into **Cryo Freezer**, **Cryofluid Synthesizer**, and **Cryo Stabilizer**.
 - **Dense Active Generators** are limited to the active generator line only.
 - **Disenchanter Array** keeps `Extract` and `Absorb`, both with Curse Protection module support.
 - **Dual Siever** lanes should feel distinct, but shared energy/output remain mandatory.

@@ -28,9 +28,9 @@ Machine status legend:
 | 🔺 **Atmospheric Synchronizer** | 🟡 **Arcane Imprinter** | 🔺 **Portable Power Cell** | 🔺 **Dimensional Teleporter** |
 | ✔ **Catalyst Weaver** | ✔ **Arc-Press Forge** | 🔺 **The Ascendant's Tool** | ✔ **Network Center** |
 | 🔺 **Cold Fusion Reactor** | 🟠 **Centrifugal Siever** | — | ✔ **Overclock Boost Network** |
-| ✔ **Cryo Chamber** | 🟡 **Cryo Cooling Bay** | — | ✔ **Overclock Relay** |
-| 🔴 **Dismantler** | 🟡 **Cryofluid Condenser** | — | ✔ **Overclock Tower** |
-| ✔ **Duplicator** | 🟡 **Cryo Stabilizer Rack** | — | ✔ **Reinforced Cable** |
+| ✔ **Cryo Chamber** | 🟡 **Cryo Freezer** | — | ✔ **Overclock Relay** |
+| 🔴 **Dismantler** | 🟡 **Cryofluid Synthesizer** | — | ✔ **Overclock Tower** |
+| ✔ **Duplicator** | 🟡 **Cryo Stabilizer** | — | ✔ **Reinforced Cable** |
 | ✔ **Enchantment Station** | 🟡 **Dense Active Generators** | — | 🔺 **Rift Anchor** |
 | ✔ **Energizer** | 🟡 **Disenchanter Array** | — | — |
 | 🔺 **Essence Collector** | 🟡 **Dual Siever** | — | — |
@@ -66,11 +66,10 @@ Machine status legend:
     3. Cryofluid Generator
   - **Notes:** Core machine for future cold-chain industry.
 
-- 🔴 **Dismantler** *(Discontinued)*
+- 🔴 **Dismantler** *(Paused)*
   - **Status:** Removed from active implementation scope in Ascendant Technology.
   - **Reason:** Reverse-crafting recovery was cut from the current superior machines rollout.
   - **Note:** Existing runtime implementation and related assets were removed from the pack.
-
 
 - 🟢 **Duplicator (Replication Matrix)**
   - **Purpose:** Late-game replication with high energy and fluid costs.
@@ -135,7 +134,7 @@ All superior machines are listed below in **alphabetical order**.
   - **Operating Mode:** `Expedition` favors longer casts and higher loot tiers, while `Mass` shortens the cycle for bulk output; both use fishing nets and an internal water tank instead of a nearby source block.
   - **Environment Hook:** Water quality, dimension context, and abyssal bonus rules can affect the loot table.
 
-- 🟡 **Arcane Imprinter** *(from `Enchantment Station`, standalone enchanting branch)*
+- 🟡 **Arcane Enchanter** *(from `Enchantment Station`, standalone enchanting branch)*
   - **Purpose:** Dedicated enchanting machine that exists purely to remove the repair and disenchant clutter from the Enchantment Station.
   - **Operating Mode:** Uses a focused gear grid and module lane for enchanting only, keeping the same core module logic while running faster than the Enchantment Station.
   - **Identity:** Its value comes from specialization and speed, not from a giant new profile tree.
@@ -151,30 +150,30 @@ All superior machines are listed below in **alphabetical order**.
   - **Booster:** Optional steam injection accelerates spin-up and batch throughput.
   - **Rule:** The first release stays focused on batch logic and steam only, without extra preset layers.
 
-- 🟡 **Cryo Cooling Bay** *(from `Cryo Chamber`, standalone cooling branch)*
-  - **Purpose:** Dedicated freezing and cooling machine for recipes that should not compete with stabilization or Cryofluid generation.
-  - **Operating Mode:** Runs a cooling grid with independent recipe checks, using water or Cryofluid-backed chains for food reversal, freezing, and cold crafting.
-  - **Identity:** This is the pure cooling branch extracted out of the Cryo Chamber.
+- 🟡 **Cryo Freezer** *(from `Cryo Chamber`, standalone Freezing branch)*
+  - **Purpose:** Dedicated freezing and cold-crafting machine for recipes that should not compete with stabilization or Cryofluid generation.
+  - **Operating Mode:** Runs a freezing grid with independent recipe checks, using water or Cryofluid-backed chains for food reversal, freezing, and cold crafting.
+  - **Identity:** This is the pure freezing branch extracted out of the Cryo Chamber.
 
-- 🟡 **Cryofluid Condenser** *(from `Cryo Chamber`, standalone generator branch)*
+- 🟡 **Cryofluid Synthesizer** *(from `Cryo Chamber`, standalone Generator branch)*
   - **Purpose:** Dedicated industrial Cryofluid production for bases that outgrow the shared Cryo Chamber generator lane.
   - **Operating Mode:** `Stable` processes one cycle at a time with normal upgrade behavior, while `Impulse` processes in batches, ramps production up to `800%`, and ignores Speed/Hyper boosts while active.
   - **Separation Rule:** Exists to scale Cryofluid generation without forcing the player to scale the whole Cryo Chamber.
 
-- 🟡 **Cryo Stabilizer Rack** *(from `Cryo Chamber`, standalone stabilizer branch)*
+- 🟡 **Cryo Stabilizer** *(from `Cryo Chamber`, standalone Stabilization branch)*
   - **Purpose:** Dedicated stabilization machine for volatile materials that should be handled separately from cooling and Cryofluid generation.
   - **Operating Mode:** Focuses only on stabilization recipes, running a dedicated catalyst/fluid-backed stabilization lane instead of sharing space with other cryogenic roles.
-  - **Identity:** This is strictly the stabilizer branch; cooling now belongs to its own superior machine.
+  - **Identity:** This is strictly the stabilization branch; freezing now belongs to its own superior machine.
 
 - 🟡 **Dense Active Generators** *(from the `Absolute` generator line)*
   - **Purpose:** Tier 6 active generator family that turns absolute generators into machine-grade power systems with state, safety, and multi-input behavior.
   - **Operating Mode:** The dense line is now limited to the active generators only:
-    1. `Dense Furnator Array` — dedicated multi-input burn windows with batch ignition.
-    2. `Dense Magmator Core` — larger lava tank, but each generation step resolves only `4000 mB` at a time.
-    3. `Dense Thermo Matrix` — requires `Cryofluid` or `Saline Coolant` instead of water, stores heat and steam internally, and gains efficiency while staying below dangerous temperature.
+    1. `Dense Furnator` — dedicated multi-input burn windows with batch ignition.
+    2. `Dense Magmator` — larger lava tank, but each generation step resolves only `4000 mB` at a time.
+    3. `Dense Thermogen` — requires `Cryofluid` or `Saline Coolant` instead of water, stores heat and steam internally, and gains efficiency while staying below dangerous temperature.
   - **Scope Rule:** Passive generators are out of this superior branch for now.
 
-- 🟡 **Disenchanter Array** *(from `Enchantment Station`, standalone disenchant branch)*
+- 🟡 **Disenchanter** *(from `Enchantment Station`, standalone disenchant branch)*
   - **Purpose:** Specialist machine for enchant extraction and XP-fluid absorption at scale.
   - **Operating Mode:** `Extraction` converts enchantments into enchanted books, while `Absorption` liquefies them into XP fluid; both modes share a Curse Protection module slot.
   - **Identity:** It exists to separate disenchant logistics from the Enchantment Station instead of inflating the station further.
@@ -235,7 +234,7 @@ All superior machines are listed below in **alphabetical order**.
 - **Adaptive Assembler** and **Quantum Digitizer** are out of the current superior roster because neither one has a strong enough gameplay justification right now.
 - **Arcane Imprinter** stays simple: dedicated enchanting plus a speed advantage is enough.
 - **Centrifugal Siever v1** stays batch + steam only.
-- **Cryo Chamber** now branches into three separate superior specialists: **Cryo Cooling Bay**, **Cryofluid Condenser**, and **Cryo Stabilizer Rack**.
+- **Cryo Chamber** now branches into three separate superior specialists: **Cryo Freezer**, **Cryofluid Synthesizer**, and **Cryo Stabilizer**.
 - **Dense Active Generators** are limited to active generators only.
 - **Disenchanter Array** keeps only `Extraction` and `Absorption`, both with a Curse Protection module slot.
 - **Dual Siever** lanes should feel distinct, but shared energy/output remain mandatory.
@@ -315,6 +314,25 @@ All superior machines are listed below in **alphabetical order**.
   - **Dense casing component** for Tier 6 generator recipes.
   - **Heat-resistant internals** for Industrial Burner and Impact Crusher.
   - **Thermal line upgrades** reducing overheating penalties under sustained load.
+
+- 🟡 **Tungsten Progression Line**
+  - **Purpose:** A late-game material that enhances durability and efficiency for machines, sendo uma melhor opção para lidar com máquinas alternativas de alta capacidade, também chamadas de "Superior Machines".
+    - **Identity:** Tungsten is a dense, heat-resistant material that excels in industrial applications, making it ideal for reinforcing machine components and improving performance under heavy workloads.
+    - **Used in:**
+      - Abyssal Fisher
+      - Arc-Press Forge
+      - Centrifugal Siever
+      - Dual Siever
+      - Impact Crusher
+      - Induction Matrix Anvil
+      - Industrial Burner
+      - Magmatic Reactor Chamber
+      - Pattern Placer
+      - Pulverizer
+      - Seismic Breaker
+      - Verdant Cultivator
+  - **Acquisition:** Tungsten can be obtained through a new ore that generates in the Nether and it's not obtainable through sieving, making it a unique resource that encourages exploration and mining in the Nether dimension.
+  - **Processing:** Tungsten ore can be processed in the Pulverizer to yield Tungsten dust, which can be smelted in Blast Furnace or Incinerator to produce Tungsten ingots. These ingots can then be used in crafting recipes for machines components, machines and other special items dependant on tungsten's properties.
 
 ---
 

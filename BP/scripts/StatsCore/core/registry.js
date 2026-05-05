@@ -107,6 +107,16 @@ function normalizeDefinition(itemId, definition) {
     return merged;
 }
 
+/**
+ * Registers or replaces a single StatsCore item definition.
+ *
+ * Keep all external registration flows funneled through this helper so every definition
+ * is normalized against the same base contract.
+ *
+ * @param {string} itemId
+ * @param {object} definition
+ * @returns {boolean}
+ */
 export function registerStatsCoreDefinition(itemId, definition) {
     const normalized = normalizeDefinition(itemId, definition);
     if (!normalized) return false;
@@ -142,12 +152,29 @@ export function registerStatsCoreDefinitions(payload) {
     return count;
 }
 
+/**
+ * Resolves the active StatsCore definition for a string id or item stack.
+ *
+ * @param {string | import("@minecraft/server").ItemStack} itemOrId
+ * @returns {object | undefined}
+ */
 export function getStatsCoreDefinition(itemOrId) {
     const itemId = normalizeId(typeof itemOrId === "string" ? itemOrId : itemOrId?.typeId);
     if (!itemId) return undefined;
 
     const definition = itemDefinitions.get(itemId);
     return definition?.enabled ? definition : undefined;
+}
+
+/**
+ * Returns how many active definitions are currently registered in StatsCore.
+ *
+ * Use this instead of cloning the whole registry when only a simple count is needed.
+ *
+ * @returns {number}
+ */
+export function getStatsCoreRegistrySize() {
+    return itemDefinitions.size;
 }
 
 export function getStatsCoreRegistrySnapshot() {

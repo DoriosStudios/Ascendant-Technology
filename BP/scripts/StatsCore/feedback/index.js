@@ -1,5 +1,6 @@
 import { STATSCORE } from "../constants.js";
 import { getCurrentTick, titleCaseIdentifier } from "../utils.js";
+import { setActionBarSafe } from "../shared/messages.js";
 
 const feedbackCooldowns = new Map();
 
@@ -21,9 +22,7 @@ function canShow(player, key, cooldownTicks = STATSCORE.runtime.feedbackCooldown
 
 function showActionBar(player, message, key, cooldownTicks) {
     if (!message || !canShow(player, key, cooldownTicks)) return;
-    try {
-        player?.onScreenDisplay?.setActionBar?.(message);
-    } catch { }
+    setActionBarSafe(player, message);
 }
 
 function playSound(entity, soundId, options) {

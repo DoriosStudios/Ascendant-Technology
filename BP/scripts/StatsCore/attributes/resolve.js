@@ -68,6 +68,17 @@ function affinityModifiers(affinity) {
     }
 }
 
+/**
+ * Resolves the fully effective StatsCore attributes for an item definition + saved state.
+ *
+ * Runtime modules should use this function instead of reading raw definition values directly,
+ * because it already merges level scaling, affinity bonuses, refinement bonuses, and
+ * unique-ability gating in one place.
+ *
+ * @param {object} definition
+ * @param {object} state
+ * @returns {object}
+ */
 export function resolveStatsAttributes(definition, state) {
     const level = Math.max(1, Math.floor(Number(state?.level) || 1));
     const attributes = definition?.attributes ?? {};

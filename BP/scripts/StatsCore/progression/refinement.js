@@ -26,6 +26,14 @@ export function getLevelFromXp(totalXp, definition) {
     return level;
 }
 
+/**
+ * Reads the configured XP gain for a specific StatsCore progression reason.
+ *
+ * @param {object} definition
+ * @param {"combat" | "kill" | "ore" | "armor" | "block" | string} reason
+ * @param {number} [fallback=1]
+ * @returns {number}
+ */
 export function getProgressAmount(definition, reason, fallback = 1) {
     const progression = definition?.progression ?? {};
     switch (reason) {
@@ -58,6 +66,18 @@ function setBuffer(uid, value) {
     }
 }
 
+/**
+ * Grants StatsCore XP to an item and persists it when the configured buffer rules require.
+ *
+ * This is the shared progression write path used by combat, mining, and support modules.
+ *
+ * @param {import("@minecraft/server").ItemStack} stack
+ * @param {object} definition
+ * @param {number} amount
+ * @param {string} [reason="use"]
+ * @param {{ forcePersist?: boolean, forceLore?: boolean }} [options={}]
+ * @returns {{ changed: boolean, levelUp: boolean, state: object | null, previousLevel?: number, level?: number, reason?: string, buffered?: number }}
+ */
 export function grantStatsProgress(stack, definition, amount, reason = "use", options = {}) {
     if (!stack || !definition || amount <= 0) {
         return { changed: false, levelUp: false, state: stack ? readStatsState(stack, definition) : null };

@@ -1,4 +1,5 @@
 import { titleCaseIdentifier } from "../utils.js";
+import { collectStatsEffectPool } from "../shared/effectSelectors.js";
 
 function getAbilityContext(options) {
     return options?.abilityData ?? options?.state?.abilityData ?? options ?? {};
@@ -43,12 +44,8 @@ export function resolveStatsAbilityName(effect, options = undefined) {
     return "";
 }
 
-export function getStatsAbilityEffects(attributes) {
-    return [
-        ...(Array.isArray(attributes?.effects) ? attributes.effects : []),
-        ...(Array.isArray(attributes?.mining?.effects) ? attributes.mining.effects : []),
-        ...(Array.isArray(attributes?.support?.effects) ? attributes.support.effects : []),
-    ].filter(effect => effect && typeof effect === "object");
+function getStatsAbilityEffects(attributes) {
+    return collectStatsEffectPool(attributes);
 }
 
 export function collectStatsAbilityNames(attributes, options = undefined) {

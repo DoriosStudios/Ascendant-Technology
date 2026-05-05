@@ -1,12 +1,13 @@
 import { ItemStack, system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
-import { getEquipment, getLiveEquipmentItem, persistEquipmentItem } from "../core/equipment.js";
-import { getStatsCoreDefinition } from "../core/registry.js";
-import { readStatsState } from "../core/state.js";
-import { resolveStatsAttributes } from "../attributes/resolve.js";
+import { getEquipment, persistEquipmentItem } from "../core/equipment.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
 import { showLevelUp, showMiningFeedback } from "../feedback/index.js";
-import { rollChance } from "../utils.js";
+import { normalizeId as normalizeBlockId, rollChance } from "../utils.js";
+import { getEquipmentStatsContext } from "../shared/context.js";
+import { repairItemDurability } from "../shared/durability.js";
+import { hasSilkTouch } from "../shared/enchantments.js";
+import { findEffectByKind } from "../shared/effectSelectors.js";
 
 const UNBREAKABLE_BLOCKS = new Set([
     "minecraft:air",
@@ -120,17 +121,6 @@ const CROP_GROWTH_CONFIG = Object.freeze({
     "minecraft:nether_wart": Object.freeze({ ageState: "age", maxAge: 3 }),
 });
 
-function getBrokenBlockId(event) {
-    return event?.brokenBlockPermutation?.type?.id
-        ?? event?.brokenBlockPermutation?.typeId
-        ?? event?.block?.typeId
-        ?? "";
-}
-
-function getBrokenBlockPermutation(event) {
-    return event?.brokenBlockPermutation ?? event?.block?.permutation ?? null;
-}
-
 function cloneLocation(location) {
     if (!location) return null;
     return {
@@ -144,10 +134,6 @@ function sameLocation(left, right) {
     return Number(left?.x) === Number(right?.x)
         && Number(left?.y) === Number(right?.y)
         && Number(left?.z) === Number(right?.z);
-}
-
-function normalizeBlockId(value) {
-    return typeof value === "string" ? value.trim().toLowerCase() : "";
 }
 
 function includesAnyToken(value, tokens) {
@@ -225,11 +211,6 @@ function shouldSpawnPrimalFiber(blockId) {
     return isLeafBlockId(normalized) || includesAnyToken(normalized, PRIMAL_FIBER_TOKENS);
 }
 
-function getMiningEffect(attributes, kind) {
-    const effects = Array.isArray(attributes?.mining?.effects) ? attributes.mining.effects : [];
-    return effects.find(effect => normalizeBlockId(effect?.kind) === normalizeBlockId(kind)) ?? null;
-}
-
 function formatCommandLocation(location) {
     return `${Math.floor(Number(location?.x) || 0)} ${Math.floor(Number(location?.y) || 0)} ${Math.floor(Number(location?.z) || 0)}`;
 }
@@ -241,31 +222,6 @@ function canUseDefinitionForMining(definition) {
         || getProgressAmount(definition, "ore", 0) > 0
         || (definition?.mining?.oreBonusChance ?? 0) > 0
         || (Array.isArray(definition?.mining?.effects) && definition.mining.effects.length > 0);
-}
-
-function hasSilkTouch(stack) {
-    try {
-        const enchantable = stack?.getComponent?.("minecraft:enchantable")
-            ?? stack?.getComponent?.("minecraft:enchantments")
-            ?? stack?.getComponent?.("enchantments");
-
-        const enchantments = enchantable?.getEnchantments?.() ?? enchantable?.enchantments;
-        if (!enchantments) return false;
-
-        const scan = entry => {
-            const id = String(entry?.type?.id ?? entry?.id ?? entry?.typeId ?? "").toLowerCase();
-            return id.includes("silk_touch");
-        };
-
-        if (Array.isArray(enchantments)) return enchantments.some(scan);
-        if (typeof enchantments[Symbol.iterator] === "function") {
-            for (const entry of enchantments) {
-                if (scan(entry)) return true;
-            }
-        }
-    } catch { }
-
-    return false;
 }
 
 function getFortune3BonusCount(blockId) {
@@ -291,21 +247,6 @@ function getFortune3BonusCount(blockId) {
     }
 
     return 0;
-}
-
-function repairOneDurability(stack) {
-    try {
-        const durability = stack?.getComponent?.("minecraft:durability") ?? stack?.getComponent?.("durability");
-        if (!durability) return false;
-
-        const currentDamage = Math.max(0, Math.floor(Number(durability.damage ?? 0) || 0));
-        if (currentDamage <= 0) return false;
-
-        durability.damage = currentDamage - 1;
-        return true;
-    } catch {
-        return false;
-    }
 }
 
 function spawnBonusDrop(dimension, location, itemId) {
@@ -454,7 +395,7 @@ function collectDrillBlocks(dimension, center, size) {
 
 function executeOperatorBreak(snapshot, attributes, state) {
     const mode = normalizeBlockId(state?.abilityData?.operatorMode ?? "crushy");
-    const operatorEffect = getMiningEffect(attributes, "operator");
+    const operatorEffect = findEffectByKind(attributes?.mining?.effects, "operator");
     const size = Math.max(3, Number(operatorEffect?.size ?? (String(snapshot?.expected ?? "").includes("heavy_drill") ? 5 : 3)) || 3);
     const blocks = collectDrillBlocks(snapshot.dimension, snapshot.location, size);
     if (!blocks.length) return;
@@ -644,15 +585,63 @@ function isBerserkLogBlockId(blockId) {
 function executeBerserkLogBreak(snapshot, effect) {
     const plankId = resolveBerserkPlankId(snapshot.blockId);
     if (!plankId) return;
-    if (!clearBlockWithoutDrops(snapshot.dimension, snapshot.location)) return;
+    if (!snapshot.dimension || !snapshot.location) return;
+
+    const dropCenter = {
+        x: Number(snapshot.location.x ?? 0) + 0.5,
+        y: Number(snapshot.location.y ?? 0) + 0.5,
+        z: Number(snapshot.location.z ?? 0) + 0.5,
+    };
+    const knownNearbyItemIds = new Set();
+
+    // Snapshot nearby item entities before the break so we only touch the fresh log drop.
+    try {
+        for (const entity of snapshot.dimension.getEntities({
+            type: "item",
+            location: dropCenter,
+            maxDistance: 1.75,
+        })) {
+            const entityId = entity?.id;
+            if (typeof entityId === "string" && entityId.length > 0) {
+                knownNearbyItemIds.add(entityId);
+            }
+        }
+    } catch { }
+
+    // Break the log normally first so the world resolves the block as a real mined break.
+    if (!destroyBlockWithDrops(snapshot.dimension, snapshot.location)) return;
 
     const extraMin = Math.max(1, Math.floor(Number(effect?.extraPlanksMin ?? 1) || 1));
     const extraMax = Math.max(extraMin, Math.floor(Number(effect?.extraPlanksMax ?? 4) || 4));
     const totalAmount = 4 + rollInclusiveAmount(extraMin, extraMax);
 
-    spawnBonusDropCount(snapshot.dimension, snapshot.location, plankId, totalAmount);
-    showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false });
-    system.run(() => processMiningBreak(snapshot));
+    system.run(() => {
+        // Remove only the newly spawned log item so we can replace it with planks.
+        try {
+            for (const entity of snapshot.dimension.getEntities({
+                type: "item",
+                location: dropCenter,
+                maxDistance: 1.75,
+            })) {
+                const entityId = entity?.id;
+                if (typeof entityId === "string" && knownNearbyItemIds.has(entityId)) {
+                    continue;
+                }
+
+                const stack = entity?.getComponent?.("minecraft:item")?.itemStack;
+                if (normalizeBlockId(stack?.typeId) !== normalizeBlockId(snapshot.blockId)) {
+                    continue;
+                }
+
+                entity.remove();
+            }
+        } catch { }
+
+        // Replace the removed log drop with 4 planks plus the Berserk extra plank roll.
+        spawnBonusDropCount(snapshot.dimension, snapshot.location, plankId, totalAmount);
+        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false });
+        processMiningBreak(snapshot);
+    });
 }
 
 function applyMiningEffects({ attributes, isOre, dimension, location }) {
@@ -684,18 +673,15 @@ function processMiningBreak(snapshot) {
     const { player, blockId, location, dimension, expected } = snapshot;
     if (!player || !blockId) return;
 
-    const access = getLiveEquipmentItem(player, expected, STATSCORE.slots.mainhand);
-    const stack = access.item;
-    if (!stack) return;
+    const context = getEquipmentStatsContext(player, STATSCORE.slots.mainhand, expected);
+    if (!context) return;
 
-    const definition = getStatsCoreDefinition(stack);
+    const { stack, definition, attributes } = context;
     if (!canUseDefinitionForMining(definition)) return;
 
     const isOre = Boolean(ORE_BONUS_DROPS[blockId]) || blockId.endsWith("_ore");
     const reason = isOre ? "ore" : "block";
     const progressAmount = getProgressAmount(definition, reason, isOre ? 4 : 1);
-    const state = readStatsState(stack, definition);
-    const attributes = resolveStatsAttributes(definition, state);
 
     let changed = false;
     let bonusDrop = false;
@@ -709,7 +695,7 @@ function processMiningBreak(snapshot) {
     }
 
     if (rollChance(attributes.mining.durabilitySaveChance, 0)) {
-        changed = repairOneDurability(stack) || changed;
+        changed = repairItemDurability(stack) || changed;
     }
 
     bonusXp = Boolean(applyMiningEffects({ attributes, isOre, dimension, location }).bonusXp);
@@ -731,7 +717,10 @@ function snapshotBreakEvent(event) {
     const player = event?.player;
     if (!player) return null;
 
-    const blockId = getBrokenBlockId(event);
+    const blockId = event?.brokenBlockPermutation?.type?.id
+        ?? event?.brokenBlockPermutation?.typeId
+        ?? event?.block?.typeId
+        ?? "";
     const location = cloneLocation(event?.block?.location);
     const dimension = event?.dimension ?? player.dimension;
     if (!blockId || !location || !dimension) return null;
@@ -741,7 +730,7 @@ function snapshotBreakEvent(event) {
     return {
         player,
         blockId,
-        blockPermutation: getBrokenBlockPermutation(event),
+        blockPermutation: event?.brokenBlockPermutation ?? event?.block?.permutation ?? null,
         location,
         dimension,
         expected
@@ -755,21 +744,17 @@ function handleBeforeBreak(event) {
         const snapshot = snapshotBreakEvent(event);
         if (!snapshot || isCreativePlayer(snapshot.player)) return;
 
-        const { item: stack } = getLiveEquipmentItem(snapshot.player, snapshot.expected, STATSCORE.slots.mainhand);
-        if (!stack) return;
+        const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);
+        if (!context || !canUseDefinitionForMining(context.definition)) return;
 
-        const definition = getStatsCoreDefinition(stack);
-        if (!definition || !canUseDefinitionForMining(definition)) return;
-
-        const state = readStatsState(stack, definition);
-        const attributes = resolveStatsAttributes(definition, state);
-        const operatorEffect = getMiningEffect(attributes, "operator");
-        const gardenerEffect = getMiningEffect(attributes, "gardener");
-        const primalEffect = getMiningEffect(attributes, "primal");
-        const forgerEffect = getMiningEffect(attributes, "forger");
-        const reaperEffect = getMiningEffect(attributes, "reaper");
-        const berserkEffect = getMiningEffect(attributes, "berserk_logging")
-            ?? getMiningEffect(attributes, "berserk");
+        const { state, attributes } = context;
+        const operatorEffect = findEffectByKind(attributes?.mining?.effects, "operator");
+        const gardenerEffect = findEffectByKind(attributes?.mining?.effects, "gardener");
+        const primalEffect = findEffectByKind(attributes?.mining?.effects, "primal");
+        const forgerEffect = findEffectByKind(attributes?.mining?.effects, "forger");
+        const reaperEffect = findEffectByKind(attributes?.mining?.effects, "reaper");
+        const berserkEffect = findEffectByKind(attributes?.mining?.effects, "berserk_logging")
+            ?? findEffectByKind(attributes?.mining?.effects, "berserk");
 
         if (operatorEffect) {
             const mode = normalizeBlockId(state?.abilityData?.operatorMode ?? "crushy");
@@ -816,36 +801,32 @@ function handleAfterBreak(event) {
         processMiningBreak(snapshot);
 
         try {
-            const { item: stack } = getLiveEquipmentItem(snapshot.player, snapshot.expected, STATSCORE.slots.mainhand);
-            if (!stack) return;
+            const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);
+            if (!context) return;
 
-            const definition = getStatsCoreDefinition(stack);
-            if (!definition) return;
+            const { attributes } = context;
 
-            const state = readStatsState(stack, definition);
-            const attributes = resolveStatsAttributes(definition, state);
-
-            if (getMiningEffect(attributes, "gardener") && isGardenerTargetBlockId(snapshot.blockId)) {
+            if (findEffectByKind(attributes?.mining?.effects, "gardener") && isGardenerTargetBlockId(snapshot.blockId)) {
                 executeGardenerBreak(snapshot);
             }
 
-            if (getMiningEffect(attributes, "primal") && isPrimalTargetBlockId(snapshot.blockId)) {
+            if (findEffectByKind(attributes?.mining?.effects, "primal") && isPrimalTargetBlockId(snapshot.blockId)) {
                 executePrimalBreak(snapshot);
             }
 
-            if (getMiningEffect(attributes, "crushing")) {
+            if (findEffectByKind(attributes?.mining?.effects, "crushing")) {
                 executeCrushingDust(snapshot);
             }
 
-            if (getMiningEffect(attributes, "forger")) {
+            if (findEffectByKind(attributes?.mining?.effects, "forger")) {
                 executeForgerOreBonus(snapshot);
             }
 
-            if (getMiningEffect(attributes, "reaper")) {
+            if (findEffectByKind(attributes?.mining?.effects, "reaper")) {
                 replantBrokenCrop(snapshot);
             }
 
-            if (getMiningEffect(attributes, "worm")) {
+            if (findEffectByKind(attributes?.mining?.effects, "worm")) {
                 executeWormBreak(snapshot);
             }
         } catch (error) {

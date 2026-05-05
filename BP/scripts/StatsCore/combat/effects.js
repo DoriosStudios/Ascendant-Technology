@@ -1,6 +1,7 @@
-import { EffectTypes, system } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { getCurrentTick, normalizeChance, rollChance } from "../utils.js";
+import { applyEffectById } from "../shared/effects.js";
 
 const marks = new Map();
 const procDamageTargets = new Map();
@@ -11,12 +12,6 @@ let bleedProcessorActive = false;
 
 function entityKey(entity) {
     return String(entity?.id ?? entity?.typeId ?? "unknown");
-}
-
-function resolveEffectType(id) {
-    if (!id) return undefined;
-    const normalized = String(id).includes(":") ? String(id) : `minecraft:${id}`;
-    return EffectTypes?.get?.(normalized) ?? EffectTypes?.get?.(id) ?? normalized;
 }
 
 function cleanupTimedEntries(map) {
@@ -361,27 +356,7 @@ function applyStatusEffect(target, effect) {
 
     const duration = Math.max(1, Math.floor(Number(effect.duration ?? 40) || 40));
     const amplifier = Math.max(0, Math.floor(Number(effect.amplifier ?? 0) || 0));
-    const effectType = resolveEffectType(effect.id);
-    if (!effectType) return false;
-
-    try {
-        target.addEffect?.(effectType, duration, {
-            amplifier,
-            showParticles: effect.showParticles !== false
-        });
-        return true;
-    } catch {
-        return false;
-    }
-}
-
-function applyStatusById(target, id, duration, amplifier = 0, showParticles = false) {
-    return applyStatusEffect(target, {
-        id,
-        duration,
-        amplifier,
-        showParticles,
-    });
+    return applyEffectById(target, effect.id, duration, amplifier, effect.showParticles !== false);
 }
 
 function applyFire(target, effect) {
@@ -401,7 +376,7 @@ function queueAftershockSlowness(target, effect) {
 
     system.runTimeout(() => {
         if (!hasHealthComponent(target)) return;
-        applyStatusById(target, "slowness", slownessDuration, slownessAmplifier, false);
+        applyEffectById(target, "slowness", slownessDuration, slownessAmplifier, false);
     }, levitationDuration);
 }
 
@@ -417,7 +392,7 @@ function applyAftershock(attacker, target, effect, finalDamage) {
     let applied = false;
     let hits = 0;
 
-    if (applyStatusById(target, "levitation", levitationDuration, levitationAmplifier, false)) {
+    if (applyEffectById(target, "levitation", levitationDuration, levitationAmplifier, false)) {
         queueAftershockSlowness(target, effect);
         applied = true;
     }
@@ -430,7 +405,7 @@ function applyAftershock(attacker, target, effect, finalDamage) {
         if (!hasHealthComponent(entity)) continue;
 
         const hit = tryApplyDamage(entity, shockDamage, attacker);
-        const lifted = applyStatusById(entity, "levitation", levitationDuration, levitationAmplifier, false);
+        const lifted = applyEffectById(entity, "levitation", levitationDuration, levitationAmplifier, false);
         if (lifted) {
             queueAftershockSlowness(entity, effect);
         }

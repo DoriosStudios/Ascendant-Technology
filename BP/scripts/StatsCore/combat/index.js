@@ -1,32 +1,17 @@
 import { system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
-import { getEquipment, getLiveEquipmentItem, persistEquipmentItem } from "../core/equipment.js";
-import { getStatsCoreDefinition } from "../core/registry.js";
-import { readStatsState } from "../core/state.js";
-import { resolveStatsAttributes } from "../attributes/resolve.js";
+import { getLiveEquipmentItem, persistEquipmentItem } from "../core/equipment.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
 import { showCombatFeedback, showLevelUp } from "../feedback/index.js";
 import { applyCombatEffects, getMarkedDamageBonus, isProcDamageTarget } from "./effects.js";
 import { rollStatsCrit, rememberCombatContact } from "./crit.js";
 import { applyArmorPenetration } from "./penetration.js";
 import { applyLifeSteal } from "./lifesteal.js";
+import { getEquipmentStatsContext } from "../shared/context.js";
+import { getEntityHurtAttacker, getEntityHurtTarget } from "../shared/damage.js";
+import { findEffectByKind } from "../shared/effectSelectors.js";
 
 const berserkStates = new Map();
-
-function getAttackerFromHurtEvent(event) {
-    const projectile = event?.damageSource?.damagingProjectile ?? event?.damagingProjectile ?? null;
-    return event?.damageSource?.damagingEntity
-        ?? projectile?.owner
-        ?? projectile?.source
-        ?? projectile?.damagingEntity
-        ?? event?.damagingEntity
-        ?? event?.source
-        ?? event?.sourceEntity;
-}
-
-function getTargetFromHurtEvent(event) {
-    return event?.hurtEntity ?? event?.entity;
-}
 
 function canUseDefinitionForCombat(definition) {
     if (!definition || definition.enabled === false) return false;
@@ -34,11 +19,6 @@ function canUseDefinitionForCombat(definition) {
     return getProgressAmount(definition, "combat", 0) > 0
         || (definition?.attributes?.crit?.chance ?? 0) > 0
         || (definition?.attributes?.penetration?.percent ?? 0) > 0;
-}
-
-function getCombatEffect(attributes, kind) {
-    const effects = Array.isArray(attributes?.effects) ? attributes.effects : [];
-    return effects.find(effect => String(effect?.kind ?? "").toLowerCase() === String(kind ?? "").toLowerCase()) ?? null;
 }
 
 function getBerserkStateKey(entity) {
@@ -109,24 +89,22 @@ function handleCombatHurt(event) {
     try {
         if (event?.cancel === true) return;
 
-        const target = getTargetFromHurtEvent(event);
+        const target = getEntityHurtTarget(event);
         if (!target || isProcDamageTarget(target)) return;
 
-        const attacker = getAttackerFromHurtEvent(event);
+        const attacker = getEntityHurtAttacker(event);
         if (!attacker || target.id === attacker.id) return;
 
-        const { item: weapon } = getEquipment(attacker, STATSCORE.slots.mainhand);
-        if (!weapon) return;
+        const context = getEquipmentStatsContext(attacker, STATSCORE.slots.mainhand);
+        if (!context) return;
 
-        const definition = getStatsCoreDefinition(weapon);
+        const { stack: weapon, definition, attributes } = context;
         if (!canUseDefinitionForCombat(definition)) return;
 
         const baseDamage = Number(event.damage ?? 0);
         if (!Number.isFinite(baseDamage) || baseDamage <= 0) return;
 
-        const state = readStatsState(weapon, definition);
-        const attributes = resolveStatsAttributes(definition, state);
-        const berserkEffect = getCombatEffect(attributes, "berserk");
+        const berserkEffect = findEffectByKind(attributes?.effects, "berserk");
         const markedDamageBonus = getMarkedDamageBonus(target, attributes);
         const crit = rollStatsCrit({ attacker, target, attributes });
         const penetration = applyArmorPenetration({ damage: baseDamage, target, event, attributes });
@@ -170,15 +148,13 @@ function handleEntityDie(event) {
         const attacker = event?.damageSource?.damagingEntity ?? event?.damagingEntity;
         if (!attacker) return;
 
-        const { item: weapon } = getEquipment(attacker, STATSCORE.slots.mainhand);
-        if (!weapon) return;
+        const context = getEquipmentStatsContext(attacker, STATSCORE.slots.mainhand);
+        if (!context) return;
 
-        const definition = getStatsCoreDefinition(weapon);
+        const { stack: weapon, definition, attributes } = context;
         if (!canUseDefinitionForCombat(definition)) return;
 
-        const state = readStatsState(weapon, definition);
-        const attributes = resolveStatsAttributes(definition, state);
-        const berserkEffect = getCombatEffect(attributes, "berserk");
+        const berserkEffect = findEffectByKind(attributes?.effects, "berserk");
         const killXp = getProgressAmount(definition, "kill", 0);
         if (killXp <= 0 && !berserkEffect) return;
 

@@ -82,9 +82,9 @@ Heavy processing and block automation still anchor this draft, but this pass als
 ### Equipment
 - **StatsCore** now acts as the universal progression and identity system for supported gear.
   - Supported equipment can gain readable stat lines, level through use, store refinement results, and expose class-style abilities instead of staying as flat stat sticks.
-- StatsCore special abilities now need to be awakened in the Refining Table.
-  - Equipment with a special ability now uses a dedicated **Runic Core** slot during refinement.
-  - The first successful awakening consumes the Runic Core and permanently unlocks that item's class ability.
+- StatsCore special abilities can now be awakened in the Refining Table without blocking normal refinement.
+  - Equipment with a locked special ability can use a dedicated **Runic Core** slot during refinement, but regular stat rolls still work without it.
+  - The first successful refinement performed with a Runic Core consumes it and permanently unlocks that item's class ability.
 - More vanilla and special gear families now work with StatsCore.
   - Added support for **Spears**, **Mace**, **Trident**, **Bow**, **Crossbow**, and **Flint and Steel**.
 - StatsCore equipment now uses clearer class-style abilities instead of generic effect labels.
@@ -102,7 +102,7 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - StatsCore special abilities received a broader combat and farming rework.
   - **Luck** now always spawns XP orbs from ore breaks, while **Crushing** now always adds matching dust for coal, copper, iron, gold, and titanium ores.
   - **Hoes** now use **Reaper**, **Shovels** now use **Worm**, and **Axes** now use **Berserk**.
-  - **Berserk** axes now always keep their sneaking log-to-planks utility, while the Runic Core awakening still governs the combat side of the ability.
+  - **Berserk** axes now always keep their sneaking log-to-planks utility, converting logs into **4 matching planks plus extra planks**, while the Runic Core awakening still governs the combat side of the ability.
   - **Aftershock**, **Harpoon**, **Deadeye**, **Ballista**, **Bleeding**, **Featherstep**, and shield passives were updated to behave more distinctly in play.
   - **Turtle Helmet** now uses **Tough** instead of sharing the regular helmet identity.
 - Added **Runic Core**.
@@ -127,7 +127,7 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Item lore now shows up to three core stats and a green ability line when the item has a class or tool ability.
   - Extra stats such as Evasion, Damage Immunity, Vulnerability, and Preserving remain available inside the machine details panel instead of crowding the item itself.
 - Refining Table now previews locked special abilities more clearly.
-  - The machine can now show when an item's class ability is still locked, which ability will be awakened, and when a Runic Core is still missing.
+  - The machine can now show when an item's class ability is still locked, which ability will be awakened, and when a Runic Core is optionally armed for that roll.
 - Refining Table displays now split machine and equipment information more cleanly.
   - The primary display now stays focused on warnings, resources, input state, and refinement costs.
   - The secondary display now focuses only on the inserted equipment, including its stats, awakened ability state, and a short ability description.
@@ -148,7 +148,7 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Supported items now persist level, XP, refinement data, and special-ability awakening state directly on the item.
 - Added the native `Refining Table` machine runtime and UI flow for StatsCore refinement.
   - Refinement rolls are now queued and only applied when the confirm button is pressed.
-  - The machine tracks XP through its internal tank, consumes chips and ingots on successful rolls, and uses `utilitycraft:runic_core` as the awakening catalyst.
+  - The machine tracks XP through its internal tank, consumes chips and ingots on successful rolls, and treats `utilitycraft:runic_core` as an optional awakening catalyst instead of a hard gate for standard refinement.
 - Expanded the StatsCore ability runtime to cover universal gear families.
   - Added native handling for combat identities such as **Bleeding**, **Sweeping**, **Skewer**, **Aftershock**, **Harpoon**, **Deadeye**, and **Ballista**.
   - Added mining and utility handling for **Luck**, **Crushing**, **Operator**, **Gardener**, **Primal**, **Forger**, **Ingniter**, **Worm**, **Reaper**, and the always-active logging side of **Berserk**.
@@ -156,6 +156,9 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - Updated several combat-side procs to behave closer to normal Bedrock combat resolution.
   - **Sweeping** now resolves its area damage through command-based damage flow instead of relying only on direct script damage.
   - Locked/awakened effect resolution is now filtered per effect, allowing utility-side behaviors like Berserk log conversion to stay active without unlocking the combat side early.
+- Reorganized the internal StatsCore runtime surface around explicit bootstrap, API, and shared helper layers.
+  - Added shared helpers for effect application, enchantment checks, durability repair, item-context resolution, damage parsing, and action-bar writes.
+  - Reduced redundant one-off helper functions and documented the intended shared entry points inside `BP/scripts/StatsCore/README.md`.
 
 ### Runtime Registration
 - Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Impact Crusher, Verdant Cultivator, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.

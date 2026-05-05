@@ -8,6 +8,13 @@ export function getEquippable(entity) {
     }
 }
 
+/**
+ * Reads an equipped item from a Bedrock equippable slot.
+ *
+ * @param {import("@minecraft/server").Entity} entity
+ * @param {string} [slotName=STATSCORE.slots.mainhand]
+ * @returns {{ item: import("@minecraft/server").ItemStack | undefined, equippable: object | undefined, slotName: string }}
+ */
 export function getEquipment(entity, slotName = STATSCORE.slots.mainhand) {
     const equippable = getEquippable(entity);
     if (!equippable) return { item: undefined, equippable: undefined, slotName };
@@ -56,11 +63,32 @@ export function setSelectedInventoryItem(player, item) {
     }
 }
 
+/**
+ * Persists a mutated equipment item back to the entity.
+ *
+ * For the mainhand slot this helper also falls back to the selected inventory slot so
+ * Bedrock keeps the runtime stack synchronized with what the player is actually holding.
+ *
+ * @param {import("@minecraft/server").Entity} entity
+ * @param {string} slotName
+ * @param {import("@minecraft/server").ItemStack} item
+ * @returns {boolean}
+ */
 export function persistEquipmentItem(entity, slotName, item) {
     return setEquipment(entity, slotName, item)
         || (slotName === STATSCORE.slots.mainhand && setSelectedInventoryItem(entity, item));
 }
 
+/**
+ * Reads an equipped item while also validating the expected type id when needed.
+ *
+ * Use this when delayed handlers might run after the player swapped items.
+ *
+ * @param {import("@minecraft/server").Entity} entity
+ * @param {string} expectedTypeId
+ * @param {string} [slotName=STATSCORE.slots.mainhand]
+ * @returns {{ item: import("@minecraft/server").ItemStack | undefined, equippable: object | undefined, slotName: string }}
+ */
 export function getLiveEquipmentItem(entity, expectedTypeId, slotName = STATSCORE.slots.mainhand) {
     const access = getEquipment(entity, slotName);
     if (!access.item) return access;

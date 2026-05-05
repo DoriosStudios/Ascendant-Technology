@@ -8,11 +8,11 @@ import {
 import {
     getStatsCoreDefinition,
     ITEM_TYPES,
+    collectStatsAbilityNames,
     readStatsState,
+    resolveStatsAttributes,
     writeStatsState,
-} from '../../StatsCore/main.js'
-import { collectStatsAbilityNames } from '../../StatsCore/core/abilities.js'
-import { resolveStatsAttributes } from '../../StatsCore/attributes/resolve.js'
+} from '../../StatsCore/API.js'
 import { safeJsonParse, titleCaseIdentifier } from '../../StatsCore/utils.js'
 import {
     formatEnergyCost,
@@ -397,6 +397,23 @@ function readPendingRefinement(machine) {
     return parsed && typeof parsed === 'object' ? parsed : null
 }
 
+function readPendingRefinementOperation(machine) {
+    const pending = readPendingRefinement(machine)
+    if (!pending) return null
+
+    if (pending.refinement && typeof pending.refinement === 'object') {
+        return {
+            refinement: pending.refinement,
+            awakenAbility: pending.awakenAbility === true,
+        }
+    }
+
+    return {
+        refinement: pending,
+        awakenAbility: false,
+    }
+}
+
 function clearPendingRefinement(machine) {
     setPendingRefinement(machine, undefined)
 }
@@ -458,7 +475,10 @@ function isOperationActive(machine) {
 
 function queueRefining(machine, preview = buildRefiningPreview(machine)) {
     if (preview?.ready) {
-        setPendingRefinement(machine, buildRolledRefinement(preview))
+        setPendingRefinement(machine, {
+            refinement: buildRolledRefinement(preview),
+            awakenAbility: preview.awakeningRequested === true,
+        })
     }
     machine?.entity?.setDynamicProperty?.(REFINING_TABLE.props.queuedTick, Number(system.currentTick ?? 0) || 1)
 }
@@ -510,14 +530,16 @@ function buildRefiningPreview(machine, tracked = syncTrackedEquipment(machine)) 
     const ingotStack = machine?.inv?.getItem?.(REFINING_TABLE.slots.ingot) ?? null
     const ingotConfig = ingotStack ? getIngotConfig(ingotStack.typeId) : null
     const totemStack = machine?.inv?.getItem?.(REFINING_TABLE.slots.totem) ?? null
+    const pendingOperation = readPendingRefinementOperation(machine)
     const xpTank = getRefiningXpTank(machine)
     const availableXp = getXpTankAmount(xpTank)
     const template = getTemplate(definition)
     const typeSupported = !!definition && !!template
     const potentialAbilityNames = buildDefinitionAbilityNames(definition, state)
-    const abilityUnlocked = !definition || !hasTotemAbilityLock(definition, { ...state, abilityData: { ...state?.abilityData, uniqueUnlocked: true } }, potentialAbilityNames)
     const requiresTotem = hasTotemAbilityLock(definition, state, potentialAbilityNames)
     const totemPresent = normalizeKey(totemStack?.typeId) === normalizeKey(REFINING_TABLE.defaults.unlockCatalystId)
+    const awakeningRequested = requiresTotem && (pendingOperation?.awakenAbility === true || (!pendingOperation && totemPresent))
+    const abilityUnlocked = !requiresTotem
     const effectiveIngots = ingotConfig
         ? Math.min(REFINING_TABLE.defaults.maxIngotsPerRoll, Math.max(0, Number(ingotStack?.amount ?? 0)))
         : 0
@@ -540,6 +562,7 @@ function buildRefiningPreview(machine, tracked = syncTrackedEquipment(machine)) 
         totemPresent,
         abilityUnlocked,
         requiresTotem,
+        awakeningRequested,
         potentialAbilityNames,
         effectiveIngots,
         rerolls,
@@ -604,8 +627,9 @@ function buildRefiningPreview(machine, tracked = syncTrackedEquipment(machine)) 
         chipConfig.id,
         ingotConfig?.id ?? '',
         effectiveIngots,
-        totemStack?.typeId ?? '',
-        totemStack?.amount ?? 0,
+        awakeningRequested ? 1 : 0,
+        awakeningRequested ? (totemStack?.typeId ?? '') : '',
+        awakeningRequested ? (totemStack?.amount ?? 0) : 0,
     ].join('|')
 
     const nextPreview = {
@@ -620,14 +644,12 @@ function buildRefiningPreview(machine, tracked = syncTrackedEquipment(machine)) 
         range,
         odds,
         signature,
-        problem: requiresTotem && !totemPresent
-            ? 'Insert Runic Core'
-            : (availableXp >= costs.xpCost ? null : 'Need More XP'),
+        problem: availableXp >= costs.xpCost ? null : 'Need More XP',
     }
 
     return {
         ...nextPreview,
-        ready: availableXp >= costs.xpCost && (!requiresTotem || totemPresent),
+        ready: availableXp >= costs.xpCost,
     }
 }
 
@@ -717,27 +739,30 @@ function applyRefinement(machine, preview) {
     }
 
     const state = readStatsState(stack, preview.definition)
+    const pendingOperation = readPendingRefinementOperation(machine)
     const xpTank = getRefiningXpTank(machine)
     const availableXp = getXpTankAmount(xpTank)
     if (availableXp < preview.xpCost) {
         return { success: false, message: 'Need More XP' }
     }
 
-    if (preview.requiresTotem) {
+    const awakeningRequested = pendingOperation?.awakenAbility === true || preview.awakeningRequested === true
+
+    if (awakeningRequested) {
         const totemStack = machine?.inv?.getItem?.(REFINING_TABLE.slots.totem)
         if (normalizeKey(totemStack?.typeId) !== normalizeKey(REFINING_TABLE.defaults.unlockCatalystId)) {
             return { success: false, message: 'Insert Runic Core' }
         }
     }
 
-    const refinement = readPendingRefinement(machine) ?? buildRolledRefinement({
+    const refinement = pendingOperation?.refinement ?? buildRolledRefinement({
         ...preview,
         state,
     })
 
     const abilityData = {
         ...(state?.abilityData ?? {}),
-        uniqueUnlocked: preview.requiresTotem ? true : state?.abilityData?.uniqueUnlocked === true,
+        uniqueUnlocked: awakeningRequested ? true : state?.abilityData?.uniqueUnlocked === true,
         operatorMode: state?.abilityData?.operatorMode ?? 'crushy',
     }
 
@@ -758,7 +783,7 @@ function applyRefinement(machine, preview) {
     if (preview.effectiveIngots > 0) {
         consumeInputSlot(machine, REFINING_TABLE.slots.ingot, preview.effectiveIngots)
     }
-    if (preview.requiresTotem) {
+    if (awakeningRequested) {
         consumeInputSlot(machine, REFINING_TABLE.slots.totem, 1)
     }
     clearPendingRefinement(machine)
@@ -818,10 +843,10 @@ function buildConfirmButtonLore(preview) {
         ]
     }
 
-    if (preview.requiresTotem && !preview.totemPresent) {
+    if (preview.requiresTotem && !preview.awakeningRequested) {
         return [
-            '§7Sacrifice a Runic Core',
-            '§7to awaken the item ability.',
+            '§7Runic Core is optional.',
+            '§7Add one to awaken the item ability during this roll.',
             `§7Ability: §e${(preview.potentialAbilityNames ?? []).join(' §8+ §e') || 'Locked'}`,
         ]
     }
@@ -975,7 +1000,7 @@ function buildEquipmentPanelLore(preview = {}) {
         details.push(`§r§7Ability: §g${abilityNames.join(' §8+ §g')}`)
     } else if (preview.requiresTotem && lockedAbilityNames.length > 0) {
         details.push(`§r§7Ability: §8Locked §8→ §e${lockedAbilityNames.join(' §8+ §e')}`)
-        details.push('§r§7Awakening: §eRunic Core')
+        details.push(`§r§7Awakening: §e${preview.awakeningRequested ? 'Runic Core Armed' : 'Optional Runic Core'}`)
     }
 
     details.push(...buildAbilityDescriptionLore(preview))
@@ -1061,7 +1086,7 @@ function buildMachineLore(preview = {}, refinement = null) {
 
     lines.push(`§7Ingot: §f${formatDiagnosticValue(preview.ingotConfig?.label, preview.ingotStack?.typeId ? 'Unsupported Ingot' : 'Optional')} §8x§f${preview.effectiveIngots ?? 0}`)
     lines.push(`§7Runic Core Slot: §f${preview.requiresTotem
-        ? (preview.totemPresent ? 'Runic Core Ready' : 'Insert Runic Core')
+        ? (preview.awakeningRequested ? 'Runic Core Armed' : (preview.totemPresent ? 'Runic Core Ready' : 'Optional'))
         : 'Not required'}`)
 
     if (preview.valid && preview.chipConfig) {
@@ -1088,8 +1113,8 @@ function buildFooterLines(preview = {}, refinement = null) {
     if (!preview.equipment?.typeId) {
         lines.push('Awaiting Equipment')
     }
-    if (preview.requiresTotem && !preview.totemPresent) {
-        lines.push('Need Runic Core')
+    if (preview.requiresTotem) {
+        lines.push(preview.awakeningRequested ? 'Awaken Ability' : 'Optional Awakening')
     }
     if (preview.valid && preview.chipConfig) {
         lines.push(`Need ${FluidManager.formatFluid(preview.xpCost)} XP`)

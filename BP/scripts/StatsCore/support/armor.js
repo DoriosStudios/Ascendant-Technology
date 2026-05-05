@@ -1,124 +1,18 @@
-import { EffectTypes, system, world } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
-import { getEquipment, persistEquipmentItem } from "../core/equipment.js";
-import { getStatsCoreDefinition } from "../core/registry.js";
-import { readStatsState } from "../core/state.js";
-import { resolveStatsAttributes } from "../attributes/resolve.js";
+import { persistEquipmentItem } from "../core/equipment.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
 import { showLevelUp } from "../feedback/index.js";
 import { getCurrentTick, rollChance } from "../utils.js";
-
-const DAMAGE_TYPE_ALIASES = Object.freeze({
-    all: "all",
-    anvil: "anvil",
-    blockexplosion: "block_explosion",
-    charging: "charging",
-    contact: "contact",
-    drowning: "drowning",
-    entityattack: "entity_attack",
-    entityexplosion: "entity_explosion",
-    fall: "fall",
-    fallingblock: "falling_block",
-    fire: "fire",
-    firetick: "fire_tick",
-    flyintowall: "fly_into_wall",
-    freezing: "freezing",
-    lava: "lava",
-    lightning: "lightning",
-    magic: "magic",
-    magma: "magma",
-    none: "none",
-    override: "override",
-    piston: "piston",
-    projectile: "projectile",
-    ramattack: "ram_attack",
-    sonicboom: "sonic_boom",
-    stalactite: "stalactite",
-    stalagmite: "stalagmite",
-    starve: "starve",
-    suffocation: "suffocation",
-    suicide: "suicide",
-    temperature: "temperature",
-    thorns: "thorns",
-    void: "void",
-    wither: "wither"
-});
+import { getEquipmentStatsContext } from "../shared/context.js";
+import { getEntityHurtAttacker, getEntityHurtTarget, getEventDamageType, matchesDamageType, normalizeDamageType, uniqueDamageTypes } from "../shared/damage.js";
+import { repairItemDurability } from "../shared/durability.js";
+import { filterEffectsByKind } from "../shared/effectSelectors.js";
+import { applyEffectById } from "../shared/effects.js";
 
 const MAX_TOTAL_DAMAGE_REDUCTION = 0.45;
 const MAX_TOTAL_VULNERABILITY = 0.6;
 const supportEffectCooldowns = new Map();
-
-function getHurtTarget(event) {
-    return event?.hurtEntity ?? event?.entity;
-}
-
-function resolveEffectType(id) {
-    if (!id) return undefined;
-    const normalized = String(id).includes(":") ? String(id) : `minecraft:${id}`;
-    return EffectTypes?.get?.(normalized) ?? EffectTypes?.get?.(id) ?? normalized;
-}
-
-function applyEffectById(target, id, duration, amplifier = 0, showParticles = false) {
-    const effectType = resolveEffectType(id);
-    if (!target || !effectType) return false;
-
-    try {
-        target.addEffect?.(effectType, duration, {
-            amplifier,
-            showParticles,
-        });
-        return true;
-    } catch {
-        return false;
-    }
-}
-
-function repairOneDurability(stack) {
-    try {
-        const durability = stack?.getComponent?.("minecraft:durability") ?? stack?.getComponent?.("durability");
-        if (!durability) return false;
-
-        const currentDamage = Math.max(0, Math.floor(Number(durability.damage ?? 0) || 0));
-        if (currentDamage <= 0) return false;
-
-        durability.damage = currentDamage - 1;
-        return true;
-    } catch {
-        return false;
-    }
-}
-
-function normalizeDamageType(value) {
-    try {
-        const raw = String(value ?? "all").trim().toLowerCase();
-        if (!raw) return "all";
-
-        const aliasKey = raw.replace(/[^a-z0-9]/g, "");
-        return DAMAGE_TYPE_ALIASES[aliasKey] ?? raw.replace(/[\s:-]+/g, "_");
-    } catch {
-        return "all";
-    }
-}
-
-function getDamageType(event) {
-    return normalizeDamageType(event?.damageSource?.cause ?? event?.cause ?? "all");
-}
-
-function uniqueDamageTypes(values) {
-    if (!Array.isArray(values) || values.length <= 0) return [];
-
-    const normalized = [];
-    const seen = new Set();
-    for (const value of values) {
-        const next = normalizeDamageType(value);
-        if (!next || seen.has(next)) continue;
-
-        seen.add(next);
-        normalized.push(next);
-    }
-
-    return normalized;
-}
 
 function combineNegationChances(chances) {
     if (!Array.isArray(chances) || chances.length <= 0) return 0;
@@ -130,11 +24,6 @@ function combineNegationChances(chances) {
     }
 
     return 1 - remainingDamageChance;
-}
-
-function matchesDamageType(values, damageType) {
-    const normalizedDamageType = normalizeDamageType(damageType);
-    return values.includes("all") || values.includes(normalizedDamageType);
 }
 
 function getEffectKey(effect) {
@@ -176,43 +65,35 @@ function getArmorSupportEntries(target) {
     const entries = [];
 
     for (const slotName of STATSCORE.slots.armor) {
-        const { item } = getEquipment(target, slotName);
-        if (!item) continue;
+        const context = getEquipmentStatsContext(target, slotName);
+        if (!context || context.definition.type !== ITEM_TYPES.support) continue;
 
-        const definition = getStatsCoreDefinition(item);
-        if (!definition || definition.type !== ITEM_TYPES.support) continue;
-
-        const state = readStatsState(item, definition);
-        const attributes = resolveStatsAttributes(definition, state);
-        entries.push({ slotName, item, definition, attributes });
+        entries.push({
+            slotName,
+            item: context.stack,
+            definition: context.definition,
+            attributes: context.attributes,
+        });
     }
 
-    const { item: offhandItem } = getEquipment(target, STATSCORE.slots.offhand);
-    if (offhandItem) {
-        const definition = getStatsCoreDefinition(offhandItem);
-        if (definition && definition.type === ITEM_TYPES.support) {
-            const state = readStatsState(offhandItem, definition);
-            const attributes = resolveStatsAttributes(definition, state);
+    const offhandContext = getEquipmentStatsContext(target, STATSCORE.slots.offhand);
+    if (offhandContext?.definition?.type === ITEM_TYPES.support) {
             entries.push({
                 slotName: STATSCORE.slots.offhand,
-                item: offhandItem,
-                definition,
-                attributes,
+                item: offhandContext.stack,
+                definition: offhandContext.definition,
+                attributes: offhandContext.attributes,
             });
-        }
     }
 
     return entries;
 }
 
 function getSupportEffects(entries, kind) {
-    const normalizedKind = String(kind ?? "").toLowerCase();
     const results = [];
 
     for (const entry of entries) {
-        const effects = Array.isArray(entry.attributes?.support?.effects) ? entry.attributes.support.effects : [];
-        for (const effect of effects) {
-            if (String(effect?.kind ?? "").toLowerCase() !== normalizedKind) continue;
+        for (const effect of filterEffectsByKind(entry.attributes?.support?.effects, kind)) {
             results.push({ entry, effect });
         }
     }
@@ -281,8 +162,8 @@ function pullNearbyMonsters(target, attacker, effect) {
 function applySupportEffects(event, entries) {
     if (!entries.length) return;
 
-    const target = getHurtTarget(event);
-    const attacker = event?.damageSource?.damagingEntity ?? event?.damagingEntity ?? event?.source ?? null;
+    const target = getEntityHurtTarget(event);
+    const attacker = getEntityHurtAttacker(event);
     const damage = Math.max(0, Number(event?.damage ?? 0) || 0);
     if (!target || !attacker || damage <= 0) return;
 
@@ -321,7 +202,7 @@ function applyArmorMitigation(event, entries) {
     const damage = Number(event?.damage ?? 0);
     if (!Number.isFinite(damage) || damage <= 0) return;
 
-    const damageType = getDamageType(event);
+    const damageType = getEventDamageType(event);
     const immunityTypes = new Set();
     const vulnerabilityMatches = [];
     const negationChances = [];
@@ -373,10 +254,10 @@ function applyArmorMitigation(event, entries) {
 }
 
 function applyCustomSupportAbilities(event, entries) {
-    const target = getHurtTarget(event);
+    const target = getEntityHurtTarget(event);
     if (!target) return;
 
-    const damageType = getDamageType(event);
+    const damageType = getEventDamageType(event);
     let nextDamage = Math.max(0, Number(event?.damage ?? 0) || 0);
     if (nextDamage <= 0) return;
 
@@ -452,7 +333,7 @@ function processArmorProgress(target) {
 
         const result = grantStatsProgress(item, definition, amount, "armor", { forcePersist: false });
         const repaired = rollChance(attributes?.support?.durabilityPreserveChance, 0)
-            ? repairOneDurability(item)
+            ? repairItemDurability(item)
             : false;
 
         if (result.changed || repaired) {
@@ -472,7 +353,7 @@ export function initializeArmorSupportModule() {
         world.beforeEvents.entityHurt.subscribe(event => {
             if (event?.cancel === true) return;
 
-            const target = getHurtTarget(event);
+            const target = getEntityHurtTarget(event);
             if (!target || target.typeId !== "minecraft:player") return;
 
             const entries = getArmorSupportEntries(target);
@@ -490,7 +371,7 @@ export function initializeArmorSupportModule() {
     hurtEvents.subscribe(event => {
         if (event?.cancel === true) return;
 
-        const target = getHurtTarget(event);
+        const target = getEntityHurtTarget(event);
         if (!target || target.typeId !== "minecraft:player") return;
 
         system.run(() => processArmorProgress(target));

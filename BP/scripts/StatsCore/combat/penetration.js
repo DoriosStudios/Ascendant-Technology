@@ -1,18 +1,6 @@
 import { getPlayerArmorMitigationProfile } from "../../DoriosCore/armor/reduction.js";
 import { clamp01, normalizeChance } from "../utils.js";
-
-function getDamageType(event) {
-    try {
-        return String(event?.damageSource?.cause ?? event?.cause ?? "all").toLowerCase();
-    } catch {
-        return "all";
-    }
-}
-
-function isBossLike(entity) {
-    const id = String(entity?.typeId ?? "").toLowerCase();
-    return id.includes("wither") || id.includes("ender_dragon") || id.includes("boss");
-}
+import { getEventDamageType, isBossLikeEntity } from "../shared/damage.js";
 
 export function applyArmorPenetration({ damage, target, event, attributes }) {
     const penetration = attributes?.penetration ?? {};
@@ -25,7 +13,7 @@ export function applyArmorPenetration({ damage, target, event, attributes }) {
         return { damage, restored: 0, percent: 0 };
     }
 
-    if (isBossLike(target)) {
+    if (isBossLikeEntity(target)) {
         percent *= clamp01(penetration.bossScalar ?? 0.5);
     }
 
@@ -37,7 +25,7 @@ export function applyArmorPenetration({ damage, target, event, attributes }) {
         return { damage, restored: 0, percent };
     }
 
-    const profile = getPlayerArmorMitigationProfile(target, getDamageType(event));
+    const profile = getPlayerArmorMitigationProfile(target, getEventDamageType(event));
     const totalReduction = clamp01(profile?.totalReduction ?? 0);
     if (totalReduction <= 0 || totalReduction >= 0.99) {
         return { damage, restored: 0, percent };

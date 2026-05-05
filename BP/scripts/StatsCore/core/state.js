@@ -41,7 +41,7 @@ function normalizeOperatorMode(value) {
     return "crushy";
 }
 
-export function normalizeStatsAbilityData(value) {
+function normalizeStatsAbilityData(value) {
     const source = value && typeof value === "object" ? value : {};
 
     return {
@@ -63,6 +63,16 @@ function readStatsAbilityData(stack) {
     }
 }
 
+/**
+ * Reads the persistent StatsCore state stored directly on an item stack.
+ *
+ * This is the canonical read path for runtime modules before resolving attributes,
+ * syncing lore, or applying refinement upgrades.
+ *
+ * @param {import("@minecraft/server").ItemStack} stack
+ * @param {object} definition
+ * @returns {object}
+ */
 export function readStatsState(stack, definition) {
     const maxLevel = Math.max(1, Math.floor(Number(definition?.maxLevel) || STATSCORE.progression.maxLevel));
     const level = Math.max(1, Math.min(maxLevel, toPositiveInteger(getProperty(stack, STATSCORE.props.level), 1)));
@@ -95,6 +105,18 @@ export function resetStatsState(stack) {
     return changed;
 }
 
+/**
+ * Writes a normalized StatsCore state back into the item's dynamic properties.
+ *
+ * When `syncLore` is requested, this helper also rebuilds the item's visible lore so
+ * gameplay-facing text stays in sync with the new internal state.
+ *
+ * @param {import("@minecraft/server").ItemStack} stack
+ * @param {object} definition
+ * @param {object} state
+ * @param {{ syncLore?: boolean, levelChanged?: boolean, forceLore?: boolean }} [options={}]
+ * @returns {{ changed: boolean, state: object }}
+ */
 export function writeStatsState(stack, definition, state, options = {}) {
     if (!stack || !definition) return { changed: false, state };
 

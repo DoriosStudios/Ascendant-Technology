@@ -164,7 +164,7 @@ function buildReadableStatEntries(definition, attributes) {
     return entries.filter(Boolean).slice(0, MAX_VISIBLE_LORE_STATS);
 }
 
-export function buildStatsCoreLore(definition, state, attributes) {
+function buildStatsCoreLore(definition, state, attributes) {
     const statsLore = buildReadableStatEntries(definition, attributes);
     const abilityLore = buildAbilityLoreEntry(attributes, state);
 

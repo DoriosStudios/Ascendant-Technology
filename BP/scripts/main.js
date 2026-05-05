@@ -4,7 +4,7 @@ import './DoriosCore/main.js'
 import './DoriosCore/armor/main.js'
 import './config/main.js'
 import './drops/drop_system.js'
-import './StatsCore/main.js'
+import './StatsCore/index.js'
 import './injectors/transmutable_injection_ascendant.js'
 import './injectors/insight_injectors.js'
 

@@ -2,7 +2,7 @@ import { system } from "@minecraft/server";
 import { STATSCORE } from "./constants.js";
 import { getEquipment, persistEquipmentItem } from "./core/equipment.js";
 import { collectStatsAbilityNames } from "./core/abilities.js";
-import { getStatsCoreDefinition, getStatsCoreRegistrySnapshot, registerStatsCoreDefinitions } from "./core/registry.js";
+import { getStatsCoreDefinition, getStatsCoreRegistrySize, registerStatsCoreDefinitions } from "./core/registry.js";
 import { readStatsState, resetStatsState } from "./core/state.js";
 import { clearStatsCoreLore } from "./core/lore.js";
 import { resolveStatsAttributes } from "./attributes/resolve.js";
@@ -31,7 +31,7 @@ function inspectHeldItem(sourceEntity) {
 
     const state = readStatsState(item, definition);
     const attributes = resolveStatsAttributes(definition, state);
-    const registrySize = Object.keys(getStatsCoreRegistrySnapshot()).length;
+    const registrySize = getStatsCoreRegistrySize();
     const abilityNames = collectStatsAbilityNames(attributes);
 
     sendMessage(sourceEntity, `§dStatsCore §7(${registrySize} registered)`);

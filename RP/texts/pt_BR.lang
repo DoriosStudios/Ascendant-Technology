@@ -13,6 +13,7 @@ tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7Aceita melhorias
 tile.utilitycraft:cryo_chamber.name=Câmara Criogênica\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica itens usando matéria escura\n- Aceita melhorias: §a§r, §b§r, §d§r
 tile.utilitycraft:enchantment_station.name=Estação de Encantamento\n§7- Repara, encanta, reforça equipamentos\n- Aceita melhorias: §a§r, §b§r, §d§r
+tile.utilitycraft:refining_table.name=Mesa de Refino\n§7- Refina equipamentos StatsCore com XP armazenado\n- Aceita melhorias: §a§r, §b§r, §d§r
 
 tile.utilitycraft:energizer.name=Energizador\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:liquifier.name=Liquefator\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r
@@ -233,6 +234,7 @@ item.utilitycraft:cryofluid_capsule_6=Cápsula de Criofluido \n§7(6 Baldes)
 item.utilitycraft:cryofluid_capsule_7=Cápsula de Criofluido \n§7(7 Baldes)
 item.utilitycraft:cryofluid_capsule_8=Cápsula de Criofluido \n§7(8 Baldes)
 item.utilitycraft:switch_button=Botão de Alternância
+item.utilitycraft:runic_core=Núcleo Rúnico
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCâmara Catalisadora
@@ -262,6 +264,7 @@ entity.utilitycraft:overclock_relay.name=§fRelé de Overclock
 entity.utilitycraft:overclock_injector.name=§fInjetor de Overclock
 entity.utilitycraft:ascane_engine.name=§5Estação de Encantamento
 entity.utilitycraft:enchantment_station.name=§5Estação de Encantamento
+entity.utilitycraft:refining_table.name=§fMesa de Refino
 entity.utilitycraft:vaporworks_processor.name=§vProcessador de Vapor
 
 ## UI

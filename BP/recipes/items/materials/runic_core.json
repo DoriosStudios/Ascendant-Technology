@@ -1,0 +1,25 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "utilitycraft:runic_core"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "ingredients": [
+            {
+                "item": "minecraft:totem_of_undying"
+            }
+        ],
+        "result": {
+            "item": "utilitycraft:runic_core",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "minecraft:totem_of_undying"
+            }
+        ]
+    }
+}

@@ -13,6 +13,7 @@ tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7Accepts upgrades:\n  
 tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:duplicator.name=Duplicator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:refining_table.name=Refining Table\n§7- Refines StatsCore gear using stored XP\n- Accepts upgrades: §a§r, §b§r, §d§r
 tile.utilitycraft:energizer.name=Energizer\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:liquifier.name=Liquifier\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7Accepts upgrades:\n  §a§r, §e§r
@@ -231,6 +232,7 @@ item.utilitycraft:cryofluid_capsule_6=Cryofluid Capsule §7\n- (6 Buckets)
 item.utilitycraft:cryofluid_capsule_7=Cryofluid Capsule §7\n- (7 Buckets)
 item.utilitycraft:cryofluid_capsule_8=Cryofluid Capsule §7\n- (8 Buckets)
 item.utilitycraft:switch_button=Switch Button
+item.utilitycraft:runic_core=Runic Core
 
 ## Entities
 entity.utilitycraft:absolute_container.name=§fAbsolute Container
@@ -259,6 +261,7 @@ entity.utilitycraft:overclock_tower.name=§6Overclock Tower
 entity.utilitycraft:overclock_relay.name=§6Overclock Relay
 entity.utilitycraft:overclock_injector.name=§fOverclock Injector
 entity.utilitycraft:enchantment_station.name=§fEnchantment Station
+entity.utilitycraft:refining_table.name=§fRefining Table
 ui.utilitycraft:disenchantment_station.name=§fDisenchantment Section
 entity.utilitycraft:vaporworks_processor.name=§fVaporworks Processor
 

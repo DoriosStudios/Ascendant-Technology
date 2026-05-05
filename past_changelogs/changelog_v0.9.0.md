@@ -1,6 +1,6 @@
 # v0.9.0 Draft
 
-Heavy processing and block automation take center stage in this draft, with new superior machines, expanded batch controls, and supporting UI/runtime work to make them practical in real automation lines.
+Heavy processing and block automation still anchor this draft, but this pass also introduces the first full **StatsCore** equipment wave. StatsCore is Ascendant Technology's gear progression layer: it gives supported weapons, tools, and defense pieces their own growth, refinement rolls, readable stat identity, and unlockable special abilities through the new **Refining Table**.
 
 ## BLOCKS
 ### Machines
@@ -59,6 +59,10 @@ Heavy processing and block automation take center stage in this draft, with new 
     - Accepts four upgrades. 
     - Can optionally consume Steam to accelerate crushing batches.
     - Supports Quantity Upgrades for larger grouped batches.
+- Added **Refining Table**
+  - New machine dedicated to **StatsCore** equipment refinement.
+  - Uses an internal **XP tank** instead of direct player XP spending during each roll.
+  - Lets players inspect equipment stats, preview roll quality, and awaken locked item abilities with a **Runic Core**.
 - Added **Seismic Breaker**
   - Superior version of Block Breaker with internal storage and different modes.
   - Has four modes:
@@ -74,9 +78,61 @@ Heavy processing and block automation take center stage in this draft, with new 
   - A dedicated Pedestal Clock slot pulses crop growth while Quantity Upgrades add extra harvest rolls.
   - Supports vanilla field crops and UtilityCraft seed crops, then exports buffered harvests from the rear when possible.
 
+## ITEMS
+### Equipment
+- **StatsCore** now acts as the universal progression and identity system for supported gear.
+  - Supported equipment can gain readable stat lines, level through use, store refinement results, and expose class-style abilities instead of staying as flat stat sticks.
+- StatsCore special abilities now need to be awakened in the Refining Table.
+  - Equipment with a special ability now uses a dedicated **Runic Core** slot during refinement.
+  - The first successful awakening consumes the Runic Core and permanently unlocks that item's class ability.
+- More vanilla and special gear families now work with StatsCore.
+  - Added support for **Spears**, **Mace**, **Trident**, **Bow**, **Crossbow**, and **Flint and Steel**.
+- StatsCore equipment now uses clearer class-style abilities instead of generic effect labels.
+  - Swords can roll **Bleeding**, AIOTs can roll **Sweeping**, and pickaxes can roll **Luck**.
+- StatsCore armor now also carries unique class-style abilities.
+  - Chestplates can trigger **Retaliation**, while helmets, leggings, boots, and shields now expose their own defensive identity instead of remaining effectless.
+- More tools and gear families now work with StatsCore.
+  - Added support for Lucky Sword, Lucky Pickaxe, drills, Heavy Drill, Smelting Pickaxe, Flint Knife, Shield, Shears, and extra hammer / paxel / AIOT variants.
+- Several StatsCore special abilities were corrected to match their in-game design more closely.
+  - **Drills** now use **Operator**, with **Crushy**, **Silky**, and **Greedy** modes.
+  - **Shears** now use **Gardener**.
+  - **Flint Knife** now uses **Primal**.
+  - **Smelting Pickaxe** now uses **Forger**.
+  - **Flint and Steel** now uses **Ingniter**.
+- StatsCore special abilities received a broader combat and farming rework.
+  - **Luck** now always spawns XP orbs from ore breaks, while **Crushing** now always adds matching dust for coal, copper, iron, gold, and titanium ores.
+  - **Hoes** now use **Reaper**, **Shovels** now use **Worm**, and **Axes** now use **Berserk**.
+  - **Berserk** axes now always keep their sneaking log-to-planks utility, while the Runic Core awakening still governs the combat side of the ability.
+  - **Aftershock**, **Harpoon**, **Deadeye**, **Ballista**, **Bleeding**, **Featherstep**, and shield passives were updated to behave more distinctly in play.
+  - **Turtle Helmet** now uses **Tough** instead of sharing the regular helmet identity.
+- Added **Runic Core**.
+  - Crafted from a **Totem of Undying** and used as the dedicated awakening catalyst for locked StatsCore abilities.
+- Newly supported combat families now also receive their own ability identities.
+  - Spears use **Skewer**, Mace uses **Aftershock**, Trident uses **Harpoon**, Bow uses **Deadeye**, and Crossbow uses **Ballista**.
+- Pure utility tools now stay focused on mining or defense instead of pretending to be melee gear.
+  - Pickaxes, shovels, drills, Smelting Pickaxe, Shears, Flint Knife, and Shield no longer center their StatsCore profile around bonus melee damage.
+- StatsCore abilities now follow one universal system across combat gear, mining tools, and defensive equipment.
+  - The same ability pipeline now feeds item lore, Refining Table inspection, debug inspection, and runtime behavior.
+
+## RECIPES
+- Added the **Refining Table** crafting recipe.
+  - The machine is crafted with Titanium Plates, Advanced Chips, Aetherium, a Machine Case, and an Anvil.
+- Added the **Runic Core** conversion recipe.
+  - A **Totem of Undying** can now be converted into a **Runic Core** for StatsCore awakenings.
+
 ## UI/UX
 - Impact Crusher now shows a dedicated temperature bar in its menu.
   - The heat display now matches the machine's live thermal state, making coolant use and overheat risk easier to read at a glance.
+- Refining Table now keeps equipment inspection clearer and more focused.
+  - Item lore now shows up to three core stats and a green ability line when the item has a class or tool ability.
+  - Extra stats such as Evasion, Damage Immunity, Vulnerability, and Preserving remain available inside the machine details panel instead of crowding the item itself.
+- Refining Table now previews locked special abilities more clearly.
+  - The machine can now show when an item's class ability is still locked, which ability will be awakened, and when a Runic Core is still missing.
+- Refining Table displays now split machine and equipment information more cleanly.
+  - The primary display now stays focused on warnings, resources, input state, and refinement costs.
+  - The secondary display now focuses only on the inserted equipment, including its stats, awakened ability state, and a short ability description.
+- Added a dedicated documentation page for StatsCore special abilities.
+  - The page now uses a cascading list layout and explains what each special ability does and which equipment families can roll it.
 - Superior machine names now use consistent subtitle formatting across all supported languages.
 - Superior machine menus now follow the world's refresh speed setting.
   - Progress arrows, status panels, tank displays, and mode panels now refresh on the same cadence as the configured world update speed.
@@ -86,8 +142,26 @@ Heavy processing and block automation take center stage in this draft, with new 
 - Added `utilitycraft:register_armor_mitigation` as a ScriptEvent-based registry for external armor items that cannot use the native `utilitycraft:armor` component.
   - The registry accepts per-item mitigation definitions with damage reduction, damage negation chance, and optional damage-type overrides.
 
+### StatsCore
+- Added the first full native `StatsCore` runtime stack to Ascendant Technology.
+  - Introduced dedicated combat, mining, support, utility, progression, lore, and registry modules for supported equipment.
+  - Supported items now persist level, XP, refinement data, and special-ability awakening state directly on the item.
+- Added the native `Refining Table` machine runtime and UI flow for StatsCore refinement.
+  - Refinement rolls are now queued and only applied when the confirm button is pressed.
+  - The machine tracks XP through its internal tank, consumes chips and ingots on successful rolls, and uses `utilitycraft:runic_core` as the awakening catalyst.
+- Expanded the StatsCore ability runtime to cover universal gear families.
+  - Added native handling for combat identities such as **Bleeding**, **Sweeping**, **Skewer**, **Aftershock**, **Harpoon**, **Deadeye**, and **Ballista**.
+  - Added mining and utility handling for **Luck**, **Crushing**, **Operator**, **Gardener**, **Primal**, **Forger**, **Ingniter**, **Worm**, **Reaper**, and the always-active logging side of **Berserk**.
+  - Added support-side handling for **Clarity**, **Retaliation**, **Bulwark**, **Featherstep**, **Spikes**, and **Tough**.
+- Updated several combat-side procs to behave closer to normal Bedrock combat resolution.
+  - **Sweeping** now resolves its area damage through command-based damage flow instead of relying only on direct script damage.
+  - Locked/awakened effect resolution is now filtered per effect, allowing utility-side behaviors like Berserk log conversion to stay active without unlocking the combat side early.
+
 ### Runtime Registration
 - Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Impact Crusher, Verdant Cultivator, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
+- Expanded StatsCore runtime handling for awakened utility abilities.
+  - Added persistent per-item awakening data for special abilities and saved **Operator** mode state on drills.
+  - Added runtime handling for **Operator**, **Gardener**, **Primal**, **Forger**, and **Ingniter** behaviors.
 - Added Verdant Cultivator crop-field runtime handling for repeated seed patterns, Pedestal Clock growth pulses, buffered harvest collection, and quantity-based bonus harvest rolls.
 - Removed the native Dismantler runtime stack (block, recipe, machine script, UI definition, textures, item catalog entry, and related localization entries).
 - Removed the generated Dismantler reverse-recipe registry and its supporting generation tooling from the active runtime.

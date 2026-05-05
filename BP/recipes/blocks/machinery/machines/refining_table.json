@@ -1,0 +1,45 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:refining_table"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "PCP",
+            "EAE",
+            "PTP"
+        ],
+        "key": {
+            "P": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "C": {
+                "item": "utilitycraft:advanced_chip"
+            },
+            "E": {
+                "item": "utilitycraft:aetherium"
+            },
+            "A": {
+                "item": "minecraft:anvil"
+            },
+            "T": {
+                "item": "utilitycraft:machine_case"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:refining_table",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "minecraft:anvil"
+            },
+            {
+                "item": "utilitycraft:advanced_chip"
+            }
+        ]
+    }
+}

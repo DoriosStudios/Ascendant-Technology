@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, formatItemName, capitalize, formatSeconds, formatEta, calculateEtaSeconds, getProgressPerSecond, formatFluidDisplayName, computeSlotCapacity, addItemsToSlot, captureItemMetadata } from '../../DoriosCore/main.js'
+import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, formatItemName, capitalize, formatSeconds, formatEta, calculateEtaSeconds, getProgressPerSecond, formatFluidDisplayName, addItemsToSlot, captureItemMetadata } from '../../DoriosCore/main.js'
 import { getClonerBlockProfile } from '../../config/recipes/duplicator.js'
 
 const config = Object.freeze({
@@ -287,31 +287,31 @@ function doriosRegister() {
             const copySlot = machine.inv.getItem(duplicator.slots.outputCopy)
             const copyPerCraft = getCopyAmountPerCraft(recipe)
 
-            if (!canAcceptSlotItem(originalSlot, recipe.input?.id)) {
+            if (!canAcceptSlotItem(originalSlot, recipe.input?.id, templateMeta)) {
                 fail('Original Slot Busy')
                 return
             }
 
-            if (copyPerCraft > 0 && !canAcceptSlotItem(copySlot, recipe.output?.id)) {
+            if (copyPerCraft > 0 && !canAcceptSlotItem(copySlot, recipe.output?.id, templateMeta)) {
                 fail('Copy Slot Busy')
                 return
             }
 
-            const originalCapacity = computeSlotCapacity(originalSlot, recipe.input?.id, getOriginalAmountPerCraft(recipe))
+            const originalCapacity = computeDuplicatorSlotCapacity(originalSlot, recipe.input?.id, getOriginalAmountPerCraft(recipe), templateMeta)
             if (originalCapacity <= 0) {
                 fail('Original Slot Full', false)
                 return
             }
 
             if (copyPerCraft > 0) {
-                const copyCapacity = computeSlotCapacity(copySlot, recipe.output?.id, copyPerCraft)
+                const copyCapacity = computeDuplicatorSlotCapacity(copySlot, recipe.output?.id, copyPerCraft, templateMeta)
                 if (copyCapacity <= 0) {
                     fail('Copy Slot Full', false)
                     return
                 }
             }
 
-            const maxCrafts = calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe)
+            const maxCrafts = calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe, templateMeta)
             if (maxCrafts <= 0) {
                 if (inputStack.amount < (recipe.input.amount ?? 1)) {
                     fail('Missing Input')
@@ -414,13 +414,13 @@ function getRecipeFluid(recipe) {
     return recipe.fluid
 }
 
-function calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe) {
+function calculateMaxCrafts(inputStack, originalSlot, copySlot, recipe, templateMeta) {
     const perInput = Math.max(1, recipe.input.amount ?? 1)
     const inputAvailable = Math.floor(inputStack.amount / perInput)
-    const originalCapacity = computeSlotCapacity(originalSlot, recipe.input?.id, getOriginalAmountPerCraft(recipe))
+    const originalCapacity = computeDuplicatorSlotCapacity(originalSlot, recipe.input?.id, getOriginalAmountPerCraft(recipe), templateMeta)
     const copyPerCraft = getCopyAmountPerCraft(recipe)
     const copyCapacity = copyPerCraft > 0
-        ? computeSlotCapacity(copySlot, recipe.output?.id, copyPerCraft)
+        ? computeDuplicatorSlotCapacity(copySlot, recipe.output?.id, copyPerCraft, templateMeta)
         : Number.MAX_SAFE_INTEGER
 
     const max = Math.min(inputAvailable, originalCapacity, copyCapacity)
@@ -559,9 +559,58 @@ function getCopyAmountPerCraft(recipe) {
     return copy > 0 ? copy : 0
 }
 
-function canAcceptSlotItem(slot, expectedId) {
+function normalizeMetadataValue(value) {
+    if (Array.isArray(value)) {
+        return value.map(entry => normalizeMetadataValue(entry))
+    }
+
+    if (value && typeof value === 'object') {
+        return Object.fromEntries(
+            Object.entries(value)
+                .sort(([left], [right]) => left.localeCompare(right))
+                .map(([key, entry]) => [key, normalizeMetadataValue(entry)])
+        )
+    }
+
+    return value
+}
+
+function buildMetadataSignature(metadata) {
+    if (!metadata || typeof metadata !== 'object') return ''
+
+    try {
+        return JSON.stringify(normalizeMetadataValue(metadata))
+    } catch {
+        return ''
+    }
+}
+
+function doesSlotMetadataMatch(slot, expectedMetadata) {
+    if (!slot || !expectedMetadata || typeof expectedMetadata !== 'object') return true
+    return buildMetadataSignature(captureItemMetadata(slot)) === buildMetadataSignature(expectedMetadata)
+}
+
+function canAcceptSlotItem(slot, expectedId, expectedMetadata = null) {
     if (!expectedId) return false
-    return !slot || slot.typeId === expectedId
+    if (!slot) return true
+    if (slot.typeId !== expectedId) return false
+    return doesSlotMetadataMatch(slot, expectedMetadata)
+}
+
+function computeDuplicatorSlotCapacity(slot, expectedId, perCraft, expectedMetadata = null) {
+    if (perCraft <= 0) return Number.MAX_SAFE_INTEGER
+    if (!expectedId) return 0
+
+    if (!slot) {
+        return Math.floor(64 / perCraft)
+    }
+
+    if (!canAcceptSlotItem(slot, expectedId, expectedMetadata)) {
+        return 0
+    }
+
+    const remaining = (slot.maxAmount ?? 64) - slot.amount
+    return Math.floor(Math.max(0, remaining) / perCraft)
 }
 
 function applyClonerRuntime(machine, recipe) {

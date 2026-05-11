@@ -27,6 +27,9 @@ export const STATSCORE = Object.freeze({
         inspect: "utilitycraft:statscore_inspect",
         reset: "utilitycraft:statscore_reset"
     }),
+    worldProperties: Object.freeze({
+        enabled: "utilitycraft:statscore_enabled"
+    }),
     runtime: Object.freeze({
         openingWindowTicks: 80,
         feedbackCooldownTicks: 12,

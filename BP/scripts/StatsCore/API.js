@@ -32,3 +32,8 @@ export {
     getXpNeededForLevel,
     grantStatsProgress,
 } from "./progression/refinement.js";
+export {
+    initializeStatsCoreRuntime,
+    isStatsCoreEnabled,
+    setStatsCoreEnabled,
+} from "./runtime.js";

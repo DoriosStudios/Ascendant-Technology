@@ -1,6 +1,7 @@
 import { STATSCORE } from "../constants.js";
 import { createRuntimeUid, toFiniteNumber, toPositiveInteger } from "../utils.js";
 import { readStatsState, writeStatsState } from "../core/state.js";
+import { isStatsCoreEnabled } from "../runtime.js";
 
 const xpBuffers = new Map();
 
@@ -81,6 +82,16 @@ function setBuffer(uid, value) {
 export function grantStatsProgress(stack, definition, amount, reason = "use", options = {}) {
     if (!stack || !definition || amount <= 0) {
         return { changed: false, levelUp: false, state: stack ? readStatsState(stack, definition) : null };
+    }
+
+    if (!isStatsCoreEnabled()) {
+        return {
+            changed: false,
+            levelUp: false,
+            state: readStatsState(stack, definition),
+            reason,
+            buffered: 0,
+        };
     }
 
     const currentState = readStatsState(stack, definition);

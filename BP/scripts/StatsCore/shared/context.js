@@ -2,6 +2,7 @@ import { STATSCORE } from "../constants.js";
 import { getEquipment, getLiveEquipmentItem } from "../core/equipment.js";
 import { getStatsCoreDefinition } from "../core/registry.js";
 import { readStatsState } from "../core/state.js";
+import { isStatsCoreEnabled } from "../runtime.js";
 import { resolveStatsAttributes } from "../attributes/resolve.js";
 
 /**
@@ -35,6 +36,8 @@ export function readStatsItemContext(stack) {
  * @returns {{ stack: import("@minecraft/server").ItemStack, definition: object, state: object, attributes: object, slotName: string, equippable: object } | null}
  */
 export function getEquipmentStatsContext(entity, slotName = STATSCORE.slots.mainhand, expectedTypeId = undefined) {
+    if (!isStatsCoreEnabled()) return null;
+
     const access = expectedTypeId
         ? getLiveEquipmentItem(entity, expectedTypeId, slotName)
         : getEquipment(entity, slotName);

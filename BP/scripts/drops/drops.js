@@ -24,6 +24,176 @@ export const DROPS_SETTINGS = {
 	}
 };
 
+const HAMMER_SPECIAL_SOUND = Object.freeze({ id: 'dig.netherrack', volume: 1, pitch: 0.5 });
+
+/**
+ * Addition-only mapping for vanilla ore hammer drops.
+ * Normal vanilla handling remains untouched unless the hammer override matches.
+ */
+const VANILLA_HAMMER_DROP_ADDITIONS = Object.freeze({
+	'minecraft:coal_ore': {
+		originalDropId: 'minecraft:coal',
+		replaceDropId: 'utilitycraft:coal_dust',
+		baseRange: [2, 4],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 2] },
+	},
+	'minecraft:deepslate_coal_ore': {
+		originalDropId: 'minecraft:coal',
+		replaceDropId: 'utilitycraft:coal_dust',
+		baseRange: [2, 3],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 1] },
+	},
+	'minecraft:copper_ore': {
+		originalDropId: 'minecraft:raw_copper',
+		replaceDropId: 'utilitycraft:copper_dust',
+		baseRange: [2, 5],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 2] },
+	},
+	'minecraft:deepslate_copper_ore': {
+		originalDropId: 'minecraft:raw_copper',
+		replaceDropId: 'utilitycraft:copper_dust',
+		baseRange: [2, 6],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 1] },
+	},
+	'minecraft:iron_ore': {
+		originalDropId: 'minecraft:raw_iron',
+		replaceDropId: 'utilitycraft:iron_dust',
+		baseRange: [2, 3],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 1] },
+	},
+	'minecraft:deepslate_iron_ore': {
+		originalDropId: 'minecraft:raw_iron',
+		replaceDropId: 'utilitycraft:iron_dust',
+		baseRange: [2, 4],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 1] },
+	},
+	'minecraft:gold_ore': {
+		originalDropId: 'minecraft:raw_gold',
+		replaceDropId: 'utilitycraft:gold_dust',
+		baseRange: [2, 3],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 1] },
+	},
+	'minecraft:deepslate_gold_ore': {
+		originalDropId: 'minecraft:raw_gold',
+		replaceDropId: 'utilitycraft:gold_dust',
+		baseRange: [2, 5],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 1] },
+	},
+	'minecraft:diamond_ore': {
+		originalDropId: 'minecraft:diamond',
+		replaceDropId: 'utilitycraft:diamond_dust',
+		baseRange: [1, 2],
+		fortuneMath: { mode: 'bonus', perLevel: [0.5, 1] },
+	},
+	'minecraft:deepslate_diamond_ore': {
+		originalDropId: 'minecraft:diamond',
+		replaceDropId: 'utilitycraft:diamond_dust',
+		baseRange: [1, 3],
+		fortuneMath: { mode: 'bonus', perLevel: [0.5, 1] },
+	},
+	'minecraft:emerald_ore': {
+		originalDropId: 'minecraft:emerald',
+		replaceDropId: 'utilitycraft:emerald_dust',
+		baseRange: [1, 1],
+		fortuneMath: { mode: 'bonus', perLevel: [0.5, 1] },
+	},
+	'minecraft:deepslate_emerald_ore': {
+		originalDropId: 'minecraft:emerald',
+		replaceDropId: 'utilitycraft:emerald_dust',
+		baseRange: [1, 1],
+		fortuneMath: { mode: 'bonus', perLevel: [0.5, 1] },
+	},
+	'minecraft:lapis_ore': {
+		originalDropId: 'minecraft:lapis_lazuli',
+		replaceDropId: 'utilitycraft:lapislazuli_chunk',
+		baseRange: [1, 2],
+		fortuneMath: { mode: 'bonus', perLevel: [0, 1] },
+	},
+	'minecraft:deepslate_lapis_ore': {
+		originalDropId: 'minecraft:lapis_lazuli',
+		replaceDropId: 'utilitycraft:deepslate_lapislazuli_chunk',
+		baseRange: [1, 2],
+		fortuneMath: { mode: 'bonus', perLevel: [0, 1] },
+	},
+	'minecraft:redstone_ore': {
+		originalDropId: 'minecraft:redstone',
+		replaceDropId: 'utilitycraft:redstone_chunk',
+		baseRange: [1, 2],
+		fortuneMath: { mode: 'bonus', perLevel: [0, 1] },
+	},
+	'minecraft:lit_redstone_ore': {
+		originalDropId: 'minecraft:redstone',
+		replaceDropId: 'utilitycraft:redstone_chunk',
+		baseRange: [1, 2],
+		fortuneMath: { mode: 'bonus', perLevel: [0, 1] },
+	},
+	'minecraft:deepslate_redstone_ore': {
+		originalDropId: 'minecraft:redstone',
+		replaceDropId: 'utilitycraft:deepslate_redstone_chunk',
+		baseRange: [1, 2],
+		fortuneMath: { mode: 'bonus', perLevel: [0, 1] },
+	},
+	'minecraft:lit_deepslate_redstone_ore': {
+		originalDropId: 'minecraft:redstone',
+		replaceDropId: 'utilitycraft:deepslate_redstone_chunk',
+		baseRange: [1, 2],
+		fortuneMath: { mode: 'bonus', perLevel: [0, 1] },
+	},
+	'minecraft:nether_quartz_ore': {
+		originalDropId: 'minecraft:quartz',
+		replaceDropId: 'utilitycraft:quartz_dust',
+		baseRange: [2, 4],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 2] },
+	},
+	'minecraft:nether_gold_ore': {
+		originalDropId: 'minecraft:gold_nugget',
+		replaceDropId: 'utilitycraft:nether_gold_chunk',
+		baseRange: [1, 2],
+		fortuneMath: { mode: 'bonus', perLevel: [0, 1] },
+	},
+	'minecraft:ancient_debris': {
+		originalDropId: 'minecraft:ancient_debris',
+		replaceDropId: 'utilitycraft:netherite_scrap_dust',
+		baseRange: [1, 1],
+		fortuneMath: { mode: 'multiplier', perLevel: [1.2, 1.5] },
+	},
+	'minecraft:amethyst_cluster': {
+		originalDropId: 'minecraft:amethyst_shard',
+		replaceDropId: 'utilitycraft:amethyst_shard',
+		baseRange: [1, 4],
+		fortuneMath: { mode: 'bonus', perLevel: [0, 1] },
+	},
+	'minecraft:amethyst_block': {
+		originalDropId: 'minecraft:amethyst_shard',
+		replaceDropId: 'utilitycraft:amethyst_shard',
+		baseRange: [3, 6],
+		fortuneMath: { mode: 'bonus', perLevel: [1, 2] },
+	}
+});
+
+function createHammerOnlyOreDrop(config) {
+	return (context) => computeDrops(context, {
+		specialTools: [
+			{
+				toolType: 'utilitycraft:is_hammer',
+				dropId: config.replaceDropId,
+				dropMode: 'vanilla',
+				originalDropId: config.originalDropId,
+				replaceDropId: config.replaceDropId,
+				fortuneMath: config.fortuneMath,
+				baseRange: config.baseRange ?? [1, 1],
+				sound: config.sound ?? HAMMER_SPECIAL_SOUND,
+			}
+		]
+	});
+}
+
+function buildMappedDropEntries(map) {
+	return Object.fromEntries(
+		Object.entries(map).map(([blockId, config]) => [blockId, createHammerOnlyOreDrop(config)])
+	);
+}
+
 /**
  * Registry of custom drop behaviors by block identifier.
  *
@@ -79,16 +249,17 @@ export const DROPS_LIBRARY = {
 			},
 			{
 				toolType: 'utilitycraft:is_hammer',
-				dropId: 'utilitycraft:titanium_nugget',
+				dropId: 'utilitycraft:titanium_dust',
 				dropMode: 'vanilla',
 				originalDropId: 'utilitycraft:raw_titanium',
-				replaceDropId: 'utilitycraft:titanium_nugget',
+				replaceDropId: 'utilitycraft:titanium_dust',
 				fortuneMath: { mode: 'bonus', perLevel: [1, 3] },
 				baseRange: [5, 12],
 				sound: { id: 'dig.netherrack', volume: 1, pitch: 0.5 },
 			}
 		],
 	}),
+	/** Raw Titanium Block. */
 	'utilitycraft:raw_titanium_block': (context) => computeDrops(context, {
 		specialTools: [
 			{
@@ -102,7 +273,8 @@ export const DROPS_LIBRARY = {
 				sound: { id: 'random.fizz', volume: 0.65, pitch: 1.5 },
 			}
 		]
-	})
+	}),
+	...buildMappedDropEntries(VANILLA_HAMMER_DROP_ADDITIONS)
 };
 
 const DROPS_RUNTIME = {
@@ -131,6 +303,18 @@ const normalizeRequiredTags = (requiredType) => {
 	if (Array.isArray(requiredType)) return requiredType.map(tag => String(tag));
 	return [String(requiredType)];
 };
+
+const normalizeHintList = (value) => {
+	if (Array.isArray(value)) return value.map(entry => String(entry));
+	if (value === undefined || value === null) return [];
+	return [String(value)];
+};
+
+const getBridgeContext = (context) => context?.bridgeContext ?? null;
+
+const getBridgeToolTypeHints = (context) => normalizeHintList(getBridgeContext(context)?.toolTypeHints);
+
+const getBridgeToolIdHints = (context) => normalizeHintList(getBridgeContext(context)?.toolIdHints);
 
 // Safe random helper: uses DoriosAPI.randomInterval when available, else a local inclusive random int.
 const randInt = (min, max) => {
@@ -328,7 +512,7 @@ function matchesConditions(ctx, conditions) {
 	}
 
 	if (conditions.toolType) {
-		if (!toolMatchesType(ctx.tool, conditions.toolType)) return false;
+		if (!toolMatchesType(ctx.tool, conditions.toolType, ctx)) return false;
 	}
 
 	if (conditions.blockStates && block?.permutation) {
@@ -390,7 +574,7 @@ function computeDrops(context, config) {
 	}
 
 	// If the base config demands a specific tool type, enforce it before anything else
-	if (config.toolType && !toolMatchesType(context.tool, config.toolType)) {
+	if (config.toolType && !toolMatchesType(context.tool, config.toolType, context)) {
 		return null;
 	}
 
@@ -398,8 +582,8 @@ function computeDrops(context, config) {
 	let specialSound;
 
 	// Apply special tool override if present
-	if (context.tool && config.specialTools?.length) {
-		const match = findSpecialToolOverride(context.tool, config.specialTools);
+	if ((context.tool || context.bridgeContext) && config.specialTools?.length) {
+		const match = findSpecialToolOverride(context.tool, config.specialTools, context);
 		if (match) {
 			if (!matchesConditions(context, match.conditions)) return null;
 			specialSound = match.sound;
@@ -533,15 +717,28 @@ function getTagsFromTool(tool, requiredType) {
 	}
 }
 
+function toolMatchesId(tool, requiredId, context) {
+	if (!requiredId) return true;
+	if (tool?.typeId === requiredId) return true;
+
+	const toolIdHints = getBridgeToolIdHints(context);
+	return toolIdHints.includes(requiredId);
+}
+
 /**
  * Checks whether the provided tool satisfies a required tool type (tag).
  * Accepts a single string tag or an array of tags; matches if ANY required tag is present.
  * @param {import('@minecraft/server').ItemStack | undefined} tool
  * @param {string|string[]=} requiredType
+ * @param {DropContext=} context
  * @returns {boolean}
  */
-function toolMatchesType(tool, requiredType) {
+function toolMatchesType(tool, requiredType, context) {
 	if (!requiredType) return true;
+	const requiredTags = normalizeRequiredTags(requiredType);
+	const bridgeHints = getBridgeToolTypeHints(context);
+	if (requiredTags.some(tag => bridgeHints.includes(tag))) return true;
+
 	const toolTags = getTagsFromTool(tool, requiredType);
 	if (!toolTags.length) return false;
 
@@ -556,13 +753,16 @@ function toolMatchesType(tool, requiredType) {
  * If both are present on an override, both must match.
  * @param {import('@minecraft/server').ItemStack | undefined} tool
  * @param {SpecialToolOverride[]=} overrides
+ * @param {DropContext=} context
  * @returns {SpecialToolOverride | undefined}
  */
-function findSpecialToolOverride(tool, overrides) {
-	if (!tool || !overrides?.length) return undefined;
+function findSpecialToolOverride(tool, overrides, context) {
+	if (!overrides?.length) return undefined;
+	const hasBridgeHints = getBridgeToolTypeHints(context).length > 0 || getBridgeToolIdHints(context).length > 0;
+	if (!tool && !hasBridgeHints) return undefined;
 	return overrides.find((override) => {
-		if (override.toolId && override.toolId !== tool.typeId) return false;
-		if (override.toolType && !toolMatchesType(tool, override.toolType)) return false;
+		if (override.toolId && !toolMatchesId(tool, override.toolId, context)) return false;
+		if (override.toolType && !toolMatchesType(tool, override.toolType, context)) return false;
 		return true;
 	});
 }

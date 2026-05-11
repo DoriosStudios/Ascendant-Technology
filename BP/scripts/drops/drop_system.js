@@ -1,4 +1,5 @@
 import { world, system, EffectTypes, ItemStack } from '@minecraft/server';
+import { isOptionalDependencyPresent } from '../DoriosAPI/config.js';
 import './drops.js'; // ensures DoriosAPI is available globally when main.js loads
 import { DROPS_SETTINGS, getDropsForBlock } from './drops.js';
 
@@ -531,11 +532,12 @@ function executeDropActions({
   replaceDrops,
   removeFreshVanillaEntities,
   removeVanillaEntities,
-  knownNearbyItemIds
+  knownNearbyItemIds,
+  deferExecution = true
 }) {
   if (!dimension || !loc) return;
 
-  system.run(() => {
+  const runActions = () => {
     const resolvedSound = omitSpecialSound ? baseSound : (sound ?? baseSound);
 
     if (removeBlock) {
@@ -705,7 +707,14 @@ function executeDropActions({
         console.warn('[drops] Failed spawning drop for', blockId, error);
       }
     }
-  });
+  };
+
+  if (deferExecution === false) {
+    runActions();
+    return;
+  }
+
+  system.run(runActions);
 }
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
@@ -809,6 +818,28 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
 });
 
 const EXCAVATE_EVENT_IDS = DROP_SYSTEM_RULES.excavateEventIds;
+const EXCAVATE_DEPENDENCY_ID = 'dorios_excavate';
+
+function buildExcavateBridgeContext(eventId, tool) {
+  const normalizedEventId = String(eventId ?? '').toLowerCase();
+  const bridgeContext = {
+    eventId: normalizedEventId,
+    toolIdHints: tool?.typeId ? [tool.typeId] : []
+  };
+
+  if (normalizedEventId === 'dorios:hammerblock') {
+    bridgeContext.toolTypeHints = ['utilitycraft:is_hammer'];
+  } else if (normalizedEventId === 'dorios:blockloot') {
+    bridgeContext.toolComponentHints = ['utilitycraft:block_loot'];
+  }
+
+  return bridgeContext;
+}
+
+function isExcavateBridgeAvailable(bridgeSettings) {
+  if (bridgeSettings?.enabled === false) return false;
+  return isOptionalDependencyPresent(EXCAVATE_DEPENDENCY_ID);
+}
 
 const scriptEventSignal =
   world.afterEvents?.scriptEventReceive ??
@@ -819,7 +850,7 @@ if (!scriptEventSignal?.subscribe) {
   console.warn('[drops] ScriptEventReceive not available; Excavate bridge disabled.');
 } else scriptEventSignal.subscribe((event) => {
   const bridgeSettings = DROPS_SETTINGS?.excavateBridge;
-  if (bridgeSettings?.enabled === false) return;
+  if (!isExcavateBridgeAvailable(bridgeSettings)) return;
 
   const eventId = String(event?.id ?? '').toLowerCase();
   if (!EXCAVATE_EVENT_IDS.has(eventId)) return;
@@ -857,6 +888,7 @@ if (!scriptEventSignal?.subscribe) {
   }
 
   const tool = getPlayerTool(player);
+  const bridgeContext = buildExcavateBridgeContext(eventId, tool);
   const { fortuneLevel, hasSilkTouch } = getEnchantData(tool);
 
   const dropResult = getDropsForBlock({
@@ -866,6 +898,7 @@ if (!scriptEventSignal?.subscribe) {
     tool,
     fortuneLevel,
     hasSilkTouch,
+    bridgeContext,
   });
 
   const resolved = normalizeDropResult(dropResult);
@@ -922,7 +955,8 @@ if (!scriptEventSignal?.subscribe) {
         replaceDrops: [],
         removeFreshVanillaEntities: vanillaPlan.removeFreshVanillaEntities,
         removeVanillaEntities: false,
-        knownNearbyItemIds: vanillaPlan.knownNearbyItemIds
+        knownNearbyItemIds: vanillaPlan.knownNearbyItemIds,
+        deferExecution: false
       });
     } else if (!vanillaPlan.blockDestroyed) {
       destroyBlockWithDrops(dimension, loc);
@@ -962,6 +996,7 @@ if (!scriptEventSignal?.subscribe) {
     replaceDrops,
     removeFreshVanillaEntities: vanillaPlan.removeFreshVanillaEntities,
     removeVanillaEntities: shouldReplaceVanillaEntities,
-    knownNearbyItemIds: vanillaPlan.knownNearbyItemIds
+    knownNearbyItemIds: vanillaPlan.knownNearbyItemIds,
+    deferExecution: false
   });
 });

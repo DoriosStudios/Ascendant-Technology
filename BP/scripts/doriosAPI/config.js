@@ -49,12 +49,26 @@ export const addonData = {
     name: "UtilityCraft: Ascendant Technology",
     author: "Dorios Studios",
     identifier: "uc_ascendant_technology",
-    version: "0.8.0",
+    version: "0.8.1",
     dependencies: {
         "utilitycraft": {
             name: "UtilityCraft",
-            version: "3.3.6",
+            version: "3.4.2",
             warning: "UtilityCraft: Ascendant Technology is an expansion for UtilityCraft, so it requires UtilityCraft to be installed. Machines and features from UtilityCraft won't work without it."
+        }
+    },
+    optionalDependencies: {
+        "uc_heavy_machinery": {
+            name: "UtilityCraft: Heavy Machinery",
+            version: "0.4.0",
+            warning: "Update Heavy Machinery to keep Ascendant Technology compatibility features aligned with the latest behavior.",
+            detectedMessage: "§bLooks like you're playing Ascendant Technology and Heavy Machinery together. You can use Ascendant's Cryofluid as a better coolant in Heavy Machinery!§r"
+        },
+        "dorios_excavate": {
+            name: "Dorios' Excavate",
+            version: "1.2.0",
+            warning: "Update Dorios' Excavate to keep Ascendant Technology's custom drop bridge aligned with the latest excavate behavior.",
+            detectedMessage: "§bAscendant Technology detected Dorios' Excavate. Supported special tool drops will now route through Ascendant's excavate bridge.§r"
         }
     }
 }
@@ -94,33 +108,74 @@ const heavyMachineryID = 'uc_heavy_machinery'
 export let isHeavyMachineryPresent = false
 export let heavyMachineryVersion = null
 
+export function getDependencyData(identifier) {
+    if (typeof identifier !== 'string' || identifier.length === 0) return null
+    return dependenciesRegistry.get(identifier) ?? null
+}
+
 export function isDependencyPresent(identifier) {
-    if (typeof identifier !== 'string' || identifier.length === 0) return false
-    return dependenciesRegistry.has(identifier)
+    return Boolean(getDependencyData(identifier))
+}
+
+export function getOptionalDependencyConfig(identifier) {
+    if (typeof identifier !== 'string' || identifier.length === 0) return null
+    return addonData.optionalDependencies?.[identifier] ?? null
+}
+
+export function getOptionalDependencyData(identifier) {
+    if (!getOptionalDependencyConfig(identifier)) return null
+    return getDependencyData(identifier)
+}
+
+export function getOptionalDependencyVersionState(identifier) {
+    const dependency = getOptionalDependencyData(identifier)
+    const config = getOptionalDependencyConfig(identifier)
+    const requiredVersion = config?.version
+    const detectedVersion = dependency?.version
+
+    if (!requiredVersion || !detectedVersion) return 'unknown'
+    return compareDependencyVersion(requiredVersion, detectedVersion)
+}
+
+export function isOptionalDependencyPresent(identifier) {
+    return Boolean(getOptionalDependencyData(identifier))
 }
 
 export function refreshHeavyMachineryCompatibilityState() {
-    const heavyMachinery = dependenciesRegistry.get(heavyMachineryID) ?? null
+    const heavyMachinery = getOptionalDependencyData(heavyMachineryID)
     isHeavyMachineryPresent = Boolean(heavyMachinery)
     heavyMachineryVersion = heavyMachinery?.version ?? null
     return heavyMachinery ?? null
 }
 
+function notifyOptionalDependencies() {
+    const optionalDependencies = addonData.optionalDependencies ?? {}
+
+    for (const [identifier, config] of Object.entries(optionalDependencies)) {
+        const dependency = getOptionalDependencyData(identifier)
+        if (!dependency) continue
+
+        const detectedMessage = config?.detectedMessage
+        if (detectedMessage) {
+            world.sendMessage(detectedMessage)
+        }
+
+        const versionState = getOptionalDependencyVersionState(identifier)
+        if (versionState !== 'outdated') continue
+
+        const requiredVersion = config?.version ?? 'unknown'
+        const detectedVersion = dependency.version ?? 'unknown'
+        const dependencyName = config?.name ?? dependency.name ?? identifier
+        world.sendMessage(`§eOptional dependency ${dependencyName} is outdated. Requires: §f${requiredVersion}§e, found: §f${detectedVersion}§e.`)
+        if (config?.warning) {
+            world.sendMessage(`§7${config.warning}§r`)
+        }
+    }
+}
+
 world.afterEvents.worldLoad.subscribe(() => {
     system.runTimeout(() => {
-        const heavyMachinery = refreshHeavyMachineryCompatibilityState()
-        if (!heavyMachinery) return
-
-        world.sendMessage("§bLooks like you're playing Ascendant Technology and Heavy Machinery together. You can use Ascendant's Cryofluid as a better coolant in Heavy Machinery!§r")
-
-        const detectedVersion = heavyMachinery.version ?? 'unknown'
-
-        const requiredVersion = addonData.dependencies?.[heavyMachineryID]?.version
-        if (requiredVersion && detectedVersion !== 'unknown') {
-            const state = compareDependencyVersion(requiredVersion, detectedVersion)
-            if (state === 'outdated') {
-                world.sendMessage(`§eHeavy Machinery version is outdated. Requires: §f${requiredVersion}§e, found: §f${detectedVersion}§e.`)
-            }
-        }
+        refreshHeavyMachineryCompatibilityState()
+        notifyOptionalDependencies()
     }, 340)
 })

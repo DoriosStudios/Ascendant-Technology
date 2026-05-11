@@ -5,30 +5,19 @@ This is where all bugs noticed in Ascendant Technology will be shown. You can re
 
 This file will be constantly updated as bugs come and go.
 
-🔷 : Fixed, but not released yet  
-✅ : Fixed    
-⚠️ : To be Fixed  
-🔶 : Couldn't reproduce  
-❌ : To be removed  
+🔷 : Fixed, but not released yet 
+✅ : Fixed
+⚠️ : To be Fixed
+🔶 : Couldn't reproduce
+❌ : Cannot be fixed
 
-## Current Version (0.7.2)
-- 🔷 Titanium and Aetherium cannot be obtained from compressed variants of crushed blocks. [#2](https://github.com/DoriosStudios/Ascendant-Technology/issues/2)
-- 🔷 Singularity Fabricator doesn't accept Dark Matter.  [#13](https://github.com/DoriosStudios/Ascendant-Technology/issues/13)
-- 🔷 Singularity Fabricator requires an absurd amount of power to operate.  [#4](https://github.com/DoriosStudios/Ascendant-Technology/issues/4)
-   - After 0.7.0 rework, energy requirements are too high for practical use.
-- 🔷 Energizer creates more items than it should, exceeding the item's maximum stack size.  [#8](https://github.com/DoriosStudios/Ascendant-Technology/issues/8)
-- 🔷 Reinforced Cable does not conduct electricity.  [#15](https://github.com/DoriosStudios/Ascendant-Technology/issues/15)
-- 🔷 Mob Magnet texts are bugged. [#36](https://github.com/DoriosStudios/Ascendant-Technology/issues/36)
-- 🔷 Mob Magnet sometimes fails to pull mobs after state updates. [#37](https://github.com/DoriosStudios/Ascendant-Technology/issues/37)
-- 🔷 Ascendant Technology machines do not connect with energy cables and networks. [#38](https://github.com/DoriosStudios/Ascendant-Technology/issues/38)
-   - This is a partial issue with AT Machines. Can be "fixed" by breaking and replacing the cables.
-- 🔷 Aetherium and Titanium hammers doesn't work. [#39](https://github.com/DoriosStudios/Ascendant-Technology/issues/39)
-   - Core bug. Can't be fixed by Ascendant Technology alone.
-- 🔷 Aetherium and Titanium ores can't be broken by Drills. [#40](https://github.com/DoriosStudios/Ascendant-Technology/issues/40)
-   - Lack of loot tables for these ores causes them to drop nothing when mined with a drill or by commands.
-- 🔶 The armor icon in Pocket UI disappears when using Aetherium and Titanium armor.  
-- 🔶 Some machines UI  gets very close on older phones.
-- ❌ Reinforced Extractor is not useful, so it will be removed in future updates.
+## Current Version (0.8.1)
+-# Dev Version: 0.9.0-alpha
+
+- 🔷 Items with dynamic properties have their values reset by the Duplicator.  
+- 🔶 The armor icon in the Pocket UI disappears when using Aetherium and Titanium armor.   
+- 🔶 Some machines UI gets very close to the screen on older phones.  
+- ❌ Custom meshes can't be used on Sieve
 
 # Last Changes
 - ✅ **Aetherium and Titanium armor does not provide protection.**  

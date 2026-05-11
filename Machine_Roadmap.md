@@ -25,7 +25,7 @@ Machine status legend:
 | New Machines | Superior Machines | Items & Gear | Infrastructure & Systems |
 |---|---|---|---|
 | ✔ **Absolute Container** | 🟠 **Abyssal Fisher** | 🔺 **Item Energizer Pad** | 🔺 **Cryo Reservoir** |
-| 🔺 **Atmospheric Synchronizer** | 🟡 **Arcane Imprinter** | 🔺 **Portable Power Cell** | 🔺 **Dimensional Teleporter** |
+| 🔺 **Atmospheric Synchronizer** | 🟡 **Arcane Enchanter** | 🔺 **Portable Power Cell** | 🔺 **Dimensional Teleporter** |
 | ✔ **Catalyst Weaver** | ✔ **Arc-Press Forge** | 🔺 **The Ascendant's Tool** | ✔ **Network Center** |
 | 🔺 **Cold Fusion Reactor** | 🟠 **Centrifugal Siever** | — | ✔ **Overclock Boost Network** |
 | ✔ **Cryo Chamber** | 🟡 **Cryo Freezer** | — | ✔ **Overclock Relay** |
@@ -42,7 +42,7 @@ Machine status legend:
 | 🔺 **Orbital Command Terminal** | ✔ **Pattern Placer** | — | — |
 | ✔ **Residue Processor** | ✔ **Pulverizer** | — | — |
 | ✔ **Singularity Fabricator** | ✔ **Seismic Breaker** | — | — |
-| ✔ **Vaporworks Processor** | 🟡 **Verdant Cultivator** | — | — |
+| ✔ **Vaporworks Processor** | 🟡 **Verdant Cultivator** | — | 🟡 **Universal Cable Suite** |
 
 ---
 
@@ -105,6 +105,13 @@ Machine status legend:
 - 🟢 **Overclock Boost Network**
   - **Purpose:** Infrastructure-level machine overclocking.
   - **Core Blocks:** Overclock Tower + Overclock Relay + Reinforced Cable.
+
+- 🟡 **Universal Cable Suite**
+  - **Core Blocks:** Universal Cable + Universal Importer + Universal Exporter.
+  - **Purpose:** Future premium unified logistics line for bases that want one duct family to carry items, fluids, energy, and overclock.
+  - **Operating Mode:** Not implemented in the current reinforced logistics pass.
+  - **Design Requirement:** Universal routing must expose fine control per side, per resource type, and per importer/exporter endpoint.
+  - **Scope Rule:** The Universal line needs a more sophisticated configuration model than Reinforced Cable. It should not reuse the current reinforced importer/exporter UI without a dedicated design pass.
 
 ---
 
@@ -232,7 +239,7 @@ All superior machines are listed below in **alphabetical order**.
 
 - **Abyssal Fisher** is the correct player-facing name; internal `abyssal_*` identifiers can stay until a runtime migration is worth the churn.
 - **Adaptive Assembler** and **Quantum Digitizer** are out of the current superior roster because neither one has a strong enough gameplay justification right now.
-- **Arcane Imprinter** stays simple: dedicated enchanting plus a speed advantage is enough.
+- **Arcane Enchanter** stays simple: dedicated enchanting plus a speed advantage is enough.
 - **Centrifugal Siever v1** stays batch + steam only.
 - **Cryo Chamber** now branches into three separate superior specialists: **Cryo Freezer**, **Cryofluid Synthesizer**, and **Cryo Stabilizer**.
 - **Dense Active Generators** are limited to active generators only.

@@ -101,7 +101,7 @@ Before the mode-heavy wave is expanded, Ascendant should standardize:
 ## Confirmed superior roster (alphabetical)
 
 - `Abyssal Fisher`
-- `Arcane Imprinter`
+- `Arcane Enchanter`
 - `Arc-Press Forge`
 - `Centrifugal Siever`
 - `Cryo Freezer`
@@ -124,7 +124,7 @@ Before the mode-heavy wave is expanded, Ascendant should standardize:
 
 ## Standalone superior branches from complex Ascendant machines
 
-### Arcane Imprinter
+### Arcane Enchanter
 
 - **Source:** `Enchantment Station` enchanting branch
 - **Purpose:** Dedicated enchanting machine that removes repair and disenchant clutter from the Enchantment Station.
@@ -246,7 +246,7 @@ Reason:
 
 ### Wave 3: standalone superior branches
 
-- Arcane Imprinter
+- Arcane Enchanter
 - Cryo Freezer
 - Cryofluid Synthesizer
 - Cryo Stabilizer
@@ -269,7 +269,7 @@ Reason:
 ## Locked decisions from April 2026 review
 
 - **Abyssal Fisher** is the correct player-facing name; internal `abyssal_*` IDs can remain until a runtime migration is worth it.
-- **Arcane Imprinter** should stay simple: dedicated enchanting plus a speed bonus is enough.
+- **Arcane Enchanter** should stay simple: dedicated enchanting plus a speed bonus is enough.
 - **Centrifugal Siever v1** stays batch + steam only.
 - **Verdant Cultivator** replaces the old `Chrono Harvester` name and should combine planting, bonemeal support, harvesting, and buffering.
 - **Cryo Chamber** now splits cleanly into **Cryo Freezer**, **Cryofluid Synthesizer**, and **Cryo Stabilizer**.

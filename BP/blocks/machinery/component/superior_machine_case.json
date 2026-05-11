@@ -1,0 +1,25 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "utilitycraft:superior_machine_case",
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:geometry": "geometry.utilitycraft_block_2",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "utilitycraft_superior_machine_case",
+                    "render_method": "alpha_test"
+                }
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 4
+            },
+            "minecraft:destructible_by_explosion": false,
+            "tag:minecraft:is_pickaxe_item_destructible": {}
+        }
+    }
+}

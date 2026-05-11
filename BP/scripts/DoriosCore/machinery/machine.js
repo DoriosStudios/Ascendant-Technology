@@ -109,6 +109,265 @@ export function refreshEnergyGeometryAround(block) {
     }
 }
 
+const FLUID_NETWORK_OFFSETS = Object.freeze([
+    { x: 1, y: 0, z: 0 },
+    { x: -1, y: 0, z: 0 },
+    { x: 0, y: 1, z: 0 },
+    { x: 0, y: -1, z: 0 },
+    { x: 0, y: 0, z: 1 },
+    { x: 0, y: 0, z: -1 },
+]);
+
+const FLUID_IO_BLOCK_TYPES = Object.freeze({
+    source: new Set([
+        "utilitycraft:reinforced_extractor",
+        "utilitycraft:reinforced_exporter"
+    ]),
+    sink: new Set([
+        "utilitycraft:reinforced_importer"
+    ])
+});
+
+const FLUID_BLOCK_FACE_OFFSETS = Object.freeze({
+    down: { x: 0, y: 1, z: 0 },
+    up: { x: 0, y: -1, z: 0 },
+    south: { x: 0, y: 0, z: -1 },
+    north: { x: 0, y: 0, z: 1 },
+    east: { x: -1, y: 0, z: 0 },
+    west: { x: 1, y: 0, z: 0 }
+});
+
+const FLUID_AXIS_OFFSETS = Object.freeze({
+    north: { x: 0, y: 0, z: -1 },
+    south: { x: 0, y: 0, z: 1 },
+    east: { x: 1, y: 0, z: 0 },
+    west: { x: -1, y: 0, z: 0 },
+    up: { x: 0, y: 1, z: 0 },
+    down: { x: 0, y: -1, z: 0 }
+});
+
+function getBlockStateSafe(block, stateId) {
+    try {
+        return block?.getState?.(stateId);
+    } catch {
+        return undefined;
+    }
+}
+
+function getFluidIoFrontPosition(block) {
+    if (!block?.location) return null;
+    const face = getBlockStateSafe(block, "minecraft:block_face");
+    const offset = FLUID_BLOCK_FACE_OFFSETS[face] ?? FLUID_AXIS_OFFSETS[getBlockStateSafe(block, "utilitycraft:axis")];
+    if (!offset) return null;
+    const { x, y, z } = block.location;
+    return { x: x + offset.x, y: y + offset.y, z: z + offset.z };
+}
+
+function toBlockPos(pos) {
+    if (!pos) return null;
+    return {
+        x: Math.floor(pos.x),
+        y: Math.floor(pos.y),
+        z: Math.floor(pos.z)
+    };
+}
+
+function posKey(pos) {
+    return `${pos.x}|${pos.y}|${pos.z}`;
+}
+
+export function getReinforcedFluidIoKey(blockOrPos) {
+    const pos = blockOrPos?.location ?? blockOrPos;
+    if (!pos) return "";
+    return posKey(toBlockPos(pos));
+}
+
+function getFluidIoRole(block) {
+    if (!block) return null;
+    if (block.hasTag?.("dorios:isExporter") || FLUID_IO_BLOCK_TYPES.source.has(block.typeId)) {
+        return "source";
+    }
+    if (block.hasTag?.("dorios:isImporter") || FLUID_IO_BLOCK_TYPES.sink.has(block.typeId)) {
+        return "sink";
+    }
+    return null;
+}
+
+function isFluidTubeBlock(block) {
+    if (!block?.hasTag?.("dorios:fluid")) return false;
+    if (block.hasTag?.("dorios:isTube")) return true;
+    return getFluidIoRole(block) !== null;
+}
+
+function getFluidIoEntity(block) {
+    if (!block?.dimension || !block?.location) return null;
+    const entities = block.dimension.getEntitiesAtBlockLocation(block.location) ?? [];
+    return entities.find(entity => entity?.hasTag?.("dorios:fluid_io")) ?? entities[0] ?? null;
+}
+
+function getFluidIoFilters(entity) {
+    const tags = entity?.getTags?.() ?? [];
+    const filters = [];
+    for (const tag of tags) {
+        if (!tag.startsWith("fluidFilter:")) continue;
+        const type = tag.slice("fluidFilter:".length).trim().toLowerCase();
+        if (type) filters.push(type);
+    }
+    return [...new Set(filters)];
+}
+
+function buildFluidIoNode(block) {
+    const role = getFluidIoRole(block);
+    if (!role) return null;
+    const frontPos = getFluidIoFrontPosition(block);
+    if (!frontPos) return null;
+
+    const entity = getFluidIoEntity(block);
+    const whitelist = entity?.getDynamicProperty?.("utilitycraft:whitelistOn");
+
+    return {
+        ...frontPos,
+        role,
+        ioKey: getReinforcedFluidIoKey(block),
+        enabled: entity?.getDynamicProperty?.("isOff") !== true,
+        filterMode: whitelist === false ? "blacklist" : "whitelist",
+        filters: getFluidIoFilters(entity)
+    };
+}
+
+function resolvePortEntity(block) {
+    if (!block?.dimension || !block?.location) return null;
+    const { x, y, z } = block.location;
+    return block.dimension.getEntities({ tags: [`input:[${x},${y},${z}]`] })[0] ?? null;
+}
+
+function hasFluidContainerAt(block) {
+    if (!block?.dimension || !block?.location) return false;
+
+    if (block.hasTag?.("dorios:multiblock.port") && block.hasTag?.("dorios:fluid")) {
+        return !!resolvePortEntity(block);
+    }
+
+    if (block.typeId?.includes("fluid_tank")) return true;
+
+    const entities = block.dimension.getEntitiesAtBlockLocation(block.location) ?? [];
+    for (const entity of entities) {
+        try {
+            const tf = entity.getComponent?.("minecraft:type_family");
+            if (tf?.hasTypeFamily?.("dorios:fluid_container")) return true;
+            if (FluidManager.findType?.(entity, 0)) return true;
+        } catch {
+            // ignore entity probing failures
+        }
+    }
+
+    return false;
+}
+
+function resolveDirectFluidNode(block) {
+    if (!block?.hasTag?.("dorios:fluid")) return null;
+    if (isFluidTubeBlock(block)) return null;
+    if (!hasFluidContainerAt(block)) return null;
+
+    if (block.hasTag?.("dorios:multiblock.port")) {
+        const entity = resolvePortEntity(block);
+        const loc = toBlockPos(entity?.location);
+        if (loc) return { ...loc, role: "direct" };
+    }
+
+    return { ...toBlockPos(block.location), role: "direct" };
+}
+
+export function canFluidNodeProvide(node) {
+    const role = node?.role ?? "direct";
+    return role === "source" || role === "direct";
+}
+
+export function canFluidNodeReceive(node) {
+    const role = node?.role ?? "direct";
+    return role === "sink" || role === "direct";
+}
+
+export function isFluidNodeEnabled(node) {
+    return node?.enabled !== false;
+}
+
+export function fluidNodeMatchesType(node, type) {
+    if (!node || !type || type === "empty") return true;
+    const filters = Array.isArray(node.filters)
+        ? node.filters.map(entry => String(entry).toLowerCase()).filter(Boolean)
+        : [];
+    if (filters.length === 0) return true;
+
+    const normalizedType = String(type).toLowerCase();
+    const contains = filters.includes(normalizedType);
+    return node.filterMode === "blacklist" ? !contains : contains;
+}
+
+export function collectFluidNetworkNodes(startBlock) {
+    if (!startBlock?.dimension || !startBlock?.location) return [];
+
+    const dim = startBlock.dimension;
+    const queue = [];
+    let queueIndex = 0;
+    const visited = new Set();
+    const nodes = [];
+    const nodeKeys = new Set();
+    const MAX_VISITED = 2048;
+
+    const pushNode = (node) => {
+        if (!node) return;
+        const key = `${node.role ?? "direct"}:${node.ioKey ?? ""}:${node.x}|${node.y}|${node.z}`;
+        if (nodeKeys.has(key)) return;
+        nodeKeys.add(key);
+        nodes.push(node);
+    };
+
+    const enqueue = (pos) => {
+        if (!pos) return;
+        queue.push(toBlockPos(pos));
+    };
+
+    if (isFluidTubeBlock(startBlock)) {
+        enqueue(startBlock.location);
+    } else {
+        for (const off of FLUID_NETWORK_OFFSETS) {
+            const neighborPos = {
+                x: startBlock.location.x + off.x,
+                y: startBlock.location.y + off.y,
+                z: startBlock.location.z + off.z
+            };
+            const neighbor = dim.getBlock(neighborPos);
+            if (!neighbor?.hasTag?.("dorios:fluid")) continue;
+
+            if (isFluidTubeBlock(neighbor)) {
+                enqueue(neighborPos);
+            } else {
+                pushNode(resolveDirectFluidNode(neighbor));
+            }
+        }
+    }
+
+    while (queueIndex < queue.length && visited.size < MAX_VISITED) {
+        const pos = queue[queueIndex++];
+        const key = posKey(pos);
+        if (visited.has(key)) continue;
+        visited.add(key);
+
+        const block = dim.getBlock(pos);
+        if (!block?.hasTag?.("dorios:fluid")) continue;
+        if (!isFluidTubeBlock(block)) continue;
+
+        pushNode(buildFluidIoNode(block));
+
+        for (const off of FLUID_NETWORK_OFFSETS) {
+            enqueue({ x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z });
+        }
+    }
+
+    return nodes;
+}
+
 /**
  * Updates pipe network connections for energy or fluid systems.
  *
@@ -130,61 +389,11 @@ export function updatePipes(block, type) {
     }
 
     const dim = block.dimension;
-
     const sourceEntity = dim.getEntitiesAtBlockLocation(block.location)[0];
     if (!sourceEntity) return;
 
-    const OFFSETS = [
-        { x: 1, y: 0, z: 0 },
-        { x: -1, y: 0, z: 0 },
-        { x: 0, y: 1, z: 0 },
-        { x: 0, y: -1, z: 0 },
-        { x: 0, y: 0, z: 1 },
-        { x: 0, y: 0, z: -1 },
-    ];
-
-    const start = block.location;
-    const queue = [start];
-    let queueIndex = 0;
-    const visited = new Set();
-    const nodes = [];
-    const MAX_VISITED = 2048;
-
-    const isFluidContainer = (entity) => {
-        try {
-            return !!FluidManager.findType?.(entity, 0);
-        } catch { return false; }
-    };
-
-    const targetTag = 'dorios:fluid';
-    const isContainer = isFluidContainer;
-
-    while (queueIndex < queue.length && visited.size <= MAX_VISITED) {
-        const pos = queue[queueIndex++];
-        const key = `${pos.x}|${pos.y}|${pos.z}`;
-        if (visited.has(key)) continue;
-        visited.add(key);
-
-        const nodeBlock = dim.getBlock(pos);
-        const isTargetTagged = nodeBlock?.hasTag?.(targetTag);
-        if (!nodeBlock || !isTargetTagged) continue;
-
-        for (const off of OFFSETS) {
-            queue.push({ x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z });
-        }
-
-        const [entity] = dim.getEntitiesAtBlockLocation(pos);
-        if (!entity) continue;
-
-        const isValidContainer = isContainer(entity);
-        if (!isValidContainer) continue;
-
-        if (pos.x === start.x && pos.y === start.y && pos.z === start.z) continue;
-
-        nodes.push(pos);
-    }
-
     const prop = "dorios:fluid_nodes";
+    const nodes = collectFluidNetworkNodes(block);
 
     try {
         sourceEntity.setDynamicProperty(prop, JSON.stringify(nodes));

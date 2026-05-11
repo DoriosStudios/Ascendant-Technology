@@ -24,6 +24,14 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Superior version of Autosieve with 4 input slots, 1 mesh chamber, and 15 output slots.
   - Processes one material stream in grouped spin cycles instead of single-item sieving.
   - Can optionally consume Steam to accelerate larger sieve batches.
+- Added **Cryo Stabilizer**
+  - Standalone superior branch of the Cryo Chamber focused only on stabilization recipes.
+  - Uses Cryofluid to safely process unstable materials without sharing space with the freezer or generator sections.
+  - Currently reuses Cryo Chamber textures as placeholders while dedicated art is still pending.
+- Added **Cryo Freezer**
+  - Standalone superior branch of the Cryo Chamber focused only on freezing and cold-crafting recipes.
+  - Keeps a dedicated 3x3 freezing grid with independent slot processing, allowing water and Cryofluid-backed recipes to run without competing with stabilization or Cryofluid generation.
+  - Currently reuses Cryo Chamber textures as placeholders while dedicated art is still pending.
 - Added **Dual Siever**
   - Superior split-path siever with two independent mesh lanes in one machine.
   - Shares energy, upgrades, steam tank, and output buffering across both lanes.
@@ -46,6 +54,10 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Uses Lava for impact cycles and accepts Water, Cryofluid, or Saline Coolant for thermal control.
   - Supports grouped crushing runs for larger processing batches.
   - Base crushing cycles now cost more energy, but complete much faster than before.
+- Added **Reinforced Importer** and **Reinforced Exporter**
+  - Reinforced fluid networks now use dedicated blocks for moving fluids into and out of the cable backbone.
+  - Reinforced Cable still carries fluids across the network, but it no longer pulls from or pushes into distant tanks by itself.
+  - Importers and Exporters can be enabled, disabled, and filtered for specific fluid types.
 - Added **Pattern Placer**
   - Superior version of Block Placer with 4 input slots and different modes.
   - Has four modes:
@@ -77,6 +89,8 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Range Upgrades expand its working field from 3x3 up to 17x17.
   - A dedicated Pedestal Clock slot pulses crop growth while Quantity Upgrades add extra harvest rolls.
   - Supports vanilla field crops and UtilityCraft seed crops, then exports buffered harvests from the rear when possible.
+- Added **Reinforced Case** and **Superior Case**.
+  - New machine-case block variants are now registered with their own textures for future recipe use.
 
 ## ITEMS
 ### Equipment
@@ -137,6 +151,19 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - Superior machine menus now follow the world's refresh speed setting.
   - Progress arrows, status panels, tank displays, and mode panels now refresh on the same cadence as the configured world update speed.
 
+## FLUIDS
+- Liquid Capsules now interact more reliably with vanilla Water and Lava sources.
+  - Pickup targeting now follows the block the player is looking at up to 6 blocks away, making source collection more consistent in tight spaces.
+  - Placement now uses more precise face detection, so Water and Lava Capsules are much easier to place where intended.
+- Infinite fluid capsules now behave as true infinite fillers when used on compatible tanks and fluid machines.
+  - Water and Lava Infinite Capsules now keep refilling accepted fluid storage instead of acting like oversized single-use containers.
+
+## BUG FIXES
+- Fixed stacked Liquid Capsules disappearing while collecting Water or Lava.
+  - Picking up a source with multiple capsules in hand no longer deletes the source block while losing the filled capsule.
+- Fixed capsule world-use priority around fluid tanks.
+  - Fluid capsules now try to fill the tank or fluid storage you clicked before attempting to place their contents into the world.
+
 ## TECHNICAL CHANGES
 ### Compatibility
 - Added `utilitycraft:register_armor_mitigation` as a ScriptEvent-based registry for external armor items that cannot use the native `utilitycraft:armor` component.
@@ -162,6 +189,10 @@ Heavy processing and block automation still anchor this draft, but this pass als
 
 ### Runtime Registration
 - Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Impact Crusher, Verdant Cultivator, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
+- Added native runtime registration for Cryo Stabilizer as a standalone superior Cryo Chamber branch.
+  - Includes block, recipe, machine script, item catalog integration, localization, and temporary placeholder textures.
+- Added native runtime registration for Cryo Freezer as a standalone superior Cryo Chamber branch.
+  - Includes block, recipe, machine script, item catalog integration, localization, and temporary placeholder textures.
 - Expanded StatsCore runtime handling for awakened utility abilities.
   - Added persistent per-item awakening data for special abilities and saved **Operator** mode state on drills.
   - Added runtime handling for **Operator**, **Gardener**, **Primal**, **Forger**, and **Ingniter** behaviors.
@@ -181,6 +212,14 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Reduced redundant block-entity lookups through cached machine entity resolution.
   - Reduced repeated direct recipe-array scans in Arc-Press Forge, Industrial Burner, and Pulverizer.
   - Reduced redundant overclock property writes across towers, relays, and connected machines.
+- Further optimized liquid-machine runtime loops for Vaporworks Processor and Liquifier.
+  - Converted Vaporworks Processor and Liquifier recipe registries to UtilityCraft-style direct lookups keyed by their main input.
+  - Added shared DoriosCore recipe resolvers so machines can consume either keyed registries or list-based recipe sets without redefining local `resolveRecipes(...)` handlers.
+  - Added per-entity caching for parsed `dorios:fluid_nodes` payloads and distance-ordered fluid-network targets to reduce repeated JSON parsing and resorting work.
+  - Collapsed repeated tank, energy, and progress reads into per-tick state snapshots before validation and HUD generation.
+  - Throttled redundant tank, energy, progress, and label refreshes when the rendered machine state has not changed.
+  - Vaporworks Processor now resolves valid fluids through direct input-type lookup instead of repeated per-tick recipe scans.
+  - Liquifier now resolves its input items through the same direct registry model while keeping shared cached lookup support for list-based recipes.
 - Optimized Absolute Container runtime behavior under sustained full-output conditions.
   - Added cached block-context and entity-runtime state to reduce repeated lookup and manager initialization cost.
   - Replaced per-tick capacity rewrites with one-time runtime initialization.
@@ -193,6 +232,13 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - Optimized reinforced cable / overclock network scan paths and refresh scheduling.
   - Replaced shift-based BFS queue traversal with index-based scans in reinforced cable, overclock, and reinforced extractor network walkers.
   - Added tick-level deduplication for reinforced cable geometry and energy rescan scheduling to avoid duplicate recomputes in dense placement/break events.
+- Updated reinforced fluid network semantics around explicit node roles.
+  - `dorios:fluid_nodes` now stores role-aware nodes (`direct`, `source`, `sink`) instead of only raw positions.
+  - Reinforced Cable now acts as a fluid transport backbone only; cable spans no longer expose remote machines or tanks as direct fluid I/O endpoints.
+  - Reinforced Importer and Reinforced Exporter are now the dedicated fluid I/O endpoints for reinforced cable spans.
+  - Vaporworks Processor and Impact Crusher now respect fluid node role, enabled state, and per-node fluid filters when pulling from a reinforced network.
+- Updated Ascendant machine energy managers to recover missing scoreboard identities before evaluating stored energy or capacity.
+  - Prevents connected machines from being treated as zero-capacity cable targets when their runtime entity is freshly spawned or reloaded.
 - Updated Dual Siever batch drop flow to use mapped autosieve-style rolls before batch expansion.
   - The machine now simulates normal autosieve rolls per consumed input (independent roll + chance per roll), stores mapped results, then applies batch expansion to the mapped output.
   - Batch processing no longer mutates base drop entry values directly.
@@ -219,5 +265,11 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Keeps the heat slot aligned with the machine's live thermal buffer instead of reusing the generic lane-progress arrow frames.
 - Added missing nineslice JSON metadata for inverted UI cell texture variants used by superior machine buttons.
 - Updated superior machine button states to swap base and hover cell imagery while keeping dedicated button textures through UtilityCraft UI Core controls.
+- Added missing nineslice JSON metadata for the remaining hover-inverted superior button cell textures.
+  - Hovered superior machine buttons now have consistent panel slicing across every registered color variant.
 - Added a shared superior UI refresh gate for display and panel rendering.
   - Superior machine status panels, tank bars, progress arrows, and button panels now throttle against the world's configured refresh cadence instead of updating immediately on every local render path.
+- Updated capsule fluid registries and world interaction flow for finite and infinite capsule behavior.
+  - Added explicit `infinite: true` registration metadata for Ascendant Technology infinite capsules so `FluidManager` treats them as real infinite providers.
+  - Switched capsule world interactions to prefer `itemUseOn` targeting when available, with a 6-block fallback raycast for source lookup.
+  - Added a pre-placement fluid-storage handler so registered capsule containers can fill clicked tanks, ports, and fluid-capable machine blocks before any world placement is attempted.

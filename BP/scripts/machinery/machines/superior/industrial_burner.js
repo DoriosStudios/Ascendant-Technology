@@ -4,6 +4,7 @@ import {
     Energy,
     FluidManager,
     findRecipeByInputId,
+    resolveMachineRecipeList,
     resolveRecipeTimeSeconds,
     buildOverclockLoreLine,
     ADAPTIVE_CHECK_RESULT,
@@ -103,7 +104,7 @@ DoriosAPI.register.blockComponent("industrial_burner", {
         if (!machine.valid) return;
 
         const tank = getLavaTank(machine, settings);
-        const recipes = resolveRecipes(e.block, settings);
+        const recipes = resolveMachineRecipeList(e.block, settings, ["industrial_burner", "furnace"], getIndustrialBurnerRecipes());
         const quantityLevel = getQuantityUpgradeLevel(machine);
         const batchSize = getBatchSize(quantityLevel);
         const yieldBoost = Math.max(1, machine.boosts.overclockYield ?? 1);
@@ -276,14 +277,6 @@ DoriosAPI.register.blockComponent("industrial_burner", {
         Machine.onDestroy(e);
     }
 });
-
-function resolveRecipes(block, settings) {
-    const component = block.getComponent("utilitycraft:machine_recipes")?.customComponentParameters?.params;
-    if (component?.type === "industrial_burner" || component?.type === "furnace") return getIndustrialBurnerRecipes();
-    if (Array.isArray(component)) return component;
-    if (Array.isArray(settings?.machine?.recipes)) return settings.machine.recipes;
-    return getIndustrialBurnerRecipes();
-}
 
 function getLavaTank(machine, settings) {
     const tank = FluidManager.initializeSingle(machine.entity);

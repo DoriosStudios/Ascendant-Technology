@@ -1,0 +1,20 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": { "identifier": "utilitycraft:reinforced_importer" },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": [
+            " H ",
+            "CRC",
+            " A "
+        ],
+        "key": {
+            "H": { "item": "minecraft:hopper" },
+            "C": { "item": "utilitycraft:reinforced_cable" },
+            "R": { "item": "minecraft:redstone" },
+            "A": { "item": "utilitycraft:advanced_chip" }
+        },
+        "result": { "item": "utilitycraft:reinforced_importer", "count": 1 },
+        "unlock": [ { "item": "utilitycraft:reinforced_cable" } ]
+    }
+}

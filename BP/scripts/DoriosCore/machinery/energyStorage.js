@@ -13,8 +13,8 @@ export class Energy {
     constructor(entity) {
         this.entity = entity;
         this.scoreId = entity?.scoreboardIdentity;
-        // Only fetch cap if the entity has a scoreboard identity
-        this.cap = this.scoreId ? this.getCap() : 0;
+        this.ensureScoreId();
+        this.cap = this.scoreId ? this.getCap() : undefined;
     }
 
     //#region Statics
@@ -53,7 +53,21 @@ export class Energy {
      * @returns {void}
      */
     static initialize(entity) {
+        if (!entity) return;
         entity.runCommand(`scoreboard players set @s energy 0`);
+    }
+
+    ensureScoreId() {
+        if (this.scoreId || !this.entity) return this.scoreId;
+
+        try {
+            Energy.initialize(this.entity);
+        } catch {
+            return undefined;
+        }
+
+        this.scoreId = this.entity?.scoreboardIdentity;
+        return this.scoreId;
     }
 
     /**
@@ -174,12 +188,15 @@ export class Energy {
 
     //#region Caps
     setCap(amount) {
+        if (!this.ensureScoreId()) return;
         const { value, exp } = Energy.normalizeValue(amount);
         Energy.#objectives.energyCap.setScore(this.scoreId, value);
         Energy.#objectives.energyCapExp.setScore(this.scoreId, exp);
+        this.cap = Energy.combineValue(value, exp);
     }
 
     getCap() {
+        if (!this.ensureScoreId()) return this.cap || 0;
         if (!this.scoreId) return this.cap || 0;
         const value = Energy.#objectives.energyCap?.getScore(this.scoreId) || 0;
         const exp = Energy.#objectives.energyCapExp?.getScore(this.scoreId) || 0;
@@ -189,6 +206,7 @@ export class Energy {
     }
 
     getCapNormalized() {
+        if (!this.ensureScoreId()) return { value: 0, exp: 0 };
         if (!this.scoreId) return { value: 0, exp: 0 };
         const value = Energy.#objectives.energyCap?.getScore(this.scoreId) || 0;
         const exp = Energy.#objectives.energyCapExp?.getScore(this.scoreId) || 0;
@@ -199,6 +217,7 @@ export class Energy {
     //#endregion
 
     set(amount) {
+        if (!this.ensureScoreId()) return;
         const { value, exp } = Energy.normalizeValue(amount);
 
         Energy.#objectives.energy.setScore(this.scoreId, value);
@@ -206,6 +225,7 @@ export class Energy {
     }
 
     get() {
+        if (!this.ensureScoreId()) return 0;
         if (!this.scoreId) return 0;
         const value = Energy.#objectives.energy?.getScore(this.scoreId) || 0;
         const exp = Energy.#objectives.energyExp?.getScore(this.scoreId) || 0;
@@ -213,6 +233,7 @@ export class Energy {
     }
 
     getNormalized() {
+        if (!this.ensureScoreId()) return { value: 0, exp: 0 };
         if (!this.scoreId) return { value: 0, exp: 0 };
         return {
             value: Energy.#objectives.energy?.getScore(this.scoreId) || 0,
@@ -229,6 +250,7 @@ export class Energy {
     }
 
     add(amount) {
+        if (!this.ensureScoreId()) return 0;
         const free = this.getFreeSpace();
         if (amount > 0 && free <= 0) return 0;
 

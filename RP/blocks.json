@@ -92,10 +92,22 @@
 	"utilitycraft:network_center": {
 		"sound": "metal"
 	},
+	"utilitycraft:reinforced_machine_case": {
+		"sound": "metal"
+	},
+	"utilitycraft:superior_machine_case": {
+		"sound": "metal"
+	},
 	"utilitycraft:tabs_test_machine": {
 		"sound": "metal"
 	},
 	"utilitycraft:reinforced_cable": {
+		"sound": "metal"
+	},
+	"utilitycraft:reinforced_importer": {
+		"sound": "metal"
+	},
+	"utilitycraft:reinforced_exporter": {
 		"sound": "metal"
 	},
 	"utilitycraft:overclock_tower": {

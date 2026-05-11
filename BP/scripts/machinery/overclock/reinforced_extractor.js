@@ -1,45 +1,214 @@
 import { system } from "@minecraft/server";
-import { FluidManager, Rotation } from "../../DoriosCore/main.js";
+import { ActionFormData } from "@minecraft/server-ui";
+import {
+    FluidManager,
+    Rotation,
+    collectFluidNetworkNodes,
+    canFluidNodeProvide,
+    canFluidNodeReceive,
+    isFluidNodeEnabled,
+    fluidNodeMatchesType,
+    updatePipes
+} from "../../DoriosCore/main.js";
 
-const REINFORCED_EXTRACTOR = Object.freeze({
+const REINFORCED_FLUID_IO = Object.freeze({
     defaults: Object.freeze({
         rate: 4000,
         maxScan: 256,
         mode: "nearest"
     }),
-    offsets: Object.freeze([
-        { x: 1, y: 0, z: 0 },
-        { x: -1, y: 0, z: 0 },
-        { x: 0, y: 1, z: 0 },
-        { x: 0, y: -1, z: 0 },
-        { x: 0, y: 0, z: 1 },
-        { x: 0, y: 0, z: -1 },
-    ]),
-    sourceTankIndices: Object.freeze([0, 1])
-});
-
-const DEFAULT_RATE = REINFORCED_EXTRACTOR.defaults.rate;
-const MAX_SCAN = REINFORCED_EXTRACTOR.defaults.maxScan;
-const DEFAULT_MODE = REINFORCED_EXTRACTOR.defaults.mode;
-const OFFSETS = REINFORCED_EXTRACTOR.offsets;
-
-function findFacingOffset(block) {
-    const facing = block.getState("utilitycraft:axis");
-    const map = {
+    sourceTankIndices: Object.freeze([0, 1]),
+    targetTankIndices: Object.freeze([0, 1]),
+    blockFaceOffsets: Object.freeze({
+        down: { x: 0, y: 1, z: 0 },
+        up: { x: 0, y: -1, z: 0 },
+        south: { x: 0, y: 0, z: -1 },
+        north: { x: 0, y: 0, z: 1 },
+        east: { x: -1, y: 0, z: 0 },
+        west: { x: 1, y: 0, z: 0 }
+    }),
+    axisOffsets: Object.freeze({
         north: { x: 0, y: 0, z: -1 },
         south: { x: 0, y: 0, z: 1 },
         east: { x: 1, y: 0, z: 0 },
         west: { x: -1, y: 0, z: 0 },
         up: { x: 0, y: 1, z: 0 },
-        down: { x: 0, y: -1, z: 0 },
-    };
-    return map[facing] ?? { x: 0, y: 0, z: 1 };
+        down: { x: 0, y: -1, z: 0 }
+    }),
+    vanillaFluids: Object.freeze({
+        "minecraft:water": "water",
+        "minecraft:lava": "lava"
+    }),
+    configTag: "dorios:fluid_io",
+    filterPrefix: "fluidFilter:"
+});
+
+const DEFAULT_RATE = REINFORCED_FLUID_IO.defaults.rate;
+const DEFAULT_MODE = REINFORCED_FLUID_IO.defaults.mode;
+const SOURCE_TANK_INDICES = REINFORCED_FLUID_IO.sourceTankIndices;
+const TARGET_TANK_INDICES = REINFORCED_FLUID_IO.targetTankIndices;
+const BLOCK_FACE_OFFSETS = REINFORCED_FLUID_IO.blockFaceOffsets;
+const AXIS_OFFSETS = REINFORCED_FLUID_IO.axisOffsets;
+const VANILLA_FLUIDS = REINFORCED_FLUID_IO.vanillaFluids;
+const CONFIG_TAG = REINFORCED_FLUID_IO.configTag;
+const FILTER_PREFIX = REINFORCED_FLUID_IO.filterPrefix;
+
+function getBlockStateSafe(block, stateId) {
+    try {
+        return block?.getState?.(stateId);
+    } catch {
+        return undefined;
+    }
 }
 
-const SOURCE_TANK_INDICES = REINFORCED_EXTRACTOR.sourceTankIndices;
+function findFacingOffset(block) {
+    const face = getBlockStateSafe(block, "minecraft:block_face");
+    if (BLOCK_FACE_OFFSETS[face]) return BLOCK_FACE_OFFSETS[face];
+
+    const axis = getBlockStateSafe(block, "utilitycraft:axis");
+    return AXIS_OFFSETS[axis] ?? AXIS_OFFSETS.south;
+}
+
+function getFrontPosition(block) {
+    const off = findFacingOffset(block);
+    const { x, y, z } = block.location;
+    return { x: x + off.x, y: y + off.y, z: z + off.z };
+}
+
+function posKey(pos) {
+    return `${Math.floor(pos.x)}|${Math.floor(pos.y)}|${Math.floor(pos.z)}`;
+}
+
+function isSamePos(a, b) {
+    if (!a || !b) return false;
+    return Math.floor(a.x) === Math.floor(b.x)
+        && Math.floor(a.y) === Math.floor(b.y)
+        && Math.floor(a.z) === Math.floor(b.z);
+}
+
+function getConfigEntity(block, create = false) {
+    if (!block?.dimension || !block?.location) return null;
+
+    const entities = block.dimension.getEntitiesAtBlockLocation(block.location) ?? [];
+    const existing = entities.find(entity => entity?.hasTag?.(CONFIG_TAG));
+    if (existing?.isValid) return existing;
+    if (!create) return null;
+
+    const center = block.center();
+    let entity = null;
+    try {
+        entity = block.dimension.spawnEntity("utilitycraft:pipe", {
+            x: center.x,
+            y: center.y - 0.25,
+            z: center.z
+        });
+    } catch {
+        return null;
+    }
+
+    entity.addTag?.(CONFIG_TAG);
+    entity.setDynamicProperty?.("transferMode", DEFAULT_MODE);
+    entity.setDynamicProperty?.("utilitycraft:whitelistOn", true);
+    entity.setDynamicProperty?.("dorios:fluid_round_idx", 0);
+    entity.nameTag = `entity.${block.typeId}.name`;
+    return entity;
+}
+
+function removeConfigEntity(block) {
+    const entities = block?.dimension?.getEntitiesAtBlockLocation(block.location) ?? [];
+    for (const entity of entities) {
+        if (entity?.hasTag?.(CONFIG_TAG)) {
+            entity.remove();
+        }
+    }
+}
+
+function getFilterTypes(entity) {
+    const tags = entity?.getTags?.() ?? [];
+    const filters = [];
+    for (const tag of tags) {
+        if (!tag.startsWith(FILTER_PREFIX)) continue;
+        const type = tag.slice(FILTER_PREFIX.length).trim().toLowerCase();
+        if (type) filters.push(type);
+    }
+    return [...new Set(filters)].sort();
+}
+
+function getWhitelistState(entity) {
+    return entity?.getDynamicProperty?.("utilitycraft:whitelistOn") !== false;
+}
+
+function ioAllowsFluid(entity, type) {
+    if (!entity || !type || type === "empty") return true;
+    const filters = getFilterTypes(entity);
+    if (!filters.length) return true;
+    const contains = filters.includes(type.toLowerCase());
+    return getWhitelistState(entity) ? contains : !contains;
+}
+
+function addFilterType(entity, type, player) {
+    const normalized = typeof type === "string" ? type.trim().toLowerCase() : "";
+    if (!entity || !normalized || normalized === "empty") return false;
+
+    const tag = `${FILTER_PREFIX}${normalized}`;
+    if (!entity.getTags?.().includes(tag)) {
+        entity.addTag?.(tag);
+    }
+
+    player?.onScreenDisplay?.setActionBar?.(`§7Added fluid filter: §b${DoriosAPI.utils.formatIdToText(normalized)}`);
+    return true;
+}
+
+function resolveHeldFluidType(item) {
+    if (!item?.typeId) return null;
+
+    const containerData = FluidManager.getContainerData?.(item.typeId);
+    if (containerData?.type) return containerData.type;
+
+    const lore = typeof item.getLore === "function" ? item.getLore() : [];
+    for (const line of lore) {
+        const parsed = FluidManager.getFluidFromText?.(line);
+        if (parsed?.type && parsed.type !== "empty" && parsed.amount > 0) {
+            return parsed.type;
+        }
+    }
+
+    return null;
+}
+
+function getEntitiesAtSameBlock(dim, pos) {
+    const key = posKey(pos);
+    const direct = dim.getEntitiesAtBlockLocation(pos) ?? [];
+    const nearby = dim.getEntities({
+        location: { x: pos.x + 0.5, y: pos.y + 0.5, z: pos.z + 0.5 },
+        maxDistance: 1.25
+    }) ?? [];
+
+    const unique = new Map();
+    for (const entity of [...direct, ...nearby]) {
+        if (!entity?.isValid) continue;
+        const entityPos = {
+            x: Math.floor(entity.location.x),
+            y: Math.floor(entity.location.y),
+            z: Math.floor(entity.location.z)
+        };
+        if (posKey(entityPos) !== key) continue;
+        const id = entity.scoreboardIdentity?.id ?? `${entity.typeId}:${unique.size}`;
+        unique.set(id, entity);
+    }
+
+    return [...unique.values()];
+}
+
+function resolvePortEntity(block) {
+    if (!block?.dimension || !block?.location) return null;
+    const { x, y, z } = block.location;
+    return block.dimension.getEntities({ tags: [`input:[${x},${y},${z}]`] })[0] ?? null;
+}
 
 function resolveSourceTank(entity) {
-    if (!entity) return null;
+    if (!entity?.isValid) return null;
+    if (entity.hasTag?.("dorios:fluid_input_only")) return null;
 
     const candidates = [];
     for (const index of SOURCE_TANK_INDICES) {
@@ -65,20 +234,14 @@ function resolveSourceTank(entity) {
 }
 
 function selectSourceFromEntities(entities) {
-    if (!Array.isArray(entities) || entities.length === 0) return null;
-
     let best = null;
     for (const entity of entities) {
-        if (!entity) continue;
-        if (entity?.hasTag?.("dorios:fluid_input_only")) continue;
-
         const tank = resolveSourceTank(entity);
         if (!tank || tank.getCap() <= 0) continue;
 
         const amount = tank.get();
         const type = tank.getType();
         const hasFluid = amount > 0 && type !== "empty";
-
         const score = (hasFluid ? amount : 0) + (type !== "water" ? 1_000_000 : 0);
         if (!best || score > best.score) {
             best = { entity, tank, score };
@@ -88,228 +251,426 @@ function selectSourceFromEntities(entities) {
     return best;
 }
 
-function posKey(pos) {
-    return `${pos.x}|${pos.y}|${pos.z}`;
-}
+function resolveFluidSourceAt(dim, sourcePos) {
+    const sourceBlock = dim.getBlock(sourcePos);
+    if (!sourceBlock) return null;
 
-function isSamePos(a, b) {
-    if (!a || !b) return false;
-    return a.x === b.x && a.y === b.y && a.z === b.z;
-}
+    let entities = getEntitiesAtSameBlock(dim, sourcePos);
 
-function isTubeBlock(block) {
-    if (!block) return false;
-    if (block.hasTag?.("dorios:isTube")) return true;
-    if (block.typeId === "utilitycraft:reinforced_cable") return true;
-    if (block.typeId === "utilitycraft:reinforced_extractor") return true;
-    return false;
-}
-
-function scanFluidTargets(startBlock, sourcePos) {
-    const dim = startBlock.dimension;
-    const queue = [startBlock.location];
-    let queueIndex = 0;
-    const visited = new Set();
-    const rawTargets = [];
-    const blockedTargets = new Set();
-    let steps = 0;
-
-    while (queueIndex < queue.length && steps < MAX_SCAN) {
-        const pos = queue[queueIndex++];
-        const key = posKey(pos);
-        if (visited.has(key)) continue;
-        visited.add(key);
-        steps++;
-
-        const block = dim.getBlock(pos);
-        if (!block || !block.hasTag("dorios:fluid")) continue;
-
-        const isTube = isTubeBlock(block);
-
-        if (block.typeId === "utilitycraft:reinforced_extractor") {
-            const off = findFacingOffset(block);
-            const frontPos = { x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z };
-            blockedTargets.add(posKey(frontPos));
-        }
-
-        if (isTube) {
-            for (const off of OFFSETS) {
-                queue.push({ x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z });
-            }
-            continue;
-        }
-
-        rawTargets.push(pos);
+    if (sourceBlock.hasTag?.("dorios:multiblock.port") && sourceBlock.hasTag?.("dorios:fluid")) {
+        const portEntity = resolvePortEntity(sourceBlock);
+        entities = portEntity ? [portEntity, ...entities] : entities;
     }
 
-    return rawTargets.filter(pos => {
-        if (sourcePos && isSamePos(pos, sourcePos)) return false;
-        if (blockedTargets.has(posKey(pos))) return false;
-        return true;
+    const sourcePick = selectSourceFromEntities(entities);
+    if (sourcePick?.tank) {
+        const type = sourcePick.tank.getType();
+        return {
+            kind: "entity",
+            pos: sourcePos,
+            block: sourceBlock,
+            tank: sourcePick.tank,
+            type,
+            amount: sourcePick.tank.get(),
+            infinite: false
+        };
+    }
+
+    if (VANILLA_FLUIDS[sourceBlock.typeId]) {
+        if (sourceBlock.permutation.getState("liquid_depth") !== 0) return null;
+        return {
+            kind: "vanilla",
+            pos: sourcePos,
+            block: sourceBlock,
+            type: VANILLA_FLUIDS[sourceBlock.typeId],
+            amount: 1000,
+            infinite: false
+        };
+    }
+
+    if (sourceBlock.typeId === "utilitycraft:crucible") {
+        const lavaLevel = sourceBlock.permutation.getState("utilitycraft:lava");
+        if (lavaLevel < 1) return null;
+        return {
+            kind: "crucible",
+            pos: sourcePos,
+            block: sourceBlock,
+            type: "lava",
+            amount: 250 * lavaLevel,
+            infinite: false
+        };
+    }
+
+    if (sourceBlock.typeId === "utilitycraft:sink") {
+        return {
+            kind: "sink",
+            pos: sourcePos,
+            block: sourceBlock,
+            type: "water",
+            amount: Infinity,
+            infinite: true
+        };
+    }
+
+    return null;
+}
+
+function resolveFluidSource(block) {
+    return resolveFluidSourceAt(block.dimension, getFrontPosition(block));
+}
+
+function selectTargetTank(entity, type) {
+    if (!entity?.isValid || !type || type === "empty") return null;
+    if (!FluidManager.findType(entity, 0) && !FluidManager.findType(entity, 1)) return null;
+
+    for (const index of TARGET_TANK_INDICES) {
+        const tank = FluidManager.findType(entity, index);
+        if (!tank || tank.getCap() <= 0) continue;
+        const targetType = tank.getType();
+        if (targetType !== "empty" && targetType !== type) continue;
+        if (tank.getFreeSpace() <= 0) continue;
+        return tank;
+    }
+
+    return null;
+}
+
+function resolveFluidTargetAt(dim, targetPos, type) {
+    const targetBlock = dim.getBlock(targetPos);
+    if (!targetBlock?.hasTag?.("dorios:fluid")) return null;
+
+    let entities = getEntitiesAtSameBlock(dim, targetPos);
+
+    if (targetBlock.hasTag?.("dorios:multiblock.port") && targetBlock.hasTag?.("dorios:fluid")) {
+        const portEntity = resolvePortEntity(targetBlock);
+        entities = portEntity ? [portEntity, ...entities] : entities;
+    }
+
+    for (const entity of entities) {
+        const tank = selectTargetTank(entity, type);
+        if (tank) return { entity, tank, block: targetBlock, pos: targetPos };
+    }
+
+    if (targetBlock.typeId.includes("fluid_tank")) {
+        const entity = FluidManager.addfluidToTank(targetBlock, type, 0);
+        const tank = selectTargetTank(entity, type);
+        if (tank) return { entity, tank, block: targetBlock, pos: targetPos };
+    }
+
+    return null;
+}
+
+function resolveDetectedTargetFluidType(block) {
+    const targetPos = getFrontPosition(block);
+    const targetBlock = block.dimension.getBlock(targetPos);
+    if (!targetBlock) return null;
+
+    const entities = getEntitiesAtSameBlock(block.dimension, targetPos);
+    for (const entity of entities) {
+        for (const index of TARGET_TANK_INDICES) {
+            const tank = FluidManager.findType(entity, index);
+            const type = tank?.getType?.();
+            if (type && type !== "empty") return type;
+        }
+    }
+
+    return null;
+}
+
+function orderNodes(nodes, origin, mode, roundIndex = 0) {
+    let ordered = Array.isArray(nodes) ? [...nodes] : [];
+    ordered.sort((a, b) => DoriosAPI.math.distanceBetween(origin, a) - DoriosAPI.math.distanceBetween(origin, b));
+
+    if (mode === "farthest") {
+        ordered.reverse();
+    } else if (mode === "round" && ordered.length > 1) {
+        const idx = Math.max(0, Number(roundIndex) || 0) % ordered.length;
+        ordered = ordered.slice(idx).concat(ordered.slice(0, idx));
+    }
+
+    return ordered;
+}
+
+function transferBlockFluidToTarget(source, targetTank, amount) {
+    if (!source || !targetTank || amount <= 0) return 0;
+
+    const type = source.type;
+    if (!type || type === "empty") return 0;
+
+    let move = Math.min(amount, targetTank.getFreeSpace(), source.infinite ? amount : source.amount);
+    if (source.kind === "crucible") {
+        move = Math.floor(move / 250) * 250;
+    }
+    if (move <= 0) return 0;
+
+    const inserted = targetTank.tryInsert(type, move);
+    return inserted ? move : 0;
+}
+
+function drainFiniteBlockSource(source, moved) {
+    if (!source || source.infinite || moved <= 0) return;
+
+    if (source.kind === "vanilla") {
+        source.block.setType("minecraft:air");
+        return;
+    }
+
+    if (source.kind === "crucible") {
+        const currentLava = source.block.permutation.getState("utilitycraft:lava");
+        const drainedLevels = Math.min(currentLava, Math.floor(moved / 250));
+        source.block.setPermutation(source.block.permutation.withState("utilitycraft:lava", Math.max(0, currentLava - drainedLevels)));
+    }
+}
+
+function runExporter(block, settings) {
+    const config = getConfigEntity(block, true);
+    if (config?.getDynamicProperty?.("isOff")) return;
+
+    const source = resolveFluidSource(block);
+    if (!source || !source.type || source.type === "empty" || source.amount <= 0) return;
+    if (!ioAllowsFluid(config, source.type)) return;
+
+    const rate = settings?.machine?.fluid_rate ?? DEFAULT_RATE;
+    const mode = config?.getDynamicProperty?.("transferMode") ?? DEFAULT_MODE;
+    const nodes = collectFluidNetworkNodes(block)
+        .filter(node => canFluidNodeReceive(node))
+        .filter(node => isFluidNodeEnabled(node))
+        .filter(node => fluidNodeMatchesType(node, source.type))
+        .filter(node => !isSamePos(node, source.pos));
+
+    if (!nodes.length) return;
+
+    let transferred = 0;
+    const roundIndex = config?.getDynamicProperty?.("dorios:fluid_round_idx") ?? 0;
+    const orderedTargets = orderNodes(nodes, block.location, mode, roundIndex);
+
+    if (source.tank) {
+        transferred = source.tank.transferToNetwork(rate, mode, orderedTargets);
+    } else {
+        let remaining = Math.min(rate, source.infinite ? rate : source.amount);
+        for (const node of orderedTargets) {
+            if (remaining <= 0) break;
+            const target = resolveFluidTargetAt(block.dimension, node, source.type);
+            const moved = transferBlockFluidToTarget(source, target?.tank, remaining);
+            if (moved <= 0) continue;
+            remaining -= moved;
+            transferred += moved;
+        }
+    }
+
+    if (transferred > 0) {
+        if (mode === "round") {
+            config.setDynamicProperty?.("dorios:fluid_round_idx", (Number(roundIndex) + 1) % nodes.length);
+        }
+        drainFiniteBlockSource(source, transferred);
+    }
+}
+
+function runImporter(block, settings) {
+    const config = getConfigEntity(block, true);
+    if (config?.getDynamicProperty?.("isOff")) return;
+
+    const targetPos = getFrontPosition(block);
+    const rate = settings?.machine?.fluid_rate ?? DEFAULT_RATE;
+    const mode = config?.getDynamicProperty?.("transferMode") ?? DEFAULT_MODE;
+    const nodes = collectFluidNetworkNodes(block)
+        .filter(node => canFluidNodeProvide(node))
+        .filter(node => isFluidNodeEnabled(node))
+        .filter(node => !isSamePos(node, targetPos));
+
+    if (!nodes.length) return;
+
+    let remaining = rate;
+    const roundIndex = config?.getDynamicProperty?.("dorios:fluid_round_idx") ?? 0;
+    const orderedSources = orderNodes(nodes, block.location, mode, roundIndex);
+
+    for (const node of orderedSources) {
+        if (remaining <= 0) break;
+
+        const source = resolveFluidSourceAt(block.dimension, node);
+        if (!source || !source.type || source.type === "empty" || source.amount <= 0) continue;
+        if (!ioAllowsFluid(config, source.type)) continue;
+        if (!fluidNodeMatchesType(node, source.type)) continue;
+
+        const target = resolveFluidTargetAt(block.dimension, targetPos, source.type);
+        if (!target?.tank) continue;
+
+        let moved = 0;
+        if (source.tank) {
+            moved = source.tank.transferTo(target.tank, remaining);
+        } else {
+            moved = transferBlockFluidToTarget(source, target.tank, remaining);
+            drainFiniteBlockSource(source, moved);
+        }
+
+        if (moved > 0) {
+            remaining -= moved;
+        }
+    }
+
+    if (remaining < rate && mode === "round") {
+        config.setDynamicProperty?.("dorios:fluid_round_idx", (Number(roundIndex) + 1) % nodes.length);
+    }
+}
+
+function openFilterRemovalMenu(entity, player) {
+    const filters = getFilterTypes(entity);
+    if (!filters.length) {
+        player.onScreenDisplay.setActionBar("§7No fluid filters configured");
+        return;
+    }
+
+    const form = new ActionFormData()
+        .title("Fluid Filters")
+        .body("Select a fluid filter to remove.");
+
+    for (const type of filters) {
+        form.button(DoriosAPI.utils.formatIdToText(type));
+    }
+
+    form.show(player).then(result => {
+        if (result.selection === undefined) return;
+        const type = filters[result.selection];
+        if (!type) return;
+        entity.removeTag?.(`${FILTER_PREFIX}${type}`);
+        player.onScreenDisplay.setActionBar(`§7Removed fluid filter: §b${DoriosAPI.utils.formatIdToText(type)}`);
     });
 }
 
-function orderTargets(targets, origin, mode) {
-    const list = Array.isArray(targets) ? [...targets] : [];
-    list.sort((a, b) => DoriosAPI.math.distanceBetween(origin, a) - DoriosAPI.math.distanceBetween(origin, b));
-    if (mode === "farthest") list.reverse();
-    if (mode !== "round") return list;
-    return list;
+function showFilterContents(entity, player) {
+    const filters = getFilterTypes(entity);
+    const mode = getWhitelistState(entity) ? "Whitelist" : "Blacklist";
+    const list = filters.length
+        ? filters.map(type => `- ${DoriosAPI.utils.formatIdToText(type)}`).join("\n")
+        : "§7(empty)";
+
+    new ActionFormData()
+        .title("Fluid Filters")
+        .body(`§e${mode}\n\n${list}`)
+        .button("Close")
+        .show(player);
 }
 
-DoriosAPI.register.blockComponent("reinforced_extractor", {
-    // Sem entidade própria: apenas encaminha do bloco à frente para a rede.
-    beforeOnPlayerPlace(e, { params }) {
-        const { block, player, permutationToPlace } = e;
+function openFluidIoMenu(block, player, role) {
+    const entity = getConfigEntity(block, true);
+    if (!entity) return;
 
-        // Ensure axis/rotation state follows the player's facing.
-        try {
-            if (params?.rotation) {
-                if (player?.isInSurvival?.()) {
-                    system.run(() => player.runCommand(`clear @s ${permutationToPlace.type.id} 0 1`));
-                }
-                e.cancel = true;
-                Rotation.facing(player, block, permutationToPlace);
+    const isOff = entity.getDynamicProperty("isOff") === true;
+    const mode = entity.getDynamicProperty("transferMode") ?? DEFAULT_MODE;
+    const whitelist = getWhitelistState(entity);
+    const filters = getFilterTypes(entity);
+    const title = role === "importer" ? "Reinforced Importer" : "Reinforced Exporter";
+
+    const form = new ActionFormData()
+        .title(`${title} Settings`)
+        .body(`Power: §e${isOff ? "Disabled" : "Enabled"}§r\nMode: §e${DoriosAPI.utils.capitalizeFirst(mode)}§r\nFilter: §e${whitelist ? "Whitelist" : "Blacklist"}§r\nEntries: §e${filters.length}`)
+        .button(isOff ? "Enable" : "Disable")
+        .button("Transfer Mode")
+        .button(whitelist ? "Use Blacklist" : "Use Whitelist")
+        .button("View Filters")
+        .button("Add Held Fluid")
+        .button("Add Detected Fluid")
+        .button("Remove Filter");
+
+    form.show(player).then(result => {
+        switch (result.selection) {
+            case 0:
+                entity.setDynamicProperty("isOff", !isOff);
+                player.onScreenDisplay.setActionBar(`§7${title} ${isOff ? "§aenabled" : "§cdisabled"}`);
+                break;
+            case 1: {
+                const modes = ["nearest", "farthest", "round"];
+                const next = modes[(modes.indexOf(mode) + 1) % modes.length] ?? DEFAULT_MODE;
+                entity.setDynamicProperty("transferMode", next);
+                player.onScreenDisplay.setActionBar(`§7Transfer mode: §e${DoriosAPI.utils.capitalizeFirst(next)}`);
+                break;
             }
-        } catch { /* ignore rotation issues */ }
-    },
-    onTick(e, { params: settings }) {
-        if (!globalThis.worldLoaded) return;
-
-        const rate = settings?.machine?.fluid_rate ?? DEFAULT_RATE;
-        const dim = e.block.dimension;
-
-        // ------------------------------
-        // 1) Identificar fonte à frente
-        // ------------------------------
-        const facing = findFacingOffset(e.block);
-        const srcPos = {
-            x: e.block.location.x + facing.x,
-            y: e.block.location.y + facing.y,
-            z: e.block.location.z + facing.z,
-        };
-
-        const sourceBlock = dim.getBlock(srcPos);
-        const sourceEntities = dim.getEntitiesAtBlockLocation(srcPos);
-        const sourcePick = selectSourceFromEntities(sourceEntities ?? []);
-        const sourceEntity = sourcePick?.entity ?? null;
-
-        let fluidSource = null;      // FluidManager quando for entidade
-        let liquidType = null;
-        let amount = 0;
-        let infinite = false;
-
-        const vanillaFluids = {
-            "minecraft:water": "water",
-            "minecraft:lava": "lava",
-        };
-
-        const sourceTank = sourcePick?.tank ?? null;
-
-        if (sourceTank) {
-            // Tanque/contêiner de fluido (entidade)
-            fluidSource = sourceTank;
-            liquidType = fluidSource.getType();
-            amount = fluidSource.get();
-        } else if (sourceBlock && vanillaFluids[sourceBlock.typeId]) {
-            // Fluido vanilla (apenas bloco cheio)
-            if (sourceBlock.permutation.getState("liquid_depth") !== 0) return;
-            liquidType = vanillaFluids[sourceBlock.typeId];
-            amount = 1000;
-        } else if (sourceBlock?.typeId === "utilitycraft:crucible") {
-            // Crisol com lava (alinha com UtilityCraft)
-            const lavaLevel = sourceBlock.permutation.getState("utilitycraft:lava");
-            if (lavaLevel < 1) return;
-            liquidType = "lava";
-            amount = 250 * lavaLevel;
-        } else if (sourceBlock?.typeId === "utilitycraft:sink") {
-            // Pia com água infinita
-            liquidType = "water";
-            amount = Infinity;
-            infinite = true;
-        } else if (sourceBlock?.hasTag?.("dorios:fluid")) {
-            // Bloco de fluido Dorios sem entidade → nada para extrair
-            return;
-        } else {
-            return; // Fonte inválida
+            case 2:
+                entity.setDynamicProperty("utilitycraft:whitelistOn", !whitelist);
+                player.onScreenDisplay.setActionBar(`§7Filter mode: §e${!whitelist ? "Whitelist" : "Blacklist"}`);
+                break;
+            case 3:
+                showFilterContents(entity, player);
+                break;
+            case 4: {
+                const item = player.getComponent("equippable")?.getEquipment("Mainhand");
+                const type = resolveHeldFluidType(item);
+                if (!addFilterType(entity, type, player)) {
+                    player.onScreenDisplay.setActionBar("§7Hold a filled fluid item to add a filter");
+                }
+                break;
+            }
+            case 5: {
+                const detected = role === "importer"
+                    ? resolveDetectedTargetFluidType(block)
+                    : resolveFluidSource(block)?.type;
+                if (!addFilterType(entity, detected, player)) {
+                    player.onScreenDisplay.setActionBar("§7No fluid detected in front");
+                }
+                break;
+            }
+            case 6:
+                openFilterRemovalMenu(entity, player);
+                break;
         }
+    });
+}
 
-        if (!liquidType || amount <= 0) return;
+function scheduleFluidRefresh(block) {
+    system.run(() => {
+        try { updatePipes(block, "fluid"); } catch { /* ignore direct refresh failures */ }
+        try { globalThis.refreshConnectedFluidNetwork?.(block); } catch { /* ignore connected refresh failures */ }
+        try { globalThis.refreshOverclockNetwork?.(block); } catch { /* ignore geometry refresh failures */ }
+    });
+}
 
-        // ------------------------------
-        // 2) Encontrar alvos na rede
-        // ------------------------------
-        const targets = scanFluidTargets(e.block, srcPos);
-        if (targets.length === 0) return;
+function createFluidIoComponent(role) {
+    return {
+        beforeOnPlayerPlace(e, { params }) {
+            const { block, player, permutationToPlace } = e;
 
-        const extractorEntity = dim.getEntitiesAtBlockLocation(e.block.location)[0];
-        const mode = extractorEntity?.getDynamicProperty?.("transferMode") ?? DEFAULT_MODE;
-        const orderedTargets = orderTargets(targets, e.block.location, mode);
-
-        // ------------------------------
-        // 3) Transferir
-        // ------------------------------
-        let transferred = 0;
-
-        if (fluidSource) {
-            transferred = fluidSource.transferToNetwork(rate, mode, orderedTargets);
-        } else {
-            let remaining = Math.min(rate, infinite ? rate : amount);
-
-            for (const loc of orderedTargets) {
-                if (remaining <= 0) break;
-
-                const targetBlock = dim.getBlock(loc);
-                if (!targetBlock?.hasTag("dorios:fluid")) continue;
-
-                let targetEntity = null;
-                const candidates = dim.getEntitiesAtBlockLocation(loc);
-                if (Array.isArray(candidates) && candidates.length) {
-                    for (const candidate of candidates) {
-                        const tank = FluidManager.findType(candidate, 0);
-                        if (!tank || tank.getCap() <= 0) continue;
-                        targetEntity = candidate;
-                        break;
+            try {
+                if (params?.rotation) {
+                    if (player?.isInSurvival?.()) {
+                        system.run(() => player.runCommand(`clear @s ${permutationToPlace.type.id} 0 1`));
                     }
+                    e.cancel = true;
+                    Rotation.facing(player, block, permutationToPlace);
+                    return;
                 }
+            } catch {
+                // ignore rotation issues
+            }
 
-                if (!targetEntity && targetBlock.typeId.includes("fluid_tank")) {
-                    targetEntity = FluidManager.addfluidToTank(targetBlock, liquidType, 0);
-                }
+            system.run(() => {
+                getConfigEntity(block, true);
+                scheduleFluidRefresh(block);
+            });
+        },
 
-                if (!targetEntity) continue;
+        onPlayerInteract(e) {
+            const { block, player } = e;
+            if (!player || player.isSneaking) return;
+            openFluidIoMenu(block, player, role);
+            e.cancel = true;
+        },
 
-                const targetTank = FluidManager.findType(targetEntity, 0);
-                if (!targetTank || targetTank.getCap() <= 0) continue;
+        onPlayerBreak(e) {
+            removeConfigEntity(e.block);
+            scheduleFluidRefresh(e.block);
+        },
 
-                const targetType = targetTank.getType();
-                if (targetType !== "empty" && targetType !== liquidType) continue;
-
-                const space = targetTank.getFreeSpace();
-                if (space <= 0) continue;
-
-                const move = Math.min(remaining, space);
-                if (move <= 0) continue;
-
-                const inserted = targetTank.tryInsert(liquidType, move);
-                if (!inserted) continue;
-
-                remaining -= move;
-                transferred += move;
+        onTick(e, { params: settings }) {
+            if (!globalThis.worldLoaded) return;
+            if (role === "importer") {
+                runImporter(e.block, settings);
+            } else {
+                runExporter(e.block, settings);
             }
         }
+    };
+}
 
-        // ------------------------------
-        // 4) Atualizar fonte finita
-        // ------------------------------
-        if (!infinite && transferred > 0) {
-            if (fluidSource) {
-                // já debitado
-            } else if (sourceBlock && vanillaFluids[sourceBlock.typeId]) {
-                sourceBlock.setType("minecraft:air");
-            } else if (sourceBlock?.typeId === "utilitycraft:crucible") {
-                sourceBlock.setPermutation(sourceBlock.permutation.withState("utilitycraft:lava", 0));
-            }
-        }
-    },
-});
+DoriosAPI.register.blockComponent("reinforced_extractor", createFluidIoComponent("exporter"));
+DoriosAPI.register.blockComponent("reinforced_exporter", createFluidIoComponent("exporter"));
+DoriosAPI.register.blockComponent("reinforced_importer", createFluidIoComponent("importer"));

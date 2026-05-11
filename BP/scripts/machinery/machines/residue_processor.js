@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, rollByproduct, clampChance, addItemsToSlot, getOutputCapacity, formatItemName } from '../../DoriosCore/main.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, rollByproduct, clampChance, addItemsToSlot, getOutputCapacity, formatItemName, resolveMachineRecipeList } from '../../DoriosCore/main.js'
 import { getResidueProcessorRecipes } from '../../config/recipes/residue_processor.js'
 
 const RESIDUE_PROCESSOR = Object.freeze({
@@ -46,7 +46,7 @@ DoriosAPI.register.blockComponent('residue_processor', {
             machine.transferItems()
         }
 
-        const recipes = resolveRecipes(block, settings)
+        const recipes = resolveMachineRecipeList(block, settings, 'residue_processor', getResidueProcessorRecipes())
         if (!recipes.length) {
             machine.showWarning('No Recipes')
             return
@@ -122,14 +122,6 @@ DoriosAPI.register.blockComponent('residue_processor', {
         Machine.onDestroy(e)
     }
 })
-
-function resolveRecipes(block, settings) {
-    const component = block.getComponent('utilitycraft:machine_recipes')?.customComponentParameters?.params
-    if (component?.type === 'residue_processor') return getResidueProcessorRecipes()
-    if (Array.isArray(component)) return component
-    if (Array.isArray(settings?.machine?.recipes)) return settings.machine.recipes
-    return getResidueProcessorRecipes()
-}
 
 function matchRecipe(recipes, stack) {
     return recipes.find(recipe => recipe.input?.id === stack.typeId && stack.amount >= (recipe.input.amount ?? 1))

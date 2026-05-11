@@ -1,4 +1,4 @@
-import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, feedFluidSlot, rollByproduct, clampChance, addItemsToSlot, formatItemName, formatFluidDisplayName } from '../../DoriosCore/main.js';
+import { Machine, Energy, FluidManager, updatePipes, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, feedFluidSlot, rollByproduct, clampChance, addItemsToSlot, formatItemName, formatFluidDisplayName, findRecipeByInputId, resolveCachedLocationList, buildSingleTankMachineState, buildStateSignature, shouldRefreshMachineUi, resetMachineRuntimeState, resolveMachineRecipes, hasRecipes } from '../../DoriosCore/main.js';
 import { getLiquifierRecipes } from '../../config/recipes/liquifier.js';
 
 const LIQUIFIER = Object.freeze({
@@ -10,6 +10,9 @@ const LIQUIFIER = Object.freeze({
     }),
     defaults: Object.freeze({
         fluidType: 'liquified_aetherium'
+    }),
+    ui: Object.freeze({
+        refreshInterval: 4
     })
 });
 
@@ -55,39 +58,56 @@ DoriosAPI.register.blockComponent('liquifier', {
         if (tickGate(machine.entity, 'liq:fluids_cd', 4)) {
             const available = tank.get();
             if (available > 0) {
-                // Ensure network cache exists when we have fluid to send
-                let nodes = [];
-                try {
-                    const cached = machine.entity.getDynamicProperty('dorios:fluid_nodes');
-                    if (cached) nodes = JSON.parse(cached);
-                } catch { /* ignore */ }
-
-                if (!Array.isArray(nodes) || nodes.length === 0) {
-                    updatePipes(block, 'fluid');
-                    try {
-                        const cached = machine.entity.getDynamicProperty('dorios:fluid_nodes');
-                        if (cached) nodes = JSON.parse(cached);
-                    } catch { /* ignore */ }
-                }
+                const nodes = resolveCachedLocationList(
+                    machine.entity,
+                    'dorios:fluid_nodes',
+                    block.location,
+                    () => updatePipes(block, 'fluid')
+                );
 
                 // Direct adjacent push (respect block facing so the outlet follows orientation)
                 tank.transferFluids(block, available, { useFacing: true });
 
                 // Network push (through fluid cables, including reinforced cable)
-                if (Array.isArray(nodes) && nodes.length) {
+                if (nodes.length) {
                     tank.transferToNetwork(available, 'nearest', nodes);
                 }
             }
         }
         feedFluidSlot(machine, tank, LIQUIFIER.slots.fluid);
 
-        const fail = (message, reset = true) => {
-            machine.showWarning(message, reset);
+        let state = buildSingleTankMachineState(machine, tank);
+
+        const refreshDisplay = () => {
             tank.display(LIQUIFIER.slots.fluidDisplay);
+            machine.displayEnergy();
+            machine.displayProgress();
         };
 
-        const recipes = resolveRecipes(block, settings);
-        if (!recipes.length) {
+        const fail = (message, reset = true) => {
+            resetMachineRuntimeState(machine, reset);
+            state = buildSingleTankMachineState(machine, tank);
+
+            const signature = buildStateSignature([
+                'warning',
+                message,
+                state.energy,
+                state.energyCost,
+                state.progress,
+                state.tank.type,
+                state.tank.amount,
+                state.tank.cap
+            ]);
+            if (!shouldRefreshMachineUi(machine.entity, 'liquifier:ui', signature, LIQUIFIER.ui.refreshInterval)) {
+                return;
+            }
+
+            machine.showWarning(message, false);
+            refreshDisplay();
+        };
+
+        const recipes = resolveMachineRecipes(block, settings, 'liquifier', getLiquifierRecipes());
+        if (!hasRecipes(recipes)) {
             fail('No Recipes');
             return;
         }
@@ -98,16 +118,14 @@ DoriosAPI.register.blockComponent('liquifier', {
             return;
         }
 
-        const recipe = matchRecipe(recipes, inputStack);
+        const recipe = findRecipeByInputId(recipes, inputStack.typeId);
         if (!recipe) {
             fail('Invalid Item');
             return;
         }
 
         const fluidType = recipe.fluid.type ?? LIQUIFIER.defaults.fluidType;
-        const tankType = tank.getType();
-
-        if (tankType !== 'empty' && tankType !== fluidType) {
+        if (state.tank.type !== 'empty' && state.tank.type !== fluidType) {
             fail(`Wrong Fluid\n§7Need ${formatFluidDisplayName(fluidType)}`);
             return;
         }
@@ -118,25 +136,27 @@ DoriosAPI.register.blockComponent('liquifier', {
             return;
         }
 
-        const crafts = calculateCrafts(machine, tank, recipe, inputStack, byproductSlot, machine.boosts.overclockYield ?? 1);
+        const yieldBoost = Math.max(1, machine.boosts.overclockYield ?? 1);
+        const crafts = calculateCrafts(state, recipe, inputStack, byproductSlot, yieldBoost);
         if (crafts.max <= 0) {
             fail(crafts.reason ?? 'Missing Items');
             return;
         }
 
-        const configuredCost = recipe.energyCost ?? settings.machine.energy_cost ?? 2000;
+        const configuredCost = recipe.energyCost ?? settings?.machine?.energy_cost ?? 2000;
         machine.setEnergyCost(configuredCost);
         if (settings?.machine?.dynamic_rate === true) {
             applyDynamicRecipeRate(machine, recipe, { energyCost: configuredCost });
         }
-        const energyAvailable = machine.energy.get();
-        if (energyAvailable <= 0) {
+
+        state = buildSingleTankMachineState(machine, tank);
+        if (state.energy <= 0) {
             fail('No Energy', false);
             return;
         }
 
-        const energyCost = machine.getEnergyCost();
-        const progress = machine.getProgress();
+        const energyCost = state.energyCost;
+        const progress = state.progress;
 
         if (progress >= energyCost) {
             const craftRuns = Math.min(crafts.max, Math.floor(progress / energyCost));
@@ -147,17 +167,34 @@ DoriosAPI.register.blockComponent('liquifier', {
         } else {
             const consumption = machine.boosts.consumption;
             const needed = energyCost - progress;
-            const spendable = Math.min(machine.energy.get(), machine.rate, needed * consumption);
+            const spendable = Math.min(state.energy, machine.rate, needed * consumption);
             if (spendable > 0) {
                 machine.energy.consume(spendable);
                 machine.addProgress(spendable / Math.max(consumption, Number.EPSILON));
             }
         }
 
-        updateHud(machine, recipe, tank, crafts.max);
-        tank.display(LIQUIFIER.slots.fluidDisplay);
-        machine.displayEnergy();
-        machine.displayProgress();
+        state = buildSingleTankMachineState(machine, tank);
+        const currentInputStack = machine.inv.getItem(LIQUIFIER.slots.input);
+        const currentByproductSlot = machine.inv.getItem(LIQUIFIER.slots.residue);
+        const queuedCrafts = calculateCrafts(state, recipe, currentInputStack, currentByproductSlot, yieldBoost);
+
+        const signature = buildStateSignature([
+            'running',
+            recipe?.input?.id ?? recipe?.fluid?.type ?? 'recipe',
+            state.energy,
+            state.energyCost,
+            state.progress,
+            queuedCrafts.max,
+            state.tank.type,
+            state.tank.amount,
+            state.tank.cap
+        ]);
+        if (shouldRefreshMachineUi(machine.entity, 'liquifier:ui', signature, LIQUIFIER.ui.refreshInterval)) {
+            updateHud(machine, recipe, state, queuedCrafts.max);
+            refreshDisplay();
+        }
+
         machine.on();
     },
 
@@ -166,32 +203,22 @@ DoriosAPI.register.blockComponent('liquifier', {
     }
 });
 
-function resolveRecipes(block, settings) {
-    const component = block.getComponent('utilitycraft:machine_recipes')?.customComponentParameters?.params;
-    if (component?.type === 'liquifier') return getLiquifierRecipes();
-    if (Array.isArray(component)) return component;
-    if (settings?.machine?.recipes && Array.isArray(settings.machine.recipes)) {
-        return settings.machine.recipes;
+function calculateCrafts(state, recipe, inputStack, byproductSlot, yieldBoost = 1) {
+    if (!inputStack) {
+        return { max: 0, reason: 'Missing Items' };
     }
-    return getLiquifierRecipes();
-}
 
-function matchRecipe(recipes, stack) {
-    return recipes.find(recipe => recipe.input?.id === stack.typeId);
-}
-
-function calculateCrafts(machine, tank, recipe, inputStack, byproductSlot, yieldBoost = 1) {
     const inputAmount = Math.max(1, recipe.input.amount ?? 1);
     const fluidPerCraft = Math.max(1, recipe.fluid.amount ?? 1);
 
     const availableItems = Math.floor(inputStack.amount / inputAmount);
-    const availableFluid = Math.floor(tank.getFreeSpace() / (fluidPerCraft * yieldBoost));
+    const availableFluid = Math.floor(state.tank.free / (fluidPerCraft * yieldBoost));
 
     let residueCapacity = Number.MAX_SAFE_INTEGER;
     if (recipe.byproduct) {
         const residueAmount = Math.max(1, recipe.byproduct.amount ?? 1);
         if (!byproductSlot) {
-            residueCapacity = Math.floor((64) / (residueAmount * yieldBoost));
+            residueCapacity = Math.floor(64 / (residueAmount * yieldBoost));
         } else {
             if (byproductSlot.typeId !== recipe.byproduct.id) {
                 return { max: 0, reason: 'Residue Slot Busy' };
@@ -220,7 +247,7 @@ function processCraft(machine, recipe, crafts, tank) {
     const yieldBoost = machine.boosts.overclockYield ?? 1;
     const fluidType = recipe.fluid.type ?? LIQUIFIER.defaults.fluidType;
     if (tank.getType() === 'empty') tank.setType(fluidType);
-    
+
     // Fluid amounts are already integers in mB, but apply yield boost
     const fluidAmount = recipe.fluid.amount * crafts * yieldBoost;
     tank.add(Math.floor(fluidAmount));
@@ -237,14 +264,14 @@ function processCraft(machine, recipe, crafts, tank) {
     }
 }
 
-function updateHud(machine, recipe, tank, maxCrafts) {
+function updateHud(machine, recipe, state, maxCrafts) {
     const fluidType = recipe.fluid.type ?? LIQUIFIER.defaults.fluidType;
     const fluidPerCraft = recipe.fluid.amount;
-    const tankAmount = FluidManager.formatFluid(tank.get());
-    const tankCap = FluidManager.formatFluid(tank.getCap());
+    const tankAmount = FluidManager.formatFluid(state.tank.amount);
+    const tankCap = FluidManager.formatFluid(state.tank.cap);
     const lore = [
-        `§bInput: §f${formatItemName(recipe.input.id)}`,
-        `§dMelt: §f${formatFluidDisplayName(fluidType)}`,
+        `§3Input: §f${formatItemName(recipe.input.id)}`,
+        `§gProcessed: §f${formatFluidDisplayName(fluidType)}`,
         `§7Yield: §f${FluidManager.formatFluid(fluidPerCraft)} each`,
         `§7Tank: §f${tankAmount} §7/ §f${tankCap}`,
         `§cCost: §f${Energy.formatEnergyToText(machine.getEnergyCost())}`,
@@ -255,7 +282,7 @@ function updateHud(machine, recipe, tank, maxCrafts) {
     if (overclockLine) lore.push(overclockLine);
 
     machine.setLabel({
-        title: '§6Flux Crucible',
+        title: '§r§6Liquifier',
         lore,
         rawText: undefined
     });

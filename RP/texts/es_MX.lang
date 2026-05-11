@@ -24,6 +24,8 @@ tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Genera carga de 
 tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica la carga de la torre en la red
 tile.utilitycraft:overclock_injector.name=Inyector de Overclock\n§7- Aplica overclock a la máquina frente a él\n- Acepta mejoras: §a§r, §b§r, §d§r
 tile.utilitycraft:reinforced_extractor.name=Extractor Reforzado\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_importer.name=Importador Reforzado\n§7- Entrada dedicada de fluidos de red
+tile.utilitycraft:reinforced_exporter.name=Exportador Reforzado\n§7- Salida dedicada de fluidos de red
 tile.utilitycraft:smart_importer.name=Importador Inteligente\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r
 
 ## Máquinas Superiores
@@ -31,6 +33,8 @@ tile.utilitycraft:abyssal_fisher.name=Pescador Abisal\n§9Pescador Automático S
 tile.utilitycraft:arc_press_forge.name=Forja Arco-Prensa\n§9Prensa Eléctrica Superior\n§7- Acepta mejoras: §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:dual_siever.name=Tamiz Doble\n§9Tamiz Automático Superior B\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:centrifugal_siever.name=Tamiz Centrífugo\n§9Tamiz Automático Superior A\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:cryo_freezer.name=Congelador Criogénico\n§9Rama Superior de la Cámara Criogénica\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_stabilizer.name=Estabilizador Criogénico\n§9Rama Superior de la Cámara Criogénica\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:industrial_burner.name=Incinerador Industrial\n§9Incinerador Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:impact_crusher.name=Triturador de Impacto\n§9Triturador Superior B\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:genetic_seed_synthesizer.name=Sintetizador Genético de Semillas\n§9Sintetizador de Semillas Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r
@@ -244,6 +248,8 @@ entity.utilitycraft:industrial_burner.name=§fIncinerador Industrial
 entity.utilitycraft:impact_crusher.name=§fTriturador de Impacto
 entity.utilitycraft:pulverizer.name=§fPulverizador
 entity.utilitycraft:centrifugal_siever.name=§fTamiz Centrífugo
+entity.utilitycraft:cryo_freezer.name=§fCongelador Criogénico
+entity.utilitycraft:cryo_stabilizer.name=§fEstabilizador Criogénico
 entity.utilitycraft:dual_siever.name=§fTamiz Doble
 entity.utilitycraft:abyssal_fisher.name=§fPescador Abisal
 entity.utilitycraft:genetic_seed_synthesizer.name=§fSintetizador Genético de Semillas
@@ -267,7 +273,9 @@ at:itemGroup.name.capsules=Cápsulas de Líquidos (Ascendant Technology)
 at:itemGroup.name.experimental=Experimental
 at:itemGroup.name.armor=Armaduras (Ascendant Technology)
 at:itemGroup.name.materials_resources=Materiales y Recursos §u(Ascendant Technology)
+at:itemGroup.name.pipes=Tuberías §u(Ascendant Technology)
 at:itemGroup.name.conveyors=Cintas Transportadoras §u(Ascendant Technology)
+dorios:itemGroup.name.pipes=Tuberías
 dorios:itemGroup.name.mob_grinding=Triturador de Mobs
 
 at:ui.h=A

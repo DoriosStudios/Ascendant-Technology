@@ -6,6 +6,7 @@ import {
     appendLoreSection,
     findRecipeByInputId,
     formatItemName,
+    resolveMachineRecipeList,
     tickGate
 } from '../../../DoriosCore/main.js'
 import { getArcPressForgeRecipes } from '../../../config/recipes/arc_press_forge.js'
@@ -134,7 +135,7 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
             transferOutputLanes(machine)
         }
 
-        const recipes = resolveRecipes(e.block, settings)
+        const recipes = resolveMachineRecipeList(e.block, settings, 'arc_press_forge', getArcPressForgeRecipes())
         if (!recipes.length) {
             showMachineWarning(machine, 'No Recipes', mode, {
                 quantityLevel,
@@ -222,14 +223,6 @@ DoriosAPI.register.blockComponent('arc_press_forge', {
         Machine.onDestroy(e)
     }
 })
-
-function resolveRecipes(block, settings) {
-    const component = block.getComponent('utilitycraft:machine_recipes')?.customComponentParameters?.params
-    if (component?.type === 'arc_press_forge') return getArcPressForgeRecipes()
-    if (Array.isArray(component)) return component
-    if (Array.isArray(settings?.machine?.recipes)) return settings.machine.recipes
-    return getArcPressForgeRecipes()
-}
 
 function matchRecipe(recipes, itemId) {
     if (!itemId) return null

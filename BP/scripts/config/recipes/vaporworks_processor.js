@@ -2,46 +2,56 @@ import { system } from "@minecraft/server";
 
 const VAPORWORKS_RECIPE_DEFAULTS = Object.freeze({
     energyCost: 2400,
-    fluidOutput: 500,
+    inputAmount: 1000,
+    outputAmount: 500,
     ticksPerSecond: 20,
     processSeconds: 4
 });
 
 /**
- * Native Vaporworks Processor recipes shipped with the add-on.
- * Each entry defines the fluid input, the amount of output fluid produced,
- * and metadata that the machine script can use to describe the recipe to the player.
+ * Direct recipe registry for the Vaporworks Processor.
+ * Keys represent the accepted input fluid type, matching the UtilityCraft lookup style.
+ * Full `inputFluid` payloads are still supported for script-event registration.
  *
- * @type {VaporworksRecipe[]}
+ * @type {Record<string, VaporworksRecipe>}
  */
-const nativeVaporworksRecipes = [
-    defineVaporworksRecipe({
+export const vaporworksProcessorRecipes = {};
+
+let vaporworksProcessorInputRate = VAPORWORKS_RECIPE_DEFAULTS.inputAmount;
+
+const vaporworksProcessorRecipesRegister = {
+    water: {
         id: "utilitycraft:water_to_steam",
-        inputFluid: { type: "water", amount: 1000 },
         outputFluid: { type: "steam", amount: 1000 },
         energyCost: 2400,
         seconds: 4,
         description: "Converts water into pressurized steam for auxiliary processing."
-    }),
-    defineVaporworksRecipe({
+    },
+    cryofluid: {
         id: "utilitycraft:cryofluid_to_steam",
-        inputFluid: { type: "cryofluid", amount: 1000 },
         outputFluid: { type: "steam", amount: 1500 },
         energyCost: 4800,
         seconds: 6,
         description: "Vaporizes cryofluid into high-pressure steam with increased yield."
-    })
-];
+    }
+};
 
-export const vaporworksProcessorRecipes = nativeVaporworksRecipes;
+for (const [inputType, definition] of Object.entries(vaporworksProcessorRecipesRegister)) {
+    upsertVaporworksRecipe(definition, inputType);
+}
 
 export function getVaporworksProcessorRecipes() {
     return vaporworksProcessorRecipes;
 }
 
+export function getVaporworksProcessorInputRate() {
+    return vaporworksProcessorInputRate;
+}
+
 /**
  * @typedef {Object} VaporworksRecipeDefinition
- * @property {{ type: string, amount?: number }} inputFluid Required fluid input; amount defaults to 1000 mB.
+ * @property {{ type: string, amount?: number }} [inputFluid] Optional fluid input; when omitted the registry key is used as the input type.
+ * @property {number} [inputAmount] Optional shorthand input amount used with keyed registration.
  * @property {{ type: string, amount?: number }} outputFluid Required fluid output; amount defaults to 500 mB.
  * @property {string} [id] Optional identifier (defaults to the input type).
  * @property {number} [energyCost] Optional FE override per craft (defaults to 2 400).
@@ -63,18 +73,19 @@ export function getVaporworksProcessorRecipes() {
 /**
  * Normalizes a vaporworks processor recipe definition.
  * @param {VaporworksRecipeDefinition} recipe
+ * @param {string} [registrationKey]
  * @returns {VaporworksRecipe}
  */
-function defineVaporworksRecipe(recipe) {
+function defineVaporworksRecipe(recipe, registrationKey) {
     if (!recipe || typeof recipe !== "object") throw new TypeError("Invalid vaporworks recipe payload");
 
-    const inputFluid = normalizeFluid(recipe.inputFluid, 1000);
-    const outputFluid = normalizeFluid(recipe.outputFluid, VAPORWORKS_RECIPE_DEFAULTS.fluidOutput);
+    const inputFluid = resolveInputFluid(recipe, registrationKey);
+    const outputFluid = normalizeFluid(recipe.outputFluid, VAPORWORKS_RECIPE_DEFAULTS.outputAmount, "output fluid");
 
     const seconds = Math.max(1, Math.floor(recipe.seconds ?? VAPORWORKS_RECIPE_DEFAULTS.processSeconds));
 
     return {
-        id: typeof recipe.id === "string" && recipe.id.length ? recipe.id : inputFluid.type,
+        id: normalizeRecipeId(recipe.id, inputFluid.type),
         inputFluid,
         outputFluid,
         energyCost: Math.max(1, Math.floor(recipe.energyCost ?? VAPORWORKS_RECIPE_DEFAULTS.energyCost)),
@@ -84,13 +95,35 @@ function defineVaporworksRecipe(recipe) {
     };
 }
 
-function normalizeFluid(fluid, fallbackAmount) {
+function resolveInputFluid(recipe, registrationKey) {
+    if (recipe.inputFluid) {
+        return normalizeFluid(recipe.inputFluid, VAPORWORKS_RECIPE_DEFAULTS.inputAmount, "input fluid");
+    }
+
+    const fallbackType = typeof registrationKey === "string"
+        ? registrationKey.trim().toLowerCase()
+        : "";
+    if (!fallbackType) {
+        throw new TypeError("Vaporworks recipe missing input fluid");
+    }
+
+    return normalizeFluid({
+        type: fallbackType,
+        amount: recipe.inputAmount ?? recipe.required ?? VAPORWORKS_RECIPE_DEFAULTS.inputAmount
+    }, VAPORWORKS_RECIPE_DEFAULTS.inputAmount, "input fluid");
+}
+
+function normalizeRecipeId(value, fallback) {
+    return typeof value === "string" && value.length ? value : fallback;
+}
+
+function normalizeFluid(fluid, fallbackAmount, label = "fluid") {
     if (!fluid || typeof fluid !== "object") {
-        throw new TypeError("Vaporworks recipe missing fluid definition");
+        throw new TypeError(`Vaporworks recipe missing ${label} definition`);
     }
 
     const type = typeof fluid.type === "string" ? fluid.type.toLowerCase() : null;
-    if (!type) throw new TypeError("Vaporworks fluid requires a type");
+    if (!type) throw new TypeError(`Vaporworks ${label} requires a type`);
 
     const amount = Math.max(1, Math.floor(fluid.amount ?? fallbackAmount));
     return { type, amount };
@@ -110,17 +143,17 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
         let added = 0;
         let replaced = 0;
 
-        for (const [recipeId, definition] of Object.entries(payload)) {
+        for (const [recipeKey, definition] of Object.entries(payload)) {
             if (!definition || typeof definition !== "object") {
-                console.warn(`[UtilityCraft] Ignored invalid vaporworks processor recipe '${recipeId}'.`);
+                console.warn(`[UtilityCraft] Ignored invalid vaporworks processor recipe '${recipeKey}'.`);
                 continue;
             }
 
             try {
-                const status = upsertVaporworksRecipe({ id: recipeId, ...definition });
+                const status = upsertVaporworksRecipe(definition, recipeKey);
                 if (status === "replaced") replaced++; else added++;
             } catch (err) {
-                console.warn(`[UtilityCraft] Failed to register vaporworks processor recipe '${recipeId}':`, err);
+                console.warn(`[UtilityCraft] Failed to register vaporworks processor recipe '${recipeKey}':`, err);
             }
         }
 
@@ -130,15 +163,22 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     }
 });
 
-function upsertVaporworksRecipe(definition) {
-    const recipe = defineVaporworksRecipe(definition);
-    const index = vaporworksProcessorRecipes.findIndex(entry => entry.id === recipe.id);
-
-    if (index >= 0) {
-        vaporworksProcessorRecipes[index] = recipe;
-        return "replaced";
+function refreshVaporworksProcessorInputRate() {
+    let nextRate = VAPORWORKS_RECIPE_DEFAULTS.inputAmount;
+    for (const recipe of Object.values(vaporworksProcessorRecipes)) {
+        nextRate = Math.max(nextRate, Math.max(1, Math.floor(recipe?.inputFluid?.amount ?? 0)));
     }
+    vaporworksProcessorInputRate = nextRate;
+}
 
-    vaporworksProcessorRecipes.push(recipe);
-    return "added";
+function upsertVaporworksRecipe(definition, registrationKey) {
+    const recipe = defineVaporworksRecipe(definition, registrationKey);
+    const lookupKey = recipe.inputFluid.type;
+    const status = Object.prototype.hasOwnProperty.call(vaporworksProcessorRecipes, lookupKey)
+        ? "replaced"
+        : "added";
+
+    vaporworksProcessorRecipes[lookupKey] = recipe;
+    refreshVaporworksProcessorInputRate();
+    return status;
 }

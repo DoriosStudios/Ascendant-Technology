@@ -7,6 +7,7 @@ import {
     appendLoreSection,
     findRecipeByInputId,
     formatItemName,
+    resolveMachineRecipeList,
     tickGate
 } from "../../../DoriosCore/main.js";
 import { getPulverizerRecipes } from "../../../config/recipes/pulverizer.js";
@@ -80,7 +81,7 @@ DoriosAPI.register.blockComponent("pulverizer", {
         if (!machine.valid) return;
 
         const tank = getSteamTank(machine, settings);
-        const recipes = resolveRecipes(e.block, settings);
+        const recipes = resolveMachineRecipeList(e.block, settings, ["pulverizer", "crusher"], getPulverizerRecipes());
         const quantityLevel = getQuantityUpgradeLevel(machine);
         const desiredBatch = getBatchSize(quantityLevel);
         const shouldRefreshUi = shouldRefreshSuperiorUi(machine, "pulverizer:ui");
@@ -199,14 +200,6 @@ DoriosAPI.register.blockComponent("pulverizer", {
         Machine.onDestroy(e);
     }
 });
-
-function resolveRecipes(block, settings) {
-    const component = block.getComponent("utilitycraft:machine_recipes")?.customComponentParameters?.params;
-    if (component?.type === "pulverizer" || component?.type === "crusher") return getPulverizerRecipes();
-    if (Array.isArray(component)) return component;
-    if (Array.isArray(settings?.machine?.recipes)) return settings.machine.recipes;
-    return getPulverizerRecipes();
-}
 
 function getSteamTank(machine, settings) {
     const tank = FluidManager.initializeSingle(machine.entity);

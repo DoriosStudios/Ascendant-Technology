@@ -26,6 +26,8 @@ tile.utilitycraft:overclock_relay.name=Overclock Relay\n§7- Mirrors the overclo
 tile.utilitycraft:overclock_injector.name=Overclock Injector\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:vaporworks_processor.name=Vaporworks Processor\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:reinforced_extractor.name=Reinforced Extractor\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_importer.name=Reinforced Importer\n§7- Dedicated fluid network input
+tile.utilitycraft:reinforced_exporter.name=Reinforced Exporter\n§7- Dedicated fluid network output
 tile.utilitycraft:smart_importer.name=Smart Importer\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:reinforced_cable.name=Reinforced Cable\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r
 
@@ -34,6 +36,8 @@ tile.utilitycraft:abyssal_fisher.name=Abyssal Fisher\n§9Superior Auto Fisher\n�
 tile.utilitycraft:arc_press_forge.name=Arc-Press Forge\n§9Superior Electro Press\n§7- Accepted upgrades: §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:dual_siever.name=Dual Siever\n§9Superior Autosieve B\n§7- Accepted upgrades:\n  §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:centrifugal_siever.name=Centrifugal Siever\n§9Superior Autosieve A\n§7- Accepted upgrades:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:cryo_freezer.name=Cryo Freezer\n§9Superior Cryo Chamber Branch\n§7- Accepted upgrades:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_stabilizer.name=Cryo Stabilizer\n§9Superior Cryo Chamber Branch\n§7- Accepted upgrades:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:industrial_burner.name=Industrial Burner\n§9Superior Incinerator\n§7- Accepted upgrades:\n  §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:impact_crusher.name=Impact Crusher\n§9Superior Crusher B\n§7- Accepted upgrades:\n  §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:genetic_seed_synthesizer.name=Genetic Seed Synthesizer\n§9Superior Seed Synthesizer\n§7- Accepted upgrades:\n  §a§r, §b§r, §d§r
@@ -84,6 +88,8 @@ tile.utilitycraft:conveyor_network_updater.name=Conveyor Network Updater\n§7- R
 tile.utilitycraft:flat_conduit.name=Flat Conduit\n§7  Aesthetic Version
 tile.utilitycraft:laser_barrier_field.name=Laser Barrier Field\n§7  Active area projected by the barrier
 tile.utilitycraft:mob_magnet.name=Mob Magnet\n§7  Pulls mobs into a configurable radius
+tile.utilitycraft:reinforced_machine_case.name=Reinforced Case
+tile.utilitycraft:superior_machine_case.name=Superior Case
 
 tile.utilitycraft:aetherium_block.name=Aetherium Block
 tile.utilitycraft:titanium_block.name=Titanium Block
@@ -248,6 +254,8 @@ entity.utilitycraft:industrial_burner.name=§fIndustrial Burner
 entity.utilitycraft:impact_crusher.name=§fImpact Crusher
 entity.utilitycraft:pulverizer.name=§fPulverizer
 entity.utilitycraft:centrifugal_siever.name=§fCentrifugal Siever
+entity.utilitycraft:cryo_freezer.name=§fCryo Freezer
+entity.utilitycraft:cryo_stabilizer.name=§fCryo Stabilizer
 entity.utilitycraft:dual_siever.name=§fDual Siever
 entity.utilitycraft:abyssal_fisher.name=§fAbyssal Fisher
 entity.utilitycraft:genetic_seed_synthesizer.name=§fGenetic Seed Synthesizer
@@ -267,12 +275,14 @@ entity.utilitycraft:vaporworks_processor.name=§fVaporworks Processor
 
 ## UI Texts
 at:itemGroup.name.machines=Machines §u(Ascendant Technology)
-at:itemGroup.name.superior_machines=Superior Machines §u(Ascendant Technology)
+at:itemGroup.name.superior_machines=Superior Machines §u(Ascendant Technology)\n§6Experimental content, may be unbalanced or have bugs.
 at:itemGroup.name.capsules=Liquid Capsules §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armor §u(Ascendant Technology)
 at:itemGroup.name.materials_resources=Materials and Resources §u(Ascendant Technology)
+at:itemGroup.name.pipes=Pipes §u(Ascendant Technology)
 at:itemGroup.name.conveyors=Conveyors §u(Ascendant Technology)
+dorios:itemGroup.name.pipes=Pipes
 dorios:itemGroup.name.mob_grinding=Mob Grinding
 
 at:ui.h=H

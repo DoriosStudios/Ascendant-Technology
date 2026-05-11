@@ -178,6 +178,12 @@
 		"utilitycraft_network_center_on": {
 			"textures": "textures/blocks/machines/network_center_on"
 		},
+		"utilitycraft_reinforced_machine_case": {
+			"textures": "textures/blocks/machines/reinforced_machine_case"
+		},
+		"utilitycraft_superior_machine_case": {
+			"textures": "textures/blocks/machines/superior/superior_machine_case"
+		},
 		"utilitycraft_absolute_container_off": {
 			"textures": "textures/blocks/generators/absolute_container_off"
 		},

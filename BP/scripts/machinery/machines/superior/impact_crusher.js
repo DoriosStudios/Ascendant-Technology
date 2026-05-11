@@ -3,6 +3,9 @@ import {
     Machine,
     FluidManager,
     updatePipes,
+    canFluidNodeProvide,
+    isFluidNodeEnabled,
+    fluidNodeMatchesType,
     findRecipeByInputId,
     resolveRecipeTimeSeconds,
     buildOverclockLoreLine,
@@ -597,6 +600,7 @@ function getSelectedInventoryItem(player) {
 function replaceHeldFluidContainer(player, expectedTypeId, nextTypeId) {
     if (!player || !expectedTypeId) return false;
     if (typeof player.isInCreative === "function" && player.isInCreative()) return true;
+    if (expectedTypeId === nextTypeId) return true;
 
     const selected = getSelectedInventoryItem(player);
     if (!selected) return false;
@@ -610,13 +614,9 @@ function replaceHeldFluidContainer(player, expectedTypeId, nextTypeId) {
         inventory.setItem(slot, current);
 
         if (nextTypeId) {
-            if (typeof player.giveItem === "function") {
-                player.giveItem(nextTypeId, 1);
-            } else {
-                const overflow = inventory.addItem(new ItemStack(nextTypeId, 1));
-                if (overflow) {
-                    player.dimension?.spawnItem?.(overflow, player.location);
-                }
+            const overflow = inventory.addItem(new ItemStack(nextTypeId, 1));
+            if (overflow) {
+                player.dimension?.spawnItem?.(overflow, player.location);
             }
         }
         return true;
@@ -722,6 +722,8 @@ function pullFluidFromNetwork(machine, block, tank, allowedTypes, maxPull, fluid
 
     for (const loc of orderedTargets) {
         if (remaining <= 0) break;
+        if (!canFluidNodeProvide(loc)) continue;
+        if (!isFluidNodeEnabled(loc)) continue;
 
         const [sourceEntity] = dim.getEntitiesAtBlockLocation(loc);
         if (!sourceEntity || sourceEntity === machine.entity) continue;
@@ -732,6 +734,7 @@ function pullFluidFromNetwork(machine, block, tank, allowedTypes, maxPull, fluid
 
         const sourceType = sourceTank.getType();
         if (!sourceType || sourceType === "empty") continue;
+        if (!fluidNodeMatchesType(loc, sourceType)) continue;
         if (!desiredTypes.has(sourceType)) continue;
 
         const pulled = sourceTank.transferTo(tank, remaining);

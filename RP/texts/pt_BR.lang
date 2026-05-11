@@ -26,6 +26,8 @@ tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Gera carga de ov
 tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Transfere overclock para a rede
 tile.utilitycraft:overclock_injector.name=Injetor de Overclock\n§7\n- Aceita melhorias: §a§r, §b§r, §d§r
 tile.utilitycraft:reinforced_extractor.name=Extrator Reforçado\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:reinforced_importer.name=Importador Reforçado\n§7- Entrada dedicada de fluidos da rede
+tile.utilitycraft:reinforced_exporter.name=Exportador Reforçado\n§7- Saída dedicada de fluidos da rede
 tile.utilitycraft:smart_importer.name=Importador Inteligente\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r
 
 ## Máquinas Superiores
@@ -33,6 +35,8 @@ tile.utilitycraft:abyssal_fisher.name=Autopescador Abissal\n§9Autopescador Supe
 tile.utilitycraft:arc_press_forge.name=Prensa Elétrica Forjada\n§9Prensa Elétrica Superior\n§7- Aceita melhorias: §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:dual_siever.name=Peneirador Duplo\n§9Peneirador Superior B\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:centrifugal_siever.name=Peneirador Centrífugo\n§9Peneirador Superior A\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r
+tile.utilitycraft:cryo_freezer.name=Congelador Criogênico\n§9Ramo Superior da Câmara Criogênica\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r
+tile.utilitycraft:cryo_stabilizer.name=Estabilizador Criogênico\n§9Ramo Superior da Câmara Criogênica\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r
 tile.utilitycraft:industrial_burner.name=Incinerador Industrial\n§9Incinerador Superior\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:impact_crusher.name=Triturador de Impacto\n§9Triturador Superior B\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r
 tile.utilitycraft:genetic_seed_synthesizer.name=Sintetizador Genético de Sementes\n§9Sintetizador de Sementes Superior\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r
@@ -45,6 +49,8 @@ tile.utilitycraft:verdant_cultivator.name=Cultivador Verdante\n§9Colheitadeira 
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versão Estética
 tile.utilitycraft:mob_magnet.name=Ímã de Mobs \n§7 Atrai mobs em um raio configurável
 tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser\n§7  Área ativa projetada pela barreira
+tile.utilitycraft:reinforced_machine_case.name=Case Reforçado
+tile.utilitycraft:superior_machine_case.name=Case Superior
 tile.utilitycraft:reinforced_cable.name=Cabo Reforçado\n§7- Espinha dorsal de alta capacidade para energia, fluidos e overclock\n- Aceita melhorias: §a§r, §b§r, §d§r
 
 ## Transportação - Esteiras
@@ -249,6 +255,8 @@ entity.utilitycraft:industrial_burner.name=§fIncinerador Industrial
 entity.utilitycraft:impact_crusher.name=§fTriturador de Impacto
 entity.utilitycraft:pulverizer.name=§fPulverizador
 entity.utilitycraft:centrifugal_siever.name=§fPeneirador Centrífugo
+entity.utilitycraft:cryo_freezer.name=§fCongelador Criogênico
+entity.utilitycraft:cryo_stabilizer.name=§fEstabilizador Criogênico
 entity.utilitycraft:dual_siever.name=§fPeneirador Duplo
 entity.utilitycraft:abyssal_fisher.name=§fPescador Abissal
 entity.utilitycraft:genetic_seed_synthesizer.name=§fSintetizador Genético de Sementes
@@ -274,7 +282,9 @@ at:itemGroup.name.capsules=Cápsulas de Líquidos §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armaduras §u(Ascendant Technology)
 at:itemGroup.name.materials_resources=Materiais e Recursos §u(Ascendant Technology)
+at:itemGroup.name.pipes=Dutos §u(Ascendant Technology)
 at:itemGroup.name.conveyors=Esteiras §u(Ascendant Technology)
+dorios:itemGroup.name.pipes=Dutos
 dorios:itemGroup.name.mob_grinding=Gerenciamento de Criaturas
 
 at:ui.h=A

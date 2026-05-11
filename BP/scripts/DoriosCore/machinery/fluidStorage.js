@@ -1084,7 +1084,31 @@ export class FluidManager {
 
         let orderedTargets = [...nodes];
 
-        const processTarget = (loc, share = null) => {
+        const canReceiveNode = (node) => {
+            const role = node?.role ?? "direct";
+            return role === "sink" || role === "direct";
+        };
+
+        const nodeEnabled = (node) => node?.enabled !== false;
+
+        const nodeMatchesType = (node, fluidType) => {
+            const filters = Array.isArray(node?.filters)
+                ? node.filters.map(entry => String(entry).toLowerCase()).filter(Boolean)
+                : [];
+            if (filters.length === 0) return true;
+
+            const normalizedType = String(fluidType).toLowerCase();
+            const contains = filters.includes(normalizedType);
+            return node?.filterMode === "blacklist" ? !contains : contains;
+        };
+
+        const processTarget = (node, share = null) => {
+            if (!Number.isFinite(node?.x) || !Number.isFinite(node?.y) || !Number.isFinite(node?.z)) return 0;
+            if (!canReceiveNode(node)) return 0;
+            if (!nodeEnabled(node)) return 0;
+            if (!nodeMatchesType(node, type)) return 0;
+
+            const loc = { x: node.x, y: node.y, z: node.z };
             const targetBlock = dim.getBlock(loc);
             if (!targetBlock?.hasTag("dorios:fluid")) return 0;
 

@@ -16,6 +16,8 @@
 							"utilitycraft:impact_crusher",
 							"utilitycraft:pulverizer",
                             "utilitycraft:centrifugal_siever",
+                            "utilitycraft:cryo_freezer",
+                            "utilitycraft:cryo_stabilizer",
                             "utilitycraft:dual_siever",
                             "utilitycraft:abyssal_fisher",
                             "utilitycraft:genetic_seed_synthesizer",
@@ -44,6 +46,17 @@
                             "utilitycraft:residue_processor",
                             "utilitycraft:singularity_fabricator",
                             "utilitycraft:vaporworks_processor"
+                        ]
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:reinforced_cable",
+                            "name": "at:itemGroup.name.pipes"
+                        },
+                        "items": [
+                            "utilitycraft:reinforced_cable",
+                            "utilitycraft:reinforced_importer",
+                            "utilitycraft:reinforced_exporter"
                         ]
                     },
                     {
@@ -81,8 +94,9 @@
                         ]
                     }
                 ]
-            },{
-                "category_name": "items",
+            },
+            {
+                "category_name": "equipment",
                 "groups": [
                     {
                         "group_identifier": {
@@ -155,7 +169,12 @@
                             "utilitycraft:milk_capsule_infinite",
                             "utilitycraft:xp_capsule_infinite"
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "category_name": "items",
+                "groups": [
                     {
                         "group_identifier": {
                             "icon": "utilitycraft:aetherium",

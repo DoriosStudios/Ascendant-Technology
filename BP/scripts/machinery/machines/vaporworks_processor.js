@@ -3,46 +3,57 @@ import {
     Energy,
     FluidManager,
     updatePipes,
+    canFluidNodeProvide,
+    isFluidNodeEnabled,
+    fluidNodeMatchesType,
     buildOverclockLoreLine,
     ADAPTIVE_CHECK_RESULT,
     runAdaptiveTickGate,
     feedFluidSlot,
-    formatFluidDisplayName
+    fillFluidSlot,
+    formatFluidDisplayName,
+    resolveCachedLocationList,
+    buildDualTankMachineState,
+    buildStateSignature,
+    shouldRefreshMachineUi,
+    resetMachineRuntimeState,
+    resolveMachineRecipes,
+    findRecipeByFluidInputType,
+    hasRecipes,
+    listRecipes
 } from '../../DoriosCore/main.js';
-import { getVaporworksProcessorRecipes } from '../../config/recipes/vaporworks_processor.js';
+import {
+    getVaporworksProcessorRecipes,
+    getVaporworksProcessorInputRate
+} from '../../config/recipes/vaporworks_processor.js';
 
-const VAPORWORKS = Object.freeze({
-    slots: Object.freeze({
-        fluidInput: 3,
-        inputDisplay: 10,
-        outputDisplay: 11,
-        fluidOutput: 19,
-        status: 1
-    }),
-    defaults: Object.freeze({
-        fluidCap: 64000
-    }),
-    transfer: Object.freeze({
-        fluidAdaptive: Object.freeze({
-            interval: 4,
-            idleBackoffTicks: 8,
-            stallBackoffTicks: 12,
-            failureEscalationThreshold: 2,
-            drasticBackoffTicks: 48
-        })
-    })
+const FLUID_INPUT_SLOT = 3;
+const INPUT_DISPLAY_SLOT = 10;
+const OUTPUT_DISPLAY_SLOT = 11;
+const FLUID_OUTPUT_SLOT = 19;
+const STATUS_SLOT = 1;
+
+const DEFAULT_FLUID_CAP = 64000;
+const UI_REFRESH_INTERVAL = 4;
+
+const FLUID_IO_OPTIONS = Object.freeze({
+    interval: 4,
+    idleBackoffTicks: 8,
+    stallBackoffTicks: 12,
+    failureEscalationThreshold: 2,
+    drasticBackoffTicks: 48
 });
 
 /*
 Slots (inventory_size: 20)
-- [0] HUD de energia (machine.displayEnergy padrão).
-- [1] Indicador de status/seta (STATUS_SLOT).
-- [3] Entrada de fluido (FLUID_INPUT_SLOT).
-- [4,5,6] Slots de upgrades (de acordo com settings.machine.upgrades).
-- [10] Display do tanque de entrada (INPUT_DISPLAY_SLOT) — bloqueado para o jogador.
-- [11] Display do tanque de saída (OUTPUT_DISPLAY_SLOT) — bloqueado para o jogador.
-- [19] Saída de fluido (FLUID_OUTPUT_SLOT).
-Slots escondidos: [7, 8, 9, 12, 13, 14, 15, 16, 17, 18] (preenchimento/UI, não utilizáveis pelo jogador).
+- [0] Default energy HUD slot (`machine.displayEnergy`).
+- [1] Status arrow slot.
+- [3] Fluid input slot.
+- [4, 5, 6] Upgrade slots from `settings.machine.upgrades`.
+- [10] Input tank display slot.
+- [11] Output tank display slot.
+- [19] Fluid output slot.
+- Hidden slots: [7, 8, 9, 12, 13, 14, 15, 16, 17, 18].
 */
 
 DoriosAPI.register.blockComponent('vaporworks_processor', {
@@ -54,13 +65,13 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
             machine.setEnergyCost(settings.machine.energy_cost ?? 2400);
             machine.displayProgress();
             machine.displayEnergy();
-            machine.blockSlots([VAPORWORKS.slots.inputDisplay, VAPORWORKS.slots.outputDisplay]);
+            machine.blockSlots([INPUT_DISPLAY_SLOT, OUTPUT_DISPLAY_SLOT]);
 
-            const [tankInput, tankOutput] = getVaporworksTanks(machine, settings);
-            tankInput.display(VAPORWORKS.slots.inputDisplay);
-            tankOutput.display(VAPORWORKS.slots.outputDisplay);
+            const [tankInput, tankOutput] = getVaporworksTanks(machine, getMachineFluidCap(settings));
+            tankInput.display(INPUT_DISPLAY_SLOT);
+            tankOutput.display(OUTPUT_DISPLAY_SLOT);
 
-            machine.entity.setItem(VAPORWORKS.slots.status, 'utilitycraft:arrow_indicator_90', 1, '');
+            machine.entity.setItem(STATUS_SLOT, 'utilitycraft:arrow_indicator_90', 1, '');
         });
     },
 
@@ -71,13 +82,14 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
         const machine = new Machine(block, settings);
         if (!machine.valid) return;
 
-        const [tankInput, tankOutput] = getVaporworksTanks(machine, settings);
-        const recipes = resolveRecipes(block, settings);
+        const [tankInput, tankOutput] = getVaporworksTanks(machine, getMachineFluidCap(settings));
+        const recipes = resolveMachineRecipes(block, settings, 'vaporworks_processor', getVaporworksProcessorRecipes());
+        const inputRate = getInputRate(settings, recipes);
 
         runAdaptiveTickGate(
             machine.entity,
             'vaporworks:fluid_io',
-            VAPORWORKS.transfer.fluidAdaptive,
+            FLUID_IO_OPTIONS,
             () => {
                 const availableOutput = tankOutput.get();
                 const freeInput = tankInput.getFreeSpace();
@@ -85,11 +97,16 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
                     return ADAPTIVE_CHECK_RESULT.idle;
                 }
 
-                const nodes = resolveFluidNodes(machine, block);
+                const nodes = resolveCachedLocationList(
+                    machine.entity,
+                    'dorios:fluid_nodes',
+                    block.location,
+                    () => updatePipes(block, 'fluid')
+                );
                 let moved = false;
 
                 if (availableOutput > 0) {
-                    const beforeOutput = tankOutput.get();
+                    const beforeOutput = availableOutput;
 
                     // Direct adjacent push
                     tankOutput.transferFluids(block, availableOutput, { useFacing: true });
@@ -105,9 +122,9 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
                     moved = tankOutput.get() < beforeOutput;
                 }
 
-                if (freeInput > 0) {
+                if (freeInput > 0 && nodes.length) {
                     const beforeInput = tankInput.get();
-                    pullFluidFromNetwork(machine, block, tankInput, recipes, settings, nodes);
+                    pullFluidFromNetwork(machine, block, tankInput, recipes, nodes, inputRate);
                     moved = tankInput.get() > beforeInput || moved;
                 }
 
@@ -118,79 +135,137 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
         );
 
         // Handle fluid input slot (capsule draining)
-        feedFluidSlot(machine, tankInput, VAPORWORKS.slots.fluidInput);
-        
-        // Handle fluid output slot (capsule filling)
-        fillFluidSlot(machine, tankOutput, VAPORWORKS.slots.fluidOutput);
+        feedFluidSlot(machine, tankInput, FLUID_INPUT_SLOT);
 
-        const fail = (message, reset = true) => {
-            machine.showWarning(message, reset);
-            tankInput.display(VAPORWORKS.slots.inputDisplay);
-            tankOutput.display(VAPORWORKS.slots.outputDisplay);
+        // Handle fluid output slot (capsule filling)
+        fillFluidSlot(machine, tankOutput, FLUID_OUTPUT_SLOT);
+
+        const refreshDisplays = () => {
+            tankInput.display(INPUT_DISPLAY_SLOT);
+            tankOutput.display(OUTPUT_DISPLAY_SLOT);
+            machine.displayEnergy();
+            machine.displayProgress();
         };
 
-        if (!recipes.length) {
+        let state = buildDualTankMachineState(machine, tankInput, tankOutput);
+
+        const fail = (message, reset = true) => {
+            resetMachineRuntimeState(machine, reset);
+            state = buildDualTankMachineState(machine, tankInput, tankOutput);
+
+            const signature = buildStateSignature([
+                'warning',
+                message,
+                state.energy,
+                state.energyCost,
+                state.progress,
+                state.input.type,
+                state.input.amount,
+                state.input.cap,
+                state.output.type,
+                state.output.amount,
+                state.output.cap
+            ]);
+
+            if (!shouldRefreshMachineUi(machine.entity, 'vaporworks:ui', signature, UI_REFRESH_INTERVAL)) {
+                return;
+            }
+
+            machine.showWarning(message, false);
+            refreshDisplays();
+        };
+
+        if (!hasRecipes(recipes)) {
             fail('No Recipes');
             return;
         }
 
-        const inputFluidType = tankInput.getType();
-        if (inputFluidType === 'empty' || tankInput.get() <= 0) {
+        if (state.input.type === 'empty' || state.input.amount <= 0) {
             fail('Insert Fluid');
             return;
         }
 
-        const recipe = matchRecipe(recipes, inputFluidType);
+        const recipe = findRecipeByFluidInputType(recipes, state.input.type);
         if (!recipe) {
             fail('Invalid Fluid');
             return;
         }
 
         const outputFluidType = recipe.outputFluid.type;
-        const outputTankType = tankOutput.getType();
-
-        if (outputTankType !== 'empty' && outputTankType !== outputFluidType) {
+        if (state.output.type !== 'empty' && state.output.type !== outputFluidType) {
             fail(`Wrong Output\n§7Need ${formatFluidDisplayName(outputFluidType)}`);
             return;
         }
 
-        const crafts = calculateCrafts(machine, tankInput, tankOutput, recipe, machine.boosts.overclockYield ?? 1);
-        if (crafts.max <= 0) {
-            fail(crafts.reason ?? 'Missing Fluid');
+        const yieldBoost = Math.max(1, machine.boosts.overclockYield ?? 1);
+        const inputPerCraft = Math.max(1, recipe.inputFluid.amount ?? 1000);
+        const outputPerCraft = Math.max(1, recipe.outputFluid.amount ?? 500);
+        const maxCrafts = Math.min(
+            Math.floor(state.input.amount / inputPerCraft),
+            Math.floor(state.output.free / (outputPerCraft * yieldBoost))
+        );
+
+        if (maxCrafts <= 0) {
+            fail(state.input.amount < inputPerCraft ? 'Missing Fluid' : 'Output Tank Full');
             return;
         }
 
-        machine.setEnergyCost(recipe.energyCost ?? settings.machine.energy_cost ?? 2400);
-        const energyAvailable = machine.energy.get();
-        if (energyAvailable <= 0) {
+        const configuredCost = recipe.energyCost ?? settings?.machine?.energy_cost ?? 2400;
+        machine.setEnergyCost(configuredCost);
+        state = buildDualTankMachineState(machine, tankInput, tankOutput);
+
+        if (state.energy <= 0) {
             fail('No Energy', false);
             return;
         }
 
-        const energyCost = machine.getEnergyCost();
-        const progress = machine.getProgress();
-
-        if (progress >= energyCost) {
-            const craftRuns = Math.min(crafts.max, Math.floor(progress / energyCost));
+        if (state.progress >= state.energyCost) {
+            const craftRuns = Math.min(maxCrafts, Math.floor(state.progress / state.energyCost));
             if (craftRuns > 0) {
-                processCraft(machine, recipe, craftRuns, tankInput, tankOutput);
-                machine.addProgress(-(craftRuns * energyCost));
+                tankInput.consume(inputPerCraft * craftRuns);
+
+                if (tankOutput.getType() === 'empty') {
+                    tankOutput.setType(outputFluidType);
+                }
+
+                tankOutput.add(Math.floor(outputPerCraft * craftRuns * yieldBoost));
+                machine.addProgress(-(craftRuns * state.energyCost));
             }
         } else {
             const consumption = machine.boosts.consumption;
-            const needed = energyCost - progress;
-            const spendable = Math.min(machine.energy.get(), machine.rate, needed * consumption);
+            const needed = state.energyCost - state.progress;
+            const spendable = Math.min(state.energy, machine.rate, needed * consumption);
             if (spendable > 0) {
                 machine.energy.consume(spendable);
                 machine.addProgress(spendable / Math.max(consumption, Number.EPSILON));
             }
         }
 
-        updateHud(machine, recipe, tankInput, tankOutput, crafts.max);
-        tankInput.display(VAPORWORKS.slots.inputDisplay);
-        tankOutput.display(VAPORWORKS.slots.outputDisplay);
-        machine.displayEnergy();
-        machine.displayProgress();
+        state = buildDualTankMachineState(machine, tankInput, tankOutput);
+        const queuedCrafts = Math.min(
+            Math.floor(state.input.amount / inputPerCraft),
+            Math.floor(state.output.free / (outputPerCraft * yieldBoost))
+        );
+        const signature = buildStateSignature([
+            'running',
+            recipe.id ?? outputFluidType,
+            state.energy,
+            state.energyCost,
+            state.progress,
+            state.input.type,
+            state.input.amount,
+            state.input.cap,
+            state.output.type,
+            state.output.amount,
+            state.output.cap,
+            queuedCrafts
+        ]);
+
+        if (shouldRefreshMachineUi(machine.entity, 'vaporworks:ui', signature, UI_REFRESH_INTERVAL)) {
+            updateHud(machine, recipe, state, queuedCrafts);
+            refreshDisplays();
+        }
+
         machine.on();
     },
 
@@ -199,101 +274,57 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
     }
 });
 
-function resolveFluidCap(settings) {
-    const configured = Number(settings?.machine?.fluid_cap);
-    if (Number.isFinite(configured) && configured > 0) {
-        return configured;
-    }
-    return VAPORWORKS.defaults.fluidCap;
+function toPositiveInt(value, fallback = 0) {
+    const normalized = Math.floor(Number(value));
+    return normalized > 0 ? normalized : fallback;
 }
 
-function resolveInputRate(settings, recipes) {
-    const configured = Number(settings?.machine?.fluid_rate);
-    if (Number.isFinite(configured) && configured > 0) {
-        return configured;
-    }
-
-    const amounts = Array.isArray(recipes)
-        ? recipes
-            .map(recipe => Number(recipe?.inputFluid?.amount))
-            .filter(value => Number.isFinite(value) && value > 0)
-        : [];
-
-    if (amounts.length) {
-        return Math.max(...amounts);
-    }
-
-    return 1000;
+function getMachineFluidCap(settings) {
+    return toPositiveInt(settings?.machine?.fluid_cap, DEFAULT_FLUID_CAP);
 }
 
-function getAllowedInputFluidTypes(recipes) {
-    const allowed = new Set();
-    if (!Array.isArray(recipes)) return allowed;
-
-    for (const recipe of recipes) {
-        const type = recipe?.inputFluid?.type;
-        if (typeof type === 'string' && type.length > 0) {
-            allowed.add(type);
-        }
+function getInputRate(settings, recipes) {
+    const configuredRate = toPositiveInt(settings?.machine?.fluid_rate, 0);
+    if (configuredRate > 0) {
+        return configuredRate;
     }
 
-    return allowed;
-}
-
-function parseCachedNodes(entity, propertyId = 'dorios:fluid_nodes') {
-    if (!entity) return [];
-    try {
-        const cached = entity.getDynamicProperty(propertyId);
-        if (!cached) return [];
-        const parsed = JSON.parse(cached);
-        return Array.isArray(parsed) ? parsed : [];
-    } catch {
-        return [];
+    let fallbackRate = getVaporworksProcessorInputRate();
+    for (const recipe of listRecipes(recipes)) {
+        fallbackRate = Math.max(fallbackRate, toPositiveInt(recipe?.inputFluid?.amount, 0));
     }
+
+    return fallbackRate;
 }
 
-function resolveFluidNodes(machine, block) {
-    const nodes = parseCachedNodes(machine?.entity, 'dorios:fluid_nodes');
-    if (nodes.length) return nodes;
-
-    updatePipes(block, 'fluid');
-    return parseCachedNodes(machine?.entity, 'dorios:fluid_nodes');
-}
-
-function pullFluidFromNetwork(machine, block, tank, recipes, settings, fluidNodes = []) {
+function pullFluidFromNetwork(machine, block, tank, recipes, fluidNodes = [], maxPull = getVaporworksProcessorInputRate()) {
     if (!machine?.entity || !tank || !block) return;
 
     const freeSpace = tank.getFreeSpace();
     if (freeSpace <= 0) return;
 
-    const allowedTypes = getAllowedInputFluidTypes(recipes);
-    if (!allowedTypes.size) return;
+    if (!hasRecipes(recipes)) return;
 
     const currentType = tank.getType();
-    if (currentType !== 'empty' && !allowedTypes.has(currentType)) {
-        return;
-    }
+    const acceptsType = currentType === 'empty'
+        ? (type) => Boolean(findRecipeByFluidInputType(recipes, type))
+        : (type) => type === currentType;
 
-    const desiredTypes = currentType === 'empty' ? allowedTypes : new Set([currentType]);
-    const maxPull = Math.min(freeSpace, resolveInputRate(settings, recipes));
-    if (maxPull <= 0) return;
+    const transferLimit = Math.min(freeSpace, maxPull);
+    if (transferLimit <= 0) return;
 
     const nodes = Array.isArray(fluidNodes) ? fluidNodes : [];
 
     if (!Array.isArray(nodes) || nodes.length === 0) return;
 
     const dim = block.dimension;
-    const origin = block.location;
-    const orderedTargets = nodes.length > 1
-        ? [...nodes].sort((a, b) =>
-            DoriosAPI.math.distanceBetween(origin, a) - DoriosAPI.math.distanceBetween(origin, b)
-        )
-        : nodes;
 
-    let remaining = maxPull;
+    let remaining = transferLimit;
 
-    for (const loc of orderedTargets) {
+    for (const loc of nodes) {
         if (remaining <= 0) break;
+        if (!canFluidNodeProvide(loc)) continue;
+        if (!isFluidNodeEnabled(loc)) continue;
 
         const [sourceEntity] = dim.getEntitiesAtBlockLocation(loc);
         if (!sourceEntity || sourceEntity === machine.entity) continue;
@@ -304,7 +335,8 @@ function pullFluidFromNetwork(machine, block, tank, recipes, settings, fluidNode
 
         const sourceType = sourceTank.getType();
         if (!sourceType || sourceType === 'empty') continue;
-        if (!desiredTypes.has(sourceType)) continue;
+        if (!fluidNodeMatchesType(loc, sourceType)) continue;
+        if (!acceptsType(sourceType)) continue;
 
         const pulled = sourceTank.transferTo(tank, remaining);
         if (pulled > 0) {
@@ -313,76 +345,28 @@ function pullFluidFromNetwork(machine, block, tank, recipes, settings, fluidNode
     }
 }
 
-function ensureTankCap(tank, cap) {
-    if (!tank) return tank;
-    if (Number.isFinite(cap) && cap > 0 && tank.getCap() <= 0) {
-        tank.setCap(cap);
-    }
-    return tank;
-}
-
-function getVaporworksTanks(machine, settings) {
+function getVaporworksTanks(machine, fluidCap = DEFAULT_FLUID_CAP) {
     if (!machine?.entity) return [null, null];
-    const [tankInput, tankOutput] = FluidManager.initializeMultiple(machine.entity, 2);
-    const fluidCap = resolveFluidCap(settings);
-    return [ensureTankCap(tankInput, fluidCap), ensureTankCap(tankOutput, fluidCap)];
-}
 
-function resolveRecipes(block, settings) {
-    const component = block.getComponent('utilitycraft:machine_recipes')?.customComponentParameters?.params;
-    if (component?.type === 'vaporworks_processor') return getVaporworksProcessorRecipes();
-    if (Array.isArray(component)) return component;
-    if (settings?.machine?.recipes && Array.isArray(settings.machine.recipes)) {
-        return settings.machine.recipes;
-    }
-    return getVaporworksProcessorRecipes();
-}
-
-function matchRecipe(recipes, inputFluidType) {
-    return recipes.find(recipe => recipe.inputFluid?.type === inputFluidType);
-}
-
-function calculateCrafts(machine, tankInput, tankOutput, recipe, yieldBoost = 1) {
-    const inputPerCraft = Math.max(1, recipe.inputFluid.amount ?? 1000);
-    const outputPerCraft = Math.max(1, recipe.outputFluid.amount ?? 500);
-
-    const availableInput = Math.floor(tankInput.get() / inputPerCraft);
-    const availableOutput = Math.floor(tankOutput.getFreeSpace() / (outputPerCraft * yieldBoost));
-
-    const max = Math.min(availableInput, availableOutput);
-
-    if (max <= 0) {
-        if (availableInput <= 0) return { max: 0, reason: 'Missing Fluid' };
-        if (availableOutput <= 0) return { max: 0, reason: 'Output Tank Full' };
+    const tanks = FluidManager.initializeMultiple(machine.entity, 2);
+    for (const tank of tanks) {
+        if (tank?.getCap?.() <= 0) {
+            tank?.setCap?.(fluidCap);
+        }
     }
 
-    return { max };
+    return tanks;
 }
-
-function processCraft(machine, recipe, crafts, tankInput, tankOutput) {
-    const inputPerCraft = Math.max(1, recipe.inputFluid.amount ?? 1000);
-    const totalInput = inputPerCraft * crafts;
-    tankInput.consume(totalInput);
-
-    const yieldBoost = machine.boosts.overclockYield ?? 1;
-    const outputFluidType = recipe.outputFluid.type;
-    if (tankOutput.getType() === 'empty') tankOutput.setType(outputFluidType);
-    
-    const outputAmount = recipe.outputFluid.amount * crafts * yieldBoost;
-    tankOutput.add(Math.floor(outputAmount));
-}
-
-function updateHud(machine, recipe, tankInput, tankOutput, maxCrafts) {
+function updateHud(machine, recipe, state, queuedCrafts) {
     const inputType = recipe.inputFluid.type;
     const outputType = recipe.outputFluid.type;
-    const inputPerCraft = recipe.inputFluid.amount;
     const outputPerCraft = recipe.outputFluid.amount;
-    
-    const inputAmount = FluidManager.formatFluid(tankInput.get());
-    const inputCap = FluidManager.formatFluid(tankInput.getCap());
-    const outputAmount = FluidManager.formatFluid(tankOutput.get());
-    const outputCap = FluidManager.formatFluid(tankOutput.getCap());
-    
+
+    const inputAmount = FluidManager.formatFluid(state.input.amount);
+    const inputCap = FluidManager.formatFluid(state.input.cap);
+    const outputAmount = FluidManager.formatFluid(state.output.amount);
+    const outputCap = FluidManager.formatFluid(state.output.cap);
+
     const lore = [
         `§bInput: §f${formatFluidDisplayName(inputType)}`,
         `§7In Tank: §f${inputAmount} §7/ §f${inputCap}`,
@@ -390,7 +374,7 @@ function updateHud(machine, recipe, tankInput, tankOutput, maxCrafts) {
         `§7Out Tank: §f${outputAmount} §7/ §f${outputCap}`,
         `§7Yield: §f${FluidManager.formatFluid(outputPerCraft)} each`,
         `§cCost: §f${Energy.formatEnergyToText(machine.getEnergyCost())}`,
-        `§7Queued Crafts: §f${maxCrafts}`
+        `§7Queued Crafts: §f${queuedCrafts}`
     ];
 
     if (recipe.description) {
@@ -405,31 +389,4 @@ function updateHud(machine, recipe, tankInput, tankOutput, maxCrafts) {
         lore,
         rawText: undefined
     });
-}
-
-function fillFluidSlot(machine, tank, slotIndex) {
-    const slotItem = machine.inv.getItem(slotIndex);
-    if (!slotItem) return;
-
-    const fillDefinition = FluidManager.getFluidFillDefinition?.(slotItem.typeId);
-    if (!fillDefinition) return;
-
-    const result = tank.fluidItem(slotItem.typeId);
-    if (result === false) return;
-
-    machine.entity.changeItemAmount(slotIndex, -1);
-
-    if (!result) return;
-
-    const updated = machine.inv.getItem(slotIndex);
-    if (!updated) {
-        machine.entity.setItem(slotIndex, result, 1);
-        return;
-    }
-
-    if (updated.typeId === result && updated.amount < updated.maxAmount) {
-        machine.entity.changeItemAmount(slotIndex, 1);
-    } else {
-        machine.entity.addItem(result, 1);
-    }
 }

@@ -8,6 +8,7 @@ import {
 import {
     getStatsCoreDefinition,
     ITEM_TYPES,
+    isStatsCoreEnabled,
     collectStatsAbilityNames,
     readStatsState,
     resolveStatsAttributes,
@@ -256,6 +257,18 @@ DoriosAPI.register.blockComponent('refining_table', {
         const tracked = syncTrackedEquipment(machine)
         const preview = buildRefiningPreview(machine, tracked)
         const activeSignature = getActiveSignature(machine)
+
+        if (!isStatsCoreEnabled()) {
+            cancelRefining(machine)
+            machine.setEnergyCost(REFINING_TABLE.defaults.idleEnergyCost)
+            showMachineWarning(machine, 'StatsCore Disabled', {
+                ...preview,
+                valid: false,
+                ready: false,
+                problem: 'StatsCore Disabled',
+            }, true, shouldRefreshUi)
+            return
+        }
 
         machine.setEnergyCost(preview.energyCost ?? REFINING_TABLE.defaults.idleEnergyCost)
 
@@ -572,6 +585,19 @@ function buildRefiningPreview(machine, tracked = syncTrackedEquipment(machine)) 
         odds: { strong: 0, masterwork: 0, transcendent: 0 },
         signature: '',
         problem: 'Insert Equipment',
+    }
+
+    if (!isStatsCoreEnabled()) {
+        return {
+            ...preview,
+            valid: false,
+            ready: false,
+            equipment,
+            definition,
+            state,
+            attributes,
+            problem: 'StatsCore Disabled',
+        }
     }
 
     if (!equipment?.typeId) {

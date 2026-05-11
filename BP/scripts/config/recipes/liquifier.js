@@ -9,17 +9,17 @@ const LIQUIFIER_RECIPE_DEFAULTS = Object.freeze({
 });
 
 /**
- * Native Liquifier recipes shipped with the add-on.
- * Each entry defines the solid input, the amount of fluid produced,
- * optional byproducts, and metadata that the machine script can use to
- * describe the recipe to the player.
+ * Direct recipe registry for the Liquifier.
+ * Keys represent the accepted item input, matching the UtilityCraft lookup style.
+ * Full `input` payloads remain supported for script-event registration.
  *
- * @type {LiquifierRecipe[]}
+ * @type {Record<string, LiquifierRecipe>}
  */
-const nativeLiquifierRecipes = [
-    defineLiquifierRecipe({
+export const liquifierRecipes = {};
+
+const liquifierRecipesRegister = {
+    "utilitycraft:aetherium": {
         id: "utilitycraft:liquified_aetherium_from_ingot",
-        input: { id: "utilitycraft:aetherium", amount: 1 },
         fluid: { type: "liquified_aetherium", amount: 1000 },
         energyCost: 9600,
         seconds: 15,
@@ -29,18 +29,18 @@ const nativeLiquifierRecipes = [
             chance: 0.25
         },
         description: "Melts refined ingots back into a full bucket of liquified aetherium."
-    }),
-    defineLiquifierRecipe({
+    },
+    "utilitycraft:aetherium_shard": {
         id: "utilitycraft:liquified_aetherium_from_shards",
-        input: { id: "utilitycraft:aetherium_shard", amount: 4 },
+        inputAmount: 4,
         fluid: { type: "liquified_aetherium", amount: 1000 },
         energyCost: 5400,
         seconds: 10,
         description: "Compresses loose shards into a usable batch of liquified aetherium."
-    }),
-    defineLiquifierRecipe({
+    },
+    "minecraft:ancient_debris": {
         id: "utilitycraft:liquified_aetherium_from_debris",
-        input: { id: "minecraft:ancient_debris", amount: 2 },
+        inputAmount: 2,
         fluid: { type: "dark_matter", amount: 1000 },
         energyCost: 12800,
         seconds: 20,
@@ -50,10 +50,10 @@ const nativeLiquifierRecipes = [
             chance: 0.35
         },
         description: "Breaks down ancient debris into a full batch of dark matter."
-    }),
-    defineLiquifierRecipe({
+    },
+    "utilitycraft:void_essence": {
         id: "utilitycraft:dark_matter_from_void_essence",
-        input: { id: "utilitycraft:void_essence", amount: 3 },
+        inputAmount: 3,
         fluid: { type: "dark_matter", amount: 750 },
         energyCost: 6400,
         seconds: 9,
@@ -63,10 +63,10 @@ const nativeLiquifierRecipes = [
             chance: 0.2
         },
         description: "Condenses volatile void essence into thick dark matter concentrate."
-    }),
-    defineLiquifierRecipe({
+    },
+    "minecraft:obsidian": {
         id: "utilitycraft:dark_matter_from_obsidian",
-        input: { id: "minecraft:obsidian", amount: 2 },
+        inputAmount: 2,
         fluid: { type: "dark_matter", amount: 500 },
         energyCost: 5200,
         seconds: 8,
@@ -76,10 +76,10 @@ const nativeLiquifierRecipes = [
             chance: 0.1
         },
         description: "Melts obsidian down into a small batch of dark matter."
-    }),
-    defineLiquifierRecipe({
+    },
+    "utilitycraft:stabilized_obsidian_dust": {
         id: "utilitycraft:dark_matter_from_stabilized_obsidian_dust",
-        input: { id: "utilitycraft:stabilized_obsidian_dust", amount: 4 },
+        inputAmount: 4,
         fluid: { type: "dark_matter", amount: 1000 },
         energyCost: 7600,
         seconds: 12,
@@ -89,25 +89,24 @@ const nativeLiquifierRecipes = [
             chance: 0.35
         },
         description: "Liquifies refined obsidian dust into a full bucket of dark matter."
-    }),
-    defineLiquifierRecipe({
-        input: { id: "utilitycraft:compressed_obsidian"},
+    },
+    "utilitycraft:compressed_obsidian": {
         fluid: { type: "dark_matter", amount: 9000},
         energyCost: 64000
-    }),
-    defineLiquifierRecipe({
-        input: { id: "utilitycraft:compressed_obsidian_2"},
+    },
+    "utilitycraft:compressed_obsidian_2": {
         fluid: { type: "dark_matter", amount: 72000},
         energyCost: 560000
-    }),
-    defineLiquifierRecipe({
-        input: { id: "utilitycraft:compressed_obsidian_3"},
+    },
+    "utilitycraft:compressed_obsidian_3": {
         fluid: { type: "dark_matter", amount: 576000},
         energyCost: 5000000
-    })
-];
+    }
+};
 
-export const liquifierRecipes = nativeLiquifierRecipes;
+for (const [inputId, definition] of Object.entries(liquifierRecipesRegister)) {
+    upsertLiquifierRecipe(definition, inputId);
+}
 
 export function getLiquifierRecipes() {
     return liquifierRecipes;
@@ -115,7 +114,8 @@ export function getLiquifierRecipes() {
 
 /**
  * @typedef {Object} LiquifierRecipeDefinition
- * @property {{ id: string, amount: number }} input Required solid input stack.
+ * @property {{ id: string, amount: number }} [input] Optional solid input stack; when omitted the registry key is used as the input identifier.
+ * @property {number} [inputAmount] Optional shorthand amount used with keyed registration.
  * @property {{ type: string, amount?: number }} fluid Required fluid output block; amount defaults to 250 mB.
  * @property {string} [id] Optional identifier (defaults to the input identifier).
  * @property {number} [energyCost] Optional FE override per craft (defaults to 3 600).
@@ -139,12 +139,13 @@ export function getLiquifierRecipes() {
 /**
  * Normalizes a liquifier recipe definition.
  * @param {LiquifierRecipeDefinition} recipe
+ * @param {string} [registrationKey]
  * @returns {LiquifierRecipe}
  */
-function defineLiquifierRecipe(recipe) {
+function defineLiquifierRecipe(recipe, registrationKey) {
     if (!recipe || typeof recipe !== "object") throw new TypeError("Invalid liquifier recipe payload");
 
-    const input = normalizeStack(recipe.input, LIQUIFIER_RECIPE_DEFAULTS.inputAmount);
+    const input = resolveInputStack(recipe, registrationKey);
     const fluid = normalizeFluid(recipe.fluid, LIQUIFIER_RECIPE_DEFAULTS.fluidAmount);
 
     const seconds = Math.max(1, Math.floor(recipe.seconds ?? LIQUIFIER_RECIPE_DEFAULTS.processSeconds));
@@ -159,6 +160,22 @@ function defineLiquifierRecipe(recipe) {
         byproduct: normalizeByproduct(recipe.byproduct),
         description: typeof recipe.description === "string" ? recipe.description : null
     };
+}
+
+function resolveInputStack(recipe, registrationKey) {
+    if (recipe.input) {
+        return normalizeStack(recipe.input, LIQUIFIER_RECIPE_DEFAULTS.inputAmount);
+    }
+
+    const fallbackId = typeof registrationKey === "string" ? registrationKey.trim() : "";
+    if (!fallbackId) {
+        throw new TypeError("Liquifier recipe missing input definition");
+    }
+
+    return normalizeStack({
+        id: fallbackId,
+        amount: recipe.inputAmount ?? recipe.required ?? LIQUIFIER_RECIPE_DEFAULTS.inputAmount
+    }, LIQUIFIER_RECIPE_DEFAULTS.inputAmount);
 }
 
 function normalizeStack(stack, fallbackAmount) {
@@ -217,17 +234,17 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
         let added = 0;
         let replaced = 0;
 
-        for (const [recipeId, definition] of Object.entries(payload)) {
+        for (const [recipeKey, definition] of Object.entries(payload)) {
             if (!definition || typeof definition !== "object") {
-                console.warn(`[UtilityCraft] Ignored invalid liquifier recipe '${recipeId}'.`);
+                console.warn(`[UtilityCraft] Ignored invalid liquifier recipe '${recipeKey}'.`);
                 continue;
             }
 
             try {
-                const status = upsertLiquifierRecipe({ id: recipeId, ...definition });
+                const status = upsertLiquifierRecipe(definition, recipeKey);
                 if (status === "replaced") replaced++; else added++;
             } catch (err) {
-                console.warn(`[UtilityCraft] Failed to register liquifier recipe '${recipeId}':`, err);
+                console.warn(`[UtilityCraft] Failed to register liquifier recipe '${recipeKey}':`, err);
             }
         }
 
@@ -237,15 +254,13 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     }
 });
 
-function upsertLiquifierRecipe(definition) {
-    const recipe = defineLiquifierRecipe(definition);
-    const index = liquifierRecipes.findIndex(entry => entry.id === recipe.id);
+function upsertLiquifierRecipe(definition, registrationKey) {
+    const recipe = defineLiquifierRecipe(definition, registrationKey);
+    const lookupKey = recipe.input.id;
+    const status = Object.prototype.hasOwnProperty.call(liquifierRecipes, lookupKey)
+        ? "replaced"
+        : "added";
 
-    if (index >= 0) {
-        liquifierRecipes[index] = recipe;
-        return "replaced";
-    }
-
-    liquifierRecipes.push(recipe);
-    return "added";
+    liquifierRecipes[lookupKey] = recipe;
+    return status;
 }

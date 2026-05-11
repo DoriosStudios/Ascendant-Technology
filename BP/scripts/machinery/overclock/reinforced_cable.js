@@ -17,8 +17,11 @@ const REINFORCED_CABLE = Object.freeze({
         ]),
         geometryTypes: new Set([
             "utilitycraft:reinforced_cable",
+            "utilitycraft:reinforced_importer",
+            "utilitycraft:reinforced_exporter",
         ]),
         maxEnergyScan: 2048,
+        maxFluidScan: 2048,
         energyDebugProp: "utilitycraft:debug_energy"
     })
 });
@@ -27,9 +30,11 @@ const OFFSETS = REINFORCED_CABLE.offsets;
 const ENERGY_TUBE_TYPES = REINFORCED_CABLE.tube.energyTypes;
 const TUBE_GEOMETRY_TYPES = REINFORCED_CABLE.tube.geometryTypes;
 const MAX_ENERGY_SCAN = REINFORCED_CABLE.tube.maxEnergyScan;
+const MAX_FLUID_SCAN = REINFORCED_CABLE.tube.maxFluidScan;
 const ENERGY_DEBUG_PROP = REINFORCED_CABLE.tube.energyDebugProp;
 
 const PENDING_ENERGY_RESCAN = new Set();
+const PENDING_FLUID_RESCAN = new Set();
 const PENDING_GEOMETRY_REFRESH = new Set();
 const PENDING_NEIGHBOR_GEOMETRY_REFRESH = new Set();
 
@@ -341,6 +346,7 @@ function scheduleNeighborCableRefresh(block) {
 function refreshNeighbors(block) {
     const dim = block.dimension;
     let energySeed = null;
+    let fluidSeed = block.hasTag?.("dorios:fluid") ? block : null;
     for (const off of OFFSETS) {
         const pos = { x: block.location.x + off.x, y: block.location.y + off.y, z: block.location.z + off.z };
         const neighbor = dim.getBlock(pos);
@@ -350,6 +356,10 @@ function refreshNeighbors(block) {
 
         if (!energySeed && neighbor.hasTag?.("dorios:energy")) {
             energySeed = neighbor;
+        }
+
+        if (!fluidSeed && neighbor.hasTag?.("dorios:fluid")) {
+            fluidSeed = neighbor;
         }
 
         // Update visual connections for overclock network
@@ -368,17 +378,100 @@ function refreshNeighbors(block) {
     if (energySeed) {
         scheduleEnergyRescan(energySeed);
     }
+
+    if (fluidSeed) {
+        scheduleFluidRescan(fluidSeed);
+    }
 }
 
 function refreshOverclockAround(block) {
     if (!block?.dimension || !block?.location) return;
     scheduleNeighborCableRefresh(block);
-    if (block.typeId === "utilitycraft:reinforced_cable") {
+    if (TUBE_GEOMETRY_TYPES.has(block.typeId)) {
         scheduleGeometryRefresh(block);
     }
 }
 
 globalThis.refreshOverclockNetwork = refreshOverclockAround;
+
+function isFluidTube(block) {
+    if (!block?.hasTag?.("dorios:fluid")) return false;
+    if (block.hasTag?.("dorios:isTube")) return true;
+    return TUBE_GEOMETRY_TYPES.has(block.typeId);
+}
+
+function collectConnectedFluidBlocks(seedBlock) {
+    if (!seedBlock?.dimension || !seedBlock?.location) return [];
+
+    const dim = seedBlock.dimension;
+    const queue = [];
+    const visited = new Set();
+    const blocks = [];
+    let queueIndex = 0;
+
+    const enqueue = (pos) => {
+        if (!pos) return;
+        queue.push({ x: pos.x, y: pos.y, z: pos.z });
+    };
+
+    if (seedBlock.hasTag?.("dorios:fluid")) {
+        enqueue(seedBlock.location);
+    }
+
+    for (const off of OFFSETS) {
+        enqueue({
+            x: seedBlock.location.x + off.x,
+            y: seedBlock.location.y + off.y,
+            z: seedBlock.location.z + off.z
+        });
+    }
+
+    while (queueIndex < queue.length && visited.size < MAX_FLUID_SCAN) {
+        const pos = queue[queueIndex++];
+        const key = posKey(pos);
+        if (visited.has(key)) continue;
+        visited.add(key);
+
+        const block = dim.getBlock(pos);
+        if (!block?.hasTag?.("dorios:fluid")) continue;
+
+        blocks.push(block);
+
+        if (!isFluidTube(block)) continue;
+
+        for (const off of OFFSETS) {
+            enqueue({ x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z });
+        }
+    }
+
+    return blocks;
+}
+
+function refreshConnectedFluidNetwork(block) {
+    const targets = collectConnectedFluidBlocks(block);
+    for (const target of targets) {
+        try { updatePipes(target, "fluid"); } catch { /* ignore fluid refresh failures */ }
+    }
+}
+
+function scheduleFluidRescan(block) {
+    if (!block?.dimension || !block?.location) return;
+
+    const dim = block.dimension;
+    const loc = block.location;
+    const pendingKey = dimensionPosKey(dim, loc);
+    if (PENDING_FLUID_RESCAN.has(pendingKey)) return;
+
+    PENDING_FLUID_RESCAN.add(pendingKey);
+    system.run(() => {
+        PENDING_FLUID_RESCAN.delete(pendingKey);
+        const liveBlock = dim.getBlock(loc);
+        if (!liveBlock) return;
+        refreshConnectedFluidNetwork(liveBlock);
+    });
+}
+
+globalThis.refreshConnectedFluidNetwork = refreshConnectedFluidNetwork;
 
 function refreshConnectedEnergy(block) {
     if (!block?.dimension) return;
@@ -446,6 +539,9 @@ world.afterEvents.playerPlaceBlock.subscribe(({ block }) => {
             if (block.hasTag?.("dorios:energy")) {
                 refreshConnectedEnergy(block);
             }
+            if (block.hasTag?.("dorios:fluid")) {
+                scheduleFluidRescan(block);
+            }
         });
     }
 });
@@ -464,6 +560,9 @@ world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation })
             scheduleNeighborCableRefresh(block);
             if (brokenBlockPermutation?.hasTag?.("dorios:energy")) {
                 refreshConnectedEnergy(block);
+            }
+            if (brokenBlockPermutation?.hasTag?.("dorios:fluid")) {
+                scheduleFluidRescan(block);
             }
         });
     }

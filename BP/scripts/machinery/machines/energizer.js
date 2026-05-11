@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, formatItemName } from '../../DoriosCore/main.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, formatItemName, resolveMachineRecipeList } from '../../DoriosCore/main.js'
 import { startHeaterAura, tickHeaterAura, stopHeaterAuraAt } from '../multi_core.js'
 import { getEnergizerRecipes } from '../../config/recipes/energizer.js'
 
@@ -49,7 +49,7 @@ DoriosAPI.register.blockComponent('energizer', {
 
         machine.transferItems()
 
-        const recipes = resolveRecipes(block, settings)
+        const recipes = resolveMachineRecipeList(block, settings, 'energizer', getEnergizerRecipes())
         if (!recipes.length) {
             machine.showWarning('No Recipes')
             return
@@ -133,14 +133,6 @@ DoriosAPI.register.blockComponent('energizer', {
         stopHeaterAuraAt(e.block)
     }
 })
-
-function resolveRecipes(block, settings) {
-    const component = block.getComponent('utilitycraft:machine_recipes')?.customComponentParameters?.params
-    if (component?.type === 'energizer') return getEnergizerRecipes()
-    if (Array.isArray(component)) return component
-    if (Array.isArray(settings?.machine?.recipes)) return settings.machine.recipes
-    return getEnergizerRecipes()
-}
 
 function pickActiveChannel(inv, recipes) {
     let fallback = null

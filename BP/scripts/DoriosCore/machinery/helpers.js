@@ -6,7 +6,10 @@ import { FluidManager } from './fluidStorage.js'
 import { TICKS_PER_SECOND } from '../constants.js'
 
 const RECIPE_LOOKUP_CACHE = new WeakMap()
+const FLUID_RECIPE_LOOKUP_CACHE = new WeakMap()
 const ADAPTIVE_CHECK_STATE = new WeakMap()
+const ENTITY_JSON_ARRAY_CACHE = new WeakMap()
+const ENTITY_RENDER_SIGNATURE_CACHE = new WeakMap()
 
 export const ADAPTIVE_CHECK_RESULT = Object.freeze({
     moved: 'moved',
@@ -162,12 +165,83 @@ export function resetAdaptiveTickGate(entity, channel) {
     }
 }
 
+function hasOwnEntry(object, key) {
+    return Object.prototype.hasOwnProperty.call(object, key)
+}
+
+function isRecipeMap(recipes) {
+    return Boolean(recipes)
+        && typeof recipes === 'object'
+        && !Array.isArray(recipes)
+        && !hasOwnEntry(recipes, 'type')
+}
+
+function matchesRegistryType(componentType, registryType) {
+    if (Array.isArray(registryType)) {
+        return registryType.includes(componentType)
+    }
+
+    return componentType === registryType
+}
+
+export function hasRecipes(recipes) {
+    if (Array.isArray(recipes)) {
+        return recipes.length > 0
+    }
+
+    if (isRecipeMap(recipes)) {
+        return Object.keys(recipes).length > 0
+    }
+
+    return false
+}
+
+export function listRecipes(recipes) {
+    if (Array.isArray(recipes)) {
+        return recipes
+    }
+
+    if (isRecipeMap(recipes)) {
+        return Object.values(recipes)
+    }
+
+    return []
+}
+
+export function resolveMachineRecipes(block, settings, registryType, fallbackRecipes) {
+    const component = block?.getComponent?.('utilitycraft:machine_recipes')?.customComponentParameters?.params
+    if (isRecipeMap(component) || Array.isArray(component)) {
+        return component
+    }
+
+    if (matchesRegistryType(component?.type, registryType)) {
+        return fallbackRecipes
+    }
+
+    const configured = settings?.machine?.recipes
+    if (isRecipeMap(configured) || Array.isArray(configured)) {
+        return configured
+    }
+
+    return fallbackRecipes
+}
+
+export function resolveMachineRecipeList(block, settings, registryType, fallbackRecipes) {
+    return listRecipes(resolveMachineRecipes(block, settings, registryType, fallbackRecipes))
+}
+
 /**
  * Resolves the first recipe that matches a direct `recipe.input.id` lookup.
  * Memoizes the lookup table by recipe-array identity to avoid repeated scans.
  */
 export function findRecipeByInputId(recipes, inputId) {
-    if (!Array.isArray(recipes) || !inputId) return null
+    if (!recipes || !inputId) return null
+
+    if (isRecipeMap(recipes)) {
+        return hasOwnEntry(recipes, inputId) ? recipes[inputId] ?? null : null
+    }
+
+    if (!Array.isArray(recipes)) return null
 
     let lookupState = RECIPE_LOOKUP_CACHE.get(recipes)
     if (!lookupState || lookupState.size !== recipes.length) {
@@ -185,6 +259,174 @@ export function findRecipeByInputId(recipes, inputId) {
     }
 
     return lookupState.lookup.get(inputId) ?? null
+}
+
+export function findRecipeByFluidInputType(recipes, fluidType) {
+    if (!recipes || !fluidType) return null
+
+    if (isRecipeMap(recipes)) {
+        return hasOwnEntry(recipes, fluidType) ? recipes[fluidType] ?? null : null
+    }
+
+    if (!Array.isArray(recipes)) return null
+
+    let lookupState = FLUID_RECIPE_LOOKUP_CACHE.get(recipes)
+    if (!lookupState || lookupState.size !== recipes.length) {
+        const lookup = new Map()
+        for (const recipe of recipes) {
+            const inputType = recipe?.inputFluid?.type
+            if (!inputType || lookup.has(inputType)) continue
+            lookup.set(inputType, recipe)
+        }
+        lookupState = {
+            size: recipes.length,
+            lookup
+        }
+        FLUID_RECIPE_LOOKUP_CACHE.set(recipes, lookupState)
+    }
+
+    return lookupState.lookup.get(fluidType) ?? null
+}
+
+function getEntityScopedCache(store, entity) {
+    let cache = store.get(entity)
+    if (!cache) {
+        cache = new Map()
+        store.set(entity, cache)
+    }
+    return cache
+}
+
+function parseJsonArray(raw) {
+    if (!raw) return []
+
+    try {
+        const parsed = JSON.parse(raw)
+        return Array.isArray(parsed) ? parsed : []
+    } catch {
+        return []
+    }
+}
+
+export function resolveCachedLocationList(entity, propertyId, origin, refresh) {
+    if (!entity || typeof propertyId !== 'string' || propertyId.length <= 0) return []
+
+    const entityCache = getEntityScopedCache(ENTITY_JSON_ARRAY_CACHE, entity)
+    const readRaw = () => {
+        try {
+            const cached = entity.getDynamicProperty(propertyId)
+            return typeof cached === 'string' ? cached : ''
+        } catch {
+            return null
+        }
+    }
+
+    const buildState = raw => ({
+        raw,
+        nodes: parseJsonArray(raw),
+        ordered: new Map()
+    })
+
+    let raw = readRaw()
+    if (raw === null) return []
+
+    let state = entityCache.get(propertyId)
+    if (!state || state.raw !== raw) {
+        state = buildState(raw)
+        entityCache.set(propertyId, state)
+    }
+
+    if (!state.nodes.length && typeof refresh === 'function') {
+        refresh()
+        raw = readRaw()
+        if (raw === null) return []
+
+        if (state.raw !== raw) {
+            state = buildState(raw)
+            entityCache.set(propertyId, state)
+        }
+    }
+
+    if (!origin || state.nodes.length <= 1) {
+        return state.nodes
+    }
+
+    const originKey = `${origin.x},${origin.y},${origin.z}`
+    const cachedOrdered = state.ordered.get(originKey)
+    if (Array.isArray(cachedOrdered)) {
+        return cachedOrdered
+    }
+
+    const orderedNodes = [...state.nodes].sort((a, b) =>
+        DoriosAPI.math.distanceBetween(origin, a) - DoriosAPI.math.distanceBetween(origin, b)
+    )
+
+    state.ordered.set(originKey, orderedNodes)
+    return orderedNodes
+}
+
+export function buildTankSnapshot(tank) {
+    const amount = tank?.get?.() ?? 0
+    const cap = tank?.getCap?.() ?? 0
+
+    return {
+        amount,
+        cap,
+        free: Math.max(0, cap - amount),
+        type: tank?.getType?.() ?? 'empty'
+    }
+}
+
+export function buildSingleTankMachineState(machine, tank) {
+    return {
+        tank: buildTankSnapshot(tank),
+        energy: machine?.energy?.get?.() ?? 0,
+        progress: machine?.getProgress?.() ?? 0,
+        energyCost: machine?.getEnergyCost?.() ?? 0
+    }
+}
+
+export function buildDualTankMachineState(machine, inputTank, outputTank) {
+    return {
+        input: buildTankSnapshot(inputTank),
+        output: buildTankSnapshot(outputTank),
+        energy: machine?.energy?.get?.() ?? 0,
+        progress: machine?.getProgress?.() ?? 0,
+        energyCost: machine?.getEnergyCost?.() ?? 0
+    }
+}
+
+export function buildStateSignature(parts = []) {
+    return (Array.isArray(parts) ? parts : [parts]).join('|')
+}
+
+export function shouldRefreshMachineUi(entity, channel, signature, interval = 4, force = false) {
+    if (!entity) return force === true
+
+    const entityCache = getEntityScopedCache(ENTITY_RENDER_SIGNATURE_CACHE, entity)
+    const normalizedChannel = typeof channel === 'string' && channel.length > 0
+        ? channel
+        : 'ui'
+    const previous = entityCache.get(normalizedChannel)
+    const gateKey = `${normalizedChannel}:refresh`
+    const periodicRefresh = tickGate(entity, gateKey, interval)
+
+    if (force || periodicRefresh || previous !== signature) {
+        entityCache.set(normalizedChannel, signature)
+        return true
+    }
+
+    return false
+}
+
+export function resetMachineRuntimeState(machine, resetProgress = true, progressSlot = 2, progressType = 'arrow_right') {
+    if (!machine) return
+
+    if (resetProgress) {
+        machine.setProgress(0, progressSlot, progressType, false)
+    }
+
+    machine.off()
 }
 
 // ──────────────────────────────────────────────────────
@@ -598,7 +840,38 @@ export function feedFluidSlot(machine, tank, slotIndex) {
     if (updated.typeId === result && updated.amount < updated.maxAmount) {
         machine.entity.changeItemAmount(slotIndex, 1)
     } else {
-        machine.entity.addItem(result, 1)
+        machine.entity.tryAddItem(result, 1)
+    }
+}
+
+/**
+ * Fills a container item from `tank` using the item in `slotIndex`.
+ * Intended for output slots that accept empty capsules or buckets.
+ */
+export function fillFluidSlot(machine, tank, slotIndex) {
+    const slotItem = machine.inv.getItem(slotIndex)
+    if (!slotItem) return
+
+    const fillDefinition = FluidManager.getFluidFillDefinition?.(slotItem.typeId)
+    if (!fillDefinition) return
+
+    const result = tank.fluidItem(slotItem.typeId)
+    if (result === false) return
+
+    machine.entity.changeItemAmount(slotIndex, -1)
+
+    if (!result) return
+
+    const updated = machine.inv.getItem(slotIndex)
+    if (!updated) {
+        machine.entity.setItem(slotIndex, result, 1)
+        return
+    }
+
+    if (updated.typeId === result && updated.amount < updated.maxAmount) {
+        machine.entity.changeItemAmount(slotIndex, 1)
+    } else {
+        machine.entity.tryAddItem(result, 1)
     }
 }
 

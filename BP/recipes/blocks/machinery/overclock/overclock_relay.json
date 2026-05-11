@@ -15,6 +15,6 @@
             "M": { "item": "utilitycraft:machine_case" }
         },
         "result": { "item": "utilitycraft:overclock_relay", "count": 1 },
-        "unlock": [ { "item": "utilitycraft:titanium" } ]
+        "unlock": [ { "item": "utilitycraft:titanium_plate" } ]
     }
 }

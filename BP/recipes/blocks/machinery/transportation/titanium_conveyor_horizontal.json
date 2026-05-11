@@ -12,7 +12,7 @@
             "BCB"
         ],
         "key": {
-            "A": { "item": "utilitycraft:titanium" },
+            "A": { "item": "utilitycraft:titanium_plate" },
             "B": { "item": "minecraft:redstone" },
             "C": { "item": "utilitycraft:energized_iron_dust" }
         },
@@ -21,7 +21,7 @@
             "count": 16
         },
         "unlock": [
-            { "item": "utilitycraft:titanium" }
+            { "item": "utilitycraft:titanium_plate" }
         ]
     }
 }

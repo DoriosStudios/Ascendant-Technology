@@ -13,7 +13,7 @@
             "ADA"
         ],
         "key": {
-            "A": { "item": "utilitycraft:titanium" },
+            "A": { "item": "utilitycraft:titanium_plate" },
             "B": { "item": "minecraft:redstone" },
             "D": { "item": "minecraft:redstone_block" }
         },
@@ -22,7 +22,7 @@
             "count": 1
         },
         "unlock": [
-            { "item": "utilitycraft:titanium" }
+            { "item": "utilitycraft:titanium_plate" }
         ]
     }
 }

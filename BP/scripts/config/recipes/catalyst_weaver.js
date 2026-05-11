@@ -152,11 +152,22 @@ const nativeCatalystWeaverRecipes = [
         catalysts: [
             {id: 'utilitycraft:energized_iron_dust', amount: 2},
             {id: 'utilitycraft:aetherium_shard', amount: 1},
-            {id: 'utilitycraft:titanium', amount: 1},
+            {id: 'utilitycraft:titanium_plate', amount: 1},
         ],
         output: {id: 'utilitycraft:hyper_processing_upgrade', amount: 1},
         cost: 12800,
         speedModifier: 0.25
+    }),
+    defineWeaverRecipe({
+        id: 'utilitycraft:refining_table',
+        input: { id: 'utilitycraft:machine_case', amount: 1 },
+        catalysts: [
+            { id: 'utilitycraft:titanium_plate', amount: 4 },
+            { id: 'utilitycraft:advanced_chip', amount: 1 },
+            { id: 'utilitycraft:aetherium', amount: 2 },
+            { id: 'minecraft:anvil', amount: 1 },
+        ],
+        output: { id: 'utilitycraft:refining_table', amount: 1 }
     }),
     defineWeaverRecipe({
         input: {id: 'utilitycraft:quadruple_compressed_cobblestone'},
@@ -172,6 +183,67 @@ const nativeCatalystWeaverRecipes = [
         catalysts: [ {id: 'minecraft:amethyst_shard', amount: 1} ],
         fluid: {type: 'dark_matter', amount: 800},
         output: {id: 'utilitycraft:refined_aetherium_shard', amount: 1}
+    }),
+    // Easter Egg. Obtains the Purple Block using Obsidian, Crying Obsidian, Amethyst Block, 4 Aetherium Shards, a Bag of Purple Dye and a Bag of Blue Dye as catalysts, and 1000 mB of Dark Matter as fluid. No 1 DE, 20x speed.
+    defineWeaverRecipe({
+        id: 'easter_egg',
+        input: {id: 'minecraft:redstone_block', amount: 1},
+        catalysts: [
+            {id: 'minecraft:obsidian', amount: 1},
+            {id: 'minecraft:crying_obsidian', amount: 1},
+            {id: 'minecraft:amethyst_block', amount: 1},
+            {id: 'utilitycraft:aetherium_shard', amount: 4},
+            {id: 'utilitycraft:bag_of_purple_dye', amount: 1},
+            {id: 'utilitycraft:bag_of_blue_dye', amount: 1}
+        ],
+        fluid: {type: 'dark_matter', amount: 1000},
+        output: {id: 'utilitycraft:compressed_block', amount: 1},
+        cost: 1,
+        speedModifier: 20
+    }),
+    defineWeaverRecipe({
+        id: 'utilitycraft:diamond_recovery',
+        input: { id: 'utilitycraft:diamond_dust', amount: 2 },
+        catalysts: [
+            { id: 'minecraft:iron_ingot', amount: 1 }
+        ],
+        fluid: { type: 'lava', amount: 100 },
+        output: { id: 'minecraft:diamond', amount: 1 },
+        cost: 3200,
+        speedModifier: 1
+    }),
+    defineWeaverRecipe({
+        id: 'utilitycraft:emerald_recovery',
+        input: { id: 'utilitycraft:emerald_dust', amount: 2 },
+        catalysts: [
+            { id: 'minecraft:iron_ingot', amount: 1 }
+        ],
+        fluid: { type: 'lava', amount: 100 },
+        output: { id: 'minecraft:emerald', amount: 1 },
+        cost: 3200,
+        speedModifier: 1
+    }),
+    defineWeaverRecipe({
+        id: 'utilitycraft:quartz_recovery',
+        input: { id: 'utilitycraft:quartz_dust', amount: 2 },
+        catalysts: [
+            { id: 'minecraft:iron_ingot', amount: 1 }
+        ],
+        fluid: { type: 'lava', amount: 100 },
+        output: { id: 'minecraft:quartz', amount: 1 },
+        cost: 3200,
+        speedModifier: 1
+    }),
+    defineWeaverRecipe({
+        id: 'utilitycraft:amethyst_recovery',
+        input: { id: 'utilitycraft:amethyst_dust', amount: 2 },
+        catalysts: [
+            { id: 'minecraft:iron_ingot', amount: 1 }
+        ],
+        fluid: { type: 'lava', amount: 100 },
+        output: { id: 'minecraft:amethyst_shard', amount: 1 },
+        cost: 3200,
+        speedModifier: 1
     }),
     defineWeaverRecipe({
         input: {id: 'minecraft:glass_bottle', amount: 1},

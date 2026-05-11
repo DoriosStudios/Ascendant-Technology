@@ -9,7 +9,7 @@
         ],
         "ingredients": [
             {
-                "item": "minecraft:totem_of_undying"
+                "item": "minecraft:gold_nugget"
             }
         ],
         "result": {
@@ -18,7 +18,7 @@
         },
         "unlock": [
             {
-                "item": "minecraft:totem_of_undying"
+                "item": "minecraft:gold_nugget"
             }
         ]
     }

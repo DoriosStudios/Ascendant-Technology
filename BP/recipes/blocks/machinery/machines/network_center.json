@@ -17,7 +17,7 @@
             "L": { "item": "minecraft:comparator" },
             "M": { "item": "utilitycraft:machine_case" },
             "I": { "item": "utilitycraft:steel_ingot" },
-            "C": { "item": "utilitycraft:titanium" },
+            "C": { "item": "utilitycraft:titanium_plate" },
             "A": { "item": "utilitycraft:ultimate_chip" }
         },
         "result": {
@@ -25,7 +25,7 @@
             "count": 1
         },
         "unlock": [
-            { "item": "utilitycraft:titanium" }
+            { "item": "utilitycraft:titanium_plate" }
         ]
     }
 }

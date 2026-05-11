@@ -16,7 +16,7 @@
         "movement_modifier": 1,
         "use_duration": 0
       },
-      "minecraft:icon": "utilitycraft_empty_liquid_capsule",
+      "minecraft:icon": "utilitycraft_water_capsule_8",
       "minecraft:allow_off_hand": false,
       "minecraft:tags": {
         "tags": [

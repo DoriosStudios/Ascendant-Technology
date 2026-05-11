@@ -15,42 +15,49 @@ const ATInfiniteCapsules = [
     {
         id: "utilitycraft:aetherium_liquid_capsule_infinite",
         amount: 512000,
+        infinite: true,
         type: "liquified_aetherium",
         output: "utilitycraft:aetherium_liquid_capsule_infinite"
     },
     {
         id: "utilitycraft:dark_matter_liquid_capsule_infinite",
         amount: 512000,
+        infinite: true,
         type: "dark_matter",
         output: "utilitycraft:dark_matter_liquid_capsule_infinite"
     },
     {
         id: "utilitycraft:cryofluid_capsule_infinite",
         amount: 512000,
+        infinite: true,
         type: "cryofluid",
         output: "utilitycraft:cryofluid_capsule_infinite"
     },
     {
         id: "utilitycraft:water_capsule_infinite",
         amount: FLUID_ITEM_DEFAULTS.infiniteCapsuleFallbackMb,
+        infinite: true,
         type: "water",
         output: "utilitycraft:water_capsule_infinite"
     },
     {
         id: "utilitycraft:lava_capsule_infinite",
         amount: FLUID_ITEM_DEFAULTS.infiniteCapsuleFallbackMb,
+        infinite: true,
         type: "lava",
         output: "utilitycraft:lava_capsule_infinite"
     },
     {
         id: "utilitycraft:milk_capsule_infinite",
         amount: FLUID_ITEM_DEFAULTS.infiniteCapsuleFallbackMb,
+        infinite: true,
         type: "milk",
         output: "utilitycraft:milk_capsule_infinite"
     },
     {
         id: "utilitycraft:xp_capsule_infinite",
         amount: FLUID_ITEM_DEFAULTS.infiniteCapsuleFallbackMb,
+        infinite: true,
         type: "xp",
         output: "utilitycraft:xp_capsule_infinite"
     }
@@ -137,7 +144,7 @@ const ATNewContainers = [
 ];
 
 const ATLegacyCapsules = Object.fromEntries(
-    ATNewCapsules.map(({ id, amount, type, output }) => [id, { amount, type, output }])
+    ATNewCapsules.map(({ id, ...definition }) => [id, { ...definition }])
 );
 
 function resolveLegacyRequired(value) {

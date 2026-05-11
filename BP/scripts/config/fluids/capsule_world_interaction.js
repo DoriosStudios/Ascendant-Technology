@@ -1,4 +1,5 @@
 import { ItemStack, world } from "@minecraft/server";
+import { FluidManager } from "../../DoriosCore/machinery/fluidStorage.js";
 
 const CAPSULE = Object.freeze({
     ids: Object.freeze({
@@ -9,6 +10,7 @@ const CAPSULE = Object.freeze({
         max: 8
     }),
     world: Object.freeze({
+        maxDistance: 6,
         airBlockIds: new Set([
             "minecraft:air",
             "minecraft:cave_air",
@@ -25,19 +27,24 @@ const CAPSULE = Object.freeze({
     }),
     fluids: Object.freeze({
         blockByType: Object.freeze({
-    water: "minecraft:water",
-    lava: "minecraft:lava",
-    // Future-ready mapping:
-    // dark_matter: "utilitycraft:dark_matter_fluid_block"
+            water: "minecraft:water",
+            lava: "minecraft:lava",
+            // Future-ready mapping:
+            // dark_matter: "utilitycraft:dark_matter_fluid_block"
         }),
         typeByBlock: Object.freeze({
-    "minecraft:water": "water",
-    "minecraft:lava": "lava"
-    // Future-ready mapping:
-    // "utilitycraft:dark_matter_fluid_block": "dark_matter"
+            "minecraft:water": "water",
+            "minecraft:lava": "lava"
+            // Future-ready mapping:
+            // "utilitycraft:dark_matter_fluid_block": "dark_matter"
+        }),
+        infiniteByItem: Object.freeze({
+            "utilitycraft:water_capsule_infinite": "water",
+            "utilitycraft:lava_capsule_infinite": "lava"
         }),
         types: Object.freeze(["water", "lava"])
     }),
+    genericCapsuleRegex: /^utilitycraft:[a-z0-9_]+_capsule_(?:[1-8]|infinite)$/i,
     regex: new RegExp(
         `^utilitycraft:(${["water", "lava"].join("|")})_capsule_([${1}-${8}])$`
     )
@@ -55,7 +62,16 @@ function parseCapsule(itemId) {
     if (!itemId) return null;
 
     if (itemId === CAPSULE.ids.empty) {
-        return { fluidType: null, tier: 0 };
+        return { fluidType: null, tier: 0, infinite: false };
+    }
+
+    const infiniteFluidType = CAPSULE.fluids.infiniteByItem[itemId];
+    if (infiniteFluidType) {
+        return {
+            fluidType: infiniteFluidType,
+            tier: CAPSULE.tiers.max,
+            infinite: true
+        };
     }
 
     const match = itemId.match(CAPSULE.regex);
@@ -64,7 +80,17 @@ function parseCapsule(itemId) {
     const tier = Number(match[2]);
     if (!Number.isFinite(tier)) return null;
 
-    return { fluidType: match[1], tier };
+    return {
+        fluidType: match[1],
+        tier,
+        infinite: false
+    };
+}
+
+function isCapsuleItemId(itemId) {
+    if (!itemId) return false;
+    if (itemId === CAPSULE.ids.empty) return true;
+    return CAPSULE.genericCapsuleRegex.test(itemId);
 }
 
 function clampTier(tier) {
@@ -123,6 +149,10 @@ function resolveOffsetFromViewDirection(player) {
 function getPlacementBlock(clickedBlock, blockFace, player) {
     if (!clickedBlock) return null;
 
+    if (isValidPlacementTarget(clickedBlock)) {
+        return clickedBlock;
+    }
+
     const offset = resolveOffset(blockFace) ?? resolveOffsetFromViewDirection(player);
     if (!offset) return null;
 
@@ -166,9 +196,24 @@ function canTransformHeldCapsule(player, expectedTypeId) {
     return selected.item.typeId === expectedTypeId;
 }
 
+function addItemToInventoryOrDrop(player, itemId) {
+    if (!player || !itemId) return false;
+
+    const inventory = player.getComponent("minecraft:inventory")?.container;
+    if (!inventory) return false;
+
+    const overflow = inventory.addItem(new ItemStack(itemId, 1));
+    if (overflow) {
+        player.dimension?.spawnItem?.(overflow, player.location);
+    }
+
+    return true;
+}
+
 function transformHeldCapsule(player, expectedTypeId, nextTypeId) {
     if (!player || !expectedTypeId || !nextTypeId) return false;
     if (isCreativePlayer(player)) return true;
+    if (expectedTypeId === nextTypeId) return true;
 
     const selected = getSelectedInventoryItem(player);
     if (!selected) return false;
@@ -181,18 +226,94 @@ function transformHeldCapsule(player, expectedTypeId, nextTypeId) {
         current.amount -= 1;
         inventory.setItem(slot, current);
 
-        if (typeof player.addItem === "function") {
-            player.addItem(nextTypeId, 1, true);
-        } else {
-            const overflow = inventory.addItem(new ItemStack(nextTypeId, 1));
-            if (overflow) {
-                player.dimension?.spawnItem?.(overflow, player.location);
-            }
-        }
-        return true;
+        return addItemToInventoryOrDrop(player, nextTypeId);
     }
 
     inventory.setItem(slot, new ItemStack(nextTypeId, 1));
+    return true;
+}
+
+function resolvePortFluidEntity(block) {
+    if (!block?.hasTag?.("dorios:multiblock.port") || !block?.dimension || !block?.location) return null;
+
+    const { x, y, z } = block.location;
+    return block.dimension.getEntities({ tags: [`input:[${x},${y},${z}]`] })[0] ?? null;
+}
+
+function resolveFluidStorageEntity(block, preferredFluidType) {
+    if (!block?.hasTag?.("dorios:fluid") || !block?.dimension || !block?.location) return null;
+
+    const portEntity = resolvePortFluidEntity(block);
+    if (portEntity) return portEntity;
+
+    const entitiesAtBlock = block.dimension.getEntitiesAtBlockLocation(block.location) ?? [];
+    const directEntity = entitiesAtBlock.find(entity => {
+        try {
+            return FluidManager.findType?.(entity, 0)?.getCap?.() > 0;
+        } catch {
+            return false;
+        }
+    });
+
+    if (directEntity) return directEntity;
+
+    if (block.typeId?.includes("fluid_tank") && preferredFluidType) {
+        return FluidManager.addfluidToTank(block, preferredFluidType, 0);
+    }
+
+    return null;
+}
+
+function formatFluidTypeLabel(fluidType) {
+    if (!fluidType || fluidType === "empty") return "Empty";
+
+    return String(fluidType)
+        .split("_")
+        .filter(Boolean)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ");
+}
+
+function showFluidInteractionFeedback(player, tank) {
+    if (!player?.onScreenDisplay?.setActionBar || !tank) return;
+
+    const type = tank.getType?.() ?? "empty";
+    const stored = Math.max(0, tank.get?.() ?? 0);
+    const cap = Math.max(0, tank.getCap?.() ?? 0);
+    const percent = cap > 0 ? ((stored / cap) * 100).toFixed(2) : "0.00";
+
+    player.onScreenDisplay.setActionBar(
+        `§b${formatFluidTypeLabel(type)}: §f${FluidManager.formatFluid(stored)}§7 / §f${FluidManager.formatFluid(cap)} §7(${percent}%)`
+    );
+}
+
+function tryInsertCapsuleIntoFluidTarget(event, player, itemId, clickedBlock) {
+    if (!player || !itemId || !clickedBlock || !isCapsuleItemId(itemId)) return false;
+
+    const containerData = FluidManager.getContainerData?.(itemId);
+    if (!containerData?.type) return false;
+
+    const targetEntity = resolveFluidStorageEntity(clickedBlock, containerData.type);
+    if (!targetEntity) return false;
+
+    let tank = null;
+    try {
+        tank = FluidManager.findType?.(targetEntity, 0) ?? new FluidManager(targetEntity, 0);
+    } catch {
+        return false;
+    }
+
+    if (!tank) return false;
+
+    const resultItemId = tank.fluidItem(itemId);
+    if (resultItemId === false) return false;
+
+    if (!transformHeldCapsule(player, itemId, resultItemId || itemId)) {
+        return false;
+    }
+
+    showFluidInteractionFeedback(player, tank);
+    if (event && "cancel" in event) event.cancel = true;
     return true;
 }
 
@@ -215,6 +336,8 @@ function setBlockTypeSafe(block, typeId) {
 }
 
 function tryPickupFluid(event, player, itemId, capsuleInfo, clickedBlock) {
+    if (capsuleInfo?.infinite) return false;
+
     const clickedFluidType = CAPSULE.fluids.typeByBlock[clickedBlock?.typeId];
     if (!clickedFluidType) return false;
     if (!isFullFluidSourceBlock(clickedBlock)) return false;
@@ -250,8 +373,6 @@ function tryPlaceFluid(event, player, itemId, capsuleInfo, clickedBlock, blockFa
     const fluidType = capsuleInfo.fluidType;
     if (!fluidType || capsuleInfo.tier <= 0) return false;
 
-    if (CAPSULE.world.airBlockIds.has(clickedBlock?.typeId)) return false;
-
     const fluidBlockId = CAPSULE.fluids.blockByType[fluidType];
     if (!fluidBlockId) return false;
 
@@ -263,7 +384,10 @@ function tryPlaceFluid(event, player, itemId, capsuleInfo, clickedBlock, blockFa
     const previousTypeId = placementBlock.typeId;
     if (!setBlockTypeSafe(placementBlock, fluidBlockId)) return false;
 
-    const nextItemId = getCapsuleId(fluidType, capsuleInfo.tier - 1);
+    const nextItemId = capsuleInfo.infinite
+        ? itemId
+        : getCapsuleId(fluidType, capsuleInfo.tier - 1);
+
     if (!transformHeldCapsule(player, itemId, nextItemId)) {
         setBlockTypeSafe(placementBlock, previousTypeId);
         return false;
@@ -280,7 +404,7 @@ function getUseTarget(player) {
     if (!player?.getBlockFromViewDirection) return null;
 
     const target = player.getBlockFromViewDirection({
-        maxDistance: 15,
+        maxDistance: CAPSULE.world.maxDistance,
         includeLiquidBlocks: true
     });
 
@@ -293,29 +417,46 @@ function getUseTarget(player) {
     };
 }
 
+function getEventTarget(event, player) {
+    const block = event?.block;
+    if (block?.isValid) {
+        return {
+            block,
+            face: event?.blockFace ?? event?.face
+        };
+    }
+
+    return getUseTarget(player);
+}
+
 function onCapsuleUse(event) {
     const player = event?.source;
     if (!player || player.typeId !== "minecraft:player") return;
 
     const itemId = event?.itemStack?.typeId;
-    if (!itemId) return;
+    if (!itemId || !isCapsuleItemId(itemId)) return;
 
     const capsuleInfo = parseCapsule(itemId);
-    if (!capsuleInfo) return;
 
-    const target = getUseTarget(player);
+    const target = getEventTarget(event, player);
     if (!target) return;
     const clickedBlock = target.block;
+
+    if (tryInsertCapsuleIntoFluidTarget(event, player, itemId, clickedBlock)) return;
+
+    if (!capsuleInfo) return;
 
     if (tryPickupFluid(event, player, itemId, capsuleInfo, clickedBlock)) return;
     const clickedFace = target.face ?? event?.blockFace ?? event?.face;
     tryPlaceFluid(event, player, itemId, capsuleInfo, clickedBlock, clickedFace);
 }
 
-// Bucket-like behavior parity: raycast target + face from itemUse event.
-const capsuleUseEvent = world.afterEvents?.itemUse ?? world.beforeEvents?.itemUse;
+const capsuleUseOnEvent = world.beforeEvents?.itemUseOn;
+const capsuleUseEvent = world.beforeEvents?.itemUse ?? world.afterEvents?.itemUse;
 
-if (capsuleUseEvent?.subscribe) {
+if (capsuleUseOnEvent?.subscribe) {
+    capsuleUseOnEvent.subscribe(onCapsuleUse);
+} else if (capsuleUseEvent?.subscribe) {
     capsuleUseEvent.subscribe(onCapsuleUse);
 } else {
     console.warn("[Ascendant Technology] itemUse event is unavailable; capsule world interaction is disabled.");

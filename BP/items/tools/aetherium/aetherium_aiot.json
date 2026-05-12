@@ -15,7 +15,7 @@
                 "sneakingMode": false
             },
             "utilitycraft:shovel": {
-                "size": 3,
+                "size": 1,
                 "sneakingMode": true
             },
             "minecraft:tags": {

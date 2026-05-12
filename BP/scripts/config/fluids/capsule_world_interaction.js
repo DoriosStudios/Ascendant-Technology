@@ -1,54 +1,46 @@
-import { ItemStack, world } from "@minecraft/server";
+import { ItemStack, system } from "@minecraft/server";
 import { FluidManager } from "../../DoriosCore/machinery/fluidStorage.js";
+import {
+    FLUID_CAPSULE_COMPONENT_ID,
+    FLUID_CAPSULE_EMPTY_FLUID,
+    FLUID_CAPSULE_MAX_AMOUNT,
+    FLUID_CAPSULE_STEP_AMOUNT,
+    getFluidCapsuleDefinitionById,
+    getFluidCapsuleFluidBlockId,
+    getFluidCapsuleFluidTypeFromBlockId,
+    getFluidCapsuleItemId,
+    normalizeFluidCapsuleParams
+} from "./capsule_registry.js";
 
-const CAPSULE = Object.freeze({
-    ids: Object.freeze({
-        empty: "utilitycraft:empty_liquid_capsule"
+const CAPSULE_USE = Object.freeze({
+    maxDistance: 6,
+    probeDistance: 0.6,
+    airBlockIds: new Set([
+        "minecraft:air"
+    ]),
+    faceOffsets: Object.freeze({
+        down: { x: 0, y: -1, z: 0 },
+        up: { x: 0, y: 1, z: 0 },
+        north: { x: 0, y: 0, z: -1 },
+        south: { x: 0, y: 0, z: 1 },
+        west: { x: -1, y: 0, z: 0 },
+        east: { x: 1, y: 0, z: 0 }
     }),
-    tiers: Object.freeze({
-        min: 1,
-        max: 8
+    fillSoundByFluid: Object.freeze({
+        water: "bucket.fill_water",
+        lava: "bucket.fill_lava"
     }),
-    world: Object.freeze({
-        maxDistance: 6,
-        airBlockIds: new Set([
-            "minecraft:air",
-            "minecraft:cave_air",
-            "minecraft:void_air"
-        ]),
-        faceOffsets: Object.freeze({
-            down: { x: 0, y: -1, z: 0 },
-            up: { x: 0, y: 1, z: 0 },
-            north: { x: 0, y: 0, z: -1 },
-            south: { x: 0, y: 0, z: 1 },
-            west: { x: -1, y: 0, z: 0 },
-            east: { x: 1, y: 0, z: 0 }
-        })
-    }),
-    fluids: Object.freeze({
-        blockByType: Object.freeze({
-            water: "minecraft:water",
-            lava: "minecraft:lava",
-            // Future-ready mapping:
-            // dark_matter: "utilitycraft:dark_matter_fluid_block"
-        }),
-        typeByBlock: Object.freeze({
-            "minecraft:water": "water",
-            "minecraft:lava": "lava"
-            // Future-ready mapping:
-            // "utilitycraft:dark_matter_fluid_block": "dark_matter"
-        }),
-        infiniteByItem: Object.freeze({
-            "utilitycraft:water_capsule_infinite": "water",
-            "utilitycraft:lava_capsule_infinite": "lava"
-        }),
-        types: Object.freeze(["water", "lava"])
-    }),
-    genericCapsuleRegex: /^utilitycraft:[a-z0-9_]+_capsule_(?:[1-8]|infinite)$/i,
-    regex: new RegExp(
-        `^utilitycraft:(${["water", "lava"].join("|")})_capsule_([${1}-${8}])$`
-    )
+    emptySoundByFluid: Object.freeze({
+        water: "bucket.empty_water",
+        lava: "bucket.empty_lava"
+    })
 });
+
+const recentCapsuleUses = new Map();
+
+function getPlayer(source) {
+    return source?.typeId === "minecraft:player" ? source : null;
+}
 
 function isCreativePlayer(player) {
     if (!player) return false;
@@ -58,123 +50,7 @@ function isCreativePlayer(player) {
     return typeof mode === "string" && mode.toLowerCase() === "creative";
 }
 
-function parseCapsule(itemId) {
-    if (!itemId) return null;
-
-    if (itemId === CAPSULE.ids.empty) {
-        return { fluidType: null, tier: 0, infinite: false };
-    }
-
-    const infiniteFluidType = CAPSULE.fluids.infiniteByItem[itemId];
-    if (infiniteFluidType) {
-        return {
-            fluidType: infiniteFluidType,
-            tier: CAPSULE.tiers.max,
-            infinite: true
-        };
-    }
-
-    const match = itemId.match(CAPSULE.regex);
-    if (!match) return null;
-
-    const tier = Number(match[2]);
-    if (!Number.isFinite(tier)) return null;
-
-    return {
-        fluidType: match[1],
-        tier,
-        infinite: false
-    };
-}
-
-function isCapsuleItemId(itemId) {
-    if (!itemId) return false;
-    if (itemId === CAPSULE.ids.empty) return true;
-    return CAPSULE.genericCapsuleRegex.test(itemId);
-}
-
-function clampTier(tier) {
-    const value = Number(tier);
-    if (!Number.isFinite(value)) return 0;
-    return Math.max(0, Math.min(CAPSULE.tiers.max, Math.floor(value)));
-}
-
-function getCapsuleId(fluidType, tier) {
-    const normalizedTier = clampTier(tier);
-    if (normalizedTier <= 0) return CAPSULE.ids.empty;
-    return `utilitycraft:${fluidType}_capsule_${normalizedTier}`;
-}
-
-function isFullFluidSourceBlock(block) {
-    if (!block) return false;
-
-    const fluidType = CAPSULE.fluids.typeByBlock[block.typeId];
-    if (!fluidType) return false;
-
-    try {
-        const depth = block.permutation?.getState?.("liquid_depth");
-        if (depth === undefined) return true;
-        return depth === 0;
-    } catch {
-        return false;
-    }
-}
-
-function resolveOffset(face) {
-    if (face === undefined || face === null) return null;
-
-    const key = String(face).toLowerCase();
-    return CAPSULE.world.faceOffsets[key] ?? null;
-}
-
-function resolveOffsetFromViewDirection(player) {
-    const view = player?.getViewDirection?.();
-    if (!view) return null;
-
-    const absX = Math.abs(view.x ?? 0);
-    const absY = Math.abs(view.y ?? 0);
-    const absZ = Math.abs(view.z ?? 0);
-
-    if (absY >= absX && absY >= absZ) {
-        return view.y >= 0 ? CAPSULE.world.faceOffsets.up : CAPSULE.world.faceOffsets.down;
-    }
-
-    if (absX >= absZ) {
-        return view.x >= 0 ? CAPSULE.world.faceOffsets.east : CAPSULE.world.faceOffsets.west;
-    }
-
-    return view.z >= 0 ? CAPSULE.world.faceOffsets.south : CAPSULE.world.faceOffsets.north;
-}
-
-function getPlacementBlock(clickedBlock, blockFace, player) {
-    if (!clickedBlock) return null;
-
-    if (isValidPlacementTarget(clickedBlock)) {
-        return clickedBlock;
-    }
-
-    const offset = resolveOffset(blockFace) ?? resolveOffsetFromViewDirection(player);
-    if (!offset) return null;
-
-    const targetLocation = {
-        x: clickedBlock.location.x + offset.x,
-        y: clickedBlock.location.y + offset.y,
-        z: clickedBlock.location.z + offset.z
-    };
-
-    try {
-        return clickedBlock.dimension.getBlock(targetLocation);
-    } catch {
-        return null;
-    }
-}
-
-function isValidPlacementTarget(block) {
-    if (!block) return false;
-    return CAPSULE.world.airBlockIds.has(block.typeId);
-}
-
-function getSelectedInventoryItem(player) {
+function getSelectedInventoryState(player) {
     const slot = player?.selectedSlotIndex ?? 0;
     const inventory = player?.getComponent("minecraft:inventory")?.container;
     if (!inventory) return null;
@@ -184,16 +60,6 @@ function getSelectedInventoryItem(player) {
         inventory,
         item: inventory.getItem(slot)
     };
-}
-
-function canTransformHeldCapsule(player, expectedTypeId) {
-    if (!player || !expectedTypeId) return false;
-    if (isCreativePlayer(player)) return true;
-
-    const selected = getSelectedInventoryItem(player);
-    if (!selected?.item) return false;
-
-    return selected.item.typeId === expectedTypeId;
 }
 
 function addItemToInventoryOrDrop(player, itemId) {
@@ -215,7 +81,7 @@ function transformHeldCapsule(player, expectedTypeId, nextTypeId) {
     if (isCreativePlayer(player)) return true;
     if (expectedTypeId === nextTypeId) return true;
 
-    const selected = getSelectedInventoryItem(player);
+    const selected = getSelectedInventoryState(player);
     if (!selected) return false;
 
     const { slot, inventory } = selected;
@@ -225,7 +91,6 @@ function transformHeldCapsule(player, expectedTypeId, nextTypeId) {
     if (current.amount > 1) {
         current.amount -= 1;
         inventory.setItem(slot, current);
-
         return addItemToInventoryOrDrop(player, nextTypeId);
     }
 
@@ -233,9 +98,287 @@ function transformHeldCapsule(player, expectedTypeId, nextTypeId) {
     return true;
 }
 
+function getVectorLength(vector) {
+    if (!vector) return 0;
+    const x = Number(vector.x) || 0;
+    const y = Number(vector.y) || 0;
+    const z = Number(vector.z) || 0;
+    return Math.sqrt((x * x) + (y * y) + (z * z));
+}
+
+function normalizeVector(vector) {
+    const length = getVectorLength(vector);
+    if (length <= 0) return null;
+
+    return {
+        x: (Number(vector.x) || 0) / length,
+        y: (Number(vector.y) || 0) / length,
+        z: (Number(vector.z) || 0) / length
+    };
+}
+
+function floorLocation(location) {
+    if (!location) return null;
+
+    return {
+        x: Math.floor(Number(location.x) || 0),
+        y: Math.floor(Number(location.y) || 0),
+        z: Math.floor(Number(location.z) || 0)
+    };
+}
+
+function getLocationKey(location) {
+    if (!location) return "";
+    return `${location.x},${location.y},${location.z}`;
+}
+
+function getBlockKey(block) {
+    return getLocationKey(block?.location);
+}
+
+function getBlockCenter(block) {
+    if (!block?.location) return null;
+
+    return {
+        x: block.location.x + 0.5,
+        y: block.location.y + 0.5,
+        z: block.location.z + 0.5
+    };
+}
+
+function getDistanceSquared(from, to) {
+    if (!from || !to) return Number.POSITIVE_INFINITY;
+
+    const dx = (Number(from.x) || 0) - (Number(to.x) || 0);
+    const dy = (Number(from.y) || 0) - (Number(to.y) || 0);
+    const dz = (Number(from.z) || 0) - (Number(to.z) || 0);
+    return (dx * dx) + (dy * dy) + (dz * dz);
+}
+
+function getEyeLocation(player) {
+    if (!player) return null;
+    return player.getHeadLocation?.() ?? {
+        x: player.location?.x ?? 0,
+        y: (player.location?.y ?? 0) + 1.62,
+        z: player.location?.z ?? 0
+    };
+}
+
+function getBlockSafe(dimension, location) {
+    if (!dimension || !location) return null;
+
+    try {
+        return dimension.getBlock(location);
+    } catch {
+        return null;
+    }
+}
+
+function addUniqueBlock(collection, seen, block) {
+    if (!block?.isValid) return;
+
+    const key = getBlockKey(block);
+    if (!key || seen.has(key)) return;
+
+    seen.add(key);
+    collection.push(block);
+}
+
+function addUniqueLocation(collection, seen, location) {
+    const normalized = floorLocation(location);
+    if (!normalized) return;
+
+    const key = getLocationKey(normalized);
+    if (!key || seen.has(key)) return;
+
+    seen.add(key);
+    collection.push(normalized);
+}
+
+function resolveOffset(face) {
+    if (face === undefined || face === null) return null;
+
+    const key = String(face).toLowerCase();
+    return CAPSULE_USE.faceOffsets[key] ?? null;
+}
+
+function resolveOffsetFromViewDirection(player) {
+    const viewDirection = normalizeVector(player?.getViewDirection?.());
+    if (!viewDirection) return null;
+
+    const absX = Math.abs(viewDirection.x);
+    const absY = Math.abs(viewDirection.y);
+    const absZ = Math.abs(viewDirection.z);
+
+    if (absY >= absX && absY >= absZ) {
+        return viewDirection.y >= 0 ? CAPSULE_USE.faceOffsets.up : CAPSULE_USE.faceOffsets.down;
+    }
+
+    if (absX >= absZ) {
+        return viewDirection.x >= 0 ? CAPSULE_USE.faceOffsets.east : CAPSULE_USE.faceOffsets.west;
+    }
+
+    return viewDirection.z >= 0 ? CAPSULE_USE.faceOffsets.south : CAPSULE_USE.faceOffsets.north;
+}
+
+function getRaycastTarget(player) {
+    if (!player?.getBlockFromViewDirection) return null;
+
+    const target = player.getBlockFromViewDirection({
+        maxDistance: CAPSULE_USE.maxDistance,
+        includeLiquidBlocks: true
+    });
+
+    if (!target?.block?.isValid) return null;
+
+    return {
+        block: target.block,
+        face: target.face ?? null
+    };
+}
+
+function getEventTarget(event, player) {
+    const raycastTarget = getRaycastTarget(player);
+    if (event?.block?.isValid) {
+        return {
+            block: event.block,
+            face: event.blockFace ?? event.face ?? null,
+            raycastBlock: raycastTarget?.block ?? null,
+            raycastFace: raycastTarget?.face ?? null
+        };
+    }
+
+    if (!raycastTarget) return null;
+
+    return {
+        block: raycastTarget.block,
+        face: raycastTarget.face,
+        raycastBlock: raycastTarget.block,
+        raycastFace: raycastTarget.face
+    };
+}
+
+function isFluidBlock(block) {
+    return Boolean(getFluidCapsuleFluidTypeFromBlockId(block?.typeId));
+}
+
+function isFullFluidSourceBlock(block) {
+    if (!isFluidBlock(block)) return false;
+
+    try {
+        const depth = block.permutation?.getState?.("liquid_depth");
+        return depth === undefined || depth === 0;
+    } catch {
+        return false;
+    }
+}
+
+function isValidPlacementTarget(block) {
+    return Boolean(block && CAPSULE_USE.airBlockIds.has(block.typeId));
+}
+
+function getAdjacentBlock(block, offset) {
+    if (!block?.location || !block?.dimension || !offset) return null;
+    return getBlockSafe(block.dimension, {
+        x: block.location.x + offset.x,
+        y: block.location.y + offset.y,
+        z: block.location.z + offset.z
+    });
+}
+
+function getPlayerProbeBlocks(player) {
+    if (!player?.dimension) return [];
+
+    const blocks = [];
+    const seenBlocks = new Set();
+    const eyeLocation = getEyeLocation(player);
+    const viewDirection = normalizeVector(player.getViewDirection?.());
+
+    addUniqueBlock(blocks, seenBlocks, getBlockSafe(player.dimension, eyeLocation));
+
+    if (eyeLocation && viewDirection) {
+        addUniqueBlock(blocks, seenBlocks, getBlockSafe(player.dimension, {
+            x: eyeLocation.x + (viewDirection.x * CAPSULE_USE.probeDistance),
+            y: eyeLocation.y + (viewDirection.y * CAPSULE_USE.probeDistance),
+            z: eyeLocation.z + (viewDirection.z * CAPSULE_USE.probeDistance)
+        }));
+    }
+
+    return blocks;
+}
+
+function canPickupWorldFluid(capsule, fluidType) {
+    if (!capsule || !fluidType || capsule.infinite) return false;
+    if (capsule.fluid === FLUID_CAPSULE_EMPTY_FLUID || capsule.amount <= 0) return true;
+    if (capsule.fluid !== fluidType) return false;
+    return capsule.amount < FLUID_CAPSULE_MAX_AMOUNT;
+}
+
+function isValidPickupCandidate(block, capsule) {
+    const fluidType = getFluidCapsuleFluidTypeFromBlockId(block?.typeId);
+    return Boolean(fluidType && isFullFluidSourceBlock(block) && canPickupWorldFluid(capsule, fluidType));
+}
+
+function resolvePickupBlock(player, target, capsule) {
+    const candidates = [];
+    const seenCandidates = new Set();
+
+    addUniqueBlock(candidates, seenCandidates, target?.raycastBlock);
+    addUniqueBlock(candidates, seenCandidates, target?.block);
+
+    for (const playerBlock of getPlayerProbeBlocks(player)) {
+        addUniqueBlock(candidates, seenCandidates, playerBlock);
+    }
+
+    for (const candidate of candidates) {
+        if (isValidPickupCandidate(candidate, capsule)) {
+            return candidate;
+        }
+    }
+
+    return null;
+}
+
+function getPlacementAnchors(target) {
+    return [
+        { block: target?.raycastBlock ?? null, face: target?.raycastFace ?? null },
+        { block: target?.block ?? null, face: target?.face ?? null }
+    ];
+}
+
+function resolvePlacementBlock(target, player) {
+    const viewOffset = resolveOffsetFromViewDirection(player);
+    const candidates = [];
+    const seenCandidates = new Set();
+
+    for (const anchor of getPlacementAnchors(target)) {
+        if (!anchor.block) continue;
+
+        const faceOffset = resolveOffset(anchor.face);
+        addUniqueBlock(candidates, seenCandidates, anchor.block);
+        addUniqueBlock(candidates, seenCandidates, getAdjacentBlock(anchor.block, faceOffset));
+
+        if (viewOffset && (
+            !faceOffset ||
+            faceOffset.x !== viewOffset.x ||
+            faceOffset.y !== viewOffset.y ||
+            faceOffset.z !== viewOffset.z
+        )) {
+            addUniqueBlock(candidates, seenCandidates, getAdjacentBlock(anchor.block, viewOffset));
+        }
+    }
+
+    for (const candidate of candidates) {
+        if (isValidPlacementTarget(candidate)) {
+            return candidate;
+        }
+    }
+
+    return null;
+}
+
 function resolvePortFluidEntity(block) {
     if (!block?.hasTag?.("dorios:multiblock.port") || !block?.dimension || !block?.location) return null;
-
     const { x, y, z } = block.location;
     return block.dimension.getEntities({ tags: [`input:[${x},${y},${z}]`] })[0] ?? null;
 }
@@ -246,8 +389,7 @@ function resolveFluidStorageEntity(block, preferredFluidType) {
     const portEntity = resolvePortFluidEntity(block);
     if (portEntity) return portEntity;
 
-    const entitiesAtBlock = block.dimension.getEntitiesAtBlockLocation(block.location) ?? [];
-    const directEntity = entitiesAtBlock.find(entity => {
+    const directEntity = (block.dimension.getEntitiesAtBlockLocation(block.location) ?? []).find(entity => {
         try {
             return FluidManager.findType?.(entity, 0)?.getCap?.() > 0;
         } catch {
@@ -265,8 +407,7 @@ function resolveFluidStorageEntity(block, preferredFluidType) {
 }
 
 function formatFluidTypeLabel(fluidType) {
-    if (!fluidType || fluidType === "empty") return "Empty";
-
+    if (!fluidType || fluidType === FLUID_CAPSULE_EMPTY_FLUID) return "Empty";
     return String(fluidType)
         .split("_")
         .filter(Boolean)
@@ -277,7 +418,7 @@ function formatFluidTypeLabel(fluidType) {
 function showFluidInteractionFeedback(player, tank) {
     if (!player?.onScreenDisplay?.setActionBar || !tank) return;
 
-    const type = tank.getType?.() ?? "empty";
+    const type = tank.getType?.() ?? FLUID_CAPSULE_EMPTY_FLUID;
     const stored = Math.max(0, tank.get?.() ?? 0);
     const cap = Math.max(0, tank.getCap?.() ?? 0);
     const percent = cap > 0 ? ((stored / cap) * 100).toFixed(2) : "0.00";
@@ -287,13 +428,44 @@ function showFluidInteractionFeedback(player, tank) {
     );
 }
 
-function tryInsertCapsuleIntoFluidTarget(event, player, itemId, clickedBlock) {
-    if (!player || !itemId || !clickedBlock || !isCapsuleItemId(itemId)) return false;
+function safePlaySound(player, soundId) {
+    if (!soundId) return;
 
-    const containerData = FluidManager.getContainerData?.(itemId);
-    if (!containerData?.type) return false;
+    try {
+        player?.playSound?.(soundId);
+    } catch {
+        // no-op
+    }
+}
 
-    const targetEntity = resolveFluidStorageEntity(clickedBlock, containerData.type);
+function setBlockTypeSafe(block, typeId) {
+    if (!block || !typeId) return false;
+
+    try {
+        block.setType(typeId);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+function shouldSkipDuplicateUse(player, target) {
+    const playerKey = player?.name;
+    if (!playerKey) return false;
+
+    const targetKey = getLocationKey((target?.block ?? target?.raycastBlock)?.location) || "none";
+    const useKey = `${system.currentTick}:${player.selectedSlotIndex ?? 0}:${targetKey}`;
+
+    if (recentCapsuleUses.get(playerKey) === useKey) return true;
+    recentCapsuleUses.set(playerKey, useKey);
+    return false;
+}
+
+function tryInteractWithFluidStorage(player, itemId, capsule, clickedBlock) {
+    if (!player || !itemId || !clickedBlock) return false;
+
+    const preferredFluidType = capsule.fluid !== FLUID_CAPSULE_EMPTY_FLUID ? capsule.fluid : null;
+    const targetEntity = resolveFluidStorageEntity(clickedBlock, preferredFluidType);
     if (!targetEntity) return false;
 
     let tank = null;
@@ -307,157 +479,102 @@ function tryInsertCapsuleIntoFluidTarget(event, player, itemId, clickedBlock) {
 
     const resultItemId = tank.fluidItem(itemId);
     if (resultItemId === false) return false;
-
-    if (!transformHeldCapsule(player, itemId, resultItemId || itemId)) {
-        return false;
-    }
+    if (!transformHeldCapsule(player, itemId, resultItemId || itemId)) return false;
 
     showFluidInteractionFeedback(player, tank);
-    if (event && "cancel" in event) event.cancel = true;
     return true;
 }
 
-function safePlaySound(player, soundId) {
-    try {
-        player?.playSound?.(soundId);
-    } catch {
-        // no-op
-    }
-}
+function tryPickupFromWorld(player, itemId, capsule, target) {
+    const pickupBlock = resolvePickupBlock(player, target, capsule);
+    const pickedFluidType = getFluidCapsuleFluidTypeFromBlockId(pickupBlock?.typeId);
+    if (!pickupBlock || !pickedFluidType) return false;
 
-function setBlockTypeSafe(block, typeId) {
-    if (!block || !typeId) return false;
-    try {
-        block.setType(typeId);
-        return true;
-    } catch {
-        return false;
-    }
-}
+    const nextAmount = capsule.amount <= 0
+        ? FLUID_CAPSULE_STEP_AMOUNT
+        : Math.min(FLUID_CAPSULE_MAX_AMOUNT, capsule.amount + FLUID_CAPSULE_STEP_AMOUNT);
+    const nextItemId = getFluidCapsuleItemId(pickedFluidType, nextAmount);
+    if (!nextItemId) return false;
 
-function tryPickupFluid(event, player, itemId, capsuleInfo, clickedBlock) {
-    if (capsuleInfo?.infinite) return false;
-
-    const clickedFluidType = CAPSULE.fluids.typeByBlock[clickedBlock?.typeId];
-    if (!clickedFluidType) return false;
-    if (!isFullFluidSourceBlock(clickedBlock)) return false;
-
-    const isEmptyCapsule = capsuleInfo.tier === 0;
-    const isSameFluidCapsule = capsuleInfo.fluidType === clickedFluidType;
-    const canUpgrade = capsuleInfo.tier < CAPSULE.tiers.max;
-
-    if (!isEmptyCapsule && (!isSameFluidCapsule || !canUpgrade)) {
-        return false;
-    }
-
-    const nextTier = isEmptyCapsule ? 1 : capsuleInfo.tier + 1;
-    const nextItemId = getCapsuleId(clickedFluidType, nextTier);
-    if (!canTransformHeldCapsule(player, itemId)) return false;
-
-    const previousTypeId = clickedBlock.typeId;
-    if (!setBlockTypeSafe(clickedBlock, "minecraft:air")) return false;
+    const previousTypeId = pickupBlock.typeId;
+    if (!setBlockTypeSafe(pickupBlock, "minecraft:air")) return false;
 
     if (!transformHeldCapsule(player, itemId, nextItemId)) {
-        setBlockTypeSafe(clickedBlock, previousTypeId);
+        setBlockTypeSafe(pickupBlock, previousTypeId);
         return false;
     }
 
-    if (clickedFluidType === "water") safePlaySound(player, "bucket.fill_water");
-    if (clickedFluidType === "lava") safePlaySound(player, "bucket.fill_lava");
-
-    if (event && "cancel" in event) event.cancel = true;
+    safePlaySound(player, CAPSULE_USE.fillSoundByFluid[pickedFluidType]);
     return true;
 }
 
-function tryPlaceFluid(event, player, itemId, capsuleInfo, clickedBlock, blockFace) {
-    const fluidType = capsuleInfo.fluidType;
-    if (!fluidType || capsuleInfo.tier <= 0) return false;
+function tryPlaceIntoWorld(player, itemId, capsule, target) {
+    if (!capsule || capsule.fluid === FLUID_CAPSULE_EMPTY_FLUID || capsule.amount <= 0) return false;
 
-    const fluidBlockId = CAPSULE.fluids.blockByType[fluidType];
+    const fluidBlockId = getFluidCapsuleFluidBlockId(capsule.fluid);
     if (!fluidBlockId) return false;
 
-    const placementBlock = getPlacementBlock(clickedBlock, blockFace, player);
-    if (!isValidPlacementTarget(placementBlock)) return false;
+    const placementBlock = resolvePlacementBlock(target, player);
+    if (!placementBlock) return false;
 
-    if (!canTransformHeldCapsule(player, itemId)) return false;
+    const nextItemId = capsule.infinite
+        ? itemId
+        : getFluidCapsuleItemId(capsule.fluid, capsule.amount - FLUID_CAPSULE_STEP_AMOUNT);
+    if (!nextItemId) return false;
 
     const previousTypeId = placementBlock.typeId;
     if (!setBlockTypeSafe(placementBlock, fluidBlockId)) return false;
-
-    const nextItemId = capsuleInfo.infinite
-        ? itemId
-        : getCapsuleId(fluidType, capsuleInfo.tier - 1);
 
     if (!transformHeldCapsule(player, itemId, nextItemId)) {
         setBlockTypeSafe(placementBlock, previousTypeId);
         return false;
     }
 
-    if (fluidType === "water") safePlaySound(player, "bucket.empty_water");
-    if (fluidType === "lava") safePlaySound(player, "bucket.empty_lava");
-
-    if (event && "cancel" in event) event.cancel = true;
+    safePlaySound(player, CAPSULE_USE.emptySoundByFluid[capsule.fluid]);
     return true;
 }
 
-function getUseTarget(player) {
-    if (!player?.getBlockFromViewDirection) return null;
+function getCapsuleState(itemStack, rawParameters) {
+    const itemId = itemStack?.typeId;
+    const fallbackDefinition = getFluidCapsuleDefinitionById(itemId);
+    if (!itemId || !fallbackDefinition) return null;
 
-    const target = player.getBlockFromViewDirection({
-        maxDistance: CAPSULE.world.maxDistance,
-        includeLiquidBlocks: true
+    return Object.freeze({
+        itemId,
+        ...normalizeFluidCapsuleParams(rawParameters?.params, itemId)
     });
-
-    const block = target?.block;
-    if (!block?.isValid) return null;
-
-    return {
-        block,
-        face: target?.face
-    };
 }
 
-function getEventTarget(event, player) {
-    const block = event?.block;
-    if (block?.isValid) {
-        return {
-            block,
-            face: event?.blockFace ?? event?.face
-        };
+function handleFluidCapsuleUse(event, rawParameters) {
+    try {
+        const player = getPlayer(event?.source);
+        if (!player) return;
+
+        const capsule = getCapsuleState(event?.itemStack, rawParameters);
+        if (!capsule) return;
+
+        const target = getEventTarget(event, player);
+        if (shouldSkipDuplicateUse(player, target)) return;
+
+        if (target?.block && tryInteractWithFluidStorage(player, capsule.itemId, capsule, target.block)) return;
+        if (tryPickupFromWorld(player, capsule.itemId, capsule, target)) return;
+        tryPlaceIntoWorld(player, capsule.itemId, capsule, target);
+    } catch (error) {
+        console.warn("[Ascendant Technology] fluid_capsule use failed.", error);
     }
-
-    return getUseTarget(player);
 }
 
-function onCapsuleUse(event) {
-    const player = event?.source;
-    if (!player || player.typeId !== "minecraft:player") return;
+const registerItemComponent = globalThis.DoriosAPI?.register?.itemComponent;
 
-    const itemId = event?.itemStack?.typeId;
-    if (!itemId || !isCapsuleItemId(itemId)) return;
-
-    const capsuleInfo = parseCapsule(itemId);
-
-    const target = getEventTarget(event, player);
-    if (!target) return;
-    const clickedBlock = target.block;
-
-    if (tryInsertCapsuleIntoFluidTarget(event, player, itemId, clickedBlock)) return;
-
-    if (!capsuleInfo) return;
-
-    if (tryPickupFluid(event, player, itemId, capsuleInfo, clickedBlock)) return;
-    const clickedFace = target.face ?? event?.blockFace ?? event?.face;
-    tryPlaceFluid(event, player, itemId, capsuleInfo, clickedBlock, clickedFace);
-}
-
-const capsuleUseOnEvent = world.beforeEvents?.itemUseOn;
-const capsuleUseEvent = world.beforeEvents?.itemUse ?? world.afterEvents?.itemUse;
-
-if (capsuleUseOnEvent?.subscribe) {
-    capsuleUseOnEvent.subscribe(onCapsuleUse);
-} else if (capsuleUseEvent?.subscribe) {
-    capsuleUseEvent.subscribe(onCapsuleUse);
+if (typeof registerItemComponent === "function") {
+    registerItemComponent("fluid_capsule", {
+        onUse(event, parameters) {
+            handleFluidCapsuleUse(event, parameters);
+        },
+        onUseOn(event, parameters) {
+            handleFluidCapsuleUse(event, parameters);
+        }
+    });
 } else {
-    console.warn("[Ascendant Technology] itemUse event is unavailable; capsule world interaction is disabled.");
+    console.warn(`[Ascendant Technology] ${FLUID_CAPSULE_COMPONENT_ID} could not be registered because DoriosAPI is unavailable.`);
 }

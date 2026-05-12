@@ -10,8 +10,8 @@ import { repairItemDurability } from "../shared/durability.js";
 import { filterEffectsByKind } from "../shared/effectSelectors.js";
 import { applyEffectById } from "../shared/effects.js";
 
-const MAX_TOTAL_DAMAGE_REDUCTION = 0.45;
-const MAX_TOTAL_VULNERABILITY = 0.6;
+const MAX_TOTAL_DAMAGE_REDUCTION = 1.0;
+const MAX_TOTAL_VULNERABILITY = 0.65;
 const supportEffectCooldowns = new Map();
 
 function combineNegationChances(chances) {

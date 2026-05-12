@@ -608,7 +608,7 @@ function buildCatalystFluidLabelContent(lines) {
  * - Propaga a mensagem para o item_label principal (slot 1).
  */
 function showMachineWarning(machine, tank, message, { resetProgress = true, lore = [] } = {}) {
-    machine.showWarning(message, resetProgress, lore)
+    machine.showWarning(message, resetProgress, lore, { displayModel: 'legacy' })
     tank.display(FLUID_DISPLAY_SLOT)
 }
 
@@ -639,7 +639,7 @@ function showRunningDisplays(machine, tank, lore = [], statusMessage = 'Running'
     machine.on()
     machine.displayEnergy()
     machine.displayProgress()
-    machine.showStatus(statusMessage, lore)
+    machine.showStatus(statusMessage, lore, { displayModel: 'legacy' })
 }
 
 function formatRecipePreviewName(recipe) {

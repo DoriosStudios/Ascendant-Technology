@@ -155,6 +155,9 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - Liquid Capsules now interact more reliably with vanilla Water and Lava sources.
   - Pickup targeting now follows the block the player is looking at up to 6 blocks away, making source collection more consistent in tight spaces.
   - Placement now uses more precise face detection, so Water and Lava Capsules are much easier to place where intended.
+- Liquid Capsules now handle wider, deeper, and player-overlapping fluid spaces more naturally.
+  - Collecting while standing inside Water or Lava now prioritizes the closest valid source block instead of failing on awkward targets.
+  - Placement now looks for the nearest sensible open space around the aimed area, improving behavior in larger pools and cramped spots.
 - Infinite fluid capsules now behave as true infinite fillers when used on compatible tanks and fluid machines.
   - Water and Lava Infinite Capsules now keep refilling accepted fluid storage instead of acting like oversized single-use containers.
 
@@ -271,5 +274,9 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Superior machine status panels, tank bars, progress arrows, and button panels now throttle against the world's configured refresh cadence instead of updating immediately on every local render path.
 - Updated capsule fluid registries and world interaction flow for finite and infinite capsule behavior.
   - Added explicit `infinite: true` registration metadata for Ascendant Technology infinite capsules so `FluidManager` treats them as real infinite providers.
+  - Replaced the old global capsule-use handler with the native `utilitycraft:fluid_capsule` item component, using per-item `fluid`, `amount`, and `infinite` parameters directly on each capsule definition.
+  - Capsule items no longer rely on deprecated `minecraft:custom_components` declarations or chained `using_converts_to` fallback behavior for their fluid state.
   - Switched capsule world interactions to prefer `itemUseOn` targeting when available, with a 6-block fallback raycast for source lookup.
+  - Tightened world pickup and placement resolution to follow the player's line of sight first, avoiding the old nearest-fluid behavior that could grab water beside or below the intended target.
   - Added a pre-placement fluid-storage handler so registered capsule containers can fill clicked tanks, ports, and fluid-capable machine blocks before any world placement is attempted.
+  - Placement now stays close to vanilla behavior, with only a short fallback around the looked-at target to reduce misplacement in cramped spaces without drifting to unrelated nearby fluid blocks.

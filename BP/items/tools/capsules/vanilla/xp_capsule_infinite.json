@@ -8,7 +8,6 @@
       }
     },
     "components": {
-      "using_converts_to": "utilitycraft:xp_capsule_infinite",
       "minecraft:hand_equipped": false,
       "minecraft:max_stack_size": 1,
       "minecraft:glint": true,
@@ -17,6 +16,11 @@
         "use_duration": 0
       },
       "minecraft:icon": "utilitycraft_xp_capsule_8",
+      "utilitycraft:fluid_capsule": {
+        "fluid": "xp",
+        "amount": 8000,
+        "infinite": true
+      },
       "minecraft:allow_off_hand": false,
       "minecraft:tags": {
         "tags": [

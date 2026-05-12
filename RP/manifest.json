@@ -6,6 +6,9 @@
 		],
 		"product_type": "addon"
 	},
+	"capabilities": [
+		"pbr"
+	],
 	"header": {
 		"name": "Ascendant Technology",
 		"description": "v0.8.1 §6Dorios Studios",

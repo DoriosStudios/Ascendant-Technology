@@ -162,10 +162,14 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Water and Lava Infinite Capsules now keep refilling accepted fluid storage instead of acting like oversized single-use containers.
 
 ## BUG FIXES
-- Fixed stacked Liquid Capsules disappearing while collecting Water or Lava.
-  - Picking up a source with multiple capsules in hand no longer deletes the source block while losing the filled capsule.
 - Fixed capsule world-use priority around fluid tanks.
   - Fluid capsules now try to fill the tank or fluid storage you clicked before attempting to place their contents into the world.
+- Fixed Mob Magnet incorrectly pulling block-entities from UtilityCraft and Better Smelters.
+  - Mechanic Hopper, Mechanic Upper, Mechanical Dropper, and Ender Hopper are no longer affected.
+  - Better Smelters furnaces are no longer affected.
+  - UtilityCraft Bonsai trees are no longer affected.
+- Fixed stacked Liquid Capsules disappearing while collecting Water or Lava.
+  - Picking up a source with multiple capsules in hand no longer deletes the source block while losing the filled capsule.
 
 ## TECHNICAL CHANGES
 ### Compatibility

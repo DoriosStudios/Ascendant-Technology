@@ -1,6 +1,6 @@
 # v0.9.0 Draft
 
-Heavy processing and block automation still anchor this draft, but this pass also introduces the first full **StatsCore** equipment wave. StatsCore is Ascendant Technology's gear progression layer: it gives supported weapons, tools, and defense pieces their own growth, refinement rolls, readable stat identity, and unlockable special abilities through the new **Refining Table**.
+Heavy processing and block automation still anchor this draft, but this pass also introduces the first full **StatsCore** equipment wave and a new **Power Beacon** line for cleaner nearby machine power routing. StatsCore is Ascendant Technology's gear progression layer: it gives supported weapons, tools, and defense pieces their own growth, refinement rolls, readable stat identity, and unlockable special abilities through the new **Refining Table**.
 
 ## BLOCKS
 ### Machines
@@ -66,6 +66,9 @@ Heavy processing and block automation still anchor this draft, but this pass als
     - **Cube (3x3x3)**: Places a 3x3x3 volume in front of it, starting 1 block above the machine center.
     - **Line (1x5)**: Places a line of 5 blocks in front of it.
   - Energy cost scales with the amount of blocks placed in the selected pattern.
+  - Can now pull placeable blocks from a compatible container placed above it.
+    - Supports common storage such as chests, barrels, Absolute Containers, and compatible machines feeding downward into it.
+  - Now includes a dedicated activation toggle in its UI.
 - Added **Pulverizer**
     - Superior version of Crusher with 4 input slots and 4 output slots.
     - Accepts four upgrades. 
@@ -84,11 +87,19 @@ Heavy processing and block automation still anchor this draft, but this pass als
     - **Line (1x5)**: Breaks a line of 5 blocks in front of it, consuming more energy and taking longer.
   - Drops are pulled into the internal storage slots when possible.
     - If the storage fills up, excess items are dropped normally in the world.
+  - Can now prioritize a compatible container above it when storing collected drops.
+    - Its internal storage still acts as a fallback buffer if the upper container cannot take everything.
+  - Now includes a dedicated activation toggle in its UI.
 - Added **Verdant Cultivator**
   - Superior version of Harvester with a repeated 2x2 seed grid and a 9-slot internal harvest buffer.
   - Range Upgrades expand its working field from 3x3 up to 17x17.
   - A dedicated Pedestal Clock slot pulses crop growth while Quantity Upgrades add extra harvest rolls.
   - Supports vanilla field crops and UtilityCraft seed crops, then exports buffered harvests from the rear when possible.
+- Added **Power Beacons**
+  - New 5-tier wireless-distribution line: **Basic**, **Advanced**, **Expert**, **Ultimate**, and **Absolute**.
+  - Sends stored energy to nearby powered machines without feeding generators or batteries.
+  - Each tier uses its own internal battery buffer, with transmission ranges of **4**, **8**, **12**, **24**, and **48** blocks.
+  - Transmission can now be toggled on or off directly from the block UI.
 - Added **Reinforced Case** and **Superior Case**.
   - New machine-case block variants are now registered with their own textures for future recipe use.
 
@@ -131,6 +142,9 @@ Heavy processing and block automation still anchor this draft, but this pass als
 ## RECIPES
 - Added the **Refining Table** crafting recipe.
   - The machine is crafted with Titanium Plates, Advanced Chips, Aetherium, a Machine Case, and an Anvil.
+- Added **Power Beacon** crafting recipes.
+  - Basic through Ultimate tiers are crafted from their matching Energy Transmitter, Battery, and Chip tiers.
+  - The Absolute tier upgrades the Ultimate Power Beacon with an **Absolute Battery**, **Network Center**, **Ultimate Chip**, and **Aetherium**.
 - Added the **Runic Core** conversion recipe.
   - A **Totem of Undying** can now be converted into a **Runic Core** for StatsCore awakenings.
 
@@ -150,6 +164,8 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - Superior machine names now use consistent subtitle formatting across all supported languages.
 - Superior machine menus now follow the world's refresh speed setting.
   - Progress arrows, status panels, tank displays, and mode panels now refresh on the same cadence as the configured world update speed.
+- Pattern Placer and Seismic Breaker now keep their activation toggle visually latched while enabled.
+  - Their machine buttons no longer bounce back to the same neutral look immediately after being switched on.
 
 ## FLUIDS
 - Liquid Capsules now interact more reliably with vanilla Water and Lava sources.
@@ -196,6 +212,8 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Includes block, recipe, machine script, item catalog integration, localization, and temporary placeholder textures.
 - Added native runtime registration for Cryo Freezer as a standalone superior Cryo Chamber branch.
   - Includes block, recipe, machine script, item catalog integration, localization, and temporary placeholder textures.
+- Added native runtime registration for Power Beacons.
+  - Includes five tiered blocks, recipes, machine script, toggle button UI, localization, item catalog, and resource registration.
 - Expanded StatsCore runtime handling for awakened utility abilities.
   - Added persistent per-item awakening data for special abilities and saved **Operator** mode state on drills.
   - Added runtime handling for **Operator**, **Gardener**, **Primal**, **Forger**, and **Ingniter** behaviors.
@@ -206,9 +224,21 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - Added a native Centrifugal Siever sieve-recipe registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_sieve_drop` custom insertions.
 - Added a native Genetic Seed Synthesizer plant registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_plant` and `utilitycraft:register_bonsai` custom insertions.
 
+### Resource Pack
+- Converted Cryo Chamber, Cryo Freezer, Cryo Stabilizer, Residue Processor, and Seismic Breaker to `minecraft:geometry.full_block` with named per-face `material_instances`.
+  - Replaced their box-UV atlas usage with generated face textures so directional rendering no longer flips the north and south sides on those machines.
+  - Archived the previous atlas sheets under `RP/textures/blocks/machines/legacy_atlases` and `RP/textures/blocks/machines/superior/legacy_atlases` for reference and future art rework.
+  - Added `tools/convert_machine_atlases_to_full_block_faces.py` to regenerate the split face textures from the archived atlases when those machine textures change.
+
 ### Core Utilities
 - Hyper Processing no longer contributes to machine output yield multipliers.
+- Ascendant machine visuals now respect the selected world refresh speed across the shared machine core.
+  - Shared labels, progress arrows, energy displays, tank displays, button panels, and generator HUD updates now follow the configured visual update cadence instead of mixing in fixed 4-tick refresh paths.
+- Enchantment Station and custom multi-panel machine HUDs now align with the same world refresh-speed cadence.
+  - The Enchantment Station no longer bypasses the main machine tick cadence during runtime, and custom progress indicators used by special machine UIs now flow through the shared refresh helper.
   - It now affects processing speed only, preventing output inflation without matching input consumption.
+- Updated Pattern Placer input consumption to clear exhausted stacks before writing back inventory changes.
+  - Prevents zero-amount item writes when the last block in a stack is placed, fixing the final-stack duplication case triggered by successful placements.
 - Industrial Burner charging now respects per-recipe time windows when calculating progress gain.
   - Speed-related boosts now change throughput more consistently instead of collapsing into near-constant craft timing.
 - Added shared runtime optimizations for high-traffic machine loops.
@@ -235,6 +265,10 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - Optimized reinforced cable / overclock network scan paths and refresh scheduling.
   - Replaced shift-based BFS queue traversal with index-based scans in reinforced cable, overclock, and reinforced extractor network walkers.
   - Added tick-level deduplication for reinforced cable geometry and energy rescan scheduling to avoid duplicate recomputes in dense placement/break events.
+- Updated reinforced cable energy target collection to allow Power Beacons to recharge from connected cable networks.
+  - Normal generator target restrictions remain in place for other source blocks.
+- Updated Power Beacon wireless target discovery to recognize both Ascendant Technology and UtilityCraft machine helper entities.
+  - Nearby powered machines are now resolved by their block position instead of relying on only one helper-entity type.
 - Updated reinforced fluid network semantics around explicit node roles.
   - `dorios:fluid_nodes` now stores role-aware nodes (`direct`, `source`, `sink`) instead of only raw positions.
   - Reinforced Cable now acts as a fluid transport backbone only; cable spans no longer expose remote machines or tanks as direct fluid I/O endpoints.

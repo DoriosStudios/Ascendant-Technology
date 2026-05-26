@@ -5,6 +5,11 @@ tile.utilitycraft:absolute_magmator.name=Magmator Absoluto\n§7  Velocidad: 400 
 tile.utilitycraft:absolute_solar_panel.name=Panel Solar Absoluto\n§7  Velocidad Máx: 96 kDE/t
 tile.utilitycraft:absolute_thermo_generator.name=Generador Termal Absoluto\n§7   Velocidad: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velocidad Base: 64 kDE/t\n  Multiplicador de Altura Máximo: 1000%\n  No funciona debajo de y12
+tile.utilitycraft:basic_power_beacon.name=§eBasic Power Beacon\n§7  Rate: 1 kDE/t\n§7  Capacity: 128 kDE\n§7  Range: 4 blocks
+tile.utilitycraft:advanced_power_beacon.name=§cAdvanced Power Beacon\n§7  Rate: 4 kDE/t\n§7  Capacity: 512 kDE\n§7  Range: 8 blocks
+tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16 kDE/t\n§7  Capacity: 2.048 MDE\n§7  Range: 12 blocks
+tile.utilitycraft:ultimate_power_beacon.name=§8Ultimate Power Beacon\n§7  Rate: 100 kDE/t\n§7  Capacity: 12.8 MDE\n§7  Range: 24 blocks
+tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate: 8 MDE/t\n§7  Capacity: 1.024 GDE\n§7  Range: 48 blocks
 tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena hasta 10.7K ítems\n- Almacena energía\n- Almacena fluidos
 
 ## Máquinas
@@ -258,6 +263,11 @@ entity.utilitycraft:seismic_breaker.name=§fQuebrador Sísmico
 entity.utilitycraft:pattern_placer.name=§fColocador de Patrones
 entity.utilitycraft:energizer.name=§fEnergizador
 entity.utilitycraft:network_center.name=§fCentro de Red
+entity.utilitycraft:basic_power_beacon.name=Basic Power Beacon
+entity.utilitycraft:advanced_power_beacon.name=Advanced Power Beacon
+entity.utilitycraft:expert_power_beacon.name=Expert Power Beacon
+entity.utilitycraft:ultimate_power_beacon.name=Ultimate Power Beacon
+entity.utilitycraft:absolute_power_beacon.name=Absolute Power Beacon
 entity.utilitycraft:tabs_test_machine.name=§fMáquina de Prueba (Pestañas)
 entity.utilitycraft:absolute_container.name=§fContenedor Absoluto
 entity.utilitycraft:overclock_tower.name=§fTorre de Overclock
@@ -269,6 +279,7 @@ entity.utilitycraft:vaporworks_processor.name=§fProcesador de Vapor
 
 ## UI Texts
 at:itemGroup.name.machines=Máquinas (Ascendant Technology)
+at:itemGroup.name.power_beacons=Power Beacons §u(Ascendant Technology)
 at:itemGroup.name.capsules=Cápsulas de Líquidos (Ascendant Technology)
 at:itemGroup.name.experimental=Experimental
 at:itemGroup.name.armor=Armaduras (Ascendant Technology)

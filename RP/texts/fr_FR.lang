@@ -5,6 +5,11 @@ tile.utilitycraft:absolute_magmator.name=Magmator Absolu\n§7  Taux: 400 kDE/t
 tile.utilitycraft:absolute_solar_panel.name=Panneau Solaire Absolu\n§7  Taux Max: 96 kDE/t
 tile.utilitycraft:absolute_thermo_generator.name=Générateur Thermique Absolu\n§7   Taux: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=Éolienne Absolue\n§7  Taux de Base: 64 kDE/t\n  Multiplicateur de Hauteur Max: 1000%\n  Ne fonctionne pas sous y12
+tile.utilitycraft:basic_power_beacon.name=§eBasic Power Beacon\n§7  Rate: 1 kDE/t\n§7  Capacity: 128 kDE\n§7  Range: 4 blocks
+tile.utilitycraft:advanced_power_beacon.name=§cAdvanced Power Beacon\n§7  Rate: 4 kDE/t\n§7  Capacity: 512 kDE\n§7  Range: 8 blocks
+tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16 kDE/t\n§7  Capacity: 2.048 MDE\n§7  Range: 12 blocks
+tile.utilitycraft:ultimate_power_beacon.name=§8Ultimate Power Beacon\n§7  Rate: 100 kDE/t\n§7  Capacity: 12.8 MDE\n§7  Range: 24 blocks
+tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate: 8 MDE/t\n§7  Capacity: 1.024 GDE\n§7  Range: 48 blocks
 
 tile.utilitycraft:absolute_container.name=Conteneur Absolu\n§7- Stocke jusqu'à 10.7K objets\n- Peut stocker des fluides\n- Peut stocker de l'énergie
 
@@ -176,6 +181,11 @@ entity.utilitycraft:pattern_placer.name=§fPlaceur de Motifs
 entity.utilitycraft:energizer.name=Énergiseur
 entity.utilitycraft:enchantment_station.name=§fStation d'Enchantement
 entity.utilitycraft:network_center.name=§fCentre Réseau
+entity.utilitycraft:basic_power_beacon.name=Basic Power Beacon
+entity.utilitycraft:advanced_power_beacon.name=Advanced Power Beacon
+entity.utilitycraft:expert_power_beacon.name=Expert Power Beacon
+entity.utilitycraft:ultimate_power_beacon.name=Ultimate Power Beacon
+entity.utilitycraft:absolute_power_beacon.name=Absolute Power Beacon
 entity.utilitycraft:tabs_test_machine.name=§fMachine de Test d'Onglets
 entity.utilitycraft:overclock_tower.name=§fTour d'Overclocking
 entity.utilitycraft:overclock_relay.name=§fRelais d'Overclocking
@@ -183,6 +193,7 @@ entity.utilitycraft:overclock_injector.name=§fInjecteur d'Overclocking
 
 ## Textes UI
 at:itemGroup.name.machines=Machines §u(Ascendant Technology)
+at:itemGroup.name.power_beacons=Power Beacons §u(Ascendant Technology)
 at:itemGroup.name.capsules=Capsules de Liquides §u(Ascendant Technology)
 at:itemGroup.name.experimental=Expérimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armures §u(Ascendant Technology)

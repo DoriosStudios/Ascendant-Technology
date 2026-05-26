@@ -50,6 +50,19 @@
                     },
                     {
                         "group_identifier": {
+                            "icon": "utilitycraft:basic_power_beacon",
+                            "name": "at:itemGroup.name.power_beacons"
+                        },
+                        "items": [
+                            "utilitycraft:basic_power_beacon",
+                            "utilitycraft:advanced_power_beacon",
+                            "utilitycraft:expert_power_beacon",
+                            "utilitycraft:ultimate_power_beacon",
+                            "utilitycraft:absolute_power_beacon"
+                        ]
+                    },
+                    {
+                        "group_identifier": {
                             "icon": "utilitycraft:reinforced_cable",
                             "name": "at:itemGroup.name.pipes"
                         },

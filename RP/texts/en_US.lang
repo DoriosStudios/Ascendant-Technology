@@ -5,6 +5,11 @@ tile.utilitycraft:absolute_magmator.name=Absolute Magmator\n§7  Rate: 400 kDE/t
 tile.utilitycraft:absolute_solar_panel.name=Absolute Solar Panel\n§7  Max Rate: 96 kDE/t
 tile.utilitycraft:absolute_thermo_generator.name=Absolute Thermo Generator\n§7   Rate: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=Absolute Wind Turbine\n§7  Base Rate: 64 kDE/t\n  Max Height Multiplier: 1000%\n  Does not work below y12
+tile.utilitycraft:basic_power_beacon.name=§eBasic Power Beacon\n§7  Rate: 1 kDE/t\n§7  Capacity: 128 kDE\n§7  Range: 4 blocks
+tile.utilitycraft:advanced_power_beacon.name=§cAdvanced Power Beacon\n§7  Rate: 4 kDE/t\n§7  Capacity: 512 kDE\n§7  Range: 8 blocks
+tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16 kDE/t\n§7  Capacity: 2.048 MDE\n§7  Range: 12 blocks
+tile.utilitycraft:ultimate_power_beacon.name=§8Ultimate Power Beacon\n§7  Rate: 100 kDE/t\n§7  Capacity: 12.8 MDE\n§7  Range: 24 blocks
+tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate: 8 MDE/t\n§7  Capacity: 1.024 GDE\n§7  Range: 48 blocks
 
 tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 10.7K items\n- Can store fluids\n- Can store energy
 
@@ -264,6 +269,11 @@ entity.utilitycraft:seismic_breaker.name=§fSeismic Breaker
 entity.utilitycraft:pattern_placer.name=§fPattern Placer
 entity.utilitycraft:energizer.name=Energizer
 entity.utilitycraft:network_center.name=Network Center
+entity.utilitycraft:basic_power_beacon.name=Basic Power Beacon
+entity.utilitycraft:advanced_power_beacon.name=Advanced Power Beacon
+entity.utilitycraft:expert_power_beacon.name=Expert Power Beacon
+entity.utilitycraft:ultimate_power_beacon.name=Ultimate Power Beacon
+entity.utilitycraft:absolute_power_beacon.name=Absolute Power Beacon
 entity.utilitycraft:tabs_test_machine.name=Tabs Test Machine
 entity.utilitycraft:overclock_tower.name=§6Overclock Tower
 entity.utilitycraft:overclock_relay.name=§6Overclock Relay
@@ -276,6 +286,7 @@ entity.utilitycraft:vaporworks_processor.name=§fVaporworks Processor
 ## UI Texts
 at:itemGroup.name.machines=Machines §u(Ascendant Technology)
 at:itemGroup.name.superior_machines=Superior Machines §u(Ascendant Technology)\n§6Experimental content, may be unbalanced or have bugs.
+at:itemGroup.name.power_beacons=Power Beacons §u(Ascendant Technology)
 at:itemGroup.name.capsules=Liquid Capsules §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armor §u(Ascendant Technology)

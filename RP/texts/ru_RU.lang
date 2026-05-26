@@ -5,6 +5,11 @@ tile.utilitycraft:absolute_magmator.name=Абсолютный Магматор\n
 tile.utilitycraft:absolute_solar_panel.name=Абсолютная Солнечная Панель\n§7  Max Скорость: 96 kDE/t
 tile.utilitycraft:absolute_thermo_generator.name=Абсолютный Термогенератор\n§7   Скорость: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=Абсолютная Ветряная Турбина\n§7  Base Скорость: 64 kDE/t\n  Макс. Множитель Высоты: 1000%\n  Не работает ниже y12
+tile.utilitycraft:basic_power_beacon.name=§eBasic Power Beacon\n§7  Rate: 1 kDE/t\n§7  Capacity: 128 kDE\n§7  Range: 4 blocks
+tile.utilitycraft:advanced_power_beacon.name=§cAdvanced Power Beacon\n§7  Rate: 4 kDE/t\n§7  Capacity: 512 kDE\n§7  Range: 8 blocks
+tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16 kDE/t\n§7  Capacity: 2.048 MDE\n§7  Range: 12 blocks
+tile.utilitycraft:ultimate_power_beacon.name=§8Ultimate Power Beacon\n§7  Rate: 100 kDE/t\n§7  Capacity: 12.8 MDE\n§7  Range: 24 blocks
+tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate: 8 MDE/t\n§7  Capacity: 1.024 GDE\n§7  Range: 48 blocks
 
 tile.utilitycraft:absolute_container.name=Абсолютный Контейнер\n§7- Хранит до 10.7K предметов\n- Может хранить жидкости\n- Может хранить энергию
 
@@ -176,6 +181,11 @@ entity.utilitycraft:pattern_placer.name=§fУстановщик Шаблонов
 entity.utilitycraft:energizer.name=Энергизатор
 entity.utilitycraft:enchantment_station.name=§fСтанция Зачарования
 entity.utilitycraft:network_center.name=§fСетевой Центр
+entity.utilitycraft:basic_power_beacon.name=Basic Power Beacon
+entity.utilitycraft:advanced_power_beacon.name=Advanced Power Beacon
+entity.utilitycraft:expert_power_beacon.name=Expert Power Beacon
+entity.utilitycraft:ultimate_power_beacon.name=Ultimate Power Beacon
+entity.utilitycraft:absolute_power_beacon.name=Absolute Power Beacon
 entity.utilitycraft:tabs_test_machine.name=§fТестовая Машина Вкладок
 entity.utilitycraft:overclock_tower.name=§fБашня Разгона
 entity.utilitycraft:overclock_relay.name=§fРеле Разгона
@@ -183,6 +193,7 @@ entity.utilitycraft:overclock_injector.name=§fИнжектор Разгона
 
 ## Тексты UI
 at:itemGroup.name.machines=Машины §u(Ascendant Technology)
+at:itemGroup.name.power_beacons=Power Beacons §u(Ascendant Technology)
 at:itemGroup.name.capsules=Жидкостные Капсулы §u(Ascendant Technology)
 at:itemGroup.name.experimental=Экспериментальный §u(Ascendant Technology)
 at:itemGroup.name.armor=Броня §u(Ascendant Technology)

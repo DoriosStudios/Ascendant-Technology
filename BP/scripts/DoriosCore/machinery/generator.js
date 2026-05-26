@@ -85,8 +85,11 @@ export class Generator {
         } else if (entity.type == 'passive') {
             generatorEvent = "utilitycraft:passive_generator";
             inventorySize = 2
-        } if (entity.type == 'battery') {
+        } else if (entity.type == 'battery') {
             generatorEvent = "utilitycraft:battery_generator";
+            inventorySize = 2
+        } else if (entity.type == 'power_beacon') {
+            generatorEvent = "utilitycraft:power_beacon";
             inventorySize = 2
         }
 

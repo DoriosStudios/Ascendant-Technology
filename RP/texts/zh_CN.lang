@@ -5,6 +5,11 @@ tile.utilitycraft:absolute_magmator.name=绝对岩浆发电机\n§7  速率: 400
 tile.utilitycraft:absolute_solar_panel.name=绝对太阳能板\n§7  Max 速率: 96 kDE/t
 tile.utilitycraft:absolute_thermo_generator.name=绝对热力发电机\n§7   速率: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=绝对风力涡轮机\n§7  Base 速率: 64 kDE/t\n  最大高度倍数: 1000%\n  在y12以下无法工作
+tile.utilitycraft:basic_power_beacon.name=§eBasic Power Beacon\n§7  Rate: 1 kDE/t\n§7  Capacity: 128 kDE\n§7  Range: 4 blocks
+tile.utilitycraft:advanced_power_beacon.name=§cAdvanced Power Beacon\n§7  Rate: 4 kDE/t\n§7  Capacity: 512 kDE\n§7  Range: 8 blocks
+tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16 kDE/t\n§7  Capacity: 2.048 MDE\n§7  Range: 12 blocks
+tile.utilitycraft:ultimate_power_beacon.name=§8Ultimate Power Beacon\n§7  Rate: 100 kDE/t\n§7  Capacity: 12.8 MDE\n§7  Range: 24 blocks
+tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate: 8 MDE/t\n§7  Capacity: 1.024 GDE\n§7  Range: 48 blocks
 
 tile.utilitycraft:absolute_container.name=绝对容器\n§7- 最多存储10.7K物品\n- 可以存储流体\n- 可以存储能量
 
@@ -176,6 +181,11 @@ entity.utilitycraft:pattern_placer.name=§f图样放置器
 entity.utilitycraft:energizer.name=充能器
 entity.utilitycraft:enchantment_station.name=§f附魔站
 entity.utilitycraft:network_center.name=§f网络中心
+entity.utilitycraft:basic_power_beacon.name=Basic Power Beacon
+entity.utilitycraft:advanced_power_beacon.name=Advanced Power Beacon
+entity.utilitycraft:expert_power_beacon.name=Expert Power Beacon
+entity.utilitycraft:ultimate_power_beacon.name=Ultimate Power Beacon
+entity.utilitycraft:absolute_power_beacon.name=Absolute Power Beacon
 entity.utilitycraft:tabs_test_machine.name=§f标签测试机
 entity.utilitycraft:overclock_tower.name=§f超频塔
 entity.utilitycraft:overclock_relay.name=§f超频中继器
@@ -183,6 +193,7 @@ entity.utilitycraft:overclock_injector.name=§f超频注入器
 
 ## UI文本
 at:itemGroup.name.machines=机器 §u(Ascendant Technology)
+at:itemGroup.name.power_beacons=Power Beacons §u(Ascendant Technology)
 at:itemGroup.name.capsules=液体胶囊 §u(Ascendant Technology)
 at:itemGroup.name.experimental=实验性 §u(Ascendant Technology)
 at:itemGroup.name.armor=盔甲 §u(Ascendant Technology)

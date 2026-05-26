@@ -92,6 +92,21 @@
 	"utilitycraft:network_center": {
 		"sound": "metal"
 	},
+	"utilitycraft:basic_power_beacon": {
+		"sound": "metal"
+	},
+	"utilitycraft:advanced_power_beacon": {
+		"sound": "metal"
+	},
+	"utilitycraft:expert_power_beacon": {
+		"sound": "metal"
+	},
+	"utilitycraft:ultimate_power_beacon": {
+		"sound": "metal"
+	},
+	"utilitycraft:absolute_power_beacon": {
+		"sound": "metal"
+	},
 	"utilitycraft:reinforced_machine_case": {
 		"sound": "metal"
 	},

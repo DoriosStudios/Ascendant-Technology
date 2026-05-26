@@ -5,6 +5,11 @@ tile.utilitycraft:absolute_magmator.name=Magmator Absoluto \n§7  Velocidade: 40
 tile.utilitycraft:absolute_solar_panel.name=Painel Solar Absoluto \n§7  Velocidade Máx: 96 kDE/t
 tile.utilitycraft:absolute_thermo_generator.name=Gerador Térmico Absoluto \n§7  Velocidade: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta \n§7  Velocidade Base: 64 kDE/t\n  Multiplicador de Altura Máximo: 10x\n  Não funciona abaixo de y12
+tile.utilitycraft:basic_power_beacon.name=§eCanalizador de Pulso Elétrico Básico\n§7  Velocidade: 1 kDE/t\n§7  Capacidade: 128 kDE\n§7  Alcance: 4 blocos
+tile.utilitycraft:advanced_power_beacon.name=§cCanalizador de Pulso Elétrico Avançado\n§7  Velocidade: 4 kDE/t\n§7  Capacidade: 512 kDE\n§7  Alcance: 8 blocos
+tile.utilitycraft:expert_power_beacon.name=§bCanalizador de Pulso Elétrico Expert\n§7  Velocidade: 16 kDE/t\n§7  Capacidade: 2.048 MDE\n§7  Alcance: 12 blocos
+tile.utilitycraft:ultimate_power_beacon.name=§8Canalizador de Pulso Elétrico Supremo\n§7  Velocidade: 100 kDE/t\n§7  Capacidade: 12.8 MDE\n§7  Alcance: 24 blocos
+tile.utilitycraft:absolute_power_beacon.name=§fCanalizador de Pulso Elétrico Absoluto\n§7  Velocidade: 8 MDE/t\n§7  Capacidade: 1.024 GDE\n§7  Alcance: 48 blocos
 
 tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena itens (168 espaços)\n- Armazena energia\n- Armazena líquidos
 
@@ -265,6 +270,11 @@ entity.utilitycraft:seismic_breaker.name=§fQuebrador Sísmico
 entity.utilitycraft:pattern_placer.name=§fColocador de Padrões
 entity.utilitycraft:energizer.name=Energizador
 entity.utilitycraft:network_center.name=§fCentro de Rede
+entity.utilitycraft:basic_power_beacon.name=§fBaliza Energética Básica
+entity.utilitycraft:advanced_power_beacon.name=§fBaliza Energética Avançada
+entity.utilitycraft:expert_power_beacon.name=§fBaliza Energética Expert
+entity.utilitycraft:ultimate_power_beacon.name=§fBaliza Energética Suprema
+entity.utilitycraft:absolute_power_beacon.name=§fBaliza Energética Absoluta
 entity.utilitycraft:tabs_test_machine.name=§fMáquina de Teste (Tabs)
 entity.utilitycraft:absolute_container.name=§fContainer Absoluto
 entity.utilitycraft:overclock_tower.name=§fTorre de Overclock
@@ -278,6 +288,7 @@ entity.utilitycraft:vaporworks_processor.name=§vProcessador de Vapor
 ## UI
 at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)
 at:itemGroup.name.superior_machines=Máquinas Superiores §u(Ascendant Technology)
+at:itemGroup.name.power_beacons=Balizas Energéticas §u(Ascendant Technology)
 at:itemGroup.name.capsules=Cápsulas de Líquidos §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
 at:itemGroup.name.armor=Armaduras §u(Ascendant Technology)

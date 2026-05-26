@@ -177,11 +177,11 @@ function collectEnergyTargets(startPos, sourceEntity) {
 
         const isBattery = tf.hasTypeFamily?.("dorios:battery") ?? false;
         const isEnergySource = tf.hasTypeFamily?.("dorios:energy_source") ?? false;
+        const isPowerBeacon = tf.hasTypeFamily?.("dorios:power_beacon") ?? false;
 
-        // Allow batteries to receive from the cable network while still excluding
-        // active generators/other sources from target collection. Battery-to-battery
-        // looping remains blocked in Energy.transferToNetwork().
-        if (isEnergySource && !isBattery) continue;
+        // Allow batteries and the power beacon to receive from the cable
+        // network while still excluding normal generators and other sources.
+        if (isEnergySource && !isBattery && !isPowerBeacon) continue;
 
         if (!targetKeys.has(key)) {
             targetKeys.add(key);

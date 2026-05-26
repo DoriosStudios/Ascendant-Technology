@@ -1,0 +1,31 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:advanced_power_beacon"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "key": {
+            "E": { "item": "utilitycraft:ender_pearl_dust" },
+            "T": { "item": "utilitycraft:advanced_energy_transmitter" },
+            "C": { "item": "utilitycraft:advanced_chip" },
+            "B": { "item": "utilitycraft:advanced_battery" },
+            "R": { "item": "minecraft:redstone_block" }
+        },
+        "pattern": [
+            "ETE",
+            "CBC",
+            "ERE"
+        ],
+        "result": {
+            "item": "utilitycraft:advanced_power_beacon",
+            "count": 1
+        },
+        "unlock": [
+            { "item": "utilitycraft:advanced_chip" },
+            { "item": "utilitycraft:advanced_energy_transmitter" }
+        ]
+    }
+}

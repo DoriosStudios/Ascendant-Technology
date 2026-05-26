@@ -25,6 +25,9 @@ import './machinery/machines/residue_processor.js'
 import './machinery/machines/vaporworks_processor.js'
 import './machinery/machines/network_center.js'
 
+// Generators
+import './machinery/generators/power_beacon.js'
+
 // Superior machines
 import './machinery/machines/superior/abyssal_fisher.js'
 import './machinery/machines/superior/arc_press_forge.js'

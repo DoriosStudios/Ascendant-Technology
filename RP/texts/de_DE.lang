@@ -5,6 +5,11 @@ tile.utilitycraft:absolute_magmator.name=Absoluter Magmator\n§7  Rate: 400 kDE/
 tile.utilitycraft:absolute_solar_panel.name=Absolutes Solarpanel\n§7  Max. Rate: 96 kDE/t
 tile.utilitycraft:absolute_thermo_generator.name=Absoluter Thermogenerator\n§7   Rate: 16 kDE/t
 tile.utilitycraft:absolute_wind_turbine.name=Absolute Windturbine\n§7  Basisrate: 64 kDE/t\n  Max. Höhenmultiplikator: 1000%\n  Funktioniert nicht unter y12
+tile.utilitycraft:basic_power_beacon.name=§eBasic Power Beacon\n§7  Rate: 1 kDE/t\n§7  Capacity: 128 kDE\n§7  Range: 4 blocks
+tile.utilitycraft:advanced_power_beacon.name=§cAdvanced Power Beacon\n§7  Rate: 4 kDE/t\n§7  Capacity: 512 kDE\n§7  Range: 8 blocks
+tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16 kDE/t\n§7  Capacity: 2.048 MDE\n§7  Range: 12 blocks
+tile.utilitycraft:ultimate_power_beacon.name=§8Ultimate Power Beacon\n§7  Rate: 100 kDE/t\n§7  Capacity: 12.8 MDE\n§7  Range: 24 blocks
+tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate: 8 MDE/t\n§7  Capacity: 1.024 GDE\n§7  Range: 48 blocks
 
 tile.utilitycraft:absolute_container.name=Absoluter Container\n§7- Speichert bis zu 10,7K Gegenstände\n- Kann Flüssigkeiten speichern\n- Kann Energie speichern
 
@@ -176,6 +181,11 @@ entity.utilitycraft:pattern_placer.name=§fMustersetzer
 entity.utilitycraft:energizer.name=Energisierer
 entity.utilitycraft:enchantment_station.name=§fVerzauberungsstation
 entity.utilitycraft:network_center.name=§fNetzwerkzentrum
+entity.utilitycraft:basic_power_beacon.name=Basic Power Beacon
+entity.utilitycraft:advanced_power_beacon.name=Advanced Power Beacon
+entity.utilitycraft:expert_power_beacon.name=Expert Power Beacon
+entity.utilitycraft:ultimate_power_beacon.name=Ultimate Power Beacon
+entity.utilitycraft:absolute_power_beacon.name=Absolute Power Beacon
 entity.utilitycraft:tabs_test_machine.name=§fTabs-Testmaschine
 entity.utilitycraft:overclock_tower.name=§fÜbertaktungsturm
 entity.utilitycraft:overclock_relay.name=§fÜbertaktungsrelais
@@ -183,6 +193,7 @@ entity.utilitycraft:overclock_injector.name=§fÜbertaktungsinjektor
 
 ## UI Texts
 at:itemGroup.name.machines=Maschinen §u(Ascendant Technology)
+at:itemGroup.name.power_beacons=Power Beacons §u(Ascendant Technology)
 at:itemGroup.name.capsules=Flüssigkeitskapseln §u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimentell §u(Ascendant Technology)
 at:itemGroup.name.armor=Rüstung §u(Ascendant Technology)

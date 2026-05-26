@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../UtilityCraft"
+		},
+		{
+			"path": "../UtilityCraft-Heavy-Machinery"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"**/RP/ui/*.json": "jsonc",
+			"**/RP/texts/**/*.json": "jsonc",
+			"**/RP/item_catalog/*.json": "jsonc"
+		},
+		"window.zoomLevel": -1
+	}
+}

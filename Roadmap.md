@@ -116,6 +116,14 @@ Machine status legend:
   - **Design Requirement:** Universal routing must expose fine control per side, per resource type, and per importer/exporter endpoint.
   - **Scope Rule:** The Universal line needs a more sophisticated configuration model than Reinforced Cable. It should not reuse the current reinforced importer/exporter UI without a dedicated design pass.
 
+- 🟡 **Vacuum Particle Condenser** *(Planned)*
+  - **Purpose:** A late-game environmental machine that condenses ambient particles into solid resources by reading altitude, dimension, and biome instead of mining blocks directly.
+  - **Operating Mode:** The machine filters surrounding air and converts contextual conditions into outputs; higher altitudes favor lighter particulate materials, lower depths favor denser or more compressed results, and special dimension rules can override the default table.
+  - **Environment Hook:** Biomes matter; placing it near specific terrain types changes what it can produce, with beach-adjacent placement acting like an enhanced sand-screening path.
+  - **Input / Fuel:** Uses DE as fuel and requires Filter Cartridges to define which particle classes are condensed efficiently.
+  - **Identity:** This is not a disguised miner; it is a placement-dependent logistics machine whose value comes from location, not from brute-force automation.
+  - **Visual:** A large rotor or fan-centered housing with a central condensation chamber, built to sell the idea of suction, pressure, and particle separation.
+
 - 🟢 **Vaporworks Processor**
   - **Purpose:** Produce steam/gas resources for auxiliary industrial use.
 

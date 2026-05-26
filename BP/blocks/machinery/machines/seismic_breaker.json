@@ -24,20 +24,36 @@
                     "energy_cost": 6400,
                     "rate_speed_base": 1600,
                     "upgrades": [9, 10, 11],
-                    "hidden_slots": [12]
+                    "hidden_slots": []
                 }
             },
             "utilitycraft:special_container": {
-                "Mode Button": 3,
-                "Precision Button": 4,
-                "Storage Slots": [5, 6, 7, 8],
-                "Upgrade Slots": [9, 10, 11],
-                "Hidden Slots": [12]
+                "Storage Slots": [5, 6, 7, 8]
             },
-            "minecraft:geometry": "geometry.utilitycraft_block_2",
+            "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
-                "*": {
-                    "texture": "utilitycraft_seismic_breaker_off",
+                "up": {
+                    "texture": "utilitycraft_seismic_breaker_off_up",
+                    "render_method": "alpha_test"
+                },
+                "down": {
+                    "texture": "utilitycraft_seismic_breaker_off_down",
+                    "render_method": "alpha_test"
+                },
+                "north": {
+                    "texture": "utilitycraft_seismic_breaker_off_north",
+                    "render_method": "alpha_test"
+                },
+                "south": {
+                    "texture": "utilitycraft_seismic_breaker_off_south",
+                    "render_method": "alpha_test"
+                },
+                "east": {
+                    "texture": "utilitycraft_seismic_breaker_off_east",
+                    "render_method": "alpha_test"
+                },
+                "west": {
+                    "texture": "utilitycraft_seismic_breaker_off_west",
                     "render_method": "alpha_test"
                 }
             },
@@ -57,8 +73,28 @@
                 "condition": "q.block_state('utilitycraft:on') == 1",
                 "components": {
                     "minecraft:material_instances": {
-                        "*": {
-                            "texture": "utilitycraft_seismic_breaker_on",
+                        "up": {
+                            "texture": "utilitycraft_seismic_breaker_on_up",
+                            "render_method": "alpha_test"
+                        },
+                        "down": {
+                            "texture": "utilitycraft_seismic_breaker_on_down",
+                            "render_method": "alpha_test"
+                        },
+                        "north": {
+                            "texture": "utilitycraft_seismic_breaker_on_north",
+                            "render_method": "alpha_test"
+                        },
+                        "south": {
+                            "texture": "utilitycraft_seismic_breaker_on_south",
+                            "render_method": "alpha_test"
+                        },
+                        "east": {
+                            "texture": "utilitycraft_seismic_breaker_on_east",
+                            "render_method": "alpha_test"
+                        },
+                        "west": {
+                            "texture": "utilitycraft_seismic_breaker_on_west",
                             "render_method": "alpha_test"
                         }
                     },

@@ -8,6 +8,8 @@ import {
 import {
     formatEnergyCost,
     formatMachineEnergyBuffer,
+    getContainerTransferSlots,
+    resolveAboveContainer,
     shouldRefreshSuperiorUi,
     syncSuperiorButtonPanel
 } from './utils.js'
@@ -19,9 +21,10 @@ const SEISMIC_BREAKER = Object.freeze({
         progress: 2,
         modeButton: 3,
         precisionButton: 4,
+        activationButton: 12,
         storage: Object.freeze([5, 6, 7, 8]),
         upgrades: Object.freeze([9, 10, 11]),
-        hidden: Object.freeze([12])
+        hidden: Object.freeze([])
     }),
     defaults: Object.freeze({
         energyCost: 6400,
@@ -59,7 +62,8 @@ const SEISMIC_BREAKER_BUTTONS = Object.freeze({
     defaultIconItemId: 'utilitycraft:switch_button',
     defaults: Object.freeze({
         mode: SEISMIC_BREAKER.modes.single.id,
-        precision: false
+        precision: false,
+        enabled: true
     }),
     buttons: Object.freeze([
         Object.freeze({
@@ -103,6 +107,28 @@ const SEISMIC_BREAKER_BUTTONS = Object.freeze({
             onChange: ({ machine }) => {
                 machine?.setProgress?.(0, SEISMIC_BREAKER.slots.progress)
             }
+        }),
+        Object.freeze({
+            id: 'activation_toggle',
+            property: 'enabled',
+            slot: SEISMIC_BREAKER.slots.activationButton,
+            type: 'toggle',
+            defaultValue: true,
+            activeValue: true,
+            inactiveValue: false,
+            iconItemId: 'utilitycraft:switch_button',
+            inactiveIconItemId: 'utilitycraft:switch_button',
+            activeIconItemId: 'utilitycraft:switch_button_pressed',
+            getTitle: ({ state }) => `Active: ${state.enabled ? 'On' : 'Off'}`,
+            getLore: ({ state }) => buildActivationButtonLore(state.enabled === true),
+            pressHint: 'Take the switch to toggle automatic breaking.',
+            showStatusInLore: false,
+            showValueInLore: false,
+            showPressHintInLore: false,
+            stateColorInTitle: false,
+            onChange: ({ machine }) => {
+                machine?.setProgress?.(0, SEISMIC_BREAKER.slots.progress)
+            }
         })
     ])
 })
@@ -137,7 +163,13 @@ DoriosAPI.register.blockComponent('seismic_breaker', {
 
         const mode = getMode(panelState.mode)
         const precision = panelState.precision === true
-        const operation = buildOperation(machine, mode, precision, settings)
+        const enabled = panelState.enabled !== false
+        const operation = buildOperation(machine, mode, precision, settings, enabled)
+
+        if (!enabled) {
+            showMachineWarning(machine, 'Disabled', operation, false, shouldRefreshUi)
+            return
+        }
 
         if (!operation.anchorBlock) {
             showMachineWarning(machine, 'No Target', operation, true, shouldRefreshUi)
@@ -200,7 +232,7 @@ function getMode(modeId) {
     return Object.values(SEISMIC_BREAKER.modes).find(mode => mode.id === modeId) ?? SEISMIC_BREAKER.modes.single
 }
 
-function buildOperation(machine, mode, precision, settings) {
+function buildOperation(machine, mode, precision, settings, enabled = true) {
     const anchorBlock = machine.block.getFacingBlock?.() ?? null
     const targetPositions = anchorBlock
         ? buildTargetPositions(machine.block, anchorBlock.location, mode)
@@ -213,11 +245,13 @@ function buildOperation(machine, mode, precision, settings) {
     const firstBreakable = breakableTargets[0] ?? null
     const baseEnergyCost = Number(settings?.machine?.energy_cost ?? SEISMIC_BREAKER.defaults.energyCost)
     const energyCost = Math.max(1, baseEnergyCost * Math.max(1, breakableTargets.length))
+    const storageTarget = resolveAboveContainer(machine)
 
     return {
         machine,
         mode,
         precision,
+        enabled,
         anchorBlock,
         targetPositions,
         targetBlocks,
@@ -226,6 +260,7 @@ function buildOperation(machine, mode, precision, settings) {
         blockedCount: Math.max(0, targetBlocks.length - breakableTargets.length),
         energyCost,
         firstBreakable,
+        storageTarget,
         lineLength: mode.id === SEISMIC_BREAKER.modes.line.id
             ? Number(mode.length ?? SEISMIC_BREAKER.defaults.lineLength)
             : 0
@@ -365,7 +400,7 @@ function executeOperation(operation) {
 
     for (const block of operation.breakableTargets) {
         const result = operation.precision
-            ? breakBlockPrecisely(operation.machine, block)
+            ? breakBlockPrecisely(operation, block)
             : destroyBlockWithDrops(block.dimension, block.location)
 
         if (result?.broken === true || result === true) {
@@ -380,7 +415,7 @@ function executeOperation(operation) {
         }
     }
 
-    const collectedDrops = collectDropsToMachine(operation)
+    const collectedDrops = collectDropsToStorage(operation)
     collectedCount += collectedDrops.collectedCount
     overflowCount += collectedDrops.overflowCount
 
@@ -393,7 +428,7 @@ function executeOperation(operation) {
     }
 }
 
-function breakBlockPrecisely(machine, block) {
+function breakBlockPrecisely(operation, block) {
     if (!block || !isBreakableBlock(block)) {
         return { broken: false, preserved: false, usedFallback: false, collectedCount: 0, overflowCount: 0 }
     }
@@ -411,7 +446,7 @@ function breakBlockPrecisely(machine, block) {
 
     try {
         block.setType('minecraft:air')
-        const stored = storeDropsInMachine(machine, drops, block.location)
+        const stored = storeDrops(operation, drops, block.location)
         return {
             broken: true,
             preserved: true,
@@ -469,27 +504,23 @@ function destroyBlockWithDrops(dimension, loc) {
     }
 }
 
-function storeDropsInMachine(machine, drops, overflowLoc) {
+function storeDrops(operation, drops, overflowLoc) {
     let collectedCount = 0
     let overflowCount = 0
 
     for (const stack of drops) {
-        if (!stack?.typeId || !Number.isFinite(stack.amount) || stack.amount <= 0) continue
-
-        const insertedAmount = insertItemIntoSlots(machine?.inv, stack, SEISMIC_BREAKER.slots.storage)
-        collectedCount += insertedAmount
-
-        const overflowAmount = Math.max(0, stack.amount - insertedAmount)
-        if (overflowAmount > 0) {
-            overflowCount += overflowAmount
-            machine?.dim?.spawnItem?.(cloneItemStack(stack, overflowAmount), toSpawnPos(overflowLoc ?? machine?.block?.location))
-        }
+        const stored = storeStackWithFallback(operation, stack, overflowLoc, {
+            spawnOverflow: true,
+            spawnWithoutInsertion: true
+        })
+        collectedCount += stored.insertedAmount
+        overflowCount += stored.overflowAmount
     }
 
     return { collectedCount, overflowCount }
 }
 
-function collectDropsToMachine(operation) {
+function collectDropsToStorage(operation) {
     const bounds = buildCollectionBounds(operation?.targetPositions)
     if (!bounds || !operation?.machine?.dim) {
         return { collectedCount: 0, overflowCount: 0 }
@@ -510,22 +541,67 @@ function collectDropsToMachine(operation) {
         const stack = itemEntity.getComponent('minecraft:item')?.itemStack
         if (!stack?.typeId || !Number.isFinite(stack.amount) || stack.amount <= 0) continue
 
-        const insertedAmount = insertItemIntoSlots(operation.machine.inv, stack, SEISMIC_BREAKER.slots.storage)
-        if (insertedAmount <= 0) continue
-
-        const overflowAmount = Math.max(0, stack.amount - insertedAmount)
         const entityLoc = itemEntity.location
+        const stored = storeStackWithFallback(operation, stack, entityLoc, {
+            spawnOverflow: true,
+            spawnWithoutInsertion: false
+        })
+        if (stored.insertedAmount <= 0) continue
+
         itemEntity.remove()
 
-        if (overflowAmount > 0) {
-            overflowCount += overflowAmount
-            operation.machine.dim.spawnItem(cloneItemStack(stack, overflowAmount), entityLoc)
-        }
-
-        collectedCount += insertedAmount
+        overflowCount += stored.overflowAmount
+        collectedCount += stored.insertedAmount
     }
 
     return { collectedCount, overflowCount }
+}
+
+function storeStackWithFallback(operation, stack, overflowLoc, options = {}) {
+    if (!stack?.typeId || !Number.isFinite(stack.amount) || stack.amount <= 0) {
+        return { insertedAmount: 0, overflowAmount: 0 }
+    }
+
+    let remaining = stack.amount
+    let insertedAmount = 0
+
+    const targetInserted = insertItemIntoTarget(operation?.storageTarget, stack)
+    insertedAmount += targetInserted
+    remaining -= targetInserted
+
+    if (remaining > 0) {
+        const internalInserted = insertItemIntoSlots(
+            operation?.machine?.inv,
+            cloneItemStack(stack, remaining),
+            SEISMIC_BREAKER.slots.storage
+        )
+        insertedAmount += internalInserted
+        remaining -= internalInserted
+    }
+
+    const shouldSpawnOverflow = options.spawnOverflow === true
+        && (options.spawnWithoutInsertion === true || insertedAmount > 0)
+
+    if (remaining > 0 && shouldSpawnOverflow) {
+        operation?.machine?.dim?.spawnItem?.(
+            cloneItemStack(stack, remaining),
+            toSpawnPos(overflowLoc ?? operation?.machine?.block?.location)
+        )
+    }
+
+    return {
+        insertedAmount,
+        overflowAmount: remaining > 0 && shouldSpawnOverflow ? remaining : 0
+    }
+}
+
+function insertItemIntoTarget(targetData, stack) {
+    if (!targetData?.container || !stack?.typeId) return 0
+
+    const targetSlots = getContainerTransferSlots(targetData, 'input')
+    if (!targetSlots.length) return 0
+
+    return insertItemIntoSlots(targetData.container, stack, targetSlots)
 }
 
 function buildCollectionBounds(positions = []) {
@@ -675,6 +751,13 @@ function buildPrecisionButtonLore(active) {
     ]
 }
 
+function buildActivationButtonLore(active) {
+    return [
+        `§7Status: ${active ? '§aEnabled' : '§7Disabled'}`,
+        '§7Toggles automatic seismic breaking.'
+    ]
+}
+
 function buildMachineLore(operation = {}) {
     const machine = operation.machine
     const lines = []
@@ -693,6 +776,11 @@ function buildMachineLore(operation = {}) {
             label: 'Precision',
             value: operation.precision ? 'Enabled' : 'Disabled',
             valueColor: operation.precision ? '§b' : '§7'
+        },
+        {
+            label: 'Activation',
+            value: operation.enabled === false ? 'Disabled' : 'Enabled',
+            valueColor: operation.enabled === false ? '§7' : '§a'
         }
     ]
     if (overclockLine) machineInfo.push(overclockLine)
@@ -742,6 +830,15 @@ function buildMachineLore(operation = {}) {
         appendLoreSection(lines, 'Target Information', targetInfo)
     }
 
+    appendLoreSection(lines, 'Storage Routing', [
+        {
+            label: 'Output',
+            value: operation.storageTarget?.block?.typeId
+                ? formatItemName(operation.storageTarget.block.typeId)
+                : 'Internal Buffer'
+        }
+    ])
+
     const lastAction = []
     if (operation.result?.preservedCount > 0) {
         lastAction.push(`§7Precision Drops: §f${operation.result.preservedCount}`)
@@ -766,7 +863,8 @@ function buildMachineLore(operation = {}) {
 function buildFooterLines(operation = {}) {
     const lines = [
         `Mode: ${operation.mode?.title ?? '1x1'}`,
-        `Precision: ${operation.precision ? 'On' : 'Off'}`
+        `Precision: ${operation.precision ? 'On' : 'Off'}`,
+        `Active: ${operation.enabled === false ? 'Off' : 'On'}`
     ]
 
     if (operation.mode?.id === SEISMIC_BREAKER.modes.line.id) {

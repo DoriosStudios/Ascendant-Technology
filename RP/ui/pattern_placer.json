@@ -73,6 +73,18 @@
                 }
             },
             {
+                "activation_button@uc.machine_button": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [18, 30],
+                    "$index": 12,
+                    "$button_size": [16, 16],
+                    "$default_texture": "textures/ui/cells/inverted_green_cell_image",
+                    "$hover_texture": "textures/ui/cells/green_cell_image",
+                    "$pressed_texture": "textures/ui/cells/green_cell_image"
+                }
+            },
+            {
                 "input_slot_1@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",

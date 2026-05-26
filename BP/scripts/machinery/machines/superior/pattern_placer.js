@@ -1,4 +1,4 @@
-import { BlockPermutation } from '@minecraft/server'
+import { BlockPermutation, ItemStack } from '@minecraft/server'
 import {
     Machine,
     buildOverclockLoreLine,
@@ -8,6 +8,8 @@ import {
 import {
     formatEnergyCost,
     formatMachineEnergyBuffer,
+    getContainerTransferSlots,
+    resolveAboveContainer,
     shouldRefreshSuperiorUi,
     syncSuperiorButtonPanel
 } from './utils.js'
@@ -18,9 +20,10 @@ const PATTERN_PLACER = Object.freeze({
         status: 1,
         progress: 2,
         modeButton: 3,
+        activationButton: 12,
         inputs: Object.freeze([4, 5, 6, 7]),
         upgrades: Object.freeze([9, 10, 11]),
-        hidden: Object.freeze([12])
+        hidden: Object.freeze([])
     }),
     defaults: Object.freeze({
         energyCost: 200,
@@ -57,7 +60,8 @@ const PATTERN_PLACER_BUTTONS = Object.freeze({
     cooldownTicks: 6,
     defaultIconItemId: 'utilitycraft:switch_button',
     defaults: Object.freeze({
-        mode: PATTERN_PLACER.modes.single.id
+        mode: PATTERN_PLACER.modes.single.id,
+        enabled: true
     }),
     buttons: Object.freeze([
         Object.freeze({
@@ -75,6 +79,28 @@ const PATTERN_PLACER_BUTTONS = Object.freeze({
             getTitle: ({ state }) => `Mode: ${getMode(state.mode).title}`,
             getLore: ({ state }) => buildModeButtonLore(getMode(state.mode)),
             pressHint: 'Take the switch to cycle the placement mode.',
+            showStatusInLore: false,
+            showValueInLore: false,
+            showPressHintInLore: false,
+            stateColorInTitle: false,
+            onChange: ({ machine }) => {
+                machine?.setProgress?.(0, PATTERN_PLACER.slots.progress)
+            }
+        }),
+        Object.freeze({
+            id: 'activation_toggle',
+            property: 'enabled',
+            slot: PATTERN_PLACER.slots.activationButton,
+            type: 'toggle',
+            defaultValue: true,
+            activeValue: true,
+            inactiveValue: false,
+            iconItemId: 'utilitycraft:switch_button',
+            inactiveIconItemId: 'utilitycraft:switch_button',
+            activeIconItemId: 'utilitycraft:switch_button_pressed',
+            getTitle: ({ state }) => `Active: ${state.enabled ? 'On' : 'Off'}`,
+            getLore: ({ state }) => buildActivationButtonLore(state.enabled === true),
+            pressHint: 'Take the switch to toggle automatic placement.',
             showStatusInLore: false,
             showValueInLore: false,
             showPressHintInLore: false,
@@ -115,7 +141,16 @@ DoriosAPI.register.blockComponent('pattern_placer', {
         })
 
         const mode = getMode(panelState.mode)
-        const operation = buildOperation(machine, mode, settings)
+        const enabled = panelState.enabled !== false
+        const supplyResult = enabled
+            ? pullInputBlocksFromAbove(machine)
+            : { movedCount: 0, source: null }
+        const operation = buildOperation(machine, mode, settings, supplyResult, enabled)
+
+        if (!enabled) {
+            showMachineWarning(machine, 'Disabled', operation, false, shouldRefreshUi)
+            return
+        }
 
         if (!operation.anchorBlock) {
             showMachineWarning(machine, 'No Target', operation, true, shouldRefreshUi)
@@ -189,7 +224,7 @@ function getMode(modeId) {
     return Object.values(PATTERN_PLACER.modes).find(mode => mode.id === modeId) ?? PATTERN_PLACER.modes.single
 }
 
-function buildOperation(machine, mode, settings) {
+function buildOperation(machine, mode, settings, supplyResult = {}, enabled = true) {
     const inv = machine.inv
     const anchorBlock = machine.block.getFacingBlock?.() ?? null
     const targetPositions = anchorBlock
@@ -214,10 +249,12 @@ function buildOperation(machine, mode, settings) {
     const placeCount = Math.min(availableInputCount, placeableTargets.length)
     const baseEnergyCost = Number(settings?.machine?.energy_cost ?? PATTERN_PLACER.defaults.energyCost)
     const energyCost = Math.max(1, baseEnergyCost * Math.max(1, placeCount))
+    const normalizedSupply = supplyResult && typeof supplyResult === 'object' ? supplyResult : {}
 
     return {
         machine,
         mode,
+        enabled,
         anchorBlock,
         targetPositions,
         targetBlocks,
@@ -231,6 +268,8 @@ function buildOperation(machine, mode, settings) {
         blockedCount: Math.max(0, targetBlocks.length - placeableTargets.length),
         baseEnergyCost,
         energyCost,
+        supplySource: normalizedSupply.source ?? null,
+        supplyPulledCount: Math.max(0, Number(normalizedSupply.movedCount ?? 0)),
         lineLength: mode.id === PATTERN_PLACER.modes.line.id
             ? Number(mode.length ?? PATTERN_PLACER.defaults.lineLength)
             : 0
@@ -387,6 +426,89 @@ function getInputEntries(container, slots = []) {
     return entries
 }
 
+function pullInputBlocksFromAbove(machine) {
+    const source = resolveAboveContainer(machine, {
+        requireMachineFacing: true
+    })
+    if (!source?.container || !machine?.inv) {
+        return { movedCount: 0, source: null }
+    }
+
+    const sourceSlots = getContainerTransferSlots(source, 'output')
+    let movedCount = 0
+
+    for (const sourceSlot of sourceSlots) {
+        movedCount += transferBlockInputToSlots(source.container, sourceSlot, machine.inv, PATTERN_PLACER.slots.inputs)
+    }
+
+    return {
+        movedCount,
+        source
+    }
+}
+
+function transferBlockInputToSlots(sourceContainer, sourceSlot, targetContainer, targetSlots) {
+    if (!sourceContainer || !targetContainer || !Array.isArray(targetSlots) || targetSlots.length === 0) return 0
+
+    const sourceItem = sourceContainer.getItem(sourceSlot)
+    if (!sourceItem?.typeId || resolveInputPermutation(sourceItem) == null) return 0
+
+    const initialAmount = Number(sourceItem.amount) || 0
+    let remaining = Number(sourceItem.amount) || 0
+    if (remaining <= 0) return 0
+
+    for (const slot of targetSlots) {
+        const targetItem = targetContainer.getItem(slot)
+        if (!areEquivalentStacks(targetItem, sourceItem)) continue
+
+        const space = Math.max(0, (targetItem.maxAmount ?? 64) - targetItem.amount)
+        if (space <= 0) continue
+
+        const moved = Math.min(space, remaining)
+        targetItem.amount += moved
+        targetContainer.setItem(slot, targetItem)
+        remaining -= moved
+
+        if (remaining <= 0) break
+    }
+
+    for (const slot of targetSlots) {
+        if (remaining <= 0) break
+
+        const targetItem = targetContainer.getItem(slot)
+        if (targetItem) continue
+
+        const moved = Math.min(sourceItem.maxAmount ?? 64, remaining)
+        targetContainer.setItem(slot, cloneItemStack(sourceItem, moved))
+        remaining -= moved
+    }
+
+    if (remaining <= 0) {
+        sourceContainer.setItem(sourceSlot, undefined)
+    } else if (remaining !== sourceItem.amount) {
+        sourceItem.amount = remaining
+        sourceContainer.setItem(sourceSlot, sourceItem)
+    }
+
+    return Math.max(0, initialAmount - remaining)
+}
+
+function cloneItemStack(stack, amount = stack?.amount ?? 1) {
+    if (typeof stack?.clone === 'function') {
+        const clone = stack.clone()
+        clone.amount = amount
+        return clone
+    }
+
+    const clone = new ItemStack(stack.typeId, amount)
+    if (stack?.nameTag) clone.nameTag = stack.nameTag
+    const lore = typeof stack?.getLore === 'function' ? stack.getLore() : []
+    if (Array.isArray(lore) && lore.length && typeof clone.setLore === 'function') {
+        clone.setLore(lore)
+    }
+    return clone
+}
+
 function consumeInputItems(container, slots, referenceStack, amount) {
     if (!container || !Array.isArray(slots) || !referenceStack?.typeId || amount <= 0) return 0
 
@@ -396,13 +518,15 @@ function consumeInputItems(container, slots, referenceStack, amount) {
         const current = container.getItem(slot)
         if (!areEquivalentStacks(current, referenceStack)) continue
 
-        const amountToConsume = Math.min(current.amount, remaining)
+        const currentAmount = Number(current.amount) || 0
+        const amountToConsume = Math.min(currentAmount, remaining)
         if (amountToConsume <= 0) continue
 
-        current.amount -= amountToConsume
-        if (current.amount <= 0) {
+        const nextAmount = currentAmount - amountToConsume
+        if (nextAmount <= 0) {
             container.setItem(slot, undefined)
         } else {
+            current.amount = nextAmount
             container.setItem(slot, current)
         }
 
@@ -466,6 +590,13 @@ function buildModeButtonLore(mode) {
     return lines
 }
 
+function buildActivationButtonLore(active) {
+    return [
+        `§7Status: ${active ? '§aEnabled' : '§7Disabled'}`,
+        '§7Toggles automatic pattern placement.'
+    ]
+}
+
 function buildMachineLore(operation = {}) {
     const machine = operation.machine
     const lines = []
@@ -479,6 +610,11 @@ function buildMachineLore(operation = {}) {
         {
             label: 'Mode',
             value: operation.mode?.title ?? '1x1'
+        },
+        {
+            label: 'Activation',
+            value: operation.enabled === false ? 'Disabled' : 'Enabled',
+            valueColor: operation.enabled === false ? '§7' : '§a'
         }
     ]
     if (overclockLine) machineInfo.push(overclockLine)
@@ -537,11 +673,21 @@ function buildMachineLore(operation = {}) {
         })
     }
 
+    if (operation.supplySource?.block?.typeId) {
+        targetInfo.push({
+            label: 'Supply',
+            value: formatItemName(operation.supplySource.block.typeId)
+        })
+    }
+
     if (targetInfo.length > 0) {
         appendLoreSection(lines, 'Target Information', targetInfo)
     }
 
     const lastAction = []
+    if (operation.supplyPulledCount > 0) {
+        lastAction.push(`§7Pulled Above: §f${operation.supplyPulledCount} block(s)`)
+    }
     if (operation.result?.failedCount > 0) {
         lastAction.push(`§6Skipped Positions: §f${operation.result.failedCount}`)
     }
@@ -558,7 +704,8 @@ function buildMachineLore(operation = {}) {
 
 function buildFooterLines(operation = {}) {
     const lines = [
-        `Mode: ${operation.mode?.title ?? '1x1'}`
+        `Mode: ${operation.mode?.title ?? '1x1'}`,
+        `Active: ${operation.enabled === false ? 'Off' : 'On'}`
     ]
 
     if (operation.mode?.id === PATTERN_PLACER.modes.line.id) {

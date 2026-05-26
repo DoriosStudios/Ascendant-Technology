@@ -1,5 +1,6 @@
 import { ItemStack, system } from "@minecraft/server";
 import { LABEL_CHAR_LIMIT } from "../constants.js";
+import { shouldRefreshEntityUi } from "../machinery/ui_refresh.js";
 
 export const BUTTON_PANEL_DEFAULTS = Object.freeze({
 	namespace: "ascendant:panel",
@@ -260,7 +261,7 @@ export class ButtonManager {
 
 		for (const { slot } of buttons) {
 			const currentItem = readSlotItem(container, slot);
-			if (currentItem?.typeId === ButtonItemStack.typeId) continue;
+			if (currentItem) continue;
 			container.setItem(slot, ButtonItemStack);
 		}
 	}
@@ -637,19 +638,45 @@ function createItemStackSafe(itemTypeId) {
 	}
 }
 
-function resolveRenderItemTypeId(panel, button) {
-	if (ButtonItemStack?.typeId) return ButtonItemStack.typeId;
+function resolveRenderItemTypeId(panel, button, context) {
+	const callbackValue = resolveCallbackValue(button?.getIconItemId, undefined, context);
+	if (typeof callbackValue === "string" && callbackValue.length > 0) {
+		return callbackValue;
+	}
+
+	if (context?.active === true && typeof button?.activeIconItemId === "string" && button.activeIconItemId.length > 0) {
+		return button.activeIconItemId;
+	}
+
+	if (context?.active === false && typeof button?.inactiveIconItemId === "string" && button.inactiveIconItemId.length > 0) {
+		return button.inactiveIconItemId;
+	}
 
 	if (typeof button?.iconItemId === "string" && button.iconItemId.length > 0) {
 		return button.iconItemId;
 	}
 
-	return panel.defaultIconItemId;
+	if (typeof panel?.defaultIconItemId === "string" && panel.defaultIconItemId.length > 0) {
+		return panel.defaultIconItemId;
+	}
+
+	return ButtonItemStack?.typeId ?? BUTTON_PANEL_DEFAULTS.defaultIconItemId;
 }
 
 function createButtonVisualItem(panel, button, context) {
-	const itemTypeId = resolveRenderItemTypeId(panel, button);
-	const item = createItemStackSafe(itemTypeId);
+	const candidateTypeIds = [
+		resolveRenderItemTypeId(panel, button, context),
+		button?.iconItemId,
+		panel?.defaultIconItemId,
+		ButtonItemStack?.typeId,
+		BUTTON_PANEL_DEFAULTS.defaultIconItemId
+	].filter((value, index, array) => typeof value === "string" && value.length > 0 && array.indexOf(value) === index);
+
+	let item = null;
+	for (const itemTypeId of candidateTypeIds) {
+		item = createItemStackSafe(itemTypeId);
+		if (item) break;
+	}
 	if (!item) return null;
 
 	const title = resolveButtonTitle(button, context);
@@ -882,7 +909,15 @@ export function syncButtonPanel(machine, panelDefinition, options = {}) {
 	}
 
 	const state = getButtonPanelState(machine, panel);
-	if (options.render !== false) {
+	const shouldRender = options.render === undefined
+		? shouldRefreshEntityUi(
+			machine.entity,
+			`button_panel:${panel.namespace}:${panel.id}`,
+			options.interval,
+			options.forceRender === true
+		)
+		: options.render !== false;
+	if (shouldRender) {
 		renderButtonPanel(machine, panel, {
 			...options,
 			state

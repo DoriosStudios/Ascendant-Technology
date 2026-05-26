@@ -25,14 +25,11 @@
                     "energy_cost": 200,
                     "rate_speed_base": 1600,
                     "upgrades": [9, 10, 11],
-                    "hidden_slots": [12]
+                    "hidden_slots": []
                 }
             },
             "utilitycraft:special_container": {
-                "Mode Button": 3,
-                "Input Slots": [4, 5, 6, 7],
-                "Upgrade Slots": [9, 10, 11],
-                "Hidden Slots": [12]
+                "Input Slots": [4, 5, 6, 7]
             },
             "minecraft:geometry": "geometry.utilitycraft_block_2",
             "minecraft:material_instances": {

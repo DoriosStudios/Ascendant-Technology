@@ -116,10 +116,46 @@
 			"textures": "textures/blocks/machines/superior/verdant_cultivator_on"
 		},
 		"utilitycraft_seismic_breaker_off": {
-			"textures": "textures/blocks/machines/superior/seismic_breaker"
+			"textures": "textures/blocks/machines/superior/legacy_atlases/seismic_breaker"
+		},
+		"utilitycraft_seismic_breaker_off_up": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/off/up"
+		},
+		"utilitycraft_seismic_breaker_off_down": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/off/down"
+		},
+		"utilitycraft_seismic_breaker_off_north": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/off/north"
+		},
+		"utilitycraft_seismic_breaker_off_south": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/off/south"
+		},
+		"utilitycraft_seismic_breaker_off_east": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/off/east"
+		},
+		"utilitycraft_seismic_breaker_off_west": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/off/west"
 		},
 		"utilitycraft_seismic_breaker_on": {
-			"textures": "textures/blocks/machines/superior/seismic_breaker_on"
+			"textures": "textures/blocks/machines/superior/legacy_atlases/seismic_breaker_on"
+		},
+		"utilitycraft_seismic_breaker_on_up": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/on/up"
+		},
+		"utilitycraft_seismic_breaker_on_down": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/on/down"
+		},
+		"utilitycraft_seismic_breaker_on_north": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/on/north"
+		},
+		"utilitycraft_seismic_breaker_on_south": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/on/south"
+		},
+		"utilitycraft_seismic_breaker_on_east": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/on/east"
+		},
+		"utilitycraft_seismic_breaker_on_west": {
+			"textures": "textures/blocks/machines/superior/faces/seismic_breaker/on/west"
 		},
 		"utilitycraft_pattern_placer_off": {
 			"textures": "textures/blocks/machines/superior/pattern_placer_off"

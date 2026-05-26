@@ -184,25 +184,12 @@ export function getSuperiorUiRefreshSpeed() {
  * @returns {boolean}
  */
 export function shouldRefreshSuperiorUi(machineOrEntity, channel = 'ui', force = false) {
-    if (force === true) return true
-
-    const entityId = machineOrEntity?.entity?.id ?? machineOrEntity?.id
-    if (!entityId) return true
-
-    const currentTick = Math.max(0, toInteger(system.currentTick, 0))
-    const refreshSpeed = getSuperiorUiRefreshSpeed()
-    const normalizedChannel = typeof channel === 'string' && channel.length > 0
-        ? channel
-        : 'ui'
-    const cacheKey = `${entityId}:${normalizedChannel}`
-    const lastTick = superiorUiRefreshCache.get(cacheKey)
-
-    if (typeof lastTick !== 'number' || currentTick - lastTick >= refreshSpeed) {
-        superiorUiRefreshCache.set(cacheKey, currentTick)
-        return true
-    }
-
-    return false
+    return shouldRefreshEntityUi(
+        machineOrEntity?.entity ?? machineOrEntity,
+        channel,
+        getSuperiorUiRefreshSpeed(),
+        force === true
+    )
 }
 
 /**
@@ -224,4 +211,126 @@ export function syncSuperiorButtonPanel(machine, panelDefinition, options = {}) 
         ...options,
         render: shouldRender
     })
+}
+
+function areLocationsEqual(left, right) {
+    if (!left || !right) return false
+
+    return Math.floor(left.x) === Math.floor(right.x)
+        && Math.floor(left.y) === Math.floor(right.y)
+        && Math.floor(left.z) === Math.floor(right.z)
+}
+
+/**
+ * Returns the best available reference object for a resolved container target.
+ *
+ * @param {{ entity?: unknown, block?: unknown, container?: unknown } | null | undefined} containerData
+ * @returns {unknown}
+ */
+export function getContainerAccessReference(containerData) {
+    return containerData?.reference
+        ?? containerData?.entity
+        ?? containerData?.block
+        ?? containerData?.container
+        ?? null
+}
+
+/**
+ * Checks whether a block is facing a specific world position.
+ *
+ * @param {{ getFacingBlock?: () => { location?: { x: number, y: number, z: number } } | null }} block
+ * @param {{ x: number, y: number, z: number } | null | undefined} targetLocation
+ * @returns {boolean}
+ */
+export function isBlockFacingLocation(block, targetLocation) {
+    const facingBlock = block?.getFacingBlock?.()
+    return areLocationsEqual(facingBlock?.location, targetLocation)
+}
+
+/**
+ * Resolves a valid inventory target directly above a machine or block.
+ *
+ * When `requireMachineFacing` is enabled, machine-like entities above the block
+ * must face the queried block location to be considered valid.
+ *
+ * @param {{ block?: import('@minecraft/server').Block, dim?: import('@minecraft/server').Dimension } | import('@minecraft/server').Block | null | undefined} machineOrBlock
+ * @param {{ requireMachineFacing?: boolean }} [options={}]
+ * @returns {{ container: import('@minecraft/server').Container, block?: import('@minecraft/server').Block, entity?: import('@minecraft/server').Entity, reference?: unknown, location?: { x: number, y: number, z: number } } | null}
+ */
+export function resolveAboveContainer(machineOrBlock, options = {}) {
+    const block = machineOrBlock?.block ?? machineOrBlock
+    const dim = machineOrBlock?.dim ?? block?.dimension
+    if (!block?.location || !dim) return null
+
+    const location = {
+        x: block.location.x,
+        y: block.location.y + 1,
+        z: block.location.z
+    }
+
+    const containerData = DoriosAPI.containers.getContainerAt(location, dim)
+    if (!containerData?.container) return null
+
+    const reference = getContainerAccessReference(containerData)
+    if (!reference) return null
+
+    if (options.requireMachineFacing === true && containerData.entity) {
+        const tf = containerData.entity.getComponent?.('minecraft:type_family')
+        const isMachineLike = tf?.hasTypeFamily?.('dorios:machine') === true
+            || tf?.hasTypeFamily?.('dorios:generator') === true
+
+        if (isMachineLike && !isBlockFacingLocation(containerData.block, block.location)) {
+            return null
+        }
+    }
+
+    return {
+        ...containerData,
+        reference,
+        location
+    }
+}
+
+/**
+ * Resolves the accessible transfer slots for a container target.
+ *
+ * Input mode respects machine blocked slots, while output mode follows the
+ * target's declared output range when available.
+ *
+ * @param {{ container?: import('@minecraft/server').Container, reference?: unknown, entity?: unknown, block?: unknown } | null | undefined} containerData
+ * @param {'input' | 'output'} [mode='input']
+ * @returns {number[]}
+ */
+export function getContainerTransferSlots(containerData, mode = 'input') {
+    const reference = getContainerAccessReference(containerData)
+    const container = containerData?.container
+        ?? reference?.getComponent?.('minecraft:inventory')?.container
+        ?? (reference?.size ? reference : null)
+
+    if (!container) return []
+
+    if (reference && !reference.size) {
+        const [start, end] = mode === 'output'
+            ? DoriosAPI.containers.getAllowedOutputRange(reference)
+            : DoriosAPI.containers.getAllowedInputRange(reference)
+
+        const blockedSlots = mode === 'input'
+            ? DoriosAPI.containers.getMachineBlockedSlots(reference)
+            : new Set()
+
+        const slots = []
+        for (let slot = start; slot <= end; slot++) {
+            if (slot < 0 || slot >= container.size) continue
+            if (blockedSlots.has(slot)) continue
+            slots.push(slot)
+        }
+
+        return slots
+    }
+
+    const slots = []
+    for (let slot = 0; slot < container.size; slot++) {
+        slots.push(slot)
+    }
+    return slots
 }

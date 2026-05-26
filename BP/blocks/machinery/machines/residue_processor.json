@@ -37,10 +37,30 @@
 			"utilitycraft:machine_recipes": {
 				"type": "residue_processor"
 			},
-			"minecraft:geometry": "geometry.utilitycraft_block_2",
+			"minecraft:geometry": "minecraft:geometry.full_block",
 			"minecraft:material_instances": {
-				"*": {
-					"texture": "utilitycraft_residue_processor_off",
+				"up": {
+					"texture": "utilitycraft_residue_processor_off_up",
+					"render_method": "alpha_test"
+				},
+				"down": {
+					"texture": "utilitycraft_residue_processor_off_down",
+					"render_method": "alpha_test"
+				},
+				"north": {
+					"texture": "utilitycraft_residue_processor_off_north",
+					"render_method": "alpha_test"
+				},
+				"south": {
+					"texture": "utilitycraft_residue_processor_off_south",
+					"render_method": "alpha_test"
+				},
+				"east": {
+					"texture": "utilitycraft_residue_processor_off_east",
+					"render_method": "alpha_test"
+				},
+				"west": {
+					"texture": "utilitycraft_residue_processor_off_west",
 					"render_method": "alpha_test"
 				}
 			},
@@ -57,8 +77,28 @@
 				"condition": "q.block_state('utilitycraft:on') == 1",
 				"components": {
 					"minecraft:material_instances": {
-						"*": {
-							"texture": "utilitycraft_residue_processor_on",
+						"up": {
+							"texture": "utilitycraft_residue_processor_on_up",
+							"render_method": "alpha_test"
+						},
+						"down": {
+							"texture": "utilitycraft_residue_processor_on_down",
+							"render_method": "alpha_test"
+						},
+						"north": {
+							"texture": "utilitycraft_residue_processor_on_north",
+							"render_method": "alpha_test"
+						},
+						"south": {
+							"texture": "utilitycraft_residue_processor_on_south",
+							"render_method": "alpha_test"
+						},
+						"east": {
+							"texture": "utilitycraft_residue_processor_on_east",
+							"render_method": "alpha_test"
+						},
+						"west": {
+							"texture": "utilitycraft_residue_processor_on_west",
 							"render_method": "alpha_test"
 						}
 					},

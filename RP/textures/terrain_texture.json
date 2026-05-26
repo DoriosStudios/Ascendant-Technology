@@ -176,10 +176,46 @@
 			"textures": "textures/blocks/machines/duplicator_on"
 		},
 		"utilitycraft_cryo_chamber_off": {
-			"textures": "textures/blocks/machines/cryo_chamber_off"
+			"textures": "textures/blocks/machines/legacy_atlases/cryo_chamber_off"
+		},
+		"utilitycraft_cryo_chamber_off_up": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/off/up"
+		},
+		"utilitycraft_cryo_chamber_off_down": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/off/down"
+		},
+		"utilitycraft_cryo_chamber_off_north": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/off/north"
+		},
+		"utilitycraft_cryo_chamber_off_south": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/off/south"
+		},
+		"utilitycraft_cryo_chamber_off_east": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/off/east"
+		},
+		"utilitycraft_cryo_chamber_off_west": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/off/west"
 		},
 		"utilitycraft_cryo_chamber_on": {
-			"textures": "textures/blocks/machines/cryo_chamber_on"
+			"textures": "textures/blocks/machines/legacy_atlases/cryo_chamber_on"
+		},
+		"utilitycraft_cryo_chamber_on_up": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/on/up"
+		},
+		"utilitycraft_cryo_chamber_on_down": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/on/down"
+		},
+		"utilitycraft_cryo_chamber_on_north": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/on/north"
+		},
+		"utilitycraft_cryo_chamber_on_south": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/on/south"
+		},
+		"utilitycraft_cryo_chamber_on_east": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/on/east"
+		},
+		"utilitycraft_cryo_chamber_on_west": {
+			"textures": "textures/blocks/machines/faces/cryo_chamber/on/west"
 		},
 		"utilitycraft_enchantment_station": {
 			"textures": "textures/blocks/machines/enchantment_station"
@@ -197,10 +233,46 @@
 			"textures": "textures/blocks/machines/liquifier_on"
 		},
 		"utilitycraft_residue_processor_off": {
-			"textures": "textures/blocks/machines/residue_processor_off"
+			"textures": "textures/blocks/machines/legacy_atlases/residue_processor_off"
+		},
+		"utilitycraft_residue_processor_off_up": {
+			"textures": "textures/blocks/machines/faces/residue_processor/off/up"
+		},
+		"utilitycraft_residue_processor_off_down": {
+			"textures": "textures/blocks/machines/faces/residue_processor/off/down"
+		},
+		"utilitycraft_residue_processor_off_north": {
+			"textures": "textures/blocks/machines/faces/residue_processor/off/north"
+		},
+		"utilitycraft_residue_processor_off_south": {
+			"textures": "textures/blocks/machines/faces/residue_processor/off/south"
+		},
+		"utilitycraft_residue_processor_off_east": {
+			"textures": "textures/blocks/machines/faces/residue_processor/off/east"
+		},
+		"utilitycraft_residue_processor_off_west": {
+			"textures": "textures/blocks/machines/faces/residue_processor/off/west"
 		},
 		"utilitycraft_residue_processor_on": {
-			"textures": "textures/blocks/machines/residue_processor_on"
+			"textures": "textures/blocks/machines/legacy_atlases/residue_processor_on"
+		},
+		"utilitycraft_residue_processor_on_up": {
+			"textures": "textures/blocks/machines/faces/residue_processor/on/up"
+		},
+		"utilitycraft_residue_processor_on_down": {
+			"textures": "textures/blocks/machines/faces/residue_processor/on/down"
+		},
+		"utilitycraft_residue_processor_on_north": {
+			"textures": "textures/blocks/machines/faces/residue_processor/on/north"
+		},
+		"utilitycraft_residue_processor_on_south": {
+			"textures": "textures/blocks/machines/faces/residue_processor/on/south"
+		},
+		"utilitycraft_residue_processor_on_east": {
+			"textures": "textures/blocks/machines/faces/residue_processor/on/east"
+		},
+		"utilitycraft_residue_processor_on_west": {
+			"textures": "textures/blocks/machines/faces/residue_processor/on/west"
 		},
 		"utilitycraft_laser_barrier_off": {
 			"textures": "textures/blocks/machines/laser_barrier_off"

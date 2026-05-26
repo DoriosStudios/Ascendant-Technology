@@ -41,10 +41,30 @@
                 "Freezer Grid": [6, 7, 8, 15, 16, 17, 24, 25, 26],
                 "Upgrades": [9, 10, 11]
             },
-            "minecraft:geometry": "geometry.utilitycraft_block_2",
+            "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
-                "*": {
-                    "texture": "utilitycraft_cryo_chamber_off",
+                "up": {
+                    "texture": "utilitycraft_cryo_chamber_off_up",
+                    "render_method": "alpha_test"
+                },
+                "down": {
+                    "texture": "utilitycraft_cryo_chamber_off_down",
+                    "render_method": "alpha_test"
+                },
+                "north": {
+                    "texture": "utilitycraft_cryo_chamber_off_north",
+                    "render_method": "alpha_test"
+                },
+                "south": {
+                    "texture": "utilitycraft_cryo_chamber_off_south",
+                    "render_method": "alpha_test"
+                },
+                "east": {
+                    "texture": "utilitycraft_cryo_chamber_off_east",
+                    "render_method": "alpha_test"
+                },
+                "west": {
+                    "texture": "utilitycraft_cryo_chamber_off_west",
                     "render_method": "alpha_test"
                 }
             },
@@ -66,8 +86,28 @@
                 "condition": "q.block_state('utilitycraft:on') == 1",
                 "components": {
                     "minecraft:material_instances": {
-                        "*": {
-                            "texture": "utilitycraft_cryo_chamber_on",
+                        "up": {
+                            "texture": "utilitycraft_cryo_chamber_on_up",
+                            "render_method": "alpha_test"
+                        },
+                        "down": {
+                            "texture": "utilitycraft_cryo_chamber_on_down",
+                            "render_method": "alpha_test"
+                        },
+                        "north": {
+                            "texture": "utilitycraft_cryo_chamber_on_north",
+                            "render_method": "alpha_test"
+                        },
+                        "south": {
+                            "texture": "utilitycraft_cryo_chamber_on_south",
+                            "render_method": "alpha_test"
+                        },
+                        "east": {
+                            "texture": "utilitycraft_cryo_chamber_on_east",
+                            "render_method": "alpha_test"
+                        },
+                        "west": {
+                            "texture": "utilitycraft_cryo_chamber_on_west",
                             "render_method": "alpha_test"
                         }
                     },

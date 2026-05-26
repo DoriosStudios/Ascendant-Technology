@@ -10,9 +10,6 @@ const LIQUIFIER = Object.freeze({
     }),
     defaults: Object.freeze({
         fluidType: 'liquified_aetherium'
-    }),
-    ui: Object.freeze({
-        refreshInterval: 4
     })
 });
 
@@ -98,7 +95,7 @@ DoriosAPI.register.blockComponent('liquifier', {
                 state.tank.amount,
                 state.tank.cap
             ]);
-            if (!shouldRefreshMachineUi(machine.entity, 'liquifier:ui', signature, LIQUIFIER.ui.refreshInterval)) {
+            if (!shouldRefreshMachineUi(machine.entity, 'liquifier:ui', signature)) {
                 return;
             }
 
@@ -190,7 +187,7 @@ DoriosAPI.register.blockComponent('liquifier', {
             state.tank.amount,
             state.tank.cap
         ]);
-        if (shouldRefreshMachineUi(machine.entity, 'liquifier:ui', signature, LIQUIFIER.ui.refreshInterval)) {
+        if (shouldRefreshMachineUi(machine.entity, 'liquifier:ui', signature)) {
             updateHud(machine, recipe, state, queuedCrafts.max);
             refreshDisplay();
         }

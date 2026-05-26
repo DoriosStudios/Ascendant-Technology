@@ -34,7 +34,6 @@ const FLUID_OUTPUT_SLOT = 19;
 const STATUS_SLOT = 1;
 
 const DEFAULT_FLUID_CAP = 64000;
-const UI_REFRESH_INTERVAL = 4;
 
 const FLUID_IO_OPTIONS = Object.freeze({
     interval: 4,
@@ -167,7 +166,7 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
                 state.output.cap
             ]);
 
-            if (!shouldRefreshMachineUi(machine.entity, 'vaporworks:ui', signature, UI_REFRESH_INTERVAL)) {
+            if (!shouldRefreshMachineUi(machine.entity, 'vaporworks:ui', signature)) {
                 return;
             }
 
@@ -261,7 +260,7 @@ DoriosAPI.register.blockComponent('vaporworks_processor', {
             queuedCrafts
         ]);
 
-        if (shouldRefreshMachineUi(machine.entity, 'vaporworks:ui', signature, UI_REFRESH_INTERVAL)) {
+        if (shouldRefreshMachineUi(machine.entity, 'vaporworks:ui', signature)) {
             updateHud(machine, recipe, state, queuedCrafts);
             refreshDisplays();
         }

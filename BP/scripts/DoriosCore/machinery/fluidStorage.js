@@ -1,5 +1,6 @@
 import { world, system, ItemStack } from "@minecraft/server";
 import { loadObjectives } from "../utils/scoreboards.js";
+import { shouldRefreshEntityUi } from "./ui_refresh.js";
 
 // ─── Fluid/Gas registries ────────────────────────────────────────────────────
 const FLUID_STORAGE_EVENTS = Object.freeze({
@@ -1226,9 +1227,10 @@ export class FluidManager {
 
     // ─── Display logic ───────────────────────────────────────────────────────
 
-    display(slot = 4) {
+    display(slot = 4, options = {}) {
         const inv = this.entity.getComponent("minecraft:inventory")?.container;
         if (!inv) return;
+        if (!shouldRefreshEntityUi(this.entity, `fluid:${slot}`, options.interval, options.force === true)) return;
 
         const fluid = this.get();
         const cap = this.getCap();

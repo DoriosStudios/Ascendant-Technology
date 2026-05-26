@@ -2,6 +2,7 @@ import { ItemStack } from "@minecraft/server";
 import { Machine, Energy, FluidManager, buildOverclockLoreLine, applyDynamicRecipeRate, tickGate, formatItemName } from '../../DoriosCore/main.js';
 import { tickCoolingAuras, stopCoolingAuraAt } from '../multi_core.js';
 import { getCryoChamberRecipes, getCryofluidGenerationConfig } from '../../config/recipes/cryo_chamber.js';
+import { shouldRefreshEntityUi } from '../../DoriosCore/machinery/ui_refresh.js';
 
 /**
  * Cryo Chamber - Multi-function thermal stabilizer
@@ -730,6 +731,9 @@ function getModuleEnergyCost(machine, key, fallback = 1) {
 
 function displayModuleProgress(machine, key, slot, indicatorType = CRYO_CHAMBER_DEFAULTS.ui.indicatorType) {
     if (typeof slot !== 'number') return;
+    if (!machine?.entity || !machine?.inv) return;
+    if (!shouldRefreshEntityUi(machine.entity, `progress:${slot}`)) return;
+
     const cost = getModuleEnergyCost(machine, key, 1);
     const progress = getModuleProgress(machine, key);
     const normalized = cost > 0 ? Math.min(16, Math.floor((progress / cost) * 16)) : 0;

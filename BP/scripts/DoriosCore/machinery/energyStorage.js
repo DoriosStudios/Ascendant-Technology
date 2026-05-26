@@ -1,5 +1,6 @@
 import { world, ItemStack, system } from "@minecraft/server";
 import { loadObjectives } from "../utils/scoreboards.js";
+import { shouldRefreshEntityUi } from "./ui_refresh.js";
 
 /**
  * Utility class to manage scoreboard-based energy values for entities.
@@ -277,9 +278,10 @@ export class Energy {
         return amount;
     }
 
-    display(slot = 0) {
+    display(slot = 0, options = {}) {
         const container = this.entity.getComponent("minecraft:inventory")?.container;
         if (!container) return;
+        if (!shouldRefreshEntityUi(this.entity, `energy:${slot}`, options.interval, options.force === true)) return;
 
         const energy = this.get();
         const energyCap = this.getCap();

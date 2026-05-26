@@ -4,6 +4,7 @@ import { Energy } from "./energyStorage.js";
 import { FluidManager, GasManager } from "./fluidStorage.js";
 import { Machine, updatePipes, applyLabelToSlot, applyLabels } from "./machine.js";
 import { getTickSpeed } from "./machine.js";
+import { shouldRefreshEntityUi } from "./ui_refresh.js";
 
 const normalizeRawMessageArg = value => {
     if (value === undefined || value === null) return "";
@@ -285,12 +286,18 @@ export class Generator {
         return this.rate;
     }
 
-    setLabel(content, slot = 1) {
-        applyLabelToSlot(this.inv, slot, content);
+    setLabel(content, slot = 1, options = {}) {
+        applyLabelToSlot(this.inv, slot, content, {
+            entity: this.entity,
+            ...options
+        });
     }
 
-    setLabels(contents, slots) {
-        applyLabels(this.inv, contents, slots);
+    setLabels(contents, slots, options = {}) {
+        applyLabels(this.inv, contents, slots, {
+            entity: this.entity,
+            ...options
+        });
     }
 
     on() {
@@ -301,7 +308,8 @@ export class Generator {
         this.block.setState('utilitycraft:on', false)
     }
 
-    displayEnergy(slot = 0) {
-        this.energy.display(slot);
+    displayEnergy(slot = 0, options = {}) {
+        if (!shouldRefreshEntityUi(this.entity, `energy:${slot}`, options.interval, options.force === true)) return;
+        this.energy.display(slot, { ...options, force: true });
     }
 }

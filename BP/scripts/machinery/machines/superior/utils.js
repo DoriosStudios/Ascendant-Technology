@@ -1,4 +1,3 @@
-import { system } from '@minecraft/server'
 import {
     Energy,
     FluidManager,
@@ -6,8 +5,7 @@ import {
     getTickSpeed,
     syncButtonPanel
 } from '../../../DoriosCore/main.js'
-
-const superiorUiRefreshCache = new Map()
+import { shouldRefreshEntityUi } from '../../../DoriosCore/machinery/ui_refresh.js'
 
 /**
  * Converts unknown numeric input to a finite number.

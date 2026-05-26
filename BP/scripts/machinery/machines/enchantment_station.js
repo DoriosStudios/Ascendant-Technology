@@ -1,5 +1,6 @@
 import { ItemStack, EnchantmentTypes, world, system } from '@minecraft/server'
 import { Machine, Energy, FluidManager } from '../../DoriosCore/main.js'
+import { shouldRefreshEntityUi } from '../../DoriosCore/machinery/ui_refresh.js'
 
 // ==================== SLOT LAYOUT (32 total) ====================
 // Fixed slots: 0=Energy, 1=Status, 2=Progress
@@ -272,8 +273,8 @@ DoriosAPI.register.blockComponent('enchantment_station', {
         resolveStationConfig(settings)
 
         const { block } = e
-        const machine = new Machine(block, settings, true)
-        if (!machine?.entity || !machine.inv) return
+        const machine = new Machine(block, settings)
+        if (!machine.valid || !machine?.entity || !machine.inv) return
 
         const tickSpeed = Math.max(1, Number(globalThis.tickSpeed ?? 1))
         const moduleSlots = resolveAvailableSlots(machine.inv, station.slots.modules)
@@ -2635,6 +2636,9 @@ function pickActiveProgress(results) {
 }
 
 function displayProgress(machine, progress, energyCost) {
+    if (!machine?.entity || !machine?.inv) return
+    if (!shouldRefreshEntityUi(machine.entity, `progress:${station.slots.progress}`)) return
+
     const frames = Math.max(1, Math.floor(Number(station.progress.frame_count) || 16))
     const normalized = energyCost > 0 ? Math.min(frames, Math.floor((progress / energyCost) * frames)) : 0
     const frame = normalized.toString().padStart(2, '0')

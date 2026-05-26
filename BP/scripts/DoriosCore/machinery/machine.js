@@ -15,6 +15,7 @@ import {
     CARDINAL_DIRECTION_OFFSETS,
     OPPOSITE_DIRECTIONS,
 } from "../constants.js";
+import { shouldRefreshEntityUi } from "./ui_refresh.js";
 
 // ─── Energy geometry helpers ─────────────────────────────────────────────────
 
@@ -758,8 +759,11 @@ function clearCachedBlockEntity(block) {
 /**
  * Applies the normalized label content to an inventory slot.
  */
-export function applyLabelToSlot(container, slot, content) {
+export function applyLabelToSlot(container, slot, content, options = {}) {
     if (!container) return;
+    if (options.entity && !shouldRefreshEntityUi(options.entity, `label:${slot}`, options.interval, options.force === true)) {
+        return;
+    }
     const { nameTag, lore } = normalizeLabelContent(content);
     const baseItem = new ItemStack(LABEL_PLACEHOLDER_ITEM);
     baseItem.nameTag = nameTag;
@@ -771,7 +775,7 @@ export function applyLabelToSlot(container, slot, content) {
 /**
  * Applies multiple labels across given slots.
  */
-export function applyLabels(container, contents, slots) {
+export function applyLabels(container, contents, slots, options = {}) {
     if (!container) return;
     const list = Array.isArray(contents) ? contents.filter(Boolean) : [contents];
     if (list.length === 0) return;
@@ -781,7 +785,7 @@ export function applyLabels(container, contents, slots) {
 
     const count = Math.min(list.length, targetSlots.length);
     for (let i = 0; i < count; i++) {
-        applyLabelToSlot(container, targetSlots[i], list[i]);
+        applyLabelToSlot(container, targetSlots[i], list[i], options);
     }
 }
 
@@ -1235,12 +1239,18 @@ export class Machine {
         return false;
     }
 
-    setLabel(content, slot = 1) {
-        applyLabelToSlot(this.inv, slot, content);
+    setLabel(content, slot = 1, options = {}) {
+        applyLabelToSlot(this.inv, slot, content, {
+            entity: this.entity,
+            ...options
+        });
     }
 
-    setLabels(contents, slots) {
-        applyLabels(this.inv, contents, slots);
+    setLabels(contents, slots, options = {}) {
+        applyLabels(this.inv, contents, slots, {
+            entity: this.entity,
+            ...options
+        });
     }
 
     on() {
@@ -1286,9 +1296,10 @@ export class Machine {
         return this.entity.getDynamicProperty("dorios:energy_cost") ?? 800;
     }
 
-    displayProgress(slot = 2, type = "arrow_right") {
+    displayProgress(slot = 2, type = "arrow_right", options = {}) {
         const inv = this.entity.getComponent("minecraft:inventory")?.container;
         if (!inv) return;
+        if (!shouldRefreshEntityUi(this.entity, `progress:${slot}`, options.interval, options.force === true)) return;
 
         const progress = this.getProgress();
         const max = Math.max(1, this.getEnergyCost());
@@ -1327,8 +1338,8 @@ export class Machine {
     }
     //#endregion
 
-    displayEnergy(slot = 0) {
-        this.energy.display(slot);
+    displayEnergy(slot = 0, options = {}) {
+        this.energy.display(slot, options);
     }
 
     getOverclockStrength() {
@@ -1347,9 +1358,10 @@ export class Machine {
         return Math.max(1, Math.floor(this.getOverclockClock()));
     }
 
-    displayOverclock(slot = this.overclockSlot) {
+    displayOverclock(slot = this.overclockSlot, options = {}) {
         if (slot === undefined || slot === null) return;
         if (!Number.isFinite(slot)) return;
+        if (!shouldRefreshEntityUi(this.entity, `overclock:${slot}`, options.interval, options.force === true)) return;
 
         const container = this.entity.getComponent("minecraft:inventory")?.container;
         if (!container) return;

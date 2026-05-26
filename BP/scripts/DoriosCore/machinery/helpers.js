@@ -4,6 +4,7 @@
 
 import { FluidManager } from './fluidStorage.js'
 import { TICKS_PER_SECOND } from '../constants.js'
+import { shouldRefreshEntityUi } from './ui_refresh.js'
 
 const RECIPE_LOOKUP_CACHE = new WeakMap()
 const FLUID_RECIPE_LOOKUP_CACHE = new WeakMap()
@@ -400,7 +401,7 @@ export function buildStateSignature(parts = []) {
     return (Array.isArray(parts) ? parts : [parts]).join('|')
 }
 
-export function shouldRefreshMachineUi(entity, channel, signature, interval = 4, force = false) {
+export function shouldRefreshMachineUi(entity, channel, signature, interval = undefined, force = false) {
     if (!entity) return force === true
 
     const entityCache = getEntityScopedCache(ENTITY_RENDER_SIGNATURE_CACHE, entity)
@@ -408,15 +409,16 @@ export function shouldRefreshMachineUi(entity, channel, signature, interval = 4,
         ? channel
         : 'ui'
     const previous = entityCache.get(normalizedChannel)
-    const gateKey = `${normalizedChannel}:refresh`
-    const periodicRefresh = tickGate(entity, gateKey, interval)
-
-    if (force || periodicRefresh || previous !== signature) {
+    if (previous !== signature) {
         entityCache.set(normalizedChannel, signature)
-        return true
     }
 
-    return false
+    return shouldRefreshEntityUi(
+        entity,
+        `${normalizedChannel}:refresh`,
+        interval,
+        force || previous === undefined
+    )
 }
 
 export function resetMachineRuntimeState(machine, resetProgress = true, progressSlot = 2, progressType = 'arrow_right') {

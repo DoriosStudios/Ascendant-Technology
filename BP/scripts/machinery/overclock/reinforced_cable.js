@@ -174,7 +174,14 @@ function collectEnergyTargets(startPos, sourceEntity) {
 
         const tf = entity?.getComponent?.("minecraft:type_family");
         if (!tf?.hasTypeFamily?.("dorios:energy_container")) continue;
-        if (tf.hasTypeFamily?.("dorios:energy_source")) continue;
+
+        const isBattery = tf.hasTypeFamily?.("dorios:battery") ?? false;
+        const isEnergySource = tf.hasTypeFamily?.("dorios:energy_source") ?? false;
+
+        // Allow batteries to receive from the cable network while still excluding
+        // active generators/other sources from target collection. Battery-to-battery
+        // looping remains blocked in Energy.transferToNetwork().
+        if (isEnergySource && !isBattery) continue;
 
         if (!targetKeys.has(key)) {
             targetKeys.add(key);

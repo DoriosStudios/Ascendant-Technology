@@ -3,7 +3,7 @@
 This file was migrated into the main machine planning document.
 
 Current source of truth:
-- `Machine_Roadmap.md`
+- `Roadmap.md`
 
 Migration notes:
 - Atmospheric Synchronizer

@@ -12,7 +12,7 @@ Here, you have:
 - A bigger chest — Way more storage for the player, to match the amount of items that UtilityCraft brings with it.
 And way more!
 
-See every planned feature [here](./Machine_Roadmap.md)
+See every planned feature [here](./Roadmap.md)
 
 This addon is on beta right now, so you may find bugs and features that does not work correctly.
 

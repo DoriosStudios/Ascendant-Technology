@@ -23,88 +23,59 @@
             },
             {
                 "upgrades@ascendant_common.panel": {
-                    "type": "collection_panel",
-                    "collection_name": "container_items",
-                    "$item_collection_name": "container_items",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "$has_container_label": false,
                     "$has_close_button": false,
                     "$panel_size": [ 24, 96 ],
-                    "offset": [ 108, 42 ],
-                    "controls": [
-                        {
-                            "panel@ascendant_common.panel": {
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "$panel_size": [ "100%", "100%" ],
-                                "$has_container_label": false,
-                                "$has_close_button": false,
-                                "layer": 1
-                            }
-                        },
-                        {
-                            "upgrade_1@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 10,
-                                "$slot_size": [ 18, 18 ],
-                                "layer": 3,
-                                "offset": [ 0, 0 ]
-                            }
-                        },
-                        {
-                            "upgrade_2@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 11,
-                                "$slot_size": [ 18, 18 ],
-                                "layer": 3,
-                                "offset": [ 0, 18 ]
-                            }
-                        },
-                        {
-                            "upgrade_3@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 12,
-                                "$slot_size": [ 18, 18 ],
-                                "layer": 3,
-                                "offset": [ 0, 36 ]
-                            }
-                        },
-                        {
-                            "upgrade_4@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 13,
-                                "$slot_size": [ 18, 18 ],
-                                "layer": 3,
-                                "offset": [ 0, 54 ]
-                            }
-                        }
-                    ]
+                    "offset": [ 110, 88 ]
                 }
             },
             {
-                "screen": {
-                    "type": "image",
-                    "texture": "textures/ui/panels/half_long_panel_classic",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [ 108, 190 ],
-                    "offset": [ -92, -10 ],
-                    "layer": 0
+                "upgrade_1@ascendant_common.slot_base": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "$slot_index": 10,
+                    "$slot_size": [ 18, 18 ],
+                    "layer": 3,
+                    "offset": [ 110, 92 ]
                 }
             },
             {
-                "item_label@machineryCommon.item_label": {
-                    "collection_index": 1,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [ 82, 154 ],
-                    "$text_scale": 0.55,
-                    "offset": [ -82, 2 ]
+                "upgrade_2@ascendant_common.slot_base": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "$slot_index": 11,
+                    "$slot_size": [ 18, 18 ],
+                    "layer": 3,
+                    "offset": [ 110, 110 ]
+                }
+            },
+            {
+                "upgrade_3@ascendant_common.slot_base": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "$slot_index": 12,
+                    "$slot_size": [ 18, 18 ],
+                    "layer": 3,
+                    "offset": [ 110, 128 ]
+                }
+            },
+            {
+                "upgrade_4@ascendant_common.slot_base": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "$slot_index": 13,
+                    "$slot_size": [ 18, 18 ],
+                    "layer": 3,
+                    "offset": [ 110, 146 ]
+
+                }
+            },
+            {
+                "info_panel@ascendant_common.info_panel": {
+                    "$has_text": true,
+                    "$index": 0
                 }
             },
             {
@@ -318,10 +289,16 @@
                                         "centrifugal_siever_top@centrifugal_siever.centrifugal_siever_top": { }
                                     },
                                     {
-                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": { }
+                                        "inventory@ascendant_common.customizable_inventory_panel_bottom_half_with_label": {
+                                            "$slot_color": "red",
+                                            "$slot_hover_color": "purple"
+                                        }
                                     },
                                     {
-                                        "hotbar_grid@common.hotbar_grid_template": { }
+                                        "hotbar_grid@ascendant_common.customizable_hotbar_grid_template": {
+                                            "$slot_color": "blue",
+                                            "$slot_hover_color": "light_blue"
+                                        }
                                     }
                                 ]
                             }

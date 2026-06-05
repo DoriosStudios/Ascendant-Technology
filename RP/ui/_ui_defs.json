@@ -18,6 +18,8 @@
         "ui/pattern_placer.json",
         "ui/duplicator.json",
         "ui/cryo_chamber.json",
+        "ui/cryo_freezer.json",
+        "ui/cryo_stabilizer.json",
         "ui/refining_table.json",
         "ui/ascane_engine.json",
         "ui/energizer.json",

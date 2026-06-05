@@ -3,7 +3,6 @@ import {
     Machine,
     FluidManager,
     Energy,
-    buildOverclockLoreLine,
     applyDynamicRecipeRate,
     tickGate,
     formatItemName
@@ -15,19 +14,13 @@ const CRYO_FREEZER = Object.freeze({
     slots: Object.freeze({
         energy: 0,
         status: 1,
-        waterInput: 2,
-        waterDisplay: 3,
-        cryofluidInput: 4,
-        cryofluidDisplay: 5,
-        freezerGrid: Object.freeze([6, 7, 8, 15, 16, 17, 24, 25, 26]),
-        upgrades: Object.freeze([9, 10, 11]),
-        guide: 12
+        tankDisplay: 2,
+        freezerGrid: Object.freeze([3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17])
     }),
     defaults: Object.freeze({
         energyCost: 4000,
         fluidCap: 64000,
-        fluidRate: 64000,
-        guideItem: 'utilitycraft:arrow_indicator_90'
+        fluidRate: 64000
     }),
     ui: Object.freeze({
         templateTokenPattern: /\{\{\s*(\w+)\s*\}\}/g
@@ -44,16 +37,12 @@ DoriosAPI.register.blockComponent('cryo_freezer', {
             machine.displayEnergy(CRYO_FREEZER.slots.energy);
             machine.blockSlots([
                 CRYO_FREEZER.slots.status,
-                CRYO_FREEZER.slots.waterDisplay,
-                CRYO_FREEZER.slots.cryofluidDisplay,
-                CRYO_FREEZER.slots.guide
+                CRYO_FREEZER.slots.tankDisplay
             ]);
 
-            const [waterTank, cryofluidTank] = getFreezerTanks(machine, settings);
-            waterTank.display(CRYO_FREEZER.slots.waterDisplay);
-            cryofluidTank.display(CRYO_FREEZER.slots.cryofluidDisplay);
-            updateGuide(machine);
-            renderStatus(machine, createIdleStatus(), waterTank, cryofluidTank, true);
+            const tank = getFreezerTank(machine, settings);
+            tank.display(CRYO_FREEZER.slots.tankDisplay);
+            renderStatus(machine, createIdleStatus(), tank, true);
         });
     },
 
@@ -63,7 +52,7 @@ DoriosAPI.register.blockComponent('cryo_freezer', {
         const machine = new Machine(e.block, settings);
         if (!machine.valid || !machine.entity || !machine.inv) return;
 
-        const [waterTank, cryofluidTank] = getFreezerTanks(machine, settings);
+        const tank = getFreezerTank(machine, settings);
         const shouldRefreshUi = shouldRefreshSuperiorUi(machine, 'cryo_freezer:ui');
 
         if (tickGate(machine.entity, 'cryo_freezer:fluid_io', 4)) {
@@ -72,25 +61,18 @@ DoriosAPI.register.blockComponent('cryo_freezer', {
                 ? configuredRate
                 : CRYO_FREEZER.defaults.fluidRate;
 
-            waterTank.transferFluids(machine.block, fluidRate, {
+            tank.transferFluids(machine.block, fluidRate, {
                 relative: 'back',
                 requireTube: false
             });
-            cryofluidTank.transferFluids(machine.block, fluidRate, {
-                relative: 'front',
-                requireTube: false
-            });
-            feedFluidSlot(machine, waterTank, CRYO_FREEZER.slots.waterInput);
-            feedFluidSlot(machine, cryofluidTank, CRYO_FREEZER.slots.cryofluidInput);
         }
 
-        const status = processCryoFreezer(machine, { water: waterTank, cryofluid: cryofluidTank }, settings);
+        const status = processCryoFreezer(machine, tank, settings);
 
         if (shouldRefreshUi) {
-            waterTank.display(CRYO_FREEZER.slots.waterDisplay);
-            cryofluidTank.display(CRYO_FREEZER.slots.cryofluidDisplay);
+            tank.display(CRYO_FREEZER.slots.tankDisplay);
             machine.displayEnergy(CRYO_FREEZER.slots.energy);
-            renderStatus(machine, status, waterTank, cryofluidTank, true);
+            renderStatus(machine, status, tank, true);
         }
 
         if (status.active) {
@@ -114,47 +96,34 @@ function createIdleStatus() {
         activeCount: 0,
         idleCount: CRYO_FREEZER.slots.freezerGrid.length,
         blockedCount: 0,
-        highlights: ['Supports water and Cryofluid-backed recipes']
+        highlights: ['Uses one shared tank for Water and Cryofluid recipes']
     };
 }
 
-function getFreezerTanks(machine, settings) {
-    const [waterTank, cryofluidTank] = FluidManager.initializeMultiple(machine.entity, 2);
+function getFreezerTank(machine, settings) {
+    const tank = FluidManager.initializeSingle(machine.entity);
     const configuredCap = Number(settings?.machine?.fluid_cap);
     const cap = Number.isFinite(configuredCap) && configuredCap > 0
         ? configuredCap
         : CRYO_FREEZER.defaults.fluidCap;
 
-    return [
-        ensureTankSetup(waterTank, 'water', cap),
-        ensureTankSetup(cryofluidTank, 'cryofluid', cap)
-    ];
-}
-
-function ensureTankSetup(tank, defaultType, cap) {
-    if (!tank) return tank;
-
     if (cap > 0 && tank.getCap() <= 0) {
         tank.setCap(cap);
-    }
-
-    if (defaultType && tank.getType() === 'empty') {
-        tank.setType(defaultType);
     }
 
     return tank;
 }
 
-function processCryoFreezer(machine, tanks, settings) {
+function processCryoFreezer(machine, tank, settings) {
     const recipes = getCryoChamberRecipes().cooling;
     const slotSummaries = CRYO_FREEZER.slots.freezerGrid.map(slot =>
-        processFreezerSlot(machine, settings, recipes, slot, tanks)
+        processFreezerSlot(machine, settings, recipes, slot, tank)
     );
 
     return summarizeFreezerSlots(slotSummaries);
 }
 
-function processFreezerSlot(machine, settings, recipes, slot, tanks) {
+function processFreezerSlot(machine, settings, recipes, slot, tank) {
     const tag = formatFreezerSlotTag(slot);
 
     const fail = (message, state = 'waiting', resetProgress = true) => {
@@ -210,7 +179,7 @@ function processFreezerSlot(machine, settings, recipes, slot, tanks) {
         return fail('Result stack too large', 'error', false);
     }
 
-    const fluidCtx = resolveFluidRequirement(recipe, tanks, { amountMultiplier: batchCount });
+    const fluidCtx = resolveFluidRequirement(recipe, tank, { amountMultiplier: batchCount });
     if (fluidCtx && !fluidCtx.ok) {
         return fail(fluidCtx.message ?? 'Need Fluid');
     }
@@ -301,17 +270,18 @@ function summarizeFreezerSlots(slotSummaries) {
     };
 }
 
-function renderStatus(machine, status, waterTank, cryofluidTank, refreshUi = true) {
+function renderStatus(machine, status, tank, refreshUi = true) {
     if (!refreshUi) return;
+
+    const tankType = tank?.getType?.() ?? 'empty';
+    const tankLabel = tankType === 'empty' ? 'Empty' : formatFluidLabel(tankType);
 
     const lore = [
         `${status.color}${status.header}`,
         `§7Grid: §f${status.message}`,
         `§7Energy: §f${Energy.formatEnergyToText(machine.energy.get())} §7/ §f${Energy.formatEnergyToText(machine.energy.getCap())}`,
-        `§7Water: §f${FluidManager.formatFluid(waterTank?.get() ?? 0)} §7/ §f${FluidManager.formatFluid(waterTank?.getCap() ?? 0)}`,
-        `§7Cryofluid: §f${FluidManager.formatFluid(cryofluidTank?.get() ?? 0)} §7/ §f${FluidManager.formatFluid(cryofluidTank?.getCap() ?? 0)}`,
-        `§7Speed: §f${(machine.boosts?.speed ?? 1).toFixed(2)}x`,
-        `§7Efficiency: §f${((1 / Math.max(machine.boosts?.consumption ?? 1, Number.EPSILON)) * 100).toFixed(0)}%`,
+        `§7Coolant: §f${FluidManager.formatFluid(tank?.get() ?? 0)} §7/ §f${FluidManager.formatFluid(tank?.getCap() ?? 0)}`,
+        `§7Fluid Type: §f${tankLabel}`,
         `§7Active Lanes: §f${status.activeCount}`,
         `§7Blocked Lanes: §f${status.blockedCount}`
     ];
@@ -323,28 +293,10 @@ function renderStatus(machine, status, waterTank, cryofluidTank, refreshUi = tru
         }
     }
 
-    const overclockLine = buildOverclockLoreLine(machine);
-    if (overclockLine) {
-        lore.push(overclockLine.replace(/^§r/, ''));
-    }
-
     machine.setLabel({
         title: '§bCryo Freezer',
         lore
     }, CRYO_FREEZER.slots.status);
-}
-
-function updateGuide(machine) {
-    const guide = new ItemStack(CRYO_FREEZER.defaults.guideItem, 1);
-    guide.nameTag = [
-        '§rCryo Freezer',
-        '§7Dedicated cryogenic freezing branch',
-        '',
-        '§9Water Input: standard cooling recipes',
-        '§bCryofluid Input: advanced cooling recipes',
-        '§aGrid: 3x3 shared input/output lanes'
-    ].join('\n');
-    machine.inv.setItem(CRYO_FREEZER.slots.guide, guide);
 }
 
 function formatFreezerSlotTag(slot) {
@@ -353,8 +305,8 @@ function formatFreezerSlotTag(slot) {
         return `Slot ${slot}`;
     }
 
-    const row = Math.floor(index / 3) + 1;
-    const col = (index % 3) + 1;
+    const row = Math.floor(index / 5) + 1;
+    const col = (index % 5) + 1;
     return `R${row}C${col}`;
 }
 
@@ -400,7 +352,7 @@ function findMatchingInputVariant(recipe, stack) {
     return null;
 }
 
-function resolveFluidRequirement(recipe, tanks, options = {}) {
+function resolveFluidRequirement(recipe, tank, options = {}) {
     const amountMultiplier = Math.max(1, Number(options.amountMultiplier) || 1);
     const fluidOptions = recipe?.fluids?.length
         ? recipe.fluids
@@ -411,7 +363,6 @@ function resolveFluidRequirement(recipe, tanks, options = {}) {
     }
 
     for (const requirement of fluidOptions) {
-        const tank = selectTankForFluid(requirement, tanks);
         if (!tank) continue;
 
         const requiredAmount = requirement.amount * amountMultiplier;
@@ -433,20 +384,12 @@ function resolveFluidRequirement(recipe, tanks, options = {}) {
     const label = fallbackRequirement?.label ?? formatFluidLabel(fallbackRequirement?.type);
     return {
         requirement: fallbackRequirement,
-        tank: selectTankForFluid(fallbackRequirement, tanks),
+        tank,
         amount: (fallbackRequirement?.amount ?? 0) * amountMultiplier,
         ok: false,
         label,
         message: label ? `Need ${label}` : 'Need Fluid'
     };
-}
-
-function selectTankForFluid(requirement, tanks) {
-    if (!requirement || !tanks) return null;
-    const source = (requirement.source ?? (requirement.type === 'water' ? 'water' : 'cryofluid')).toLowerCase();
-    return source === 'water'
-        ? (tanks.water ?? null)
-        : (tanks.cryofluid ?? null);
 }
 
 function formatFluidLabel(type) {
@@ -553,32 +496,3 @@ function resolveSpendRate(machine, recipe, settings, energyCost, options = {}) {
     return derivedRate;
 }
 
-function feedFluidSlot(machine, tank, slot) {
-    const item = machine.inv.getItem(slot);
-    if (!item?.typeId) return;
-
-    const containerData = FluidManager.getContainerData(item.typeId);
-    if (!containerData) return;
-
-    const tankType = tank.getType();
-    if (tankType !== 'empty' && tankType !== containerData.type) return;
-    if (tank.getFreeSpace() < containerData.amount) return;
-
-    if (tankType === 'empty') {
-        tank.setType(containerData.type);
-    }
-
-    tank.add(containerData.amount);
-
-    if (containerData.output) {
-        machine.inv.setItem(slot, undefined);
-        machine.dim.spawnItem(new ItemStack(containerData.output, 1), {
-            x: machine.block.location.x + 0.5,
-            y: machine.block.location.y + 1,
-            z: machine.block.location.z + 0.5
-        });
-        return;
-    }
-
-    machine.entity.changeItemAmount(slot, -1);
-}

@@ -175,6 +175,18 @@
 		"utilitycraft_duplicator_on": {
 			"textures": "textures/blocks/machines/duplicator_on"
 		},
+		"utilitycraft_cryo_stabilizer_off": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_off"
+		},
+		"utilitycraft_cryo_stabilizer_on": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_on"
+		},
+		"utilitycraft_cryo_freezer_off": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_off"
+		},
+		"utilitycraft_cryo_freezer_on": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_on"
+		},
 		"utilitycraft_cryo_chamber_off": {
 			"textures": "textures/blocks/machines/legacy_atlases/cryo_chamber_off"
 		},

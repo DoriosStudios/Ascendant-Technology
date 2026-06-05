@@ -12,7 +12,7 @@
 			"minecraft:icon": "utilitycraft_lucky_mesh",
 			"utilitycraft:mesh": {
 				"tier": 7,
-				"multiplier": 6.5,
+				"multiplier": 6,
 				"amount_multiplier": 3
 			},
 			"minecraft:fire_resistant": {

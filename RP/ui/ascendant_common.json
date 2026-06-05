@@ -20,9 +20,10 @@
 	 * Cell textures, hover variants, and panel textures.
 	 * Texture paths:
 	 * - textures/ui/cells/<color>_cell
-	 * - textures/ui/cells/<color>_cell_hover
+	 * - textures/ui/cells/hover_inverted_<color>_cell_image
 	 * - textures/ui/panels/background_panel
 	 * - textures/ui/panels/background_panel_<color>
+	 * - textures/insight/style_<style>
 	 */
 
 	/* ELEMENT: cell_white
@@ -30,7 +31,7 @@
 	 */
 	"cell_white": {
 		"type": "image",
-		"texture": "textures/ui/cells/white_cell_image"
+		"texture": "textures/ui/cells/light_gray_cell_image"
 	},
 
 	/* ELEMENT: cell_white_hover
@@ -38,7 +39,7 @@
 	 */
 	"cell_white_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/white_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_light_gray_cell_image"
 	},
 
 	/* ELEMENT: panel_white
@@ -62,7 +63,7 @@
 	 */
 	"cell_light_gray_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/light_gray_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_light_gray_cell_image"
 	},
 
 	/* ELEMENT: panel_light_gray
@@ -86,7 +87,7 @@
 	 */
 	"cell_gray_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/gray_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_gray_cell_image"
 	},
 
 	/* ELEMENT: panel_gray
@@ -110,7 +111,7 @@
 	 */
 	"cell_black_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/black_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_black_cell_image"
 	},
 
 	/* ELEMENT: panel_black
@@ -134,7 +135,7 @@
 	 */
 	"cell_brown_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/brown_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_brown_cell_image"
 	},
 
 	/* ELEMENT: panel_brown
@@ -158,7 +159,7 @@
 	 */
 	"cell_red_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/red_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_red_cell_image"
 	},
 
 	/* ELEMENT: panel_red
@@ -182,7 +183,7 @@
 	 */
 	"cell_orange_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/orange_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_orange_cell_image"
 	},
 
 	/* ELEMENT: panel_orange
@@ -206,7 +207,7 @@
 	 */
 	"cell_yellow_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/yellow_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_orange_cell_image"
 	},
 
 	/* ELEMENT: panel_yellow
@@ -230,7 +231,7 @@
 	 */
 	"cell_lime_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/lime_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_lime_cell_image"
 	},
 
 	/* ELEMENT: panel_lime
@@ -254,7 +255,7 @@
 	 */
 	"cell_green_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/green_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_green_cell_image"
 	},
 
 	/* ELEMENT: panel_green
@@ -278,7 +279,7 @@
 	 */
 	"cell_cyan_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/cyan_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_cyan_cell_image"
 	},
 
 	/* ELEMENT: panel_cyan
@@ -302,7 +303,7 @@
 	 */
 	"cell_light_blue_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/light_blue_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_light_blue_cell_image"
 	},
 
 	/* ELEMENT: panel_light_blue
@@ -326,7 +327,7 @@
 	 */
 	"cell_blue_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/blue_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_blue_cell_image"
 	},
 
 	/* ELEMENT: panel_blue
@@ -350,7 +351,7 @@
 	 */
 	"cell_purple_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/purple_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_purple_cell_image"
 	},
 
 	/* ELEMENT: panel_purple
@@ -374,7 +375,7 @@
 	 */
 	"cell_magenta_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/magenta_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_magenta_cell_image"
 	},
 
 	/* ELEMENT: panel_magenta
@@ -398,7 +399,7 @@
 	 */
 	"cell_pink_hover": {
 		"type": "image",
-		"texture": "textures/ui/cells/pink_cell_hover"
+		"texture": "textures/ui/cells/hover_inverted_pink_cell_image"
 	},
 
 	/* ELEMENT: panel_pink
@@ -443,6 +444,52 @@
 	"aqua_bg": {
 		"type": "image",
 		"texture": "textures/ui/panels/background_panel_aqua"
+	},
+
+	/* SUBSECTION: TOOLTIP STYLE ASSETS
+	 * Nineslice tooltip panels copied from Dorios' Insight.
+	 */
+
+	"tooltip_style_default": {
+		"type": "image",
+		"texture": "textures/insight/style_default",
+		"nineslice_size": 4
+	},
+
+	"tooltip_style_dark": {
+		"type": "image",
+		"texture": "textures/insight/style_dark",
+		"nineslice_size": 4
+	},
+
+	"tooltip_style_copper": {
+		"type": "image",
+		"texture": "textures/insight/style_copper",
+		"nineslice_size": 4
+	},
+
+	"tooltip_style_magenta": {
+		"type": "image",
+		"texture": "textures/insight/style_magenta",
+		"nineslice_size": 4
+	},
+
+	"tooltip_style_cyan": {
+		"type": "image",
+		"texture": "textures/insight/style_cyan",
+		"nineslice_size": 4
+	},
+
+	"tooltip_style_blood": {
+		"type": "image",
+		"texture": "textures/insight/style_blood",
+		"nineslice_size": 4
+	},
+
+	"tooltip_style_ascane": {
+		"type": "image",
+		"texture": "textures/insight/style_ascane",
+		"nineslice_size": 4
 	},
 
 	/* SECTION: DISPLAYS
@@ -1300,6 +1347,40 @@
 		"$container_top_ref": "ascendant_common.iron_chest_container_top_14x12"
 	},
 
+	/* SUBSECTION: PLAYER INVENTORY WRAPPERS
+	 * Reusable wrappers for player inventory layouts.
+	 */
+
+	/* ELEMENT: vertical_player_inventory
+	 * Vertical counterpart of `common.inventory_panel_bottom_half`.
+	 */
+	"vertical_player_inventory": {
+		"type": "panel",
+		"size": [88, 166],
+		"anchor_from": "top_middle",
+		"anchor_to": "top_left",
+		"$show_inventory_label|default": false,
+		"$inventory_label_text|default": "container.inventory",
+		"$inventory_panel_ref|default": "ascendant_common.vertical_inventory_panel",
+		"controls": [
+			{
+				"inventory_panel@$inventory_panel_ref": {
+					"$item_collection_name": "inventory_items"
+				}
+			},
+			{
+				"inventory_label@common.section_heading_label": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [7, 3],
+					"layer": 2,
+					"text": "$inventory_label_text",
+					"ignored": "(not $show_inventory_label)"
+				}
+			}
+		]
+	},
+
 	/* SECTION: PANELS
 	 * Panel building blocks and panel-based layouts.
 	 */
@@ -1316,6 +1397,8 @@
 		"collection_name": "container_items",
 		"$item_collection_name": "container_items",
 		"$index|default": 0,
+		"$offset|default": [-128, 44],
+		"offset": "$offset",
 		"size": "$bg_size",
 		"anchor_from": "center",
 		"anchor_to": "center",
@@ -1323,9 +1406,9 @@
 		"$has_text|default": false,
 		"$label_index|default": 1,
 		"$background_color|default": "gray",
-		"$text_borders|default": ["100% - 16px, 100% - 16px"],
-		"$info_size|default": ["100% - 8px", "100% - 8px"],
 		"$bg_size|default": [90, 166],
+		"$info_size|default": [82, 158],
+		"$text_borders|default": [74, 150],
 		"$has_close_button|default": false,
 		"$panel_bg_control|default": "ascendant_common.panel_no_close",
 		"$background_color|dark": {
@@ -2108,10 +2191,28 @@
 		"$cell_image_size|default": "$slot_panel_size",
 		"$slot_bg_variant|default": "gray",
 		"$slot_color|default": "gray",
+		"$slot_hover_color|default": "light_blue",
 		"$slot_surface|default": "cell",
 		"$slot_panel_texture|default": "",
 		"$slot_panel_alpha|default": 1,
 		"$slot_panel_layer|default": 0,
+		"$slot_default_color|default": [1, 1, 1],
+		"$slot_hover_tint|default": [1, 1, 1],
+		"$slot_pressed_tint|default": [1, 1, 1],
+		"$slot_default_alpha|default": 1,
+		"$slot_hover_alpha|default": 1,
+		"$slot_pressed_alpha|default": 1,
+		"$slot_tooltip_enabled|default": false,
+		"$slot_tooltip_ref|default": "ascendant_common.slot_tooltip",
+		"$slot_tooltip_style|default": "default",
+		"$slot_tooltip_texture|default": "textures/insight/style_default",
+		"$slot_tooltip_text_color|default": [1, 1, 1],
+		"$slot_tooltip_binding_name|default": "#hover_text",
+		"$slot_tooltip_binding_type|default": "collection",
+		"$slot_tooltip_offset|default": [0, -22],
+		"$slot_tooltip_anchor|default": "top_middle",
+		"$slot_tooltip_layer|default": 30,
+		"$slot_tooltip_alpha|default": 0.96,
 		"$cell_color|default": [1, 1, 1],
 		"$cell_texture|default": "textures/ui/cell_image",
 		"$cell_custom_enabled|default": false,
@@ -2416,6 +2517,33 @@
 					"tts_ignore_count": true,
 					"tts_skip_message": true,
 					"tts_inherit_siblings": true,
+					"size": "$slot_panel_size",
+					"$slot_size": "$slot_panel_size",
+					"$slot_color": "$slot_color",
+					"$slot_hover_color": "$slot_hover_color",
+					"$slot_default_color": "$slot_default_color",
+					"$slot_hover_tint": "$slot_hover_tint",
+					"$slot_pressed_tint": "$slot_pressed_tint",
+					"$slot_default_alpha": "$slot_default_alpha",
+					"$slot_hover_alpha": "$slot_hover_alpha",
+					"$slot_pressed_alpha": "$slot_pressed_alpha",
+					"$slot_tooltip_enabled": "$slot_tooltip_enabled",
+					"$slot_tooltip_ref": "$slot_tooltip_ref",
+					"$slot_tooltip_style": "$slot_tooltip_style",
+					"$slot_tooltip_texture": "$slot_tooltip_texture",
+					"$slot_tooltip_text_color": "$slot_tooltip_text_color",
+					"$slot_tooltip_binding_name": "$slot_tooltip_binding_name",
+					"$slot_tooltip_binding_type": "$slot_tooltip_binding_type",
+					"$slot_tooltip_offset": "$slot_tooltip_offset",
+					"$slot_tooltip_anchor": "$slot_tooltip_anchor",
+					"$slot_tooltip_layer": "$slot_tooltip_layer",
+					"$slot_tooltip_alpha": "$slot_tooltip_alpha",
+					"$item_collection_name": "$item_collection_name",
+					"$focus_id": "$focus_id",
+					"$focus_override_down": "$focus_override_down",
+					"$focus_override_up": "$focus_override_up",
+					"$focus_override_left": "$focus_override_left",
+					"$focus_override_right": "$focus_override_right",
 					"layer": 5
 				}
 			},
@@ -2439,6 +2567,508 @@
 				}
 			}
 		]
+	},
+
+	/* ELEMENT: slot_tooltip
+	 * Compact colored tooltip panel for slot hover states.
+	 */
+	"slot_tooltip": {
+		"type": "image",
+		"$tooltip_style|default": "default",
+		"$tooltip_texture|default": "textures/insight/style_default",
+		"$tooltip_text_color|default": [1, 1, 1],
+		"$tooltip_text|default": "",
+		"$tooltip_text_binding_name|default": "#hover_text",
+		"$tooltip_binding_type|default": "collection",
+		"$tooltip_nineslice_size|default": 4,
+		"$tooltip_size|default": ["100%c + 12px", "100%cm + 8px"],
+		"$tooltip_offset|default": [0, -22],
+		"$tooltip_anchor|default": "top_middle",
+		"$tooltip_layer|default": 30,
+		"$tooltip_alpha|default": 0.96,
+		"$tooltip_label_offset|default": [0, 0],
+		"$tooltip_label_font_scale|default": 0.75,
+		"$item_collection_name|default": "container_items",
+		"$tooltip_style|dark": {
+			"$tooltip_texture": "textures/insight/style_dark",
+			"$tooltip_text_color": [0.82, 0.82, 0.82]
+		},
+		"$tooltip_style|copper": {
+			"$tooltip_texture": "textures/insight/style_copper",
+			"$tooltip_text_color": [0.86, 0.68, 0.48]
+		},
+		"$tooltip_style|magenta": {
+			"$tooltip_texture": "textures/insight/style_magenta",
+			"$tooltip_text_color": [0.92, 0.62, 0.92]
+		},
+		"$tooltip_style|cyan": {
+			"$tooltip_texture": "textures/insight/style_cyan",
+			"$tooltip_text_color": [0.56, 0.92, 0.95]
+		},
+		"$tooltip_style|blood": {
+			"$tooltip_texture": "textures/insight/style_blood",
+			"$tooltip_text_color": [0.9, 0.48, 0.48]
+		},
+		"$tooltip_style|ascane": {
+			"$tooltip_texture": "textures/insight/style_ascane",
+			"$tooltip_text_color": [0.74, 0.7, 0.97]
+		},
+		"texture": "$tooltip_texture",
+		"nineslice_size": "$tooltip_nineslice_size",
+		"size": "$tooltip_size",
+		"offset": "$tooltip_offset",
+		"anchor_from": "$tooltip_anchor",
+		"anchor_to": "$tooltip_anchor",
+		"alpha": "$tooltip_alpha",
+		"layer": "$tooltip_layer",
+		"allow_clipping": false,
+		"property_bag": {
+			"#tooltip_text": "$tooltip_text"
+		},
+		"controls": [
+			{
+				"text": {
+					"type": "label",
+					"text": "#tooltip_text",
+					"localize": false,
+					"color": "$tooltip_text_color",
+					"font_scale_factor": "$tooltip_label_font_scale",
+					"offset": "$tooltip_label_offset",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"layer": 1
+				}
+			}
+		],
+		"bindings": [
+			{
+				"binding_name": "$tooltip_text_binding_name",
+				"binding_name_override": "#tooltip_text",
+				"binding_type": "$tooltip_binding_type",
+				"binding_collection_name": "$item_collection_name"
+			},
+			{
+				"binding_type": "view",
+				"source_property_name": "(not(#tooltip_text = ''))",
+				"target_property_name": "#visible"
+			}
+		]
+	},
+
+	/* ELEMENT: slot_button_visual_state
+	 * Visual state image used by customizable inventory slot buttons.
+	 */
+	"slot_button_visual_state": {
+		"type": "image",
+		"$slot_state_size|default": [18, 18],
+		"$slot_state_texture|default": "textures/ui/cells/gray_cell_image",
+		"$slot_state_color|default": [1, 1, 1],
+		"$slot_state_alpha|default": 1,
+		"$slot_state_tooltip_enabled|default": false,
+		"$slot_state_tooltip_ref|default": "ascendant_common.slot_tooltip",
+		"$slot_state_tooltip_style|default": "default",
+		"$slot_state_tooltip_texture|default": "textures/insight/style_default",
+		"$slot_state_tooltip_text_color|default": [1, 1, 1],
+		"$slot_state_tooltip_binding_name|default": "#hover_text",
+		"$slot_state_tooltip_binding_type|default": "collection",
+		"$slot_state_tooltip_offset|default": [0, -22],
+		"$slot_state_tooltip_anchor|default": "top_middle",
+		"$slot_state_tooltip_layer|default": 30,
+		"$slot_state_tooltip_alpha|default": 0.96,
+		"$item_collection_name|default": "container_items",
+		"size": "$slot_state_size",
+		"texture": "$slot_state_texture",
+		"color": "$slot_state_color",
+		"alpha": "$slot_state_alpha",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"controls": [
+			{
+				"tooltip@$slot_state_tooltip_ref": {
+					"$tooltip_style": "$slot_state_tooltip_style",
+					"$tooltip_texture": "$slot_state_tooltip_texture",
+					"$tooltip_text_color": "$slot_state_tooltip_text_color",
+					"$tooltip_text_binding_name": "$slot_state_tooltip_binding_name",
+					"$tooltip_binding_type": "$slot_state_tooltip_binding_type",
+					"$tooltip_offset": "$slot_state_tooltip_offset",
+					"$tooltip_anchor": "$slot_state_tooltip_anchor",
+					"$tooltip_layer": "$slot_state_tooltip_layer",
+					"$tooltip_alpha": "$slot_state_tooltip_alpha",
+					"$item_collection_name": "$item_collection_name",
+					"ignored": "(not $slot_state_tooltip_enabled)"
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: customizable_container_slot_button
+	 * Stateful slot button that swaps the cell texture between default and hover variants.
+	 */
+	"customizable_container_slot_button@common.container_slot_button_prototype": {
+		"$slot_size|default": [18, 18],
+		"size": "$slot_size",
+		"default_control": "default",
+		"hover_control": "hover",
+		"pressed_control": "pressed",
+		"$slot_color|default": "gray",
+		"$slot_hover_color|default": "light_blue",
+		"$slot_default_texture|default": "textures/ui/cells/gray_cell_image",
+		"$slot_hover_texture|default": "textures/ui/cells/hover_inverted_light_blue_cell_image",
+		"$slot_pressed_texture|default": "$slot_hover_texture",
+		"$slot_default_color|default": [1, 1, 1],
+		"$slot_hover_tint|default": [1, 1, 1],
+		"$slot_pressed_tint|default": [1, 1, 1],
+		"$slot_default_alpha|default": 1,
+		"$slot_hover_alpha|default": 1,
+		"$slot_pressed_alpha|default": 1,
+		"$slot_tooltip_enabled|default": false,
+		"$slot_tooltip_ref|default": "ascendant_common.slot_tooltip",
+		"$slot_tooltip_style|default": "default",
+		"$slot_tooltip_texture|default": "textures/insight/style_default",
+		"$slot_tooltip_text_color|default": [1, 1, 1],
+		"$slot_tooltip_binding_name|default": "#hover_text",
+		"$slot_tooltip_binding_type|default": "collection",
+		"$slot_tooltip_offset|default": [0, -22],
+		"$slot_tooltip_anchor|default": "top_middle",
+		"$slot_tooltip_layer|default": 30,
+		"$slot_tooltip_alpha|default": 0.96,
+		"$item_collection_name|default": "container_items",
+		"$slot_color|white": {
+			"$slot_default_texture": "textures/ui/cells/light_gray_cell_image"
+		},
+		"$slot_color|light_gray": {
+			"$slot_default_texture": "textures/ui/cells/light_gray_cell_image"
+		},
+		"$slot_color|gray": {
+			"$slot_default_texture": "textures/ui/cells/gray_cell_image"
+		},
+		"$slot_color|black": {
+			"$slot_default_texture": "textures/ui/cells/black_cell_image"
+		},
+		"$slot_color|brown": {
+			"$slot_default_texture": "textures/ui/cells/brown_cell_image"
+		},
+		"$slot_color|red": {
+			"$slot_default_texture": "textures/ui/cells/red_cell_image"
+		},
+		"$slot_color|orange": {
+			"$slot_default_texture": "textures/ui/cells/orange_cell_image"
+		},
+		"$slot_color|yellow": {
+			"$slot_default_texture": "textures/ui/cells/yellow_cell_image"
+		},
+		"$slot_color|lime": {
+			"$slot_default_texture": "textures/ui/cells/lime_cell_image"
+		},
+		"$slot_color|green": {
+			"$slot_default_texture": "textures/ui/cells/green_cell_image"
+		},
+		"$slot_color|cyan": {
+			"$slot_default_texture": "textures/ui/cells/cyan_cell_image"
+		},
+		"$slot_color|light_blue": {
+			"$slot_default_texture": "textures/ui/cells/light_blue_cell_image"
+		},
+		"$slot_color|blue": {
+			"$slot_default_texture": "textures/ui/cells/blue_cell_image"
+		},
+		"$slot_color|purple": {
+			"$slot_default_texture": "textures/ui/cells/purple_cell_image"
+		},
+		"$slot_color|magenta": {
+			"$slot_default_texture": "textures/ui/cells/magenta_cell_image"
+		},
+		"$slot_color|pink": {
+			"$slot_default_texture": "textures/ui/cells/pink_cell_image"
+		},
+		"$slot_color|dark": {
+			"$slot_default_texture": "textures/ui/cells/dark_cell_image"
+		},
+		"$slot_hover_color|white": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_light_gray_cell_image"
+		},
+		"$slot_hover_color|light_gray": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_light_gray_cell_image"
+		},
+		"$slot_hover_color|gray": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_gray_cell_image"
+		},
+		"$slot_hover_color|black": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_black_cell_image"
+		},
+		"$slot_hover_color|brown": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_brown_cell_image"
+		},
+		"$slot_hover_color|red": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_red_cell_image"
+		},
+		"$slot_hover_color|orange": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_orange_cell_image"
+		},
+		"$slot_hover_color|yellow": {
+			"$slot_hover_texture": "textures/ui/cells/yellow_cell_image"
+		},
+		"$slot_hover_color|lime": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_lime_cell_image"
+		},
+		"$slot_hover_color|green": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_green_cell_image"
+		},
+		"$slot_hover_color|cyan": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_cyan_cell_image"
+		},
+		"$slot_hover_color|light_blue": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_light_blue_cell_image"
+		},
+		"$slot_hover_color|blue": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_blue_cell_image"
+		},
+		"$slot_hover_color|purple": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_purple_cell_image"
+		},
+		"$slot_hover_color|magenta": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_magenta_cell_image"
+		},
+		"$slot_hover_color|pink": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_pink_cell_image"
+		},
+		"$slot_hover_color|dark": {
+			"$slot_hover_texture": "textures/ui/cells/hover_inverted_dark_cell_image"
+		},
+		"controls": [
+			{
+				"default@ascendant_common.slot_button_visual_state": {
+					"$slot_state_size": "$slot_size",
+					"$slot_state_texture": "$slot_default_texture",
+					"$slot_state_color": "$slot_default_color",
+					"$slot_state_alpha": "$slot_default_alpha",
+					"$item_collection_name": "$item_collection_name"
+				}
+			},
+			{
+				"hover@ascendant_common.slot_button_visual_state": {
+					"$slot_state_size": "$slot_size",
+					"$slot_state_texture": "$slot_hover_texture",
+					"$slot_state_color": "$slot_hover_tint",
+					"$slot_state_alpha": "$slot_hover_alpha",
+					"$slot_state_tooltip_enabled": "$slot_tooltip_enabled",
+					"$slot_state_tooltip_ref": "$slot_tooltip_ref",
+					"$slot_state_tooltip_style": "$slot_tooltip_style",
+					"$slot_state_tooltip_texture": "$slot_tooltip_texture",
+					"$slot_state_tooltip_text_color": "$slot_tooltip_text_color",
+					"$slot_state_tooltip_binding_name": "$slot_tooltip_binding_name",
+					"$slot_state_tooltip_binding_type": "$slot_tooltip_binding_type",
+					"$slot_state_tooltip_offset": "$slot_tooltip_offset",
+					"$slot_state_tooltip_anchor": "$slot_tooltip_anchor",
+					"$slot_state_tooltip_layer": "$slot_tooltip_layer",
+					"$slot_state_tooltip_alpha": "$slot_tooltip_alpha",
+					"$item_collection_name": "$item_collection_name"
+				}
+			},
+			{
+				"pressed@ascendant_common.slot_button_visual_state": {
+					"$slot_state_size": "$slot_size",
+					"$slot_state_texture": "$slot_pressed_texture",
+					"$slot_state_color": "$slot_pressed_tint",
+					"$slot_state_alpha": "$slot_pressed_alpha",
+					"$slot_state_tooltip_enabled": "$slot_tooltip_enabled",
+					"$slot_state_tooltip_ref": "$slot_tooltip_ref",
+					"$slot_state_tooltip_style": "$slot_tooltip_style",
+					"$slot_state_tooltip_texture": "$slot_tooltip_texture",
+					"$slot_state_tooltip_text_color": "$slot_tooltip_text_color",
+					"$slot_state_tooltip_binding_name": "$slot_tooltip_binding_name",
+					"$slot_state_tooltip_binding_type": "$slot_tooltip_binding_type",
+					"$slot_state_tooltip_offset": "$slot_tooltip_offset",
+					"$slot_state_tooltip_anchor": "$slot_tooltip_anchor",
+					"$slot_state_tooltip_layer": "$slot_tooltip_layer",
+					"$slot_state_tooltip_alpha": "$slot_tooltip_alpha",
+					"$item_collection_name": "$item_collection_name"
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: customizable_container_item
+	 * Container item variant that keeps the item renderer above a customizable stateful background.
+	 */
+	"customizable_container_item": {
+		"type": "input_panel",
+		"$slot_size|default": [18, 18],
+		"size": "$slot_size",
+		"layer": 1,
+		"$cell_image_size|default": "$slot_size",
+		"$cell_overlay_ref|default": "common.cell_overlay",
+		"$button_ref|default": "ascendant_common.customizable_container_slot_button",
+		"$stack_count_required|default": true,
+		"$durability_bar_required|default": true,
+		"$storage_bar_required|default": true,
+		"$item_renderer|default": "common.item_renderer",
+		"$item_renderer_panel_size|default": "$slot_size",
+		"$item_renderer_size|default": [16, 16],
+		"$item_renderer_offset|default": [0, 0],
+		"$item_collection_name|default": "container_items",
+		"$slot_color|default": "gray",
+		"$slot_hover_color|default": "light_blue",
+		"$slot_default_color|default": [1, 1, 1],
+		"$slot_hover_tint|default": [1, 1, 1],
+		"$slot_pressed_tint|default": [1, 1, 1],
+		"$slot_default_alpha|default": 1,
+		"$slot_hover_alpha|default": 1,
+		"$slot_pressed_alpha|default": 1,
+		"$slot_tooltip_enabled|default": false,
+		"$slot_tooltip_ref|default": "ascendant_common.slot_tooltip",
+		"$slot_tooltip_style|default": "default",
+		"$slot_tooltip_texture|default": "textures/insight/style_default",
+		"$slot_tooltip_text_color|default": [1, 1, 1],
+		"$slot_tooltip_binding_name|default": "#hover_text",
+		"$slot_tooltip_binding_type|default": "collection",
+		"$slot_tooltip_offset|default": [0, -22],
+		"$slot_tooltip_anchor|default": "top_middle",
+		"$slot_tooltip_layer|default": 30,
+		"$slot_tooltip_alpha|default": 0.96,
+		"$slot_selected_ref|default": "common.slot_selected",
+		"$slot_selected_layer|default": 4,
+		"$slot_selected_visible|default": true,
+		"$lock_overlay_ref|default": "common.container_item_lock_overlay",
+		"$lock_cell_ref|default": "common.item_lock_cell_image",
+		"$bundle_slot_ref|default": "gameplay.bundle_slot_panel",
+		"$focus_id|default": "",
+		"$focus_override_down|default": "",
+		"$focus_override_up|default": "",
+		"$focus_override_left|default": "",
+		"$focus_override_right|default": "",
+		"focus_identifier": "$focus_id",
+		"focus_change_down": "$focus_override_down",
+		"focus_change_up": "$focus_override_up",
+		"focus_change_left": "$focus_override_left",
+		"focus_change_right": "$focus_override_right",
+		"focus_enabled": true,
+		"focus_wrap_enabled": false,
+		"focus_magnet_enabled": true,
+		"tts_ignore_count": true,
+		"controls": [
+			{
+				"item_button_ref@$button_ref": {
+					"tts_ignore_count": true,
+					"tts_skip_message": true,
+					"tts_inherit_siblings": true,
+					"size": "$cell_image_size",
+					"$slot_size": "$cell_image_size",
+					"$slot_color": "$slot_color",
+					"$slot_hover_color": "$slot_hover_color",
+					"$slot_default_color": "$slot_default_color",
+					"$slot_hover_tint": "$slot_hover_tint",
+					"$slot_pressed_tint": "$slot_pressed_tint",
+					"$slot_default_alpha": "$slot_default_alpha",
+					"$slot_hover_alpha": "$slot_hover_alpha",
+					"$slot_pressed_alpha": "$slot_pressed_alpha",
+					"$slot_tooltip_enabled": "$slot_tooltip_enabled",
+					"$slot_tooltip_ref": "$slot_tooltip_ref",
+					"$slot_tooltip_style": "$slot_tooltip_style",
+					"$slot_tooltip_texture": "$slot_tooltip_texture",
+					"$slot_tooltip_text_color": "$slot_tooltip_text_color",
+					"$slot_tooltip_binding_name": "$slot_tooltip_binding_name",
+					"$slot_tooltip_binding_type": "$slot_tooltip_binding_type",
+					"$slot_tooltip_offset": "$slot_tooltip_offset",
+					"$slot_tooltip_anchor": "$slot_tooltip_anchor",
+					"$slot_tooltip_layer": "$slot_tooltip_layer",
+					"$slot_tooltip_alpha": "$slot_tooltip_alpha",
+					"$item_collection_name": "$item_collection_name",
+					"$focus_id": "$focus_id",
+					"$focus_override_down": "$focus_override_down",
+					"$focus_override_up": "$focus_override_up",
+					"$focus_override_left": "$focus_override_left",
+					"$focus_override_right": "$focus_override_right",
+					"layer": 1
+				}
+			},
+			{
+				"item_cell": {
+					"type": "panel",
+					"size": "$cell_image_size",
+					"layer": 2,
+					"controls": [
+						{
+							"item": {
+								"type": "panel",
+								"size": "$item_renderer_panel_size",
+								"layer": 0,
+								"controls": [
+									{
+										"stack_count_label@common.stack_count_label": {
+											"layer": 27
+										}
+									},
+									{
+										"$item_renderer@$item_renderer": {
+											"size": "$item_renderer_size",
+											"offset": "$item_renderer_offset",
+											"anchor_to": "center",
+											"anchor_from": "center",
+											"layer": 7
+										}
+									}
+								]
+							}
+						},
+						{
+							"durability_bar@common.durability_bar": {
+								"layer": 20
+							}
+						},
+						{
+							"storage_bar@common.storage_bar": {
+								"layer": 20
+							}
+						}
+					]
+				}
+			},
+			{
+				"item_cell_overlay_ref@$cell_overlay_ref": {
+					"layer": 3
+				}
+			},
+			{
+				"item_selected_image@$slot_selected_ref": {
+					"layer": "$slot_selected_layer",
+					"visible": "$slot_selected_visible"
+				}
+			},
+			{
+				"container_item_lock_overlay@$lock_overlay_ref": {
+					"size": "$item_renderer_size",
+					"offset": [1, 1],
+					"anchor_to": "top_left",
+					"anchor_from": "top_left",
+					"layer": 6
+				}
+			},
+			{
+				"item_lock_cell_image@$lock_cell_ref": {
+					"layer": 5
+				}
+			},
+			{
+				"bundle_slot_panel@$bundle_slot_ref": {
+					"layer": 10
+				}
+			}
+		]
+	},
+
+	/* ELEMENT: customizable_grid_item_for_inventory
+	 * Inventory grid item that uses the customizable standard slot visuals.
+	 */
+	"customizable_grid_item_for_inventory@ascendant_common.customizable_container_item": {
+		"$item_collection_name": "inventory_items"
+	},
+
+	/* ELEMENT: customizable_grid_item_for_hotbar
+	 * Hotbar grid item that uses the customizable standard slot visuals.
+	 */
+	"customizable_grid_item_for_hotbar@ascendant_common.customizable_container_item": {
+		"$item_collection_name": "hotbar_items"
 	},
 
 	/* SUBSECTION: CUSTOM SLOTS
@@ -3992,16 +4622,239 @@
 	},
 
 	/* SECTION: INVENTORIES
-	 * Alternative for inventory panels, such as vertical inventories.
+	 * Recreated standard inventory panels and alternative inventory layouts.
 	 */
+
+	"customizable_hotbar_grid_template": {
+		"type": "grid",
+		"$hotbar_grid_size|default": [162, 18],
+		"size": "$hotbar_grid_size",
+		"anchor_from": "bottom_middle",
+		"anchor_to": "bottom_middle",
+		"$hotbar_grid_offset|default": [0, -5],
+		"offset": "$hotbar_grid_offset",
+		"$hotbar_grid_dimensions|default": [9, 1],
+		"grid_dimensions": "$hotbar_grid_dimensions",
+		"$item_collection_name|default": "hotbar_items",
+		"collection_name": "$item_collection_name",
+		"$grid_item_template|default": "ascendant_common.customizable_grid_item_for_hotbar",
+		"grid_item_template": "$grid_item_template",
+		"$slot_size|default": [18, 18],
+		"$cell_image_size|default": "$slot_size",
+		"$item_renderer_panel_size|default": "$slot_size",
+		"$item_renderer_size|default": [16, 16],
+		"$item_renderer_offset|default": [0, 0],
+		"$slot_color|default": "gray",
+		"$slot_hover_color|default": "light_blue",
+		"$slot_default_color|default": [1, 1, 1],
+		"$slot_hover_tint|default": [1, 1, 1],
+		"$slot_pressed_tint|default": [1, 1, 1],
+		"$slot_default_alpha|default": 1,
+		"$slot_hover_alpha|default": 1,
+		"$slot_pressed_alpha|default": 1,
+		"$slot_tooltip_enabled|default": false,
+		"$slot_tooltip_style|default": "default",
+		"$slot_tooltip_texture|default": "textures/insight/style_default",
+		"$slot_tooltip_text_color|default": [1, 1, 1],
+		"$slot_tooltip_offset|default": [0, -22],
+		"$slot_tooltip_anchor|default": "top_middle",
+		"$slot_tooltip_layer|default": 30,
+		"$slot_tooltip_alpha|default": 0.96
+	},
+
+	"customizable_inventory_panel": {
+		"type": "panel",
+		"$inventory_panel_size|default": [88, 83],
+		"size": "$inventory_panel_size",
+		"anchor_from": "bottom_middle",
+		"anchor_to": "bottom_middle",
+		"$grid_item_template|default": "ascendant_common.customizable_grid_item_for_inventory",
+		"$item_collection_name|default": "inventory_items",
+		"$inventory_grid_size|default": [162, 54],
+		"$inventory_grid_offset|default": [0, -26],
+		"$inventory_grid_dimensions|default": [9, 3],
+		"$slot_size|default": [18, 18],
+		"$cell_image_size|default": "$slot_size",
+		"$item_renderer_panel_size|default": "$slot_size",
+		"$item_renderer_size|default": [16, 16],
+		"$item_renderer_offset|default": [0, 0],
+		"$slot_color|default": "gray",
+		"$slot_hover_color|default": "light_blue",
+		"$slot_default_color|default": [1, 1, 1],
+		"$slot_hover_tint|default": [1, 1, 1],
+		"$slot_pressed_tint|default": [1, 1, 1],
+		"$slot_default_alpha|default": 1,
+		"$slot_hover_alpha|default": 1,
+		"$slot_pressed_alpha|default": 1,
+		"$slot_tooltip_enabled|default": false,
+		"$slot_tooltip_style|default": "default",
+		"$slot_tooltip_texture|default": "textures/insight/style_default",
+		"$slot_tooltip_text_color|default": [1, 1, 1],
+		"$slot_tooltip_offset|default": [0, -22],
+		"$slot_tooltip_anchor|default": "top_middle",
+		"$slot_tooltip_layer|default": 30,
+		"$slot_tooltip_alpha|default": 0.96,
+		"controls": [
+			{
+				"inventory_grid": {
+					"type": "grid",
+					"size": "$inventory_grid_size",
+					"anchor_from": "bottom_middle",
+					"anchor_to": "bottom_middle",
+					"offset": "$inventory_grid_offset",
+					"grid_dimensions": "$inventory_grid_dimensions",
+					"grid_item_template": "$grid_item_template",
+					"collection_name": "$item_collection_name",
+					"$item_collection_name": "$item_collection_name",
+					"$slot_size": "$slot_size",
+					"$cell_image_size": "$cell_image_size",
+					"$item_renderer_panel_size": "$item_renderer_panel_size",
+					"$item_renderer_size": "$item_renderer_size",
+					"$item_renderer_offset": "$item_renderer_offset",
+					"$slot_color": "$slot_color",
+					"$slot_hover_color": "$slot_hover_color",
+					"$slot_default_color": "$slot_default_color",
+					"$slot_hover_tint": "$slot_hover_tint",
+					"$slot_pressed_tint": "$slot_pressed_tint",
+					"$slot_default_alpha": "$slot_default_alpha",
+					"$slot_hover_alpha": "$slot_hover_alpha",
+					"$slot_pressed_alpha": "$slot_pressed_alpha",
+					"$slot_tooltip_enabled": "$slot_tooltip_enabled",
+					"$slot_tooltip_style": "$slot_tooltip_style",
+					"$slot_tooltip_texture": "$slot_tooltip_texture",
+					"$slot_tooltip_text_color": "$slot_tooltip_text_color",
+					"$slot_tooltip_offset": "$slot_tooltip_offset",
+					"$slot_tooltip_anchor": "$slot_tooltip_anchor",
+					"$slot_tooltip_layer": "$slot_tooltip_layer",
+					"$slot_tooltip_alpha": "$slot_tooltip_alpha"
+				}
+			}
+		]
+	},
+
+	"customizable_inventory_panel_bottom_half": {
+		"type": "panel",
+		"size": ["100%", "50%"],
+		"anchor_from": "left_middle",
+		"anchor_to": "top_left",
+		"$slot_color|default": "gray",
+		"$slot_hover_color|default": "light_blue",
+		"$slot_size|default": [18, 18],
+		"$cell_image_size|default": "$slot_size",
+		"$item_renderer_panel_size|default": "$slot_size",
+		"$item_renderer_size|default": [16, 16],
+		"$item_renderer_offset|default": [0, 0],
+		"$slot_default_color|default": [1, 1, 1],
+		"$slot_hover_tint|default": [1, 1, 1],
+		"$slot_pressed_tint|default": [1, 1, 1],
+		"$slot_default_alpha|default": 1,
+		"$slot_hover_alpha|default": 1,
+		"$slot_pressed_alpha|default": 1,
+		"$slot_tooltip_enabled|default": false,
+		"$slot_tooltip_style|default": "default",
+		"$slot_tooltip_texture|default": "textures/insight/style_default",
+		"$slot_tooltip_text_color|default": [1, 1, 1],
+		"$slot_tooltip_offset|default": [0, -22],
+		"$slot_tooltip_anchor|default": "top_middle",
+		"$slot_tooltip_layer|default": 30,
+		"$slot_tooltip_alpha|default": 0.96,
+		"$inventory_panel_ref|default": "ascendant_common.customizable_inventory_panel",
+		"controls": [
+			{
+				"inventory_panel@$inventory_panel_ref": {
+					"$slot_color": "$slot_color",
+					"$slot_hover_color": "$slot_hover_color",
+					"$slot_size": "$slot_size",
+					"$cell_image_size": "$cell_image_size",
+					"$item_renderer_panel_size": "$item_renderer_panel_size",
+					"$item_renderer_size": "$item_renderer_size",
+					"$item_renderer_offset": "$item_renderer_offset",
+					"$slot_default_color": "$slot_default_color",
+					"$slot_hover_tint": "$slot_hover_tint",
+					"$slot_pressed_tint": "$slot_pressed_tint",
+					"$slot_default_alpha": "$slot_default_alpha",
+					"$slot_hover_alpha": "$slot_hover_alpha",
+					"$slot_pressed_alpha": "$slot_pressed_alpha",
+					"$slot_tooltip_enabled": "$slot_tooltip_enabled",
+					"$slot_tooltip_style": "$slot_tooltip_style",
+					"$slot_tooltip_texture": "$slot_tooltip_texture",
+					"$slot_tooltip_text_color": "$slot_tooltip_text_color",
+					"$slot_tooltip_offset": "$slot_tooltip_offset",
+					"$slot_tooltip_anchor": "$slot_tooltip_anchor",
+					"$slot_tooltip_layer": "$slot_tooltip_layer",
+					"$slot_tooltip_alpha": "$slot_tooltip_alpha"
+				}
+			}
+		]
+	},
+
+	"customizable_inventory_panel_bottom_half_with_label@ascendant_common.customizable_inventory_panel_bottom_half": {
+		"anchor_from": "bottom_left",
+		"anchor_to": "bottom_left",
+		"size": ["100%", 93],
+		"$show_inventory_label|default": true,
+		"$inventory_label_text|default": "container.inventory",
+		"controls": [
+			{
+				"inventory_panel@$inventory_panel_ref": {
+					"$slot_color": "$slot_color",
+					"$slot_hover_color": "$slot_hover_color",
+					"$slot_size": "$slot_size",
+					"$cell_image_size": "$cell_image_size",
+					"$item_renderer_panel_size": "$item_renderer_panel_size",
+					"$item_renderer_size": "$item_renderer_size",
+					"$item_renderer_offset": "$item_renderer_offset",
+					"$slot_default_color": "$slot_default_color",
+					"$slot_hover_tint": "$slot_hover_tint",
+					"$slot_pressed_tint": "$slot_pressed_tint",
+					"$slot_default_alpha": "$slot_default_alpha",
+					"$slot_hover_alpha": "$slot_hover_alpha",
+					"$slot_pressed_alpha": "$slot_pressed_alpha",
+					"$slot_tooltip_enabled": "$slot_tooltip_enabled",
+					"$slot_tooltip_style": "$slot_tooltip_style",
+					"$slot_tooltip_texture": "$slot_tooltip_texture",
+					"$slot_tooltip_text_color": "$slot_tooltip_text_color",
+					"$slot_tooltip_offset": "$slot_tooltip_offset",
+					"$slot_tooltip_anchor": "$slot_tooltip_anchor",
+					"$slot_tooltip_layer": "$slot_tooltip_layer",
+					"$slot_tooltip_alpha": "$slot_tooltip_alpha"
+				}
+			},
+			{
+				"inventory_label@common.section_heading_label": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [7, 3],
+					"layer": 2,
+					"text": "$inventory_label_text",
+					"ignored": "(not $show_inventory_label)"
+				}
+			}
+		]
+	},
 
 	"vertical_inventory_panel":{
 		"type": "grid",
-		"collection_name": "inventory_items",
+		"size": [54, 162],
 		"$item_collection_name": "inventory_items",
+		"collection_name": "$item_collection_name",
+		"$grid_item_template|default": "common.grid_item_for_inventory",
+		"grid_item_template": "$grid_item_template",
 		"anchor_from": "right_middle",
 		"anchor_to": "right_middle",
 		"grid_dimensions": [3, 9]
+	},
+
+	"vertical_hotbar_grid_template": {
+		"type": "grid",
+		"size": [18, 162],
+		"$item_collection_name": "hotbar_items",
+		"collection_name": "$item_collection_name",
+		"$grid_item_template|default": "common.grid_item_for_hotbar",
+		"grid_item_template": "$grid_item_template",
+		"anchor_from": "right_middle",
+		"anchor_to": "right_middle",
+		"grid_dimensions": [1, 9]
 	},
 
 

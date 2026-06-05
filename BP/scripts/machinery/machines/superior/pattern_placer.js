@@ -9,6 +9,8 @@ import {
     formatEnergyCost,
     formatMachineEnergyBuffer,
     getContainerTransferSlots,
+    resolveEffectiveEnergyCost,
+    resolveManualProgressSpendRate,
     resolveAboveContainer,
     shouldRefreshSuperiorUi,
     syncSuperiorButtonPanel
@@ -201,9 +203,10 @@ DoriosAPI.register.blockComponent('pattern_placer', {
         }
 
         const consumption = machine.boosts.consumption
+        const spendRate = resolveManualProgressSpendRate(machine)
         const energyToConsume = Math.min(
             machine.energy.get(),
-            machine.rate,
+            spendRate,
             Math.max(0, operation.energyCost - progress) * consumption
         )
 
@@ -249,6 +252,7 @@ function buildOperation(machine, mode, settings, supplyResult = {}, enabled = tr
     const placeCount = Math.min(availableInputCount, placeableTargets.length)
     const baseEnergyCost = Number(settings?.machine?.energy_cost ?? PATTERN_PLACER.defaults.energyCost)
     const energyCost = Math.max(1, baseEnergyCost * Math.max(1, placeCount))
+    const effectiveEnergyCost = resolveEffectiveEnergyCost(energyCost, machine?.boosts?.consumption ?? 1)
     const normalizedSupply = supplyResult && typeof supplyResult === 'object' ? supplyResult : {}
 
     return {
@@ -268,6 +272,7 @@ function buildOperation(machine, mode, settings, supplyResult = {}, enabled = tr
         blockedCount: Math.max(0, targetBlocks.length - placeableTargets.length),
         baseEnergyCost,
         energyCost,
+        effectiveEnergyCost,
         supplySource: normalizedSupply.source ?? null,
         supplyPulledCount: Math.max(0, Number(normalizedSupply.movedCount ?? 0)),
         lineLength: mode.id === PATTERN_PLACER.modes.line.id
@@ -638,7 +643,7 @@ function buildMachineLore(operation = {}) {
         },
         {
             label: 'Cost',
-            value: formatEnergyCost(operation.energyCost ?? 0)
+            value: formatEnergyCost(operation.effectiveEnergyCost ?? operation.energyCost ?? 0)
         }
     ]
 

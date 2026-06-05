@@ -177,6 +177,7 @@
                     "anchor_to": "top_left",
                     "$has_text": true,
                     "$text_borders": [88, 150],
+                    "$info_size": [96, 158],
                     "$bg_size": [
                         104,
                         166

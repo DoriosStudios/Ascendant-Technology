@@ -26,6 +26,7 @@ import './recipes/pulverizer.js';
 import './recipes/centrifugal_siever.js';
 import './recipes/abyssal_fisher.js';
 import './recipes/genetic_seed_synthesizer.js';
+import './recipes/verdant_cultivator.js';
 import './recipes/liquifier.js';
 import './recipes/energizer.js';
 import './recipes/residue_processor.js';

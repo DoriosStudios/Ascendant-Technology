@@ -1,10 +1,10 @@
 {
   "version": "5",
   "specifiers": {
-    "npm:@minecraft/common@^1.2.0": "1.2.0",
-    "npm:@minecraft/server@^2.6.0": "2.6.0_@minecraft+common@1.2.0_@minecraft+vanilla-data@1.26.13",
-    "npm:commitizen@^4.3.1": "4.3.1",
-    "npm:cz-conventional-changelog@^3.3.0": "3.3.0"
+    "npm:@minecraft/common@^1.3.0": "1.3.0",
+    "npm:@minecraft/server@^2.7.0": "2.7.0_@minecraft+common@1.3.0_@minecraft+vanilla-data@1.26.21",
+    "npm:commitizen@^4.3.1": "4.3.1_@types+node@25.9.1_cosmiconfig@9.0.1__typescript@6.0.3_typescript@6.0.3",
+    "npm:cz-conventional-changelog@^3.3.0": "3.3.0_@types+node@25.9.1_cosmiconfig@9.0.1__typescript@6.0.3_typescript@6.0.3"
   },
   "npm": {
     "@babel/code-frame@7.27.1": {
@@ -28,15 +28,13 @@
     "@commitlint/execute-rule@20.0.0": {
       "integrity": "sha512-xyCoOShoPuPL44gVa+5EdZsBVao/pNzpQhkzq3RdtlFdKZtjWcLlUFQHSWBuhk5utKYykeJPSz2i8ABHQA+ZZw=="
     },
-    "@commitlint/load@20.2.0_cosmiconfig@9.0.0__typescript@5.9.3": {
+    "@commitlint/load@20.2.0_@types+node@25.9.1_cosmiconfig@9.0.1__typescript@6.0.3_typescript@6.0.3": {
       "integrity": "sha512-iAK2GaBM8sPFTSwtagI67HrLKHIUxQc2BgpgNc/UMNme6LfmtHpIxQoN1TbP+X1iz58jq32HL1GbrFTCzcMi6g==",
       "dependencies": [
         "@commitlint/config-validator",
         "@commitlint/execute-rule",
         "@commitlint/resolve-extends",
         "@commitlint/types",
-        "chalk@5.6.2",
-        "cosmiconfig",
         "cosmiconfig-typescript-loader",
         "lodash.isplainobject",
         "lodash.merge",
@@ -50,38 +48,33 @@
         "@commitlint/types",
         "global-directory",
         "import-meta-resolve",
-        "lodash.mergewith",
-        "resolve-from@5.0.0"
+        "lodash.mergewith"
       ]
     },
     "@commitlint/types@20.2.0": {
       "integrity": "sha512-KTy0OqRDLR5y/zZMnizyx09z/rPlPC/zKhYgH8o/q6PuAjoQAKlRfY4zzv0M64yybQ//6//4H1n14pxaLZfUnA==",
       "dependencies": [
-        "@types/conventional-commits-parser",
-        "chalk@5.6.2"
+        "@types/conventional-commits-parser"
       ]
     },
-    "@minecraft/common@1.2.0": {
-      "integrity": "sha512-JdmEq4P3Z/FtoBzhLijFgMSVFnFRrUoLwY8DHHrgtFo0mfLTOLTB1RErYjLMsA6b7BGVNxkX/pfFRiH7QZ0XwQ=="
+    "@minecraft/common@1.3.0": {
+      "integrity": "sha512-GLT8USFhvEyeTTFHZAgszbrnoT007hmXmK+aO4l+2A1up9/zwZ+4e8R8F0KcKrCWDjLEqkOJtPow0hQCcNJ++Q=="
     },
-    "@minecraft/server@2.6.0_@minecraft+common@1.2.0_@minecraft+vanilla-data@1.26.13": {
-      "integrity": "sha512-/l1gbUHcTl/3gb3cB7Ilb8pfW1QytoAc+iMXUPSzvv8cxGluf6M635jl29P8Bid3iVmUB9hWyCUZtRUVVlk5ew==",
+    "@minecraft/server@2.7.0_@minecraft+common@1.3.0_@minecraft+vanilla-data@1.26.21": {
+      "integrity": "sha512-2gI80wxSBQ/U6JvGVYVDlbbSOywU8WPy6b5lvfetkWCKU+c//7UdY6dDAU2DkKmR/DzxmPqyy7YAKXwGJduRWQ==",
       "dependencies": [
         "@minecraft/common",
         "@minecraft/vanilla-data"
       ]
     },
-    "@minecraft/vanilla-data@1.26.13": {
-      "integrity": "sha512-Mll1g5vX84iJ2PjJM5KKJ9V9gH8haJtIhSqywn/FlZN9IN0fn4MFWyjC43xNLh/COWgZfVgB7XAA7fGsEt60MQ=="
+    "@minecraft/vanilla-data@1.26.21": {
+      "integrity": "sha512-bDmqSIjZBoaChpAdK2H3SVzhIod4/kXwY+viEA3AgftAbda1X1dkjMiBbxZcmwzRrVwT9embIB3zsEkYn1rSNA=="
     },
     "@types/conventional-commits-parser@5.0.2": {
-      "integrity": "sha512-BgT2szDXnVypgpNxOK8aL5SGjUdaQbC++WZNjF1Qge3Og2+zhHj+RWhmehLhYyvQwqAmvezruVfOf8+3m74W+g==",
-      "dependencies": [
-        "@types/node"
-      ]
+      "integrity": "sha512-BgT2szDXnVypgpNxOK8aL5SGjUdaQbC++WZNjF1Qge3Og2+zhHj+RWhmehLhYyvQwqAmvezruVfOf8+3m74W+g=="
     },
-    "@types/node@25.0.3": {
-      "integrity": "sha512-W609buLVRVmeW693xKfzHeIV6nJGGz98uCPfeXI1ELMLXVeKYZ9m15fAMSaUPBHYLGFsVRcMmSCksQOrZV9BYA==",
+    "@types/node@25.9.1": {
+      "integrity": "sha512-xfrlY7UD5rMJk3ZVJP8BNzS28J36YJg+xp+LPXV1TdWxr8uMH5A860QNxYDGQe/ylDSgjxE52Q9VnO7p75tJxg==",
       "dependencies": [
         "undici-types"
       ]
@@ -107,13 +100,7 @@
     "ansi-styles@3.2.1": {
       "integrity": "sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==",
       "dependencies": [
-        "color-convert@1.9.3"
-      ]
-    },
-    "ansi-styles@4.3.0": {
-      "integrity": "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==",
-      "dependencies": [
-        "color-convert@2.0.1"
+        "color-convert"
       ]
     },
     "argparse@2.0.1": {
@@ -165,20 +152,10 @@
     "chalk@2.4.2": {
       "integrity": "sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==",
       "dependencies": [
-        "ansi-styles@3.2.1",
+        "ansi-styles",
         "escape-string-regexp",
-        "supports-color@5.5.0"
+        "supports-color"
       ]
-    },
-    "chalk@4.1.2": {
-      "integrity": "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==",
-      "dependencies": [
-        "ansi-styles@4.3.0",
-        "supports-color@7.2.0"
-      ]
-    },
-    "chalk@5.6.2": {
-      "integrity": "sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA=="
     },
     "chardet@0.7.0": {
       "integrity": "sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA=="
@@ -201,22 +178,13 @@
     "color-convert@1.9.3": {
       "integrity": "sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==",
       "dependencies": [
-        "color-name@1.1.3"
-      ]
-    },
-    "color-convert@2.0.1": {
-      "integrity": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
-      "dependencies": [
-        "color-name@1.1.4"
+        "color-name"
       ]
     },
     "color-name@1.1.3": {
       "integrity": "sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw=="
     },
-    "color-name@1.1.4": {
-      "integrity": "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA=="
-    },
-    "commitizen@4.3.1": {
+    "commitizen@4.3.1_@types+node@25.9.1_cosmiconfig@9.0.1__typescript@6.0.3_typescript@6.0.3": {
       "integrity": "sha512-gwAPAVTy/j5YcOOebcCRIijn+mSjWJC+IYKivTu6aG8Ei/scoXgfsMRnuAk6b0GRste2J4NGxVdMN3ZpfNaVaw==",
       "dependencies": [
         "cachedir",
@@ -242,7 +210,7 @@
     "conventional-commit-types@3.0.0": {
       "integrity": "sha512-SmmCYnOniSsAa9GqWOeLqc179lfr5TRu5b4QFDkbsrJ5TZjPJx85wtOr3zn+1dbeNiXDKGPbZ72IKbPhLXh/Lg=="
     },
-    "cosmiconfig-typescript-loader@6.2.0_@types+node@25.0.3_cosmiconfig@9.0.0__typescript@5.9.3_typescript@5.9.3": {
+    "cosmiconfig-typescript-loader@6.2.0_@types+node@25.9.1_cosmiconfig@9.0.1__typescript@6.0.3_typescript@6.0.3": {
       "integrity": "sha512-GEN39v7TgdxgIoNcdkRE3uiAzQt3UXLyHbRHD6YoL048XAeOomyxaP+Hh/+2C6C2wYjxJ2onhJcsQp+L4YEkVQ==",
       "dependencies": [
         "@types/node",
@@ -251,8 +219,8 @@
         "typescript"
       ]
     },
-    "cosmiconfig@9.0.0_typescript@5.9.3": {
-      "integrity": "sha512-itvL5h8RETACmOTFc4UfIyB2RfEHi71Ax6E/PivVxq9NseKbOWpeyHEOIbmAw1rs8Ak0VursQNww7lf7YtUwzg==",
+    "cosmiconfig@9.0.1_typescript@6.0.3": {
+      "integrity": "sha512-hr4ihw+DBqcvrsEDioRO31Z17x71pUYoNe/4h6Z0wB72p7MU7/9gH8Q3s12NFhHPfYBBOV3qyfUxmr/Yn3shnQ==",
       "dependencies": [
         "env-paths",
         "import-fresh",
@@ -264,10 +232,10 @@
         "typescript"
       ]
     },
-    "cz-conventional-changelog@3.3.0": {
+    "cz-conventional-changelog@3.3.0_@types+node@25.9.1_cosmiconfig@9.0.1__typescript@6.0.3_typescript@6.0.3": {
       "integrity": "sha512-U466fIzU5U22eES5lTNiNbZ+d8dfcHcssH4o7QsdWaCcRs/feIPCxKYSWkYBNs5mny7MvEfwpTLWjvbm94hecw==",
       "dependencies": [
-        "chalk@2.4.2",
+        "chalk",
         "commitizen",
         "conventional-commit-types",
         "lodash.map",
@@ -384,10 +352,7 @@
       "deprecated": true
     },
     "global-directory@4.0.1": {
-      "integrity": "sha512-wHTUcDUoZ1H5/0iVqEudYW4/kAlN5cZ3j/bXn0Dpbizl9iaUVeWSHqiOjsgk6OW2bkLclbBjzewBz6weQ1zA2Q==",
-      "dependencies": [
-        "ini@4.1.1"
-      ]
+      "integrity": "sha512-wHTUcDUoZ1H5/0iVqEudYW4/kAlN5cZ3j/bXn0Dpbizl9iaUVeWSHqiOjsgk6OW2bkLclbBjzewBz6weQ1zA2Q=="
     },
     "global-modules@1.0.0": {
       "integrity": "sha512-sKzpEkf11GpOFuw0Zzjzmt4B4UZwjOcG757PPvrfhxcLFbq0wpsgpOqxpxtxFiCG4DtG93M6XRVbF2oGdev7bg==",
@@ -402,7 +367,6 @@
       "dependencies": [
         "expand-tilde",
         "homedir-polyfill",
-        "ini@1.3.8",
         "is-windows",
         "which"
       ]
@@ -412,9 +376,6 @@
     },
     "has-flag@3.0.0": {
       "integrity": "sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw=="
-    },
-    "has-flag@4.0.0": {
-      "integrity": "sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ=="
     },
     "homedir-polyfill@1.0.3": {
       "integrity": "sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==",
@@ -434,8 +395,7 @@
     "import-fresh@3.3.1": {
       "integrity": "sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==",
       "dependencies": [
-        "parent-module",
-        "resolve-from@4.0.0"
+        "parent-module"
       ]
     },
     "import-meta-resolve@4.2.0": {
@@ -452,17 +412,10 @@
     "inherits@2.0.4": {
       "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ=="
     },
-    "ini@1.3.8": {
-      "integrity": "sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew=="
-    },
-    "ini@4.1.1": {
-      "integrity": "sha512-QQnnxNyfvmHFIsj7gkPcYymR8Jdw/o7mp5ZFihxn6h8Ci6fh3Dx4E1gPjpQEpIuPo9XVNY/ZUwh4BPMjGyL01g=="
-    },
     "inquirer@8.2.5": {
       "integrity": "sha512-QAgPDQMEgrDssk1XiwwHoOGYF9BAbUcc1+j+FhEvaOt8/cKRqyLn0U5qA6F74fGhTMGxf92pOvPBeh29jQJDTQ==",
       "dependencies": [
         "ansi-escapes",
-        "chalk@4.1.2",
         "cli-cursor",
         "cli-width",
         "external-editor",
@@ -564,7 +517,6 @@
     "log-symbols@4.1.0": {
       "integrity": "sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==",
       "dependencies": [
-        "chalk@4.1.2",
         "is-unicode-supported"
       ]
     },
@@ -612,7 +564,6 @@
       "integrity": "sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==",
       "dependencies": [
         "bl",
-        "chalk@4.1.2",
         "cli-cursor",
         "cli-spinners",
         "is-interactive",
@@ -670,12 +621,6 @@
         "global-modules"
       ]
     },
-    "resolve-from@4.0.0": {
-      "integrity": "sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g=="
-    },
-    "resolve-from@5.0.0": {
-      "integrity": "sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw=="
-    },
     "restore-cursor@3.1.0": {
       "integrity": "sha512-l+sSefzHpj5qimhFSE5a8nufZYAM3sBSVMAPtYkmC+4EH2anSGaEMXSD0izRQbu9nfyQ9y5JrVmp7E8oZrUjvA==",
       "dependencies": [
@@ -730,13 +675,7 @@
     "supports-color@5.5.0": {
       "integrity": "sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==",
       "dependencies": [
-        "has-flag@3.0.0"
-      ]
-    },
-    "supports-color@7.2.0": {
-      "integrity": "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==",
-      "dependencies": [
-        "has-flag@4.0.0"
+        "has-flag"
       ]
     },
     "through@2.3.8": {
@@ -760,12 +699,12 @@
     "type-fest@0.21.3": {
       "integrity": "sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w=="
     },
-    "typescript@5.9.3": {
-      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+    "typescript@6.0.3": {
+      "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
       "bin": true
     },
-    "undici-types@7.16.0": {
-      "integrity": "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="
+    "undici-types@7.24.6": {
+      "integrity": "sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg=="
     },
     "universalify@2.0.1": {
       "integrity": "sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw=="
@@ -792,7 +731,6 @@
     "wrap-ansi@7.0.0": {
       "integrity": "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==",
       "dependencies": [
-        "ansi-styles@4.3.0",
         "string-width",
         "strip-ansi"
       ]
@@ -804,8 +742,8 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
-        "npm:@minecraft/common@^1.2.0",
-        "npm:@minecraft/server@^2.6.0",
+        "npm:@minecraft/common@^1.3.0",
+        "npm:@minecraft/server@^2.7.0",
         "npm:commitizen@^4.3.1",
         "npm:cz-conventional-changelog@^3.3.0"
       ]

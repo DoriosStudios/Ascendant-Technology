@@ -127,6 +127,58 @@ export function formatEnergyCost(energyCost) {
 }
 
 /**
+ * Resolves the per-tick energy spend rate for manual progress operations.
+ *
+ * This keeps Speed and Hyper upgrades increasing throughput while also
+ * allowing lower consumption (Efficiency) to reduce the time needed to reach
+ * the same progress target.
+ *
+ * @param {{ rate?: number, processingRate?: number, boosts?: { consumption?: number, hyper?: number } } | null | undefined} machine
+ * @returns {number}
+ */
+export function resolveManualProgressSpendRate(machine) {
+    const consumption = Math.max(
+        Number.EPSILON,
+        toFiniteNumber(machine?.boosts?.consumption, 1)
+    )
+    const rate = Math.max(0, toFiniteNumber(machine?.rate, 0))
+    if (rate > 0) {
+        return rate / consumption
+    }
+
+    const processingRate = Math.max(0, toFiniteNumber(machine?.processingRate, 0))
+    if (processingRate > 0) {
+        const hyper = Math.max(
+            Number.EPSILON,
+            toFiniteNumber(machine?.boosts?.hyper, 1)
+        )
+        return processingRate / (consumption * hyper)
+    }
+
+    return 0
+}
+
+/**
+ * Resolves the effective energy cost after upgrade consumption scaling.
+ *
+ * Mirrors the general UtilityCraft behavior where Efficiency upgrades reduce
+ * the total energy spent per operation.
+ *
+ * @param {number} energyCost
+ * @param {number} [consumptionMultiplier=1]
+ * @returns {number}
+ */
+export function resolveEffectiveEnergyCost(energyCost, consumptionMultiplier = 1) {
+    const baseCost = Math.max(0, toFiniteNumber(energyCost, 0))
+    const consumption = Math.max(
+        Number.EPSILON,
+        toFiniteNumber(consumptionMultiplier, 1)
+    )
+
+    return baseCost * consumption
+}
+
+/**
  * Formats a mixed energy + fluid cost label.
  *
  * Example: "12kDE + 500mB Steam".

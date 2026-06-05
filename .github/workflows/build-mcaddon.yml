@@ -1,0 +1,189 @@
+name: Build mcaddon packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Optional version label for the generated filenames.
+        required: false
+        type: string
+      release_tag:
+        description: Optional GitHub release tag to create or update.
+        required: false
+        type: string
+      release_name:
+        description: Optional GitHub release title for manual runs.
+        required: false
+        type: string
+      create_release:
+        description: Create or update a GitHub release with the generated packages.
+        required: false
+        type: boolean
+        default: true
+      prerelease:
+        description: Mark the manually created or updated release as a prerelease.
+        required: false
+        type: boolean
+        default: true
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-mcaddon-${{ github.ref_name || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build BP/RP packages
+        id: pack
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PUSH_TAG: ${{ github.ref_name }}
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import re
+          import zipfile
+          from pathlib import Path
+
+          root = Path.cwd()
+          bp_dir = root / "BP"
+          rp_dir = root / "RP"
+          bp_manifest_path = bp_dir / "manifest.json"
+          rp_manifest_path = rp_dir / "manifest.json"
+
+          missing = [
+              str(path.relative_to(root))
+              for path in (bp_manifest_path, rp_manifest_path)
+              if not path.exists()
+          ]
+          if missing:
+              raise SystemExit(
+                  f"Missing required manifest file(s): {', '.join(missing)}"
+              )
+
+          with bp_manifest_path.open("r", encoding="utf-8") as handle:
+              bp_manifest = json.load(handle)
+          with rp_manifest_path.open("r", encoding="utf-8") as handle:
+              rp_manifest = json.load(handle)
+
+          def version_string(manifest):
+              version = manifest.get("header", {}).get("version")
+              if not isinstance(version, list) or not version:
+                  raise SystemExit(
+                      "Manifest header.version must be a non-empty array."
+                  )
+              return ".".join(str(part) for part in version)
+
+          bp_version = version_string(bp_manifest)
+          rp_version = version_string(rp_manifest)
+          if bp_version != rp_version:
+              raise SystemExit(
+                  "Behavior and resource pack versions do not match "
+                  f"({bp_version} vs {rp_version})."
+              )
+
+          event_name = os.environ.get("EVENT_NAME", "").strip()
+          push_tag = os.environ.get("PUSH_TAG", "").strip()
+          input_version = os.environ.get("INPUT_VERSION", "").strip()
+          input_release_tag = os.environ.get("INPUT_RELEASE_TAG", "").strip()
+
+          version_label = input_version
+          if not version_label and push_tag:
+              version_label = push_tag.lstrip("v")
+          if not version_label and input_release_tag:
+              version_label = input_release_tag.lstrip("v")
+          if not version_label:
+              version_label = bp_version
+
+          release_tag = push_tag if event_name == "push" else (input_release_tag or f"v{version_label}")
+          if not release_tag:
+              raise SystemExit("Could not determine the release tag for this package build.")
+
+          file_safe_version = re.sub(r"[^A-Za-z0-9._-]+", "_", version_label)
+          bundle_prefix = "Ascendant_Tech"
+          dist_dir = root / "dist"
+          dist_dir.mkdir(exist_ok=True)
+
+          bp_pack = dist_dir / f"{bundle_prefix}_BP_{file_safe_version}.mcpack"
+          rp_pack = dist_dir / f"{bundle_prefix}_RP_{file_safe_version}.mcpack"
+          addon_pack = dist_dir / f"{bundle_prefix}_{file_safe_version}.mcaddon"
+
+          def build_pack(source_dir: Path, target_file: Path):
+              with zipfile.ZipFile(target_file, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+                  for file_path in sorted(source_dir.rglob("*")):
+                      if file_path.is_file():
+                          archive.write(file_path, file_path.relative_to(source_dir))
+
+          build_pack(bp_dir, bp_pack)
+          build_pack(rp_dir, rp_pack)
+
+          with zipfile.ZipFile(addon_pack, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+              archive.write(bp_pack, bp_pack.name)
+              archive.write(rp_pack, rp_pack.name)
+
+          outputs = {
+              "version_label": version_label,
+              "bp_pack": str(bp_pack),
+              "rp_pack": str(rp_pack),
+              "addon_pack": str(addon_pack),
+              "release_tag": release_tag,
+          }
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              for key, value in outputs.items():
+                  handle.write(f"{key}={value}\n")
+
+          print(
+              f"Created {bp_pack.name}, {rp_pack.name}, and {addon_pack.name}."
+          )
+          PY
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ascendant-Tech-${{ steps.pack.outputs.version_label }}
+          path: |
+            ${{ steps.pack.outputs.bp_pack }}
+            ${{ steps.pack.outputs.rp_pack }}
+            ${{ steps.pack.outputs.addon_pack }}
+          if-no-files-found: error
+
+      - name: Create or update release from pushed tag
+        if: ${{ github.event_name == 'push' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.pack.outputs.release_tag }}
+          name: ${{ steps.pack.outputs.release_tag }}
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          files: |
+            ${{ steps.pack.outputs.bp_pack }}
+            ${{ steps.pack.outputs.rp_pack }}
+            ${{ steps.pack.outputs.addon_pack }}
+          overwrite_files: true
+
+      - name: Create or update release from manual run
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.create_release }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.pack.outputs.release_tag }}
+          name: ${{ inputs.release_name || steps.pack.outputs.release_tag }}
+          target_commitish: ${{ github.sha }}
+          prerelease: ${{ inputs.prerelease }}
+          files: |
+            ${{ steps.pack.outputs.bp_pack }}
+            ${{ steps.pack.outputs.rp_pack }}
+            ${{ steps.pack.outputs.addon_pack }}
+          overwrite_files: true

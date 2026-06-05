@@ -9,11 +9,11 @@
       "GSG"
     ],
     "key": {
-      "S": { "item": "minecraft:emerald" },
+      "S": { "item": "minecraft:emerald_block" },
       "G": { "item": "utilitycraft:gold_plate" },
       "E": { "item": "utilitycraft:emerald_mesh"}
     },
     "result": { "item": "utilitycraft:lucky_mesh" },
-    "unlock": [ { "item": "minecraft:emerald" } ]
+    "unlock": [ { "item": "minecraft:emerald_block" } ]
   }
 }

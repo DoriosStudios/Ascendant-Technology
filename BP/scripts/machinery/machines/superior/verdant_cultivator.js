@@ -9,6 +9,12 @@ import {
     runAdaptiveTickGate
 } from "../../../DoriosCore/main.js";
 import {
+    getVerdantCultivatorCropSpec,
+    getVerdantCultivatorCropSpecByBlockId,
+    getVerdantCultivatorTrackedDropIds,
+    isVerdantCultivatorSeedItem
+} from "../../../config/recipes/verdant_cultivator.js";
+import {
     formatEnergyCost,
     formatMachineEnergyBuffer,
     formatSecondsLabel,
@@ -47,6 +53,7 @@ const VERDANT_CULTIVATOR = Object.freeze({
         clockPulseTargetsPerQuantityLevel: 1,
         clockPulseBaseChance: 0.8,
         dropCollectionDelayTicks: 8,
+        dropCollectionRadius: 1.25,
         cycleTimeBaseSeconds: 1.1,
         cycleTimePerSideSeconds: 0.18,
         cycleTimePerHarvestSeconds: 0.08,
@@ -88,177 +95,14 @@ const CLOCK_TIER_CHANCE_MULTIPLIERS = Object.freeze({
     4: 0.05
 });
 
-const VANILLA_CROP_SPECS = Object.freeze({
-    "minecraft:wheat_seeds": Object.freeze({
-        seedItemId: "minecraft:wheat_seeds",
-        cropBlockId: "minecraft:wheat",
-        commandBlockId: "wheat",
-        ageState: "growth",
-        maxAge: 7,
-        validSoils: Object.freeze(["minecraft:farmland"]),
-        bonusExclusions: Object.freeze(["minecraft:wheat_seeds"]),
-        biomeTokens: Object.freeze(["plains", "meadow", "sunflower"]),
-        biomeTitle: "Plains Bloom"
-    }),
-    "minecraft:carrot": Object.freeze({
-        seedItemId: "minecraft:carrot",
-        cropBlockId: "minecraft:carrots",
-        commandBlockId: "carrots",
-        ageState: "growth",
-        maxAge: 7,
-        validSoils: Object.freeze(["minecraft:farmland"]),
-        bonusExclusions: Object.freeze([]),
-        biomeTokens: Object.freeze(["plains", "meadow", "sunflower"]),
-        biomeTitle: "Plains Bloom"
-    }),
-    "minecraft:potato": Object.freeze({
-        seedItemId: "minecraft:potato",
-        cropBlockId: "minecraft:potatoes",
-        commandBlockId: "potatoes",
-        ageState: "growth",
-        maxAge: 7,
-        validSoils: Object.freeze(["minecraft:farmland"]),
-        bonusExclusions: Object.freeze([]),
-        biomeTokens: Object.freeze(["plains", "meadow", "sunflower"]),
-        biomeTitle: "Plains Bloom"
-    }),
-    "minecraft:beetroot_seeds": Object.freeze({
-        seedItemId: "minecraft:beetroot_seeds",
-        cropBlockId: "minecraft:beetroot",
-        commandBlockId: "beetroot",
-        ageState: "growth",
-        maxAge: 7,
-        validSoils: Object.freeze(["minecraft:farmland"]),
-        bonusExclusions: Object.freeze(["minecraft:beetroot_seeds"]),
-        biomeTokens: Object.freeze(["plains", "meadow", "sunflower"]),
-        biomeTitle: "Plains Bloom"
-    }),
-    "minecraft:nether_wart": Object.freeze({
-        seedItemId: "minecraft:nether_wart",
-        cropBlockId: "minecraft:nether_wart",
-        commandBlockId: "nether_wart",
-        ageState: "age",
-        maxAge: 3,
-        validSoils: Object.freeze(["minecraft:soul_sand"]),
-        bonusExclusions: Object.freeze([]),
-        biomeTokens: Object.freeze(["nether"]),
-        biomeTitle: "Nether Resonance"
-    })
-});
+const VERDANT_FIELD_LAYOUT_CACHE = new Map();
+const VERDANT_FIELD_SCAN_CACHE = new Map();
 
-const UTILITY_TIER_SOILS = Object.freeze({
-    1: "utilitycraft:yellow_soil",
-    2: "utilitycraft:red_soil",
-    3: "utilitycraft:blue_soil",
-    4: "utilitycraft:black_soil"
-});
-
-const UTILITY_TIER_SEEDS = Object.freeze({
-    1: Object.freeze([
-        "utilitycraft:coal_seeds",
-        "utilitycraft:copper_seeds",
-        "utilitycraft:dyes_seeds",
-        "utilitycraft:glass_seeds",
-        "utilitycraft:gunpowder_seeds",
-        "utilitycraft:iron_seeds",
-        "utilitycraft:leather_seeds",
-        "utilitycraft:prismarine_crystals_seeds",
-        "utilitycraft:prismarine_shards_seeds",
-        "utilitycraft:water_seeds",
-        "utilitycraft:wool_seeds"
-    ]),
-    2: Object.freeze([
-        "utilitycraft:ghast_seeds",
-        "utilitycraft:glowstone_seeds",
-        "utilitycraft:gold_seeds",
-        "utilitycraft:honey_seeds",
-        "utilitycraft:lapis_seeds",
-        "utilitycraft:lava_seeds",
-        "utilitycraft:quartz_seeds",
-        "utilitycraft:redstone_seeds",
-        "utilitycraft:resin_seeds",
-        "utilitycraft:slime_seeds"
-    ]),
-    3: Object.freeze([
-        "utilitycraft:amethyst_seeds",
-        "utilitycraft:blaze_seeds",
-        "utilitycraft:diamond_seeds",
-        "utilitycraft:emerald_seeds",
-        "utilitycraft:enderpearl_seeds",
-        "utilitycraft:obsidian_seeds"
-    ]),
-    4: Object.freeze([
-        "utilitycraft:nether_star_seeds",
-        "utilitycraft:netherite_seeds",
-        "utilitycraft:shulker_seeds",
-        "utilitycraft:totem_seeds",
-        "utilitycraft:wither_seeds"
-    ])
-});
-
-const UTILITY_CROP_NAME_OVERRIDES = Object.freeze({
-    prismarine_crystals: "prismarine_crystal_crop",
-    nether_star: "netherstar_crop"
-});
-
-const UTILITY_BIOME_CONFIG = Object.freeze({
-    water: Object.freeze({
-        tokens: Object.freeze(["ocean", "river", "beach"]),
-        title: "Tidal Surge"
-    }),
-    prismarine_crystals: Object.freeze({
-        tokens: Object.freeze(["ocean", "river", "beach"]),
-        title: "Tidal Surge"
-    }),
-    prismarine_shards: Object.freeze({
-        tokens: Object.freeze(["ocean", "river", "beach"]),
-        title: "Tidal Surge"
-    }),
-    slime: Object.freeze({
-        tokens: Object.freeze(["swamp", "mangrove"]),
-        title: "Bog Bloom"
-    }),
-    resin: Object.freeze({
-        tokens: Object.freeze(["swamp", "mangrove"]),
-        title: "Bog Bloom"
-    }),
-    honey: Object.freeze({
-        tokens: Object.freeze(["flower", "meadow", "sunflower"]),
-        title: "Flower Burst"
-    }),
-    ghast: Object.freeze({
-        tokens: Object.freeze(["nether"]),
-        title: "Nether Resonance"
-    }),
-    glowstone: Object.freeze({
-        tokens: Object.freeze(["nether"]),
-        title: "Nether Resonance"
-    }),
-    quartz: Object.freeze({
-        tokens: Object.freeze(["nether"]),
-        title: "Nether Resonance"
-    }),
-    blaze: Object.freeze({
-        tokens: Object.freeze(["nether"]),
-        title: "Nether Resonance"
-    }),
-    netherite: Object.freeze({
-        tokens: Object.freeze(["nether"]),
-        title: "Nether Resonance"
-    }),
-    nether_star: Object.freeze({
-        tokens: Object.freeze(["nether"]),
-        title: "Nether Resonance"
-    }),
-    wither: Object.freeze({
-        tokens: Object.freeze(["nether"]),
-        title: "Nether Resonance"
-    })
-});
-
-const CROP_SPECS = Object.freeze({
-    ...VANILLA_CROP_SPECS,
-    ...buildUtilityCropSpecs()
+const VERDANT_FIELD_SCAN_INTERVALS = Object.freeze({
+    active: 4,
+    monitoring: 8,
+    blocked: 16,
+    idle: 20
 });
 
 DoriosAPI.register.blockComponent("verdant_cultivator", {
@@ -369,40 +213,27 @@ DoriosAPI.register.blockComponent("verdant_cultivator", {
     },
 
     onPlayerBreak(e) {
+        clearVerdantRuntimeCache(e.block);
         Machine.onDestroy(e);
     }
 });
 
-function buildUtilityCropSpecs() {
-    const specs = {};
+function buildVerdantCacheKey(block) {
+    const { location, dimension } = block ?? {};
+    if (!location) return "";
+    return `${String(dimension?.id ?? "unknown")}:${location.x},${location.y},${location.z}`;
+}
 
-    for (const [tierKey, seedIds] of Object.entries(UTILITY_TIER_SEEDS)) {
-        const tier = Number(tierKey);
-        const soilId = UTILITY_TIER_SOILS[tier];
-        if (!soilId) continue;
+function clearVerdantRuntimeCache(block) {
+    const cacheKey = buildVerdantCacheKey(block);
+    if (!cacheKey) return;
+    VERDANT_FIELD_LAYOUT_CACHE.delete(cacheKey);
+    VERDANT_FIELD_SCAN_CACHE.delete(cacheKey);
+}
 
-        for (const seedItemId of seedIds) {
-            const rawName = seedItemId.split(":")[1]?.replace(/_seeds$/, "") ?? "";
-            if (!rawName) continue;
-
-            const cropName = UTILITY_CROP_NAME_OVERRIDES[rawName] ?? `${rawName}_crop`;
-            const biomeConfig = UTILITY_BIOME_CONFIG[rawName] ?? null;
-
-            specs[seedItemId] = Object.freeze({
-                seedItemId,
-                cropBlockId: `utilitycraft:${cropName}`,
-                commandBlockId: `utilitycraft:${cropName}`,
-                ageState: "utilitycraft:age",
-                maxAge: 5,
-                validSoils: Object.freeze([soilId]),
-                bonusExclusions: Object.freeze([seedItemId]),
-                biomeTokens: Object.freeze([...(biomeConfig?.tokens ?? [])]),
-                biomeTitle: biomeConfig?.title ?? null
-            });
-        }
-    }
-
-    return specs;
+function invalidateVerdantFieldScan(block) {
+    const cacheKey = buildVerdantCacheKey(block);
+    if (cacheKey) VERDANT_FIELD_SCAN_CACHE.delete(cacheKey);
 }
 
 function resolveSeedTemplates(machine) {
@@ -420,11 +251,16 @@ function resolveSeedTemplates(machine) {
 
 function getCropSpec(typeId) {
     if (!typeId) return null;
-    return CROP_SPECS[typeId] ?? null;
+    return getVerdantCultivatorCropSpec(typeId);
+}
+
+function getCropSpecByBlockId(typeId) {
+    if (!typeId) return null;
+    return getVerdantCultivatorCropSpecByBlockId(typeId);
 }
 
 function isSupportedSeedItem(item) {
-    return Boolean(getCropSpec(item?.typeId));
+    return isVerdantCultivatorSeedItem(item);
 }
 
 function isClockItem(item) {
@@ -437,33 +273,28 @@ function buildOperation(machine) {
     const supportedFacing = Boolean(vectors);
     const rangeLevel = Math.max(0, Math.min(VERDANT_CULTIVATOR.defaults.maxRangeLevel, Number(machine.upgrades?.range) || 0));
     const quantityLevel = getQuantityUpgradeLevel(machine);
+    const hyperLevel = Math.max(0, Number(machine.upgrades?.hyper) || 0);
     const sideLength = VERDANT_CULTIVATOR.defaults.baseSideLength + (rangeLevel * 2);
     const clockInstalled = isClockItem(machine.inv.getItem(VERDANT_CULTIVATOR.slots.clock));
     const templates = resolveSeedTemplates(machine);
     const validTemplates = templates.filter(template => template.spec);
     const invalidTemplate = templates.find(template => template.invalid) ?? null;
     const bufferInfo = getOutputBufferInfo(machine);
+    const templateSignature = templates.map(template => template?.stack?.typeId ?? "empty").join(",");
+    const layoutSignature = [axis, sideLength, templateSignature].join("|");
 
     const baseOperation = {
         supportedFacing,
         axis,
         rangeLevel,
         quantityLevel,
+        hyperLevel,
         sideLength,
         clockInstalled,
-        forwardVector: vectors?.forward ?? null,
-        rearVector: vectors
-            ? {
-                x: -vectors.forward.x,
-                z: -vectors.forward.z
-            }
-            : null,
         seedTemplates: templates,
         activeTemplateCount: validTemplates.length,
         invalidTemplate,
         bufferFilledSlots: bufferInfo.filledSlots,
-        bufferTotalItems: bufferInfo.totalItems,
-        outputsFilled: bufferInfo.filledSlots,
         biomeId: null,
         activeBiomeBonusTitle: null,
         biomeBonusActive: false,
@@ -473,10 +304,9 @@ function buildOperation(machine) {
         plantTargets: [],
         replantTargets: [],
         growthTargets: [],
-        selectedGrowthTargets: [],
+        selectedGrowthTargetCount: 0,
         blockedCount: 0,
         invalidSoilCount: 0,
-        activeCellCount: 0,
         ready: false,
         message: null,
         energyCost: 0,
@@ -492,40 +322,160 @@ function buildOperation(machine) {
         };
     }
 
-    if (validTemplates.length <= 0) {
-        return {
-            ...baseOperation,
-            message: invalidTemplate ? "Unsupported Seed" : "Insert Seeds"
-        };
-    }
-
-    const field = buildFieldLayout(machine.block, sideLength, templates);
-    const biomeProbe = field.cells[0]?.position ?? machine.block.location;
-    const biomeId = getBiomeId(machine.dim, biomeProbe);
+    const field = getVerdantFieldRuntime(machine, layoutSignature, sideLength, templates);
+    const biomeId = field.biomeId ?? getBiomeId(machine.dim, field.cells[0]?.position ?? machine.block.location);
     const activeBiomeBonuses = dedupeBiomeBonuses(
         validTemplates
             .map(template => resolveBiomeBonus(template.spec, biomeId))
             .filter(result => result.active)
     );
 
+    const { harvestTargets, plantCandidates, growthCandidates, blockedCount, invalidSoilCount, detectedCropCount } = field.scan;
+
+    const plantBudgets = buildSeedBudgets(validTemplates);
+    const replantTargets = harvestTargets.map(target => ({
+        ...target,
+        template: null
+    }));
+    const plantTargets = reservePlantTargets(plantCandidates, plantBudgets);
+
+    const hyperPulseTargets = Math.max(VERDANT_CULTIVATOR.defaults.clockPulseBaseTargets, hyperLevel);
+    const quantityPulseTargets = quantityLevel * VERDANT_CULTIVATOR.defaults.clockPulseTargetsPerQuantityLevel;
+    const biomePulseTargets = activeBiomeBonuses.length > 0
+        ? VERDANT_CULTIVATOR.defaults.biomeBonusExtraPulseTargets
+        : 0;
+    const pulseTargetBudget = hyperPulseTargets + quantityPulseTargets + biomePulseTargets;
+    const pulseTargetCount = clockInstalled
+        ? Math.min(
+            growthCandidates.length,
+            Math.max(hyperPulseTargets, pulseTargetBudget)
+        )
+        : 0;
+
+    const ready = harvestTargets.length > 0 || plantTargets.length > 0 || pulseTargetCount > 0;
+    const hasOperatingProfile = validTemplates.length > 0 || detectedCropCount > 0;
+    const energyCost = ready
+        ? Math.max(
+            1,
+            VERDANT_CULTIVATOR.defaults.sweepCostBase
+                + (sideLength * VERDANT_CULTIVATOR.defaults.sweepCostPerSide)
+                + (harvestTargets.length * VERDANT_CULTIVATOR.defaults.harvestCost)
+                + ((plantTargets.length + replantTargets.length) * VERDANT_CULTIVATOR.defaults.plantCost)
+                + (pulseTargetCount * VERDANT_CULTIVATOR.defaults.growthCost)
+        )
+        : 0;
+    const cycleSeconds = ready
+        ? resolveOperationCycleSeconds({
+            sideLength,
+            harvestCount: harvestTargets.length,
+            plantCount: plantTargets.length + replantTargets.length,
+            pulseCount: pulseTargetCount
+        })
+        : 0;
+    const configSignature = buildConfigSignature({
+        axis,
+        sideLength,
+        quantityLevel,
+        clockInstalled,
+        templateSignature
+    });
+
+    return {
+        ...baseOperation,
+        hasValidSeeds: hasOperatingProfile,
+        biomeId,
+        activeBiomeBonusTitle: activeBiomeBonuses[0]?.title ?? null,
+        biomeBonusActive: activeBiomeBonuses.length > 0,
+        focusSpec: validTemplates[0]?.spec ?? harvestTargets[0]?.spec ?? growthCandidates[0]?.spec ?? null,
+        harvestTargets,
+        plantTargets,
+        replantTargets,
+        growthTargets: growthCandidates,
+        selectedGrowthTargetCount: pulseTargetCount,
+        blockedCount,
+        invalidSoilCount,
+        ready,
+        message: invalidTemplate && !hasOperatingProfile
+            ? "Unsupported Seed"
+            : resolveIdleMessage({ blockedCount, invalidSoilCount, ready }),
+        energyCost,
+        cycleSeconds,
+        configSignature
+    };
+}
+
+function getVerdantFieldRuntime(machine, layoutSignature, sideLength, templates) {
+    const cacheKey = buildVerdantCacheKey(machine?.block);
+    let field = cacheKey ? VERDANT_FIELD_LAYOUT_CACHE.get(cacheKey) : null;
+
+    if (field?.layoutSignature !== layoutSignature) {
+        field = {
+            layoutSignature,
+            cells: buildFieldLayout(machine.block, sideLength, templates).cells,
+            biomeId: null
+        };
+        field.biomeId = getBiomeId(machine.dim, field.cells[0]?.position ?? machine.block.location);
+        if (cacheKey) VERDANT_FIELD_LAYOUT_CACHE.set(cacheKey, field);
+        VERDANT_FIELD_SCAN_CACHE.delete(cacheKey);
+    }
+
+    const currentTick = Math.max(0, Math.floor(Number(system.currentTick ?? globalThis.tickCount ?? 0)));
+    const cachedScan = cacheKey ? VERDANT_FIELD_SCAN_CACHE.get(cacheKey) : null;
+    if (cachedScan?.layoutSignature !== layoutSignature || currentTick >= cachedScan.nextScanTick) {
+        const scan = scanFieldState(machine, field.cells);
+        const nextScanTick = currentTick + resolveFieldScanInterval(scan);
+        if (cacheKey) {
+            VERDANT_FIELD_SCAN_CACHE.set(cacheKey, {
+                layoutSignature,
+                nextScanTick,
+                scan
+            });
+        }
+        return {
+            ...field,
+            scan
+        };
+    }
+
+    return {
+        ...field,
+        scan: cachedScan.scan
+    };
+}
+
+function scanFieldState(machine, cells) {
     const harvestTargets = [];
     const plantCandidates = [];
     const growthCandidates = [];
     let blockedCount = 0;
     let invalidSoilCount = 0;
+    let detectedCropCount = 0;
 
-    for (const cell of field.cells) {
+    for (const cell of cells) {
         const evaluation = evaluateFieldCell(machine, cell);
+        const resolvedCell = evaluation.spec
+            ? {
+                ...cell,
+                spec: evaluation.spec
+            }
+            : cell;
+
         if (evaluation.kind === "harvest") {
-            harvestTargets.push(cell);
+            harvestTargets.push(resolvedCell);
+            detectedCropCount += 1;
             continue;
         }
         if (evaluation.kind === "plant") {
-            plantCandidates.push(cell);
+            plantCandidates.push(resolvedCell);
             continue;
         }
         if (evaluation.kind === "grow") {
-            growthCandidates.push(cell);
+            growthCandidates.push(resolvedCell);
+            detectedCropCount += 1;
+            continue;
+        }
+        if (evaluation.kind === "monitor") {
+            detectedCropCount += 1;
             continue;
         }
         if (evaluation.kind === "invalid_soil") {
@@ -537,77 +487,38 @@ function buildOperation(machine) {
         }
     }
 
-    const plantBudgets = buildSeedBudgets(validTemplates);
-    const replantTargets = reservePlantTargets(harvestTargets, plantBudgets);
-    const plantTargets = reservePlantTargets(plantCandidates, plantBudgets);
-
-    const quantityPulseTargets = quantityLevel * VERDANT_CULTIVATOR.defaults.clockPulseTargetsPerQuantityLevel;
-    const biomePulseTargets = activeBiomeBonuses.length > 0
-        ? VERDANT_CULTIVATOR.defaults.biomeBonusExtraPulseTargets
-        : 0;
-    const pulseTargetBudget = VERDANT_CULTIVATOR.defaults.clockPulseBaseTargets + quantityPulseTargets + biomePulseTargets;
-    const pulseTargetCount = clockInstalled
-        ? Math.min(
-            growthCandidates.length,
-            Math.max(VERDANT_CULTIVATOR.defaults.clockPulseBaseTargets, pulseTargetBudget)
-        )
-        : 0;
-    const selectedGrowthTargets = pulseTargetCount > 0
-        ? sampleEntries(growthCandidates, pulseTargetCount)
-        : [];
-
-    const ready = harvestTargets.length > 0 || plantTargets.length > 0 || selectedGrowthTargets.length > 0;
-    const energyCost = ready
-        ? Math.max(
-            1,
-            VERDANT_CULTIVATOR.defaults.sweepCostBase
-                + (sideLength * VERDANT_CULTIVATOR.defaults.sweepCostPerSide)
-                + (harvestTargets.length * VERDANT_CULTIVATOR.defaults.harvestCost)
-                + ((plantTargets.length + replantTargets.length) * VERDANT_CULTIVATOR.defaults.plantCost)
-                + (selectedGrowthTargets.length * VERDANT_CULTIVATOR.defaults.growthCost)
-        )
-        : 0;
-    const cycleSeconds = ready
-        ? resolveOperationCycleSeconds({
-            sideLength,
-            harvestCount: harvestTargets.length,
-            plantCount: plantTargets.length + replantTargets.length,
-            pulseCount: selectedGrowthTargets.length
-        })
-        : 0;
-    const configSignature = buildConfigSignature({
-        axis,
-        sideLength,
-        quantityLevel,
-        clockInstalled,
-        templates
-    });
-
     return {
-        ...baseOperation,
-        biomeId,
-        activeBiomeBonusTitle: activeBiomeBonuses[0]?.title ?? null,
-        biomeBonusActive: activeBiomeBonuses.length > 0,
         harvestTargets,
-        plantTargets,
-        replantTargets,
-        growthTargets: growthCandidates,
-        selectedGrowthTargets,
+        plantCandidates,
+        growthCandidates,
         blockedCount,
         invalidSoilCount,
-        activeCellCount: field.cells.length,
-        ready,
-        message: resolveIdleMessage({ blockedCount, invalidSoilCount, ready }),
-        energyCost,
-        cycleSeconds,
-        configSignature
+        detectedCropCount
     };
+}
+
+function resolveFieldScanInterval(scanResult) {
+    if ((scanResult?.harvestTargets?.length ?? 0) > 0
+        || (scanResult?.plantCandidates?.length ?? 0) > 0
+        || (scanResult?.growthCandidates?.length ?? 0) > 0) {
+        return VERDANT_FIELD_SCAN_INTERVALS.active;
+    }
+
+    if ((scanResult?.blockedCount ?? 0) > 0 || (scanResult?.invalidSoilCount ?? 0) > 0) {
+        return VERDANT_FIELD_SCAN_INTERVALS.blocked;
+    }
+
+    if ((scanResult?.detectedCropCount ?? 0) > 0) {
+        return VERDANT_FIELD_SCAN_INTERVALS.monitoring;
+    }
+
+    return VERDANT_FIELD_SCAN_INTERVALS.idle;
 }
 
 function buildFieldLayout(block, sideLength, templates) {
     const vectors = resolveHorizontalFieldVectors(block);
     const pattern = buildSeedPattern(templates);
-    if (!vectors || pattern.cells.length <= 0) return { cells: [] };
+    if (!vectors) return { cells: [] };
 
     const halfWidth = Math.floor(sideLength / 2);
     const cells = [];
@@ -619,16 +530,20 @@ function buildFieldLayout(block, sideLength, templates) {
 
     for (let row = 0; row < sideLength; row++) {
         for (let col = 0; col < sideLength; col++) {
-            const patternIndex = ((row % pattern.height) * pattern.width) + (col % pattern.width);
-            const template = pattern.cells[patternIndex] ?? null;
-            if (!template?.spec) continue;
+            const hasPattern = pattern.width > 0 && pattern.height > 0 && pattern.cells.length > 0;
+            const patternIndex = hasPattern
+                ? ((row % pattern.height) * pattern.width) + (col % pattern.width)
+                : -1;
+            const template = hasPattern
+                ? (pattern.cells[patternIndex] ?? null)
+                : null;
 
             const lateral = col - halfWidth;
             cells.push({
                 row,
                 col,
                 template,
-                spec: template.spec,
+                spec: template?.spec ?? null,
                 position: {
                     x: anchor.x + (vectors.forward.x * row) + (vectors.right.x * lateral),
                     y: anchor.y,
@@ -740,18 +655,32 @@ function evaluateFieldCell(machine, cell) {
     const block = machine.dim.getBlock(cell.position);
     if (!block) return { kind: "blocked" };
 
-    if (block.typeId === cell.spec.cropBlockId) {
-        if (isCropMature(block, cell.spec)) {
-            return { kind: "harvest" };
+    const blockSpec = getCropSpecByBlockId(block.typeId);
+    if (blockSpec) {
+        if (isCropMature(block, blockSpec)) {
+            return {
+                kind: "harvest",
+                spec: blockSpec
+            };
         }
-        if (canGrowCrop(block, cell.spec)) {
-            return { kind: "grow" };
+        if (canGrowCrop(block, blockSpec)) {
+            return {
+                kind: "grow",
+                spec: blockSpec
+            };
         }
-        return { kind: "monitor" };
+        return {
+            kind: "monitor",
+            spec: blockSpec
+        };
     }
 
     if (!block.isAir) {
         return { kind: "blocked" };
+    }
+
+    if (!cell.spec) {
+        return { kind: "idle" };
     }
 
     const soilBlock = machine.dim.getBlock({
@@ -883,8 +812,9 @@ function executeOperation(machine, operation, settings) {
     let overflowCount = 0;
     const harvestedPositions = [];
     const replantTargets = new Set((operation.replantTargets ?? []).map(target => buildPositionKey(target.position)));
+    const selectedGrowthTargets = getOperationSelectedGrowthTargets(operation);
 
-    for (const target of operation.selectedGrowthTargets) {
+    for (const target of selectedGrowthTargets) {
         const block = machine.dim.getBlock(target.position);
         if (!block || block.typeId !== target.spec.cropBlockId) continue;
 
@@ -916,6 +846,10 @@ function executeOperation(machine, operation, settings) {
         scheduleHarvestDropCollection(machine, harvestedPositions, operation, settings);
     }
 
+    if (harvestedCount > 0 || plantedCount > 0 || pulsedCount > 0) {
+        invalidateVerdantFieldScan(machine.block);
+    }
+
     return {
         harvestedCount,
         plantedCount,
@@ -924,6 +858,11 @@ function executeOperation(machine, operation, settings) {
         bonusCount,
         overflowCount
     };
+}
+
+function getOperationSelectedGrowthTargets(operation) {
+    const pulseTargetCount = Math.max(0, Number(operation?.selectedGrowthTargetCount) || 0);
+    return pulseTargetCount > 0 ? sampleEntries(operation?.growthTargets ?? [], pulseTargetCount) : [];
 }
 
 function growCropBlock(block, spec) {
@@ -993,10 +932,16 @@ function plantTarget(machine, target) {
     });
 
     if (!block || !block.isAir || !soilBlock || !isValidSoil(soilBlock, target.spec)) return false;
-    if (!consumeSeedFromSlot(machine, target.template?.slot, target.spec.seedItemId)) return false;
+
+    const shouldConsumeInternalSeed = typeof target.template?.slot === "number";
+    if (shouldConsumeInternalSeed && !consumeSeedFromSlot(machine, target.template.slot, target.spec.seedItemId)) {
+        return false;
+    }
 
     if (!prepareSoilForPlanting(machine, soilBlock, target.spec)) {
-        restoreSeedToSlot(machine, target.template?.slot, target.spec.seedItemId);
+        if (shouldConsumeInternalSeed) {
+            restoreSeedToSlot(machine, target.template.slot, target.spec.seedItemId);
+        }
         return false;
     }
 
@@ -1004,7 +949,9 @@ function plantTarget(machine, target) {
         return true;
     }
 
-    restoreSeedToSlot(machine, target.template?.slot, target.spec.seedItemId);
+    if (shouldConsumeInternalSeed) {
+        restoreSeedToSlot(machine, target.template.slot, target.spec.seedItemId);
+    }
     return false;
 }
 
@@ -1061,20 +1008,15 @@ function scheduleHarvestDropCollection(machine, harvestedPositions, operation, s
     const operationSnapshot = {
         quantityLevel: operation.quantityLevel,
         biomeBonusActive: operation.biomeBonusActive,
-        seedTemplates: (operation.seedTemplates ?? []).map(template => ({
-            spec: template?.spec
-                ? {
-                    bonusExclusions: [...(template.spec.bonusExclusions ?? [])]
-                }
-                : null
-        }))
+        trackedDropIds: buildTrackedDropIds(operation),
+        harvestExclusionIds: [...buildHarvestExclusionSet(operation)]
     };
 
     system.runTimeout(() => {
         const block = machine.dim.getBlock(machineLocation);
         if (!block || block.typeId !== "utilitycraft:verdant_cultivator") return;
 
-        const delayedMachine = new Machine(block, settings);
+        const delayedMachine = new Machine(block, settings, true);
         if (!delayedMachine.valid || !delayedMachine.inv) return;
 
         delayedMachine.transferItems("complex");
@@ -1084,7 +1026,10 @@ function scheduleHarvestDropCollection(machine, harvestedPositions, operation, s
 }
 
 function collectHarvestDrops(machine, harvestedPositions, operation) {
-    const bounds = buildCollectionBounds(harvestedPositions);
+    const bounds = buildCollectionBounds(harvestedPositions, {
+        margin: VERDANT_CULTIVATOR.defaults.dropCollectionRadius,
+        radiusPadding: 2.75
+    });
     if (!bounds) {
         return {
             collectedCount: 0,
@@ -1099,28 +1044,31 @@ function collectHarvestDrops(machine, harvestedPositions, operation) {
         maxDistance: bounds.radius
     });
 
+    const trackedDropIds = new Set(operation?.trackedDropIds ?? []);
     const exclusions = buildHarvestExclusionSet(operation);
     let collectedCount = 0;
     let bonusCount = 0;
     let overflowCount = 0;
 
     for (const itemEntity of nearbyItems) {
-        if (!isWithinBounds(itemEntity?.location, bounds)) continue;
-
         const stack = itemEntity.getComponent("minecraft:item")?.itemStack;
         if (!stack?.typeId || !Number.isFinite(stack.amount) || stack.amount <= 0) continue;
+        if (trackedDropIds.size > 0 && !trackedDropIds.has(stack.typeId)) continue;
+        if (!isWithinBounds(itemEntity?.location, bounds)) continue;
+        if (!isWithinHarvestCollectionRadius(itemEntity?.location, harvestedPositions, VERDANT_CULTIVATOR.defaults.dropCollectionRadius)) continue;
 
         const bonusAmount = isHarvestBonusEligible(stack, exclusions)
             ? rollHarvestBonus(operation.quantityLevel, operation.biomeBonusActive)
             : 0;
         const totalAmount = stack.amount + bonusAmount;
-        const itemLocation = itemEntity.location;
+        const itemLocation = teleportHarvestDropToMachine(machine, itemEntity);
 
         itemEntity.remove();
 
         const augmented = cloneItemStack(stack, totalAmount);
-        const insertedAmount = insertItemIntoSlots(machine.inv, augmented, VERDANT_CULTIVATOR.slots.outputs);
-        const overflowAmount = Math.max(0, totalAmount - insertedAmount);
+        const storageResult = storeCollectedHarvestStack(machine, augmented);
+        const insertedAmount = storageResult.insertedAmount;
+        const overflowAmount = storageResult.overflowAmount;
 
         collectedCount += insertedAmount;
         bonusCount += bonusAmount;
@@ -1138,7 +1086,92 @@ function collectHarvestDrops(machine, harvestedPositions, operation) {
     };
 }
 
+function buildTrackedDropIds(operation) {
+    const trackedSpecs = [];
+
+    for (const target of operation?.harvestTargets ?? []) {
+        if (target?.spec) trackedSpecs.push(target.spec);
+    }
+
+    if (trackedSpecs.length <= 0) {
+        for (const template of operation?.seedTemplates ?? []) {
+            if (template?.spec) trackedSpecs.push(template.spec);
+        }
+    }
+
+    return getVerdantCultivatorTrackedDropIds(trackedSpecs);
+}
+
+function storeCollectedHarvestStack(machine, stack) {
+    if (!machine?.inv || !stack?.typeId || !Number.isFinite(stack.amount) || stack.amount <= 0) {
+        return {
+            insertedAmount: 0,
+            overflowAmount: 0
+        };
+    }
+
+    let remaining = stack.amount;
+    let insertedAmount = 0;
+
+    const preferredSeedSlots = getPreferredSeedCollectionSlots(machine, stack.typeId);
+    if (preferredSeedSlots.length > 0) {
+        const seedInserted = insertItemIntoSlots(
+            machine.inv,
+            cloneItemStack(stack, remaining),
+            preferredSeedSlots
+        );
+        insertedAmount += seedInserted;
+        remaining -= seedInserted;
+    }
+
+    if (remaining > 0) {
+        const outputInserted = insertItemIntoSlots(
+            machine.inv,
+            cloneItemStack(stack, remaining),
+            VERDANT_CULTIVATOR.slots.outputs
+        );
+        insertedAmount += outputInserted;
+        remaining -= outputInserted;
+    }
+
+    return {
+        insertedAmount,
+        overflowAmount: Math.max(0, remaining)
+    };
+}
+
+function getPreferredSeedCollectionSlots(machine, typeId) {
+    if (!machine?.inv || !isSupportedSeedItem({ typeId })) {
+        return [];
+    }
+
+    const matchingSlots = [];
+    const emptySlots = [];
+
+    for (const slot of VERDANT_CULTIVATOR.slots.seeds) {
+        const current = machine.inv.getItem(slot);
+        if (!current) {
+            emptySlots.push(slot);
+            continue;
+        }
+
+        if (current.typeId === typeId && current.amount < current.maxAmount) {
+            matchingSlots.push(slot);
+        }
+    }
+
+    if (matchingSlots.length > 0) {
+        return matchingSlots;
+    }
+
+    return emptySlots.length > 0 ? [emptySlots[0]] : [];
+}
+
 function buildHarvestExclusionSet(operation) {
+    if (Array.isArray(operation?.harvestExclusionIds)) {
+        return new Set(operation.harvestExclusionIds);
+    }
+
     const exclusions = new Set();
 
     for (const template of operation.seedTemplates ?? []) {
@@ -1189,17 +1222,19 @@ function getOutputBufferInfo(machine) {
     return { filledSlots, totalItems };
 }
 
-function buildConfigSignature({ axis, sideLength, quantityLevel, clockInstalled, templates }) {
-    const templateSignature = templates
-        .map(template => template.stack?.typeId ?? "empty")
-        .join(",");
+function buildConfigSignature({ axis, sideLength, quantityLevel, clockInstalled, templateSignature, templates }) {
+    const resolvedTemplateSignature = typeof templateSignature === "string" && templateSignature.length > 0
+        ? templateSignature
+        : (typeof templates === "string"
+            ? templates
+            : templates.map(template => template?.stack?.typeId ?? "empty").join(","));
 
     return [
         axis,
         sideLength,
         quantityLevel,
         clockInstalled ? 1 : 0,
-        templateSignature
+        resolvedTemplateSignature
     ].join("|");
 }
 
@@ -1234,7 +1269,7 @@ function resolveIdleMessage({ blockedCount, invalidSoilCount, ready }) {
 function resolveChargingMessage(operation) {
     if ((operation.harvestTargets?.length ?? 0) > 0) return "Cultivating";
     if ((operation.plantTargets?.length ?? 0) > 0) return "Planting";
-    if ((operation.selectedGrowthTargets?.length ?? 0) > 0) return "Pulsing";
+    if (getSelectedGrowthTargetCount(operation) > 0) return "Pulsing";
     return "Charging";
 }
 
@@ -1335,12 +1370,27 @@ function capitalizeWord(value) {
 }
 
 function sampleEntries(entries, count) {
+    if (!Array.isArray(entries) || entries.length <= 0 || count <= 0) {
+        return [];
+    }
+
+    if (count >= entries.length) {
+        return [...entries];
+    }
+
     const pool = [...entries];
     for (let index = pool.length - 1; index > 0; index--) {
         const swapIndex = Math.floor(Math.random() * (index + 1));
         [pool[index], pool[swapIndex]] = [pool[swapIndex], pool[index]];
     }
     return pool.slice(0, count);
+}
+
+function getSelectedGrowthTargetCount(operation) {
+    return Math.max(
+        0,
+        Number(operation?.selectedGrowthTargetCount) || 0
+    );
 }
 
 function transferOutputBufferToRear(machine) {
@@ -1452,7 +1502,7 @@ function cloneItemStack(stack, amount = stack?.amount ?? 1) {
     return clone;
 }
 
-function buildCollectionBounds(positions = []) {
+function buildCollectionBounds(positions = [], { margin = 0.75, radiusPadding = 2.5 } = {}) {
     if (!Array.isArray(positions) || positions.length === 0) return null;
 
     let minX = Infinity;
@@ -1479,19 +1529,20 @@ function buildCollectionBounds(positions = []) {
         y: (minY + maxY) / 2,
         z: (minZ + maxZ) / 2
     };
-    const radius = Math.max(
-        Math.abs(maxX - center.x),
-        Math.abs(maxY - center.y),
-        Math.abs(maxZ - center.z)
-    ) + 2;
+    const halfExtents = {
+        x: Math.abs(maxX - center.x) + margin,
+        y: Math.abs(maxY - center.y) + margin,
+        z: Math.abs(maxZ - center.z) + margin
+    };
+    const radius = Math.hypot(halfExtents.x, halfExtents.y, halfExtents.z) + radiusPadding;
 
     return {
-        minX: minX - 0.75,
-        minY: minY - 0.75,
-        minZ: minZ - 0.75,
-        maxX: maxX + 0.75,
-        maxY: maxY + 0.75,
-        maxZ: maxZ + 0.75,
+        minX: minX - margin,
+        minY: minY - margin,
+        minZ: minZ - margin,
+        maxX: maxX + margin,
+        maxY: maxY + margin,
+        maxZ: maxZ + margin,
         center,
         radius
     };
@@ -1504,8 +1555,52 @@ function isWithinBounds(location, bounds) {
         && location.z >= bounds.minZ && location.z <= bounds.maxZ;
 }
 
+function isWithinHarvestCollectionRadius(location, harvestedPositions, radius) {
+    if (!location || !Array.isArray(harvestedPositions) || harvestedPositions.length <= 0) return false;
+
+    const maxDistance = Math.max(0, Number(radius) || 0);
+    const maxDistanceSquared = maxDistance * maxDistance;
+
+    for (const position of harvestedPositions) {
+        if (!position) continue;
+
+        const deltaX = location.x - (position.x + 0.5);
+        const deltaY = location.y - (position.y + 0.5);
+        const deltaZ = location.z - (position.z + 0.5);
+        const distanceSquared = (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
+
+        if (distanceSquared <= maxDistanceSquared) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function buildPositionKey(position) {
     return `${position?.x ?? 0},${position?.y ?? 0},${position?.z ?? 0}`;
+}
+
+function teleportHarvestDropToMachine(machine, itemEntity) {
+    const intakeLocation = buildHarvestIntakeLocation(machine);
+
+    try {
+        itemEntity.teleport(intakeLocation, {
+            checkForBlocks: false,
+            dimension: machine.dim
+        });
+        return intakeLocation;
+    } catch {
+        return itemEntity?.location ?? intakeLocation;
+    }
+}
+
+function buildHarvestIntakeLocation(machine) {
+    return {
+        x: (machine?.block?.location?.x ?? 0) + 0.5,
+        y: (machine?.block?.location?.y ?? 0) + 1.05,
+        z: (machine?.block?.location?.z ?? 0) + 0.5
+    };
 }
 
 function toSpawnPosition(location) {
@@ -1580,7 +1675,7 @@ function buildMachineLore(machine, context = {}) {
     if (context.clockInstalled) {
         fieldInfo.push({
             label: "Pulse",
-            value: context.selectedGrowthTargets?.length ?? 0
+            value: getSelectedGrowthTargetCount(context)
         });
     }
     if ((context.invalidSoilCount ?? 0) > 0) {

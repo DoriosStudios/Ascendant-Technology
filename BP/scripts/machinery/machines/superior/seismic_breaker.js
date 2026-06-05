@@ -9,6 +9,8 @@ import {
     formatEnergyCost,
     formatMachineEnergyBuffer,
     getContainerTransferSlots,
+    resolveEffectiveEnergyCost,
+    resolveManualProgressSpendRate,
     resolveAboveContainer,
     shouldRefreshSuperiorUi,
     syncSuperiorButtonPanel
@@ -209,9 +211,10 @@ DoriosAPI.register.blockComponent('seismic_breaker', {
         }
 
         const consumption = machine.boosts.consumption
+        const spendRate = resolveManualProgressSpendRate(machine)
         const energyToConsume = Math.min(
             machine.energy.get(),
-            machine.rate,
+            spendRate,
             Math.max(0, operation.energyCost - progress) * consumption
         )
 
@@ -245,6 +248,7 @@ function buildOperation(machine, mode, precision, settings, enabled = true) {
     const firstBreakable = breakableTargets[0] ?? null
     const baseEnergyCost = Number(settings?.machine?.energy_cost ?? SEISMIC_BREAKER.defaults.energyCost)
     const energyCost = Math.max(1, baseEnergyCost * Math.max(1, breakableTargets.length))
+    const effectiveEnergyCost = resolveEffectiveEnergyCost(energyCost, machine?.boosts?.consumption ?? 1)
     const storageTarget = resolveAboveContainer(machine)
 
     return {
@@ -259,6 +263,7 @@ function buildOperation(machine, mode, precision, settings, enabled = true) {
         hasPotentialTarget: targetBlocks.length > 0,
         blockedCount: Math.max(0, targetBlocks.length - breakableTargets.length),
         energyCost,
+        effectiveEnergyCost,
         firstBreakable,
         storageTarget,
         lineLength: mode.id === SEISMIC_BREAKER.modes.line.id
@@ -800,7 +805,7 @@ function buildMachineLore(operation = {}) {
         },
         {
             label: 'Cost',
-            value: formatEnergyCost(operation.energyCost ?? 0)
+            value: formatEnergyCost(operation.effectiveEnergyCost ?? operation.energyCost ?? 0)
         }
     ]
 

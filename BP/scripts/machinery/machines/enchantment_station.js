@@ -1,5 +1,16 @@
 import { ItemStack, EnchantmentTypes, world, system } from '@minecraft/server'
-import { Machine, Energy, FluidManager } from '../../DoriosCore/main.js'
+import {
+    Machine,
+    Energy,
+    FluidManager,
+    extractEnchantments,
+    getEnchantableComponent,
+    isSlotAvailable,
+    normalizeEnchantmentId,
+    resolveAvailableSlots,
+    safeGetItem,
+    applyEnchantmentsToStack as applyCoreEnchantmentsToStack
+} from '../../DoriosCore/main.js'
 import { shouldRefreshEntityUi } from '../../DoriosCore/machinery/ui_refresh.js'
 
 // ==================== SLOT LAYOUT (32 total) ====================
@@ -331,42 +342,6 @@ function getModuleLevels(inv, slots = station.slots.modules) {
     return levels
 }
 
-function resolveInventorySize(inv) {
-    const raw = Number(inv?.size ?? inv?.containerSize ?? inv?.inventorySize ?? NaN)
-    if (!Number.isFinite(raw) || raw <= 0) return null
-    return Math.floor(raw)
-}
-
-function isSlotAvailable(inv, slot) {
-    if (!inv || !Number.isInteger(slot) || slot < 0) return false
-
-    const size = resolveInventorySize(inv)
-    if (size !== null) {
-        return slot < size
-    }
-
-    try {
-        inv.getItem(slot)
-        return true
-    } catch {
-        return false
-    }
-}
-
-function resolveAvailableSlots(inv, slots) {
-    if (!Array.isArray(slots) || slots.length === 0) return []
-    return slots.filter(slot => isSlotAvailable(inv, slot))
-}
-
-function safeGetItem(inv, slot) {
-    if (!isSlotAvailable(inv, slot)) return undefined
-    try {
-        return inv.getItem(slot)
-    } catch {
-        return undefined
-    }
-}
-
 function resolveModuleLevel(typeId) {
     if (!typeId) return null
 
@@ -440,7 +415,7 @@ function processDisenchantSlot(machine, settings, tickSpeed, xpTank) {
         return fail('error', 'Invalid Item')
     }
 
-    const current = readEnchantments(stack)
+    const current = extractEnchantments(stack)
     const enchantCount = current.length
 
     if (enchantCount <= 0) {
@@ -715,17 +690,46 @@ function ensureDisenchantXpTank(entity, settings) {
 function computeAbsorbXpGain(enchantments) {
     if (!Array.isArray(enchantments) || enchantments.length <= 0) return 0
 
-    const validLevels = enchantments
-        .map(entry => Math.max(0, Math.floor(Number(entry?.level ?? 0))))
-        .filter(level => level > 0)
+    let total = 0
+    for (const enchantment of enchantments) {
+        const level = Math.max(0, Math.floor(Number(enchantment?.level ?? 0)))
+        if (level <= 0) continue
 
-    if (validLevels.length <= 0) return 0
+        const maxLevel = resolveEnchantmentMaxLevel(enchantment)
+        const perLevel = resolveXpPerLevelFromMax(maxLevel)
+        total += perLevel * level
+    }
 
-    const count = validLevels.length
-    const sumLevels = validLevels.reduce((sum, level) => sum + level, 0)
-    const averageLevel = sumLevels / count
-    const avgRecipeXp = Number(station?.xp?.per_enchant ?? 1000) * averageLevel
-    return Math.max(1, Math.floor(avgRecipeXp * count))
+    return Math.max(0, Math.floor(total))
+}
+
+function resolveEnchantmentMaxLevel(enchantment) {
+    const directMax = Number(enchantment?.type?.maxLevel)
+    if (Number.isFinite(directMax) && directMax > 0) {
+        return Math.floor(directMax)
+    }
+
+    const enchantmentId = normalizeEnchantmentId(enchantment?.type)
+    if (enchantmentId && EnchantmentTypes?.get) {
+        try {
+            const resolvedType = EnchantmentTypes.get(enchantmentId)
+            const resolvedMax = Number(resolvedType?.maxLevel)
+            if (Number.isFinite(resolvedMax) && resolvedMax > 0) {
+                return Math.floor(resolvedMax)
+            }
+        } catch { }
+    }
+
+    return 1
+}
+
+function resolveXpPerLevelFromMax(maxLevel) {
+    const value = Math.max(1, Math.floor(Number(maxLevel) || 1))
+    if (value >= 5) return 1000
+    if (value === 4) return 1250
+    if (value === 3) return 1666
+    if (value === 2) return 2500
+    return 5000
 }
 
 function registerDisenchantAbsorbUsage(entity, gainedXp) {
@@ -748,7 +752,7 @@ function executeDisenchantAbsorb(entity, settings) {
     if (!sourceStack || sourceStack.amount !== 1) return false
     if (!getEnchantableComponent(sourceStack)) return false
 
-    const enchantments = readEnchantments(sourceStack)
+    const enchantments = extractEnchantments(sourceStack)
     if (!Array.isArray(enchantments) || enchantments.length <= 0) return false
 
     const catalyst = safeGetItem(inv, station.slots.disenchant.catalyst)
@@ -853,7 +857,7 @@ function applyDisenchantOperation({ machine, sourceStack, sourceSlot, catalystSl
         return { ok: false, message: 'Invalid State' }
     }
 
-    const currentEnchantments = readEnchantments(sourceStack)
+    const currentEnchantments = extractEnchantments(sourceStack)
     if (!Array.isArray(currentEnchantments) || currentEnchantments.length <= 0) {
         return { ok: false, message: 'No Enchantments' }
     }
@@ -924,7 +928,7 @@ function createEnchantedBookFromEnchantment(enchantment) {
     if (!type || level <= 0) return null
 
     const bookStack = new ItemStack('minecraft:enchanted_book', 1)
-    const applied = applyEnchantmentsToStack(bookStack, [{ type, level }])
+    const applied = applyCoreEnchantmentsToStack(bookStack, [{ type, level }])
     if (!applied) return null
     return bookStack
 }
@@ -935,7 +939,7 @@ function rebuildDisenchantSourceStack(stack, remainingEnchantments) {
     if (!removed) return null
 
     if (Array.isArray(remainingEnchantments) && remainingEnchantments.length > 0) {
-        const reapplied = applyEnchantmentsToStack(stack, remainingEnchantments)
+        const reapplied = applyCoreEnchantmentsToStack(stack, remainingEnchantments)
         if (!reapplied) return null
         return stack
     }
@@ -1234,7 +1238,7 @@ function buildEnchantPlan(stack, enchantComp, modules) {
         }
     }
 
-    const current = readEnchantments(stack)
+    const current = extractEnchantments(stack)
     const curation = curateCursedEnchantments(current, modules)
     const curatedEnchantments = curation.enchantments
     const curatingChanged = curation.removedCount > 0
@@ -1496,40 +1500,6 @@ function canWriteEnchantments(enchantComp) {
     return false
 }
 
-function readEnchantments(stack) {
-    if (!stack || typeof stack.getComponent !== 'function') return []
-    const compEnchantments = stack.getComponent('minecraft:enchantments')
-        ?? stack.getComponent('enchantments')
-        ?? null
-    const compEnchantable = stack.getComponent('minecraft:enchantable')
-        ?? null
-
-    let list = []
-    try {
-        if (compEnchantments && typeof compEnchantments.getEnchantments === 'function') {
-            list = compEnchantments.getEnchantments()
-        } else if (compEnchantable && typeof compEnchantable.getEnchantments === 'function') {
-            list = compEnchantable.getEnchantments()
-        } else if (Array.isArray(compEnchantments?.enchantments)) {
-            list = compEnchantments.enchantments
-        } else if (Array.isArray(compEnchantable?.enchantments)) {
-            list = compEnchantable.enchantments
-        }
-    } catch {
-        return []
-    }
-
-    if (!Array.isArray(list)) return []
-    return list
-        .map(entry => {
-            if (!entry?.type) return null
-            const level = Number(entry.level ?? entry.lvl ?? entry.amount ?? 0)
-            if (level <= 0) return null
-            return { type: entry.type, level }
-        })
-        .filter(Boolean)
-}
-
 function hasEnchantmentsChanged(before, after) {
     const beforeNormalized = normalizeEnchantmentList(before)
     const afterNormalized = normalizeEnchantmentList(after)
@@ -1577,12 +1547,6 @@ function getEnchantmentAdditions(before, after) {
         const id = normalizeEnchantmentId(entry?.type)
         return id && !existingIds.has(id)
     })
-}
-
-function normalizeEnchantmentId(type) {
-    if (!type) return ''
-    const id = type.id ?? type.identifier ?? type.typeId ?? type.name ?? ''
-    return typeof id === 'string' ? id.toLowerCase() : ''
 }
 
 function normalizeEnchantmentList(list) {
@@ -1696,52 +1660,10 @@ function resolveEnchantPlanIds(stack, enchantComp, level, existingIds = new Set(
     return ids
 }
 
-function applyEnchantmentsToStack(targetStack, enchantments) {
-    if (!Array.isArray(enchantments) || enchantments.length === 0) return false
-    const comp = getEnchantableComponent(targetStack)
-    if (!comp) return false
-
-    const sanitized = enchantments
-        .map(entry => {
-            const level = Number(entry?.level) || 0
-            if (!entry?.type || level <= 0) return null
-            return { type: entry.type, level }
-        })
-        .filter(entry => entry && canApplyEnchantment(comp, entry.type))
-
-    if (!sanitized.length) return false
-
-    const tryApply = () => {
-        if (typeof comp.addEnchantments === 'function') {
-            comp.addEnchantments(sanitized)
-            return true
-        }
-        if (typeof comp.addEnchantment === 'function') {
-            for (const entry of sanitized) {
-                try {
-                    comp.addEnchantment(entry)
-                } catch { }
-            }
-            return true
-        }
-        return false
-    }
-
-    try {
-        if (!tryApply()) return false
-        const signature = buildEnchantmentSignature(sanitized)
-        setStoredEnchantSignature(targetStack, signature)
-        return true
-    } catch (error) {
-        console.warn('[enchantment_station] Failed to apply enchantments:', error)
-        return false
-    }
-}
-
 function applyEnchantmentPlanToStack(targetStack, enchantments) {
     if (!targetStack || !Array.isArray(enchantments)) return false
 
-    const current = readEnchantments(targetStack)
+    const current = extractEnchantments(targetStack)
     if (!hasEnchantmentsChanged(current, enchantments)) {
         return false
     }
@@ -1752,7 +1674,11 @@ function applyEnchantmentPlanToStack(targetStack, enchantments) {
             return false
         }
         // Fallback for components that do not expose bulk removal.
-        return applyEnchantmentsToStack(targetStack, enchantments)
+        const appliedFallback = applyCoreEnchantmentsToStack(targetStack, enchantments)
+        if (appliedFallback) {
+            setStoredEnchantSignature(targetStack, buildEnchantmentSignature(enchantments))
+        }
+        return appliedFallback
     }
 
     if (enchantments.length === 0) {
@@ -1760,7 +1686,11 @@ function applyEnchantmentPlanToStack(targetStack, enchantments) {
         return true
     }
 
-    return applyEnchantmentsToStack(targetStack, enchantments)
+    const applied = applyCoreEnchantmentsToStack(targetStack, enchantments)
+    if (applied) {
+        setStoredEnchantSignature(targetStack, buildEnchantmentSignature(enchantments))
+    }
+    return applied
 }
 
 function removeAllEnchantmentsFromStack(targetStack) {
@@ -1775,7 +1705,7 @@ function removeAllEnchantmentsFromStack(targetStack) {
     } catch { }
 
     if (typeof comp.removeEnchantment === 'function') {
-        const current = readEnchantments(targetStack)
+        const current = extractEnchantments(targetStack)
         for (const entry of current) {
             try {
                 comp.removeEnchantment(entry.type)
@@ -1785,14 +1715,6 @@ function removeAllEnchantmentsFromStack(targetStack) {
     }
 
     return false
-}
-
-function getEnchantableComponent(stack) {
-    if (!stack || typeof stack.getComponent !== 'function') return null
-    return stack.getComponent('minecraft:enchantable')
-        ?? stack.getComponent('minecraft:enchantments')
-        ?? stack.getComponent('enchantments')
-        ?? null
 }
 
 function getReinforcementPoints(stack) {
@@ -2008,7 +1930,7 @@ function updateDisenchantHud(machine, result, modules = { enchantability: 0, rei
     const books = safeGetItem(machine.inv, station.slots.disenchant.books)
 
     const itemName = stack ? formatIdentifier(stack.typeId) : 'None'
-    const enchantments = stack ? readEnchantments(stack) : []
+    const enchantments = stack ? extractEnchantments(stack) : []
     const enchantCount = enchantments.length
     const catalystAmount = getCatalystAmount(catalyst)
     const bookAmount = getDisenchantBookAmount(books)

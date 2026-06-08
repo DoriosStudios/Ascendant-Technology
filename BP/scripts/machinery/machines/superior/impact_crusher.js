@@ -12,7 +12,8 @@ import {
     ADAPTIVE_CHECK_RESULT,
     runAdaptiveTickGate,
     formatItemName,
-    formatFluidDisplayName
+    formatFluidDisplayName,
+    resolveItemMaxStackSize as resolveMaxStackSize
 } from "../../../DoriosCore/main.js";
 import { getPulverizerRecipes } from "../../../config/recipes/pulverizer.js";
 import {
@@ -130,7 +131,6 @@ const STATE_KEYS = Object.freeze({
     lockActive: "impact_crusher:lock_active",
     lockSignature: "impact_crusher:lock_signature"
 });
-const MAX_STACK_SIZE_CACHE = new Map();
 const ALL_OUTPUT_SLOTS = Object.freeze([
     ...IMPACT_CRUSHER.slots.laneOneOutputs,
     ...IMPACT_CRUSHER.slots.laneTwoOutputs
@@ -1304,31 +1304,6 @@ function buildOutputPlan(machine, outputId, outputSlots) {
     }
 
     return { slots, totalSpace, compatibleSlotCount };
-}
-
-function resolveMaxStackSize(slot, itemId) {
-    if (slot?.maxAmount) return slot.maxAmount;
-
-    const cached = MAX_STACK_SIZE_CACHE.get(itemId);
-    if (cached) return cached;
-
-    try {
-        const probe = new ItemStack(itemId, 1);
-        if (probe?.maxAmount) {
-            MAX_STACK_SIZE_CACHE.set(itemId, probe.maxAmount);
-            return probe.maxAmount;
-        }
-        const component = probe?.getComponent?.("minecraft:max_stack_size");
-        if (typeof component?.value === "number") {
-            MAX_STACK_SIZE_CACHE.set(itemId, component.value);
-            return component.value;
-        }
-    } catch {
-        // Ignore invalid probes and fall back to a standard stack size.
-    }
-
-    MAX_STACK_SIZE_CACHE.set(itemId, 64);
-    return 64;
 }
 
 function distributeOutput(machine, outputId, amount, outputSlots) {

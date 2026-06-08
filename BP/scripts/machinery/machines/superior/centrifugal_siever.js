@@ -6,6 +6,7 @@ import {
     buildOverclockLoreLine,
     appendLoreSection,
     formatItemName,
+    resolveItemMaxStackSize as resolveMaxStackSize,
     ADAPTIVE_CHECK_RESULT,
     runAdaptiveTickGate
 } from "../../../DoriosCore/main.js";
@@ -65,8 +66,6 @@ const CENTRIFUGAL_SIEVER = Object.freeze({
     }),
     lockProperty: "ascendant:centrifugal_siever_locked_input"
 });
-
-const MAX_STACK_SIZE_CACHE = new Map();
 
 DoriosAPI.register.blockComponent("centrifugal_siever", {
     beforeOnPlayerPlace(e, { params: settings }) {
@@ -902,32 +901,6 @@ function estimateExpectedOutputs(entries, batchCount, meshData) {
     }
 
     return Math.max(0, Math.round(total));
-}
-
-function resolveMaxStackSize(slot, outputId) {
-    if (slot?.maxAmount) return slot.maxAmount;
-    if (!outputId) return 64;
-
-    const cached = MAX_STACK_SIZE_CACHE.get(outputId);
-    if (cached) return cached;
-
-    try {
-        const probe = new ItemStack(outputId, 1);
-        if (probe?.maxAmount) {
-            MAX_STACK_SIZE_CACHE.set(outputId, probe.maxAmount);
-            return probe.maxAmount;
-        }
-        const component = probe?.getComponent?.("minecraft:max_stack_size");
-        if (typeof component?.value === "number") {
-            MAX_STACK_SIZE_CACHE.set(outputId, component.value);
-            return component.value;
-        }
-    } catch {
-        // Ignore invalid probes and fall back to a standard stack size.
-    }
-
-    MAX_STACK_SIZE_CACHE.set(outputId, 64);
-    return 64;
 }
 
 function transferOutputSlots(machine) {

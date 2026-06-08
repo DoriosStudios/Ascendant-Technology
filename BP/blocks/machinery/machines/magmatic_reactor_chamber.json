@@ -1,0 +1,81 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "utilitycraft:magmatic_reactor_chamber",
+            "menu_category": {
+                "category": "construction"
+            },
+            "states": {
+                "utilitycraft:on": [false, true],
+                "utilitycraft:axis": ["east", "west", "north", "south", "up", "down"],
+                "utilitycraft:rotation": [0, 1, 2, 3]
+            }
+        },
+        "components": {
+            "utilitycraft:magmatic_reactor_chamber": {
+                "rotation": "facing",
+                "entity": {
+                    "type": "machine",
+                    "input_type": "complex",
+                    "output_type": "complex",
+                    "inventory_size": 16,
+                    "input_range": [3, 8],
+                    "output_range": [9, 9],
+                    "fluid": true
+                },
+                "machine": {
+                    "energy_cap": 420000000,
+                    "energy_cost": 4000,
+                    "fluid_cap": 128000,
+                    "rate_speed_base": 24000,
+                    "dynamic_rate": true,
+                    "upgrades": [10, 11, 12, 13],
+                    "hidden_slots": [14]
+                }
+            },
+            "utilitycraft:special_container": {
+                "Input Slots": [3, 4, 5, 6, 7, 8],
+                "Output": 9,
+                "Upgrade Slots": [10, 11, 12, 13],
+                "Lava Tank": 15
+            },
+            "utilitycraft:machine_recipes": {
+                "type": "magmatic_reactor_chamber"
+            },
+            "minecraft:geometry": "geometry.utilitycraft_block_2",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "utilitycraft_absolute_magmator_off",
+                    "render_method": "alpha_test"
+                }
+            },
+            "minecraft:tick": {
+                "interval_range": [2, 2]
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1
+            },
+            "minecraft:destructible_by_explosion": false,
+            "tag:dorios:machine": {},
+            "tag:dorios:energy": {},
+            "tag:dorios:fluid": {},
+            "tag:dorios:item": {},
+            "tag:minecraft:is_pickaxe_item_destructible": {}
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('utilitycraft:on') == 1",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "utilitycraft_absolute_magmator_on",
+                            "render_method": "alpha_test"
+                        }
+                    },
+                    "minecraft:light_emission": 4
+                }
+            }
+        ]
+    }
+}

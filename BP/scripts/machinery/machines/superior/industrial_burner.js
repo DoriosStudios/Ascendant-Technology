@@ -10,7 +10,8 @@ import {
     ADAPTIVE_CHECK_RESULT,
     runAdaptiveTickGate,
     formatItemName,
-    formatFluidDisplayName
+    formatFluidDisplayName,
+    resolveItemMaxStackSize as resolveMaxStackSize
 } from "../../../DoriosCore/main.js";
 import { getIndustrialBurnerRecipes } from "../../../config/recipes/industrial_burner.js";
 import { shouldRefreshSuperiorUi } from "./utils.js";
@@ -56,8 +57,6 @@ const INDUSTRIAL_BURNER = Object.freeze({
 });
 
 const LANE_PROGRESS_KEYS = INDUSTRIAL_BURNER.slots.inputs.map((_, index) => `industrial_burner:lane_progress_${index}`);
-const MAX_STACK_SIZE_CACHE = new Map();
-
 DoriosAPI.register.blockComponent("industrial_burner", {
     beforeOnPlayerPlace(e, { params: settings }) {
         Machine.spawnMachineEntity(e, settings, () => {
@@ -526,31 +525,6 @@ function resolveLaneEnergyChargeCap(lane, machine) {
     const energyPerSecond = progressPerSecond * consumptionMultiplier;
     const intervalTicks = Math.max(1, INDUSTRIAL_BURNER.defaults.tickIntervalTicks);
     return Math.max(0, (energyPerSecond / 20) * intervalTicks);
-}
-
-function resolveMaxStackSize(slot, itemId) {
-    if (slot?.maxAmount) return slot.maxAmount;
-
-    const cached = MAX_STACK_SIZE_CACHE.get(itemId);
-    if (cached) return cached;
-
-    try {
-        const probe = new ItemStack(itemId, 1);
-        if (probe?.maxAmount) {
-            MAX_STACK_SIZE_CACHE.set(itemId, probe.maxAmount);
-            return probe.maxAmount;
-        }
-        const component = probe?.getComponent?.("minecraft:max_stack_size");
-        if (typeof component?.value === "number") {
-            MAX_STACK_SIZE_CACHE.set(itemId, component.value);
-            return component.value;
-        }
-    } catch {
-        // fall through to vanilla-like default
-    }
-
-    MAX_STACK_SIZE_CACHE.set(itemId, 64);
-    return 64;
 }
 
 function canOutputFit(outputStack, itemId, amount) {

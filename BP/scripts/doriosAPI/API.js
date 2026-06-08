@@ -304,14 +304,14 @@ globalThis.DoriosAPI = {
          *   - **UtilityCraft machines** like Assemblers and Simple Inputs.
          * - Additional compatibility will be added in the future.
          *
-         * @function addItem
+         * @function tryAddItem
          * @memberof DoriosAPI
          * @param {Block | Entity | Container} target Target entity, block, or container.
          * @param {ItemStack | String} itemStack Item to insert. Can be an ItemStack or an item identifier string.
          * @param {number} [amount=1] Number of items to insert when `itemStack` is a string. Ignored if an ItemStack is provided.
          * @returns {boolean|number} Whether the item was successfully added or the amount inserted.
          */
-        addItem(target, itemStack, amount = 1) {
+        tryAddItem(target, itemStack, amount = 1) {
             if (itemStack == undefined || target == undefined) return false;
 
             // Normalize itemStack
@@ -321,7 +321,7 @@ globalThis.DoriosAPI = {
 
             // Direct container
             if (target.size) {
-                target.addItem(itemStack);
+                target.tryAddItem(itemStack);
                 return true;
             }
 
@@ -332,7 +332,7 @@ globalThis.DoriosAPI = {
 
             // Vanilla containers
             if (target.permutation && DoriosAPI.constants.vanillaContainers.includes(target.typeId)) {
-                targetInv.addItem(itemStack);
+                targetInv.tryAddItem(itemStack);
                 return true;
             }
 
@@ -414,7 +414,7 @@ globalThis.DoriosAPI = {
                 if (isMachine) {
                     return DoriosAPI.containers.insertIntoInventory(targetInv, itemStack, blockedSlots);
                 }
-                targetInv.addItem(itemStack);
+                targetInv.tryAddItem(itemStack);
                 return true;
             }
 
@@ -436,7 +436,7 @@ globalThis.DoriosAPI = {
          *   - **UtilityCraft machines** like Assemblers and Simple Inputs.
          * - Additional compatibility will be added in the future.
          *
-         * @function addItem
+         * @function tryAddItem
          * @memberof DoriosAPI
          * @param {Vector3} loc World coordinates of the target.
          * @param {Dimension} dim Dimension where the target exists.
@@ -444,7 +444,7 @@ globalThis.DoriosAPI = {
          * @param {number} [amount=1] Number of items to insert when `itemStack` is a string. Ignored if an ItemStack is provided.
          * @returns {boolean} Whether the item was successfully added.
          */
-        addItemAt(loc, dim, itemStack, amount = 1) {
+        tryAddItemAt(loc, dim, itemStack, amount = 1) {
             if (!loc || !dim || !itemStack) return false
 
             let target = null
@@ -461,7 +461,7 @@ globalThis.DoriosAPI = {
             }
 
             if (!target) return false
-            return this.addItem(target, itemStack, amount)
+            return this.tryAddItem(target, itemStack, amount)
         },
         /**
          * This function was created by **Dorios Studios** to handle
@@ -471,7 +471,7 @@ globalThis.DoriosAPI = {
          * - Works with both **entities** and **containers** as parameters.
          * - Automatically extracts `minecraft:inventory.container` if an
          *   entity is passed instead of a container.
-         * - Uses {@link addItemStack} for all target insertions, ensuring
+         * - Uses {@link tryAddItemStack} for all target insertions, ensuring
          *   compatibility with Dorios containers, Storage Drawers, and
          *   UtilityCraft machines.
          *
@@ -524,8 +524,8 @@ globalThis.DoriosAPI = {
                     continue;
                 }
 
-                // Try to add to target using addItemStack
-                const added = this.addItem(target, itemToTransfer);
+                // Try to add to target using tryAddItemStack
+                const added = this.tryAddItem(target, itemToTransfer);
 
                 if (added === true) {
                     // Fully transferred → clear slot
@@ -551,7 +551,7 @@ globalThis.DoriosAPI = {
          * - Works with both **entities** and **containers** as parameters.
          * - Automatically extracts `minecraft:inventory.container` if an
          *   entity is passed instead of a container.
-         * - Uses {@link addItemStack} for all target insertions, ensuring
+         * - Uses {@link tryAddItemStack} for all target insertions, ensuring
          *   compatibility with Dorios containers, Storage Drawers, and
          *   UtilityCraft machines.
          *
@@ -615,8 +615,8 @@ globalThis.DoriosAPI = {
                     continue;
                 }
 
-                // Try to add to target using addItemStack
-                const added = this.addItem(target, itemToTransfer);
+                // Try to add to target using tryAddItemStack
+                const added = this.tryAddItem(target, itemToTransfer);
 
                 if (added === true) {
                     // Fully transferred → clear the slot
@@ -640,7 +640,7 @@ globalThis.DoriosAPI = {
          * ## Features
          * - Works with both blocks and entities at the given positions.
          * - Automatically detects valid inventories using `minecraft:inventory`.
-         * - Uses DoriosAPI.containers.addItem() for full compatibility with Dorios containers and vanilla chests.
+         * - Uses DoriosAPI.containers.tryAddItem() for full compatibility with Dorios containers and vanilla chests.
          *
          * @function transferItemsBetween
          * @memberof DoriosAPI
@@ -698,8 +698,8 @@ globalThis.DoriosAPI = {
                     }
                 }
 
-                // Fallback → use addItem for Dorios machines and others
-                const added = this.addItem(target.entity, item);
+                // Fallback → use tryAddItem for Dorios machines and others
+                const added = this.tryAddItem(target.entity, item);
                 if (added === true) {
                     sourceInv.setItem(slot, undefined);
                     transferred = item.maxAmount;

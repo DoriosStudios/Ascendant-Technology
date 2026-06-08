@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../UtilityCraft-Heavy-Machinery"
+		},
+		{
+			"path": "../UtilityCraft-Digital-Storage"
 		}
 	],
 	"settings": {

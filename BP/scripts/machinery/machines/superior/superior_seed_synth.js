@@ -6,6 +6,7 @@ import {
     buildOverclockLoreLine,
     appendLoreSection,
     formatItemName,
+    resolveItemMaxStackSize as resolveMaxStackSize,
     ADAPTIVE_CHECK_RESULT,
     runAdaptiveTickGate
 } from "../../../DoriosCore/main.js";
@@ -104,7 +105,6 @@ const GENETIC_SEED_SYNTHESIZER = Object.freeze({
 });
 
 const PROFILE_LIST = Object.freeze(Object.values(GENETIC_SEED_SYNTHESIZER.profiles));
-const MAX_STACK_SIZE_CACHE = new Map();
 const VALID_ITEM_ID_CACHE = new Map();
 const LOCK_SEPARATOR = "||";
 
@@ -868,33 +868,6 @@ function countItemsAcrossSlots(machine, slots, typeId) {
 function hasMatchingInputLane(machine, slot, typeId) {
     const current = machine.inv.getItem(slot);
     return Boolean(current && current.typeId === typeId);
-}
-
-function resolveMaxStackSize(slot, outputId) {
-    if (slot?.maxAmount) return slot.maxAmount;
-    if (!outputId) return 64;
-
-    const cached = MAX_STACK_SIZE_CACHE.get(outputId);
-    if (cached) return cached;
-
-    try {
-        const probe = new ItemStack(outputId, 1);
-        if (probe?.maxAmount) {
-            MAX_STACK_SIZE_CACHE.set(outputId, probe.maxAmount);
-            return probe.maxAmount;
-        }
-
-        const component = probe?.getComponent?.("minecraft:max_stack_size");
-        if (typeof component?.value === "number") {
-            MAX_STACK_SIZE_CACHE.set(outputId, component.value);
-            return component.value;
-        }
-    } catch {
-        // Ignore invalid probes and fall back to a standard stack size.
-    }
-
-    MAX_STACK_SIZE_CACHE.set(outputId, 64);
-    return 64;
 }
 
 function isValidItemId(id) {

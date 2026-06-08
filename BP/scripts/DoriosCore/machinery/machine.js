@@ -803,15 +803,16 @@ export class Machine {
         this.block = block
         this.entity = getCachedBlockEntity(block)
         if (!this.entity) return null
+        const machineSettings = settings?.machine ?? {}
         if (!this.entity.scoreboardIdentity) {
             Energy.initialize(this.entity)
         }
         this.inv = this.entity?.getComponent('inventory')?.container
         this.energy = new Energy(this.entity)
-        if (this.entity.getDynamicProperty("dorios:base_energy_cap") === undefined && settings?.machine?.energy_cap) {
-            this.entity.setDynamicProperty("dorios:base_energy_cap", settings.machine.energy_cap)
+        if (this.entity.getDynamicProperty("dorios:base_energy_cap") === undefined && machineSettings.energy_cap) {
+            this.entity.setDynamicProperty("dorios:base_energy_cap", machineSettings.energy_cap)
         }
-        this.upgrades = this.getUpgradeLevels(settings.machine.upgrades)
+        this.upgrades = this.getUpgradeLevels(machineSettings.upgrades ?? [])
         this.boosts = this.calculateBoosts(this.upgrades)
 
         this.overclock = this.readOverclockState()
@@ -824,11 +825,11 @@ export class Machine {
         this.baseRate = energyRateUnits
         this.rate = this.baseRate * getTickSpeed()
         this.processingRate = this.baseRate * hyperMultiplier * getTickSpeed()
-        this.hiddenSlots = Array.isArray(settings?.machine?.hidden_slots)
-            ? settings.machine.hidden_slots.filter(slot => typeof slot === "number")
+        this.hiddenSlots = Array.isArray(machineSettings.hidden_slots)
+            ? machineSettings.hidden_slots.filter(slot => typeof slot === "number")
             : []
-        this.overclockSlot = Number.isFinite(settings?.machine?.overclock_slot)
-            ? Number(settings.machine.overclock_slot)
+        this.overclockSlot = Number.isFinite(machineSettings.overclock_slot)
+            ? Number(machineSettings.overclock_slot)
             : undefined
 
         if (this.overclockSlot === undefined && this.hiddenSlots.length && this.inv?.size) {

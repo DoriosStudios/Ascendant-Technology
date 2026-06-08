@@ -9,7 +9,7 @@ export const BUTTON_PANEL_DEFAULTS = Object.freeze({
 	defaultIconItemId: "utilitycraft:ui_filler",
 	statePrefix: "state",
 	cooldownPrefix: "cooldown",
-	defaultPressHint: "Take or replace the button item to switch.",
+	defaultPressHint: "Press the button to switch.",
 	fallbackButtonLabel: "Button"
 });
 

@@ -1,4 +1,4 @@
-import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, formatItemName, resolveMachineRecipeList } from '../../DoriosCore/main.js'
+import { Machine, Energy, buildOverclockLoreLine, applyDynamicRecipeRate, formatItemName, resolveMachineRecipeList, resolveItemMaxStackSize as resolveMaxStackSize } from '../../DoriosCore/main.js'
 import { startHeaterAura, tickHeaterAura, stopHeaterAuraAt } from '../multi_core.js'
 import { getEnergizerRecipes } from '../../config/recipes/energizer.js'
 
@@ -166,20 +166,6 @@ function getOutputCapacity(slot, outputId, perCraft, yieldBoost = 1) {
     if (space <= 0) return 0
     const effectivePerCraft = Math.max(1, perCraft * yieldBoost)
     return Math.floor(space / effectivePerCraft)
-}
-
-function resolveMaxStackSize(slot, outputId) {
-    if (slot?.maxAmount) return slot.maxAmount
-    if (!outputId) return 64
-    try {
-        const probe = new ItemStack(outputId, 1)
-        if (probe?.maxAmount) return probe.maxAmount
-        const comp = probe?.getComponent?.("minecraft:max_stack_size")
-        if (typeof comp?.value === "number") return comp.value
-    } catch {
-        // Fall back to default stack size
-    }
-    return 64
 }
 
 function processCraft(machine, channel, crafts) {

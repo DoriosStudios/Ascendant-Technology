@@ -2,6 +2,7 @@
 // Shared utility functions used across multiple machine files.
 // Extracted to avoid duplication and centralize maintenance.
 
+import { ItemStack } from '@minecraft/server'
 import { FluidManager } from './fluidStorage.js'
 import { TICKS_PER_SECOND } from '../constants.js'
 import { shouldRefreshEntityUi } from './ui_refresh.js'
@@ -11,6 +12,7 @@ const FLUID_RECIPE_LOOKUP_CACHE = new WeakMap()
 const ADAPTIVE_CHECK_STATE = new WeakMap()
 const ENTITY_JSON_ARRAY_CACHE = new WeakMap()
 const ENTITY_RENDER_SIGNATURE_CACHE = new WeakMap()
+const ITEM_MAX_STACK_CACHE = new Map()
 
 export const ADAPTIVE_CHECK_RESULT = Object.freeze({
     moved: 'moved',
@@ -568,12 +570,21 @@ export function clampChance(value) {
     return Math.max(0, Math.min(1, parsed))
 }
 
-function getEnchantableComponent(stack) {
+export function getEnchantableComponent(stack) {
     if (!stack || typeof stack.getComponent !== 'function') return null
     return stack.getComponent('minecraft:enchantable')
         ?? stack.getComponent('minecraft:enchantments')
         ?? stack.getComponent('enchantments')
         ?? null
+}
+
+/**
+ * Normalizes enchantment identifiers from API objects.
+ */
+export function normalizeEnchantmentId(type) {
+    if (!type) return ''
+    const id = type.id ?? type.identifier ?? type.typeId ?? type.name ?? ''
+    return typeof id === 'string' ? id.toLowerCase() : ''
 }
 
 /**
@@ -783,6 +794,86 @@ function applyMetadataToSlot(machine, slotIndex, itemId, metadata, options = {})
 // ──────────────────────────────────────────────────────
 // INVENTORY HELPERS
 // ──────────────────────────────────────────────────────
+
+/**
+ * Resolves inventory size from different container implementations.
+ */
+export function resolveInventorySize(inv) {
+    const raw = Number(inv?.size ?? inv?.containerSize ?? inv?.inventorySize ?? NaN)
+    if (!Number.isFinite(raw) || raw <= 0) return null
+    return Math.floor(raw)
+}
+
+/**
+ * Checks if a slot index is valid and readable for a container.
+ */
+export function isSlotAvailable(inv, slot) {
+    if (!inv || !Number.isInteger(slot) || slot < 0) return false
+
+    const size = resolveInventorySize(inv)
+    if (size !== null) {
+        return slot < size
+    }
+
+    try {
+        inv.getItem(slot)
+        return true
+    } catch {
+        return false
+    }
+}
+
+/**
+ * Safely reads a slot item, returning undefined when unavailable.
+ */
+export function safeGetItem(inv, slot) {
+    if (!isSlotAvailable(inv, slot)) return undefined
+    try {
+        return inv.getItem(slot)
+    } catch {
+        return undefined
+    }
+}
+
+/**
+ * Filters a slot list to only valid/readable container slots.
+ */
+export function resolveAvailableSlots(inv, slots) {
+    if (!Array.isArray(slots) || slots.length === 0) return []
+    return slots.filter(slot => isSlotAvailable(inv, slot))
+}
+
+/**
+ * Resolves the max stack size for an item id, with cache and slot fallback.
+ */
+export function resolveItemMaxStackSize(slot, itemId, fallback = 64) {
+    if (slot?.maxAmount) return slot.maxAmount
+    if (!itemId) return fallback
+
+    const cached = ITEM_MAX_STACK_CACHE.get(itemId)
+    if (Number.isFinite(cached) && cached > 0) {
+        return cached
+    }
+
+    try {
+        const probe = new ItemStack(itemId, 1)
+        if (probe?.maxAmount) {
+            ITEM_MAX_STACK_CACHE.set(itemId, probe.maxAmount)
+            return probe.maxAmount
+        }
+
+        const component = probe?.getComponent?.('minecraft:max_stack_size')
+        if (typeof component?.value === 'number' && component.value > 0) {
+            ITEM_MAX_STACK_CACHE.set(itemId, component.value)
+            return component.value
+        }
+    } catch {
+        // fall back to default stack size
+    }
+
+    ITEM_MAX_STACK_CACHE.set(itemId, fallback)
+    return fallback
+}
 
 /**
  * Adds items to an inventory slot, stacking when possible.

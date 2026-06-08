@@ -11,6 +11,10 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Has two modes:
     - **Mass**: Process fish drops in batches with regular water consumption. Faster than Autofisher.
     - **Expedition**: Process fish drops with increased water consumption, higher luck and a bonus of +1 tier to the current mesh used.
+- Added **Arcane Enchanter**
+  - Standalone superior enchanting machine split from Enchantment Station.
+  - Focuses only on enchant application and level-up behavior without repair or disenchant flow.
+  - Supports module-driven enchant strength and faster cycle pacing.
 - Added **Arc-Press Forge**
   - Superior version of Electro Press with 4 input slots and 4 output slots.
   - Accepts four upgrades.
@@ -30,10 +34,23 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - Added **Cryo Freezer**
   - Standalone superior branch of the Cryo Chamber focused only on freezing and cold-crafting recipes.
   - Keeps a dedicated 5x3 freezing grid with independent slot processing, using one shared tank for Water and Cryofluid-backed recipes without competing with stabilization or Cryofluid generation.
+- Added **Cryofluid Synthesizer**
+  - Standalone superior branch of the Cryo Chamber dedicated to industrial Cryofluid output.
+  - Includes **Stable** mode for steady processing and **Impulse** mode for burst production.
+  - Built to scale Cryofluid supply independently from Cryo Chamber operation.
 - Added **Dual Siever**
   - Superior split-path siever with two independent mesh lanes in one machine.
   - Shares energy, upgrades, steam tank, and output buffering across both lanes.
   - Can process both lanes in the same cycle when resources are available.
+- Added **Dense Active Generators**
+  - Added three superior active-generator variants: **Dense Furnator Array**, **Dense Magmator Core**, and **Dense Thermo Matrix**.
+  - Dense Furnator now runs multi-window fuel ignition for larger sustained burn batches.
+  - Dense Magmator resolves generation in controlled lava steps for more stable output pacing.
+  - Dense Thermo requires advanced coolant support and tracks internal heat/steam behavior.
+- Added **Disenchanter**
+  - Standalone superior disenchant machine with dedicated extraction and fluid conversion logic.
+  - Supports **Extraction** mode for enchanted-book output and **Absorption** mode for XP-fluid generation.
+  - Keeps disenchant logistics separate from Enchantment Station and Arcane Enchanter flows.
 - Added **Genetic Seed Synthesizer**
   - Superior version of Seed Synthesizer with 4 seed input lanes and 15 output slots.
   - Can switch between Growth, Resilience, and Yield profiles.
@@ -52,6 +69,10 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Uses Lava for impact cycles and accepts Water, Cryofluid, or Saline Coolant for thermal control.
   - Supports grouped crushing runs for larger processing batches.
   - Base crushing cycles now cost more energy, but complete much faster than before.
+- Added **Magmatic Reactor Chamber**
+  - Superior thermal machine focused on high-heat industrial processing.
+  - Tracks internal heat and steam windows for safer efficiency scaling.
+  - Adds overheat management behavior to reward sustained but controlled operation.
 - Added **Reinforced Importer** and **Reinforced Exporter**
   - Reinforced fluid networks now use dedicated blocks for moving fluids into and out of the cable backbone.
   - Reinforced Cable still carries fluids across the network, but it no longer pulls from or pushes into distant tanks by itself.
@@ -72,6 +93,10 @@ Heavy processing and block automation still anchor this draft, but this pass als
     - Accepts four upgrades. 
     - Can optionally consume Steam to accelerate crushing batches.
     - Supports Quantity Upgrades for larger grouped batches.
+- Added **Reinforcement Anvil**
+  - Standalone superior machine for advanced item repair and reinforcement.
+  - Supports **Repair** and **Reinforce** modes with module-based reinforcement targets.
+  - Includes support for Reinforcement Module IV/V progression targets.
 - Added **Refining Table**
   - New machine dedicated to **StatsCore** equipment refinement.
   - Uses an internal **XP tank** instead of direct player XP spending during each roll.
@@ -218,6 +243,10 @@ Heavy processing and block automation still anchor this draft, but this pass als
 
 ### Runtime Registration
 - Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Impact Crusher, Verdant Cultivator, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
+- Added native runtime registration for Arcane Enchanter, Cryofluid Synthesizer, Disenchanter, Magmatic Reactor Chamber, and Reinforcement Anvil.
+  - Includes machine scripts, block registration, and item catalog integration for each superior branch.
+- Added native runtime registration for Dense Active Generators.
+  - Includes Dense Furnator Array, Dense Magmator Core, and Dense Thermo Matrix scripts and block definitions.
 - Added native runtime registration for Cryo Stabilizer as a standalone superior Cryo Chamber branch.
   - Includes block, recipe, machine script, dedicated UI definition, item catalog integration, localization, and classic superior texture registration.
 - Added native runtime registration for Cryo Freezer as a standalone superior Cryo Chamber branch.

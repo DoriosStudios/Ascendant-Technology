@@ -3,10 +3,14 @@ import {
     Machine,
     FluidManager,
     applyDynamicRecipeRate,
+    applyEnchantmentsToStack as applyCoreEnchantmentsToStack,
     buildOverclockLoreLine,
     appendLoreSection,
     extractEnchantments,
     formatItemName,
+    getEnchantableComponent,
+    normalizeEnchantmentId,
+    resolveItemMaxStackSize as resolveMaxStackSize,
     tickGate
 } from "../../../DoriosCore/main.js";
 import { abyssalFisherConfig, abyssalFisherLoot } from "../../../config/recipes/abyssal_fisher.js";
@@ -80,7 +84,6 @@ const ABYSALL_FISHER = Object.freeze({
 });
 
 const MODE_LIST = Object.freeze(Object.values(ABYSALL_FISHER.modes));
-const MAX_STACK_SIZE_CACHE = new Map();
 const WATER_TYPES = new Set([
     "minecraft:water",
     "minecraft:flowing_water",
@@ -1130,33 +1133,6 @@ function cloneItemStack(stack, amount = stack?.amount ?? 1) {
     return clone;
 }
 
-function resolveMaxStackSize(slot, outputId) {
-    if (slot?.maxAmount) return slot.maxAmount;
-    if (!outputId) return 64;
-
-    const cached = MAX_STACK_SIZE_CACHE.get(outputId);
-    if (cached) return cached;
-
-    try {
-        const probe = new ItemStack(outputId, 1);
-        if (probe?.maxAmount) {
-            MAX_STACK_SIZE_CACHE.set(outputId, probe.maxAmount);
-            return probe.maxAmount;
-        }
-
-        const component = probe?.getComponent?.("minecraft:max_stack_size");
-        if (typeof component?.value === "number") {
-            MAX_STACK_SIZE_CACHE.set(outputId, component.value);
-            return component.value;
-        }
-    } catch {
-        // Ignore invalid probes and fall back to a standard stack size.
-    }
-
-    MAX_STACK_SIZE_CACHE.set(outputId, 64);
-    return 64;
-}
-
 function getStackLore(stack) {
     const lore = typeof stack?.getLore === "function" ? stack.getLore() : [];
     return Array.isArray(lore) ? lore : [];
@@ -1171,12 +1147,6 @@ function getDurabilityDamage(stack) {
 function areStringArraysEqual(left, right) {
     if (left.length !== right.length) return false;
     return left.every((value, index) => value === right[index]);
-}
-
-function normalizeEnchantmentId(type) {
-    if (!type) return "";
-    const id = type.id ?? type.identifier ?? type.typeId ?? type.name ?? "";
-    return typeof id === "string" ? id.toLowerCase() : "";
 }
 
 function normalizeEnchantmentList(list) {
@@ -1340,14 +1310,6 @@ function getCompatibleEnchantmentTypes(item) {
     return types.filter(type => canApplyEnchantment(enchantable, type));
 }
 
-function getEnchantableComponent(stack) {
-    if (!stack || typeof stack.getComponent !== "function") return null;
-    return stack.getComponent("minecraft:enchantable")
-        ?? stack.getComponent("minecraft:enchantments")
-        ?? stack.getComponent("enchantments")
-        ?? null;
-}
-
 function canApplyEnchantment(enchantComp, type) {
     if (!enchantComp || !type) return false;
     if (typeof enchantComp.canAddEnchantment === "function") {
@@ -1372,13 +1334,6 @@ function canApplyEnchantment(enchantComp, type) {
     return true;
 }
 
-function canWriteEnchantments(enchantComp) {
-    if (!enchantComp) return false;
-    if (typeof enchantComp.addEnchantments === "function") return true;
-    if (typeof enchantComp.addEnchantment === "function") return true;
-    return false;
-}
-
 function sanitizeEnchantmentEntries(enchantComp, enchantments) {
     if (!Array.isArray(enchantments)) return [];
 
@@ -1401,30 +1356,25 @@ function sanitizeEnchantmentEntries(enchantComp, enchantments) {
 
 function applyEnchantmentEntriesToStack(targetStack, enchantments) {
     const enchantComp = getEnchantableComponent(targetStack);
-    if (!enchantComp || !canWriteEnchantments(enchantComp)) return false;
+    if (!enchantComp) return false;
 
     const sanitized = sanitizeEnchantmentEntries(enchantComp, enchantments);
     if (!sanitized.length) return false;
 
-    try {
-        enchantComp.removeAllEnchantments?.();
-    } catch {
-        // Ignore components that do not support explicit clearing.
-    }
-
-    try {
-        if (typeof enchantComp.addEnchantments === "function") {
-            enchantComp.addEnchantments(sanitized);
-        } else if (typeof enchantComp.addEnchantment === "function") {
+    let applied = applyCoreEnchantmentsToStack(targetStack, sanitized);
+    if (!applied && typeof enchantComp.addEnchantment === "function") {
+        try {
+            enchantComp.removeAllEnchantments?.();
             for (const entry of sanitized) {
                 enchantComp.addEnchantment(entry);
             }
-        } else {
-            return false;
+            applied = true;
+        } catch {
+            applied = false;
         }
-    } catch {
-        return false;
     }
+
+    if (!applied) return false;
 
     return buildEnchantmentSignature(extractEnchantments(targetStack)) === buildEnchantmentSignature(sanitized);
 }

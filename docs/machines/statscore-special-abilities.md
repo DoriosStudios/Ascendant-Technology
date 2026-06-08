@@ -7,15 +7,15 @@ Most special abilities are **awakened in the Refining Table**. If an item still 
 ## Combat and hybrid abilities
 
 - **Bleeding**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium / Lucky Swords
+	- **Equipment:** Sword
 	- **Effect:** Hits can apply a bleed that keeps damaging the target over time, now with red dust particles on each bleed tick.
 
 - **Sweeping**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium / Lucky AIOTs
+	- **Equipment:** AIOT
 	- **Effect:** Exclusive to AIOTs, releasing wide strikes that damage nearby enemies.
 
 - **Skewer**
-	- **Equipment:** Wooden / Stone / Iron / Golden / Diamond / Netherite Spears
+	- **Equipment:** Spear
 	- **Effect:** Hits can mark targets so follow-up damage lands harder.
 
 - **Aftershock**
@@ -35,7 +35,7 @@ Most special abilities are **awakened in the Refining Table**. If an item still 
 	- **Effect:** Marks the struck target and chains into up to **3** extra nearby targets.
 
 - **Reaper**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium Hoes
+	- **Equipment:** Hoe
 	- **Effect:** Adds **+2 Attack Damage**, damages nearby mobs of the same type as the original target, and also powers the crop-harvest behavior listed below.
 
 - **Berserk**
@@ -45,11 +45,11 @@ Most special abilities are **awakened in the Refining Table**. If an item still 
 ## Mining and utility abilities
 
 - **Luck**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium / Lucky Pickaxes, Lucky AIOT
+	- **Equipment:** AIOT
 	- **Effect:** Breaking ores always spawns an XP orb.
 
 - **Crushing**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium Hammers
+	- **Equipment:** Hammer
 	- **Effect:** Ore breaks always add the matching dust for **coal, copper, iron, gold, and titanium**.
 
 - **Operator**
@@ -77,7 +77,7 @@ Most special abilities are **awakened in the Refining Table**. If an item still 
 	- **Effect:** Igniting TNT replaces it with a fresh TNT block and can light Creepers.
 
 - **Worm**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium Shovels
+	- **Equipment:** Shovel
 	- **Effect:** Breaking dirt, sand, red sand, or gravel adds matching handfuls/fragments.
 	- **Extra behavior:**
 		- Using the shovel on supported soil cycles between dirt-style variants.
@@ -85,29 +85,29 @@ Most special abilities are **awakened in the Refining Table**. If an item still 
 		- Holding the shovel grants **50% evade chance**.
 
 - **Reaper**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium Hoes
+	- **Equipment:** Hoe
 	- **Effect:** Breaking a ripe crop duplicates the harvest and automatically replants it.
 
 - **Berserk**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium Axes
+	- **Equipment:** Axe
 	- **Effect:** Sneak-breaking normal or stripped logs converts them directly into planks with extra plank output.
 
 ## Defense abilities
 
 - **Clarity**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium Helmets
+	- **Equipment:** Helmet
 	- **Effect:** Grants **Night Vision** below **Y48** in the Overworld.
 
 - **Retaliation**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium Chestplates
+	- **Equipment:** Chestplate
 	- **Effect:** Taking damage can reflect part of it back at the attacker.
 
 - **Bulwark**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium Leggings
+	- **Equipment:** Aetherium Leggings
 	- **Effect:** Defensive identity focused on steady protection and survival.
 
 - **Featherstep**
-	- **Equipment:** Diamond / Netherite / Titanium / Aetherium Boots
+	- **Equipment:** Boots
 	- **Effect:** Reduces fall damage by **80%** and grants a short **Absorption** burst with a **1-minute cooldown**.
 
 - **Spikes**

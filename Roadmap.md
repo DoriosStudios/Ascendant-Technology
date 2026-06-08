@@ -3,9 +3,10 @@ The overall roadmap for Ascendant Technology. This is the source of truth for pl
 
 Machine status legend:
 - 🟢 Implemented (in-game)
+- 🟣 Needs Design (Done, but missing assets)
 - 🔵 In Development (actively being built)
 - 🟡 Planned (Not started or confirmed)
-- 🟣 Needs Design (Missing assets)
+- 🟠 Not Confirmed (doesn't have a defined plan)
 - 🔴 On Hold / Cut (Paused or no longer planned)
 
 ---

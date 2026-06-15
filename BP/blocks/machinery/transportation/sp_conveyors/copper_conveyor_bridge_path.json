@@ -4,7 +4,7 @@
 		"description": {
 			"identifier": "utilitycraft:copper_conveyor_bridge_path",
 			"states": {
-				"utilitycraft:cardinal_direction": ["north", "south", "east", "west"]
+				"utilitycraft:cardinal_direction": [ "north", "south", "east", "west" ]
 			}
 		},
 		"components": {
@@ -17,24 +17,25 @@
 				}
 			},
 			"minecraft:collision_box": {
-				"origin": [0, 0, 0],
-				"size": [0, 0, 0]
+				"origin": [ 0, 0, 0 ],
+				"size": [ 0, 0, 0 ]
 			},
 			"minecraft:selection_box": {
-				"origin": [-8, 0, -8],
-				"size": [16, 2, 16]
+				"origin": [ -8, 0, -8 ],
+				"size": [ 16, 2, 16 ]
 			},
+			"minecraft:loot": "loot_tables/empty.json",
 			"minecraft:light_dampening": 0,
-			"tag:dorios:conveyor_bridge_path_copper": {},
-			"tag:dorios:energy": {},
-			"tag:dorios:isTube": {}
+			"tag:dorios:conveyor_bridge_path_copper": { },
+			"tag:dorios:energy": { },
+			"tag:dorios:isTube": { }
 		},
 		"permutations": [
 			{
 				"condition": "q.block_state('utilitycraft:cardinal_direction') == 'north'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [0, 0, 0]
+						"rotation": [ 0, 0, 0 ]
 					}
 				}
 			},
@@ -42,7 +43,7 @@
 				"condition": "q.block_state('utilitycraft:cardinal_direction') == 'south'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [0, 180, 0]
+						"rotation": [ 0, 180, 0 ]
 					}
 				}
 			},
@@ -50,7 +51,7 @@
 				"condition": "q.block_state('utilitycraft:cardinal_direction') == 'east'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [0, -90, 0]
+						"rotation": [ 0, -90, 0 ]
 					}
 				}
 			},
@@ -58,7 +59,7 @@
 				"condition": "q.block_state('utilitycraft:cardinal_direction') == 'west'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [0, 90, 0]
+						"rotation": [ 0, 90, 0 ]
 					}
 				}
 			}

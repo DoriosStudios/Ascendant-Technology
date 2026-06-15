@@ -21,6 +21,7 @@
 				"origin": [0, 0, 0],
 				"size": [0, 0, 0]
 			},
+			"minecraft:loot": "loot_tables/empty.json",
 			"minecraft:light_dampening": 0,
 			"tag:dorios:conveyor_bridge_path": {},
 			"tag:dorios:energy": {},

@@ -126,6 +126,13 @@ Heavy processing and block automation still anchor this draft, but this pass als
 - Added **Reinforced Case** and **Superior Case**.
   - New machine-case block variants are now registered with their own textures for future recipe use.
 
+### Transportation
+- Conveyors
+  - Vertical conveyors now switch cleanly between upward and downward flow when adjusted with a **Wrench**.
+  - Copper, Titanium, and Aetherium vertical conveyors now keep their visual direction and real item movement aligned when flipped.
+  - Inclined and declined conveyors now follow a more faithful ramp path, starting the lift earlier, keeping the lane slightly higher, and handing off with a shorter end reach.
+  - Vertical conveyors now keep rising items centered on the lane instead of pushing them sideways.
+
 ## ITEMS
 ### Equipment
 - **StatsCore** now acts as the universal progression and identity system for supported gear.
@@ -258,6 +265,8 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Added runtime handling for **Operator**, **Gardener**, **Primal**, **Forger**, and **Ingniter** behaviors.
 - Added Verdant Cultivator crop-field runtime handling for repeated seed patterns, Pedestal Clock growth pulses, buffered harvest collection, and quantity-based bonus harvest rolls.
 - Removed the native Dismantler runtime stack (block, recipe, machine script, UI definition, textures, item catalog entry, and related localization entries).
+- Reworked the conveyor runtime into separate `plain_conveyors`, `bridge_conveyors`, and `special_conveyors` script modules.
+  - Removed duplicated local conveyor helpers where equivalent `DoriosAPI` block-state helpers or shared transport routines already covered the behavior.
 - Removed the generated Dismantler reverse-recipe registry and its supporting generation tooling from the active runtime.
 - Added a native Pulverizer crusher-recipe registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_crusher_recipe` custom insertions.
 - Added a native Centrifugal Siever sieve-recipe registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_sieve_drop` custom insertions.

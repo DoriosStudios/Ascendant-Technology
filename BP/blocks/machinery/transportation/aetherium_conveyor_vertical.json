@@ -92,7 +92,7 @@
 				"condition": "q.block_state('minecraft:cardinal_direction') == 'north' && q.block_state('utilitycraft:vertical_direction') == 'down'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [270, 0, 0]
+						"rotation": [270, 180, 0]
 					}
 				}
 			},
@@ -100,7 +100,7 @@
 				"condition": "q.block_state('minecraft:cardinal_direction') == 'south' && q.block_state('utilitycraft:vertical_direction') == 'down'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [270, 180, 0]
+						"rotation": [270, 0, 0]
 					}
 				}
 			},
@@ -108,7 +108,7 @@
 				"condition": "q.block_state('minecraft:cardinal_direction') == 'east' && q.block_state('utilitycraft:vertical_direction') == 'down'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [270, -90, 0]
+						"rotation": [270, 90, 0]
 					}
 				}
 			},
@@ -116,7 +116,7 @@
 				"condition": "q.block_state('minecraft:cardinal_direction') == 'west' && q.block_state('utilitycraft:vertical_direction') == 'down'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [270, 90, 0]
+						"rotation": [270, 270, 0]
 					}
 				}
 			}

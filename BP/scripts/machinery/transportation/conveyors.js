@@ -1,7 +1,12 @@
 import { system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { updatePipes, Energy } from "../../DoriosCore/main.js";
+import { CARDINAL_DIRECTION_OFFSETS, LEFT_OF_DIRECTION, OPPOSITE_DIRECTIONS, RIGHT_OF_DIRECTION } from "../../DoriosCore/constants.js";
+import { createPlainConveyors } from "./plain_conveyors.js";
+import { createBridgeConveyors } from "./bridge_conveyors.js";
+import { createSpecialConveyors } from "./special_conveyors.js";
 
+// IDs and data keys.
 const CONVEYOR_IDS = Object.freeze({
     tags: Object.freeze({
         conveyor: "dorios:conveyor",
@@ -10,9 +15,6 @@ const CONVEYOR_IDS = Object.freeze({
     states: Object.freeze({
         bridgePathDirection: "utilitycraft:cardinal_direction",
         verticalDirection: "utilitycraft:vertical_direction"
-    }),
-    items: Object.freeze({
-        wrench: "utilitycraft:wrench"
     }),
     props: Object.freeze({
         itemMoveTick: "utilitycraft:conveyor_move_tick",
@@ -33,85 +35,87 @@ const CONVEYOR_IDS = Object.freeze({
     })
 });
 
+// Bridge path data.
 const CONVEYOR_BRIDGE = Object.freeze({
     legacyPathBlockId: "utilitycraft:conveyor_bridge_path",
     pathByTier: Object.freeze({
-    copper: {
-        id: "utilitycraft:copper_conveyor_bridge_path",
-        tag: "dorios:conveyor_bridge_path_copper"
-    },
-    titanium: {
-        id: "utilitycraft:titanium_conveyor_bridge_path",
-        tag: "dorios:conveyor_bridge_path_titanium"
-    },
-    aetherium: {
-        id: "utilitycraft:aetherium_conveyor_bridge_path",
-        tag: "dorios:conveyor_bridge_path_aetherium"
-    }
+        copper: {
+            id: "utilitycraft:copper_conveyor_bridge_path",
+            tag: "dorios:conveyor_bridge_path_copper"
+        },
+        titanium: {
+            id: "utilitycraft:titanium_conveyor_bridge_path",
+            tag: "dorios:conveyor_bridge_path_titanium"
+        },
+        aetherium: {
+            id: "utilitycraft:aetherium_conveyor_bridge_path",
+            tag: "dorios:conveyor_bridge_path_aetherium"
+        }
     }),
     airBlockIds: new Set(["minecraft:air", "minecraft:cave_air", "minecraft:void_air"]),
     clearableBlocks: new Set([
-    "minecraft:snow",
-    "minecraft:snow_layer",
-    "minecraft:torch",
-    "minecraft:soul_torch",
-    "minecraft:redstone_torch",
-    "minecraft:wall_torch",
-    "minecraft:soul_wall_torch",
-    "minecraft:redstone_wall_torch",
-    "minecraft:grass",
-    "minecraft:tallgrass",
-    "minecraft:short_grass",
-    "minecraft:tall_grass",
-    "minecraft:fern",
-    "minecraft:large_fern",
-    "minecraft:deadbush",
-    "minecraft:dandelion",
-    "minecraft:poppy",
-    "minecraft:blue_orchid",
-    "minecraft:allium",
-    "minecraft:azure_bluet",
-    "minecraft:red_tulip",
-    "minecraft:orange_tulip",
-    "minecraft:white_tulip",
-    "minecraft:pink_tulip",
-    "minecraft:oxeye_daisy",
-    "minecraft:cornflower",
-    "minecraft:lily_of_the_valley",
-    "minecraft:wither_rose",
-    "minecraft:sunflower",
-    "minecraft:lilac",
-    "minecraft:rose_bush",
-    "minecraft:peony",
-    "minecraft:seagrass",
-    "minecraft:tall_seagrass",
-    "minecraft:kelp",
-    "minecraft:kelp_plant",
-    "minecraft:sea_pickle",
-    "minecraft:waterlily",
-    "minecraft:vine",
-    "minecraft:glow_lichen",
-    "minecraft:cave_vines",
-    "minecraft:cave_vines_body_with_berries",
-    "minecraft:cave_vines_head_with_berries",
-    "minecraft:small_dripleaf",
-    "minecraft:big_dripleaf",
-    "minecraft:big_dripleaf_stem",
-    "minecraft:spore_blossom",
-    "minecraft:crimson_fungus",
-    "minecraft:warped_fungus",
-    "minecraft:crimson_roots",
-    "minecraft:warped_roots",
-    "minecraft:nether_sprouts",
-    "minecraft:weeping_vines",
-    "minecraft:twisting_vines",
-    "minecraft:weeping_vines_plant",
-    "minecraft:twisting_vines_plant",
-    "minecraft:bamboo_sapling"
+        "minecraft:snow",
+        "minecraft:snow_layer",
+        "minecraft:torch",
+        "minecraft:soul_torch",
+        "minecraft:redstone_torch",
+        "minecraft:wall_torch",
+        "minecraft:soul_wall_torch",
+        "minecraft:redstone_wall_torch",
+        "minecraft:grass",
+        "minecraft:tallgrass",
+        "minecraft:short_grass",
+        "minecraft:tall_grass",
+        "minecraft:fern",
+        "minecraft:large_fern",
+        "minecraft:deadbush",
+        "minecraft:dandelion",
+        "minecraft:poppy",
+        "minecraft:blue_orchid",
+        "minecraft:allium",
+        "minecraft:azure_bluet",
+        "minecraft:red_tulip",
+        "minecraft:orange_tulip",
+        "minecraft:white_tulip",
+        "minecraft:pink_tulip",
+        "minecraft:oxeye_daisy",
+        "minecraft:cornflower",
+        "minecraft:lily_of_the_valley",
+        "minecraft:wither_rose",
+        "minecraft:sunflower",
+        "minecraft:lilac",
+        "minecraft:rose_bush",
+        "minecraft:peony",
+        "minecraft:seagrass",
+        "minecraft:tall_seagrass",
+        "minecraft:kelp",
+        "minecraft:kelp_plant",
+        "minecraft:sea_pickle",
+        "minecraft:waterlily",
+        "minecraft:vine",
+        "minecraft:glow_lichen",
+        "minecraft:cave_vines",
+        "minecraft:cave_vines_body_with_berries",
+        "minecraft:cave_vines_head_with_berries",
+        "minecraft:small_dripleaf",
+        "minecraft:big_dripleaf",
+        "minecraft:big_dripleaf_stem",
+        "minecraft:spore_blossom",
+        "minecraft:crimson_fungus",
+        "minecraft:warped_fungus",
+        "minecraft:crimson_roots",
+        "minecraft:warped_roots",
+        "minecraft:nether_sprouts",
+        "minecraft:weeping_vines",
+        "minecraft:twisting_vines",
+        "minecraft:weeping_vines_plant",
+        "minecraft:twisting_vines_plant",
+        "minecraft:bamboo_sapling"
     ]),
     clearableSuffixes: Object.freeze(["_sapling", "_fungus", "_mushroom", "_flower", "_tulip"])
 });
 
+// Shared tuning values.
 const CONVEYOR_DEFAULTS = Object.freeze({
     special: Object.freeze({
         tier: "universal",
@@ -136,90 +140,23 @@ const CONVEYOR_DEFAULTS = Object.freeze({
         aetheriumSpeedMultiplier: 5
     }),
     routing: Object.freeze({
-        creatureExcludedTypes: Object.freeze([
-    "minecraft:player",
-    "minecraft:item",
-    "minecraft:xp_orb",
-    "minecraft:minecart",
-    "minecraft:hopper_minecart",
-    "minecraft:tnt_minecart",
-    "minecraft:command_block_minecart",
-    "minecraft:spawner_minecart",
-    "minecraft:chest_minecart",
-    "minecraft:boat",
-    "minecraft:chest_boat",
-    "minecraft:armor_stand",
-    "minecraft:lightning_bolt",
-    "minecraft:falling_block"
-        ]),
-        creatureExcludedFamilies: Object.freeze([
-    "player",
-    "inanimate",
-    "projectile",
-    "machine",
-    "dorios:energy_container",
-    "dorios:fluid_container",
-    "dorios:battery"
-        ]),
         upgradeTypes: new Set([
-    "energy",
-    "filter",
-    "hyper",
-    "quantity",
-    "range",
-    "size",
-    "speed",
-    "ultimate"
+            "energy",
+            "filter",
+            "hyper",
+            "quantity",
+            "range",
+            "size",
+            "speed",
+            "ultimate"
         ]),
         smartRouterDefault: Object.freeze({ left: [], front: [], right: [] }),
         smartRouterDirs: Object.freeze(["left", "front", "right"]),
-        upgradeMax: 64,
-        maxEnergyScan: 2048
-    }),
-    directions: Object.freeze({
-        cardinalOffsets: Object.freeze({
-            north: { x: 0, y: 0, z: -1 },
-            south: { x: 0, y: 0, z: 1 },
-            east: { x: 1, y: 0, z: 0 },
-            west: { x: -1, y: 0, z: 0 }
-        }),
-        energyOffsets: Object.freeze([
-            { x: 1, y: 0, z: 0 },
-            { x: -1, y: 0, z: 0 },
-            { x: 0, y: 1, z: 0 },
-            { x: 0, y: -1, z: 0 },
-            { x: 0, y: 0, z: 1 },
-            { x: 0, y: 0, z: -1 }
-        ]),
-        oppositeCardinal: Object.freeze({
-            north: "south",
-            south: "north",
-            east: "west",
-            west: "east"
-        }),
-        rightCardinal: Object.freeze({
-            north: "east",
-            east: "south",
-            south: "west",
-            west: "north"
-        }),
-        leftCardinal: Object.freeze({
-            north: "west",
-            west: "south",
-            south: "east",
-            east: "north"
-        })
-    }),
-    types: Object.freeze({
-        tiers: Object.freeze([
-            { tier: "copper", ips: 5, bridgeRange: 8 },
-            { tier: "titanium", ips: 11, bridgeRange: 16 },
-            { tier: "aetherium", ips: 128, bridgeRange: 32 }
-        ]),
-        shapes: Object.freeze(["horizontal", "inclined", "declined", "vertical"])
+        upgradeMax: 64
     })
 });
 
+// Runtime caches.
 const CONVEYOR_RUNTIME = {
     networkDirty: new Set(),
     networkCache: new Map(),
@@ -232,6 +169,7 @@ const CONVEYOR_RUNTIME = {
     metaByType: new Map()
 };
 
+// Derived shortcuts.
 const CONVEYOR_TAG = CONVEYOR_IDS.tags.conveyor;
 const BRIDGE_TAG = CONVEYOR_IDS.tags.bridge;
 const LEGACY_BRIDGE_PATH_BLOCK_ID = CONVEYOR_BRIDGE.legacyPathBlockId;
@@ -250,20 +188,16 @@ const ITEM_MOVE_TICK_PROP = CONVEYOR_IDS.props.itemMoveTick;
 const ITEM_MOVE_KEY_PROP = CONVEYOR_IDS.props.itemMoveKey;
 const ENTITY_MOVE_TICK_PROP = CONVEYOR_IDS.props.entityMoveTick;
 const ENTITY_MOVE_KEY_PROP = CONVEYOR_IDS.props.entityMoveKey;
-const CONVEYOR_CREATURE_EXCLUDED_TYPES = CONVEYOR_DEFAULTS.routing.creatureExcludedTypes;
-const CONVEYOR_CREATURE_EXCLUDED_FAMILIES = CONVEYOR_DEFAULTS.routing.creatureExcludedFamilies;
 const CONVEYOR_PERSIST_CHUNK_PREFIX = CONVEYOR_IDS.props.persistChunkPrefix;
 const CONVEYOR_PERSIST_CHUNK_INDEX_META_PREFIX = CONVEYOR_IDS.props.persistChunkIndexMetaPrefix;
 const CONVEYOR_PERSIST_CHUNK_INDEX_PAGE_PREFIX = CONVEYOR_IDS.props.persistChunkIndexPagePrefix;
 const CONVEYOR_PERSIST_CHUNK_PAGE_SIZE = CONVEYOR_DEFAULTS.timing.persistChunkPageSize;
-const MAX_CONVEYOR_ENERGY_SCAN = CONVEYOR_DEFAULTS.routing.maxEnergyScan;
 const CONVEYOR_UPGRADE_TYPES = CONVEYOR_DEFAULTS.routing.upgradeTypes;
 const CONVEYOR_NETWORK_DIRTY = CONVEYOR_RUNTIME.networkDirty;
 const CONVEYOR_NETWORK_CACHE = CONVEYOR_RUNTIME.networkCache;
 const CONVEYOR_NETWORK_UPDATER_INTERVAL_DEFAULT = CONVEYOR_DEFAULTS.timing.networkUpdaterIntervalDefault;
 const CONVEYOR_NETWORK_UPDATER_MAX_SCAN = CONVEYOR_DEFAULTS.timing.networkUpdaterMaxScan;
 const VERTICAL_DIRECTION_STATE = CONVEYOR_IDS.states.verticalDirection;
-const WRENCH_ITEM_ID = CONVEYOR_IDS.items.wrench;
 const CONVEYOR_UPGRADE_MAX = CONVEYOR_DEFAULTS.routing.upgradeMax;
 const CONVEYOR_UPGRADE_KEY_PREFIX = CONVEYOR_IDS.props.upgradeKeyPrefix;
 const CONVEYOR_UPGRADE_TYPE_KEY_PREFIX = CONVEYOR_IDS.props.upgradeTypeKeyPrefix;
@@ -287,18 +221,16 @@ const tr = (key, withArgs = []) => ({
     with: withArgs.map(normalizeRawMessageArg)
 });
 
-const PROCESS_INTERVAL = CONVEYOR_DEFAULTS.timing.processInterval;
 const BASE_IPS = CONVEYOR_DEFAULTS.movement.baseIps;
 const BASE_SPEED = CONVEYOR_DEFAULTS.movement.baseSpeed;
 const BASE_VERTICAL_SPEED = CONVEYOR_DEFAULTS.movement.baseVerticalSpeed;
 const MAX_SPEED = CONVEYOR_DEFAULTS.movement.maxSpeed;
 const MAX_VERTICAL_SPEED = CONVEYOR_DEFAULTS.movement.maxVerticalSpeed;
 const AETHERIUM_SPEED_MULTIPLIER = CONVEYOR_DEFAULTS.movement.aetheriumSpeedMultiplier;
-const CARDINAL_OFFSETS = CONVEYOR_DEFAULTS.directions.cardinalOffsets;
-const ENERGY_OFFSETS = CONVEYOR_DEFAULTS.directions.energyOffsets;
-const OPPOSITE_CARDINAL = CONVEYOR_DEFAULTS.directions.oppositeCardinal;
-const RIGHT_CARDINAL = CONVEYOR_DEFAULTS.directions.rightCardinal;
-const LEFT_CARDINAL = CONVEYOR_DEFAULTS.directions.leftCardinal;
+const CARDINAL_OFFSETS = CARDINAL_DIRECTION_OFFSETS;
+const OPPOSITE_CARDINAL = OPPOSITE_DIRECTIONS;
+const RIGHT_CARDINAL = RIGHT_OF_DIRECTION;
+const LEFT_CARDINAL = LEFT_OF_DIRECTION;
 const conveyorRegistry = CONVEYOR_RUNTIME.registry;
 const bridgeCache = CONVEYOR_RUNTIME.bridgeCache;
 const routerDirectionCache = CONVEYOR_RUNTIME.routerDirectionCache;
@@ -306,40 +238,13 @@ const sorterSideCycleCache = CONVEYOR_RUNTIME.sorterSideCycleCache;
 const overflowCycleCache = CONVEYOR_RUNTIME.overflowCycleCache;
 const underflowCycleCache = CONVEYOR_RUNTIME.underflowCycleCache;
 const CONVEYOR_META_BY_TYPE = CONVEYOR_RUNTIME.metaByType;
-
-function defineConveyorType(id, meta) {
-    CONVEYOR_META_BY_TYPE.set(id, Object.freeze({ ...meta }));
-}
-
-const TIERS = CONVEYOR_DEFAULTS.types.tiers;
-const SHAPES = CONVEYOR_DEFAULTS.types.shapes;
-
-for (const tier of TIERS) {
-    for (const shape of SHAPES) {
-        defineConveyorType(`utilitycraft:${tier.tier}_conveyor_${shape}`, {
-            tier: tier.tier,
-            shape,
-            ips: tier.ips,
-            bridgeRange: tier.bridgeRange
-        });
-    }
-
-    defineConveyorType(`utilitycraft:${tier.tier}_conveyor_bridge_transmitter`, {
-        tier: tier.tier,
-        shape: "bridge_transmitter",
-        ips: tier.ips,
-        bridgeRange: tier.bridgeRange
-    });
-
-    defineConveyorType(`utilitycraft:${tier.tier}_conveyor_bridge_receiver`, {
-        tier: tier.tier,
-        shape: "bridge_receiver",
-        ips: tier.ips,
-        bridgeRange: tier.bridgeRange
-    });
-}
-
-for (const specialTypeId of [
+const TIER_DEFS = [
+    { tier: "copper", ips: 5, bridgeRange: 8 },
+    { tier: "titanium", ips: 11, bridgeRange: 16 },
+    { tier: "aetherium", ips: 128, bridgeRange: 32 }
+];
+const PLAIN_SHAPES = ["horizontal", "inclined", "declined", "vertical"];
+const SPECIAL_TYPE_IDS = [
     "utilitycraft:conveyor_junction",
     "utilitycraft:conveyor_overflow",
     "utilitycraft:conveyor_router",
@@ -347,15 +252,165 @@ for (const specialTypeId of [
     "utilitycraft:conveyor_underflow",
     "utilitycraft:conveyor_sorter",
     "utilitycraft:conveyor_inverted_sorter"
-]) {
-    const shape = specialTypeId.replace("utilitycraft:conveyor_", "");
-    defineConveyorType(specialTypeId, {
-        tier: SPECIAL_CONVEYOR_TIER,
-        shape,
-        ips: SPECIAL_CONVEYOR_IPS,
-        bridgeRange: 0
-    });
+];
+
+function defineConveyorType(id, meta) {
+    CONVEYOR_META_BY_TYPE.set(id, Object.freeze({ ...meta }));
 }
+
+const plainConveyors = createPlainConveyors({
+    tierDefs: TIER_DEFS,
+    plainShapes: PLAIN_SHAPES,
+    defineConveyorType,
+    baseIps: BASE_IPS,
+    baseSpeed: BASE_SPEED,
+    baseVerticalSpeed: BASE_VERTICAL_SPEED,
+    maxSpeed: MAX_SPEED,
+    maxVerticalSpeed: MAX_VERTICAL_SPEED,
+    aetheriumSpeedMultiplier: AETHERIUM_SPEED_MULTIPLIER,
+    cardinalOffsets: CARDINAL_OFFSETS,
+    verticalDirectionState: VERTICAL_DIRECTION_STATE,
+    itemMoveTickProp: ITEM_MOVE_TICK_PROP,
+    itemMoveKeyProp: ITEM_MOVE_KEY_PROP,
+    entityMoveTickProp: ENTITY_MOVE_TICK_PROP,
+    entityMoveKeyProp: ENTITY_MOVE_KEY_PROP,
+    itemSpacing: ITEM_SPACING,
+    inclinedDetectionRadius: INCLINED_DETECTION_RADIUS,
+    posKey
+});
+
+const {
+    registerPlainConveyorTypes,
+    getConveyorSpeed,
+    getConveyorVerticalSpeed,
+    resolveOutputOffset,
+    getItemsNear,
+    getCreaturesNear,
+    getItemStackFromEntity,
+    getConveyorTick,
+    hasItemMovedThisTick,
+    hasEntityMovedThisTick,
+    markItemMoved,
+    markEntityMoved,
+    canMoveItemWithSpacing,
+    shouldHoldAetheriumItem,
+    tryInsertIntoContainer,
+    moveItem,
+    moveEntity,
+    processStandardConveyor
+} = plainConveyors;
+
+const bridgeConveyors = createBridgeConveyors({
+    tierDefs: TIER_DEFS,
+    defineConveyorType,
+    bridgeTag: BRIDGE_TAG,
+    bridgePathByTier: BRIDGE_PATH_BY_TIER,
+    legacyBridgePathBlockId: LEGACY_BRIDGE_PATH_BLOCK_ID,
+    airBlockIds: AIR_BLOCK_IDS,
+    bridgePathDirectionState: BRIDGE_PATH_DIRECTION_STATE,
+    bridgeClearableBlocks: BRIDGE_CLEARABLE_BLOCKS,
+    bridgeClearableSuffixes: BRIDGE_CLEARABLE_SUFFIXES,
+    cardinalOffsets: CARDINAL_OFFSETS,
+    oppositeCardinal: OPPOSITE_CARDINAL,
+    bridgeCache,
+    posKey,
+    tr,
+    system,
+    updatePipes,
+    markConveyorNetworkDirty,
+    getConveyorMeta,
+    getItemsNear,
+    getCreaturesNear,
+    getItemStackFromEntity,
+    hasItemMovedThisTick,
+    hasEntityMovedThisTick,
+    markItemMoved,
+    markEntityMoved,
+    shouldHoldAetheriumItem,
+    processStandardConveyor,
+    conveyorTag: CONVEYOR_TAG
+});
+
+const {
+    registerBridgeConveyorTypes,
+    isAirLike,
+    isLegacyBridgePathBlock,
+    isBridgePathBlock,
+    findBridgeTransmittersForReceiver,
+    evaluateBridgeLink,
+    clearBridgePath,
+    refreshBridgePathFromTransmitter,
+    refreshBridgePathsForReceiver,
+    processBridgeTransmitter
+} = bridgeConveyors;
+
+const specialConveyors = createSpecialConveyors({
+    world,
+    ActionFormData,
+    defineConveyorType,
+    specialTypeIds: SPECIAL_TYPE_IDS,
+    specialTier: SPECIAL_CONVEYOR_TIER,
+    specialIps: SPECIAL_CONVEYOR_IPS,
+    specialEnergyCost: SPECIAL_CONVEYOR_ENERGY_COST,
+    smartRouterKeyPrefix: SMART_ROUTER_KEY_PREFIX,
+    sorterFilterKeyPrefix: SORTER_FILTER_KEY_PREFIX,
+    smartRouterDefault: SMART_ROUTER_DEFAULT,
+    smartRouterDirs: SMART_ROUTER_DIRS,
+    routerDirectionCache,
+    sorterSideCycleCache,
+    overflowCycleCache,
+    underflowCycleCache,
+    routerCycleTicks: ROUTER_CYCLE_TICKS,
+    cardinalOffsets: CARDINAL_OFFSETS,
+    oppositeCardinal: OPPOSITE_CARDINAL,
+    rightCardinal: RIGHT_CARDINAL,
+    leftCardinal: LEFT_CARDINAL,
+    conveyorTag: CONVEYOR_TAG,
+    itemMoveKeyProp: ITEM_MOVE_KEY_PROP,
+    itemJunctionDirProp: ITEM_JUNCTION_DIR_PROP,
+    itemJunctionBlockProp: ITEM_JUNCTION_BLOCK_PROP,
+    posKey,
+    parsePosKey,
+    tr,
+    getConveyorTick,
+    getItemsNear,
+    getItemStackFromEntity,
+    hasItemMovedThisTick,
+    markItemMoved,
+    canMoveItemWithSpacing,
+    shouldHoldAetheriumItem,
+    tryInsertIntoContainer,
+    resolveOutputOffset,
+    consumeConveyorEnergy,
+    canConsumeConveyorEnergy,
+    isAirLike,
+    isBridgePathBlock,
+    isLegacyBridgePathBlock
+});
+
+const {
+    registerSpecialConveyorTypes,
+    getSmartRouterId,
+    readSorterFilter,
+    saveSorterFilter,
+    clearSorterFilter,
+    clearSorterFilterAt,
+    getSmartRouterConfig,
+    saveSmartRouterConfig,
+    removeSmartRouterConfig,
+    openSorterMenu,
+    openSmartRouterMenu,
+    processRouterConveyor,
+    processSorterConveyor,
+    processSmartRouterConveyor,
+    processOverflowConveyor,
+    processUnderflowConveyor,
+    processJunctionConveyor
+} = specialConveyors;
+
+registerPlainConveyorTypes();
+registerBridgeConveyorTypes();
+registerSpecialConveyorTypes();
 
 function posKey(pos) {
     return `${pos.x}|${pos.y}|${pos.z}`;
@@ -611,7 +666,7 @@ function collectEnergySourcesFromNetwork(dim, startPos) {
     const sourceKeys = new Set();
     let steps = 0;
 
-    while (queue.length && steps < MAX_CONVEYOR_ENERGY_SCAN) {
+    while (queue.length && steps < 2048) {
         const pos = queue.shift();
         const key = posKey(pos);
         if (visited.has(key)) continue;
@@ -622,13 +677,20 @@ function collectEnergySourcesFromNetwork(dim, startPos) {
         if (!block?.hasTag?.("dorios:energy")) continue;
 
         if (isEnergyTubeBlock(block)) {
-            for (const off of ENERGY_OFFSETS) {
+            for (const off of [
+                { x: 1, y: 0, z: 0 },
+                { x: -1, y: 0, z: 0 },
+                { x: 0, y: 1, z: 0 },
+                { x: 0, y: -1, z: 0 },
+                { x: 0, y: 0, z: 1 },
+                { x: 0, y: 0, z: -1 }
+            ]) {
                 queue.push({ x: pos.x + off.x, y: pos.y + off.y, z: pos.z + off.z });
             }
             if (block.hasTag?.(BRIDGE_TAG)) {
                 const meta = getConveyorMeta(block.typeId);
                 if (meta?.shape === "bridge_transmitter") {
-                    const facing = getFacing(block);
+                    const facing = block.getState?.("minecraft:cardinal_direction") ?? null;
                     if (facing) {
                         const link = evaluateBridgeLink(block, meta, facing);
                         if (link.receiver && !link.obstructed) {
@@ -667,7 +729,7 @@ function buildConveyorNetworkCache(dim, registry) {
         if (!meta) continue;
 
         if (meta.shape === "bridge_transmitter") {
-            const facing = getFacing(block);
+            const facing = block.getState?.("minecraft:cardinal_direction") ?? null;
             if (!facing) continue;
             const link = evaluateBridgeLink(block, meta, facing);
             if (link.receiver && !link.obstructed) {
@@ -874,186 +936,6 @@ function scheduleConveyorRestore() {
     system.runTimeout(attemptRestore, 20);
 }
 
-function notifyBridgeObstructed(player) {
-    if (!player?.onScreenDisplay) return;
-    try {
-        player.onScreenDisplay.setActionBar(tr("ui.utilitycraft.conveyor.bridge_obstructed"));
-    } catch {
-        system.run(() => {
-            player.onScreenDisplay.setActionBar(tr("ui.utilitycraft.conveyor.bridge_obstructed"));
-        });
-    }
-}
-
-function isAirLike(block) {
-    if (!block) return false;
-    if (block.isAir === true) return true;
-    return AIR_BLOCK_IDS.has(block.typeId);
-}
-
-function isLegacyBridgePathBlock(block) {
-    if (!block) return false;
-    if (block.typeId === LEGACY_BRIDGE_PATH_BLOCK_ID) return true;
-    return block.hasTag?.("dorios:conveyor_bridge_path") ?? false;
-}
-
-function getBridgePathDefinition(tier) {
-    if (!tier) return null;
-    return BRIDGE_PATH_BY_TIER[tier] ?? null;
-}
-
-function getBridgePathBlockId(tier) {
-    const def = getBridgePathDefinition(tier);
-    return def?.id ?? LEGACY_BRIDGE_PATH_BLOCK_ID;
-}
-
-function isBridgePathBlock(block, tier = null) {
-    if (!block) return false;
-    if (tier) {
-        const def = getBridgePathDefinition(tier);
-        if (!def) return false;
-        if (block.typeId === def.id) return true;
-        return block.hasTag?.(def.tag) ?? false;
-    }
-
-    if (isLegacyBridgePathBlock(block)) return true;
-
-    for (const def of Object.values(BRIDGE_PATH_BY_TIER)) {
-        if (block.typeId === def.id) return true;
-        if (block.hasTag?.(def.tag)) return true;
-    }
-    return false;
-}
-
-function matchesClearableSuffix(typeId) {
-    if (typeof typeId !== "string") return false;
-    return BRIDGE_CLEARABLE_SUFFIXES.some(suffix => typeId.endsWith(suffix));
-}
-
-function isBridgeClearableBlock(block) {
-    if (!block) return false;
-    if (isAirLike(block)) return false;
-    if (isBridgePathBlock(block)) return false;
-
-    const typeId = block.typeId;
-    const unbreakables = DoriosAPI?.constants?.unbreakableBlocks;
-    if (Array.isArray(unbreakables) && unbreakables.includes(typeId)) return false;
-
-    if (block.hasTag?.("minecraft:replaceable")) return true;
-    if (block.hasTag?.("minecraft:replaceable_plants")) return true;
-    if (block.hasTag?.("minecraft:plant")) return true;
-
-    if (BRIDGE_CLEARABLE_BLOCKS.has(typeId)) return true;
-    if (matchesClearableSuffix(typeId)) return true;
-
-    return false;
-}
-
-function getSmartRouterId(block) {
-    const { x, y, z } = block.location;
-    const dimId = block.dimension?.id ?? "unknown";
-    return `${SMART_ROUTER_KEY_PREFIX}_${dimId}_${x}_${y}_${z}`;
-}
-
-function getSorterFilterKey(block) {
-    if (!block?.dimension || !block?.location) return null;
-    const { x, y, z } = block.location;
-    const dimId = block.dimension?.id ?? "unknown";
-    return `${SORTER_FILTER_KEY_PREFIX}_${dimId}_${x}_${y}_${z}`;
-}
-
-function readSorterFilter(block) {
-    const key = getSorterFilterKey(block);
-    if (!key) return "";
-    const raw = world.getDynamicProperty(key);
-    if (typeof raw !== "string") return "";
-    return raw.trim().toLowerCase();
-}
-
-function saveSorterFilter(block, itemId) {
-    const key = getSorterFilterKey(block);
-    if (!key) return;
-    const normalized = String(itemId ?? "").trim().toLowerCase();
-    world.setDynamicProperty(key, normalized);
-}
-
-function clearSorterFilter(block) {
-    const key = getSorterFilterKey(block);
-    if (!key) return;
-    world.setDynamicProperty(key, "");
-}
-
-function clearSorterFilterAt(dimId, pos) {
-    if (!dimId || !pos) return;
-    const { x, y, z } = pos;
-    const key = `${SORTER_FILTER_KEY_PREFIX}_${dimId}_${x}_${y}_${z}`;
-    world.setDynamicProperty(key, "");
-}
-
-function getSmartRouterConfig(id) {
-    const raw = world.getDynamicProperty(id);
-    if (typeof raw !== "string" || raw.length === 0) {
-        return { ...SMART_ROUTER_DEFAULT };
-    }
-    try {
-        const parsed = JSON.parse(raw);
-        return {
-            left: Array.isArray(parsed.left) ? parsed.left : [],
-            front: Array.isArray(parsed.front) ? parsed.front : [],
-            right: Array.isArray(parsed.right) ? parsed.right : []
-        };
-    } catch {
-        return { ...SMART_ROUTER_DEFAULT };
-    }
-}
-
-function saveSmartRouterConfig(id, config) {
-    const normalizeList = list => Array.from(new Set((list ?? []).map(v => String(v).toLowerCase())));
-    const payload = {
-        left: normalizeList(config.left),
-        front: normalizeList(config.front),
-        right: normalizeList(config.right)
-    };
-    world.setDynamicProperty(id, JSON.stringify(payload));
-}
-
-function removeSmartRouterConfig(id) {
-    world.setDynamicProperty(id, "");
-}
-
-function resolveSmartRouterOutput(config, itemId) {
-    const normalized = String(itemId ?? "").toLowerCase();
-    if (!normalized) return null;
-    if (config.left.includes(normalized)) return "left";
-    if (config.front.includes(normalized)) return "front";
-    if (config.right.includes(normalized)) return "right";
-    return null;
-}
-
-function assignSmartRouterItem(config, direction, itemId) {
-    const normalized = String(itemId ?? "").toLowerCase();
-    if (!normalized) return config;
-    const next = {
-        left: config.left.filter(id => id !== normalized),
-        front: config.front.filter(id => id !== normalized),
-        right: config.right.filter(id => id !== normalized)
-    };
-    if (SMART_ROUTER_DIRS.includes(direction)) {
-        next[direction] = [...next[direction], normalized];
-    }
-    return next;
-}
-
-function removeSmartRouterItem(config, itemId) {
-    const normalized = String(itemId ?? "").toLowerCase();
-    if (!normalized) return config;
-    return {
-        left: config.left.filter(id => id !== normalized),
-        front: config.front.filter(id => id !== normalized),
-        right: config.right.filter(id => id !== normalized)
-    };
-}
-
 function getConveyorMeta(typeId, params) {
     if (CONVEYOR_META_BY_TYPE.has(typeId)) {
         return CONVEYOR_META_BY_TYPE.get(typeId);
@@ -1199,24 +1081,6 @@ function getConveyorEffectiveUpgrades(block, meta, networkId, network, networkUp
     );
 }
 
-function saveConveyorUpgrades(networkId, levels, network = null) {
-    const key = getConveyorUpgradeKey(networkId);
-    const normalized = normalizeConveyorUpgrades(levels);
-    world.setDynamicProperty(key, JSON.stringify(normalized));
-    if (network) {
-        network.upgrades = normalized;
-        network.upgradeKey = key;
-    }
-    return normalized;
-}
-
-function saveConveyorUpgradesForKey(key, levels) {
-    if (!key) return normalizeConveyorUpgrades(levels);
-    const normalized = normalizeConveyorUpgrades(levels);
-    world.setDynamicProperty(key, JSON.stringify(normalized));
-    return normalized;
-}
-
 function calculateHyperSpeedMultiplier(level) {
     const hyperLevel = Math.min(8, Math.max(0, Number(level) || 0));
     if (hyperLevel <= 0) return 1;
@@ -1235,14 +1099,6 @@ function applyConveyorUpgrades(meta, upgrades) {
     };
 }
 
-function getPlayerHeldItem(player) {
-    if (!player) return null;
-    const inv = player.getComponent("inventory")?.container;
-    if (!inv) return null;
-    const slot = player.selectedSlot;
-    if (slot === undefined || slot === null) return null;
-    return inv.getItem(slot);
-}
 function registerConveyor(block, params, options = {}) {
     if (!block?.dimension) return;
     const meta = getConveyorMeta(block.typeId, params);
@@ -1261,25 +1117,6 @@ function registerConveyor(block, params, options = {}) {
     if (options.persist === true) {
         persistConveyorPosition(block);
     }
-}
-
-function getConveyorNetworkContext(block, params) {
-    if (!block?.dimension) return { networkId: null, network: null, meta: null };
-    const dimId = block.dimension.id;
-    const registry = getRegistryForDimension(dimId);
-    const key = posKey(block.location);
-
-    if (!registry.has(key)) {
-        registerConveyor(block, params, { persist: true });
-    }
-
-    const entry = registry.get(key);
-    const meta = getConveyorMeta(block.typeId, params) ?? entry?.meta ?? null;
-    const networkCache = getConveyorNetworkCache(block.dimension, registry);
-    const networkId = networkCache.byPos.get(key) ?? null;
-    const network = networkId ? networkCache.networks.get(networkId) : null;
-
-    return { networkId, network, meta };
 }
 
 function getNetworkUpdaterInterval(block) {
@@ -1318,38 +1155,6 @@ function getConveyorUpdaterSeeds(dim, pos) {
     return seeds;
 }
 
-function findBridgeTransmittersForReceiver(dim, receiver, receiverMeta) {
-    if (!dim || !receiver || !receiverMeta?.bridgeRange) return [];
-    const transmitters = [];
-    const pos = receiver.location;
-
-    for (const [dir, offset] of Object.entries(CARDINAL_OFFSETS)) {
-        for (let step = 1; step <= receiverMeta.bridgeRange; step++) {
-            const targetPos = {
-                x: pos.x + offset.x * step,
-                y: pos.y,
-                z: pos.z + offset.z * step
-            };
-            const candidate = dim.getBlock(targetPos);
-            if (!candidate?.hasTag?.(BRIDGE_TAG)) continue;
-
-            const candidateMeta = getConveyorMeta(candidate.typeId);
-            if (!candidateMeta || candidateMeta.shape !== "bridge_transmitter") continue;
-            if (candidateMeta.tier !== receiverMeta.tier) continue;
-
-            const facing = getFacing(candidate);
-            if (facing !== OPPOSITE_CARDINAL[dir]) continue;
-
-            const link = evaluateBridgeLink(candidate, candidateMeta, facing);
-            if (link.receiver && posKey(link.receiver.location) === posKey(receiver.location) && !link.obstructed) {
-                transmitters.push(candidate);
-            }
-        }
-    }
-
-    return transmitters;
-}
-
 function collectConnectedConveyorsFromSeeds(dim, seeds, maxScan) {
     if (!dim || !Array.isArray(seeds) || !seeds.length) return [];
     const limit = Number.isFinite(maxScan) && maxScan > 0 ? maxScan : CONVEYOR_NETWORK_UPDATER_MAX_SCAN;
@@ -1381,7 +1186,7 @@ function collectConnectedConveyorsFromSeeds(dim, seeds, maxScan) {
         }
 
         if (meta?.shape === "bridge_transmitter") {
-            const facing = getFacing(block);
+            const facing = block.getState?.("minecraft:cardinal_direction") ?? null;
             if (facing) {
                 const link = evaluateBridgeLink(block, meta, facing);
                 if (link.receiver && !link.obstructed) queue.push(link.receiver);
@@ -1412,212 +1217,51 @@ function runConveyorNetworkUpdater(block) {
     syncConveyorRegistryFromBlocks(block.dimension, seeds, getNetworkUpdaterMaxScan(block));
 }
 
-function unregisterConveyorAt(dimId, pos) {
-    if (!dimId || !pos) return;
-    const registry = conveyorRegistry.get(dimId);
-    if (!registry) return;
-    const key = posKey(pos);
-    registry.delete(key);
+function clearConveyorRuntimeCaches(key) {
     bridgeCache.delete(key);
     routerDirectionCache.delete(key);
     sorterSideCycleCache.delete(key);
     overflowCycleCache.delete(key);
     underflowCycleCache.delete(key);
+}
+
+function purgeConveyorEntry(registry, dimId, key, entry = null, dim = null) {
+    registry?.delete?.(key);
+    clearConveyorRuntimeCaches(key);
+    if (isSorterShape(entry?.meta?.shape)) {
+        clearSorterFilterAt(dimId, entry.pos);
+    }
+    if (entry?.meta?.shape === "smart_router" && dim) {
+        removeSmartRouterConfig(getSmartRouterId({ location: entry.pos, dimension: dim }));
+    }
     markConveyorNetworkDirty(dimId);
+}
+
+function unregisterConveyorAt(dimId, pos) {
+    if (!dimId || !pos) return;
+    const registry = conveyorRegistry.get(dimId);
+    if (!registry) return;
+    const key = posKey(pos);
+    purgeConveyorEntry(registry, dimId, key);
 }
 
 function refreshEnergyAround(block) {
     if (!block?.dimension) return;
     const dim = block.dimension;
     const { x, y, z } = block.location;
-    const offsets = [
+    for (const off of [
         { x: 1, y: 0, z: 0 },
         { x: -1, y: 0, z: 0 },
         { x: 0, y: 1, z: 0 },
         { x: 0, y: -1, z: 0 },
         { x: 0, y: 0, z: 1 },
         { x: 0, y: 0, z: -1 }
-    ];
-
-    for (const off of offsets) {
+    ]) {
         const neighbor = dim.getBlock({ x: x + off.x, y: y + off.y, z: z + off.z });
         if (neighbor?.hasTag?.("dorios:energy")) {
             updatePipes(neighbor, "energy");
         }
     }
-}
-
-function getFacing(block) {
-    try {
-        return block.permutation.getState("minecraft:cardinal_direction");
-    } catch {
-        return null;
-    }
-}
-
-function getFacingFromPermutation(permutation) {
-    try {
-        return permutation.getState("minecraft:cardinal_direction");
-    } catch {
-        return null;
-    }
-}
-
-function getVerticalDirection(block) {
-    if (!block?.permutation) return "up";
-    try {
-        const state = block.permutation.getState(VERTICAL_DIRECTION_STATE);
-        return state === "down" ? "down" : "up";
-    } catch {
-        return "up";
-    }
-}
-
-function toggleVerticalDirection(block) {
-    if (!block?.permutation) return false;
-    const current = getVerticalDirection(block);
-    const next = current === "down" ? "up" : "down";
-    try {
-        block.setPermutation(block.permutation.withState(VERTICAL_DIRECTION_STATE, next));
-        return true;
-    } catch {
-        return false;
-    }
-}
-
-function getSpeed(ips) {
-    const normalized = Number.isFinite(ips) && ips > 0 ? ips : BASE_IPS;
-    return Math.min(MAX_SPEED, BASE_SPEED * (normalized / BASE_IPS));
-}
-
-function getVerticalSpeed(ips) {
-    const normalized = Number.isFinite(ips) && ips > 0 ? ips : BASE_IPS;
-    return Math.min(MAX_VERTICAL_SPEED, BASE_VERTICAL_SPEED * (normalized / BASE_IPS));
-}
-
-function getConveyorSpeed(meta) {
-    const base = getSpeed(meta?.ips);
-    if (meta?.tier === "aetherium") return base * AETHERIUM_SPEED_MULTIPLIER;
-    return base;
-}
-
-function getConveyorVerticalSpeed(meta) {
-    const base = getVerticalSpeed(meta?.ips);
-    if (meta?.tier === "aetherium") return base * AETHERIUM_SPEED_MULTIPLIER;
-    return base;
-}
-
-function resolveOutputOffset(shape, facing) {
-    if (shape === "vertical") return { x: 0, y: 1, z: 0 };
-
-    const base = CARDINAL_OFFSETS[facing] ?? { x: 0, y: 0, z: 0 };
-
-    if (shape === "inclined") return { x: base.x, y: 1, z: base.z };
-    if (shape === "declined") return { x: base.x, y: -1, z: base.z };
-
-    return base;
-}
-
-function getItemsNear(block, radius = 0.9) {
-    const { x, y, z } = block.location;
-    const center = { x: x + 0.5, y: y + 0.4, z: z + 0.5 };
-    return block.dimension.getEntities({
-        type: "minecraft:item",
-        location: center,
-        maxDistance: radius
-    });
-}
-
-function getCreaturesNear(block, radius = 0.9) {
-    const { x, y, z } = block.location;
-    const center = { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
-    return block.dimension.getEntities({
-        location: center,
-        maxDistance: radius,
-        excludeTypes: CONVEYOR_CREATURE_EXCLUDED_TYPES,
-        excludeFamilies: CONVEYOR_CREATURE_EXCLUDED_FAMILIES
-    });
-}
-
-function getItemStackFromEntity(item) {
-    if (!item) return null;
-    return item.getComponent("minecraft:item")?.itemStack ?? null;
-}
-
-function getConveyorTick() {
-    return Math.max(0, Math.floor(Number(globalThis.tickCount ?? 0)));
-}
-
-function hasItemMovedThisTick(item) {
-    if (!item?.getDynamicProperty) return false;
-    const lastTick = Number(item.getDynamicProperty(ITEM_MOVE_TICK_PROP) ?? -1);
-    return lastTick === getConveyorTick();
-}
-
-function hasEntityMovedThisTick(entity) {
-    if (!entity?.getDynamicProperty) return false;
-    const lastTick = Number(entity.getDynamicProperty(ENTITY_MOVE_TICK_PROP) ?? -1);
-    return lastTick === getConveyorTick();
-}
-
-function markItemMoved(item, blockKey) {
-    if (!item?.setDynamicProperty) return;
-    const tick = getConveyorTick();
-    try {
-        item.setDynamicProperty(ITEM_MOVE_TICK_PROP, tick);
-        if (blockKey) item.setDynamicProperty(ITEM_MOVE_KEY_PROP, blockKey);
-    } catch {
-        // ignore dynamic property failures
-    }
-}
-
-function markEntityMoved(entity, blockKey) {
-    if (!entity?.setDynamicProperty) return;
-    const tick = getConveyorTick();
-    try {
-        entity.setDynamicProperty(ENTITY_MOVE_TICK_PROP, tick);
-        if (blockKey) entity.setDynamicProperty(ENTITY_MOVE_KEY_PROP, blockKey);
-    } catch {
-        // ignore dynamic property failures
-    }
-}
-
-function getDirectionAxis(direction) {
-    if (direction === "up" || direction === "down") return "y";
-    if (direction === "east" || direction === "west") return "x";
-    return "z";
-}
-
-function isDirectionPositive(direction) {
-    return direction === "east" || direction === "south" || direction === "up";
-}
-
-function canMoveItemWithSpacing(item, items, direction) {
-    if (!item || !Array.isArray(items) || items.length <= 1) return true;
-    if (!direction) return true;
-
-    const axis = getDirectionAxis(direction);
-    const sign = isDirectionPositive(direction) ? 1 : -1;
-    const value = item.location?.[axis] ?? 0;
-
-    for (const other of items) {
-        if (!other || other === item) continue;
-        const otherValue = other.location?.[axis] ?? 0;
-        const delta = (otherValue - value) * sign;
-        if (delta > 0 && delta < ITEM_SPACING) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-function shouldHoldAetheriumItem(meta, item) {
-    if (meta?.tier !== "aetherium") return false;
-    const stack = getItemStackFromEntity(item);
-    if (!stack) return false;
-    if (stack.maxAmount < 64) return false;
-    return stack.amount < stack.maxAmount;
 }
 
 function getNetworkEnergySources(block, network) {
@@ -1683,979 +1327,41 @@ function consumeConveyorEnergy(block, network, amount) {
     return remaining <= 0;
 }
 
-function tryInsertIntoContainer(item, block, outputOffset) {
-    if (!item || !block?.dimension || !outputOffset) return false;
-
-    const target = {
-        x: block.location.x + outputOffset.x,
-        y: block.location.y + outputOffset.y,
-        z: block.location.z + outputOffset.z
-    };
-
-    const itemComp = item.getComponent("minecraft:item");
-    const stack = itemComp?.itemStack;
-    if (!stack) return false;
-
-    const result = DoriosAPI?.containers?.addItemAt?.(target, block.dimension, stack);
-
-    if (result === true) {
-        item.remove();
-        return true;
-    }
-
-    if (typeof result === "number" && result > 0) {
-        const remaining = stack.amount - result;
-        const spawnLoc = item.location;
-        item.remove();
-        if (remaining > 0) {
-            const leftover = typeof stack.clone === "function" ? stack.clone() : stack;
-            leftover.amount = remaining;
-            block.dimension.spawnItem(leftover, spawnLoc);
-        }
-        return true;
-    }
-
-    return false;
-}
-
-function moveItem(item, delta, block, centerStrength = 0) {
-    if (!item || !delta) return;
-
-    const current = item.location;
-    const target = {
-        x: current.x + delta.x,
-        y: current.y + delta.y,
-        z: current.z + delta.z
-    };
-
-    if (centerStrength > 0 && block) {
-        const centerX = block.location.x + 0.5;
-        const centerZ = block.location.z + 0.5;
-        target.x += (centerX - target.x) * centerStrength;
-        target.z += (centerZ - target.z) * centerStrength;
-    }
-
-    item.teleport(target);
-}
-
-function moveEntity(entity, delta, block, centerStrength = 0) {
-    if (!entity || !delta) return;
-
-    const current = entity.location;
-    const target = {
-        x: current.x + delta.x,
-        y: current.y + delta.y,
-        z: current.z + delta.z
-    };
-
-    if (centerStrength > 0 && block) {
-        const centerX = block.location.x + 0.5;
-        const centerZ = block.location.z + 0.5;
-        target.x += (centerX - target.x) * centerStrength;
-        target.z += (centerZ - target.z) * centerStrength;
-    }
-
-    try {
-        entity.teleport(target);
-    } catch {
-        // ignore teleport errors
-    }
-}
-
-function getRelativeDirections(facing) {
-    return {
-        front: facing,
-        back: OPPOSITE_CARDINAL[facing],
-        right: RIGHT_CARDINAL[facing],
-        left: LEFT_CARDINAL[facing]
-    };
-}
-
-function getTargetBlock(block, direction) {
-    if (!block?.dimension || !direction) return null;
-    const offset = CARDINAL_OFFSETS[direction];
-    if (!offset) return null;
-    const pos = {
-        x: block.location.x + offset.x,
-        y: block.location.y + offset.y,
-        z: block.location.z + offset.z
-    };
-    return block.dimension.getBlock(pos);
-}
-
-function isOutputPassable(block, direction) {
-    const target = getTargetBlock(block, direction);
-    if (!target) return false;
-    if (isAirLike(target)) return true;
-    if (isBridgePathBlock(target) || isLegacyBridgePathBlock(target)) return true;
-    if (target.hasTag?.(CONVEYOR_TAG)) return true;
-    if (target.getComponent("minecraft:inventory")?.container) return true;
-
-    const entities = block.dimension.getEntitiesAtBlockLocation(target.location);
-    for (const entity of entities) {
-        if (entity?.getComponent("minecraft:inventory")?.container) return true;
-    }
-
-    return false;
-}
-
-function hasContainerAt(block, direction) {
-    const target = getTargetBlock(block, direction);
-    if (!target) return false;
-    if (target.getComponent("minecraft:inventory")?.container) return true;
-
-    const entities = block.dimension.getEntitiesAtBlockLocation(target.location);
-    for (const entity of entities) {
-        if (entity?.getComponent("minecraft:inventory")?.container) return true;
-    }
-
-    return false;
-}
-
-function pickRandomDirection(options) {
-    if (!Array.isArray(options) || options.length === 0) return null;
-    const index = Math.floor(Math.random() * options.length);
-    return options[index] ?? null;
-}
-
-function resolveRouterDirection(block, key, options) {
-    if (!block || !key || !Array.isArray(options) || options.length === 0) return null;
-    const passableOptions = options.filter(dir => isOutputPassable(block, dir));
-    if (passableOptions.length === 0) {
-        routerDirectionCache.delete(key);
-        return null;
-    }
-
-    const tick = getConveyorTick();
-    const cached = routerDirectionCache.get(key);
-    const cachedDirection = typeof cached?.direction === "string" ? cached.direction : null;
-    const cycleEndTick = Number(cached?.cycleEndTick ?? -1);
-
-    if (cachedDirection && passableOptions.includes(cachedDirection) && tick < cycleEndTick) {
-        return cachedDirection;
-    }
-
-    let nextIndex = 0;
-
-    if (cachedDirection && passableOptions.includes(cachedDirection)) {
-        const currentIndex = passableOptions.indexOf(cachedDirection);
-        nextIndex = (currentIndex + 1) % passableOptions.length;
-    } else {
-        const fallbackIndex = Number(cached?.nextIndex);
-        if (Number.isFinite(fallbackIndex)) {
-            nextIndex = Math.max(0, Math.min(Math.floor(fallbackIndex), passableOptions.length - 1));
-        }
-    }
-
-    const selected = passableOptions[nextIndex] ?? passableOptions[0] ?? null;
-    if (!selected) return null;
-
-    const selectedIndex = passableOptions.indexOf(selected);
-    const following = (selectedIndex + 1) % passableOptions.length;
-
-    routerDirectionCache.set(key, {
-        direction: selected,
-        cycleEndTick: tick + ROUTER_CYCLE_TICKS,
-        nextIndex: following
-    });
-
-    return selected;
-}
-
-function moveItemInDirection(item, block, meta, direction) {
-    const offset = CARDINAL_OFFSETS[direction];
-    if (!offset) return;
-
-    const speed = getConveyorSpeed(meta);
-    const delta = { x: offset.x * speed, y: 0, z: offset.z * speed };
-    const outputOffset = resolveOutputOffset("horizontal", direction);
-    if (tryInsertIntoContainer(item, block, outputOffset)) return;
-    moveItem(item, delta, block);
-}
-
-function teleportItemToDirection(item, block, direction) {
-    if (!item || !block || !direction) return;
-    const offset = CARDINAL_OFFSETS[direction];
-    if (!offset) return;
-    const target = {
-        x: block.location.x + offset.x + 0.5,
-        y: block.location.y + 0.1,
-        z: block.location.z + offset.z + 0.5
-    };
-    item.teleport(target);
-}
-
-function trySendItemInstant(item, block, direction) {
-    if (!item || !block || !direction) return false;
-    const outputOffset = resolveOutputOffset("horizontal", direction);
-    if (tryInsertIntoContainer(item, block, outputOffset)) return true;
-    teleportItemToDirection(item, block, direction);
-    return true;
-}
-
-function getCycleIndex(cache, key, max) {
-    const stored = cache.get(key);
-    const numeric = Number.isFinite(stored) ? stored : 0;
-    return Math.max(0, Math.min(numeric, max));
-}
-
-function setCycleIndex(cache, key, value, max) {
-    const numeric = Number.isFinite(value) ? value : 0;
-    cache.set(key, Math.max(0, Math.min(numeric, max)));
-}
-
-function formatItemLabel(id) {
-    if (!id) return "";
-    if (DoriosAPI?.utils?.formatIdToText) return DoriosAPI.utils.formatIdToText(id);
-    return String(id);
-}
-
-function openSorterMenu(player, block, meta) {
-    if (!player || !block || !meta) return;
-    const held = player.getComponent("equippable")?.getEquipment("Mainhand");
-    const heldId = held?.typeId ?? "";
-    const currentFilter = readSorterFilter(block);
-    const modeKey =
-        meta.shape === "inverted_sorter"
-            ? "ui.utilitycraft.conveyor.sorter.mode.inverted"
-            : "ui.utilitycraft.conveyor.sorter.mode.standard";
-
-    const bodyRawtext = [
-        tr("ui.utilitycraft.conveyor.sorter.mode_label", [tr(modeKey)]),
-        { text: "\n" },
-        tr("ui.utilitycraft.conveyor.sorter.current_filter", [
-            currentFilter ? formatItemLabel(currentFilter) : tr("ui.utilitycraft.conveyor.sorter.current_filter.none")
-        ])
-    ];
-
-    if (heldId) {
-        bodyRawtext.push({ text: "\n" });
-        bodyRawtext.push(tr("ui.utilitycraft.conveyor.sorter.held_item", [formatItemLabel(heldId)]));
-    }
-
-    const form = new ActionFormData()
-        .title(tr("ui.utilitycraft.conveyor.sorter.title"))
-        .body({ rawtext: bodyRawtext });
-
-    const actions = [];
-    if (heldId) {
-        form.button(tr("ui.utilitycraft.conveyor.sorter.button.set_filter", [formatItemLabel(heldId)]));
-        actions.push("set");
-    }
-    if (currentFilter) {
-        form.button(tr("ui.utilitycraft.conveyor.sorter.button.clear_filter"));
-        actions.push("clear");
-    }
-    form.button(tr("ui.utilitycraft.conveyor.sorter.button.close"));
-    actions.push("close");
-
-    form.show(player).then(response => {
-        if (response.canceled || response.selection === undefined) return;
-        const action = actions[response.selection];
-        if (!action || action === "close") return;
-
-        if (action === "set" && heldId) {
-            saveSorterFilter(block, heldId);
-            player.onScreenDisplay?.setActionBar(
-                tr("ui.utilitycraft.conveyor.sorter.filter_set", [formatItemLabel(heldId)])
-            );
-            return;
-        }
-
-        if (action === "clear") {
-            clearSorterFilter(block);
-            player.onScreenDisplay?.setActionBar(tr("ui.utilitycraft.conveyor.sorter.filter_cleared"));
-        }
-    });
-}
-
-function openSmartRouterMenu(player, block) {
-    if (!player || !block) return;
-    const smartRouterId = getSmartRouterId(block);
-    const config = getSmartRouterConfig(smartRouterId);
-    const hand = player.getComponent("equippable")?.getEquipment("Mainhand");
-    const heldId = hand?.typeId ?? "";
-    const heldLabel = formatItemLabel(heldId);
-
-    const form = new ActionFormData()
-        .title(tr("ui.utilitycraft.smart_router.title"))
-        .body(
-            heldId
-                ? tr("ui.utilitycraft.smart_router.body_held", [heldLabel])
-                : tr("ui.utilitycraft.smart_router.body_empty")
-        );
-
-    const actions = [];
-
-    if (heldId) {
-        form.button(tr("ui.utilitycraft.smart_router.button.assign_left"));
-        actions.push("assign_left");
-        form.button(tr("ui.utilitycraft.smart_router.button.assign_front"));
-        actions.push("assign_front");
-        form.button(tr("ui.utilitycraft.smart_router.button.assign_right"));
-        actions.push("assign_right");
-        form.button(tr("ui.utilitycraft.smart_router.button.remove_item"));
-        actions.push("remove_item");
-    }
-
-    form.button(tr("ui.utilitycraft.smart_router.button.view"));
-    actions.push("view");
-    form.button(tr("ui.utilitycraft.smart_router.button.clear_all"));
-    actions.push("clear_all");
-    form.button(tr("ui.utilitycraft.smart_router.button.close"));
-    actions.push("close");
-
-    form.show(player).then(response => {
-        if (response.canceled || response.selection === undefined) return;
-        const action = actions[response.selection];
-        if (!action) return;
-
-        if (action.startsWith("assign_")) {
-            const direction = action.replace("assign_", "");
-            const nextConfig = assignSmartRouterItem(config, direction, heldId);
-            saveSmartRouterConfig(smartRouterId, nextConfig);
-            player.onScreenDisplay?.setActionBar(tr("ui.utilitycraft.smart_router.saved"));
-            return;
-        }
-
-        if (action === "remove_item") {
-            const nextConfig = removeSmartRouterItem(config, heldId);
-            saveSmartRouterConfig(smartRouterId, nextConfig);
-            player.onScreenDisplay?.setActionBar(tr("ui.utilitycraft.smart_router.removed"));
-            return;
-        }
-
-        if (action === "view") {
-            const lines = [];
-            for (const dir of SMART_ROUTER_DIRS) {
-                const list = config[dir] ?? [];
-                const label = dir.charAt(0).toUpperCase() + dir.slice(1);
-                const items = list.length ? list.map(formatItemLabel).join(", ") : "-";
-                lines.push(`${label}: ${items}`);
-            }
-            player.sendMessage(lines.join("\n"));
-            return;
-        }
-
-        if (action === "clear_all") {
-            saveSmartRouterConfig(smartRouterId, SMART_ROUTER_DEFAULT);
-            player.onScreenDisplay?.setActionBar(tr("ui.utilitycraft.smart_router.cleared"));
-            return;
-        }
-    });
-}
-
-function processRouterConveyor(block, meta, facing, context = {}) {
-    const key = posKey(block.location);
-    const dirs = getRelativeDirections(facing);
-    const options = [dirs.front, dirs.right, dirs.left].filter(Boolean);
-    const selected = resolveRouterDirection(block, key, options);
-    if (!selected) return;
-
-    const items = getItemsNear(block, 0.9);
-    if (!items?.length && meta?.tier !== "aetherium") return;
-
-    for (const item of items) {
-        if (hasItemMovedThisTick(item)) continue;
-        const stack = getItemStackFromEntity(item);
-        if (!stack) continue;
-        if (shouldHoldAetheriumItem(meta, item)) continue;
-        if (!isOutputPassable(block, selected)) continue;
-        if (!canMoveItemWithSpacing(item, items, selected)) continue;
-        if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        trySendItemInstant(item, block, selected);
-        markItemMoved(item, key);
-    }
-}
-
-function processSorterConveyor(block, meta, facing, context = {}) {
-    const key = posKey(block.location);
-    const dirs = getRelativeDirections(facing);
-    let sideCycle = getCycleIndex(sorterSideCycleCache, key, 1);
-    const filterId = readSorterFilter(block);
-    const hasFilter = filterId.length > 0;
-    const inverted = meta.shape === "inverted_sorter";
-
-    const items = getItemsNear(block, 0.9);
-    if (!items?.length) return;
-
-    for (const item of items) {
-        if (hasItemMovedThisTick(item)) continue;
-        const stack = getItemStackFromEntity(item);
-        if (!stack) continue;
-        if (shouldHoldAetheriumItem(meta, item)) continue;
-
-        const matchesFilter = hasFilter && stack.typeId.toLowerCase() === filterId;
-        const prioritizeSides = hasFilter && (inverted ? matchesFilter : !matchesFilter);
-        const primarySide = sideCycle === 0 ? dirs.right : dirs.left;
-        const secondarySide = sideCycle === 0 ? dirs.left : dirs.right;
-        const candidates = prioritizeSides
-            ? [primarySide, secondarySide, dirs.front]
-            : [dirs.front, primarySide, secondarySide];
-
-        const selected = candidates.find(dir => dir && isOutputPassable(block, dir));
-        if (!selected) continue;
-        if (!canMoveItemWithSpacing(item, items, selected)) continue;
-        if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-
-        trySendItemInstant(item, block, selected);
-        markItemMoved(item, key);
-
-        if (selected === dirs.right || selected === dirs.left) {
-            sideCycle = 1 - sideCycle;
-        }
-    }
-
-    setCycleIndex(sorterSideCycleCache, key, sideCycle, 1);
-}
-
-function processSmartRouterConveyor(block, meta, facing, context = {}) {
-    const smartRouterId = getSmartRouterId(block);
-    const config = getSmartRouterConfig(smartRouterId);
-    const dirs = getRelativeDirections(facing);
-    const items = getItemsNear(block, 0.9);
-    if (!items?.length) return;
-    const key = posKey(block.location);
-
-    for (const item of items) {
-        if (hasItemMovedThisTick(item)) continue;
-        const stack = getItemStackFromEntity(item);
-        if (!stack) continue;
-        if (shouldHoldAetheriumItem(meta, item)) continue;
-
-        const preferred = resolveSmartRouterOutput(config, stack.typeId);
-        const candidates = [];
-        if (preferred && dirs[preferred]) candidates.push(dirs[preferred]);
-        for (const dirKey of ["front", "right", "left"]) {
-            const dir = dirs[dirKey];
-            if (dir && !candidates.includes(dir)) candidates.push(dir);
-        }
-
-        const selected = candidates.find(dir => isOutputPassable(block, dir)) ?? dirs.front;
-        if (!canMoveItemWithSpacing(item, items, selected)) continue;
-        if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        trySendItemInstant(item, block, selected);
-        markItemMoved(item, key);
-    }
-}
-
-function processOverflowConveyor(block, meta, facing, context = {}) {
-    const key = posKey(block.location);
-    const dirs = getRelativeDirections(facing);
-    let cycleIndex = getCycleIndex(overflowCycleCache, key, 1);
-
-    const items = getItemsNear(block, 0.9);
-    if (!items?.length) return;
-
-    for (const item of items) {
-        if (hasItemMovedThisTick(item)) continue;
-        const stack = getItemStackFromEntity(item);
-        if (!stack) continue;
-        if (shouldHoldAetheriumItem(meta, item)) continue;
-        if (isOutputPassable(block, dirs.front)) {
-            if (!canMoveItemWithSpacing(item, items, dirs.front)) continue;
-            if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-            trySendItemInstant(item, block, dirs.front);
-            markItemMoved(item, key);
-            continue;
-        }
-
-        const primary = cycleIndex === 0 ? dirs.right : dirs.left;
-        const secondary = cycleIndex === 0 ? dirs.left : dirs.right;
-        let selected = null;
-
-        if (primary && isOutputPassable(block, primary)) {
-            selected = primary;
-            cycleIndex = 1 - cycleIndex;
-        } else if (secondary && isOutputPassable(block, secondary)) {
-            selected = secondary;
-            cycleIndex = 1 - cycleIndex;
-        } else {
-            selected = dirs.front;
-        }
-
-        if (!canMoveItemWithSpacing(item, items, selected)) continue;
-        if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        trySendItemInstant(item, block, selected);
-        markItemMoved(item, key);
-    }
-
-    setCycleIndex(overflowCycleCache, key, cycleIndex, 1);
-}
-
-function processUnderflowConveyor(block, meta, facing, context = {}) {
-    const key = posKey(block.location);
-    const dirs = getRelativeDirections(facing);
-    let cycleIndex = getCycleIndex(underflowCycleCache, key, 1);
-
-    const items = getItemsNear(block, 0.9);
-    if (!items?.length) return;
-
-    for (const item of items) {
-        if (hasItemMovedThisTick(item)) continue;
-        const stack = getItemStackFromEntity(item);
-        if (!stack) continue;
-        if (shouldHoldAetheriumItem(meta, item)) continue;
-        const primary = cycleIndex === 0 ? dirs.right : dirs.left;
-        const secondary = cycleIndex === 0 ? dirs.left : dirs.right;
-        let injected = false;
-
-        if (primary && hasContainerAt(block, primary) && canConsumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) {
-            const outputOffset = resolveOutputOffset("horizontal", primary);
-            if (tryInsertIntoContainer(item, block, outputOffset)) {
-                consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST);
-                cycleIndex = 1 - cycleIndex;
-                markItemMoved(item, key);
-                injected = true;
-            }
-        }
-
-        if (!injected && secondary && hasContainerAt(block, secondary) && canConsumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) {
-            const outputOffset = resolveOutputOffset("horizontal", secondary);
-            if (tryInsertIntoContainer(item, block, outputOffset)) {
-                consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST);
-                cycleIndex = 1 - cycleIndex;
-                markItemMoved(item, key);
-                injected = true;
-            }
-        }
-
-        if (injected) continue;
-
-        if (!dirs.front || !isOutputPassable(block, dirs.front)) continue;
-        if (!canMoveItemWithSpacing(item, items, dirs.front)) continue;
-        if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        trySendItemInstant(item, block, dirs.front);
-        markItemMoved(item, key);
-    }
-
-    setCycleIndex(underflowCycleCache, key, cycleIndex, 1);
-}
-
-function isItemInsideBlock(item, block) {
-    const pos = item?.location;
-    if (!pos || !block?.location) return false;
-    return (
-        Math.floor(pos.x) === block.location.x &&
-        Math.floor(pos.y) === block.location.y &&
-        Math.floor(pos.z) === block.location.z
-    );
-}
-
-function resolveJunctionDirection(block, item, facing) {
-    if (!item?.location || !block?.location) return facing;
-    const lastKey = item?.getDynamicProperty?.(ITEM_MOVE_KEY_PROP);
-    const lastPos = parsePosKey(lastKey);
-    if (lastPos) {
-        const dx = lastPos.x - block.location.x;
-        const dy = lastPos.y - block.location.y;
-        const dz = lastPos.z - block.location.z;
-        if (dy === 0 && Math.abs(dx) + Math.abs(dz) === 1) {
-            if (dx === 1) return "west";
-            if (dx === -1) return "east";
-            if (dz === 1) return "north";
-            if (dz === -1) return "south";
-        }
-    }
-    const centerX = block.location.x + 0.5;
-    const centerZ = block.location.z + 0.5;
-    const dx = item.location.x - centerX;
-    const dz = item.location.z - centerZ;
-
-    if (Math.abs(dx) >= Math.abs(dz)) {
-        return dx >= 0 ? "west" : "east";
-    }
-    return dz >= 0 ? "north" : "south";
-}
-
-function clearJunctionItemCache(item) {
-    try {
-        item?.setDynamicProperty?.(ITEM_JUNCTION_BLOCK_PROP, "");
-        item?.setDynamicProperty?.(ITEM_JUNCTION_DIR_PROP, "");
-    } catch {
-        // ignore
-    }
-}
-
-function getJunctionDirectionForItem(block, item, facing) {
-    const blockKey = posKey(block.location);
-    const storedKey = item?.getDynamicProperty?.(ITEM_JUNCTION_BLOCK_PROP);
-    const storedDir = item?.getDynamicProperty?.(ITEM_JUNCTION_DIR_PROP);
-
-    if (storedKey === blockKey && typeof storedDir === "string" && storedDir.length > 0) {
-        if (isOutputPassable(block, storedDir)) return storedDir;
-        clearJunctionItemCache(item);
-    }
-
-    const resolved = resolveJunctionDirection(block, item, facing);
-    if (!resolved) return null;
-
-    let chosen = resolved;
-    if (!isOutputPassable(block, chosen)) {
-        const opposite = OPPOSITE_CARDINAL[chosen];
-        chosen = opposite && isOutputPassable(block, opposite) ? opposite : null;
-    }
-
-    if (!chosen) return null;
-    try {
-        item?.setDynamicProperty?.(ITEM_JUNCTION_BLOCK_PROP, blockKey);
-        item?.setDynamicProperty?.(ITEM_JUNCTION_DIR_PROP, chosen);
-    } catch {
-        // ignore dynamic property issues
-    }
-    return chosen;
-}
-
-function processJunctionConveyor(block, meta, facing, context = {}) {
-    const items = getItemsNear(block, 0.9);
-    if (!items?.length) return;
-    const key = posKey(block.location);
-
-    for (const item of items) {
-        if (hasItemMovedThisTick(item)) continue;
-        const stack = getItemStackFromEntity(item);
-        if (!stack) continue;
-        if (shouldHoldAetheriumItem(meta, item)) continue;
-        if (!isItemInsideBlock(item, block)) {
-            const blockKey = posKey(block.location);
-            if (item?.getDynamicProperty?.(ITEM_JUNCTION_BLOCK_PROP) === blockKey) {
-                clearJunctionItemCache(item);
-            }
-        }
-
-        const direction = getJunctionDirectionForItem(block, item, facing);
-        if (!direction) continue;
-        if (!canMoveItemWithSpacing(item, items, direction)) continue;
-        if (!consumeConveyorEnergy(block, context?.network, SPECIAL_CONVEYOR_ENERGY_COST)) continue;
-        trySendItemInstant(item, block, direction);
-        markItemMoved(item, key);
-    }
-}
-
-function evaluateBridgeLink(block, meta, facing) {
-    if (!block?.dimension || !meta?.bridgeRange) {
-        return { receiver: null, obstructed: false, steps: 0 };
-    }
-
-    const offset = CARDINAL_OFFSETS[facing];
-    if (!offset) {
-        return { receiver: null, obstructed: false, steps: 0 };
-    }
-
-    let receiver = null;
-    let receiverSteps = 0;
-    let obstructed = false;
-
-    for (let step = 1; step <= meta.bridgeRange; step++) {
-        const targetPos = {
-            x: block.location.x + offset.x * step,
-            y: block.location.y,
-            z: block.location.z + offset.z * step
-        };
-
-        const candidate = block.dimension.getBlock(targetPos);
-        if (!candidate) continue;
-
-        if (candidate.hasTag?.(BRIDGE_TAG)) {
-            const candidateMeta = getConveyorMeta(candidate.typeId);
-            if (candidateMeta?.shape === "bridge_receiver" && candidateMeta?.tier === meta.tier) {
-                receiver = candidate;
-                receiverSteps = step;
-                break;
-            }
-        }
-
-        if (isAirLike(candidate)) continue;
-        if (isBridgePathBlock(candidate, meta.tier) || isLegacyBridgePathBlock(candidate)) continue;
-        if (isBridgeClearableBlock(candidate)) continue;
-        obstructed = true;
-    }
-
-    return { receiver, obstructed, steps: receiverSteps };
-}
-
-function clearBridgePath(block, tier, facing, range) {
-    if (!block?.dimension || !facing || !range) return;
-    const offset = CARDINAL_OFFSETS[facing];
-    if (!offset) return;
-
-    for (let step = 1; step <= range; step++) {
-        const pos = {
-            x: block.location.x + offset.x * step,
-            y: block.location.y,
-            z: block.location.z + offset.z * step
-        };
-        const target = block.dimension.getBlock(pos);
-        if (!target) continue;
-        if (target.hasTag?.(BRIDGE_TAG)) break;
-        if (isBridgePathBlock(target, tier) || isLegacyBridgePathBlock(target)) {
-            target.setType("minecraft:air");
-        }
-    }
-}
-
-function createBridgePath(block, tier, facing, steps) {
-    if (!block?.dimension || !facing || !steps) return;
-    const offset = CARDINAL_OFFSETS[facing];
-    if (!offset) return;
-    const pathId = getBridgePathBlockId(tier);
-
-    const applyBridgePathDirection = target => {
-        if (!target) return;
-        try {
-            if (target.permutation?.getState(BRIDGE_PATH_DIRECTION_STATE) !== undefined) {
-                target.setPermutation(target.permutation.withState(BRIDGE_PATH_DIRECTION_STATE, facing));
-            }
-        } catch {
-            // ignore permutation errors
-        }
-    };
-
-    for (let step = 1; step < steps; step++) {
-        const pos = {
-            x: block.location.x + offset.x * step,
-            y: block.location.y,
-            z: block.location.z + offset.z * step
-        };
-        const target = block.dimension.getBlock(pos);
-        if (!target) continue;
-        if (target.hasTag?.(BRIDGE_TAG)) break;
-
-        if (isBridgeClearableBlock(target)) {
-            target.setType("minecraft:air");
-        }
-
-        if (isAirLike(target) || isBridgePathBlock(target, tier) || isLegacyBridgePathBlock(target)) {
-            target.setType(pathId);
-            applyBridgePathDirection(target);
-        }
-    }
-}
-
-function updateBridgeNetworkCache(block, receiver) {
-    if (!block?.dimension) return;
-    const key = posKey(block.location);
-    const nextKey = receiver ? posKey(receiver.location) : null;
-    const existing = bridgeCache.get(key);
-    const existingKey = existing?.pos ? posKey(existing.pos) : null;
-
-    if (existingKey === nextKey) return;
-
-    if (receiver) {
-        bridgeCache.set(key, { pos: { ...receiver.location } });
-    } else {
-        bridgeCache.delete(key);
-    }
-
-    markConveyorNetworkDirty(block.dimension.id);
-}
-
-function refreshBridgePathFromTransmitter(block, meta, player) {
-    const facing = getFacing(block);
-    if (!facing) return;
-
-    clearBridgePath(block, meta.tier, facing, meta.bridgeRange);
-
-    const link = evaluateBridgeLink(block, meta, facing);
-    const key = posKey(block.location);
-
-    if (link.receiver && !link.obstructed) {
-        createBridgePath(block, meta.tier, facing, link.steps);
-        updateBridgeNetworkCache(block, link.receiver);
-        updatePipes(block, "energy");
-        return;
-    }
-
-    updateBridgeNetworkCache(block, null);
-
-    if (link.receiver && link.obstructed) {
-        notifyBridgeObstructed(player);
-    }
-
-    updatePipes(block, "energy");
-}
-
-function refreshBridgePathsForReceiver(dim, pos, meta, player) {
-    if (!dim || !pos || !meta?.bridgeRange) return;
-
-    for (const [dir, offset] of Object.entries(CARDINAL_OFFSETS)) {
-        for (let step = 1; step <= meta.bridgeRange; step++) {
-            const targetPos = {
-                x: pos.x + offset.x * step,
-                y: pos.y,
-                z: pos.z + offset.z * step
-            };
-            const candidate = dim.getBlock(targetPos);
-            if (!candidate?.hasTag?.(BRIDGE_TAG)) continue;
-
-            const candidateMeta = getConveyorMeta(candidate.typeId);
-            if (!candidateMeta || candidateMeta.shape !== "bridge_transmitter") continue;
-            if (candidateMeta.tier !== meta.tier) continue;
-
-            const facing = getFacing(candidate);
-            if (facing !== OPPOSITE_CARDINAL[dir]) continue;
-
-            refreshBridgePathFromTransmitter(candidate, candidateMeta, player);
-        }
-    }
-}
-
-function processBridgeTransmitter(block, meta, facing, context = {}) {
-    const link = evaluateBridgeLink(block, meta, facing);
-    if (!link.receiver || link.obstructed) {
-        updateBridgeNetworkCache(block, null);
-        clearBridgePath(block, meta.tier, facing, meta.bridgeRange);
-        processStandardConveyor(block, meta, facing, "horizontal", context);
-        return;
-    }
-
-    updateBridgeNetworkCache(block, link.receiver);
-
-    const items = getItemsNear(block, 0.9);
-    if (!items?.length && meta?.tier !== "aetherium") return;
-
-    const receiverCenter = {
-        x: link.receiver.location.x + 0.5,
-        y: link.receiver.location.y + 0.1,
-        z: link.receiver.location.z + 0.5
-    };
-
-    const key = posKey(block.location);
-    if (items?.length) {
-        for (const item of items) {
-            if (hasItemMovedThisTick(item)) continue;
-            const stack = getItemStackFromEntity(item);
-            if (!stack) continue;
-            if (shouldHoldAetheriumItem(meta, item)) continue;
-            item.teleport(receiverCenter);
-            markItemMoved(item, key);
-        }
-    }
-
-    if (meta?.tier === "aetherium") {
-        const creatures = getCreaturesNear(block, 0.9);
-        if (!creatures?.length) return;
-        for (const entity of creatures) {
-            if (entity?.isValid === false) continue;
-            if (hasEntityMovedThisTick(entity)) continue;
-            try {
-                entity.teleport(receiverCenter);
-            } catch {
-                // ignore teleport errors
-            }
-            markEntityMoved(entity, key);
-        }
-    }
-}
-
-function processStandardConveyor(block, meta, facing, forcedShape = null, context = {}) {
-    const shape = forcedShape ?? meta.shape;
-    const baseOffset = CARDINAL_OFFSETS[facing] ?? { x: 0, y: 0, z: 0 };
-
-    const speed = getConveyorSpeed(meta);
-    const verticalSpeed = getConveyorVerticalSpeed(meta);
-    const verticalDirection = shape === "vertical" ? getVerticalDirection(block) : "up";
-
-    let delta = { x: 0, y: 0, z: 0 };
-    let centerStrength = 0;
-
-    switch (shape) {
-        case "horizontal":
-        case "bridge_receiver":
-            delta = { x: baseOffset.x * speed, y: 0, z: baseOffset.z * speed };
-            break;
-        case "inclined":
-            delta = { x: baseOffset.x * speed, y: verticalSpeed, z: baseOffset.z * speed };
-            break;
-        case "declined":
-            delta = { x: baseOffset.x * speed, y: -verticalSpeed, z: baseOffset.z * speed };
-            break;
-        case "vertical":
-            delta = { x: 0, y: verticalDirection === "down" ? -verticalSpeed : verticalSpeed, z: 0 };
-            centerStrength = 0.35;
-            break;
-        default:
-            return;
-    }
-
-    let outputOffset = resolveOutputOffset(shape, facing);
-    if (shape === "vertical" && verticalDirection === "down") {
-        outputOffset = { x: 0, y: -1, z: 0 };
-    }
-    const detectionRadius = shape === "inclined" || shape === "declined" ? INCLINED_DETECTION_RADIUS : 0.9;
-    const items = getItemsNear(block, detectionRadius);
-
-    const moveDirection = shape === "vertical" ? verticalDirection : facing;
-    const blockKey = posKey(block.location);
-
-    if (items?.length) {
-        for (const item of items) {
-            if (hasItemMovedThisTick(item)) continue;
-            const stack = getItemStackFromEntity(item);
-            if (!stack) continue;
-            if (shouldHoldAetheriumItem(meta, item)) continue;
-            if (!canMoveItemWithSpacing(item, items, moveDirection)) continue;
-            if (tryInsertIntoContainer(item, block, outputOffset)) {
-                markItemMoved(item, blockKey);
-                continue;
-            }
-            moveItem(item, delta, block, centerStrength);
-            markItemMoved(item, blockKey);
-        }
-    }
-
-    if (meta?.tier === "aetherium") {
-        const creatures = getCreaturesNear(block, detectionRadius);
-        if (!creatures?.length) return;
-        for (const entity of creatures) {
-            if (entity?.isValid === false) continue;
-            if (hasEntityMovedThisTick(entity)) continue;
-            moveEntity(entity, delta, block, centerStrength);
-            markEntityMoved(entity, blockKey);
-        }
-    }
+function isSorterShape(shape) {
+    return shape === "sorter" || shape === "inverted_sorter" || shape === "filter";
 }
 
 function processConveyor(block, meta, context = {}) {
-    const facing = getFacing(block);
+    const facing = block.getState?.("minecraft:cardinal_direction") ?? null;
     if (!facing) return;
 
-    if (meta.shape === "bridge_transmitter") {
-        processBridgeTransmitter(block, meta, facing, context);
-        return;
+    switch (meta.shape) {
+        case "bridge_transmitter":
+            processBridgeTransmitter(block, meta, facing, context);
+            return;
+        case "router":
+            processRouterConveyor(block, meta, facing, context);
+            return;
+        case "smart_router":
+            processSmartRouterConveyor(block, meta, facing, context);
+            return;
+        case "sorter":
+        case "inverted_sorter":
+        case "filter":
+            processSorterConveyor(block, meta, facing, context);
+            return;
+        case "overflow":
+            processOverflowConveyor(block, meta, facing, context);
+            return;
+        case "underflow":
+            processUnderflowConveyor(block, meta, facing, context);
+            return;
+        case "junction":
+            processJunctionConveyor(block, meta, facing, context);
+            return;
+        default:
+            processStandardConveyor(block, meta, facing, null, context);
     }
-
-    if (meta.shape === "router") {
-        processRouterConveyor(block, meta, facing, context);
-        return;
-    }
-
-    if (meta.shape === "smart_router") {
-        processSmartRouterConveyor(block, meta, facing, context);
-        return;
-    }
-
-    if (meta.shape === "sorter" || meta.shape === "inverted_sorter" || meta.shape === "filter") {
-        processSorterConveyor(block, meta, facing, context);
-        return;
-    }
-
-    if (meta.shape === "overflow") {
-        processOverflowConveyor(block, meta, facing, context);
-        return;
-    }
-
-    if (meta.shape === "underflow") {
-        processUnderflowConveyor(block, meta, facing, context);
-        return;
-    }
-
-    if (meta.shape === "junction") {
-        processJunctionConveyor(block, meta, facing, context);
-        return;
-    }
-
-    processStandardConveyor(block, meta, facing, null, context);
 }
 
 function processAllConveyors() {
@@ -2670,34 +1376,13 @@ function processAllConveyors() {
         for (const [key, entry] of registry.entries()) {
             const block = dim.getBlock(entry.pos);
             if (!block?.hasTag?.(CONVEYOR_TAG)) {
-                registry.delete(key);
-                bridgeCache.delete(key);
-                routerDirectionCache.delete(key);
-                sorterSideCycleCache.delete(key);
-                overflowCycleCache.delete(key);
-                underflowCycleCache.delete(key);
-                if (entry.meta?.shape === "sorter" || entry.meta?.shape === "inverted_sorter" || entry.meta?.shape === "filter") {
-                    clearSorterFilterAt(dimId, entry.pos);
-                }
-                if (entry.meta?.shape === "smart_router") {
-                    removeSmartRouterConfig(getSmartRouterId({ location: entry.pos, dimension: dim }));
-                }
-                markConveyorNetworkDirty(dimId);
+                purgeConveyorEntry(registry, dimId, key, entry, dim);
                 continue;
             }
 
             const meta = getConveyorMeta(block.typeId) ?? entry.meta;
             if (!meta) {
-                registry.delete(key);
-                bridgeCache.delete(key);
-                routerDirectionCache.delete(key);
-                sorterSideCycleCache.delete(key);
-                overflowCycleCache.delete(key);
-                underflowCycleCache.delete(key);
-                if (entry.meta?.shape === "sorter" || entry.meta?.shape === "inverted_sorter" || entry.meta?.shape === "filter") {
-                    clearSorterFilterAt(dimId, entry.pos);
-                }
-                markConveyorNetworkDirty(dimId);
+                purgeConveyorEntry(registry, dimId, key, entry);
                 continue;
             }
 
@@ -2725,12 +1410,18 @@ DoriosAPI.register.blockComponent("conveyor", {
     },
     onPlayerInteract(e, { params }) {
         if (!e?.player || !e.block) return;
-        const held = getPlayerHeldItem(e.player);
+        const held = e.player.getComponent("equippable")?.getEquipment("Mainhand") ?? null;
         const meta = getConveyorMeta(e.block.typeId, params);
-        if (held?.typeId === WRENCH_ITEM_ID) {
+        if (held?.typeId === "utilitycraft:wrench") {
             if (meta?.shape === "vertical") {
                 system.run(() => {
-                    toggleVerticalDirection(e.block);
+                    try {
+                        const current = e.block.getState?.(VERTICAL_DIRECTION_STATE);
+                        const next = current === "down" ? "up" : "down";
+                        e.block.setState?.(VERTICAL_DIRECTION_STATE, next);
+                    } catch {
+                        // ignore permutation errors
+                    }
                 });
                 return;
             }
@@ -2744,7 +1435,7 @@ DoriosAPI.register.blockComponent("conveyor", {
             return;
         }
 
-        if (meta?.shape === "sorter" || meta?.shape === "inverted_sorter" || meta?.shape === "filter") {
+        if (isSorterShape(meta?.shape)) {
             if (e.player.isSneaking) {
                 system.run(() => {
                     clearSorterFilter(e.block);
@@ -2761,7 +1452,7 @@ DoriosAPI.register.blockComponent("conveyor", {
     onPlayerBreak(e, { params }) {
         const dimId = e.block.dimension?.id;
         const meta = getConveyorMeta(e.block.typeId, params);
-        if (meta?.shape === "sorter" || meta?.shape === "inverted_sorter" || meta?.shape === "filter") {
+        if (isSorterShape(meta?.shape)) {
             clearSorterFilter(e.block);
         }
         if (dimId) {
@@ -2806,7 +1497,12 @@ world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation, p
     }
     system.run(() => {
         const meta = getConveyorMeta(brokenBlockPermutation.type.id);
-        const facing = getFacingFromPermutation(brokenBlockPermutation);
+        let facing = null;
+        try {
+            facing = brokenBlockPermutation.getState("minecraft:cardinal_direction");
+        } catch {
+            facing = null;
+        }
 
         if (meta?.shape === "bridge_transmitter" && facing) {
             clearBridgePath(block, meta.tier, facing, meta.bridgeRange);
@@ -2820,7 +1516,7 @@ world.afterEvents.playerBreakBlock.subscribe(({ block, brokenBlockPermutation, p
             removeSmartRouterConfig(getSmartRouterId(block));
         }
 
-        if (meta?.shape === "sorter" || meta?.shape === "inverted_sorter" || meta?.shape === "filter") {
+        if (isSorterShape(meta?.shape)) {
             clearSorterFilterAt(block.dimension?.id, block.location);
         }
 
@@ -2839,4 +1535,4 @@ world.afterEvents.playerSpawn.subscribe(({ initialSpawn }) => {
 
 system.runInterval(() => {
     processAllConveyors();
-}, PROCESS_INTERVAL);
+}, 2);

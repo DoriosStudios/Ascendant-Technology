@@ -202,13 +202,19 @@
                             "name": "at:itemGroup.name.materials_resources"
                         },
                         "items": [
+                            "utilitycraft:aetherium_block",
                             "utilitycraft:aetherium",
                             "utilitycraft:aetherium_shard",
                             "utilitycraft:refined_aetherium_shard",
+                            "utilitycraft:titanium_block",
+                            "utilitycraft:raw_titanium_block",
                             "utilitycraft:raw_titanium",
 
                             "utilitycraft:titanium",
-                            "utilitycraft:titanium_nugget"
+                            "utilitycraft:titanium_nugget",
+                            "utilitycraft:pure_enderling_tear",
+                            "utilitycraft:enderling_tear",
+                            "utilitycraft:void_essence"
                         ]
                     }
                 ]

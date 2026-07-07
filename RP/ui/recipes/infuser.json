@@ -1,0 +1,174 @@
+{
+  "namespace": "uc",
+  "infuser_recipes_buttons/addon_recipe_rows": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_front",
+        "value": [
+          {
+            "ascendant_technology_recipe_rows@uc.at_infuser_recipe_rows": {}
+          }
+        ]
+      }
+    ]
+  },
+  "infuser_recipes_panel/recipes_panel/addon_recipe_panels": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_front",
+        "value": [
+          {
+            "ascendant_technology_recipe_panels@uc.at_infuser_recipe_panels": {}
+          }
+        ]
+      }
+    ]
+  },
+  "at_infuser_recipe_rows": {
+    "type": "stack_panel",
+    "size": [
+      126,
+      "100%c"
+    ],
+    "orientation": "vertical",
+    "controls": [
+      {
+        "ascendant_technology_separator@uc.addon_recipe_separator": {
+          "$separator_label": "Ascendant Technology"
+        }
+      },
+      {
+        "ascendant_technology_recipe_row_0": {
+          "type": "panel",
+          "size": [
+            126,
+            18
+          ],
+          "controls": [
+            {
+              "at_stabilized_obsidian_dust_toggle@uc.infuser_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3000,
+                "$toggle_hover_text": "Stabilized Obsidian Dust",
+                "$toggle_control_name": "at_stabilized_obsidian_dust_recipe",
+                "$recipe_icon": "textures/items/dusts/stabilized_obsidian_dust",
+                "offset": [
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "at_crying_obsidian_toggle@uc.infuser_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3001,
+                "$toggle_hover_text": "Crying Obsidian",
+                "$toggle_control_name": "at_crying_obsidian_recipe",
+                "$recipe_icon": "textures/blocks/crying_obsidian",
+                "offset": [
+                  18,
+                  0
+                ]
+              }
+            },
+            {
+              "at_way_chip_toggle@uc.infuser_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3002,
+                "$toggle_hover_text": "Way Chip",
+                "$toggle_control_name": "at_way_chip_recipe",
+                "$recipe_icon": "textures/items/machinery/Way_Chip_Anchored_V2",
+                "offset": [
+                  36,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "at_infuser_recipe_panels": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "size": [
+      80,
+      108
+    ],
+    "controls": [
+      {
+        "at_stabilized_obsidian_dust_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_stabilized_obsidian_dust_recipe",
+          "controls": [
+            {
+              "catalyst@uc.infuser_recipe_catalyst": {
+                "$slot_item_texture": "textures/items/glowstone_dust"
+              }
+            },
+            {
+              "input@uc.infuser_recipe_input": {
+                "$slot_item_texture": "textures/items/dusts/crying_obsidian_dust"
+              }
+            },
+            {
+              "output@uc.infuser_recipe_output": {
+                "$slot_item_texture": "textures/items/dusts/stabilized_obsidian_dust"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_crying_obsidian_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_crying_obsidian_recipe",
+          "controls": [
+            {
+              "catalyst@uc.infuser_recipe_catalyst": {
+                "$slot_item_texture": "textures/items/blaze_powder"
+              }
+            },
+            {
+              "input@uc.infuser_recipe_input": {
+                "$slot_item_texture": "textures/blocks/obsidian"
+              }
+            },
+            {
+              "output@uc.infuser_recipe_output": {
+                "$slot_item_texture": "textures/blocks/crying_obsidian"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_way_chip_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_way_chip_recipe",
+          "controls": [
+            {
+              "catalyst@uc.infuser_recipe_catalyst": {
+                "$slot_item_texture": "textures/items/ender_eye"
+              }
+            },
+            {
+              "input@uc.infuser_recipe_input": {
+                "$slot_item_texture": "textures/items/machinery/chip"
+              }
+            },
+            {
+              "output@uc.infuser_recipe_output": {
+                "$slot_item_texture": "textures/items/machinery/Way_Chip_Anchored_V2"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -11,27 +11,24 @@
                             "name": "at:itemGroup.name.superior_machines"
                         },
                         "items": [
+                            "utilitycraft:abyssal_fisher",
                             "utilitycraft:arc_press_forge",
                             "utilitycraft:arcane_enchanter",
-							"utilitycraft:industrial_burner",
-							"utilitycraft:impact_crusher",
-							"utilitycraft:pulverizer",
                             "utilitycraft:centrifugal_siever",
                             "utilitycraft:cryo_freezer",
                             "utilitycraft:cryofluid_synthesizer",
                             "utilitycraft:cryo_stabilizer",
-                            "utilitycraft:dual_siever",
-                            "utilitycraft:dense_furnator_array",
-                            "utilitycraft:dense_magmator_core",
-                            "utilitycraft:dense_thermo_matrix",
                             "utilitycraft:disenchanter",
-                            "utilitycraft:abyssal_fisher",
-                            "utilitycraft:magmatic_reactor_chamber",
-                            "utilitycraft:reinforcement_anvil",
+                            "utilitycraft:dual_siever",
                             "utilitycraft:genetic_seed_synthesizer",
-                            "utilitycraft:verdant_cultivator",
+							"utilitycraft:impact_crusher",
+							"utilitycraft:industrial_burner",
+                            "utilitycraft:magmatic_reactor_chamber",
+                            "utilitycraft:pattern_placer",
+							"utilitycraft:pulverizer",
+                            "utilitycraft:reinforcement_anvil",
                             "utilitycraft:seismic_breaker",
-                            "utilitycraft:pattern_placer"
+                            "utilitycraft:verdant_cultivator"
                         ]
                     },
                     {

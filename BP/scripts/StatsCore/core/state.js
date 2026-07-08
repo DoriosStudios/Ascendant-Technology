@@ -1,5 +1,5 @@
 import { STATSCORE } from "../constants.js";
-import { createRuntimeUid, normalizeId, toPositiveInteger } from "../utils.js";
+import { createRuntimeUid, normalizeId, safeJsonParse, toPositiveInteger } from "../utils.js";
 import { normalizeStatsRefinementData, readStatsRefinementData, serializeStatsRefinementData } from "./refinement.js";
 import { syncStatsCoreLore } from "./lore.js";
 import { resolveStatsAttributes } from "../attributes/resolve.js";
@@ -63,6 +63,56 @@ function readStatsAbilityData(stack) {
     }
 }
 
+export function getCategoryForReason(reason) {
+    const normalized = normalizeId(reason);
+    if (normalized === "combat" || normalized === "kill") return "offensive";
+    if (normalized === "hurt") return "defensive";
+    if (normalized === "block" || normalized === "ore" || normalized === "tool") return "mining";
+    if (normalized === "utility") return "utility";
+    return null;
+}
+
+export function getCategoriesForDefinition(definition) {
+    const categories = new Set();
+    if (!definition) return categories;
+
+    if (definition.progression?.combatXp > 0 || definition.progression?.killXp > 0) {
+        categories.add("offensive");
+    }
+    if (definition.progression?.armorXp > 0) {
+        categories.add("defensive");
+    }
+    if (definition.progression?.blockXp > 0 || definition.progression?.oreXp > 0 || definition.progression?.toolXp > 0) {
+        categories.add("mining");
+    }
+    if (definition.type === "utility") {
+        categories.add("utility");
+    }
+
+    return categories;
+}
+
+function normalizeProgressionState(value) {
+    const source = value && typeof value === "object" ? value : {};
+    const createCategory = (cat) => ({
+        level: toPositiveInteger(source[cat]?.level, 1),
+        xp: toPositiveInteger(source[cat]?.xp, 0),
+    });
+
+    return {
+        offensive: createCategory("offensive"),
+        defensive: createCategory("defensive"),
+        mining: createCategory("mining"),
+        utility: createCategory("utility"),
+    };
+}
+
+function readProgressionState(stack) {
+    const raw = getProperty(stack, STATSCORE.props.progression);
+    const parsed = safeJsonParse(raw);
+    return normalizeProgressionState(parsed);
+}
+
 /**
  * Reads the persistent StatsCore state stored directly on an item stack.
  *
@@ -74,15 +124,12 @@ function readStatsAbilityData(stack) {
  * @returns {object}
  */
 export function readStatsState(stack, definition) {
-    const maxLevel = Math.max(1, Math.floor(Number(definition?.maxLevel) || STATSCORE.progression.maxLevel));
-    const level = Math.max(1, Math.min(maxLevel, toPositiveInteger(getProperty(stack, STATSCORE.props.level), 1)));
     const refinement = readStatsRefinementData(stack);
 
     return {
         uid: String(getProperty(stack, STATSCORE.props.uid) ?? ""),
         version: toPositiveInteger(getProperty(stack, STATSCORE.props.version), 0),
-        level,
-        xp: toPositiveInteger(getProperty(stack, STATSCORE.props.xp), 0),
+        progression: readProgressionState(stack),
         affinity: normalizeId(getProperty(stack, STATSCORE.props.affinity)) || definition?.affinity || "hybrid",
         branch: normalizeId(getProperty(stack, STATSCORE.props.branch)) || definition?.branch || definition?.type || "hybrid",
         abilityData: readStatsAbilityData(stack),
@@ -124,8 +171,7 @@ export function writeStatsState(stack, definition, state, options = {}) {
         ...state,
         uid: state.uid || createRuntimeUid("statscore"),
         version: STATSCORE.version,
-        level: Math.max(1, Math.min(definition.maxLevel ?? STATSCORE.progression.maxLevel, Math.floor(Number(state.level) || 1))),
-        xp: Math.max(0, Math.floor(Number(state.xp) || 0)),
+        progression: normalizeProgressionState(state.progression),
         affinity: state.affinity || definition.affinity || "hybrid",
         branch: state.branch || definition.branch || definition.type || "hybrid",
         abilityData: normalizeStatsAbilityData(state?.abilityData),
@@ -135,8 +181,7 @@ export function writeStatsState(stack, definition, state, options = {}) {
     let changed = false;
     changed = setPropertyIfChanged(stack, STATSCORE.props.uid, nextState.uid) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.version, nextState.version) || changed;
-    changed = setPropertyIfChanged(stack, STATSCORE.props.level, nextState.level) || changed;
-    changed = setPropertyIfChanged(stack, STATSCORE.props.xp, nextState.xp) || changed;
+    changed = setPropertyIfChanged(stack, STATSCORE.props.progression, JSON.stringify(nextState.progression)) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.affinity, nextState.affinity) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.branch, nextState.branch) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.abilityData, JSON.stringify(nextState.abilityData)) || changed;

@@ -64,7 +64,7 @@ export function showMiningFeedback(player, blockId, result) {
 
     const segments = [];
     if (result?.bonusXp) segments.push("§gLuck");
-    if (result?.bonusDrop) segments.push("§bRefined Yield");
+    if (result?.bonusDrop) segments.push(result?.bonusDropLabel ?? "§bRefined Yield");
 
     showActionBar(player, `${segments.join(" §8| ")} §8| §7${titleCaseIdentifier(blockId)}`, "mining", 16);
     playSound(player, result?.bonusXp ? "random.orb" : "random.pop", {
@@ -74,11 +74,12 @@ export function showMiningFeedback(player, blockId, result) {
 }
 
 export function showLevelUp(player, stack, result) {
-    if (!player || !result?.levelUp) return;
+    if (!player || !result?.levelUp || !result.category) return;
 
+    const categoryName = titleCaseIdentifier(result.category);
     showActionBar(
         player,
-        `§dStatsCore Lv ${result.previousLevel} -> ${result.level}`,
+        `§6${categoryName} Lvl ${result.previousLevel} -> ${result.level}`,
         `level:${stack?.typeId ?? "item"}`,
         4
     );

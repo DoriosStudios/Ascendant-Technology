@@ -5,8 +5,7 @@ export const STATSCORE = Object.freeze({
     props: Object.freeze({
         uid: "utilitycraft:statscore_uid",
         version: "utilitycraft:statscore_version",
-        level: "utilitycraft:statscore_level",
-        xp: "utilitycraft:statscore_xp",
+        progression: "utilitycraft:statscore_progression",
         affinity: "utilitycraft:statscore_affinity",
         branch: "utilitycraft:statscore_branch",
         refinement: "utilitycraft:statscore_refinement",
@@ -47,7 +46,8 @@ export const ITEM_TYPES = Object.freeze({
     weapon: "weapon",
     tool: "tool",
     hybrid: "hybrid",
-    support: "support"
+    support: "support",
+    utility: "utility"
 });
 
 export const AFFINITIES = Object.freeze({

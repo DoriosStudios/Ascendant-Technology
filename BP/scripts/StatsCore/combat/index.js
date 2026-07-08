@@ -1,7 +1,9 @@
 import { system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
 import { getLiveEquipmentItem, persistEquipmentItem } from "../core/equipment.js";
+import { getStatsCoreDefinition } from "../core/registry.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
+import { readStatsState, writeStatsState } from "../core/state.js";
 import { showCombatFeedback, showLevelUp } from "../feedback/index.js";
 import { applyCombatEffects, getMarkedDamageBonus, isProcDamageTarget } from "./effects.js";
 import { rollStatsCrit, rememberCombatContact } from "./crit.js";
@@ -13,12 +15,15 @@ import { findEffectByKind } from "../shared/effectSelectors.js";
 
 const berserkStates = new Map();
 
-function canUseDefinitionForCombat(definition) {
+function canUseDefinitionForCombat(definition, attributes = undefined) {
     if (!definition || definition.enabled === false) return false;
     if (definition.type === ITEM_TYPES.support) return false;
     return getProgressAmount(definition, "combat", 0) > 0
-        || (definition?.attributes?.crit?.chance ?? 0) > 0
-        || (definition?.attributes?.penetration?.percent ?? 0) > 0;
+        || (attributes?.flatDamageBonus ?? 0) > 0
+        || (attributes?.crit?.chance ?? definition?.attributes?.crit?.chance ?? 0) > 0
+        || (attributes?.penetration?.percent ?? definition?.attributes?.penetration?.percent ?? 0) > 0
+        || (Array.isArray(attributes?.elemental) && attributes.elemental.length > 0)
+        || (Array.isArray(attributes?.effects) && attributes.effects.length > 0);
 }
 
 function getBerserkStateKey(entity) {
@@ -67,21 +72,24 @@ function addBerserkStack(attacker, effect) {
     return nextStacks;
 }
 
-function persistCombatProgress(attacker, expectedTypeId, amount, reason, forcePersist, levelFeedback) {
+function persistCombatProgress(attacker, expectedTypeId, amount, reason, levelFeedback) {
     const access = getLiveEquipmentItem(attacker, expectedTypeId, STATSCORE.slots.mainhand);
     const stack = access.item;
     if (!stack) return;
 
     const definition = getStatsCoreDefinition(stack);
     if (!definition) return;
+    
+    const state = readStatsState(stack, definition);
+    const progress = grantStatsProgress(state, definition, amount, reason);
 
-    const result = grantStatsProgress(stack, definition, amount, reason, { forcePersist });
-    if (result.changed) {
-        persistEquipmentItem(attacker, STATSCORE.slots.mainhand, stack);
+    if (progress.changed) {
+        const { changed } = writeStatsState(stack, definition, progress.state, { levelChanged: progress.levelUp });
+        if (changed) persistEquipmentItem(attacker, STATSCORE.slots.mainhand, stack);
     }
 
     if (levelFeedback !== false) {
-        showLevelUp(attacker, stack, result);
+        showLevelUp(attacker, stack, progress);
     }
 }
 
@@ -99,7 +107,7 @@ function handleCombatHurt(event) {
         if (!context) return;
 
         const { stack: weapon, definition, attributes } = context;
-        if (!canUseDefinitionForCombat(definition)) return;
+        if (!canUseDefinitionForCombat(definition, attributes)) return;
 
         const baseDamage = Number(event.damage ?? 0);
         if (!Number.isFinite(baseDamage) || baseDamage <= 0) return;
@@ -135,7 +143,7 @@ function handleCombatHurt(event) {
         system.run(() => {
             applyLifeSteal(attacker, finalDamage, attributes, { crit: crit.active });
             applyCombatEffects({ attacker, target, attributes, crit, finalDamage });
-            persistCombatProgress(attacker, weaponTypeId, combatXp, "combat", crit.active === true, true);
+            persistCombatProgress(attacker, weaponTypeId, combatXp, "combat", true);
             showCombatFeedback(attacker, target, { crit, penetration, damage: finalDamage });
         });
     } catch (error) {
@@ -152,7 +160,7 @@ function handleEntityDie(event) {
         if (!context) return;
 
         const { stack: weapon, definition, attributes } = context;
-        if (!canUseDefinitionForCombat(definition)) return;
+        if (!canUseDefinitionForCombat(definition, attributes)) return;
 
         const berserkEffect = findEffectByKind(attributes?.effects, "berserk");
         const killXp = getProgressAmount(definition, "kill", 0);
@@ -164,7 +172,7 @@ function handleEntityDie(event) {
             }
 
             if (killXp > 0) {
-                persistCombatProgress(attacker, weapon.typeId, killXp, "kill", true, true);
+                persistCombatProgress(attacker, weapon.typeId, killXp, "kill", true);
             }
         });
     } catch (error) {

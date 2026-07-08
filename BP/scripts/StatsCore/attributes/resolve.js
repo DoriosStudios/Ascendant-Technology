@@ -1,5 +1,6 @@
 import { AFFINITIES } from "../constants.js";
 import { clamp01, normalizeChance, toFiniteNumber } from "../utils.js";
+import { getCategoriesForDefinition } from "../core/state.js";
 import { getStatsRefinementReserveXp, hasStatsRefinementBonuses, normalizeStatsRefinementData } from "../core/refinement.js";
 
 function scaleValue(base, perLevel, level, cap = Number.POSITIVE_INFINITY) {
@@ -31,6 +32,25 @@ function normalizeEffectList(values) {
     return values
         .filter(value => value && typeof value === "object")
         .map(value => ({ ...value }));
+}
+
+function normalizeElementalList(values) {
+    if (!Array.isArray(values)) return [];
+
+    return values
+        .filter(value => value && typeof value === "object")
+        .map(value => ({
+            ...value,
+            id: String(value.id ?? value.key ?? value.type ?? "").trim().toLowerCase(),
+            label: typeof value.label === "string" ? value.label : "",
+            chance: normalizeChance(value.chance, 0),
+            damage: Math.max(0, toFiniteNumber(value.damage, 0)),
+            damageScale: Math.max(0, toFiniteNumber(value.damageScale, 0)),
+            durationTicks: Math.max(0, Math.floor(toFiniteNumber(value.durationTicks, 0))),
+            amplifier: Math.max(0, Math.floor(toFiniteNumber(value.amplifier, 0))),
+            seconds: Math.max(0, Math.floor(toFiniteNumber(value.seconds, 0)))
+        }))
+        .filter(value => value.id && (value.chance > 0 || value.damage > 0 || value.damageScale > 0));
 }
 
 function resolveUnlockedEffects(values, abilitiesUnlocked) {
@@ -80,7 +100,17 @@ function affinityModifiers(affinity) {
  * @returns {object}
  */
 export function resolveStatsAttributes(definition, state) {
-    const level = Math.max(1, Math.floor(Number(state?.level) || 1));
+    const categories = getCategoriesForDefinition(definition);
+    const offensiveLevel = categories.has("offensive") ? state.progression.offensive.level : 1;
+    const defensiveLevel = categories.has("defensive") ? state.progression.defensive.level : 1;
+    const miningLevel = categories.has("mining") ? state.progression.mining.level : 1;
+    const utilityLevel = categories.has("utility") ? state.progression.utility.level : 1;
+
+    // Use the highest level for general purpose scaling, or specific levels for specific stats.
+    const combatLevel = offensiveLevel;
+    const supportLevel = defensiveLevel;
+    const toolLevel = miningLevel;
+
     const attributes = definition?.attributes ?? {};
     const mining = definition?.mining ?? {};
     const supportBase = definition?.support ?? {};
@@ -95,51 +125,60 @@ export function resolveStatsAttributes(definition, state) {
     const critBase = attributes.crit ?? {};
     const penetrationBase = attributes.penetration ?? {};
     const lifestealBase = attributes.lifesteal ?? {};
+    const refinementCritDamage = toFiniteNumber(refinementBonuses.critMultiplier, 0)
+        + toFiniteNumber(refinementBonuses.critDamageBonus, 0);
+    const refinementFlatDamage = toFiniteNumber(refinementBonuses.extraDamage, 0)
+        + toFiniteNumber(refinementBonuses.flatDamageBonus, 0);
+    const refinementElement = refinementBonuses.elemental ?? {};
+    const elemental = isSupport ? [] : [
+        ...normalizeElementalList(attributes.elemental),
+        ...normalizeElementalList(refinementElement.id ? [refinementElement] : [])
+    ];
 
     const critChance = isSupport ? 0 : normalizeChance(
-        scaleValue(critBase.chance, critBase.chancePerLevel, level, critBase.maxChance ?? 0.35)
+        scaleValue(critBase.chance, critBase.chancePerLevel, combatLevel, critBase.maxChance ?? 0.35)
         + (mods.critChance ?? 0)
     );
     const lifesteal = isSupport ? 0 : normalizeChance(
-        scaleValue(lifestealBase.percent, lifestealBase.perLevel, level, lifestealBase.cap ?? 0.08)
+        scaleValue(lifestealBase.percent, lifestealBase.perLevel, combatLevel, lifestealBase.cap ?? 0.08)
         + (mods.lifesteal ?? 0)
         + toFiniteNumber(refinementBonuses.lifesteal, 0)
     );
 
-    const critMultiplier = isSupport ? 1 : scaleValue(critBase.multiplier, critBase.multiplierPerLevel, level, critBase.maxMultiplier ?? 2)
-        + toFiniteNumber(refinementBonuses.critMultiplier, 0);
+    const critMultiplier = isSupport ? 1 : scaleValue(critBase.multiplier, critBase.multiplierPerLevel, combatLevel, critBase.maxMultiplier ?? 2)
+        + refinementCritDamage;
     const damageMultiplier = isSupport ? 1 : 1
-        + scaleValue(attributes.damagePerLevel, 0, level, 1)
+        + scaleValue(0, attributes.damagePerLevel, combatLevel)
         + (mods.damage ?? 0)
         + toFiniteNumber(refinementBonuses.damageMultiplier, 0);
     const penetrationPercent = isSupport ? 0 : normalizeChance(
-        scaleValue(penetrationBase.percent, penetrationBase.perLevel, level, penetrationBase.cap ?? 0.35)
+        scaleValue(penetrationBase.percent, penetrationBase.perLevel, combatLevel, penetrationBase.cap ?? 0.35)
         + toFiniteNumber(refinementBonuses.penetration, 0)
     );
     const bonusDropChance = isSupport ? 0 : normalizeChance(
-        scaleValue(mining.bonusDropChance, mining.bonusDropChancePerLevel, level, mining.maxBonusDropChance ?? 0.32)
+        scaleValue(mining.bonusDropChance, mining.bonusDropChancePerLevel, toolLevel, mining.maxBonusDropChance ?? 0.32)
         + (mods.miningChance ?? 0)
         + toFiniteNumber(refinementBonuses.bonusDropChance, 0)
     );
     const oreBonusChance = isSupport ? 0 : normalizeChance(
-        scaleValue(mining.oreBonusChance, mining.oreBonusChancePerLevel, level, mining.maxBonusDropChance ?? 0.32)
+        scaleValue(mining.oreBonusChance, mining.oreBonusChancePerLevel, toolLevel, mining.maxBonusDropChance ?? 0.32)
         + (mods.miningChance ?? 0)
         + toFiniteNumber(refinementBonuses.oreBonusChance, 0)
     );
     const durabilitySaveChance = isSupport ? 0 : normalizeChance(
-        scaleValue(mining.durabilitySaveChance, mining.durabilitySaveChancePerLevel, level, mining.maxDurabilitySaveChance ?? 0.35)
+        scaleValue(mining.durabilitySaveChance, mining.durabilitySaveChancePerLevel, toolLevel, mining.maxDurabilitySaveChance ?? 0.35)
         + toFiniteNumber(refinementBonuses.durabilitySaveChance, 0)
     );
     const supportDamageReduction = isSupport ? normalizeChance(
-        scaleValue(supportBase.damageReduction, supportBase.damageReductionPerLevel, level, supportBase.maxDamageReduction ?? 0.16)
+        scaleValue(supportBase.damageReduction, supportBase.damageReductionPerLevel, supportLevel, supportBase.maxDamageReduction ?? 0.16)
         + toFiniteNumber(refinementBonuses.damageReduction, 0)
     ) : 0;
     const supportDurabilityPreserveChance = isSupport ? normalizeChance(
-        scaleValue(supportBase.durabilityPreserveChance, supportBase.durabilityPreserveChancePerLevel, level, supportBase.maxDurabilityPreserveChance ?? 0.26)
+        scaleValue(supportBase.durabilityPreserveChance, supportBase.durabilityPreserveChancePerLevel, supportLevel, supportBase.maxDurabilityPreserveChance ?? 0.26)
         + toFiniteNumber(refinementBonuses.durabilityPreserveChance, 0)
     ) : 0;
     const supportNegateAllDamageChance = isSupport ? normalizeChance(
-        scaleValue(supportBase.negateAllDamageChance, supportBase.negateAllDamageChancePerLevel, level, supportBase.maxNegateAllDamageChance ?? 0.2)
+        scaleValue(supportBase.negateAllDamageChance, supportBase.negateAllDamageChancePerLevel, supportLevel, supportBase.maxNegateAllDamageChance ?? 0.2)
         + toFiniteNumber(refinementBonuses.negateAllDamageChance, 0)
     ) : 0;
     const supportDamageImmunities = isSupport ? normalizeDamageTypeList(supportBase.damageImmunities) : [];
@@ -148,8 +187,12 @@ export function resolveStatsAttributes(definition, state) {
     const supportEffects = isSupport ? resolveUnlockedEffects(supportBase.effects, abilitiesUnlocked) : [];
 
     return {
+        levels: {
+            offensive: offensiveLevel,
+            mining: miningLevel
+        },
         damageMultiplier,
-        flatDamageBonus: isSupport ? 0 : Math.max(0, toFiniteNumber(attributes.flatDamageBonus, 0)),
+        flatDamageBonus: isSupport ? 0 : Math.max(0, toFiniteNumber(attributes.flatDamageBonus, 0) + refinementFlatDamage),
         markedDamageBonus: isSupport ? 0 : clamp01(toFiniteNumber(attributes.markedDamageBonus, 0)),
         crit: {
             chance: isSupport ? 0 : normalizeChance(critChance + toFiniteNumber(refinementBonuses.critChance, 0)),
@@ -168,6 +211,7 @@ export function resolveStatsAttributes(definition, state) {
             critBonus: normalizeChance(lifestealBase.critBonus, 0),
             cap: normalizeChance(lifestealBase.cap, 0.08)
         },
+        elemental,
         effects: isSupport ? [] : resolveUnlockedEffects(attributes.effects, abilitiesUnlocked),
         mining: {
             bonusDropChance,
@@ -190,10 +234,16 @@ export function resolveStatsAttributes(definition, state) {
             ingotAmount: refinement.ingotAmount,
             bonuses: {
                 damageMultiplier: toFiniteNumber(refinementBonuses.damageMultiplier, 0),
+                extraDamage: toFiniteNumber(refinementBonuses.extraDamage, 0),
+                flatDamageBonus: toFiniteNumber(refinementBonuses.flatDamageBonus, 0),
                 critChance: toFiniteNumber(refinementBonuses.critChance, 0),
                 critMultiplier: toFiniteNumber(refinementBonuses.critMultiplier, 0),
+                critDamageBonus: toFiniteNumber(refinementBonuses.critDamageBonus, 0),
                 penetration: toFiniteNumber(refinementBonuses.penetration, 0),
                 lifesteal: toFiniteNumber(refinementBonuses.lifesteal, 0),
+                elementalChance: toFiniteNumber(refinementBonuses.elementalChance, 0),
+                elementalDamage: toFiniteNumber(refinementBonuses.elementalDamage, 0),
+                elemental: { ...refinementBonuses.elemental },
                 damageReduction: toFiniteNumber(refinementBonuses.damageReduction, 0),
                 negateAllDamageChance: toFiniteNumber(refinementBonuses.negateAllDamageChance, 0),
                 bonusDropChance: toFiniteNumber(refinementBonuses.bonusDropChance, 0),

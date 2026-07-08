@@ -308,7 +308,7 @@ function refreshPassiveSupportEffects() {
 
         if (overworld && belowClarityDepth) {
             for (const { effect } of getSupportEffects(entries, "clarity")) {
-                applyEffectById(player, "night_vision", Math.max(80, Math.floor(Number(effect.durationTicks ?? 220) || 220)), 0, false);
+                applyEffectById(player, "night_vision", Math.max(80, Math.floor(Number(effect.durationTicks ?? 250) || 250)), 0, false);
             }
         }
 

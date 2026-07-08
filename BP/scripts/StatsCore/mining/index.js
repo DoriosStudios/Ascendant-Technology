@@ -1,12 +1,13 @@
 import { ItemStack, system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
 import { getEquipment, persistEquipmentItem } from "../core/equipment.js";
+import { readStatsState, writeStatsState } from "../core/state.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
 import { showLevelUp, showMiningFeedback } from "../feedback/index.js";
 import { normalizeId as normalizeBlockId, rollChance } from "../utils.js";
 import { getEquipmentStatsContext } from "../shared/context.js";
 import { repairItemDurability } from "../shared/durability.js";
-import { hasSilkTouch } from "../shared/enchantments.js";
+import { createDoubleTroubleEffect, hasSilkTouch } from "./effects.js";
 import { findEffectByKind } from "../shared/effectSelectors.js";
 
 const UNBREAKABLE_BLOCKS = new Set([
@@ -101,11 +102,14 @@ const ORE_DUST_DROPS = Object.freeze({
     "utilitycraft:deepslate_titanium_ore": "utilitycraft:titanium_dust",
 });
 
+const PENDING_ORE_BREAKS = new WeakMap();
+const PENDING_DOUBLE_TROUBLE_BREAKS = new WeakMap();
+
 const WORM_SOIL_DROPS = Object.freeze({
     "minecraft:dirt": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
     "minecraft:grass_block": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
     "minecraft:coarse_dirt": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
-    "minecraft:rooted_dirt": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
+    "minecraft:rooted_dirt": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 6 }),
     "minecraft:podzol": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
     "minecraft:mycelium": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
     "minecraft:sand": Object.freeze({ itemId: "utilitycraft:sand_handful", min: 1, max: 4 }),
@@ -220,6 +224,7 @@ function canUseDefinitionForMining(definition) {
     if (definition.type === ITEM_TYPES.weapon || definition.type === ITEM_TYPES.support) return false;
     return getProgressAmount(definition, "block", 0) > 0
         || getProgressAmount(definition, "ore", 0) > 0
+        || getProgressAmount(definition, "tool", 0) > 0
         || (definition?.mining?.oreBonusChance ?? 0) > 0
         || (Array.isArray(definition?.mining?.effects) && definition.mining.effects.length > 0);
 }
@@ -314,6 +319,106 @@ function spawnDuplicateLoot(player, location) {
     } catch {
         return false;
     }
+}
+
+function collectNearbyItemEntityIds(dimension, location, maxDistance = 1.75) {
+    const entityIds = new Set();
+    if (!dimension || !location) return entityIds;
+
+    try {
+        for (const entity of dimension.getEntities({
+            type: "item",
+            location,
+            maxDistance,
+        })) {
+            const entityId = entity?.id;
+            if (typeof entityId === "string" && entityId.length > 0) {
+                entityIds.add(entityId);
+            }
+        }
+    } catch {
+        // Ignore failures to keep the break flow resilient.
+    }
+
+    return entityIds;
+}
+
+function rememberOreDropSnapshot(snapshot) {
+    const normalized = normalizeBlockId(snapshot?.blockId);
+    if (!snapshot?.player || !snapshot?.dimension || !snapshot?.location || !(ORE_PLATE_DROPS[normalized] || ORE_BONUS_DROPS[normalized])) return;
+
+    PENDING_ORE_BREAKS.set(snapshot.player, {
+        knownItemIds: collectNearbyItemEntityIds(snapshot.dimension, snapshot.location),
+    });
+}
+
+function consumePendingOreDropSnapshot(snapshot) {
+    if (!snapshot?.player) return null;
+
+    const pending = PENDING_ORE_BREAKS.get(snapshot.player);
+    PENDING_ORE_BREAKS.delete(snapshot.player);
+    return pending;
+}
+
+function rememberDoubleTroubleSnapshot(snapshot) {
+    if (!snapshot?.player || !snapshot?.dimension || !snapshot?.location) return;
+
+    PENDING_DOUBLE_TROUBLE_BREAKS.set(snapshot.player, {
+        knownItemIds: collectNearbyItemEntityIds(snapshot.dimension, snapshot.location),
+    });
+}
+
+function getTrackedOreDropIds(blockId) {
+    const normalized = normalizeBlockId(blockId);
+
+    switch (normalized) {
+        case "minecraft:copper_ore":
+        case "minecraft:deepslate_copper_ore":
+            return ["minecraft:raw_copper", "minecraft:copper_ingot"];
+        case "minecraft:iron_ore":
+        case "minecraft:deepslate_iron_ore":
+            return ["minecraft:raw_iron", "minecraft:iron_ingot"];
+        case "minecraft:gold_ore":
+        case "minecraft:deepslate_gold_ore":
+            return ["minecraft:raw_gold", "minecraft:gold_ingot"];
+        case "minecraft:nether_gold_ore":
+            return ["minecraft:gold_nugget", "minecraft:raw_gold", "minecraft:gold_ingot"];
+        case "utilitycraft:deepslate_titanium_ore":
+            return ["utilitycraft:raw_titanium", "utilitycraft:titanium"];
+        case "minecraft:ancient_debris":
+            return ["minecraft:ancient_debris", "netherite_scrap"];
+        default:
+            return [];
+    }
+}
+
+function countTrackedOreDropAmount(dimension, location, trackedItemIds, knownItemIds = new Set()) {
+    if (!dimension || !location || !trackedItemIds?.length) return 0;
+
+    let amount = 0;
+
+    try {
+        for (const entity of dimension.getEntities({
+            type: "item",
+            location,
+            maxDistance: 1.75,
+        })) {
+            const entityId = entity?.id;
+            if (typeof entityId === "string" && entityId.length > 0 && knownItemIds.has(entityId)) {
+                continue;
+            }
+
+            const stack = entity?.getComponent?.("minecraft:item")?.itemStack;
+            const normalizedItemId = normalizeBlockId(stack?.typeId);
+            if (!trackedItemIds.includes(normalizedItemId)) continue;
+
+            amount += Math.max(1, Math.floor(Number(stack?.amount ?? 1) || 1));
+        }
+    } catch {
+        return 0;
+    }
+
+    return amount;
 }
 
 function clearBlockWithoutDrops(dimension, location) {
@@ -442,7 +547,7 @@ function executeGardenerBreak(snapshot) {
     }
 
     if (applied) {
-        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false });
+        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "§bGreen Thumb" });
     }
 }
 
@@ -459,17 +564,59 @@ function executePrimalBreak(snapshot) {
     }
 
     if (bonusDrop) {
-        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false });
+        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "§bPrimal Fiber" });
     }
 }
 
-function executeForgerOreBonus(snapshot) {
-    const plateId = ORE_PLATE_DROPS[normalizeBlockId(snapshot.blockId)];
+function executeForgerOreBonus(snapshot, pendingState = null) {
+    const normalizedBlockId = normalizeBlockId(snapshot.blockId);
+    const plateId = ORE_PLATE_DROPS[normalizedBlockId];
     if (!plateId) return false;
 
-    const applied = spawnBonusDrop(snapshot.dimension, snapshot.location, plateId);
+    const trackedDropIds = getTrackedOreDropIds(normalizedBlockId);
+    if (!trackedDropIds.length) return false;
+
+    const amount = countTrackedOreDropAmount(
+        snapshot.dimension,
+        snapshot.location,
+        trackedDropIds,
+        pendingState?.knownItemIds ?? new Set()
+    );
+
+    if (amount <= 0) return false;
+
+    const applied = spawnBonusDropCount(snapshot.dimension, snapshot.location, plateId, amount);
     if (applied) {
-        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false });
+        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "§bForger Plate" });
+    }
+
+    return applied;
+}
+
+function executeExtraYieldBonus(snapshot, pendingState = null) {
+    const normalizedBlockId = normalizeBlockId(snapshot.blockId);
+    const dropId = ORE_BONUS_DROPS[normalizedBlockId];
+    if (!dropId) return false;
+
+    const trackedDropIds = getTrackedOreDropIds(normalizedBlockId);
+    if (!trackedDropIds.length) return false;
+
+    const dropAmount = countTrackedOreDropAmount(
+        snapshot.dimension,
+        snapshot.location,
+        trackedDropIds,
+        pendingState?.knownItemIds ?? new Set()
+    );
+
+    if (dropAmount <= 0) return false;
+
+    const yieldChance = Math.max(0, Number(snapshot?.attributes?.mining?.bonusDropChance ?? 0));
+    if (yieldChance <= 0) return false;
+
+    const bonusAmount = Math.max(1, Math.ceil(dropAmount * yieldChance));
+    const applied = spawnBonusDropCount(snapshot.dimension, snapshot.location, dropId, bonusAmount);
+    if (applied) {
+        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "§bExtra Yield" });
     }
 
     return applied;
@@ -481,7 +628,7 @@ function executeCrushingDust(snapshot) {
 
     const applied = spawnBonusDrop(snapshot.dimension, snapshot.location, dustId);
     if (applied) {
-        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false });
+        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "§bCrushing Dust" });
     }
 
     return applied;
@@ -503,6 +650,54 @@ function executeWormBreak(snapshot) {
     }
 
     return applied;
+}
+
+function executeDoubleTrouble(snapshot) {
+    const pendingState = PENDING_DOUBLE_TROUBLE_BREAKS.get(snapshot.player);
+    PENDING_DOUBLE_TROUBLE_BREAKS.delete(snapshot.player);
+    if (!pendingState) return;
+
+    const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);
+    if (!context) return;
+
+    const { attributes } = context;
+    const effect = findEffectByKind(attributes?.mining?.effects, "double_trouble");
+    if (!effect) return;
+
+    const miningLevel = attributes.levels?.mining ?? 1;
+    const baseChance = effect.baseChance ?? 0.001;
+    const per10Levels = effect.chancePer10Levels ?? 0.001;
+    const maxChance = effect.maxChance ?? 0.01;
+    const chance = Math.min(maxChance, baseChance + Math.floor(miningLevel / 10) * per10Levels);
+
+    if (!rollChance(chance)) return;
+    system.runTimeout(() => {
+        const newItems = [];
+        try {
+            for (const entity of snapshot.dimension.getEntities({ type: "item", location: snapshot.location, maxDistance: 2.5 })) {
+                if (entity && !pendingState.knownItemIds.has(entity.id)) {
+                    const stack = entity.getComponent("minecraft:item")?.itemStack;
+                    if (stack) {
+                        newItems.push(stack);
+                    }
+                }
+            }
+
+            if (newItems.length > 0) {
+                for (const itemStack of newItems) {
+                    snapshot.dimension.spawnItem(itemStack, snapshot.location);
+                }
+                snapshot.dimension.playSound("random.levelup", snapshot.location, { pitch: 0.8, volume: 0.7 });
+                snapshot.dimension.spawnParticle("minecraft:village_hero_effect", {
+                    x: snapshot.location.x + 0.5,
+                    y: snapshot.location.y + 1,
+                    z: snapshot.location.z + 0.5
+                });
+            }
+        } catch (e) {
+            console.warn("[StatsCore] Double Trouble effect failed.", e);
+        }
+    }, 5);
 }
 
 function replantBrokenCrop(snapshot) {
@@ -639,7 +834,7 @@ function executeBerserkLogBreak(snapshot, effect) {
 
         // Replace the removed log drop with 4 planks plus the Berserk extra plank roll.
         spawnBonusDropCount(snapshot.dimension, snapshot.location, plankId, totalAmount);
-        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false });
+        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "§bBerserk Planks" });
         processMiningBreak(snapshot);
     });
 }
@@ -680,7 +875,9 @@ function processMiningBreak(snapshot) {
     if (!canUseDefinitionForMining(definition)) return;
 
     const isOre = Boolean(ORE_BONUS_DROPS[blockId]) || blockId.endsWith("_ore");
-    const reason = isOre ? "ore" : "block";
+    const reason = (definition.type === ITEM_TYPES.tool || definition.type === ITEM_TYPES.hybrid)
+        ? "tool"
+        : isOre ? "ore" : "block";
     const progressAmount = getProgressAmount(definition, reason, isOre ? 4 : 1);
 
     let changed = false;
@@ -698,17 +895,18 @@ function processMiningBreak(snapshot) {
         changed = repairItemDurability(stack) || changed;
     }
 
-    bonusXp = Boolean(applyMiningEffects({ attributes, isOre, dimension, location }).bonusXp);
+    const effectResult = applyMiningEffects({ attributes, isOre, dimension, location });
+    bonusXp = effectResult.bonusXp;
 
-    const progress = grantStatsProgress(stack, definition, progressAmount, reason, {
-        forcePersist: isOre || bonusDrop
-    });
-    changed = progress.changed || changed;
+    const state = readStatsState(stack, definition);
+    const progress = grantStatsProgress(state, definition, progressAmount, reason);
 
-    if (changed) {
-        persistEquipmentItem(player, STATSCORE.slots.mainhand, stack);
+    if (progress.changed) {
+        const writeResult = writeStatsState(stack, definition, progress.state, { levelChanged: progress.levelUp });
+        changed = writeResult.changed || changed;
     }
 
+    if (changed) persistEquipmentItem(player, STATSCORE.slots.mainhand, stack);
     showLevelUp(player, stack, progress);
     showMiningFeedback(player, blockId, { bonusDrop, bonusXp });
 }
@@ -777,6 +975,16 @@ function handleBeforeBreak(event) {
             return;
         }
 
+        if (forgerEffect && ORE_PLATE_DROPS[normalizeBlockId(snapshot.blockId)]) {
+            rememberOreDropSnapshot(snapshot);
+        } else if (ORE_BONUS_DROPS[normalizeBlockId(snapshot.blockId)]) {
+            rememberOreDropSnapshot(snapshot);
+        }
+
+        if (findEffectByKind(attributes?.mining?.effects, "double_trouble")) {
+            rememberDoubleTroubleSnapshot(snapshot);
+        }
+
         if (gardenerEffect && isGardenerTargetBlockId(snapshot.blockId)) {
             spawnDuplicateLoot(snapshot.player, snapshot.location);
         }
@@ -806,6 +1014,10 @@ function handleAfterBreak(event) {
 
             const { attributes } = context;
 
+            if (findEffectByKind(attributes?.mining?.effects, "double_trouble")) {
+                executeDoubleTrouble(snapshot);
+            }
+
             if (findEffectByKind(attributes?.mining?.effects, "gardener") && isGardenerTargetBlockId(snapshot.blockId)) {
                 executeGardenerBreak(snapshot);
             }
@@ -819,7 +1031,11 @@ function handleAfterBreak(event) {
             }
 
             if (findEffectByKind(attributes?.mining?.effects, "forger")) {
-                executeForgerOreBonus(snapshot);
+                executeForgerOreBonus(snapshot, consumePendingOreDropSnapshot(snapshot));
+            }
+
+            if (attributes?.mining?.bonusDropChance > 0) {
+                executeExtraYieldBonus(snapshot, consumePendingOreDropSnapshot(snapshot));
             }
 
             if (findEffectByKind(attributes?.mining?.effects, "reaper")) {

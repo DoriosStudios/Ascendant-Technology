@@ -1,13 +1,52 @@
 import { AFFINITIES, ITEM_TYPES } from "./constants.js";
 import { registerStatsCoreDefinition } from "./core/registry.js";
+import { createDoubleTroubleEffect } from "./mining/effects.js";
 import { deepMerge } from "./utils.js";
 
+function buildTierPreset(values, tierMultiplier) {
+    const multiplier = tierMultiplier === 1 ? 1.5 : tierMultiplier;
+    const scaled = Object.entries(values).reduce((acc, [key, value]) => {
+        let next = value;
+        if (typeof next === "number" && key.endsWith("Level")) {
+            next = next * 4;
+        }
+        acc[key] = typeof next === "number" ? Number((next * multiplier).toFixed(6)) : next;
+        return acc;
+    }, {});
+
+    return Object.freeze(scaled);
+}
+
+const GOLDEN_PRESET = buildTierPreset({
+    rarity: "gleaming",
+    combatXp: 1.5,
+    blockXp: 1,
+    oreXp: 3,
+    toolXp: 3.4,
+    critChance: 0.04,
+    critLevel: 0.0018,
+    critMultiplier: 1.22,
+    critMultiplierLevel: 0.0055,
+    penetration: 0.018,
+    penetrationLevel: 0.0014,
+    penetrationCap: 0.12,
+    lifesteal: 0.002,
+    lifestealLevel: 0.0001,
+    miningBonus: 0.03,
+    miningLevel: 0.0015,
+    oreBonus: 0.05,
+    oreLevel: 0.0018,
+    durabilitySave: 0.014,
+    durabilitySaveLevel: 0.0009
+}, 3);
+
 const TIER_PRESETS = Object.freeze({
-    wood: Object.freeze({
+    wood: buildTierPreset({
         rarity: "common",
         combatXp: 1,
         blockXp: 1,
         oreXp: 2,
+        toolXp: 2,
         critChance: 0.015,
         critLevel: 0.001,
         critMultiplier: 1.12,
@@ -23,12 +62,13 @@ const TIER_PRESETS = Object.freeze({
         oreLevel: 0.001,
         durabilitySave: 0.006,
         durabilitySaveLevel: 0.0004
-    }),
-    stone: Object.freeze({
+    }, 1),
+    stone: buildTierPreset({
         rarity: "sturdy",
         combatXp: 1.2,
         blockXp: 1,
         oreXp: 3,
+        toolXp: 2.25,
         critChance: 0.02,
         critLevel: 0.0012,
         critMultiplier: 1.15,
@@ -44,12 +84,35 @@ const TIER_PRESETS = Object.freeze({
         oreLevel: 0.0012,
         durabilitySave: 0.009,
         durabilitySaveLevel: 0.0005
-    }),
-    iron: Object.freeze({
+    }, 2),
+    copper: buildTierPreset({
+        rarity: "bright",
+        combatXp: 1.35,
+        blockXp: 1,
+        oreXp: 3.2,
+        toolXp: 2.8,
+        critChance: 0.024,
+        critLevel: 0.0013,
+        critMultiplier: 1.16,
+        critMultiplierLevel: 0.0048,
+        penetration: 0.02,
+        penetrationLevel: 0.0014,
+        penetrationCap: 0.11,
+        lifesteal: 0.001,
+        lifestealLevel: 0.00008,
+        miningBonus: 0.018,
+        miningLevel: 0.001,
+        oreBonus: 0.03,
+        oreLevel: 0.0013,
+        durabilitySave: 0.011,
+        durabilitySaveLevel: 0.0006
+    }, 2.5),
+    iron: buildTierPreset({
         rarity: "tempered",
         combatXp: 1.6,
         blockXp: 1,
         oreXp: 3.5,
+        toolXp: 3.2,
         critChance: 0.028,
         critLevel: 0.0015,
         critMultiplier: 1.18,
@@ -65,33 +128,37 @@ const TIER_PRESETS = Object.freeze({
         oreLevel: 0.0015,
         durabilitySave: 0.013,
         durabilitySaveLevel: 0.0008
-    }),
-    golden: Object.freeze({
-        rarity: "gleaming",
-        combatXp: 1.5,
+    }, 3),
+    steel: buildTierPreset({
+        rarity: "fortified",
+        combatXp: 1.7,
         blockXp: 1,
-        oreXp: 3,
-        critChance: 0.04,
-        critLevel: 0.0018,
-        critMultiplier: 1.22,
-        critMultiplierLevel: 0.0055,
-        penetration: 0.018,
-        penetrationLevel: 0.0014,
-        penetrationCap: 0.12,
-        lifesteal: 0.002,
-        lifestealLevel: 0.0001,
-        miningBonus: 0.03,
-        miningLevel: 0.0015,
-        oreBonus: 0.05,
-        oreLevel: 0.0018,
-        durabilitySave: 0.014,
+        oreXp: 3.8,
+        toolXp: 3.6,
+        critChance: 0.033,
+        critLevel: 0.0017,
+        critMultiplier: 1.2,
+        critMultiplierLevel: 0.0052,
+        penetration: 0.028,
+        penetrationLevel: 0.0021,
+        penetrationCap: 0.16,
+        lifesteal: 0.003,
+        lifestealLevel: 0.0002,
+        miningBonus: 0.026,
+        miningLevel: 0.0014,
+        oreBonus: 0.045,
+        oreLevel: 0.0017,
+        durabilitySave: 0.015,
         durabilitySaveLevel: 0.0009
-    }),
-    diamond: Object.freeze({
+    }, 3.5),
+    gold: GOLDEN_PRESET,
+    golden: GOLDEN_PRESET,
+    diamond: buildTierPreset({
         rarity: "advanced",
         combatXp: 2,
         blockXp: 1,
         oreXp: 4,
+        toolXp: 4,
         critChance: 0.045,
         critLevel: 0.002,
         critMultiplier: 1.24,
@@ -107,12 +174,13 @@ const TIER_PRESETS = Object.freeze({
         oreLevel: 0.002,
         durabilitySave: 0.018,
         durabilitySaveLevel: 0.0012
-    }),
-    netherite: Object.freeze({
+    }, 4),
+    netherite: buildTierPreset({
         rarity: "elite",
         combatXp: 2.5,
         blockXp: 1,
         oreXp: 5,
+        toolXp: 4.8,
         critChance: 0.062,
         critLevel: 0.0028,
         critMultiplier: 1.34,
@@ -128,12 +196,13 @@ const TIER_PRESETS = Object.freeze({
         oreLevel: 0.0028,
         durabilitySave: 0.03,
         durabilitySaveLevel: 0.0018
-    }),
-    titanium: Object.freeze({
+    }, 5),
+    titanium: buildTierPreset({
         rarity: "refined",
         combatXp: 2,
         blockXp: 1,
         oreXp: 5,
+        toolXp: 4.2,
         critChance: 0.055,
         critLevel: 0.0025,
         critMultiplier: 1.32,
@@ -149,12 +218,13 @@ const TIER_PRESETS = Object.freeze({
         oreLevel: 0.0025,
         durabilitySave: 0.025,
         durabilitySaveLevel: 0.0015
-    }),
-    aetherium: Object.freeze({
+    }, 4.5),
+    aetherium: buildTierPreset({
         rarity: "ascendant",
         combatXp: 3,
         blockXp: 1,
         oreXp: 6,
+        toolXp: 5.4,
         critChance: 0.075,
         critLevel: 0.003,
         critMultiplier: 1.38,
@@ -170,12 +240,13 @@ const TIER_PRESETS = Object.freeze({
         oreLevel: 0.0035,
         durabilitySave: 0.04,
         durabilitySaveLevel: 0.002
-    }),
-    lucky: Object.freeze({
+    }, 6),
+    lucky: buildTierPreset({
         rarity: "unique",
         combatXp: 3,
         blockXp: 2,
         oreXp: 7,
+        toolXp: 6,
         critChance: 0.11,
         critLevel: 0.0035,
         critMultiplier: 1.42,
@@ -191,7 +262,7 @@ const TIER_PRESETS = Object.freeze({
         oreLevel: 0.004,
         durabilitySave: 0.055,
         durabilitySaveLevel: 0.0025
-    })
+    }, 5)
 });
 
 const NON_COMBAT_TOOL_BRANCHES = new Set([
@@ -343,11 +414,11 @@ function createBleedEffect(tierName, overrides = {}) {
 
 function createSweepEffect(tierName, overrides = {}) {
     const preset = {
-        diamond: { chance: 0.18, radius: 2.4, maxTargets: 2, damageScale: 0.36, cooldownTicks: 18 },
-        netherite: { chance: 0.22, radius: 2.6, maxTargets: 3, damageScale: 0.42, cooldownTicks: 16 },
-        titanium: { chance: 0.21, radius: 2.6, maxTargets: 3, damageScale: 0.40, cooldownTicks: 16 },
-        aetherium: { chance: 0.26, radius: 2.9, maxTargets: 4, damageScale: 0.48, cooldownTicks: 14 },
-        lucky: { chance: 0.30, radius: 3.2, maxTargets: 4, damageScale: 0.52, cooldownTicks: 12 },
+        diamond: { chance: 1, radius: 2.5, maxTargets: 3, damageScale: 0.6, cooldownTicks: 18 },
+        netherite: { chance: 1, radius: 3, maxTargets: 4, damageScale: 0.75, cooldownTicks: 16 },
+        titanium: { chance: 1, radius: 2.75, maxTargets: 3, damageScale: 0.65, cooldownTicks: 16 },
+        aetherium: { chance: 1, radius: 4.4, maxTargets: 4, damageScale: 1, cooldownTicks: 14 },
+        lucky: { chance: 1, radius: 4, maxTargets: 10, damageScale: 0.52, cooldownTicks: 12 },
     }[tierName] ?? { chance: 0.18, radius: 2.4, maxTargets: 2, damageScale: 0.36, cooldownTicks: 18 };
 
     return {
@@ -356,6 +427,10 @@ function createSweepEffect(tierName, overrides = {}) {
         label: "Sweeping",
         on: "hit",
         ...preset,
+        chance: 1,
+        cooldownTicks: 0,
+        requiresUniqueUnlock: false,
+        alwaysActive: true,
         ...overrides,
     };
 }
@@ -736,18 +811,19 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
         affinity,
         branch,
         maxLevel: tierName === "lucky" ? 35 : 30,
-        persistEveryXp: isWeapon ? 18 : 24,
+        persistEveryXp: isWeapon ? 18 : isTool || isHybrid ? 12 : 24,
         progression: {
             combatXp: hasCombatProfile ? (isTool ? 1 : tier.combatXp) : 0,
             killXp: hasCombatProfile ? (isTool ? 6 : 12) : 0,
-            blockXp: isWeapon || isSupport ? 0 : tier.blockXp,
-            oreXp: isWeapon || isSupport ? 0 : tier.oreXp,
+            blockXp: isWeapon || isSupport ? 0 : (isTool || isHybrid ? 0 : tier.blockXp),
+            oreXp: isWeapon || isSupport ? 0 : (isTool || isHybrid ? 0 : tier.oreXp),
+            toolXp: isTool || isHybrid ? tier.toolXp : 0,
             armorXp: tierName === "aetherium" ? 3 : 2,
             baseXp: tierName === "lucky" ? 70 : 60,
             growth: tierName === "aetherium" ? 1.24 : 1.22
         },
         attributes: {
-            damagePerLevel: hasCombatProfile ? (isTool ? 0.001 : (isHybrid ? 0.004 : 0.006)) : 0,
+            damagePerLevel: hasCombatProfile ? 0.03 : 0,
             flatDamageBonus: 0,
             markedDamageBonus: hasCombatProfile ? (tierName === "aetherium" ? 0.08 : 0.04) : 0,
             crit: {
@@ -755,7 +831,7 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
                 chancePerLevel: hasCombatProfile ? tier.critLevel : 0,
                 maxChance: hasCombatProfile ? (tierName === "lucky" ? 0.38 : 0.32) : 0,
                 multiplier: hasCombatProfile ? (isTool ? 1.18 : tier.critMultiplier) : 1,
-                multiplierPerLevel: hasCombatProfile ? tier.critMultiplierLevel : 0,
+                multiplierPerLevel: hasCombatProfile ? 0.025 : 0,
                 maxMultiplier: hasCombatProfile ? (tierName === "aetherium" ? 1.95 : 1.85) : 1,
                 openingBonus: hasCombatProfile ? (isWeapon ? 0.045 : 0.02) : 0,
                 precisionBonus: hasCombatProfile ? (isWeapon ? 0.025 : 0.01) : 0
@@ -791,17 +867,21 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
         },
         mining: {
             bonusDropChance: isWeapon || isSupport ? 0 : tier.miningBonus,
-            bonusDropChancePerLevel: isWeapon || isSupport ? 0 : tier.miningLevel,
+            bonusDropChancePerLevel: isWeapon || isSupport ? 0 : 0.03,
             oreBonusChance: isWeapon || isSupport ? 0 : tier.oreBonus,
-            oreBonusChancePerLevel: isWeapon || isSupport ? 0 : tier.oreLevel,
+            oreBonusChancePerLevel: isWeapon || isSupport ? 0 : 0.03,
             durabilitySaveChance: isSupport ? 0 : (isWeapon ? 0.01 : tier.durabilitySave),
-            durabilitySaveChancePerLevel: isSupport ? 0 : tier.durabilitySaveLevel,
+            durabilitySaveChancePerLevel: isSupport ? 0 : 0.03,
             effects: [],
             maxBonusDropChance: tierName === "lucky" ? 0.42 : 0.32,
             maxDurabilitySaveChance: tierName === "lucky" ? 0.42 : 0.34
         }
     };
 
+    if (overrides.progression) {
+        definition.progression = { ...definition.progression, ...overrides.progression };
+        delete overrides.progression;
+    }
     const merged = deepMerge(definition, overrides);
     const hasUniqueEffects = [
         merged?.attributes?.effects,
@@ -816,7 +896,122 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
     return merged;
 }
 
+/**
+ * Tries to dynamically infer a StatsCore definition for an unregistered item ID.
+ * This allows for compatibility with items from other addons without explicit registration.
+ * @param {string} id The item's typeId.
+ * @returns {object|null} A generated definition or null if inference fails.
+ */
+export function inferDynamicDefinition(id) {
+    const normalizedId = String(id ?? "").toLowerCase();
+    const branch = inferBranch(id, null);
+
+    // If we can't even determine a branch (e.g., sword, pickaxe, chestplate), we can't proceed.
+    if (!branch) return null;
+
+    // Determine the item type based on the inferred branch.
+    let type = ITEM_TYPES.utility;
+    if (["helmet", "chestplate", "leggings", "boots", "shield"].includes(branch)) {
+        type = ITEM_TYPES.support;
+    } else if (["sword", "mace", "trident", "bow", "crossbow", "spear"].includes(branch)) {
+        type = ITEM_TYPES.weapon;
+    } else if (["axe", "paxel", "aiot"].includes(branch)) {
+        type = ITEM_TYPES.hybrid;
+    } else if (["pickaxe", "shovel", "hoe", "hammer", "drill"].includes(branch)) {
+        type = ITEM_TYPES.tool;
+    }
+
+    // Try to find a tier name within the ID.
+    const tiers = Object.keys(TIER_PRESETS);
+    const tierName = tiers.find(tier => normalizedId.includes(tier));
+
+    // If no tier is found, we can't generate stats.
+    if (!tierName) return null;
+
+    // Determine affinity based on type.
+    const affinity = {
+        [ITEM_TYPES.weapon]: AFFINITIES.aggression,
+        [ITEM_TYPES.hybrid]: AFFINITIES.technique,
+        [ITEM_TYPES.tool]: AFFINITIES.mining,
+        [ITEM_TYPES.support]: AFFINITIES.survival,
+        [ITEM_TYPES.utility]: AFFINITIES.hybrid,
+    }[type] ?? AFFINITIES.hybrid;
+
+    console.warn(`[StatsCore] Dynamically generated definition for unregistered item: ${id} (Tier: ${tierName}, Type: ${type})`);
+    return baseDefinition(id, tierName, type, affinity);
+}
+
 const DEFAULT_DEFINITIONS = [
+    baseDefinition("minecraft:wooden_sword", "wood", ITEM_TYPES.weapon, AFFINITIES.aggression),
+    baseDefinition("minecraft:wooden_axe", "wood", ITEM_TYPES.hybrid, AFFINITIES.technique),
+    baseDefinition("minecraft:wooden_pickaxe", "wood", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("minecraft:wooden_shovel", "wood", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("minecraft:wooden_hoe", "wood", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:wooden_hammer", "wood", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:wooden_paxel", "wood", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("utilitycraft:wooden_aiot", "wood", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+
+    baseDefinition("minecraft:stone_sword", "stone", ITEM_TYPES.weapon, AFFINITIES.aggression),
+    baseDefinition("minecraft:stone_axe", "stone", ITEM_TYPES.hybrid, AFFINITIES.technique),
+    baseDefinition("minecraft:stone_pickaxe", "stone", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("minecraft:stone_shovel", "stone", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("minecraft:stone_hoe", "stone", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:stone_hammer", "stone", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:stone_paxel", "stone", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("utilitycraft:stone_aiot", "stone", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+
+    baseDefinition("utilitycraft:copper_sword", "copper", ITEM_TYPES.weapon, AFFINITIES.aggression),
+    baseDefinition("utilitycraft:copper_axe", "copper", ITEM_TYPES.hybrid, AFFINITIES.technique),
+    baseDefinition("utilitycraft:copper_pickaxe", "copper", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:copper_shovel", "copper", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:copper_hoe", "copper", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:copper_hammer", "copper", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:copper_paxel", "copper", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("utilitycraft:copper_aiot", "copper", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("utilitycraft:copper_helmet", "copper", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("utilitycraft:copper_chestplate", "copper", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("utilitycraft:copper_leggings", "copper", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("utilitycraft:copper_boots", "copper", ITEM_TYPES.support, AFFINITIES.survival),
+
+    baseDefinition("minecraft:iron_sword", "iron", ITEM_TYPES.weapon, AFFINITIES.aggression),
+    baseDefinition("minecraft:iron_axe", "iron", ITEM_TYPES.hybrid, AFFINITIES.technique),
+    baseDefinition("minecraft:iron_pickaxe", "iron", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("minecraft:iron_shovel", "iron", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("minecraft:iron_hoe", "iron", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:iron_hammer", "iron", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:iron_paxel", "iron", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("utilitycraft:iron_aiot", "iron", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("minecraft:iron_helmet", "iron", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("minecraft:iron_chestplate", "iron", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("minecraft:iron_leggings", "iron", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("minecraft:iron_boots", "iron", ITEM_TYPES.support, AFFINITIES.survival),
+
+    baseDefinition("utilitycraft:steel_sword", "steel", ITEM_TYPES.weapon, AFFINITIES.aggression),
+    baseDefinition("utilitycraft:steel_axe", "steel", ITEM_TYPES.hybrid, AFFINITIES.technique),
+    baseDefinition("utilitycraft:steel_pickaxe", "steel", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:steel_shovel", "steel", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:steel_hoe", "steel", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:steel_hammer", "steel", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:steel_paxel", "steel", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("utilitycraft:steel_aiot", "steel", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("utilitycraft:steel_helmet", "steel", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("utilitycraft:steel_chestplate", "steel", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("utilitycraft:steel_leggings", "steel", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("utilitycraft:steel_boots", "steel", ITEM_TYPES.support, AFFINITIES.survival),
+
+    baseDefinition("minecraft:golden_sword", "golden", ITEM_TYPES.weapon, AFFINITIES.aggression),
+    baseDefinition("minecraft:golden_axe", "golden", ITEM_TYPES.hybrid, AFFINITIES.technique),
+    baseDefinition("minecraft:golden_pickaxe", "golden", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("minecraft:golden_shovel", "golden", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("minecraft:golden_hoe", "golden", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:golden_hammer", "golden", ITEM_TYPES.tool, AFFINITIES.mining),
+    baseDefinition("utilitycraft:golden_paxel", "golden", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("utilitycraft:golden_aiot", "golden", ITEM_TYPES.hybrid, AFFINITIES.hybrid),
+    baseDefinition("minecraft:golden_helmet", "golden", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("minecraft:golden_chestplate", "golden", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("minecraft:golden_leggings", "golden", ITEM_TYPES.support, AFFINITIES.survival),
+    baseDefinition("minecraft:golden_boots", "golden", ITEM_TYPES.support, AFFINITIES.survival),
+
     baseDefinition("minecraft:diamond_sword", "diamond", ITEM_TYPES.weapon, AFFINITIES.precision, {
         attributes: { effects: [createBleedEffect("diamond")] }
     }),
@@ -825,10 +1020,10 @@ const DEFAULT_DEFINITIONS = [
         mining: { effects: [createBerserkLoggingEffect()] }
     }),
     baseDefinition("minecraft:diamond_pickaxe", "diamond", ITEM_TYPES.tool, AFFINITIES.mining, {
-        mining: { effects: [createLuckEffect("diamond")] }
+        mining: { effects: [createLuckEffect("diamond"), createDoubleTroubleEffect()] }
     }),
     baseDefinition("minecraft:diamond_shovel", "diamond", ITEM_TYPES.tool, AFFINITIES.mining, {
-        mining: { effects: [createWormEffect()] }
+        mining: { effects: [createWormEffect(), createDoubleTroubleEffect()] }
     }),
     baseDefinition("minecraft:diamond_hoe", "diamond", ITEM_TYPES.tool, AFFINITIES.mining, {
         attributes: {
@@ -840,7 +1035,7 @@ const DEFAULT_DEFINITIONS = [
     baseDefinition("minecraft:diamond_spear", "diamond", ITEM_TYPES.weapon, AFFINITIES.control, {
         attributes: { effects: [createMarkEffect("diamond", "Skewer")] }
     }),
-    baseDefinition("minecraft:shears", "diamond", ITEM_TYPES.tool, AFFINITIES.mining, {
+    baseDefinition("minecraft:shears", "diamond", ITEM_TYPES.utility, AFFINITIES.mining, {
         rarity: "utility",
         progression: { oreXp: 0 },
         mining: {
@@ -953,7 +1148,7 @@ const DEFAULT_DEFINITIONS = [
             effects: [createBallistaEffect("netherite")]
         }
     }),
-    baseDefinition("minecraft:flint_and_steel", "iron", ITEM_TYPES.tool, AFFINITIES.control, {
+    baseDefinition("minecraft:flint_and_steel", "iron", ITEM_TYPES.utility, AFFINITIES.control, {
         rarity: "utility",
         progression: {
             combatXp: 0,
@@ -1073,7 +1268,7 @@ const DEFAULT_DEFINITIONS = [
         attributes: { effects: [createSweepEffect("aetherium")] }
     }),
 
-    baseDefinition("utilitycraft:drill", "diamond", ITEM_TYPES.tool, AFFINITIES.mining, {
+    baseDefinition("utilitycraft:drill", "diamond", ITEM_TYPES.utility, AFFINITIES.mining, {
         rarity: "utility",
         mining: {
             oreBonusChance: 0.08,
@@ -1081,7 +1276,7 @@ const DEFAULT_DEFINITIONS = [
             effects: [createOperatorEffect({ size: 3 })]
         }
     }),
-    baseDefinition("utilitycraft:heavy_drill", "netherite", ITEM_TYPES.tool, AFFINITIES.mining, {
+    baseDefinition("utilitycraft:heavy_drill", "netherite", ITEM_TYPES.utility, AFFINITIES.mining, {
         rarity: "utility",
         mining: {
             oreBonusChance: 0.10,
@@ -1090,7 +1285,7 @@ const DEFAULT_DEFINITIONS = [
             effects: [createOperatorEffect({ size: 5 })]
         }
     }),
-    baseDefinition("utilitycraft:flint_knife", "diamond", ITEM_TYPES.tool, AFFINITIES.mining, {
+    baseDefinition("utilitycraft:flint_knife", "diamond", ITEM_TYPES.utility, AFFINITIES.mining, {
         rarity: "utility",
         progression: { oreXp: 0 },
         attributes: {
@@ -1105,7 +1300,12 @@ const DEFAULT_DEFINITIONS = [
         }
     }),
     baseDefinition("utilitycraft:smelting_pickaxe", "netherite", ITEM_TYPES.tool, AFFINITIES.mining, {
-        rarity: "utility",
+        rarity: "tool",
+        progression: {
+            toolXp: 4,
+            oreXp: 5,
+            combatXp: 0
+        },
         attributes: {
             effects: [createFireEffect("netherite", "Forger", { chance: 1, seconds: 4 })]
         },

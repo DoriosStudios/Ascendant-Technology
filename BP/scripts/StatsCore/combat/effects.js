@@ -2,12 +2,17 @@ import { system } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { getCurrentTick, normalizeChance, rollChance } from "../utils.js";
 import { applyEffectById } from "../shared/effects.js";
+import { getEquipmentStatsContext } from "../shared/context.js"; 
 
 const marks = new Map();
 const procDamageTargets = new Map();
 const effectCooldowns = new Map();
 const bleedStates = new Map();
 const CALM_EVENT_IDS = Object.freeze(["minecraft:become_calm", "become_calm_event"]);
+const HOT_ENTITY_TOKENS = Object.freeze(["blaze", "magma", "strider", "ghast", "piglin", "hoglin", "zoglin", "wither_skeleton"]);
+const COLD_ENTITY_TOKENS = Object.freeze(["stray", "snow_golem", "breeze", "ice", "frozen", "frost"]);
+const DARK_RESISTANT_TOKENS = Object.freeze(["wither", "warden", "ender", "shulker"]);
+const PET_ENTITY_TOKENS = Object.freeze(["wolf", "cat", "ocelot", "parrot", "horse", "donkey", "mule", "llama", "fox", "rabbit", "bee"]);
 let bleedProcessorActive = false;
 
 function entityKey(entity) {
@@ -34,6 +39,54 @@ function getCooldownKey(entity, effect) {
 function hasHealthComponent(entity) {
     try {
         return !!entity?.getComponent?.("minecraft:health") || !!entity?.getComponent?.("health");
+    } catch {
+        return false;
+    }
+}
+
+function getHealthComponent(entity) {
+    try {
+        return entity?.getComponent?.("minecraft:health") ?? entity?.getComponent?.("health") ?? null;
+    } catch {
+        return null;
+    }
+}
+
+function hasEntityToken(entity, tokens) {
+    const id = String(entity?.typeId ?? "").toLowerCase();
+    return tokens.some(token => id.includes(token));
+}
+
+function isNetherOrHotTarget(entity) {
+    const dimensionId = String(entity?.dimension?.id ?? "").toLowerCase();
+    return dimensionId.includes("nether") || hasEntityToken(entity, HOT_ENTITY_TOKENS);
+}
+
+function isColdTarget(entity) {
+    return hasEntityToken(entity, COLD_ENTITY_TOKENS);
+}
+
+function isPlayerEntity(entity) {
+    return entity?.isPlayer === true || String(entity?.typeId ?? entity?.id ?? "").toLowerCase() === "minecraft:player";
+}
+
+function isPetEntity(entity) {
+    if (!entity) return false;
+    if (isPlayerEntity(entity)) return true;
+    if (entity?.isTamed === true || entity?.isLeashed === true) return true;
+    return hasEntityToken(entity, PET_ENTITY_TOKENS);
+}
+
+function healTarget(target, amount) {
+    const health = getHealthComponent(target);
+    const current = Number(health?.currentValue ?? health?.value ?? 0);
+    const max = Number(health?.effectiveMax ?? health?.defaultValue ?? health?.max ?? current);
+    if (!health || !Number.isFinite(current) || !Number.isFinite(max) || max <= current) return false;
+    if (typeof health.setCurrentValue !== "function") return false;
+
+    try {
+        health.setCurrentValue(Math.min(max, current + Math.max(0, Number(amount ?? 0) || 0)));
+        return true;
     } catch {
         return false;
     }
@@ -183,6 +236,7 @@ function applySweep(attacker, target, effect, finalDamage) {
     })) {
         if (!entity || entity.id === attacker.id || entity.id === target.id) continue;
         if (!hasHealthComponent(entity)) continue;
+        if (isPlayerEntity(entity) || isPetEntity(entity)) continue;
 
         if (tryApplyCommandDamage(entity, sweepDamage, attacker)) {
             hits++;
@@ -369,6 +423,170 @@ function applyFire(target, effect) {
     }
 }
 
+function applyElementalAspect(attacker, target, aspect, finalDamage) {
+    if (!target || !aspect?.id || !rollChance(aspect.chance, 0)) return false;
+
+    const id = String(aspect.id).toLowerCase();
+    const duration = Math.max(20, Math.floor(Number(aspect.durationTicks ?? 80) || 80));
+    const amplifier = Math.max(0, Math.floor(Number(aspect.amplifier ?? 0) || 0));
+    const baseDamage = Math.max(0, Number(aspect.damage ?? 0) || 0);
+    const scaledDamage = Math.max(0, Number(finalDamage ?? 0) || 0) * Math.max(0, Number(aspect.damageScale ?? 0) || 0);
+    let amount = Math.max(1, baseDamage + scaledDamage);
+
+    // Plant / Poison
+    // Stronger and longer poison effects
+    if (id === "plant" || id === "poison") {
+        if (isNetherOrHotTarget(target)) {
+            amount *= 0.65;
+        }
+
+        // increase duration and potency
+        const longDuration = Math.max(duration * 2, 80);
+        const strongAmp = Math.max(1, Math.floor(Number(amplifier) || 1));
+        const poisoned = applyEffectById(target, "fatal_poison", longDuration, strongAmp, false)
+            || applyEffectById(target, "poison", longDuration, strongAmp, false);
+
+        // increase direct damage from the aspect as well
+        amount *= 1.5;
+        return tryApplyDamage(target, amount, attacker, "magic") || poisoned;
+    }
+
+    // Ice / Frost / Freezing
+    // Stronger freezing effect: heavy damage and deeper slow.
+    if (id === "frost" || id === "ice") {
+        // custom particle placeholder:
+        // TODO: spawn custom frost particle here, e.g. spawnParticleSafe(target, "minecraft:custom_frost_particle");
+
+        if (isColdTarget(target)) {
+            // cold targets receive a small heal instead of damage
+            return healTarget(target, Math.max(1, amount * 0.25));
+        }
+
+        // increase damage vs hot/ nether targets
+        if (isNetherOrHotTarget(target)) {
+            amount *= 2.0; // drastically stronger against hot targets
+        } else {
+            amount *= 1.6; // generally stronger overall
+        }
+
+        // apply a much stronger slowness (amplifier 2 or more)
+        const heavySlownessAmp = Math.max(2, Math.floor(Number(amplifier) || 2));
+        const slowed = applyEffectById(target, "slowness", Math.max(40, duration * 2), heavySlownessAmp, false);
+        return tryApplyDamage(target, amount, attacker, "freezing") || slowed;
+    }
+
+    // Fire - burns cold targets harder and loses bite vs hot targets
+    if (id === "fire") {
+        if (isColdTarget(target)) amount *= 1.35;
+        if (isNetherOrHotTarget(target)) amount *= 0.65;
+        const ignited = applyFire(target, aspect);
+        return tryApplyDamage(target, amount, attacker, "fire") || ignited;
+    }
+
+    // Lightning
+    // Sends a lightning strike to all nearby targets (useful with sweeping) and then
+    // extinguishes fire on nearby players and ground to avoid leaving dangerous lingering fires.
+    if (id === "lightning" || id === "shock") {
+        if (target?.isInWater === true || target?.isWet === true) amount *= 1.5; // stronger bonus vs wet
+
+        // radius to search for additional targets to strike with lightning
+        const strikeRadius = Math.max(2.5, Number(aspect?.radius ?? 3) || 3);
+
+        try {
+            const origin = target.location;
+            if (origin && target.dimension) {
+                // collect nearby entities (including the original target)
+                const struck = [];
+                for (const ent of target.dimension.getEntities({ location: origin, maxDistance: strikeRadius })) {
+                    if (!ent) continue;
+                    struck.push(ent);
+                }
+
+                // Summon lightning at each struck entity's location
+                for (const ent of struck) {
+                    try {
+                        const loc = ent.location;
+                        if (!loc) continue;
+                        // summon lightning bolt at the entity
+                        if (typeof ent.dimension?.runCommand === "function") {
+                            ent.dimension.runCommand(`summon lightning_bolt ${Math.floor(loc.x)} ${Math.floor(loc.y)} ${Math.floor(loc.z)}`);
+                        }
+                    } catch { }
+                }
+
+                // After lightning, extinguish fire on nearby players/entities
+                for (const ent of attacker.dimension.getEntities({ location: origin, maxDistance: strikeRadius })) {
+                    try {
+                        if (typeof ent.setOnFire === "function") {
+                            ent.setOnFire?.(0, true);
+                        }
+                    } catch { }
+                }
+
+                // Attempt to clear fire blocks in a small area using a safer fill command.
+                try {
+                    const radius = Math.min(6, Math.max(2, Math.floor(strikeRadius) + 1));
+                    if (typeof attacker.dimension.runCommand === "function") {
+                        attacker.dimension.runCommand(`fill ~${radius} ~-2 ~${radius} ~-${radius} ~2 ~-${radius} air replace fire`);
+                    }
+                } catch { }
+            }
+        } catch { }
+
+        const weakened = applyEffectById(target, "weakness", duration, amplifier, false);
+        return tryApplyDamage(target, amount, attacker, "lightning") || weakened;
+    }
+
+    // Darkness
+    // Extremely powerful and rare effect: applies blindness, darkness, weakness I, wither I and slowness I.
+    // If the target is resistant (deep dark / end-like) it's reduced. If the target is a player wearing
+    // StatsCore equipment, reflect the effects to the attacker instead.
+    if (id === "darkness" || id === "dark") {
+        // Check resistance
+        if (hasEntityToken(target, DARK_RESISTANT_TOKENS)) amount *= 0.7;
+
+        // Determine final recipient: if the target is a player and has StatsCore equipment, apply to attacker instead
+        let recipient = target;
+        try {
+            const targetContext = getEquipmentStatsContext && typeof getEquipmentStatsContext === "function"
+                ? getEquipmentStatsContext(target)
+                : null;
+            if (targetContext && attacker) {
+                recipient = attacker; // reflect to attacker
+            }
+        } catch { }
+
+        // Apply stacked status effects: blindness, darkness, weakness I, wither I, slowness I
+        // blindness
+        applyEffectById(recipient, "blindness", Math.max(40, duration), 0, false);
+        // darkness
+        applyEffectById(recipient, "darkness", Math.max(40, duration), 0, false);
+        // weakness I
+        applyEffectById(recipient, "weakness", Math.max(40, duration), 0, false);
+        // wither I
+        applyEffectById(recipient, "wither", Math.max(40, duration), 0, false);
+        // slowness I
+        applyEffectById(recipient, "slowness", Math.max(40, duration), 0, false);
+
+        return tryApplyDamage(target, amount * 0.25, attacker, "wither");
+    }
+
+    return tryApplyDamage(target, amount, attacker, "magic");
+}
+
+function applyElementalAspects({ attacker, target, attributes, finalDamage }) {
+    const aspects = Array.isArray(attributes?.elemental) ? attributes.elemental : [];
+    let applied = 0;
+
+    for (const aspect of aspects) {
+        if (applyElementalAspect(attacker, target, aspect, finalDamage)) {
+            applied++;
+        }
+    }
+
+    return applied;
+}
+
 function queueAftershockSlowness(target, effect) {
     const levitationDuration = Math.max(1, Math.floor(Number(effect?.levitationDurationTicks ?? 40) || 40));
     const slownessDuration = Math.max(1, Math.floor(Number(effect?.slownessDurationTicks ?? 100) || 100));
@@ -540,10 +758,12 @@ function applyBallista(attacker, target, effect, finalDamage) {
 
 export function applyCombatEffects({ attacker, target, attributes, crit, finalDamage }) {
     const effects = Array.isArray(attributes?.effects) ? attributes.effects : [];
-    if (!effects.length || !target) return 0;
+    if (!target) return 0;
 
     const marked = Boolean(getMark(target));
-    let applied = 0;
+    let applied = applyElementalAspects({ attacker, target, attributes, finalDamage });
+
+    if (!effects.length) return applied;
 
     for (const effect of effects) {
         if (!effect || typeof effect !== "object") continue;

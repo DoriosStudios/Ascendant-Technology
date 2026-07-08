@@ -100,6 +100,38 @@ function buildReadableFlatEntry(label, value) {
     return `§r§9+${numeric} ${label}`;
 }
 
+function getElementIcon(elementId) {
+    switch (String(elementId ?? "").toLowerCase()) {
+        case "plant":
+        case "poison":
+            return "";
+        case "frost":
+        case "ice":
+            return "";
+        case "fire":
+            return "";
+        case "lightning":
+        case "shock":
+            return "";
+        case "darkness":
+        case "dark":
+            return "";
+        default:
+            return "✦";
+    }
+}
+
+function buildReadableElementEntry(attributes) {
+    const element = Array.isArray(attributes?.elemental)
+        ? attributes.elemental.find(entry => entry?.id && Number(entry?.chance ?? 0) > 0)
+        : null;
+    if (!element) return null;
+
+    const icon = getElementIcon(element.id);
+    const damage = Math.max(0, Number(element.damage ?? 0) || 0);
+    return `§r${icon} §8${formatPercent(element.chance)} §9+${damage.toFixed(damage % 1 === 0 ? 0 : 1)} Element`;
+}
+
 function buildAbilityLoreEntry(attributes, state) {
     const names = collectStatsAbilityNames(attributes, { state });
 
@@ -117,6 +149,7 @@ function buildReadableStatEntries(definition, attributes) {
     const critDamage = Math.max(0, Number(attributes?.crit?.multiplier ?? 1) - 1);
     const penetration = Math.max(0, Number(attributes?.penetration?.percent ?? 0));
     const lifesteal = Math.max(0, Number(attributes?.lifesteal?.percent ?? 0));
+    const elemental = buildReadableElementEntry(attributes);
     const oreBonus = Math.max(0, Number(attributes?.mining?.oreBonusChance ?? 0));
     const yieldBonus = Math.max(0, Number(attributes?.mining?.bonusDropChance ?? 0));
     const preserving = Math.max(
@@ -136,6 +169,7 @@ function buildReadableStatEntries(definition, attributes) {
         : definition?.type === "tool"
             ? [
                 buildReadableFlatEntry("Attack Damage", flatDamageBonus),
+                elemental,
                 buildReadableStatEntry("Ore Bonus", oreBonus),
                 buildReadableStatEntry("Bonus Yield", yieldBonus),
                 buildReadableStatEntry("Preserving", preserving),
@@ -144,6 +178,7 @@ function buildReadableStatEntries(definition, attributes) {
             : definition?.type === "hybrid"
                 ? [
                     buildReadableFlatEntry("Attack Damage", flatDamageBonus),
+                    elemental,
                     buildReadableStatEntry("Bonus Damage", damageBonus),
                     buildReadableStatEntry("Critical Chance", critChance),
                     buildReadableStatEntry("Ore Bonus", oreBonus),
@@ -154,6 +189,7 @@ function buildReadableStatEntries(definition, attributes) {
                 ]
                 : [
                     buildReadableFlatEntry("Attack Damage", flatDamageBonus),
+                    elemental,
                     buildReadableStatEntry("Bonus Damage", damageBonus),
                     buildReadableStatEntry("Critical Chance", critChance),
                     buildReadableStatEntry("Lifesteal", lifesteal),

@@ -1,186 +1,66 @@
-import { STATSCORE } from "../constants.js";
-import { clonePlain, deepMerge, isPlainObject, normalizeId } from "../utils.js";
+import { inferDynamicDefinition } from "../defaults.js";
+import { normalizeId } from "../utils.js";
 
-const itemDefinitions = new Map();
-
-const BASE_DEFINITION = Object.freeze({
-    enabled: true,
-    type: "hybrid",
-    tier: "common",
-    rarity: "common",
-    affinity: "hybrid",
-    branch: "hybrid",
-    maxLevel: STATSCORE.progression.maxLevel,
-    persistEveryXp: STATSCORE.progression.persistEveryXp,
-    progression: Object.freeze({
-        baseXp: STATSCORE.progression.baseXp,
-        growth: STATSCORE.progression.growth,
-        combatXp: 2,
-        killXp: 10,
-        blockXp: 1,
-        oreXp: 4,
-        armorXp: 2
-    }),
-    attributes: Object.freeze({
-        damagePerLevel: 0,
-        crit: Object.freeze({
-            chance: 0,
-            chancePerLevel: 0,
-            maxChance: 0.35,
-            multiplier: 1,
-            multiplierPerLevel: 0,
-            maxMultiplier: 2,
-            openingBonus: 0,
-            precisionBonus: 0
-        }),
-        penetration: Object.freeze({
-            percent: 0,
-            perLevel: 0,
-            cap: 0.35,
-            bossScalar: 0.5
-        }),
-        lifesteal: Object.freeze({
-            percent: 0,
-            perLevel: 0,
-            cap: 0.08,
-            critBonus: 0
-        }),
-        effects: Object.freeze([]),
-        markedDamageBonus: 0
-    }),
-    mining: Object.freeze({
-        bonusDropChance: 0,
-        bonusDropChancePerLevel: 0,
-        oreBonusChance: 0,
-        oreBonusChancePerLevel: 0,
-        durabilitySaveChance: 0,
-        durabilitySaveChancePerLevel: 0,
-        effects: Object.freeze([]),
-        maxBonusDropChance: 0.32,
-        maxDurabilitySaveChance: 0.35
-    }),
-    support: Object.freeze({
-        damageReduction: 0,
-        damageReductionPerLevel: 0,
-        maxDamageReduction: 0.16,
-        durabilityPreserveChance: 0,
-        durabilityPreserveChancePerLevel: 0,
-        maxDurabilityPreserveChance: 0.26,
-        negateAllDamageChance: 0,
-        negateAllDamageChancePerLevel: 0,
-        maxNegateAllDamageChance: 0.2,
-        damageImmunities: Object.freeze([]),
-        vulnerabilities: Object.freeze([]),
-        vulnerabilityPenalty: 0,
-        effects: Object.freeze([])
-    }),
-    feedback: Object.freeze({
-        combat: true,
-        mining: true,
-        levelUp: true
-    })
-});
-
-function normalizeDefinition(itemId, definition) {
-    const normalizedItemId = normalizeId(itemId ?? definition?.id ?? definition?.itemId ?? definition?.typeId);
-    if (!normalizedItemId || !isPlainObject(definition)) return null;
-
-    const { id, itemId: ignoredItemId, typeId, ...rest } = definition;
-    const merged = deepMerge(BASE_DEFINITION, rest);
-    merged.id = normalizedItemId;
-    merged.enabled = merged.enabled !== false;
-    merged.maxLevel = Math.max(1, Math.floor(Number(merged.maxLevel) || STATSCORE.progression.maxLevel));
-    merged.persistEveryXp = Math.max(1, Math.floor(Number(merged.persistEveryXp) || STATSCORE.progression.persistEveryXp));
-
-    if (!Array.isArray(merged.attributes.effects)) {
-        merged.attributes.effects = [];
-    }
-
-    if (!Array.isArray(merged.mining.effects)) {
-        merged.mining.effects = [];
-    }
-
-    if (!Array.isArray(merged.support.effects)) {
-        merged.support.effects = [];
-    }
-
-    return merged;
-}
+const STATSCORE_REGISTRY = new Map();
 
 /**
- * Registers or replaces a single StatsCore item definition.
- *
- * Keep all external registration flows funneled through this helper so every definition
- * is normalized against the same base contract.
- *
- * @param {string} itemId
- * @param {object} definition
- * @returns {boolean}
+ * Registers a StatsCore definition for a given item ID.
+ * @param {string} id The item's typeId.
+ * @param {object} definition The StatsCore definition object.
+ * @returns {boolean} True if the definition was registered, false otherwise.
  */
-export function registerStatsCoreDefinition(itemId, definition) {
-    const normalized = normalizeDefinition(itemId, definition);
-    if (!normalized) return false;
-
-    itemDefinitions.set(normalized.id, normalized);
+export function registerStatsCoreDefinition(id, definition) {
+    const normalized = normalizeId(id);
+    if (!normalized || typeof definition !== "object") return false;
+    STATSCORE_REGISTRY.set(normalized, definition);
     return true;
 }
 
-export function registerStatsCoreDefinitions(payload) {
-    if (!payload) return 0;
-
-    if (Array.isArray(payload)) {
-        let count = 0;
-        for (const entry of payload) {
-            if (!isPlainObject(entry)) continue;
-            const id = entry.id ?? entry.itemId ?? entry.typeId;
-            if (registerStatsCoreDefinition(id, entry)) count++;
-        }
-        return count;
-    }
-
-    if (!isPlainObject(payload)) return 0;
-
-    const directId = payload.id ?? payload.itemId ?? payload.typeId;
-    if (directId) {
-        return registerStatsCoreDefinition(directId, payload) ? 1 : 0;
-    }
-
+/**
+ * Registers multiple StatsCore definitions.
+ * @param {Array<object>} definitions An array of definition objects, each with an 'id' property.
+ * @returns {number} The number of definitions successfully registered.
+ */
+export function registerStatsCoreDefinitions(definitions) {
+    if (!Array.isArray(definitions)) return 0;
     let count = 0;
-    for (const [itemId, definition] of Object.entries(payload)) {
-        if (registerStatsCoreDefinition(itemId, definition)) count++;
+    for (const definition of definitions) {
+        if (registerStatsCoreDefinition(definition?.id, definition)) {
+            count++;
+        }
     }
     return count;
 }
 
 /**
- * Resolves the active StatsCore definition for a string id or item stack.
- *
- * @param {string | import("@minecraft/server").ItemStack} itemOrId
- * @returns {object | undefined}
+ * Retrieves the StatsCore definition for a given item or item ID.
+ * If not found, it attempts to dynamically infer a definition.
+ * @param {string|import("@minecraft/server").ItemStack} itemOrId The item stack or its typeId.
+ * @returns {object|null} The definition object or null if not found/inferred.
  */
 export function getStatsCoreDefinition(itemOrId) {
-    const itemId = normalizeId(typeof itemOrId === "string" ? itemOrId : itemOrId?.typeId);
-    if (!itemId) return undefined;
+    const id = typeof itemOrId === "string" ? itemOrId : itemOrId?.typeId;
+    const normalized = normalizeId(id);
+    if (!normalized) return null;
 
-    const definition = itemDefinitions.get(itemId);
-    return definition?.enabled ? definition : undefined;
+    if (STATSCORE_REGISTRY.has(normalized)) {
+        return STATSCORE_REGISTRY.get(normalized);
+    }
+
+    // Attempt to dynamically generate and register a definition for future use.
+    const dynamicDefinition = inferDynamicDefinition(normalized);
+    if (dynamicDefinition) {
+        registerStatsCoreDefinition(normalized, dynamicDefinition);
+        return dynamicDefinition;
+    }
+
+    return null;
 }
 
-/**
- * Returns how many active definitions are currently registered in StatsCore.
- *
- * Use this instead of cloning the whole registry when only a simple count is needed.
- *
- * @returns {number}
- */
 export function getStatsCoreRegistrySize() {
-    return itemDefinitions.size;
+    return STATSCORE_REGISTRY.size;
 }
 
 export function getStatsCoreRegistrySnapshot() {
-    const snapshot = {};
-    for (const [itemId, definition] of itemDefinitions.entries()) {
-        snapshot[itemId] = clonePlain(definition);
-    }
-    return snapshot;
+    return Object.fromEntries(STATSCORE_REGISTRY.entries());
 }

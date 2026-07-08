@@ -36,13 +36,3 @@ export function hasEnchantmentToken(stack, token) {
 
     return false;
 }
-
-/**
- * Convenience helper for Bedrock's Silk Touch enchantment.
- *
- * @param {import("@minecraft/server").ItemStack} stack
- * @returns {boolean}
- */
-export function hasSilkTouch(stack) {
-    return hasEnchantmentToken(stack, "silk_touch");
-}

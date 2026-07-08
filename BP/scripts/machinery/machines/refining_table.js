@@ -23,6 +23,7 @@ import {
     shouldRefreshSuperiorUi,
     syncSuperiorButtonPanel,
 } from './superior/utils.js'
+import { REFINING_TABLE_CONFIG } from '../../config/recipes/refining_table.js'
 
 const REFINING_TABLE = Object.freeze({
     slots: Object.freeze({
@@ -42,125 +43,12 @@ const REFINING_TABLE = Object.freeze({
         activeSignature: 'utilitycraft:refining_table_active_signature',
         pendingRefinement: 'utilitycraft:refining_table_pending_refinement',
     }),
-    defaults: Object.freeze({
-        idleEnergyCost: 7200,
-        xpTankCapacity: 512000,
-        xpFluidType: 'xp',
-        unlockCatalystId: 'utilitycraft:runic_core',
-        maxIngotsPerRoll: 8,
-        strongThreshold: 0.55,
-        masterworkThreshold: 0.78,
-        transcendentThreshold: 0.92,
-        minRollSpread: 0.04,
-    }),
-    chips: Object.freeze({
-        'utilitycraft:chip': Object.freeze({
-            id: 'utilitycraft:chip',
-            label: 'Chip',
-            minQuality: 0.08,
-            maxQuality: 0.38,
-            baseXpCost: 80,
-            baseEnergyCost: 5200,
-        }),
-        'utilitycraft:basic_chip': Object.freeze({
-            id: 'utilitycraft:basic_chip',
-            label: 'Basic Chip',
-            minQuality: 0.18,
-            maxQuality: 0.48,
-            baseXpCost: 120,
-            baseEnergyCost: 7600,
-        }),
-        'utilitycraft:advanced_chip': Object.freeze({
-            id: 'utilitycraft:advanced_chip',
-            label: 'Advanced Chip',
-            minQuality: 0.30,
-            maxQuality: 0.62,
-            baseXpCost: 180,
-            baseEnergyCost: 10800,
-        }),
-        'utilitycraft:expert_chip': Object.freeze({
-            id: 'utilitycraft:expert_chip',
-            label: 'Expert Chip',
-            minQuality: 0.42,
-            maxQuality: 0.74,
-            baseXpCost: 260,
-            baseEnergyCost: 15400,
-        }),
-        'utilitycraft:ultimate_chip': Object.freeze({
-            id: 'utilitycraft:ultimate_chip',
-            label: 'Ultimate Chip',
-            minQuality: 0.54,
-            maxQuality: 0.84,
-            baseXpCost: 360,
-            baseEnergyCost: 21200,
-        }),
-        'utilitycraft:superior_chip': Object.freeze({
-            id: 'utilitycraft:superior_chip',
-            label: 'Superior Chip',
-            minQuality: 0.66,
-            maxQuality: 0.92,
-            baseXpCost: 500,
-            baseEnergyCost: 28600,
-        }),
-        'utilitycraft:absolute_chip': Object.freeze({
-            id: 'utilitycraft:absolute_chip',
-            label: 'Absolute Chip',
-            minQuality: 0.76,
-            maxQuality: 0.98,
-            baseXpCost: 680,
-            baseEnergyCost: 36800,
-        }),
-    }),
-    ingots: Object.freeze({
-        'minecraft:copper_ingot': Object.freeze({ id: 'minecraft:copper_ingot', label: 'Copper Ingot', power: 0.35 }),
-        'minecraft:iron_ingot': Object.freeze({ id: 'minecraft:iron_ingot', label: 'Iron Ingot', power: 0.50 }),
-        'minecraft:gold_ingot': Object.freeze({ id: 'minecraft:gold_ingot', label: 'Gold Ingot', power: 0.60 }),
-        'utilitycraft:steel_ingot': Object.freeze({ id: 'utilitycraft:steel_ingot', label: 'Steel Ingot', power: 0.72 }),
-        'utilitycraft:energized_iron_ingot': Object.freeze({ id: 'utilitycraft:energized_iron_ingot', label: 'Energized Iron Ingot', power: 0.82 }),
-        'utilitycraft:titanium': Object.freeze({ id: 'utilitycraft:titanium', label: 'Titanium Ingot', power: 1.00 }),
-        'minecraft:netherite_ingot': Object.freeze({ id: 'minecraft:netherite_ingot', label: 'Netherite Ingot', power: 1.16 }),
-        'utilitycraft:aetherium': Object.freeze({ id: 'utilitycraft:aetherium', label: 'Aetherium Ingot', power: 1.30 }),
-    }),
-    templates: Object.freeze({
-        [ITEM_TYPES.weapon]: Object.freeze({
-            damageMultiplier: 0.10,
-            critChance: 0.05,
-            critMultiplier: 0.24,
-            penetration: 0.06,
-            lifesteal: 0.018,
-        }),
-        [ITEM_TYPES.tool]: Object.freeze({
-            bonusDropChance: 0.08,
-            oreBonusChance: 0.10,
-            durabilitySaveChance: 0.08,
-        }),
-        [ITEM_TYPES.hybrid]: Object.freeze({
-            damageMultiplier: 0.08,
-            critChance: 0.035,
-            critMultiplier: 0.16,
-            penetration: 0.04,
-            lifesteal: 0.012,
-            bonusDropChance: 0.05,
-            oreBonusChance: 0.06,
-            durabilitySaveChance: 0.05,
-        }),
-        [ITEM_TYPES.support]: Object.freeze({
-            damageReduction: 0.032,
-            durabilityPreserveChance: 0.08,
-            negateAllDamageChance: 0.03,
-        }),
-    }),
-    tierScales: Object.freeze({
-        wood: 0.54,
-        stone: 0.62,
-        iron: 0.74,
-        golden: 0.7,
-        diamond: 0.84,
-        netherite: 0.94,
-        titanium: 0.95,
-        aetherium: 1.05,
-        lucky: 1.14,
-    }),
+    defaults: REFINING_TABLE_CONFIG.defaults,
+    chips: REFINING_TABLE_CONFIG.chips,
+    ingots: REFINING_TABLE_CONFIG.ingots,
+    templates: REFINING_TABLE_CONFIG.templates,
+    tierScales: REFINING_TABLE_CONFIG.tierScales,
+    elements: REFINING_TABLE_CONFIG.elements,
 })
 
 const SPECIAL_ABILITY_DESCRIPTIONS = Object.freeze({
@@ -730,6 +618,25 @@ function roundBonus(value) {
     return Math.round(Number(value || 0) * 10000) / 10000
 }
 
+function getBonusCap(key) {
+    if (key === 'extraDamage') return 12
+    if (key === 'elementalDamage') return 12
+    return 0.99
+}
+
+function pickRolledElement() {
+    const elements = Object.values(REFINING_TABLE.elements ?? {})
+    const totalWeight = elements.reduce((total, element) => total + Math.max(0, Number(element?.weight ?? 0) || 0), 0)
+    let roll = Math.random() * Math.max(1, totalWeight)
+
+    for (const element of elements) {
+        roll -= Math.max(0, Number(element?.weight ?? 0) || 0)
+        if (roll <= 0) return element
+    }
+
+    return elements[0] ?? null
+}
+
 function buildRolledRefinement(preview) {
     const quality = rollQuality(preview.range)
     const grade = getGradeFromQuality(quality)
@@ -739,7 +646,20 @@ function buildRolledRefinement(preview) {
 
     for (const [key, maxValue] of Object.entries(template ?? {})) {
         const variance = 0.92 + (Math.random() * 0.16)
-        bonuses[key] = roundBonus(Math.min(0.99, Number(maxValue) * quality * tierScale * variance))
+        bonuses[key] = roundBonus(Math.min(getBonusCap(key), Number(maxValue) * quality * tierScale * variance))
+    }
+
+    // Elemental rolls keep the raw numbers plus the chosen label/effect packet.
+    if ((bonuses.elementalChance ?? 0) > 0 && (bonuses.elementalDamage ?? 0) > 0) {
+        const element = pickRolledElement()
+        if (element) {
+            bonuses.elemental = {
+                ...element,
+                chance: bonuses.elementalChance,
+                damage: bonuses.elementalDamage,
+                quality: roundBonus(quality),
+            }
+        }
     }
 
     return {
@@ -888,6 +808,7 @@ function buildConfirmButtonLore(preview) {
         `§7Cost: §f${FluidManager.formatFluid(preview.xpCost)} XP`,
         `§7Energy: §f${formatEnergyCost(preview.energyCost)}`,
         `§7Roll: §f${formatPercentFromRatio(preview.range.min)} - ${formatPercentFromRatio(preview.range.max)}`,
+        `§7Reroll: §f#${Math.max(0, Number(preview.rerolls ?? 0)) + 1}`,
     ]
 }
 
@@ -925,6 +846,17 @@ function formatCompactStatLine(label, ratio, suffix = '') {
     return `§r${label} +${formatPercentFromRatio(ratio, 1)}${suffix}`
 }
 
+function getPrimaryElement(attributes) {
+    return Array.isArray(attributes?.elemental)
+        ? attributes.elemental.find((element) => element?.id && Number(element?.chance ?? 0) > 0)
+        : null
+}
+
+function formatCompactFlat(value) {
+    const numeric = Math.max(0, Number(value ?? 0) || 0)
+    return Number.isInteger(numeric) ? String(numeric) : numeric.toFixed(1)
+}
+
 function buildAttributeSummaryLines(preview = {}, maxLines = 4) {
     const attributes = preview.attributes ?? {}
     const lines = []
@@ -947,6 +879,7 @@ function buildAttributeSummaryLines(preview = {}, maxLines = 4) {
         Number(attributes.mining?.durabilitySaveChance ?? 0),
         Number(attributes.support?.durabilityPreserveChance ?? 0),
     )
+    const element = getPrimaryElement(attributes)
     const reduction = Math.max(0, Number(attributes.support?.damageReduction ?? 0))
     const evasion = Math.max(0, Number(attributes.support?.negateAllDamageChance ?? 0))
 
@@ -957,6 +890,9 @@ function buildAttributeSummaryLines(preview = {}, maxLines = 4) {
     } else {
         if (flatDamageBonus > 0) {
             push(`§rAttack Damage +${Math.floor(flatDamageBonus)}`)
+        }
+        if (element) {
+            push(`§r${element.label} §8${formatPercentFromRatio(element.chance, 1)} §r+${formatCompactFlat(element.damage)}`)
         }
         push(formatCompactStatLine('Bonus Damage', damageBonus))
         push(formatCompactStatLine('Critical Chance', critChance))
@@ -995,6 +931,7 @@ function buildEquipmentPanelLore(preview = {}) {
     const abilityNames = buildAbilityNames(attributes, preview.state)
     const lockedAbilityNames = Array.isArray(preview.potentialAbilityNames) ? preview.potentialAbilityNames : []
     const flatDamageBonus = Math.max(0, Number(attributes.flatDamageBonus ?? 0) || 0)
+    const element = getPrimaryElement(attributes)
     const pushPercent = (label, value) => {
         const numeric = Math.max(0, Number(value ?? 0) || 0)
         if (numeric <= 0) return
@@ -1003,6 +940,10 @@ function buildEquipmentPanelLore(preview = {}) {
 
     if (flatDamageBonus > 0) {
         details.push(`§r§7Attack Damage: §9+${Math.floor(flatDamageBonus)}`)
+    }
+
+    if (element) {
+        details.push(`§r§7Element: ${element.label} §8(${formatPercentFromRatio(element.chance, 1)}, +${formatCompactFlat(element.damage)})`)
     }
 
     pushPercent('Bonus Damage', Math.max(0, Number(attributes.damageMultiplier ?? 1) - 1))
@@ -1118,6 +1059,7 @@ function buildMachineLore(preview = {}, refinement = null) {
     if (preview.valid && preview.chipConfig) {
         lines.push(`§7Roll Range: §f${formatPercentFromRatio(preview.range.min)} - ${formatPercentFromRatio(preview.range.max)}`)
         lines.push(`§7XP Cost: §f${FluidManager.formatFluid(preview.xpCost)} XP`)
+        lines.push(`§7Reroll: §f#${Math.max(0, Number(preview.rerolls ?? 0)) + 1}`)
         lines.push(`§7Strong: §f${formatPercentFromRatio(preview.odds.strong)} §8| §7Masterwork: §f${formatPercentFromRatio(preview.odds.masterwork)}`)
         lines.push(`§7Transcendent: §f${formatPercentFromRatio(preview.odds.transcendent)}`)
         lines.push(`§7Inputs: §f${formatBooleanState(Boolean(preview.chipConfig), 'Chip OK', 'Need Chip')} §8| §7XP: §f${formatBooleanState(preview.ready, 'Enough', 'Missing')}`)
@@ -1125,6 +1067,9 @@ function buildMachineLore(preview = {}, refinement = null) {
 
     if (refinement?.grade) {
         lines.push(`§bResult: §f${formatRefineGrade(refinement.grade)} (${formatPercentFromRatio(refinement.quality ?? 0)})`)
+        if (refinement.bonuses?.elemental?.label) {
+            lines.push(`§bElement: ${refinement.bonuses.elemental.label}`)
+        }
     }
 
     if (overclockLine) {

@@ -42,6 +42,8 @@ export function getProgressAmount(definition, reason, fallback = 1) {
             return Math.max(0, toFiniteNumber(progression.combatXp, fallback));
         case "kill":
             return Math.max(0, toFiniteNumber(progression.killXp, fallback));
+        case "tool":
+            return Math.max(0, toFiniteNumber(progression.toolXp, fallback));
         case "ore":
             return Math.max(0, toFiniteNumber(progression.oreXp, fallback));
         case "armor":

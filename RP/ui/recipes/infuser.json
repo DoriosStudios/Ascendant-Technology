@@ -1,198 +1,176 @@
 ﻿{
-    "namespace":  "uc",
-    "infuser_recipes_buttons/addon_recipe_rows":  {
-                                                      "modifications":  [
-                                                                            {
-                                                                                "array_name":  "controls",
-                                                                                "operation":  "insert_front",
-                                                                                "value":  [
-                                                                                              {
-                                                                                                  "ascendant_technology_recipe_rows@uc.at_infuser_recipe_rows":  {
-
-                                                                                                                                                                 }
-                                                                                              }
-                                                                                          ]
-                                                                            }
-                                                                        ]
-                                                  },
-    "infuser_recipes_panel/recipes_panel/addon_recipe_panels":  {
-                                                                    "modifications":  [
-                                                                                          {
-                                                                                              "array_name":  "controls",
-                                                                                              "operation":  "insert_front",
-                                                                                              "value":  [
-                                                                                                            {
-                                                                                                                "ascendant_technology_recipe_panels@uc.at_infuser_recipe_panels":  {
-
-                                                                                                                                                                                   }
-                                                                                                            }
-                                                                                                        ]
-                                                                                          }
-                                                                                      ]
-                                                                },
-    "at_infuser_recipe_rows":  {
-                                   "type":  "stack_panel",
-                                   "size":  [
-                                                126,
-                                                "100%c"
-                                            ],
-                                   "orientation":  "vertical",
-                                   "controls":  [
-                                                    {
-                                                        "ascendant_technology_separator@uc.addon_recipe_separator":  {
-                                                                                                                         "$separator_label":  "Ascendant Technology"
-                                                                                                                     }
-                                                    },
-                                                    {
-                                                        "ascendant_technology_recipe_row_0":  {
-                                                                                                  "type":  "panel",
-                                                                                                  "size":  [
-                                                                                                               126,
-                                                                                                               18
-                                                                                                           ],
-                                                                                                  "controls":  [
-                                                                                                                   {
-                                                                                                                       "at_stabilized_obsidian_dust_toggle@uc.infuser_recipe_toggle":  {
-                                                                                                                                                                                           "anchor_from":  "top_left",
-                                                                                                                                                                                           "anchor_to":  "top_left",
-                                                                                                                                                                                           "$toggle_index":  3000,
-                                                                                                                                                                                           "$toggle_hover_text":  "item.utilitycraft:stabilized_obsidian_dust",
-                                                                                                                                                                                           "$toggle_control_name":  "at_stabilized_obsidian_dust_recipe",
-                                                                                                                                                                                           "$recipe_icon":  "textures/items/dusts/stabilized_obsidian_dust",
-                                                                                                                                                                                           "offset":  [
-                                                                                                                                                                                                          0,
-                                                                                                                                                                                                          0
-                                                                                                                                                                                                      ]
-                                                                                                                                                                                       }
-                                                                                                                   },
-                                                                                                                   {
-                                                                                                                       "at_crying_obsidian_toggle@uc.infuser_recipe_toggle":  {
-                                                                                                                                                                                  "anchor_from":  "top_left",
-                                                                                                                                                                                  "anchor_to":  "top_left",
-                                                                                                                                                                                  "$toggle_index":  3001,
-                                                                                                                                                                                  "$toggle_hover_text":  "tile.crying_obsidian.name",
-                                                                                                                                                                                  "$toggle_control_name":  "at_crying_obsidian_recipe",
-                                                                                                                                                                                  "$recipe_icon":  "textures/blocks/crying_obsidian",
-                                                                                                                                                                                  "offset":  [
-                                                                                                                                                                                                 18,
-                                                                                                                                                                                                 0
-                                                                                                                                                                                             ]
-                                                                                                                                                                              }
-                                                                                                                   },
-                                                                                                                   {
-                                                                                                                       "at_way_chip_toggle@uc.infuser_recipe_toggle":  {
-                                                                                                                                                                           "anchor_from":  "top_left",
-                                                                                                                                                                           "anchor_to":  "top_left",
-                                                                                                                                                                           "$toggle_index":  3002,
-                                                                                                                                                                           "$toggle_hover_text":  "item.utilitycraft:way_chip",
-                                                                                                                                                                           "$toggle_control_name":  "at_way_chip_recipe",
-                                                                                                                                                                           "$recipe_icon":  "textures/items/machinery/Way_Chip_Anchored_V2",
-                                                                                                                                                                           "offset":  [
-                                                                                                                                                                                          36,
-                                                                                                                                                                                          0
-                                                                                                                                                                                      ]
-                                                                                                                                                                       }
-                                                                                                                   }
-                                                                                                               ]
-                                                                                              }
-                                                    }
-                                                ]
-                               },
-    "at_infuser_recipe_panels":  {
-                                     "type":  "panel",
-                                     "anchor_from":  "center",
-                                     "anchor_to":  "center",
-                                     "size":  [
-                                                  80,
-                                                  108
-                                              ],
-                                     "controls":  [
-                                                      {
-                                                          "at_stabilized_obsidian_dust_panel@uc.recipe_panel":  {
-                                                                                                                    "$recipe_control_name":  "at_stabilized_obsidian_dust_recipe",
-                                                                                                                    "controls":  [
-                                                                                                                                     {
-                                                                                                                                         "catalyst@uc.infuser_recipe_catalyst":  {
-                                                                                                                                                                                     "$slot_item_texture":  "textures/items/glowstone_dust",
-                                                                                                                                                                                     "$slot_hover_text":  "item.glowstone_dust.name",
-                                                                                                                                                                                     "$has_slot_hover":  true,
-                                                                                                                                                                                     "$slot_count_text":  "4",
-                                                                                                                                                                                     "$has_slot_count":  true
-                                                                                                                                                                                 }
-                                                                                                                                     },
-                                                                                                                                     {
-                                                                                                                                         "input@uc.infuser_recipe_input":  {
-                                                                                                                                                                               "$slot_item_texture":  "textures/items/dusts/crying_obsidian_dust",
-                                                                                                                                                                               "$slot_hover_text":  "item.utilitycraft:crying_obsidian_dust",
-                                                                                                                                                                               "$has_slot_hover":  true
-                                                                                                                                                                           }
-                                                                                                                                     },
-                                                                                                                                     {
-                                                                                                                                         "output@uc.infuser_recipe_output":  {
-                                                                                                                                                                                 "$slot_item_texture":  "textures/items/dusts/stabilized_obsidian_dust",
-                                                                                                                                                                                 "$slot_hover_text":  "item.utilitycraft:stabilized_obsidian_dust",
-                                                                                                                                                                                 "$has_slot_hover":  true
-                                                                                                                                                                             }
-                                                                                                                                     }
-                                                                                                                                 ]
-                                                                                                                }
-                                                      },
-                                                      {
-                                                          "at_crying_obsidian_panel@uc.recipe_panel":  {
-                                                                                                           "$recipe_control_name":  "at_crying_obsidian_recipe",
-                                                                                                           "controls":  [
-                                                                                                                            {
-                                                                                                                                "catalyst@uc.infuser_recipe_catalyst":  {
-                                                                                                                                                                            "$slot_item_texture":  "textures/items/blaze_powder",
-                                                                                                                                                                            "$slot_hover_text":  "item.blaze_powder.name",
-                                                                                                                                                                            "$has_slot_hover":  true
-                                                                                                                                                                        }
-                                                                                                                            },
-                                                                                                                            {
-                                                                                                                                "input@uc.infuser_recipe_input":  {
-                                                                                                                                                                      "$slot_item_texture":  "textures/blocks/obsidian",
-                                                                                                                                                                      "$slot_hover_text":  "tile.obsidian.name",
-                                                                                                                                                                      "$has_slot_hover":  true
-                                                                                                                                                                  }
-                                                                                                                            },
-                                                                                                                            {
-                                                                                                                                "output@uc.infuser_recipe_output":  {
-                                                                                                                                                                        "$slot_item_texture":  "textures/blocks/crying_obsidian",
-                                                                                                                                                                        "$slot_hover_text":  "tile.crying_obsidian.name",
-                                                                                                                                                                        "$has_slot_hover":  true
-                                                                                                                                                                    }
-                                                                                                                            }
-                                                                                                                        ]
-                                                                                                       }
-                                                      },
-                                                      {
-                                                          "at_way_chip_panel@uc.recipe_panel":  {
-                                                                                                    "$recipe_control_name":  "at_way_chip_recipe",
-                                                                                                    "controls":  [
-                                                                                                                     {
-                                                                                                                         "catalyst@uc.infuser_recipe_catalyst":  {
-                                                                                                                                                                     "$slot_item_texture":  "textures/items/ender_eye",
-                                                                                                                                                                     "$slot_hover_text":  "item.ender_eye.name",
-                                                                                                                                                                     "$has_slot_hover":  true
-                                                                                                                                                                 }
-                                                                                                                     },
-                                                                                                                     {
-                                                                                                                         "input@uc.infuser_recipe_input":  {
-                                                                                                                                                               "$slot_item_texture":  "textures/items/machinery/chip",
-                                                                                                                                                               "$slot_hover_text":  "item.utilitycraft:chip",
-                                                                                                                                                               "$has_slot_hover":  true
-                                                                                                                                                           }
-                                                                                                                     },
-                                                                                                                     {
-                                                                                                                         "output@uc.infuser_recipe_output":  {
-                                                                                                                                                                 "$slot_item_texture":  "textures/items/machinery/Way_Chip_Anchored_V2",
-                                                                                                                                                                 "$slot_hover_text":  "item.utilitycraft:way_chip",
-                                                                                                                                                                 "$has_slot_hover":  true
-                                                                                                                                                             }
-                                                                                                                     }
-                                                                                                                 ]
-                                                                                                }
-                                                      }
-                                                  ]
-                                 }
+  "namespace": "uc",
+  "infuser_recipes_buttons/addon_recipe_rows": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_front",
+        "value": [
+          {
+            "ascendant_technology_recipe_rows@uc.at_infuser_recipe_rows": {}
+          }
+        ]
+      }
+    ]
+  },
+  "infuser_recipes_panel/recipes_panel/addon_recipe_panels": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_front",
+        "value": [
+          {
+            "ascendant_technology_recipe_panels@uc.at_infuser_recipe_panels": {}
+          }
+        ]
+      }
+    ]
+  },
+  "at_infuser_recipe_rows": {
+    "type": "stack_panel",
+    "size": [126, "100%c"],
+    "orientation": "vertical",
+    "controls": [
+      {
+        "ascendant_technology_separator@uc.addon_recipe_separator": {
+          "$separator_label": "Ascendant Technology"
+        }
+      },
+      {
+        "ascendant_technology_recipe_row_0": {
+          "type": "panel",
+          "size": [126, 18],
+          "controls": [
+            {
+              "at_stabilized_obsidian_dust_toggle@uc.infuser_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3000,
+                "$toggle_hover_text": "item.utilitycraft:stabilized_obsidian_dust",
+                "$toggle_control_name": "at_stabilized_obsidian_dust_recipe",
+                "$recipe_icon": "textures/items/dusts/stabilized_obsidian_dust",
+                "offset": [0, 0]
+              }
+            },
+            {
+              "at_crying_obsidian_toggle@uc.infuser_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3001,
+                "$toggle_hover_text": "tile.crying_obsidian.name",
+                "$toggle_control_name": "at_crying_obsidian_recipe",
+                "$recipe_icon": "textures/blocks/crying_obsidian",
+                "offset": [18, 0]
+              }
+            },
+            {
+              "at_way_chip_toggle@uc.infuser_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3002,
+                "$toggle_hover_text": "item.utilitycraft:way_chip",
+                "$toggle_control_name": "at_way_chip_recipe",
+                "$recipe_icon": "textures/items/machinery/Way_Chip_Anchored_V2",
+                "offset": [36, 0]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "at_infuser_recipe_panels": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "size": [80, 108],
+    "controls": [
+      {
+        "at_stabilized_obsidian_dust_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_stabilized_obsidian_dust_recipe",
+          "controls": [
+            {
+              "catalyst@uc.infuser_recipe_catalyst": {
+                "$slot_item_texture": "textures/items/glowstone_dust",
+                "$slot_hover_text": "item.glowstone_dust.name",
+                "$has_slot_hover": true,
+                "$slot_count_text": "4",
+                "$has_slot_count": true
+              }
+            },
+            {
+              "input@uc.infuser_recipe_input": {
+                "$slot_item_texture": "textures/items/dusts/crying_obsidian_dust",
+                "$slot_hover_text": "item.utilitycraft:crying_obsidian_dust",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.infuser_recipe_output": {
+                "$slot_item_texture": "textures/items/dusts/stabilized_obsidian_dust",
+                "$slot_hover_text": "item.utilitycraft:stabilized_obsidian_dust",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_crying_obsidian_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_crying_obsidian_recipe",
+          "controls": [
+            {
+              "catalyst@uc.infuser_recipe_catalyst": {
+                "$slot_item_texture": "textures/items/blaze_powder",
+                "$slot_hover_text": "item.blaze_powder.name",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "input@uc.infuser_recipe_input": {
+                "$slot_item_texture": "textures/blocks/obsidian",
+                "$slot_hover_text": "tile.obsidian.name",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.infuser_recipe_output": {
+                "$slot_item_texture": "textures/blocks/crying_obsidian",
+                "$slot_hover_text": "tile.crying_obsidian.name",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_way_chip_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_way_chip_recipe",
+          "controls": [
+            {
+              "catalyst@uc.infuser_recipe_catalyst": {
+                "$slot_item_texture": "textures/items/ender_eye",
+                "$slot_hover_text": "item.ender_eye.name",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "input@uc.infuser_recipe_input": {
+                "$slot_item_texture": "textures/items/machinery/chip",
+                "$slot_hover_text": "item.utilitycraft:chip",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.infuser_recipe_output": {
+                "$slot_item_texture": "textures/items/machinery/Way_Chip_Anchored_V2",
+                "$slot_hover_text": "item.utilitycraft:way_chip",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
 }

@@ -1,0 +1,91 @@
+﻿{
+  "namespace": "uc",
+  "electro_press_recipes_buttons/addon_recipe_rows": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_back",
+        "value": [
+          {
+            "at_electro_press_rows@uc.at_electro_press_recipe_rows": {}
+          }
+        ]
+      }
+    ]
+  },
+  "electro_press_recipes_panel/recipes_panel/addon_recipe_panels": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_back",
+        "value": [
+          {
+            "at_electro_press_panels@uc.at_electro_press_recipe_panels": {}
+          }
+        ]
+      }
+    ]
+  },
+  "at_electro_press_recipe_rows": {
+    "type": "stack_panel",
+    "size": [126, "100%c"],
+    "orientation": "vertical",
+    "controls": [
+      {
+        "at_electro_press_separator@uc.addon_recipe_separator": {
+          "$separator_label": "Ascendant Technology"
+        }
+      },
+      {
+        "at_electro_press_recipe_row_0": {
+          "type": "panel",
+          "size": [126, 18],
+          "controls": [
+            {
+              "at_titanium_plate_toggle@uc.electro_press_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3000,
+                "$toggle_hover_text": "item.utilitycraft:titanium_plate",
+                "$toggle_control_name": "at_titanium_plate_recipe",
+                "$recipe_icon": "textures/items/ores/titanium_plate",
+                "offset": [0, 0]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "at_electro_press_recipe_panels": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "size": [80, 108],
+    "controls": [
+      {
+        "at_titanium_plate_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_titanium_plate_recipe",
+          "controls": [
+            {
+              "input@uc.electro_press_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/titanium_ingot",
+                "$slot_hover_text": "item.utilitycraft:titanium",
+                "$has_slot_hover": true,
+                "$slot_count_text": "2",
+                "$has_slot_count": true
+              }
+            },
+            {
+              "output@uc.electro_press_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/titanium_plate",
+                "$slot_hover_text": "item.utilitycraft:titanium_plate",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

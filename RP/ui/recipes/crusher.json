@@ -1,0 +1,189 @@
+﻿{
+  "namespace": "uc",
+  "crusher_recipes_buttons/addon_recipe_rows": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_back",
+        "value": [
+          {
+            "at_crusher_rows@uc.at_crusher_recipe_rows": {}
+          }
+        ]
+      }
+    ]
+  },
+  "crusher_recipes_panel/recipes_panel/addon_recipe_panels": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_back",
+        "value": [
+          {
+            "at_crusher_panels@uc.at_crusher_recipe_panels": {}
+          }
+        ]
+      }
+    ]
+  },
+  "at_crusher_recipe_rows": {
+    "type": "stack_panel",
+    "size": [126, "100%c"],
+    "orientation": "vertical",
+    "controls": [
+      {
+        "at_crusher_separator@uc.addon_recipe_separator": {
+          "$separator_label": "Ascendant Technology"
+        }
+      },
+      {
+        "at_crusher_recipe_row_0": {
+          "type": "panel",
+          "size": [126, 18],
+          "controls": [
+            {
+              "at_raw_titanium_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3000,
+                "$toggle_hover_text": "item.utilitycraft:raw_titanium",
+                "$toggle_control_name": "at_raw_titanium_recipe",
+                "$recipe_icon": "textures/items/ores/raw_titanium",
+                "offset": [0, 0]
+              }
+            },
+            {
+              "at_titanium_dust_1_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3001,
+                "$toggle_hover_text": "item.utilitycraft:titanium_dust",
+                "$toggle_control_name": "at_titanium_dust_1_recipe",
+                "$recipe_icon": "textures/items/ores/titanium_dust",
+                "offset": [18, 0]
+              }
+            },
+            {
+              "at_titanium_dust_2_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3002,
+                "$toggle_hover_text": "item.utilitycraft:titanium_dust",
+                "$toggle_control_name": "at_titanium_dust_2_recipe",
+                "$recipe_icon": "textures/items/ores/titanium_dust",
+                "offset": [36, 0]
+              }
+            },
+            {
+              "at_titanium_dust_6_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3003,
+                "$toggle_hover_text": "item.utilitycraft:titanium_dust",
+                "$toggle_control_name": "at_titanium_dust_6_recipe",
+                "$recipe_icon": "textures/items/ores/titanium_dust",
+                "offset": [54, 0]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "at_crusher_recipe_panels": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "size": [80, 108],
+    "controls": [
+      {
+        "at_raw_titanium_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_raw_titanium_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/titanium_chunk",
+                "$slot_hover_text": "item.utilitycraft:titanium_chunk",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/raw_titanium",
+                "$slot_hover_text": "item.utilitycraft:raw_titanium",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_titanium_dust_1_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_titanium_dust_1_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/titanium_ingot",
+                "$slot_hover_text": "item.utilitycraft:titanium",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/titanium_dust",
+                "$slot_hover_text": "item.utilitycraft:titanium_dust",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_titanium_dust_2_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_titanium_dust_2_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/raw_titanium",
+                "$slot_hover_text": "item.utilitycraft:raw_titanium",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/titanium_dust",
+                "$slot_hover_text": "item.utilitycraft:titanium_dust",
+                "$has_slot_hover": true,
+                "$slot_count_text": "2",
+                "$has_slot_count": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_titanium_dust_6_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_titanium_dust_6_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/blocks/ores/raw_titanium_block",
+                "$slot_hover_text": "tile.utilitycraft:raw_titanium_block.name",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/titanium_dust",
+                "$slot_hover_text": "item.utilitycraft:titanium_dust",
+                "$has_slot_hover": true,
+                "$slot_count_text": "6",
+                "$has_slot_count": true
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

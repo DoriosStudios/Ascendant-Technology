@@ -1,8 +1,14 @@
 import { system } from "@minecraft/server";
 
 const PULVERIZER_DEFAULTS = Object.freeze({
-    energyCost: 1600,
+    energyCost: 800,
     seconds: 3,
+    ticksPerSecond: 20
+});
+
+const IMPACT_CRUSHER_DEFAULTS = Object.freeze({
+    energyCost: 1000,
+    seconds: 4,
     ticksPerSecond: 20
 });
 
@@ -158,11 +164,19 @@ const nativePulverizerRecipes = Object.entries(nativePulverizerRecipeDefinitions
     definePulverizerRecipe(recipeId, payload)
 );
 
+const impactCrusherRecipes = [];
 export const pulverizerRecipes = [...nativePulverizerRecipes];
 
 export function getPulverizerRecipes() {
     return pulverizerRecipes;
 }
+
+export function getImpactCrusherRecipes() {
+    // Combine native recipes (if any) with dynamically added ones
+    return impactCrusherRecipes;
+}
+
+
 
 function definePulverizerRecipe(recipeId, payload) {
     if (!recipeId || typeof recipeId !== "string") {
@@ -173,7 +187,7 @@ function definePulverizerRecipe(recipeId, payload) {
         throw new TypeError(`Pulverizer recipe '${recipeId}' is invalid`);
     }
 
-    const energyCost = normalizePositiveInteger(payload.energyCost ?? payload.cost, PULVERIZER_DEFAULTS.energyCost);
+    const energyCost = normalizePositiveInteger(payload.energyCost ?? payload.cost, PULVERIZER_DEFAULTS.energyCost * (payload.tier > 0 ? payload.tier * 1.2 : 1));
     const input = normalizeStack(payload.input ?? { id: recipeId, amount: payload.required }, {
         fallbackId: recipeId,
         fallbackAmount: payload.required ?? 1
@@ -267,16 +281,36 @@ function normalizePositiveInteger(value, fallback = 1) {
     return Math.max(1, Math.floor(parsed));
 }
 
+function upsertImpactCrusherRecipe(recipeId, payload) {
+    const baseRecipe = definePulverizerRecipe(recipeId, payload);
+    const recipe = {
+        ...baseRecipe,
+        energyCost: normalizePositiveInteger(payload.energyCost ?? payload.cost, IMPACT_CRUSHER_DEFAULTS.energyCost * (payload.tier > 0 ? payload.tier * 1.2 : 1)),
+        seconds: IMPACT_CRUSHER_DEFAULTS.seconds
+    };
+
+    const index = impactCrusherRecipes.findIndex(entry => entry.id === recipe.id);
+    if (index >= 0) {
+        impactCrusherRecipes[index] = recipe;
+        return "replaced";
+    }
+
+    impactCrusherRecipes.push(recipe);
+    return "added";
+}
+
 function upsertPulverizerRecipe(recipeId, payload) {
     const recipe = definePulverizerRecipe(recipeId, payload);
     const index = pulverizerRecipes.findIndex(entry => entry.id === recipe.id);
 
     if (index >= 0) {
         pulverizerRecipes[index] = recipe;
+        upsertImpactCrusherRecipe(recipeId, payload); // Also update impact crusher
         return "replaced";
     }
 
     pulverizerRecipes.push(recipe);
+    upsertImpactCrusherRecipe(recipeId, payload); // Also add to impact crusher
     return "added";
 }
 
@@ -287,20 +321,22 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
         const payload = JSON.parse(message);
         if (!payload || typeof payload !== "object") return;
 
-        let added = 0;
-        let replaced = 0;
+        let pulverizerAdded = 0, pulverizerReplaced = 0;
+        let impactAdded = 0, impactReplaced = 0;
 
         for (const [recipeId, definition] of Object.entries(payload)) {
             try {
                 const status = upsertPulverizerRecipe(recipeId, definition);
-                if (status === "replaced") replaced++;
-                else added++;
+                if (status === "replaced") pulverizerReplaced++;
+                else pulverizerAdded++;
+
+                const impactStatus = upsertImpactCrusherRecipe(recipeId, definition);
+                if (impactStatus === "replaced") impactReplaced++;
+                else impactAdded++;
             } catch (error) {
                 console.warn(`[Pulverizer] Failed to register crusher recipe '${recipeId}':`, error);
             }
         }
-
-        console.warn(`[Pulverizer] Registered ${added} new and replaced ${replaced} crusher recipes.`);
     } catch (error) {
         console.warn("[Pulverizer] Failed to parse crusher recipe payload:", error);
     }

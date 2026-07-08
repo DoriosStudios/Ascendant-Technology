@@ -560,38 +560,41 @@ function normalizePlantEntry(entry) {
 	};
 }
 
-system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
-	if (id !== "utilitycraft:register_plant") return;
+function registerPlantRecipesFromPayload(payload) {
+	if (!payload || typeof payload !== "object") return;
 
-	try {
-		const payload = JSON.parse(message);
-		if (!payload || typeof payload !== "object") return;
-
-		for (const [plantId, plantData] of Object.entries(payload)) {
-			const normalized = normalizePlantEntry(plantData);
-			if (!normalized || typeof plantId !== "string" || plantId.length === 0) continue;
+	for (const [plantId, plantData] of Object.entries(payload)) {
+		const normalized = normalizePlantEntry(plantData);
+		if (!normalized || typeof plantId !== "string" || plantId.length === 0) continue;
+		if (!plantsData[plantId]) { // Avoid overwriting native AT definitions
 			plantsData[plantId] = normalized;
 		}
-	} catch {
-		// Ignore malformed registration payloads to keep the machine registry stable.
 	}
-});
+}
 
-system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
-	if (id !== "utilitycraft:register_bonsai") return;
+function registerBonsaiRecipesFromPayload(payload) {
+	if (!payload || typeof payload !== "object") return;
 
-	try {
-		const payload = JSON.parse(message);
-		if (!payload || typeof payload !== "object") return;
+	for (const bonsaiData of Object.values(payload)) {
+		if (!bonsaiData || typeof bonsaiData !== "object" || typeof bonsaiData.sapling !== "string") continue;
 
-		for (const bonsaiData of Object.values(payload)) {
-			if (!bonsaiData || typeof bonsaiData !== "object" || typeof bonsaiData.sapling !== "string") continue;
-
-			const normalized = normalizePlantEntry(bonsaiData);
-			if (!normalized) continue;
+		const normalized = normalizePlantEntry(bonsaiData);
+		if (!normalized) continue;
+		if (!plantsData[bonsaiData.sapling]) { // Avoid overwriting
 			plantsData[bonsaiData.sapling] = normalized;
 		}
-	} catch {
-		// Ignore malformed bonsai payloads to keep the machine registry stable.
 	}
+}
+
+system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
+    try {
+        const payload = JSON.parse(message);
+        if (id === "utilitycraft:register_plant") {
+            registerPlantRecipesFromPayload(payload);
+        } else if (id === "utilitycraft:register_bonsai") {
+            registerBonsaiRecipesFromPayload(payload);
+        }
+    } catch {
+        // Silently ignore malformed payloads
+    }
 });

@@ -26,9 +26,6 @@ import './machinery/machines/vaporworks_processor.js'
 import './machinery/machines/network_center.js'
 
 // Generators
-import './machinery/generators/dense_furnator_array.js'
-import './machinery/generators/dense_magmator_core.js'
-import './machinery/generators/dense_thermo_matrix.js'
 import './machinery/generators/power_beacon.js'
 
 // Superior machines

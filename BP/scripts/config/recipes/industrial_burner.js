@@ -9,73 +9,9 @@ const INDUSTRIAL_BURNER_DEFAULTS = Object.freeze({
 
 const INDUSTRIAL_BURNER_EVENT_ID = "utilitycraft:register_furnace_recipe";
 
-const nativeIndustrialBurnerRecipes = [
-    defineIndustrialBurnerRecipe("utilitycraft:raw_titanium", {
-        output: "utilitycraft:titanium",
-        energyCost: 1600,
-        seconds: 5
-    }),
-    defineIndustrialBurnerRecipe("utilitycraft:raw_titanium_block", {
-        output: "utilitycraft:titanium_block",
-        energyCost: 12000,
-        seconds: 10
-    }),
-    defineIndustrialBurnerRecipe("utilitycraft:deepslate_titanium_ore", {
-        output: "utilitycraft:titanium",
-        energyCost: 2200,
-        seconds: 6
-    }),
-    defineIndustrialBurnerRecipe("minecraft:raw_iron", {
-        output: "minecraft:iron_ingot"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:raw_gold", {
-        output: "minecraft:gold_ingot"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:raw_copper", {
-        output: "minecraft:copper_ingot"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:iron_ore", {
-        output: "minecraft:iron_ingot",
-        energyCost: 1200
-    }),
-    defineIndustrialBurnerRecipe("minecraft:gold_ore", {
-        output: "minecraft:gold_ingot",
-        energyCost: 1200
-    }),
-    defineIndustrialBurnerRecipe("minecraft:copper_ore", {
-        output: "minecraft:copper_ingot",
-        energyCost: 1200
-    }),
-    defineIndustrialBurnerRecipe("minecraft:sand", {
-        output: "minecraft:glass"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:cobblestone", {
-        output: "minecraft:stone"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:porkchop", {
-        output: "minecraft:cooked_porkchop"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:beef", {
-        output: "minecraft:cooked_beef"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:chicken", {
-        output: "minecraft:cooked_chicken"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:cod", {
-        output: "minecraft:cooked_cod"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:salmon", {
-        output: "minecraft:cooked_salmon"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:potato", {
-        output: "minecraft:baked_potato"
-    }),
-    defineIndustrialBurnerRecipe("minecraft:kelp", {
-        output: "minecraft:dried_kelp"
-    })
-];
+const nativeIndustrialBurnerRecipes = [];
 
-export const industrialBurnerRecipes = nativeIndustrialBurnerRecipes;
+export const industrialBurnerRecipes = [...nativeIndustrialBurnerRecipes];
 
 export function getIndustrialBurnerRecipes() {
     return industrialBurnerRecipes;
@@ -212,8 +148,7 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
             }
         }
 
-        console.warn(`[Industrial Burner] Registered ${added} new and replaced ${replaced} furnace recipes.`);
     } catch (error) {
-        console.warn("[Industrial Burner] Failed to parse furnace recipe payload:", error);
+        // Silently ignore malformed payloads
     }
 });

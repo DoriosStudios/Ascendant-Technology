@@ -1,5 +1,4 @@
 import { system } from "@minecraft/server"
-import { infuserRecipes } from './infuser_registry.js'
 import { defineSingularityRecipe } from "./duplicator.js"
 
 const CATALYST_WEAVER_DEFAULTS = Object.freeze({
@@ -10,6 +9,13 @@ const CATALYST_WEAVER_DEFAULTS = Object.freeze({
     maxCatalystSlots: 6,
     energyPerSecond: 180 * 20
 })
+
+/**
+ * Dynamic registry for Infuser-style recipes received via script events.
+ * These are translated on-the-fly into Catalyst Weaver recipes.
+ * @type {Record<string, any>}
+ */
+const dynamicInfuserRecipes = {}
 
 /**
  * @typedef {Object} RecipeInput
@@ -373,7 +379,7 @@ function translateInfuserRecipe(recipeKey, recipeDef) {
 }
 
 function buildInfuserWeaverRecipes() {
-    return Object.entries(infuserRecipes)
+    return Object.entries(dynamicInfuserRecipes)
         .map(([key, def]) => translateInfuserRecipe(key, def))
         .filter(Boolean)
 }
@@ -381,6 +387,38 @@ function buildInfuserWeaverRecipes() {
 const CATALYST_WEAVER_EVENTS = Object.freeze({
     register: "utilitycraft:register_catalyst_weaver_recipe"
 })
+
+const INFUSER_RECIPE_EVENT_ID = "utilitycraft:register_infuser_recipe"
+
+/**
+ * Listens for both native Catalyst Weaver recipes and Infuser-style recipes.
+ * Infuser recipes are dynamically translated ("decompiled") into the full weaver format.
+ */
+system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
+    if (id === CATALYST_WEAVER_EVENTS.register) {
+        registerCatalystWeaverRecipesFromPayload(message)
+    } else if (id === INFUSER_RECIPE_EVENT_ID) {
+        registerInfuserRecipesFromPayload(message)
+    }
+})
+
+function registerInfuserRecipesFromPayload(message) {
+    try {
+        const payload = JSON.parse(message)
+        if (!payload || typeof payload !== 'object') return
+
+        for (const [recipeKey, data] of Object.entries(payload)) {
+            if (!data?.output || typeof data.output !== 'string' || !recipeKey.includes('|')) {
+                console.info(`[Catalyst Weaver] Ignored invalid Infuser-style recipe key '${recipeKey}'.`)
+                continue
+            }
+            // Add or replace the recipe in the dynamic registry
+            dynamicInfuserRecipes[recipeKey] = data
+        }
+    } catch (err) {
+        console.warn('[Catalyst Weaver] Failed to parse Infuser-style recipe payload:', err)
+    }
+}
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (id !== CATALYST_WEAVER_EVENTS.register) return
@@ -407,12 +445,38 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
             }
         }
 
-        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} catalyst weaver recipes.`)
+        console.info(`[UtilityCraft] Registered ${added} new and replaced ${replaced} catalyst weaver recipes.`)
     } catch (err) {
         console.warn('[UtilityCraft] Failed to parse catalyst weaver recipe payload:', err)
     }
 })
 
+function registerCatalystWeaverRecipesFromPayload(message) {
+    try {
+        const payload = JSON.parse(message)
+        if (!payload || typeof payload !== 'object') return
+
+        let added = 0
+        let replaced = 0
+
+        for (const [recipeId, definition] of Object.entries(payload)) {
+            if (!definition || typeof definition !== 'object') {
+                console.info(`[UtilityCraft] Ignored invalid catalyst weaver recipe '${recipeId}'.`)
+                continue
+            }
+
+            try {
+                const status = upsertCatalystWeaverRecipe({ id: recipeId, ...definition })
+                if (status === 'replaced') replaced++
+                else added++
+            } catch (err) {
+                console.warn(`[UtilityCraft] Failed to register catalyst weaver recipe '${recipeId}':`, err)
+            }
+        }
+    } catch (err) {
+        console.warn('[UtilityCraft] Failed to parse catalyst weaver recipe payload:', err)
+    }
+}
 function upsertCatalystWeaverRecipe(definition) {
     const recipe = defineWeaverRecipe(definition)
     const index = nativeCatalystWeaverRecipes.findIndex(entry => entry.id === recipe.id)

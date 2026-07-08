@@ -8,7 +8,7 @@
 	},
 	"header": {
 		"name": "§uAscendant Technology§8",
-		"description": "v0.8.1 §6Dorios Studios",
+		"description": "v0.9.0 Alpha - §6Dorios Studios",
 		"min_engine_version": [
 			1,
 			21,
@@ -17,8 +17,8 @@
 		"uuid": "8d4e0a7e-98d5-4bdb-bfcc-ff0c08f09799",
 		"version": [
 			0,
-			8,
-			2
+			9,
+			0
 		]
 	},
 	"modules": [

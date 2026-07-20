@@ -2,9 +2,10 @@
     "format_version": "1.21.100",
     "minecraft:block": {
         "description": {
-            "identifier": "utilitycraft:dual_siever",
+            "identifier": "utilitycraft:impact_crusher",
             "menu_category": {
-                "category": "construction"
+                "category": "none",
+                "is_hidden_in_commands": false
             },
             "states": {
                 "utilitycraft:on": [false, true],
@@ -13,43 +14,39 @@
             }
         },
         "components": {
-            "utilitycraft:dual_siever": {
+            "utilitycraft:impact_crusher": {
                 "rotation": "facing",
                 "entity": {
                     "type": "machine",
                     "input_type": "complex",
                     "output_type": "complex",
-                    "inventory_size": 37,
+                    "inventory_size": 20,
                     "fluid": true
                 },
                 "machine": {
-                    "energy_cap": 32000000,
-                    "energy_cost": 800,
-                    "rate_speed_base": 9600,
-                    "dynamic_rate": true,
+                    "energy_cap": 64000000,
+                    "energy_cost": 4400,
+                    "rate_speed_base": 64000,
                     "fluid_cap": 32000,
-                    "upgrades": [11, 12, 13, 14],
-                    "hidden_slots": [9]
+                    "upgrades": [9, 10, 11, 12],
+                    "hidden_slots": [13, 15, 17, 18, 19]
                 }
             },
             "utilitycraft:special_container": {
-                "Lane A Inputs": [3, 4],
-                "Lane A Mesh": 5,
-                "Lane B Inputs": [6, 7],
-                "Lane B Mesh": 8,
-                "Steam Tank": 10,
-                "Upgrade Slots": [11, 12, 13, 14],
-                "Output Lanes": [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34],
-                "Mode Switch": 35,
-                "Lane B Progress": 36
+                "Input Lanes": [3, 4],
+                "Lava Tank": 14,
+                "Coolant Tank": 16,
+                "Upgrade Slots": [9, 10, 11, 12],
+                "Output Buffer": [5, 6, 7, 8],
+                "Hidden Slots": [13, 15, 17, 18, 19]
             },
             "utilitycraft:machine_recipes": {
-                "type": "dual_siever"
+                "type": "impact_crusher"
             },
             "minecraft:geometry": "geometry.utilitycraft_block_2",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_dual_siever_off",
+                    "texture": "utilitycraft_impact_crusher_off",
                     "render_method": "alpha_test"
                 }
             },
@@ -72,7 +69,7 @@
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "utilitycraft_dual_siever_on",
+                            "texture": "utilitycraft_impact_crusher_on",
                             "render_method": "alpha_test"
                         }
                     },

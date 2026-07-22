@@ -1,0 +1,20 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "utilitycraft:raw_tungsten_block_from_raw"
+    },
+    "tags": [ "crafting_table" ],
+    "key": {
+      "R": {
+        "item": "utilitycraft:raw_tungsten"
+      }
+    },
+    "pattern": [
+      "RRR",
+      "RRR",
+      "RRR"
+    ],
+    "result": { "item": "utilitycraft:raw_tungsten_block" }
+  }
+}

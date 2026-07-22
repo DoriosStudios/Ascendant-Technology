@@ -113,9 +113,6 @@
 	"utilitycraft:superior_machine_case": {
 		"sound": "metal"
 	},
-	"utilitycraft:tabs_test_machine": {
-		"sound": "metal"
-	},
 	"utilitycraft:reinforced_cable": {
 		"sound": "metal"
 	},
@@ -131,16 +128,10 @@
 	"utilitycraft:overclock_relay": {
 		"sound": "metal"
 	},
-	"utilitycraft:overclock_injector": {
-		"sound": "metal"
-	},
 	"utilitycraft:residue_processor": {
 		"sound": "metal"
 	},
 	"utilitycraft:singularity_fabricator": {
-		"sound": "metal"
-	},
-	"utilitycraft:synthesis_crucible": {
 		"sound": "metal"
 	},
 	"utilitycraft:titanium_block": {

@@ -248,7 +248,6 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
             }
         }
 
-        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} liquifier recipes.`);
     } catch (err) {
         console.warn("[UtilityCraft] Failed to parse liquifier recipe payload:", err);
     }

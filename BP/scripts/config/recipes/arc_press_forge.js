@@ -159,7 +159,6 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
             }
         }
 
-        console.warn(`[Arc-Press Forge] Registered ${added} new and replaced ${replaced} press recipes.`);
     } catch (error) {
         console.warn("[Arc-Press Forge] Failed to parse press recipe payload:", error);
     }

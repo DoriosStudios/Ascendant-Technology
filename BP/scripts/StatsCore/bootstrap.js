@@ -18,5 +18,5 @@ if (!globalThis.__statsCoreInitialized) {
     initializeUtilityInteractionModule();
     initializeStatsCoreScriptEvents();
 
-    console.warn("[StatsCore] Initialized.");
+    // console.warn("[StatsCore] Initialized.");
 }

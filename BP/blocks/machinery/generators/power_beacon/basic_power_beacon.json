@@ -5,7 +5,7 @@
             "identifier": "utilitycraft:basic_power_beacon",
             "menu_category": {
                 "category": "construction",
-                "group": "dorios:itemGroup.name.generators"
+                "group": "at:itemGroup.name.power_beacons"
             },
             "states": {
                 "utilitycraft:on": [false, true]

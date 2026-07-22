@@ -4,7 +4,7 @@
     "description": {
       "identifier": "utilitycraft:empty_liquid_capsule",
       "menu_category": {
-        "category": "items"
+        "category": "equipment"
       }
     },
     "components": {

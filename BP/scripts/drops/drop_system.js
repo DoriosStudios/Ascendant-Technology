@@ -846,9 +846,7 @@ const scriptEventSignal =
   world.afterEvents?.scriptEventReceived ??
   world.afterEvents?.scriptEvent;
 
-if (!scriptEventSignal?.subscribe) {
-  console.warn('[drops] ScriptEventReceive not available; Excavate bridge disabled.');
-} else scriptEventSignal.subscribe((event) => {
+if (scriptEventSignal?.subscribe) scriptEventSignal.subscribe((event) => {
   const bridgeSettings = DROPS_SETTINGS?.excavateBridge;
   if (!isExcavateBridgeAvailable(bridgeSettings)) return;
 

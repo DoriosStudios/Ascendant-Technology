@@ -5,7 +5,7 @@
 			"identifier": "utilitycraft:mob_magnet",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.mob_grinding"
+                "group": "at:itemGroup.name.machines"
 			},
 			"states": {
 				"utilitycraft:isOn": [
@@ -23,7 +23,7 @@
 			"minecraft:material_instances": {
 				"*": {
 					"texture": "utilitycraft_mob_magnet_off",
-					"render_method": "opaque"
+					"render_method": "alpha_test"
 				}
 			},
 			"tag:dorios:upgraedable": {},

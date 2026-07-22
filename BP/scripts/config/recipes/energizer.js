@@ -157,7 +157,6 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
             }
         }
 
-        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} energizer recipes.`);
     } catch (err) {
         console.warn("[UtilityCraft] Failed to parse energizer recipe payload:", err);
     }

@@ -5,7 +5,7 @@
 			"identifier": "utilitycraft:reinforced_exporter",
 			"menu_category": {
 				"category": "construction",
-				"group": "dorios:itemGroup.name.pipes"
+				"group": "at:itemGroup.name.pipes"
 			},
 			"states": {
 				"utilitycraft:up": [false, true],

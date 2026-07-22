@@ -88,10 +88,7 @@ export function initializeStatsCoreScriptEvents() {
             if (!payload) return;
 
             try {
-                const count = registerStatsCoreDefinitions(payload);
-                if (count > 0) {
-                    console.warn(`[StatsCore] Registered ${count} definition${count === 1 ? "" : "s"} via ScriptEvent.`);
-                }
+                registerStatsCoreDefinitions(payload);
             } catch (error) {
                 console.warn("[StatsCore] register script event failed:", error);
             }

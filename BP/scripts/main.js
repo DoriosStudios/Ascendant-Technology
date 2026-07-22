@@ -5,8 +5,6 @@ import './DoriosCore/armor/main.js'
 import './config/main.js'
 import './drops/drop_system.js'
 import './StatsCore/index.js'
-import './injectors/transmutable_injection_ascendant.js'
-import './injectors/insight_injectors.js'
 
 // Conveyors
 import './machinery/transportation/conveyors.js'
@@ -56,6 +54,3 @@ import './blocks/mob_magnet.js'
 import './machinery/overclock/index.js'
 import './machinery/overclock/reinforced_cable.js'
 import './machinery/overclock/reinforced_extractor.js'
-
-import './injectors/insight_registry_injector.generated.js'
-

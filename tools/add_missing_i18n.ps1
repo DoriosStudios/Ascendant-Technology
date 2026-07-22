@@ -6,57 +6,6 @@ $languages = @("fr_FR", "de_DE", "ru_RU", "ja_JP", "zh_CN")
 # Content to add (in English as placeholder for translation)
 $itemsContent = @"
 
-## Steam Placeholders (UI)
-item.utilitycraft:steam_00=Steam
-item.utilitycraft:steam_01=Steam
-item.utilitycraft:steam_02=Steam
-item.utilitycraft:steam_03=Steam
-item.utilitycraft:steam_04=Steam
-item.utilitycraft:steam_05=Steam
-item.utilitycraft:steam_06=Steam
-item.utilitycraft:steam_07=Steam
-item.utilitycraft:steam_08=Steam
-item.utilitycraft:steam_09=Steam
-item.utilitycraft:steam_10=Steam
-item.utilitycraft:steam_11=Steam
-item.utilitycraft:steam_12=Steam
-item.utilitycraft:steam_13=Steam
-item.utilitycraft:steam_14=Steam
-item.utilitycraft:steam_15=Steam
-item.utilitycraft:steam_16=Steam
-item.utilitycraft:steam_17=Steam
-item.utilitycraft:steam_18=Steam
-item.utilitycraft:steam_19=Steam
-item.utilitycraft:steam_20=Steam
-item.utilitycraft:steam_21=Steam
-item.utilitycraft:steam_22=Steam
-item.utilitycraft:steam_23=Steam
-item.utilitycraft:steam_24=Steam
-item.utilitycraft:steam_25=Steam
-item.utilitycraft:steam_26=Steam
-item.utilitycraft:steam_27=Steam
-item.utilitycraft:steam_28=Steam
-item.utilitycraft:steam_29=Steam
-item.utilitycraft:steam_30=Steam
-item.utilitycraft:steam_31=Steam
-item.utilitycraft:steam_32=Steam
-item.utilitycraft:steam_33=Steam
-item.utilitycraft:steam_34=Steam
-item.utilitycraft:steam_35=Steam
-item.utilitycraft:steam_36=Steam
-item.utilitycraft:steam_37=Steam
-item.utilitycraft:steam_38=Steam
-item.utilitycraft:steam_39=Steam
-item.utilitycraft:steam_40=Steam
-item.utilitycraft:steam_41=Steam
-item.utilitycraft:steam_42=Steam
-item.utilitycraft:steam_43=Steam
-item.utilitycraft:steam_44=Steam
-item.utilitycraft:steam_45=Steam
-item.utilitycraft:steam_46=Steam
-item.utilitycraft:steam_47=Steam
-item.utilitycraft:steam_48=Steam
-
 ## Arcane Placeholders (UI)
 item.utilitycraft:arcane_00=Arcane Energy
 item.utilitycraft:arcane_01=Arcane Energy

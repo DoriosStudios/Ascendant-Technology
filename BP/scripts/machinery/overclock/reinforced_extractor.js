@@ -671,6 +671,7 @@ function createFluidIoComponent(role) {
     };
 }
 
-DoriosAPI.register.blockComponent("reinforced_extractor", createFluidIoComponent("exporter"));
+// Disabled legacy alias: no block consumes utilitycraft:reinforced_extractor.
+// DoriosAPI.register.blockComponent("reinforced_extractor", createFluidIoComponent("exporter"));
 DoriosAPI.register.blockComponent("reinforced_exporter", createFluidIoComponent("exporter"));
 DoriosAPI.register.blockComponent("reinforced_importer", createFluidIoComponent("importer"));

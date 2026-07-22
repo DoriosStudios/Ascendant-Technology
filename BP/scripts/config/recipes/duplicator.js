@@ -313,7 +313,6 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
             }
         }
 
-        console.warn(`[UtilityCraft] Registered ${added} new and replaced ${replaced} singularity recipes.`);
     } catch (err) {
         console.warn('[UtilityCraft] Failed to parse singularity recipe payload:', err);
     }

@@ -269,11 +269,7 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     try {
         const payload = JSON.parse(message);
         const entries = Array.isArray(payload) ? payload : [payload];
-        const added = appendLootEntries(entries);
-
-        if (added > 0) {
-            console.warn(`[Abyssal Fisher] Registered ${added} extra fishing loot entries.`);
-        }
+        appendLootEntries(entries);
     } catch (error) {
         console.warn("[Abyssal Fisher] Failed to parse fisher loot payload:", error);
     }

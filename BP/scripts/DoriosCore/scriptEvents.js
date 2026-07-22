@@ -93,15 +93,9 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
 
     try {
         if (id === SCRIPT_EVENT_IDS.fluid.registerContainer) {
-            const added = registerFluidContainerBatch(payload);
-            if (added > 0) {
-                console.warn(`[UtilityCraft] Registered ${added} fluid container${added === 1 ? "" : "s"} via ScriptEvent.`);
-            }
+            registerFluidContainerBatch(payload);
         } else {
-            const added = registerFluidOutputBatch(payload);
-            if (added > 0) {
-                console.warn(`[UtilityCraft] Registered ${added} fluid output container${added === 1 ? "" : "s"} via ScriptEvent.`);
-            }
+            registerFluidOutputBatch(payload);
         }
     } catch (error) {
         console.warn(`[UtilityCraft] Failed to process ${id} payload:`, error);
@@ -124,15 +118,9 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
 
     try {
         if (id === SCRIPT_EVENT_IDS.gas.registerContainer) {
-            const added = registerGasContainerBatch(payload);
-            if (added > 0) {
-                console.warn(`[UtilityCraft] Registered ${added} gas container${added === 1 ? "" : "s"} via ScriptEvent.`);
-            }
+            registerGasContainerBatch(payload);
         } else {
-            const added = registerGasOutputBatch(payload);
-            if (added > 0) {
-                console.warn(`[UtilityCraft] Registered ${added} gas output container${added === 1 ? "" : "s"} via ScriptEvent.`);
-            }
+            registerGasOutputBatch(payload);
         }
     } catch (error) {
         console.warn(`[UtilityCraft] Failed to process ${id} payload:`, error);
@@ -222,10 +210,7 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
     if (!payload) return;
 
     try {
-        const applied = registerArmorMitigationDefinitionsFromScriptEvent(payload);
-        if (applied > 0) {
-            console.warn(`[UtilityCraft] Registered ${applied} armor mitigation definition${applied === 1 ? "" : "s"} via ScriptEvent.`);
-        }
+        registerArmorMitigationDefinitionsFromScriptEvent(payload);
     } catch (error) {
         console.warn(`[UtilityCraft] Failed to process ${id} payload:`, error);
     }
@@ -368,9 +353,6 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
             }
         }
 
-        if (added || replaced) {
-            console.warn(`[UtilityCraft] Registered ${added} new and ${replaced} updated fluid container${added + replaced === 1 ? "" : "s"} via legacy ScriptEvent.`);
-        }
         return;
     }
 
@@ -418,9 +400,6 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
             }
         }
 
-        if (added || replaced) {
-            console.warn(`[UtilityCraft] Registered ${added} new and ${replaced} updated fluid holder${added + replaced === 1 ? "" : "s"} via legacy ScriptEvent.`);
-        }
         return;
     }
 
@@ -468,9 +447,6 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
             }
         }
 
-        if (added || replaced) {
-            console.warn(`[UtilityCraft] Registered ${added} new and ${replaced} updated gas container${added + replaced === 1 ? "" : "s"} via legacy ScriptEvent.`);
-        }
         return;
     }
 
@@ -518,9 +494,6 @@ system.afterEvents.scriptEventReceive.subscribe(event => {
             }
         }
 
-        if (added || replaced) {
-            console.warn(`[UtilityCraft] Registered ${added} new and ${replaced} updated gas holder${added + replaced === 1 ? "" : "s"} via legacy ScriptEvent.`);
-        }
         return;
     }
 });

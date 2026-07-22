@@ -5,7 +5,7 @@
             "identifier": "utilitycraft:network_center",
             "menu_category": {
                 "category": "construction",
-                "group": "dorios:itemGroup.name.machines"
+                "group": "at:itemGroup.name.machines"
             },
             "states": {
                 "utilitycraft:on": [false, true],

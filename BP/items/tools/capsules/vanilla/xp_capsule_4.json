@@ -4,7 +4,7 @@
     "description": {
       "identifier": "utilitycraft:xp_capsule_4",
       "menu_category": {
-        "category": "items"
+        "category": "equipment"
       }
     },
     "components": {

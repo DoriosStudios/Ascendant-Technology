@@ -4,7 +4,7 @@
     "description": {
       "identifier": "utilitycraft:xp_capsule_infinite",
       "menu_category": {
-        "category": "items"
+        "category": "equipment"
       }
     },
     "components": {

@@ -513,6 +513,8 @@ function refreshConnectedEnergy(block) {
 
 globalThis.refreshConnectedEnergy = refreshConnectedEnergy;
 
+/* Disabled: the reinforced cable block no longer consumes this legacy
+ * custom component. The active world event handlers below remain in use.
 DoriosAPI.register.blockComponent("reinforced_cable", {
     beforeOnPlayerPlace(e) {
         // After placement, refresh adjacent networks
@@ -527,6 +529,7 @@ DoriosAPI.register.blockComponent("reinforced_cable", {
         });
     }
 });
+*/
 
 // Keep cable geometry synced when placing/breaking relays (or other overclock network blocks)
 world.afterEvents.playerPlaceBlock.subscribe(({ block }) => {

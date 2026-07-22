@@ -45,7 +45,7 @@
                     },
                     {
                         "items": ["utilitycraft:aetherium_paxel"],
-                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2)"
+                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2"
                     }
                 ]
             },

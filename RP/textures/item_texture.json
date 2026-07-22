@@ -32,6 +32,24 @@
 		"utilitycraft_titanium_plate": {
 			"textures": "textures/items/ores/titanium_plate"
 		},
+		"utilitycraft_raw_tungsten": {
+			"textures": "textures/items/ores/raw_tungsten"
+		},
+		"utilitycraft_raw_tungsten_dust": {
+			"textures": "textures/items/ores/raw_tungsten_dust"
+		},
+		"utilitycraft_tungsten": {
+			"textures": "textures/items/ores/tungsten_ingot"
+		},
+		"utilitycraft_tungsten_dust": {
+			"textures": "textures/items/ores/tungsten_dust"
+		},
+		"utilitycraft_tungsten_nugget": {
+			"textures": "textures/items/ores/tungsten_nugget"
+		},
+		"utilitycraft_tungsten_plate": {
+			"textures": "textures/items/ores/tungsten_plate"
+		},
 		"utilitycraft_aetherium_helmet": {
 			"textures": "textures/items/armor/aetherium_helmet"
 		},

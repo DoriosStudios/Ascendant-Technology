@@ -65,7 +65,7 @@
 			"textures": "textures/blocks/machines/superior/arc_press_forge_off"
 		},
 		"utilitycraft_arc_press_forge_on": {
-			"textures": "textures/blocks/machines/superior/ar_press_forge_on"
+			"textures": "textures/blocks/machines/superior/arc_press_forge_on"
 		},
 		"utilitycraft_industrial_burner_off": {
 			"textures": "textures/blocks/machines/superior/industrial_burner_off"
@@ -459,6 +459,898 @@
 		},
 		"utilitycraft_vaporworks_processor_off": {
 			"textures": "textures/blocks/machines/vaporworks_processor_off"
+		}
+,
+		"utilitycraft_absolute_furnator_off_north": {
+			"textures": "textures/blocks/generators/absolute_furnator_off_north"
+		},
+		"utilitycraft_absolute_furnator_off_south": {
+			"textures": "textures/blocks/generators/absolute_furnator_off_south"
+		},
+		"utilitycraft_absolute_furnator_off_east": {
+			"textures": "textures/blocks/generators/absolute_furnator_off_east"
+		},
+		"utilitycraft_absolute_furnator_off_west": {
+			"textures": "textures/blocks/generators/absolute_furnator_off_west"
+		},
+		"utilitycraft_absolute_furnator_off_up": {
+			"textures": "textures/blocks/generators/absolute_furnator_off_up"
+		},
+		"utilitycraft_absolute_furnator_off_down": {
+			"textures": "textures/blocks/generators/absolute_furnator_off_down"
+		},
+		"utilitycraft_absolute_furnator_on_north": {
+			"textures": "textures/blocks/generators/absolute_furnator_on_north"
+		},
+		"utilitycraft_absolute_furnator_on_south": {
+			"textures": "textures/blocks/generators/absolute_furnator_on_south"
+		},
+		"utilitycraft_absolute_furnator_on_east": {
+			"textures": "textures/blocks/generators/absolute_furnator_on_east"
+		},
+		"utilitycraft_absolute_furnator_on_west": {
+			"textures": "textures/blocks/generators/absolute_furnator_on_west"
+		},
+		"utilitycraft_absolute_furnator_on_up": {
+			"textures": "textures/blocks/generators/absolute_furnator_on_up"
+		},
+		"utilitycraft_absolute_furnator_on_down": {
+			"textures": "textures/blocks/generators/absolute_furnator_on_down"
+		},
+		"utilitycraft_absolute_magmator_off_north": {
+			"textures": "textures/blocks/generators/absolute_magmator_off_north"
+		},
+		"utilitycraft_absolute_magmator_off_south": {
+			"textures": "textures/blocks/generators/absolute_magmator_off_south"
+		},
+		"utilitycraft_absolute_magmator_off_east": {
+			"textures": "textures/blocks/generators/absolute_magmator_off_east"
+		},
+		"utilitycraft_absolute_magmator_off_west": {
+			"textures": "textures/blocks/generators/absolute_magmator_off_west"
+		},
+		"utilitycraft_absolute_magmator_off_up": {
+			"textures": "textures/blocks/generators/absolute_magmator_off_up"
+		},
+		"utilitycraft_absolute_magmator_off_down": {
+			"textures": "textures/blocks/generators/absolute_magmator_off_down"
+		},
+		"utilitycraft_absolute_magmator_on_north": {
+			"textures": "textures/blocks/generators/absolute_magmator_on_north"
+		},
+		"utilitycraft_absolute_magmator_on_south": {
+			"textures": "textures/blocks/generators/absolute_magmator_on_south"
+		},
+		"utilitycraft_absolute_magmator_on_east": {
+			"textures": "textures/blocks/generators/absolute_magmator_on_east"
+		},
+		"utilitycraft_absolute_magmator_on_west": {
+			"textures": "textures/blocks/generators/absolute_magmator_on_west"
+		},
+		"utilitycraft_absolute_magmator_on_up": {
+			"textures": "textures/blocks/generators/absolute_magmator_on_up"
+		},
+		"utilitycraft_absolute_magmator_on_down": {
+			"textures": "textures/blocks/generators/absolute_magmator_on_down"
+		},
+		"utilitycraft_absolute_thermo_generator_off_north": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_off_north"
+		},
+		"utilitycraft_absolute_thermo_generator_off_south": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_off_south"
+		},
+		"utilitycraft_absolute_thermo_generator_off_east": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_off_east"
+		},
+		"utilitycraft_absolute_thermo_generator_off_west": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_off_west"
+		},
+		"utilitycraft_absolute_thermo_generator_off_up": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_off_up"
+		},
+		"utilitycraft_absolute_thermo_generator_off_down": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_off_down"
+		},
+		"utilitycraft_absolute_thermo_generator_on_north": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_on_north"
+		},
+		"utilitycraft_absolute_thermo_generator_on_south": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_on_south"
+		},
+		"utilitycraft_absolute_thermo_generator_on_east": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_on_east"
+		},
+		"utilitycraft_absolute_thermo_generator_on_west": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_on_west"
+		},
+		"utilitycraft_absolute_thermo_generator_on_up": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_on_up"
+		},
+		"utilitycraft_absolute_thermo_generator_on_down": {
+			"textures": "textures/blocks/generators/absolute_thermo_generator_on_down"
+		},
+		"utilitycraft_abyssal_fisher_off_north": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_off_north"
+		},
+		"utilitycraft_abyssal_fisher_off_south": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_off_south"
+		},
+		"utilitycraft_abyssal_fisher_off_east": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_off_east"
+		},
+		"utilitycraft_abyssal_fisher_off_west": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_off_west"
+		},
+		"utilitycraft_abyssal_fisher_off_up": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_off_up"
+		},
+		"utilitycraft_abyssal_fisher_off_down": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_off_down"
+		},
+		"utilitycraft_abyssal_fisher_on_north": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_on_north"
+		},
+		"utilitycraft_abyssal_fisher_on_south": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_on_south"
+		},
+		"utilitycraft_abyssal_fisher_on_east": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_on_east"
+		},
+		"utilitycraft_abyssal_fisher_on_west": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_on_west"
+		},
+		"utilitycraft_abyssal_fisher_on_up": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_on_up"
+		},
+		"utilitycraft_abyssal_fisher_on_down": {
+			"textures": "textures/blocks/machines/superior/abyssal_autofisher_on_down"
+		},
+		"utilitycraft_arc_press_forge_off_north": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_off_north"
+		},
+		"utilitycraft_arc_press_forge_off_south": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_off_south"
+		},
+		"utilitycraft_arc_press_forge_off_east": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_off_east"
+		},
+		"utilitycraft_arc_press_forge_off_west": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_off_west"
+		},
+		"utilitycraft_arc_press_forge_off_up": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_off_up"
+		},
+		"utilitycraft_arc_press_forge_off_down": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_off_down"
+		},
+		"utilitycraft_arc_press_forge_on_north": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_on_north"
+		},
+		"utilitycraft_arc_press_forge_on_south": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_on_south"
+		},
+		"utilitycraft_arc_press_forge_on_east": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_on_east"
+		},
+		"utilitycraft_arc_press_forge_on_west": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_on_west"
+		},
+		"utilitycraft_arc_press_forge_on_up": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_on_up"
+		},
+		"utilitycraft_arc_press_forge_on_down": {
+			"textures": "textures/blocks/machines/superior/arc_press_forge_on_down"
+		},
+		"utilitycraft_catalyst_weaver_off_north": {
+			"textures": "textures/blocks/machines/catalyst_weaver_off_north"
+		},
+		"utilitycraft_catalyst_weaver_off_south": {
+			"textures": "textures/blocks/machines/catalyst_weaver_off_south"
+		},
+		"utilitycraft_catalyst_weaver_off_east": {
+			"textures": "textures/blocks/machines/catalyst_weaver_off_east"
+		},
+		"utilitycraft_catalyst_weaver_off_west": {
+			"textures": "textures/blocks/machines/catalyst_weaver_off_west"
+		},
+		"utilitycraft_catalyst_weaver_off_up": {
+			"textures": "textures/blocks/machines/catalyst_weaver_off_up"
+		},
+		"utilitycraft_catalyst_weaver_off_down": {
+			"textures": "textures/blocks/machines/catalyst_weaver_off_down"
+		},
+		"utilitycraft_catalyst_weaver_on_north": {
+			"textures": "textures/blocks/machines/catalyst_weaver_on_north"
+		},
+		"utilitycraft_catalyst_weaver_on_south": {
+			"textures": "textures/blocks/machines/catalyst_weaver_on_south"
+		},
+		"utilitycraft_catalyst_weaver_on_east": {
+			"textures": "textures/blocks/machines/catalyst_weaver_on_east"
+		},
+		"utilitycraft_catalyst_weaver_on_west": {
+			"textures": "textures/blocks/machines/catalyst_weaver_on_west"
+		},
+		"utilitycraft_catalyst_weaver_on_up": {
+			"textures": "textures/blocks/machines/catalyst_weaver_on_up"
+		},
+		"utilitycraft_catalyst_weaver_on_down": {
+			"textures": "textures/blocks/machines/catalyst_weaver_on_down"
+		},
+		"utilitycraft_centrifugal_siever_off_north": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_off_north"
+		},
+		"utilitycraft_centrifugal_siever_off_south": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_off_south"
+		},
+		"utilitycraft_centrifugal_siever_off_east": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_off_east"
+		},
+		"utilitycraft_centrifugal_siever_off_west": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_off_west"
+		},
+		"utilitycraft_centrifugal_siever_off_up": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_off_up"
+		},
+		"utilitycraft_centrifugal_siever_off_down": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_off_down"
+		},
+		"utilitycraft_centrifugal_siever_on_north": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_on_north"
+		},
+		"utilitycraft_centrifugal_siever_on_south": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_on_south"
+		},
+		"utilitycraft_centrifugal_siever_on_east": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_on_east"
+		},
+		"utilitycraft_centrifugal_siever_on_west": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_on_west"
+		},
+		"utilitycraft_centrifugal_siever_on_up": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_on_up"
+		},
+		"utilitycraft_centrifugal_siever_on_down": {
+			"textures": "textures/blocks/machines/superior/centrifugal_siever_on_down"
+		},
+		"utilitycraft_cryo_freezer_off_north": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_off_north"
+		},
+		"utilitycraft_cryo_freezer_off_south": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_off_south"
+		},
+		"utilitycraft_cryo_freezer_off_east": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_off_east"
+		},
+		"utilitycraft_cryo_freezer_off_west": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_off_west"
+		},
+		"utilitycraft_cryo_freezer_off_up": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_off_up"
+		},
+		"utilitycraft_cryo_freezer_off_down": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_off_down"
+		},
+		"utilitycraft_cryo_freezer_on_north": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_on_north"
+		},
+		"utilitycraft_cryo_freezer_on_south": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_on_south"
+		},
+		"utilitycraft_cryo_freezer_on_east": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_on_east"
+		},
+		"utilitycraft_cryo_freezer_on_west": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_on_west"
+		},
+		"utilitycraft_cryo_freezer_on_up": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_on_up"
+		},
+		"utilitycraft_cryo_freezer_on_down": {
+			"textures": "textures/blocks/machines/superior/cryo_freezer_on_down"
+		},
+		"utilitycraft_cryo_stabilizer_off_north": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_off_north"
+		},
+		"utilitycraft_cryo_stabilizer_off_south": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_off_south"
+		},
+		"utilitycraft_cryo_stabilizer_off_east": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_off_east"
+		},
+		"utilitycraft_cryo_stabilizer_off_west": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_off_west"
+		},
+		"utilitycraft_cryo_stabilizer_off_up": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_off_up"
+		},
+		"utilitycraft_cryo_stabilizer_off_down": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_off_down"
+		},
+		"utilitycraft_cryo_stabilizer_on_north": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_on_north"
+		},
+		"utilitycraft_cryo_stabilizer_on_south": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_on_south"
+		},
+		"utilitycraft_cryo_stabilizer_on_east": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_on_east"
+		},
+		"utilitycraft_cryo_stabilizer_on_west": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_on_west"
+		},
+		"utilitycraft_cryo_stabilizer_on_up": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_on_up"
+		},
+		"utilitycraft_cryo_stabilizer_on_down": {
+			"textures": "textures/blocks/machines/superior/cryo_stabilizer_on_down"
+		},
+		"utilitycraft_dual_siever_off_north": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_off_north"
+		},
+		"utilitycraft_dual_siever_off_south": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_off_south"
+		},
+		"utilitycraft_dual_siever_off_east": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_off_east"
+		},
+		"utilitycraft_dual_siever_off_west": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_off_west"
+		},
+		"utilitycraft_dual_siever_off_up": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_off_up"
+		},
+		"utilitycraft_dual_siever_off_down": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_off_down"
+		},
+		"utilitycraft_dual_siever_on_north": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_on_north"
+		},
+		"utilitycraft_dual_siever_on_south": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_on_south"
+		},
+		"utilitycraft_dual_siever_on_east": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_on_east"
+		},
+		"utilitycraft_dual_siever_on_west": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_on_west"
+		},
+		"utilitycraft_dual_siever_on_up": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_on_up"
+		},
+		"utilitycraft_dual_siever_on_down": {
+			"textures": "textures/blocks/machines/superior/dual_sieve_on_down"
+		},
+		"utilitycraft_duplicator_off_north": {
+			"textures": "textures/blocks/machines/duplicator_off_north"
+		},
+		"utilitycraft_duplicator_off_south": {
+			"textures": "textures/blocks/machines/duplicator_off_south"
+		},
+		"utilitycraft_duplicator_off_east": {
+			"textures": "textures/blocks/machines/duplicator_off_east"
+		},
+		"utilitycraft_duplicator_off_west": {
+			"textures": "textures/blocks/machines/duplicator_off_west"
+		},
+		"utilitycraft_duplicator_off_up": {
+			"textures": "textures/blocks/machines/duplicator_off_up"
+		},
+		"utilitycraft_duplicator_off_down": {
+			"textures": "textures/blocks/machines/duplicator_off_down"
+		},
+		"utilitycraft_duplicator_on_north": {
+			"textures": "textures/blocks/machines/duplicator_on_north"
+		},
+		"utilitycraft_duplicator_on_south": {
+			"textures": "textures/blocks/machines/duplicator_on_south"
+		},
+		"utilitycraft_duplicator_on_east": {
+			"textures": "textures/blocks/machines/duplicator_on_east"
+		},
+		"utilitycraft_duplicator_on_west": {
+			"textures": "textures/blocks/machines/duplicator_on_west"
+		},
+		"utilitycraft_duplicator_on_up": {
+			"textures": "textures/blocks/machines/duplicator_on_up"
+		},
+		"utilitycraft_duplicator_on_down": {
+			"textures": "textures/blocks/machines/duplicator_on_down"
+		},
+		"utilitycraft_energizer_off_north": {
+			"textures": "textures/blocks/machines/energizer_off_north"
+		},
+		"utilitycraft_energizer_off_south": {
+			"textures": "textures/blocks/machines/energizer_off_south"
+		},
+		"utilitycraft_energizer_off_east": {
+			"textures": "textures/blocks/machines/energizer_off_east"
+		},
+		"utilitycraft_energizer_off_west": {
+			"textures": "textures/blocks/machines/energizer_off_west"
+		},
+		"utilitycraft_energizer_off_up": {
+			"textures": "textures/blocks/machines/energizer_off_up"
+		},
+		"utilitycraft_energizer_off_down": {
+			"textures": "textures/blocks/machines/energizer_off_down"
+		},
+		"utilitycraft_energizer_on_north": {
+			"textures": "textures/blocks/machines/energizer_on_north"
+		},
+		"utilitycraft_energizer_on_south": {
+			"textures": "textures/blocks/machines/energizer_on_south"
+		},
+		"utilitycraft_energizer_on_east": {
+			"textures": "textures/blocks/machines/energizer_on_east"
+		},
+		"utilitycraft_energizer_on_west": {
+			"textures": "textures/blocks/machines/energizer_on_west"
+		},
+		"utilitycraft_energizer_on_up": {
+			"textures": "textures/blocks/machines/energizer_on_up"
+		},
+		"utilitycraft_energizer_on_down": {
+			"textures": "textures/blocks/machines/energizer_on_down"
+		},
+		"utilitycraft_genetic_seed_synthesizer_off_north": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_off_north"
+		},
+		"utilitycraft_genetic_seed_synthesizer_off_south": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_off_south"
+		},
+		"utilitycraft_genetic_seed_synthesizer_off_east": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_off_east"
+		},
+		"utilitycraft_genetic_seed_synthesizer_off_west": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_off_west"
+		},
+		"utilitycraft_genetic_seed_synthesizer_off_up": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_off_up"
+		},
+		"utilitycraft_genetic_seed_synthesizer_off_down": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_off_down"
+		},
+		"utilitycraft_genetic_seed_synthesizer_on_north": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_on_north"
+		},
+		"utilitycraft_genetic_seed_synthesizer_on_south": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_on_south"
+		},
+		"utilitycraft_genetic_seed_synthesizer_on_east": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_on_east"
+		},
+		"utilitycraft_genetic_seed_synthesizer_on_west": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_on_west"
+		},
+		"utilitycraft_genetic_seed_synthesizer_on_up": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_on_up"
+		},
+		"utilitycraft_genetic_seed_synthesizer_on_down": {
+			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_on_down"
+		},
+		"utilitycraft_impact_crusher_off_north": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_off_north"
+		},
+		"utilitycraft_impact_crusher_off_south": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_off_south"
+		},
+		"utilitycraft_impact_crusher_off_east": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_off_east"
+		},
+		"utilitycraft_impact_crusher_off_west": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_off_west"
+		},
+		"utilitycraft_impact_crusher_off_up": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_off_up"
+		},
+		"utilitycraft_impact_crusher_off_down": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_off_down"
+		},
+		"utilitycraft_impact_crusher_on_north": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_on_north"
+		},
+		"utilitycraft_impact_crusher_on_south": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_on_south"
+		},
+		"utilitycraft_impact_crusher_on_east": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_on_east"
+		},
+		"utilitycraft_impact_crusher_on_west": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_on_west"
+		},
+		"utilitycraft_impact_crusher_on_up": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_on_up"
+		},
+		"utilitycraft_impact_crusher_on_down": {
+			"textures": "textures/blocks/machines/superior/impact_crusher_on_down"
+		},
+		"utilitycraft_industrial_burner_off_north": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_off_north"
+		},
+		"utilitycraft_industrial_burner_off_south": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_off_south"
+		},
+		"utilitycraft_industrial_burner_off_east": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_off_east"
+		},
+		"utilitycraft_industrial_burner_off_west": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_off_west"
+		},
+		"utilitycraft_industrial_burner_off_up": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_off_up"
+		},
+		"utilitycraft_industrial_burner_off_down": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_off_down"
+		},
+		"utilitycraft_industrial_burner_on_north": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_on_north"
+		},
+		"utilitycraft_industrial_burner_on_south": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_on_south"
+		},
+		"utilitycraft_industrial_burner_on_east": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_on_east"
+		},
+		"utilitycraft_industrial_burner_on_west": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_on_west"
+		},
+		"utilitycraft_industrial_burner_on_up": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_on_up"
+		},
+		"utilitycraft_industrial_burner_on_down": {
+			"textures": "textures/blocks/machines/superior/industrial_burner_on_down"
+		},
+		"utilitycraft_liquifier_off_north": {
+			"textures": "textures/blocks/machines/liquifier_off_north"
+		},
+		"utilitycraft_liquifier_off_south": {
+			"textures": "textures/blocks/machines/liquifier_off_south"
+		},
+		"utilitycraft_liquifier_off_east": {
+			"textures": "textures/blocks/machines/liquifier_off_east"
+		},
+		"utilitycraft_liquifier_off_west": {
+			"textures": "textures/blocks/machines/liquifier_off_west"
+		},
+		"utilitycraft_liquifier_off_up": {
+			"textures": "textures/blocks/machines/liquifier_off_up"
+		},
+		"utilitycraft_liquifier_off_down": {
+			"textures": "textures/blocks/machines/liquifier_off_down"
+		},
+		"utilitycraft_liquifier_on_north": {
+			"textures": "textures/blocks/machines/liquifier_on_north"
+		},
+		"utilitycraft_liquifier_on_south": {
+			"textures": "textures/blocks/machines/liquifier_on_south"
+		},
+		"utilitycraft_liquifier_on_east": {
+			"textures": "textures/blocks/machines/liquifier_on_east"
+		},
+		"utilitycraft_liquifier_on_west": {
+			"textures": "textures/blocks/machines/liquifier_on_west"
+		},
+		"utilitycraft_liquifier_on_up": {
+			"textures": "textures/blocks/machines/liquifier_on_up"
+		},
+		"utilitycraft_liquifier_on_down": {
+			"textures": "textures/blocks/machines/liquifier_on_down"
+		},
+		"utilitycraft_network_center_off_north": {
+			"textures": "textures/blocks/machines/network_center_off_north"
+		},
+		"utilitycraft_network_center_off_south": {
+			"textures": "textures/blocks/machines/network_center_off_south"
+		},
+		"utilitycraft_network_center_off_east": {
+			"textures": "textures/blocks/machines/network_center_off_east"
+		},
+		"utilitycraft_network_center_off_west": {
+			"textures": "textures/blocks/machines/network_center_off_west"
+		},
+		"utilitycraft_network_center_off_up": {
+			"textures": "textures/blocks/machines/network_center_off_up"
+		},
+		"utilitycraft_network_center_off_down": {
+			"textures": "textures/blocks/machines/network_center_off_down"
+		},
+		"utilitycraft_network_center_on_north": {
+			"textures": "textures/blocks/machines/network_center_on_north"
+		},
+		"utilitycraft_network_center_on_south": {
+			"textures": "textures/blocks/machines/network_center_on_south"
+		},
+		"utilitycraft_network_center_on_east": {
+			"textures": "textures/blocks/machines/network_center_on_east"
+		},
+		"utilitycraft_network_center_on_west": {
+			"textures": "textures/blocks/machines/network_center_on_west"
+		},
+		"utilitycraft_network_center_on_up": {
+			"textures": "textures/blocks/machines/network_center_on_up"
+		},
+		"utilitycraft_network_center_on_down": {
+			"textures": "textures/blocks/machines/network_center_on_down"
+		},
+		"utilitycraft_pattern_placer_off_north": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_off_north"
+		},
+		"utilitycraft_pattern_placer_off_south": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_off_south"
+		},
+		"utilitycraft_pattern_placer_off_east": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_off_east"
+		},
+		"utilitycraft_pattern_placer_off_west": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_off_west"
+		},
+		"utilitycraft_pattern_placer_off_up": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_off_up"
+		},
+		"utilitycraft_pattern_placer_off_down": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_off_down"
+		},
+		"utilitycraft_pattern_placer_on_north": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_on_north"
+		},
+		"utilitycraft_pattern_placer_on_south": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_on_south"
+		},
+		"utilitycraft_pattern_placer_on_east": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_on_east"
+		},
+		"utilitycraft_pattern_placer_on_west": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_on_west"
+		},
+		"utilitycraft_pattern_placer_on_up": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_on_up"
+		},
+		"utilitycraft_pattern_placer_on_down": {
+			"textures": "textures/blocks/machines/superior/pattern_placer_on_down"
+		},
+		"utilitycraft_pulverizer_off_north": {
+			"textures": "textures/blocks/machines/superior/pulverizer_off_north"
+		},
+		"utilitycraft_pulverizer_off_south": {
+			"textures": "textures/blocks/machines/superior/pulverizer_off_south"
+		},
+		"utilitycraft_pulverizer_off_east": {
+			"textures": "textures/blocks/machines/superior/pulverizer_off_east"
+		},
+		"utilitycraft_pulverizer_off_west": {
+			"textures": "textures/blocks/machines/superior/pulverizer_off_west"
+		},
+		"utilitycraft_pulverizer_off_up": {
+			"textures": "textures/blocks/machines/superior/pulverizer_off_up"
+		},
+		"utilitycraft_pulverizer_off_down": {
+			"textures": "textures/blocks/machines/superior/pulverizer_off_down"
+		},
+		"utilitycraft_pulverizer_on_north": {
+			"textures": "textures/blocks/machines/superior/pulverizer_on_north"
+		},
+		"utilitycraft_pulverizer_on_south": {
+			"textures": "textures/blocks/machines/superior/pulverizer_on_south"
+		},
+		"utilitycraft_pulverizer_on_east": {
+			"textures": "textures/blocks/machines/superior/pulverizer_on_east"
+		},
+		"utilitycraft_pulverizer_on_west": {
+			"textures": "textures/blocks/machines/superior/pulverizer_on_west"
+		},
+		"utilitycraft_pulverizer_on_up": {
+			"textures": "textures/blocks/machines/superior/pulverizer_on_up"
+		},
+		"utilitycraft_pulverizer_on_down": {
+			"textures": "textures/blocks/machines/superior/pulverizer_on_down"
+		},
+		"utilitycraft_reinforced_machine_case_north": {
+			"textures": "textures/blocks/machines/reinforced_machine_case_north"
+		},
+		"utilitycraft_reinforced_machine_case_south": {
+			"textures": "textures/blocks/machines/reinforced_machine_case_south"
+		},
+		"utilitycraft_reinforced_machine_case_east": {
+			"textures": "textures/blocks/machines/reinforced_machine_case_east"
+		},
+		"utilitycraft_reinforced_machine_case_west": {
+			"textures": "textures/blocks/machines/reinforced_machine_case_west"
+		},
+		"utilitycraft_reinforced_machine_case_up": {
+			"textures": "textures/blocks/machines/reinforced_machine_case_up"
+		},
+		"utilitycraft_reinforced_machine_case_down": {
+			"textures": "textures/blocks/machines/reinforced_machine_case_down"
+		},
+		"utilitycraft_singularity_fabricator_off_north": {
+			"textures": "textures/blocks/machines/singularity_fabricator_off_north"
+		},
+		"utilitycraft_singularity_fabricator_off_south": {
+			"textures": "textures/blocks/machines/singularity_fabricator_off_south"
+		},
+		"utilitycraft_singularity_fabricator_off_east": {
+			"textures": "textures/blocks/machines/singularity_fabricator_off_east"
+		},
+		"utilitycraft_singularity_fabricator_off_west": {
+			"textures": "textures/blocks/machines/singularity_fabricator_off_west"
+		},
+		"utilitycraft_singularity_fabricator_off_up": {
+			"textures": "textures/blocks/machines/singularity_fabricator_off_up"
+		},
+		"utilitycraft_singularity_fabricator_off_down": {
+			"textures": "textures/blocks/machines/singularity_fabricator_off_down"
+		},
+		"utilitycraft_singularity_fabricator_on_north": {
+			"textures": "textures/blocks/machines/singularity_fabricator_on_north"
+		},
+		"utilitycraft_singularity_fabricator_on_south": {
+			"textures": "textures/blocks/machines/singularity_fabricator_on_south"
+		},
+		"utilitycraft_singularity_fabricator_on_east": {
+			"textures": "textures/blocks/machines/singularity_fabricator_on_east"
+		},
+		"utilitycraft_singularity_fabricator_on_west": {
+			"textures": "textures/blocks/machines/singularity_fabricator_on_west"
+		},
+		"utilitycraft_singularity_fabricator_on_up": {
+			"textures": "textures/blocks/machines/singularity_fabricator_on_up"
+		},
+		"utilitycraft_singularity_fabricator_on_down": {
+			"textures": "textures/blocks/machines/singularity_fabricator_on_down"
+		},
+		"utilitycraft_superior_machine_case_north": {
+			"textures": "textures/blocks/machines/superior/superior_machine_case_north"
+		},
+		"utilitycraft_superior_machine_case_south": {
+			"textures": "textures/blocks/machines/superior/superior_machine_case_south"
+		},
+		"utilitycraft_superior_machine_case_east": {
+			"textures": "textures/blocks/machines/superior/superior_machine_case_east"
+		},
+		"utilitycraft_superior_machine_case_west": {
+			"textures": "textures/blocks/machines/superior/superior_machine_case_west"
+		},
+		"utilitycraft_superior_machine_case_up": {
+			"textures": "textures/blocks/machines/superior/superior_machine_case_up"
+		},
+		"utilitycraft_superior_machine_case_down": {
+			"textures": "textures/blocks/machines/superior/superior_machine_case_down"
+		},
+		"utilitycraft_vaporworks_processor_off_north": {
+			"textures": "textures/blocks/machines/vaporworks_processor_off_north"
+		},
+		"utilitycraft_vaporworks_processor_off_south": {
+			"textures": "textures/blocks/machines/vaporworks_processor_off_south"
+		},
+		"utilitycraft_vaporworks_processor_off_east": {
+			"textures": "textures/blocks/machines/vaporworks_processor_off_east"
+		},
+		"utilitycraft_vaporworks_processor_off_west": {
+			"textures": "textures/blocks/machines/vaporworks_processor_off_west"
+		},
+		"utilitycraft_vaporworks_processor_off_up": {
+			"textures": "textures/blocks/machines/vaporworks_processor_off_up"
+		},
+		"utilitycraft_vaporworks_processor_off_down": {
+			"textures": "textures/blocks/machines/vaporworks_processor_off_down"
+		},
+		"utilitycraft_vaporworks_processor_on_north": {
+			"textures": "textures/blocks/machines/vaporworks_processor_on_north"
+		},
+		"utilitycraft_vaporworks_processor_on_south": {
+			"textures": "textures/blocks/machines/vaporworks_processor_on_south"
+		},
+		"utilitycraft_vaporworks_processor_on_east": {
+			"textures": "textures/blocks/machines/vaporworks_processor_on_east"
+		},
+		"utilitycraft_vaporworks_processor_on_west": {
+			"textures": "textures/blocks/machines/vaporworks_processor_on_west"
+		},
+		"utilitycraft_vaporworks_processor_on_up": {
+			"textures": "textures/blocks/machines/vaporworks_processor_on_up"
+		},
+		"utilitycraft_vaporworks_processor_on_down": {
+			"textures": "textures/blocks/machines/vaporworks_processor_on_down"
+		},
+		"utilitycraft_verdant_cultivator_off_north": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_off_north"
+		},
+		"utilitycraft_verdant_cultivator_off_south": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_off_south"
+		},
+		"utilitycraft_verdant_cultivator_off_east": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_off_east"
+		},
+		"utilitycraft_verdant_cultivator_off_west": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_off_west"
+		},
+		"utilitycraft_verdant_cultivator_off_up": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_off_up"
+		},
+		"utilitycraft_verdant_cultivator_off_down": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_off_down"
+		},
+		"utilitycraft_verdant_cultivator_on_north": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_on_north"
+		},
+		"utilitycraft_verdant_cultivator_on_south": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_on_south"
+		},
+		"utilitycraft_verdant_cultivator_on_east": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_on_east"
+		},
+		"utilitycraft_verdant_cultivator_on_west": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_on_west"
+		},
+		"utilitycraft_verdant_cultivator_on_up": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_on_up"
+		},
+		"utilitycraft_verdant_cultivator_on_down": {
+			"textures": "textures/blocks/machines/superior/verdant_cultivator_on_down"
+		},
+		"utilitycraft_battery_absolute_0_side": {
+			"textures": "textures/blocks/generators/battery_absolute_0_side"
+		},
+		"utilitycraft_battery_absolute_0_up": {
+			"textures": "textures/blocks/generators/battery_absolute_0_up"
+		},
+		"utilitycraft_battery_absolute_0_down": {
+			"textures": "textures/blocks/generators/battery_absolute_0_down"
+		},
+		"utilitycraft_battery_absolute_1_side": {
+			"textures": "textures/blocks/generators/battery_absolute_1_side"
+		},
+		"utilitycraft_battery_absolute_1_up": {
+			"textures": "textures/blocks/generators/battery_absolute_1_up"
+		},
+		"utilitycraft_battery_absolute_1_down": {
+			"textures": "textures/blocks/generators/battery_absolute_1_down"
+		},
+		"utilitycraft_battery_absolute_2_side": {
+			"textures": "textures/blocks/generators/battery_absolute_2_side"
+		},
+		"utilitycraft_battery_absolute_2_up": {
+			"textures": "textures/blocks/generators/battery_absolute_2_up"
+		},
+		"utilitycraft_battery_absolute_2_down": {
+			"textures": "textures/blocks/generators/battery_absolute_2_down"
+		},
+		"utilitycraft_battery_absolute_3_side": {
+			"textures": "textures/blocks/generators/battery_absolute_3_side"
+		},
+		"utilitycraft_battery_absolute_3_up": {
+			"textures": "textures/blocks/generators/battery_absolute_3_up"
+		},
+		"utilitycraft_battery_absolute_3_down": {
+			"textures": "textures/blocks/generators/battery_absolute_3_down"
+		},
+		"utilitycraft_battery_absolute_4_side": {
+			"textures": "textures/blocks/generators/battery_absolute_4_side"
+		},
+		"utilitycraft_battery_absolute_4_up": {
+			"textures": "textures/blocks/generators/battery_absolute_4_up"
+		},
+		"utilitycraft_battery_absolute_4_down": {
+			"textures": "textures/blocks/generators/battery_absolute_4_down"
+		},
+		"utilitycraft_battery_absolute_5_side": {
+			"textures": "textures/blocks/generators/battery_absolute_5_side"
+		},
+		"utilitycraft_battery_absolute_5_up": {
+			"textures": "textures/blocks/generators/battery_absolute_5_up"
+		},
+		"utilitycraft_battery_absolute_5_down": {
+			"textures": "textures/blocks/generators/battery_absolute_5_down"
+		},
+		"utilitycraft_battery_absolute_6_side": {
+			"textures": "textures/blocks/generators/battery_absolute_6_side"
+		},
+		"utilitycraft_battery_absolute_6_up": {
+			"textures": "textures/blocks/generators/battery_absolute_6_up"
+		},
+		"utilitycraft_battery_absolute_6_down": {
+			"textures": "textures/blocks/generators/battery_absolute_6_down"
 		}
 	}
 }

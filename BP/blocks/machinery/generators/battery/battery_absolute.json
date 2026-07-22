@@ -24,10 +24,18 @@
 				"energy_cap": 25600000000,
 				"rate_speed_base": 8000000
 			},
-			"minecraft:geometry": "geometry.utilitycraft_battery",
+			"minecraft:geometry": "minecraft:geometry.full_block",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "utilitycraft_battery_absolute_0",
+					"texture": "utilitycraft_battery_absolute_0_side",
+					"render_method": "alpha_test"
+				},
+				"up": {
+					"texture": "utilitycraft_battery_absolute_0_up",
+					"render_method": "alpha_test"
+				},
+				"down": {
+					"texture": "utilitycraft_battery_absolute_0_down",
 					"render_method": "alpha_test"
 				}
 			},
@@ -51,7 +59,15 @@
 				"components": {
 					"minecraft:material_instances": {
 						"*": {
-							"texture": "utilitycraft_battery_absolute_0",
+							"texture": "utilitycraft_battery_absolute_0_side",
+							"render_method": "alpha_test"
+						},
+						"up": {
+							"texture": "utilitycraft_battery_absolute_0_up",
+							"render_method": "alpha_test"
+						},
+						"down": {
+							"texture": "utilitycraft_battery_absolute_0_down",
 							"render_method": "alpha_test"
 						}
 					},
@@ -63,7 +79,15 @@
 				"components": {
 					"minecraft:material_instances": {
 						"*": {
-							"texture": "utilitycraft_battery_absolute_1",
+							"texture": "utilitycraft_battery_absolute_1_side",
+							"render_method": "alpha_test"
+						},
+						"up": {
+							"texture": "utilitycraft_battery_absolute_1_up",
+							"render_method": "alpha_test"
+						},
+						"down": {
+							"texture": "utilitycraft_battery_absolute_1_down",
 							"render_method": "alpha_test"
 						}
 					},
@@ -76,7 +100,15 @@
 				"components": {
 					"minecraft:material_instances": {
 						"*": {
-							"texture": "utilitycraft_battery_absolute_2",
+							"texture": "utilitycraft_battery_absolute_2_side",
+							"render_method": "alpha_test"
+						},
+						"up": {
+							"texture": "utilitycraft_battery_absolute_2_up",
+							"render_method": "alpha_test"
+						},
+						"down": {
+							"texture": "utilitycraft_battery_absolute_2_down",
 							"render_method": "alpha_test"
 						}
 					},
@@ -89,7 +121,15 @@
 				"components": {
 					"minecraft:material_instances": {
 						"*": {
-							"texture": "utilitycraft_battery_absolute_3",
+							"texture": "utilitycraft_battery_absolute_3_side",
+							"render_method": "alpha_test"
+						},
+						"up": {
+							"texture": "utilitycraft_battery_absolute_3_up",
+							"render_method": "alpha_test"
+						},
+						"down": {
+							"texture": "utilitycraft_battery_absolute_3_down",
 							"render_method": "alpha_test"
 						}
 					},
@@ -102,7 +142,15 @@
 				"components": {
 					"minecraft:material_instances": {
 						"*": {
-							"texture": "utilitycraft_battery_absolute_4",
+							"texture": "utilitycraft_battery_absolute_4_side",
+							"render_method": "alpha_test"
+						},
+						"up": {
+							"texture": "utilitycraft_battery_absolute_4_up",
+							"render_method": "alpha_test"
+						},
+						"down": {
+							"texture": "utilitycraft_battery_absolute_4_down",
 							"render_method": "alpha_test"
 						}
 					},
@@ -115,7 +163,15 @@
 				"components": {
 					"minecraft:material_instances": {
 						"*": {
-							"texture": "utilitycraft_battery_absolute_5",
+							"texture": "utilitycraft_battery_absolute_5_side",
+							"render_method": "alpha_test"
+						},
+						"up": {
+							"texture": "utilitycraft_battery_absolute_5_up",
+							"render_method": "alpha_test"
+						},
+						"down": {
+							"texture": "utilitycraft_battery_absolute_5_down",
 							"render_method": "alpha_test"
 						}
 					},
@@ -128,7 +184,15 @@
 				"components": {
 					"minecraft:material_instances": {
 						"*": {
-							"texture": "utilitycraft_battery_absolute_6",
+							"texture": "utilitycraft_battery_absolute_6_side",
+							"render_method": "alpha_test"
+						},
+						"up": {
+							"texture": "utilitycraft_battery_absolute_6_up",
+							"render_method": "alpha_test"
+						},
+						"down": {
+							"texture": "utilitycraft_battery_absolute_6_down",
 							"render_method": "alpha_test"
 						}
 					},

@@ -26,7 +26,6 @@ export const PROPERTY_IDS = Object.freeze({
   states: Object.freeze({
     isOn: "utilitycraft:isOn",
     range: "utilitycraft:range",
-    rangeSelected: "utilitycraft:rangeSelected",
     filter: "utilitycraft:filter"
   }),
   dynamic: Object.freeze({
@@ -36,7 +35,6 @@ export const PROPERTY_IDS = Object.freeze({
 
 export const STATE_IS_ON = PROPERTY_IDS.states.isOn;
 export const STATE_RANGE = PROPERTY_IDS.states.range;
-export const STATE_RANGE_SELECTED = PROPERTY_IDS.states.rangeSelected;
 export const STATE_FILTER = PROPERTY_IDS.states.filter;
 export const DYN_MAGNET_COOLDOWN = PROPERTY_IDS.dynamic.magnetCooldown;
 
@@ -61,17 +59,7 @@ export const PROPERTY_REGISTRY = {
     type: 'enum',
     values: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
     default: 0,
-    notes: 'Represents the maximum unlocked range tier. Actual selected distance is in utilitycraft:rangeSelected.',
-    jsonPaths: ['BP/blocks/**']
-  },
-
-  [STATE_RANGE_SELECTED]: {
-    description: 'Currently selected reach in meters (from the predefined distances). Clamped by the upgrade level.',
-    kind: 'block_state',
-    type: 'enum',
-    values: [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32],
-    default: 2,
-    notes: 'Written by UI when the player picks a distance. Should not exceed the tier unlocked by utilitycraft:range.',
+    notes: 'Represents the maximum unlocked range tier. The selected distance is persisted by location in the Mob Magnet state document.',
     jsonPaths: ['BP/blocks/**']
   },
 

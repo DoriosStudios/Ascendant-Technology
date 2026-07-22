@@ -13,14 +13,6 @@
 						"minecraft:cardinal_direction"
 					]
 				}
-			},
-			"states": {
-				"utilitycraft:up": [false, true],
-				"utilitycraft:down": [false, true],
-				"utilitycraft:north": [false, true],
-				"utilitycraft:south": [false, true],
-				"utilitycraft:east": [false, true],
-				"utilitycraft:west": [false, true]
 			}
 		},
 		"components": {
@@ -37,12 +29,28 @@
 				}
 			},
 			"minecraft:collision_box": {
-				"origin": [-8, 0, -8],
-				"size": [16, 3, 16]
+				"origin": [
+					-8,
+					0,
+					-8
+				],
+				"size": [
+					16,
+					3,
+					16
+				]
 			},
 			"minecraft:selection_box": {
-				"origin": [-8, 0, -8],
-				"size": [16, 3, 16]
+				"origin": [
+					-8,
+					0,
+					-8
+				],
+				"size": [
+					16,
+					3,
+					16
+				]
 			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 0.4
@@ -59,7 +67,11 @@
 				"condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [0, 0, 0]
+						"rotation": [
+							0,
+							0,
+							0
+						]
 					}
 				}
 			},
@@ -67,7 +79,11 @@
 				"condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [0, 180, 0]
+						"rotation": [
+							0,
+							180,
+							0
+						]
 					}
 				}
 			},
@@ -75,7 +91,11 @@
 				"condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [0, -90, 0]
+						"rotation": [
+							0,
+							-90,
+							0
+						]
 					}
 				}
 			},
@@ -83,7 +103,11 @@
 				"condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
 				"components": {
 					"minecraft:transformation": {
-						"rotation": [0, 90, 0]
+						"rotation": [
+							0,
+							90,
+							0
+						]
 					}
 				}
 			}

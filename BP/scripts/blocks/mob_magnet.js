@@ -40,7 +40,6 @@ const MAGNET = Object.freeze({
 	states: Object.freeze({
 		immuneTag: "dorios:magnet_immune",
 		range: "utilitycraft:range",
-		rangeSelected: "utilitycraft:rangeSelected",
 		filterUpgrade: "utilitycraft:filter",
 		legacyFilterUpgrade: "utilitycraft:filter_upgrade",
 		cooldownProp: "utilitycraft:mob_magnet_cooldown",
@@ -151,6 +150,10 @@ DoriosAPI.register.blockComponent("mob_magnet", {
 		if (hand || player.isSneaking) return;
 
 		const magnetId = getMagnetId(block.location);
+		if (hasFilterUpgradeInstalled(block)) {
+			openEnhancedMenu(player, block, magnetId);
+			return;
+		}
 		openSettingsMenu(player, block, magnetId);
 	}
 });
@@ -179,90 +182,44 @@ function openSettingsMenu(player, block, magnetId, returnToMenu) {
 	const isOn = syncedState.isOn;
 	const rangeSelected = syncedState.rangeIndex;
 	const cooldownIndex = getCooldownIndex(magnetId);
-	const rangeValue = MAGNET.levels.range[rangeSelected] ?? MAGNET.levels.range[0];
-	const cooldownTicks = MAGNET.levels.cooldown[cooldownIndex] ?? MAGNET.levels.cooldown[0];
-	const hasFilterUpgrade = hasFilterUpgradeInstalled(block);
-	const filterData = hasFilterUpgrade ? getFilterConfig(magnetId) : null;
-	const hasFilterEntries = Boolean(filterData?.list?.length);
-	const toggleKey = isOn
-		? "ui.utilitycraft.mob_magnet.settings.button.toggle_on"
-		: "ui.utilitycraft.mob_magnet.settings.button.toggle_off";
+	const rangeOptions = MAGNET.levels.range
+		.slice(0, maxRangeIndex + 1)
+		.map((range, index) => tr("ui.utilitycraft.mob_magnet.settings.range_option", [range, index + 1]));
+	const cooldownOptions = MAGNET.levels.cooldown
+		.map(cooldown => tr("ui.utilitycraft.mob_magnet.settings.cooldown_option", [cooldown]));
 
-	const form = new ActionFormData()
+	const form = new ModalFormData()
 		.title(tr("ui.utilitycraft.mob_magnet.settings.title"))
-		.body(tr("ui.utilitycraft.mob_magnet.settings.body"))
-		.button(tr(toggleKey))
-		.button(tr("ui.utilitycraft.mob_magnet.settings.button.range", [rangeValue, rangeSelected + 1]))
-		.button(tr("ui.utilitycraft.mob_magnet.settings.button.cooldown", [cooldownTicks]));
-
-	const actions = ["toggle", "range", "cooldown"];
-	if (hasFilterUpgrade && filterData) {
-		form.button(tr("ui.utilitycraft.mob_magnet.filter.add"));
-		actions.push("filter_add");
-
-		if (hasFilterEntries) {
-			form.button(tr("ui.utilitycraft.mob_magnet.filter.list", [filterData.list.length]));
-			actions.push("filter_list");
-
-			form.button(tr("ui.utilitycraft.mob_magnet.filter.remove"));
-			actions.push("filter_remove");
-		}
-
-		form.button(tr(getFilterModeButtonKey(filterData.mode)));
-		actions.push("filter_mode");
-	}
-	const hasReturn = typeof returnToMenu === "function";
-	if (hasReturn) {
-		form.button(tr("ui.utilitycraft.mob_magnet.settings.button.back"));
-		actions.push("back");
-	}
-
-	const returnToSettings = () => openSettingsMenu(player, block, magnetId, returnToMenu);
+		.toggle(tr("ui.utilitycraft.mob_magnet.settings.toggle"), { defaultValue: isOn })
+		.dropdown(
+			tr("ui.utilitycraft.mob_magnet.settings.range"),
+			rangeOptions,
+			{ defaultValueIndex: rangeSelected }
+		)
+		.dropdown(
+			tr("ui.utilitycraft.mob_magnet.settings.cooldown"),
+			cooldownOptions,
+			{ defaultValueIndex: cooldownIndex }
+		);
 
 	form.show(player).then(result => {
-		if (result.canceled || result.selection === undefined) return;
-		const action = actions[result.selection];
+		if (result.canceled || !result.formValues) return;
 
-		switch (action) {
-			case "toggle": {
-				const appliedOn = !isOn;
-				applyBlockStates(block, {
-					"utilitycraft:isOn": appliedOn
-				});
-				saveStoredMagnetState(magnetId, { isOn: appliedOn, rangeIndex: rangeSelected });
-				break;
-			}
-			case "range": {
-				const nextRangeIndex = rangeSelected >= maxRangeIndex ? 0 : rangeSelected + 1;
-				applyBlockStates(block, {
-					[MAGNET.states.rangeSelected]: getRangeStateValueFromIndex(nextRangeIndex)
-				});
-				saveStoredMagnetState(magnetId, { isOn, rangeIndex: nextRangeIndex });
-				break;
-			}
-			case "cooldown": {
-				const nextCooldownIndex = (cooldownIndex + 1) % MAGNET.levels.cooldown.length;
-				setCooldownIndex(magnetId, nextCooldownIndex);
-				break;
-			}
-			case "filter_add":
-				promptAddMob(player, block, magnetId, filterData ?? getFilterConfig(magnetId), returnToSettings);
-				return;
-			case "filter_list":
-				showFilteredMobList(player, block, magnetId, filterData ?? getFilterConfig(magnetId), returnToSettings);
-				return;
-			case "filter_remove":
-				promptRemoveMob(player, block, magnetId, filterData ?? getFilterConfig(magnetId), returnToSettings);
-				return;
-			case "filter_mode":
-				toggleFilterMode(player, block, magnetId, filterData ?? getFilterConfig(magnetId), returnToSettings);
-				return;
-			case "back":
-				returnToMenu();
-				return;
+		const [enabledValue, rangeValue, cooldownValue] = result.formValues;
+		const enabled = Boolean(enabledValue);
+		const selectedRangeIndex = clampIndex(rangeValue, maxRangeIndex);
+		const selectedCooldownIndex = clampIndex(cooldownValue, MAGNET.levels.cooldown.length - 1);
+
+		if (enabled !== isOn) {
+			applyBlockStates(block, {
+				"utilitycraft:isOn": enabled
+			});
 		}
 
-		openSettingsMenu(player, block, magnetId, returnToMenu);
+		saveStoredMagnetState(magnetId, { isOn: enabled, rangeIndex: selectedRangeIndex });
+		setCooldownIndex(magnetId, selectedCooldownIndex);
+
+		if (typeof returnToMenu === "function") returnToMenu();
 	});
 }
 
@@ -488,16 +445,6 @@ function clampIndex(value, max = Number.MAX_SAFE_INTEGER) {
 	return Math.max(0, Math.min(numeric, max));
 }
 
-function getRangeIndexFromStateValue(value) {
-	const numeric = Math.floor(Number(value) || 0);
-	const idx = MAGNET.levels.range.indexOf(numeric);
-	return idx >= 0 ? idx : 0;
-}
-
-function getRangeStateValueFromIndex(index) {
-	return MAGNET.levels.range[clampIndex(index, MAGNET.levels.range.length - 1)] ?? MAGNET.levels.range[0];
-}
-
 function applyBlockStates(block, updates) {
 	let permutation = block.permutation;
 	for (const [key, value] of Object.entries(updates)) {
@@ -591,8 +538,7 @@ function syncMagnetState(block, magnetId, maxRangeIndex) {
 	const stored = getStoredMagnetState(magnetId);
 	const permutation = block.permutation;
 	let isOn = Boolean(getBlockStateValue(permutation, "utilitycraft:isOn"));
-	const blockStateValue = getBlockStateValue(permutation, MAGNET.states.rangeSelected);
-	let rangeIndex = clampIndex(getRangeIndexFromStateValue(blockStateValue), maxRangeIndex);
+	let rangeIndex = 0;
 
 	if (stored) {
 		if (typeof stored.isOn === "boolean") {
@@ -606,10 +552,6 @@ function syncMagnetState(block, magnetId, maxRangeIndex) {
 	const updates = {};
 	if (Boolean(getBlockStateValue(permutation, "utilitycraft:isOn")) !== isOn) {
 		updates["utilitycraft:isOn"] = isOn;
-	}
-	const desiredStateValue = getRangeStateValueFromIndex(rangeIndex);
-	if (blockStateValue !== desiredStateValue) {
-		updates[MAGNET.states.rangeSelected] = desiredStateValue;
 	}
 
 	if (Object.keys(updates).length > 0) {

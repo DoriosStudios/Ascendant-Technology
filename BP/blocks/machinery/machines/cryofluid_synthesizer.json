@@ -6,15 +6,20 @@
             "menu_category": {
                 "category": "construction"
             },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180
+                }
+            },
             "states": {
-                "utilitycraft:on": [false, true],
-                "utilitycraft:axis": ["east", "west", "north", "south", "up", "down"],
-                "utilitycraft:rotation": [0, 1, 2, 3]
+                "utilitycraft:on": [false, true]
             }
         },
         "components": {
             "utilitycraft:cryofluid_synthesizer": {
-                "rotation": "facing",
                 "entity": {
                     "type": "machine",
                     "input_type": "complex",
@@ -45,10 +50,34 @@
             "utilitycraft:machine_recipes": {
                 "type": "cryofluid_synthesizer"
             },
-            "minecraft:geometry": "geometry.utilitycraft_block_2",
+            "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_cryo_chamber_off",
+                    "texture": "utilitycraft_cryo_chamber_off_north",
+                    "render_method": "alpha_test"
+                },
+                "north": {
+                    "texture": "utilitycraft_cryo_chamber_off_north",
+                    "render_method": "alpha_test"
+                },
+                "south": {
+                    "texture": "utilitycraft_cryo_chamber_off_south",
+                    "render_method": "alpha_test"
+                },
+                "east": {
+                    "texture": "utilitycraft_cryo_chamber_off_east",
+                    "render_method": "alpha_test"
+                },
+                "west": {
+                    "texture": "utilitycraft_cryo_chamber_off_west",
+                    "render_method": "alpha_test"
+                },
+                "up": {
+                    "texture": "utilitycraft_cryo_chamber_off_up",
+                    "render_method": "alpha_test"
+                },
+                "down": {
+                    "texture": "utilitycraft_cryo_chamber_off_down",
                     "render_method": "alpha_test"
                 }
             },
@@ -71,11 +100,83 @@
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "utilitycraft_cryo_chamber_on",
+                            "texture": "utilitycraft_cryo_chamber_on_north",
+                            "render_method": "alpha_test"
+                        },
+                        "north": {
+                            "texture": "utilitycraft_cryo_chamber_on_north",
+                            "render_method": "alpha_test"
+                        },
+                        "south": {
+                            "texture": "utilitycraft_cryo_chamber_on_south",
+                            "render_method": "alpha_test"
+                        },
+                        "east": {
+                            "texture": "utilitycraft_cryo_chamber_on_east",
+                            "render_method": "alpha_test"
+                        },
+                        "west": {
+                            "texture": "utilitycraft_cryo_chamber_on_west",
+                            "render_method": "alpha_test"
+                        },
+                        "up": {
+                            "texture": "utilitycraft_cryo_chamber_on_up",
+                            "render_method": "alpha_test"
+                        },
+                        "down": {
+                            "texture": "utilitycraft_cryo_chamber_on_down",
                             "render_method": "alpha_test"
                         }
                     },
                     "minecraft:light_emission": 4
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
                 }
             }
         ]

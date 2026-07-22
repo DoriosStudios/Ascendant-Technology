@@ -14,7 +14,6 @@
       "minecraft:destructible_by_explosion": {
         "explosion_resistance": 7.0
       },
-      "minecraft:loot": "loot_tables/blocks/tungsten_block.json",
       "minecraft:material_instances": {
         "*": { "texture": "utilitycraft_tungsten_block", "render_method": "opaque" }
       },

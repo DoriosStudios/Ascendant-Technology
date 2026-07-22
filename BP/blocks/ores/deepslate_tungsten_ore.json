@@ -5,7 +5,7 @@
       "identifier": "utilitycraft:deepslate_tungsten_ore",
       "menu_category": {
         "category": "nature",
-        "group": "itemGroup.name.ore"
+        "group": "minecraft:itemGroup.name.ore"
       }
     },
     "components": {
@@ -15,7 +15,6 @@
       "minecraft:destructible_by_explosion": {
         "explosion_resistance": 120
       },
-      "minecraft:loot": "loot_tables/blocks/deepslate_tungsten_ore.json",
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
         "*": {

@@ -293,8 +293,6 @@ at:itemGroup.name.armor=Armor \n§u(Ascendant Technology)
 at:itemGroup.name.materials_resources=Materials and Resources \n§u(Ascendant Technology)
 at:itemGroup.name.pipes=Pipes \n§u(Ascendant Technology)
 at:itemGroup.name.conveyors=Conveyors \n§u(Ascendant Technology)
-dorios:itemGroup.name.pipes=Pipes
-dorios:itemGroup.name.mob_grinding=Mob Grinding
 
 at:ui.h=H
 at:ui.l=L

@@ -44,7 +44,7 @@
             "minecraft:geometry": "geometry.utilitycraft_block_2",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_enchantment_station_off",
+                    "texture": "utilitycraft_enchantment_station",
                     "render_method": "alpha_test"
                 }
             },
@@ -66,7 +66,7 @@
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "utilitycraft_enchantment_station_on",
+                            "texture": "utilitycraft_enchantment_station",
                             "render_method": "alpha_test"
                         }
                     },

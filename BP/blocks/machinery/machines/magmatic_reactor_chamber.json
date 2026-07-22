@@ -21,7 +21,7 @@
                     "output_type": "complex",
                     "inventory_size": 16,
                     "input_range": [3, 8],
-                    "output_range": [9, 9],
+                    "output": 9,
                     "fluid": true
                 },
                 "machine": {
@@ -35,10 +35,7 @@
                 }
             },
             "utilitycraft:special_container": {
-                "Input Slots": [3, 4, 5, 6, 7, 8],
-                "Output": 9,
-                "Upgrade Slots": [10, 11, 12, 13],
-                "Lava Tank": 15
+                "Input Grid": [3, 4, 5, 6, 7, 8]
             },
             "utilitycraft:machine_recipes": {
                 "type": "magmatic_reactor_chamber"

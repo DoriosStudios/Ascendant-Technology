@@ -98,7 +98,7 @@
                     ],
                     "offset": [
                         -88,
-                        -8
+                        -7
                     ],
                     "layer": 0
                 }
@@ -109,6 +109,10 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$text_scale": 0.55,
+                    "size": [
+                        82,
+                        154
+                    ],
                     "offset": [
                         -78,
                         2

@@ -14,7 +14,12 @@ world.afterEvents.worldLoad.subscribe(() => {
         "minecraft:ender_eye|utilitycraft:chip": {
             output: "utilitycraft:way_chip",
             required: 1
-        }
+        },
+        "utilitycraft:aetherium|minecraft:netheite_ingot": {
+            output: "utilitycraft:netherite_aetherium_ingot",
+            required: 8,
+            cost: 512000
+        },
     };
 
     system.sendScriptEvent("utilitycraft:register_infuser_recipe", JSON.stringify(addedRecipes));

@@ -424,6 +424,21 @@ function resolveTieredGeneratorRarity(id) {
     return CLONER_RARITY_DATA.generators.tierToRarity[tier] ?? null;
 }
 
+function resolveCompressedBlockRarity(id) {
+    const match = /^utilitycraft:compressed_([a-z_]+)(_(\d))?$/.exec(id);
+    if (!match) return null;
+
+    const compressionLevel = match[3] ? parseInt(match[3], 10) : 1;
+
+    switch (compressionLevel) {
+        case 1: return "rare";
+        case 2: return "epic";
+        case 3: return "legendary";
+        case 4: return "mythic";
+        default: return null;
+    }
+}
+
 function addEntriesToMap(target, entries, rarity) {
     for (const id of entries) {
         target[id] = rarity;
@@ -492,6 +507,15 @@ export function getClonerItemProfile(id) {
             rarity: tieredGeneratorRarity,
             declared: true,
             source: "ascendant_generator_tier"
+        };
+    }
+
+    const compressedBlockRarity = resolveCompressedBlockRarity(normalized);
+    if (compressedBlockRarity) {
+        return {
+            rarity: compressedBlockRarity,
+            declared: true,
+            source: "ascendant_compressed_block"
         };
     }
 

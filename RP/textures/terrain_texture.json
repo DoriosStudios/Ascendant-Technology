@@ -418,6 +418,12 @@
 		"utilitycraft_deepslate_aetherium_ore": {
 			"textures": "textures/blocks/ores/deepslate_aetherium_ore"
 		},
+		"utilitycraft_deepslate_tungsten_ore": {
+			"textures": "textures/blocks/ores/deepslate_tungsten_ore"
+		},
+		"utilitycraft_nether_tungsten_ore": {
+			"textures": "textures/blocks/ores/nether_tungsten_ore"
+		},
 		"utilitycraft_end_aetherium_ore": {
 			"textures": "textures/blocks/ores/end_aetherium_ore"
 		},
@@ -429,6 +435,12 @@
 		},
 		"utilitycraft_raw_titanium_block": {
 			"textures": "textures/blocks/ores/raw_titanium_block"
+		},
+		"utilitycraft_tungsten_block": {
+			"textures": "textures/blocks/ores/tungsten_block"
+		},
+		"utilitycraft_raw_tungsten_block": {
+			"textures": "textures/blocks/ores/raw_tungsten_block"
 		},
 		"utilitycraft_overclock_tower_on": {
 			"textures": "textures/blocks/machines/overclock_tower_on"

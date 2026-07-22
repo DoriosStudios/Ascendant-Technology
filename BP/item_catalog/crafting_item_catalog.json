@@ -7,27 +7,6 @@
                 "groups": [
                     {
                         "group_identifier": {
-                            "icon": "utilitycraft:arc_press_forge",
-                            "name": "at:itemGroup.name.superior_machines"
-                        },
-                        "items": [
-                            "utilitycraft:arc_press_forge",
-							"utilitycraft:industrial_burner",
-							"utilitycraft:impact_crusher",
-							"utilitycraft:pulverizer",
-                            "utilitycraft:centrifugal_siever",
-                            "utilitycraft:cryo_freezer",
-                            "utilitycraft:cryo_stabilizer",
-                            "utilitycraft:dual_siever",
-                            "utilitycraft:abyssal_fisher",
-                            "utilitycraft:genetic_seed_synthesizer",
-                            "utilitycraft:verdant_cultivator",
-                            "utilitycraft:seismic_breaker",
-                            "utilitycraft:pattern_placer"
-                        ]
-                    },
-                    {
-                        "group_identifier": {
                             "icon": "utilitycraft:singularity_fabricator",
                             "name": "at:itemGroup.name.machines"
                         },
@@ -46,19 +25,6 @@
                             "utilitycraft:residue_processor",
                             "utilitycraft:singularity_fabricator",
                             "utilitycraft:vaporworks_processor"
-                        ]
-                    },
-                    {
-                        "group_identifier": {
-                            "icon": "utilitycraft:basic_power_beacon",
-                            "name": "at:itemGroup.name.power_beacons"
-                        },
-                        "items": [
-                            "utilitycraft:basic_power_beacon",
-                            "utilitycraft:advanced_power_beacon",
-                            "utilitycraft:expert_power_beacon",
-                            "utilitycraft:ultimate_power_beacon",
-                            "utilitycraft:absolute_power_beacon"
                         ]
                     },
                     {
@@ -201,6 +167,24 @@
 
                             "utilitycraft:titanium",
                             "utilitycraft:titanium_nugget"
+                        ]
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:enchantability_module_5",
+                            "name": "at:itemGroup.name.enchantment_modules"
+                        },
+                        "items": [
+                            "utilitycraft:ascane_module_base",
+                            "utilitycraft:curse_protection_module",
+                            "utilitycraft:enchantability_module",
+                            "utilitycraft:enchantability_module_2",
+                            "utilitycraft:enchantability_module_3",
+                            "utilitycraft:enchantability_module_4",
+                            "utilitycraft:enchantability_module_5",
+                            "utilitycraft:reinforcement_module",
+                            "utilitycraft:reinforcement_module_2",
+                            "utilitycraft:reinforcement_module_3"
                         ]
                     }
                 ]

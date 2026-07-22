@@ -1,5 +1,5 @@
 {
-  "format_version": "1.20.80",
+  "format_version": "1.26.30",
   "minecraft:block": {
     "description": {
       "identifier": "utilitycraft:end_aetherium_ore",
@@ -10,9 +10,11 @@
     },
     "components": {
       "minecraft:destructible_by_mining": {
-        "seconds_to_destroy": 4.6
+        "seconds_to_destroy": 5.6
       },
-      "minecraft:destructible_by_explosion": false,
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 90
+      },
       "minecraft:loot": "loot_tables/blocks/end_aetherium_ore.json",
       "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
@@ -21,8 +23,10 @@
           "render_method": "opaque"
         }
       },
-      "tag:minecraft:is_pickaxe_item_destructible": {},
-      "tag:minecraft:diamond_tier_destructible": {}
+      "minecraft:tags": [
+        "minecraft:diamond_tier_destructible",
+        "minecraft:is_pickaxe_item_destructible"
+      ]
     }
   }
 }

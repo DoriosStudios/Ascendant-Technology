@@ -29,7 +29,7 @@
         "numerator": 1,
         "denominator": 16
       },
-      "iterations": 12,
+      "iterations": 18,
       "coordinate_eval_order": "zyx",
       "x": {
         "distribution": "uniform",

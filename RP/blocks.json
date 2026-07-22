@@ -146,6 +146,9 @@
 	"utilitycraft:titanium_block": {
 		"sound": "metal"
 	},
+	"utilitycraft:tungsten_block": {
+		"sound": "metal"
+	},
 	"utilitycraft:aetherium_block": {
 		"sound": "amethyst_block"
 	},

@@ -4,188 +4,165 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [206, 116],
-        "offset": [-10, -48],
+        "size": [162, 72],
+        "offset": [-10, -40],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "chest_label@chest.chest_label": {
-                    "offset": [10, 0]
+                "machine_name@uc.machine_name": {
+                    "offset": [0, -2]
                 }
             },
             {
-                "energy_bar@machineryCommon.vertical_single": {
-                    "$is_energy": true,
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
                     "$has_bg": false,
-                    "offset": [-84, 4]
+                    "offset": [-70, -1]
                 }
             },
             {
-                "upgrades@ascendant_common.panel": {
-                    "type": "collection_panel",
-                    "collection_name": "container_items",
-                    "$item_collection_name": "container_items",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "$has_container_label": false,
-                    "$has_close_button": false,
-                    "$panel_size": [24, 96],
-                    "offset": [104, 42],
-                    "controls": [
-                        {
-                            "upgrade_1@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 6,
-                                "$slot_size":[18, 18],
-                                "layer": 3,
-                                "offset": [0, 0]
-                            }
-                        },
-                        {
-                            "upgrade_2@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 7,
-                                "$slot_size":[18, 18],
-                                "layer": 3,
-                                "offset": [0, 18]
-                            }
-                        },
-                        {
-                            "upgrade_3@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 8,
-                                "$slot_size":[18, 18],
-                                "layer": 3,
-                                "offset": [0, 36]
-                            }
-                        },
-                        {
-                            "upgrade_4@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 17,
-                                "$slot_size":[18, 18],
-                                "layer": 3,
-                                "offset": [0, 54]
-                            }
-                        }
-                    ]
-                }
+                "side_panel@uc.machine_side_panel": {}
             },
             {
-                "screen": {
-                    "type": "image",
-                    "texture": "textures/ui/panels/half_long_panel_classic",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [96, 182],
-                    "offset": [-92, -10],
-                    "layer": 0
-                }
-            },
-            {
-                "item_label@machineryCommon.item_label": {
+                "item_label@uc.text_label": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [82, 154],
+                    "size": [74, 146],
                     "$text_scale": 0.55,
-                    "offset": [-82, 2]
+                    "offset": [-76, 2]
                 }
             },
             {
-                "burner_progress@common_machines.machinery": {
+                "input_lane_1@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [18, 4],
-                    "collection_index": 2
-                }
-            },
-            {
-                "lava_display@ascendant_common.liquid_display": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [80, -10],
-                    "$fluid_slot_index": 10
-                }
-            },
-            {
-                "input_slot_1@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [-10, 10],
+                    "offset": [-17, 12],
                     "collection_index": 3
                 }
             },
             {
-                "input_slot_2@common.container_item": {
+                "input_lane_2@uc.input_2_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-10, 38],
+                    "offset": [-17, 30],
                     "collection_index": 4
                 }
             },
             {
-                "input_slot_3@common.container_item": {
+                "input_lane_3@uc.input_3_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-10, 66],
+                    "offset": [-17, 48],
                     "collection_index": 5
                 }
             },
             {
-                "lane_progress_1@common_machines.machinery": {
+                "lane_progress_1@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [20, 10],
-                    "collection_index": 14,
-                    "focus_enabled": false
+                    "offset": [10, 4],
+                    "collection_index": 14
                 }
             },
             {
-                "lane_progress_2@common_machines.machinery": {
+                "lane_progress_2@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [20, 38],
-                    "collection_index": 15,
-                    "focus_enabled": false
+                    "offset": [10, 22],
+                    "collection_index": 15
                 }
             },
             {
-                "lane_progress_3@common_machines.machinery": {
+                "lane_progress_3@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [20, 66],
-                    "collection_index": 16,
-                    "focus_enabled": false
+                    "offset": [10, 40],
+                    "collection_index": 16
                 }
             },
             {
-                "output_slot_1@common.container_item": {
+                "output_lane_1@uc.input_slot": {
+                    "$slot_background_texture": "textures/ui/slots/output_1_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [50, 10],
+                    "offset": [37, 12],
                     "collection_index": 11
                 }
             },
             {
-                "output_slot_2@common.container_item": {
+                "output_lane_2@uc.input_slot": {
+                    "$slot_background_texture": "textures/ui/slots/output_2_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [50, 38],
+                    "offset": [37, 30],
                     "collection_index": 12
                 }
             },
             {
-                "output_slot_3@common.container_item": {
+                "output_lane_3@uc.input_slot": {
+                    "$slot_background_texture": "textures/ui/slots/output_3_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [50, 66],
+                    "offset": [37, 48],
                     "collection_index": 13
+                }
+            },
+            {
+                "lava_bar@uc.liquid_fuel_bar": {
+                    "$collection_index": 10,
+                    "$has_bg": false,
+                    "offset": [66, -1]
+                }
+            },
+            {
+                "upgrades_tab@uc.upgrades_tab": {
+                    "$upgrade_index_1": 6,
+                    "$upgrade_index_2": 7,
+                    "$upgrade_index_3": 8,
+                    "$upgrade_index_4": 17,
+                    "$has_first_upgrade": true,
+                    "$has_second_upgrade": true,
+                    "$has_third_upgrade": true,
+                    "$has_fourth_upgrade": true,
+                    "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade",
+                    "$upgrade_overlay_4": "textures/items/machinery/quantity_upgrade"
+                }
+            },
+            {
+                "io_tab@uc.io_tab": {
+                    "$io_items_modes_description": "ui.utilitycraft:io.industrial_burner.items",
+                    "$io_fluids_modes_description": "ui.utilitycraft:io.industrial_burner.liquids",
+                    "$has_item_io": true,
+                    "$has_fluid_io": true,
+                    "$io_items_default": true,
+                    "$io_fluids_default": false,
+                    "$io_top_texture": "textures/blocks/machines/superior/industrial_burner_off_up",
+                    "$io_left_texture": "textures/blocks/machines/superior/industrial_burner_off_west",
+                    "$io_front_texture": "textures/blocks/machines/superior/industrial_burner_off_north",
+                    "$io_right_texture": "textures/blocks/machines/superior/industrial_burner_off_east",
+                    "$io_bottom_texture": "textures/blocks/machines/superior/industrial_burner_off_down",
+                    "$io_back_texture": "textures/blocks/machines/superior/industrial_burner_off_south",
+                    "$io_item_top_index": 20,
+                    "$io_item_left_index": 21,
+                    "$io_item_front_index": 22,
+                    "$io_item_right_index": 23,
+                    "$io_item_bottom_index": 24,
+                    "$io_item_back_index": 25,
+                    "$io_fluid_top_index": 26,
+                    "$io_fluid_left_index": 27,
+                    "$io_fluid_front_index": 28,
+                    "$io_fluid_right_index": 29,
+                    "$io_fluid_bottom_index": 30,
+                    "$io_fluid_back_index": 31
+                }
+            },
+            {
+                "info_tab@uc.info_tab": {
+                    "$info_description": "ui.utilitycraft:info.industrial_burner"
                 }
             }
         ]
@@ -198,7 +175,7 @@
             },
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 14
+                    "layer": 40
                 }
             },
             {
@@ -227,6 +204,9 @@
                                     },
                                     {
                                         "hotbar_grid@common.hotbar_grid_template": {}
+                                    },
+                                    {
+                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
                                     }
                                 ]
                             }

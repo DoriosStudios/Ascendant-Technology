@@ -33,14 +33,14 @@
                     "energy_cap": 512000000,
                     "rate_speed_base": 64000
                 },
-                "max_altitude_multiplier": 4,
+                "max_altitude_multiplier": 3,
                 "altitude": {
                     "min": 12,
                     "base": 63,
                     "bonus_step": 16,
                     "penalty_step": 8,
                     "step_ratio": 0.5625,
-                    "max_multiplier": 10
+                    "max_multiplier": 3
                 }
             },
             "minecraft:geometry": "geometry.utilitycraft_wind_turbine",

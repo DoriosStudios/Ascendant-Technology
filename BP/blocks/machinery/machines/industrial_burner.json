@@ -19,31 +19,26 @@
 			}
 		},
 		"components": {
-// LEGACY_DISABLED 			"utilitycraft:industrial_burner": {
-// 				"entity": {
-// 					"type": "machine",
-// 					"input_type": "complex",
-// 					"output_type": "complex",
-// 					"inventory_size": 20,
-// 					"fluid": true
-// 				},
-// 				"machine": {
-// 					"energy_cap": 32000000,
-// 					"energy_cost": 800,
-// 					"rate_speed_base": 9600,
-// 					"fluid_cap": 32000,
-// 					"upgrades": [6, 7, 8, 17],
-// 					"hidden_slots": [9, 18, 19]
-// 				}
-// 			},
-// LEGACY_DISABLED 			"utilitycraft:special_container": {
-// 				"Input Lanes": [3, 4, 5],
-// 				"Upgrade Slots": [6, 7, 8, 17],
-// 				"Lava Tank": 10,
-// 				"Output Lanes": [11, 12, 13],
-// 				"Lane Progress": [14, 15, 16],
-// 				"Hidden Slots": [9, 18, 19]
-// 			},
+			"utilitycraft:industrial_burner": {
+				"entity": {
+					"type": "fluid_machine",
+					"inventory_size": 32,
+					"fixed_fluid_types": true
+				},
+				"machine": {
+					"energy_cap": 32000000,
+					"energy_cost": 800,
+					"rate_speed_base": 9600,
+					"fluid_cap": 32000,
+					"fluid_types": 1,
+					"upgrades": [6, 7, 8, 17]
+				}
+			},
+			"utilitycraft:machine_upgrades": [
+				{ "type": "speed", "slot": 6 },
+				{ "type": "energy", "slot": 7 }
+			],
+			"utilitycraft:fluid_container": {},
 			"utilitycraft:machine_recipes": {
 				"type": "industrial_burner"
 			},
@@ -78,9 +73,9 @@
 					"render_method": "alpha_test"
 				}
 			},
-// LEGACY_DISABLED 			"minecraft:tick": {
-// 				"interval_range": [4, 4]
-// 			},
+			"minecraft:tick": {
+				"interval_range": [4, 4]
+			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 1
 			},

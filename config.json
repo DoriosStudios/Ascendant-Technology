@@ -71,10 +71,24 @@
 					"readOnly": false,
 					"target": "development"
 				},
+				"filters": []
+			},
+			"bundle": {
+				"export": {
+					"build": "standard",
+					"readOnly": false,
+					"target": "development"
+				},
 				"filters": [
-					{ "filter": "bundle_scripts" },
-					{ "filter": "use_bundle_entry" },
-					{ "filter": "cleanup_bundled_scripts" }
+					{
+						"filter": "bundle_scripts"
+					},
+					{
+						"filter": "use_bundle_entry"
+					},
+					{
+						"filter": "cleanup_bundled_scripts"
+					}
 				]
 			},
 			"minify": {
@@ -84,9 +98,59 @@
 					"target": "development"
 				},
 				"filters": [
-					{ "filter": "minify_bundle_scripts" },
-					{ "filter": "use_bundle_entry" },
-					{ "filter": "cleanup_bundled_scripts" }
+					{
+						"filter": "minify_bundle_scripts"
+					},
+					{
+						"filter": "use_bundle_entry"
+					},
+					{
+						"filter": "cleanup_bundled_scripts"
+					}
+				]
+			},
+			"build": {
+				"export": {
+					"bpName": "project.name + ' BP'",
+					"rpName": "project.name + ' RP'",
+					"target": "local"
+				},
+				"filters": [
+					{
+						"filter": "bundle_scripts"
+					},
+					{
+						"filter": "use_bundle_entry"
+					},
+					{
+						"filter": "cleanup_bundled_scripts"
+					}
+				]
+			},
+			"buildDev": {
+				"export": {
+					"bpName": "project.name + ' BP'",
+					"rpName": "project.name + ' RP'",
+					"target": "local"
+				},
+				"filters": []
+			},
+			"buildMinify": {
+				"export": {
+					"bpName": "project.name + ' BP'",
+					"rpName": "project.name + ' RP'",
+					"target": "local"
+				},
+				"filters": [
+					{
+						"filter": "minify_bundle_scripts"
+					},
+					{
+						"filter": "use_bundle_entry"
+					},
+					{
+						"filter": "cleanup_bundled_scripts"
+					}
 				]
 			}
 		}

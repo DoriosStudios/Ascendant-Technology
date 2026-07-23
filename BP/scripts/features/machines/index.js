@@ -6,3 +6,4 @@ import "./centrifugalSiever.js";
 import "./dualSiever.js";
 import "./residueProcessor.js";
 import "./liquifier.js";
+import "./catalystWeaver.js";

@@ -1,4 +1,7 @@
 ## Generators
+ui.utilitycraft:info.catalyst_weaver=Combines one base item with an exact set of up to six catalysts. Catalyst positions do not matter, but extra catalyst types prevent a match. Some recipes also consume Lava, Liquified Aetherium, or Dark Matter from the internal 128,000 mB tank.\n\nCatalyst Weaver recipes and registered UtilityCraft Infuser recipes are indexed when loaded. Recipe lookup does not scan the complete registry while machines run.\n\nItem I/O:\n§9Base Input§r exposes the base item.\n§bCatalyst 1§r, §1Catalyst 2§r, §bCatalyst 3§r, §9Catalyst 4§r, §bCatalyst 5§r, and §1Catalyst 6§r each expose one catalyst slot.\n§3Input All§r exposes every item input.\n§cMain Output§r and §cResidue Output§r expose their respective results.\n§cOutput All§r exposes both outputs.\n\nLiquid I/O:\n§9Catalyst Fluid Input§r exposes the internal tank.
+ui.utilitycraft:io.catalyst_weaver.items=I/O Modes:\n§r- §9Base Input\n§r- §bCatalyst 1\n§r- §1Catalyst 2\n§r- §bCatalyst 3\n§r- §9Catalyst 4\n§r- §bCatalyst 5\n§r- §1Catalyst 6\n§r- §3Input All\n§r- §cMain Output\n§r- §cResidue Output\n§r- §cOutput All
+ui.utilitycraft:io.catalyst_weaver.liquids=I/O Modes:\n§r- §9Catalyst Fluid Input
 ui.utilitycraft:info.liquifier=Converts supported solid materials into Liquified Aetherium or Dark Matter. Insert the solid material on the left; produced liquid accumulates in the output tank on the right. Some recipes can also create an optional solid residue.\n\nThe tank accepts one liquid type at a time and stores up to 640,000 mB. Drain it before switching between Liquified Aetherium and Dark Matter. The liquid can be extracted through liquid I/O or standard UtilityCraft fluid containers.\n\nItem I/O:\n§9Input§r exposes the solid material input.\n§cResidue Output§r exposes the optional byproduct.\n\nLiquid I/O:\n§cLiquid Output§r exposes the produced liquid tank.
 ui.utilitycraft:io.liquifier.items=I/O Modes:\n§r- §9Input\n§r- §cResidue Output
 ui.utilitycraft:io.liquifier.liquids=I/O Modes:\n§r- §cLiquid Output
@@ -36,7 +39,7 @@ tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate
 tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 10.7K items\n- Can store fluids\n- Can store energy\n§o§9@UC: Ascendant Technology
 
 ## Machines
-tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:duplicator.name=Duplicator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
@@ -269,7 +272,7 @@ item.utilitycraft:runic_core=Runic Core\n§o§9@UC: Ascendant Technology
 
 ## Entities
 entity.utilitycraft:absolute_container.name=§fAbsolute Container
-entity.utilitycraft:catalyst_weaver.name=§fCatalyst Weaver
+entity.utilitycraft:catalyst_weaver.name=Catalyst Weaver
 entity.utilitycraft:duplicator.name=Duplicator
 entity.utilitycraft:cryo_chamber.name=§fCryo Chamber
 entity.utilitycraft:singularity_fabricator.name=Singularity Fabricator

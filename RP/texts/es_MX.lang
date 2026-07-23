@@ -1,4 +1,7 @@
 ## Generadores
+ui.utilitycraft:info.catalyst_weaver=Combina un objeto base con un conjunto exacto de hasta seis catalizadores. La posicion de los catalizadores no importa, pero los tipos adicionales impiden encontrar una receta. Algunas recetas tambien consumen Lava, Aetherium Liquido o Materia Oscura del tanque interno de 128,000 mB.\n\nLas recetas de la Camara Catalizadora y las recetas registradas del Infuser de UtilityCraft se indexan al cargarse. La busqueda no recorre el registro completo mientras funcionan las maquinas.\n\nE/S de objetos:\n§9Entrada base§r expone el objeto base.\n§bCatalizador 1§r, §1Catalizador 2§r, §bCatalizador 3§r, §9Catalizador 4§r, §bCatalizador 5§r y §1Catalizador 6§r exponen un slot de catalizador cada uno.\n§3Todas las entradas§r expone todas las entradas de objetos.\n§cSalida principal§r y §cSalida de residuo§r exponen sus resultados.\n§cTodas las salidas§r expone ambas salidas.\n\nE/S de liquidos:\n§9Entrada de fluido catalizador§r expone el tanque interno.
+ui.utilitycraft:io.catalyst_weaver.items=Modos de E/S:\n§r- §9Entrada base\n§r- §bCatalizador 1\n§r- §1Catalizador 2\n§r- §bCatalizador 3\n§r- §9Catalizador 4\n§r- §bCatalizador 5\n§r- §1Catalizador 6\n§r- §3Todas las entradas\n§r- §cSalida principal\n§r- §cSalida de residuo\n§r- §cTodas las salidas
+ui.utilitycraft:io.catalyst_weaver.liquids=Modos de E/S:\n§r- §9Entrada de fluido catalizador
 ui.utilitycraft:info.liquifier=Convierte materiales solidos compatibles en Aetherium Liquido o Materia Oscura. Coloca el material solido a la izquierda; el liquido producido se acumula en el tanque de salida a la derecha. Algunas recetas tambien pueden crear un residuo solido opcional.\n\nEl tanque acepta un solo tipo de liquido a la vez y almacena hasta 640,000 mB. Vacialo antes de cambiar entre Aetherium Liquido y Materia Oscura. El liquido puede extraerse mediante E/S de liquidos o contenedores de fluidos de UtilityCraft.\n\nE/S de objetos:\n§9Entrada§r expone la entrada de material solido.\n§cSalida de residuo§r expone el subproducto opcional.\n\nE/S de liquidos:\n§cSalida de liquido§r expone el tanque producido.
 ui.utilitycraft:io.liquifier.items=Modos de E/S:\n§r- §9Entrada\n§r- §cSalida de residuo
 ui.utilitycraft:io.liquifier.liquids=Modos de E/S:\n§r- §cSalida de liquido
@@ -35,7 +38,7 @@ tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate
 tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena hasta 10.7K ítems\n- Almacena energía\n- Almacena fluidos\n§o§9@UC: Ascendant Technology
 
 ## Máquinas
-tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:cryo_chamber.name=Cámara Criogénica\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica ítems usando materia oscura\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:enchantment_station.name=Estación de Encantamiento\n§7- Repara, encanta, refuerza equipamiento\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
@@ -263,7 +266,7 @@ item.utilitycraft:cryofluid_capsule_7=Cápsula de Criolíquido §7\n- (7 Cubos)\
 item.utilitycraft:cryofluid_capsule_8=Cápsula de Criolíquido §7\n- (8 Cubos)\n§o§9@UC: Ascendant Technology
 
 ## Entidades
-entity.utilitycraft:catalyst_weaver.name=§fCámara Catalizadora
+entity.utilitycraft:catalyst_weaver.name=Cámara Catalizadora
 entity.utilitycraft:duplicator.name=§fDuplicador
 entity.utilitycraft:cryo_chamber.name=§fCámara Criogénica
 entity.utilitycraft:singularity_fabricator.name=§fFabricador de Singularidad

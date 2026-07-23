@@ -9,3 +9,5 @@ import "./liquifier.js";
 import "./catalystWeaver.js";
 import "./energizer.js";
 import "./vaporworksProcessor.js";
+import "./cryofluidSynthesizer.js";
+import "./cryoStabilizer.js";

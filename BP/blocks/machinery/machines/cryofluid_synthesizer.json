@@ -19,34 +19,26 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:cryofluid_synthesizer": {
-//                 "entity": {
-//                     "type": "machine",
-//                     "input_type": "complex",
-//                     "output_type": "complex",
-//                     "inventory_size": 18,
-//                     "input_range": [4, 11],
-//                     "fluid": true
-//                 },
-//                 "machine": {
-//                     "energy_cap": 384000000,
-//                     "energy_cost": 6000,
-//                     "rate_speed_base": 24000,
-//                     "dynamic_rate": true,
-//                     "fluid_cap": 128000,
-//                     "fluid_rate": 64000,
-//                     "upgrades": [14, 15, 16, 17],
-//                     "hidden_slots": [13]
-//                 }
-//             },
-// LEGACY_DISABLED             "utilitycraft:special_container": {
-//                 "Mode Switch": 3,
-//                 "Titanium Input": [4, 5, 6, 7],
-//                 "Lapis Input": [8, 9, 10, 11],
-//                 "Water Tank": 12,
-//                 "Cryofluid Tank": 13,
-//                 "Upgrade Slots": [14, 15, 16, 17]
-//             },
+            "utilitycraft:fluid_container": {},
+            "utilitycraft:cryofluid_synthesizer": {
+                "entity": {
+                    "type": "fluid_machine",
+                    "inventory_size": 28,
+                    "fixed_fluid_types": true
+                },
+                "machine": {
+                    "energy_cap": 384000000,
+                    "energy_cost": 6000,
+                    "rate_speed_base": 24000,
+                    "fluid_cap": 128000,
+                    "fluid_types": 2,
+                    "upgrades": [14, 15]
+                }
+            },
+            "utilitycraft:machine_upgrades": [
+                { "type": "speed", "slot": 14 },
+                { "type": "energy", "slot": 15 }
+            ],
             "utilitycraft:machine_recipes": {
                 "type": "cryofluid_synthesizer"
             },
@@ -81,9 +73,9 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": {
-//                 "interval_range": [4, 4]
-//             },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

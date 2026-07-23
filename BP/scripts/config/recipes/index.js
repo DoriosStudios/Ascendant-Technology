@@ -19,3 +19,9 @@ export {
     registerVaporworksRecipe,
     vaporworksRecipeDefinitions,
 } from "./vaporworksProcessor.js";
+export {
+    cryoStabilizerRecipeDefinitions,
+    getCryoStabilizerRecipe,
+    getCryoStabilizerRecipeCount,
+    registerCryoStabilizerRecipe,
+} from "./cryoStabilizer.js";

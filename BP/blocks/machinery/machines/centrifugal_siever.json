@@ -22,7 +22,7 @@
             "utilitycraft:centrifugal_siever": {
                 "entity": {
                     "type": "gas_machine",
-                    "inventory_size": 41,
+                    "inventory_size": 38,
                     "fixed_gas_types": true
                 },
                 "machine": {
@@ -31,12 +31,12 @@
                     "rate_speed_base": 9600,
                     "gas_cap": 32000,
                     "gas_types": 1,
-                    "upgrades": [10, 11]
+                    "upgrades": [9, 10]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 10 },
-                { "type": "energy", "slot": 11 }
+                { "type": "speed", "slot": 9 },
+                { "type": "energy", "slot": 10 }
             ],
             "utilitycraft:gas_container": {},
             "utilitycraft:machine_recipes": {

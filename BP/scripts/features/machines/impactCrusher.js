@@ -21,7 +21,9 @@ import {
 const ID = "utilitycraft:impact_crusher";
 const INPUTS = Object.freeze([3, 4]);
 const OUTPUTS = Object.freeze([[5, 6], [7, 8]]);
-const PROGRESS_SLOTS = Object.freeze([17, 18]);
+const PROGRESS_SLOTS = Object.freeze([9, 10]);
+const LAVA_DISPLAY_SLOT = 15;
+const COOLANT_DISPLAY_SLOT = 16;
 const LAVA_PER_CRAFT = 400;
 const MAX_HEAT = 1000;
 const HEAT_KEY = "ascendant:impact_crusher_heat";
@@ -35,7 +37,7 @@ const COOLANTS = Object.freeze({
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [20, 21, 22, 23, 24, 25],
+        buttonSlots: [17, 18, 19, 20, 21, 22],
         anyInputSlots: INPUTS,
         anyOutputSlots: [5, 6, 7, 8],
         modes: [
@@ -49,7 +51,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [26, 27, 28, 29, 30, 31],
+        buttonSlots: [23, 24, 25, 26, 27, 28],
         anyInputIndices: [0, 1],
         anyOutputIndices: [],
         modes: [
@@ -128,8 +130,8 @@ function burnAndLock(machine) {
 
 function display(machine, lava, coolant, heat, lanes) {
     if (!machine.shouldUpdateUI) return;
-    lava.display(14);
-    coolant.display(16);
+    lava.display(LAVA_DISPLAY_SLOT);
+    coolant.display(COOLANT_DISPLAY_SLOT);
     displayTemperature(machine, heat, MAX_HEAT, 2);
     for (let index = 0; index < lanes.length; index++) {
         displayProgress(machine, lanes[index].cost, PROGRESS_SLOTS[index], index);
@@ -141,11 +143,10 @@ DoriosLib.registry.blockComponent(ID, {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
-            machine.blockSlots([13, 15, 19]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:temperature_00");
-            setUiItem(machine.container, 14, "utilitycraft:lava_00");
-            setUiItem(machine.container, 16, "utilitycraft:empty_fluid_bar");
+            setUiItem(machine.container, LAVA_DISPLAY_SLOT, "utilitycraft:lava_00");
+            setUiItem(machine.container, COOLANT_DISPLAY_SLOT, "utilitycraft:empty_fluid_bar");
             for (let index = 0; index < PROGRESS_SLOTS.length; index++) {
                 setUiItem(machine.container, PROGRESS_SLOTS[index], "utilitycraft:progress_right_big_bar_00");
                 setDynamicNumber(machine.entity, `dorios:progress_${index}`, 0);

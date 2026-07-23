@@ -25,18 +25,18 @@
 			"utilitycraft:arc_press_forge": {
 				"entity": {
 					"type": "machine",
-					"inventory_size": 26
+					"inventory_size": 22
 				},
 				"machine": {
 					"energy_cap": 384000000,
 					"energy_cost": 6400,
 					"rate_speed_base": 32000,
-					"upgrades": [10, 11, 12, 13]
+					"upgrades": [12, 13, 14, 15]
 				}
 			},
 			"utilitycraft:machine_upgrades": [
-				{ "type": "speed", "slot": 10 },
-				{ "type": "energy", "slot": 11 }
+				{ "type": "speed", "slot": 12 },
+				{ "type": "energy", "slot": 13 }
 			],
 			"utilitycraft:machine_recipes": {
 				"type": "arc_press_forge"

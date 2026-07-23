@@ -23,7 +23,7 @@ const FLUID_IO_RATE = 128000;
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [10, 11, 12, 13, 14, 15],
+        buttonSlots: [8, 9, 10, 11, 12, 13],
         anyInputSlots: [INPUT_SLOT],
         anyOutputSlots: [BYPRODUCT_SLOT],
         modes: [
@@ -33,7 +33,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [16, 17, 18, 19, 20, 21],
+        buttonSlots: [14, 15, 16, 17, 18, 19],
         anyInputIndices: [],
         anyOutputIndices: [0],
         modes: [
@@ -49,7 +49,7 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([LIQUID_DISPLAY_SLOT, 8, 9]);
+            machine.blockSlots([LIQUID_DISPLAY_SLOT]);
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");

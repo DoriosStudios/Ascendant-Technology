@@ -15,14 +15,15 @@ import { displayProgress, renderStatus, setDynamicNumber, setDynamicString, setU
 
 const ID = "utilitycraft:arc_press_forge";
 const INPUTS = Object.freeze([3, 4, 5, 6]);
-const OUTPUTS = Object.freeze([16, 17, 18, 19]);
+const OUTPUTS = Object.freeze([7, 8, 9, 10]);
+const MODE_BUTTON_SLOT = 11;
 const MODE_KEY = "ascendant:arc_press_forge_mode";
 
 function getMode(entity) {
     return entity.getDynamicProperty(MODE_KEY) === "high_speed" ? "high_speed" : "low_loss";
 }
 
-ButtonManager.registerMachineButton(ID, 8, ({ entity }) => {
+ButtonManager.registerMachineButton(ID, MODE_BUTTON_SLOT, ({ entity }) => {
     const next = getMode(entity) === "low_loss" ? "high_speed" : "low_loss";
     setDynamicString(entity, MODE_KEY, next);
     setDynamicNumber(entity, "dorios:progress_0", 0);
@@ -31,7 +32,7 @@ ButtonManager.registerMachineButton(ID, 8, ({ entity }) => {
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [20, 21, 22, 23, 24, 25],
+        buttonSlots: [16, 17, 18, 19, 20, 21],
         anyInputSlots: INPUTS,
         anyOutputSlots: OUTPUTS,
         modes: [
@@ -47,10 +48,9 @@ DoriosLib.registry.blockComponent(ID, {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
-            machine.blockSlots([7, 9, 14, 15]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
-            setUiItem(machine.container, 8, "utilitycraft:ui_filler", "§r§aLow Loss");
+            setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "§r§aLow Loss");
             setDynamicString(machine.entity, MODE_KEY, "low_loss");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
         });

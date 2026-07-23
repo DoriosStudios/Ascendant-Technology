@@ -18,15 +18,15 @@ const FLUID_CONTAINER_INPUT_SLOT = 3;
 const FLUID_CONTAINER_RETURN_SLOT = 4;
 const GAS_CONTAINER_INPUT_SLOT = 5;
 const GAS_CONTAINER_OUTPUT_SLOT = 6;
-const FLUID_DISPLAY_SLOT = 10;
-const GAS_DISPLAY_SLOT = 11;
+const FLUID_DISPLAY_SLOT = 7;
+const GAS_DISPLAY_SLOT = 8;
 const RECIPE_KEY = "ascendant:vaporworks_recipe";
 const RESOURCE_IO_RATE = 128000;
 const itemMaximums = new Map();
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [12, 13, 14, 15, 16, 17],
+        buttonSlots: [11, 12, 13, 14, 15, 16],
         anyInputSlots: [FLUID_CONTAINER_INPUT_SLOT, GAS_CONTAINER_INPUT_SLOT],
         anyOutputSlots: [FLUID_CONTAINER_RETURN_SLOT, GAS_CONTAINER_OUTPUT_SLOT],
         modes: [
@@ -40,7 +40,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [18, 19, 20, 21, 22, 23],
+        buttonSlots: [17, 18, 19, 20, 21, 22],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -49,7 +49,7 @@ registerIOInterface(ID, {
         ],
     },
     gases: {
-        buttonSlots: [24, 25, 26, 27, 28, 29],
+        buttonSlots: [23, 24, 25, 26, 27, 28],
         anyInputIndices: [],
         anyOutputIndices: [0],
         modes: [
@@ -65,7 +65,7 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([7, FLUID_DISPLAY_SLOT, GAS_DISPLAY_SLOT]);
+            machine.blockSlots([FLUID_DISPLAY_SLOT, GAS_DISPLAY_SLOT]);
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");

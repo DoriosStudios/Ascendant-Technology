@@ -22,7 +22,7 @@
 			"utilitycraft:industrial_burner": {
 				"entity": {
 					"type": "fluid_machine",
-					"inventory_size": 32,
+					"inventory_size": 28,
 					"fixed_fluid_types": true
 				},
 				"machine": {
@@ -31,12 +31,12 @@
 					"rate_speed_base": 9600,
 					"fluid_cap": 32000,
 					"fluid_types": 1,
-					"upgrades": [6, 7, 8, 17]
+					"upgrades": [12, 13, 14, 15]
 				}
 			},
 			"utilitycraft:machine_upgrades": [
-				{ "type": "speed", "slot": 6 },
-				{ "type": "energy", "slot": 7 }
+				{ "type": "speed", "slot": 12 },
+				{ "type": "energy", "slot": 13 }
 			],
 			"utilitycraft:fluid_container": {},
 			"utilitycraft:machine_recipes": {

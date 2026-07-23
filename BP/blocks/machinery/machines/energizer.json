@@ -25,7 +25,7 @@
 			"utilitycraft:energizer": {
 				"entity": {
 					"type": "machine",
-					"inventory_size": 16
+					"inventory_size": 14
 				},
 				"machine": {
 					"energy_cap": 256000000,

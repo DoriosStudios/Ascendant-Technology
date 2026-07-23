@@ -18,14 +18,14 @@ import { displayProgress, renderStatus, setDynamicNumber, setDynamicString, setU
 const ID = "utilitycraft:centrifugal_siever";
 const INPUTS = Object.freeze([3, 4, 5, 6]);
 const MESH_SLOT = 7;
-const STEAM_DISPLAY_SLOT = 9;
-const OUTPUTS = Object.freeze([14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]);
+const STEAM_DISPLAY_SLOT = 8;
+const OUTPUTS = Object.freeze([11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]);
 const LOCK_KEY = "ascendant:centrifugal_siever_input";
 const STEAM_PER_CRAFT = 125;
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [29, 30, 31, 32, 33, 34],
+        buttonSlots: [26, 27, 28, 29, 30, 31],
         anyInputSlots: [...INPUTS, MESH_SLOT],
         anyOutputSlots: OUTPUTS,
         modes: [
@@ -36,7 +36,7 @@ registerIOInterface(ID, {
         ],
     },
     gases: {
-        buttonSlots: [35, 36, 37, 38, 39, 40],
+        buttonSlots: [32, 33, 34, 35, 36, 37],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -57,7 +57,7 @@ DoriosLib.registry.blockComponent(ID, {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
-            machine.blockSlots([8, 12, 13]);
+            machine.blockSlots([STEAM_DISPLAY_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setUiItem(machine.container, STEAM_DISPLAY_SLOT, "utilitycraft:steam_00");

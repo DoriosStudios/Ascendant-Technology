@@ -15,12 +15,13 @@ import { displayProgress, renderStatus, setDynamicNumber, setUiItem } from "./ru
 
 const ID = "utilitycraft:pulverizer";
 const INPUTS = Object.freeze([3, 4, 5, 6]);
-const OUTPUTS = Object.freeze([16, 17, 18, 19]);
+const OUTPUTS = Object.freeze([7, 8, 9, 10]);
+const STEAM_DISPLAY_SLOT = 11;
 const STEAM_PER_CRAFT = 250;
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [20, 21, 22, 23, 24, 25],
+        buttonSlots: [16, 17, 18, 19, 20, 21],
         anyInputSlots: INPUTS,
         anyOutputSlots: OUTPUTS,
         modes: [
@@ -30,7 +31,7 @@ registerIOInterface(ID, {
         ],
     },
     gases: {
-        buttonSlots: [26, 27, 28, 29, 30, 31],
+        buttonSlots: [22, 23, 24, 25, 26, 27],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -45,10 +46,10 @@ DoriosLib.registry.blockComponent(ID, {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
-            machine.blockSlots([7, 9, 14, 15]);
+            machine.blockSlots([STEAM_DISPLAY_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
-            setUiItem(machine.container, 8, "utilitycraft:steam_00");
+            setUiItem(machine.container, STEAM_DISPLAY_SLOT, "utilitycraft:steam_00");
             const steam = new GasStorage(machine.entity, 0);
             steam.setType("steam");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
@@ -68,7 +69,7 @@ DoriosLib.registry.blockComponent(ID, {
             setDynamicNumber(machine.entity, "dorios:progress_0", 0);
             displayProgress(machine, settings.machine.energy_cost);
             renderStatus(machine, false, "Insert Items");
-            if (machine.shouldUpdateUI) steam.display(8);
+            if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
             return;
         }
 
@@ -82,7 +83,7 @@ DoriosLib.registry.blockComponent(ID, {
             if (inputCrafts <= 0) setDynamicNumber(machine.entity, "dorios:progress_0", 0);
             displayProgress(machine, recipe.cost ?? settings.machine.energy_cost);
             renderStatus(machine, false, outputCrafts <= 0 ? "Output Full" : "Needs More Input");
-            if (machine.shouldUpdateUI) steam.display(8);
+            if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
             return;
         }
 
@@ -111,7 +112,7 @@ DoriosLib.registry.blockComponent(ID, {
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
         setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
         displayProgress(machine, cost);
-        if (machine.shouldUpdateUI) steam.display(8);
+        if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
         const active = result.energyUsed > 0 || result.processCount > 0;
         renderStatus(machine, active, active ? (steamActive ? "Steam Boost" : "Running") : "No Energy");
     },

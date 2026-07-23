@@ -26,7 +26,7 @@
 			"utilitycraft:catalyst_weaver": {
 				"entity": {
 					"type": "fluid_machine",
-					"inventory_size": 32
+					"inventory_size": 27
 				},
 				"machine": {
 					"energy_cap": 4096000,
@@ -34,12 +34,12 @@
 					"rate_speed_base": 180,
 					"fluid_cap": 128000,
 					"fluid_types": 1,
-					"upgrades": [15, 16]
+					"upgrades": [11, 12]
 				}
 			},
 			"utilitycraft:machine_upgrades": [
-				{ "type": "speed", "slot": 15 },
-				{ "type": "energy", "slot": 16 }
+				{ "type": "speed", "slot": 11 },
+				{ "type": "energy", "slot": 12 }
 			],
 			"utilitycraft:machine_recipes": {
 				"type": "catalyst_weaver"

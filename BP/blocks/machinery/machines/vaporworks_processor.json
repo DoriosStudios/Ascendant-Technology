@@ -24,7 +24,7 @@
 			"utilitycraft:vaporworks_processor": {
 				"entity": {
 					"type": "fluid_gas_machine",
-					"inventory_size": 30,
+					"inventory_size": 29,
 					"fixed_gas_types": true
 				},
 				"machine": {
@@ -35,12 +35,12 @@
 					"fluid_types": 1,
 					"gas_cap": 64000,
 					"gas_types": 1,
-					"upgrades": [8, 9]
+					"upgrades": [9, 10]
 				}
 			},
 			"utilitycraft:machine_upgrades": [
-				{ "type": "speed", "slot": 8 },
-				{ "type": "energy", "slot": 9 }
+				{ "type": "speed", "slot": 9 },
+				{ "type": "energy", "slot": 10 }
 			],
 			"utilitycraft:machine_recipes": {
 				"type": "vaporworks_processor"

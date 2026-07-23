@@ -60,25 +60,25 @@
                     "anchor_to": "top_middle",
                     "offset": [46, 21],
                     "$slot_outline_texture": "textures/ui/slots/output_slot",
-                    "$collection_index_1": 16,
-                    "$collection_index_2": 17,
-                    "$collection_index_3": 18,
-                    "$collection_index_4": 19
+                    "$collection_index_1": 7,
+                    "$collection_index_2": 8,
+                    "$collection_index_3": 9,
+                    "$collection_index_4": 10
                 }
             },
             {
                 "steam_bar@uc.liquid_input_1_bar": {
-                    "$collection_index": 8,
+                    "$collection_index": 11,
                     "$has_bg": false,
                     "offset": [70, -1]
                 }
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "$upgrade_index_1": 10,
-                    "$upgrade_index_2": 11,
-                    "$upgrade_index_3": 12,
-                    "$upgrade_index_4": 13,
+                    "$upgrade_index_1": 12,
+                    "$upgrade_index_2": 13,
+                    "$upgrade_index_3": 14,
+                    "$upgrade_index_4": 15,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
                     "$has_third_upgrade": true,
@@ -104,18 +104,18 @@
                     "$io_right_texture": "textures/blocks/machines/superior/pulverizer_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/superior/pulverizer_off_down",
                     "$io_back_texture": "textures/blocks/machines/superior/pulverizer_off_south",
-                    "$io_item_top_index": 20,
-                    "$io_item_left_index": 21,
-                    "$io_item_front_index": 22,
-                    "$io_item_right_index": 23,
-                    "$io_item_bottom_index": 24,
-                    "$io_item_back_index": 25,
-                    "$io_gas_top_index": 26,
-                    "$io_gas_left_index": 27,
-                    "$io_gas_front_index": 28,
-                    "$io_gas_right_index": 29,
-                    "$io_gas_bottom_index": 30,
-                    "$io_gas_back_index": 31
+                    "$io_item_top_index": 16,
+                    "$io_item_left_index": 17,
+                    "$io_item_front_index": 18,
+                    "$io_item_right_index": 19,
+                    "$io_item_bottom_index": 20,
+                    "$io_item_back_index": 21,
+                    "$io_gas_top_index": 22,
+                    "$io_gas_left_index": 23,
+                    "$io_gas_front_index": 24,
+                    "$io_gas_right_index": 25,
+                    "$io_gas_bottom_index": 26,
+                    "$io_gas_back_index": 27
                 }
             },
             {

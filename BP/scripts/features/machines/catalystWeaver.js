@@ -16,16 +16,16 @@ import {
 const ID = "utilitycraft:catalyst_weaver";
 const INPUT_SLOT = 3;
 const CATALYST_SLOTS = [4, 5, 6, 7, 8, 9];
-const FLUID_DISPLAY_SLOT = 11;
-const BYPRODUCT_SLOT = 18;
-const OUTPUT_SLOT = 19;
+const FLUID_DISPLAY_SLOT = 10;
+const BYPRODUCT_SLOT = 13;
+const OUTPUT_SLOT = 14;
 const RECIPE_KEY = "ascendant:catalyst_weaver_recipe";
 const FLUID_IO_RATE = 128000;
 const itemMaximums = new Map();
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [20, 21, 22, 23, 24, 25],
+        buttonSlots: [15, 16, 17, 18, 19, 20],
         anyInputSlots: [INPUT_SLOT, ...CATALYST_SLOTS],
         anyOutputSlots: [OUTPUT_SLOT, BYPRODUCT_SLOT],
         modes: [
@@ -44,7 +44,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [26, 27, 28, 29, 30, 31],
+        buttonSlots: [21, 22, 23, 24, 25, 26],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -60,7 +60,7 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([10, FLUID_DISPLAY_SLOT, 12, 13, 14, 17]);
+            machine.blockSlots([FLUID_DISPLAY_SLOT]);
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");

@@ -22,7 +22,7 @@ const itemMaximums = new Map();
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [10, 11, 12, 13, 14, 15],
+        buttonSlots: [8, 9, 10, 11, 12, 13],
         anyInputSlots: [PRIMARY_INPUT_SLOT, AUXILIARY_INPUT_SLOT],
         anyOutputSlots: [OUTPUT_SLOT],
         modes: [
@@ -41,7 +41,6 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([8, 9]);
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");

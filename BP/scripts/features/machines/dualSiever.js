@@ -17,15 +17,15 @@ import { displayProgress, renderStatus, setDynamicNumber, setDynamicString, setU
 
 const ID = "utilitycraft:dual_siever";
 const MODE_KEY = "ascendant:dual_siever_mode";
-const MODE_BUTTON_SLOT = 35;
-const LANE_B_PROGRESS_SLOT = 36;
-const STEAM_DISPLAY_SLOT = 10;
+const MODE_BUTTON_SLOT = 7;
+const LANE_B_PROGRESS_SLOT = 8;
+const STEAM_DISPLAY_SLOT = 9;
 const STEAM_PER_CRAFT = 125;
 const OUTPUTS = Object.freeze([
-    15, 16, 17, 18, 19,
-    20, 21, 22, 23, 24,
-    25, 26, 27, 28, 29,
-    30, 31, 32, 33, 34,
+    12, 13, 14, 15, 16,
+    17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31,
 ]);
 const LANES = Object.freeze([
     Object.freeze({ index: 0, name: "A", inputs: Object.freeze([3]), meshSlot: 4, progressSlot: 2 }),
@@ -46,7 +46,7 @@ ButtonManager.registerMachineButton(ID, MODE_BUTTON_SLOT, ({ entity }) => {
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [37, 38, 39, 40, 41, 42],
+        buttonSlots: [32, 33, 34, 35, 36, 37],
         anyInputSlots: [3, 4, 5, 6],
         anyOutputSlots: OUTPUTS,
         modes: [
@@ -61,7 +61,7 @@ registerIOInterface(ID, {
         ],
     },
     gases: {
-        buttonSlots: [9, 43, 44, 45, 46, 47],
+        buttonSlots: [38, 39, 40, 41, 42, 43],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -190,7 +190,6 @@ DoriosLib.registry.blockComponent(ID, {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
-            machine.blockSlots([13, 14]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setUiItem(machine.container, STEAM_DISPLAY_SLOT, "utilitycraft:steam_00");

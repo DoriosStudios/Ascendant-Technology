@@ -22,7 +22,7 @@
             "utilitycraft:dual_siever": {
                 "entity": {
                     "type": "gas_machine",
-                    "inventory_size": 48,
+                    "inventory_size": 44,
                     "fixed_gas_types": true
                 },
                 "machine": {
@@ -31,12 +31,12 @@
                     "rate_speed_base": 9600,
                     "gas_cap": 32000,
                     "gas_types": 1,
-                    "upgrades": [11, 12]
+                    "upgrades": [10, 11]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 11 },
-                { "type": "energy", "slot": 12 }
+                { "type": "speed", "slot": 10 },
+                { "type": "energy", "slot": 11 }
             ],
             "utilitycraft:gas_container": {},
             "utilitycraft:machine_recipes": {

@@ -66,7 +66,7 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": { "interval_range": [2, 2] },
+// LEGACY_DISABLED             "minecraft:tick": { "interval_range": [4, 4] },
             "minecraft:destructible_by_mining": { "seconds_to_destroy": 1 },
             "minecraft:destructible_by_explosion": false,
             "tag:dorios:machine": {},

@@ -56,7 +56,7 @@
 				}
 			},
 // LEGACY_DISABLED 			"minecraft:tick": {
-// 				"interval_range": [1, 1]
+// 				"interval_range": [4, 4]
 // 			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 1

@@ -8,12 +8,14 @@ import { BasicMachine } from "./basicMachine";
 import { OutputTracker } from "./outputTracker.js";
 import { resolveItemContainerAt } from "./itemContainers.js";
 import { TickScheduler } from "./tickScheduler.js";
+import { MachineUpgradeRegistry } from "./machineUpgrades.js";
 import { Rotation } from "../utils/rotation";
 import * as Utils from "../utils/entity";
 import { InterfaceManager } from "../interfaces/index.js";
 import { ensureItemIOConfig } from "../interfaces/itemIO.js";
 import { ensureFluidIOConfig } from "../interfaces/fluidIO.js";
 import { ensureGasIOConfig } from "../interfaces/gasIO.js";
+import { ensureBlockIOInterface } from "../interfaces/IOInterface.js";
 import { getDirectionBetween, OPPOSITE_DIRECTIONS } from "../utils/directions.js";
 import * as DoriosContainer from "../../DoriosLib/containers/index.js";
 
@@ -33,23 +35,25 @@ export class Machine extends BasicMachine {
     const machineSettings = settings.machine;
     if (!machineSettings) return;
 
-    this.upgrades = {
-      energy: 0,
-      range: 0,
-      speed: 0,
-      ultimate: 0,
-    };
-    this.boosts = {
-      speed: 1,
-      consumption: 1,
-    };
+    this.boosts = MachineUpgradeRegistry.resolveBoosts(
+      this.container,
+      machineSettings.upgrades,
+      {
+        speed: 1,
+        energy_cost: 1,
+        energy_efficiency: 1,
+        process_batch: 1,
+      },
+    );
+    this.boosts.energy_cost = Math.max(0.01, this.boosts.energy_cost);
+    this.boosts.energy_efficiency = Math.max(0.01, this.boosts.energy_efficiency);
+    this.boosts.consumption = Math.max(
+      0.01,
+      this.boosts.energy_cost / this.boosts.energy_efficiency,
+    );
 
-    if (machineSettings.upgrades) {
-      this.upgrades = this.#getUpgradeLevels(machineSettings.upgrades);
-      this.boosts = this.#calculateBoosts(this.upgrades);
-      const adjustedRate = settings.machine.rate_speed_base * this.boosts.speed * this.boosts.consumption;
-      this.setRate(adjustedRate);
-    }
+    const adjustedRate = baseRate * this.boosts.speed * this.boosts.consumption;
+    this.setRate(adjustedRate);
   }
 
   /**
@@ -163,6 +167,7 @@ export class Machine extends BasicMachine {
     }
 
     system.run(() => {
+      ensureBlockIOInterface(block);
       const entity = Utils.spawnEntity(block, config);
       const energyManager = new EnergyStorage(entity);
       energyManager.setCap(config.machine.energy_cap);
@@ -400,7 +405,8 @@ export class Machine extends BasicMachine {
 §r${Constants.MACHINE_TEXT_COLORS.yellow}${message}!
 
 §r${Constants.MACHINE_TEXT_COLORS.green}Speed x${this.boosts.speed.toFixed(2)}
-§r${Constants.MACHINE_TEXT_COLORS.green}Efficiency ${((1 / this.boosts.consumption) * 100).toFixed(0)}%%
+§r${Constants.MACHINE_TEXT_COLORS.green}Efficiency x${(1 / this.boosts.consumption).toFixed(2)}
+§r${Constants.MACHINE_TEXT_COLORS.green}Recipe Batch x${Math.max(1, Math.floor(this.boosts.process_batch))}
 §r${Constants.MACHINE_TEXT_COLORS.green}Cost ---
 
 §r${Constants.MACHINE_TEXT_COLORS.red}Rate ${EnergyStorage.formatEnergyToText(Math.floor(this.baseRate))}/t
@@ -421,7 +427,8 @@ export class Machine extends BasicMachine {
 §r${Constants.MACHINE_TEXT_COLORS.darkGreen}${message}!
 
 §r${Constants.MACHINE_TEXT_COLORS.green}Speed x${this.boosts.speed.toFixed(2)}
-§r${Constants.MACHINE_TEXT_COLORS.green}Efficiency ${((1 / this.boosts.consumption) * 100).toFixed(0)}%%
+§r${Constants.MACHINE_TEXT_COLORS.green}Efficiency x${(1 / this.boosts.consumption).toFixed(2)}
+§r${Constants.MACHINE_TEXT_COLORS.green}Recipe Batch x${Math.max(1, Math.floor(this.boosts.process_batch))}
 §r${Constants.MACHINE_TEXT_COLORS.green}Cost ${EnergyStorage.formatEnergyToText(this.getEnergyCost() * this.boosts.consumption)}
 
 §r${Constants.MACHINE_TEXT_COLORS.red}Rate ${EnergyStorage.formatEnergyToText(Math.floor(this.baseRate))}/t
@@ -429,87 +436,4 @@ export class Machine extends BasicMachine {
   }
   //#endregion
 
-  /**
-   * Scans upgrade slots and returns upgrade levels by type.
-   *
-   * @param {Array<number>} [slots=[4,5,6]] The inventory slots reserved for upgrades.
-   * @returns {UpgradeLevels}
-   */
-  #getUpgradeLevels(slots = [4, 5]) {
-    /** @type {UpgradeLevels} */
-    const levels = {
-      energy: 0,
-      range: 0,
-      speed: 0,
-      ultimate: 0,
-    };
-
-    for (const slot of slots) {
-      const item = this.container.getItem(slot);
-      if (!item) continue;
-
-      if (!item.hasTag("utilitycraft:is_upgrade")) continue;
-
-      // Parse type (e.g. "utilitycraft:energy_upgrade" → "energy")
-      const [, raw] = item.typeId.split(":");
-      const type = raw.split("_")[0];
-
-      if (levels[type] !== undefined) {
-        levels[type] += item.amount;
-      }
-    }
-
-    return levels;
-  }
-
-  /**
-   * Calculates the speed multiplier based on upgrade amounts.
-   *
-   * Formula:
-   * speed = 1 + 0.125 * n * (n + 1)
-   *
-   * @param {number} speedAmount
-   * @returns {number} Speed multiplier
-   */
-  #calculateSpeed(speedAmount) {
-    const speedLevel = Math.min(8, speedAmount);
-    return 1 + 0.125 * speedLevel * (speedLevel + 1);
-  }
-
-  /**
-   * Calculates the consumption multiplier (lower = better).
-   *
-   * Formula (depends on energy upgrade level):
-   * If level < 4:
-   *   consumption = (1 - 0.2 * level) * speed
-   * Else:
-   *   consumption = (1 - (0.95 - 0.05 * (8 - level))) * speed
-   *
-   * @param {number} energyAmount
-   * @param {number} speed
-   * @returns {number} Consumption multiplier (0–1)
-   */
-  #calculateConsumption(energyAmount, speed) {
-    const energyLevel = Math.min(8, energyAmount);
-    if (energyLevel < 4) {
-      return (1 - 0.2 * energyLevel) * speed;
-    }
-    return (1 - (0.95 - 0.05 * (8 - energyLevel))) * speed;
-  }
-
-  /**
-   * Aggregates all boosts (speed + consumption).
-   *
-   * @param {Object} levels Upgrade levels { speed, energy, ... }
-   * @returns {{ speed: number, consumption: number }}
-   */
-  #calculateBoosts(levels) {
-    const speedLevel = levels.speed ?? 0;
-    const energyLevel = levels.energy ?? 0;
-
-    const speed = this.#calculateSpeed(speedLevel);
-    const consumption = this.#calculateConsumption(energyLevel, speed);
-
-    return { speed, consumption };
-  }
 }

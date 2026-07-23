@@ -26,7 +26,7 @@ applicable.
 | Area | Inventory | Active now | Main remaining work |
 |---|---:|---:|---|
 | AT machines | 30 | 0 | 30 new implementations |
-| Generators | 11 blocks / 7 families | 3 complete + 3 partial | External-ID IO support and Power Beacon (5 tiers) |
+| Generators | 11 blocks / 7 families | 6 blocks / 6 families | Power Beacon (5 tiers) |
 | Transportation | 30 blocks | 0 | Conveyors, bridges, and routing |
 | Overclock | 5 blocks | 0 | Network, tower, relay, and reinforced IO |
 | Mob grinding | 1 block | 0 | Mob Magnet |
@@ -53,19 +53,18 @@ applicable.
 
 The six generators use components registered by UC, and their block parameter contracts
 match the current UC tiers with AT-specific tier values. Battery, Solar, and Wind require
-no block-ID-specific IO policy. Furnator, Magmator, and Thermo do: current UC registers
-only its own tier IDs, so generation is connected but external IO remains blocked until
-UC exposes or performs registration for external component users. The experimental
-`dense_*` scripts found in legacy were not imported by the old `main.js`, so they are not
-part of the confirmed behavior of the previous release.
+no block-ID-specific IO policy. Furnator, Magmator, and Thermo use explicit UC family tags;
+DoriosCore resolves each tagged external block type once and materializes the ordinary IO
+registration. The experimental `dense_*` scripts found in legacy were not imported by the
+old `main.js`, so they are not part of the confirmed behavior of the previous release.
 
 | Active now | In-game test | Family / identifier | Current implementation | Test requirements |
 |---|---|---|---|---|
 | ✅ | ⬜ | Absolute Battery — `utilitycraft:absolute_battery` | UC `utilitycraft:battery` | Place, charge, transfer, break, and restore energy. |
-| 🟨 | ⬜ | Absolute Furnator — `utilitycraft:absolute_furnator` | UC `utilitycraft:furnator`; inventory contract aligned, external-ID IO pending | Fuel, IO, generation, UI, and persistence. |
-| 🟨 | ⬜ | Absolute Magmator — `utilitycraft:absolute_magmator` | UC `magmator` + `fluid_container`; inventory contract aligned, external-ID IO pending | Lava input, IO, energy, and persistence. |
+| ✅ | ⬜ | Absolute Furnator — `utilitycraft:absolute_furnator` | UC `utilitycraft:furnator` + `utilitycraft:io.furnator` | Fuel, IO, generation, UI, and persistence. |
+| ✅ | ⬜ | Absolute Magmator — `utilitycraft:absolute_magmator` | UC `magmator` + `fluid_container` + `utilitycraft:io.magmator` | Lava input, IO, energy, and persistence. |
 | ✅ | ⬜ | Absolute Solar Panel — `utilitycraft:absolute_solar_panel` | UC `utilitycraft:solar_panel` | Day/night cycle, generation, and transfer. |
-| 🟨 | ⬜ | Absolute Thermo Generator — `utilitycraft:absolute_thermo_generator` | UC `utilitycraft:thermo_generator`; inventory contract aligned, external-ID IO pending | Heat source, coolant, IO, and energy. |
+| ✅ | ⬜ | Absolute Thermo Generator — `utilitycraft:absolute_thermo_generator` | UC `utilitycraft:thermo_generator` + `utilitycraft:io.thermo_generator` | Heat source, coolant, IO, and energy. |
 | ✅ | ⬜ | Absolute Wind Turbine — `utilitycraft:absolute_wind_turbine` | UC `utilitycraft:wind_turbine` | Altitude, weather, generation, and transfer. |
 | ❌ | ⬜ | Power Beacon — `basic`, `advanced`, `expert`, `ultimate`, `absolute` | The `power_beacon` component and ticks are disabled | Rebuild tiers, consumption, range, UI, and effects. |
 

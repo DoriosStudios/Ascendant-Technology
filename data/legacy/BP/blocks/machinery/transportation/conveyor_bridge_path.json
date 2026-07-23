@@ -1,0 +1,30 @@
+{
+	"format_version": "1.21.100",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:conveyor_bridge_path"
+		},
+		"components": {
+            "minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_conveyor_bridge_path",
+					"render_method": "blend",
+                    "face_dimming": false
+				}
+			},
+			"minecraft:collision_box": {
+				"origin": [0, 0, 0],
+				"size": [0, 0, 0]
+			},
+			"minecraft:selection_box": {
+				"origin": [0, 0, 0],
+				"size": [0, 0, 0]
+			},
+			"minecraft:light_dampening": 0,
+			"tag:dorios:conveyor_bridge_path": {},
+			"tag:dorios:energy": {},
+			"tag:dorios:isTube": {}
+		}
+	}
+}

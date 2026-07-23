@@ -16,10 +16,10 @@
         "use_duration": 0
       },
       "minecraft:icon": "utilitycraft_aetherium_liquid_capsule_5",
-      "utilitycraft:fluid_capsule": {
-        "fluid": "liquified_aetherium",
-        "amount": 5000
-      },
+// LEGACY_DISABLED       "utilitycraft:fluid_capsule": {
+//         "fluid": "liquified_aetherium",
+//         "amount": 5000
+//       },
       "minecraft:allow_off_hand": false,
       "minecraft:tags": {
         "tags": [

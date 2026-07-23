@@ -22,43 +22,43 @@
 			}
 		},
 		"components": {
-			"utilitycraft:energizer": {
-				"entity": {
-					"type": "machine",
-					"input_type": "simple",
-					"output_type": "simple",
-					"inventory_size": 20,
-					"input_range": [3, 4],
-					"output_slot": 19
-				},
-				"machine": {
-					"energy_cap": 256000000,
-					"energy_cost": 9600,
-					"rate_speed_base": 24000,
-					"upgrades": [
-						6,
-						7,
-						8
-					],
-					"hidden_slots": [
-						5,
-						9,
-						10,
-						11,
-						12,
-						13,
-						14,
-						15,
-						16,
-						17,
-						18
-					]
-				}
-			},
-			"utilitycraft:special_container":{
-				"Primary Input": 3,
-				"Aux Input": 4
-			},
+// LEGACY_DISABLED 			"utilitycraft:energizer": {
+// 				"entity": {
+// 					"type": "machine",
+// 					"input_type": "simple",
+// 					"output_type": "simple",
+// 					"inventory_size": 20,
+// 					"input_range": [3, 4],
+// 					"output_slot": 19
+// 				},
+// 				"machine": {
+// 					"energy_cap": 256000000,
+// 					"energy_cost": 9600,
+// 					"rate_speed_base": 24000,
+// 					"upgrades": [
+// 						6,
+// 						7,
+// 						8
+// 					],
+// 					"hidden_slots": [
+// 						5,
+// 						9,
+// 						10,
+// 						11,
+// 						12,
+// 						13,
+// 						14,
+// 						15,
+// 						16,
+// 						17,
+// 						18
+// 					]
+// 				}
+// 			},
+// LEGACY_DISABLED 			"utilitycraft:special_container":{
+// 				"Primary Input": 3,
+// 				"Aux Input": 4
+// 			},
 			"utilitycraft:machine_recipes": {
 				"type": "energizer"
 			},
@@ -93,12 +93,12 @@
 					"render_method": "alpha_test"
 				}
 			},
-			"minecraft:tick": {
-				"interval_range": [
-					2,
-					2
-				]
-			},
+// LEGACY_DISABLED 			"minecraft:tick": {
+// 				"interval_range": [
+// 					2,
+// 					2
+// 				]
+// 			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 1
 			},

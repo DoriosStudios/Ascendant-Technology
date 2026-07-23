@@ -1,0 +1,49 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:titanium_leggings",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.leggings"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_titanium_leggings",
+            "minecraft:wearable": {
+                "slot": "slot.armor.legs",
+                "protection": 7
+            },
+            "minecraft:enchantable": {
+                "slot": "armor_legs",
+                "value": 18
+            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:durability": {
+                "max_durability": 495
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": [
+                            "utilitycraft:titanium"
+                        ],
+                        "repair_amount": "(q.max_durability*0.25)"
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:titanium_plate"
+                        ],
+                        "repair_amount": "(q.max_durability*0.333)"
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:titanium_leggings"
+                        ],
+                        "repair_amount": "(q.max_durability*0.5)"
+                    }
+                ]
+            }
+        }
+    }
+}

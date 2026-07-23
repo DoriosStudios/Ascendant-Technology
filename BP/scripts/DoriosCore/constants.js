@@ -1,66 +1,101 @@
 
-export const CORE_CONSTANTS = Object.freeze({
-    machine: Object.freeze({
-        defaultEntityId: "utilitycraft:machine",
-        defaultTickSpeed: 10,
-        ticksPerSecond: 20
-    }),
-    directions: Object.freeze({
-        cardinalOffsets: Object.freeze({
-            north: { x: 0, y: 0, z: -1 },
-            south: { x: 0, y: 0, z: 1 },
-            east: { x: 1, y: 0, z: 0 },
-            west: { x: -1, y: 0, z: 0 },
-            up: { x: 0, y: 1, z: 0 },
-            down: { x: 0, y: -1, z: 0 }
-        }),
-        opposite: Object.freeze({
-            north: "south",
-            south: "north",
-            east: "west",
-            west: "east",
-            up: "down",
-            down: "up"
-        }),
-        leftOf: Object.freeze({
-            north: "west",
-            south: "east",
-            east: "north",
-            west: "south"
-        }),
-        rightOf: Object.freeze({
-            north: "east",
-            south: "west",
-            east: "south",
-            west: "north"
-        }),
-        validRelative: new Set(["front", "back", "left", "right", "up", "down"])
-    }),
-    labels: Object.freeze({
-        placeholderItem: "utilitycraft:arrow_indicator_90",
-        charLimit: 255,
-        hiddenSlotFillerItem: "utilitycraft:container_filler"
-    }),
-    energy: Object.freeze({
-        debugProp: "utilitycraft:debug_energy",
-        geometryTag: "dorios:energy",
-        geometrySkipTypes: new Set([
-            "utilitycraft:reinforced_cable"
-        ])
-    })
-});
+/**
+ * Default entity identifier used by machines.
+ *
+ * Machines spawn this entity to handle storage, processing,
+ * and internal machine logic.
+ *
+ * @constant
+ */
+export const DEFAULT_ENTITY_ID = "utilitycraft:machine_entity";
 
-export const DEFAULT_ENTITY_ID = CORE_CONSTANTS.machine.defaultEntityId;
-export const DEFAULT_TICK_SPEED = CORE_CONSTANTS.machine.defaultTickSpeed;
-export const TICKS_PER_SECOND = CORE_CONSTANTS.machine.ticksPerSecond;
-export const CARDINAL_DIRECTION_OFFSETS = CORE_CONSTANTS.directions.cardinalOffsets;
-export const OPPOSITE_DIRECTIONS = CORE_CONSTANTS.directions.opposite;
-export const LEFT_OF_DIRECTION = CORE_CONSTANTS.directions.leftOf;
-export const RIGHT_OF_DIRECTION = CORE_CONSTANTS.directions.rightOf;
-export const VALID_RELATIVE_DIRECTIONS = CORE_CONSTANTS.directions.validRelative;
-export const LABEL_PLACEHOLDER_ITEM = CORE_CONSTANTS.labels.placeholderItem;
-export const LABEL_CHAR_LIMIT = CORE_CONSTANTS.labels.charLimit;
-export const HIDDEN_SLOT_FILLER_ITEM = CORE_CONSTANTS.labels.hiddenSlotFillerItem;
-export const ENERGY_DEBUG_PROP = CORE_CONSTANTS.energy.debugProp;
-export const ENERGY_GEOMETRY_TAG = CORE_CONSTANTS.energy.geometryTag;
-export const ENERGY_GEOMETRY_SKIP_TYPES = CORE_CONSTANTS.energy.geometrySkipTypes;
+/**
+ * Default machine processing interval.
+ *
+ * Represents the number of ticks between machine updates.
+ * Minecraft runs at 20 ticks per second.
+ *
+ * @constant
+ */
+export const DEFAULT_TICK_SPEED = 20;
+
+/**
+ * Global key used to store the world-loaded flag in `globalThis`.
+ */
+export const GLOBAL_WORLD_LOADED_KEY = "worldLoaded";
+
+/**
+ * Global key used to store the shared tick counter in `globalThis`.
+ */
+export const GLOBAL_TICK_COUNT_KEY = "tickCount";
+
+/**
+ * Global key used to store the shared tick speed in `globalThis`.
+ */
+export const GLOBAL_TICK_SPEED_KEY = "tickSpeed";
+
+/**
+ * Dynamic property used to persist the configured machine tick speed.
+ */
+export const TICK_SPEED_PROPERTY_ID = "utilitycraft:tickSpeed";
+
+/**
+ * Script event used to destroy a UtilityCraft machine from a helper entity.
+ */
+export const DESTROY_MACHINE_EVENT_ID = "dorios:destroyMachine";
+
+/**
+ * Script event used to destroy a UtilityCraft generator from a helper entity.
+ */
+export const DESTROY_GENERATOR_EVENT_ID = "dorios:destroyGenerator";
+
+/**
+ * Script event used to destroy a UtilityCraft fluid tank from a helper entity.
+ */
+export const DESTROY_TANK_EVENT_ID = "dorios:destroyTank";
+
+/**
+ * Script event used to register fluid container items at runtime.
+ */
+export const REGISTER_FLUID_ITEM_EVENT_ID = "utilitycraft:register_fluid_item";
+
+/**
+ * Script event used to register fluid holder items at runtime.
+ */
+export const REGISTER_FLUID_HOLDER_EVENT_ID = "utilitycraft:register_fluid_holder";
+
+/** Script event used to register gas container items at runtime. */
+export const REGISTER_GAS_ITEM_EVENT_ID = "utilitycraft:register_gas_item";
+
+/** Script event used to register gas holder items at runtime. */
+export const REGISTER_GAS_HOLDER_EVENT_ID = "utilitycraft:register_gas_holder";
+
+/**
+ * Script event used to update the shared machinery tick speed.
+ */
+export const SET_TICK_SPEED_EVENT_ID = "utilitycraft:set_tick_speed";
+
+/**
+ * Default background scheduler profile used by UtilityCraft machinery.
+ */
+export const DEFAULT_SCHEDULER_PROFILE = "fast";
+
+/**
+ * Dynamic property used to persist the configured machinery scheduler profile.
+ */
+export const SCHEDULER_PROFILE_PROPERTY_ID = "utilitycraft:schedulerProfile";
+
+/**
+ * Script event used to update the machinery scheduler profile.
+ */
+export const SET_SCHEDULER_PROFILE_EVENT_ID = "utilitycraft:set_scheduler_profile";
+
+/**
+ * Script event used to synchronize machine tick group counts across addons.
+ */
+export const TICK_GROUP_EVENT_ID = "utilitycraft:tick_group";
+
+/**
+ * Source identifier used by UtilityCraft tick group sync messages.
+ */
+export const TICK_GROUP_SOURCE_ID = "utilitycraft";

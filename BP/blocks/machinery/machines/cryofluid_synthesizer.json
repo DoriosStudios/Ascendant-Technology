@@ -19,34 +19,34 @@
             }
         },
         "components": {
-            "utilitycraft:cryofluid_synthesizer": {
-                "entity": {
-                    "type": "machine",
-                    "input_type": "complex",
-                    "output_type": "complex",
-                    "inventory_size": 18,
-                    "input_range": [4, 11],
-                    "fluid": true
-                },
-                "machine": {
-                    "energy_cap": 384000000,
-                    "energy_cost": 6000,
-                    "rate_speed_base": 24000,
-                    "dynamic_rate": true,
-                    "fluid_cap": 128000,
-                    "fluid_rate": 64000,
-                    "upgrades": [14, 15, 16, 17],
-                    "hidden_slots": [13]
-                }
-            },
-            "utilitycraft:special_container": {
-                "Mode Switch": 3,
-                "Titanium Input": [4, 5, 6, 7],
-                "Lapis Input": [8, 9, 10, 11],
-                "Water Tank": 12,
-                "Cryofluid Tank": 13,
-                "Upgrade Slots": [14, 15, 16, 17]
-            },
+// LEGACY_DISABLED             "utilitycraft:cryofluid_synthesizer": {
+//                 "entity": {
+//                     "type": "machine",
+//                     "input_type": "complex",
+//                     "output_type": "complex",
+//                     "inventory_size": 18,
+//                     "input_range": [4, 11],
+//                     "fluid": true
+//                 },
+//                 "machine": {
+//                     "energy_cap": 384000000,
+//                     "energy_cost": 6000,
+//                     "rate_speed_base": 24000,
+//                     "dynamic_rate": true,
+//                     "fluid_cap": 128000,
+//                     "fluid_rate": 64000,
+//                     "upgrades": [14, 15, 16, 17],
+//                     "hidden_slots": [13]
+//                 }
+//             },
+// LEGACY_DISABLED             "utilitycraft:special_container": {
+//                 "Mode Switch": 3,
+//                 "Titanium Input": [4, 5, 6, 7],
+//                 "Lapis Input": [8, 9, 10, 11],
+//                 "Water Tank": 12,
+//                 "Cryofluid Tank": 13,
+//                 "Upgrade Slots": [14, 15, 16, 17]
+//             },
             "utilitycraft:machine_recipes": {
                 "type": "cryofluid_synthesizer"
             },
@@ -81,9 +81,9 @@
                     "render_method": "alpha_test"
                 }
             },
-            "minecraft:tick": {
-                "interval_range": [2, 2]
-            },
+// LEGACY_DISABLED             "minecraft:tick": {
+//                 "interval_range": [2, 2]
+//             },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

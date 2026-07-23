@@ -1,0 +1,97 @@
+{
+	"format_version": "1.21.90",
+	"minecraft:item": {
+		"description": {
+			"identifier": "utilitycraft:lucky_aiot",
+			"menu_category": {
+				"category": "none"
+			}
+		},
+		"components": {
+			"utilitycraft:hoe": {
+				"size": 3,
+				"runTractor": true,
+				"sneakingMode": false
+			},
+			"utilitycraft:shovel": {
+				"size": 1,
+				"sneakingMode": true
+			},
+			"minecraft:tags": {
+				"tags": [
+					"minecraft:is_axe",
+					"minecraft:is_pickaxe",
+					"minecraft:is_sword",
+					"minecraft:is_tool",
+					"utilitycraft:is_aiot",
+					"minecraft:netherite_tier"
+				]
+			},
+			"minecraft:icon": "utilitycraft_lucky_aiot",
+			"minecraft:max_stack_size": 1,
+			"minecraft:hand_equipped": true,
+			"minecraft:durability": {
+				"max_durability": 7805
+			},
+			"minecraft:fire_resistant": {
+				"value": true
+			},
+			"minecraft:damage": 9,
+			"minecraft:enchantable": {
+				"value": 50,
+				"slot": "axe"
+			},
+			"minecraft:repairable": {
+				"repair_items": [
+					{
+						"items": [
+							"minecraft:experience_bottle"
+						],
+						"repair_amount": "(q.max_durability * 0.04)"
+					},
+					{
+						"items": [
+							"minecraft:emerald", "minecraft:gold_ingot"
+						],
+						"repair_amount": "(q.max_durability * 0.8)"
+					},
+					{
+						"items": [ 
+							"minecraft:emerald_block", "minecraft:gold_block"
+						],
+						"repair_amount": "(q.max_durability * 0.333)"
+					},
+					{
+						"items": [
+							"utilitycraft:lucky_aiot"
+						],
+						"repair_amount": "(q.max_durability)"
+					}
+				]
+			},
+			"minecraft:digger": {
+				"use_efficiency": true,
+				"destroy_speeds": [
+					{
+						"speed": 40,
+						"block": {
+							"tags": "q.any_tag('minecraft:is_pickaxe_item_destructible', 'minecraft:is_shovel_item_destructible', 'minecraft:is_axe_item_destructible', 'minecraft:is_hoe_item_destructible')"
+						}
+					},
+					{
+						"speed": 30,
+						"block": "minecraft:web"
+					},
+					{
+						"block": "minecraft:bamboo",
+						"speed": 30
+					},
+					{
+						"block": "minecraft:honeycomb_block",
+						"speed": 30
+					}
+				]
+			}
+		}
+	}
+}

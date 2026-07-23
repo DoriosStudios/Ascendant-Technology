@@ -16,11 +16,11 @@
         "use_duration": 0
       },
       "minecraft:icon": "utilitycraft_steam_capsule_8",
-      "utilitycraft:fluid_capsule": {
-        "fluid": "milk",
-        "amount": 8000,
-        "infinite": true
-      },
+// LEGACY_DISABLED       "utilitycraft:fluid_capsule": {
+//         "fluid": "milk",
+//         "amount": 8000,
+//         "infinite": true
+//       },
       "minecraft:allow_off_hand": false,
       "minecraft:tags": {
         "tags": [

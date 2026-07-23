@@ -1,0 +1,163 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "utilitycraft:network_center",
+            "menu_category": {
+                "category": "construction",
+                "group": "at:itemGroup.name.machines"
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180
+                }
+            },
+            "states": {
+                "utilitycraft:on": [false, true]
+            }
+        },
+        "components": {
+            "utilitycraft:network_center": {
+                "entity": {
+                    "type": "machine",
+                    "input_type": "none",
+                    "output_type": "none",
+                    "inventory_size": 6
+                },
+                "machine": {
+                    "energy_cap": 800000,
+                    "energy_cost": 400,
+                    "rate_speed_base": 8000,
+                    "upgrades": [],
+                    "hidden_slots": []
+                }
+            },
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "utilitycraft_network_center_off_north",
+                    "render_method": "alpha_test"
+                },
+                "north": {
+                    "texture": "utilitycraft_network_center_off_north",
+                    "render_method": "alpha_test"
+                },
+                "south": {
+                    "texture": "utilitycraft_network_center_off_south",
+                    "render_method": "alpha_test"
+                },
+                "east": {
+                    "texture": "utilitycraft_network_center_off_east",
+                    "render_method": "alpha_test"
+                },
+                "west": {
+                    "texture": "utilitycraft_network_center_off_west",
+                    "render_method": "alpha_test"
+                },
+                "up": {
+                    "texture": "utilitycraft_network_center_off_up",
+                    "render_method": "alpha_test"
+                },
+                "down": {
+                    "texture": "utilitycraft_network_center_off_down",
+                    "render_method": "alpha_test"
+                }
+            },
+            "minecraft:tick": { "interval_range": [2, 2] },
+            "minecraft:destructible_by_mining": { "seconds_to_destroy": 1 },
+            "minecraft:destructible_by_explosion": false,
+            "tag:dorios:machine": {},
+            "tag:dorios:energy": {},
+            "tag:dorios:item": {}
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('utilitycraft:on') == 1",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "utilitycraft_network_center_on_north",
+                            "render_method": "alpha_test"
+                        },
+                        "north": {
+                            "texture": "utilitycraft_network_center_on_north",
+                            "render_method": "alpha_test"
+                        },
+                        "south": {
+                            "texture": "utilitycraft_network_center_on_south",
+                            "render_method": "alpha_test"
+                        },
+                        "east": {
+                            "texture": "utilitycraft_network_center_on_east",
+                            "render_method": "alpha_test"
+                        },
+                        "west": {
+                            "texture": "utilitycraft_network_center_on_west",
+                            "render_method": "alpha_test"
+                        },
+                        "up": {
+                            "texture": "utilitycraft_network_center_on_up",
+                            "render_method": "alpha_test"
+                        },
+                        "down": {
+                            "texture": "utilitycraft_network_center_on_down",
+                            "render_method": "alpha_test"
+                        }
+                    },
+                    "minecraft:light_emission": 3
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

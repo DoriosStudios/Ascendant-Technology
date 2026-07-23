@@ -19,26 +19,26 @@
 			}
 		},
 		"components": {
-			"utilitycraft:residue_processor": {
-				"entity": {
-					"type": "machine",
-					"input_type": "simple",
-					"output_type": "simple",
-					"inventory_size": 20,
-					"input_slot": 3,
-					"output_range": [18, 19]
-				},
-				"machine": {
-					"energy_cap": 12800000,
-					"energy_cost": 5200,
-					"rate_speed_base": 16000,
-					"upgrades": [6, 7],
-					"hidden_slots": [5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
-				}
-			},
-			"utilitycraft:special_container":{
-				"Residue Input": 3
-			},
+// LEGACY_DISABLED 			"utilitycraft:residue_processor": {
+// 				"entity": {
+// 					"type": "machine",
+// 					"input_type": "simple",
+// 					"output_type": "simple",
+// 					"inventory_size": 20,
+// 					"input_slot": 3,
+// 					"output_range": [18, 19]
+// 				},
+// 				"machine": {
+// 					"energy_cap": 12800000,
+// 					"energy_cost": 5200,
+// 					"rate_speed_base": 16000,
+// 					"upgrades": [6, 7],
+// 					"hidden_slots": [5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+// 				}
+// 			},
+// LEGACY_DISABLED 			"utilitycraft:special_container":{
+// 				"Residue Input": 3
+// 			},
 			"utilitycraft:machine_recipes": {
 				"type": "residue_processor"
 			},
@@ -69,7 +69,7 @@
 					"render_method": "alpha_test"
 				}
 			},
-			"minecraft:tick": {"interval_range": [2, 2]},
+// LEGACY_DISABLED 			"minecraft:tick": {"interval_range": [2, 2]},
 			"minecraft:destructible_by_mining": {"seconds_to_destroy": 1},
 			"minecraft:destructible_by_explosion": false,
 			"tag:dorios:machine": {},

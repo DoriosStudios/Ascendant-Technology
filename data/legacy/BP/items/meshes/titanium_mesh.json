@@ -1,0 +1,22 @@
+{
+	"format_version": "1.21.90",
+	"minecraft:item": {
+		"description": {
+			"identifier": "utilitycraft:titanium_mesh",
+			"menu_category": {
+				"category": "construction",
+				"group": "dorios:itemGroup.name.meshes"
+			}
+		},
+		"components": {
+			"minecraft:icon": "utilitycraft_titanium_mesh",
+			"minecraft:durability": {
+				"max_durability": 1873
+			},
+			"utilitycraft:mesh": {
+				"tier": 6,
+				"multiplier": 3.6
+			}
+		}
+	}
+}

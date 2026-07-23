@@ -1,0 +1,35 @@
+{
+	"format_version": "1.21.100",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:conveyor_network_updater",
+			"menu_category": {
+				"category": "construction",
+				"group": "at:itemGroup.name.conveyors"
+			}
+		},
+		"components": {
+			"utilitycraft:conveyor_network_updater": {},
+			"minecraft:geometry": "geometry.utilitycraft_updater",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_updater",
+					"render_method": "alpha_test",
+					"ambient_occlusion": true,
+					"face_dimming": true
+				}
+			},
+			"minecraft:light_dampening": 15,
+			"minecraft:light_emission": 1,
+			"minecraft:tick": {
+				"interval_range": [1, 1]
+			},
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 0.4
+			},
+			"minecraft:destructible_by_explosion": false,
+			"tag:dorios:color.default": {},
+			"tag:minecraft:is_pickaxe_item_destructible": {}
+		}
+	}
+}

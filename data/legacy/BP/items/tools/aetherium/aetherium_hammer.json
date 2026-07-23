@@ -1,0 +1,86 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_hammer",
+            "menu_category": {
+                "category": "equipment",
+                "group": "dorios:itemGroup.name.hammers"
+            }
+        },
+        "components": {
+            "utilitycraft:hammer": {
+                "tier": 4
+            },
+            "utilitycraft:dig_pebble": {},
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_pickaxe",
+                    "utilitycraft:is_hammer",
+                    "minecraft:is_tool",
+                    "minecraft:netherite_tier",
+                    "minecraft:transformable_items"
+                ]
+            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:hand_equipped": true,
+            "minecraft:durability": {
+                "max_durability": 3579
+            },
+            "minecraft:fire_resistant": {
+                "value": true
+            },
+            "minecraft:damage": 10,
+            "minecraft:icon": "utilitycraft_aetherium_hammer",
+            "minecraft:enchantable": {
+                "value": 30,
+                "slot": "pickaxe"
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["utilitycraft:aetherium_shard"],
+                        "repair_amount": "(q.max_durability * 0.25)"
+                    },
+                    {
+                        "items": ["utilitycraft:aetherium"],
+                        "repair_amount": "(q.max_durability * 0.333)"
+                    },
+                    {
+                        "items": ["utilitycraft:aetherium_hammer"],
+                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2"
+                    }
+                ]
+            },
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "speed": 20,
+                        "block": {
+                            "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible')"
+                        }
+                    },
+                    {
+                        "speed": 16,
+                        "block": {
+                            "tags": "query.any_tag( 'utilitycraft:compressed_siftable' )"
+                        }
+                    },
+                    {
+                        "speed": 14,
+                        "block": "minecraft:dirt"
+                    },
+                    {
+                        "speed": 14,
+                        "block": "minecraft:gravel"
+                    },
+                    {
+                        "speed": 14,
+                        "block": "minecraft:sand"
+                    }
+                ]
+            }
+        }
+    }
+}

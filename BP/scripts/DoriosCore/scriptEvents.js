@@ -1,511 +1,18 @@
-import { system, world, ItemStack } from "@minecraft/server";
-import { Energy } from "./machinery/energyStorage.js";
-import {
-    FluidManager,
-    GasManager,
-    registerFluidContainerDefinition,
-    registerFluidContainerBatch,
-    registerFluidOutputDefinition,
-    registerFluidOutputBatch,
-    registerGasContainerDefinition,
-    registerGasContainerBatch,
-    registerGasOutputDefinition,
-    registerGasOutputBatch,
-    getFluidContainerRegistry,
-    getFluidOutputRegistry,
-    getGasContainerRegistry,
-    getGasOutputRegistry,
-} from "./machinery/fluidStorage.js";
-import { Machine, updatePipes, sanitizeTickSpeed } from "./machinery/machine.js";
-import { Generator } from "./machinery/generator.js";
-import { ENERGY_DEBUG_PROP } from "./constants.js";
-import {
-    registerArmorMitigationDefinitionsFromScriptEvent
-} from "./armor/reduction.js";
-
-// ─── Event IDs ───────────────────────────────────────────────────────────────
-
-const SCRIPT_EVENT_IDS = Object.freeze({
-    fluid: Object.freeze({
-        registerContainer: "utilitycraft:register_fluid_container",
-        registerOutput: "utilitycraft:register_fluid_output",
-        legacyItem: "utilitycraft:register_fluid_item",
-        legacyHolder: "utilitycraft:register_fluid_holder"
-    }),
-    gas: Object.freeze({
-        registerContainer: "utilitycraft:register_gas_container",
-        registerOutput: "utilitycraft:register_gas_output",
-        legacyItem: "utilitycraft:register_gas_item",
-        legacyHolder: "utilitycraft:register_gas_holder"
-    }),
-    machine: Object.freeze({
-        legacyTickSpeed: "utilitycraft:set_tick_speed",
-        updatePipes: "dorios:updatePipes",
-        energyDebug: "utilitycraft:debug_energy"
-    }),
-    armor: Object.freeze({
-        registerMitigation: "utilitycraft:register_armor_mitigation"
-    })
-});
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-function energyDebugEnabled() {
-    try {
-        const value = world.getDynamicProperty(ENERGY_DEBUG_PROP);
-        if (value !== undefined) return value === true;
-    } catch { /* ignore */ }
-    return globalThis.energyDebugEnabled === true;
-}
-
-const normalizeFluidType = (value) =>
-    typeof value === "string" && value.trim().length
-        ? value.trim().toLowerCase()
-        : "";
-
-const normalizeGasType = (value) =>
-    typeof value === "string" && value.trim().length
-        ? value.trim().toLowerCase()
-        : "";
-
-const safeJsonParse = (payload) => {
-    if (typeof payload !== "string" || payload.length === 0) return null;
-    try {
-        return JSON.parse(payload);
-    } catch {
-        return null;
-    }
-};
-
-// ─── Fluid container / output registration via ScriptEvent ───────────────────
-
-system.afterEvents.scriptEventReceive.subscribe(event => {
-    const { id } = event;
-    if (id !== SCRIPT_EVENT_IDS.fluid.registerContainer && id !== SCRIPT_EVENT_IDS.fluid.registerOutput) {
-        return;
-    }
-
-    const trimmedMessage = typeof event.message === "string" ? event.message.trim() : "";
-    if (!trimmedMessage) return;
-
-    const payload = safeJsonParse(trimmedMessage);
-    if (!payload) return;
-
-    try {
-        if (id === SCRIPT_EVENT_IDS.fluid.registerContainer) {
-            registerFluidContainerBatch(payload);
-        } else {
-            registerFluidOutputBatch(payload);
-        }
-    } catch (error) {
-        console.warn(`[UtilityCraft] Failed to process ${id} payload:`, error);
-    }
-});
-
-// ─── Gas container / output registration via ScriptEvent ─────────────────────
-
-system.afterEvents.scriptEventReceive.subscribe(event => {
-    const { id } = event;
-    if (id !== SCRIPT_EVENT_IDS.gas.registerContainer && id !== SCRIPT_EVENT_IDS.gas.registerOutput) {
-        return;
-    }
-
-    const trimmedMessage = typeof event.message === "string" ? event.message.trim() : "";
-    if (!trimmedMessage) return;
-
-    const payload = safeJsonParse(trimmedMessage);
-    if (!payload) return;
-
-    try {
-        if (id === SCRIPT_EVENT_IDS.gas.registerContainer) {
-            registerGasContainerBatch(payload);
-        } else {
-            registerGasOutputBatch(payload);
-        }
-    } catch (error) {
-        console.warn(`[UtilityCraft] Failed to process ${id} payload:`, error);
-    }
-});
-
-// ─── updatePipes handler ─────────────────────────────────────────────────────
-
-system.afterEvents.scriptEventReceive.subscribe(event => {
-    const { id, message, sourceEntity } = event;
-    if (id !== SCRIPT_EVENT_IDS.machine.updatePipes) return;
-
-    const text = typeof message === "string" ? message : "";
-    const [rawType, rawCoords] = text.split("|");
-    const type = rawType?.trim();
-    if (type !== "energy" && type !== "fluid" && type !== "item") return;
-
-    let location = null;
-    try {
-        const parsed = JSON.parse(rawCoords ?? "null");
-        if (Array.isArray(parsed) && parsed.length >= 3) {
-            const [x, y, z] = parsed.map(Number);
-            if ([x, y, z].every(Number.isFinite)) location = { x, y, z };
-        } else if (parsed && typeof parsed === "object") {
-            const x = Number(parsed.x);
-            const y = Number(parsed.y);
-            const z = Number(parsed.z);
-            if ([x, y, z].every(Number.isFinite)) location = { x, y, z };
-        }
-    } catch { /* ignore malformed payloads */ }
-
-    if (!location) return;
-
-    const dim = sourceEntity?.dimension ?? world.getDimension("overworld");
-    const block = dim.getBlock(location);
-    if (!block) return;
-
-    try {
-        updatePipes(block, type);
-    } catch (err) {
-        console.warn(`[UtilityCraft] updatePipes ScriptEvent failed: ${err}`);
-    }
-});
-
-// ─── Energy debug toggle ─────────────────────────────────────────────────────
-
-system.afterEvents.scriptEventReceive.subscribe(event => {
-    const { id, message } = event;
-    if (id !== SCRIPT_EVENT_IDS.machine.energyDebug) return;
-
-    const raw = typeof message === "string" ? message.trim().toLowerCase() : "";
-    let nextState = null;
-
-    if (!raw || raw === "toggle") {
-        nextState = !energyDebugEnabled();
-    } else if (["true", "1", "on", "enable", "enabled"].includes(raw)) {
-        nextState = true;
-    } else if (["false", "0", "off", "disable", "disabled"].includes(raw)) {
-        nextState = false;
-    } else {
-        console.warn(`[EnergyDebug] Unknown toggle value: ${raw}`);
-        return;
-    }
-
-    globalThis.energyDebugEnabled = nextState;
-
-    try {
-        world.setDynamicProperty(ENERGY_DEBUG_PROP, nextState);
-        console.warn(`[EnergyDebug] ${nextState ? "Enabled" : "Disabled"} (ScriptEvent).`);
-    } catch (error) {
-        console.warn(`[EnergyDebug] Failed to set ${ENERGY_DEBUG_PROP} (ScriptEvent).`, error);
-    }
-});
-
-// ─── Armor mitigation registration via ScriptEvent ──────────────────────────
-
-system.afterEvents.scriptEventReceive.subscribe(event => {
-    const { id } = event;
-    if (id !== SCRIPT_EVENT_IDS.armor.registerMitigation) {
-        return;
-    }
-
-    const trimmedMessage = typeof event.message === "string" ? event.message.trim() : "";
-    if (!trimmedMessage) return;
-
-    const payload = safeJsonParse(trimmedMessage);
-    if (!payload) return;
-
-    try {
-        registerArmorMitigationDefinitionsFromScriptEvent(payload);
-    } catch (error) {
-        console.warn(`[UtilityCraft] Failed to process ${id} payload:`, error);
-    }
-});
-
-// ─── Legacy fluid / gas item & holder registration ───────────────────────────
-
-function normalizeLegacyFluidContainer(entry) {
-    if (!entry || typeof entry !== "object") return null;
-
-    const amount = entry.amountRange ?? entry.amount ?? entry.value ?? entry.required;
-    const type = normalizeFluidType(entry.type ?? entry.fluid ?? entry.liquid);
-
-    if (amount === undefined || amount === null || !type) return null;
-
-    const normalized = { amount, type };
-    const output = entry.output ?? entry.result ?? entry.returnItem ?? entry.empty;
-    if (typeof output === "string" && output.length > 0) {
-        normalized.output = output;
-    }
-
-    return normalized;
-}
-
-function normalizeLegacyFluidHolder(entry) {
-    if (!entry || typeof entry !== "object") return null;
-
-    const amount = entry.amountRange ?? entry.required ?? entry.amount ?? entry.requirement;
-    const types = entry.types ?? entry.fills ?? entry.outputs;
-    if (amount === undefined || amount === null || typeof types !== "object" || types === null) return null;
-
-    const fills = {};
-    for (const [rawType, itemId] of Object.entries(types)) {
-        const type = normalizeFluidType(rawType);
-        if (!type) continue;
-        if (typeof itemId !== "string" || itemId.length === 0) continue;
-        fills[type] = itemId;
-    }
-
-    if (Object.keys(fills).length === 0) return null;
-
-    return { amount, fills };
-}
-
-function normalizeLegacyGasContainer(entry) {
-    if (!entry || typeof entry !== "object") return null;
-
-    const amount = entry.amountRange ?? entry.amount ?? entry.value ?? entry.required;
-    const type = normalizeGasType(entry.type ?? entry.gas ?? entry.vapor);
-
-    if (amount === undefined || amount === null || !type) return null;
-
-    const normalized = { amount, type };
-    const output = entry.output ?? entry.result ?? entry.returnItem ?? entry.empty;
-    if (typeof output === "string" && output.length > 0) {
-        normalized.output = output;
-    }
-
-    return normalized;
-}
-
-function normalizeLegacyGasHolder(entry) {
-    if (!entry || typeof entry !== "object") return null;
-
-    const amount = entry.amountRange ?? entry.required ?? entry.amount ?? entry.requirement;
-    const types = entry.types ?? entry.fills ?? entry.outputs;
-    if (amount === undefined || amount === null || typeof types !== "object" || types === null) return null;
-
-    const fills = {};
-    for (const [rawType, itemId] of Object.entries(types)) {
-        const type = normalizeGasType(rawType);
-        if (!type) continue;
-        if (typeof itemId !== "string" || itemId.length === 0) continue;
-        fills[type] = itemId;
-    }
-
-    if (Object.keys(fills).length === 0) return null;
-
-    return { amount, fills };
-}
-
-system.afterEvents.scriptEventReceive.subscribe(event => {
-    const { id, message } = event;
-
-    const isTickSpeedEvent = id === SCRIPT_EVENT_IDS.machine.legacyTickSpeed || id === "dorios:set_tick_speed";
-    if (isTickSpeedEvent) {
-        const parsed = safeJsonParse(message);
-        const numeric = typeof parsed === "number" ? parsed : Number(message);
-        if (Number.isFinite(numeric)) {
-            const sanitized = sanitizeTickSpeed(numeric);
-            globalThis.tickSpeed = sanitized;
-            try {
-                world.setDynamicProperty("utilitycraft:tickSpeed", sanitized);
-            } catch { /* ignore property errors */ }
-        }
-        return;
-    }
-
-    if (id === SCRIPT_EVENT_IDS.fluid.legacyItem) {
-        const payload = safeJsonParse(message);
-        if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
-
-        const queue = Array.isArray(payload)
-            ? payload
-            : Object.entries(payload).map(([entryId, definition]) => ({ id: entryId, ...definition }));
-
-        let added = 0;
-        let replaced = 0;
-
-        for (const entry of queue) {
-            if (!entry || typeof entry !== "object") continue;
-
-            const targets = [];
-            const appendTarget = value => {
-                if (typeof value === "string" && value.length > 0) {
-                    targets.push(value);
-                }
-            };
-            appendTarget(entry.id);
-            appendTarget(entry.item);
-            appendTarget(entry.itemId);
-
-            if (Array.isArray(entry.ids)) {
-                for (const candidate of entry.ids) {
-                    appendTarget(candidate);
-                }
-            }
-
-            const uniqueTargets = [...new Set(targets)];
-            if (uniqueTargets.length === 0) continue;
-
-            const normalized = normalizeLegacyFluidContainer(entry);
-            if (!normalized) continue;
-
-            for (const targetId of uniqueTargets) {
-                const existed = Boolean(getFluidContainerRegistry()[targetId]);
-                if (registerFluidContainerDefinition(targetId, normalized)) {
-                    existed ? replaced++ : added++;
-                }
-            }
-        }
-
-        return;
-    }
-
-    if (id === SCRIPT_EVENT_IDS.fluid.legacyHolder) {
-        const payload = safeJsonParse(message);
-        if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
-
-        const queue = Array.isArray(payload)
-            ? payload
-            : Object.entries(payload).map(([entryId, definition]) => ({ id: entryId, ...definition }));
-
-        let added = 0;
-        let replaced = 0;
-
-        for (const entry of queue) {
-            if (!entry || typeof entry !== "object") continue;
-
-            const targets = [];
-            const appendTarget = value => {
-                if (typeof value === "string" && value.length > 0) {
-                    targets.push(value);
-                }
-            };
-            appendTarget(entry.id);
-            appendTarget(entry.item);
-            appendTarget(entry.itemId);
-
-            if (Array.isArray(entry.ids)) {
-                for (const candidate of entry.ids) {
-                    appendTarget(candidate);
-                }
-            }
-
-            const uniqueTargets = [...new Set(targets)];
-            if (uniqueTargets.length === 0) continue;
-
-            const normalized = normalizeLegacyFluidHolder(entry);
-            if (!normalized) continue;
-
-            for (const targetId of uniqueTargets) {
-                const existed = Boolean(getFluidOutputRegistry()[targetId]);
-                if (registerFluidOutputDefinition(targetId, normalized)) {
-                    existed ? replaced++ : added++;
-                }
-            }
-        }
-
-        return;
-    }
-
-    if (id === SCRIPT_EVENT_IDS.gas.legacyItem) {
-        const payload = safeJsonParse(message);
-        if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
-
-        const queue = Array.isArray(payload)
-            ? payload
-            : Object.entries(payload).map(([entryId, definition]) => ({ id: entryId, ...definition }));
-
-        let added = 0;
-        let replaced = 0;
-
-        for (const entry of queue) {
-            if (!entry || typeof entry !== "object") continue;
-
-            const targets = [];
-            const appendTarget = value => {
-                if (typeof value === "string" && value.length > 0) {
-                    targets.push(value);
-                }
-            };
-            appendTarget(entry.id);
-            appendTarget(entry.item);
-            appendTarget(entry.itemId);
-
-            if (Array.isArray(entry.ids)) {
-                for (const candidate of entry.ids) {
-                    appendTarget(candidate);
-                }
-            }
-
-            const uniqueTargets = [...new Set(targets)];
-            if (uniqueTargets.length === 0) continue;
-
-            const normalized = normalizeLegacyGasContainer(entry);
-            if (!normalized) continue;
-
-            for (const targetId of uniqueTargets) {
-                const existed = Boolean(getGasContainerRegistry()[targetId]);
-                if (registerGasContainerDefinition(targetId, normalized)) {
-                    existed ? replaced++ : added++;
-                }
-            }
-        }
-
-        return;
-    }
-
-    if (id === SCRIPT_EVENT_IDS.gas.legacyHolder) {
-        const payload = safeJsonParse(message);
-        if (!payload || (typeof payload !== "object" && !Array.isArray(payload))) return;
-
-        const queue = Array.isArray(payload)
-            ? payload
-            : Object.entries(payload).map(([entryId, definition]) => ({ id: entryId, ...definition }));
-
-        let added = 0;
-        let replaced = 0;
-
-        for (const entry of queue) {
-            if (!entry || typeof entry !== "object") continue;
-
-            const targets = [];
-            const appendTarget = value => {
-                if (typeof value === "string" && value.length > 0) {
-                    targets.push(value);
-                }
-            };
-            appendTarget(entry.id);
-            appendTarget(entry.item);
-            appendTarget(entry.itemId);
-
-            if (Array.isArray(entry.ids)) {
-                for (const candidate of entry.ids) {
-                    appendTarget(candidate);
-                }
-            }
-
-            const uniqueTargets = [...new Set(targets)];
-            if (uniqueTargets.length === 0) continue;
-
-            const normalized = normalizeLegacyGasHolder(entry);
-            if (!normalized) continue;
-
-            for (const targetId of uniqueTargets) {
-                const existed = Boolean(getGasOutputRegistry()[targetId]);
-                if (registerGasOutputDefinition(targetId, normalized)) {
-                    existed ? replaced++ : added++;
-                }
-            }
-        }
-
-        return;
-    }
-});
-
-// ─── destroyMachine ──────────────────────────────────────────────────────────
-
-system.afterEvents.scriptEventReceive.subscribe(e => {
-    const { id, message, sourceEntity } = e;
-
-    if (id === 'dorios:destroyMachine') {
+import * as DoriosLib from "DoriosLib/index.js";
+import { ItemStack, system, world } from "@minecraft/server";
+import * as Constants from "./constants.js";
+import * as MachineryConstants from "./machinery/constants.js";
+import { FluidStorage, GasStorage, Generator, Machine } from "DoriosCore/index.js";
+import { TickScheduler } from "./machinery/tickScheduler.js";
+
+export const scriptEventHandler = {
+    /**
+     * ScriptEvent handler to destroy a machine at given coordinates.
+     * Removes the machine entity, drops stored items, and replaces the block with air.
+     */
+    [Constants.DESTROY_MACHINE_EVENT_ID]: ({ message, sourceEntity }) => {
         try {
-            const [x, y, z] = message.split(',').map(Number);
+            const [x, y, z] = message.split(",").map(Number);
             const dim = sourceEntity.dimension;
             const block = dim.getBlock({ x, y, z });
             if (!block) return;
@@ -514,53 +21,30 @@ system.afterEvents.scriptEventReceive.subscribe(e => {
                 block,
                 brokenBlockPermutation: block.permutation,
                 player: null,
-                dimension: dim
+                dimension: dim,
             };
 
             const broken = Machine.onDestroy(fakeEvent);
 
+            // Remove block after destruction
             system.runTimeout(() => {
                 if (broken) {
-                    dim.setBlockType(block.location, 'minecraft:air');
+                    dim.setBlockType(block.location, "minecraft:air");
                 } else {
                     dim.runCommand(`fill ${x} ${y} ${z} ${x} ${y} ${z} air destroy`);
                 }
             }, 1);
-
         } catch (err) {
             console.warn(`[destroyMachine] Error: ${err}`);
         }
-    }
-});
-
-// ─── special_container ───────────────────────────────────────────────────────
-
-system.afterEvents.scriptEventReceive.subscribe(e => {
-    const { id, message, sourceEntity } = e;
-
-    if (id !== 'dorios:special_container') return;
-
-    let slots;
-    try {
-        slots = JSON.parse(message);
-    } catch {
-        return;
-    }
-
-    if (!slots || (!slots.input && !slots.output)) return;
-    if (!sourceEntity) return;
-
-    sourceEntity.setDynamicProperty("dorios:special_container", JSON.stringify(slots));
-});
-
-// ─── destroyGenerator ────────────────────────────────────────────────────────
-
-system.afterEvents.scriptEventReceive.subscribe(e => {
-    const { id, message, sourceEntity } = e;
-
-    if (id === 'dorios:destroyGenerator') {
+    },
+    /**
+     * ScriptEvent handler to destroy a generator at given coordinates.
+     * Removes the generator entity, drops stored items, and replaces the block with air.
+     */
+    [Constants.DESTROY_GENERATOR_EVENT_ID]: ({ message, sourceEntity }) => {
         try {
-            const [x, y, z] = message.split(',').map(Number);
+            const [x, y, z] = message.split(",").map(Number);
             const dim = sourceEntity.dimension;
             const block = dim.getBlock({ x, y, z });
             if (!block) return;
@@ -569,64 +53,252 @@ system.afterEvents.scriptEventReceive.subscribe(e => {
                 block,
                 brokenBlockPermutation: block.permutation,
                 player: null,
-                dimension: dim
+                dimension: dim,
             };
 
             const broken = Generator.onDestroy(fakeEvent);
 
+            // Remove block after destruction
             system.runTimeout(() => {
                 if (broken) {
-                    dim.setBlockType(block.location, 'minecraft:air');
+                    dim.setBlockType(block.location, "minecraft:air");
                 } else {
                     dim.runCommand(`fill ${x} ${y} ${z} ${x} ${y} ${z} air destroy`);
                 }
             }, 1);
-
         } catch (err) {
             console.warn(`[destroyGenerator] Error: ${err}`);
         }
-    }
-});
-
-// ─── destroyTank ─────────────────────────────────────────────────────────────
-
-system.afterEvents.scriptEventReceive.subscribe(e => {
-    const { id, message, sourceEntity } = e;
-
-    if (id === 'dorios:destroyTank') {
+    },
+    /**
+     * ScriptEvent handler to destroy a fluid tank at given coordinates.
+     * Builds the tank item with fluid lore, removes the entity, sets the block to air, and drops the item.
+     */
+    [Constants.DESTROY_TANK_EVENT_ID]: ({ message, sourceEntity }) => {
         try {
-            const [x, y, z] = message.split(',').map(Number);
+            const [x, y, z] = message.split(",").map(Number);
             const dim = sourceEntity.dimension;
             const block = dim.getBlock({ x, y, z });
             if (!block) return;
 
-            const entity = dim.getEntitiesAtBlockLocation(block.location)
-                .find(e => e.typeId.includes("tank"));
+            const entity = dim
+                .getEntitiesAtBlockLocation(block.location)
+                .find((e) => e.typeId.includes("tank"));
             if (!entity) {
                 dim.runCommand(`fill ${x} ${y} ${z} ${x} ${y} ${z} air destroy`);
                 return;
             }
 
-            const fluid = new FluidManager(entity);
+            const fluid = new FluidStorage(entity);
             const blockItemId = block.typeId;
             const blockItem = new ItemStack(blockItemId);
             const lore = [];
 
-            if (fluid.type !== 'empty' && fluid.get() > 0) {
-                const liquidName = DoriosAPI.utils.capitalizeFirst(fluid.type);
-                lore.push(`§r§7  ${liquidName}: ${FluidManager.formatFluid(fluid.get())}/${FluidManager.formatFluid(fluid.cap)}`);
+            // Fluid lore
+            if (fluid.type !== MachineryConstants.EMPTY_FLUID_TYPE && fluid.get() > 0) {
+                const liquidName = DoriosLib.text.capitalizeFirst(fluid.type);
+                lore.push(
+                    `§r§7  ${liquidName}: ${FluidStorage.formatFluid(fluid.get())}/${FluidStorage.formatFluid(fluid.cap)}`,
+                );
             }
             if (lore.length > 0) blockItem.setLore(lore);
 
             const dropPos = block.center();
 
+            // Remove entity, clear block, then drop the item
             system.run(() => {
                 entity.remove();
-                dim.setBlockType(block.location, 'minecraft:air');
+                dim.setBlockType(block.location, "minecraft:air");
                 dim.spawnItem(blockItem, dropPos);
             });
         } catch (err) {
             console.warn(`[destroyTank] Error: ${err}`);
         }
+    },
+    /**
+     * ScriptEvent receiver: "utilitycraft:register_fluid_item"
+     *
+     * Allows other addons or scripts to dynamically add or replace
+     * fluid-item mappings used by LiquidManager.liquidItem().
+     *
+     * Expected payload format (JSON):
+     * ```json
+     * {
+     *   "minecraft:lava_bucket": { "amount": 1000, "type": "lava", "output": "minecraft:bucket" },
+     *   "custom:water_cell": { "amount": 4000, "type": "water", "output": "custom:empty_cell" }
+     * }
+     * ```
+     *
+     * Behavior:
+     * - New items are created automatically if missing.
+     * - Existing items are replaced and logged individually.
+     * - Only a summary log is printed when finished.
+     */
+    [Constants.REGISTER_FLUID_ITEM_EVENT_ID]: ({ message }) => {
+        try {
+            const payload = JSON.parse(message);
+            if (!payload || typeof payload !== "object") return;
+
+            let added = 0;
+            let replaced = 0;
+
+            for (const [itemId, data] of Object.entries(payload)) {
+                if (typeof data.amount !== "number" || typeof data.type !== "string")
+                    continue;
+
+                if (FluidStorage.itemFluidStorages[itemId]) {
+                    replaced++;
+                } else {
+                    added++;
+                }
+
+                // Direct assignment; LiquidManager uses this data
+                FluidStorage.itemFluidStorages[itemId] = data;
+            }
+        } catch (err) {
+            console.warn(
+                "[UtilityCraft] Failed to parse fluid-item registration payload:",
+                err,
+            );
+        }
+    },
+    /**
+     * ScriptEvent handler: "utilitycraft:register_fluid_holder"
+     *
+     * Allows addons or scripts to register or extend fluid extraction holders.
+     *
+     * Behavior:
+     * - If the holder does not exist, it is created.
+     * - If the holder already exists, its `types` map is merged.
+     * - Existing types are preserved.
+     * - `required` is only overwritten if explicitly provided.
+     *
+     * Expected payload format:
+     * {
+     *   "item:id": {
+     *     types: { fluidType: outputItemId, ... },
+     *     required?: number
+     *   }
+     * }
+     */
+    [Constants.REGISTER_FLUID_HOLDER_EVENT_ID]: ({ message }) => {
+        try {
+            const payload = JSON.parse(message);
+            if (!payload || typeof payload !== "object") return;
+
+            for (const [itemId, data] of Object.entries(payload)) {
+                if (!data.types || typeof data.types !== "object") continue;
+
+                const existing = FluidStorage.itemFluidHolders[itemId];
+
+                if (existing) {
+                    existing.types = {
+                        ...existing.types,
+                        ...data.types
+                    };
+
+                    if (typeof data.required === "number") {
+                        existing.required = data.required;
+                    }
+                } else {
+                    if (typeof data.required !== "number") continue;
+
+                    FluidStorage.itemFluidHolders[itemId] = {
+                        types: { ...data.types },
+                        required: data.required
+                    };
+                }
+            }
+        } catch (err) {
+            console.warn(
+                "[UtilityCraft] Failed to parse fluid-holder registration payload:",
+                err
+            );
+        }
+    },
+    /** Registers item-to-gas insertion mappings without sharing fluid registries. */
+    [Constants.REGISTER_GAS_ITEM_EVENT_ID]: ({ message }) => {
+        try {
+            const payload = JSON.parse(message);
+            if (!payload || typeof payload !== "object") return;
+
+            for (const [itemId, data] of Object.entries(payload)) {
+                if (typeof data.amount !== "number" || typeof data.type !== "string") continue;
+                GasStorage.itemGasStorages[itemId] = data;
+            }
+        } catch (err) {
+            console.warn("[UtilityCraft] Failed to parse gas-item registration payload:", err);
+        }
+    },
+    /** Registers or extends items that extract a supported gas from storage. */
+    [Constants.REGISTER_GAS_HOLDER_EVENT_ID]: ({ message }) => {
+        try {
+            const payload = JSON.parse(message);
+            if (!payload || typeof payload !== "object") return;
+
+            for (const [itemId, data] of Object.entries(payload)) {
+                if (!data.types || typeof data.types !== "object") continue;
+                const existing = GasStorage.itemGasHolders[itemId];
+
+                if (existing) {
+                    existing.types = { ...existing.types, ...data.types };
+                    if (typeof data.required === "number") existing.required = data.required;
+                } else if (typeof data.required === "number") {
+                    GasStorage.itemGasHolders[itemId] = {
+                        types: { ...data.types },
+                        required: data.required,
+                    };
+                }
+            }
+        } catch (err) {
+            console.warn("[UtilityCraft] Failed to parse gas-holder registration payload:", err);
+        }
+    },
+    /**
+     * ScriptEvent: "utilitycraft:set_tick_speed"
+     *
+     * Updates the global tickSpeed value used by UtilityCraft machinery.
+     * The payload must be a JSON number (e.g., 1, 5, 10, 20).
+     *
+     * Behavior:
+     * - Replaces the tickSpeed value immediately.
+     * - Ignores invalid or non-numeric payloads.
+     */
+    [Constants.SET_TICK_SPEED_EVENT_ID]: ({ message }) => {
+        try {
+            const value = JSON.parse(message);
+
+            if (typeof value !== "number" || value <= 0) {
+                console.warn(`[UtilityCraft] Invalid tickSpeed received: ${message}`);
+                return;
+            }
+
+            world.setDynamicProperty(Constants.TICK_SPEED_PROPERTY_ID, value);
+            globalThis[Constants.GLOBAL_TICK_SPEED_KEY] = value;
+        } catch {
+            console.warn("[UtilityCraft] Failed to parse tickSpeed payload.");
+        }
+    },
+    /**
+     * ScriptEvent: "utilitycraft:set_scheduler_profile"
+     *
+     * Updates the background machine scheduler profile.
+     * Supported payloads: "fast", "normal", "low".
+     */
+    [Constants.SET_SCHEDULER_PROFILE_EVENT_ID]: ({ message }) => {
+        TickScheduler.handleSchedulerProfileScriptEvent(message);
+    },
+    /**
+     * ScriptEvent: "utilitycraft:tick_group"
+     *
+     * Synchronizes machine tick group counts between addons.
+     * Payload format:
+     * - "add|1"
+     * - "remove|1"
+     * - "add|1|addon_id"
+     * - "remove|1|addon_id"
+     */
+    [Constants.TICK_GROUP_EVENT_ID]: ({ message }) => {
+        TickScheduler.handleTickGroupScriptEvent(message);
     }
-});
+}

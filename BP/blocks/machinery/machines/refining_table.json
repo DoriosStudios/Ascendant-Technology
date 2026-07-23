@@ -19,30 +19,30 @@
             }
         },
         "components": {
-            "utilitycraft:refining_table": {
-                "entity": {
-                    "type": "machine",
-                    "fluid": true,
-                    "inventory_size": 12
-                },
-                "machine": {
-                    "energy_cap": 32000000,
-                    "energy_cost": 7200,
-                    "fluid_cap": 512000,
-                    "rate_speed_base": 1800,
-                    "upgrades": [9, 10, 11],
-                    "hidden_slots": []
-                }
-            },
-            "utilitycraft:special_container": {
-                "Equipment Slot": [3],
-                "Ingot Slot": [4],
-                "Chip Slot": [5],
-                "Confirm Button": [6],
-                "Chance Display": [7],
-                "§eRunic Core Slot": [8],
-                "Upgrade Slots": [9, 10, 11]
-            },
+// LEGACY_DISABLED             "utilitycraft:refining_table": {
+//                 "entity": {
+//                     "type": "machine",
+//                     "fluid": true,
+//                     "inventory_size": 12
+//                 },
+//                 "machine": {
+//                     "energy_cap": 32000000,
+//                     "energy_cost": 7200,
+//                     "fluid_cap": 512000,
+//                     "rate_speed_base": 1800,
+//                     "upgrades": [9, 10, 11],
+//                     "hidden_slots": []
+//                 }
+//             },
+// LEGACY_DISABLED             "utilitycraft:special_container": {
+//                 "Equipment Slot": [3],
+//                 "Ingot Slot": [4],
+//                 "Chip Slot": [5],
+//                 "Confirm Button": [6],
+//                 "Chance Display": [7],
+//                 "§eRunic Core Slot": [8],
+//                 "Upgrade Slots": [9, 10, 11]
+//             },
             "minecraft:geometry": "geometry.utilitycraft_enchantment_station",
             "minecraft:material_instances": {
                 "*": {
@@ -50,9 +50,9 @@
                     "render_method": "alpha_test"
                 }
             },
-            "minecraft:tick": {
-                "interval_range": [2, 2]
-            },
+// LEGACY_DISABLED             "minecraft:tick": {
+//                 "interval_range": [2, 2]
+//             },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

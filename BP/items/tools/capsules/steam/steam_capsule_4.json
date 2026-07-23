@@ -16,10 +16,10 @@
         "use_duration": 0
       },
       "minecraft:icon": "utilitycraft_steam_capsule_4",
-      "utilitycraft:fluid_capsule": {
-        "fluid": "steam",
-        "amount": 4000
-      },
+// LEGACY_DISABLED       "utilitycraft:fluid_capsule": {
+//         "fluid": "steam",
+//         "amount": 4000
+//       },
       "minecraft:allow_off_hand": false,
       "minecraft:tags": {
         "tags": [

@@ -16,11 +16,11 @@
 			}
 		},
 		"components": {
-			"utilitycraft:conveyor": {
-				"tier": "aetherium",
-				"shape": "declined",
-				"ips": 64
-			},
+// LEGACY_DISABLED 			"utilitycraft:conveyor": {
+// 				"tier": "aetherium",
+// 				"shape": "declined",
+// 				"ips": 64
+// 			},
 			"minecraft:geometry": "geometry.utilitycraft_aetherium_conveyor_declined",
 			"minecraft:material_instances": {
 				"*": {

@@ -1,0 +1,309 @@
+import { ItemStack, system } from "@minecraft/server";
+import * as GlobalConstants from "../constants.js";
+import * as MachineryConstants from "../machinery/constants.js";
+import { EnergyStorage } from "../machinery/energyStorage.js";
+import { FluidStorage } from "../machinery/fluidStorage.js";
+import { TickScheduler } from "../machinery/tickScheduler.js";
+import * as Constants from "./constants.js";
+
+const OPEN_UI_PLAYERS_PROPERTY_ID = "utilitycraft:players";
+
+/**
+ * Determines whether the current tick should execute machine logic.
+ *
+ * This function checks if the global tick counter aligns with the
+ * configured tickSpeed interval. It is used to throttle machine
+ * processing logic to avoid running every single game tick.
+ *
+ * Example:
+ * - tickSpeed = 10 → logic runs every 10 ticks
+ * - tickSpeed = 1  → logic runs every tick
+ *
+ * @function shouldProcess
+ * @returns {boolean} True if the current tick matches the configured processing interval.
+ */
+export function shouldProcess() {
+  return (
+    globalThis[GlobalConstants.GLOBAL_TICK_COUNT_KEY] % globalThis[GlobalConstants.GLOBAL_TICK_SPEED_KEY] === 0 &&
+    globalThis[GlobalConstants.GLOBAL_WORLD_LOADED_KEY]
+  );
+}
+
+/**
+ * Ensures that the given entity has a valid scoreboard identity.
+ *
+ * If an entity does not yet have one, its `scoreboardIdentity` will be `undefined`.
+ * Running this method forces the entity to be registered in the scoreboard system
+ * by setting its `energy` objective to `0`.
+ *
+ * @param {import("@minecraft/server").Entity} entity The entity representing the machine.
+ * @returns {void}
+ */
+export function initializeEntity(entity) {
+  entity.runCommand(`scoreboard players set @s energy 0`);
+}
+
+/**
+ * Attempts to retrieve the first entity located at a given block's position.
+ *
+ * This is commonly used in machine systems where a controller block
+ * has a paired entity storing inventory, energy, or dynamic data.
+ *
+ * If no entity exists at the block location, the function returns undefined.
+ *
+ * @function tryGetEntityFromBlock
+ * @param {import("@minecraft/server").Block} block The block to inspect.
+ * @returns {import("@minecraft/server").Entity | undefined} The first entity found at the block location, or undefined if none exist.
+ */
+export function tryGetEntityFromBlock(block) {
+  return block.dimension
+    .getEntitiesAtBlockLocation(block.location)
+    .find((entity) => entity.typeId !== "utilitycraft:machine_area_outline");
+}
+
+/**
+ * Attempts to resolve the block currently represented by a machine entity.
+ *
+ * Machine helper entities are spawned with a small offset, so the lookup uses
+ * floored coordinates to reach the owning block position.
+ *
+ * @param {import("@minecraft/server").Entity} entity The helper entity to inspect.
+ * @returns {import("@minecraft/server").Block | undefined} The block under the entity, if available.
+ */
+export function tryGetBlockFromEntity(entity) {
+  if (!entity?.dimension || !entity.location) {
+    return undefined;
+  }
+
+  return entity.dimension.getBlock({
+    x: Math.floor(entity.location.x),
+    y: Math.floor(entity.location.y),
+    z: Math.floor(entity.location.z),
+  });
+}
+
+/**
+ * Returns how many players currently have this entity container UI open.
+ *
+ * @param {import("@minecraft/server").Entity} entity The machine entity to inspect.
+ * @returns {number} Open UI viewer count.
+ */
+export function getOpenUICount(entity) {
+  try {
+    const count = Number(entity?.getProperty?.(OPEN_UI_PLAYERS_PROPERTY_ID) ?? 0);
+    return Math.max(0, Math.floor(count));
+  } catch {
+    return 0;
+  }
+}
+
+/**
+ * Returns true when at least one player has this entity container UI open.
+ *
+ * @param {import("@minecraft/server").Entity} entity The machine entity to inspect.
+ * @returns {boolean} Whether the UI is currently open.
+ */
+export function hasOpenUI(entity) {
+  // return true;
+  return getOpenUICount(entity) > 0;
+}
+
+/**
+ * Updates the open UI viewer count stored on the machine entity.
+ *
+ * @param {import("@minecraft/server").Entity} entity The machine entity to update.
+ * @param {number} count The new viewer count.
+ * @returns {number} The normalized count written to the entity.
+ */
+export function setOpenUICount(entity, count) {
+  const normalizedCount = Math.max(0, Math.floor(Number(count) || 0));
+
+  try {
+    entity?.setProperty?.(OPEN_UI_PLAYERS_PROPERTY_ID, normalizedCount);
+  } catch {
+    return getOpenUICount(entity);
+  }
+
+  return normalizedCount;
+}
+
+/**
+ * Adds one open UI viewer to the machine entity.
+ *
+ * @param {import("@minecraft/server").Entity} entity The machine entity to update.
+ * @returns {number} The updated viewer count.
+ */
+export function addOpenUICount(entity) {
+  return setOpenUICount(entity, getOpenUICount(entity) + 1);
+}
+
+/**
+ * Removes one open UI viewer from the machine entity.
+ *
+ * @param {import("@minecraft/server").Entity} entity The machine entity to update.
+ * @returns {number} The updated viewer count.
+ */
+export function removeOpenUICount(entity) {
+  return setOpenUICount(entity, getOpenUICount(entity) - 1);
+}
+
+/**
+ * Spawns a UtilityCraft machine entity at the given block location
+ * and initializes its inventory size and name tag.
+ *
+ * The entity is assigned inventory size, name tag, represented block metadata,
+ * scoreboard identity, tick group, and an optional type-specific entity event.
+ *
+ * @param {import("@minecraft/server").Block} block The block where the machine will be placed.
+ * @param {Object} config Machine configuration object.
+ * @param {Object} config.entity Entity configuration.
+ * @param {string} [config.entity.identifier] Entity identifier.
+ * @param {number} config.entity.inventory_size Inventory slot count.
+ * @param {string} [config.entity.name] Optional name.
+ * @param {boolean} [config.entity.fixed_fluid_types] Keeps fluid type tags even when tanks are empty.
+ * @param {boolean} [config.entity.fixed_gas_types] Keeps gas type tags even when tanks are empty.
+ * @param {string} [config.entity.type] Optional entity event suffix triggered after initialization.
+ * @param {{x:number,y:number,z:number}} [config.spawn_offset] Optional spawn offset.
+ *
+ * @returns {import("@minecraft/server").Entity} The spawned entity.
+ */
+export function spawnEntity(block, config) {
+  const { entity: entityData, spawn_offset = Constants.DEFAULT_MACHINE_SPAWN_OFFSET } = config;
+  const dimension = block.dimension;
+
+  const center = block.center();
+  const location = {
+    x: center.x + spawn_offset.x,
+    y: center.y + spawn_offset.y,
+    z: center.z + spawn_offset.z,
+  };
+
+  const identifier = entityData.identifier ?? GlobalConstants.DEFAULT_ENTITY_ID;
+  const entity = dimension.spawnEntity(identifier, location);
+
+  if (entityData.fixed_fluid_types === true) {
+    entity.addTag(MachineryConstants.CONSTANT_FLUID_TYPE_TAG);
+  }
+  if (entityData.fixed_gas_types === true) {
+    entity.addTag(MachineryConstants.CONSTANT_GAS_TYPE_TAG);
+  }
+
+  const inventorySize = entityData.inventory_size ?? 1;
+  try {
+    entity.triggerEvent(`utilitycraft:inventory_${inventorySize}`);
+  } catch {}
+
+  const name = entityData.name ?? block.typeId.split(":")[1];
+  entity.nameTag = `entity.utilitycraft:${name}.name`;
+  TickScheduler.assignTickGroup(entity);
+
+  initializeEntity(entity);
+
+  if (entityData.type) {
+    entity.triggerEvent(`utilitycraft:${entityData.type}`);
+  }
+
+  return entity;
+}
+
+/**
+ * Updates nearby pipe networks based on the block's tags.
+ *
+ * The function schedules a delayed update that triggers the
+ * `dorios:updatePipes` script event for adjacent networks.
+ *
+ * The `block` parameter provides the world location used for the update,
+ * while the `permutationToPlace` parameter is used to check block tags
+ * (e.g. energy, item, or fluid networks).
+ *
+ * @param {import("@minecraft/server").Block} block The block whose location will be used to update adjacent networks.
+ * @param {import("@minecraft/server").BlockPermutation} [permutationToPlace=block.permutation] Optional permutation used to read tags (e.g. when placing a new block).
+ */
+export function updateAdjacentNetwork(block, permutationToPlace = block.permutation) {
+  let { x, y, z } = block.location;
+  system.runTimeout(() => {
+    if (permutationToPlace.hasTag(Constants.ENERGY_BLOCK_TAG)) {
+      block.dimension.runCommand(`execute as @n run scriptevent ${Constants.UPDATE_PIPES_EVENT_ID} energy|[${x},${y},${z}]`);
+    }
+
+    if (permutationToPlace.hasTag(Constants.ITEM_BLOCK_TAG)) {
+      block.dimension.runCommand(`execute as @n run scriptevent ${Constants.UPDATE_PIPES_EVENT_ID} item|[${x},${y},${z}]`);
+    }
+
+    if (permutationToPlace.hasTag(Constants.FLUID_BLOCK_TAG)) {
+      block.dimension.runCommand(`execute as @n run scriptevent ${Constants.UPDATE_PIPES_EVENT_ID} fluid|[${x},${y},${z}]`);
+    }
+
+    if (permutationToPlace.hasTag(Constants.GAS_BLOCK_TAG)) {
+      block.dimension.runCommand(`execute as @n run scriptevent ${Constants.UPDATE_PIPES_EVENT_ID} gas|[${x},${y},${z}]`);
+    }
+  }, 2);
+}
+
+/**
+ * Extracts stored energy and fluid information from an item's lore.
+ *
+ * The function reads the lore lines of an ItemStack and attempts to
+ * parse energy and fluid values using the EnergyStorage and FluidStorage helpers.
+ *
+ * Expected lore format examples:
+ *   "§eEnergy: 25,000 FE"
+ *   "§bWater: 4,000 mB"
+ *
+ * @param {import("@minecraft/server").ItemStack} item The item to read lore from.
+ * @returns {{
+ *   energy: number,
+ *   fluid?: { type: string, amount: number }
+ * }} Parsed energy and fluid data.
+ */
+export function getEnergyAndFluidFromItem(item) {
+  const lore = item?.getLore() ?? [];
+
+  let energy = 0;
+  let fluid = undefined;
+
+  if (lore[0] && lore[0].includes("Energy")) {
+    energy = EnergyStorage.getEnergyFromText(lore[0]);
+  }
+
+  const nextLine = energy > 0 ? lore[1] : lore[0];
+
+  if (nextLine) {
+    fluid = FluidStorage.getFluidFromText(nextLine);
+  }
+
+  return { energy, fluid };
+}
+
+/**
+ * Drops all items from a machine entity's inventory except UI elements.
+ *
+ * @param {import("@minecraft/server").Entity} entity The machine entity whose items will be dropped.
+ * @returns {void}
+ */
+export function dropAllItems(entity) {
+  const inv = entity.getComponent("minecraft:inventory")?.container;
+  if (!inv) return;
+
+  const dim = entity.dimension;
+  const center = entity.location;
+
+  for (let i = 0; i < inv.size; i++) {
+    const item = inv.getItem(i);
+    if (!item) continue;
+
+    // Skip UI items
+    let shouldContinue = false;
+    if (Constants.UI_ITEM_TAGS.some((tag) => item.hasTag(tag))) continue;
+    item.getTags().forEach((tag) => {
+      if (tag.includes("ui")) {
+        shouldContinue = true;
+        return;
+      }
+    });
+    if (shouldContinue) continue;
+
+    dim.spawnItem(item, center);
+    inv.setItem(i, undefined);
+  }
+}

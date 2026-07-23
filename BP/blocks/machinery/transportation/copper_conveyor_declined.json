@@ -16,11 +16,11 @@
 			}
 		},
 		"components": {
-			"utilitycraft:conveyor": {
-				"tier": "copper",
-				"shape": "declined",
-				"ips": 5
-			},
+// LEGACY_DISABLED 			"utilitycraft:conveyor": {
+// 				"tier": "copper",
+// 				"shape": "declined",
+// 				"ips": 5
+// 			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_declined",
 			"minecraft:material_instances": {
 				"*": {

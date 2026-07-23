@@ -24,11 +24,11 @@
 			}
 		},
 		"components": {
-			"utilitycraft:reinforced_importer": {
-				"machine": {
-					"fluid_rate": 4000
-				}
-			},
+// LEGACY_DISABLED 			"utilitycraft:reinforced_importer": {
+// 				"machine": {
+// 					"fluid_rate": 4000
+// 				}
+// 			},
 			"minecraft:geometry": {
 				"identifier": "geometry.utilitycraft_reinforced_importer",
 				"bone_visibility": {
@@ -54,9 +54,9 @@
 				"origin": [-4, 4, -4],
 				"size": [8, 8, 8]
 			},
-			"minecraft:tick": {
-				"interval_range": [10, 10]
-			},
+// LEGACY_DISABLED 			"minecraft:tick": {
+// 				"interval_range": [10, 10]
+// 			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 1
 			},

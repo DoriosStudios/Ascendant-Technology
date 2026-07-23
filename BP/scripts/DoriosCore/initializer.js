@@ -1,67 +1,74 @@
 import { ItemStack, system, world } from "@minecraft/server";
-import { Energy } from "./machinery/energyStorage.js";
-import { sanitizeTickSpeed, getTickSpeed } from "./machinery/machine.js";
+import * as ButtonConstants from "./buttons/constants.js";
 import { loadButtonItemStack } from "./buttons/index.js";
+import { scriptEventHandler } from "./scriptEvents.js";
+import * as Constants from "./constants.js";
+import { EnergyStorage } from "./machinery/energyStorage.js";
+import { FluidStorage } from "./machinery/fluidStorage.js";
+import { GasStorage } from "./machinery/gasStorage.js";
 
-// ─── Tick counter ────────────────────────────────────────────────────────────
+globalThis[Constants.GLOBAL_WORLD_LOADED_KEY] = false;
+globalThis[Constants.GLOBAL_TICK_COUNT_KEY] = 0;
+globalThis[Constants.GLOBAL_TICK_SPEED_KEY] = Constants.DEFAULT_TICK_SPEED;
 
-globalThis.tickCount ??= 0;
-globalThis.tickSpeed ??= 2;
-globalThis.worldLoaded ??= false;
-
+/**
+ * Advances the shared UtilityCraft tick counter on the same cadence as the
+ * current machine block tick base.
+ */
 system.runInterval(() => {
-    globalThis.tickCount += 2;
-    if (globalThis.tickCount == 1000) globalThis.tickCount = 0;
-}, 2);
+    globalThis[Constants.GLOBAL_TICK_COUNT_KEY] += 4;
+    if (globalThis[Constants.GLOBAL_TICK_COUNT_KEY] === 1000) {
+        globalThis[Constants.GLOBAL_TICK_COUNT_KEY] = 0;
+    }
+}, 4);
 
-// ─── World load ──────────────────────────────────────────────────────────────
-
+/**
+ * Initializes global scoreboard objectives and core runtime
+ * configuration once the world has fully loaded.
+ *
+ * Responsibilities:
+ * - Ensure energy-related objectives exist.
+ * - Mark the world as loaded.
+ * - Initialize legacy global tick speed from dynamic property.
+ * - Preload the shared button item stack constructor dependency.
+ *
+ * This runs exactly once per world session.
+ */
 world.afterEvents.worldLoad.subscribe(() => {
-    Energy.initializeObjectives();
 
-    loadButtonItemStack("utilitycraft:ui_filler", ItemStack);
+    // Initialize energy system scoreboard objectives
+    EnergyStorage.initializeObjectives();
 
-    if (world.getDynamicProperty("loaded") === undefined) {
-        world.setDynamicProperty("loaded", false);
+    // Initialize fluid objectives
+    FluidStorage.initializeObjectives();
+
+    // Initialize the fully separate gas objectives.
+    GasStorage.initializeObjectives();
+
+    // Mark world as ready
+    if (world.getDimension("overworld").getEntities()[0]) {
+        globalThis[Constants.GLOBAL_WORLD_LOADED_KEY] = true;
     }
 
-    // Sync tick speed from world property when available
-    try {
-        const storedTickSpeed = Number(world.getDynamicProperty("utilitycraft:tickSpeed"));
-        if (Number.isFinite(storedTickSpeed)) {
-            const sanitized = sanitizeTickSpeed(storedTickSpeed);
-            globalThis.tickSpeed = sanitized;
-            world.setDynamicProperty("utilitycraft:tickSpeed", sanitized);
-        } else {
-            world.setDynamicProperty("utilitycraft:tickSpeed", getTickSpeed());
-        }
-    } catch { /* ignore dynamic property issues */ }
+    // Load configurable tick speed
+    const configuredTickSpeed =
+        world.getDynamicProperty(Constants.TICK_SPEED_PROPERTY_ID)
+        ?? Constants.DEFAULT_TICK_SPEED;
 
-    globalThis.worldLoaded = world.getDynamicProperty("loaded");
+    globalThis[Constants.GLOBAL_TICK_SPEED_KEY] = configuredTickSpeed;
 
-    if (world.getDimension('overworld').getEntities()[0]) {
-        world.setDynamicProperty("loaded", true);
-        globalThis.worldLoaded = true;
-    }
+    loadButtonItemStack(ButtonConstants.DEFAULT_BUTTON_ITEM_ID, ItemStack);
 });
 
-// ─── Player spawn ────────────────────────────────────────────────────────────
-
+// --- Al primer spawn del jugador ---
 world.afterEvents.playerSpawn.subscribe(({ initialSpawn }) => {
     if (!initialSpawn) return;
     system.runTimeout(() => {
-        world.setDynamicProperty("loaded", true);
-        globalThis.worldLoaded = true;
+        globalThis[Constants.GLOBAL_WORLD_LOADED_KEY] = true;
     }, 50);
 });
 
-// ─── Shutdown ────────────────────────────────────────────────────────────────
-
-system.beforeEvents.shutdown.subscribe(() => {
-    try {
-        world.setDynamicProperty("loaded", false);
-    } catch { /* ignore */ }
+system.afterEvents.scriptEventReceive.subscribe((e) => {
+    const event = scriptEventHandler[e.id];
+    if (event) event(e);
 });
-
-// Import script events so all handlers are registered
-import "./scriptEvents.js";

@@ -1,0 +1,62 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_shovel",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.shovel"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_aetherium_shovel",
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_shovel",
+                    "minecraft:is_tool",
+                    "minecraft:transformable_items"
+                ]
+            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:hand_equipped": true,
+            "minecraft:durability": {
+                "max_durability": 3579
+            },
+            "minecraft:fire_resistant": {
+                "value": true
+            },
+            "minecraft:damage": 7,
+            "minecraft:enchantable": {
+                "value": 30,
+                "slot": "shovel"
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["utilitycraft:aetherium_shard"],
+                        "repair_amount": "(q.max_durability * 0.25)"
+                    },
+                    {
+                        "items": ["utilitycraft:aetherium"],
+                        "repair_amount": "(q.max_durability * 0.333)"
+                    },
+                    {
+                        "items": ["utilitycraft:aetherium_shovel"],
+                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2"
+                    }
+                ]
+            },
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "speed": 20,
+                        "block": {
+                            "tags": "q.any_tag('minecraft:is_shovel_item_destructible')"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

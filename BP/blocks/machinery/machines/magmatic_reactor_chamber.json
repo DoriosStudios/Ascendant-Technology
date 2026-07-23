@@ -19,29 +19,29 @@
             }
         },
         "components": {
-            "utilitycraft:magmatic_reactor_chamber": {
-                "entity": {
-                    "type": "machine",
-                    "input_type": "complex",
-                    "output_type": "complex",
-                    "inventory_size": 16,
-                    "input_range": [3, 8],
-                    "output": 9,
-                    "fluid": true
-                },
-                "machine": {
-                    "energy_cap": 420000000,
-                    "energy_cost": 4000,
-                    "fluid_cap": 128000,
-                    "rate_speed_base": 24000,
-                    "dynamic_rate": true,
-                    "upgrades": [10, 11, 12, 13],
-                    "hidden_slots": [14]
-                }
-            },
-            "utilitycraft:special_container": {
-                "Input Grid": [3, 4, 5, 6, 7, 8]
-            },
+// LEGACY_DISABLED             "utilitycraft:magmatic_reactor_chamber": {
+//                 "entity": {
+//                     "type": "machine",
+//                     "input_type": "complex",
+//                     "output_type": "complex",
+//                     "inventory_size": 16,
+//                     "input_range": [3, 8],
+//                     "output": 9,
+//                     "fluid": true
+//                 },
+//                 "machine": {
+//                     "energy_cap": 420000000,
+//                     "energy_cost": 4000,
+//                     "fluid_cap": 128000,
+//                     "rate_speed_base": 24000,
+//                     "dynamic_rate": true,
+//                     "upgrades": [10, 11, 12, 13],
+//                     "hidden_slots": [14]
+//                 }
+//             },
+// LEGACY_DISABLED             "utilitycraft:special_container": {
+//                 "Input Grid": [3, 4, 5, 6, 7, 8]
+//             },
             "utilitycraft:machine_recipes": {
                 "type": "magmatic_reactor_chamber"
             },
@@ -76,9 +76,9 @@
                     "render_method": "alpha_test"
                 }
             },
-            "minecraft:tick": {
-                "interval_range": [2, 2]
-            },
+// LEGACY_DISABLED             "minecraft:tick": {
+//                 "interval_range": [2, 2]
+//             },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

@@ -19,31 +19,31 @@
             }
         },
         "components": {
-            "utilitycraft:pulverizer": {
-                "entity": {
-                    "type": "machine",
-                    "input_type": "complex",
-                    "output_type": "complex",
-                    "inventory_size": 20,
-                    "fluid": true
-                },
-                "machine": {
-                    "energy_cap": 64000000,
-                    "energy_cost": 1600,
-                    "rate_speed_base": 12800,
-                    "dynamic_rate": true,
-                    "fluid_cap": 32000,
-                    "upgrades": [10, 11, 12, 13],
-                    "hidden_slots": [7, 9, 14, 15]
-                }
-            },
-            "utilitycraft:special_container": {
-                "Input Lanes": [3, 4, 5, 6],
-                "Steam Tank": 8,
-                "Upgrade Slots": [10, 11, 12, 13],
-                "Output Lanes": [16, 17, 18, 19],
-                "Hidden Slots": [7, 9, 14, 15]
-            },
+// LEGACY_DISABLED             "utilitycraft:pulverizer": {
+//                 "entity": {
+//                     "type": "machine",
+//                     "input_type": "complex",
+//                     "output_type": "complex",
+//                     "inventory_size": 20,
+//                     "fluid": true
+//                 },
+//                 "machine": {
+//                     "energy_cap": 64000000,
+//                     "energy_cost": 1600,
+//                     "rate_speed_base": 12800,
+//                     "dynamic_rate": true,
+//                     "fluid_cap": 32000,
+//                     "upgrades": [10, 11, 12, 13],
+//                     "hidden_slots": [7, 9, 14, 15]
+//                 }
+//             },
+// LEGACY_DISABLED             "utilitycraft:special_container": {
+//                 "Input Lanes": [3, 4, 5, 6],
+//                 "Steam Tank": 8,
+//                 "Upgrade Slots": [10, 11, 12, 13],
+//                 "Output Lanes": [16, 17, 18, 19],
+//                 "Hidden Slots": [7, 9, 14, 15]
+//             },
             "utilitycraft:machine_recipes": {
                 "type": "pulverizer"
             },
@@ -78,9 +78,9 @@
                     "render_method": "alpha_test"
                 }
             },
-            "minecraft:tick": {
-                "interval_range": [2, 2]
-            },
+// LEGACY_DISABLED             "minecraft:tick": {
+//                 "interval_range": [2, 2]
+//             },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

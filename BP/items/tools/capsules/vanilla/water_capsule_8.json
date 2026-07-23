@@ -16,10 +16,10 @@
         "use_duration": 0
       },
       "minecraft:icon": "utilitycraft_water_capsule_8",
-      "utilitycraft:fluid_capsule": {
-        "fluid": "water",
-        "amount": 8000
-      },
+// LEGACY_DISABLED       "utilitycraft:fluid_capsule": {
+//         "fluid": "water",
+//         "amount": 8000
+//       },
       "minecraft:allow_off_hand": false,
       "minecraft:tags": {
         "tags": [

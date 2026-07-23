@@ -1,0 +1,49 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:titanium_boots",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.boots"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_titanium_boots",
+            "minecraft:wearable": {
+                "slot": "slot.armor.feet",
+                "protection": 3
+            },
+            "minecraft:enchantable": {
+                "slot": "armor_feet",
+                "value": 18
+            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:durability": {
+                "max_durability": 363
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": [
+                            "utilitycraft:titanium"
+                        ],
+                        "repair_amount": "(q.max_durability*0.25)"
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:titanium_plate"
+                        ],
+                        "repair_amount": "(q.max_durability*0.333)"
+                    },
+                    {
+                        "items": [
+                            "utilitycraft:titanium_boots"
+                        ],
+                        "repair_amount": "(q.max_durability*0.5)"
+                    }
+                ]
+            }
+        }
+    }
+}

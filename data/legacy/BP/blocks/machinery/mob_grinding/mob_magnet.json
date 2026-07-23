@@ -1,0 +1,86 @@
+{
+	"format_version": "1.21.100",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:mob_magnet",
+			"menu_category": {
+				"category": "construction",
+				"group": "at:itemGroup.name.machines"
+			},
+			"states": {
+				"utilitycraft:isOn": [
+					false,
+					true
+				],
+				"utilitycraft:range": [
+					0,
+					1,
+					2,
+					3,
+					4,
+					5,
+					6,
+					7,
+					8,
+					9,
+					10,
+					11,
+					12,
+					13,
+					14,
+					15
+				],
+				"utilitycraft:filter": [
+					0,
+					1
+				]
+			}
+		},
+		"components": {
+			"utilitycraft:mob_magnet": {},
+			"utilitycraft:upgradeable": {},
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_mob_magnet_off",
+					"render_method": "alpha_test"
+				}
+			},
+			"tag:dorios:upgraedable": {},
+			"minecraft:geometry": "minecraft:geometry.full_block",
+			"minecraft:map_color": "#1d1526",
+			"minecraft:tick": {
+				"interval_range": [
+					4,
+					4
+				]
+			},
+			"minecraft:selection_box": {
+				"origin": [
+					-8,
+					0,
+					-8
+				],
+				"size": [
+					16,
+					16,
+					16
+				]
+			},
+			"tag:minecraft:is_pickaxe_item_destructible": {}
+		},
+		"permutations": [
+			{
+				"condition": "q.block_state('utilitycraft:isOn') == 1",
+				"components": {
+					"minecraft:material_instances": {
+						"*": {
+							"texture": "utilitycraft_mob_magnet_on",
+							"render_method": "alpha_test"
+						}
+					},
+					"minecraft:light_emission": 8
+				}
+			}
+		]
+	}
+}

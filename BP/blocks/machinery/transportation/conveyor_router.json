@@ -16,11 +16,11 @@
 			}
 		},
 		"components": {
-			"utilitycraft:conveyor": {
-				"tier": "universal",
-				"shape": "router",
-				"ips": 5
-			},
+// LEGACY_DISABLED 			"utilitycraft:conveyor": {
+// 				"tier": "universal",
+// 				"shape": "router",
+// 				"ips": 5
+// 			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_horizontal",
 			"minecraft:material_instances": {
 				"*": {

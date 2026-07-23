@@ -37,7 +37,7 @@
 			}
 		},
 		"components": {
-			"utilitycraft:mob_magnet": {},
+// LEGACY_DISABLED 			"utilitycraft:mob_magnet": {},
 			"utilitycraft:upgradeable": {},
 			"minecraft:material_instances": {
 				"*": {
@@ -48,12 +48,12 @@
 			"tag:dorios:upgraedable": {},
 			"minecraft:geometry": "minecraft:geometry.full_block",
 			"minecraft:map_color": "#1d1526",
-			"minecraft:tick": {
-				"interval_range": [
-					4,
-					4
-				]
-			},
+// LEGACY_DISABLED 			"minecraft:tick": {
+// 				"interval_range": [
+// 					4,
+// 					4
+// 				]
+// 			},
 			"minecraft:selection_box": {
 				"origin": [
 					-8,

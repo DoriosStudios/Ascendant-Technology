@@ -1,0 +1,82 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:titanium_aiot",
+            "menu_category": {
+                "category": "equipment",
+                "group": "dorios:itemGroup.name.aiots"
+            }
+        },
+        "components": {
+            "utilitycraft:hoe": {
+                "size": 1,
+                "runTractor": true,
+                "sneakingMode": false
+            },
+            "utilitycraft:shovel": {
+                "size": 1,
+                "sneakingMode": true
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_pickaxe",
+                    "minecraft:is_axe",
+                    "minecraft:is_sword",
+                    "minecraft:is_tool",
+                    "utilitycraft:is_aiot"
+                ]
+            },
+            "minecraft:icon": "utilitycraft_titanium_aiot",
+            "minecraft:max_stack_size": 1,
+            "minecraft:hand_equipped": true,
+            "minecraft:durability": {
+                "max_durability": 7805
+            },
+            "minecraft:damage": 10,
+            "minecraft:enchantable": {
+                "value": 20,
+                "slot": "axe"
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["utilitycraft:titanium"],
+                        "repair_amount": "(q.max_durability * 0.25)"
+                    },
+                    {
+                        "items": ["utilitycraft:titanium_plate"],
+                        "repair_amount": "(q.max_durability * 0.33)"
+                    },
+                    {
+                        "items": ["utilitycraft:titanium_aiot"],
+                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2"
+                    }
+                ]
+            },
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "speed": 22,
+                        "block": {
+                            "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible', 'minecraft:is_shovel_item_destructible', 'minecraft:is_axe_item_destructible', 'minecraft:is_hoe_item_destructible')"
+                        }
+                    },
+                    {
+                        "speed": 30,
+                        "block": "minecraft:web"
+                    },
+                    {
+                        "block": "minecraft:bamboo",
+                        "speed": 30
+                    },
+                    {
+                        "block": "minecraft:honeycomb_block",
+                        "speed": 30
+                    }
+                ]
+            }
+        }
+    }
+}

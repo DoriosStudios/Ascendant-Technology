@@ -16,11 +16,11 @@
         "use_duration": 0
       },
       "minecraft:icon": "utilitycraft_cryofluid_capsule_8",
-      "utilitycraft:fluid_capsule": {
-        "fluid": "cryofluid",
-        "amount": 8000,
-        "infinite": true
-      },
+// LEGACY_DISABLED       "utilitycraft:fluid_capsule": {
+//         "fluid": "cryofluid",
+//         "amount": 8000,
+//         "infinite": true
+//       },
       "minecraft:allow_off_hand": false,
       "minecraft:tags": {
         "tags": [

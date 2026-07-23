@@ -19,23 +19,23 @@
 			}
 		},
 		"components": {
-			"utilitycraft:overclock_tower": {
-				"entity": {
-					"type": "machine",
-					"input_type": "simple",
-					"output_type": "simple",
-					"inventory_size": 15,
-					"input_range": [2, 10]
-				},
-				"machine": {
-					"energy_cap": 102400000,
-					"energy_cost": 32000,
-					"rate_speed_base": 32000,
-					"upgrades": [],
-					"hidden_slots": [12, 13, 14],
-					"overclock_slot": 11
-				}
-			},
+// LEGACY_DISABLED 			"utilitycraft:overclock_tower": {
+// 				"entity": {
+// 					"type": "machine",
+// 					"input_type": "simple",
+// 					"output_type": "simple",
+// 					"inventory_size": 15,
+// 					"input_range": [2, 10]
+// 				},
+// 				"machine": {
+// 					"energy_cap": 102400000,
+// 					"energy_cost": 32000,
+// 					"rate_speed_base": 32000,
+// 					"upgrades": [],
+// 					"hidden_slots": [12, 13, 14],
+// 					"overclock_slot": 11
+// 				}
+// 			},
 			"minecraft:geometry": "geometry.utilitycraft_tower",
 			"minecraft:material_instances": {
 				"*": {
@@ -43,9 +43,9 @@
 					"render_method": "alpha_test"
 				}
 			},
-			"minecraft:tick": {
-				"interval_range": [2, 2]
-			},
+// LEGACY_DISABLED 			"minecraft:tick": {
+// 				"interval_range": [2, 2]
+// 			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 1
 			},

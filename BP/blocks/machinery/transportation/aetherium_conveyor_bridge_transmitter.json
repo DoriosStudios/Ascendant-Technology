@@ -16,12 +16,12 @@
 			}
 		},
 		"components": {
-			"utilitycraft:conveyor": {
-				"tier": "aetherium",
-				"shape": "bridge_transmitter",
-				"ips": 64,
-				"bridge_range": 32
-			},
+// LEGACY_DISABLED 			"utilitycraft:conveyor": {
+// 				"tier": "aetherium",
+// 				"shape": "bridge_transmitter",
+// 				"ips": 64,
+// 				"bridge_range": 32
+// 			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_bridge_controller",
 			"minecraft:material_instances": {
 				"*": {

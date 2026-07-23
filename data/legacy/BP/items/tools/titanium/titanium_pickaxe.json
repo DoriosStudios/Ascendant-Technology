@@ -1,0 +1,58 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:titanium_pickaxe",
+            "menu_category": {
+                "category": "equipment",
+                "group": "minecraft:itemGroup.name.pickaxe"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_titanium_pickaxe",
+            "minecraft:tags": {
+                "tags": [
+                    "minecraft:is_pickaxe",
+                    "minecraft:is_tool"
+                ]
+            },
+            "minecraft:max_stack_size": 1,
+            "minecraft:hand_equipped": true,
+            "minecraft:durability": {
+                "max_durability": 1561
+            },
+            "minecraft:damage": 5,
+            "minecraft:enchantable": {
+                "value": 20,
+                "slot": "pickaxe"
+            },
+            "minecraft:repairable": {
+                "repair_items": [
+                    {
+                        "items": ["utilitycraft:titanium"],
+                        "repair_amount": "(q.max_durability * 0.25)"
+                    },
+                    {
+                        "items": ["utilitycraft:titanium_plate"],
+                        "repair_amount": "(q.max_durability * 0.33)"
+                    },
+                    {
+                        "items": ["utilitycraft:titanium_pickaxe"],
+                        "repair_amount": "((q.remaining_durability) + q.max_durability) / 2"
+                    }
+                ]
+            },
+            "minecraft:digger": {
+                "use_efficiency": true,
+                "destroy_speeds": [
+                    {
+                        "speed": 12,
+                        "block": {
+                            "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible')"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

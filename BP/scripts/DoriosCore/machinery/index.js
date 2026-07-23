@@ -1,108 +1,11 @@
-// DoriosCore/machinery barrel – re-exports every public symbol from the
-// machinery sub-modules so consumers can import from a single path.
-
-export {
-    Machine,
-    Container,
-    getCachedBlockEntity,
-    updatePipes,
-    applyDynamicRecipeRate,
-    buildOverclockLoreLine,
-    applyLabelToSlot,
-    applyLabels,
-    refreshEnergyGeometryAround,
-    getReinforcedFluidIoKey,
-    canFluidNodeProvide,
-    canFluidNodeReceive,
-    isFluidNodeEnabled,
-    fluidNodeMatchesType,
-    collectFluidNetworkNodes,
-    sanitizeTickSpeed,
-    getTickSpeed,
-    resolveMachineEnergyRateUnits,
-    resolveRecipeTimeSeconds,
-} from "./machine.js";
-
-export { Generator } from "./generator.js";
-
-export {
-    Energy,
-    shareEnergyWithNeighbors,
-} from "./energyStorage.js";
-
-export {
-    FluidManager,
-    GasManager,
-    resolveFluidTransferOffset,
-    entityAllowsFluid,
-    getFluidWhitelist,
-    registerFluidContainerDefinition,
-    registerFluidContainerDefinitionBatch,
-    registerFluidOutputDefinition,
-    registerFluidOutputDefinitionBatch,
-    registerGasContainerDefinition,
-    registerGasContainerDefinitionBatch,
-    registerGasOutputDefinition,
-    registerGasOutputDefinitionBatch,
-} from "./fluidStorage.js";
-
-export {
-    tickGate,
-    ADAPTIVE_CHECK_RESULT,
-    runAdaptiveTickGate,
-    resetAdaptiveTickGate,
-    hasRecipes,
-    listRecipes,
-    resolveMachineRecipes,
-    resolveMachineRecipeList,
-    findRecipeByInputId,
-    findRecipeByFluidInputType,
-    resolveCachedLocationList,
-    buildTankSnapshot,
-    buildSingleTankMachineState,
-    buildDualTankMachineState,
-    buildStateSignature,
-    shouldRefreshMachineUi,
-    resetMachineRuntimeState,
-    formatItemName,
-    capitalize,
-    formatLoreMetric,
-    appendLoreSection,
-    formatFluidDisplayName,
-    clampChance,
-    getEnchantableComponent,
-    normalizeEnchantmentId,
-    captureItemMetadata,
-    applyItemMetadata,
-    extractEnchantments,
-    applyEnchantmentsToStack,
-    resolveInventorySize,
-    isSlotAvailable,
-    safeGetItem,
-    resolveAvailableSlots,
-    resolveItemMaxStackSize,
-    addItemsToSlot,
-    feedFluidSlot,
-    fillFluidSlot,
-    computeSlotCapacity,
-    getOutputCapacity,
-    rollByproduct,
-    formatSeconds,
-    getProgressPerSecond,
-    calculateEtaSeconds,
-    formatEta,
-} from "./helpers.js";
-
-export {
-    ButtonItemStack,
-    loadButtonItemStack,
-    ButtonManager,
-    BUTTON_PANEL_DEFAULTS,
-    getButtonPanelState,
-    getButtonPanelValue,
-    setButtonPanelValue,
-    pressButtonPanelButton,
-    clearButtonPanel,
-    renderButtonPanel,
-    syncButtonPanel,
-} from "../buttons/index.js";
+export * from "./basicMachine.js"
+export * from "./machine.js"
+export * from "./generator.js"
+export * from "./energyStorage.js"
+export * from "./fluidStorage.js"
+export * from "./gasStorage.js"
+export * from "./tickScheduler.js"
+export * from "./outputTracker.js"
+export * from "./itemContainers.js"
+export * from "./fluidContainers.js"
+export * from "./gasContainers.js"

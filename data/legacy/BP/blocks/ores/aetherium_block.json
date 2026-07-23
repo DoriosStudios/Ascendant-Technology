@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:block": {
+    "description": {
+      "identifier": "utilitycraft:aetherium_block",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 5.5
+      },
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 8.0
+      },
+      "minecraft:loot": "loot_tables/blocks/aetherium_block.json",
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "utilitycraft_aetherium_block",
+          "render_method": "opaque"
+        }
+      },
+      "tag:minecraft:is_pickaxe_item_destructible": {},
+      "tag:minecraft:diamond_tier_destructible": {}
+    }
+  }
+}

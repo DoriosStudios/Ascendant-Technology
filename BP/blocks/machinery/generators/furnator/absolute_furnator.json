@@ -27,8 +27,7 @@
 				"entity": {
 					"name": "furnator",
 					"type": "generator",
-					"inventory_size": 4,
-					"input_slot": 3
+					"inventory_size": 10
 				},
 				"generator": {
 					"energy_cap": 512000000,
@@ -77,6 +76,7 @@
 			},
 			"minecraft:destructible_by_explosion": false,
 			"tag:dorios:generator": {},
+			"tag:dorios:io": {},
 			"tag:dorios:energy": {},
 			"tag:dorios:item": {},
 			"tag:minecraft:is_pickaxe_item_destructible": {}

@@ -16,11 +16,11 @@
         "use_duration": 0
       },
       "minecraft:icon": "utilitycraft_dark_matter_liquid_capsule_8",
-      "utilitycraft:fluid_capsule": {
-        "fluid": "dark_matter",
-        "amount": 8000,
-        "infinite": true
-      },
+// LEGACY_DISABLED       "utilitycraft:fluid_capsule": {
+//         "fluid": "dark_matter",
+//         "amount": 8000,
+//         "infinite": true
+//       },
       "minecraft:allow_off_hand": false,
       "minecraft:tags": {
         "tags": [

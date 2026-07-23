@@ -459,6 +459,12 @@
 		},
 		"utilitycraft_vaporworks_processor_off": {
 			"textures": "textures/blocks/machines/vaporworks_processor_off"
+		},
+		"utilitycraft_aetherium_cobble_gen": {
+			"textures": "textures/blocks/generators/aetherium_cobble_gen"
+		},
+		"utilitycraft_absolute_tank": {
+			"textures": "textures/blocks/pipes/fluid_tank_absolute"
 		}
 ,
 		"utilitycraft_absolute_furnator_off_north": {

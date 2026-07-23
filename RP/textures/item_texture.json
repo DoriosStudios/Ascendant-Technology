@@ -62,6 +62,57 @@
 		"utilitycraft_aetherium_boots": {
 			"textures": "textures/items/armor/aetherium_boots"
 		},
+		"utilitycraft_absolute_chip": {
+			"textures": "textures/items/machinery/absolute_chip"
+		},
+		"utilitycraft_kyarium": {
+			"textures": "textures/items/ores/kyarium"
+		},
+		"utilitycraft_kyarium_aiot": {
+			"textures": "textures/items/tools/kyarium_aiot"
+		},
+		"utilitycraft_kyarium_hammer": {
+			"textures": "textures/items/tools/kyarium_hammer"
+		},
+		"utilitycraft_kyarium_mesh": {
+			"textures": "textures/items/meshes/kyarium_mesh"
+		},
+		"utilitycraft_kyarium_fishing_net":{
+			"textures": "textures/items/nets/kyarium_net"
+		},
+		"utilitycraft_kyarium_helmet": {
+			"textures": "textures/items/armor/kyarium_helmet"
+		},
+		"utilitycraft_kyarium_chestplate": {
+			"textures": "textures/items/armor/kyarium_chestplate"
+		},
+		"utilitycraft_kyarium_leggings": {
+			"textures": "textures/items/armor/kyarium_leggings"
+		},
+		"utilitycraft_kyarium_boots": {
+			"textures": "textures/items/armor/kyarium_boots"
+		},
+		"utilitycraft_kyarium_sword": {
+			"textures": "textures/items/tools/kyarium_sword"
+		},
+		"utilitycraft_kyarium_pickaxe": {
+			"textures": "textures/items/tools/kyarium_pickaxe"
+		},
+		"utilitycraft_kyarium_axe": {
+			"textures": "textures/items/tools/kyarium_axe"
+		},
+		"utilitycraft_kyarium_shovel": {
+			"textures": "textures/items/tools/kyarium_shovel"
+		},
+		"utilitycraft_kyarium_hoe": {
+			"textures": "textures/items/tools/kyarium_hoe"
+		},
+		"utilitycraft_kyarium_paxel": {
+			"textures": "textures/items/tools/kyarium_paxel"
+		},
+		"utilitycraft_kyarium_chip": {
+			"textures": "textures/items/machinery/kyarium_chip"
+		},
 		"utilitycraft_titanium_helmet": {
 			"textures": "textures/items/armor/titanium_helmet"
 		},

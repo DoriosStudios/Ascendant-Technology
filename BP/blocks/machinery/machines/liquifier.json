@@ -22,45 +22,25 @@
 			}
 		},
 		"components": {
-// LEGACY_DISABLED 			"utilitycraft:liquifier": {
-// 				"entity": {
-// 					"type": "machine",
-// 					"input_type": "complex",
-// 					"output_type": "simple",
-// 					"inventory_size": 20,
-// 					"input_slot": 3,
-// 					"output_slot": 19,
-// 					"fluid": true
-// 				},
-// 				"machine": {
-// 					"energy_cap": 8192000,
-// 					"energy_cost": 3600,
-// 					"rate_speed_base": 3600,
-// 					"fluid_cap": 128000,
-// 					"fluid_rate": 128000,
-// 					"upgrades": [
-// 						4,
-// 						5,
-// 						6
-// 					],
-// 					"hidden_slots": [
-// 						7,
-// 						8,
-// 						9,
-// 						12,
-// 						13,
-// 						14,
-// 						15,
-// 						16,
-// 						17,
-// 						18
-// 					]
-// 				}
-// 			},
-// LEGACY_DISABLED 			"utilitycraft:special_container":{
-// 				"Input": 3,
-// 				"Fluid Manual Input": 10
-// 			},
+			"utilitycraft:fluid_container": {},
+			"utilitycraft:liquifier": {
+				"entity": {
+					"type": "fluid_machine",
+					"inventory_size": 22
+				},
+				"machine": {
+					"energy_cap": 8192000,
+					"energy_cost": 3600,
+					"rate_speed_base": 32,
+					"fluid_cap": 640000,
+					"fluid_types": 1,
+					"upgrades": [6, 7]
+				}
+			},
+			"utilitycraft:machine_upgrades": [
+				{ "type": "speed", "slot": 6 },
+				{ "type": "energy", "slot": 7 }
+			],
 			"utilitycraft:machine_recipes": {
 				"type": "liquifier"
 			},
@@ -95,12 +75,9 @@
 					"render_method": "alpha_test"
 				}
 			},
-// LEGACY_DISABLED 			"minecraft:tick": {
-// 				"interval_range": [
-// 					4,
-// 					4
-// 				]
-// 			},
+			"minecraft:tick": {
+				"interval_range": [4, 4]
+			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 1
 			},

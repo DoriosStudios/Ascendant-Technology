@@ -1,5 +1,7 @@
-/** @type {Readonly<Record<string, { output: string, amount: number, cost: number, tier: number }>>} */
-export const crusherRecipeAdditions = Object.freeze({
+import * as DoriosLib from "DoriosLib/index.js";
+
+/** @type {Record<string, { output: string, amount: number, cost: number, tier: number }>} */
+export const crusherRecipeAdditions = {
     "utilitycraft:titanium_chunk": {
         output: "utilitycraft:raw_titanium",
         amount: 1,
@@ -24,4 +26,6 @@ export const crusherRecipeAdditions = Object.freeze({
         cost: 21600,
         tier: 5,
     },
-});
+};
+
+DoriosLib.registry.registerCrusherRecipe(crusherRecipeAdditions);

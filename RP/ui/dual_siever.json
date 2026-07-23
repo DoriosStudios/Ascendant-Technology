@@ -1,405 +1,257 @@
 {
     "namespace": "dual_siever",
+    "flipbook_animation": {
+        "anim_type": "flip_book",
+        "frame_count": 8,
+        "frame_step": 0,
+        "fps": 1,
+        "easing": "linear",
+        "initial_uv": [0, 0]
+    },
+    "output_grid_5x4": {
+        "type": "collection_panel",
+        "size": [90, 72],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "controls": [
+            { "slot_1@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "collection_index": 15 } },
+            { "slot_2@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 0], "collection_index": 16 } },
+            { "slot_3@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 0], "collection_index": 17 } },
+            { "slot_4@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 0], "collection_index": 18 } },
+            { "slot_5@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 0], "collection_index": 19 } },
+            { "slot_6@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 18], "collection_index": 20 } },
+            { "slot_7@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 18], "collection_index": 21 } },
+            { "slot_8@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 18], "collection_index": 22 } },
+            { "slot_9@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 18], "collection_index": 23 } },
+            { "slot_10@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 18], "collection_index": 24 } },
+            { "slot_11@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 36], "collection_index": 25 } },
+            { "slot_12@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 36], "collection_index": 26 } },
+            { "slot_13@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 36], "collection_index": 27 } },
+            { "slot_14@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 36], "collection_index": 28 } },
+            { "slot_15@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 36], "collection_index": 29 } },
+            { "slot_16@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 54], "collection_index": 30 } },
+            { "slot_17@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 54], "collection_index": 31 } },
+            { "slot_18@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 54], "collection_index": 32 } },
+            { "slot_19@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 54], "collection_index": 33 } },
+            { "slot_20@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 54], "collection_index": 34 } },
+            {
+                "grid_outline": {
+                    "type": "image",
+                    "texture": "textures/ui/slots/output_slot",
+                    "size": [92, 74],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [-1, -1],
+                    "layer": 4
+                }
+            }
+        ]
+    },
     "dual_siever_top": {
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [ 206, 126 ],
-        "offset": [ -10, -44 ],
+        "size": [162, 88],
+        "offset": [-10, -32],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "chest_label@chest.chest_label": {
-                    "offset": [ 10, 0 ]
+                "screen": {
+                    "type": "image",
+                    "texture": "textures/ui/background_panel",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "$cell_image_size": [200, 182],
+                    "size": [200, 182],
+                    "offset": [20, 40],
+                    "layer": -1
                 }
             },
             {
-                "energy_bar@machineryCommon.vertical_single": {
-                    "$is_energy": true,
-                    "$has_bg": false,
-                    "offset": [ -84, 4 ]
+                "extended_side_panel": {
+                    "type": "image",
+                    "texture": "textures/ui/side_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$cell_image_size": [90, 182],
+                    "size": [90, 182],
+                    "offset": [-89, -13],
+                    "layer": 0
                 }
             },
             {
-                "item_label@machineryCommon.item_label": {
+                "exit_button_panel": {
+                    "type": "panel",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [42, -10],
+                    "controls": [
+                        { "close_button@common.close_button": {} }
+                    ]
+                }
+            },
+            { "machine_name@uc.machine_name": { "offset": [0, -2] } },
+            {
+                "item_label@uc.text_label": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [ 82, 154 ],
+                    "size": [74, 178],
                     "$text_scale": 0.55,
-                    "offset": [ -82, 2 ]
+                    "offset": [-79, 2]
                 }
             },
+            { "lane_a_input@uc.input_1_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-57, 21], "collection_index": 3 } },
+            { "lane_a_mesh@uc.input_2_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-37, 21], "collection_index": 4 } },
             {
-                "upgrades@ascendant_common.panel": {
-                    "type": "collection_panel",
-                    "collection_name": "container_items",
-                    "$item_collection_name": "container_items",
+                "lane_a_mesh_overlay@uc.function_panel": {
+                    "collection_index": 4,
+                    "type": "panel",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "$has_container_label": false,
-                    "$has_close_button": false,
-                    "$panel_size": [ 24, 96 ],
-                    "offset": [ 108, 42 ],
+                    "size": [16, 16],
+                    "offset": [-37, 22],
                     "controls": [
                         {
-                            "panel@ascendant_common.panel": {
+                            "mesh_image": {
+                                "type": "image",
+                                "texture": "textures/static/images/meshes_flipbook",
+                                "uv_size": [16, 16],
+                                "uv": "@dual_siever.flipbook_animation",
+                                "layer": 4,
+                                "alpha": 0.5,
                                 "anchor_from": "center",
                                 "anchor_to": "center",
-                                "$panel_size": [ "100%", "100%" ],
-                                "$has_container_label": false,
-                                "$has_close_button": false,
-                                "layer": 1
-                            }
-                        },
-                        {
-                            "upgrade_1@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 11,
-                                "$slot_size": [ 18, 18 ],
-                                "layer": 3,
-                                "offset": [ 0, 0 ]
-                            }
-                        },
-                        {
-                            "upgrade_2@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 12,
-                                "$slot_size": [ 18, 18 ],
-                                "layer": 3,
-                                "offset": [ 0, 18 ]
-                            }
-                        },
-                        {
-                            "upgrade_3@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 13,
-                                "$slot_size": [ 18, 18 ],
-                                "layer": 3,
-                                "offset": [ 0, 36 ]
-                            }
-                        },
-                        {
-                            "upgrade_4@ascendant_common.slot_base": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$slot_index": 14,
-                                "$slot_size": [ 18, 18 ],
-                                "layer": 3,
-                                "offset": [ 0, 54 ]
+                                "size": [16, 16]
                             }
                         }
                     ]
                 }
             },
+            { "lane_a_progress@uc.progress_display": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-9, 13], "collection_index": 2 } },
+            { "lane_b_input@uc.input_3_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-57, 57], "collection_index": 5 } },
+            { "lane_b_mesh@uc.input_4_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-37, 57], "collection_index": 6 } },
             {
-                "screen": {
-                    "type": "image",
-                    "texture": "textures/ui/panels/half_long_panel_classic",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [ 108, 190 ],
-                    "offset": [ -92, -10 ],
-                    "layer": 0
-                }
-            },
-            {
-                "dual_progress@common_machines.machinery": {
+                "lane_b_mesh_overlay@uc.function_panel": {
+                    "collection_index": 6,
+                    "type": "panel",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [ 18, 2 ],
-                    "collection_index": 2
+                    "size": [16, 16],
+                    "offset": [-37, 58],
+                    "controls": [
+                        {
+                            "mesh_image": {
+                                "type": "image",
+                                "texture": "textures/static/images/meshes_flipbook",
+                                "uv_size": [16, 16],
+                                "uv": "@dual_siever.flipbook_animation",
+                                "layer": 4,
+                                "alpha": 0.5,
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "size": [16, 16]
+                            }
+                        }
+                    ]
                 }
             },
+            { "lane_b_progress@uc.progress_display": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-9, 49], "collection_index": 36 } },
             {
-                "dual_progress_lane_b@common_machines.machinery": {
+                "mode_button@uc.dynamic_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [ 18, 20 ],
-                    "collection_index": 36
-                }
-            },
-            {
-                "mode_button@uc.machine_button": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 18, 74 ],
+                    "offset": [-47, 41],
                     "$index": 35,
-                    "$button_size": [ 16, 16 ],
+                    "$button_size": [28, 14],
+                    "$text_scale": 0.55,
                     "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
-                    "$hover_texture": "textures/ui/cells/orange_cell_image",
+                    "$hover_texture": "textures/ui/cells/hover_inverted_orange_image",
                     "$pressed_texture": "textures/ui/cells/orange_cell_image"
                 }
             },
+            { "output_grid@dual_siever.output_grid_5x4": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [60, 12] } },
             {
-                "lane_a_input_1@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ -36, 2 ],
-                    "collection_index": 3
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
+                    "offset": [119, 64],
+                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
+                }
+            },
+            { "steam_bar@uc.liquid_input_1_bar": { "$collection_index": 10, "$has_bg": false, "offset": [91, 64] } },
+            {
+                "upgrades_tab@uc.upgrades_tab": {
+                    "offset": [22, -8],
+                    "$upgrade_index_1": 11,
+                    "$upgrade_index_2": 12,
+                    "$has_first_upgrade": true,
+                    "$has_second_upgrade": true,
+                    "$has_third_upgrade": false,
+                    "$has_fourth_upgrade": false,
+                    "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
                 }
             },
             {
-                "lane_a_input_2@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ -36, 20 ],
-                    "collection_index": 4
+                "io_tab@uc.io_tab": {
+                    "offset": [22, -8],
+                    "$io_items_modes_description": "ui.utilitycraft:io.dual_siever.items",
+                    "$io_gases_modes_description": "ui.utilitycraft:io.dual_siever.gases",
+                    "$has_item_io": true,
+                    "$has_fluid_io": false,
+                    "$has_gas_io": true,
+                    "$io_items_default": true,
+                    "$io_gases_default": false,
+                    "$io_top_texture": "textures/blocks/machines/superior/dual_sieve_off_up",
+                    "$io_left_texture": "textures/blocks/machines/superior/dual_sieve_off_west",
+                    "$io_front_texture": "textures/blocks/machines/superior/dual_sieve_off_north",
+                    "$io_right_texture": "textures/blocks/machines/superior/dual_sieve_off_east",
+                    "$io_bottom_texture": "textures/blocks/machines/superior/dual_sieve_off_down",
+                    "$io_back_texture": "textures/blocks/machines/superior/dual_sieve_off_south",
+                    "$io_item_top_index": 37,
+                    "$io_item_left_index": 38,
+                    "$io_item_front_index": 39,
+                    "$io_item_right_index": 40,
+                    "$io_item_bottom_index": 41,
+                    "$io_item_back_index": 42,
+                    "$io_gas_top_index": 9,
+                    "$io_gas_left_index": 43,
+                    "$io_gas_front_index": 44,
+                    "$io_gas_right_index": 45,
+                    "$io_gas_bottom_index": 46,
+                    "$io_gas_back_index": 47
                 }
             },
-            {
-                "lane_a_mesh@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ -36, 38 ],
-                    "collection_index": 5
-                }
-            },
-            {
-                "lane_b_input_1@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 0, 2 ],
-                    "collection_index": 6
-                }
-            },
-            {
-                "lane_b_input_2@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 0, 20 ],
-                    "collection_index": 7
-                }
-            },
-            {
-                "lane_b_mesh@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 0, 38 ],
-                    "collection_index": 8
-                }
-            },
-            {
-                "steam_display@ascendant_common.liquid_display": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [ 18, 96 ],
-                    "$fluid_slot_index": 10
-                }
-            },
-            {
-                "output_slot_1@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 36, 2 ],
-                    "collection_index": 15
-                }
-            },
-            {
-                "output_slot_2@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 54, 2 ],
-                    "collection_index": 16
-                }
-            },
-            {
-                "output_slot_3@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 72, 2 ],
-                    "collection_index": 17
-                }
-            },
-            {
-                "output_slot_4@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 90, 2 ],
-                    "collection_index": 18
-                }
-            },
-            {
-                "output_slot_5@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 36, 20 ],
-                    "collection_index": 19
-                }
-            },
-            {
-                "output_slot_6@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 54, 20 ],
-                    "collection_index": 20
-                }
-            },
-            {
-                "output_slot_7@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 72, 20 ],
-                    "collection_index": 21
-                }
-            },
-            {
-                "output_slot_8@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 90, 20 ],
-                    "collection_index": 22
-                }
-            },
-            {
-                "output_slot_9@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 36, 38 ],
-                    "collection_index": 23
-                }
-            },
-            {
-                "output_slot_10@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 54, 38 ],
-                    "collection_index": 24
-                }
-            },
-            {
-                "output_slot_11@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 72, 38 ],
-                    "collection_index": 25
-                }
-            },
-            {
-                "output_slot_12@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 90, 38 ],
-                    "collection_index": 26
-                }
-            },
-            {
-                "output_slot_13@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 36, 56 ],
-                    "collection_index": 27
-                }
-            },
-            {
-                "output_slot_14@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 54, 56 ],
-                    "collection_index": 28
-                }
-            },
-            {
-                "output_slot_15@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 72, 56 ],
-                    "collection_index": 29
-                }
-            },
-            {
-                "output_slot_16@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 90, 56 ],
-                    "collection_index": 30
-                }
-            },
-            {
-                "output_slot_17@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 36, 74 ],
-                    "collection_index": 31
-                }
-            },
-            {
-                "output_slot_18@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 54, 74 ],
-                    "collection_index": 32
-                }
-            },
-            {
-                "output_slot_19@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 72, 74 ],
-                    "collection_index": 33
-                }
-            },
-            {
-                "output_slot_20@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [ 90, 74 ],
-                    "collection_index": 34
-                }
-            }
+            { "info_tab@uc.info_tab": { "offset": [22, -8], "$info_description": "ui.utilitycraft:info.dual_siever" } }
         ]
     },
     "utility_panel": {
         "type": "panel",
         "controls": [
-            {
-                "container_gamepad_helpers@common.container_gamepad_helpers": { }
-            },
-            {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 14
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": { }
-            },
-            {
-                "item_lock_notification_factory@common.item_lock_notification_factory": { }
-            },
+            { "container_gamepad_helpers@common.container_gamepad_helpers": {} },
+            { "flying_item_renderer@common.flying_item_renderer": { "layer": 40 } },
+            { "selected_item_details_factory@common.selected_item_details_factory": {} },
+            { "item_lock_notification_factory@common.item_lock_notification_factory": {} },
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
                     "controls": [
-                        {
-                            "common_panel@common.common_panel": { }
-                        },
+                        { "common_panel@common.common_panel": { "$show_close_button": false } },
                         {
                             "chest_panel": {
                                 "type": "panel",
                                 "layer": 5,
                                 "controls": [
-                                    {
-                                        "dual_siever_top@dual_siever.dual_siever_top": { }
-                                    },
-                                    {
-                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": { }
-                                    },
-                                    {
-                                        "hotbar_grid@common.hotbar_grid_template": { }
-                                    }
+                                    { "dual_siever_top@dual_siever.dual_siever_top": {} },
+                                    { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": { "offset": [0, 11] } },
+                                    { "hotbar_grid@common.hotbar_grid_template": { "offset": [0, 11] } },
+                                    { "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": { "offset": [0, 11] } }
                                 ]
                             }
                         },
-                        {
-                            "inventory_selected_icon_button@common.inventory_selected_icon_button": { }
-                        },
-                        {
-                            "gamepad_cursor@common.gamepad_cursor_button": { }
-                        }
+                        { "inventory_selected_icon_button@common.inventory_selected_icon_button": {} },
+                        { "gamepad_cursor@common.gamepad_cursor_button": {} }
                     ]
                 }
             }

@@ -1,5 +1,7 @@
-/** @type {Readonly<Record<string, { output: string, required: number }>>} */
-export const infuserRecipeAdditions = Object.freeze({
+import * as DoriosLib from "DoriosLib/index.js";
+
+/** @type {Record<string, { output: string, required: number }>} */
+export const infuserRecipeAdditions = {
     "minecraft:glowstone_dust|utilitycraft:crying_obsidian_dust": {
         output: "utilitycraft:stabilized_obsidian_dust",
         required: 4,
@@ -12,4 +14,6 @@ export const infuserRecipeAdditions = Object.freeze({
         output: "utilitycraft:way_chip",
         required: 1,
     },
-});
+};
+
+DoriosLib.registry.registerInfuserRecipe(infuserRecipeAdditions);

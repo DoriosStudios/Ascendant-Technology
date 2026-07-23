@@ -5,8 +5,8 @@ import "./DoriosCore/index.js";
 
 // New Ascendant Technology code is loaded only through these entry points.
 import "./ATCore/index.js";
+import "./config/recipes/index.js";
 import "./features/index.js";
-import "./integrations/index.js";
 
 DoriosLib.registry.install();
 DoriosLib.container.initialize();

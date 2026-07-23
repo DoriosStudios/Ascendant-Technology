@@ -4,161 +4,111 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [
-            162,
-            72
-        ],
-        "offset": [
-            -10,
-            -40
-        ],
+        "size": [162, 72],
+        "offset": [-10, -40],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "chest_label@chest.chest_label": {
-                    "offset": [
-                        10,
-                        0
-                    ]
+                "machine_name@uc.machine_name": {
+                    "offset": [0, -2]
                 }
             },
             {
-                "energy_bar@machineryCommon.vertical_single": {
-                    "$is_energy": true,
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
                     "$has_bg": false,
-                    "offset": [
-                        -72,
-                        0
-                    ]
+                    "offset": [-74, -1]
                 }
             },
             {
-                "fluid_panel": {
-                    "type": "panel",
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [
-                        36,
-                        0
-                    ],
-                    "controls": [
-                        {
-                            "fluid_bar@machineryCommon.vertical_single": {
-                                "$is_fluid": true,
-                                "$has_bg": false,
-                                "$collection_index": 11,
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "layer": 0
-                            }
-                        },
-                        {
-                            "fluid_border": {
-                                "type": "image",
-                                "texture": "textures/ui/liquid_border",
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "size": [
-                                    50,
-                                    50
-                                ],
-                                "offset": [
-                                    10,
-                                    3
-                                ],
-                                "layer": 13
-                            }
-                        }
-                    ]
-                }
+                "side_panel@uc.machine_side_panel": {}
             },
             {
-                "upgrades@machineryCommon.vertical_interactive": {
-                    "$has_bg": true,
-                    "$collection_index_first": 4,
-                    "$collection_index_second": 5,
-                    "$collection_index_third": 6,
-                    "$has_third": true,
-                    "offset": [
-                        102,
-                        0
-                    ]
-                }
-            },
-            {
-                "screen": {
-                    "type": "image",
-                    "texture": "textures/ui/panels/half_long_panel_classic",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [
-                        90,
-                        166
-                    ],
-                    "offset": [
-                        -88,
-                        -8
-                    ],
-                    "layer": 0
-                }
-            },
-            {
-                "item_label@machineryCommon.item_label": {
+                "item_label@uc.text_label": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "size": [74, 146],
                     "$text_scale": 0.55,
-                    "offset": [
-                        -78,
-                        2
-                    ]
+                    "offset": [-76, 2]
                 }
             },
             {
-                "machinery@common_machines.machinery": {
+                "input@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [
-                        20,
-                        30
-                    ],
+                    "offset": [-28, 29],
+                    "collection_index": 3
+                }
+            },
+            {
+                "process_progress@uc.progress_display": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [0, 22],
                     "collection_index": 2
                 }
             },
             {
-                "item@common.container_item": {
+                "residue_output@uc.input_slot": {
+                    "$slot_background_texture": "textures/ui/slots/output_1_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [
-                        -8,
-                        28
-                    ],
-                    "collection_index": 3,
-                    "$cell_image_size": [22, 22],
-                    "size": [22, 22]
+                    "offset": [39, 29],
+                    "collection_index": 5
                 }
             },
             {
-                "item@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [
-                        -32,
-                        30
-                    ],
-                    "collection_index": 10
+                "liquid_output@uc.liquid_output_1_bar": {
+                    "$collection_index": 4,
+                    "$has_bg": false,
+                    "offset": [55, 0]
                 }
             },
             {
-                "item@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [
-                        72,
-                        30
-                    ],
-                    "collection_index": 19
+                "upgrades_tab@uc.upgrades_tab": {
+                    "$upgrade_index_1": 6,
+                    "$upgrade_index_2": 7,
+                    "$has_first_upgrade": true,
+                    "$has_second_upgrade": true,
+                    "$has_third_upgrade": false,
+                    "$has_fourth_upgrade": false,
+                    "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                }
+            },
+            {
+                "io_tab@uc.io_tab": {
+                    "$io_items_modes_description": "ui.utilitycraft:io.liquifier.items",
+                    "$io_fluids_modes_description": "ui.utilitycraft:io.liquifier.liquids",
+                    "$has_item_io": true,
+                    "$has_fluid_io": true,
+                    "$io_items_default": true,
+                    "$io_fluids_default": false,
+                    "$io_top_texture": "textures/blocks/machines/liquifier_off_up",
+                    "$io_left_texture": "textures/blocks/machines/liquifier_off_west",
+                    "$io_front_texture": "textures/blocks/machines/liquifier_off_north",
+                    "$io_right_texture": "textures/blocks/machines/liquifier_off_east",
+                    "$io_bottom_texture": "textures/blocks/machines/liquifier_off_down",
+                    "$io_back_texture": "textures/blocks/machines/liquifier_off_south",
+                    "$io_item_top_index": 10,
+                    "$io_item_left_index": 11,
+                    "$io_item_front_index": 12,
+                    "$io_item_right_index": 13,
+                    "$io_item_bottom_index": 14,
+                    "$io_item_back_index": 15,
+                    "$io_fluid_top_index": 16,
+                    "$io_fluid_left_index": 17,
+                    "$io_fluid_front_index": 18,
+                    "$io_fluid_right_index": 19,
+                    "$io_fluid_bottom_index": 20,
+                    "$io_fluid_back_index": 21
+                }
+            },
+            {
+                "info_tab@uc.info_tab": {
+                    "$info_description": "ui.utilitycraft:info.liquifier"
                 }
             }
         ]
@@ -171,7 +121,7 @@
             },
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 14
+                    "layer": 40
                 }
             },
             {

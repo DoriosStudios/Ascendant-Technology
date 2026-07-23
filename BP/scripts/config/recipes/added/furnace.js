@@ -1,5 +1,7 @@
-/** @type {Readonly<Record<string, { output: string }>>} */
-export const furnaceRecipeAdditions = Object.freeze({
+import * as DoriosLib from "DoriosLib/index.js";
+
+/** @type {Record<string, { output: string }>} */
+export const furnaceRecipeAdditions = {
     "utilitycraft:raw_titanium": {
         output: "utilitycraft:titanium",
     },
@@ -9,4 +11,6 @@ export const furnaceRecipeAdditions = Object.freeze({
     "utilitycraft:deepslate_titanium_ore": {
         output: "utilitycraft:titanium",
     },
-});
+};
+
+DoriosLib.registry.registerFurnaceRecipe(furnaceRecipeAdditions);

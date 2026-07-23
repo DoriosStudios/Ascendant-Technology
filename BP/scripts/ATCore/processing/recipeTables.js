@@ -10,6 +10,8 @@ export const crusherRecipes = Object.create(null);
 export const furnaceRecipes = Object.create(null);
 /** @type {Record<string, CompiledRecipe>} */
 export const pressRecipes = Object.create(null);
+/** Exact sieve input id -> immutable compiled drop list. */
+export const sieveRecipes = new Map();
 
 const TABLES_BY_EVENT = Object.freeze(Object.assign(Object.create(null), {
     "utilitycraft:register_crusher_recipe": crusherRecipes,
@@ -50,7 +52,50 @@ function compileRecipe(value) {
     return Object.freeze(compiled);
 }
 
+function compileSieveDrop(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+    const item = typeof value.item === "string" ? value.item.trim() : "";
+    const chance = Number(value.chance);
+    const tier = Math.max(0, Math.floor(Number(value.tier) || 0));
+    if (!item || !Number.isFinite(chance) || chance <= 0) return undefined;
+
+    let amount;
+    if (Array.isArray(value.amount)) {
+        const minimum = positiveInteger(value.amount[0], 1);
+        const maximum = Math.max(minimum, positiveInteger(value.amount[1], minimum));
+        amount = Object.freeze([minimum, maximum]);
+    } else {
+        amount = positiveInteger(value.amount, 1);
+    }
+
+    return Object.freeze({ item, amount, chance, tier });
+}
+
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
+    if (id === "utilitycraft:register_sieve_drop") {
+        try {
+            const payload = JSON.parse(message);
+            if (!payload || typeof payload !== "object" || Array.isArray(payload)) return;
+
+            for (const [inputId, values] of Object.entries(payload)) {
+                if (!inputId || !Array.isArray(values)) continue;
+                const additions = [];
+                for (let index = 0; index < values.length; index++) {
+                    const drop = compileSieveDrop(values[index]);
+                    if (drop) additions.push(drop);
+                }
+                if (additions.length === 0) continue;
+                sieveRecipes.set(inputId, Object.freeze([
+                    ...(sieveRecipes.get(inputId) ?? []),
+                    ...additions,
+                ]));
+            }
+        } catch (error) {
+            console.warn("[AscendantTechnology] Invalid sieve drop registration:", error);
+        }
+        return;
+    }
+
     const table = TABLES_BY_EVENT[id];
     if (!table) return;
 

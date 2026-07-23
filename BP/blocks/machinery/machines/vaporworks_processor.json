@@ -19,29 +19,29 @@
 			}
 		},
 		"components": {
-// LEGACY_DISABLED 			"utilitycraft:vaporworks_processor": {
-// 				"entity": {
-// 					"type": "machine",
-// 					"input_type": "fluid",
-// 					"output_type": "fluid",
-// 					"inventory_size": 20,
-// 					"input_slot": 3,
-// 					"output_slot": 19,
-// 					"fluid": true
-// 				},
-// 				"machine": {
-// 					"energy_cap": 9600000,
-// 					"energy_cost": 2400,
-// 					"rate_speed_base": 12000,
-// 					"fluid_cap": 64000,
-// 					"upgrades": [4, 5, 6],
-// 					"hidden_slots": [7, 8, 9, 12, 13, 14, 15, 16, 17, 18]
-// 				}
-// 			},
-// LEGACY_DISABLED 			"utilitycraft:special_container":{
-// 				"Fluid Input": 3,
-// 				"Fluid Output": 19
-// 			},
+			"utilitycraft:fluid_container": {},
+			"utilitycraft:gas_container": {},
+			"utilitycraft:vaporworks_processor": {
+				"entity": {
+					"type": "fluid_gas_machine",
+					"inventory_size": 30,
+					"fixed_gas_types": true
+				},
+				"machine": {
+					"energy_cap": 9600000,
+					"energy_cost": 2400,
+					"rate_speed_base": 12000,
+					"fluid_cap": 64000,
+					"fluid_types": 1,
+					"gas_cap": 64000,
+					"gas_types": 1,
+					"upgrades": [8, 9]
+				}
+			},
+			"utilitycraft:machine_upgrades": [
+				{ "type": "speed", "slot": 8 },
+				{ "type": "energy", "slot": 9 }
+			],
 			"utilitycraft:machine_recipes": {
 				"type": "vaporworks_processor"
 			},
@@ -76,12 +76,14 @@
 					"render_method": "alpha_test"
 				}
 			},
-// LEGACY_DISABLED 			"minecraft:tick": {"interval_range": [4, 4]},
+			"minecraft:tick": {"interval_range": [4, 4]},
 			"minecraft:destructible_by_mining": {"seconds_to_destroy": 1},
 			"minecraft:destructible_by_explosion": false,
 			"tag:dorios:machine": {},
 			"tag:dorios:energy": {},
 			"tag:dorios:fluid": {},
+			"tag:dorios:gas": {},
+			"tag:dorios:item": {},
 			"tag:minecraft:is_pickaxe_item_destructible": {}
 		},
 		"permutations": [

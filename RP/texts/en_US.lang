@@ -1,4 +1,10 @@
 ## Generators
+ui.utilitycraft:info.vaporworks_processor=Converts liquid inputs into pressurized Steam gas. Water produces Steam at a 1:1 ratio; Cryofluid takes longer and produces 50% more Steam. The liquid input tank and Steam gas tank each store 64,000 units.\n\nFilled Water or Cryofluid containers go in the upper-left slot and their empty containers leave below it. Empty gas capsules go in the upper-right slot; a filled 8,000-unit Steam Capsule leaves below it.\n\nItem I/O:\n§9Liquid Container Input§r and §bGas Container Input§r accept containers.\n§cContainer Return§r and §cSteam Container Output§r expose processed containers.\n§9Input All§r and §cOutput All§r expose both pairs.\n\nLiquid I/O:\n§9Liquid Input§r accepts Water or Cryofluid.\n\nGas I/O:\n§cSteam Output§r exposes the Steam tank.
+ui.utilitycraft:io.vaporworks_processor.items=I/O Modes:\n§r- §9Liquid Container Input\n§r- §bGas Container Input\n§r- §9Input All\n§r- §cContainer Return\n§r- §cSteam Container Output\n§r- §cOutput All
+ui.utilitycraft:io.vaporworks_processor.liquids=I/O Modes:\n§r- §9Liquid Input
+ui.utilitycraft:io.vaporworks_processor.gases=I/O Modes:\n§r- §cSteam Output
+ui.utilitycraft:info.energizer=Converts supported iron materials into energized components. Place materials in either input; the Primary channel is checked first, then Auxiliary. Each recipe defines its own processing time and total energy cost.\n\nBoth channels resolve recipes through direct indexed lookup. Speed and Energy upgrades affect processing, while Process Batch controls how many items complete per paid cycle.\n\nItem I/O:\n§9Primary Input§r exposes the first-priority channel.\n§bAuxiliary Input§r exposes the fallback channel.\n§9Input All§r exposes both inputs.\n§cOutput§r exposes the result slot.
+ui.utilitycraft:io.energizer.items=I/O Modes:\n§r- §9Primary Input\n§r- §bAuxiliary Input\n§r- §9Input All\n§r- §cOutput
 ui.utilitycraft:info.catalyst_weaver=Combines one base item with an exact set of up to six catalysts. Catalyst positions do not matter, but extra catalyst types prevent a match. Some recipes also consume Lava, Liquified Aetherium, or Dark Matter from the internal 128,000 mB tank.\n\nCatalyst Weaver recipes and registered UtilityCraft Infuser recipes are indexed when loaded. Recipe lookup does not scan the complete registry while machines run.\n\nItem I/O:\n§9Base Input§r exposes the base item.\n§bCatalyst 1§r, §1Catalyst 2§r, §bCatalyst 3§r, §9Catalyst 4§r, §bCatalyst 5§r, and §1Catalyst 6§r each expose one catalyst slot.\n§3Input All§r exposes every item input.\n§cMain Output§r and §cResidue Output§r expose their respective results.\n§cOutput All§r exposes both outputs.\n\nLiquid I/O:\n§9Catalyst Fluid Input§r exposes the internal tank.
 ui.utilitycraft:io.catalyst_weaver.items=I/O Modes:\n§r- §9Base Input\n§r- §bCatalyst 1\n§r- §1Catalyst 2\n§r- §bCatalyst 3\n§r- §9Catalyst 4\n§r- §bCatalyst 5\n§r- §1Catalyst 6\n§r- §3Input All\n§r- §cMain Output\n§r- §cResidue Output\n§r- §cOutput All
 ui.utilitycraft:io.catalyst_weaver.liquids=I/O Modes:\n§r- §9Catalyst Fluid Input
@@ -44,7 +50,7 @@ tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7Accepts upgrades:\n  §a
 tile.utilitycraft:duplicator.name=Duplicator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:refining_table.name=Refining Table\n§7- Refines StatsCore gear using stored XP\n- Accepts upgrades: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:energizer.name=Energizer\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:energizer.name=Energizer\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:liquifier.name=Liquifier\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:laser_barrier.name=Laser Barrier\n§7Accepts upgrades:\n  §a§r, §e§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:residue_processor.name=Residue Processor\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
@@ -54,7 +60,7 @@ tile.utilitycraft:tabs_test_machine.name=Tabs Test Machine\n§7Accepts upgrades:
 tile.utilitycraft:overclock_tower.name=Overclock Tower\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:overclock_relay.name=Overclock Relay\n§7- Mirrors the overclock to the network\n- Mandatory.\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:overclock_injector.name=Overclock Injector\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:vaporworks_processor.name=Vaporworks Processor\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:vaporworks_processor.name=Vaporworks Processor\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:reinforced_extractor.name=Reinforced Extractor\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:reinforced_importer.name=Reinforced Importer\n§7- Dedicated fluid network input\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:reinforced_exporter.name=Reinforced Exporter\n§7- Dedicated fluid network output\n§o§9@UC: Ascendant Technology
@@ -306,7 +312,7 @@ entity.utilitycraft:overclock_injector.name=§fOverclock Injector
 entity.utilitycraft:enchantment_station.name=§fEnchantment Station
 entity.utilitycraft:refining_table.name=§fRefining Table
 ui.utilitycraft:disenchantment_station.name=§fDisenchantment Section
-entity.utilitycraft:vaporworks_processor.name=§fVaporworks Processor
+entity.utilitycraft:vaporworks_processor.name=Vaporworks Processor
 
 ## UI Texts
 at:itemGroup.name.machines=Machines \n§u(Ascendant Technology)

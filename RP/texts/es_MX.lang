@@ -1,4 +1,10 @@
 ## Generadores
+ui.utilitycraft:info.vaporworks_processor=Convierte liquidos en gas de Vapor presurizado. El Agua produce Vapor en proporcion 1:1; el Cryofluid tarda mas y produce 50% mas Vapor. El tanque liquido de entrada y el tanque de gas almacenan 64,000 unidades cada uno.\n\nLos contenedores llenos de Agua o Cryofluid van en el slot superior izquierdo y sus contenedores vacios salen debajo. Las capsulas de gas vacias van en el slot superior derecho; debajo sale una Capsula de Vapor con 8,000 unidades.\n\nE/S de objetos:\n§9Entrada de contenedor liquido§r y §bEntrada de contenedor de gas§r aceptan contenedores.\n§cRetorno de contenedor§r y §cSalida de contenedor de Vapor§r exponen los resultados.\n§9Todas las entradas§r y §cTodas las salidas§r exponen ambos pares.\n\nE/S de liquidos:\n§9Entrada de liquido§r acepta Agua o Cryofluid.\n\nE/S de gases:\n§cSalida de Vapor§r expone el tanque de Vapor.
+ui.utilitycraft:io.vaporworks_processor.items=Modos de E/S:\n§r- §9Entrada de contenedor liquido\n§r- §bEntrada de contenedor de gas\n§r- §9Todas las entradas\n§r- §cRetorno de contenedor\n§r- §cSalida de contenedor de Vapor\n§r- §cTodas las salidas
+ui.utilitycraft:io.vaporworks_processor.liquids=Modos de E/S:\n§r- §9Entrada de liquido
+ui.utilitycraft:io.vaporworks_processor.gases=Modos de E/S:\n§r- §cSalida de Vapor
+ui.utilitycraft:info.energizer=Convierte materiales de hierro compatibles en componentes energizados. Coloca materiales en cualquier entrada; primero se revisa el canal Primario y despues el Auxiliar. Cada receta define su propio tiempo de proceso y costo total de energia.\n\nAmbos canales resuelven recetas mediante una busqueda indexada directa. Las mejoras de Velocidad y Energia afectan el proceso, mientras que el Lote de Procesos controla cuantos objetos terminan por ciclo pagado.\n\nE/S de objetos:\n§9Entrada primaria§r expone el canal prioritario.\n§bEntrada auxiliar§r expone el canal alternativo.\n§9Todas las entradas§r expone ambas entradas.\n§cSalida§r expone el resultado.
+ui.utilitycraft:io.energizer.items=Modos de E/S:\n§r- §9Entrada primaria\n§r- §bEntrada auxiliar\n§r- §9Todas las entradas\n§r- §cSalida
 ui.utilitycraft:info.catalyst_weaver=Combina un objeto base con un conjunto exacto de hasta seis catalizadores. La posicion de los catalizadores no importa, pero los tipos adicionales impiden encontrar una receta. Algunas recetas tambien consumen Lava, Aetherium Liquido o Materia Oscura del tanque interno de 128,000 mB.\n\nLas recetas de la Camara Catalizadora y las recetas registradas del Infuser de UtilityCraft se indexan al cargarse. La busqueda no recorre el registro completo mientras funcionan las maquinas.\n\nE/S de objetos:\n§9Entrada base§r expone el objeto base.\n§bCatalizador 1§r, §1Catalizador 2§r, §bCatalizador 3§r, §9Catalizador 4§r, §bCatalizador 5§r y §1Catalizador 6§r exponen un slot de catalizador cada uno.\n§3Todas las entradas§r expone todas las entradas de objetos.\n§cSalida principal§r y §cSalida de residuo§r exponen sus resultados.\n§cTodas las salidas§r expone ambas salidas.\n\nE/S de liquidos:\n§9Entrada de fluido catalizador§r expone el tanque interno.
 ui.utilitycraft:io.catalyst_weaver.items=Modos de E/S:\n§r- §9Entrada base\n§r- §bCatalizador 1\n§r- §1Catalizador 2\n§r- §bCatalizador 3\n§r- §9Catalizador 4\n§r- §bCatalizador 5\n§r- §1Catalizador 6\n§r- §3Todas las entradas\n§r- §cSalida principal\n§r- §cSalida de residuo\n§r- §cTodas las salidas
 ui.utilitycraft:io.catalyst_weaver.liquids=Modos de E/S:\n§r- §9Entrada de fluido catalizador
@@ -42,14 +48,14 @@ tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7Acepta mejoras:\
 tile.utilitycraft:cryo_chamber.name=Cámara Criogénica\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica ítems usando materia oscura\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:enchantment_station.name=Estación de Encantamiento\n§7- Repara, encanta, refuerza equipamiento\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:energizer.name=Energizador\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:energizer.name=Energizador\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:liquifier.name=Licuefactor\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:laser_barrier.name=Barrera Láser\n§7Acepta mejoras:\n  §a§r, §e§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:residue_processor.name=Procesador de Residuos\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:network_center.name=Centro de Red\n§7- Muestra estadísticas de red\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:tabs_test_machine.name=Máquina de Prueba (Pestañas)\n§7- Bloque de prueba de pestañas\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:vaporworks_processor.name=Procesador de Vapor\n§7- Genera Vapor desde agua\n- Usa fuente de combustible y energía\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:vaporworks_processor.name=Procesador de Vapor\n§7- Genera Vapor desde Agua o Cryofluid\n- Acepta mejoras: §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Genera carga de overclock (Titanio + energía)\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica la carga de la torre en la red\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:overclock_injector.name=Inyector de Overclock\n§7- Aplica overclock a la máquina frente a él\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
@@ -286,7 +292,7 @@ entity.utilitycraft:genetic_seed_synthesizer.name=§fSintetizador Genético de S
 entity.utilitycraft:verdant_cultivator.name=§fCultivador Verdante
 entity.utilitycraft:seismic_breaker.name=§fQuebrador Sísmico
 entity.utilitycraft:pattern_placer.name=§fColocador de Patrones
-entity.utilitycraft:energizer.name=§fEnergizador
+entity.utilitycraft:energizer.name=Energizador
 entity.utilitycraft:network_center.name=§fCentro de Red
 entity.utilitycraft:basic_power_beacon.name=Basic Power Beacon
 entity.utilitycraft:advanced_power_beacon.name=Advanced Power Beacon
@@ -300,7 +306,7 @@ entity.utilitycraft:overclock_relay.name=§fRelé de Overclock
 entity.utilitycraft:overclock_injector.name=§fInyector de Overclock
 entity.utilitycraft:ascane_engine.name=§fEstación de Encantamiento
 entity.utilitycraft:enchantment_station.name=§fEstación de Encantamiento
-entity.utilitycraft:vaporworks_processor.name=§fProcesador de Vapor
+entity.utilitycraft:vaporworks_processor.name=Procesador de Vapor
 
 ## UI Texts
 at:itemGroup.name.machines=Máquinas (Ascendant Technology)

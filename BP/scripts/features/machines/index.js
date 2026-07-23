@@ -7,3 +7,5 @@ import "./dualSiever.js";
 import "./residueProcessor.js";
 import "./liquifier.js";
 import "./catalystWeaver.js";
+import "./energizer.js";
+import "./vaporworksProcessor.js";

@@ -4,19 +4,36 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [220, 136],
-        "offset": [-10, -46],
+        "size": [162, 72],
+        "offset": [-10, -40],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "machine_name@uc.machine_name": {
-                    "offset": [0, -2]
+                "screen": {
+                    "type": "image",
+                    "texture": "textures/ui/background_panel",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "$cell_image_size": [200, 166],
+                    "size": [200, 166],
+                    "offset": [20, 40],
+                    "layer": -1
                 }
             },
             {
-                "side_panel@uc.machine_side_panel": {}
+                "exit_button_panel": {
+                    "type": "panel",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [42, -10],
+                    "controls": [
+                        { "close_button@common.close_button": {} }
+                    ]
+                }
             },
+            { "machine_name@uc.machine_name": { "offset": [0, -2] } },
+            { "side_panel@uc.machine_side_panel": { "offset": [-2, 0] } },
             {
                 "item_label@uc.text_label": {
                     "collection_index": 1,
@@ -24,29 +41,38 @@
                     "anchor_to": "top_left",
                     "size": [74, 146],
                     "$text_scale": 0.55,
-                    "offset": [-76, 2]
+                    "offset": [-78, 2]
                 }
             },
             {
-                "energy_bar@uc.energy_bar": {
-                    "$collection_index": 0,
-                    "$has_bg": false,
-                    "offset": [88, 0]
+                "titanium_grid@uc.slot_grid_2x2": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-58, 27],
+                    "$slot_outline_texture": "textures/ui/slots/input_1_slot",
+                    "$collection_index_1": 4,
+                    "$collection_index_2": 5,
+                    "$collection_index_3": 6,
+                    "$collection_index_4": 7
                 }
             },
             {
-                "process_progress@uc.progress_display": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [10, 0],
-                    "collection_index": 2
+                "lapis_grid@uc.slot_grid_2x2": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-16, 27],
+                    "$slot_outline_texture": "textures/ui/slots/input_2_slot",
+                    "$collection_index_1": 8,
+                    "$collection_index_2": 9,
+                    "$collection_index_3": 10,
+                    "$collection_index_4": 11
                 }
             },
             {
                 "mode_button@uc.machine_button": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [-54, 24],
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [25, 11],
                     "$index": 3,
                     "$button_size": [16, 16],
                     "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
@@ -55,85 +81,37 @@
                 }
             },
             {
-                "titanium_slot_1@uc.input_1_slot": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [-54, -22],
-                    "collection_index": 4
-                }
-            },
-            {
-                "titanium_slot_2@uc.input_1_slot": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [-32, -22],
-                    "collection_index": 5
-                }
-            },
-            {
-                "titanium_slot_3@uc.input_1_slot": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [-54, 2],
-                    "collection_index": 6
-                }
-            },
-            {
-                "titanium_slot_4@uc.input_1_slot": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [-32, 2],
-                    "collection_index": 7
-                }
-            },
-            {
-                "lapis_slot_1@uc.input_2_slot": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [-6, -22],
-                    "collection_index": 8
-                }
-            },
-            {
-                "lapis_slot_2@uc.input_2_slot": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [16, -22],
-                    "collection_index": 9
-                }
-            },
-            {
-                "lapis_slot_3@uc.input_2_slot": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [-6, 2],
-                    "collection_index": 10
-                }
-            },
-            {
-                "lapis_slot_4@uc.input_2_slot": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [16, 2],
-                    "collection_index": 11
+                "process_progress@uc.progress_display": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [25, 29],
+                    "collection_index": 2
                 }
             },
             {
                 "water_display@uc.liquid_input_1_bar": {
                     "$collection_index": 12,
                     "$has_bg": false,
-                    "offset": [30, -34]
+                    "offset": [53, -1]
                 }
             },
             {
                 "cryofluid_display@uc.liquid_output_1_bar": {
                     "$collection_index": 13,
                     "$has_bg": false,
-                    "offset": [30, -6]
+                    "offset": [77, -1]
+                }
+            },
+            {
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
+                    "offset": [119, 64],
+                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
+                    "offset": [22, 0],
                     "$upgrade_index_1": 14,
                     "$upgrade_index_2": 15,
                     "$has_first_upgrade": true,
@@ -146,6 +124,7 @@
             },
             {
                 "io_tab@uc.io_tab": {
+                    "offset": [22, 0],
                     "$io_items_modes_description": "ui.utilitycraft:io.cryofluid_synthesizer.items",
                     "$io_fluids_modes_description": "ui.utilitycraft:io.cryofluid_synthesizer.liquids",
                     "$has_item_io": true,
@@ -175,6 +154,7 @@
             },
             {
                 "info_tab@uc.info_tab": {
+                    "offset": [22, 0],
                     "$info_description": "ui.utilitycraft:info.cryofluid_synthesizer"
                 }
             }
@@ -190,9 +170,8 @@
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
-                    "offset": [32, 0],
                     "controls": [
-                        { "common_panel@common.common_panel": {} },
+                        { "common_panel@common.common_panel": { "$show_close_button": false } },
                         {
                             "chest_panel": {
                                 "type": "panel",

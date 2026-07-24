@@ -4,115 +4,61 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [
-            162,
-            72
-        ],
-        "offset": [
-            -10,
-            -40
-        ],
+        "size": [162, 72],
+        "offset": [-10, -40],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "chest_label@chest.chest_label": {
-                    "offset": [
-                        10,
-                        0
-                    ]
-                }
+                "machine_name@uc.machine_name": {}
             },
             {
-                "energy_bar@machineryCommon.vertical_single": {
-                    "$is_energy": true,
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
                     "$has_bg": false,
-                    "offset": [
-                        0,
-                        0
-                    ]
+                    "offset": [54, 0]
                 }
             },
             {
-                "upgrades@machineryCommon.vertical_interactive": {
-                    "$has_bg": true,
-                    "$collection_index_first": 4,
-                    "$collection_index_second": 5,
-                    "$collection_index_third": 6,
-                    "$has_third": true,
-                    "offset": [
-                        102,
-                        0
-                    ]
-                }
+                "machine_screen@uc.big_machine_screen": {}
             },
             {
-                "heightUpg":{
-                    "type": "label",
-                    "text": "at:ui.h",
-                    "color":"white",
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": [10, 10],
-                    "offset": [114, -14],
-                    "layer": 3
-                }
-            },
-            {
-                "lengthUpg":{
-                    "type": "label",
-                    "text": "at:ui.l",
-                    "color": "white",
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": [10, 10],
-                    "offset": [114, 4],
-                    "layer": 3
-                }
-            },
-            {
-                "energyUpg":{
-                    "type": "label",
-                    "text": "at:ui.e",
-                    "color": "white",
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": [10, 10],
-                    "offset": [114, 21],
-                    "layer": 3
-                }
-            },
-            {
-                "screen": {
-                    "type": "image",
-                    "texture": "textures/ui/panels/half_long_panel_classic",
+                "power_button@uc.machine_button": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [
-                        90,
-                        166
-                    ],
-                    "offset": [
-                        -88,
-                        -8
-                    ],
-                    "layer": 0
+                    "offset": [105, 57],
+                    "$index": 2,
+                    "$button_size": [18, 18]
                 }
             },
             {
-                "item_label@machineryCommon.item_label": {
+                "machine_description@uc.text_label": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [
-                        76,
-                        150
-                    ],
+                    "size": [92, 46],
                     "$text_scale": 0.55,
-                    "offset": [
-                        -78,
-                        2
-                    ]
+                    "offset": [14, 12]
+                }
+            },
+            {
+                "upgrades_tab@uc.upgrades_tab": {
+                    "$upgrade_index_1": 4,
+                    "$upgrade_index_2": 5,
+                    "$upgrade_index_3": 6,
+                    "$upgrade_index_4": 3,
+                    "$has_first_upgrade": true,
+                    "$has_second_upgrade": true,
+                    "$has_third_upgrade": true,
+                    "$has_fourth_upgrade": false,
+                    "$upgrade_overlay_1": "textures/items/machinery/size_upgrade",
+                    "$upgrade_overlay_2": "textures/items/machinery/size_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/energy_upgrade"
+                }
+            },
+            {
+                "info_tab@uc.info_tab": {
+                    "$info_description": "ui.utilitycraft:info.laser_barrier"
                 }
             }
         ]
@@ -125,7 +71,7 @@
             },
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 14
+                    "layer": 40
                 }
             },
             {

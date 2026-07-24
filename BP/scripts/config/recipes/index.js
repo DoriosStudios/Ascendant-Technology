@@ -42,3 +42,7 @@ export {
     getCryoChamberCatalyst,
 } from "./cryoChamber.js";
 export { singularityFabricatorRecipeDefinitions } from "./singularityFabricator.js";
+export {
+    geneticSeedRecipeDefinitions,
+    geneticSoilDefinitions,
+} from "./geneticSeedSynthesizer.js";

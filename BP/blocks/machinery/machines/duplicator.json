@@ -22,43 +22,26 @@
 			}
 		},
 		"components": {
-// LEGACY_DISABLED 			"utilitycraft:duplicator": {
-// 				"entity": {
-// 					"type": "machine",
-// 					"input_type": "complex",
-// 					"output_type": "simple",
-// 					"inventory_size": 20,
-// 					"input_slot": 3,
-// 					"output_range": [18, 19],
-// 					"fluid": true
-// 				},
-// 				"machine": {
-// 					"energy_cap": 512000000,
-// 					"energy_cost": 256000,
-// 					"rate_speed_base": 800,
-// 					"dynamic_rate": true,
-// 					"fluid_cap": 512000,
-// 					"upgrades": [
-// 						4,
-// 						5,
-// 						6
-// 					],
-// 					"hidden_slots": [
-// 						7,
-// 						8,
-// 						9,
-// 						12,
-// 						13,
-// 						14,
-// 						15,
-// 						16,
-// 						17
-// 					]
-// 				}
-// 			},
-// LEGACY_DISABLED 			"utilitycraft:special_container":{
-// 				"Template": 3
-// 			},
+			"utilitycraft:fluid_container": {},
+			"utilitycraft:duplicator": {
+				"entity": {
+					"type": "fluid_machine",
+					"inventory_size": 32,
+					"fixed_fluid_types": true
+				},
+				"machine": {
+					"energy_cap": 512000000,
+					"energy_cost": 1600000,
+					"rate_speed_base": 800,
+					"fluid_cap": 512000,
+					"fluid_types": 1,
+					"upgrades": [4, 5]
+				}
+			},
+			"utilitycraft:machine_upgrades": [
+				{ "type": "speed", "slot": 4 },
+				{ "type": "energy", "slot": 5 }
+			],
 			"utilitycraft:machine_recipes": {
 				"type": "duplicator"
 			},
@@ -93,12 +76,9 @@
 					"render_method": "alpha_test"
 				}
 			},
-// LEGACY_DISABLED 			"minecraft:tick": {
-// 				"interval_range": [
-// 					4,
-// 					4
-// 				]
-// 			},
+			"minecraft:tick": {
+				"interval_range": [4, 4]
+			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 1
 			},

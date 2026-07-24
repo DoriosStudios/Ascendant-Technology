@@ -19,3 +19,5 @@ import "./cryoStabilizer.js";
 import "./cryoChamber.js";
 import "./cryoFreezer.js";
 import "./singularityFabricator.js";
+import "./duplicator.js";
+import "./geneticSeedSynthesizer.js";

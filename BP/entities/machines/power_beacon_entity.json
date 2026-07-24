@@ -1,0 +1,97 @@
+{
+    "format_version": "1.19.20",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "utilitycraft:power_beacon_entity",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "is_experimental": false,
+            "properties": {
+                "utilitycraft:players": {
+                    "type": "int",
+                    "default": 0,
+                    "range": [0, 100]
+                },
+                "utilitycraft:tick_group": {
+                    "type": "int",
+                    "default": 0,
+                    "range": [0, 5]
+                }
+            }
+        },
+        "component_groups": {
+            "despawn": {
+                "minecraft:instant_despawn": {}
+            }
+        },
+        "components": {
+            "minecraft:nameable": {
+                "always_show": false,
+                "allow_name_tag_renaming": false
+            },
+            "minecraft:type_family": {
+                "family": [
+                    "inanimate",
+                    "dorios:machine",
+                    "dorios:energy_source",
+                    "dorios:energy_container",
+                    "dorios:container"
+                ]
+            },
+            "minecraft:damage_sensor": {
+                "triggers": [
+                    {
+                        "cause": "all",
+                        "deals_damage": false
+                    }
+                ]
+            },
+            "minecraft:health": {
+                "max": 1,
+                "min": 1,
+                "value": 1
+            },
+            "minecraft:knockback_resistance": {
+                "value": 1000,
+                "max": 1000
+            },
+            "minecraft:collision_box": {
+                "height": 0.5,
+                "width": 1
+            },
+            "minecraft:fire_immune": true,
+            "minecraft:inventory": {
+                "inventory_size": 3,
+                "container_type": "container"
+            },
+            "minecraft:environment_sensor": {
+                "triggers": {
+                    "filters": {
+                        "test": "has_tag",
+                        "value": "despawn"
+                    },
+                    "event": "despawn"
+                }
+            },
+            "minecraft:inside_block_notifier": {
+                "block_list": [
+                    {
+                        "block": {
+                            "name": "air"
+                        },
+                        "entered_block_event": {
+                            "event": "despawn"
+                        }
+                    }
+                ]
+            }
+        },
+        "events": {
+            "despawn": {
+                "add": {
+                    "component_groups": ["despawn"]
+                }
+            }
+        }
+    }
+}

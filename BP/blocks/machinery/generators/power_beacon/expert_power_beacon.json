@@ -12,17 +12,17 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:power_beacon": {
-//                 "entity": {
-//                     "type": "power_beacon",
-//                     "inventory_size": 3
-//                 },
-//                 "generator": {
-//                     "energy_cap": 2048000,
-//                     "rate_speed_base": 16000,
-//                     "range": 12
-//                 }
-//             },
+            "utilitycraft:power_beacon": {
+                "entity": {
+                    "identifier": "utilitycraft:power_beacon_entity",
+                    "inventory_size": 3
+                },
+                "generator": {
+                    "energy_cap": 2048000,
+                    "rate_speed_base": 16000,
+                    "range": 12
+                }
+            },
             "minecraft:geometry": "geometry.energy_transmitter",
             "minecraft:material_instances": {
                 "*": {
@@ -30,9 +30,9 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": {
-//                 "interval_range": [4, 4]
-//             },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

@@ -35,7 +35,7 @@ tile.utilitycraft:smart_importer.name=Умный Импортер\n§7Прини
 tile.utilitycraft:reinforced_cable.name=Усиленный Кабель\n§7- Высокоемкостная основа энергии/жидкости/разгона\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 
 ## Улучшенные Машины
-tile.utilitycraft:abyssal_fisher.name=Абиссальный Рыбак\n§9Улучшенный Auto Fisher\n§7- Принимаемые обновления: §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:abyssal_fisher.name=Абиссальный Рыбак\n§9Улучшенный Auto Fisher\n§7- Принимаемые обновления: §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:arc_press_forge.name=Кузня Дугового Пресса\n§9Улучшенный Электро Пресс\n§7- Принимаемые обновления: §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:dual_siever.name=Двойное Сито\n§9Улучшенный Autosieve B\n§7- Принимаемые обновления:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:centrifugal_siever.name=Центрифужное Сито\n§9Улучшенный Autosieve A\n§7- Принимаемые обновления:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology

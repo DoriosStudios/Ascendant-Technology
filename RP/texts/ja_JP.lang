@@ -35,7 +35,7 @@ tile.utilitycraft:smart_importer.name=スマートインポーター\n§7対応�
 tile.utilitycraft:reinforced_cable.name=強化ケーブル\n§7- 高容量エネルギー/液体/オーバークロックバックボーン\n- 対応アップグレード: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 
 ## 上位機械
-tile.utilitycraft:abyssal_fisher.name=アビサルフィッシャー\n§9上位Auto Fisher\n§7- 受け入れられたアップグレード: §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:abyssal_fisher.name=アビサルフィッシャー\n§9上位Auto Fisher\n§7- 受け入れられたアップグレード: §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:arc_press_forge.name=アークプレス・フォージ\n§9上位Electro Press\n§7- 受け入れられたアップグレード: §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:dual_siever.name=デュアルシーバー\n§9上位Autosieve B\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:centrifugal_siever.name=遠心シーバー\n§9上位Autosieve A\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology

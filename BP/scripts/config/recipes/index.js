@@ -47,3 +47,7 @@ export {
     geneticSoilDefinitions,
 } from "./geneticSeedSynthesizer.js";
 export { verdantCropDefinitions } from "./verdantCultivator.js";
+export {
+    abyssalFisherConfig,
+    abyssalFisherLootDefinitions,
+} from "./abyssalFisher.js";

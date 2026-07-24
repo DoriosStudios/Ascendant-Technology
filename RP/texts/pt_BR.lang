@@ -36,7 +36,7 @@ tile.utilitycraft:reinforced_exporter.name=Exportador Reforçado\n§7- Saída de
 tile.utilitycraft:smart_importer.name=Importador Inteligente\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 
 ## Máquinas Superiores
-tile.utilitycraft:abyssal_fisher.name=Autopescador Abissal\n§9Autopescador Superior\n§7- Aceita melhorias: §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:abyssal_fisher.name=Autopescador Abissal\n§9Autopescador Superior\n§7- Aceita melhorias: §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:arc_press_forge.name=Prensa Elétrica Forjada\n§9Prensa Elétrica Superior\n§7- Aceita melhorias: §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:dual_siever.name=Peneirador Duplo\n§9Peneirador Superior B\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:centrifugal_siever.name=Peneirador Centrífugo\n§9Peneirador Superior A\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology

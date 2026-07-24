@@ -35,7 +35,7 @@ tile.utilitycraft:smart_importer.name=智能导入器\n§7接受的升级:\n  §
 tile.utilitycraft:reinforced_cable.name=强化电缆\n§7- 高容量能量/流体/超频主干\n- 接受的升级: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 
 ## 高级机器
-tile.utilitycraft:abyssal_fisher.name=深渊渔机\n§9高级自动钓鱼\n§7- 接受的升级： §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:abyssal_fisher.name=深渊渔机\n§9高级自动钓鱼\n§7- 接受的升级： §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:arc_press_forge.name=电弧压锻炉\n§9高级Electro Press\n§7- 接受的升级： §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:dual_siever.name=双联筛机\n§9高级Autosieve B\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:centrifugal_siever.name=离心筛机\n§9高级Autosieve A\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology

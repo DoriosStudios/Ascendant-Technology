@@ -19,31 +19,26 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:abyssal_fisher": {
-//                 "entity": {
-//                     "type": "machine",
-//                     "input_type": "complex",
-//                     "output_type": "complex",
-//                     "inventory_size": 29,
-//                     "fluid": true
-//                 },
-//                 "machine": {
-//                     "energy_cap": 64000000,
-//                     "energy_cost": 2400,
-//                     "rate_speed_base": 9600,
-//                     "dynamic_rate": true,
-//                     "fluid_cap": 32000,
-//                     "upgrades": [7, 8, 9, 10],
-//                     "hidden_slots": [5]
-//                 }
-//             },
-// LEGACY_DISABLED             "utilitycraft:special_container": {
-//                 "Mode Switch": 3,
-//                 "Fishing Net": 4,
-//                 "Water Tank": 6,
-//                 "Upgrade Slots": [7, 8, 9, 10],
-//                 "Output Lanes": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]
-//             },
+            "utilitycraft:fluid_container": {},
+            "utilitycraft:abyssal_fisher": {
+                "entity": {
+                    "type": "fluid_machine",
+                    "inventory_size": 41,
+                    "fixed_fluid_types": true
+                },
+                "machine": {
+                    "energy_cap": 64000000,
+                    "energy_cost": 2400,
+                    "rate_speed_base": 9600,
+                    "fluid_cap": 32000,
+                    "fluid_types": 1,
+                    "upgrades": [7, 8]
+                }
+            },
+            "utilitycraft:machine_upgrades": [
+                { "type": "speed", "slot": 7 },
+                { "type": "energy", "slot": 8 }
+            ],
             "utilitycraft:machine_recipes": {
                 "type": "abyssal_fisher"
             },
@@ -78,9 +73,9 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": {
-//                 "interval_range": [4, 4]
-//             },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

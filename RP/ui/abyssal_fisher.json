@@ -1,290 +1,224 @@
 {
     "namespace": "abyssal_fisher",
+    "net_flipbook": {
+        "anim_type": "flip_book",
+        "frame_count": 7,
+        "frame_step": 0,
+        "fps": 1,
+        "easing": "linear",
+        "initial_uv": [0, 0]
+    },
+    "output_grid_6x3": {
+        "type": "collection_panel",
+        "size": [108, 54],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "controls": [
+            { "slot_1@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "collection_index": 11 } },
+            { "slot_2@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 0], "collection_index": 12 } },
+            { "slot_3@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 0], "collection_index": 13 } },
+            { "slot_4@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 0], "collection_index": 14 } },
+            { "slot_5@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 0], "collection_index": 15 } },
+            { "slot_6@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [90, 0], "collection_index": 16 } },
+            { "slot_7@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 18], "collection_index": 17 } },
+            { "slot_8@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 18], "collection_index": 18 } },
+            { "slot_9@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 18], "collection_index": 19 } },
+            { "slot_10@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 18], "collection_index": 20 } },
+            { "slot_11@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 18], "collection_index": 21 } },
+            { "slot_12@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [90, 18], "collection_index": 22 } },
+            { "slot_13@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 36], "collection_index": 23 } },
+            { "slot_14@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 36], "collection_index": 24 } },
+            { "slot_15@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 36], "collection_index": 25 } },
+            { "slot_16@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 36], "collection_index": 26 } },
+            { "slot_17@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 36], "collection_index": 27 } },
+            { "slot_18@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [90, 36], "collection_index": 28 } },
+            {
+                "grid_outline": {
+                    "type": "image",
+                    "texture": "textures/ui/slots/output_slot",
+                    "size": [110, 56],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [-1, -1],
+                    "layer": 4
+                }
+            }
+        ]
+    },
     "abyssal_fisher_top": {
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [206, 126],
-        "offset": [-10, -44],
+        "size": [180, 72],
+        "offset": [-10, -40],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "chest_label@chest.chest_label": {
-                    "offset": [10, 0]
+                "screen": {
+                    "type": "image",
+                    "texture": "textures/ui/background_panel",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "$cell_image_size": [218, 166],
+                    "size": [218, 166],
+                    "offset": [29, 40],
+                    "layer": -1
                 }
             },
             {
-                "energy_bar@machineryCommon.vertical_single": {
-                    "$is_energy": true,
-                    "$has_bg": false,
-                    "offset": [-84, 4]
+                "exit_button_panel": {
+                    "type": "panel",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [51, -10],
+                    "controls": [
+                        { "close_button@common.close_button": {} }
+                    ]
                 }
             },
             {
-                "upgrades@ascendant_common.panel": {
-                    "type": "collection_panel",
-                    "collection_name": "container_items",
-                    "$item_collection_name": "container_items",
+                "machine_name@uc.machine_name": {
+                    "offset": [0, -2]
+                }
+            },
+            {
+                "side_panel@uc.machine_side_panel": {
+                    "offset": [-9, 0]
+                }
+            },
+            {
+                "item_label@uc.text_label": {
+                    "collection_index": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [74, 146],
+                    "$text_scale": 0.55,
+                    "offset": [-85, 2]
+                }
+            },
+            {
+                "net_slot@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "$has_container_label": false,
-                    "$has_close_button": false,
-                    "$panel_size": [24, 96],
-                    "offset": [108, 42],
+                    "offset": [-59, 20],
+                    "collection_index": 4
+                }
+            },
+            {
+                "net_overlay@uc.function_panel": {
+                    "collection_index": 4,
+                    "type": "panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "size": [16, 16],
+                    "offset": [-59, 21],
                     "controls": [
                         {
-                            "panel@ascendant_common.panel": {
+                            "net_image": {
+                                "type": "image",
+                                "texture": "textures/static/images/nets_flipbook",
+                                "uv_size": [16, 16],
+                                "uv": "@abyssal_fisher.net_flipbook",
+                                "layer": 4,
+                                "alpha": 0.5,
                                 "anchor_from": "center",
                                 "anchor_to": "center",
-                                "$panel_size": ["100%", "100%"],
-                                "$has_container_label": false,
-                                "$has_close_button": false,
-                                "layer": 1
-                            }
-                        },
-                        {
-                            "upgrade_1@ascendant_common.slot_base": {
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "$slot_index": 7,
-                                "$slot_size": [18, 18],
-                                "layer": 3,
-                                "offset": [0, -24]
-                            }
-                        },
-                        {
-                            "upgrade_2@ascendant_common.slot_base": {
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "$slot_index": 8,
-                                "$slot_size": [18, 18],
-                                "layer": 3,
-                                "offset": [0, -6]
-                            }
-                        },
-                        {
-                            "upgrade_3@ascendant_common.slot_base": {
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "$slot_index": 9,
-                                "$slot_size": [18, 18],
-                                "layer": 3,
-                                "offset": [0, 12]
-                            }
-                        },
-                        {
-                            "upgrade_4@ascendant_common.slot_base": {
-                                "anchor_from": "center",
-                                "anchor_to": "center",
-                                "$slot_index": 10,
-                                "$slot_size": [18, 18],
-                                "layer": 3,
-                                "offset": [0, 30]
+                                "size": [16, 16]
                             }
                         }
                     ]
                 }
             },
             {
-                "screen": {
-                    "type": "image",
-                    "texture": "textures/ui/panels/half_long_panel_classic",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [108, 190],
-                    "offset": [-92, -10],
-                    "layer": 0
-                }
-            },
-            {
-                "item_label@machineryCommon.item_label": {
-                    "collection_index": 1,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [82, 154],
-                    "$text_scale": 0.55,
-                    "offset": [-82, 2]
-                }
-            },
-            {
-                "progress@common_machines.machinery": {
+                "process_progress@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [18, 2],
+                    "offset": [-31, 12],
                     "collection_index": 2
                 }
             },
             {
-                "mode_button@uc.machine_button": {
+                "mode_button@uc.dynamic_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [18, 20],
+                    "offset": [-45, 46],
                     "$index": 3,
-                    "$button_size": [16, 16],
+                    "$button_size": [38, 14],
+                    "$text_scale": 0.5,
                     "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
                     "$hover_texture": "textures/ui/cells/hover_inverted_orange_image",
                     "$pressed_texture": "textures/ui/cells/orange_cell_image"
                 }
             },
             {
-                "net_slot@common.container_item": {
+                "output_grid@abyssal_fisher.output_grid_6x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [18, 38],
-                    "collection_index": 4
+                    "offset": [47, 14]
                 }
             },
             {
-                "water_display@ascendant_common.liquid_display": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [18, 96],
-                    "$fluid_slot_index": 6
+                "water_bar@uc.liquid_input_1_bar": {
+                    "$collection_index": 6,
+                    "$has_bg": false,
+                    "offset": [104, 64]
                 }
             },
             {
-                "output_slot_1@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [54, 2],
-                    "collection_index": 11
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
+                    "offset": [132, 64],
+                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
             {
-                "output_slot_2@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [72, 2],
-                    "collection_index": 12
+                "upgrades_tab@uc.upgrades_tab": {
+                    "offset": [35, 0],
+                    "$upgrade_index_1": 7,
+                    "$upgrade_index_2": 8,
+                    "$has_first_upgrade": true,
+                    "$has_second_upgrade": true,
+                    "$has_third_upgrade": false,
+                    "$has_fourth_upgrade": false,
+                    "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
                 }
             },
             {
-                "output_slot_3@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [90, 2],
-                    "collection_index": 13
+                "io_tab@uc.io_tab": {
+                    "offset": [35, 0],
+                    "$io_items_modes_description": "ui.utilitycraft:io.abyssal_fisher.items",
+                    "$io_fluids_modes_description": "ui.utilitycraft:io.abyssal_fisher.liquids",
+                    "$has_item_io": true,
+                    "$has_fluid_io": true,
+                    "$has_gas_io": false,
+                    "$io_items_default": true,
+                    "$io_fluids_default": false,
+                    "$io_top_texture": "textures/blocks/machines/superior/abyssal_autofisher_off_up",
+                    "$io_left_texture": "textures/blocks/machines/superior/abyssal_autofisher_off_west",
+                    "$io_front_texture": "textures/blocks/machines/superior/abyssal_autofisher_off_north",
+                    "$io_right_texture": "textures/blocks/machines/superior/abyssal_autofisher_off_east",
+                    "$io_bottom_texture": "textures/blocks/machines/superior/abyssal_autofisher_off_down",
+                    "$io_back_texture": "textures/blocks/machines/superior/abyssal_autofisher_off_south",
+                    "$io_item_top_index": 29,
+                    "$io_item_left_index": 30,
+                    "$io_item_front_index": 31,
+                    "$io_item_right_index": 32,
+                    "$io_item_bottom_index": 33,
+                    "$io_item_back_index": 34,
+                    "$io_fluid_top_index": 35,
+                    "$io_fluid_left_index": 36,
+                    "$io_fluid_front_index": 37,
+                    "$io_fluid_right_index": 38,
+                    "$io_fluid_bottom_index": 39,
+                    "$io_fluid_back_index": 40
                 }
             },
             {
-                "output_slot_4@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [54, 20],
-                    "collection_index": 14
-                }
-            },
-            {
-                "output_slot_5@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [72, 20],
-                    "collection_index": 15
-                }
-            },
-            {
-                "output_slot_6@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [90, 20],
-                    "collection_index": 16
-                }
-            },
-            {
-                "output_slot_7@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [54, 38],
-                    "collection_index": 17
-                }
-            },
-            {
-                "output_slot_8@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [72, 38],
-                    "collection_index": 18
-                }
-            },
-            {
-                "output_slot_9@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [90, 38],
-                    "collection_index": 19
-                }
-            },
-            {
-                "output_slot_10@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [54, 56],
-                    "collection_index": 20
-                }
-            },
-            {
-                "output_slot_11@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [72, 56],
-                    "collection_index": 21
-                }
-            },
-            {
-                "output_slot_12@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [90, 56],
-                    "collection_index": 22
-                }
-            },
-            {
-                "output_slot_13@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [54, 74],
-                    "collection_index": 23
-                }
-            },
-            {
-                "output_slot_14@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [72, 74],
-                    "collection_index": 24
-                }
-            },
-            {
-                "output_slot_15@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [90, 74],
-                    "collection_index": 25
-                }
-            },
-            {
-                "output_slot_16@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [54, 92],
-                    "collection_index": 26
-                }
-            },
-            {
-                "output_slot_17@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [72, 92],
-                    "collection_index": 27
-                }
-            },
-            {
-                "output_slot_18@common.container_item": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [90, 92],
-                    "collection_index": 28
+                "info_tab@uc.info_tab": {
+                    "offset": [35, 0],
+                    "$info_description": "ui.utilitycraft:info.abyssal_fisher"
                 }
             }
         ]
@@ -292,50 +226,29 @@
     "utility_panel": {
         "type": "panel",
         "controls": [
-            {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {}
-            },
-            {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 14
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {}
-            },
-            {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
-            },
+            { "container_gamepad_helpers@common.container_gamepad_helpers": {} },
+            { "flying_item_renderer@common.flying_item_renderer": { "layer": 40 } },
+            { "selected_item_details_factory@common.selected_item_details_factory": {} },
+            { "item_lock_notification_factory@common.item_lock_notification_factory": {} },
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
                     "controls": [
-                        {
-                            "common_panel@common.common_panel": {}
-                        },
+                        { "common_panel@common.common_panel": { "$show_close_button": false } },
                         {
                             "chest_panel": {
                                 "type": "panel",
                                 "layer": 5,
                                 "controls": [
-                                    {
-                                        "abyssal_fisher_top@abyssal_fisher.abyssal_fisher_top": {}
-                                    },
-                                    {
-                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
-                                    },
-                                    {
-                                        "hotbar_grid@common.hotbar_grid_template": {}
-                                    }
+                                    { "abyssal_fisher_top@abyssal_fisher.abyssal_fisher_top": {} },
+                                    { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {} },
+                                    { "hotbar_grid@common.hotbar_grid_template": {} },
+                                    { "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {} }
                                 ]
                             }
                         },
-                        {
-                            "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                        },
-                        {
-                            "gamepad_cursor@common.gamepad_cursor_button": {}
-                        }
+                        { "inventory_selected_icon_button@common.inventory_selected_icon_button": {} },
+                        { "gamepad_cursor@common.gamepad_cursor_button": {} }
                     ]
                 }
             }

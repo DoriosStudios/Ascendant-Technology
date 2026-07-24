@@ -19,23 +19,22 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:pattern_placer": {
-//                 "entity": {
-//                     "type": "machine",
-//                     "inventory_size": 13,
-//                     "input_range": [4, 7]
-//                 },
-//                 "machine": {
-//                     "energy_cap": 64000000,
-//                     "energy_cost": 200,
-//                     "rate_speed_base": 1600,
-//                     "upgrades": [9, 10, 11],
-//                     "hidden_slots": []
-//                 }
-//             },
-// LEGACY_DISABLED             "utilitycraft:special_container": {
-//                 "Input Slots": [4, 5, 6, 7]
-//             },
+            "utilitycraft:pattern_placer": {
+                "entity": {
+                    "type": "machine",
+                    "inventory_size": 19
+                },
+                "machine": {
+                    "energy_cap": 64000000,
+                    "energy_cost": 200,
+                    "rate_speed_base": 1600,
+                    "upgrades": [9, 10]
+                }
+            },
+            "utilitycraft:machine_upgrades": [
+                { "type": "speed", "slot": 9 },
+                { "type": "energy", "slot": 10 }
+            ],
             "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
                 "*": {
@@ -67,9 +66,9 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": {
-//                 "interval_range": [4, 4]
-//             },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

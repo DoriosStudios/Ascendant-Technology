@@ -12,3 +12,4 @@ export * as ui from "./ui/index.js";
 export * as cloning from "./cloning/index.js";
 export * as genetics from "./genetics/index.js";
 export * as agriculture from "./agriculture/index.js";
+export * as spatial from "./spatial/index.js";

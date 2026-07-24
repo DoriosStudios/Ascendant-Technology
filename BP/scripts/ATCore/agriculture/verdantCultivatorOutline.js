@@ -13,6 +13,11 @@ const MAX_RANGE_LEVEL = 4;
 const OUTLINE_ENABLED_PROPERTY = "utilitycraft:outline_enabled";
 const OUTLINE_COLOR_PROPERTY = "utilitycraft:outline_color";
 const OUTLINE_SIZE_PROPERTY = "utilitycraft:outline_size";
+const OUTLINE_DIMENSION_PROPERTIES = {
+    width: "utilitycraft:outline_width",
+    height: "utilitycraft:outline_height",
+    depth: "utilitycraft:outline_depth",
+};
 const OUTLINE_OFFSET_PROPERTIES = {
     x: "utilitycraft:outline_offset_x",
     y: "utilitycraft:outline_offset_y",
@@ -90,6 +95,9 @@ export function syncVerdantOutline(block, outline, machineEntity, rangeLevel) {
     setPropertyIfChanged(outline, OUTLINE_ENABLED_PROPERTY, true);
     setPropertyIfChanged(outline, OUTLINE_COLOR_PROPERTY, 0);
     setPropertyIfChanged(outline, OUTLINE_SIZE_PROPERTY, transform.size);
+    setPropertyIfChanged(outline, OUTLINE_DIMENSION_PROPERTIES.width, transform.size);
+    setPropertyIfChanged(outline, OUTLINE_DIMENSION_PROPERTIES.height, 1);
+    setPropertyIfChanged(outline, OUTLINE_DIMENSION_PROPERTIES.depth, transform.size);
     setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.x, transform.offset.x);
     setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.y, transform.offset.y);
     setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.z, transform.offset.z);
@@ -124,6 +132,9 @@ export function syncVerdantOutlineIfNeeded(machine, rangeLevel) {
     const transform = getOutlineTransform(machine.block, rangeLevel);
     if (
         outline.getProperty(OUTLINE_SIZE_PROPERTY) === transform.size
+        && outline.getProperty(OUTLINE_DIMENSION_PROPERTIES.width) === transform.size
+        && outline.getProperty(OUTLINE_DIMENSION_PROPERTIES.height) === 1
+        && outline.getProperty(OUTLINE_DIMENSION_PROPERTIES.depth) === transform.size
         && outline.getProperty(OUTLINE_OFFSET_PROPERTIES.x) === transform.offset.x
         && outline.getProperty(OUTLINE_OFFSET_PROPERTIES.z) === transform.offset.z
     ) return;

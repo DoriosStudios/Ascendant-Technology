@@ -1,15 +1,15 @@
 ## Geradores
-tile.utilitycraft:absolute_battery.name=Bateria Absoluta \n§7  Velocidade: 800 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_furnator.name=Furnator Absoluto \n§7  Velocidade: 320 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_magmator.name=Magmator Absoluto \n§7  Velocidade: 400 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_solar_panel.name=Painel Solar Absoluto \n§7  Velocidade Máx: 96 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_thermo_generator.name=Gerador Térmico Absoluto \n§7  Velocidade: 16 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta \n§7  Velocidade Base: 64 kDE/t\n  Multiplicador de Altura Máximo: 3x\n  Não funciona abaixo de y12\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:basic_power_beacon.name=§eCanalizador de Pulso Elétrico Básico\n§7  Velocidade: 1 kDE/t\n§7  Capacidade: 128 kDE\n§7  Alcance: 4 blocos\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:advanced_power_beacon.name=§cCanalizador de Pulso Elétrico Avançado\n§7  Velocidade: 4 kDE/t\n§7  Capacidade: 512 kDE\n§7  Alcance: 8 blocos\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:expert_power_beacon.name=§bCanalizador de Pulso Elétrico Expert\n§7  Velocidade: 16 kDE/t\n§7  Capacidade: 2.048 MDE\n§7  Alcance: 12 blocos\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:ultimate_power_beacon.name=§8Canalizador de Pulso Elétrico Supremo\n§7  Velocidade: 100 kDE/t\n§7  Capacidade: 12.8 MDE\n§7  Alcance: 24 blocos\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_power_beacon.name=§fCanalizador de Pulso Elétrico Absoluto\n§7  Velocidade: 8 MDE/t\n§7  Capacidade: 1.024 GDE\n§7  Alcance: 48 blocos\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_battery.name=§uBateria Absoluta \n§7  Velocidade: 800 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_furnator.name=§uFurnator Absoluto \n§7  Velocidade: 320 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_magmator.name=§uMagmator Absoluto \n§7  Velocidade: 400 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_solar_panel.name=§uPainel Solar Absoluto \n§7  Velocidade Máx: 96 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_thermo_generator.name=§uGerador Térmico Absoluto \n§7  Velocidade: 16 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_wind_turbine.name=§uTurbina Eólica Absoluta \n§7  Velocidade Base: 64 kDE/t\n  Multiplicador de Altura Máximo: 3x\n  Não funciona abaixo de y12\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:basic_power_beacon.name=§eSinalizador de Energia Básico\n§7  Velocidade: 1 kDE/t\n§7  Capacidade: 128 kDE\n§7  Alcance: 4 blocos\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:advanced_power_beacon.name=§cSinalizador de Energia Avançado\n§7  Velocidade: 4 kDE/t\n§7  Capacidade: 512 kDE\n§7  Alcance: 8 blocos\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:expert_power_beacon.name=§bSinalizador de Energia Expert\n§7  Velocidade: 16 kDE/t\n§7  Capacidade: 2.048 MDE\n§7  Alcance: 12 blocos\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:ultimate_power_beacon.name=§8Sinalizador de Energia Supremo\n§7  Velocidade: 100 kDE/t\n§7  Capacidade: 12.8 MDE\n§7  Alcance: 24 blocos\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_power_beacon.name=§vSinalizador de Energia Absoluto\n§7  Velocidade: 8 MDE/t\n§7  Capacidade: 1.024 GDE\n§7  Alcance: 48 blocos\n§o§9@UC: Ascendant Technology
 
 tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena itens (168 espaços)\n- Armazena energia\n- Armazena líquidos\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:cobble_gen_6.name=Gerador de Pedregulho (§uTier VII§r)\n§7- Gera 32 por segundo\n§o§9@UC: Ascendant Technology
@@ -19,7 +19,7 @@ tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7Aceita melhorias
 tile.utilitycraft:cryo_chamber.name=Câmara Criogênica\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica itens usando matéria escura\n- Aceita melhorias: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:enchantment_station.name=Estação de Encantamento\n§7- Repara, encanta, reforça equipamentos\n- Aceita melhorias: §a§r, §b§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:refining_table.name=Mesa de Refino\n§7- Refina equipamentos StatsCore com XP armazenado\n- Aceita melhorias: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:refining_table.name=Mesa de Refinaria\n§7- Refina equipamentos StatsCore com XP armazenado\n- Aceita melhorias: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 
 tile.utilitycraft:energizer.name=Energizador\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:liquifier.name=Liquefator\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
@@ -41,8 +41,8 @@ tile.utilitycraft:abyssal_fisher.name=Autopescador Abissal\n§9Autopescador Supe
 tile.utilitycraft:arc_press_forge.name=Prensa Elétrica Forjada\n§9Prensa Elétrica Superior\n§7- Aceita melhorias: §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:dual_siever.name=Peneirador Duplo\n§9Peneirador Superior B\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:centrifugal_siever.name=Peneirador Centrífugo\n§9Peneirador Superior A\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:cryo_freezer.name=Congelador Criogênico\n§9Ramo Superior da Câmara Criogênica\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:cryo_stabilizer.name=Estabilizador Criogênico\n§9Ramo Superior da Câmara Criogênica\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:cryo_freezer.name=Congelador Criogênico\n§9Congelador Dedicado\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:cryo_stabilizer.name=Estabilizador Criogênico\n§9Estabilizador Dedicado\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:industrial_burner.name=Incinerador Industrial\n§9Incinerador Superior\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:impact_crusher.name=Triturador de Impacto\n§9Triturador Superior B\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:genetic_seed_synthesizer.name=Sintetizador Genético de Sementes\n§9Sintetizador de Sementes Superior\n§7- Aceita melhorias:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
@@ -154,7 +154,8 @@ item.utilitycraft:lucky_aiot=§aAiOT da Sorte\n§o§9@UC: Ascendant Technology
 
 ### Módulos de Melhoria
 item.utilitycraft:size_upgrade=Módulo de Melhoria de §gTamanho§7\n- Aumenta a área da Barreira de Laser\n§o§9@UC: Ascendant Technology
-item.utilitycraft:hyper_processing_upgrade=Módulo de Melhoria de §dHyper Processamento§7\n- Aumenta a velocidade das máquinas\n- Não aumenta o consumo de energia\n- Exclusivo para máquinas AT\n§o§9@UC: Ascendant Technology
+item.utilitycraft:hyper_processing_upgrade=Módulo de Melhoria de §dHyper Processamento§7\n- Aumenta a velocidade das máquinas\n- Não aumenta o consumo de energia\n§o§9@UC: Ascendant Technology
+item.utilitycraft:stack_upgrade=Módulo de Melhoria de §6Pacotes§7\n- Aumenta a quantidade de itens pro-\n  -cessados por vez.\n§o§9@UC: Ascendant Technology
 item.utilitycraft:curse_protection_module=§dMódulo de Proteção contra Maldições§7\n- Reduz chance de maldição durante encantamento\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dMódulo de Encantabilidade §r(Tier I)§7\n- Desbloqueia encantamento\n- Nível máx: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dMódulo de Encantabilidade §r(Tier II)§7\n- Nível de encantamento máx: 2\n§o§9@UC: Ascendant Technology
@@ -291,17 +292,16 @@ tile.utilitycraft:disenchanter.name=Desencantador\n§o§9@UC: Ascendant Technolo
 tile.utilitycraft:arcane_enchanter.name=Encantador Arcano\n§o§9@UC: Ascendant Technology
 
 ## UI
-at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)
-at:itemGroup.name.superior_machines=Máquinas Superiores §u(Ascendant Technology)
-at:itemGroup.name.power_beacons=Balizas Energéticas §u(Ascendant Technology)
-at:itemGroup.name.capsules=Cápsulas de Líquidos §u(Ascendant Technology)
-at:itemGroup.name.experimental=Experimental §u(Ascendant Technology)
-at:itemGroup.name.armor=Armaduras §u(Ascendant Technology)
-at:itemGroup.name.materials_resources=Materiais e Recursos §u(Ascendant Technology)
-at:itemGroup.name.pipes=Dutos §u(Ascendant Technology)
-at:itemGroup.name.conveyors=Esteiras §u(Ascendant Technology)
-dorios:itemGroup.name.pipes=Dutos
-dorios:itemGroup.name.mob_grinding=Gerenciamento de Criaturas
+at:itemGroup.name.machines=Máquinas \n§u(Ascendant Technology)
+at:itemGroup.name.superior_machines=Máquinas Superiores \n§u(Ascendant Technology)
+at:itemGroup.name.power_beacons=Balizas Energéticas \n§u(Ascendant Technology)
+at:itemGroup.name.capsules=Cápsulas de Líquidos \n§u(Ascendant Technology)
+at:itemGroup.name.experimental=Experimental \n§u(Ascendant Technology)
+at:itemGroup.name.armor=Armaduras \n§u(Ascendant Technology)
+at:itemGroup.name.materials_resources=Materiais e Recursos \n§u(Ascendant Technology)
+at:itemGroup.name.pipes=Dutos \n§u(Ascendant Technology)
+at:itemGroup.name.conveyors=Esteiras \n§u(Ascendant Technology)
+at:itemGroup.name.modules=Módulos Arcanos \n§u(Ascendant Technology)
 
 at:ui.h=A
 at:ui.l=L

@@ -214,6 +214,7 @@ item.utilitycraft:pure_enderling_tear=Lágrima Pura de Enderling\n§7- Caída ra
 ## Módulos
 item.utilitycraft:size_upgrade=Mejora de §gTamaño§7\n- Aumenta el área de la Barrera Láser\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=Mejora de §dProcesamiento Híper§7\n- Aumenta la velocidad de operación de las máquinas\n- No aumenta el consumo de energía\n§o§9@UC: Ascendant Technology
+item.utilitycraft:stack_upgrade=Mejora de §6Pila§7\n- Aumenta la cantidad de ítems\n  procesados a la vez.\n§o§9@UC: Ascendant Technology
 item.utilitycraft:curse_protection_module=§dMódulo de Protección contra Maldiciones§7\n- Reduce probabilidad de maldición\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dMódulo de Encantabilidad §r(Tier I)§7\n- Desbloquea encantamiento\n- Nivel máx: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dMódulo de Encantabilidad §r(Tier II)§7\n- Nivel de encantamiento máx: 2\n§o§9@UC: Ascendant Technology
@@ -351,16 +352,15 @@ tile.utilitycraft:disenchanter.name=Desencantador\n§o§9@UC: Ascendant Technolo
 tile.utilitycraft:arcane_enchanter.name=Encantador Arcano\n§o§9@UC: Ascendant Technology
 
 ## UI Texts
-at:itemGroup.name.machines=Máquinas (Ascendant Technology)
-at:itemGroup.name.power_beacons=Power Beacons §u(Ascendant Technology)
-at:itemGroup.name.capsules=Cápsulas de Líquidos (Ascendant Technology)
+at:itemGroup.name.machines=Máquinas \n§u(Ascendant Technology)
+at:itemGroup.name.power_beacons=Power Beacons \n§u(Ascendant Technology)
+at:itemGroup.name.capsules=Cápsulas de Líquidos \n§u(Ascendant Technology)
 at:itemGroup.name.experimental=Experimental
-at:itemGroup.name.armor=Armaduras (Ascendant Technology)
-at:itemGroup.name.materials_resources=Materiales y Recursos §u(Ascendant Technology)
-at:itemGroup.name.pipes=Tuberías §u(Ascendant Technology)
-at:itemGroup.name.conveyors=Cintas Transportadoras §u(Ascendant Technology)
-dorios:itemGroup.name.pipes=Tuberías
-dorios:itemGroup.name.mob_grinding=Triturador de Mobs
+at:itemGroup.name.armor=Armaduras \n§u(Ascendant Technology)
+at:itemGroup.name.materials_resources=Materiales y Recursos \n§u(Ascendant Technology)
+at:itemGroup.name.pipes=Tuberías \n§u(Ascendant Technology)
+at:itemGroup.name.conveyors=Cintas Transportadoras \n§u(Ascendant Technology)
+at:itemGroup.name.modules=Módulos Arcanos \n§u(Ascendant Technology)
 
 at:ui.h=A
 at:ui.l=L

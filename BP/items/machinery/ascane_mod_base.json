@@ -4,8 +4,7 @@
     "description": {
       "identifier": "utilitycraft:ascane_module_base",
       "menu_category": {
-        "category": "items",
-        "group": "dorios:itemGroup.name.upgrades"
+        "category": "items"
       }
     },
     "components": {

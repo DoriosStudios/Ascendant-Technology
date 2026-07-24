@@ -1,0 +1,17 @@
+{
+	"format_version": "1.21.110",
+	"minecraft:item": {
+		"description": {
+			"identifier": "utilitycraft:absolute_chip",
+			"menu_category": {
+				"category": "items"
+			}
+		},
+		"components": {
+			"minecraft:icon": "utilitycraft_absolute_chip",
+			"minecraft:fire_resistant": {
+				"value": true
+			}
+		}
+	}
+}

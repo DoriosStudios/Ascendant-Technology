@@ -213,6 +213,24 @@
                             "utilitycraft:enderling_tear",
                             "utilitycraft:void_essence"
                         ]
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:enchantability_module_5",
+                            "name": "at:itemGroup.name.modules"
+                        },
+                        "items": [
+                            "utilitycraft:ascane_module_base",
+                            "utilitycraft:reinforcement_module",
+                            "utilitycraft:reinforcement_module_2",
+                            "utilitycraft:reinforcement_module_3",
+                            "utilitycraft:enchantability_module",
+                            "utilitycraft:enchantability_module_2",
+                            "utilitycraft:enchantability_module_3",
+                            "utilitycraft:enchantability_module_4",
+                            "utilitycraft:enchantability_module_5",
+                            "utilitycraft:curse_protection_module"
+                        ]
                     }
                 ]
             }

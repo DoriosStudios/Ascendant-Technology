@@ -4,8 +4,7 @@
     "description": {
       "identifier": "utilitycraft:enchantability_module",
       "menu_category": {
-        "category": "items",
-        "group": "dorios:itemGroup.name.upgrades"
+        "category": "items"
       }
     },
     "components": {

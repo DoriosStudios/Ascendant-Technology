@@ -212,6 +212,9 @@
 		"utilitycraft_size_upgrade": {
 			"textures": "textures/items/machinery/size_upgrade"
 		},
+		"utilitycraft_stack_upgrade": {
+			"textures": "textures/items/machinery/stack_upgrade"
+		},
 		"utilitycraft_hyper_processing_upgrade": {
 			"textures": "textures/items/machinery/hyper_processing_upgrade"
 		},

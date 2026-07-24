@@ -285,6 +285,8 @@ entity.utilitycraft:enchantment_station.name=§5Estação de Encantamento
 entity.utilitycraft:refining_table.name=§fMesa de Refino
 entity.utilitycraft:vaporworks_processor.name=§vProcessador de Vapor
 entity.utilitycraft:arcane_enchanter.name=Encantador Arcano
+entity.utilitycraft:disenchanter.name=Desencantador
+tile.utilitycraft:disenchanter.name=Desencantador\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:arcane_enchanter.name=Encantador Arcano\n§o§9@UC: Ascendant Technology
 
 ## UI

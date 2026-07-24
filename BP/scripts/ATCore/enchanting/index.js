@@ -7,3 +7,11 @@ export {
     getEnchantabilityModuleLevel,
     isArcaneEnchantPlan,
 } from "./arcaneEnchanting.js";
+
+export {
+    createDisenchantSignature,
+    extractFirstEnchantment,
+    getAbsorbedXp,
+    readDisenchantments,
+    removeAllDisenchantments,
+} from "./disenchanting.js";

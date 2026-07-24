@@ -9,6 +9,7 @@ import "./liquifier.js";
 import "./magmaticReactorChamber.js";
 import "./catalystWeaver.js";
 import "./arcaneEnchanter.js";
+import "./disenchanter.js";
 import "./energizer.js";
 import "./vaporworksProcessor.js";
 import "./cryofluidSynthesizer.js";

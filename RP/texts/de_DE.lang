@@ -191,6 +191,8 @@ entity.utilitycraft:overclock_tower.name=§fÜbertaktungsturm
 entity.utilitycraft:overclock_relay.name=§fÜbertaktungsrelais
 entity.utilitycraft:overclock_injector.name=§fÜbertaktungsinjektor
 entity.utilitycraft:arcane_enchanter.name=Arkaner Verzauberer
+entity.utilitycraft:disenchanter.name=Entzauberer
+tile.utilitycraft:disenchanter.name=Entzauberer\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:arcane_enchanter.name=Arkaner Verzauberer\n§o§9@UC: Ascendant Technology
 
 ## UI Texts

@@ -23,7 +23,7 @@
             "utilitycraft:arcane_enchanter": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 12,
+                    "inventory_size": 24,
                     "fixed_fluid_types": true
                 },
                 "machine": {
@@ -32,7 +32,7 @@
                     "rate_speed_base": 32000,
                     "fluid_cap": 128000,
                     "fluid_types": 1,
-                    "upgrades": [8, 9, 10]
+                    "upgrades": [8, 9]
                 }
             },
             "utilitycraft:machine_upgrades": [
@@ -58,6 +58,8 @@
             "minecraft:destructible_by_explosion": false,
             "tag:dorios:machine": {},
             "tag:dorios:energy": {},
+            "tag:dorios:fluid": {},
+            "tag:dorios:item": {},
             "tag:minecraft:is_pickaxe_item_destructible": {}
         },
         "permutations": [

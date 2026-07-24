@@ -191,6 +191,8 @@ entity.utilitycraft:overclock_tower.name=§fオーバークロックタワー
 entity.utilitycraft:overclock_relay.name=§fオーバークロックリレー
 entity.utilitycraft:overclock_injector.name=§fオーバークロックインジェクター
 entity.utilitycraft:arcane_enchanter.name=Arcane Enchanter
+entity.utilitycraft:disenchanter.name=ディスエンチャンター
+tile.utilitycraft:disenchanter.name=ディスエンチャンター\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:arcane_enchanter.name=Arcane Enchanter\n§o§9@UC: Ascendant Technology
 
 ## UIテキスト

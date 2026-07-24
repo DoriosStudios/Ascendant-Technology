@@ -2,7 +2,7 @@
 
 import { world } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, FluidStorage, Machine } from "DoriosCore/index.js";
+import { EnergyStorage, FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
 import {
     applyArcaneEnchantPlan,
     buildArcaneEnchantPlan,
@@ -32,6 +32,31 @@ const OPERATION_SECONDS = 6;
 const OPERATION_SIGNATURE_KEY = "ascendant:arcane_enchanter_signature";
 const OPERATION_PLAN_KEY = "ascendant:arcane_enchanter_plan";
 
+registerIOInterface(ID, {
+    items: {
+        buttonSlots: [12, 13, 14, 15, 16, 17],
+        anyInputSlots: [INPUT_SLOT, LAPIS_SLOT, MODULE_SLOT],
+        anyOutputSlots: [OUTPUT_SLOT],
+        modes: [
+            { id: "disabled" },
+            { id: "input_1", inputSlots: [INPUT_SLOT] },
+            { id: "input_2", inputSlots: [LAPIS_SLOT] },
+            { id: "input_3", inputSlots: [MODULE_SLOT] },
+            { id: "input_4", inputSlots: [INPUT_SLOT, LAPIS_SLOT, MODULE_SLOT] },
+            { id: "output_1", outputSlots: [OUTPUT_SLOT] },
+        ],
+    },
+    liquids: {
+        buttonSlots: [18, 19, 20, 21, 22, 23],
+        anyInputIndices: [0],
+        anyOutputIndices: [],
+        modes: [
+            { id: "disabled" },
+            { id: "input_1", inputIndices: [0] },
+        ],
+    },
+});
+
 /** @type {Map<string, { signature: string, plan: ReturnType<typeof buildArcaneEnchantPlan> }>} */
 const operationCache = new Map();
 
@@ -60,6 +85,8 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+
+        machine.processIO();
 
         const xpTank = new FluidStorage(machine.entity, 0);
         if (xpTank.get() <= 0 && xpTank.getType() !== XP_TYPE) xpTank.setType(XP_TYPE);

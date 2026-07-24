@@ -1,4 +1,10 @@
 ## Generadores
+ui.utilitycraft:info.arcane_enchanter=Encanta un objeto a la vez usando Lapislazuli, XP liquida y un Modulo de Encantabilidad. Los modulos de mayor nivel pueden agregar mas encantamientos compatibles y elevar sus niveles. El objeto terminado pasa al slot de salida.\n\nE/S de objetos:\n§9Entrada de objeto§r acepta el objeto que se encantara.\n§bEntrada de Lapislazuli§r acepta Lapislazuli.\n§1Entrada de modulo§r acepta el Modulo de Encantabilidad.\n§3Todas las entradas§r expone las tres entradas.\n§cSalida§r expone el objeto encantado.\n\nE/S de liquidos:\n§9Entrada de XP§r llena el tanque interno de XP.
+ui.utilitycraft:io.arcane_enchanter.items=Modos de E/S:\n§r- §9Entrada de objeto\n§r- §bEntrada de Lapislazuli\n§r- §1Entrada de modulo\n§r- §3Todas las entradas\n§r- §cSalida
+ui.utilitycraft:io.arcane_enchanter.liquids=Modos de E/S:\n§r- §9Entrada de XP
+ui.utilitycraft:info.disenchanter=Procesa un objeto encantado en dos modos seleccionables. Extraccion retira un encantamiento, consume un Libro normal y coloca el Libro encantado en la salida mientras conserva la fuente actualizada. Absorcion elimina todos los encantamientos y almacena su valor como XP liquida.\n\nE/S de objetos:\n§9Entrada de fuente§r inserta el objeto encantado.\n§bEntrada de libro§r inserta Libros normales.\n§3Todas las entradas§r expone ambas entradas.\n§cObjeto procesado§r extrae la fuente despues del proceso.\n§cLibro encantado§r extrae la salida de libro.\n§cTodas las salidas§r expone ambas salidas.\n\nE/S de liquidos:\n§cSalida de XP§r drena la XP recuperada.
+ui.utilitycraft:io.disenchanter.items=Modos de E/S:\n§r- §9Entrada de fuente\n§r- §bEntrada de libro\n§r- §3Todas las entradas\n§r- §cObjeto procesado\n§r- §cLibro encantado\n§r- §cTodas las salidas
+ui.utilitycraft:io.disenchanter.liquids=Modos de E/S:\n§r- §cSalida de XP
 ui.utilitycraft:info.magmatic_reactor_chamber=Procesa materiales compatibles mientras genera Lava. El Adoquin se convierte en Piedra y produce 400 mB, la Arena se convierte en Vidrio y produce 500 mB, y 4 Bolas de Arcilla se convierten en 4 Ladrillos y producen 650 mB. Los seis slots de entrada forman un solo pool; se procesa la primera receta indexada que este lista.\n\nEl tanque interno almacena 128,000 mB de Lava. El proceso se detiene si la salida solida o el tanque estan llenos. Las mejoras de Velocidad y Energia afectan el proceso, mientras que el Lote de Procesos puede completar varias conversiones por ciclo pagado.\n\nE/S de objetos:\n§9Cuadricula de entrada§r expone los seis slots de materiales.\n§cSalida solida§r expone el objeto procesado.\n\nE/S de liquidos:\n§cSalida de Lava§r expone el tanque de Lava generado.
 ui.utilitycraft:io.magmatic_reactor_chamber.items=Modos de E/S:\n§r- §9Cuadricula de entrada\n§r- §cSalida solida
 ui.utilitycraft:io.magmatic_reactor_chamber.liquids=Modos de E/S:\n§r- §cSalida de Lava
@@ -313,6 +319,8 @@ entity.utilitycraft:ascane_engine.name=§fEstación de Encantamiento
 entity.utilitycraft:enchantment_station.name=§fEstación de Encantamiento
 entity.utilitycraft:vaporworks_processor.name=Procesador de Vapor
 entity.utilitycraft:arcane_enchanter.name=Encantador Arcano
+entity.utilitycraft:disenchanter.name=Desencantador
+tile.utilitycraft:disenchanter.name=Desencantador\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:arcane_enchanter.name=Encantador Arcano\n§o§9@UC: Ascendant Technology
 
 ## UI Texts

@@ -112,7 +112,7 @@ function configureOutline(outline, blockLocation, positions) {
     setPropertyIfChanged(outline, OUTLINE_DIMENSION_PROPERTIES.depth, depth);
     setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.x, offsetX);
     setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.y, offsetY);
-    setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.z, offsetZ);
+    setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.z, -offsetZ);
 }
 
 function rebuildSeismicOutline(block, machineEntity, modeId) {

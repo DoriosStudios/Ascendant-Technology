@@ -114,7 +114,7 @@ function configureOutline(outline, blockLocation, positions) {
     setPropertyIfChanged(outline, OUTLINE_DIMENSION_PROPERTIES.width, dimensions.width);
     setPropertyIfChanged(outline, OUTLINE_DIMENSION_PROPERTIES.height, dimensions.height);
     setPropertyIfChanged(outline, OUTLINE_DIMENSION_PROPERTIES.depth, dimensions.depth);
-    setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.x, -worldOffset.x);
+    setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.x, worldOffset.x);
     setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.y, worldOffset.y);
     setPropertyIfChanged(outline, OUTLINE_OFFSET_PROPERTIES.z, -worldOffset.z);
 }

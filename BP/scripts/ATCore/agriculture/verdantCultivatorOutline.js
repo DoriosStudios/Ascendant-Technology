@@ -64,13 +64,12 @@ function getOutlineTransform(block, rangeLevel) {
     const sideLength = 3 + normalizeRangeLevel(rangeLevel) * 2;
     const forwardCenter = (sideLength + 1) / 2;
     const direction = block.permutation.getState("minecraft:cardinal_direction");
-    // The shared outline model uses entity-model coordinates, whose horizontal
-    // offsets are inverted relative to block-world directions.
+    // The shared outline model keeps the world X sign but inverts the world Z sign.
     const offsets = {
         north: { x: 0, y: 0, z: forwardCenter },
         south: { x: 0, y: 0, z: -forwardCenter },
-        east: { x: -forwardCenter, y: 0, z: 0 },
-        west: { x: forwardCenter, y: 0, z: 0 },
+        east: { x: forwardCenter, y: 0, z: 0 },
+        west: { x: -forwardCenter, y: 0, z: 0 },
     };
     return {
         size: sideLength,

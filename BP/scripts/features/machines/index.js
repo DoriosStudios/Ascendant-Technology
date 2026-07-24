@@ -11,3 +11,5 @@ import "./energizer.js";
 import "./vaporworksProcessor.js";
 import "./cryofluidSynthesizer.js";
 import "./cryoStabilizer.js";
+import "./cryoChamber.js";
+import "./cryoFreezer.js";

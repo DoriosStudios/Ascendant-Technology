@@ -12,6 +12,7 @@ export {
     selectPooledRecipe,
 } from "./itemPools.js";
 export { advanceLanes, advanceProcess } from "./processEngine.js";
+export { processCryoCoolingGrid } from "./cryoCoolingGrid.js";
 export {
     getEligibleSieveDrops,
     hasSieveOutputCapacity,

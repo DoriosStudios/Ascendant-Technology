@@ -19,34 +19,26 @@
 			}
 		},
 		"components": {
-// LEGACY_DISABLED 			"utilitycraft:cryo_chamber": {
-// 				"entity": {
-// 					"type": "machine",
-// 					"input_type": "simple",
-// 					"output_type": "simple",
-// 					"inventory_size": 27,
-// 					"input_slot": 3,
-// 					"output_slot": 24,
-// 					"fluid": true
-// 				},
-// 				"machine": {
-// 					"energy_cap": 128000000,
-// 					"energy_cost": 4000,
-// 					"rate_speed_base": 2400,
-// 					"dynamic_rate": true,
-// 					"fluid_cap": 64000,
-// 					"fluid_rate": 64000,
-// 					"upgrades": [19, 20, 21],
-// 					"hidden_slots": [26]
-// 				}
-// 			},
-// LEGACY_DISABLED 			"utilitycraft:special_container":{
-// 				"Stabilizer": 3,
-// 				"Cooling Chamber": [4, 5, 6, 7, 8, 9, 10, 11, 12],
-// 				"Cryofluid Generator": [13, 17, 18],
-// 				"Upgrades": [19, 20, 21],
-// 				"Output": [24]
-// 			},
+			"utilitycraft:fluid_container": {},
+			"utilitycraft:cryo_chamber": {
+				"entity": {
+					"type": "fluid_machine",
+					"inventory_size": 36,
+					"fixed_fluid_types": true
+				},
+				"machine": {
+					"energy_cap": 128000000,
+					"energy_cost": 4000,
+					"rate_speed_base": 2400,
+					"fluid_cap": 64000,
+					"fluid_types": 2,
+					"upgrades": [19, 20]
+				}
+			},
+			"utilitycraft:machine_upgrades": [
+				{ "type": "speed", "slot": 19 },
+				{ "type": "energy", "slot": 20 }
+			],
 			"utilitycraft:machine_recipes": {
 				"type": "cryo_chamber"
 			},
@@ -77,9 +69,9 @@
 					"render_method": "alpha_test"
 				}
 			},
-// LEGACY_DISABLED 			"minecraft:tick": {
-// 				"interval_range": [4, 4]
-// 			},
+			"minecraft:tick": {
+				"interval_range": [4, 4]
+			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 1
 			},

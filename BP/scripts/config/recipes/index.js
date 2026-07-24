@@ -25,3 +25,15 @@ export {
     getCryoStabilizerRecipeCount,
     registerCryoStabilizerRecipe,
 } from "./cryoStabilizer.js";
+export {
+    cryoCoolingRecipeDefinitions,
+    getCryoCoolingRecipe,
+    getCryoCoolingRecipeCount,
+    isCryoCoolingOutput,
+    registerCryoCoolingRecipe,
+} from "./cryoCooling.js";
+export {
+    cryoChamberCatalystDefinitions,
+    cryoChamberGeneration,
+    getCryoChamberCatalyst,
+} from "./cryoChamber.js";

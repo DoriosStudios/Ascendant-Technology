@@ -20,6 +20,7 @@
                     "ui/cryo_chamber.json",
                     "ui/cryofluid_synthesizer.json",
                     "ui/cryo_stabilizer.json",
+                    "ui/cryo_freezer.json",
                     "ui/refining_table.json",
                     "ui/ascane_engine.json",
                     "ui/energizer.json",

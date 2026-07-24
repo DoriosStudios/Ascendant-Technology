@@ -19,26 +19,23 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:verdant_cultivator": {
-//                 "entity": {
-//                     "type": "machine",
-//                     "input_type": "complex",
-//                     "output_type": "complex",
-//                     "inventory_size": 21
-//                 },
-//                 "machine": {
-//                     "energy_cap": 64000000,
-//                     "energy_cost": 6400,
-//                     "rate_speed_base": 3200,
-//                     "upgrades": [8, 9, 10, 11]
-//                 }
-//             },
-// LEGACY_DISABLED             "utilitycraft:special_container": {
-//                 "Seed Grid": [3, 4, 5, 6],
-//                 "Clock Slot": 7,
-//                 "Upgrade Slots": [8, 9, 10, 11],
-//                 "Harvest Buffer": [12, 13, 14, 15, 16, 17, 18, 19, 20]
-//             },
+            "utilitycraft:verdant_cultivator": {
+                "entity": {
+                    "type": "machine",
+                    "inventory_size": 27
+                },
+                "machine": {
+                    "energy_cap": 64000000,
+                    "energy_cost": 6400,
+                    "rate_speed_base": 3200,
+                    "upgrades": [8, 9, 10]
+                }
+            },
+            "utilitycraft:machine_upgrades": [
+                { "type": "speed", "slot": 8 },
+                { "type": "energy", "slot": 9 },
+                { "type": "range", "slot": 10, "max": 4 }
+            ],
             "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
                 "*": {
@@ -70,9 +67,9 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": {
-//                 "interval_range": [4, 4]
-//             },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

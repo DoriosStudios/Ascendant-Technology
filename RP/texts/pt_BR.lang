@@ -48,7 +48,7 @@ tile.utilitycraft:genetic_seed_synthesizer.name=Sintetizador Genético de Sement
 tile.utilitycraft:pattern_placer.name=Colocador de Padrões\n§9Coloca-Bloco Superior\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pulverizer.name=Pulverizador\n§9Triturador Superior A\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:seismic_breaker.name=Quebrador Sísmico\n§9Quebra-Bloco Superior\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:verdant_cultivator.name=Cultivador Verdante\n§9Colheitadeira Superior\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:verdant_cultivator.name=Cultivador Verdante\n§9Colheitadeira Superior\n§7- Aceita melhorias:\n  §a§r, §b§r, §9§r\n§o§9@UC: Ascendant Technology
 
 ## Outros Blocos
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versão Estética\n§o§9@UC: Ascendant Technology

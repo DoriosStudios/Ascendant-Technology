@@ -46,3 +46,4 @@ export {
     geneticSeedRecipeDefinitions,
     geneticSoilDefinitions,
 } from "./geneticSeedSynthesizer.js";
+export { verdantCropDefinitions } from "./verdantCultivator.js";

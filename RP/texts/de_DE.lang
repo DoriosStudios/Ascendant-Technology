@@ -47,7 +47,7 @@ tile.utilitycraft:genetic_seed_synthesizer.name=Genetischer Saatgut-Synthesizer\
 tile.utilitycraft:pattern_placer.name=Mustersetzer\n§9Verbesserter Blocksetzer\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r\n§o§9UC: Ascendant Technology
 tile.utilitycraft:pulverizer.name=Pulverisierer\n§9Verbesserter Brecher A\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r, §s§r\n§o§9UC: Ascendant Technology
 tile.utilitycraft:seismic_breaker.name=Seismischer Brecher\n§9Verbesserter Blockbrecher\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r\n§o§9UC: Ascendant Technology
-tile.utilitycraft:verdant_cultivator.name=Üppiger Kultivator\n§9Verbesserte Erntemaschine\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §d§r, §s§r\n§o§9UC: Ascendant Technology
+tile.utilitycraft:verdant_cultivator.name=Üppiger Kultivator\n§9Verbesserte Erntemaschine\n§7- Akzeptierte Upgrades:\n  §a§r, §b§r, §9§r\n§o§9UC: Ascendant Technology
 
 ## Andere Blöcke
 tile.utilitycraft:flat_conduit.name=Flache Leitung\n§7  Ästhetische Version\n§o§9UC: Ascendant Technology

@@ -47,7 +47,7 @@ tile.utilitycraft:genetic_seed_synthesizer.name=基因种子合成器\n§9高级
 tile.utilitycraft:pattern_placer.name=图样放置器\n§9高级块放置器\n§7- 接受的升级：\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pulverizer.name=粉碎机\n§9高级破碎机 A\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:seismic_breaker.name=地震破碎机\n§9高级Block Breaker\n§7- 接受的升级：\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:verdant_cultivator.name=翠绿培植机\n§9高级收割机\n§7- 接受的升级：\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:verdant_cultivator.name=翠绿培植机\n§9高级收割机\n§7- 接受的升级：\n  §a§r, §b§r, §9§r\n§o§9@UC: Ascendant Technology
 
 ## 其他方块
 tile.utilitycraft:flat_conduit.name=平面管道\n§7  美观版本\n§o§9@UC: Ascendant Technology

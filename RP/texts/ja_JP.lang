@@ -47,7 +47,7 @@ tile.utilitycraft:genetic_seed_synthesizer.name=ジェネティック・シー�
 tile.utilitycraft:pattern_placer.name=パターンプレーサー\n§9上位ブロック配置者\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pulverizer.name=パルバライザー\n§9上位クラッシャー A\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:seismic_breaker.name=シーズミックブレーカー\n§9上位ブロック ブレーカー\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:verdant_cultivator.name=ヴァーダント・カルティベーター\n§9上位ハーベスター\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:verdant_cultivator.name=ヴァーダント・カルティベーター\n§9上位ハーベスター\n§7- 受け入れられたアップグレード:\n  §a§r, §b§r, §9§r\n§o§9@UC: Ascendant Technology
 
 ## その他のブロック
 tile.utilitycraft:flat_conduit.name=フラットコンジット\n§7  美観バージョン\n§o§9@UC: Ascendant Technology

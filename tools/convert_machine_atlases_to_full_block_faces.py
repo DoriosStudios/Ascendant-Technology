@@ -14,6 +14,8 @@ FACE_BOXES = {
     "down": (32, 0, 48, 16),
 }
 
+HORIZONTALLY_MIRRORED_FACES = {"east", "west"}
+
 CONVERSIONS = (
     {
         "label": "cryo_chamber_off",
@@ -44,12 +46,14 @@ CONVERSIONS = (
         "source": SUPERIOR_ROOT / "seismic_breaker.png",
         "legacy": SUPERIOR_ROOT / "legacy_atlases" / "seismic_breaker.png",
         "faces_dir": SUPERIOR_ROOT / "faces" / "seismic_breaker" / "off",
+        "mirror_horizontal": True,
     },
     {
         "label": "seismic_breaker_on",
         "source": SUPERIOR_ROOT / "seismic_breaker_on.png",
         "legacy": SUPERIOR_ROOT / "legacy_atlases" / "seismic_breaker_on.png",
         "faces_dir": SUPERIOR_ROOT / "faces" / "seismic_breaker" / "on",
+        "mirror_horizontal": True,
     },
 )
 
@@ -70,20 +74,27 @@ def archive_source_atlas(source_path: Path, legacy_path: Path) -> Path:
 
 
 
-def export_faces(atlas_path: Path, faces_dir: Path) -> None:
+def export_faces(atlas_path: Path, faces_dir: Path, mirror_horizontal: bool = False) -> None:
     faces_dir.mkdir(parents=True, exist_ok=True)
 
     with Image.open(atlas_path).convert("RGBA") as atlas:
         for face_name, box in FACE_BOXES.items():
             output_path = faces_dir / f"{face_name}.png"
-            atlas.crop(box).save(output_path)
+            face = atlas.crop(box)
+            if mirror_horizontal and face_name in HORIZONTALLY_MIRRORED_FACES:
+                face = face.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+            face.save(output_path)
 
 
 
 def main() -> None:
     for conversion in CONVERSIONS:
         atlas_path = archive_source_atlas(conversion["source"], conversion["legacy"])
-        export_faces(atlas_path, conversion["faces_dir"])
+        export_faces(
+            atlas_path,
+            conversion["faces_dir"],
+            conversion.get("mirror_horizontal", False),
+        )
         print(f"Converted {conversion['label']} -> {conversion['faces_dir']}")
 
 

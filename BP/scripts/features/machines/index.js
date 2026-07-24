@@ -23,3 +23,4 @@ import "./duplicator.js";
 import "./geneticSeedSynthesizer.js";
 import "./verdantCultivator.js";
 import "./patternPlacer.js";
+import "./seismicBreaker.js";

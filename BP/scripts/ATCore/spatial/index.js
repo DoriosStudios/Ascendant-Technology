@@ -13,3 +13,10 @@ export {
     removePatternOutline,
     syncPatternOutlineIfNeeded,
 } from "./patternOutline.js";
+
+export {
+    handleSeismicOutlineInteract,
+    initializeSeismicOutline,
+    removeSeismicOutline,
+    syncSeismicOutlineIfNeeded,
+} from "./seismicOutline.js";

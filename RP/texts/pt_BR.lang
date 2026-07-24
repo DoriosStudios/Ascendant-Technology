@@ -47,7 +47,7 @@ tile.utilitycraft:impact_crusher.name=Triturador de Impacto\n§9Triturador Super
 tile.utilitycraft:genetic_seed_synthesizer.name=Sintetizador Genético de Sementes\n§9Sintetizador de Sementes Superior\n§7- Aceita melhorias:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pattern_placer.name=Colocador de Padrões\n§9Coloca-Bloco Superior\n§7- Aceita melhorias:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pulverizer.name=Pulverizador\n§9Triturador Superior A\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:seismic_breaker.name=Quebrador Sísmico\n§9Quebra-Bloco Superior\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:seismic_breaker.name=Quebrador Sísmico\n§9Quebra-Bloco Superior\n§7- Aceita melhorias:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:verdant_cultivator.name=Cultivador Verdante\n§9Colheitadeira Superior\n§7- Aceita melhorias:\n  §a§r, §b§r, §9§r\n§o§9@UC: Ascendant Technology
 
 ## Outros Blocos

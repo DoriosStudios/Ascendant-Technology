@@ -19,22 +19,22 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:seismic_breaker": {
-//                 "entity": {
-//                     "type": "machine",
-//                     "inventory_size": 13
-//                 },
-//                 "machine": {
-//                     "energy_cap": 64000000,
-//                     "energy_cost": 6400,
-//                     "rate_speed_base": 1600,
-//                     "upgrades": [9, 10, 11],
-//                     "hidden_slots": []
-//                 }
-//             },
-// LEGACY_DISABLED             "utilitycraft:special_container": {
-//                 "Storage Slots": [5, 6, 7, 8]
-//             },
+            "utilitycraft:seismic_breaker": {
+                "entity": {
+                    "type": "machine",
+                    "inventory_size": 19
+                },
+                "machine": {
+                    "energy_cap": 64000000,
+                    "energy_cost": 6400,
+                    "rate_speed_base": 1600,
+                    "upgrades": [9, 10]
+                }
+            },
+            "utilitycraft:machine_upgrades": [
+                { "type": "speed", "slot": 9 },
+                { "type": "energy", "slot": 10 }
+            ],
             "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
                 "up": {
@@ -62,15 +62,16 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": {
-//                 "interval_range": [4, 4]
-//             },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },
             "minecraft:destructible_by_explosion": false,
             "tag:dorios:machine": {},
             "tag:dorios:energy": {},
+            "tag:dorios:item": {},
             "tag:minecraft:is_pickaxe_item_destructible": {}
         },
         "permutations": [

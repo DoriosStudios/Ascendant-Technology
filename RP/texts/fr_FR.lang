@@ -46,7 +46,7 @@ tile.utilitycraft:impact_crusher.name=Concasseur à Impact\n§9Crusher Supérieu
 tile.utilitycraft:genetic_seed_synthesizer.name=Synthétiseur Génétique de Graines\n§9Synthétiseur de Graines Supérieur\n§7- Mises à niveau acceptées :\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pattern_placer.name=Placeur de Motifs\n§9Block Placer Supérieur\n§7- Mises à niveau acceptées :\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pulverizer.name=Pulvériseur\n§9Crusher Supérieur A\n§7- Mises à niveau acceptées :\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:seismic_breaker.name=Briseur Sismique\n§9Block Breaker Supérieur\n§7- Mises à niveau acceptées :\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:seismic_breaker.name=Briseur Sismique\n§9Block Breaker Supérieur\n§7- Mises à niveau acceptées :\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:verdant_cultivator.name=Cultivateur Verdoyant\n§9Moissonneuse Supérieure\n§7- Mises à niveau acceptées :\n  §a§r, §b§r, §9§r\n§o§9@UC: Ascendant Technology
 
 ## Autres Blocs

@@ -18,3 +18,4 @@ import "./cryofluidSynthesizer.js";
 import "./cryoStabilizer.js";
 import "./cryoChamber.js";
 import "./cryoFreezer.js";
+import "./singularityFabricator.js";

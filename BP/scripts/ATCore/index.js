@@ -9,3 +9,4 @@ export * as overclock from "./overclock/index.js";
 export * as processing from "./processing/index.js";
 export * as runtime from "./runtime/index.js";
 export * as ui from "./ui/index.js";
+export * as cloning from "./cloning/index.js";

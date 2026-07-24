@@ -41,3 +41,4 @@ export {
     cryoChamberGeneration,
     getCryoChamberCatalyst,
 } from "./cryoChamber.js";
+export { singularityFabricatorRecipeDefinitions } from "./singularityFabricator.js";

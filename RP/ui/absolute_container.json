@@ -132,16 +132,17 @@
                             }
                         },
                         {
-                            "energy_bar@ascendant_common.energy_display": {
-                                "$energy_slot_index": 168,
+                            "energy_bar@uc.energy_bar": {
+                                "$collection_index": 168,
+                                "$has_bg": false,
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [-32, 2]
                             }
                         },
                         {
-                            "fluid_bar@ascendant_common.liquid_display": {
-                                "$fluid_slot_index": 169,
+                            "fluid_bar@uc.liquid_bar": {
+                                "$collection_index": 169,
                                 "anchor_from": "top_right",
                                 "anchor_to": "top_right",
                                 "offset": [8, 2]

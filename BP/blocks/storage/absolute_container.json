@@ -20,28 +20,22 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:absolute_container": {
-//                 "entity": {
-//                     "id": "utilitycraft:storage_container",
-//                     "type": "machine",
-//                     "skip_machine_event": false,
-//                     "skip_inventory_event": false,
-//                     "input_type": "none",
-//                     "output_type": "none",
-//                     "inventory_size": 170,
-//                     "input_range": [0, 158],
-//                     "output_range": [159, 167]
-//                 },
-//                 "machine": {
-//                     "energy_cap": 25600000,
-//                     "energy_cost": 0,
-//                     "rate_speed_base": 25600000,
-//                     "fluid_cap": 25600000,
-//                     "fluid_rate": 25600000,
-//                     "upgrades": [],
-//                     "hidden_slots": []
-//                 }
-//             },
+            "utilitycraft:fluid_container": {},
+            "utilitycraft:absolute_container": {
+                "entity": {
+                    "type": "fluid_machine",
+                    "inventory_size": 173
+                },
+                "machine": {
+                    "energy_cap": 25600000,
+                    "energy_cost": 0,
+                    "rate_speed_base": 25600000,
+                    "fluid_cap": 25600000,
+                    "fluid_rate": 25600000,
+                    "fluid_types": 1,
+                    "upgrades": []
+                }
+            },
             "minecraft:geometry": "geometry.utilitycraft_absolute_container",
             "minecraft:material_instances": {
                 "*": {
@@ -50,7 +44,7 @@
                 }
             },
             "minecraft:light_emission": 2,
-// LEGACY_DISABLED             "minecraft:tick": { "interval_range": [4, 4] },
+            "minecraft:tick": { "interval_range": [4, 4] },
             "minecraft:destructible_by_mining": { "seconds_to_destroy": 12 },
             "minecraft:destructible_by_explosion": false,
             "tag:dorios:machine": {},

@@ -3,3 +3,4 @@ import "./blocks/index.js";
 import "./generators/index.js";
 import "./machines/index.js";
 import "./transportation/index.js";
+import "./drops/index.js";

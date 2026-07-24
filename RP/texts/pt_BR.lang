@@ -12,6 +12,7 @@ tile.utilitycraft:ultimate_power_beacon.name=§8Canalizador de Pulso Elétrico S
 tile.utilitycraft:absolute_power_beacon.name=§fCanalizador de Pulso Elétrico Absoluto\n§7  Velocidade: 8 MDE/t\n§7  Capacidade: 1.024 GDE\n§7  Alcance: 48 blocos\n§o§9@UC: Ascendant Technology
 
 tile.utilitycraft:absolute_container.name=Container Absoluto\n§7- Armazena itens (168 espaços)\n- Armazena energia\n- Armazena líquidos\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:cobble_gen_6.name=Gerador de Pedregulho (§uTier VII§r)\n§7- Gera 32 por segundo\n§o§9@UC: Ascendant Technology
 
 ## Máquinas
 tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology

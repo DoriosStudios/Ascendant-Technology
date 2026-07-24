@@ -4,7 +4,7 @@ const catalystsByInput = new Map();
 
 export const cryoChamberGeneration = {
     lapis: { id: "minecraft:lapis_lazuli", amount: 8 },
-    cost: 32000,
+    cost: 1600,
     ticks: 80,
 };
 
@@ -19,6 +19,16 @@ export const cryoChamberCatalystDefinitions = {
         water: 1000,
         cryofluid: 1600,
     },
+    "utilitycraft:raw_titanium_block": {
+        input: { id: "utilitycraft:raw_titanium_block", amount: 1 },
+        water: 8000,
+        cryofluid: 12800,
+    },
+    "utilitycraft:titanium_block": {
+        input: { id: "utilitycraft:raw_titanium_block", amount: 1 },
+        water: 8000,
+        cryofluid: 12800,
+    }
 };
 
 for (const definition of Object.values(cryoChamberCatalystDefinitions)) {

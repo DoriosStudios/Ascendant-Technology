@@ -31,8 +31,8 @@
 					"inventory_size": 9
 				},
 				"generator": {
-					"energy_cap": 640000000,
-					"fluid_cap": 256000000,
+					"energy_cap": 64000000,
+					"fluid_cap": 32000000,
 					"fluid_types": 1,
 					"rate_speed_base": 400000
 				}

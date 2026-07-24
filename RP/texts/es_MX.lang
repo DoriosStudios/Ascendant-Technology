@@ -76,6 +76,8 @@ tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16
 tile.utilitycraft:ultimate_power_beacon.name=§8Ultimate Power Beacon\n§7  Rate: 100 kDE/t\n§7  Capacity: 12.8 MDE\n§7  Range: 24 blocks\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate: 8 MDE/t\n§7  Capacity: 1.024 GDE\n§7  Range: 48 blocks\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_container.name=Contenedor Absoluto\n§7- Almacena hasta 10.7K ítems\n- Almacena energía\n- Almacena fluidos\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:cobble_gen_6.name=Gerador de Adoquín (§uNivel VII)\n§7- Produce 32 por segundo\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:cobble_gen_7.name=Gerador de Adoquín (§aN§bi§3v§1e§ul §5V§4I§cI§6I)\n§7- Produce 128 por segundo\n§o§9@UC: Ascendant Technology
 
 ## Máquinas
 tile.utilitycraft:magmatic_reactor_chamber.name=Cámara de Reactor Magmático\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology

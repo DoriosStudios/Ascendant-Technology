@@ -55,6 +55,9 @@
 		"utilitycraft_battery_absolute_6": {
 			"textures": "textures/blocks/generators/battery_absolute_6"
 		},
+		"utilitycraft_cobble_gen_aetherium": {
+			"textures": "textures/blocks/generators/aetherium_cobble_gen"
+		},
 		"utilitycraft_catalyst_weaver_off": {
 			"textures": "textures/blocks/machines/catalyst_weaver_off"
 		},

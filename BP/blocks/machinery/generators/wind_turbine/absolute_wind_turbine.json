@@ -30,8 +30,8 @@
                     "inventory_size": 2
                 },
                 "generator": {
-                    "energy_cap": 512000000,
-                    "rate_speed_base": 64000
+                    "energy_cap": 40960000,
+                    "rate_speed_base": 6400
                 },
                 "max_altitude_multiplier": 3,
                 "altitude": {

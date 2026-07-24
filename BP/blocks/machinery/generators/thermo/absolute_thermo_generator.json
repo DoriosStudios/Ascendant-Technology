@@ -30,10 +30,10 @@
 					"inventory_size": 9
 				},
 				"generator": {
-					"energy_cap": 256000000,
-					"fluid_cap": 16000000,
+					"energy_cap": 25600000,
+					"fluid_cap": 12800000,
 					"fluid_types": 1,
-					"rate_speed_base": 160000
+					"rate_speed_base": 16000
 				}
 			},
 			"minecraft:geometry": "minecraft:geometry.full_block",

@@ -26,10 +26,10 @@
                     "fixed_gas_types": true
                 },
                 "machine": {
-                    "energy_cap": 64000000,
-                    "energy_cost": 1600,
-                    "rate_speed_base": 12800,
-                    "gas_cap": 32000,
+                    "energy_cap": 512000,
+                    "energy_cost": 3200,
+                    "rate_speed_base": 640,
+                    "gas_cap": 128000,
                     "gas_types": 1,
                     "upgrades": [12, 13, 14, 15]
                 }

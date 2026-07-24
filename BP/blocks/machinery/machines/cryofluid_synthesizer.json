@@ -27,9 +27,9 @@
                     "fixed_fluid_types": true
                 },
                 "machine": {
-                    "energy_cap": 384000000,
-                    "energy_cost": 6000,
-                    "rate_speed_base": 24000,
+                    "energy_cap": 512000,
+                    "energy_cost": 1600,
+                    "rate_speed_base": 640,
                     "fluid_cap": 128000,
                     "fluid_types": 2,
                     "upgrades": [14, 15]

@@ -6,14 +6,14 @@ DoriosLib.registry.registerMachineUpgrade({
   "utilitycraft:hyper_processing_upgrade": {
     type: "speed",
     levels: {
-      1: { speed: 0.06 },
-      2: { speed: 0.18 },
-      3: { speed: 0.36 },
-      4: { speed: 0.6 },
-      5: { speed: 0.9 },
-      6: { speed: 1.26 },
-      7: { speed: 1.68 },
-      8: { speed: 2.16 },
+      1: { speed: 0.65 },
+      2: { speed: 1.27 },
+      3: { speed: 1.62 },
+      4: { speed: 2.06 },
+      5: { speed: 2.62 },
+      6: { speed: 3.33 },
+      7: { speed: 4.24 },
+      8: { speed: 5.40 },
     },
   },
 });

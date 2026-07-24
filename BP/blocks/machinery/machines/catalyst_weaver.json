@@ -29,17 +29,18 @@
 					"inventory_size": 27
 				},
 				"machine": {
-					"energy_cap": 4096000,
-					"energy_cost": 6400,
-					"rate_speed_base": 180,
-					"fluid_cap": 128000,
+					"energy_cap": 2048000,
+					"energy_cost": 1600,
+					"rate_speed_base": 320,
+					"fluid_cap": 512000,
 					"fluid_types": 1,
-					"upgrades": [11, 12]
+					"upgrades": [11, 12, 13]
 				}
 			},
 			"utilitycraft:machine_upgrades": [
 				{ "type": "speed", "slot": 11 },
-				{ "type": "energy", "slot": 12 }
+				{ "type": "energy", "slot": 12 },
+				{ "type": "hyper_processing", "slot": 13 }
 			],
 			"utilitycraft:machine_recipes": {
 				"type": "catalyst_weaver"

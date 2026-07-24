@@ -22,8 +22,8 @@
 					"inventory_size": 2
 				},
 				"generator": {
-					"energy_cap": 256000000,
-					"rate_speed_base": 96000
+					"energy_cap": 25600000,
+					"rate_speed_base": 9600
 				}
 			},
 			"minecraft:geometry": "geometry.utilitycraft_solar_panel",

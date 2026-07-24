@@ -29,10 +29,10 @@
 					"inventory_size": 20
 				},
 				"machine": {
-					"energy_cap": 8192000,
-					"energy_cost": 3600,
-					"rate_speed_base": 32,
-					"fluid_cap": 640000,
+					"energy_cap": 512000,
+					"energy_cost": 1600,
+					"rate_speed_base": 640,
+					"fluid_cap": 512000,
 					"fluid_types": 1,
 					"upgrades": [6, 7]
 				}

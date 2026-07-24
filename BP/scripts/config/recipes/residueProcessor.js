@@ -27,6 +27,7 @@ export const residueProcessorRecipes = {
             chance: 0.35,
         },
     },
+    // lowkey need more recipes for this.
     "minecraft:podzol": {
         required: 1,
         output: "minecraft:bone_meal",

@@ -3,7 +3,35 @@
 Heavy processing and block automation still anchor this draft, but this pass also introduces the first full **StatsCore** equipment wave and a new **Power Beacon** line for cleaner nearby machine power routing. StatsCore is Ascendant Technology's gear progression layer: it gives supported weapons, tools, and defense pieces their own growth, refinement rolls, readable stat identity, and unlockable special abilities through the new **Refining Table**.
 
 ## BLOCKS
-### Machines
+### General
+- Added **Reinforced Case** and **Superior Case**.
+  - New machine-case block variants are now registered with their own textures for future recipe use.
+- Added **Aetherium Cobblestone Generator** (Tier 7)
+  - Produces up to 32 cobblestone per second.
+
+### Generators
+- Absolute Battery
+  - Decreased energy capacity from 25.6 GDE to 256 MDE.
+  - Decreased transfer rate from 800 kDE/t to 80 kDE/t.
+- Absolute Furnator
+  - Decreased energy capacity from 512 MDE to 51.2 MDE.
+  - Decreased transfer rate from 320 kDE/t to 32 kDE/t.
+- Absolute Magmator
+  - Decreased energy capactiy from 640 MDE to 64 MDE.
+  - Decreased liquid capacity from 320 MB to 32 MB.
+  - Decreased transfer rate from 400 kDE/t to 40 kDE/t.
+- Absolute Solar Panel
+  - Decreased energy capacity from 256 MDE to 25.6 MDE.
+  - Decreased transfer rate from 96 kDE/t to 9.6 kDE/t.
+- Absolute Thermo Generator
+  - Decreased energy capacity from 256 MDE to 25.6 MDE.
+  - Decreased liquid capacity from 16 MB to 12.8 MB.
+  - Decreased transfer rate from 160 kDE/t to 16 kDE/t.
+- Absolute Wind Turbine
+  - Decreased energy capacity from 512 MDE to 40.96 MDE.
+  - Decreased transfer rate from 64 kDE/t to 6.4 kDE/t.
+
+### Machines (Additions)
 - Added **Abyssal Fisher**
   - Superior version of Autofisher with more output slots and different modes.
     - Unlike Autofisher, that requires a water source block nearby, Abyssal Fisher uses an internal water tank for fishing, using an Ender Eye to fish remotely between different places.
@@ -112,7 +140,7 @@ Heavy processing and block automation still anchor this draft, but this pass als
     - If the storage fills up, excess items are dropped normally in the world.
   - Can now prioritize a compatible container above it when storing collected drops.
     - Its internal storage still acts as a fallback buffer if the upper container cannot take everything.
-  - Now includes a dedicated activation toggle in its UI.
+  - Includes a dedicated activation toggle in its UI.
 - Added **Verdant Cultivator**
   - Superior version of Harvester with a repeated 2x2 seed grid and a 9-slot internal harvest buffer.
   - Range Upgrades expand its working field from 3x3 up to 17x17.
@@ -122,9 +150,40 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - New 5-tier wireless-distribution line: **Basic**, **Advanced**, **Expert**, **Ultimate**, and **Absolute**.
   - Sends stored energy to nearby powered machines without feeding generators or batteries.
   - Each tier uses its own internal battery buffer, with transmission ranges of **4**, **8**, **12**, **24**, and **48** blocks.
-  - Transmission can now be toggled on or off directly from the block UI.
-- Added **Reinforced Case** and **Superior Case**.
-  - New machine-case block variants are now registered with their own textures for future recipe use.
+  - Transmission can be toggled on or off directly from the block UI.
+
+### Machines (Balancing)
+- Catalyst Weaver
+  - Decreased energy capacity from 4 MDE to 2 MDE.
+  - Decreased minimum energy cost per operation from 6.4 kDe to 1.6 kDE.
+  - Increased transfer rate from 180 DE/t to 320 DE/t.
+  - Increased liquid capacity from 128 B to 512 B.
+- Cryo Chamber
+  - Decreased energy capacity from 128 MDE to 1.5 MDE.
+  - Decreased minimum energy cost per operation from 6.4 kDe to 1.6 kDE.
+- Duplicator
+  - Decreased transfer rate from 800 DE/t to 640 DE/t.
+- Enchantment Station
+  - Decreased minimum energy cost per operation from 64 kDE to 16 kDE.
+  - Decreased transfer rate from 64 kDE/t to 640 DE/t.
+- Energizer
+  - Decreased energy capacity from 256 MDE to 512 kDE.
+  - Decreased minimum energy cost per operation from 9.6 kDE to 1.6 kDE.
+  - Decreased transfer rate from 24 kDE/t to 640 DE/t.
+- Liquifier
+  - Decreased energy capacity from 8.2 MDE to 512 kDE.
+  - Decreased minimum energy cost per operation from 3.6 kDE to 1.6 kDE.
+  - Decreased liquid capacity from 640 B to 512 B.
+  - Increased transfer rate from 32 DE/t to 640 DE/t.
+- Residue Processor
+  - Decreased energy capactiy from 12.8 MDE to 512 kDE.
+  - Decreased minimum energy cost per operation from 5.2 kDE to 1.6 kDE.
+- Vaporworks Processor
+  - Decreased energy capacity from 9.6 MDE to 512 kDE.
+  - Decreased minimum energy cost per operation from 2.4 kDE to 1.6 kDE.
+  - Decreased transfer rate from 24 kDE/t to 640 DE/t.
+  - Increased gas capacity from 64 B to 128 B.
+  - Increased liquid capacity from 64 B to 128 B.
 
 ### Transportation
 - Conveyors
@@ -134,7 +193,10 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Vertical conveyors now keep rising items centered on the lane instead of pushing them sideways.
 
 ## ITEMS
+### General
+- Hyper Processing Upgrade can now be used in UtilityCraft machines.
 ### Equipment
+// I'll edit this later. Too much content.
 - **StatsCore** now acts as the universal progression and identity system for supported gear.
   - Supported equipment can gain readable stat lines, level through use, store refinement results, and expose class-style abilities instead of staying as flat stat sticks.
 - StatsCore special abilities can now be awakened in the Refining Table without blocking normal refinement.
@@ -170,13 +232,7 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - The same ability pipeline now feeds item lore, Refining Table inspection, debug inspection, and runtime behavior.
 
 ## RECIPES
-- Added the **Refining Table** crafting recipe.
-  - The machine is crafted with Titanium Plates, Advanced Chips, Aetherium, a Machine Case, and an Anvil.
-- Added **Power Beacon** crafting recipes.
-  - Basic through Ultimate tiers are crafted from their matching Energy Transmitter, Battery, and Chip tiers.
-  - The Absolute tier upgrades the Ultimate Power Beacon with an **Absolute Battery**, **Network Center**, **Ultimate Chip**, and **Aetherium**.
-- Added the **Runic Core** conversion recipe.
-  - A **Totem of Undying** can now be converted into a **Runic Core** for StatsCore awakenings.
+- Added conversion recipes to convert gem dust into their gem from again.
 - Changed the **Lucky Mesh** recipe to use an Emerald Block instead of Emeralds.
   - The change better reflects the mesh's tier and resource cost, while also making it more consistent with the other superior mesh recipes that use block-tier materials.
 

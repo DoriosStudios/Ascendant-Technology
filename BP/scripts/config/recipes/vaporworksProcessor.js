@@ -17,14 +17,20 @@ export const vaporworksRecipeDefinitions = {
     "utilitycraft:water_to_steam": {
         inputFluid: { type: "water", amount: 1000 },
         outputGas: { type: "steam", amount: 1000 },
-        cost: 2400,
+        cost: 1600,
         ticks: 80,
     },
     "utilitycraft:cryofluid_to_steam": {
         inputFluid: { type: "cryofluid", amount: 1000 },
         outputGas: { type: "steam", amount: 1500 },
-        cost: 4800,
+        cost: 2400,
         ticks: 120,
+    },
+    "utilitycraft:saline_coolant_to_steam": {
+        inputFluid: { type: "saline_coolant", amount: 1000 },
+        outputGas: { type: "steam", amount: 1500 },
+        cost: 2000,
+        ticks: 100,
     },
 };
 

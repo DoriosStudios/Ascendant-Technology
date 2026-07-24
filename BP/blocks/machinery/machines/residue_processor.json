@@ -25,8 +25,8 @@
 					"inventory_size": 14
 				},
 				"machine": {
-					"energy_cap": 12800000,
-					"energy_cost": 5200,
+					"energy_cap": 512000,
+					"energy_cost": 1600,
 					"rate_speed_base": 40,
 					"upgrades": [6, 7]
 				}

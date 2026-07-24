@@ -30,8 +30,8 @@
 					"inventory_size": 10
 				},
 				"generator": {
-					"energy_cap": 512000000,
-					"rate_speed_base": 320000
+					"energy_cap": 51200000,
+					"rate_speed_base": 32000
 				}
 			},
 			"minecraft:geometry": "minecraft:geometry.full_block",

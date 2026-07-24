@@ -91,6 +91,7 @@ tile.utilitycraft:ultimate_power_beacon.name=§8Ultimate Power Beacon\n§7  Rate
 tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate: 8 MDE/t\n§7  Capacity: 1.024 GDE\n§7  Range: 48 blocks\n§o§9@UC: Ascendant Technology
 
 tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 10.7K items\n- Can store fluids\n- Can store energy\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:cobble_gen_6.name=Cobblestone Generator (§uTier 7§r)\n§7- Produces 32 per second\n§o§9@UC: Ascendant Technology
 
 ## Machines
 tile.utilitycraft:magmatic_reactor_chamber.name=Magmatic Reactor Chamber\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology

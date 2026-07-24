@@ -1,4 +1,7 @@
 ## Generators
+ui.utilitycraft:info.magmatic_reactor_chamber=Processes supported materials while generating Lava. Cobblestone becomes Stone and produces 400 mB, Sand becomes Glass and produces 500 mB, and 4 Clay Balls become 4 Bricks and produce 650 mB. All six input slots share one recipe pool; the first ready indexed recipe is processed.\n\nThe internal Lava tank stores 128,000 mB. Processing pauses when either the solid output or Lava tank is full. Speed and Energy upgrades affect processing, while Process Batch can complete multiple conversions per paid cycle.\n\nItem I/O:\n§9Input Grid§r exposes all six material slots.\n§cSolid Output§r exposes the processed item.\n\nLiquid I/O:\n§cLava Output§r exposes the generated Lava tank.
+ui.utilitycraft:io.magmatic_reactor_chamber.items=I/O Modes:\n§r- §9Input Grid\n§r- §cSolid Output
+ui.utilitycraft:io.magmatic_reactor_chamber.liquids=I/O Modes:\n§r- §cLava Output
 ui.utilitycraft:info.cryofluid_synthesizer=Combines Titanium, Lapis Lazuli, and Water to produce Cryofluid. Stable mode uses 1 Titanium, 1 Lapis, and 1,000 mB Water to make 1,000 mB Cryofluid for 6,000 DE. Impulse mode uses 4 Titanium, 2 Lapis, and 4,000 mB Water to make 4,000 mB Cryofluid for 18,000 DE; Speed upgrades do not accelerate this profile.\n\nUse the orange button to switch profiles. Titanium and Raw Titanium are both accepted. Process Batch completes multiple conversions when enough items, Water, and tank space are available.\n\nItem I/O:\n§9Titanium Input§r exposes the four Titanium slots.\n§bLapis Input§r exposes the four Lapis slots.\n§9Input All§r exposes all eight item inputs.\n\nLiquid I/O:\n§9Water Input§r fills the Water tank.\n§cCryofluid Output§r drains the Cryofluid tank.
 ui.utilitycraft:io.cryofluid_synthesizer.items=I/O Modes:\n§r- §9Titanium Input\n§r- §bLapis Input\n§r- §9Input All
 ui.utilitycraft:io.cryofluid_synthesizer.liquids=I/O Modes:\n§r- §9Water Input\n§r- §cCryofluid Output
@@ -59,6 +62,7 @@ tile.utilitycraft:absolute_power_beacon.name=§uAbsolute Power Beacon\n§7  Rate
 tile.utilitycraft:absolute_container.name=Absolute Container\n§7- Stores up to 10.7K items\n- Can store fluids\n- Can store energy\n§o§9@UC: Ascendant Technology
 
 ## Machines
+tile.utilitycraft:magmatic_reactor_chamber.name=Magmatic Reactor Chamber\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:duplicator.name=Duplicator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
@@ -291,6 +295,7 @@ item.utilitycraft:switch_button=Switch Button\n§o§9@UC: Ascendant Technology
 item.utilitycraft:runic_core=Runic Core\n§o§9@UC: Ascendant Technology
 
 ## Entities
+entity.utilitycraft:magmatic_reactor_chamber.name=Magmatic Reactor Chamber
 entity.utilitycraft:absolute_container.name=§fAbsolute Container
 entity.utilitycraft:catalyst_weaver.name=Catalyst Weaver
 entity.utilitycraft:duplicator.name=Duplicator

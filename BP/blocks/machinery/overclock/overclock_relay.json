@@ -19,22 +19,20 @@
 			}
 		},
 		"components": {
-// LEGACY_DISABLED 			"utilitycraft:overclock_relay": {
-// 				"entity": {
-// 					"type": "machine",
-// 					"input_type": "simple",
-// 					"output_type": "simple",
-// 					"inventory_size": 5
-// 				},
-// 				"machine": {
-// 					"energy_cap": 6400000,
-// 					"energy_cost": 0,
-// 					"rate_speed_base": 6400000,
-// 					"upgrades": [],
-// 					"hidden_slots": [3, 4],
-// 					"overclock_slot": 2
-// 				}
-// 			},
+			"utilitycraft:overclock_relay": {
+				"entity": {
+					"type": "machine",
+					"inventory_size": 5
+				},
+				"machine": {
+					"overclock": false,
+					"energy_cap": 6400000,
+					"energy_cost": 0,
+					"energy_transfer": 20000,
+					"rate_speed_base": 6400000,
+					"upgrades": []
+				}
+			},
 			"minecraft:geometry": "geometry.utilitycraft_relay",
 			"minecraft:material_instances": {
 				"*": {
@@ -42,9 +40,9 @@
 					"render_method": "alpha_test"
 				}
 			},
-// LEGACY_DISABLED 			"minecraft:tick": {
-// 				"interval_range": [4, 4]
-// 			},
+			"minecraft:tick": {
+				"interval_range": [4, 4]
+			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 1
 			},
@@ -52,6 +50,7 @@
 			"tag:dorios:machine": {},
 			"tag:dorios:energy": {},
 			"tag:dorios:overclock_network": {},
+			"tag:dorios:overclock_relay": {},
 			"tag:minecraft:is_pickaxe_item_destructible": {}
 		},
 		"permutations": [

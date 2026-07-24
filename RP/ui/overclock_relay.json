@@ -4,64 +4,43 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [
-            180,
-            120
-        ],
-        "offset": [
-            -10,
-            -40
-        ],
+        "size": [162, 72],
+        "offset": [-10, -40],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "chest_label@chest.chest_label": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [
-                        52,
-                        -52
-                    ]
+                "machine_name@uc.machine_name": {
+                    "offset": [0, -2]
                 }
             },
             {
-                "energy_bar@machineryCommon.vertical_single": {
-                    "$is_energy": true,
-                    "$has_bg": false,
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [
-                        -16,
-                        0
-                    ]
-                }
+                "side_panel@uc.machine_side_panel": {}
             },
             {
-                "item_label@machineryCommon.item_label": {
+                "item_label@uc.text_label": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "size": [74, 146],
                     "$text_scale": 0.55,
-                    "size": [
-                        96,
-                        80
-                    ],
-                    "offset": [
-                        -64,
-                        -6
-                    ]
+                    "offset": [-76, 2]
                 }
             },
             {
-                "overclock_display@ascendant_common.overclock_slot_display": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [
-                        16,
-                        0
-                    ],
-                    "$overclock_slot_index": 2
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
+                    "$has_bg": false,
+                    "offset": [-25, -1]
+                }
+            },
+            {
+                "overclock_display@uc.item_display_hover_large": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [25, 14],
+                    "collection_index": 2,
+                    "focus_enabled": false
                 }
             }
         ]
@@ -70,14 +49,14 @@
         "type": "panel",
         "controls": [
             { "container_gamepad_helpers@common.container_gamepad_helpers": {} },
-            { "flying_item_renderer@common.flying_item_renderer": { "layer": 14 } },
+            { "flying_item_renderer@common.flying_item_renderer": { "layer": 40 } },
             { "selected_item_details_factory@common.selected_item_details_factory": {} },
             { "item_lock_notification_factory@common.item_lock_notification_factory": {} },
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
                     "controls": [
-                        { "dark_panel@ascendant_common.dark_panel": { } },
+                        { "common_panel@common.common_panel": {} },
                         {
                             "chest_panel": {
                                 "type": "panel",

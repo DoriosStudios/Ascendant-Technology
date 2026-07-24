@@ -49,7 +49,6 @@
 			"minecraft:destructible_by_explosion": false,
 			"tag:minecraft:is_pickaxe_item_destructible": {},
 			"tag:dorios:energy": {},
-			"tag:dorios:fluid": {},
 			"tag:dorios:isTube": {},
 			"tag:dorios:color.default": {},
 			"tag:dorios:overclock_network": {}

@@ -2,3 +2,4 @@
 export * from "./recipes/index.js";
 import "./resources/index.js";
 export * from "./drops/index.js";
+import "./overclock/index.js";

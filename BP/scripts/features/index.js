@@ -4,3 +4,4 @@ import "./generators/index.js";
 import "./machines/index.js";
 import "./transportation/index.js";
 import "./drops/index.js";
+import "./overclock/index.js";

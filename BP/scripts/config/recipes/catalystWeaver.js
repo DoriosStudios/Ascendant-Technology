@@ -3,7 +3,7 @@
 import { system } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
 
-const DEFAULT_COST = 6400;
+const DEFAULT_COST = 3200;
 const INFUSER_SPEED = 2.5;
 const SIGNATURE_SEPARATOR = "\u0001";
 
@@ -31,62 +31,22 @@ export const catalystWeaverRecipeDefinitions = {
         cost: 12000,
         speed: 0.5,
     },
-    "at:easier_aetherium": {
-        input: { id: "minecraft:netherite_ingot", amount: 1 },
-        catalysts: [{ id: "utilitycraft:aetherium_shard", amount: 4 }],
-        fluid: { type: "lava", amount: 8000 },
-        output: { id: "utilitycraft:aetherium", amount: 1 },
-        cost: 512000,
-        speed: 12,
-    },
-    "utilitycraft:stabilized_obsidian_conversion": {
-        input: { id: "utilitycraft:crying_obsidian_dust", amount: 4 },
-        catalysts: [
-            { id: "minecraft:glowstone_dust", amount: 2 },
-            { id: "utilitycraft:energized_iron_dust", amount: 1 },
-        ],
-        fluid: { type: "liquified_aetherium", amount: 250 },
-        output: { id: "utilitycraft:stabilized_obsidian_dust", amount: 2 },
-        byproduct: { id: "minecraft:obsidian", amount: 1, chance: 0.001 },
-        cost: 5400,
-        speed: 1,
-    },
     "utilitycraft:hyper_processing_upgrade": {
         input: { id: "utilitycraft:speed_upgrade", amount: 1 },
         catalysts: [
             { id: "utilitycraft:energized_iron_dust", amount: 2 },
-            { id: "utilitycraft:aetherium_shard", amount: 1 },
+            { id: "utilitycraft:aetherium_dust", amount: 1 },
             { id: "utilitycraft:titanium_plate", amount: 1 },
         ],
         output: { id: "utilitycraft:hyper_processing_upgrade", amount: 1 },
         cost: 12800,
         speed: 0.25,
     },
-    "utilitycraft:refining_table": {
-        input: { id: "utilitycraft:machine_case", amount: 1 },
-        catalysts: [
-            { id: "utilitycraft:titanium_plate", amount: 4 },
-            { id: "utilitycraft:advanced_chip", amount: 1 },
-            { id: "utilitycraft:aetherium", amount: 2 },
-            { id: "minecraft:anvil", amount: 1 },
-        ],
-        output: { id: "utilitycraft:refining_table", amount: 1 },
-        cost: 6400,
-        speed: 1,
-    },
-    "utilitycraft:compressed_blackstone_4": {
-        input: { id: "utilitycraft:quadruple_compressed_cobblestone", amount: 1 },
-        catalysts: [{ id: "utilitycraft:compressed_coal_block_4", amount: 1 }],
-        output: { id: "utilitycraft:compressed_blackstone_4", amount: 1 },
-        cost: 601600,
-        speed: 0.5,
-    },
     "utilitycraft:refined_aetherium_shard": {
         input: { id: "utilitycraft:aetherium_shard", amount: 1 },
         catalysts: [{ id: "minecraft:amethyst_shard", amount: 1 }],
         fluid: { type: "dark_matter", amount: 800 },
         output: { id: "utilitycraft:refined_aetherium_shard", amount: 1 },
-        cost: 6400,
         speed: 1,
     },
     "at:easter_egg": {
@@ -109,7 +69,6 @@ export const catalystWeaverRecipeDefinitions = {
         catalysts: [{ id: "minecraft:iron_ingot", amount: 1 }],
         fluid: { type: "lava", amount: 100 },
         output: { id: "minecraft:diamond", amount: 1 },
-        cost: 3200,
         speed: 1,
     },
     "utilitycraft:emerald_recovery": {
@@ -143,7 +102,7 @@ export const catalystWeaverRecipeDefinitions = {
         output: { id: "utilitycraft:void_essence", amount: 1 },
         cost: 32000,
         speed: 0.5,
-    },
+    }
 };
 
 for (const [id, definition] of Object.entries(catalystWeaverRecipeDefinitions)) {

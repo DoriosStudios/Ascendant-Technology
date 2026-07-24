@@ -190,6 +190,8 @@ entity.utilitycraft:tabs_test_machine.name=§fMachine de Test d'Onglets
 entity.utilitycraft:overclock_tower.name=§fTour d'Overclocking
 entity.utilitycraft:overclock_relay.name=§fRelais d'Overclocking
 entity.utilitycraft:overclock_injector.name=§fInjecteur d'Overclocking
+entity.utilitycraft:arcane_enchanter.name=Enchanteur arcanique
+tile.utilitycraft:arcane_enchanter.name=Enchanteur arcanique\n§o§9@UC: Ascendant Technology
 
 ## Textes UI
 at:itemGroup.name.machines=Machines §u(Ascendant Technology)

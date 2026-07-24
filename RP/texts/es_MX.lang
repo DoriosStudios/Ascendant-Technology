@@ -312,6 +312,8 @@ entity.utilitycraft:overclock_injector.name=§fInyector de Overclock
 entity.utilitycraft:ascane_engine.name=§fEstación de Encantamiento
 entity.utilitycraft:enchantment_station.name=§fEstación de Encantamiento
 entity.utilitycraft:vaporworks_processor.name=Procesador de Vapor
+entity.utilitycraft:arcane_enchanter.name=Encantador Arcano
+tile.utilitycraft:arcane_enchanter.name=Encantador Arcano\n§o§9@UC: Ascendant Technology
 
 ## UI Texts
 at:itemGroup.name.machines=Máquinas (Ascendant Technology)

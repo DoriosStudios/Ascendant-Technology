@@ -190,6 +190,8 @@ entity.utilitycraft:tabs_test_machine.name=§f标签测试机
 entity.utilitycraft:overclock_tower.name=§f超频塔
 entity.utilitycraft:overclock_relay.name=§f超频中继器
 entity.utilitycraft:overclock_injector.name=§f超频注入器
+entity.utilitycraft:arcane_enchanter.name=Arcane Enchanter
+tile.utilitycraft:arcane_enchanter.name=Arcane Enchanter\n§o§9@UC: Ascendant Technology
 
 ## UI文本
 at:itemGroup.name.machines=机器 §u(Ascendant Technology)

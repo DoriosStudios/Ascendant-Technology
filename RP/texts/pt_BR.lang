@@ -284,6 +284,8 @@ entity.utilitycraft:ascane_engine.name=§5Estação de Encantamento
 entity.utilitycraft:enchantment_station.name=§5Estação de Encantamento
 entity.utilitycraft:refining_table.name=§fMesa de Refino
 entity.utilitycraft:vaporworks_processor.name=§vProcessador de Vapor
+entity.utilitycraft:arcane_enchanter.name=Encantador Arcano
+tile.utilitycraft:arcane_enchanter.name=Encantador Arcano\n§o§9@UC: Ascendant Technology
 
 ## UI
 at:itemGroup.name.machines=Máquinas §u(Ascendant Technology)

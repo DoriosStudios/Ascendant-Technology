@@ -332,6 +332,8 @@ entity.utilitycraft:enchantment_station.name=§fEnchantment Station
 entity.utilitycraft:refining_table.name=§fRefining Table
 ui.utilitycraft:disenchantment_station.name=§fDisenchantment Section
 entity.utilitycraft:vaporworks_processor.name=Vaporworks Processor
+entity.utilitycraft:arcane_enchanter.name=Arcane Enchanter
+tile.utilitycraft:arcane_enchanter.name=Arcane Enchanter\n§o§9@UC: Ascendant Technology
 
 ## UI Texts
 at:itemGroup.name.machines=Machines \n§u(Ascendant Technology)

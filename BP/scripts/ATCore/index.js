@@ -2,6 +2,7 @@
 // Keep concrete blocks and machines in ../features.
 
 export * as machinery from "./machinery/index.js";
+export * as enchanting from "./enchanting/index.js";
 export * as modifiers from "./modifiers/index.js";
 export * as networks from "./networks/index.js";
 export * as overclock from "./overclock/index.js";

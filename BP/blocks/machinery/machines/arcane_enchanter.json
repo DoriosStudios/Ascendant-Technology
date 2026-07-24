@@ -19,34 +19,26 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:arcane_enchanter": {
-//                 "entity": {
-//                     "type": "machine",
-//                     "input_type": "complex",
-//                     "output_type": "complex",
-//                     "inventory_size": 12,
-//                     "input_range": [3, 5],
-//                     "output_range": [6, 6],
-//                     "fluid": true
-//                 },
-//                 "machine": {
-//                     "energy_cap": 192000000,
-//                     "energy_cost": 12000,
-//                     "rate_speed_base": 32000,
-//                     "dynamic_rate": true,
-//                     "fluid_cap": 128000,
-//                     "upgrades": [8, 9, 10],
-//                     "hidden_slots": [7]
-//                 }
-//             },
-// LEGACY_DISABLED             "utilitycraft:special_container": {
-//                 "Input Item": 3,
-//                 "Lapis": 4,
-//                 "Module": 5,
-//                 "Output": 6,
-//                 "XP Tank": 11,
-//                 "Upgrade Slots": [8, 9, 10]
-//             },
+            "utilitycraft:fluid_container": {},
+            "utilitycraft:arcane_enchanter": {
+                "entity": {
+                    "type": "fluid_machine",
+                    "inventory_size": 12,
+                    "fixed_fluid_types": true
+                },
+                "machine": {
+                    "energy_cap": 192000000,
+                    "energy_cost": 12000,
+                    "rate_speed_base": 32000,
+                    "fluid_cap": 128000,
+                    "fluid_types": 1,
+                    "upgrades": [8, 9, 10]
+                }
+            },
+            "utilitycraft:machine_upgrades": [
+                { "type": "speed", "slot": 8 },
+                { "type": "energy", "slot": 9 }
+            ],
             "utilitycraft:machine_recipes": {
                 "type": "arcane_enchanter"
             },
@@ -57,17 +49,15 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": {
-//                 "interval_range": [4, 4]
-//             },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },
             "minecraft:destructible_by_explosion": false,
             "tag:dorios:machine": {},
             "tag:dorios:energy": {},
-            "tag:dorios:fluid": {},
-            "tag:dorios:item": {},
             "tag:minecraft:is_pickaxe_item_destructible": {}
         },
         "permutations": [

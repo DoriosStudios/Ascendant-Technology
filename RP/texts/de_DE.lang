@@ -190,6 +190,8 @@ entity.utilitycraft:tabs_test_machine.name=§fTabs-Testmaschine
 entity.utilitycraft:overclock_tower.name=§fÜbertaktungsturm
 entity.utilitycraft:overclock_relay.name=§fÜbertaktungsrelais
 entity.utilitycraft:overclock_injector.name=§fÜbertaktungsinjektor
+entity.utilitycraft:arcane_enchanter.name=Arkaner Verzauberer
+tile.utilitycraft:arcane_enchanter.name=Arkaner Verzauberer\n§o§9@UC: Ascendant Technology
 
 ## UI Texts
 at:itemGroup.name.machines=Maschinen §u(Ascendant Technology)

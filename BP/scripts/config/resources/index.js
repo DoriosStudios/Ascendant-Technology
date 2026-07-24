@@ -1,1 +1,1 @@
-import "./vaporworksContainers.js";
+import "./capsules.js";

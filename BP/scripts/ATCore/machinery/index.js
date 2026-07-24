@@ -1,1 +1,1 @@
-// Future AT-specific Machine/BasicMachine extensions.
+export * from "./machineUpgrades.js";

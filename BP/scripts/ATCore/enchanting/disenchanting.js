@@ -76,25 +76,44 @@ export function getAbsorbedXp(enchantments) {
  * @returns {{ source: import("@minecraft/server").ItemStack, book: import("@minecraft/server").ItemStack } | undefined}
  */
 export function extractFirstEnchantment(source, enchantments) {
-    const extracted = enchantments[0];
-    if (!extracted?.type) return undefined;
+    const result = extractDisenchantments(source, enchantments, 1);
+    if (!result || result.books.length === 0) return undefined;
+    return { source: result.source, book: result.books[0] };
+}
 
-    const updatedSource = rebuildSource(source, enchantments.slice(1));
+/**
+ * Removes a bounded prefix of enchantments and creates one enchanted book for
+ * each. All output objects are built before the caller mutates inventory.
+ *
+ * @param {import("@minecraft/server").ItemStack} source
+ * @param {DisenchantmentEntry[]} enchantments
+ * @param {number} count
+ */
+export function extractDisenchantments(source, enchantments, count) {
+    const amount = Math.min(enchantments.length, Math.max(0, Math.floor(Number(count) || 0)));
+    if (amount <= 0) return undefined;
+
+    const updatedSource = rebuildSource(source, enchantments.slice(amount));
     if (!updatedSource) return undefined;
 
-    const book = new ItemStack("minecraft:enchanted_book", 1);
-    const enchantable = getEnchantableComponent(book);
-    if (!enchantable) return undefined;
+    const books = new Array(amount);
+    for (let index = 0; index < amount; index++) {
+        const extracted = enchantments[index];
+        if (!extracted?.type) return undefined;
 
-    try {
-        enchantable.addEnchantment({
-            type: extracted.type,
-            level: extracted.level,
-        });
-        return { source: updatedSource, book };
-    } catch {
-        return undefined;
+        const book = new ItemStack("minecraft:enchanted_book", 1);
+        const enchantable = getEnchantableComponent(book);
+        if (!enchantable) return undefined;
+
+        try {
+            enchantable.addEnchantment({ type: extracted.type, level: extracted.level });
+        } catch {
+            return undefined;
+        }
+        books[index] = book;
     }
+
+    return { source: updatedSource, books };
 }
 
 /**

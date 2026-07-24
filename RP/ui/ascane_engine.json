@@ -231,8 +231,9 @@
 				}
 			},
 			{
-				"energy@ascendant_common.energy_display": {
-					"$energy_slot_index": 0,
+				"energy@uc.energy_bar": {
+					"$collection_index": 0,
+					"$has_bg": false,
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [ -66, -42 ]
@@ -245,7 +246,7 @@
 				}
 			},
 			{
-				"status_label@machineryCommon.item_label": {
+				"status_label@uc.text_label": {
 					"collection_index": 1,
 					"anchor_from": "center",
 					"anchor_to": "center",
@@ -272,7 +273,7 @@
 					],
 					"controls": [
 						{
-							"progress_display@common_machines.machinery": {
+							"progress_display@uc.progress_display": {
 								"anchor_from": "center",
 								"anchor_to": "center",
 								"offset": [ 0, -38 ],
@@ -280,7 +281,7 @@
 								"size": [ 60, 60 ],
 								"$cell_image_size": [ 60, 60 ],
 								"$item_renderer_size": [ 60, 60 ],
-								"$item_renderizer_panel_size": [ 64, 64 ]
+								"$item_renderer_panel_size": [ 64, 64 ]
 							}
 						},
 						{
@@ -392,42 +393,6 @@
 				}
 			},
 			{
-				"upgrades_s1@ascendant_common.slot_cyan": {
-					"$slot_index": 19,
-					"$slot_color": "cyan",
-					"$outline_variant": "cyan",
-					"$outline_size": [ 20, 20 ],
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"offset": [ 98, 36 ],
-					"size": [ 18, 18 ]
-				}
-			},
-			{
-				"upgrades_s2@ascendant_common.slot_cyan": {
-					"$slot_index": 20,
-					"$slot_color": "cyan",
-					"$outline_variant": "cyan",
-					"$outline_size": [ 20, 20 ],
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"offset": [ 98, 54 ],
-					"size": [ 18, 18 ]
-				}
-			},
-			{
-				"upgrades_s3@ascendant_common.slot_cyan": {
-					"$slot_index": 21,
-					"$slot_color": "cyan",
-					"$outline_variant": "cyan",
-					"$outline_size": [ 20, 20 ],
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"offset": [ 98, 72 ],
-					"size": [ 18, 18 ]
-				}
-			},
-			{
 				"module_and_upg_bg@ascendant_common.panel": {
 					"$panel_color": "black",
 					"$panel_size": [ 28, 166 ],
@@ -437,6 +402,56 @@
 					"$has_container_label": false,
 					"$has_close_button": true,
 					"$close_button": "light"
+				}
+			},
+			{
+				"upgrades_tab@uc.upgrades_tab": {
+					"offset": [ 13, 0 ],
+					"$upgrade_index_1": 19,
+					"$upgrade_index_2": 20,
+					"$upgrade_index_3": 21,
+					"$upgrade_index_4": 32,
+					"$has_first_upgrade": true,
+					"$has_second_upgrade": true,
+					"$has_third_upgrade": false,
+					"$has_fourth_upgrade": false,
+					"$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+					"$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+				}
+			},
+			{
+				"io_tab@uc.io_tab": {
+					"offset": [ 13, 0 ],
+					"$io_items_modes_description": "ui.utilitycraft:io.enchantment_station.items",
+					"$io_fluids_modes_description": "ui.utilitycraft:io.enchantment_station.liquids",
+					"$has_item_io": true,
+					"$has_fluid_io": true,
+					"$io_items_default": true,
+					"$io_fluids_default": false,
+					"$io_top_texture": "textures/blocks/machines/enchantment_station",
+					"$io_left_texture": "textures/blocks/machines/enchantment_station",
+					"$io_front_texture": "textures/blocks/machines/enchantment_station",
+					"$io_right_texture": "textures/blocks/machines/enchantment_station",
+					"$io_bottom_texture": "textures/blocks/machines/enchantment_station",
+					"$io_back_texture": "textures/blocks/machines/enchantment_station",
+					"$io_item_top_index": 33,
+					"$io_item_left_index": 34,
+					"$io_item_front_index": 35,
+					"$io_item_right_index": 36,
+					"$io_item_bottom_index": 37,
+					"$io_item_back_index": 38,
+					"$io_fluid_top_index": 39,
+					"$io_fluid_left_index": 40,
+					"$io_fluid_front_index": 41,
+					"$io_fluid_right_index": 42,
+					"$io_fluid_bottom_index": 43,
+					"$io_fluid_back_index": 44
+				}
+			},
+			{
+				"info_tab@uc.info_tab": {
+					"offset": [ 13, 0 ],
+					"$info_description": "ui.utilitycraft:info.enchantment_station"
 				}
 			}
 		]
@@ -457,7 +472,7 @@
 				}
 			},
 			{
-				"status_label@machineryCommon.item_label": {
+				"status_label@uc.text_label": {
 					"collection_index": 31,
 					"anchor_from": "center",
 					"anchor_to": "center",
@@ -511,7 +526,7 @@
 				}
 			},
 			{
-				"disenchant_progress_display@common_machines.machinery": {
+				"disenchant_progress_display@uc.progress_display": {
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [ -24, 2 ],
@@ -519,7 +534,7 @@
 					"size": [ 18, 18 ],
 					"$cell_image_size": [ 18, 18 ],
 					"$item_renderer_size": [ 18, 18 ],
-					"$item_renderizer_panel_size": [ 20, 20 ]
+					"$item_renderer_panel_size": [ 20, 20 ]
 				}
 			},
 			{

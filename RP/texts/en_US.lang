@@ -1,4 +1,7 @@
 ## Generators
+ui.utilitycraft:info.enchantment_station=Runs up to nine enchantment operations in parallel. Put target items in the main grid and Enchantability Modules in the three orange slots; completed items remain in their grid slots. The alternate mode can extract enchantments into Books or absorb all enchantments as XP fluid. Refined Aetherium is used as the extraction catalyst.\n\nItem I/O:\n§9Main Grid§r inserts targets and can extract their processed versions.\n§bModule Input§r fills the orange module slots.\n§1Disenchant Source§r inserts or extracts the alternate-mode source.\n§bCatalyst Input§r supplies Refined Aetherium.\n§9Book Input§r supplies normal Books.\n§3Input All§r exposes every item input.\n§cProcessed Grid§r, §cProcessed Source§r, and §4Enchanted Books§r expose their respective results.\n§cOutput All§r exposes every item result.\n\nLiquid I/O:\n§9XP Input§r supplies enchanting operations.\n§cXP Output§r drains XP recovered by absorption.\n§9Input §r+ §cOutput§r allows both on one face.
+ui.utilitycraft:io.enchantment_station.items=I/O Modes:\n§r- §9Main Grid\n§r- §bModule Input\n§r- §1Disenchant Source\n§r- §bCatalyst Input\n§r- §9Book Input\n§r- §3Input All\n§r- §cProcessed Grid\n§r- §cProcessed Source\n§r- §4Enchanted Books\n§r- §cOutput All
+ui.utilitycraft:io.enchantment_station.liquids=I/O Modes:\n§r- §9XP Input\n§r- §cXP Output\n§r- §9Input §r+ §cOutput
 ui.utilitycraft:info.arcane_enchanter=Enchants one item at a time using Lapis Lazuli, XP fluid, and an Enchantability Module. Higher-tier modules can add more compatible enchantments and raise their levels. The completed item moves to the output slot.\n\nItem I/O:\n§9Item Input§r accepts the item to enchant.\n§bLapis Input§r accepts Lapis Lazuli.\n§1Module Input§r accepts the Enchantability Module.\n§3Input All§r exposes all three inputs.\n§cOutput§r exposes the enchanted item.\n\nLiquid I/O:\n§9XP Input§r fills the internal XP tank.
 ui.utilitycraft:io.arcane_enchanter.items=I/O Modes:\n§r- §9Item Input\n§r- §bLapis Input\n§r- §1Module Input\n§r- §3Input All\n§r- §cOutput
 ui.utilitycraft:io.arcane_enchanter.liquids=I/O Modes:\n§r- §9XP Input
@@ -72,7 +75,7 @@ tile.utilitycraft:magmatic_reactor_chamber.name=Magmatic Reactor Chamber\n§7Acc
 tile.utilitycraft:catalyst_weaver.name=Catalyst Weaver\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:cryo_chamber.name=Cryo Chamber\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:duplicator.name=Duplicator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:enchantment_station.name=Enchantment Station\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:refining_table.name=Refining Table\n§7- Refines StatsCore gear using stored XP\n- Accepts upgrades: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:energizer.name=Energizer\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:liquifier.name=Liquifier\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology

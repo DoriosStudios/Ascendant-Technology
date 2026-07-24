@@ -197,6 +197,9 @@
 		"offset": [ 0, 0 ],
 		"collection_name": "container_items",
 		"$item_collection_name": "container_items",
+		"$slot_size": [ 18, 18 ],
+		"$slot_panel_size": [ 18, 18 ],
+		"$slot_panel_offset": [ 0, 0 ],
 		"controls": [
 			{
 				"label": {
@@ -464,6 +467,9 @@
 		"size": [ 76, 84 ],
 		"collection_name": "container_items",
 		"$item_collection_name": "container_items",
+		"$slot_size": [ 18, 18 ],
+		"$slot_panel_size": [ 18, 18 ],
+		"$slot_panel_offset": [ 0, 0 ],
 		"controls": [
 			{
 				"info_panel@ascendant_common.info_panel": {

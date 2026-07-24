@@ -9,6 +9,11 @@ const SYNC_VERSION = 1;
 const LORE_PATTERN = /Reinforcement\s*:\s*(\d+)(?:\s*\/\s*(\d+))?/i;
 const LORE_PREFIX = "\u00A7r\u00A79Reinforcement: ";
 const REINFORCEMENT_RATIOS = [0, 0.25, 0.5, 1];
+const REINFORCEMENT_MODULE_LEVELS = new Map([
+    ["utilitycraft:reinforcement_module", 1],
+    ["utilitycraft:reinforcement_module_2", 2],
+    ["utilitycraft:reinforcement_module_3", 3],
+]);
 const ARMOR_SLOTS = ["Head", "Chest", "Legs", "Feet"];
 const pendingRepairs = new Set();
 
@@ -78,6 +83,52 @@ export function setReinforcementPoints(stack, points, maximum) {
 export function getReinforcementTarget(durability, moduleLevel) {
     const tier = Math.max(0, Math.min(3, Math.floor(Number(moduleLevel) || 0)));
     return Math.max(0, Math.floor(durability.maxDurability * REINFORCEMENT_RATIOS[tier]));
+}
+
+/** @param {import("@minecraft/server").ItemStack | undefined} module */
+export function getReinforcementModuleLevel(module) {
+    return REINFORCEMENT_MODULE_LEVELS.get(module?.typeId) ?? 0;
+}
+
+/**
+ * Clones one damageable item and restores a fraction of its maximum
+ * durability. The source stack is never mutated.
+ *
+ * @param {import("@minecraft/server").ItemStack} source
+ * @param {number} [fraction=0.25]
+ */
+export function applyDurabilityRepair(source, fraction = 0.25) {
+    const stack = source?.clone();
+    const durability = stack ? getDurability(stack) : undefined;
+    if (!stack || !durability) return undefined;
+
+    const before = Math.max(0, Math.floor(Number(durability.damage) || 0));
+    if (before <= 0) return undefined;
+
+    const maximum = Math.max(1, Math.floor(Number(durability.maxDurability) || 1));
+    const restored = Math.max(1, Math.floor(maximum * Math.max(0, Number(fraction) || 0)));
+    durability.damage = Math.max(0, before - restored);
+    return { stack, before, after: durability.damage, restored: before - durability.damage };
+}
+
+/**
+ * Clones one damageable item and fills its reinforcement reserve to the
+ * selected module target. The module is a reusable catalyst.
+ *
+ * @param {import("@minecraft/server").ItemStack} source
+ * @param {number} moduleLevel
+ */
+export function applyReinforcement(source, moduleLevel) {
+    const stack = source?.clone();
+    const durability = stack ? getDurability(stack) : undefined;
+    if (!stack || !durability) return undefined;
+
+    const target = getReinforcementTarget(durability, moduleLevel);
+    const before = getReinforcementPoints(stack);
+    if (target <= 0 || before >= target) return undefined;
+
+    setReinforcementPoints(stack, target, target);
+    return { stack, before, after: target, target };
 }
 
 /**

@@ -29,6 +29,7 @@ const CATALYST_SLOT = 16;
 const BOOK_SLOT = 17;
 const DISENCHANT_PROGRESS_SLOT = 18;
 const DISENCHANT_STATUS_SLOT = 31;
+const INVENTORY_SIZE = 45;
 const BASE_COST = 64_000;
 const XP_PER_CHANGE = 1_000;
 const REPAIR_AMOUNT = 2_000;
@@ -103,6 +104,10 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+
+        // Existing stations may still own the former 32-slot component. Resize
+        // them before the IO interface attempts to write its face buttons.
+        if (!ensureInventorySize(machine)) return;
 
         machine.processIO();
 
@@ -601,6 +606,36 @@ function createDisenchantSignatureFast(enchantments) {
         result += `${entry.id}@${entry.level}|`;
     }
     return result;
+}
+
+/**
+ * Expands stations placed before IO buttons were added and restores every
+ * pre-existing stack after the inventory component has been replaced.
+ *
+ * @param {Machine} machine
+ */
+function ensureInventorySize(machine) {
+    if (machine.container.size >= INVENTORY_SIZE) return true;
+
+    const contents = new Array(machine.container.size);
+    for (let slot = 0; slot < machine.container.size; slot++) {
+        contents[slot] = machine.container.getItem(slot);
+    }
+
+    const entity = machine.entity;
+    entity.triggerEvent(`utilitycraft:inventory_${INVENTORY_SIZE}`);
+    system.run(() => {
+        if (!entity.isValid) return;
+        const inventory = entity.getComponent("minecraft:inventory") ?? entity.getComponent("inventory");
+        const resized = inventory?.container;
+        if (!resized || resized.size < INVENTORY_SIZE) return;
+
+        for (let slot = 0; slot < contents.length; slot++) {
+            const item = contents[slot];
+            if (item) resized.setItem(slot, item);
+        }
+    });
+    return false;
 }
 
 function getDurability(stack) {

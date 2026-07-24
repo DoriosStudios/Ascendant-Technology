@@ -19,33 +19,22 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:reinforcement_anvil": {
-//                 "entity": {
-//                     "type": "machine",
-//                     "input_type": "complex",
-//                     "output_type": "complex",
-//                     "inventory_size": 10,
-//                     "input_range": [4, 4],
-//                     "output_range": [6, 6]
-//                 },
-//                 "machine": {
-//                     "energy_cap": 280000000,
-//                     "energy_cost": 8000,
-//                     "rate_speed_base": 20000,
-//                     "dynamic_rate": true,
-//                     "upgrades": [7, 8, 9]
-//                 }
-//             },
-// LEGACY_DISABLED             "utilitycraft:special_container": {
-//                 "Mode Switch": 3,
-//                 "Input": 4,
-//                 "Module": 5,
-//                 "Output": 6,
-//                 "Upgrade Slots": [7, 8, 9]
-//             },
-            "utilitycraft:machine_recipes": {
-                "type": "reinforcement_anvil"
+            "utilitycraft:reinforcement_anvil": {
+                "entity": {
+                    "type": "machine",
+                    "inventory_size": 17
+                },
+                "machine": {
+                    "energy_cap": 280000000,
+                    "energy_cost": 8000,
+                    "rate_speed_base": 20000,
+                    "upgrades": [7, 8]
+                }
             },
+            "utilitycraft:machine_upgrades": [
+                { "type": "speed", "slot": 7 },
+                { "type": "energy", "slot": 8 }
+            ],
             "minecraft:geometry": "geometry.utilitycraft_enchantment_station",
             "minecraft:material_instances": {
                 "*": {
@@ -53,9 +42,9 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": {
-//                 "interval_range": [4, 4]
-//             },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

@@ -29,24 +29,12 @@
                 }
             },
             {
-                "energy_bar@machineryCommon.vertical_single": {
-                    "$is_energy": true,
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
                     "$has_bg": false,
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [100, 16]
-                }
-            },
-            {
-                "upgrades@machineryCommon.vertical_interactive": {
-                    "$has_bg": false,
-                    "$collection_index_first": 7,
-                    "$collection_index_second": 8,
-                    "$collection_index_third": 9,
-                    "$has_third": true,
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [100, 76]
+                    "offset": [100, 64]
                 }
             },
             {
@@ -60,7 +48,7 @@
                 }
             },
             {
-                "item_label@machineryCommon.item_label": {
+                "item_label@uc.text_label": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -70,7 +58,7 @@
                 }
             },
             {
-                "progress@common_machines.machinery": {
+                "progress@uc.progress_display": {
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "offset": [20, 0],
@@ -111,6 +99,45 @@
                     "anchor_to": "center",
                     "offset": [58, 0],
                     "collection_index": 6
+                }
+            },
+            {
+                "upgrades_tab@uc.upgrades_tab": {
+                    "$upgrade_index_1": 7,
+                    "$upgrade_index_2": 8,
+                    "$upgrade_index_3": 9,
+                    "$upgrade_index_4": 10,
+                    "$has_first_upgrade": true,
+                    "$has_second_upgrade": true,
+                    "$has_third_upgrade": false,
+                    "$has_fourth_upgrade": false,
+                    "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                }
+            },
+            {
+                "io_tab@uc.io_tab": {
+                    "$io_items_modes_description": "ui.utilitycraft:io.reinforcement_anvil.items",
+                    "$has_item_io": true,
+                    "$has_fluid_io": false,
+                    "$io_items_default": true,
+                    "$io_top_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_left_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_front_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_right_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_bottom_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_back_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_item_top_index": 11,
+                    "$io_item_left_index": 12,
+                    "$io_item_front_index": 13,
+                    "$io_item_right_index": 14,
+                    "$io_item_bottom_index": 15,
+                    "$io_item_back_index": 16
+                }
+            },
+            {
+                "info_tab@uc.info_tab": {
+                    "$info_description": "ui.utilitycraft:info.reinforcement_anvil"
                 }
             }
         ]

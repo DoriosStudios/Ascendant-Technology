@@ -26,7 +26,10 @@ export {
 } from "./stationEnchanting.js";
 
 export {
+    applyDurabilityRepair,
+    applyReinforcement,
     consumeReinforcement,
+    getReinforcementModuleLevel,
     getReinforcementMaximum,
     getReinforcementPoints,
     getReinforcementTarget,

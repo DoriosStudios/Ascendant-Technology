@@ -209,7 +209,7 @@ function processMagnet(block) {
   }
 
   const useFilter = hasFilterUpgrade(block);
-  const target = { x: center.x, y: block.location.y + 1, z: center.z };
+  const target = { x: center.x, y: block.location.y + 1.25, z: center.z };
   for (const entity of entities) {
     if (!entity?.isValid || entity.hasTag?.(IMMUNE_TAG)) continue;
     if (useFilter && !shouldPullEntity(entity, state)) continue;

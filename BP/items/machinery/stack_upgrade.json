@@ -11,12 +11,13 @@
 		"components": {
 			"utilitycraft:machine_upgrade": {},
 			"minecraft:icon": "utilitycraft_stack_upgrade",
+            "minecraft:max_stack_size": 8,
 			"minecraft:tags": {
 				"tags": [
-					"utilitycraft:is_upgrade"
+					"utilitycraft:is_upgrade",
+                    "utilitycraft:stack_upgrade"
 				]
-			},
-			"minecraft:max_stack_size": 8
+			}
 		}
 	}
 }

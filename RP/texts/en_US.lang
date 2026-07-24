@@ -230,6 +230,7 @@ item.utilitycraft:pure_enderling_tear=Pure Enderling Tear\n§7- Rare drop from E
 ## Modules
 item.utilitycraft:size_upgrade=§gSize Upgrade§7\n- Increases Laser Barrier area\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§dHyper Processing Upgrade§7\n- Increases machine operation speed\n- No extra energy cost\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:hyper_processing_upgrade.name=§dHyper Processing Upgrade§r
 item.utilitycraft:stack_upgrade=§6Stack Upgrade§7\n- Increases the amount of items\n  processed at once.\n§o§9@UC: Ascendant Technology
 item.utilitycraft:curse_protection_module=§dCurse Protection Module§7\n- Reduces curse chance during enchanting\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dEnchantability Module §r(Tier I)§7\n- Unlocks enchanting\n- Max level: 1\n§o§9@UC: Ascendant Technology

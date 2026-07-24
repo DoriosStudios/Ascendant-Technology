@@ -105,6 +105,7 @@ item.utilitycraft:liquid_void=Капсула Жидкой Пустоты\n§o§9
 ## Модули
 item.utilitycraft:size_upgrade=§gУлучшение Размера§7\n- Увеличивает область Лазерного Барьера\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§dУлучшение Гиперобработки§7\n- Увеличивает скорость работы машин\n- Без дополнительных энергозатрат\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:hyper_processing_upgrade.name=§dУлучшение Гиперобработки§r
 item.utilitycraft:curse_protection_module=§dМодуль Защиты от Проклятий§7\n- Снижает шанс проклятия при зачаровании\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dМодуль Зачаровываемости §r(Tier I)§7\n- Открывает зачарование\n- Макс. уровень: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dМодуль Зачаровываемости §r(Tier II)§7\n- Макс. уровень зачарования: 2\n§o§9@UC: Ascendant Technology

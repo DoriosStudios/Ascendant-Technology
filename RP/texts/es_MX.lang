@@ -214,6 +214,7 @@ item.utilitycraft:pure_enderling_tear=Lágrima Pura de Enderling\n§7- Caída ra
 ## Módulos
 item.utilitycraft:size_upgrade=Mejora de §gTamaño§7\n- Aumenta el área de la Barrera Láser\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=Mejora de §dProcesamiento Híper§7\n- Aumenta la velocidad de operación de las máquinas\n- No aumenta el consumo de energía\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:hyper_processing_upgrade.name=Mejora de §dProcesamiento Híper§r
 item.utilitycraft:stack_upgrade=Mejora de §6Pila§7\n- Aumenta la cantidad de ítems\n  procesados a la vez.\n§o§9@UC: Ascendant Technology
 item.utilitycraft:curse_protection_module=§dMódulo de Protección contra Maldiciones§7\n- Reduce probabilidad de maldición\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dMódulo de Encantabilidad §r(Tier I)§7\n- Desbloquea encantamiento\n- Nivel máx: 1\n§o§9@UC: Ascendant Technology

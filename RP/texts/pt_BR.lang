@@ -155,6 +155,7 @@ item.utilitycraft:lucky_aiot=§aAiOT da Sorte\n§o§9@UC: Ascendant Technology
 ### Módulos de Melhoria
 item.utilitycraft:size_upgrade=Módulo de Melhoria de §gTamanho§7\n- Aumenta a área da Barreira de Laser\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=Módulo de Melhoria de §dHyper Processamento§7\n- Aumenta a velocidade das máquinas\n- Não aumenta o consumo de energia\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:hyper_processing_upgrade.name=Módulo de Melhoria de §dHyper Processamento§r
 item.utilitycraft:stack_upgrade=Módulo de Melhoria de §6Pacotes§7\n- Aumenta a quantidade de itens pro-\n  -cessados por vez.\n§o§9@UC: Ascendant Technology
 item.utilitycraft:curse_protection_module=§dMódulo de Proteção contra Maldições§7\n- Reduz chance de maldição durante encantamento\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dMódulo de Encantabilidade §r(Tier I)§7\n- Desbloqueia encantamento\n- Nível máx: 1\n§o§9@UC: Ascendant Technology

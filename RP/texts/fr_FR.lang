@@ -105,6 +105,7 @@ item.utilitycraft:liquid_void=Capsule de Vide Liquide\n§o§9@UC: Ascendant Tech
 ## Modules
 item.utilitycraft:size_upgrade=§gAmélioration de Taille§7\n- Augmente la zone de la Barrière Laser\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§dAmélioration de Traitement Hyper§7\n- Augmente la vitesse d'opération des machines\n- Aucun coût énergétique supplémentaire\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:hyper_processing_upgrade.name=§dAmélioration de Traitement Hyper§r
 item.utilitycraft:curse_protection_module=§dModule de Protection contre les Malédictions§7\n- Réduit le risque de malédiction pendant l'enchantement\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dModule d'Enchantabilité §r(Palier I)§7\n- Débloque l'enchantement\n- Niveau max: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dModule d'Enchantabilité §r(Palier II)§7\n- Niveau d'enchantement max: 2\n§o§9@UC: Ascendant Technology

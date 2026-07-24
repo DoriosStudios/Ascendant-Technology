@@ -105,6 +105,7 @@ item.utilitycraft:liquid_void=Flüssige-Leere-Kapsel\n§o§9UC: Ascendant Techno
 ## Modules
 item.utilitycraft:size_upgrade=§gGrößen-Upgrade§7\n- Vergrößert Laserbarrierebereich\n§o§9UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§dHyper-Verarbeitungs-Upgrade§7\n- Erhöht Maschinengeschwindigkeit\n- Keine zusätzlichen Energiekosten\n§o§9UC: Ascendant Technology
+upgrade.utilitycraft:hyper_processing_upgrade.name=§dHyper-Verarbeitungs-Upgrade§r
 item.utilitycraft:curse_protection_module=§dFluchschutz-Modul§7\n- Verringert die Fluchchance beim Verzaubern\n§o§9UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dVerzauberbarkeits-Modul §r(Stufe I)§7\n- Schaltet Verzauberung frei\n- Max. Stufe: 1\n§o§9UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dVerzauberbarkeits-Modul §r(Stufe II)§7\n- Max. Verzauberungsstufe: 2\n§o§9UC: Ascendant Technology

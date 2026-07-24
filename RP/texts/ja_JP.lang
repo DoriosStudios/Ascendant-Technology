@@ -105,6 +105,7 @@ item.utilitycraft:liquid_void=液体虚無カプセル\n§o§9@UC: Ascendant Tec
 ## モジュール
 item.utilitycraft:size_upgrade=§gサイズアップグレード§7\n- レーザーバリアの範囲を拡大\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§dハイパー処理アップグレード§7\n- 機械の動作速度を向上\n- 追加のエネルギーコストなし\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:hyper_processing_upgrade.name=§dハイパー処理アップグレード§r
 item.utilitycraft:curse_protection_module=§d呪い保護モジュール§7\n- エンチャント時の呪い発生率を低下\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dエンチャント適性モジュール §r(Tier I)§7\n- エンチャント機能を解放\n- 最大レベル: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dエンチャント適性モジュール §r(Tier II)§7\n- 最大エンチャントレベル: 2\n§o§9@UC: Ascendant Technology

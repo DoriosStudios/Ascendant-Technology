@@ -105,6 +105,7 @@ item.utilitycraft:liquid_void=液态虚空胶囊\n§o§9@UC: Ascendant Technolog
 ## 模块
 item.utilitycraft:size_upgrade=§g大小升级§7\n- 增加激光屏障区域\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§d超级处理升级§7\n- 提高机器运行速度\n- 无额外能量消耗\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:hyper_processing_upgrade.name=§d超级处理升级§r
 item.utilitycraft:curse_protection_module=§d诅咒保护模块§7\n- 降低附魔时出现诅咒的概率\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§d附魔能力模块 §r(Tier I)§7\n- 解锁附魔功能\n- 最大等级: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§d附魔能力模块 §r(Tier II)§7\n- 最大附魔等级: 2\n§o§9@UC: Ascendant Technology

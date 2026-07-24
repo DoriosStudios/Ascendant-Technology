@@ -452,7 +452,7 @@
 	// #region Display
 
 	/* SUBSECTION: ENERGY AND FLUID DISPLAYS
-	 * Wrappers around machineryCommon bars and indicators.
+	 * Wrappers around UtilityCraft UI Core bars and indicators.
 	 */
 
 	/* ELEMENT: energy_display
@@ -463,84 +463,56 @@
 		"$energy_slot_index|default": 168,
 		"controls": [
 			{
-				/* Energy bar from machineryCommon library. */
-				"energy_bar@machineryCommon.vertical_single": {
+				/* ui_core defaults this control to [-101, -13]; override it so this wrapper remains origin-neutral. */
+				"energy_bar@uc.energy_bar": {
 					"$collection_index": "$energy_slot_index",
-					"$is_energy": true,
-					"$has_bg": false
+					"$has_bg": false,
+					"offset": [0, 0]
 				}
 			}
 		]
 	},
 
 	/* ELEMENT: liquid_display
-	 * Fluid bar display with decorative border.
+	 * Fluid bar display provided by UtilityCraft UI Core.
 	 */
 	"liquid_display": {
 		"type": "panel",
 		"$fluid_slot_index|default": 169,
 		"controls": [
 			{
-				/* Fluid bar from machineryCommon library. */
-				"fluid_bar@machineryCommon.vertical_single": {
-					"$is_fluid": true,
+				"fluid_bar@uc.fluid_bar": {
 					"$has_bg": false,
 					"$collection_index": "$fluid_slot_index",
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"layer": 0
 				}
-			},
-			{
-				/* Decorative border for the fluid display. */
-				"fluid_border": {
-					"type": "image",
-					"texture": "textures/ui/liquid_border",
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"size": [50, 50],
-					"offset": [10, 3],
-					"layer": 13
-				}
 			}
 		]
 	},
 
 	/* ELEMENT: gas_display
-	 * Gas bar display with decorative border.
+	 * Gas storage currently uses the shared fluid bar presentation.
 	 */
 	"gas_display": {
 		"type": "panel",
 		"$gas_slot_index|default": 169,
 		"controls": [
 			{
-				/* Gas bar from machineryCommon library. */
-				"gas_bar@machineryCommon.vertical_single": {
-					"$is_gas": true,
+				"gas_bar@uc.fluid_bar": {
 					"$has_bg": false,
 					"$collection_index": "$gas_slot_index",
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"layer": 0
 				}
-			},
-			{
-				/* Decorative border for the gas display. */
-				"gas_border": {
-					"type": "image",
-					"texture": "textures/ui/gas_border",
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"size": [50, 50],
-					"offset": [10, 3],
-					"layer": 13
-				}
 			}
 		]
 	},
 
 	/* ELEMENT: overclock_slot_display
-	 * Overclock bar display rendered like vertical_single.
+	 * Overclock bar display rendered with the UI Core large item control.
 	 */
 	"overclock_slot_display": {
 		"type": "collection_panel",
@@ -555,7 +527,7 @@
 		"controls": [
 			{
 				/* Item renderer for the overclock slot. */
-				"overclock_item@machineryCommon.container_item_3": {
+				"overclock_item@uc.item_display_hover_large": {
 					"collection_index": "$overclock_slot_index",
 					"anchor_from": "top_middle",
 					"anchor_to": "top_middle",
@@ -1400,7 +1372,7 @@
 				}
 			},
 			{
-				"info@machineryCommon.item_label": {
+				"info@uc.text_label": {
 					"visible": "$has_text",
 					"$text_scale": 0.55,
 					"anchor_from": "center",

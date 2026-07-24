@@ -48,8 +48,7 @@
 		"$item_collection_name": "container_items",
 		"controls": [
 			{
-				"energy_bar@machineryCommon.vertical_single": {
-					"$is_energy": true,
+				"energy_bar@uc.energy_bar": {
 					"$has_bg": false,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
@@ -174,7 +173,7 @@
 				}
 			},
 			{
-				"status_label@machineryCommon.item_label": {
+				"status_label@uc.text_label": {
 					"collection_index": 1,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
@@ -261,7 +260,7 @@
 				}
 			},
 			{
-				"status_label@machineryCommon.item_label": {
+				"status_label@uc.text_label": {
 					"collection_index": 22,
 					"anchor_from": "center",
 					"anchor_to": "center",
@@ -392,7 +391,7 @@
 				}
 			},
 			{
-				"status_label@machineryCommon.item_label": {
+				"status_label@uc.text_label": {
 					"collection_index": 23,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
@@ -452,8 +451,7 @@
 			},
 			// Cryofluid capsule output — slot 15, from Vaporworks fluid_receptor [54, 2]
 			{
-				"cryofluid_output@machineryCommon.vertical_single": {
-					"$is_liquid": true,
+				"cryofluid_output@uc.fluid_bar": {
 					"$has_bg": false,
 					"$collection_index": 15,
 					"anchor_from": "center",

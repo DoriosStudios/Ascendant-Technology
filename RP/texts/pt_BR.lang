@@ -19,7 +19,7 @@ tile.utilitycraft:catalyst_weaver.name=Câmara Catalisadora\n§7Aceita melhorias
 tile.utilitycraft:cryo_chamber.name=Câmara Criogênica\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica itens usando matéria escura\n- Aceita melhorias: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:enchantment_station.name=Estação de Encantamento\n§7- Repara, encanta, reforça equipamentos\n- Aceita melhorias: §a§r, §b§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:refining_table.name=Mesa de Refinaria\n§7- Refina equipamentos StatsCore com XP armazenado\n- Aceita melhorias: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:refining_table.name=Mesa de Refinaria\n§7- Refina equipamentos StatsCore com XP armazenado\n- Aceita melhorias: §a§r, §b§r\n§o§9@UC: Ascendant Technology
 
 tile.utilitycraft:energizer.name=Energizador\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:liquifier.name=Liquefator\n§7- Aceita melhorias:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology

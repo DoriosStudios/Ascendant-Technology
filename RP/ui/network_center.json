@@ -33,7 +33,7 @@
         }
       },
       {
-        "item_label_tl@machineryCommon.item_label": {
+        "item_label_tl@uc.text_label": {
           "collection_index": 3,
           "anchor_from": "center",
           "anchor_to": "center",
@@ -49,7 +49,7 @@
         }
       },
       {
-        "item_label_dl@machineryCommon.item_label": {
+        "item_label_dl@uc.text_label": {
           "collection_index": 4,
           "anchor_from": "center",
           "anchor_to": "center",
@@ -82,7 +82,7 @@
         }
       },
       {
-        "item_label_tr@machineryCommon.item_label": {
+        "item_label_tr@uc.text_label": {
           "collection_index": 0,
           "anchor_from": "center",
           "anchor_to": "center",
@@ -98,7 +98,7 @@
         }
       },
       {
-        "item_label_dr@machineryCommon.item_label": {
+        "item_label_dr@uc.text_label": {
           "collection_index": 1,
           "anchor_from": "top_middle",
           "anchor_to": "top_middle",
@@ -131,7 +131,7 @@
         }
       },
       {
-        "item_label_c@machineryCommon.item_label": {
+        "item_label_c@uc.text_label": {
           "collection_index": 2,
           "anchor_from": "top_middle",
           "anchor_to": "top_middle",

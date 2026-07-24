@@ -15,14 +15,13 @@
 				}
 			},
 			{
-				"energy_bar@machineryCommon.vertical_single": {
-					"$is_energy": true,
+				"energy_bar@uc.energy_bar": {
 					"$has_bg": false,
 					"offset": [-72, 0]
 				}
 			},
 			{
-				"upgrades@machineryCommon.vertical_interactive": {
+				"upgrades@uc.slot_stack_vertical": {
 					"$has_bg": true,
 					"$collection_index_first": 6,
 					"$collection_index_second": 7,
@@ -43,7 +42,7 @@
 				}
 			},
 			{
-				"item_label@machineryCommon.item_label": {
+				"item_label@uc.text_label": {
 					"collection_index": 1,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",

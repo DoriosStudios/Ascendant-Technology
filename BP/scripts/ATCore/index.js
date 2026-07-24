@@ -15,3 +15,4 @@ export * as agriculture from "./agriculture/index.js";
 export * as spatial from "./spatial/index.js";
 export * as drops from "./drops/index.js";
 export * as security from "./security/index.js";
+export * as stats from "./StatsCore/index.js";

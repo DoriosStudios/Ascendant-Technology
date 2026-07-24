@@ -99,7 +99,7 @@
         }
       },
       {
-        "upgrades@machineryCommon.vertical_interactive": {
+        "upgrades@uc.slot_stack_vertical": {
           "$has_bg": true,
           "$collection_index_first": 3,
           "$collection_index_second": 6,

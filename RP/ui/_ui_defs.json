@@ -1,7 +1,6 @@
 ﻿{
     "ui_defs":  [
                     "ui/ascendant_common.json",
-                    "ui/machineryCommon.json",
                     "ui/at_test.json",
                     "ui/absolute_container.json",
                     "ui/catalyst_weaver.json",

@@ -8,9 +8,7 @@
             },
             "traits": {
                 "minecraft:placement_direction": {
-                    "enabled_states": [
-                        "minecraft:cardinal_direction"
-                    ],
+                    "enabled_states": ["minecraft:cardinal_direction"],
                     "y_rotation_offset": 180
                 }
             },
@@ -19,30 +17,26 @@
             }
         },
         "components": {
-// LEGACY_DISABLED             "utilitycraft:refining_table": {
-//                 "entity": {
-//                     "type": "machine",
-//                     "fluid": true,
-//                     "inventory_size": 12
-//                 },
-//                 "machine": {
-//                     "energy_cap": 32000000,
-//                     "energy_cost": 7200,
-//                     "fluid_cap": 512000,
-//                     "rate_speed_base": 1800,
-//                     "upgrades": [9, 10, 11],
-//                     "hidden_slots": []
-//                 }
-//             },
-// LEGACY_DISABLED             "utilitycraft:special_container": {
-//                 "Equipment Slot": [3],
-//                 "Ingot Slot": [4],
-//                 "Chip Slot": [5],
-//                 "Confirm Button": [6],
-//                 "Chance Display": [7],
-//                 "§eRunic Core Slot": [8],
-//                 "Upgrade Slots": [9, 10, 11]
-//             },
+            "utilitycraft:fluid_container": {},
+            "utilitycraft:refining_table": {
+                "entity": {
+                    "type": "fluid_machine",
+                    "inventory_size": 24,
+                    "fixed_fluid_types": true
+                },
+                "machine": {
+                    "energy_cap": 32000000,
+                    "energy_cost": 7200,
+                    "fluid_cap": 512000,
+                    "fluid_types": 1,
+                    "rate_speed_base": 1800,
+                    "upgrades": [9, 10]
+                }
+            },
+            "utilitycraft:machine_upgrades": [
+                { "type": "speed", "slot": 9 },
+                { "type": "energy", "slot": 10 }
+            ],
             "minecraft:geometry": "geometry.utilitycraft_enchantment_station",
             "minecraft:material_instances": {
                 "*": {
@@ -50,9 +44,9 @@
                     "render_method": "alpha_test"
                 }
             },
-// LEGACY_DISABLED             "minecraft:tick": {
-//                 "interval_range": [4, 4]
-//             },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },
@@ -79,49 +73,25 @@
             {
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
-                    "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            0,
-                            0
-                        ]
-                    }
+                    "minecraft:transformation": { "rotation": [0, 0, 0] }
                 }
             },
             {
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
-                    "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            180,
-                            0
-                        ]
-                    }
+                    "minecraft:transformation": { "rotation": [0, 180, 0] }
                 }
             },
             {
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
                 "components": {
-                    "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            -90,
-                            0
-                        ]
-                    }
+                    "minecraft:transformation": { "rotation": [0, -90, 0] }
                 }
             },
             {
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
-                    "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            90,
-                            0
-                        ]
-                    }
+                    "minecraft:transformation": { "rotation": [0, 90, 0] }
                 }
             }
         ]

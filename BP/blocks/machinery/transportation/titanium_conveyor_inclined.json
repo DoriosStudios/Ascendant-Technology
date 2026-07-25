@@ -16,11 +16,7 @@
 			}
 		},
 		"components": {
-// LEGACY_DISABLED 			"utilitycraft:conveyor": {
-// 				"tier": "titanium",
-// 				"shape": "inclined",
-// 				"ips": 11
-// 			},
+			"utilitycraft:conveyor": {},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_inclined",
 			"minecraft:material_instances": {
 				"*": {

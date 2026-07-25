@@ -9,7 +9,7 @@
 			}
 		},
 		"components": {
-// LEGACY_DISABLED 			"utilitycraft:conveyor_network_updater": {},
+			"utilitycraft:conveyor_network_updater": {},
 			"minecraft:geometry": "geometry.utilitycraft_updater",
 			"minecraft:material_instances": {
 				"*": {
@@ -21,9 +21,6 @@
 			},
 			"minecraft:light_dampening": 15,
 			"minecraft:light_emission": 1,
-// LEGACY_DISABLED 			"minecraft:tick": {
-// 				"interval_range": [4, 4]
-// 			},
 			"minecraft:destructible_by_mining": {
 				"seconds_to_destroy": 0.4
 			},

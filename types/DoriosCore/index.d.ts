@@ -217,7 +217,7 @@ export interface MachineBoosts {
   consumption: number;
 }
 
-/** Script registration for one exact machine-upgrade item type id. */
+/** Registration definition for one exact machine-upgrade item type id. */
 export interface MachineUpgradeRegistration {
   /** Semantic category used to prevent equivalent upgrades from stacking. */
   type: string;
@@ -237,7 +237,7 @@ export interface CompiledMachineUpgrade {
   levels: Array<Record<string, number>>;
 }
 
-/** Global script-only registry for machine upgrade items and their perks. */
+/** Compiled runtime registry for machine upgrade items and their perks. */
 export class MachineUpgradeRegistry {
   static register(itemTypeId: string, registration: MachineUpgradeRegistration): CompiledMachineUpgrade;
   static get(itemTypeId: string): CompiledMachineUpgrade | undefined;
@@ -963,6 +963,45 @@ export class GasStorage {
   static getTankCapacity(typeId: string): number;
 }
 
+/** One indexed fluid or gas entry persisted on a block item. */
+export interface StoredResourceEntry {
+  index: number;
+  type: string;
+  amount: number;
+}
+
+/** Stack-safe resource state decoded from machine or tank lore. */
+export interface StoredResourceSnapshot {
+  energy: number;
+  fluids: StoredResourceEntry[];
+  gases: StoredResourceEntry[];
+}
+
+/** Invisible formatting-code prefixes used to identify resource lore. */
+export const RESOURCE_LORE_MARKERS: Readonly<{
+  energy: "§e§r";
+  fluid: "§l§r";
+  gas: "§g§r";
+}>;
+
+export function buildEnergyLoreLine(amount: number, cap: number): string;
+export function buildFluidLoreLine(index: number, type: string, amount: number, cap: number): string;
+export function buildGasLoreLine(index: number, type: string, amount: number, cap: number): string;
+export function createResourceLore(
+  entity: Entity,
+  options?: { energy?: boolean; fluids?: boolean; gases?: boolean },
+): string[];
+export function parseResourceLore(lore: readonly string[]): StoredResourceSnapshot;
+export function getResourcesFromItem(item: ItemStack | undefined): StoredResourceSnapshot;
+export function restoreResourceSnapshot(
+  snapshot: StoredResourceSnapshot,
+  managers?: {
+    energy?: EnergyStorage;
+    fluids?: FluidStorage[];
+    gases?: GasStorage[];
+  },
+): void;
+
 /** Config for a machinery scheduler refresh profile. */
 export interface SchedulerProfileConfig {
   /** Human-readable profile label. */
@@ -1463,3 +1502,4 @@ export const GAS_TANK_CAPACITIES: Record<string, number>;
 
 export const REGISTER_GAS_ITEM_EVENT_ID: "utilitycraft:register_gas_item";
 export const REGISTER_GAS_HOLDER_EVENT_ID: "utilitycraft:register_gas_holder";
+export const REGISTER_MACHINE_UPGRADE_EVENT_ID: "utilitycraft:register_machine_upgrade";

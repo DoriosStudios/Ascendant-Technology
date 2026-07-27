@@ -100,10 +100,14 @@ tile.utilitycraft:conveyor_network_updater.name=Atualizador de Rede de Esteiras\
 ## Outros Blocos
 tile.utilitycraft:titanium_block.name=Bloco de Titânio\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:raw_titanium_block.name=Bloco de Titânio Bruto\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:tungsten_block.name=Bloco de Tungstênio\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:raw_tungsten_block.name=Bloco de Tungstênio Bruto\n§o§9@UC: Ascendant Technology
 
 tile.utilitycraft:deepslate_aetherium_ore.name=Minério de Aetherium de Ardosiabissal\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:deepslate_titanium_ore.name=Minério de Titânio de Ardosiabissal\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:end_aetherium_ore.name=Minério de Aetherium do Fim\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:deepslate_tungsten_ore.name=Minério de Tungstênio de Ardósia\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:nether_tungsten_ore.name=Minério de Tungstênio do Nether\n§o§9@UC: Ascendant Technology
 
 ## Itens
 ### Aetherium
@@ -127,6 +131,15 @@ item.utilitycraft:aetherium_hammer=Martelo de Aetherium\n§o§9@UC: Ascendant Te
 item.utilitycraft:titanium=Barra de Titânio\n§o§9@UC: Ascendant Technology
 item.utilitycraft:raw_titanium=Titânio Bruto\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_nugget=Pepita de Titânio\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_ingot=Lingote de Tungstênio\n§o§9@UC: Ascendant Technology
+item.utilitycraft:raw_tungsten=Tungstênio Bruto\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_chunk=Fragmento de Tungstênio\n§o§9@UC: Ascendant Technology
+item.utilitycraft:deepslate_tungsten_chunk=Fragmento de Tungstênio de Ardósia\n§o§9@UC: Ascendant Technology
+item.utilitycraft:nether_tungsten_chunk=Fragmento de Tungstênio do Nether\n§o§9@UC: Ascendant Technology
+item.utilitycraft:raw_tungsten_dust=Pó de Tungstênio Bruto\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_dust=Pó de Tungstênio\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_nugget=Pepita de Tungstênio\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_plate=Placa de Tungstênio\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_chunk=Pedaço de Titânio\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_dust=Pó de Titânio\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_plate=Placa de Titânio\n§o§9@UC: Ascendant Technology

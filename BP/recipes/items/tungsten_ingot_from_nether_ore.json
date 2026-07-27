@@ -1,0 +1,9 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_furnace": {
+    "description": { "identifier": "utilitycraft:nether_tungsten_ore_to_ingot" },
+    "tags": ["furnace", "blast_furnace"],
+    "input": "utilitycraft:nether_tungsten_ore",
+    "output": "utilitycraft:tungsten_ingot"
+  }
+}

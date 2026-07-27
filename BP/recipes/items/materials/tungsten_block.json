@@ -1,0 +1,11 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": { "identifier": "utilitycraft:tungsten_block" },
+		"tags": ["crafting_table"],
+		"pattern": ["AAA", "AAA", "AAA"],
+		"key": { "A": { "item": "utilitycraft:tungsten_ingot" } },
+		"result": { "item": "utilitycraft:tungsten_block" },
+		"unlock": [{ "item": "utilitycraft:tungsten_ingot" }]
+	}
+}

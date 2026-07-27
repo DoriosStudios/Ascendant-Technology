@@ -35,6 +35,15 @@
 		"utilitycraft_raw_tungsten": {
 			"textures": "textures/items/ores/raw_tungsten"
 		},
+		"utilitycraft_tungsten_chunk": {
+			"textures": "textures/items/ores/tungsten_chunk"
+		},
+		"utilitycraft_deepslate_tungsten_chunk": {
+			"textures": "textures/items/ores/deepslate_tungsten_chunk"
+		},
+		"utilitycraft_nether_tungsten_chunk": {
+			"textures": "textures/items/ores/nether_tungsten_chunk"
+		},
 		"utilitycraft_raw_tungsten_dust": {
 			"textures": "textures/items/ores/raw_tungsten_dust"
 		},

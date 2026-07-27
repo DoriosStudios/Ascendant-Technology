@@ -1,0 +1,10 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shapeless": {
+    "description": { "identifier": "utilitycraft:tungsten_nuggets_from_ingot" },
+    "tags": ["crafting_table"],
+    "ingredients": [{ "item": "utilitycraft:tungsten_ingot" }],
+    "result": { "item": "utilitycraft:tungsten_nugget", "count": 9 },
+    "unlock": [{ "item": "utilitycraft:tungsten_ingot" }]
+  }
+}

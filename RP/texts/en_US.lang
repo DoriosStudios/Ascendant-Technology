@@ -185,10 +185,14 @@ tile.utilitycraft:superior_machine_case.name=Superior Case\n§o§9@UC: Ascendant
 tile.utilitycraft:aetherium_block.name=Aetherium Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:titanium_block.name=Titanium Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:raw_titanium_block.name=Raw Titanium Block\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:tungsten_block.name=Tungsten Block\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:raw_tungsten_block.name=Raw Tungsten Block\n§o§9@UC: Ascendant Technology
 
 tile.utilitycraft:deepslate_aetherium_ore.name=Deepslate Aetherium Ore\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:deepslate_titanium_ore.name=Deepslate Titanium Ore\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:end_aetherium_ore.name=End Aetherium Ore\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:deepslate_tungsten_ore.name=Deepslate Tungsten Ore\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:nether_tungsten_ore.name=Nether Tungsten Ore\n§o§9@UC: Ascendant Technology
 
 
 ## Items
@@ -213,6 +217,16 @@ item.utilitycraft:aetherium_hammer=Aetherium Hammer\n§o§9@UC: Ascendant Techno
 item.utilitycraft:titanium=Titanium Ingot\n§o§9@UC: Ascendant Technology
 item.utilitycraft:raw_titanium=Raw Titanium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_nugget=Titanium Nugget\n§o§9@UC: Ascendant Technology
+### Tungsten
+item.utilitycraft:tungsten_ingot=Tungsten Ingot\n§o§9@UC: Ascendant Technology
+item.utilitycraft:raw_tungsten=Raw Tungsten\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_chunk=Tungsten Chunk\n§o§9@UC: Ascendant Technology
+item.utilitycraft:deepslate_tungsten_chunk=Deepslate Tungsten Chunk\n§o§9@UC: Ascendant Technology
+item.utilitycraft:nether_tungsten_chunk=Nether Tungsten Chunk\n§o§9@UC: Ascendant Technology
+item.utilitycraft:raw_tungsten_dust=Raw Tungsten Dust\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_dust=Tungsten Dust\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_nugget=Tungsten Nugget\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_plate=Tungsten Plate\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_chunk=Titanium Chunk\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_dust=Titanium Dust\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_plate=Titanium Plate\n§o§9@UC: Ascendant Technology

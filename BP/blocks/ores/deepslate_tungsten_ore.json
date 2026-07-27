@@ -5,7 +5,7 @@
       "identifier": "utilitycraft:deepslate_tungsten_ore",
       "menu_category": {
         "category": "nature",
-        "group": "minecraft:itemGroup.name.ore"
+        "group": "itemGroup.name.ore"
       }
     },
     "components": {

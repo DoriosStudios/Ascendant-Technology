@@ -3,7 +3,7 @@
   "minecraft:block": {
 	"description": {
 	  "identifier": "utilitycraft:nether_tungsten_ore",
-	  "menu_category": { "category": "nature", "group": "minecraft:itemGroup.name.ore" }
+	  "menu_category": { "category": "nature", "group": "itemGroup.name.ore" }
 	},
 	"components": {
 	  "minecraft:destructible_by_mining": { "seconds_to_destroy": 3.0 },

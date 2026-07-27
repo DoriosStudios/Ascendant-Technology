@@ -55,8 +55,8 @@ tile.utilitycraft:verdant_cultivator.name=Cultivador Verdante\n§9Colheitadeira 
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versão Estética\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:mob_magnet.name=Ímã de Mobs \n§7 Atrai mobs em um raio configurável\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:laser_barrier_field.name=Campo da Barreira de Laser\n§7  Área ativa projetada pela barreira\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:reinforced_machine_case.name=Case Reforçado\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:superior_machine_case.name=Case Superior\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:reinforced_machine_case.name=Chassi de Máquinas Reforçado\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:superior_machine_case.name=Chassi de Máquinas Superior\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:reinforced_cable.name=Cabo Reforçado\n§7- Espinha dorsal de alta capacidade para energia, fluidos e overclock\n- Aceita melhorias: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 
 ## Transportação - Esteiras

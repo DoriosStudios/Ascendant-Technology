@@ -1214,8 +1214,8 @@
 		"utilitycraft_superior_machine_case_south": {
 			"textures": "textures/blocks/machines/superior/superior_machine_case_south"
 		},
-		"utilitycraft_superior_machine_case_east": {
-			"textures": "textures/blocks/machines/superior/superior_machine_case_east"
+		"utilitycraft_superior_machine_case_sides": {
+			"textures": "textures/blocks/machines/superior/superior_machine_case_sides"
 		},
 		"utilitycraft_superior_machine_case_west": {
 			"textures": "textures/blocks/machines/superior/superior_machine_case_west"

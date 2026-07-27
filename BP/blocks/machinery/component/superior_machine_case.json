@@ -14,22 +14,14 @@
                     "texture": "utilitycraft_superior_machine_case_north",
                     "render_method": "alpha_test"
                 },
-                "north": {
-                    "texture": "utilitycraft_superior_machine_case_north",
+                "sides": {
+                    "texture": "utilitycraft_superior_machine_case_sides",
                     "render_method": "alpha_test"
                 },
-                "south": {
-                    "texture": "utilitycraft_superior_machine_case_south",
-                    "render_method": "alpha_test"
-                },
-                "east": {
-                    "texture": "utilitycraft_superior_machine_case_east",
-                    "render_method": "alpha_test"
-                },
-                "west": {
-                    "texture": "utilitycraft_superior_machine_case_west",
-                    "render_method": "alpha_test"
-                },
+                "north": "sides",
+                "south": "sides",
+                "east": "sides",
+                "west": "sides",
                 "up": {
                     "texture": "utilitycraft_superior_machine_case_up",
                     "render_method": "alpha_test"

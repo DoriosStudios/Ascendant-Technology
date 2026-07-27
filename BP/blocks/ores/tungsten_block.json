@@ -4,7 +4,7 @@
     "description": {
       "identifier": "utilitycraft:tungsten_block",
       "menu_category": {
-        "category": "construction"
+        "category": "items"
       }
     },
     "components": {
@@ -14,11 +14,16 @@
       "minecraft:destructible_by_explosion": {
         "explosion_resistance": 7.0
       },
+      "minecraft:loot": "loot_tables/blocks/tungsten_block.json",
+      "minecraft:geometry": "minecraft:geometry.full_block",
       "minecraft:material_instances": {
-        "*": { "texture": "utilitycraft_tungsten_block", "render_method": "opaque" }
+        "*": {
+          "texture": "utilitycraft_tungsten_block",
+          "render_method": "opaque"
+        }
       },
       "tag:minecraft:is_pickaxe_item_destructible": {},
-      "tag:minecraft:diamond_tier_destructible": {}
+      "tag:minecraft:iron_tier_destructible": {}
     }
   }
 }

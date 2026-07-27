@@ -27,7 +27,7 @@
     "distribution": {
       "scatter_chance": {
         "numerator": 1,
-        "denominator": 16
+        "denominator": 2
       },
       "iterations": 12,
       "coordinate_eval_order": "zyx",
@@ -37,7 +37,7 @@
       },
       "y": {
         "distribution": "uniform",
-        "extent": [-64, -48]
+        "extent": [48, 52]
       },
       "z": {
         "distribution": "uniform",

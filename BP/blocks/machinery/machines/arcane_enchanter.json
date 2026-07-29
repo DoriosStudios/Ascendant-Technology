@@ -42,10 +42,10 @@
             "utilitycraft:machine_recipes": {
                 "type": "arcane_enchanter"
             },
-            "minecraft:geometry": "geometry.utilitycraft_enchantment_station",
+            "minecraft:geometry": "geometry.utilitycraft_arcane_enchanter",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_enchantment_station",
+                    "texture": "utilitycraft_arcane_enchanter",
                     "render_method": "alpha_test"
                 }
             },
@@ -68,7 +68,7 @@
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "utilitycraft_enchantment_station",
+                            "texture": "utilitycraft_arcane_enchanter",
                             "render_method": "alpha_test"
                         }
                     },

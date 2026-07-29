@@ -235,6 +235,9 @@
 		"utilitycraft_enchantment_station": {
 			"textures": "textures/blocks/machines/enchantment_station"
 		},
+		"utilitycraft_arcane_enchanter": {
+			"textures": "textures/blocks/machines/enchanter_64x64"
+		},
 		"utilitycraft_mob_magnet_off": {
 			"textures": "textures/blocks/machines/mob_magnet_off"
 		},

@@ -43,6 +43,7 @@ Heavy processing and block automation still anchor this draft, but this pass als
   - Standalone superior enchanting machine split from Enchantment Station.
   - Focuses only on enchant application and level-up behavior without repair or disenchant flow.
   - Supports module-driven enchant strength and faster cycle pacing.
+  - Uses its own custom model and texture.
 - Added **Arc-Press Forge**
   - Superior version of Electro Press with 4 input slots and 4 output slots.
   - Accepts four upgrades.
@@ -196,7 +197,6 @@ Heavy processing and block automation still anchor this draft, but this pass als
 ### General
 - Hyper Processing Upgrade can now be used in UtilityCraft machines.
 ### Equipment
-// I'll edit this later. Too much content.
 - **StatsCore** now acts as the universal progression and identity system for supported gear.
   - Supported equipment can gain readable stat lines, level through use, store refinement results, and expose class-style abilities instead of staying as flat stat sticks.
 - StatsCore special abilities can now be awakened in the Refining Table without blocking normal refinement.

@@ -1,0 +1,149 @@
+// StatsCore / Dorios' Trinkets
+ Extra Damage (StatsCore) / Attack Damage (Dorios' Trinkets)
+ Damage Reduction (StatsCore) / Resistance (? | Dorios' Trinkets)
+ I have no fucking idea
+ Walking Speed
+ Swimming Speed
+ Evasion
+ Luck
+ Double Trouble
+ Triple Trouble
+ Sweeping
+ Critical Multiplier
+ Critical Damage
+ Critical Chance
+ Preserving (Tool)
+ Preserving (Armor)
+ Ore Yield
+ Fire
+ Poison
+ Ice (placeholder)
+ Darkness
+ Lightning
+ Healed Heart
+ Full Heart
+ Half Heart
+ Full Heart (Fire)
+ Half Heart (Fire)
+ Full Heart (Hardcore)
+ Half Heart (Hardcore)
+ Full Heart (Tamed / Animal)
+ Half Heart (Tamed / Animal)
+ Full Heart (Withered)
+ Half Heart (Withered)
+ Full Heart (Creative)
+ Full Heart (Absorption)
+ Half Heart (Absorption)
+ Full Heart (Frozen)
+ Half Heart (Frozen)
+ Full Heart (Poison / Fatal Poison)
+ Half Heart (Poison / Fatal Poison)
+ Empty Heart
+ Full Armor
+ Half Armor
+ Empty armor
+ Hunger Full Saturation Full
+ Hunger Full Saturation Half
+ Hunger Half Saturation Full
+ Hunger Half Saturation Half
+ Hunger Empty Saturation Full
+ Hunger Empty Saturation Half
+ Hunger Full
+ Hunger Effect Full
+ Hunger Half
+ Hunger Effect Half
+ Hunger Empty
+ Hunger Effect Empty
+ Water Bubble Full
+ Water Bubble Popping
+ Water Bubble Empty
+
+// UtilityCraft
+ Water
+ Cryofluid
+ Steam
+ Lava
+ Liquified Aetherium
+ Dark Matter
+ XP
+ Milk
+ Energy (Small)
+ Generic Fluid
+ Speed Upgrade
+ Energy Upgrade
+ Range Upgrade
+ Damage Upgrade
+ Filter Upgrade
+ Quantity Upgrade
+ Hyper Processing Upgrade
+ Size Upgrade
+ Stack Upgrade
+
+# Vanilla
+## Items
+ Rotten Flesh
+ Poisoned Potato
+ Potato
+ Cooked Potato
+ Apple
+ Golden Apple
+ Netherite Ingot
+ Diamond
+ Iron Ingot
+ Prizmarine
+ Gold Ingot
+ Iron Sword
+ Iron Pickaxe
+ Iron Axe
+ Iron Shovel
+ Iron Hoe
+ Shears
+ Unkwown
+
+## Blocks
+ Ancient Debris
+ Diamond Ore
+ Emerald Ore
+ Gold Ore
+ Gold Nether Ore
+ Copper Ore
+ Redstone Ore
+ Lapis Lazuli Ore
+
+## Effects
+ Bad Omen
+ Blindness
+ Conduit Power
+ Darkness
+ Dolphin's Grace
+ Fatal Poison
+ Fire
+ Fire Resistance
+ Haste
+ Health Boost
+ Hunger
+ Infested
+ Invisibility
+ Jump Boost
+ Levitation
+ Mining Fatigue
+ Poison
+ Raid Omen
+ Resistance
+ Slow Falling
+ Slowness
+ Speed
+ Sticky
+ Strength
+ Trail omen
+ Village Hero
+ Water Breathing
+ Weakness
+ Weaving
+ Wind Charged
+ Wither
+ Idk
+
+
+
+

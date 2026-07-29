@@ -1,2 +1,0 @@
-execute at @a[hasitem=[{item=utilitycraft:lucky_aiot_item , location=slot.weapon.mainhand}]] run structure load mystructure:lucky_aiot ~ ~ ~
-clear @a[hasitem=[{item=utilitycraft:lucky_aiot_item , location=slot.weapon.mainhand}]] utilitycraft:lucky_aiot_item 0 1

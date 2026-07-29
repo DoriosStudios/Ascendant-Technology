@@ -4,6 +4,6 @@
     "description": { "identifier": "utilitycraft:raw_tungsten_to_ingot" },
     "tags": ["furnace", "blast_furnace"],
     "input": "utilitycraft:raw_tungsten",
-    "output": "utilitycraft:tungsten_ingot"
+    "output": "utilitycraft:tungsten"
   }
 }

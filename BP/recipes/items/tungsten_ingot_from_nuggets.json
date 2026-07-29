@@ -5,7 +5,7 @@
     "tags": ["crafting_table"],
     "pattern": ["AAA", "AAA", "AAA"],
     "key": { "A": { "item": "utilitycraft:tungsten_nugget" } },
-    "result": { "item": "utilitycraft:tungsten_ingot" },
+    "result": { "item": "utilitycraft:tungsten" },
     "unlock": [{ "item": "utilitycraft:tungsten_nugget" }]
   }
 }

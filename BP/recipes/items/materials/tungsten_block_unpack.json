@@ -4,7 +4,7 @@
     "description": { "identifier": "utilitycraft:tungsten_block_unpack" },
     "tags": ["crafting_table"],
     "ingredients": [{ "item": "utilitycraft:tungsten_block" }],
-    "result": { "item": "utilitycraft:tungsten_ingot", "count": 9 },
+    "result": { "item": "utilitycraft:tungsten", "count": 9 },
     "unlock": [{ "item": "utilitycraft:tungsten_block" }]
   }
 }

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:feature_rules": {
+    "description": {
+      "identifier": "utilitycraft:ti_ore_lower_feature_rule",
+      "places_feature": "utilitycraft:ti_ore_feature"
+    },
+    "conditions": {
+      "placement_pass": "underground_pass",
+      "minecraft:biome_filter": [
+        {
+          "any_of": [
+            { "test": "has_biome_tag", "operator": "==", "value": "overworld" },
+            { "test": "has_biome_tag", "operator": "==", "value": "overworld_generation" }
+          ]
+        }
+      ]
+    },
+    "distribution": {
+      "scatter_chance": { "numerator": 1, "denominator": 4 },
+      "iterations": 8,
+      "coordinate_eval_order": "zyx",
+      "x": { "distribution": "uniform", "extent": [0, 16] },
+      "y": { "distribution": "uniform", "extent": [-64, -48] },
+      "z": { "distribution": "uniform", "extent": [0, 16] }
+    }
+  }
+}

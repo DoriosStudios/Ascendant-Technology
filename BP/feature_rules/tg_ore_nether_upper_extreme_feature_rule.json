@@ -1,7 +1,7 @@
 {
   "format_version": "1.13.0",
   "minecraft:feature_rules": {
-    "description": { "identifier": "utilitycraft:tt_ore_nether_upper_extreme_feature_rule", "places_feature": "utilitycraft:tt_ore_nether_feature" },
+    "description": { "identifier": "utilitycraft:tg_ore_nether_upper_extreme_feature_rule", "places_feature": "utilitycraft:tg_ore_nether_feature" },
     "conditions": { "placement_pass": "underground_pass", "minecraft:biome_filter": [{ "any_of": [{ "test": "has_biome_tag", "operator": "==", "value": "nether" }, { "test": "has_biome_tag", "operator": "==", "value": "nether_generation" }] }] },
     "distribution": {
       "scatter_chance": { "numerator": 1, "denominator": 2 },

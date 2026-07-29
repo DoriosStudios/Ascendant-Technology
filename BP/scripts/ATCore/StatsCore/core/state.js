@@ -3,6 +3,7 @@ import { createRuntimeUid, normalizeId, safeJsonParse, toPositiveInteger } from 
 import { normalizeStatsRefinementData, readStatsRefinementData, serializeStatsRefinementData } from "./refinement.js";
 import { syncStatsCoreLore } from "./lore.js";
 import { resolveStatsAttributes } from "../attributes/resolve.js";
+import { normalizeAttributeProgress } from "../progression/attributes.js";
 
 function getProperty(stack, key) {
     try {
@@ -113,6 +114,16 @@ function readProgressionState(stack) {
     return normalizeProgressionState(parsed);
 }
 
+function readAttributeProgressState(stack) {
+    const raw = getProperty(stack, STATSCORE.props.attributeProgress);
+    const parsed = safeJsonParse(raw);
+    if (parsed && typeof parsed === "object") {
+        return normalizeAttributeProgress(parsed);
+    }
+
+    return normalizeAttributeProgress(undefined);
+}
+
 /**
  * Reads the persistent StatsCore state stored directly on an item stack.
  *
@@ -125,14 +136,18 @@ function readProgressionState(stack) {
  */
 export function readStatsState(stack, definition) {
     const refinement = readStatsRefinementData(stack);
+    const uid = String(getProperty(stack, STATSCORE.props.uid) ?? "");
+    const progression = readProgressionState(stack);
 
     return {
-        uid: String(getProperty(stack, STATSCORE.props.uid) ?? ""),
+        uid,
         version: toPositiveInteger(getProperty(stack, STATSCORE.props.version), 0),
-        progression: readProgressionState(stack),
+        progression,
+        attributeProgress: readAttributeProgressState(stack),
         affinity: normalizeId(getProperty(stack, STATSCORE.props.affinity)) || definition?.affinity || "hybrid",
         branch: normalizeId(getProperty(stack, STATSCORE.props.branch)) || definition?.branch || definition?.type || "hybrid",
         abilityData: readStatsAbilityData(stack),
+        refined: getProperty(stack, STATSCORE.props.refined) === true,
         refinement
     };
 }
@@ -172,9 +187,11 @@ export function writeStatsState(stack, definition, state, options = {}) {
         uid: state.uid || createRuntimeUid("statscore"),
         version: STATSCORE.version,
         progression: normalizeProgressionState(state.progression),
+        attributeProgress: normalizeAttributeProgress(state.attributeProgress),
         affinity: state.affinity || definition.affinity || "hybrid",
         branch: state.branch || definition.branch || definition.type || "hybrid",
         abilityData: normalizeStatsAbilityData(state?.abilityData),
+        refined: state?.refined === true,
         refinement: normalizeStatsRefinementData(state?.refinement)
     };
 
@@ -182,9 +199,11 @@ export function writeStatsState(stack, definition, state, options = {}) {
     changed = setPropertyIfChanged(stack, STATSCORE.props.uid, nextState.uid) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.version, nextState.version) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.progression, JSON.stringify(nextState.progression)) || changed;
+    changed = setPropertyIfChanged(stack, STATSCORE.props.attributeProgress, JSON.stringify(nextState.attributeProgress)) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.affinity, nextState.affinity) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.branch, nextState.branch) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.abilityData, JSON.stringify(nextState.abilityData)) || changed;
+    changed = setPropertyIfChanged(stack, STATSCORE.props.refined, nextState.refined ? true : undefined) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.refinement, serializeStatsRefinementData(nextState.refinement)) || changed;
 
     if (options.syncLore === true || options.levelChanged === true || nextState.version !== state.version) {

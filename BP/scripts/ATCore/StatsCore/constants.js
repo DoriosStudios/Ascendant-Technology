@@ -1,16 +1,21 @@
 export const STATSCORE = Object.freeze({
     namespace: "utilitycraft",
     name: "StatsCore",
-    version: 1,
+    version: 2,
     props: Object.freeze({
         uid: "utilitycraft:statscore_uid",
         version: "utilitycraft:statscore_version",
         progression: "utilitycraft:statscore_progression",
+        attributeProgress: "utilitycraft:statscore_attribute_progress",
         affinity: "utilitycraft:statscore_affinity",
         branch: "utilitycraft:statscore_branch",
         refinement: "utilitycraft:statscore_refinement",
+        refined: "utilitycraft:statscore_refined",
         abilityData: "utilitycraft:statscore_ability_data",
         loreSignature: "utilitycraft:statscore_lore_signature"
+    }),
+    playerProperties: Object.freeze({
+        feedbackStyle: "utilitycraft:statscore_feedback_style",
     }),
     lore: Object.freeze({
         start: "\u00A7r\u00A78[StatsCore]",
@@ -35,7 +40,6 @@ export const STATSCORE = Object.freeze({
         markCleanupSize: 96
     }),
     progression: Object.freeze({
-        maxLevel: 30,
         baseXp: 60,
         growth: 1.22,
         persistEveryXp: 24

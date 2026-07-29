@@ -6,7 +6,7 @@ import { getHeldStatsContext } from "../shared/context.js";
 import { applyEffectById } from "../shared/effects.js";
 import { hasEnchantmentToken } from "../shared/enchantments.js";
 import { hasEffectKind } from "../shared/effectSelectors.js";
-import { setActionBarSafe } from "../shared/messages.js";
+import { showAbilityFeedback } from "../feedback/index.js";
 import { normalizeId } from "../utils.js";
 
 const operatorToggleTicks = new Map();
@@ -64,7 +64,7 @@ function cycleOperatorMode(player, context) {
         persistEquipmentItem(player, STATSCORE.slots.mainhand, context.stack);
     }
 
-    setActionBarSafe(player, `\u00A7g${next === "silky" ? "Silky" : next === "greedy" ? "Greedy" : "Crushy"} Operator`);
+    showAbilityFeedback(player, `${next === "silky" ? "Silky" : next === "greedy" ? "Greedy" : "Crushy"} Operator`);
     return true;
 }
 
@@ -84,7 +84,7 @@ function handleCreeperIgnition(player, context) {
         }
     }
 
-    setActionBarSafe(player, "\u00A7gIngniter");
+    showAbilityFeedback(player, "Ingniter");
     return true;
 }
 
@@ -102,7 +102,7 @@ function handleHarpoonLaunch(player, context) {
             z: Number(view.z ?? 0) * 2.15,
         });
         applyEffectById(player, "slow_falling", 60, 0, false);
-        setActionBarSafe(player, "\u00A7gHarpoon");
+        showAbilityFeedback(player, "Harpoon");
         return true;
     } catch {
         return false;
@@ -132,7 +132,7 @@ function handleTntIgnition(event) {
             const currentBlock = dimension.getBlock(location);
             if (currentBlock?.typeId === "minecraft:air") {
                 dimension.runCommand(`setblock ${location.x} ${location.y} ${location.z} tnt`);
-                setActionBarSafe(player, "\u00A7gIngniter");
+                showAbilityFeedback(player, "Ingniter");
             }
         } catch { }
     });
@@ -168,7 +168,7 @@ function handleWormUseOn(event, context) {
     if (player.isSneaking) {
         const applied = spawnRandomWormSeed(block);
         if (applied) {
-            setActionBarSafe(player, "\u00A7gWorm");
+            showAbilityFeedback(player, "Worm");
         }
         return applied;
     }
@@ -180,7 +180,7 @@ function handleWormUseOn(event, context) {
 
     try {
         block.setType(nextSoilId);
-        setActionBarSafe(player, "\u00A7gWorm");
+        showAbilityFeedback(player, "Worm");
         return true;
     } catch {
         return false;
@@ -199,7 +199,7 @@ function handleWormEvasion(event) {
 
     if (Math.random() > 0.5) return;
     event.damage = 0;
-    setActionBarSafe(player, "\u00A7gWorm");
+    showAbilityFeedback(player, "Worm");
 }
 
 function handleItemUse(event) {

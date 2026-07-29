@@ -25,9 +25,6 @@ const restrictionCache = new Map();
 
 const restrictedItems = new Map([
     ["utilitycraft:duplicator", "Cannot Duplicate Itself"],
-    ["utilitycraft:lucky_sword", "Cannot Duplicate Lucky Tools"],
-    ["utilitycraft:lucky_pickaxe", "Cannot Duplicate Lucky Tools"],
-    ["utilitycraft:lucky_aiot", "Cannot Duplicate Lucky Tools"],
 ]);
 
 const restrictedPatterns = [

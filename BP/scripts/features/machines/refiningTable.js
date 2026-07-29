@@ -18,6 +18,7 @@ import {
 } from "../../ATCore/StatsCore/API.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import { REFINING_TABLE_CONFIG as CONFIG } from "../../config/recipes/refiningTable.js";
+import { computeRefinementRollRange, rollStatsRefinement } from "../../ATCore/StatsCore/refining/rolls.js";
 import {
     displayProgress,
     setDynamicNumber,
@@ -232,7 +233,7 @@ function buildPreview(machine, xpTank) {
     if (ingotStack && !ingot) return { ...preview, valid: true, problem: "Unsupported Ingot" };
     if (!chip) return { ...preview, valid: true, problem: "Insert Chip" };
 
-    const range = computeRollRange(chip, ingot, effectiveIngots);
+    const range = computeRefinementRollRange(chip, ingot, effectiveIngots);
     const costs = computeCosts(chip, ingot, effectiveIngots, Number(state?.refinement?.rerolls ?? 0));
     const signature = [
         equipment.typeId,
@@ -266,16 +267,6 @@ function buildPreview(machine, xpTank) {
     };
 }
 
-function computeRollRange(chip, ingot, amount) {
-    const power = Number(ingot?.power ?? 0);
-    const min = Math.min(0.98, chip.minQuality + amount * 0.012 * power);
-    const max = Math.min(
-        0.99,
-        Math.max(min + CONFIG.defaults.minRollSpread, chip.maxQuality + amount * 0.018 * power),
-    );
-    return { min, max };
-}
-
 function computeCosts(chip, ingot, amount, rerolls) {
     const power = Number(ingot?.power ?? 0);
     const rerollScalar = 1 + Math.min(1.8, Math.max(0, rerolls) * 0.18);
@@ -292,53 +283,15 @@ function chanceAtOrAbove(range, threshold) {
 }
 
 function rollRefinement(preview) {
-    const quality = preview.range.min + Math.random() * Math.max(0, preview.range.max - preview.range.min);
-    const template = CONFIG.templates[preview.definition.type];
-    const tierScale = CONFIG.tierScales[normalizeId(preview.definition.tier)] ?? 1;
-    const bonuses = {};
-
-    for (const [key, maxValue] of Object.entries(template)) {
-        const variance = 0.92 + Math.random() * 0.16;
-        const cap = key === "extraDamage" || key === "elementalDamage" ? 12 : 0.99;
-        bonuses[key] = roundBonus(Math.min(cap, Number(maxValue) * quality * tierScale * variance));
-    }
-
-    if ((bonuses.elementalChance ?? 0) > 0 && (bonuses.elementalDamage ?? 0) > 0) {
-        const element = pickElement();
-        if (element) {
-            bonuses.elemental = {
-                ...element,
-                chance: bonuses.elementalChance,
-                damage: bonuses.elementalDamage,
-                quality: roundBonus(quality),
-            };
-        }
-    }
-
-    return {
-        version: 1,
-        grade: gradeFromQuality(quality),
-        quality: roundBonus(quality),
-        minQuality: roundBonus(preview.range.min),
-        maxQuality: roundBonus(preview.range.max),
-        spentXp: Math.max(0, Number(preview.state?.refinement?.spentXp ?? 0)) + preview.xpCost,
-        rerolls: Math.max(0, Number(preview.state?.refinement?.rerolls ?? 0)) + 1,
-        chipId: preview.chip.id,
-        chipLabel: preview.chip.label,
-        ingotId: preview.ingot?.id ?? "",
-        ingotAmount: preview.effectiveIngots,
-        bonuses,
-    };
-}
-
-function pickElement() {
-    const totalWeight = CONFIG.elements.reduce((sum, element) => sum + Math.max(0, element.weight), 0);
-    let roll = Math.random() * Math.max(1, totalWeight);
-    for (const element of CONFIG.elements) {
-        roll -= Math.max(0, element.weight);
-        if (roll <= 0) return element;
-    }
-    return CONFIG.elements[0];
+    return rollStatsRefinement({
+        definition: preview.definition,
+        state: preview.state,
+        chip: preview.chip,
+        ingot: preview.ingot,
+        amount: preview.effectiveIngots,
+        range: preview.range,
+        xpCost: preview.xpCost,
+    });
 }
 
 function applyRefinement(machine, xpTank, preview) {
@@ -358,6 +311,10 @@ function applyRefinement(machine, xpTank, preview) {
 
     writeStatsState(equipment, definition, {
         ...state,
+        // Attribute points from the retired use-based system are not a
+        // refinement reward. The table owns all refinement-side stat changes.
+        attributeProgress: {},
+        refined: true,
         abilityData: {
             ...state.abilityData,
             uniqueUnlocked: awakenAbility || state.abilityData?.uniqueUnlocked === true,
@@ -410,6 +367,10 @@ function buildDetails(preview) {
         `\u00A7r\u00A77Level: \u00A7f${level}`,
         `\u00A7r\u00A77Current: \u00A7f${grade}`,
     ];
+
+    if (preview.definition.type !== "support" && Number(preview.attributes?.crit?.multiplier ?? 1) > 1) {
+        lines.push(`\u00A7r\u00A77Critical Multiplier: \u00A7fx${Number(preview.attributes.crit.multiplier).toFixed(2)}`);
+    }
 
     if (preview.chip) {
         lines.push(`\u00A7r\u00A77Roll: \u00A7f${formatPercent(preview.range.min)} - ${formatPercent(preview.range.max)}`);
@@ -465,18 +426,6 @@ function readJson(entity, key) {
 
 function normalizeId(value) {
     return typeof value === "string" ? value.trim().toLowerCase() : "";
-}
-
-function roundBonus(value) {
-    return Math.round((Number(value) || 0) * 10000) / 10000;
-}
-
-function gradeFromQuality(quality) {
-    if (quality >= CONFIG.defaults.transcendentThreshold) return "transcendent";
-    if (quality >= CONFIG.defaults.masterworkThreshold) return "masterwork";
-    if (quality >= CONFIG.defaults.strongThreshold) return "exceptional";
-    if (quality >= 0.32) return "steady";
-    return "rough";
 }
 
 function formatGrade(value) {

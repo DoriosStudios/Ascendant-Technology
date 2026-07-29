@@ -2,7 +2,8 @@ import { system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
 import { persistEquipmentItem } from "../core/equipment.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
-import { showLevelUp } from "../feedback/index.js";
+import { showAbilityFeedback, showLevelUp } from "../feedback/index.js";
+import { STATSCORE_ICONS } from "../icons.js";
 import { getCurrentTick, rollChance } from "../utils.js";
 import { getEquipmentStatsContext } from "../shared/context.js";
 import { getEntityHurtAttacker, getEntityHurtTarget, getEventDamageType, matchesDamageType, normalizeDamageType, uniqueDamageTypes } from "../shared/damage.js";
@@ -67,6 +68,7 @@ function getArmorSupportEntries(target) {
     for (const slotName of STATSCORE.slots.armor) {
         const context = getEquipmentStatsContext(target, slotName);
         if (!context || context.definition.type !== ITEM_TYPES.support) continue;
+        if (context.attributes?.refinement?.active !== true) continue;
 
         entries.push({
             slotName,
@@ -77,7 +79,7 @@ function getArmorSupportEntries(target) {
     }
 
     const offhandContext = getEquipmentStatsContext(target, STATSCORE.slots.offhand);
-    if (offhandContext?.definition?.type === ITEM_TYPES.support) {
+    if (offhandContext?.definition?.type === ITEM_TYPES.support && offhandContext.attributes?.refinement?.active === true) {
             entries.push({
                 slotName: STATSCORE.slots.offhand,
                 item: offhandContext.stack,
@@ -354,6 +356,9 @@ function processArmorProgress(target) {
 
         if (result.changed || repaired) {
             persistEquipmentItem(target, slotName, item);
+        }
+        if (repaired) {
+            showAbilityFeedback(target, "\u00A7aArmor Preserving", STATSCORE_ICONS.preservingArmor);
         }
         showLevelUp(target, item, result);
     }

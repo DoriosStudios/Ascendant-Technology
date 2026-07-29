@@ -6,7 +6,7 @@ import { showLevelUp, showMiningFeedback } from "../feedback/index.js";
 import { normalizeId as normalizeBlockId, rollChance } from "../utils.js";
 import { getEquipmentStatsContext } from "../shared/context.js";
 import { repairItemDurability } from "../shared/durability.js";
-import { createDoubleTroubleEffect, hasSilkTouch } from "./effects.js";
+import { hasSilkTouch } from "./effects.js";
 import { findEffectByKind } from "../shared/effectSelectors.js";
 
 const UNBREAKABLE_BLOCKS = new Set([
@@ -102,7 +102,7 @@ const ORE_DUST_DROPS = Object.freeze({
 });
 
 const PENDING_ORE_BREAKS = new WeakMap();
-const PENDING_DOUBLE_TROUBLE_BREAKS = new WeakMap();
+const PENDING_BERSERK_LOG_BREAKS = new WeakMap();
 
 const WORM_SOIL_DROPS = Object.freeze({
     "minecraft:dirt": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
@@ -218,14 +218,16 @@ function formatCommandLocation(location) {
     return `${Math.floor(Number(location?.x) || 0)} ${Math.floor(Number(location?.y) || 0)} ${Math.floor(Number(location?.z) || 0)}`;
 }
 
-function canUseDefinitionForMining(definition) {
+function canUseDefinitionForMining(definition, attributes = undefined) {
     if (!definition || definition.enabled === false) return false;
     if (definition.type === ITEM_TYPES.weapon || definition.type === ITEM_TYPES.support) return false;
+    if (attributes?.refinement?.active !== true) return false;
     return getProgressAmount(definition, "block", 0) > 0
         || getProgressAmount(definition, "ore", 0) > 0
         || getProgressAmount(definition, "tool", 0) > 0
-        || (definition?.mining?.oreBonusChance ?? 0) > 0
-        || (Array.isArray(definition?.mining?.effects) && definition.mining.effects.length > 0);
+        || (attributes?.mining?.oreBonusChance ?? 0) > 0
+        || (attributes?.mining?.doubleTrouble?.chance ?? 0) > 0
+        || (Array.isArray(attributes?.mining?.effects) && attributes.mining.effects.length > 0);
 }
 
 function getFortune3BonusCount(blockId) {
@@ -357,14 +359,6 @@ function consumePendingOreDropSnapshot(snapshot) {
     const pending = PENDING_ORE_BREAKS.get(snapshot.player);
     PENDING_ORE_BREAKS.delete(snapshot.player);
     return pending;
-}
-
-function rememberDoubleTroubleSnapshot(snapshot) {
-    if (!snapshot?.player || !snapshot?.dimension || !snapshot?.location) return;
-
-    PENDING_DOUBLE_TROUBLE_BREAKS.set(snapshot.player, {
-        knownItemIds: collectNearbyItemEntityIds(snapshot.dimension, snapshot.location),
-    });
 }
 
 function getTrackedOreDropIds(blockId) {
@@ -651,52 +645,103 @@ function executeWormBreak(snapshot) {
     return applied;
 }
 
-function executeDoubleTrouble(snapshot) {
-    const pendingState = PENDING_DOUBLE_TROUBLE_BREAKS.get(snapshot.player);
-    PENDING_DOUBLE_TROUBLE_BREAKS.delete(snapshot.player);
-    if (!pendingState) return;
+function getDoubleTroubleChance(effect, miningLevel) {
+    const baseChance = effect?.baseChance ?? 0.01;
+    const per10Levels = effect?.chancePer10Levels ?? 0.01;
+    const maxChance = effect?.maxChance ?? 0.2;
+    return Math.min(maxChance, baseChance + Math.floor(Math.max(1, miningLevel) / 10) * per10Levels);
+}
 
+function rememberBerserkLogBreak(snapshot, effect) {
+    if (!snapshot?.player || !snapshot?.dimension || !snapshot?.location) return;
+
+    PENDING_BERSERK_LOG_BREAKS.set(snapshot.player, {
+        knownItemIds: collectNearbyItemEntityIds(snapshot.dimension, snapshot.location),
+        effect,
+    });
+}
+
+function consumeBerserkLogBreak(snapshot) {
+    if (!snapshot?.player) return null;
+
+    const pending = PENDING_BERSERK_LOG_BREAKS.get(snapshot.player) ?? null;
+    PENDING_BERSERK_LOG_BREAKS.delete(snapshot.player);
+    return pending;
+}
+
+/**
+ * Resolves the complete loot-table result for this block. No item-id filtering
+ * is applied: Trouble effects duplicate every stack the loot manager returns.
+ */
+function generateAllBlockLoot(snapshot) {
+    try {
+        const manager = world.getLootTableManager?.();
+        if (!manager) return [];
+
+        const drops = manager.generateLootFromBlockPermutation?.(snapshot.blockPermutation, snapshot.tool)
+            ?? manager.generateLootFromBlock?.(snapshot.dimension?.getBlock?.(snapshot.location), snapshot.tool);
+        return Array.isArray(drops) ? drops.filter(Boolean) : [];
+    } catch (error) {
+        console.warn("[StatsCore] Trouble loot generation failed.", error);
+        return [];
+    }
+}
+
+function spawnAllGeneratedLoot(snapshot, drops) {
+    let spawned = false;
+    for (const drop of drops) {
+        try {
+            snapshot.dimension.spawnItem(drop, {
+                x: snapshot.location.x + 0.5,
+                y: snapshot.location.y + 0.5,
+                z: snapshot.location.z + 0.5,
+            });
+            spawned = true;
+        } catch { }
+    }
+    return spawned;
+}
+
+function executeDoubleTrouble(snapshot) {
     const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);
     if (!context) return;
 
     const { attributes } = context;
-    const effect = findEffectByKind(attributes?.mining?.effects, "double_trouble");
-    if (!effect) return;
+    if (attributes?.refinement?.active !== true) return;
+    const doubleTrouble = attributes?.mining?.doubleTrouble;
+    if (!doubleTrouble) return;
 
     const miningLevel = attributes.levels?.mining ?? 1;
-    const baseChance = effect.baseChance ?? 0.001;
-    const per10Levels = effect.chancePer10Levels ?? 0.001;
-    const maxChance = effect.maxChance ?? 0.01;
-    const chance = Math.min(maxChance, baseChance + Math.floor(miningLevel / 10) * per10Levels);
+    if (!rollChance(getDoubleTroubleChance(doubleTrouble, miningLevel))) return;
 
-    if (!rollChance(chance)) return;
-    system.runTimeout(() => {
-        const newItems = [];
-        try {
-            for (const entity of snapshot.dimension.getEntities({ type: "item", location: snapshot.location, maxDistance: 2.5 })) {
-                if (entity && !pendingState.knownItemIds.has(entity.id)) {
-                    const stack = entity.getComponent("minecraft:item")?.itemStack;
-                    if (stack) {
-                        newItems.push(stack);
-                    }
-                }
-            }
+    const doubleDrops = generateAllBlockLoot(snapshot);
+    if (!spawnAllGeneratedLoot(snapshot, doubleDrops)) return;
 
-            if (newItems.length > 0) {
-                for (const itemStack of newItems) {
-                    snapshot.dimension.spawnItem(itemStack, snapshot.location);
-                }
-                snapshot.dimension.playSound("random.levelup", snapshot.location, { pitch: 0.8, volume: 0.7 });
-                snapshot.dimension.spawnParticle("minecraft:village_hero_effect", {
-                    x: snapshot.location.x + 0.5,
-                    y: snapshot.location.y + 1,
-                    z: snapshot.location.z + 0.5
-                });
-            }
-        } catch (e) {
-            console.warn("[StatsCore] Double Trouble effect failed.", e);
-        }
-    }, 5);
+    let label = "\u00A7dDouble Trouble";
+    let tripleTriggered = false;
+    const triple = attributes?.mining?.tripleTrouble;
+    const tripleChance = getDoubleTroubleChance(doubleTrouble, miningLevel)
+        * Math.max(0, Number(triple?.chanceScale ?? 0.1));
+    if (triple && rollChance(tripleChance) && spawnAllGeneratedLoot(snapshot, generateAllBlockLoot(snapshot))) {
+        label = "\u00A75Triple Trouble";
+        tripleTriggered = true;
+    }
+
+    snapshot.dimension.playSound("random.levelup", snapshot.location, { pitch: 1, volume: 0.7 });
+    if (tripleTriggered) {
+        snapshot.dimension.playSound("random.levelup", snapshot.location, { pitch: 0.55, volume: 0.7 });
+    }
+    snapshot.dimension.spawnParticle("minecraft:village_hero_effect", {
+        x: snapshot.location.x + 0.5,
+        y: snapshot.location.y + 1,
+        z: snapshot.location.z + 0.5
+    });
+    showMiningFeedback(snapshot.player, snapshot.blockId, {
+        bonusDrop: true,
+        bonusXp: false,
+        bonusDropLabel: label,
+        silent: true,
+    });
 }
 
 function replantBrokenCrop(snapshot) {
@@ -776,7 +821,7 @@ function isBerserkLogBlockId(blockId) {
     return Boolean(resolveBerserkPlankId(blockId));
 }
 
-function executeBerserkLogBreak(snapshot, effect) {
+function executeBerserkLogConversion(snapshot, effect, pendingState = null) {
     const plankId = resolveBerserkPlankId(snapshot.blockId);
     if (!plankId) return;
     if (!snapshot.dimension || !snapshot.location) return;
@@ -786,9 +831,14 @@ function executeBerserkLogBreak(snapshot, effect) {
         y: Number(snapshot.location.y ?? 0) + 0.5,
         z: Number(snapshot.location.z ?? 0) + 0.5,
     };
-    const knownNearbyItemIds = new Set();
+    const extraMin = Math.max(1, Math.floor(Number(effect?.extraPlanksMin ?? 1) || 1));
+    const extraMax = Math.max(extraMin, Math.floor(Number(effect?.extraPlanksMax ?? 4) || 4));
+    const totalAmount = 4 + rollInclusiveAmount(extraMin, extraMax);
+    const knownItemIds = pendingState?.knownItemIds ?? new Set();
+    let removedLogDrop = false;
 
-    // Snapshot nearby item entities before the break so we only touch the fresh log drop.
+    // The native break has already produced its items. Replace only fresh log
+    // entities; the before-event snapshot protects items that were already here.
     try {
         for (const entity of snapshot.dimension.getEntities({
             type: "item",
@@ -796,46 +846,20 @@ function executeBerserkLogBreak(snapshot, effect) {
             maxDistance: 1.75,
         })) {
             const entityId = entity?.id;
-            if (typeof entityId === "string" && entityId.length > 0) {
-                knownNearbyItemIds.add(entityId);
-            }
+            if (typeof entityId === "string" && knownItemIds.has(entityId)) continue;
+
+            const stack = entity?.getComponent?.("minecraft:item")?.itemStack;
+            if (normalizeBlockId(stack?.typeId) !== normalizeBlockId(snapshot.blockId)) continue;
+
+            entity.remove();
+            removedLogDrop = true;
         }
     } catch { }
 
-    // Break the log normally first so the world resolves the block as a real mined break.
-    if (!destroyBlockWithDrops(snapshot.dimension, snapshot.location)) return;
+    if (!removedLogDrop) return;
 
-    const extraMin = Math.max(1, Math.floor(Number(effect?.extraPlanksMin ?? 1) || 1));
-    const extraMax = Math.max(extraMin, Math.floor(Number(effect?.extraPlanksMax ?? 4) || 4));
-    const totalAmount = 4 + rollInclusiveAmount(extraMin, extraMax);
-
-    system.run(() => {
-        // Remove only the newly spawned log item so we can replace it with planks.
-        try {
-            for (const entity of snapshot.dimension.getEntities({
-                type: "item",
-                location: dropCenter,
-                maxDistance: 1.75,
-            })) {
-                const entityId = entity?.id;
-                if (typeof entityId === "string" && knownNearbyItemIds.has(entityId)) {
-                    continue;
-                }
-
-                const stack = entity?.getComponent?.("minecraft:item")?.itemStack;
-                if (normalizeBlockId(stack?.typeId) !== normalizeBlockId(snapshot.blockId)) {
-                    continue;
-                }
-
-                entity.remove();
-            }
-        } catch { }
-
-        // Replace the removed log drop with 4 planks plus the Berserk extra plank roll.
-        spawnBonusDropCount(snapshot.dimension, snapshot.location, plankId, totalAmount);
-        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "\u00A7bBerserk Planks" });
-        processMiningBreak(snapshot);
-    });
+    spawnBonusDropCount(snapshot.dimension, snapshot.location, plankId, totalAmount);
+    showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "\u00A7bBerserk Planks" });
 }
 
 function applyMiningEffects({ attributes, isOre, dimension, location }) {
@@ -871,7 +895,7 @@ function processMiningBreak(snapshot) {
     if (!context) return;
 
     const { stack, definition, attributes } = context;
-    if (!canUseDefinitionForMining(definition)) return;
+    if (!canUseDefinitionForMining(definition, attributes)) return;
 
     const isOre = Boolean(ORE_BONUS_DROPS[blockId]) || blockId.endsWith("_ore");
     const reason = (definition.type === ITEM_TYPES.tool || definition.type === ITEM_TYPES.hybrid)
@@ -882,6 +906,7 @@ function processMiningBreak(snapshot) {
     let changed = false;
     let bonusDrop = false;
     let bonusXp = false;
+    let preserved = false;
 
     if (isOre && !hasSilkTouch(stack)) {
         const dropId = ORE_BONUS_DROPS[blockId];
@@ -891,7 +916,8 @@ function processMiningBreak(snapshot) {
     }
 
     if (rollChance(attributes.mining.durabilitySaveChance, 0)) {
-        changed = repairItemDurability(stack) || changed;
+        preserved = repairItemDurability(stack);
+        changed = preserved || changed;
     }
 
     const effectResult = applyMiningEffects({ attributes, isOre, dimension, location });
@@ -902,7 +928,7 @@ function processMiningBreak(snapshot) {
 
     if (changed) persistEquipmentItem(player, STATSCORE.slots.mainhand, stack);
     showLevelUp(player, stack, progress);
-    showMiningFeedback(player, blockId, { bonusDrop, bonusXp });
+    showMiningFeedback(player, blockId, { bonusDrop, bonusXp, preserved });
 }
 
 function snapshotBreakEvent(event) {
@@ -917,7 +943,11 @@ function snapshotBreakEvent(event) {
     const dimension = event?.dimension ?? player.dimension;
     if (!blockId || !location || !dimension) return null;
 
-    const expected = event?.itemStack?.typeId ?? getEquipment(player, STATSCORE.slots.mainhand).item?.typeId;
+    const tool = event?.itemStackBeforeBreak
+        ?? event?.itemStack
+        ?? event?.itemStackAfterBreak
+        ?? getEquipment(player, STATSCORE.slots.mainhand).item;
+    const expected = tool?.typeId;
     if (!expected) return null;
     return {
         player,
@@ -925,7 +955,8 @@ function snapshotBreakEvent(event) {
         blockPermutation: event?.brokenBlockPermutation ?? event?.block?.permutation ?? null,
         location,
         dimension,
-        expected
+        expected,
+        tool,
     };
 }
 
@@ -937,12 +968,11 @@ function handleBeforeBreak(event) {
         if (!snapshot || isCreativePlayer(snapshot.player)) return;
 
         const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);
-        if (!context || !canUseDefinitionForMining(context.definition)) return;
+        if (!context || !canUseDefinitionForMining(context.definition, context.attributes)) return;
 
         const { state, attributes } = context;
         const operatorEffect = findEffectByKind(attributes?.mining?.effects, "operator");
         const gardenerEffect = findEffectByKind(attributes?.mining?.effects, "gardener");
-        const primalEffect = findEffectByKind(attributes?.mining?.effects, "primal");
         const forgerEffect = findEffectByKind(attributes?.mining?.effects, "forger");
         const reaperEffect = findEffectByKind(attributes?.mining?.effects, "reaper");
         const berserkEffect = findEffectByKind(attributes?.mining?.effects, "berserk_logging")
@@ -958,9 +988,7 @@ function handleBeforeBreak(event) {
         }
 
         if (berserkEffect && snapshot.player?.isSneaking && isBerserkLogBlockId(snapshot.blockId)) {
-            event.cancel = true;
-            system.run(() => executeBerserkLogBreak(snapshot, berserkEffect));
-            return;
+            rememberBerserkLogBreak(snapshot, berserkEffect);
         }
 
         if (forgerEffect && normalizeBlockId(snapshot.blockId) === "minecraft:netherrack") {
@@ -975,15 +1003,7 @@ function handleBeforeBreak(event) {
             rememberOreDropSnapshot(snapshot);
         }
 
-        if (findEffectByKind(attributes?.mining?.effects, "double_trouble")) {
-            rememberDoubleTroubleSnapshot(snapshot);
-        }
-
         if (gardenerEffect && isGardenerTargetBlockId(snapshot.blockId)) {
-            spawnDuplicateLoot(snapshot.player, snapshot.location);
-        }
-
-        if (primalEffect && isPrimalTargetBlockId(snapshot.blockId)) {
             spawnDuplicateLoot(snapshot.player, snapshot.location);
         }
 
@@ -1000,23 +1020,29 @@ function handleAfterBreak(event) {
     if (!snapshot) return;
 
     system.run(() => {
+        const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);
+        if (!context || !canUseDefinitionForMining(context.definition, context.attributes)) {
+            consumeBerserkLogBreak(snapshot);
+            return;
+        }
+
+        const pendingBerserk = consumeBerserkLogBreak(snapshot);
+        if (pendingBerserk?.effect) {
+            executeBerserkLogConversion(snapshot, pendingBerserk.effect, pendingBerserk);
+        }
+
         processMiningBreak(snapshot);
 
         try {
-            const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);
-            if (!context) return;
-
             const { attributes } = context;
-
-            if (findEffectByKind(attributes?.mining?.effects, "double_trouble")) {
-                executeDoubleTrouble(snapshot);
-            }
+            if (attributes?.mining?.doubleTrouble) executeDoubleTrouble(snapshot);
 
             if (findEffectByKind(attributes?.mining?.effects, "gardener") && isGardenerTargetBlockId(snapshot.blockId)) {
                 executeGardenerBreak(snapshot);
             }
 
             if (findEffectByKind(attributes?.mining?.effects, "primal") && isPrimalTargetBlockId(snapshot.blockId)) {
+                // Primal owns its drops; do not duplicate this block through the loot table.
                 executePrimalBreak(snapshot);
             }
 

@@ -221,12 +221,27 @@ function tryApplyCommandDamage(target, amount, attacker, cause = "entity_attack"
     }
 }
 
-function applySweep(attacker, target, effect, finalDamage) {
+function getSweepDamageScale(effect, offensiveLevel) {
+    const baseScale = Math.max(0.5, Number(effect?.damageScale ?? 0.5) || 0.5);
+    const scalePer5Levels = Math.max(0, Number(effect?.damageScalePer5Levels ?? 0.05) || 0.05);
+    const maxScale = Math.max(baseScale, Number(effect?.maxDamageScale ?? 1) || 1);
+    const levelSteps = Math.floor(Math.max(1, Number(offensiveLevel ?? 1) || 1) / 5);
+    return Math.min(maxScale, baseScale + levelSteps * scalePer5Levels);
+}
+
+function getSweepRadius(effect, offensiveLevel) {
+    const baseRadius = Math.max(0.5, Number(effect?.radius ?? 2.5) || 2.5);
+    const radiusPer5Levels = Math.max(0, Number(effect?.radiusPer5Levels ?? 0.5) || 0.5);
+    const maxRadiusLevel = Math.max(1, Math.floor(Number(effect?.maxRadiusLevel ?? 25) || 25));
+    const cappedLevel = Math.min(maxRadiusLevel, Math.max(1, Number(offensiveLevel ?? 1) || 1));
+    return baseRadius + Math.floor(cappedLevel / 5) * radiusPer5Levels;
+}
+
+function applySweep(attacker, target, effect, finalDamage, offensiveLevel) {
     if (!attacker || !target || !target.dimension || isEffectOnCooldown(attacker, effect)) return false;
 
-    const radius = Math.max(1.5, Number(effect?.radius ?? 2.5) || 2.5);
-    const maxTargets = Math.max(1, Math.floor(Number(effect?.maxTargets ?? 2) || 2));
-    const damageScale = Math.max(0.1, Number(effect?.damageScale ?? 0.35) || 0.35);
+    const radius = getSweepRadius(effect, offensiveLevel);
+    const damageScale = getSweepDamageScale(effect, offensiveLevel);
     const sweepDamage = Math.max(1, Number(finalDamage ?? 0) * damageScale);
     let hits = 0;
 
@@ -241,8 +256,6 @@ function applySweep(attacker, target, effect, finalDamage) {
         if (tryApplyCommandDamage(entity, sweepDamage, attacker)) {
             hits++;
         }
-
-        if (hits >= maxTargets) break;
     }
 
     if (hits > 0) {
@@ -576,15 +589,15 @@ function applyElementalAspect(attacker, target, aspect, finalDamage) {
 
 function applyElementalAspects({ attacker, target, attributes, finalDamage }) {
     const aspects = Array.isArray(attributes?.elemental) ? attributes.elemental : [];
-    let applied = 0;
+    const applied = [];
 
     for (const aspect of aspects) {
         if (applyElementalAspect(attacker, target, aspect, finalDamage)) {
-            applied++;
+            applied.push(String(aspect?.id ?? aspect?.type ?? "").trim().toLowerCase());
         }
     }
 
-    return applied;
+    return applied.filter(Boolean);
 }
 
 function queueAftershockSlowness(target, effect) {
@@ -758,12 +771,13 @@ function applyBallista(attacker, target, effect, finalDamage) {
 
 export function applyCombatEffects({ attacker, target, attributes, crit, finalDamage }) {
     const effects = Array.isArray(attributes?.effects) ? attributes.effects : [];
-    if (!target) return 0;
+    if (!target) return { count: 0, elemental: [] };
 
     const marked = Boolean(getMark(target));
-    let applied = applyElementalAspects({ attacker, target, attributes, finalDamage });
+    const elemental = applyElementalAspects({ attacker, target, attributes, finalDamage });
+    let applied = elemental.length;
 
-    if (!effects.length) return applied;
+    if (!effects.length) return { count: applied, elemental };
 
     for (const effect of effects) {
         if (!effect || typeof effect !== "object") continue;
@@ -808,7 +822,7 @@ export function applyCombatEffects({ attacker, target, attributes, crit, finalDa
         }
 
         if (kind === "sweep") {
-            if (applySweep(attacker, target, effect, finalDamage)) applied++;
+            if (applySweep(attacker, target, effect, finalDamage, attributes?.levels?.offensive)) applied++;
             continue;
         }
 
@@ -827,6 +841,6 @@ export function applyCombatEffects({ attacker, target, attributes, crit, finalDa
         }
     }
 
-    return applied;
+    return { count: applied, elemental };
 }
 

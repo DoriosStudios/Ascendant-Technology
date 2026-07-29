@@ -3,7 +3,7 @@ import { ITEM_TYPES, STATSCORE } from "../constants.js";
 import { getLiveEquipmentItem, persistEquipmentItem } from "../core/equipment.js";
 import { getStatsCoreDefinition } from "../core/registry.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
-import { showCombatFeedback, showLevelUp } from "../feedback/index.js";
+import { showAbilityFeedback, showCombatFeedback, showLevelUp } from "../feedback/index.js";
 import { applyCombatEffects, getMarkedDamageBonus, isProcDamageTarget } from "./effects.js";
 import { rollStatsCrit, rememberCombatContact } from "./crit.js";
 import { applyArmorPenetration } from "./penetration.js";
@@ -17,10 +17,11 @@ const berserkStates = new Map();
 function canUseDefinitionForCombat(definition, attributes = undefined) {
     if (!definition || definition.enabled === false) return false;
     if (definition.type === ITEM_TYPES.support) return false;
+    if (attributes?.refinement?.active !== true) return false;
     return getProgressAmount(definition, "combat", 0) > 0
         || (attributes?.flatDamageBonus ?? 0) > 0
-        || (attributes?.crit?.chance ?? definition?.attributes?.crit?.chance ?? 0) > 0
-        || (attributes?.penetration?.percent ?? definition?.attributes?.penetration?.percent ?? 0) > 0
+        || (attributes?.crit?.chance ?? 0) > 0
+        || (attributes?.penetration?.percent ?? 0) > 0
         || (Array.isArray(attributes?.elemental) && attributes.elemental.length > 0)
         || (Array.isArray(attributes?.effects) && attributes.effects.length > 0);
 }
@@ -64,9 +65,7 @@ function addBerserkStack(attacker, effect) {
         expiresAt: now + durationTicks,
     });
 
-    try {
-        attacker?.onScreenDisplay?.setActionBar?.(`\u00A7cBerserk x${nextStacks}`);
-    } catch { }
+    showAbilityFeedback(attacker, `\u00A7cBerserk x${nextStacks}`);
 
     return nextStacks;
 }
@@ -136,9 +135,15 @@ function handleCombatHurt(event) {
 
         system.run(() => {
             applyLifeSteal(attacker, finalDamage, attributes, { crit: crit.active });
-            applyCombatEffects({ attacker, target, attributes, crit, finalDamage });
+            const effects = applyCombatEffects({ attacker, target, attributes, crit, finalDamage });
             persistCombatProgress(attacker, weaponTypeId, combatXp, "combat", true);
-            showCombatFeedback(attacker, target, { crit, penetration, damage: finalDamage });
+            showCombatFeedback(attacker, target, {
+                crit,
+                penetration,
+                damage: finalDamage,
+                extraDamage: Math.max(0, finalDamage - baseDamage),
+                elemental: effects.elemental,
+            });
         });
     } catch (error) {
         console.warn("[StatsCore] combat hurt handler failed:", error);

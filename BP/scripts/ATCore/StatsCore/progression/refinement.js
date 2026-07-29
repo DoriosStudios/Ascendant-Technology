@@ -13,11 +13,10 @@ export function getXpNeededForLevel(level, definition) {
 }
 
 export function getLevelFromXp(totalXp, definition) {
-    const maxLevel = Math.max(1, Math.floor(Number(definition?.maxLevel) || STATSCORE.progression.maxLevel));
     let level = 1;
     let remaining = Math.max(0, Math.floor(Number(totalXp) || 0));
 
-    while (level < maxLevel) {
+    while (true) {
         const needed = getXpNeededForLevel(level, definition);
         if (remaining < needed) break;
         remaining -= needed;
@@ -98,6 +97,9 @@ export function grantStatsProgress(stack, definition, amount, reason = "use", op
 
     const category = getCategoryForReason(reason);
     const currentState = readStatsState(stack, definition);
+    if (currentState.refined !== true) {
+        return { changed: false, levelUp: false, state: currentState, reason, buffered: 0 };
+    }
     if (!category || !currentState.progression?.[category]) {
         return { changed: false, levelUp: false, state: currentState, reason, buffered: 0 };
     }

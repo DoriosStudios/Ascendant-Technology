@@ -106,6 +106,38 @@ item.utilitycraft:liquid_void=Flüssige-Leere-Kapsel\n§o§9UC: Ascendant Techno
 item.utilitycraft:size_upgrade=§gGrößen-Upgrade§7\n- Vergrößert Laserbarrierebereich\n§o§9UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§dHyper-Verarbeitungs-Upgrade§7\n- Erhöht Maschinengeschwindigkeit\n- Keine zusätzlichen Energiekosten\n§o§9UC: Ascendant Technology
 upgrade.utilitycraft:hyper_processing_upgrade.name=§dHyper-Verarbeitungs-Upgrade§r
+upgrade.utilitycraft:stack_upgrade.name=§6Stapel-Upgrade§r
+
+## Base UtilityCraft Machines
+
+tile.utilitycraft:autosieve.name=Autosieb\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autosieve.name=Autosieb
+tile.utilitycraft:autofisher.name=Automatischer Fischer\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autofisher.name=Automatischer Fischer
+tile.utilitycraft:block_breaker.name=Blockbrecher\n§7Akzeptiert Upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_breaker.name=Blockbrecher
+tile.utilitycraft:crusher.name=Brecher\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:crusher.name=Brecher
+tile.utilitycraft:harvester.name=Erntemaschine\n§7Akzeptiert Upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:harvester.name=Erntemaschine
+tile.utilitycraft:electro_press.name=Elektropresse\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:electro_press.name=Elektropresse
+tile.utilitycraft:block_placer.name=Blocksetzer\n§7Akzeptiert Upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_placer.name=Blocksetzer
+tile.utilitycraft:seed_synthesizer.name=Saatgut-Synthesizer\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:seed_synthesizer.name=Saatgut-Synthesizer
+tile.utilitycraft:incinerator.name=Verbrenner\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:incinerator.name=Verbrenner
+tile.utilitycraft:infuser.name=Infuser\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:infuser.name=Infuser
+tile.utilitycraft:assembler.name=Assembler\n§7Akzeptiert Upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:assembler.name=Assembler
+tile.utilitycraft:digitizer.name=Digitalisierer\n§7Akzeptiert Upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:digitizer.name=Digitalisierer
+tile.utilitycraft:induction_anvil.name=Induktionsamboss\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:induction_anvil.name=Induktionsamboss
+tile.utilitycraft:magmatic_chamber.name=Magmakammer\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:magmatic_chamber.name=Magmakammer
 item.utilitycraft:curse_protection_module=§dFluchschutz-Modul§7\n- Verringert die Fluchchance beim Verzaubern\n§o§9UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dVerzauberbarkeits-Modul §r(Stufe I)§7\n- Schaltet Verzauberung frei\n- Max. Stufe: 1\n§o§9UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dVerzauberbarkeits-Modul §r(Stufe II)§7\n- Max. Verzauberungsstufe: 2\n§o§9UC: Ascendant Technology
@@ -117,15 +149,11 @@ item.utilitycraft:reinforcement_module_2=§dVerstärkungs-Modul §r(Stufe II)§7
 item.utilitycraft:reinforcement_module_3=§dVerstärkungs-Modul §r(Stufe III)§7\n- Maximaler Haltbarkeitsbonus\n§o§9UC: Ascendant Technology
 
 ## Meshes & Nets
-item.utilitycraft:lucky_mesh=§aGlücksgitter\n§7- Max. Drop-Stufe: Diamant\n§7- Gegenstandsmultiplikator: 2x\n§o§9UC: Ascendant Technology
-item.utilitycraft:lucky_fishing_net=§aGlücksangelnetz\n§7- Haken-Geschwindigkeitsstufe: 10\n§7- Gegenstandsmultiplikator: 2x\n§o§9UC: Ascendant Technology
 item.utilitycraft:aetherium_mesh=§uAetherium §7Mesh\n§7- Max. Drop-Stufe: Interdimensional\n§7- Gegenstandsmultiplikator: 1,5x\n§o§9UC: Ascendant Technology
 item.utilitycraft:aetherium_fishing_net=§uAetherium §7Fishing Net\n§7- Haken-Geschwindigkeitsstufe: 8\n§7- Gegenstandsmultiplikator: 1,5x\n§o§9UC: Ascendant Technology
 item.utilitycraft:titanium_mesh=§3Titan §7Mesh\n§7- Max. Drop-Stufe: Diamant\n§o§9UC: Ascendant Technology
 item.utilitycraft:titanium_fishing_net=§3Titan §7Fishing Net\n§7- Haken-Geschwindigkeitsstufe: 6\n§o§9UC: Ascendant Technology
 
-item.utilitycraft:lucky_aiot_item=§aGlücks-AiOT\n§7Plünderung X\nGlück X\n§o§9UC: Ascendant Technology
-item.utilitycraft:lucky_aiot=§aGlücks-AiOT\n§o§9UC: Ascendant Technology
 
 ## Liquid Capsules
 item.utilitycraft:empty_liquid_capsule=Leere Flüssigkeitskapsel\n§o§9UC: Ascendant Technology

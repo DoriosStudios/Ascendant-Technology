@@ -106,6 +106,38 @@ item.utilitycraft:liquid_void=Капсула Жидкой Пустоты\n§o§9
 item.utilitycraft:size_upgrade=§gУлучшение Размера§7\n- Увеличивает область Лазерного Барьера\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§dУлучшение Гиперобработки§7\n- Увеличивает скорость работы машин\n- Без дополнительных энергозатрат\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:hyper_processing_upgrade.name=§dУлучшение Гиперобработки§r
+upgrade.utilitycraft:stack_upgrade.name=§6Улучшение Стопки§r
+
+## Base UtilityCraft Machines
+
+tile.utilitycraft:autosieve.name=Автосито\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autosieve.name=Автосито
+tile.utilitycraft:autofisher.name=Авторыбак\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autofisher.name=Авторыбак
+tile.utilitycraft:block_breaker.name=Разрушитель Блоков\n§7Принимает улучшения:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_breaker.name=Разрушитель Блоков
+tile.utilitycraft:crusher.name=Дробилка\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:crusher.name=Дробилка
+tile.utilitycraft:harvester.name=Харвестер\n§7Принимает улучшения:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:harvester.name=Харвестер
+tile.utilitycraft:electro_press.name=Электропресс\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:electro_press.name=Электропресс
+tile.utilitycraft:block_placer.name=Установщик Блоков\n§7Принимает улучшения:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_placer.name=Установщик Блоков
+tile.utilitycraft:seed_synthesizer.name=Синтезатор Семян\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:seed_synthesizer.name=Синтезатор Семян
+tile.utilitycraft:incinerator.name=Мусоросжигатель\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:incinerator.name=Мусоросжигатель
+tile.utilitycraft:infuser.name=Инфузор\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:infuser.name=Инфузор
+tile.utilitycraft:assembler.name=Сборщик\n§7Принимает улучшения:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:assembler.name=Сборщик
+tile.utilitycraft:digitizer.name=Дигитайзер\n§7Принимает улучшения:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:digitizer.name=Дигитайзер
+tile.utilitycraft:induction_anvil.name=Индукционная Наковальня\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:induction_anvil.name=Индукционная Наковальня
+tile.utilitycraft:magmatic_chamber.name=Магматическая Камера\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:magmatic_chamber.name=Магматическая Камера
 item.utilitycraft:curse_protection_module=§dМодуль Защиты от Проклятий§7\n- Снижает шанс проклятия при зачаровании\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dМодуль Зачаровываемости §r(Tier I)§7\n- Открывает зачарование\n- Макс. уровень: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dМодуль Зачаровываемости §r(Tier II)§7\n- Макс. уровень зачарования: 2\n§o§9@UC: Ascendant Technology
@@ -117,15 +149,11 @@ item.utilitycraft:reinforcement_module_2=§dМодуль Усиления §r(Ti
 item.utilitycraft:reinforcement_module_3=§dМодуль Усиления §r(Tier III)§7\n- Максимальный бонус прочности\n§o§9@UC: Ascendant Technology
 
 ## Meshes & Nets
-item.utilitycraft:lucky_mesh=§aУдачная Сетка\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x\n§o§9@UC: Ascendant Technology
-item.utilitycraft:lucky_fishing_net=§aУдачная Рыболовная Сеть\n§7- Hook Speed Tier: 10\n§7- Item Multiplier: 2x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_mesh=§uAetherium §7Mesh\n§7- Max Drop Tier: Interdimensional\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_fishing_net=§uAetherium §7Fishing Net\n§7- Hook Speed Tier: 8\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_mesh=§3Титан §7Mesh\n§7- Max Drop Tier: Diamond\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_fishing_net=§3Титан §7Fishing Net\n§7- Hook Speed Tier: 6\n§o§9@UC: Ascendant Technology
 
-item.utilitycraft:lucky_aiot_item=§aLucky AiOT\n§7Looting X\nFortune X\n§o§9@UC: Ascendant Technology
-item.utilitycraft:lucky_aiot=§aLucky AiOT\n§o§9@UC: Ascendant Technology
 
 ## Жидкостные Капсулы
 item.utilitycraft:empty_liquid_capsule=Пустая Жидкостная Капсула\n§o§9@UC: Ascendant Technology

@@ -13,7 +13,7 @@
                 "item": "utilitycraft:titanium_block"
             },
             "G": {
-                "item": "utilitycraft:tungsten_ingot"
+                "item": "utilitycraft:tungsten"
             }
         },
         "pattern": [
@@ -27,7 +27,7 @@
         },
         "unlock": [
             {
-                "item": "utilitycraft:tungsten_ingot"
+                "item": "utilitycraft:tungsten"
             }
         ]
     }

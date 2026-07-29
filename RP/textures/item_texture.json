@@ -257,15 +257,6 @@
 		"utilitycraft_curse_protection_module": {
 			"textures": "textures/items/machinery/modules/curs_prot_mod_2"
 		},
-		"utilitycraft_lucky_mesh":{
-			"textures": "textures/items/meshes/lucky_mesh"
-		},
-		"utilitycraft_lucky_aiot":{
-			"textures": "textures/items/tools/lucky_aiot"
-		},
-		"utilitycraft_lucky_fishing_net":{
-			"textures": "textures/items/nets/lucky_net"
-		},
 		"utilitycraft_empty_liquid_capsule": {
 			"textures": "textures/items/misc/liquid_capsule_0"
 		},

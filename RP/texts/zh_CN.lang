@@ -106,6 +106,38 @@ item.utilitycraft:liquid_void=液态虚空胶囊\n§o§9@UC: Ascendant Technolog
 item.utilitycraft:size_upgrade=§g大小升级§7\n- 增加激光屏障区域\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§d超级处理升级§7\n- 提高机器运行速度\n- 无额外能量消耗\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:hyper_processing_upgrade.name=§d超级处理升级§r
+upgrade.utilitycraft:stack_upgrade.name=§6堆叠升级§r
+
+## Base UtilityCraft Machines
+
+tile.utilitycraft:autosieve.name=自动筛机\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autosieve.name=自动筛机
+tile.utilitycraft:autofisher.name=自动钓鱼机\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autofisher.name=自动钓鱼机
+tile.utilitycraft:block_breaker.name=方块破坏机\n§7接受的升级:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_breaker.name=方块破坏机
+tile.utilitycraft:crusher.name=粉碎机\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:crusher.name=粉碎机
+tile.utilitycraft:harvester.name=收割机\n§7接受的升级:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:harvester.name=收割机
+tile.utilitycraft:electro_press.name=电动冲压机\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:electro_press.name=电动冲压机
+tile.utilitycraft:block_placer.name=方块放置器\n§7接受的升级:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_placer.name=方块放置器
+tile.utilitycraft:seed_synthesizer.name=种子合成器\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:seed_synthesizer.name=种子合成器
+tile.utilitycraft:incinerator.name=焚化炉\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:incinerator.name=焚化炉
+tile.utilitycraft:infuser.name=注入器\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:infuser.name=注入器
+tile.utilitycraft:assembler.name=装配机\n§7接受的升级:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:assembler.name=装配机
+tile.utilitycraft:digitizer.name=数字化机\n§7接受的升级:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:digitizer.name=数字化机
+tile.utilitycraft:induction_anvil.name=感应铁砧\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:induction_anvil.name=感应铁砧
+tile.utilitycraft:magmatic_chamber.name=岩浆室\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:magmatic_chamber.name=岩浆室
 item.utilitycraft:curse_protection_module=§d诅咒保护模块§7\n- 降低附魔时出现诅咒的概率\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§d附魔能力模块 §r(Tier I)§7\n- 解锁附魔功能\n- 最大等级: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§d附魔能力模块 §r(Tier II)§7\n- 最大附魔等级: 2\n§o§9@UC: Ascendant Technology
@@ -117,15 +149,11 @@ item.utilitycraft:reinforcement_module_2=§d强化模块 §r(Tier II)§7\n- 提�
 item.utilitycraft:reinforcement_module_3=§d强化模块 §r(Tier III)§7\n- 最大耐久加成\n§o§9@UC: Ascendant Technology
 
 ## Meshes & Nets
-item.utilitycraft:lucky_mesh=§a幸运网格\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x\n§o§9@UC: Ascendant Technology
-item.utilitycraft:lucky_fishing_net=§a幸运渔网\n§7- Hook Speed Tier: 10\n§7- Item Multiplier: 2x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_mesh=§uAetherium §7Mesh\n§7- Max Drop Tier: Interdimensional\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_fishing_net=§uAetherium §7Fishing Net\n§7- Hook Speed Tier: 8\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_mesh=§3钛 §7Mesh\n§7- Max Drop Tier: Diamond\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_fishing_net=§3钛 §7Fishing Net\n§7- Hook Speed Tier: 6\n§o§9@UC: Ascendant Technology
 
-item.utilitycraft:lucky_aiot_item=§aLucky AiOT\n§7Looting X\nFortune X\n§o§9@UC: Ascendant Technology
-item.utilitycraft:lucky_aiot=§aLucky AiOT\n§o§9@UC: Ascendant Technology
 
 ## 液体胶囊
 item.utilitycraft:empty_liquid_capsule=空液体胶囊\n§o§9@UC: Ascendant Technology

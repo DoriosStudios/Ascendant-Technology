@@ -106,6 +106,38 @@ item.utilitycraft:liquid_void=Capsule de Vide Liquide\n§o§9@UC: Ascendant Tech
 item.utilitycraft:size_upgrade=§gAmélioration de Taille§7\n- Augmente la zone de la Barrière Laser\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§dAmélioration de Traitement Hyper§7\n- Augmente la vitesse d'opération des machines\n- Aucun coût énergétique supplémentaire\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:hyper_processing_upgrade.name=§dAmélioration de Traitement Hyper§r
+upgrade.utilitycraft:stack_upgrade.name=§6Amélioration de Pile§r
+
+## Base UtilityCraft Machines
+
+tile.utilitycraft:autosieve.name=Tamis Automatique\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autosieve.name=Tamis Automatique
+tile.utilitycraft:autofisher.name=Pêcheur Automatique\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autofisher.name=Pêcheur Automatique
+tile.utilitycraft:block_breaker.name=Briseur de Blocs\n§7Améliorations acceptées :\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_breaker.name=Briseur de Blocs
+tile.utilitycraft:crusher.name=Broyeur\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:crusher.name=Broyeur
+tile.utilitycraft:harvester.name=Moissonneuse\n§7Améliorations acceptées :\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:harvester.name=Moissonneuse
+tile.utilitycraft:electro_press.name=Presse Électrique\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:electro_press.name=Presse Électrique
+tile.utilitycraft:block_placer.name=Placeur de Blocs\n§7Améliorations acceptées :\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_placer.name=Placeur de Blocs
+tile.utilitycraft:seed_synthesizer.name=Synthétiseur de Graines\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:seed_synthesizer.name=Synthétiseur de Graines
+tile.utilitycraft:incinerator.name=Incinérateur\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:incinerator.name=Incinérateur
+tile.utilitycraft:infuser.name=Infuseur\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:infuser.name=Infuseur
+tile.utilitycraft:assembler.name=Assembleur\n§7Améliorations acceptées :\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:assembler.name=Assembleur
+tile.utilitycraft:digitizer.name=Numériseur\n§7Améliorations acceptées :\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:digitizer.name=Numériseur
+tile.utilitycraft:induction_anvil.name=Enclume à Induction\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:induction_anvil.name=Enclume à Induction
+tile.utilitycraft:magmatic_chamber.name=Chambre Magmatique\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:magmatic_chamber.name=Chambre Magmatique
 item.utilitycraft:curse_protection_module=§dModule de Protection contre les Malédictions§7\n- Réduit le risque de malédiction pendant l'enchantement\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dModule d'Enchantabilité §r(Palier I)§7\n- Débloque l'enchantement\n- Niveau max: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dModule d'Enchantabilité §r(Palier II)§7\n- Niveau d'enchantement max: 2\n§o§9@UC: Ascendant Technology
@@ -117,15 +149,11 @@ item.utilitycraft:reinforcement_module_2=§dModule de Renforcement §r(Palier II
 item.utilitycraft:reinforcement_module_3=§dModule de Renforcement §r(Palier III)§7\n- Bonus de durabilité maximal\n§o§9@UC: Ascendant Technology
 
 ## Filets & Mailles
-item.utilitycraft:lucky_mesh=§aMaille Chanceuse\n§7- Niveau Max de Butin: Diamant\n§7- Multiplicateur d'Objets: 2x\n§o§9@UC: Ascendant Technology
-item.utilitycraft:lucky_fishing_net=§aFilet de Pêche Chanceux\n§7- Niveau de Vitesse: 10\n§7- Multiplicateur d'Objets: 2x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_mesh=§uMaille en Aetherium\n§7- Niveau Max de Butin: Interdimensionnel\n§7- Multiplicateur d'Objets: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_fishing_net=§uFilet de Pêche en Aetherium\n§7- Niveau de Vitesse: 8\n§7- Multiplicateur d'Objets: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_mesh=§3Maille en Titane\n§7- Niveau Max de Butin: Diamant\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_fishing_net=§3Filet de Pêche en Titane\n§7- Niveau de Vitesse: 6\n§o§9@UC: Ascendant Technology
 
-item.utilitycraft:lucky_aiot_item=§aAiOT Chanceux\n§7Pillage X\nFortune X\n§o§9@UC: Ascendant Technology
-item.utilitycraft:lucky_aiot=§aAiOT Chanceux\n§o§9@UC: Ascendant Technology
 
 ## Capsules de Liquides
 item.utilitycraft:empty_liquid_capsule=Capsule de Liquide Vide\n§o§9@UC: Ascendant Technology

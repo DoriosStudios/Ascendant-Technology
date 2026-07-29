@@ -2,7 +2,7 @@ import * as DoriosLib from "DoriosLib/index.js";
 
 /** @type {Record<string, { output: string, required: number }>} */
 export const pressRecipeAdditions = {
-    "utilitycraft:tungsten_ingot": {
+    "utilitycraft:tungsten": {
         output: "utilitycraft:tungsten_plate",
         required: 2,
     },

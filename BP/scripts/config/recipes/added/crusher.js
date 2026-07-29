@@ -20,7 +20,7 @@ export const crusherRecipeAdditions = {
         cost: 2000,
         tier: 5,
     },
-    "utilitycraft:tungsten_ingot": {
+    "utilitycraft:tungsten": {
         output: "utilitycraft:tungsten_dust",
         amount: 1,
         cost: 2000,

@@ -106,6 +106,38 @@ item.utilitycraft:liquid_void=液体虚無カプセル\n§o§9@UC: Ascendant Tec
 item.utilitycraft:size_upgrade=§gサイズアップグレード§7\n- レーザーバリアの範囲を拡大\n§o§9@UC: Ascendant Technology
 item.utilitycraft:hyper_processing_upgrade=§dハイパー処理アップグレード§7\n- 機械の動作速度を向上\n- 追加のエネルギーコストなし\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:hyper_processing_upgrade.name=§dハイパー処理アップグレード§r
+upgrade.utilitycraft:stack_upgrade.name=§6スタックアップグレード§r
+
+## Base UtilityCraft Machines
+
+tile.utilitycraft:autosieve.name=オートシーバー\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autosieve.name=オートシーバー
+tile.utilitycraft:autofisher.name=自動釣り機\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:autofisher.name=自動釣り機
+tile.utilitycraft:block_breaker.name=ブロックブレーカー\n§7対応アップグレード:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_breaker.name=ブロックブレーカー
+tile.utilitycraft:crusher.name=クラッシャー\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:crusher.name=クラッシャー
+tile.utilitycraft:harvester.name=ハーベスター\n§7対応アップグレード:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:harvester.name=ハーベスター
+tile.utilitycraft:electro_press.name=エレクトロプレス\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:electro_press.name=エレクトロプレス
+tile.utilitycraft:block_placer.name=ブロックプレーサー\n§7対応アップグレード:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:block_placer.name=ブロックプレーサー
+tile.utilitycraft:seed_synthesizer.name=シードシンセサイザー\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:seed_synthesizer.name=シードシンセサイザー
+tile.utilitycraft:incinerator.name=焼却炉\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:incinerator.name=焼却炉
+tile.utilitycraft:infuser.name=インフューザー\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:infuser.name=インフューザー
+tile.utilitycraft:assembler.name=アセンブラー\n§7対応アップグレード:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:assembler.name=アセンブラー
+tile.utilitycraft:digitizer.name=デジタイザー\n§7対応アップグレード:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:digitizer.name=デジタイザー
+tile.utilitycraft:induction_anvil.name=誘導アンビル\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:induction_anvil.name=誘導アンビル
+tile.utilitycraft:magmatic_chamber.name=マグマチックチャンバー\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+entity.utilitycraft:magmatic_chamber.name=マグマチックチャンバー
 item.utilitycraft:curse_protection_module=§d呪い保護モジュール§7\n- エンチャント時の呪い発生率を低下\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dエンチャント適性モジュール §r(Tier I)§7\n- エンチャント機能を解放\n- 最大レベル: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dエンチャント適性モジュール §r(Tier II)§7\n- 最大エンチャントレベル: 2\n§o§9@UC: Ascendant Technology
@@ -117,15 +149,11 @@ item.utilitycraft:reinforcement_module_2=§d強化モジュール §r(Tier II)§
 item.utilitycraft:reinforcement_module_3=§d強化モジュール §r(Tier III)§7\n- 最大耐久ボーナス\n§o§9@UC: Ascendant Technology
 
 ## Meshes & Nets
-item.utilitycraft:lucky_mesh=§aラッキーメッシュ\n§7- Max Drop Tier: Diamond\n§7- Item Multiplier: 2x\n§o§9@UC: Ascendant Technology
-item.utilitycraft:lucky_fishing_net=§aラッキー釣り網\n§7- Hook Speed Tier: 10\n§7- Item Multiplier: 2x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_mesh=§uAetherium §7Mesh\n§7- Max Drop Tier: Interdimensional\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_fishing_net=§uAetherium §7Fishing Net\n§7- Hook Speed Tier: 8\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_mesh=§3チタン §7Mesh\n§7- Max Drop Tier: Diamond\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_fishing_net=§3チタン §7Fishing Net\n§7- Hook Speed Tier: 6\n§o§9@UC: Ascendant Technology
 
-item.utilitycraft:lucky_aiot_item=§aLucky AiOT\n§7Looting X\nFortune X\n§o§9@UC: Ascendant Technology
-item.utilitycraft:lucky_aiot=§aLucky AiOT\n§o§9@UC: Ascendant Technology
 
 ## 液体カプセル
 item.utilitycraft:empty_liquid_capsule=空の液体カプセル\n§o§9@UC: Ascendant Technology

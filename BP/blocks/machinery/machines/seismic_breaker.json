@@ -22,7 +22,7 @@
             "utilitycraft:seismic_breaker": {
                 "entity": {
                     "type": "machine",
-                    "inventory_size": 19
+                    "inventory_size": 18
                 },
                 "machine": {
                     "energy_cap": 512000,

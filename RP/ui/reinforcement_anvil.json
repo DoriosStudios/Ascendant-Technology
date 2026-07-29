@@ -105,8 +105,8 @@
                 "upgrades_tab@uc.upgrades_tab": {
                     "$upgrade_index_1": 7,
                     "$upgrade_index_2": 8,
-                    "$upgrade_index_3": 9,
-                    "$upgrade_index_4": 10,
+                    "$upgrade_index_3": 7,
+                    "$upgrade_index_4": 8,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
                     "$has_third_upgrade": false,
@@ -127,12 +127,12 @@
                     "$io_right_texture": "textures/blocks/machines/enchantment_station",
                     "$io_bottom_texture": "textures/blocks/machines/enchantment_station",
                     "$io_back_texture": "textures/blocks/machines/enchantment_station",
-                    "$io_item_top_index": 11,
-                    "$io_item_left_index": 12,
-                    "$io_item_front_index": 13,
-                    "$io_item_right_index": 14,
-                    "$io_item_bottom_index": 15,
-                    "$io_item_back_index": 16
+                    "$io_item_top_index": 9,
+                    "$io_item_left_index": 10,
+                    "$io_item_front_index": 11,
+                    "$io_item_right_index": 12,
+                    "$io_item_bottom_index": 13,
+                    "$io_item_back_index": 14
                 }
             },
             {

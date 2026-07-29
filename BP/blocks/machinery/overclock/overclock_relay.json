@@ -22,7 +22,7 @@
 			"utilitycraft:overclock_relay": {
 				"entity": {
 					"type": "machine",
-					"inventory_size": 5
+					"inventory_size": 3
 				},
 				"machine": {
 					"overclock": false,

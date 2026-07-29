@@ -15,6 +15,8 @@ import {
 import { displayOverclock, formatLevel } from "./display.js";
 
 const ID = "utilitycraft:overclock_tower";
+const INVENTORY_SIZE = 12;
+const LEGACY_SLOT_LAYOUT = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const FUEL_SLOTS = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 const OVERCLOCK_DISPLAY_SLOT = 11;
 const BURN_STATE_PROPERTY = "ascendant:overclock_burns";
@@ -38,6 +40,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         ensureOverclockNetwork(event.block);
         const fuelState = processFuelSlots(machine);

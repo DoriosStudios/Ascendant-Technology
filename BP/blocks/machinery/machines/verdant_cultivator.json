@@ -22,7 +22,7 @@
             "utilitycraft:verdant_cultivator": {
                 "entity": {
                     "type": "machine",
-                    "inventory_size": 27
+                    "inventory_size": 26
                 },
                 "machine": {
                     "energy_cap": 1024000,

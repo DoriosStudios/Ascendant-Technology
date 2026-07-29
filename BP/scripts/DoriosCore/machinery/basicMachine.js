@@ -1,5 +1,5 @@
 import * as DoriosLib from "DoriosLib/index.js";
-import { ItemStack, world } from "@minecraft/server";
+import { ItemStack, system, world } from "@minecraft/server";
 import * as Constants from "./constants.js";
 import { EnergyStorage } from "./energyStorage";
 import { OutputTracker } from "./outputTracker.js";
@@ -452,5 +452,70 @@ export class BasicMachine {
         this.container.setItem(index, undefined);
       }
     }
+  }
+
+  /**
+   * Replaces a legacy inventory component with a compact layout while keeping
+   * every mapped stack. `sourceSlots[targetSlot]` identifies the slot in the
+   * current layout that should be copied into each target slot.
+   *
+   * Unmapped player items are returned to the world instead of being deleted;
+   * UI-only placeholders are discarded. The resize completes on the next
+   * script tick, so callers must stop processing when this returns `false`.
+   *
+   * @param {number} targetSize Final inventory size.
+   * @param {number[]} sourceSlots Legacy source slot for every target slot.
+   * @returns {boolean} Whether the inventory already uses the target layout.
+   */
+  ensureInventoryLayout(targetSize, sourceSlots) {
+    const normalizedSize = Math.max(1, Math.floor(Number(targetSize) || 1));
+    if (this.container.size === normalizedSize) return true;
+
+    const contents = new Array(normalizedSize);
+    const retainedSources = new Set();
+    for (let targetSlot = 0; targetSlot < normalizedSize; targetSlot++) {
+      const sourceSlot = Math.floor(Number(sourceSlots?.[targetSlot]));
+      if (!Number.isInteger(sourceSlot) || sourceSlot < 0 || sourceSlot >= this.container.size) continue;
+      retainedSources.add(sourceSlot);
+      contents[targetSlot] = this.container.getItem(sourceSlot)?.clone();
+    }
+
+    const overflow = [];
+    for (let sourceSlot = 0; sourceSlot < this.container.size; sourceSlot++) {
+      if (retainedSources.has(sourceSlot)) continue;
+      const item = this.container.getItem(sourceSlot);
+      if (!item || isUiInventoryItem(item)) continue;
+      overflow.push(item.clone());
+    }
+
+    const entity = this.entity;
+    try {
+      entity.triggerEvent(`utilitycraft:inventory_${normalizedSize}`);
+    } catch {
+      return false;
+    }
+
+    system.run(() => {
+      if (!entity.isValid) return;
+      const inventory = entity.getComponent("minecraft:inventory") ?? entity.getComponent("inventory");
+      const resized = inventory?.container;
+      if (!resized || resized.size !== normalizedSize) return;
+
+      for (let slot = 0; slot < resized.size; slot++) resized.setItem(slot, undefined);
+      for (let slot = 0; slot < contents.length; slot++) {
+        const item = contents[slot];
+        if (item) resized.setItem(slot, item);
+      }
+      for (const item of overflow) entity.dimension.spawnItem(item, entity.location);
+    });
+    return false;
+  }
+}
+
+function isUiInventoryItem(item) {
+  try {
+    return item.getTags().some((tag) => tag.includes("ui"));
+  } catch {
+    return false;
   }
 }

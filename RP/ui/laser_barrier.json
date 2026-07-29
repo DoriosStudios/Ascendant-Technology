@@ -43,10 +43,10 @@
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "$upgrade_index_1": 4,
-                    "$upgrade_index_2": 5,
-                    "$upgrade_index_3": 6,
-                    "$upgrade_index_4": 3,
+                    "$upgrade_index_1": 3,
+                    "$upgrade_index_2": 4,
+                    "$upgrade_index_3": 5,
+                    "$upgrade_index_4": 5,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
                     "$has_third_upgrade": true,

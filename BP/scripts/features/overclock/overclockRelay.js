@@ -12,6 +12,8 @@ import {
 import { displayOverclock, formatLevel } from "./display.js";
 
 const ID = "utilitycraft:overclock_relay";
+const INVENTORY_SIZE = 3;
+const LEGACY_SLOT_LAYOUT = [0, 1, 2];
 const OVERCLOCK_DISPLAY_SLOT = 2;
 
 DoriosLib.registry.blockComponent(ID, {
@@ -28,6 +30,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         ensureOverclockNetwork(event.block);
         const network = getOverclockNetworkForRelay(machine.entity);

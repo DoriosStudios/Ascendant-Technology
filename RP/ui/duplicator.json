@@ -36,7 +36,7 @@
             },
             {
                 "aetherium_input@uc.liquid_input_1_bar": {
-                    "$collection_index": 11,
+                    "$collection_index": 6,
                     "$has_bg": false,
                     "offset": [-50, 0]
                 }
@@ -62,7 +62,7 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [54, 20],
-                    "collection_index": 18
+                    "collection_index": 7
                 }
             },
             {
@@ -70,7 +70,7 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [54, 38],
-                    "collection_index": 19
+                    "collection_index": 8
                 }
             },
             {
@@ -99,18 +99,18 @@
                     "$io_right_texture": "textures/blocks/machines/duplicator_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/duplicator_off_down",
                     "$io_back_texture": "textures/blocks/machines/duplicator_off_south",
-                    "$io_item_top_index": 20,
-                    "$io_item_left_index": 21,
-                    "$io_item_front_index": 22,
-                    "$io_item_right_index": 23,
-                    "$io_item_bottom_index": 24,
-                    "$io_item_back_index": 25,
-                    "$io_fluid_top_index": 26,
-                    "$io_fluid_left_index": 27,
-                    "$io_fluid_front_index": 28,
-                    "$io_fluid_right_index": 29,
-                    "$io_fluid_bottom_index": 30,
-                    "$io_fluid_back_index": 31
+                    "$io_item_top_index": 9,
+                    "$io_item_left_index": 10,
+                    "$io_item_front_index": 11,
+                    "$io_item_right_index": 12,
+                    "$io_item_bottom_index": 13,
+                    "$io_item_back_index": 14,
+                    "$io_fluid_top_index": 15,
+                    "$io_fluid_left_index": 16,
+                    "$io_fluid_front_index": 17,
+                    "$io_fluid_right_index": 18,
+                    "$io_fluid_bottom_index": 19,
+                    "$io_fluid_back_index": 20
                 }
             },
             {

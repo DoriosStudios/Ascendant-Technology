@@ -14,18 +14,27 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:catalyst_weaver";
+const INVENTORY_SIZE = 28;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, -1,
+    13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+];
+const LEGACY_UPGRADE_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+    -1, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+];
 const INPUT_SLOT = 3;
 const CATALYST_SLOTS = [4, 5, 6, 7, 8, 9];
 const FLUID_DISPLAY_SLOT = 10;
-const BYPRODUCT_SLOT = 13;
-const OUTPUT_SLOT = 14;
+const BYPRODUCT_SLOT = 14;
+const OUTPUT_SLOT = 15;
 const RECIPE_KEY = "ascendant:catalyst_weaver_recipe";
 const FLUID_IO_RATE = 128000;
 const itemMaximums = new Map();
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [15, 16, 17, 18, 19, 20],
+        buttonSlots: [16, 17, 18, 19, 20, 21],
         anyInputSlots: [INPUT_SLOT, ...CATALYST_SLOTS],
         anyOutputSlots: [OUTPUT_SLOT, BYPRODUCT_SLOT],
         modes: [
@@ -44,7 +53,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [21, 22, 23, 24, 25, 26],
+        buttonSlots: [22, 23, 24, 25, 26, 27],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -73,6 +82,13 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        const legacySlot13 = machine.container.size === 27
+            ? machine.container.getItem(13)
+            : undefined;
+        const migrationLayout = isMachineUpgrade(legacySlot13)
+            ? LEGACY_UPGRADE_SLOT_LAYOUT
+            : LEGACY_SLOT_LAYOUT;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, migrationLayout)) return;
 
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
         const tank = new FluidStorage(machine.entity, 0);
@@ -181,6 +197,14 @@ DoriosLib.registry.blockComponent(ID, {
         Machine.onDestroy(event);
     },
 });
+
+function isMachineUpgrade(item) {
+    try {
+        return item?.getTags().includes("utilitycraft:is_upgrade") === true;
+    } catch {
+        return false;
+    }
+}
 
 function readCatalystTotals(container) {
     const totals = new Map();

@@ -29,11 +29,15 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:seismic_breaker";
+const INVENTORY_SIZE = 18;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18,
+];
 const MODE_BUTTON_SLOT = 3;
 const PRECISION_BUTTON_SLOT = 4;
 const OUTPUT_SLOTS = [5, 6, 7, 8];
-const ACTIVATION_BUTTON_SLOT = 12;
-const IO_BUTTON_SLOTS = [13, 14, 15, 16, 17, 18];
+const ACTIVATION_BUTTON_SLOT = 11;
+const IO_BUTTON_SLOTS = [12, 13, 14, 15, 16, 17];
 const MODE_KEY = "ascendant:seismic_breaker_mode";
 const PRECISION_KEY = "ascendant:seismic_breaker_precision";
 const ENABLED_KEY = "ascendant:seismic_breaker_enabled";
@@ -100,7 +104,6 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([11]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A761x1");
@@ -118,6 +121,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         machine.processIO();
         if (machine.shouldUpdateUI) ButtonManager.ensureWatching(machine.entity, ID);

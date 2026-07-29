@@ -85,7 +85,7 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [48, 47],
-                    "$index": 12,
+                    "$index": 11,
                     "$button_size": [38, 14],
                     "$text_scale": 0.5,
                     "$default_texture": "textures/ui/cells/inverted_green_cell_image",
@@ -118,12 +118,12 @@
                     "$io_right_texture": "textures/blocks/machines/superior/seismic_breaker_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/superior/seismic_breaker_off_down",
                     "$io_back_texture": "textures/blocks/machines/superior/seismic_breaker_off_south",
-                    "$io_item_top_index": 13,
-                    "$io_item_left_index": 14,
-                    "$io_item_front_index": 15,
-                    "$io_item_right_index": 16,
-                    "$io_item_bottom_index": 17,
-                    "$io_item_back_index": 18
+                    "$io_item_top_index": 12,
+                    "$io_item_left_index": 13,
+                    "$io_item_front_index": 14,
+                    "$io_item_right_index": 15,
+                    "$io_item_bottom_index": 16,
+                    "$io_item_back_index": 17
                 }
             },
             {

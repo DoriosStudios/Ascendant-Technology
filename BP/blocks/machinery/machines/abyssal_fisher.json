@@ -23,7 +23,7 @@
             "utilitycraft:abyssal_fisher": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 41,
+                    "inventory_size": 38,
                     "fixed_fluid_types": true
                 },
                 "machine": {
@@ -32,12 +32,12 @@
                     "rate_speed_base": 9600,
                     "fluid_cap": 32000,
                     "fluid_types": 1,
-                    "upgrades": [7, 8]
+                    "upgrades": [6, 7]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 7 },
-                { "type": "energy", "slot": 8 }
+                { "type": "speed", "slot": 6 },
+                { "type": "energy", "slot": 7 }
             ],
             "utilitycraft:machine_recipes": {
                 "type": "abyssal_fisher"

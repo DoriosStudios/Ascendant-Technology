@@ -22,11 +22,16 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:arcane_enchanter";
+const INVENTORY_SIZE = 22;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 11, 8, 9,
+    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+];
 const INPUT_SLOT = 3;
 const LAPIS_SLOT = 4;
 const MODULE_SLOT = 5;
 const OUTPUT_SLOT = 6;
-const XP_DISPLAY_SLOT = 11;
+const XP_DISPLAY_SLOT = 7;
 const XP_TYPE = "xp";
 const OPERATION_SECONDS = 6;
 const OPERATION_SIGNATURE_KEY = "ascendant:arcane_enchanter_signature";
@@ -34,7 +39,7 @@ const OPERATION_PLAN_KEY = "ascendant:arcane_enchanter_plan";
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [12, 13, 14, 15, 16, 17],
+        buttonSlots: [10, 11, 12, 13, 14, 15],
         anyInputSlots: [INPUT_SLOT, LAPIS_SLOT, MODULE_SLOT],
         anyOutputSlots: [OUTPUT_SLOT],
         modes: [
@@ -47,7 +52,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [18, 19, 20, 21, 22, 23],
+        buttonSlots: [16, 17, 18, 19, 20, 21],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -85,6 +90,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         machine.processIO();
 

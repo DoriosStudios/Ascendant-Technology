@@ -39,12 +39,12 @@
     "$slot_red_size": [16, 16]
   },
   "recipe_output@uc.recipe_slot_overlay": {
-    "collection_index": 14,
+    "collection_index": 15,
     "$slot_offset": [71, 23],
     "$slot_red_size": [24, 24]
   },
   "recipe_byproduct@uc.recipe_slot_overlay": {
-    "collection_index": 13,
+    "collection_index": 14,
     "$slot_offset": [99, 23],
     "$slot_red_size": [16, 16]
   },

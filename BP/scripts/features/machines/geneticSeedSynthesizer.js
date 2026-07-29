@@ -23,11 +23,17 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:genetic_seed_synthesizer";
+const INVENTORY_SIZE = 39;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12,
+    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+    30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+];
 const SEED_SLOTS = [3, 4, 5, 6];
 const SOIL_SLOT = 7;
 const PROFILE_BUTTON_SLOT = 8;
-const CRYOFLUID_DISPLAY_SLOT = 10;
-const OUTPUT_SLOTS = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29];
+const CRYOFLUID_DISPLAY_SLOT = 9;
+const OUTPUT_SLOTS = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
 const PROFILE_KEY = "ascendant:genetic_seed_profile";
 const OPERATION_KEY = "ascendant:genetic_seed_operation";
 const CRYOFLUID = "cryofluid";
@@ -85,7 +91,7 @@ ButtonManager.registerMachineButton(ID, PROFILE_BUTTON_SLOT, ({ entity }) => {
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [30, 31, 32, 33, 34, 35],
+        buttonSlots: [27, 28, 29, 30, 31, 32],
         anyInputSlots: [...SEED_SLOTS, SOIL_SLOT],
         anyOutputSlots: OUTPUT_SLOTS,
         modes: [
@@ -97,7 +103,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [36, 37, 38, 39, 40, 41],
+        buttonSlots: [33, 34, 35, 36, 37, 38],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -113,7 +119,7 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([9, CRYOFLUID_DISPLAY_SLOT, 13, 14]);
+            machine.blockSlots([CRYOFLUID_DISPLAY_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setUiItem(machine.container, PROFILE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A7aGRW");
@@ -130,6 +136,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         const cryofluid = new FluidStorage(machine.entity, 0);
         if (cryofluid.getType() === "empty") cryofluid.setType(CRYOFLUID);

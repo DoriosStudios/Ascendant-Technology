@@ -16,20 +16,20 @@ Template-driven replication chamber that duplicates one item per craft using ene
 2. Fill the internal tank with **Liquified Aetherium**.
 3. Wait for processing.
 4. Collect items from:
-	 - **Slot 18**: original stream
-	 - **Slot 19**: copy stream
+	 - **Slot 7**: original stream
+	 - **Slot 8**: copy stream
 
-## Slot layout (inventory size: 20)
+## Slot layout (inventory size: 21)
 - **0**: energy HUD
 - **1**: status indicator
+- **2**: progress display
 - **3**: template input
-- **4, 5, 6**: upgrade slots
-- **10**: fluid input (blocked)
-- **11**: fluid display (blocked)
-- **18**: original output
-- **19**: copied output
-
-Legacy upgrade slots **16/17** are migrated automatically to 4/5/6 when possible.
+- **4, 5**: upgrade slots
+- **6**: fluid display (internal)
+- **7**: original output
+- **8**: copied output
+- **9-14**: item I/O configuration
+- **15-20**: fluid I/O configuration
 
 ## Restrictions
 - Cannot duplicate:
@@ -44,7 +44,7 @@ Legacy upgrade slots **16/17** are migrated automatically to 4/5/6 when possible
 - **Processing Rate**: 16,000 DE/tick (16 kDE/t)
 - **Fluid Tank Capacity**: 512,000 mB (512 buckets)
 - **Fluid Consumption**: 50 mB/s of effective recipe time
-- **Upgrade Slots**: 3 (slots 4, 5, 6)
+- **Upgrade Slots**: 2 (slots 4 and 5)
 
 ## Runtime model
 
@@ -79,7 +79,7 @@ If a template is not in the rarity map, the machine runs in **Unknown** mode:
 ## Output behavior
 - Per craft, the generic profile outputs:
 	- input amount consumed from slot 3 (normally 1)
-	- original amount added to slot 18 (normally 1)
-	- copy amount added to slot 19 (normally 1)
+	- original amount added to slot 7 (normally 1)
+	- copy amount added to slot 8 (normally 1)
 
 Net result for a standard template craft is **2 units total** (original + copy).

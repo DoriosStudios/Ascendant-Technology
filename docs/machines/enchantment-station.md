@@ -20,8 +20,8 @@ Station for enchanting, curse curation, reinforcement management and disenchanti
 - **Base Energy Cost**: 8,000 DE (scaled by operation inflation rules)
 - **Base Machine Rate**: `rate_speed_base = 64,000` (dynamic runtime enabled)
 - **XP Tank Capacity**: 128,000 mB (fluid type `xp`)
-- **Inventory Size**: 32 slots
-- **Upgrade Slots**: 3 (19, 20, 21)
+- **Inventory Size**: 43 slots
+- **Upgrade Slots**: 2 (19, 20)
 
 ## Slot layout
 - **0**: Energy HUD
@@ -33,9 +33,11 @@ Station for enchanting, curse curation, reinforcement management and disenchanti
 - **16**: Disenchant catalyst
 - **17**: Book storage
 - **18**: Disenchant progress
-- **19-21**: Upgrades
-- **22-30**: Disenchant outputs
-- **31**: Disenchant HUD status
+- **19-20**: Upgrades
+- **21-29**: Disenchant outputs
+- **30**: Disenchant HUD status
+- **31-36**: Item I/O configuration
+- **37-42**: Fluid I/O configuration
 
 ## Modules
 ### Enchantability Modules
@@ -123,7 +125,7 @@ Requirements:
 - Enchanted source item in slot 15
 - Valid catalyst in slot 16
 - Books in slot 17
-- Free output space in 22-30
+- Free output space in 21-29
 
 Result:
 - Converts enchantments to enchanted books in output slots.

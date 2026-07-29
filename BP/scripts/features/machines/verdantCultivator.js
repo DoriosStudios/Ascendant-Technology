@@ -21,9 +21,14 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:verdant_cultivator";
+const INVENTORY_SIZE = 26;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+];
 const SEED_SLOTS = [3, 4, 5, 6];
 const CLOCK_SLOT = 7;
-const OUTPUT_SLOTS = [12, 13, 14, 15, 16, 17, 18, 19, 20];
+const OUTPUT_SLOTS = [11, 12, 13, 14, 15, 16, 17, 18, 19];
 const CONFIGURATION_KEY = "ascendant:verdant_configuration";
 const BASE_SIDE_LENGTH = 3;
 const MAX_RANGE_LEVEL = 4;
@@ -51,7 +56,7 @@ const clockTierChance = new Map([
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [21, 22, 23, 24, 25, 26],
+        buttonSlots: [20, 21, 22, 23, 24, 25],
         anyInputSlots: [...SEED_SLOTS, CLOCK_SLOT],
         anyOutputSlots: OUTPUT_SLOTS,
         modes: [
@@ -69,7 +74,6 @@ DoriosLib.registry.blockComponent(ID, {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
-            machine.blockSlots([11]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
@@ -81,6 +85,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
         machine.processIO();
 
         const configuration = readConfiguration(machine);

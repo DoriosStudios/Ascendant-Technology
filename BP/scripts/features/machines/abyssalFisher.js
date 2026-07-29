@@ -24,12 +24,18 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:abyssal_fisher";
+const INVENTORY_SIZE = 38;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 6, 7, 8,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+    29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+];
 const MODE_BUTTON_SLOT = 3;
 const NET_SLOT = 4;
-const WATER_DISPLAY_SLOT = 6;
-const OUTPUT_SLOTS = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28];
-const ITEM_IO_BUTTON_SLOTS = [29, 30, 31, 32, 33, 34];
-const FLUID_IO_BUTTON_SLOTS = [35, 36, 37, 38, 39, 40];
+const WATER_DISPLAY_SLOT = 5;
+const OUTPUT_SLOTS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
+const ITEM_IO_BUTTON_SLOTS = [26, 27, 28, 29, 30, 31];
+const FLUID_IO_BUTTON_SLOTS = [32, 33, 34, 35, 36, 37];
 const MODE_KEY = "ascendant:abyssal_fisher_mode";
 const OPERATION_KEY = "ascendant:abyssal_fisher_operation";
 const WATER_TYPE = "water";
@@ -124,7 +130,7 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([5, WATER_DISPLAY_SLOT, 9, 10]);
+            machine.blockSlots([WATER_DISPLAY_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A76EXP");
@@ -142,6 +148,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         const water = new FluidStorage(machine.entity, 0);
         if (water.getType() === "empty") water.setType(WATER_TYPE);

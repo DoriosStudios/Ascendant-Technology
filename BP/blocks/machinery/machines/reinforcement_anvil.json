@@ -22,7 +22,7 @@
             "utilitycraft:reinforcement_anvil": {
                 "entity": {
                     "type": "machine",
-                    "inventory_size": 17
+                    "inventory_size": 15
                 },
                 "machine": {
                     "energy_cap": 512000,

@@ -23,7 +23,7 @@
             "utilitycraft:disenchanter": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 24,
+                    "inventory_size": 22,
                     "fixed_fluid_types": true
                 },
                 "machine": {

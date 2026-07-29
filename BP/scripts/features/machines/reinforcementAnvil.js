@@ -20,6 +20,10 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:reinforcement_anvil";
+const INVENTORY_SIZE = 15;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16,
+];
 const REPAIR_MODE = "repair";
 const REINFORCE_MODE = "reinforce";
 const MODE_KEY = "ascendant:reinforcement_anvil_mode";
@@ -35,7 +39,7 @@ installReinforcementRuntime();
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [11, 12, 13, 14, 15, 16],
+        buttonSlots: [9, 10, 11, 12, 13, 14],
         anyInputSlots: [INPUT_SLOT, MODULE_SLOT],
         anyOutputSlots: [OUTPUT_SLOT],
         modes: [
@@ -67,7 +71,6 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([9, 10]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A7aRepair");
@@ -80,6 +83,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         machine.processIO();
         if (machine.shouldUpdateUI) ButtonManager.ensureWatching(machine.entity, ID);

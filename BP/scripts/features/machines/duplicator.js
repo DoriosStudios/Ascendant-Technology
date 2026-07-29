@@ -13,19 +13,23 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:duplicator";
+const INVENTORY_SIZE = 21;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 11, 18, 19,
+    20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+];
 const INPUT_SLOT = 3;
-const LIQUID_DISPLAY_SLOT = 11;
-const ORIGINAL_OUTPUT_SLOT = 18;
-const COPY_OUTPUT_SLOT = 19;
+const LIQUID_DISPLAY_SLOT = 6;
+const ORIGINAL_OUTPUT_SLOT = 7;
+const COPY_OUTPUT_SLOT = 8;
 const LIQUIFIED_AETHERIUM = "liquified_aetherium";
 const RECIPE_KEY = "ascendant:duplicator_recipe";
 const MACHINE_UPDATES_PER_SECOND = 5;
 const FLUID_IO_RATE = 128000;
-const UNUSED_SLOTS = [6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17];
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [20, 21, 22, 23, 24, 25],
+        buttonSlots: [9, 10, 11, 12, 13, 14],
         anyInputSlots: [INPUT_SLOT],
         anyOutputSlots: [ORIGINAL_OUTPUT_SLOT, COPY_OUTPUT_SLOT],
         modes: [
@@ -37,7 +41,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [26, 27, 28, 29, 30, 31],
+        buttonSlots: [15, 16, 17, 18, 19, 20],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -53,7 +57,7 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots(UNUSED_SLOTS);
+            machine.blockSlots([LIQUID_DISPLAY_SLOT]);
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");
@@ -67,6 +71,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
         const tank = new FluidStorage(machine.entity, 0);

@@ -26,7 +26,7 @@
 			"utilitycraft:singularity_fabricator": {
 				"entity": {
 					"type": "fluid_machine",
-					"inventory_size": 32,
+					"inventory_size": 21,
 					"fixed_fluid_types": true
 				},
 				"machine": {

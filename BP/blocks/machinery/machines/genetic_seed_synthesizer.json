@@ -23,7 +23,7 @@
             "utilitycraft:genetic_seed_synthesizer": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 42,
+                    "inventory_size": 39,
                     "fixed_fluid_types": true
                 },
                 "machine": {
@@ -32,12 +32,12 @@
                     "rate_speed_base": 640,
                     "fluid_cap": 128000,
                     "fluid_types": 1,
-                    "upgrades": [11, 12]
+                    "upgrades": [10, 11]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 11 },
-                { "type": "energy", "slot": 12 }
+                { "type": "speed", "slot": 10 },
+                { "type": "energy", "slot": 11 }
             ],
             "utilitycraft:machine_recipes": {
                 "type": "genetic_seed_synthesizer"

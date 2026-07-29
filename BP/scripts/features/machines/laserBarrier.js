@@ -17,14 +17,15 @@ import {
 const ID = "utilitycraft:laser_barrier";
 const MACHINE_ENTITY_ID = "utilitycraft:machine_entity";
 const SIZE_UPGRADE_ID = "utilitycraft:size_upgrade";
+const INVENTORY_SIZE = 6;
+const LEGACY_SLOT_LAYOUT = [0, 1, 2, 4, 5, 6];
 
 const ENERGY_SLOT = 0;
 const LABEL_SLOT = 1;
 const POWER_BUTTON_SLOT = 2;
-const BLOCKED_SLOT = 3;
-const LENGTH_UPGRADE_SLOT = 4;
-const HEIGHT_UPGRADE_SLOT = 5;
-const ENERGY_UPGRADE_SLOT = 6;
+const LENGTH_UPGRADE_SLOT = 3;
+const HEIGHT_UPGRADE_SLOT = 4;
+const ENERGY_UPGRADE_SLOT = 5;
 
 const BASE_LENGTH = 3;
 const BASE_HEIGHT = 3;
@@ -51,7 +52,6 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([BLOCKED_SLOT]);
             syncPowerButton(machine.entity);
             setEnabled(machine.entity, true);
             machine.entity.setDynamicProperty(ACTIVE_PROPERTY, false);
@@ -66,6 +66,7 @@ DoriosLib.registry.blockComponent(ID, {
 
         const machine = new Machine(event.block, { ...settings, ignoreTick: true });
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         if (machine.shouldUpdateUI) {
             syncPowerButton(machine.entity);

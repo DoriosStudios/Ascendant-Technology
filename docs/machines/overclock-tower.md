@@ -85,8 +85,8 @@ When idle:
 ### Properties
 - **Energy Capacity**: 102,400,000 DE
 - **Base Energy Cost**: 32,000 DE/tick (scales with power)
-- **Inventory Size**: 15 slots (fuel slots 2-10, overclock display slot 11, hidden slots 12-14)
-- **Hidden Slots**: Slots 0, 1, 12, 13, 14 (internal use)
+- **Inventory Size**: 12 slots (internal slots 0-1, fuel slots 2-10, overclock display slot 11)
+- **Internal Slots**: Slots 0 and 1
 - **Upgrade Slots**: None (upgrades not supported)
 
 ### Block States

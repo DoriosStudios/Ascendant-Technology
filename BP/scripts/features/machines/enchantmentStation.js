@@ -23,13 +23,18 @@ import { setDynamicNumber, setDynamicString, setRunning, setUiItem } from "./run
 const ID = "utilitycraft:enchantment_station";
 const GRID_SLOTS = [3, 4, 5, 6, 7, 8, 9, 10, 11];
 const MODULE_SLOTS = [12, 13, 14];
-const OUTPUT_SLOTS = [22, 23, 24, 25, 26, 27, 28, 29, 30];
+const OUTPUT_SLOTS = [21, 22, 23, 24, 25, 26, 27, 28, 29];
 const SOURCE_SLOT = 15;
 const CATALYST_SLOT = 16;
 const BOOK_SLOT = 17;
 const DISENCHANT_PROGRESS_SLOT = 18;
-const DISENCHANT_STATUS_SLOT = 31;
-const INVENTORY_SIZE = 45;
+const DISENCHANT_STATUS_SLOT = 30;
+const INVENTORY_SIZE = 43;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+    33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
+];
 const BASE_COST = 64_000;
 const XP_PER_CHANGE = 1_000;
 const REPAIR_AMOUNT = 2_000;
@@ -43,7 +48,7 @@ const ABSORB_START_KEY = "ascendant:station_absorb_start";
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [33, 34, 35, 36, 37, 38],
+        buttonSlots: [31, 32, 33, 34, 35, 36],
         anyInputSlots: [...GRID_SLOTS, ...MODULE_SLOTS, SOURCE_SLOT, CATALYST_SLOT, BOOK_SLOT],
         anyOutputSlots: [...GRID_SLOTS, SOURCE_SLOT, ...OUTPUT_SLOTS],
         modes: [
@@ -61,7 +66,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [39, 40, 41, 42, 43, 44],
+        buttonSlots: [37, 38, 39, 40, 41, 42],
         anyInputIndices: [0],
         anyOutputIndices: [0],
         modes: [
@@ -88,7 +93,7 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([0, 1, 2, DISENCHANT_PROGRESS_SLOT, 21, DISENCHANT_STATUS_SLOT, 32]);
+            machine.blockSlots([0, 1, 2, DISENCHANT_PROGRESS_SLOT, DISENCHANT_STATUS_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:ui_filler");
             setUiItem(machine.container, 2, "utilitycraft:arcane_00");
             setUiItem(machine.container, DISENCHANT_PROGRESS_SLOT, "utilitycraft:progress_right_bar_00");
@@ -105,9 +110,7 @@ DoriosLib.registry.blockComponent(ID, {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
 
-        // Existing stations may still own the former 32-slot component. Resize
-        // them before the IO interface attempts to write its face buttons.
-        if (!ensureInventorySize(machine)) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         machine.processIO();
 
@@ -606,36 +609,6 @@ function createDisenchantSignatureFast(enchantments) {
         result += `${entry.id}@${entry.level}|`;
     }
     return result;
-}
-
-/**
- * Expands stations placed before IO buttons were added and restores every
- * pre-existing stack after the inventory component has been replaced.
- *
- * @param {Machine} machine
- */
-function ensureInventorySize(machine) {
-    if (machine.container.size >= INVENTORY_SIZE) return true;
-
-    const contents = new Array(machine.container.size);
-    for (let slot = 0; slot < machine.container.size; slot++) {
-        contents[slot] = machine.container.getItem(slot);
-    }
-
-    const entity = machine.entity;
-    entity.triggerEvent(`utilitycraft:inventory_${INVENTORY_SIZE}`);
-    system.run(() => {
-        if (!entity.isValid) return;
-        const inventory = entity.getComponent("minecraft:inventory") ?? entity.getComponent("inventory");
-        const resized = inventory?.container;
-        if (!resized || resized.size < INVENTORY_SIZE) return;
-
-        for (let slot = 0; slot < contents.length; slot++) {
-            const item = contents[slot];
-            if (item) resized.setItem(slot, item);
-        }
-    });
-    return false;
 }
 
 function getDurability(stack) {

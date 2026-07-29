@@ -25,6 +25,11 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:disenchanter";
+const INVENTORY_SIZE = 22;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+];
 const MODE_KEY = "ascendant:disenchanter_mode";
 const SIGNATURE_KEY = "ascendant:disenchanter_signature";
 const EXTRACTION_MODE = "extraction";
@@ -40,7 +45,7 @@ const XP_TYPE = "xp";
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [12, 13, 14, 15, 16, 17],
+        buttonSlots: [10, 11, 12, 13, 14, 15],
         anyInputSlots: [SOURCE_SLOT, CATALYST_SLOT],
         anyOutputSlots: [SOURCE_SLOT, OUTPUT_SLOT],
         modes: [
@@ -54,7 +59,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [18, 19, 20, 21, 22, 23],
+        buttonSlots: [16, 17, 18, 19, 20, 21],
         anyInputIndices: [],
         anyOutputIndices: [0],
         modes: [
@@ -100,6 +105,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         machine.processIO();
 

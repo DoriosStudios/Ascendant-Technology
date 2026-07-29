@@ -23,18 +23,18 @@
             "utilitycraft:laser_barrier": {
                 "entity": {
                     "type": "machine",
-                    "inventory_size": 7
+                    "inventory_size": 6
                 },
                 "machine": {
                     "energy_cap": 320000,
                     "energy_cost": 800,
                     "rate_speed_base": 0,
                     "overclock": false,
-                    "upgrades": [6]
+                    "upgrades": [5]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "energy", "slot": 6, "max": 8 }
+                { "type": "energy", "slot": 5, "max": 8 }
             ],
             "minecraft:geometry": "geometry.utilitycraft_laser_barrier",
             "minecraft:material_instances": {

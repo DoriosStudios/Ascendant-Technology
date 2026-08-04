@@ -235,8 +235,83 @@
 		"utilitycraft_enchantment_station": {
 			"textures": "textures/blocks/machines/enchantment_station"
 		},
+		"utilitycraft_refining_table": {
+			"textures": "textures/blocks/machines/refining_table"
+		},
 		"utilitycraft_arcane_enchanter": {
 			"textures": "textures/blocks/machines/enchanter_64x64"
+		},
+		"utilitycraft_disenchanter_off_up": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/off/up"
+		},
+		"utilitycraft_disenchanter_off_down": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/off/down"
+		},
+		"utilitycraft_disenchanter_off_north": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/off/north"
+		},
+		"utilitycraft_disenchanter_off_south": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/off/south"
+		},
+		"utilitycraft_disenchanter_off_east": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/off/east"
+		},
+		"utilitycraft_disenchanter_off_west": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/off/west"
+		},
+		"utilitycraft_disenchanter_on_up": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/on/up"
+		},
+		"utilitycraft_disenchanter_on_down": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/on/down"
+		},
+		"utilitycraft_disenchanter_on_north": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/on/north"
+		},
+		"utilitycraft_disenchanter_on_south": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/on/south"
+		},
+		"utilitycraft_disenchanter_on_east": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/on/east"
+		},
+		"utilitycraft_disenchanter_on_west": {
+			"textures": "textures/blocks/machines/superior/faces/disenchanter/on/west"
+		},
+		"utilitycraft_cryofluid_synthesizer_off_up": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/off/up"
+		},
+		"utilitycraft_cryofluid_synthesizer_off_down": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/off/down"
+		},
+		"utilitycraft_cryofluid_synthesizer_off_north": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/off/north"
+		},
+		"utilitycraft_cryofluid_synthesizer_off_south": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/off/south"
+		},
+		"utilitycraft_cryofluid_synthesizer_off_east": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/off/east"
+		},
+		"utilitycraft_cryofluid_synthesizer_off_west": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/off/west"
+		},
+		"utilitycraft_cryofluid_synthesizer_on_up": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/on/up"
+		},
+		"utilitycraft_cryofluid_synthesizer_on_down": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/on/down"
+		},
+		"utilitycraft_cryofluid_synthesizer_on_north": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/on/north"
+		},
+		"utilitycraft_cryofluid_synthesizer_on_south": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/on/south"
+		},
+		"utilitycraft_cryofluid_synthesizer_on_east": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/on/east"
+		},
+		"utilitycraft_cryofluid_synthesizer_on_west": {
+			"textures": "textures/blocks/machines/superior/faces/cryofluid_synthesizer/on/west"
 		},
 		"utilitycraft_mob_magnet_off": {
 			"textures": "textures/blocks/machines/mob_magnet_off"

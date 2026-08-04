@@ -1,10 +1,16 @@
+import { STATSCORE_ICONS } from "../../ATCore/StatsCore/icons.js";
+
 export const REFINING_TABLE_CONFIG = {
     defaults: {
         idleEnergyCost: 100,
         xpTankCapacity: 512000,
         xpFluidType: "xp",
         unlockCatalystId: "utilitycraft:runic_core",
+        advancedUnlockCatalystId: "utilitycraft:advanced_runic_core",
         maxIngotsPerRoll: 8,
+        advancedMaxIngotsPerRoll: 12,
+        advancedStrongMultiplier: 1.35,
+        advancedDirectDamageCap: 18,
         strongThreshold: 0.55,
         masterworkThreshold: 0.78,
         transcendentThreshold: 0.92,
@@ -43,8 +49,7 @@ export const REFINING_TABLE_CONFIG = {
         },
         tool: {
             extraDamage: 0.8,
-            bonusDropChance: 0.08,
-            oreBonusChance: 0.10,
+            bonusLootChance: 0.18,
             durabilitySaveChance: 0.08,
             elementalChance: 0.10,
             elementalDamage: 1.4,
@@ -56,8 +61,7 @@ export const REFINING_TABLE_CONFIG = {
             critDamageBonus: 0.5,
             penetration: 0.05,
             lifesteal: 0.025,
-            bonusDropChance: 0.10,
-            oreBonusChance: 0.10,
+            bonusLootChance: 0.20,
             durabilitySaveChance: 0.20,
             elementalChance: 0.30,
             elementalDamage: 4,
@@ -78,14 +82,13 @@ export const REFINING_TABLE_CONFIG = {
         diamond: 0.9,
         netherite: 1.01,
         titanium: 0.98,
-        aetherium: 2,
-        lucky: 5,
+        aetherium: 1,
     },
     elements: [
-        { id: "plant", label: "\u00A7a\u2620 Poison", weight: 22, damageScale: 0.05, durationTicks: 120, amplifier: 0 },
-        { id: "frost", label: "\u00A7b\u2744 Frost", weight: 20, damageScale: 0.07, durationTicks: 90, amplifier: 1 },
-        { id: "fire", label: "\u00A7c\u25B2 Fire", weight: 20, damageScale: 0.08, seconds: 4 },
-        { id: "lightning", label: "\u00A7e\u26A1 Lightning", weight: 18, damageScale: 0.09, durationTicks: 60, amplifier: 0 },
-        { id: "darkness", label: "\u00A78\u25C6 Darkness", weight: 20, damageScale: 0.07, durationTicks: 100, amplifier: 0 },
+        { id: "plant", label: `\u00A7a${STATSCORE_ICONS.poison} Poison`, weight: 22, damageScale: 0.05, durationTicks: 120, amplifier: 0 },
+        { id: "frost", label: `\u00A7b${STATSCORE_ICONS.ice} Frost`, weight: 20, damageScale: 0.07, durationTicks: 90, amplifier: 1 },
+        { id: "fire", label: `\u00A7c${STATSCORE_ICONS.fire} Fire`, weight: 20, damageScale: 0.08, seconds: 4 },
+        { id: "lightning", label: `\u00A7e${STATSCORE_ICONS.lightning} Lightning`, weight: 18, damageScale: 0.09, durationTicks: 60, amplifier: 0 },
+        { id: "darkness", label: `\u00A78${STATSCORE_ICONS.darkness} Darkness`, weight: 20, damageScale: 0.07, durationTicks: 100, amplifier: 0 },
     ],
 };

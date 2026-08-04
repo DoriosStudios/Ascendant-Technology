@@ -1,4 +1,5 @@
 import { STATSCORE } from "../constants.js";
+import { invalidateEquipmentContextCache } from "../shared/contextCache.js";
 
 export function getEquippable(entity) {
     try {
@@ -36,6 +37,7 @@ export function setEquipment(entity, slotName, item) {
 
     try {
         equippable.setEquipment(slotName, item);
+        invalidateEquipmentContextCache(entity, slotName);
         return true;
     } catch {
         return false;
@@ -57,6 +59,7 @@ export function setSelectedInventoryItem(player, item) {
         const inventory = player?.getComponent?.("inventory")?.container;
         if (!inventory) return false;
         inventory.setItem(getSelectedSlot(player), item);
+        invalidateEquipmentContextCache(player, STATSCORE.slots.mainhand);
         return true;
     } catch {
         return false;

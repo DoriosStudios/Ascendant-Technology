@@ -1,7 +1,7 @@
 export const STATSCORE = Object.freeze({
     namespace: "utilitycraft",
     name: "StatsCore",
-    version: 2,
+    version: 3,
     props: Object.freeze({
         uid: "utilitycraft:statscore_uid",
         version: "utilitycraft:statscore_version",
@@ -16,6 +16,7 @@ export const STATSCORE = Object.freeze({
     }),
     playerProperties: Object.freeze({
         feedbackStyle: "utilitycraft:statscore_feedback_style",
+        insightBridge: "utilitycraft:statscore_insight_bridge",
     }),
     lore: Object.freeze({
         start: "\u00A7r\u00A78[StatsCore]",

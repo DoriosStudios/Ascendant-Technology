@@ -1,8 +1,20 @@
 // StatsCore / Dorios' Trinkets
  Extra Damage (StatsCore) / Attack Damage (Dorios' Trinkets)
  Damage Reduction (StatsCore) / Resistance (? | Dorios' Trinkets)
- I have no fucking idea
- Walking Speed
+ Death
+ Blood (probably Dripping Blood)
+ Potion
+ Diamond Sword
+ Ground Walking Speed
+ Lava Walking Speed
+ Extra Arrow (I think?)
+ ??? some white stone shi
+ Falling Damage
+ Green Particle
+ Orange Particle
+ Purple Particle
+ Golden Armor
+ Generic Speed
  Swimming Speed
  Evasion
  Luck
@@ -14,34 +26,41 @@
  Critical Chance
  Preserving (Tool)
  Preserving (Armor)
+ Scavenger
+ Random (A dice, actually. Can be used to represent rolls, activation...)
+ Life Steal / Vampirism
+ Soul
+ New Item
+ Mining Level Up
+ Defense Level Up
+ Offensive Level Up
+ Ability Level Up
+ Ability Level 0/5
+ Ability Level 1/5
+ Ability Level 2/5
+ Ability Level 3/5
+ Ability Level 4/5
+ Ability Level 5/5
+ Hourglass (White)
+ Hourglass (Golden; Probably ready.)
  Ore Yield
  Fire
  Poison
- Ice (placeholder)
+ Ice
  Darkness
- Lightning
+ Lightning
  Healed Heart
- Full Heart
- Half Heart
- Full Heart (Fire)
- Half Heart (Fire)
- Full Heart (Hardcore)
- Half Heart (Hardcore)
- Full Heart (Tamed / Animal)
- Half Heart (Tamed / Animal)
- Full Heart (Withered)
- Half Heart (Withered)
+ Full Heart /  Half Heart
+ Full Heart /  Half Heart (Fire)
+ Full Heart /  Half Heart (Hardcore)
+ Full Heart /  Half Heart (Tamed / Animal)
+ Full Heart /  Half Heart (Withered)
  Full Heart (Creative)
- Full Heart (Absorption)
- Half Heart (Absorption)
- Full Heart (Frozen)
- Half Heart (Frozen)
- Full Heart (Poison / Fatal Poison)
- Half Heart (Poison / Fatal Poison)
+ Full Heart /  Half Heart (Absorption)
+ Full Heart /  Half Heart (Frozen)
+ Full Heart /  Half Heart (Poison / Fatal Poison)
  Empty Heart
- Full Armor
- Half Armor
- Empty armor
+ Full /  Half /  Empty Armor
  Hunger Full Saturation Full
  Hunger Full Saturation Half
  Hunger Half Saturation Full
@@ -116,6 +135,7 @@
  Conduit Power
  Darkness
  Dolphin's Grace
+ Effect Particle
  Fatal Poison
  Fire
  Fire Resistance
@@ -144,6 +164,10 @@
  Wither
  Idk
 
-
+## Misc
+ Player Standing
+ Player Crouching
+ Player Standing Outlined
+ Player Crouching Outlined
 
 

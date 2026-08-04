@@ -1,9 +1,9 @@
 import { STATSCORE } from "../constants.js";
-import { collectStatsAbilityNames } from "./abilities.js";
+import { getStatsAbilitySummary } from "./abilities.js";
 import { formatPercent, titleCaseIdentifier } from "../utils.js";
-import { getAbilityIcon, getElementIcon, STATSCORE_ICONS, uniqueIcons } from "../icons.js";
+import { getAbilityIcon, getElementIcon, STATSCORE_ICONS } from "../icons.js";
 
-const MAX_VISIBLE_LORE_STATS = 3;
+const MAX_VISIBLE_LORE_ATTRIBUTES = 3;
 
 function getLore(stack) {
     if (!stack || typeof stack.getLore !== "function") return [];
@@ -63,28 +63,35 @@ function readStatsLoreSignature(stack) {
     }
 }
 
-function stripTrailingStatsLore(lore, statsLore) {
+function stripStatsLoreOccurrences(lore, statsLore) {
     if (!Array.isArray(lore) || lore.length <= 0) return [];
     if (!Array.isArray(statsLore) || statsLore.length <= 0) return [...lore];
-    if (statsLore.length > lore.length) return [...lore];
 
-    const trailing = lore.slice(lore.length - statsLore.length);
-    if (!arraysEqual(trailing, statsLore)) {
-        return [...lore];
+    const result = [];
+    for (let index = 0; index < lore.length;) {
+        let matches = index + statsLore.length <= lore.length;
+        for (let offset = 0; matches && offset < statsLore.length; offset++) {
+            matches = lore[index + offset] === statsLore[offset];
+        }
+        if (matches) {
+            index += statsLore.length;
+            continue;
+        }
+        result.push(lore[index]);
+        index++;
     }
-
-    return lore.slice(0, lore.length - statsLore.length);
+    return result;
 }
 
-function getBaseLore(stack) {
-    const lore = getLore(stack);
+function getBaseLore(stack, currentLore = undefined) {
+    const lore = Array.isArray(currentLore) ? currentLore : getLore(stack);
     const strippedLegacyLore = stripStatsCoreLore(lore);
 
     if (!arraysEqual(strippedLegacyLore, lore)) {
         return strippedLegacyLore;
     }
 
-    return stripTrailingStatsLore(lore, readStatsLoreSignature(stack));
+    return stripStatsLoreOccurrences(lore, readStatsLoreSignature(stack));
 }
 
 function buildReadableStatEntry(label, value, icon) {
@@ -95,10 +102,11 @@ function buildReadableStatEntry(label, value, icon) {
 }
 
 function buildReadableFlatEntry(label, value, icon) {
-    const numeric = Math.max(0, Math.floor(Number(value ?? 0) || 0));
+    const numeric = Math.max(0, Number(value ?? 0) || 0);
     if (numeric <= 0) return null;
 
-    return `\u00A7r${icon} \u00A79+${numeric} ${label}`;
+    const formatted = numeric.toFixed(numeric % 1 === 0 ? 0 : 1);
+    return `\u00A7r${icon} \u00A79+${formatted} ${label}`;
 }
 
 function buildReadableMultiplierEntry(label, value, icon) {
@@ -109,7 +117,11 @@ function buildReadableMultiplierEntry(label, value, icon) {
 
 function buildReadableElementEntries(attributes) {
     const elements = Array.isArray(attributes?.elemental)
-        ? attributes.elemental.filter(entry => entry?.id && Number(entry?.chance ?? 0) > 0)
+        ? attributes.elemental.filter(entry => (
+            entry?.id
+            && Number(entry?.chance ?? 0) > 0
+            && Number(entry?.damage ?? 0) > 0
+        ))
         : [];
 
     return elements.map(element => {
@@ -119,15 +131,32 @@ function buildReadableElementEntries(attributes) {
     });
 }
 
-function buildAbilityLoreEntry(attributes, state) {
-    const names = collectStatsAbilityNames(attributes, { state });
+function buildCombinedExtraDamageEntry(attributes) {
+    const flatDamage = Math.max(0, Number(attributes?.flatDamageBonus ?? 0) || 0);
+    const bonusDamage = Math.max(0, Number(attributes?.damageMultiplier ?? 1) - 1);
+    const elements = buildReadableElementEntries(attributes)
+        .map(entry => entry.replace(/^§r[^\s]+\s+/, "").replace(/^§8/, ""));
+    const parts = [];
 
-    if (!names.length) {
-        return null;
+    if (flatDamage > 0) {
+        parts.push(`+${flatDamage.toFixed(flatDamage % 1 === 0 ? 0 : 1)}`);
     }
+    if (bonusDamage > 0) {
+        parts.push(`+${formatPercent(bonusDamage)} Bonus`);
+    }
+    parts.push(...elements);
+    if (parts.length <= 0) return null;
 
-    const icons = uniqueIcons(names.map(getAbilityIcon));
-    return `\u00A7r${icons} \u00A77Ability: \u00A7g${names.join(" \u00A78+ \u00A7g")}`;
+    return `§r${STATSCORE_ICONS.attackDamage} §9Extra Damage §8| §7${parts.join(" §8+ §7")}`;
+}
+
+function buildAbilityLoreEntry(attributes, state) {
+    const summary = getStatsAbilitySummary(attributes, { state });
+    if (!summary.primary) return null;
+
+    const icon = getAbilityIcon(summary.primary);
+    const additional = summary.total > 1 ? " \u00A7e+" : "";
+    return `\u00A7r${icon} \u00A77Ability: \u00A7g${summary.primary}${additional}`;
 }
 
 function isProgressionCategoryEnabled(definition, category) {
@@ -141,9 +170,15 @@ function isProgressionCategoryEnabled(definition, category) {
 function buildLevelLoreEntry(definition, state) {
     const progression = state?.progression ?? {};
     const entries = [];
-    if (isProgressionCategoryEnabled(definition, "offensive")) entries.push(`\u00A7cLv${Math.max(1, Number(progression.offensive?.level ?? 1) || 1)}`);
-    if (isProgressionCategoryEnabled(definition, "mining")) entries.push(`\u00A7qLv${Math.max(1, Number(progression.mining?.level ?? 1) || 1)}`);
-    if (isProgressionCategoryEnabled(definition, "defensive")) entries.push(`\u00A73Lv${Math.max(1, Number(progression.defensive?.level ?? 1) || 1)}`);
+    if (isProgressionCategoryEnabled(definition, "offensive")) {
+        entries.push(`\u00A7cOffensive Level ${Math.max(1, Number(progression.offensive?.level ?? 1) || 1)}`);
+    }
+    if (isProgressionCategoryEnabled(definition, "mining")) {
+        entries.push(`\u00A7qMining Level ${Math.max(1, Number(progression.mining?.level ?? 1) || 1)}`);
+    }
+    if (isProgressionCategoryEnabled(definition, "defensive")) {
+        entries.push(`\u00A73Defensive Level ${Math.max(1, Number(progression.defensive?.level ?? 1) || 1)}`);
+    }
     return entries.length > 0 ? `\u00A7r${entries.join(" \u00A78| ")}` : null;
 }
 
@@ -154,9 +189,6 @@ function buildReadableStatEntries(definition, attributes) {
     const critMultiplier = Math.max(1, Number(attributes?.crit?.multiplier ?? 1));
     const penetration = Math.max(0, Number(attributes?.penetration?.percent ?? 0));
     const lifesteal = Math.max(0, Number(attributes?.lifesteal?.percent ?? 0));
-    const elemental = buildReadableElementEntries(attributes);
-    const oreBonus = Math.max(0, Number(attributes?.mining?.oreBonusChance ?? 0));
-    const yieldBonus = Math.max(0, Number(attributes?.mining?.bonusDropChance ?? 0));
     const preserving = Math.max(
         0,
         Number(attributes?.mining?.durabilitySaveChance ?? 0),
@@ -164,45 +196,57 @@ function buildReadableStatEntries(definition, attributes) {
     );
     const damageReduction = Math.max(0, Number(attributes?.support?.damageReduction ?? 0));
     const evasion = Math.max(0, Number(attributes?.support?.negateAllDamageChance ?? 0));
+    const adaptiveResilience = Math.max(0, Number(attributes?.eventDriven?.adaptiveResilience?.reductionPerStack ?? 0));
+    const healingEfficiency = Math.max(0, Number(attributes?.eventDriven?.healingEfficiency?.bonus ?? 0));
+    const chargeMastery = Math.max(0, Number(attributes?.eventDriven?.chargeMastery?.maxDamageBonus ?? 0));
+    const persistence = Math.max(0, Number(attributes?.eventDriven?.persistence?.maxBonus ?? 0));
+    const scavenging = Math.max(0, Number(attributes?.eventDriven?.scavenging?.chance ?? 0));
+    const dimensionalAttunement = Math.max(0, Number(attributes?.eventDriven?.dimensionalAttunement?.durationTicks ?? 0));
 
-    const entries = definition?.type === "support"
+    const candidate = (line, activation) => line ? {
+        line,
+        activation: Math.max(0, Number(activation ?? 0) || 0),
+    } : null;
+    const directEntries = definition?.type === "support"
+        ? []
+        : [
+            buildCombinedExtraDamageEntry(attributes),
+        ].filter(Boolean);
+
+    const candidates = definition?.type === "support"
         ? [
-            buildReadableStatEntry("Damage Reduction", damageReduction, STATSCORE_ICONS.damageReduction),
-            buildReadableStatEntry("Evasion", evasion, STATSCORE_ICONS.evasion),
-            buildReadableStatEntry("Preserving", preserving, STATSCORE_ICONS.preservingArmor)
+            candidate(buildReadableStatEntry("Damage Reduction", damageReduction, STATSCORE_ICONS.damageReduction), 1),
+            candidate(buildReadableStatEntry("Adaptive Resilience", adaptiveResilience, STATSCORE_ICONS.damageReduction), 0.8),
+            candidate(buildReadableStatEntry("Healing Efficiency", healingEfficiency, STATSCORE_ICONS.healedHeart), 0.75),
+            candidate(dimensionalAttunement > 0
+                ? `\u00A7r${STATSCORE_ICONS.darkness} \u00A79${Math.round(dimensionalAttunement / 20)}s Dimensional Attunement`
+                : null, 0.35),
+            candidate(buildReadableStatEntry("Evasion", evasion, STATSCORE_ICONS.evasion), evasion),
+            candidate(buildReadableStatEntry("Preserving", preserving, STATSCORE_ICONS.preservingArmor), preserving),
         ]
         : definition?.type === "tool"
             ? [
-                buildReadableFlatEntry("Attack Damage", flatDamageBonus, STATSCORE_ICONS.attackDamage),
-                ...elemental,
-                buildReadableStatEntry("Ore Bonus", oreBonus, STATSCORE_ICONS.oreYield),
-                buildReadableStatEntry("Bonus Yield", yieldBonus, STATSCORE_ICONS.oreYield),
-                buildReadableStatEntry("Preserving", preserving, STATSCORE_ICONS.preservingTool),
-                buildReadableStatEntry("Bonus Damage", damageBonus, STATSCORE_ICONS.attackDamage)
+                candidate(buildReadableStatEntry("Scavenging", scavenging, STATSCORE_ICONS.scavenger), scavenging),
+                candidate(buildReadableStatEntry("Preserving", preserving, STATSCORE_ICONS.preservingTool), preserving),
             ]
-            : definition?.type === "hybrid"
-            ? [
-                buildReadableFlatEntry("Attack Damage", flatDamageBonus, STATSCORE_ICONS.attackDamage),
-                ...elemental,
-                buildReadableMultiplierEntry("Critical Multiplier", critMultiplier, STATSCORE_ICONS.criticalMultiplier),
-                buildReadableStatEntry("Bonus Damage", damageBonus, STATSCORE_ICONS.attackDamage),
-                buildReadableStatEntry("Critical Chance", critChance, STATSCORE_ICONS.criticalChance),
-                buildReadableStatEntry("Ore Bonus", oreBonus, STATSCORE_ICONS.oreYield),
-                buildReadableStatEntry("Preserving", preserving, STATSCORE_ICONS.preservingTool),
-                buildReadableStatEntry("Lifesteal", lifesteal, STATSCORE_ICONS.healedHeart),
-                buildReadableStatEntry("Armor Penetration", penetration, STATSCORE_ICONS.fullArmor)
-                ]
-                : [
-                buildReadableFlatEntry("Attack Damage", flatDamageBonus, STATSCORE_ICONS.attackDamage),
-                ...elemental,
-                buildReadableMultiplierEntry("Critical Multiplier", critMultiplier, STATSCORE_ICONS.criticalMultiplier),
-                buildReadableStatEntry("Bonus Damage", damageBonus, STATSCORE_ICONS.attackDamage),
-                buildReadableStatEntry("Critical Chance", critChance, STATSCORE_ICONS.criticalChance),
-                buildReadableStatEntry("Lifesteal", lifesteal, STATSCORE_ICONS.healedHeart),
-                buildReadableStatEntry("Armor Penetration", penetration, STATSCORE_ICONS.fullArmor)
-                ];
+            : [
+                candidate(buildReadableStatEntry("Persistence", persistence, STATSCORE_ICONS.sword), 0.95),
+                candidate(buildReadableStatEntry("Charge Mastery", chargeMastery, STATSCORE_ICONS.sword), 0.85),
+                candidate(buildReadableStatEntry("Scavenging", scavenging, STATSCORE_ICONS.scavenger), scavenging),
+                candidate(buildReadableStatEntry("Critical Chance", critChance, STATSCORE_ICONS.criticalChance), critChance),
+                candidate(buildReadableMultiplierEntry("Critical Multiplier", critMultiplier, STATSCORE_ICONS.criticalMultiplier), critChance * 0.95),
+                candidate(buildReadableStatEntry("Lifesteal", lifesteal, STATSCORE_ICONS.healedHeart), lifesteal),
+                candidate(buildReadableStatEntry("Armor Penetration", penetration, STATSCORE_ICONS.fullArmor), penetration),
+                candidate(buildReadableStatEntry("Preserving", preserving, STATSCORE_ICONS.preservingTool), preserving),
+            ];
 
-    return entries.filter(Boolean).slice(0, MAX_VISIBLE_LORE_STATS);
+    const attributeEntries = candidates
+        .filter(Boolean)
+        .sort((left, right) => right.activation - left.activation)
+        .slice(0, MAX_VISIBLE_LORE_ATTRIBUTES)
+        .map(entry => entry.line);
+
+    return [...directEntries, ...attributeEntries];
 }
 
 function buildStatsCoreLore(definition, state, attributes) {
@@ -221,17 +265,15 @@ export function syncStatsCoreLore(stack, definition, state, attributes, force = 
     if (!stack || typeof stack.setLore !== "function") return false;
 
     const currentLore = getLore(stack);
-    const baseLore = getBaseLore(stack);
+    const baseLore = getBaseLore(stack, currentLore);
     const statsLore = buildStatsCoreLore(definition, state, attributes);
     const nextLore = statsLore.length > 0
         ? [...baseLore, ...statsLore]
         : [...baseLore];
     const signature = JSON.stringify(statsLore);
-    const currentLoreSignature = JSON.stringify(currentLore);
-    const nextLoreSignature = JSON.stringify(nextLore);
 
     try {
-        if (!force && currentLoreSignature === nextLoreSignature) {
+        if (!force && arraysEqual(currentLore, nextLore)) {
             return false;
         }
 
@@ -251,8 +293,8 @@ export function clearStatsCoreLore(stack) {
     if (!stack || typeof stack.setLore !== "function") return false;
 
     const currentLore = getLore(stack);
-    const nextLore = getBaseLore(stack);
-    const changed = JSON.stringify(currentLore) !== JSON.stringify(nextLore);
+    const nextLore = getBaseLore(stack, currentLore);
+    const changed = !arraysEqual(currentLore, nextLore);
     if (!changed) return false;
 
     try {

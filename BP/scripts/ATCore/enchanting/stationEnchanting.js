@@ -126,7 +126,7 @@ export function buildStationEnchantPlan(stack, modules) {
 
     const current = readEnchantments(stack);
     const curated = modules.curseProtection > 0
-        ? current.filter((entry) => !CURSE_IDS.has(entry.id))
+        ? current.filter((entry) => !isCurseId(entry.id))
         : current.slice();
     const curatingChanged = curated.length !== current.length;
 
@@ -164,7 +164,7 @@ export function buildStationEnchantPlan(stack, modules) {
     const stored = readStoredTargets(stack);
     const storedMatchesTier = stored?.moduleLevel === modules.enchantability;
     const storedTargets = storedMatchesTier
-        ? stored.ids.filter((id) => modules.curseProtection <= 0 || !CURSE_IDS.has(id))
+        ? stored.ids.filter((id) => modules.curseProtection <= 0 || !isCurseId(id))
         : [];
     for (const id of resultIds) {
         if (!storedTargets.includes(id)) storedTargets.push(id);
@@ -298,6 +298,7 @@ function replaceEnchantments(stack, enchantments) {
 function buildSourcePool(enchantable) {
     const byId = getEnchantmentsById();
     const result = [];
+    const included = new Set();
 
     for (let sourceIndex = 0; sourceIndex < ENCHANTMENT_SOURCES.length; sourceIndex++) {
         const source = ENCHANTMENT_SOURCES[sourceIndex];
@@ -305,9 +306,23 @@ function buildSourcePool(enchantable) {
         for (let idIndex = 0; idIndex < source.length; idIndex++) {
             const id = source[idIndex];
             const type = byId.get(id);
-            if (type && canAdd(enchantable, type, 1)) valid.push(id);
+            if (type && canAdd(enchantable, type, 1)) {
+                valid.push(id);
+                included.add(id);
+            }
         }
         if (valid.length > 0) result.push(valid);
+    }
+
+    // Keep the curated incompatibility groups above, then add compatible
+    // enchantments introduced by newer game versions or other packs.
+    for (const [id, type] of byId.entries()) {
+        // Curses are deliberately excluded from the generic compatibility
+        // fallback. They may only enter through the dedicated curse roll,
+        // which the protection module disables completely.
+        if (!included.has(id) && !isCurseId(id) && canAdd(enchantable, type, 1)) {
+            result.push([id]);
+        }
     }
 
     return result;
@@ -411,6 +426,15 @@ function emptyPlan() {
 /** @param {unknown} value */
 function normalizeId(value) {
     return String(value ?? "").trim().toLowerCase();
+}
+
+function isCurseId(value) {
+    const id = normalizeId(value);
+    const localId = id.includes(":") ? id.split(":").pop() : id;
+    return CURSE_IDS.has(id)
+        || localId === "binding"
+        || localId === "vanishing"
+        || String(localId).includes("curse");
 }
 
 /**

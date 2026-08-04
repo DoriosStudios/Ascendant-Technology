@@ -5,6 +5,7 @@ import { system, world } from "@minecraft/server";
 const POINTS_KEY = "utilitycraft:reinforcement";
 const MAX_KEY = "utilitycraft:reinforcement_max";
 const SYNC_KEY = "utilitycraft:reinforcement_sync_version";
+const STATSCORE_LORE_SIGNATURE_KEY = "utilitycraft:statscore_lore_signature";
 const SYNC_VERSION = 1;
 const LORE_PATTERN = /Reinforcement\s*:\s*(\d+)(?:\s*\/\s*(\d+))?/i;
 const LORE_PREFIX = "\u00A7r\u00A79Reinforcement: ";
@@ -69,11 +70,52 @@ export function setReinforcementPoints(stack, points, maximum) {
         stack.setDynamicProperty(SYNC_KEY, SYNC_VERSION);
     } catch {}
 
-    const lore = safeLore(stack).filter((line) => !LORE_PATTERN.test(line));
+    const statsLore = readLoreSignature(stack, STATSCORE_LORE_SIGNATURE_KEY);
+    const lore = stripLoreSequence(safeLore(stack), statsLore)
+        .filter((line) => !LORE_PATTERN.test(line));
     if (cap > 0) lore.push(`${LORE_PREFIX}${current} / ${cap}`);
+    if (statsLore.length > 0) lore.push(...statsLore);
     try {
         stack.setLore(lore);
     } catch {}
+}
+
+/**
+ * Removes every exact occurrence of a generated lore sequence. This repairs
+ * items that were already duplicated while preserving unrelated custom lore.
+ *
+ * @param {string[]} lore
+ * @param {string[]} sequence
+ */
+function stripLoreSequence(lore, sequence) {
+    if (!Array.isArray(sequence) || sequence.length === 0) return [...lore];
+
+    const result = [];
+    for (let index = 0; index < lore.length;) {
+        let matches = index + sequence.length <= lore.length;
+        for (let offset = 0; matches && offset < sequence.length; offset++) {
+            matches = lore[index + offset] === sequence[offset];
+        }
+        if (matches) {
+            index += sequence.length;
+            continue;
+        }
+        result.push(lore[index]);
+        index++;
+    }
+    return result;
+}
+
+/** @param {import("@minecraft/server").ItemStack} stack @param {string} key */
+function readLoreSignature(stack, key) {
+    try {
+        const raw = stack.getDynamicProperty(key);
+        if (typeof raw !== "string" || raw.length === 0) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed.filter(line => typeof line === "string") : [];
+    } catch {
+        return [];
+    }
 }
 
 /**

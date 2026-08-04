@@ -187,15 +187,10 @@ function prepareMainLane(machine, slot, modules, moduleSignature, xpTank, reserv
     }
 
     const durability = getDurability(stack);
-    if (!durability) {
-        resetLane(machine, slot);
-        return { state: mainState(slot, "Invalid Item") };
-    }
-
     const reinforcement = getReinforcementPoints(stack);
     const signature = [
         stack.typeId,
-        `d${Math.floor(durability.damage)}`,
+        `d${Math.floor(Number(durability?.damage ?? 0))}`,
         `r${reinforcement}`,
         moduleSignature,
         createStationEnchantSignature(stack),
@@ -214,8 +209,10 @@ function prepareMainLane(machine, slot, modules, moduleSignature, xpTank, reserv
         if (built.storedTargetsChanged) machine.container.setItem(slot, stack);
     }
 
-    const repairNeeded = durability.damage > 0;
-    const reinforcementTarget = getReinforcementTarget(durability, modules.reinforcement);
+    const repairNeeded = Boolean(durability && durability.damage > 0);
+    const reinforcementTarget = durability
+        ? getReinforcementTarget(durability, modules.reinforcement)
+        : 0;
     const reinforcementNeeded = reinforcementTarget > reinforcement;
     const enchantNeeded = plan.changed;
 
@@ -398,8 +395,8 @@ function commitMainLane(machine, slot, signature, plan, reinforcementTarget, rep
 
     let result = current.clone();
     const durability = getDurability(result);
-    if (!durability) return false;
-    if (repairNeeded) durability.damage = Math.max(0, durability.damage - REPAIR_AMOUNT);
+    if (repairNeeded && !durability) return false;
+    if (repairNeeded && durability) durability.damage = Math.max(0, durability.damage - REPAIR_AMOUNT);
 
     if (plan.changed) {
         const enchanted = applyStationEnchantPlan(result, plan);
@@ -411,11 +408,20 @@ function commitMainLane(machine, slot, signature, plan, reinforcementTarget, rep
         setReinforcementPoints(result, reinforcementTarget, reinforcementTarget);
     }
 
+    let consumedXp = 0;
     try {
         machine.container.setItem(slot, result);
-        if (xpCost > 0 && xpTank.add(-xpCost) !== -xpCost) throw new Error("XP commit failed");
+        if (xpCost > 0) {
+            consumedXp = xpTank.consume(xpCost);
+            if (consumedXp !== xpCost) throw new Error("XP commit failed");
+        }
         return true;
     } catch {
+        if (consumedXp > 0) {
+            try {
+                xpTank.add(consumedXp);
+            } catch {}
+        }
         try {
             machine.container.setItem(slot, current);
         } catch {}

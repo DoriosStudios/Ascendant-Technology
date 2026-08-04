@@ -1,19 +1,25 @@
-import { system } from "@minecraft/server";
+import { EntityDamageCause, system, world } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { getCurrentTick, normalizeChance, rollChance } from "../utils.js";
 import { applyEffectById } from "../shared/effects.js";
 import { getEquipmentStatsContext } from "../shared/context.js"; 
+import { ENTITY_CATEGORIES, ENTITY_CATEGORY_MEMBERS, OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity, getEntityCategory } from "../shared/entityCategories.js";
+import { resolveStatsAbilityName } from "../core/abilities.js";
 
 const marks = new Map();
 const procDamageTargets = new Map();
 const effectCooldowns = new Map();
 const bleedStates = new Map();
-const CALM_EVENT_IDS = Object.freeze(["minecraft:become_calm", "become_calm_event"]);
 const HOT_ENTITY_TOKENS = Object.freeze(["blaze", "magma", "strider", "ghast", "piglin", "hoglin", "zoglin", "wither_skeleton"]);
 const COLD_ENTITY_TOKENS = Object.freeze(["stray", "snow_golem", "breeze", "ice", "frozen", "frost"]);
 const DARK_RESISTANT_TOKENS = Object.freeze(["wither", "warden", "ender", "shulker"]);
-const PET_ENTITY_TOKENS = Object.freeze(["wolf", "cat", "ocelot", "parrot", "horse", "donkey", "mule", "llama", "fox", "rabbit", "bee"]);
-let bleedProcessorActive = false;
+const SWEEP_ENTITY_CATEGORIES = Object.freeze([
+    ...OFFENSIVE_ENTITY_CATEGORIES,
+    ENTITY_CATEGORIES.passive,
+]);
+const SWEEP_ENTITY_CATEGORY_SET = new Set(SWEEP_ENTITY_CATEGORIES);
+const SWEEP_EXCLUDED_ENTITY_TYPES = ENTITY_CATEGORY_MEMBERS[ENTITY_CATEGORIES.ally];
+let bleedProcessorRunId;
 
 function entityKey(entity) {
     return String(entity?.id ?? entity?.typeId ?? "unknown");
@@ -66,15 +72,15 @@ function isColdTarget(entity) {
     return hasEntityToken(entity, COLD_ENTITY_TOKENS);
 }
 
-function isPlayerEntity(entity) {
-    return entity?.isPlayer === true || String(entity?.typeId ?? entity?.id ?? "").toLowerCase() === "minecraft:player";
+function canDamageWithEffect(effect, entity) {
+    return effectAppliesToEntity(effect, entity, OFFENSIVE_ENTITY_CATEGORIES);
 }
 
-function isPetEntity(entity) {
-    if (!entity) return false;
-    if (isPlayerEntity(entity)) return true;
-    if (entity?.isTamed === true || entity?.isLeashed === true) return true;
-    return hasEntityToken(entity, PET_ENTITY_TOKENS);
+function canSweepEntity(_effect, entity) {
+    // Sweeping has a fixed target policy. Do not inherit an old
+    // `appliesTo: ["hostile"]` restriction persisted on a refined item.
+    const category = getEntityCategory(entity);
+    return category !== ENTITY_CATEGORIES.ally && SWEEP_ENTITY_CATEGORY_SET.has(category);
 }
 
 function healTarget(target, amount) {
@@ -108,9 +114,12 @@ function isEffectOnCooldown(entity, effect) {
     const cooldownTicks = Math.max(0, Math.floor(Number(effect?.cooldownTicks ?? 0) || 0));
     if (!entity || cooldownTicks <= 0) return false;
 
-    cleanupTimedEntries(effectCooldowns);
-    const cooldown = effectCooldowns.get(getCooldownKey(entity, effect));
-    return Number(cooldown?.expiresAt ?? 0) > getCurrentTick();
+    const key = getCooldownKey(entity, effect);
+    const cooldown = effectCooldowns.get(key);
+    const now = getCurrentTick();
+    if (Number(cooldown?.expiresAt ?? 0) > now) return true;
+    if (cooldown) effectCooldowns.delete(key);
+    return false;
 }
 
 function setEffectCooldown(entity, effect) {
@@ -120,105 +129,30 @@ function setEffectCooldown(entity, effect) {
     effectCooldowns.set(getCooldownKey(entity, effect), {
         expiresAt: getCurrentTick() + cooldownTicks
     });
+    if (effectCooldowns.size > STATSCORE.runtime.markCleanupSize) {
+        cleanupTimedEntries(effectCooldowns);
+    }
 }
 
-function tryApplyDamage(target, amount, attacker, cause = "entity_attack") {
-    if (!target || !hasHealthComponent(target)) return false;
+function tryApplyDamage(target, amount, attacker, cause = EntityDamageCause.entityAttack, healthChecked = false) {
+    if (!target || (!healthChecked && !hasHealthComponent(target))) return false;
 
     try {
         markProcDamageTarget(target, 4);
-        target.applyDamage?.(amount, {
-            cause,
+        return target.applyDamage?.(amount, {
+            // `entity_attack` is valid in the `/damage` command but not in
+            // Script API's EntityDamageCause enum. Keep compatibility with
+            // existing callers while using the API's camel-case value.
+            cause: cause === "entity_attack" ? EntityDamageCause.entityAttack : cause,
             damagingEntity: attacker,
-        });
-        return true;
+        }) === true;
     } catch {
         return false;
     }
 }
 
-function formatCommandNumber(value, digits = 3) {
-    const numeric = Number(value ?? 0);
-    if (!Number.isFinite(numeric)) return "0";
-
-    return (Math.round(numeric * (10 ** digits)) / (10 ** digits)).toFixed(digits);
-}
-
-function createTemporarySelectorTag(prefix, entity) {
-    const base = `${prefix}_${entityKey(entity)}_${getCurrentTick()}`;
-    return base.replace(/[^A-Za-z0-9_]/g, "_").slice(0, 120);
-}
-
-function addTemporaryTag(entity, tag) {
-    if (!entity || !tag || typeof entity.addTag !== "function") return false;
-
-    try {
-        entity.addTag(tag);
-        return true;
-    } catch {
-        return false;
-    }
-}
-
-function removeTemporaryTag(entity, tag) {
-    if (!entity || !tag || typeof entity.removeTag !== "function") return;
-
-    try {
-        entity.removeTag(tag);
-    } catch { }
-}
-
-function tryApplyCommandDamage(target, amount, attacker, cause = "entity_attack") {
-    if (!target || !hasHealthComponent(target)) return false;
-
-    const damageAmount = Math.max(1, Math.round(Number(amount ?? 0) || 0));
-    const location = target.location;
-    const origin = attacker?.location ?? location;
-    if (!location || !origin) return false;
-
-    const targetTag = createTemporarySelectorTag("statscore_sweep_target", target);
-    const attackerTag = attacker ? createTemporarySelectorTag("statscore_sweep_source", attacker) : "";
-    const targetSelector = `@e[tag=${targetTag},c=1]`;
-    const sourcePosition = attackerTag
-        ? `at @e[tag=${attackerTag},c=1]`
-        : `positioned ${formatCommandNumber(origin.x)} ${formatCommandNumber(origin.y)} ${formatCommandNumber(origin.z)}`;
-    const command = `execute as ${targetSelector} ${sourcePosition} run damage @s ${damageAmount} ${cause} entity @p`;
-    let targetTagged = false;
-    let attackerTagged = false;
-
-    try {
-        markProcDamageTarget(target, 4);
-        targetTagged = addTemporaryTag(target, targetTag);
-        if (!targetTagged) {
-            return tryApplyDamage(target, damageAmount, attacker, cause);
-        }
-
-        if (attackerTag) {
-            attackerTagged = addTemporaryTag(attacker, attackerTag);
-        }
-
-        if (typeof target.dimension?.runCommand === "function") {
-            target.dimension.runCommand(command);
-            return true;
-        }
-
-        if (typeof attacker?.runCommand === "function") {
-            attacker.runCommand(`execute ${sourcePosition} run damage ${targetSelector} ${damageAmount} ${cause} entity @p`);
-            return true;
-        }
-
-        return tryApplyDamage(target, damageAmount, attacker, cause);
-    } catch {
-        return tryApplyDamage(target, damageAmount, attacker, cause);
-    } finally {
-        if (attackerTagged) {
-            removeTemporaryTag(attacker, attackerTag);
-        }
-
-        if (targetTagged) {
-            removeTemporaryTag(target, targetTag);
-        }
-    }
+export function applyStatsProcDamage(target, amount, attacker, cause = EntityDamageCause.entityAttack) {
+    return tryApplyDamage(target, Math.max(0, Number(amount ?? 0) || 0), attacker, cause);
 }
 
 function getSweepDamageScale(effect, offensiveLevel) {
@@ -243,18 +177,22 @@ function applySweep(attacker, target, effect, finalDamage, offensiveLevel) {
     const radius = getSweepRadius(effect, offensiveLevel);
     const damageScale = getSweepDamageScale(effect, offensiveLevel);
     const sweepDamage = Math.max(1, Number(finalDamage ?? 0) * damageScale);
+    const attackerId = attacker.id;
+    const targetId = target.id;
     let hits = 0;
 
     for (const entity of target.dimension.getEntities({
         location: target.location,
         maxDistance: radius,
+        excludeTypes: SWEEP_EXCLUDED_ENTITY_TYPES,
     })) {
-        if (!entity || entity.id === attacker.id || entity.id === target.id) continue;
+        if (!entity || entity.id === attackerId || entity.id === targetId) continue;
         if (!hasHealthComponent(entity)) continue;
-        if (isPlayerEntity(entity) || isPetEntity(entity)) continue;
+        if (!canSweepEntity(effect, entity)) continue;
 
-        if (tryApplyCommandDamage(entity, sweepDamage, attacker)) {
+        if (tryApplyDamage(entity, sweepDamage, attacker, EntityDamageCause.entityAttack, true)) {
             hits++;
+            spawnParticleSafe(entity, "minecraft:critical_hit_emitter");
         }
     }
 
@@ -278,11 +216,17 @@ function spawnParticleSafe(entity, particleId) {
 }
 
 function ensureBleedProcessor() {
-    if (bleedProcessorActive) return;
-    bleedProcessorActive = true;
+    if (bleedProcessorRunId !== undefined) return;
 
-    system.runInterval(() => {
-        if (bleedStates.size <= 0) return;
+    bleedProcessorRunId = system.runInterval(() => {
+        if (bleedStates.size <= 0) {
+            const runId = bleedProcessorRunId;
+            bleedProcessorRunId = undefined;
+            try {
+                system.clearRun(runId);
+            } catch { }
+            return;
+        }
 
         const now = getCurrentTick();
         for (const [key, state] of bleedStates.entries()) {
@@ -355,9 +299,22 @@ function applyBleed(target, attacker, effect, finalDamage) {
 }
 
 function shouldTriggerEffect(effect, context) {
+    const kind = String(effect?.kind ?? "").trim().toLowerCase();
+    // Sweeping deliberately has a broader target policy than the other combat
+    // effects: it can begin on, and spread to, passive creatures. Previously
+    // the generic hostile-only gate rejected a cow/pig/chicken before
+    // applySweep() was ever reached.
+    const targetIsAllowed = kind === "sweep"
+        ? canSweepEntity(effect, context?.target)
+        : effectAppliesToEntity(effect, context?.target, OFFENSIVE_ENTITY_CATEGORIES);
+    if (!targetIsAllowed) return false;
+
     const on = String(effect?.on ?? "hit").toLowerCase();
     if (on === "crit" && context?.crit?.active !== true) return false;
     if (on === "marked" && context?.marked !== true) return false;
+    const projectileDamage = Boolean(context?.damagingProjectile)
+        || String(context?.damageSource?.cause ?? "").trim().toLowerCase() === "projectile";
+    if (effect?.requiresProjectile === true && !projectileDamage) return false;
     return rollChance(effect?.chance, 1);
 }
 
@@ -438,6 +395,7 @@ function applyFire(target, effect) {
 
 function applyElementalAspect(attacker, target, aspect, finalDamage) {
     if (!target || !aspect?.id || !rollChance(aspect.chance, 0)) return false;
+    if (!canDamageWithEffect(aspect, target)) return false;
 
     const id = String(aspect.id).toLowerCase();
     const duration = Math.max(20, Math.floor(Number(aspect.durationTicks ?? 80) || 80));
@@ -512,6 +470,7 @@ function applyElementalAspect(attacker, target, aspect, finalDamage) {
                 const struck = [];
                 for (const ent of target.dimension.getEntities({ location: origin, maxDistance: strikeRadius })) {
                     if (!ent) continue;
+                    if (!canDamageWithEffect(aspect, ent)) continue;
                     struck.push(ent);
                 }
 
@@ -527,22 +486,31 @@ function applyElementalAspect(attacker, target, aspect, finalDamage) {
                     } catch { }
                 }
 
-                // After lightning, extinguish fire on nearby players/entities
-                for (const ent of attacker.dimension.getEntities({ location: origin, maxDistance: strikeRadius })) {
-                    try {
-                        if (typeof ent.setOnFire === "function") {
-                            ent.setOnFire?.(0, true);
+                // A successful lightning proc cleans a 7×7×3 volume centred
+                // on the strike and extinguishes every online player.
+                const center = {
+                    x: Math.floor(Number(origin.x ?? 0)),
+                    y: Math.floor(Number(origin.y ?? 0)),
+                    z: Math.floor(Number(origin.z ?? 0)),
+                };
+                for (let x = -3; x <= 3; x++) {
+                    for (let y = -1; y <= 1; y++) {
+                        for (let z = -3; z <= 3; z++) {
+                            try {
+                                const block = target.dimension.getBlock?.({ x: center.x + x, y: center.y + y, z: center.z + z });
+                                const blockId = String(block?.typeId ?? "").toLowerCase();
+                                if (blockId === "minecraft:fire" || blockId === "minecraft:soul_fire") {
+                                    block.setType?.("minecraft:air");
+                                }
+                            } catch { }
                         }
+                    }
+                }
+                for (const player of world.getPlayers?.() ?? []) {
+                    try {
+                        player.extinguishFire?.(true);
                     } catch { }
                 }
-
-                // Attempt to clear fire blocks in a small area using a safer fill command.
-                try {
-                    const radius = Math.min(6, Math.max(2, Math.floor(strikeRadius) + 1));
-                    if (typeof attacker.dimension.runCommand === "function") {
-                        attacker.dimension.runCommand(`fill ~${radius} ~-2 ~${radius} ~-${radius} ~2 ~-${radius} air replace fire`);
-                    }
-                } catch { }
             }
         } catch { }
 
@@ -600,22 +568,26 @@ function applyElementalAspects({ attacker, target, attributes, finalDamage }) {
     return applied.filter(Boolean);
 }
 
-function queueAftershockSlowness(target, effect) {
-    const levitationDuration = Math.max(1, Math.floor(Number(effect?.levitationDurationTicks ?? 40) || 40));
+function queueAftershockLandingBurst(target, effect) {
     const slownessDuration = Math.max(1, Math.floor(Number(effect?.slownessDurationTicks ?? 100) || 100));
     const slownessAmplifier = Math.max(0, Math.floor(Number(effect?.slownessAmplifier ?? 3) || 3));
-
-    system.runTimeout(() => {
+    let attempts = 0;
+    const checkLanding = () => {
         if (!hasHealthComponent(target)) return;
-        applyEffectById(target, "slowness", slownessDuration, slownessAmplifier, false);
-    }, levitationDuration);
+        attempts++;
+        if (target?.isOnGround === true || attempts >= 30) {
+            applyEffectById(target, "slowness", slownessDuration, slownessAmplifier, false);
+            spawnParticleSafe(target, "minecraft:critical_hit_emitter");
+            return;
+        }
+        system.runTimeout(checkLanding, 2);
+    };
+    system.runTimeout(checkLanding, 2);
 }
 
 function applyAftershock(attacker, target, effect, finalDamage) {
     if (!attacker || !target || !target.dimension || isEffectOnCooldown(attacker, effect)) return false;
 
-    const levitationDuration = Math.max(1, Math.floor(Number(effect?.levitationDurationTicks ?? 40) || 40));
-    const levitationAmplifier = Math.max(0, Math.floor(Number(effect?.levitationAmplifier ?? 4) || 4));
     const radius = Math.max(2, Number(effect?.radius ?? 7.5) || 7.5);
     const maxTargets = Math.max(1, Math.floor(Number(effect?.maxTargets ?? 12) || 12));
     const damageScale = Math.max(0.1, Number(effect?.damageScale ?? 0.5) || 0.5);
@@ -623,10 +595,12 @@ function applyAftershock(attacker, target, effect, finalDamage) {
     let applied = false;
     let hits = 0;
 
-    if (applyEffectById(target, "levitation", levitationDuration, levitationAmplifier, false)) {
-        queueAftershockSlowness(target, effect);
+    try {
+        target.applyKnockback?.({ x: 0, z: 0 }, Math.max(0.8, Number(effect?.knockbackVertical ?? 1.1) || 1.1));
+        queueAftershockLandingBurst(target, effect);
+        spawnParticleSafe(target, "minecraft:critical_hit_emitter");
         applied = true;
-    }
+    } catch { }
 
     for (const entity of target.dimension.getEntities({
         location: target.location,
@@ -634,12 +608,16 @@ function applyAftershock(attacker, target, effect, finalDamage) {
     })) {
         if (!entity || entity.id === attacker.id || entity.id === target.id) continue;
         if (!hasHealthComponent(entity)) continue;
+        if (!canDamageWithEffect(effect, entity)) continue;
 
-        const hit = tryApplyDamage(entity, shockDamage, attacker);
-        const lifted = applyEffectById(entity, "levitation", levitationDuration, levitationAmplifier, false);
-        if (lifted) {
-            queueAftershockSlowness(entity, effect);
-        }
+        const hit = tryApplyDamage(entity, shockDamage, attacker, EntityDamageCause.entityAttack, true);
+        let lifted = false;
+        try {
+            entity.applyKnockback?.({ x: 0, z: 0 }, Math.max(0.8, Number(effect?.knockbackVertical ?? 1.1) || 1.1));
+            queueAftershockLandingBurst(entity, effect);
+            spawnParticleSafe(entity, "minecraft:critical_hit_emitter");
+            lifted = true;
+        } catch { }
 
         applied = hit || lifted || applied;
         if (hit || lifted) {
@@ -662,7 +640,7 @@ function applyReaper(attacker, target, effect, finalDamage) {
     const radius = Math.max(1.5, Number(effect?.radius ?? 4.5) || 4.5);
     const damageScale = Math.max(0.1, Number(effect?.damageScale ?? 0.55) || 0.55);
     const reapDamage = Math.max(1, Number(finalDamage ?? 0) * damageScale);
-    let applied = false;
+    let applied = applyBleed(target, attacker, { ...effect, key: "reaper_bleeding", kind: "bleed", chance: 1 }, finalDamage);
 
     for (const entity of target.dimension.getEntities({
         location: target.location,
@@ -670,9 +648,11 @@ function applyReaper(attacker, target, effect, finalDamage) {
     })) {
         if (!entity || entity.id === attacker.id || entity.id === target.id) continue;
         if (!hasHealthComponent(entity)) continue;
+        if (!canDamageWithEffect(effect, entity)) continue;
         if (entity.typeId !== target.typeId) continue;
 
-        applied = tryApplyDamage(entity, reapDamage, attacker) || applied;
+        applied = tryApplyDamage(entity, reapDamage, attacker, EntityDamageCause.entityAttack, true) || applied;
+        applyBleed(entity, attacker, { ...effect, key: "reaper_bleeding", kind: "bleed", chance: 1 }, reapDamage);
     }
 
     return applied;
@@ -684,18 +664,55 @@ function applyHarpoon(target, attacker, effect) {
     return true;
 }
 
-function applyDeadeye(target) {
-    if (!target?.triggerEvent) return false;
+function applySkewer(attacker, target, effect) {
+    if (!attacker || !target || !attacker.location || !target.location) return false;
+    applyMark(target, attacker, effect);
 
-    let applied = false;
-    for (const eventId of CALM_EVENT_IDS) {
-        try {
-            target.triggerEvent(eventId);
-            applied = true;
-        } catch { }
-    }
+    const dx = Number(target.location.x ?? 0) - Number(attacker.location.x ?? 0);
+    const dz = Number(target.location.z ?? 0) - Number(attacker.location.z ?? 0);
+    const distance = Math.max(0.001, Math.hypot(dx, dz));
+    try {
+        target.applyKnockback?.({
+            x: (dx / distance) * 2.4,
+            z: (dz / distance) * 2.4,
+        }, 0.55);
+    } catch { }
+    try {
+        attacker.applyImpulse?.({
+            x: (dx / distance) * 0.42,
+            y: 0.08,
+            z: (dz / distance) * 0.42,
+        });
+    } catch { }
+    return true;
+}
 
-    return applied;
+function applyPinningShot(target, attacker, effect) {
+    if (!target || !attacker) return false;
+    if (isEffectOnCooldown(attacker, effect)) return false;
+
+    const duration = Math.max(20, Math.floor(Number(effect?.durationTicks ?? 80) || 80));
+    applyEffectById(
+        target,
+        "slowness",
+        duration,
+        Math.max(0, Math.floor(Number(effect?.slownessAmplifier ?? 3) || 3)),
+        false
+    );
+    applyEffectById(
+        target,
+        "weakness",
+        duration,
+        Math.max(0, Math.floor(Number(effect?.weaknessAmplifier ?? 1) || 1)),
+        false
+    );
+    applyMark(target, attacker, {
+        ...effect,
+        durationTicks: duration,
+        damageBonus: Math.max(0, Number(effect?.damageBonus ?? 0.06) || 0.06),
+    });
+    setEffectCooldown(attacker, effect);
+    return true;
 }
 
 function distanceSquared(left, right) {
@@ -703,30 +720,6 @@ function distanceSquared(left, right) {
     const dy = Number(left?.y ?? 0) - Number(right?.y ?? 0);
     const dz = Number(left?.z ?? 0) - Number(right?.z ?? 0);
     return (dx * dx) + (dy * dy) + (dz * dz);
-}
-
-function findNearestUntouchedTarget(current, attacker, visited, range) {
-    if (!current?.dimension || !current?.location) return null;
-
-    let best = null;
-    let bestDistance = Infinity;
-
-    for (const entity of current.dimension.getEntities({
-        location: current.location,
-        maxDistance: range,
-    })) {
-        if (!entity || entity.id === attacker?.id) continue;
-        if (!hasHealthComponent(entity)) continue;
-        if (visited.has(entity.id)) continue;
-
-        const nextDistance = distanceSquared(current.location, entity.location);
-        if (nextDistance >= bestDistance) continue;
-
-        best = entity;
-        bestDistance = nextDistance;
-    }
-
-    return best;
 }
 
 function applyBallista(attacker, target, effect, finalDamage) {
@@ -742,17 +735,18 @@ function applyBallista(attacker, target, effect, finalDamage) {
     const range = Math.max(1.5, Number(effect?.chainRange ?? 5) || 5);
     const damageScale = Math.max(0.1, Number(effect?.damageScale ?? 0.45) || 0.45);
     const chainedDamage = Math.max(1, Number(finalDamage ?? 0) * damageScale);
-    const visited = new Set([attacker.id, target.id]);
-    let current = target;
+    const nearbyTargets = target.dimension.getEntities({
+        location: target.location,
+        maxDistance: range,
+    })
+        .filter(entity => entity && entity.id !== attacker.id && entity.id !== target.id)
+        .filter(entity => hasHealthComponent(entity) && canDamageWithEffect(effect, entity))
+        .sort((left, right) => distanceSquared(target.location, left.location) - distanceSquared(target.location, right.location))
+        .slice(0, maxChains);
     let applied = true;
 
-    for (let index = 0; index < maxChains; index++) {
-        const nextTarget = findNearestUntouchedTarget(current, attacker, visited, range);
-        if (!nextTarget) break;
-
-        visited.add(nextTarget.id);
-        current = nextTarget;
-
+    for (const nextTarget of nearbyTargets) {
+        spawnParticleTrail(target.dimension, target.location, nextTarget.location);
         const hit = tryApplyDamage(nextTarget, chainedDamage, attacker, "projectile");
         applyMark(nextTarget, attacker, {
             ...effect,
@@ -769,19 +763,32 @@ function applyBallista(attacker, target, effect, finalDamage) {
     return applied;
 }
 
-export function applyCombatEffects({ attacker, target, attributes, crit, finalDamage }) {
+export function applyCombatEffects({ attacker, target, attributes, crit, finalDamage, damageSource, damagingProjectile }) {
     const effects = Array.isArray(attributes?.effects) ? attributes.effects : [];
-    if (!target) return { count: 0, elemental: [] };
+    if (!target) return { count: 0, elemental: [], abilities: [] };
 
     const marked = Boolean(getMark(target));
     const elemental = applyElementalAspects({ attacker, target, attributes, finalDamage });
+    const abilities = [];
     let applied = elemental.length;
 
-    if (!effects.length) return { count: applied, elemental };
+    if (!effects.length) return { count: applied, elemental, abilities };
+
+    const recordAbility = (effect) => {
+        const name = resolveStatsAbilityName(effect);
+        if (name && !abilities.includes(name)) abilities.push(name);
+    };
 
     for (const effect of effects) {
         if (!effect || typeof effect !== "object") continue;
-        if (!shouldTriggerEffect(effect, { attacker, target, crit, marked })) continue;
+        if (!shouldTriggerEffect(effect, {
+            attacker,
+            target,
+            crit,
+            marked,
+            damageSource,
+            damagingProjectile,
+        })) continue;
 
         const targetEntity = effect.target === "attacker" ? attacker : target;
         const kind = String(effect.kind ?? "").toLowerCase();
@@ -790,57 +797,111 @@ export function applyCombatEffects({ attacker, target, attributes, crit, finalDa
             continue;
         }
 
+        if (kind === "skewer") {
+            if (applySkewer(attacker, target, effect)) {
+                applied++;
+                recordAbility(effect);
+            }
+            continue;
+        }
+
         if (kind === "mark") {
             applyMark(target, attacker, effect);
             applied++;
+            recordAbility(effect);
             continue;
         }
 
         if (kind === "harpoon") {
-            if (applyHarpoon(target, attacker, effect)) applied++;
+            if (applyHarpoon(target, attacker, effect)) {
+                applied++;
+                recordAbility(effect);
+            }
             continue;
         }
 
-        if (kind === "deadeye") {
-            if (applyDeadeye(target)) applied++;
+        if (kind === "pinning_shot") {
+            if (applyPinningShot(target, attacker, effect)) {
+                applied++;
+                recordAbility(effect);
+            }
             continue;
         }
 
         if (kind === "ballista") {
-            if (applyBallista(attacker, target, effect, finalDamage)) applied++;
+            if (applyBallista(attacker, target, effect, finalDamage)) {
+                applied++;
+                recordAbility(effect);
+            }
             continue;
         }
 
         if (kind === "aftershock") {
-            if (applyAftershock(attacker, target, effect, finalDamage)) applied++;
+            if (applyAftershock(attacker, target, effect, finalDamage)) {
+                applied++;
+                recordAbility(effect);
+            }
             continue;
         }
 
         if (kind === "reaper") {
-            if (applyReaper(attacker, target, effect, finalDamage)) applied++;
+            if (applyReaper(attacker, target, effect, finalDamage)) {
+                applied++;
+                recordAbility(effect);
+            }
             continue;
         }
 
         if (kind === "sweep") {
-            if (applySweep(attacker, target, effect, finalDamage, attributes?.levels?.offensive)) applied++;
+            if (applySweep(attacker, target, effect, finalDamage, attributes?.levels?.offensive)) {
+                applied++;
+                recordAbility(effect);
+            }
             continue;
         }
 
         if (kind === "bleed") {
-            if (applyBleed(target, attacker, effect, finalDamage)) applied++;
+            if (applyBleed(target, attacker, effect, finalDamage)) {
+                applied++;
+                recordAbility(effect);
+            }
             continue;
         }
 
         if (kind === "fire") {
-            if (applyFire(targetEntity, effect)) applied++;
+            if (applyFire(targetEntity, effect)) {
+                applied++;
+                recordAbility(effect);
+            }
             continue;
         }
 
         if (applyStatusEffect(targetEntity, effect)) {
             applied++;
+            recordAbility(effect);
         }
     }
 
-    return { count: applied, elemental };
+    return { count: applied, elemental, abilities };
+}
+
+function spawnParticleTrail(dimension, from, to, particleId = "minecraft:critical_hit_emitter") {
+    if (!dimension || !from || !to) return;
+    const dx = Number(to.x ?? 0) - Number(from.x ?? 0);
+    const dy = Number(to.y ?? 0) - Number(from.y ?? 0);
+    const dz = Number(to.z ?? 0) - Number(from.z ?? 0);
+    const distance = Math.max(0.01, Math.hypot(dx, dy, dz));
+    const steps = Math.min(18, Math.max(2, Math.ceil(distance * 2)));
+
+    for (let step = 0; step <= steps; step++) {
+        const progress = step / steps;
+        try {
+            dimension.spawnParticle?.(particleId, {
+                x: Number(from.x ?? 0) + (dx * progress),
+                y: Number(from.y ?? 0) + 0.8 + (dy * progress),
+                z: Number(from.z ?? 0) + (dz * progress),
+            });
+        } catch { }
+    }
 }
 

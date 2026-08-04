@@ -20,12 +20,22 @@ export const STATSCORE_ICONS = Object.freeze({
     criticalChance: "",
     preservingTool: "",
     preservingArmor: "",
+    blood: "",
+    death: "",
+    scavenger: "",
+    random: "",
+    soul: "",
+    newItem: "",
+    miningLevelUp: "",
+    defensiveLevelUp: "",
+    offensiveLevelUp: "",
+    abilityLevelUp: "",
     oreYield: "",
     fire: "",
     poison: "",
-    ice: "",
+    ice: "",
     darkness: "",
-    lightning: "",
+    lightning: "",
     healedHeart: "",
     fullHeart: "",
     emptyHeart: "",
@@ -72,7 +82,7 @@ export function getAttributeIcon(label, context = "") {
     if (normalized.includes("critical multiplier")) return STATSCORE_ICONS.criticalMultiplier;
     if (normalized.includes("critical chance")) return STATSCORE_ICONS.criticalChance;
     if (normalized.includes("critical damage")) return STATSCORE_ICONS.criticalDamage;
-    if (normalized.includes("damage reduction")) return STATSCORE_ICONS.damageReduction;
+    if (normalized.includes("damage reduction") || normalized.includes("resilience")) return STATSCORE_ICONS.damageReduction;
     if (normalized.includes("attack damage") || normalized.includes("bonus damage") || normalized.includes("extra damage")) {
         return STATSCORE_ICONS.attackDamage;
     }
@@ -80,6 +90,7 @@ export function getAttributeIcon(label, context = "") {
         return normalizedContext === "support" ? STATSCORE_ICONS.preservingArmor : STATSCORE_ICONS.preservingTool;
     }
     if (normalized.includes("evasion") || normalized.includes("negate")) return STATSCORE_ICONS.evasion;
+    if (normalized.includes("scaveng")) return STATSCORE_ICONS.scavenger;
     if (normalized.includes("luck") || normalized.includes("xp")) return STATSCORE_ICONS.luck;
     if (normalized.includes("ore") || normalized.includes("yield") || normalized.includes("drop")) return STATSCORE_ICONS.oreYield;
     if (normalized.includes("lifesteal") || normalized.includes("heal")) return STATSCORE_ICONS.healedHeart;
@@ -87,6 +98,8 @@ export function getAttributeIcon(label, context = "") {
     if (normalized.includes("walk") || normalized.includes("feather")) return STATSCORE_ICONS.walkingSpeed;
     if (normalized.includes("swim") || normalized.includes("water")) return STATSCORE_ICONS.swimmingSpeed;
     if (normalized.includes("sweep")) return STATSCORE_ICONS.sweeping;
+    if (normalized.includes("charge") || normalized.includes("projectile")) return STATSCORE_ICONS.unknown;
+    if (normalized.includes("dimension")) return STATSCORE_ICONS.darkness;
     return STATSCORE_ICONS.unknown;
 }
 
@@ -97,10 +110,18 @@ export function getAbilityIcon(label) {
         return STATSCORE_ICONS.fire;
     }
     if (normalized.includes("sweep")) return STATSCORE_ICONS.sweeping;
-    if (normalized.includes("bleed") || normalized.includes("poison")) return STATSCORE_ICONS.poison;
-    if (normalized.includes("feather")) return STATSCORE_ICONS.walkingSpeed;
+    if (normalized.includes("bleed")) return STATSCORE_ICONS.blood;
+    if (normalized.includes("poison")) return STATSCORE_ICONS.poison;
+    if (normalized.includes("feather") || normalized.includes("dash")) return STATSCORE_ICONS.walkingSpeed;
     if (normalized.includes("tough") || normalized.includes("spikes")) return STATSCORE_ICONS.fullArmor;
     if (normalized.includes("clarity")) return STATSCORE_ICONS.healedHeart;
+    if (normalized.includes("perfect guard") || normalized.includes("blast ward")) return STATSCORE_ICONS.fullArmor;
+    if (normalized.includes("overcharge")) return STATSCORE_ICONS.lightning;
+    if (normalized.includes("soul collector")) return STATSCORE_ICONS.soul;
+    if (normalized.includes("dimensional")) return STATSCORE_ICONS.darkness;
+    if (normalized.includes("phase step")) return STATSCORE_ICONS.walkingSpeed;
+    if (normalized.includes("scaveng")) return STATSCORE_ICONS.scavenger;
+    if (normalized.includes("reaper")) return STATSCORE_ICONS.death;
     if (
         normalized.includes("operator")
         || normalized.includes("crush")
@@ -113,10 +134,9 @@ export function getAbilityIcon(label) {
     }
     if (
         normalized.includes("harpoon")
-        || normalized.includes("deadeye")
+        || normalized.includes("pinning shot")
         || normalized.includes("ballista")
         || normalized.includes("berserk")
-        || normalized.includes("reaper")
         || normalized.includes("primal")
     ) {
         return STATSCORE_ICONS.sword;
@@ -127,13 +147,13 @@ export function getAbilityIcon(label) {
 export function getProgressionIcon(category) {
     switch (normalizeLabel(category)) {
         case "offensive":
-            return STATSCORE_ICONS.attackDamage;
+            return STATSCORE_ICONS.offensiveLevelUp;
         case "mining":
-            return STATSCORE_ICONS.oreYield;
+            return STATSCORE_ICONS.miningLevelUp;
         case "defensive":
-            return STATSCORE_ICONS.fullArmor;
+            return STATSCORE_ICONS.defensiveLevelUp;
         case "utility":
-            return STATSCORE_ICONS.luck;
+            return STATSCORE_ICONS.abilityLevelUp;
         default:
             return STATSCORE_ICONS.unknown;
     }

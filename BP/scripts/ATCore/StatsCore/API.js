@@ -22,16 +22,40 @@ export {
     syncStatsCoreLore,
 } from "./core/lore.js";
 export {
+    collectStatsAbilityEntries,
     collectStatsAbilityNames,
+    getStatsAbilitySummary,
+    isAdvancedStatsAbilityEffect,
     resolveStatsAbilityName,
 } from "./core/abilities.js";
 export { resolveStatsAttributes } from "./attributes/resolve.js";
 export {
+    ENTITY_CATEGORIES,
+    ENTITY_CATEGORY_MEMBERS,
+    ENTITY_TYPE_CATEGORY,
+    OFFENSIVE_ENTITY_CATEGORIES,
+    effectAppliesToEntity,
+    entityMatchesAppliesTo,
+    getEntityCategory,
+    isTamedEntity,
+    normalizeAppliesTo,
+    normalizeEntityCategory,
+} from "./shared/entityCategories.js";
+export {
     getLevelFromXp,
     getProgressAmount,
+    getTotalXpForLevel,
     getXpNeededForLevel,
     grantStatsProgress,
 } from "./progression/refinement.js";
+export {
+    REFINEMENT_ABILITY_CATALOG,
+    REFINEMENT_ABILITY_KEYS,
+    REFINEMENT_ATTRIBUTE_CATALOG,
+    REFINEMENT_ATTRIBUTE_KEYS,
+    getRefinementAbilityOption,
+    getRefinementAttributeOption,
+} from "./refining/commandCatalog.js";
 export {
     initializeStatsCoreRuntime,
     isStatsCoreEnabled,

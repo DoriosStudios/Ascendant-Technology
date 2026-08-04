@@ -84,6 +84,20 @@
 			"sounds": [
 				"sounds/blastling_ammo_shot"
 			]
+		},
+		"ascendant.statscore.soul_explosion": {
+			"category": "player",
+			"sounds": [
+				"sounds/statscore/soul_explosion0",
+				"sounds/statscore/soul_explosion1"
+			]
+		},
+		"ascendant.statscore.wind_launch": {
+			"category": "player",
+			"sounds": [
+				"sounds/statscore/wind_launch0",
+				"sounds/statscore/wind_launch1"
+			]
 		}
 	}
 }

@@ -80,7 +80,15 @@ export function getEntityHurtTarget(event) {
  */
 export function getEntityHurtAttacker(event) {
     const projectile = event?.damageSource?.damagingProjectile ?? event?.damagingProjectile ?? null;
-    return event?.damageSource?.damagingEntity
+    let projectileOwner = null;
+    try {
+        projectileOwner = projectile?.getComponent?.("minecraft:projectile")?.owner
+            ?? projectile?.getComponent?.("projectile")?.owner
+            ?? null;
+    } catch { }
+
+    return projectileOwner
+        ?? event?.damageSource?.damagingEntity
         ?? projectile?.owner
         ?? projectile?.source
         ?? projectile?.damagingEntity
@@ -132,7 +140,7 @@ export function matchesDamageType(values, damageType) {
  * @returns {boolean}
  */
 export function isBossLikeEntity(entity) {
-    const id = String(entity?.typeId ?? "").toLowerCase();
-    return id.includes("wither") || id.includes("ender_dragon") || id.includes("boss");
+    return getEntityCategory(entity) === ENTITY_CATEGORIES.boss;
 }
 
+import { ENTITY_CATEGORIES, getEntityCategory } from "./entityCategories.js";

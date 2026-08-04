@@ -25,8 +25,7 @@ const DEFAULT_REFINEMENT_BONUSES = Object.freeze({
     }),
     damageReduction: 0,
     negateAllDamageChance: 0,
-    bonusDropChance: 0,
-    oreBonusChance: 0,
+    bonusLootChance: 0,
     durabilitySaveChance: 0,
     durabilityPreserveChance: 0
 });
@@ -64,7 +63,7 @@ function normalizeRefinementElement(value, fallbackChance, fallbackDamage) {
         id,
         label: id ? label : "",
         chance: clamp01(toFiniteNumber(element.chance, fallbackChance)),
-        damage: clampPositive(toFiniteNumber(element.damage, fallbackDamage), 12),
+        damage: clampPositive(toFiniteNumber(element.damage, fallbackDamage), 18),
         damageScale: clampPositive(element.damageScale, 1),
         durationTicks: toPositiveInteger(element.durationTicks, 0),
         amplifier: toPositiveInteger(element.amplifier, 0),
@@ -76,25 +75,31 @@ function normalizeRefinementElement(value, fallbackChance, fallbackDamage) {
 function normalizeRefinementBonuses(value) {
     const bonuses = value && typeof value === "object" ? value : {};
     const elementalChance = clamp01(toFiniteNumber(bonuses.elementalChance, bonuses.elemental?.chance ?? 0));
-    const elementalDamage = clampPositive(toFiniteNumber(bonuses.elementalDamage, bonuses.elemental?.damage ?? 0), 12);
+    const elementalDamage = clampPositive(toFiniteNumber(bonuses.elementalDamage, bonuses.elemental?.damage ?? 0), 18);
     const elemental = normalizeRefinementElement(bonuses.elemental, elementalChance, elementalDamage);
 
     return {
         damageMultiplier: clamp01(toFiniteNumber(bonuses.damageMultiplier, 0)),
-        extraDamage: clampPositive(toFiniteNumber(bonuses.extraDamage, bonuses.flatDamageBonus ?? 0), 12),
-        flatDamageBonus: clampPositive(toFiniteNumber(bonuses.flatDamageBonus, 0), 12),
+        extraDamage: clampPositive(toFiniteNumber(bonuses.extraDamage, bonuses.flatDamageBonus ?? 0), 18),
+        flatDamageBonus: clampPositive(toFiniteNumber(bonuses.flatDamageBonus, 0), 18),
         critChance: clamp01(toFiniteNumber(bonuses.critChance, 0)),
         critMultiplier: clamp01(toFiniteNumber(bonuses.critMultiplier, 0)),
         critDamageBonus: clamp01(toFiniteNumber(bonuses.critDamageBonus, 0)),
         penetration: clamp01(toFiniteNumber(bonuses.penetration, 0)),
         lifesteal: clamp01(toFiniteNumber(bonuses.lifesteal, 0)),
         elementalChance,
-        elementalDamage,
+        elementalDamage: clampPositive(elementalDamage, 18),
         elemental,
         damageReduction: clamp01(toFiniteNumber(bonuses.damageReduction, 0)),
         negateAllDamageChance: clamp01(toFiniteNumber(bonuses.negateAllDamageChance, 0)),
-        bonusDropChance: clamp01(toFiniteNumber(bonuses.bonusDropChance, 0)),
-        oreBonusChance: clamp01(toFiniteNumber(bonuses.oreBonusChance, 0)),
+        // Merge legacy drop and ore rolls into the single Bonus Loot roll.
+        // Their values used to be independent rolls, so retain their combined
+        // strength when an existing refined item is migrated.
+        bonusLootChance: clamp01(
+            toFiniteNumber(bonuses.bonusLootChance, 0),
+            + toFiniteNumber(bonuses.bonusDropChance, 0)
+            + toFiniteNumber(bonuses.oreBonusChance, 0)
+        ),
         durabilitySaveChance: clamp01(toFiniteNumber(bonuses.durabilitySaveChance, 0)),
         durabilityPreserveChance: clamp01(toFiniteNumber(bonuses.durabilityPreserveChance, 0))
     };
@@ -126,6 +131,10 @@ export function normalizeStatsRefinementData(value) {
     return normalized;
 }
 
+export function parseStatsRefinementData(rawValue) {
+    return normalizeStatsRefinementData(safeJsonParse(rawValue));
+}
+
 export function readStatsRefinementData(stack) {
     if (!stack || typeof stack.getDynamicProperty !== "function") {
         return createDefaultStatsRefinementData();
@@ -138,11 +147,10 @@ export function readStatsRefinementData(stack) {
         rawValue = undefined;
     }
 
-    return normalizeStatsRefinementData(safeJsonParse(rawValue));
+    return parseStatsRefinementData(rawValue);
 }
 
-export function hasStatsRefinementBonuses(refinement) {
-    const normalized = normalizeStatsRefinementData(refinement);
+function hasNormalizedStatsRefinementBonuses(normalized) {
     const bonuses = normalized.bonuses;
     const elemental = bonuses.elemental;
     return normalized.spentXp > 0
@@ -156,9 +164,13 @@ export function hasStatsRefinementBonuses(refinement) {
         || Object.values(bonuses).some(value => toFiniteNumber(value, 0) > 0);
 }
 
+export function hasStatsRefinementBonuses(refinement) {
+    return hasNormalizedStatsRefinementBonuses(normalizeStatsRefinementData(refinement));
+}
+
 export function serializeStatsRefinementData(refinement) {
     const normalized = normalizeStatsRefinementData(refinement);
-    if (!hasStatsRefinementBonuses(normalized)) {
+    if (!hasNormalizedStatsRefinementBonuses(normalized)) {
         return undefined;
     }
     return JSON.stringify(normalized);

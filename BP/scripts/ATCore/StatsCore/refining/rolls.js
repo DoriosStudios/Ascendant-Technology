@@ -26,21 +26,28 @@ function pickElement() {
     return CONFIG.elements[0];
 }
 
-export function computeRefinementRollRange(chip, ingot, amount) {
+export function computeRefinementRollRange(chip, ingot, amount, options = {}) {
+    const advanced = options?.advanced === true;
     const power = Number(ingot?.power ?? 0);
-    const safeAmount = Math.min(CONFIG.defaults.maxIngotsPerRoll, Math.max(0, Math.floor(Number(amount) || 0)));
-    const min = Math.min(0.98, chip.minQuality + safeAmount * 0.012 * power);
+    const maxIngots = advanced
+        ? CONFIG.defaults.advancedMaxIngotsPerRoll
+        : CONFIG.defaults.maxIngotsPerRoll;
+    const safeAmount = Math.min(maxIngots, Math.max(0, Math.floor(Number(amount) || 0)));
+    const min = Math.min(advanced ? 0.99 : 0.98, chip.minQuality + safeAmount * 0.012 * power);
     const max = Math.min(
-        0.99,
+        advanced ? 1 : 0.99,
         Math.max(min + CONFIG.defaults.minRollSpread, chip.maxQuality + safeAmount * 0.018 * power),
     );
     return { min, max };
 }
 
 /** Rolls the same StatsCore refinement data used by the Refining Table. */
-export function rollStatsRefinement({ definition, state, chip, ingot, amount, range, xpCost = 0, tier = undefined }) {
-    const safeAmount = Math.min(CONFIG.defaults.maxIngotsPerRoll, Math.max(0, Math.floor(Number(amount) || 0)));
-    const rollRange = range ?? computeRefinementRollRange(chip, ingot, safeAmount);
+export function rollStatsRefinement({ definition, state, chip, ingot, amount, range, xpCost = 0, tier = undefined, advanced = false }) {
+    const maxIngots = advanced
+        ? CONFIG.defaults.advancedMaxIngotsPerRoll
+        : CONFIG.defaults.maxIngotsPerRoll;
+    const safeAmount = Math.min(maxIngots, Math.max(0, Math.floor(Number(amount) || 0)));
+    const rollRange = range ?? computeRefinementRollRange(chip, ingot, safeAmount, { advanced });
     const quality = rollRange.min + Math.random() * Math.max(0, rollRange.max - rollRange.min);
     const template = CONFIG.templates[definition?.type];
     if (!template) return null;
@@ -49,8 +56,12 @@ export function rollStatsRefinement({ definition, state, chip, ingot, amount, ra
     const bonuses = {};
     for (const [key, maxValue] of Object.entries(template)) {
         const variance = 0.92 + Math.random() * 0.16;
-        const cap = key === "extraDamage" || key === "elementalDamage" ? 12 : 0.99;
-        bonuses[key] = roundBonus(Math.min(cap, Number(maxValue) * quality * tierScale * variance));
+        const directDamage = key === "extraDamage" || key === "elementalDamage";
+        const cap = directDamage
+            ? (advanced ? CONFIG.defaults.advancedDirectDamageCap : 12)
+            : 0.99;
+        const ceiling = advanced ? CONFIG.defaults.advancedStrongMultiplier : 1;
+        bonuses[key] = roundBonus(Math.min(cap, Number(maxValue) * ceiling * quality * tierScale * variance));
     }
 
     if ((bonuses.elementalChance ?? 0) > 0 && (bonuses.elementalDamage ?? 0) > 0) {
@@ -77,6 +88,7 @@ export function rollStatsRefinement({ definition, state, chip, ingot, amount, ra
         chipLabel: chip.label,
         ingotId: ingot?.id ?? "",
         ingotAmount: safeAmount,
+        advanced: advanced === true,
         bonuses,
     };
 }

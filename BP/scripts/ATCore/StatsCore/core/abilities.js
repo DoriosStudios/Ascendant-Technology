@@ -15,13 +15,16 @@ function getOperatorModeLabel(options) {
 
 export function resolveStatsAbilityName(effect, options = undefined) {
     const kind = String(effect?.kind ?? "").trim().toLowerCase();
+    const levelPlaceholder = typeof effect?.levelPlaceholder === "string"
+        ? effect.levelPlaceholder.trim()
+        : "";
 
     if (kind === "operator") {
         return `${getOperatorModeLabel(options)} Operator`;
     }
 
     if (typeof effect?.label === "string" && effect.label.trim().length > 0) {
-        return effect.label.trim();
+        return `${levelPlaceholder ? `${levelPlaceholder} ` : ""}${effect.label.trim()}`;
     }
 
     if (kind === "mark") return "Mark";
@@ -48,8 +51,13 @@ function getStatsAbilityEffects(attributes) {
     return collectStatsEffectPool(attributes);
 }
 
-export function collectStatsAbilityNames(attributes, options = undefined) {
-    const names = [];
+export function isAdvancedStatsAbilityEffect(effect) {
+    return effect?.requiresAdvancedUnlock === true
+        || String(effect?.unlockTier ?? "").trim().toLowerCase() === "advanced";
+}
+
+export function collectStatsAbilityEntries(attributes, options = undefined) {
+    const entries = [];
     const seen = new Set();
 
     for (const effect of getStatsAbilityEffects(attributes)) {
@@ -58,9 +66,29 @@ export function collectStatsAbilityNames(attributes, options = undefined) {
         if (!name || seen.has(key)) continue;
 
         seen.add(key);
-        names.push(name);
+        entries.push({
+            name,
+            effect,
+            advanced: isAdvancedStatsAbilityEffect(effect),
+        });
     }
 
-    return names;
+    return entries;
+}
+
+export function collectStatsAbilityNames(attributes, options = undefined) {
+    return collectStatsAbilityEntries(attributes, options).map(entry => entry.name);
+}
+
+export function getStatsAbilitySummary(attributes, options = undefined) {
+    const entries = collectStatsAbilityEntries(attributes, options);
+    const primaryEntry = entries.find(entry => !entry.advanced) ?? entries[0] ?? null;
+
+    return {
+        entries,
+        primary: primaryEntry?.name ?? "",
+        additionalCount: Math.max(0, entries.length - (primaryEntry ? 1 : 0)),
+        total: entries.length,
+    };
 }
 

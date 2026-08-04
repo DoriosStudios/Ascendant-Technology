@@ -84,7 +84,7 @@ function handleCreeperIgnition(player, context) {
         }
     }
 
-    showAbilityFeedback(player, "Ingniter");
+    showAbilityFeedback(player, "Igniter");
     return true;
 }
 
@@ -132,7 +132,7 @@ function handleTntIgnition(event) {
             const currentBlock = dimension.getBlock(location);
             if (currentBlock?.typeId === "minecraft:air") {
                 dimension.runCommand(`setblock ${location.x} ${location.y} ${location.z} tnt`);
-                showAbilityFeedback(player, "Ingniter");
+                showAbilityFeedback(player, "Igniter");
             }
         } catch { }
     });

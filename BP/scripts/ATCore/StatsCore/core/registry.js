@@ -2,6 +2,7 @@ import { inferDynamicDefinition } from "../defaults.js";
 import { normalizeId } from "../utils.js";
 
 const STATSCORE_REGISTRY = new Map();
+const UNSUPPORTED_ITEM_IDS = new Set();
 
 /**
  * Registers a StatsCore definition for a given item ID.
@@ -13,6 +14,7 @@ export function registerStatsCoreDefinition(id, definition) {
     const normalized = normalizeId(id);
     if (!normalized || typeof definition !== "object") return false;
     STATSCORE_REGISTRY.set(normalized, definition);
+    UNSUPPORTED_ITEM_IDS.delete(normalized);
     return true;
 }
 
@@ -46,6 +48,7 @@ export function getStatsCoreDefinition(itemOrId) {
     if (STATSCORE_REGISTRY.has(normalized)) {
         return STATSCORE_REGISTRY.get(normalized);
     }
+    if (UNSUPPORTED_ITEM_IDS.has(normalized)) return null;
 
     // Attempt to dynamically generate and register a definition for future use.
     const dynamicDefinition = inferDynamicDefinition(normalized);
@@ -54,6 +57,7 @@ export function getStatsCoreDefinition(itemOrId) {
         return dynamicDefinition;
     }
 
+    UNSUPPORTED_ITEM_IDS.add(normalized);
     return null;
 }
 

@@ -10,9 +10,9 @@ import { getEntityHurtAttacker, getEntityHurtTarget, getEventDamageType, matches
 import { repairItemDurability } from "../shared/durability.js";
 import { filterEffectsByKind } from "../shared/effectSelectors.js";
 import { applyEffectById } from "../shared/effects.js";
+import { OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity } from "../shared/entityCategories.js";
 
-const MAX_TOTAL_DAMAGE_REDUCTION = 1.0;
-const MAX_TOTAL_VULNERABILITY = 0.65;
+const MAX_TOTAL_DAMAGE_REDUCTION = 0.9;
 const supportEffectCooldowns = new Map();
 
 function combineNegationChances(chances) {
@@ -20,7 +20,7 @@ function combineNegationChances(chances) {
 
     let remainingDamageChance = 1;
     for (const chance of chances) {
-        const value = Math.min(0.9999, Math.max(0, Number(chance) || 0));
+        const value = Math.min(1, Math.max(0, Number(chance) || 0));
         remainingDamageChance *= (1 - value);
     }
 
@@ -48,9 +48,12 @@ function isSupportEffectOnCooldown(target, effect) {
     const cooldownTicks = Math.max(0, Math.floor(Number(effect?.cooldownTicks ?? 0) || 0));
     if (!target || cooldownTicks <= 0) return false;
 
-    cleanupSupportCooldowns();
-    const entry = supportEffectCooldowns.get(getCooldownKey(target, effect));
-    return Number(entry?.expiresAt ?? 0) > getCurrentTick();
+    const key = getCooldownKey(target, effect);
+    const entry = supportEffectCooldowns.get(key);
+    const now = getCurrentTick();
+    if (Number(entry?.expiresAt ?? 0) > now) return true;
+    if (entry) supportEffectCooldowns.delete(key);
+    return false;
 }
 
 function setSupportEffectCooldown(target, effect) {
@@ -60,6 +63,7 @@ function setSupportEffectCooldown(target, effect) {
     supportEffectCooldowns.set(getCooldownKey(target, effect), {
         expiresAt: getCurrentTick() + cooldownTicks,
     });
+    if (supportEffectCooldowns.size > STATSCORE.runtime.markCleanupSize) cleanupSupportCooldowns();
 }
 
 function getArmorSupportEntries(target) {
@@ -91,6 +95,20 @@ function getArmorSupportEntries(target) {
     return entries;
 }
 
+function getTotalDamageReduction(entries) {
+    if (!Array.isArray(entries) || entries.length <= 0) return 0;
+
+    const reduction = entries.reduce((sum, entry) => {
+        const isOffhandShield = entry.slotName === STATSCORE.slots.offhand
+            && String(entry.definition?.branch ?? "").toLowerCase() === "shield";
+        const value = isOffhandShield
+            ? 0.6
+            : Number(entry.attributes?.support?.damageReduction ?? 0);
+        return sum + (Number.isFinite(value) ? Math.max(0, value) : 0);
+    }, 0);
+    return Math.min(MAX_TOTAL_DAMAGE_REDUCTION, reduction);
+}
+
 /**
  * Resolves the StatsCore mitigation currently equipped by a player.
  * Combat penetration uses this same profile so the retired DoriosCore armor
@@ -101,9 +119,7 @@ export function getPlayerArmorMitigationProfile(target, damageType = "all") {
     return {
         damageType: normalizeDamageType(damageType),
         pieceCount: entries.length,
-        totalReduction: Math.min(MAX_TOTAL_DAMAGE_REDUCTION, entries.reduce((sum, entry) => {
-            return sum + Math.max(0, Number(entry.attributes?.support?.damageReduction ?? 0) || 0);
-        }, 0)),
+        totalReduction: getTotalDamageReduction(entries),
     };
 }
 
@@ -136,15 +152,7 @@ function applyKnockbackAway(attacker, target, effect) {
     }
 }
 
-function isMonsterEntity(entity) {
-    try {
-        return entity?.matches?.({ families: ["monster"] }) === true;
-    } catch {
-        return false;
-    }
-}
-
-function pullNearbyMonsters(target, attacker, effect) {
+function pullNearbyTargets(target, attacker, effect) {
     if (!target?.dimension || !target?.location || !attacker?.location) return false;
 
     const radius = Math.max(0.5, Number(effect?.gatherRadius ?? 1.5) || 1.5);
@@ -156,7 +164,7 @@ function pullNearbyMonsters(target, attacker, effect) {
         maxDistance: radius,
     })) {
         if (!entity || entity.id === target.id || entity.id === attacker.id) continue;
-        if (!isMonsterEntity(entity)) continue;
+        if (!effectAppliesToEntity(effect, entity, OFFENSIVE_ENTITY_CATEGORIES)) continue;
         if (!entity.applyImpulse) continue;
 
         const dx = Number(attacker.location.x ?? 0) - Number(entity.location?.x ?? 0);
@@ -187,6 +195,7 @@ function applySupportEffects(event, entries) {
 
     for (const { effect } of getSupportEffects(entries, "retaliate")) {
         if (String(effect.on ?? "hurt").toLowerCase() !== "hurt") continue;
+        if (!effectAppliesToEntity(effect, attacker, OFFENSIVE_ENTITY_CATEGORIES)) continue;
         if (isSupportEffectOnCooldown(target, effect)) continue;
         if (!rollChance(effect.chance, 0)) continue;
 
@@ -200,18 +209,6 @@ function applySupportEffects(event, entries) {
         } catch { }
     }
 
-    for (const { effect } of getSupportEffects(entries, "spikes")) {
-        const reflectedDamage = Math.max(1, damage * Math.max(0.08, Number(effect.damageRatio ?? 0.18) || 0.18));
-        try {
-            attacker.applyDamage?.(reflectedDamage, {
-                cause: "thorns",
-                damagingEntity: target,
-            });
-        } catch { }
-
-        applyKnockbackAway(attacker, target, effect);
-        pullNearbyMonsters(target, attacker, effect);
-    }
 }
 
 function applyArmorMitigation(event, entries) {
@@ -220,40 +217,18 @@ function applyArmorMitigation(event, entries) {
     const damage = Number(event?.damage ?? 0);
     if (!Number.isFinite(damage) || damage <= 0) return;
 
-    const damageType = getEventDamageType(event);
-    const immunityTypes = new Set();
-    const vulnerabilityMatches = [];
     const negationChances = [];
 
-    const totalReduction = Math.min(MAX_TOTAL_DAMAGE_REDUCTION, entries.reduce((sum, entry) => {
-        return sum + Math.max(0, Number(entry.attributes?.support?.damageReduction ?? 0) || 0);
-    }, 0));
+    const totalReduction = getTotalDamageReduction(entries);
 
     for (const entry of entries) {
         const support = entry.attributes?.support ?? {};
-
-        for (const immunityType of uniqueDamageTypes(support.damageImmunities)) {
-            immunityTypes.add(immunityType);
-        }
 
         const negateAllDamageChance = Math.max(0, Number(support.negateAllDamageChance ?? 0) || 0);
         if (negateAllDamageChance > 0) {
             negationChances.push(negateAllDamageChance);
         }
 
-        const vulnerabilityPenalty = Math.max(0, Number(support.vulnerabilityPenalty ?? 0) || 0);
-        if (vulnerabilityPenalty <= 0) continue;
-
-        for (const vulnerabilityType of uniqueDamageTypes(support.vulnerabilities)) {
-            if (vulnerabilityType === "all" || vulnerabilityType === damageType) {
-                vulnerabilityMatches.push(vulnerabilityPenalty);
-            }
-        }
-    }
-
-    if (matchesDamageType([...immunityTypes], damageType)) {
-        event.damage = 0;
-        return;
     }
 
     const totalNegationChance = combineNegationChances(negationChances);
@@ -262,13 +237,8 @@ function applyArmorMitigation(event, entries) {
         return;
     }
 
-    const totalVulnerability = Math.min(MAX_TOTAL_VULNERABILITY, vulnerabilityMatches.reduce((sum, value) => sum + value, 0));
     const mitigatedDamage = totalReduction > 0 ? damage * (1 - totalReduction) : damage;
-    const finalDamage = totalVulnerability > 0
-        ? mitigatedDamage * (1 + totalVulnerability)
-        : mitigatedDamage;
-
-    event.damage = Math.max(0, finalDamage);
+    event.damage = Math.max(0, mitigatedDamage);
 }
 
 function applyCustomSupportAbilities(event, entries) {
@@ -350,8 +320,9 @@ function processArmorProgress(target) {
         if (amount <= 0) continue;
 
         const result = grantStatsProgress(item, definition, amount, "armor", { forcePersist: false });
-        const repaired = rollChance(attributes?.support?.durabilityPreserveChance, 0)
-            ? repairItemDurability(item)
+        const preservationChance = Math.max(0, Number(attributes?.support?.durabilityPreserveChance ?? 0) || 0);
+        const repaired = (preservationChance >= 1 || Math.random() <= preservationChance)
+            ? repairItemDurability(item, attributes?.support?.preservationRepairAmount ?? 2)
             : false;
 
         if (result.changed || repaired) {
@@ -380,8 +351,10 @@ export function initializeArmorSupportModule() {
             const entries = getArmorSupportEntries(target);
             applyArmorMitigation(event, entries);
             applyCustomSupportAbilities(event, entries);
-            system.run(() => applySupportEffects(event, entries));
-            system.run(() => processArmorProgress(target));
+            system.run(() => {
+                applySupportEffects(event, entries);
+                processArmorProgress(target);
+            });
         });
         return;
     }

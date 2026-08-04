@@ -43,7 +43,7 @@ function inspectHeldItem(sourceEntity) {
     sendMessage(sourceEntity, `\u00A77Affinity: \u00A7f${titleCaseIdentifier(state.affinity)} \u00A78| \u00A77Branch: \u00A7f${titleCaseIdentifier(state.branch)}`);
     sendMessage(sourceEntity, `\u00A77Crit: \u00A7f${formatPercent(attributes.crit.chance)} \u00A78x${Number(attributes.crit.multiplier ?? 1).toFixed(2)}`);
     sendMessage(sourceEntity, `\u00A77Armor Penetration: \u00A7f${formatPercent(attributes.penetration.percent)} \u00A78| \u00A77Lifesteal: \u00A7f${formatPercent(attributes.lifesteal.percent)}`);
-    sendMessage(sourceEntity, `\u00A77Ore Bonus: \u00A7f${formatPercent(attributes.mining.oreBonusChance)} \u00A78| \u00A77Preserving: \u00A7f${formatPercent(attributes.mining.durabilitySaveChance)}`);
+    sendMessage(sourceEntity, `\u00A77Bonus Loot: \u00A7f${formatPercent(attributes.mining.bonusLootChance)} \u00A78| \u00A77Preserving: \u00A7f${formatPercent(attributes.mining.durabilitySaveChance)}`);
     if (abilityNames.length > 0) {
         sendMessage(sourceEntity, `\u00A77Abilities: \u00A7g${abilityNames.join(" \u00A78+ \u00A7g")}`);
     }

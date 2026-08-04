@@ -14,7 +14,9 @@ export function applyArmorPenetration({ damage, target, event, attributes }) {
     }
 
     if (isBossLikeEntity(target)) {
-        percent *= clamp01(penetration.bossScalar ?? 0.5);
+        const bossScalar = clamp01(penetration.bossScalar ?? 0.55);
+        const bossCap = clamp01(penetration.bossCap ?? 0.2);
+        percent = Math.min(bossCap, percent * bossScalar);
     }
 
     if (percent <= 0) {

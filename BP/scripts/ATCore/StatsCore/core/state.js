@@ -1,9 +1,13 @@
 import { STATSCORE } from "../constants.js";
 import { createRuntimeUid, normalizeId, safeJsonParse, toPositiveInteger } from "../utils.js";
-import { normalizeStatsRefinementData, readStatsRefinementData, serializeStatsRefinementData } from "./refinement.js";
+import { normalizeStatsRefinementData, parseStatsRefinementData, serializeStatsRefinementData } from "./refinement.js";
 import { syncStatsCoreLore } from "./lore.js";
 import { resolveStatsAttributes } from "../attributes/resolve.js";
 import { normalizeAttributeProgress } from "../progression/attributes.js";
+import { normalizeAppliesTo } from "../shared/entityCategories.js";
+
+const MAX_CACHED_STATES_PER_DEFINITION = 128;
+const stateCacheByDefinition = new WeakMap();
 
 function getProperty(stack, key) {
     try {
@@ -44,15 +48,35 @@ function normalizeOperatorMode(value) {
 
 function normalizeStatsAbilityData(value) {
     const source = value && typeof value === "object" ? value : {};
+    const appliedSource = source.appliedAbilities && typeof source.appliedAbilities === "object"
+        ? source.appliedAbilities
+        : {};
+    const appliedAbilities = {};
+    for (const [rawKey, rawLevel] of Object.entries(appliedSource)) {
+        const key = normalizeId(rawKey);
+        const level = Math.min(5, toPositiveInteger(rawLevel, 0));
+        if (key && level > 0) appliedAbilities[key] = level;
+    }
+    const targetSource = source.abilityTargets && typeof source.abilityTargets === "object"
+        ? source.abilityTargets
+        : {};
+    const abilityTargets = {};
+    for (const [rawKey, rawTargets] of Object.entries(targetSource)) {
+        const key = normalizeId(rawKey);
+        const targets = normalizeAppliesTo(rawTargets);
+        if (key && targets.length > 0) abilityTargets[key] = targets;
+    }
 
     return {
         uniqueUnlocked: source.uniqueUnlocked === true,
-        operatorMode: normalizeOperatorMode(source.operatorMode)
+        advancedUnlocked: source.advancedUnlocked === true,
+        operatorMode: normalizeOperatorMode(source.operatorMode),
+        appliedAbilities,
+        abilityTargets,
     };
 }
 
-function readStatsAbilityData(stack) {
-    const raw = getProperty(stack, STATSCORE.props.abilityData);
+function parseStatsAbilityData(raw) {
     if (typeof raw !== "string" || raw.length <= 0) {
         return normalizeStatsAbilityData(undefined);
     }
@@ -61,6 +85,45 @@ function readStatsAbilityData(stack) {
         return normalizeStatsAbilityData(JSON.parse(raw));
     } catch {
         return normalizeStatsAbilityData(undefined);
+    }
+}
+
+function signatureValue(value) {
+    const serialized = value === undefined ? "" : String(value);
+    return `${typeof value}:${serialized.length}:${serialized}`;
+}
+
+function getRawStateSignature(raw) {
+    return [
+        raw.uid,
+        raw.version,
+        raw.progression,
+        raw.attributeProgress,
+        raw.affinity,
+        raw.branch,
+        raw.abilityData,
+        raw.refined,
+        raw.refinement,
+    ].map(signatureValue).join("|");
+}
+
+function readCachedState(definition, cacheKey, signature) {
+    if (!definition || typeof definition !== "object") return null;
+    const cached = stateCacheByDefinition.get(definition)?.get(cacheKey);
+    return cached?.signature === signature ? cached.state : null;
+}
+
+function cacheState(definition, cacheKey, signature, state) {
+    if (!definition || typeof definition !== "object") return;
+    let cache = stateCacheByDefinition.get(definition);
+    if (!cache) {
+        cache = new Map();
+        stateCacheByDefinition.set(definition, cache);
+    }
+
+    cache.set(cacheKey, { signature, state });
+    if (cache.size > MAX_CACHED_STATES_PER_DEFINITION) {
+        cache.delete(cache.keys().next().value);
     }
 }
 
@@ -108,14 +171,12 @@ function normalizeProgressionState(value) {
     };
 }
 
-function readProgressionState(stack) {
-    const raw = getProperty(stack, STATSCORE.props.progression);
+function parseProgressionState(raw) {
     const parsed = safeJsonParse(raw);
     return normalizeProgressionState(parsed);
 }
 
-function readAttributeProgressState(stack) {
-    const raw = getProperty(stack, STATSCORE.props.attributeProgress);
+function parseAttributeProgressState(raw) {
     const parsed = safeJsonParse(raw);
     if (parsed && typeof parsed === "object") {
         return normalizeAttributeProgress(parsed);
@@ -135,21 +196,36 @@ function readAttributeProgressState(stack) {
  * @returns {object}
  */
 export function readStatsState(stack, definition) {
-    const refinement = readStatsRefinementData(stack);
-    const uid = String(getProperty(stack, STATSCORE.props.uid) ?? "");
-    const progression = readProgressionState(stack);
-
-    return {
-        uid,
-        version: toPositiveInteger(getProperty(stack, STATSCORE.props.version), 0),
-        progression,
-        attributeProgress: readAttributeProgressState(stack),
-        affinity: normalizeId(getProperty(stack, STATSCORE.props.affinity)) || definition?.affinity || "hybrid",
-        branch: normalizeId(getProperty(stack, STATSCORE.props.branch)) || definition?.branch || definition?.type || "hybrid",
-        abilityData: readStatsAbilityData(stack),
-        refined: getProperty(stack, STATSCORE.props.refined) === true,
-        refinement
+    const raw = {
+        uid: getProperty(stack, STATSCORE.props.uid),
+        version: getProperty(stack, STATSCORE.props.version),
+        progression: getProperty(stack, STATSCORE.props.progression),
+        attributeProgress: getProperty(stack, STATSCORE.props.attributeProgress),
+        affinity: getProperty(stack, STATSCORE.props.affinity),
+        branch: getProperty(stack, STATSCORE.props.branch),
+        abilityData: getProperty(stack, STATSCORE.props.abilityData),
+        refined: getProperty(stack, STATSCORE.props.refined),
+        refinement: getProperty(stack, STATSCORE.props.refinement),
     };
+    const uid = String(raw.uid ?? "");
+    const signature = getRawStateSignature(raw);
+    const cacheKey = uid || `uninitialized:${String(stack?.typeId ?? definition?.id ?? "item")}`;
+    const cached = readCachedState(definition, cacheKey, signature);
+    if (cached) return cached;
+
+    const state = {
+        uid,
+        version: toPositiveInteger(raw.version, 0),
+        progression: parseProgressionState(raw.progression),
+        attributeProgress: parseAttributeProgressState(raw.attributeProgress),
+        affinity: normalizeId(raw.affinity) || definition?.affinity || "hybrid",
+        branch: normalizeId(raw.branch) || definition?.branch || definition?.type || "hybrid",
+        abilityData: parseStatsAbilityData(raw.abilityData),
+        refined: raw.refined === true,
+        refinement: parseStatsRefinementData(raw.refinement)
+    };
+    cacheState(definition, cacheKey, signature, state);
+    return state;
 }
 
 export function resetStatsState(stack) {

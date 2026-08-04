@@ -13,6 +13,53 @@ import { getEntityHurtAttacker, getEntityHurtTarget } from "../shared/damage.js"
 import { findEffectByKind } from "../shared/effectSelectors.js";
 
 const berserkStates = new Map();
+const pendingCombatFollowUps = new Map();
+let useImmediateAfterHurtFollowUp = false;
+let pendingFollowUpCleanupScheduled = false;
+
+function getCombatFollowUpKey(attacker, target) {
+    return `${String(target?.id ?? "target")}:${String(attacker?.id ?? "attacker")}`;
+}
+
+function enqueueCombatFollowUp(followUp) {
+    const key = getCombatFollowUpKey(followUp.attacker, followUp.target);
+    const queue = pendingCombatFollowUps.get(key) ?? [];
+    queue.push(followUp);
+    pendingCombatFollowUps.set(key, queue);
+
+    if (!pendingFollowUpCleanupScheduled) {
+        pendingFollowUpCleanupScheduled = true;
+        system.runTimeout(() => {
+            pendingFollowUpCleanupScheduled = false;
+            const currentTick = Number(system.currentTick ?? 0) || 0;
+            for (const [pendingKey, pendingQueue] of pendingCombatFollowUps) {
+                const active = pendingQueue.filter(entry => Number(entry?.expiresAt ?? 0) >= currentTick);
+                if (active.length > 0) pendingCombatFollowUps.set(pendingKey, active);
+                else pendingCombatFollowUps.delete(pendingKey);
+            }
+        }, 2);
+    }
+}
+
+function takeCombatFollowUp(event) {
+    const target = getEntityHurtTarget(event);
+    const attacker = getEntityHurtAttacker(event);
+    if (!target || !attacker) return null;
+
+    const key = getCombatFollowUpKey(attacker, target);
+    const queue = pendingCombatFollowUps.get(key);
+    if (!queue?.length) return null;
+
+    const currentTick = Number(system.currentTick ?? 0) || 0;
+    while (queue.length > 0 && Number(queue[0]?.expiresAt ?? 0) < currentTick) {
+        queue.shift();
+    }
+
+    const followUp = queue.shift() ?? null;
+    if (queue.length > 0) pendingCombatFollowUps.set(key, queue);
+    else pendingCombatFollowUps.delete(key);
+    return followUp;
+}
 
 function canUseDefinitionForCombat(definition, attributes = undefined) {
     if (!definition || definition.enabled === false) return false;
@@ -42,9 +89,13 @@ function cleanupBerserkStates() {
 function getBerserkDamageBonus(attacker, effect) {
     if (!attacker || !effect) return 0;
 
-    cleanupBerserkStates();
-    const state = berserkStates.get(getBerserkStateKey(attacker));
+    const key = getBerserkStateKey(attacker);
+    const state = berserkStates.get(key);
     if (!state) return 0;
+    if (Number(state.expiresAt ?? 0) <= (Number(system.currentTick ?? 0) || 0)) {
+        berserkStates.delete(key);
+        return 0;
+    }
 
     const perStack = Math.max(0, Number(effect.damagePerStack ?? 1) || 1);
     return Math.max(0, Number(state.stacks ?? 0) || 0) * perStack;
@@ -64,25 +115,95 @@ function addBerserkStack(attacker, effect) {
         stacks: nextStacks,
         expiresAt: now + durationTicks,
     });
+    if (berserkStates.size > STATSCORE.runtime.markCleanupSize) cleanupBerserkStates();
 
     showAbilityFeedback(attacker, `\u00A7cBerserk x${nextStacks}`);
 
     return nextStacks;
 }
 
-function persistCombatProgress(attacker, expectedTypeId, amount, reason, levelFeedback) {
+function persistCombatProgress(attacker, expectedTypeId, amount, reason, levelFeedback, knownDefinition) {
     const access = getLiveEquipmentItem(attacker, expectedTypeId, STATSCORE.slots.mainhand);
     const stack = access.item;
     if (!stack) return;
 
-    const definition = getStatsCoreDefinition(stack);
+    const definition = knownDefinition ?? getStatsCoreDefinition(stack);
     if (!definition) return;
-    
+
     const progress = grantStatsProgress(stack, definition, amount, reason);
     if (progress.changed) persistEquipmentItem(attacker, STATSCORE.slots.mainhand, stack);
 
     if (levelFeedback !== false) {
         showLevelUp(attacker, stack, progress);
+    }
+}
+
+function processCombatFollowUp(followUp) {
+    if (!followUp) return;
+
+    const {
+        attacker,
+        target,
+        attributes,
+        definition,
+        crit,
+        finalDamage,
+        damageSource,
+        damagingProjectile,
+        weaponTypeId,
+        combatXp,
+        penetration,
+        baseDamage,
+        markedDamageBonus,
+        berserkDamageBonus,
+    } = followUp;
+    let lifestealHealed = 0;
+    let effects = { elemental: [], abilities: [] };
+    try {
+        lifestealHealed = applyLifeSteal(attacker, finalDamage, attributes, { crit: crit.active });
+        effects = applyCombatEffects({
+            attacker,
+            target,
+            attributes,
+            crit,
+            finalDamage,
+            damageSource,
+            damagingProjectile,
+        });
+    } catch (error) {
+        console.warn("[StatsCore] combat effects failed:", error);
+    }
+
+    try {
+        persistCombatProgress(attacker, weaponTypeId, combatXp, "combat", true, definition);
+    } catch (error) {
+        console.warn("[StatsCore] combat progression failed:", error);
+    }
+
+    try {
+        showCombatFeedback(attacker, target, {
+            crit,
+            penetration,
+            damage: finalDamage,
+            extraDamage: Math.max(0, finalDamage - baseDamage),
+            elemental: effects.elemental,
+            abilities: effects.abilities,
+            lifestealHealed,
+            markedDamageBonus,
+            flatDamageBonus: attributes.flatDamageBonus,
+            damageMultiplier: attributes.damageMultiplier,
+            berserkDamageBonus,
+        });
+    } catch (error) {
+        console.warn("[StatsCore] combat feedback failed:", error);
+    }
+}
+
+function handleCombatAfterHurt(event) {
+    try {
+        processCombatFollowUp(takeCombatFollowUp(event));
+    } catch (error) {
+        console.warn("[StatsCore] combat after-hurt handler failed:", error);
     }
 }
 
@@ -132,19 +253,28 @@ function handleCombatHurt(event) {
         const finalDamage = event.damage;
         const weaponTypeId = weapon.typeId;
         const combatXp = getProgressAmount(definition, "combat", 1);
+        const damageSource = event?.damageSource;
+        const damagingProjectile = damageSource?.damagingProjectile;
 
-        system.run(() => {
-            applyLifeSteal(attacker, finalDamage, attributes, { crit: crit.active });
-            const effects = applyCombatEffects({ attacker, target, attributes, crit, finalDamage });
-            persistCombatProgress(attacker, weaponTypeId, combatXp, "combat", true);
-            showCombatFeedback(attacker, target, {
-                crit,
-                penetration,
-                damage: finalDamage,
-                extraDamage: Math.max(0, finalDamage - baseDamage),
-                elemental: effects.elemental,
-            });
-        });
+        const followUp = {
+            attacker,
+            target,
+            attributes,
+            definition,
+            crit,
+            finalDamage,
+            damageSource,
+            damagingProjectile,
+            weaponTypeId,
+            combatXp,
+            penetration,
+            baseDamage,
+            markedDamageBonus,
+            berserkDamageBonus,
+            expiresAt: (Number(system.currentTick ?? 0) || 0) + 1,
+        };
+        if (useImmediateAfterHurtFollowUp) enqueueCombatFollowUp(followUp);
+        else system.run(() => processCombatFollowUp(followUp));
     } catch (error) {
         console.warn("[StatsCore] combat hurt handler failed:", error);
     }
@@ -165,15 +295,13 @@ function handleEntityDie(event) {
         const killXp = getProgressAmount(definition, "kill", 0);
         if (killXp <= 0 && !berserkEffect) return;
 
-        system.run(() => {
-            if (berserkEffect) {
-                addBerserkStack(attacker, berserkEffect);
-            }
+        if (berserkEffect) {
+            addBerserkStack(attacker, berserkEffect);
+        }
 
-            if (killXp > 0) {
-                persistCombatProgress(attacker, weapon.typeId, killXp, "kill", true);
-            }
-        });
+        if (killXp > 0) {
+            persistCombatProgress(attacker, weapon.typeId, killXp, "kill", true, definition);
+        }
     } catch (error) {
         console.warn("[StatsCore] kill handler failed:", error);
     }
@@ -187,6 +315,11 @@ export function initializeCombatModule() {
         world.beforeEvents.entityHurt.subscribe(handleCombatHurt);
     } else {
         console.warn("[StatsCore] beforeEvents.entityHurt unavailable; combat damage modules disabled.");
+    }
+
+    if (world.afterEvents?.entityHurt?.subscribe) {
+        useImmediateAfterHurtFollowUp = true;
+        world.afterEvents.entityHurt.subscribe(handleCombatAfterHurt);
     }
 
     if (world.afterEvents?.entityDie?.subscribe) {

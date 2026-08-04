@@ -5,23 +5,116 @@ import { isStatsCoreEnabled } from "../runtime.js";
 
 const xpBuffers = new Map();
 
-export function getXpNeededForLevel(level, definition) {
+/**
+ * Resolves the arithmetic XP curve used by StatsCore.
+ *
+ * Preferred configuration:
+ * progression: {
+ *     baseXp: 100,
+ *     growthPerLevel: 20
+ * }
+ *
+ * Legacy `progression.growth` multipliers remain supported. A value such as
+ * 1.2 is converted to an additive increase equal to 20% of `baseXp`.
+ *
+ * @param {object} definition
+ * @returns {{ baseXp: number, growthPerLevel: number }}
+ */
+function getProgressionCurve(definition) {
     const progression = definition?.progression ?? {};
-    const baseXp = Math.max(1, toFiniteNumber(progression.baseXp, STATSCORE.progression.baseXp));
-    const growth = Math.max(1, toFiniteNumber(progression.growth, STATSCORE.progression.growth));
-    return Math.max(1, Math.floor(baseXp * Math.pow(growth, Math.max(0, level - 1))));
+    const baseXp = Math.max(
+        1,
+        Math.floor(toFiniteNumber(progression.baseXp, STATSCORE.progression.baseXp))
+    );
+
+    const explicitGrowth = progression.growthPerLevel ?? progression.xpGrowthPerLevel;
+    const legacyMultiplier = Math.max(
+        1,
+        toFiniteNumber(progression.growth, STATSCORE.progression.growth)
+    );
+    const legacyGrowthPerLevel = Math.max(
+        0,
+        Math.floor(baseXp * (legacyMultiplier - 1))
+    );
+    const growthPerLevel = Math.max(
+        0,
+        Math.floor(toFiniteNumber(explicitGrowth, legacyGrowthPerLevel))
+    );
+
+    return { baseXp, growthPerLevel };
 }
 
-export function getLevelFromXp(totalXp, definition) {
-    let level = 1;
-    let remaining = Math.max(0, Math.floor(Number(totalXp) || 0));
+/**
+ * Returns the XP required to advance from `level` to `level + 1`.
+ *
+ * The cost follows an arithmetic progression instead of exponential growth:
+ * baseXp + growthPerLevel * (level - 1).
+ *
+ * @param {number} level
+ * @param {object} definition
+ * @returns {number}
+ */
+export function getXpNeededForLevel(level, definition) {
+    const { baseXp, growthPerLevel } = getProgressionCurve(definition);
+    const currentLevel = Math.max(1, Math.floor(Number(level) || 1));
+    return baseXp + growthPerLevel * (currentLevel - 1);
+}
 
-    while (true) {
-        const needed = getXpNeededForLevel(level, definition);
-        if (remaining < needed) break;
-        remaining -= needed;
-        level++;
+/**
+ * Returns the total accumulated XP required to reach `level`.
+ *
+ * @param {number} level
+ * @param {object} definition
+ * @returns {number}
+ */
+export function getTotalXpForLevel(level, definition) {
+    return getTotalXpForLevelFromCurve(level, getProgressionCurve(definition));
+}
+
+function getTotalXpForLevelFromCurve(level, curve) {
+    const { baseXp, growthPerLevel } = curve;
+    const targetLevel = Math.max(1, Math.floor(Number(level) || 1));
+    const completedLevels = targetLevel - 1;
+
+    return Math.floor(
+        completedLevels * baseXp
+        + growthPerLevel * completedLevels * (completedLevels - 1) / 2
+    );
+}
+
+/**
+ * Resolves a level from accumulated XP using the inverse arithmetic-series
+ * formula, followed by a small precision correction around the threshold.
+ *
+ * @param {number} totalXp
+ * @param {object} definition
+ * @returns {number}
+ */
+export function getLevelFromXp(totalXp, definition) {
+    const { baseXp, growthPerLevel } = getProgressionCurve(definition);
+    const xp = Math.min(
+        Number.MAX_SAFE_INTEGER,
+        Math.max(0, Math.floor(Number(totalXp) || 0))
+    );
+
+    let completedLevels;
+
+    if (growthPerLevel <= 0) {
+        completedLevels = Math.floor(xp / baseXp);
+    } else {
+        const linearTerm = 2 * baseXp - growthPerLevel;
+        const discriminant = linearTerm * linearTerm + 8 * growthPerLevel * xp;
+        completedLevels = Math.max(
+            0,
+            Math.floor((-linearTerm + Math.sqrt(discriminant)) / (2 * growthPerLevel))
+        );
     }
+
+    let level = completedLevels + 1;
+
+    const curve = { baseXp, growthPerLevel };
+    while (xp >= getTotalXpForLevelFromCurve(level + 1, curve)) level++;
+    while (level > 1 && xp < getTotalXpForLevelFromCurve(level, curve)) level--;
 
     return level;
 }
@@ -77,7 +170,7 @@ function setBuffer(uid, value) {
  * @param {object} definition
  * @param {number} amount
  * @param {string} [reason="use"]
- * @param {{ forcePersist?: boolean, forceLore?: boolean }} [options={}]
+ * @param {{ forcePersist?: boolean, forceLore?: boolean, currentState?: object }} [options={}]
  * @returns {{ changed: boolean, levelUp: boolean, state: object | null, previousLevel?: number, level?: number, reason?: string, buffered?: number }}
  */
 export function grantStatsProgress(stack, definition, amount, reason = "use", options = {}) {
@@ -96,7 +189,9 @@ export function grantStatsProgress(stack, definition, amount, reason = "use", op
     }
 
     const category = getCategoryForReason(reason);
-    const currentState = readStatsState(stack, definition);
+    const currentState = options.currentState && typeof options.currentState === "object"
+        ? options.currentState
+        : readStatsState(stack, definition);
     if (currentState.refined !== true) {
         return { changed: false, levelUp: false, state: currentState, reason, buffered: 0 };
     }
@@ -112,7 +207,11 @@ export function grantStatsProgress(stack, definition, amount, reason = "use", op
     const totalXp = currentProgress.xp + buffered;
     const nextLevel = getLevelFromXp(totalXp, definition);
     const levelUp = nextLevel > currentProgress.level;
-    const persistEveryXp = Math.max(1, Math.floor(Number(definition.persistEveryXp) || STATSCORE.progression.persistEveryXp));
+    const configuredPersistEveryXp = definition?.progression?.persistEveryXp ?? definition.persistEveryXp;
+    const persistEveryXp = Math.max(
+        1,
+        Math.floor(Number(configuredPersistEveryXp) || STATSCORE.progression.persistEveryXp)
+    );
     const shouldPersist = options.forcePersist === true || !initialized || levelUp || buffered >= persistEveryXp;
 
     if (!shouldPersist) {

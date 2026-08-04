@@ -102,7 +102,6 @@ const ORE_DUST_DROPS = Object.freeze({
 });
 
 const PENDING_ORE_BREAKS = new WeakMap();
-const PENDING_BERSERK_LOG_BREAKS = new WeakMap();
 
 const WORM_SOIL_DROPS = Object.freeze({
     "minecraft:dirt": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
@@ -225,7 +224,7 @@ function canUseDefinitionForMining(definition, attributes = undefined) {
     return getProgressAmount(definition, "block", 0) > 0
         || getProgressAmount(definition, "ore", 0) > 0
         || getProgressAmount(definition, "tool", 0) > 0
-        || (attributes?.mining?.oreBonusChance ?? 0) > 0
+        || (attributes?.mining?.bonusLootChance ?? 0) > 0
         || (attributes?.mining?.doubleTrouble?.chance ?? 0) > 0
         || (Array.isArray(attributes?.mining?.effects) && attributes.mining.effects.length > 0);
 }
@@ -521,10 +520,34 @@ function executeOperatorBreak(snapshot, attributes, state) {
     system.run(() => processMiningBreak(snapshot));
 }
 
-function executeForgerNetherrackBreak(snapshot) {
-    if (!clearBlockWithoutDrops(snapshot.dimension, snapshot.location)) return;
+function removeNativeBlockDrops(snapshot, acceptedItemIds) {
+    if (!snapshot?.dimension || !snapshot?.location) return false;
+    const accepted = new Set((acceptedItemIds ?? []).map(normalizeBlockId));
+    let removed = false;
 
-    spawnBonusDropCount(snapshot.dimension, snapshot.location, "minecraft:nether_brick", 4);
+    try {
+        for (const entity of snapshot.dimension.getEntities({
+            type: "item",
+            location: { x: snapshot.location.x + 0.5, y: snapshot.location.y + 0.5, z: snapshot.location.z + 0.5 },
+            maxDistance: 1.75,
+        })) {
+            const stack = entity?.getComponent?.("minecraft:item")?.itemStack;
+            if (!accepted.has(normalizeBlockId(stack?.typeId))) continue;
+            entity.remove();
+            removed = true;
+        }
+    } catch { }
+
+    return removed;
+}
+
+function executeForgerNetherrackBreak(snapshot) {
+    if (!removeNativeBlockDrops(snapshot, ["minecraft:netherrack"])) return false;
+    const applied = spawnBonusDropCount(snapshot.dimension, snapshot.location, "minecraft:nether_brick", 4);
+    if (applied) {
+        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "\u00A7bForger Bricks" });
+    }
+    return applied;
     system.run(() => processMiningBreak(snapshot));
 }
 
@@ -586,7 +609,7 @@ function executeForgerOreBonus(snapshot, pendingState = null) {
     return applied;
 }
 
-function executeExtraYieldBonus(snapshot, pendingState = null) {
+function executeBonusLoot(snapshot, attributes, pendingState = null) {
     const normalizedBlockId = normalizeBlockId(snapshot.blockId);
     const dropId = ORE_BONUS_DROPS[normalizedBlockId];
     if (!dropId) return false;
@@ -603,13 +626,13 @@ function executeExtraYieldBonus(snapshot, pendingState = null) {
 
     if (dropAmount <= 0) return false;
 
-    const yieldChance = Math.max(0, Number(snapshot?.attributes?.mining?.bonusDropChance ?? 0));
-    if (yieldChance <= 0) return false;
+    const lootChance = Math.max(0, Number(attributes?.mining?.bonusLootChance ?? 0));
+    if (lootChance <= 0 || !rollChance(lootChance, 0)) return false;
 
-    const bonusAmount = Math.max(1, Math.ceil(dropAmount * yieldChance));
+    const bonusAmount = Math.max(1, Math.ceil(dropAmount * lootChance));
     const applied = spawnBonusDropCount(snapshot.dimension, snapshot.location, dropId, bonusAmount);
     if (applied) {
-        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "\u00A7bExtra Yield" });
+        showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "\u00A7bBonus Loot" });
     }
 
     return applied;
@@ -652,21 +675,9 @@ function getDoubleTroubleChance(effect, miningLevel) {
     return Math.min(maxChance, baseChance + Math.floor(Math.max(1, miningLevel) / 10) * per10Levels);
 }
 
-function rememberBerserkLogBreak(snapshot, effect) {
-    if (!snapshot?.player || !snapshot?.dimension || !snapshot?.location) return;
-
-    PENDING_BERSERK_LOG_BREAKS.set(snapshot.player, {
-        knownItemIds: collectNearbyItemEntityIds(snapshot.dimension, snapshot.location),
-        effect,
-    });
-}
-
-function consumeBerserkLogBreak(snapshot) {
-    if (!snapshot?.player) return null;
-
-    const pending = PENDING_BERSERK_LOG_BREAKS.get(snapshot.player) ?? null;
-    PENDING_BERSERK_LOG_BREAKS.delete(snapshot.player);
-    return pending;
+function rollPreservation(chance) {
+    const numeric = Math.max(0, Number(chance ?? 0) || 0);
+    return numeric >= 1 || Math.random() <= numeric;
 }
 
 /**
@@ -826,40 +837,15 @@ function executeBerserkLogConversion(snapshot, effect, pendingState = null) {
     if (!plankId) return;
     if (!snapshot.dimension || !snapshot.location) return;
 
-    const dropCenter = {
-        x: Number(snapshot.location.x ?? 0) + 0.5,
-        y: Number(snapshot.location.y ?? 0) + 0.5,
-        z: Number(snapshot.location.z ?? 0) + 0.5,
-    };
     const extraMin = Math.max(1, Math.floor(Number(effect?.extraPlanksMin ?? 1) || 1));
     const extraMax = Math.max(extraMin, Math.floor(Number(effect?.extraPlanksMax ?? 4) || 4));
     const totalAmount = 4 + rollInclusiveAmount(extraMin, extraMax);
-    const knownItemIds = pendingState?.knownItemIds ?? new Set();
-    let removedLogDrop = false;
+    if (!removeNativeBlockDrops(snapshot, [snapshot.blockId])) return false;
 
-    // The native break has already produced its items. Replace only fresh log
-    // entities; the before-event snapshot protects items that were already here.
-    try {
-        for (const entity of snapshot.dimension.getEntities({
-            type: "item",
-            location: dropCenter,
-            maxDistance: 1.75,
-        })) {
-            const entityId = entity?.id;
-            if (typeof entityId === "string" && knownItemIds.has(entityId)) continue;
-
-            const stack = entity?.getComponent?.("minecraft:item")?.itemStack;
-            if (normalizeBlockId(stack?.typeId) !== normalizeBlockId(snapshot.blockId)) continue;
-
-            entity.remove();
-            removedLogDrop = true;
-        }
-    } catch { }
-
-    if (!removedLogDrop) return;
-
-    spawnBonusDropCount(snapshot.dimension, snapshot.location, plankId, totalAmount);
+    const applied = spawnBonusDropCount(snapshot.dimension, snapshot.location, plankId, totalAmount);
+    if (!applied) return false;
     showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "\u00A7bBerserk Planks" });
+    return true;
 }
 
 function applyMiningEffects({ attributes, isOre, dimension, location }) {
@@ -902,21 +888,14 @@ function processMiningBreak(snapshot) {
         ? "tool"
         : isOre ? "ore" : "block";
     const progressAmount = getProgressAmount(definition, reason, isOre ? 4 : 1);
+    const defenseProgressAmount = getProgressAmount(definition, "armor", 0);
 
     let changed = false;
-    let bonusDrop = false;
     let bonusXp = false;
     let preserved = false;
 
-    if (isOre && !hasSilkTouch(stack)) {
-        const dropId = ORE_BONUS_DROPS[blockId];
-        if (dropId && rollChance(attributes.mining.oreBonusChance, 0)) {
-            bonusDrop = spawnBonusDrop(dimension, location, dropId);
-        }
-    }
-
-    if (rollChance(attributes.mining.durabilitySaveChance, 0)) {
-        preserved = repairItemDurability(stack);
+    if (rollPreservation(attributes.mining.durabilitySaveChance)) {
+        preserved = repairItemDurability(stack, attributes.mining.preservationRepairAmount ?? 2);
         changed = preserved || changed;
     }
 
@@ -925,10 +904,15 @@ function processMiningBreak(snapshot) {
 
     const progress = grantStatsProgress(stack, definition, progressAmount, reason);
     changed = progress.changed || changed;
+    const defenseProgress = defenseProgressAmount > 0
+        ? grantStatsProgress(stack, definition, defenseProgressAmount, "armor", { currentState: progress.state })
+        : null;
+    changed = Boolean(defenseProgress?.changed) || changed;
 
     if (changed) persistEquipmentItem(player, STATSCORE.slots.mainhand, stack);
     showLevelUp(player, stack, progress);
-    showMiningFeedback(player, blockId, { bonusDrop, bonusXp, preserved });
+    showLevelUp(player, stack, defenseProgress);
+    showMiningFeedback(player, blockId, { bonusXp, preserved });
 }
 
 function snapshotBreakEvent(event) {
@@ -975,9 +959,6 @@ function handleBeforeBreak(event) {
         const gardenerEffect = findEffectByKind(attributes?.mining?.effects, "gardener");
         const forgerEffect = findEffectByKind(attributes?.mining?.effects, "forger");
         const reaperEffect = findEffectByKind(attributes?.mining?.effects, "reaper");
-        const berserkEffect = findEffectByKind(attributes?.mining?.effects, "berserk_logging")
-            ?? findEffectByKind(attributes?.mining?.effects, "berserk");
-
         if (operatorEffect) {
             const mode = normalizeBlockId(state?.abilityData?.operatorMode ?? "crushy");
             if (mode !== "crushy") {
@@ -985,16 +966,6 @@ function handleBeforeBreak(event) {
                 system.run(() => executeOperatorBreak(snapshot, attributes, state));
                 return;
             }
-        }
-
-        if (berserkEffect && snapshot.player?.isSneaking && isBerserkLogBlockId(snapshot.blockId)) {
-            rememberBerserkLogBreak(snapshot, berserkEffect);
-        }
-
-        if (forgerEffect && normalizeBlockId(snapshot.blockId) === "minecraft:netherrack") {
-            event.cancel = true;
-            system.run(() => executeForgerNetherrackBreak(snapshot));
-            return;
         }
 
         if (forgerEffect && ORE_PLATE_DROPS[normalizeBlockId(snapshot.blockId)]) {
@@ -1021,20 +992,23 @@ function handleAfterBreak(event) {
 
     system.run(() => {
         const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);
-        if (!context || !canUseDefinitionForMining(context.definition, context.attributes)) {
-            consumeBerserkLogBreak(snapshot);
-            return;
-        }
+        if (!context || !canUseDefinitionForMining(context.definition, context.attributes)) return;
 
-        const pendingBerserk = consumeBerserkLogBreak(snapshot);
-        if (pendingBerserk?.effect) {
-            executeBerserkLogConversion(snapshot, pendingBerserk.effect, pendingBerserk);
+        const berserkEffect = findEffectByKind(context.attributes?.mining?.effects, "berserk_logging")
+            ?? findEffectByKind(context.attributes?.mining?.effects, "berserk");
+        const forgerEffect = findEffectByKind(context.attributes?.mining?.effects, "forger");
+        if (berserkEffect && snapshot.player?.isSneaking && isBerserkLogBlockId(snapshot.blockId)) {
+            executeBerserkLogConversion(snapshot, berserkEffect);
+        }
+        if (forgerEffect && normalizeBlockId(snapshot.blockId) === "minecraft:netherrack") {
+            executeForgerNetherrackBreak(snapshot);
         }
 
         processMiningBreak(snapshot);
 
         try {
             const { attributes } = context;
+            const pendingOreDrops = consumePendingOreDropSnapshot(snapshot);
             if (attributes?.mining?.doubleTrouble) executeDoubleTrouble(snapshot);
 
             if (findEffectByKind(attributes?.mining?.effects, "gardener") && isGardenerTargetBlockId(snapshot.blockId)) {
@@ -1051,11 +1025,11 @@ function handleAfterBreak(event) {
             }
 
             if (findEffectByKind(attributes?.mining?.effects, "forger")) {
-                executeForgerOreBonus(snapshot, consumePendingOreDropSnapshot(snapshot));
+                executeForgerOreBonus(snapshot, pendingOreDrops);
             }
 
-            if (attributes?.mining?.bonusDropChance > 0) {
-                executeExtraYieldBonus(snapshot, consumePendingOreDropSnapshot(snapshot));
+            if (attributes?.mining?.bonusLootChance > 0) {
+                executeBonusLoot(snapshot, attributes, pendingOreDrops);
             }
 
             if (findEffectByKind(attributes?.mining?.effects, "reaper")) {

@@ -21,7 +21,7 @@
             "utilitycraft:refining_table": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 24,
+                    "inventory_size": 25,
                     "fixed_fluid_types": true
                 },
                 "machine": {
@@ -37,10 +37,10 @@
                 { "type": "speed", "slot": 9 },
                 { "type": "energy", "slot": 10 }
             ],
-            "minecraft:geometry": "geometry.utilitycraft_enchantment_station",
+            "minecraft:geometry": "geometry.refining_table",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_enchantment_station",
+                    "texture": "utilitycraft_refining_table",
                     "render_method": "alpha_test"
                 }
             },
@@ -63,7 +63,7 @@
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "utilitycraft_enchantment_station",
+                            "texture": "utilitycraft_refining_table",
                             "render_method": "alpha_test"
                         }
                     },

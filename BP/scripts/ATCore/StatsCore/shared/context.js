@@ -1,9 +1,11 @@
 import { STATSCORE } from "../constants.js";
+import { system } from "@minecraft/server";
 import { getEquipment, getLiveEquipmentItem } from "../core/equipment.js";
 import { getStatsCoreDefinition } from "../core/registry.js";
 import { readStatsState } from "../core/state.js";
 import { isStatsCoreEnabled } from "../runtime.js";
 import { resolveStatsAttributes } from "../attributes/resolve.js";
+import { readEquipmentContextCache, writeEquipmentContextCache } from "./contextCache.js";
 
 /**
  * Builds the full StatsCore runtime context for an already resolved item stack.
@@ -38,20 +40,39 @@ export function readStatsItemContext(stack) {
 export function getEquipmentStatsContext(entity, slotName = STATSCORE.slots.mainhand, expectedTypeId = undefined) {
     if (!isStatsCoreEnabled()) return null;
 
+    const currentTick = Number(system.currentTick ?? 0) || 0;
+    const cached = readEquipmentContextCache(entity, slotName, currentTick);
+    if (cached) {
+        if (expectedTypeId && cached.typeId !== expectedTypeId) return null;
+        return cached.context;
+    }
+
     const access = expectedTypeId
         ? getLiveEquipmentItem(entity, expectedTypeId, slotName)
         : getEquipment(entity, slotName);
 
-    if (!access?.item) return null;
+    if (!access?.item) {
+        // A failed expected-type guard does not mean that the slot is empty.
+        // Avoid caching that transient result for callers without the guard.
+        if (!expectedTypeId) {
+            writeEquipmentContextCache(entity, slotName, currentTick, "", null);
+        }
+        return null;
+    }
 
     const itemContext = readStatsItemContext(access.item);
-    if (!itemContext) return null;
+    if (!itemContext) {
+        writeEquipmentContextCache(entity, slotName, currentTick, access.item.typeId, null);
+        return null;
+    }
 
-    return {
+    const context = {
         ...itemContext,
         slotName: access.slotName,
         equippable: access.equippable,
     };
+    writeEquipmentContextCache(entity, slotName, currentTick, access.item.typeId, context);
+    return context;
 }
 
 /**

@@ -1,5 +1,6 @@
 import { AFFINITIES, ITEM_TYPES } from "./constants.js";
 import { deepMerge } from "./utils.js";
+import { OFFENSIVE_ENTITY_CATEGORIES } from "./shared/entityCategories.js";
 
 function buildTierPreset(values, tierMultiplier) {
     const multiplier = tierMultiplier === 1 ? 1.5 : tierMultiplier;
@@ -239,28 +240,6 @@ const TIER_PRESETS = Object.freeze({
         durabilitySave: 0.04,
         durabilitySaveLevel: 0.002
     }, 6),
-    lucky: buildTierPreset({
-        rarity: "unique",
-        combatXp: 3,
-        blockXp: 2,
-        oreXp: 7,
-        toolXp: 6,
-        critChance: 0.11,
-        critLevel: 0.0035,
-        critMultiplier: 1.42,
-        critMultiplierLevel: 0.008,
-        penetration: 0.08,
-        penetrationLevel: 0.0035,
-        penetrationCap: 0.28,
-        lifesteal: 0.01,
-        lifestealLevel: 0.0005,
-        miningBonus: 0.08,
-        miningLevel: 0.003,
-        oreBonus: 0.13,
-        oreLevel: 0.004,
-        durabilitySave: 0.055,
-        durabilitySaveLevel: 0.0025
-    }, 5)
 });
 
 const NON_COMBAT_TOOL_BRANCHES = new Set([
@@ -275,6 +254,7 @@ const NON_COMBAT_TOOL_BRANCHES = new Set([
 const SUPPORT_SLOT_SCALARS = Object.freeze({
     helmet: 0.8,
     chestplate: 1,
+    elytra: 1,
     leggings: 0.75,
     boots: 0.65,
     generic: 0.7
@@ -293,7 +273,6 @@ const WEAK_ATTRIBUTE_GROWTH = Object.freeze({
     netherite: 0.024,
     titanium: 0.024,
     aetherium: 0.03,
-    lucky: 0.036,
 });
 
 function getWeakAttributeGrowth(tierName) {
@@ -302,69 +281,23 @@ function getWeakAttributeGrowth(tierName) {
 
 function getArmorSlotName(id) {
     const normalizedId = String(id ?? "").toLowerCase();
+    if (normalizedId === "minecraft:elytra") return "elytra";
     if (normalizedId.endsWith("_helmet")) return "helmet";
     if (normalizedId.endsWith("_chestplate")) return "chestplate";
     if (normalizedId.endsWith("_leggings")) return "leggings";
     if (normalizedId.endsWith("_boots")) return "boots";
+    if (normalizedId.endsWith("shield")) return "shield";
     return "generic";
 }
 
-function getSupportNegationConfig(id, tierName) {
-    const slot = getArmorSlotName(id);
-    const scalar = SUPPORT_SLOT_SCALARS[slot] ?? SUPPORT_SLOT_SCALARS.generic;
-
-    const tierBase = {
-        diamond: { chance: 0.006, perLevel: 0.00025, cap: 0.02 },
-        netherite: { chance: 0.009, perLevel: 0.0003, cap: 0.028 },
-        titanium: { chance: 0.008, perLevel: 0.00028, cap: 0.026 },
-        aetherium: { chance: 0.012, perLevel: 0.00036, cap: 0.038 },
-        lucky: { chance: 0.014, perLevel: 0.00042, cap: 0.044 }
-    }[tierName] ?? { chance: 0.006, perLevel: 0.00025, cap: 0.02 };
-
-    return {
-        chance: tierBase.chance * scalar,
-        perLevel: tierBase.perLevel * scalar,
-        cap: tierBase.cap * scalar
-    };
-}
-
-function getSupportDamageImmunities(id, tierName) {
-    const normalizedId = String(id ?? "").toLowerCase();
-    const slot = getArmorSlotName(id);
-
-    if (normalizedId === "minecraft:turtle_helmet") return [];
-
-    if (slot === "helmet") {
-        return ["suffocation"];
+function getSupportNegationConfig(id) {
+    if (getArmorSlotName(id) === "shield") {
+        return { chance: 0.05, perLevel: 0, cap: 0.05 };
     }
 
-    if (slot === "chestplate") {
-        if (tierName === "aetherium") return ["fire", "fire_tick", "lava"];
-        if (tierName === "netherite") return ["fire", "lava"];
-        if (tierName === "titanium") return ["contact"];
-    }
-
-    if (slot === "leggings" && (tierName === "titanium" || tierName === "aetherium")) {
-        return ["freezing"];
-    }
-
-    return [];
-}
-
-function getSupportVulnerabilities(tierName) {
-    if (tierName === "diamond") return ["magic"];
-    if (tierName === "netherite") return ["freezing"];
-    if (tierName === "titanium") return ["lightning"];
-    if (tierName === "aetherium") return ["void"];
-    return [];
-}
-
-function getSupportVulnerabilityPenalty(tierName) {
-    if (tierName === "diamond") return 0.06;
-    if (tierName === "netherite") return 0.04;
-    if (tierName === "titanium") return 0.05;
-    if (tierName === "aetherium") return 0.03;
-    return 0;
+    // Evasion is no longer tier- or slot-exclusive. Every armor piece follows
+    // the same Defense-level progression, with no per-piece level cap.
+    return { chance: 0.01, perLevel: 0.01, cap: Number.POSITIVE_INFINITY };
 }
 
 function createEffectKey(label, fallback = "effect") {
@@ -375,6 +308,7 @@ function createEffectKey(label, fallback = "effect") {
 function inferBranch(id, type) {
     const normalizedId = String(id ?? "").toLowerCase();
 
+    if (normalizedId === "minecraft:elytra") return "elytra";
     if (normalizedId.includes("aiot")) return "aiot";
     if (normalizedId.includes("paxel")) return "paxel";
     if (normalizedId.includes("hammer")) return "hammer";
@@ -414,8 +348,6 @@ function createBleedEffect(tierName, overrides = {}) {
         diamond: { chance: 0.18, durationTicks: 80, damageRatio: 0.12, maxStacks: 1 },
         netherite: { chance: 0.22, durationTicks: 90, damageRatio: 0.14, maxStacks: 1 },
         titanium: { chance: 0.21, durationTicks: 90, damageRatio: 0.14, maxStacks: 1 },
-        aetherium: { chance: 0.28, durationTicks: 110, damageRatio: 0.17, maxStacks: 2 },
-        lucky: { chance: 0.30, durationTicks: 120, damageRatio: 0.18, maxStacks: 2 },
     }[tierName] ?? { chance: 0.18, durationTicks: 80, damageRatio: 0.12, maxStacks: 1 };
 
     return {
@@ -426,25 +358,20 @@ function createBleedEffect(tierName, overrides = {}) {
         tickInterval: 20,
         refresh: true,
         ...preset,
+        chance: 1,
+        durationTicks: 100,
+        damageRatio: 0.14,
+        maxStacks: 1,
         ...overrides,
     };
 }
 
 function createSweepEffect(tierName, overrides = {}) {
-    const preset = {
-        diamond: { chance: 1, cooldownTicks: 18 },
-        netherite: { chance: 1, cooldownTicks: 16 },
-        titanium: { chance: 1, cooldownTicks: 16 },
-        aetherium: { chance: 1, cooldownTicks: 14 },
-        lucky: { chance: 1, cooldownTicks: 12 },
-    }[tierName] ?? { chance: 1, cooldownTicks: 18 };
-
     return {
         key: "sweeping",
         kind: "sweep",
         label: "Sweeping",
         on: "hit",
-        ...preset,
         radius: 2.5,
         radiusPer5Levels: 0.5,
         maxRadiusLevel: 25,
@@ -452,7 +379,7 @@ function createSweepEffect(tierName, overrides = {}) {
         damageScalePer5Levels: 0.05,
         maxDamageScale: 1,
         chance: 1,
-        cooldownTicks: 0,
+        cooldownTicks: 12,
         requiresUniqueUnlock: false,
         alwaysActive: true,
         ...overrides,
@@ -464,8 +391,6 @@ function createLuckEffect(tierName, label = "Luck", overrides = {}) {
         diamond: { chance: 1, xpAmount: 3 },
         netherite: { chance: 1, xpAmount: 4 },
         titanium: { chance: 1, xpAmount: 4 },
-        aetherium: { chance: 1, xpAmount: 5 },
-        lucky: { chance: 1, xpAmount: 6 },
     }[tierName] ?? { chance: 1, xpAmount: 3 };
 
     return {
@@ -484,8 +409,6 @@ function createRetaliateEffect(tierName, label = "Retaliation", overrides = {}) 
         diamond: { chance: 0.18, damageRatio: 0.18, cooldownTicks: 18 },
         netherite: { chance: 0.22, damageRatio: 0.22, cooldownTicks: 16 },
         titanium: { chance: 0.21, damageRatio: 0.2, cooldownTicks: 16 },
-        aetherium: { chance: 0.26, damageRatio: 0.26, cooldownTicks: 14 },
-        lucky: { chance: 0.3, damageRatio: 0.3, cooldownTicks: 12 },
     }[tierName] ?? { chance: 0.18, damageRatio: 0.18, cooldownTicks: 18 };
 
     return {
@@ -507,8 +430,6 @@ function createMarkEffect(tierName, label = "Mark", overrides = {}) {
         diamond: { chance: 0.22, durationTicks: 100, damageBonus: 0.08 },
         netherite: { chance: 0.26, durationTicks: 110, damageBonus: 0.1 },
         titanium: { chance: 0.25, durationTicks: 110, damageBonus: 0.1 },
-        aetherium: { chance: 0.3, durationTicks: 120, damageBonus: 0.12 },
-        lucky: { chance: 0.32, durationTicks: 130, damageBonus: 0.13 },
     }[tierName] ?? { chance: 0.18, durationTicks: 80, damageBonus: 0.06 };
 
     return {
@@ -528,8 +449,6 @@ function createFireEffect(tierName, label = "Fire", overrides = {}) {
         diamond: { chance: 0.2, seconds: 4 },
         netherite: { chance: 0.24, seconds: 4 },
         titanium: { chance: 0.24, seconds: 4 },
-        aetherium: { chance: 0.28, seconds: 5 },
-        lucky: { chance: 0.32, seconds: 5 },
     }[tierName] ?? { chance: 0.18, seconds: 3 };
 
     return {
@@ -589,9 +508,9 @@ function createForgerEffect(overrides = {}) {
 
 function createIgniterEffect(overrides = {}) {
     return {
-        key: "ingniter",
+        key: "igniter",
         kind: "igniter",
-        label: "Ingniter",
+        label: "Igniter",
         ...overrides,
     };
 }
@@ -602,8 +521,6 @@ function createAftershockEffect(tierName, overrides = {}) {
         diamond: { chance: 0.22, damageScale: 0.52, cooldownTicks: 22 },
         netherite: { chance: 0.26, damageScale: 0.58, cooldownTicks: 20 },
         titanium: { chance: 0.26, damageScale: 0.56, cooldownTicks: 20 },
-        aetherium: { chance: 0.3, damageScale: 0.64, cooldownTicks: 18 },
-        lucky: { chance: 0.34, damageScale: 0.7, cooldownTicks: 16 },
     }[tierName] ?? { chance: 0.22, damageScale: 0.52, cooldownTicks: 22 };
 
     return {
@@ -631,8 +548,6 @@ function createHarpoonEffect(tierName, overrides = {}) {
         diamond: { chance: 0.22, durationTicks: 100, damageBonus: 0.08 },
         netherite: { chance: 0.3, durationTicks: 110, damageBonus: 0.11 },
         titanium: { chance: 0.28, durationTicks: 110, damageBonus: 0.1 },
-        aetherium: { chance: 0.32, durationTicks: 120, damageBonus: 0.13 },
-        lucky: { chance: 0.34, durationTicks: 130, damageBonus: 0.14 },
     }[tierName] ?? { chance: 0.22, durationTicks: 100, damageBonus: 0.08 };
 
     return {
@@ -647,13 +562,19 @@ function createHarpoonEffect(tierName, overrides = {}) {
     };
 }
 
-function createDeadeyeEffect(overrides = {}) {
+function createPinningShotEffect(overrides = {}) {
     return {
-        key: "deadeye",
-        kind: "deadeye",
-        label: "Deadeye",
+        key: "pinning_shot",
+        kind: "pinning_shot",
+        label: "Pinning Shot",
         on: "hit",
         chance: 1,
+        requiresProjectile: true,
+        durationTicks: 80,
+        slownessAmplifier: 1,
+        weaknessAmplifier: 0,
+        damageBonus: 0.06,
+        cooldownTicks: 24,
         ...overrides,
     };
 }
@@ -663,8 +584,6 @@ function createBallistaEffect(tierName, overrides = {}) {
         diamond: { chance: 0.18, damageScale: 0.44, cooldownTicks: 16 },
         netherite: { chance: 0.22, damageScale: 0.48, cooldownTicks: 14 },
         titanium: { chance: 0.22, damageScale: 0.47, cooldownTicks: 14 },
-        aetherium: { chance: 0.26, damageScale: 0.54, cooldownTicks: 12 },
-        lucky: { chance: 0.3, damageScale: 0.58, cooldownTicks: 10 },
     }[tierName] ?? { chance: 0.2, damageScale: 0.45, cooldownTicks: 16 };
 
     return {
@@ -697,8 +616,8 @@ function createWormEffect(overrides = {}) {
     return {
         key: "worm",
         kind: "worm",
-        label: "Worm",
-        evadeChance: 0.5,
+        label: "Guard Worm",
+        damageReduction: 0.4,
         ...overrides,
     };
 }
@@ -751,29 +670,6 @@ function createFeatherstepEffect(overrides = {}) {
     };
 }
 
-function createSpikesEffect(tierName, overrides = {}) {
-    const preset = {
-        diamond: { damageRatio: 0.18 },
-        netherite: { damageRatio: 0.22 },
-        titanium: { damageRatio: 0.2 },
-        aetherium: { damageRatio: 0.26 },
-        lucky: { damageRatio: 0.3 },
-    }[tierName] ?? { damageRatio: 0.18 };
-
-    return {
-        key: "spikes",
-        kind: "spikes",
-        label: "Spikes",
-        on: "hurt",
-        knockbackHorizontal: 1.35,
-        knockbackVertical: 0.42,
-        gatherRadius: 1.5,
-        gatherStrength: 1.1,
-        ...preset,
-        ...overrides,
-    };
-}
-
 function createToughEffect(overrides = {}) {
     return {
         key: "tough",
@@ -785,6 +681,192 @@ function createToughEffect(overrides = {}) {
         reducedDamageTypes: ["falling_block", "suffocation", "lightning", "stalactite"],
         ...overrides,
     };
+}
+
+const EVENT_TIER_POWER = Object.freeze({
+    wood: 0.65,
+    stone: 0.75,
+    copper: 0.85,
+    iron: 1,
+    steel: 1.08,
+    golden: 1.12,
+    diamond: 1.2,
+    netherite: 1.4,
+    titanium: 1.35,
+    aetherium: 1.6,
+});
+
+function getEventTierPower(tierName) {
+    return EVENT_TIER_POWER[tierName] ?? EVENT_TIER_POWER.iron;
+}
+
+function createEventDrivenAttributeProfile(type, branch, tierName) {
+    const power = getEventTierPower(tierName);
+    const support = type === ITEM_TYPES.support;
+    const projectile = ["bow", "crossbow", "trident"].includes(branch);
+    const scavenger = type === ITEM_TYPES.tool || type === ITEM_TYPES.hybrid || type === ITEM_TYPES.utility;
+
+    return {
+        adaptiveResilience: support ? {
+            reductionPerStack: 0.008 * power,
+            reductionPerLevel: 0.00018 * power,
+            maxReductionPerStack: 0.025,
+            maxStacks: 3,
+            durationTicks: 100,
+        } : null,
+        healingEfficiency: support ? {
+            bonus: 0.012 * power,
+            bonusPerLevel: 0.00025 * power,
+            maxBonus: 0.25,
+            overhealAbsorptionDurationTicks: 100,
+        } : null,
+        chargeMastery: projectile ? {
+            maxDamageBonus: 0.08 * power,
+            damageBonusPerLevel: 0.0015 * power,
+            cap: 0.4,
+            fullChargeTicks: branch === "crossbow" ? 25 : 20,
+        } : null,
+        persistence: projectile ? {
+            bonusPerHit: 0.025,
+            maxBonus: 0.5,
+            resetTicks: 200,
+        } : null,
+        dimensionalAttunement: support ? {
+            durationTicks: Math.floor(80 + (power * 30)),
+            amplifier: 0,
+        } : null,
+        scavenging: scavenger ? {
+            chance: 0.035 * power,
+            chancePerLevel: 0.00075 * power,
+            maxChance: 0.3,
+            xpAmount: Math.max(1, Math.floor(power * 2)),
+            healAmount: 0.5 + (power * 0.35),
+        } : null,
+    };
+}
+
+function createPerfectGuardEffect(tierName) {
+    const power = getEventTierPower(tierName);
+    return {
+        key: "perfect_guard",
+        kind: "perfect_guard",
+        label: "Perfect Guard",
+        windowTicks: 8,
+        cooldownTicks: Math.max(35, Math.floor(90 - (power * 18))),
+        damageMultiplier: Math.max(0.08, 0.32 - (power * 0.1)),
+        cancelChance: Math.min(0.45, 0.08 * power),
+        unlockTier: "advanced",
+        requiresAdvancedUnlock: true,
+    };
+}
+
+function createOverchargeEffect(tierName) {
+    const power = getEventTierPower(tierName);
+    return {
+        key: "overcharge",
+        kind: "overcharge",
+        label: "Overcharge",
+        radius: 2.5 + power,
+        damageScale: Math.min(0.65, 0.28 + (power * 0.14)),
+        fireSeconds: Math.max(2, Math.floor(1 + power)),
+        cooldownTicks: Math.max(20, Math.floor(55 - (power * 12))),
+        unlockTier: "advanced",
+        requiresAdvancedUnlock: true,
+    };
+}
+
+function createSoulCollectorEffect(tierName) {
+    const power = getEventTierPower(tierName);
+    return {
+        key: "soul_collector",
+        kind: "soul_collector",
+        label: "Soul Collector",
+        maxCharges: 5,
+        requiresFullCharge: true,
+        durationTicks: 600,
+        damagePerCharge: Math.min(0.15, 0.055 + (power * 0.025)),
+        healPerCharge: 0.35 + (power * 0.2),
+        unlockTier: "advanced",
+        requiresAdvancedUnlock: true,
+    };
+}
+
+function createBlastWardEffect(tierName) {
+    const power = getEventTierPower(tierName);
+    return {
+        key: "blast_ward",
+        kind: "blast_ward",
+        label: "Blast Ward",
+        damageReduction: Math.min(0.75, 0.3 + (power * 0.16)),
+        protectionRadius: 3.5 + power,
+        cooldownTicks: Math.max(45, Math.floor(110 - (power * 25))),
+        unlockTier: "advanced",
+        requiresAdvancedUnlock: true,
+    };
+}
+
+function createPhaseStepEffect(tierName) {
+    const power = getEventTierPower(tierName);
+    return {
+        key: "phase_step",
+        kind: "phase_step",
+        label: "Phase Step",
+        durationTicks: Math.floor(70 + (power * 35)),
+        speedAmplifier: 0,
+        resistanceAmplifier: 0,
+        cooldownTicks: Math.max(80, Math.floor(260 - (power * 70))),
+        unlockTier: "advanced",
+        requiresAdvancedUnlock: true,
+    };
+}
+
+function createDashEffect() {
+    return {
+        key: "dash",
+        kind: "dash",
+        label: "Boot Dash",
+        strength: 1.35,
+        verticalBoost: 0.12,
+        cooldownTicks: 70,
+        requiresUniqueUnlock: false,
+        alwaysActive: true,
+    };
+}
+
+function createElytraWindLaunchEffect() {
+    return {
+        key: "elytra_wind_launch",
+        kind: "elytra_wind_launch",
+        label: "Wind Launch",
+        horizontalBoost: 0.9,
+        verticalBoost: 0.82,
+        cooldownTicks: 45,
+        requiresUniqueUnlock: false,
+        alwaysActive: true,
+    };
+}
+
+function createEventDrivenAbilitySet(type, branch, tierName, hasCombatProfile) {
+    const attributes = [];
+    const support = [];
+
+    if (hasCombatProfile) {
+        attributes.push(createSoulCollectorEffect(tierName));
+    }
+    if (["bow", "crossbow", "trident"].includes(branch)) {
+        attributes.push(createOverchargeEffect(tierName));
+    }
+    if (branch === "leggings" || branch === "shield") {
+        support.push(createPerfectGuardEffect(tierName));
+    }
+    if (branch === "chestplate" || branch === "shield") {
+        support.push(createBlastWardEffect(tierName));
+    }
+    if (branch === "boots") {
+        support.push(createPhaseStepEffect(tierName), createDashEffect());
+    }
+
+    return { attributes, support };
 }
 
 function createArmorAbilitySet(id, slot, tierName) {
@@ -810,9 +892,9 @@ function createArmorAbilitySet(id, slot, tierName) {
         return [createFeatherstepEffect()];
     }
 
-    if (slotKey === "shield") {
-        return [createSpikesEffect(tierName)];
-    }
+    // Spikes remains deliberately disabled: EntityHurt is not delivered for
+    // blocked shield hits reliably enough in the current Bedrock API.
+    if (slotKey === "shield") return [];
 
     return [];
 }
@@ -826,7 +908,7 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
     const supportsMiningTrouble = isTool || isHybrid || type === ITEM_TYPES.utility;
     const branch = inferBranch(id, type);
     const hasCombatProfile = !isSupport && !(isTool && NON_COMBAT_TOOL_BRANCHES.has(branch));
-    const supportNegation = getSupportNegationConfig(id, tierName);
+    const supportNegation = getSupportNegationConfig(id);
     const weakGrowth = getWeakAttributeGrowth(tierName);
 
     const definition = {
@@ -843,21 +925,23 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
             blockXp: isWeapon || isSupport ? 0 : (isTool || isHybrid ? 0 : tier.blockXp),
             oreXp: isWeapon || isSupport ? 0 : (isTool || isHybrid ? 0 : tier.oreXp),
             toolXp: isTool || isHybrid ? tier.toolXp : 0,
-            armorXp: tierName === "aetherium" ? 3 : 2,
-            baseXp: tierName === "lucky" ? 70 : 60,
-            growth: tierName === "aetherium" ? 1.24 : 1.22
+            // Preservation is tied to Defense for both armor and compatible
+            // mining equipment, so both categories need a real Defense track.
+            armorXp: isSupport || supportsMiningTrouble ? 2 : 0,
+            baseXp: 60,
+            growth: 1.22
         },
         attributes: {
             damagePerLevel: hasCombatProfile ? weakGrowth : 0,
             flatDamageBonus: 0,
-            markedDamageBonus: hasCombatProfile ? (tierName === "aetherium" ? 0.08 : 0.04) : 0,
+            markedDamageBonus: hasCombatProfile ? 0.04 : 0,
             crit: {
                 chance: hasCombatProfile ? (isTool ? tier.critChance * 0.45 : tier.critChance) : 0,
                 chancePerLevel: hasCombatProfile ? weakGrowth : 0,
-                maxChance: hasCombatProfile ? (tierName === "lucky" ? 0.5 : 0.45) : 0,
-                multiplier: hasCombatProfile ? (isTool ? 1.18 : tier.critMultiplier) : 1,
-                multiplierPerLevel: hasCombatProfile ? weakGrowth : 0,
-                maxMultiplier: hasCombatProfile ? (tierName === "aetherium" ? 2.5 : 2.35) : 1,
+                maxChance: hasCombatProfile ? 0.45 : 0,
+                multiplier: hasCombatProfile ? 1.5 : 1,
+                multiplierPerLevel: hasCombatProfile ? tier.critMultiplierLevel : 0,
+                maxMultiplier: hasCombatProfile ? 2.25 : 1,
                 openingBonus: hasCombatProfile ? (isWeapon ? 0.045 : 0.02) : 0,
                 precisionBonus: hasCombatProfile ? (isWeapon ? 0.025 : 0.01) : 0
             },
@@ -865,38 +949,36 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
                 percent: hasCombatProfile ? (isTool ? tier.penetration * 0.35 : tier.penetration) : 0,
                 perLevel: hasCombatProfile ? weakGrowth : 0,
                 cap: hasCombatProfile ? Math.max(0.45, tier.penetrationCap) : 0,
-                bossScalar: 0.55
+                bossScalar: 0.55,
+                bossCap: 0.2
             },
             lifesteal: {
                 percent: hasCombatProfile && !isTool ? tier.lifesteal : 0,
                 perLevel: hasCombatProfile && !isTool ? weakGrowth : 0,
-                cap: hasCombatProfile ? (tierName === "aetherium" ? 0.12 : 0.1) : 0,
+                cap: hasCombatProfile ? 0.25 : 0,
                 critBonus: hasCombatProfile ? (isWeapon ? 0.01 : 0.004) : 0
             },
             effects: []
         },
         support: {
-            damageReduction: isSupport ? (tierName === "aetherium" ? 0.012 : tierName === "netherite" ? 0.01 : tierName === "diamond" ? 0.007 : 0.009) : 0,
+            // Keep existing material base values; tier-specific caps and
+            // Aetherium-only overrides are intentionally gone.
+            damageReduction: isSupport ? (tierName === "netherite" ? 0.01 : tierName === "diamond" ? 0.007 : 0.009) : 0,
             damageReductionPerLevel: isSupport ? weakGrowth : 0,
-            maxDamageReduction: tierName === "aetherium" ? 0.16 : tierName === "netherite" ? 0.14 : 0.12,
-            durabilityPreserveChance: isSupport ? (tierName === "aetherium" ? 0.035 : tierName === "netherite" ? 0.028 : tierName === "diamond" ? 0.02 : 0.024) : 0,
-            durabilityPreserveChancePerLevel: isSupport ? weakGrowth : 0,
-            maxDurabilityPreserveChance: tierName === "aetherium" ? 0.26 : 0.22,
+            maxDamageReduction: 0.12,
+            durabilityPreserveChance: isSupport ? 0.01 : 0,
+            durabilityPreserveChancePerLevel: isSupport ? 0.01 : 0,
+            maxDurabilityPreserveChance: Number.POSITIVE_INFINITY,
             negateAllDamageChance: isSupport ? supportNegation.chance : 0,
             negateAllDamageChancePerLevel: isSupport ? supportNegation.perLevel : 0,
             maxNegateAllDamageChance: isSupport ? supportNegation.cap : 0,
-            damageImmunities: isSupport ? getSupportDamageImmunities(id, tierName) : [],
-            vulnerabilities: isSupport ? getSupportVulnerabilities(tierName) : [],
-            vulnerabilityPenalty: isSupport ? getSupportVulnerabilityPenalty(tierName) : 0,
             effects: isSupport ? createArmorAbilitySet(id, branch, tierName) : []
         },
         mining: {
-            bonusDropChance: isWeapon || isSupport ? 0 : tier.miningBonus,
-            bonusDropChancePerLevel: isWeapon || isSupport ? 0 : weakGrowth,
-            oreBonusChance: isWeapon || isSupport ? 0 : tier.oreBonus,
-            oreBonusChancePerLevel: isWeapon || isSupport ? 0 : weakGrowth,
-            durabilitySaveChance: isSupport ? 0 : (isWeapon ? 0.01 : tier.durabilitySave),
-            durabilitySaveChancePerLevel: isSupport ? 0 : weakGrowth,
+            bonusLootChance: isWeapon || isSupport ? 0 : tier.miningBonus + tier.oreBonus,
+            bonusLootChancePerLevel: isWeapon || isSupport ? 0 : weakGrowth,
+            durabilitySaveChance: isSupport ? 0 : 0.01,
+            durabilitySaveChancePerLevel: isSupport ? 0 : 0.01,
             strongAttributes: supportsMiningTrouble ? {
                 doubleTrouble: {
                     baseChance: 0.01,
@@ -909,7 +991,8 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
             } : {},
             effects: [],
             // Weak chance attributes are intentionally only bounded by 100%.
-        }
+        },
+        eventDriven: createEventDrivenAttributeProfile(type, branch, tierName),
     };
 
     if (overrides.progression) {
@@ -917,6 +1000,15 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
         delete overrides.progression;
     }
     const merged = deepMerge(definition, overrides);
+    const eventAbilities = createEventDrivenAbilitySet(type, branch, tierName, hasCombatProfile);
+    merged.attributes.effects = [
+        ...(Array.isArray(merged?.attributes?.effects) ? merged.attributes.effects : []),
+        ...eventAbilities.attributes,
+    ];
+    merged.support.effects = [
+        ...(Array.isArray(merged?.support?.effects) ? merged.support.effects : []),
+        ...eventAbilities.support,
+    ];
     const hasUniqueEffects = [
         merged?.attributes?.effects,
         merged?.mining?.effects,
@@ -943,10 +1035,9 @@ const CANONICAL_TIER_TOKENS = Object.freeze({
     netherite: "netherite",
     titanium: "titanium",
     aetherium: "aetherium",
-    lucky: "lucky",
 });
 
-const ADVANCED_ABILITY_TIERS = new Set(["diamond", "netherite", "titanium", "aetherium", "lucky"]);
+const ADVANCED_ABILITY_TIERS = new Set(["diamond", "netherite", "titanium", "aetherium"]);
 
 function getItemPath(id) {
     return String(id ?? "").toLowerCase().split(":").pop() ?? "";
@@ -954,7 +1045,7 @@ function getItemPath(id) {
 
 function inferItemType(branch) {
     if (["drill", "knife", "lighter", "shears"].includes(branch)) return ITEM_TYPES.utility;
-    if (["helmet", "chestplate", "leggings", "boots", "shield"].includes(branch)) return ITEM_TYPES.support;
+    if (["helmet", "chestplate", "leggings", "boots", "shield", "elytra"].includes(branch)) return ITEM_TYPES.support;
     if (["sword", "mace", "trident", "bow", "crossbow", "spear"].includes(branch)) return ITEM_TYPES.weapon;
     if (["axe", "paxel", "aiot"].includes(branch)) return ITEM_TYPES.hybrid;
     if (["pickaxe", "shovel", "hoe", "hammer"].includes(branch)) return ITEM_TYPES.tool;
@@ -969,7 +1060,7 @@ function inferTierName(id, branch) {
     }
 
     if (path.includes("heavy_drill") || path.includes("smelting")) return "netherite";
-    if (path.includes("flint_knife") || branch === "shears" || branch === "shield" || path.includes("turtle")) return "diamond";
+    if (path.includes("flint_knife") || branch === "shears" || branch === "shield" || branch === "elytra" || path.includes("turtle")) return "diamond";
     if (branch === "lighter") return "iron";
     if (branch === "mace" || branch === "trident" || branch === "crossbow") return "netherite";
     if (branch === "bow") return "diamond";
@@ -980,9 +1071,7 @@ function inferAffinity(type, branch, tierName) {
     if (branch === "spear") return AFFINITIES.control;
     if (branch === "bow" || branch === "trident") return AFFINITIES.precision;
     if (branch === "crossbow" || branch === "axe") return AFFINITIES.technique;
-    if (branch === "sword") return tierName === "diamond" || tierName === "aetherium"
-        ? AFFINITIES.precision
-        : AFFINITIES.aggression;
+    if (branch === "sword") return AFFINITIES.aggression;
     if (branch === "lighter") return AFFINITIES.control;
 
     return {
@@ -1011,7 +1100,7 @@ function getInferredSpecialOverrides(id, tierName, type, branch) {
         return {
             rarity: "utility",
             progression: { combatXp: 0, killXp: 0, blockXp: 0, oreXp: 0 },
-            mining: { bonusDropChance: 0, oreBonusChance: 0, durabilitySaveChance: 0, effects: [] },
+            mining: { bonusLootChance: 0, durabilitySaveChance: 0, effects: [] },
             attributes: {
                 damagePerLevel: 0,
                 flatDamageBonus: 0,
@@ -1029,8 +1118,7 @@ function getInferredSpecialOverrides(id, tierName, type, branch) {
         return {
             rarity: "utility",
             mining: {
-                oreBonusChance: heavy ? 0.10 : 0.08,
-                bonusDropChance: heavy ? 0.05 : 0.04,
+                bonusLootChance: heavy ? 0.15 : 0.12,
                 ...(heavy ? { durabilitySaveChance: 0.035 } : {}),
                 effects: [createOperatorEffect({ size: heavy ? 5 : 3 })],
             },
@@ -1041,8 +1129,8 @@ function getInferredSpecialOverrides(id, tierName, type, branch) {
         return {
             rarity: "utility",
             progression: { oreXp: 0 },
-            attributes: { flatDamageBonus: 4, effects: [createBleedEffect("diamond", { label: "Primal", chance: 0.34, durationTicks: 100, damageRatio: 0.14 })] },
-            mining: { bonusDropChance: 0.035, oreBonusChance: 0, durabilitySaveChance: 0.012, effects: [createPrimalEffect()] },
+            attributes: { flatDamageBonus: 4, effects: [createBleedEffect("diamond", { label: "Primal", durationTicks: 100, damageRatio: 0.14 })] },
+            mining: { bonusLootChance: 0.035, durabilitySaveChance: 0.01, effects: [createPrimalEffect()] },
         };
     }
 
@@ -1050,7 +1138,7 @@ function getInferredSpecialOverrides(id, tierName, type, branch) {
         return {
             rarity: "utility",
             progression: { oreXp: 0 },
-            mining: { bonusDropChance: 0.02, oreBonusChance: 0, durabilitySaveChance: 0.014, effects: [createGardenerEffect()] },
+            mining: { bonusLootChance: 0.02, durabilitySaveChance: 0.01, effects: [createGardenerEffect()] },
         };
     }
 
@@ -1059,46 +1147,53 @@ function getInferredSpecialOverrides(id, tierName, type, branch) {
             rarity: "utility",
             progression: { armorXp: 1 },
             support: {
-                damageReduction: 0.006,
-                damageReductionPerLevel: 0.00035,
-                maxDamageReduction: 0.08,
-                durabilityPreserveChance: 0.016,
-                durabilityPreserveChancePerLevel: 0.0008,
-                maxDurabilityPreserveChance: 0.14,
-                negateAllDamageChance: 0.004,
-                negateAllDamageChancePerLevel: 0.00014,
-                maxNegateAllDamageChance: 0.012,
-                damageImmunities: [],
-                vulnerabilities: [],
+                damageReduction: 0.60,
+                damageReductionPerLevel: 0,
+                maxDamageReduction: 0.60,
+                durabilityPreserveChance: 0.01,
+                durabilityPreserveChancePerLevel: 0,
+                maxDurabilityPreserveChance: Number.POSITIVE_INFINITY,
+                negateAllDamageChance: 0.05,
+                negateAllDamageChancePerLevel: 0,
+                maxNegateAllDamageChance: 0.05,
                 effects: createArmorAbilitySet(id, "shield", tierName),
             },
         };
     }
 
-    if (type === ITEM_TYPES.support && tierName === "aetherium") {
-        return { support: { damageReduction: 0.075, negateAllDamageChance: 0.025 } };
+    if (branch === "elytra") {
+        return {
+            rarity: "utility",
+            progression: { armorXp: 2 },
+            support: {
+                damageReduction: 0.45,
+                damageReductionPerLevel: 0,
+                maxDamageReduction: 0.45,
+                effects: [createElytraWindLaunchEffect()],
+            },
+        };
     }
 
     if (branch === "spear") {
-        return { attributes: { effects: [createMarkEffect(tierName, "Skewer", tierName === "netherite" ? { damageBonus: 0.12 } : {})] } };
+        return { attributes: { effects: [createMarkEffect(tierName, "Skewer", { kind: "skewer", damageBonus: 0.1 })] } };
     }
     if (branch === "mace") return { attributes: { effects: [createAftershockEffect(tierName)] } };
     if (branch === "trident") return { attributes: { effects: [createHarpoonEffect(tierName)] } };
     if (branch === "bow") {
         return {
             attributes: {
-                crit: { chance: 0.08, chancePerLevel: 0.0032, maxChance: 0.4, multiplier: 1.28, multiplierPerLevel: 0.007, maxMultiplier: 1.95, openingBonus: 0.05, precisionBonus: 0.06 },
-                effects: [createDeadeyeEffect()],
+                crit: { chance: 0.08, chancePerLevel: 0.0032, maxChance: 0.4, multiplier: 1.5, multiplierPerLevel: 0.005, maxMultiplier: 2.15, openingBonus: 0.05, precisionBonus: 0.06 },
+                effects: [createPinningShotEffect()],
             },
         };
     }
     if (branch === "crossbow") {
-        return { attributes: { penetration: { percent: 0.08, perLevel: 0.004, cap: 0.34, bossScalar: 0.65 }, effects: [createBallistaEffect(tierName)] } };
+        return { attributes: { penetration: { percent: 0.08, perLevel: 0.004, cap: 0.34, bossScalar: 0.65, bossCap: 0.2 }, effects: [createBallistaEffect(tierName)] } };
     }
 
-    if (!advanced) return {};
-    if (branch === "sword") return { attributes: { effects: [createBleedEffect(tierName)] } };
     if (branch === "axe") return { attributes: { effects: [createBerserkEffect()] }, mining: { effects: [createBerserkLoggingEffect()] } };
+    if (!advanced) return {};
+    if (branch === "sword") return { attributes: { effects: [createBleedEffect(tierName), createSweepEffect(tierName)] } };
     if (branch === "pickaxe") return { mining: { effects: [createLuckEffect(tierName)] } };
     if (branch === "shovel") return { mining: { effects: [createWormEffect()] } };
     if (branch === "hoe") return { attributes: { flatDamageBonus: 2, effects: [createReaperEffect()] }, mining: { effects: [createReaperEffect()] } };
@@ -1106,7 +1201,7 @@ function getInferredSpecialOverrides(id, tierName, type, branch) {
     if (branch === "aiot") {
         return {
             attributes: { effects: [createSweepEffect(tierName)] },
-            mining: tierName === "lucky" ? { effects: [createLuckEffect(tierName)] } : {},
+            mining: {},
         };
     }
 
@@ -1124,7 +1219,9 @@ export function inferDynamicDefinition(id) {
     if (!branch) return null;
 
     const type = inferItemType(branch);
-    const tierName = inferTierName(normalizedId, branch);
+    // Third-party axes are eligible for Berserk as long as their identifier
+    // ends in _axe, even when the addon uses an unknown material token.
+    const tierName = inferTierName(normalizedId, branch) ?? (branch === "axe" ? "iron" : null);
     if (!tierName) return null;
 
     const affinity = inferAffinity(type, branch, tierName);

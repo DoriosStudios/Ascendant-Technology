@@ -23,9 +23,10 @@ function getMaxHealth(health, current) {
 
 export function applyLifeSteal(attacker, finalDamage, attributes, context = {}) {
     const lifesteal = attributes?.lifesteal ?? {};
-    let percent = clamp01(lifesteal.percent ?? 0);
+    const cap = clamp01(lifesteal.cap ?? 1);
+    let percent = Math.min(cap, clamp01(lifesteal.percent ?? 0));
     if (context.crit === true) {
-        percent = clamp01(percent + clamp01(lifesteal.critBonus ?? 0));
+        percent = Math.min(cap, percent + clamp01(lifesteal.critBonus ?? 0));
     }
 
     if (percent <= 0 || finalDamage <= 0) return 0;

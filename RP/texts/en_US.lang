@@ -125,33 +125,33 @@ tile.utilitycraft:smart_importer.name=Smart Importer\n§7Accepts upgrades:\n  §
 tile.utilitycraft:reinforced_cable.name=Reinforced Cable\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
 
 ## Base UtilityCraft Machines
-tile.utilitycraft:autosieve.name=Autosieve\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:autosieve.name=Autosieve\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:autosieve.name=Autosieve
-tile.utilitycraft:autofisher.name=Auto Fisher\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:autofisher.name=Auto Fisher\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:autofisher.name=Auto Fisher
-tile.utilitycraft:block_breaker.name=Block Breaker\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:block_breaker.name=Block Breaker\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UtilityCraft
 entity.utilitycraft:block_breaker.name=Block Breaker
-tile.utilitycraft:crusher.name=Crusher\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:crusher.name=Crusher\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:crusher.name=Crusher
-tile.utilitycraft:harvester.name=Harvester\n§7Accepts upgrades:\n  §a§r, §b§r, §3§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:harvester.name=Harvester\n§7Accepts upgrades:\n  §a§r, §b§r, §3§r\n§o§9@UtilityCraft
 entity.utilitycraft:harvester.name=Harvester
-tile.utilitycraft:electro_press.name=Electro Press\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:electro_press.name=Electro Press\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:electro_press.name=Electro Press
-tile.utilitycraft:block_placer.name=Block Placer\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:block_placer.name=Block Placer\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UtilityCraft
 entity.utilitycraft:block_placer.name=Block Placer
-tile.utilitycraft:seed_synthesizer.name=Seed Synthesizer\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:seed_synthesizer.name=Seed Synthesizer\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@@UtilityCraft
 entity.utilitycraft:seed_synthesizer.name=Seed Synthesizer
-tile.utilitycraft:incinerator.name=Incinerator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:incinerator.name=Incinerator\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@@UtilityCraft
 entity.utilitycraft:incinerator.name=Incinerator
-tile.utilitycraft:infuser.name=Infuser\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:infuser.name=Infuser\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@@UtilityCraft
 entity.utilitycraft:infuser.name=Infuser
-tile.utilitycraft:assembler.name=Assembler\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:assembler.name=Assembler\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@@UtilityCraft
 entity.utilitycraft:assembler.name=Assembler
-tile.utilitycraft:digitizer.name=Digitizer\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:digitizer.name=Digitizer\n§7Accepts upgrades:\n  §a§r, §b§r\n§o§9@@UtilityCraft
 entity.utilitycraft:digitizer.name=Digitizer
-tile.utilitycraft:induction_anvil.name=Induction Anvil\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:induction_anvil.name=Induction Anvil\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@@UtilityCraft
 entity.utilitycraft:induction_anvil.name=Induction Anvil
-tile.utilitycraft:magmatic_chamber.name=Magmatic Chamber\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:magmatic_chamber.name=Magmatic Chamber\n§7Accepts upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@@UtilityCraft
 entity.utilitycraft:magmatic_chamber.name=Magmatic Chamber
 
 ## Superior Machines

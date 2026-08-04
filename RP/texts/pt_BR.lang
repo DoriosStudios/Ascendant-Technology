@@ -200,7 +200,7 @@ entity.utilitycraft:induction_anvil.name=Bigorna de Indução
 tile.utilitycraft:magmatic_chamber.name=Câmara Magmática\n§7Aceita melhorias:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
 entity.utilitycraft:magmatic_chamber.name=Câmara Magmática
 item.utilitycraft:stack_upgrade=Módulo de Melhoria de §6Pacotes§7\n- Aumenta a quantidade de itens pro-\n  -cessados por vez.\n§o§9@UC: Ascendant Technology
-item.utilitycraft:curse_protection_module=§dMódulo de Proteção contra Maldições§7\n- Reduz chance de maldição durante encantamento\n§o§9@UC: Ascendant Technology
+item.utilitycraft:curse_protection_module=§dMódulo de Proteção contra Maldições§7\n- Impede maldições durante o encantamento\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dMódulo de Encantabilidade §r(Tier I)§7\n- Desbloqueia encantamento\n- Nível máx: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dMódulo de Encantabilidade §r(Tier II)§7\n- Nível de encantamento máx: 2\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_3=§dMódulo de Encantabilidade §r(Tier III)§7\n- Nível de encantamento máx: 3\n- Encantamentos mid-tier disponíveis\n§o§9@UC: Ascendant Technology
@@ -290,6 +290,7 @@ item.utilitycraft:cryofluid_capsule_7=Cápsula de Criofluido \n§7(7 Baldes)\n§
 item.utilitycraft:cryofluid_capsule_8=Cápsula de Criofluido \n§7(8 Baldes)\n§o§9@UC: Ascendant Technology
 item.utilitycraft:switch_button=Botão de Alternância\n§o§9@UC: Ascendant Technology
 item.utilitycraft:runic_core=Núcleo Rúnico\n§o§9@UC: Ascendant Technology
+item.utilitycraft:advanced_runic_core=Núcleo Rúnico Avançado\n§o§9@UC: Ascendant Technology
 
 ## Entidades
 entity.utilitycraft:catalyst_weaver.name=§fCâmara Catalisadora
@@ -716,3 +717,5 @@ item.utilitycraft:xp_capsule_infinite=Cápsula de XP Infinita\n§7- Armazena XP 
 
 ## Módulos (Faltantes)
 item.utilitycraft:ascane_module_base=§dBase de Módulo Arcano§7\n- Componente base para criação de módulos\n§o§9@UC: Ascendant Technology
+ui.utilitycraft:refining_table.stats=Estatísticas
+ui.utilitycraft:refining_table.all_statistics=Todas as Estatísticas

@@ -253,7 +253,7 @@ entity.utilitycraft:induction_anvil.name=Yunque de Inducción
 tile.utilitycraft:magmatic_chamber.name=Cámara Magmática\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
 entity.utilitycraft:magmatic_chamber.name=Cámara Magmática
 item.utilitycraft:stack_upgrade=Mejora de §6Pila§7\n- Aumenta la cantidad de ítems\n  procesados a la vez.\n§o§9@UC: Ascendant Technology
-item.utilitycraft:curse_protection_module=§dMódulo de Protección contra Maldiciones§7\n- Reduce probabilidad de maldición\n§o§9@UC: Ascendant Technology
+item.utilitycraft:curse_protection_module=§dMódulo de Protección contra Maldiciones§7\n- Impide maldiciones durante el encantamiento\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dMódulo de Encantabilidad §r(Tier I)§7\n- Desbloquea encantamiento\n- Nivel máx: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dMódulo de Encantabilidad §r(Tier II)§7\n- Nivel de encantamiento máx: 2\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_3=§dMódulo de Encantabilidad §r(Tier III)§7\n- Nivel de encantamiento máx: 3\n- Encantamientos mid-tier disponibles\n§o§9@UC: Ascendant Technology
@@ -768,3 +768,7 @@ item.utilitycraft:xp_capsule_infinite=Cápsula de XP Infinita\n§7- Contiene XP 
 
 ## Módulos (Faltantes)
 item.utilitycraft:ascane_module_base=§dBase de Módulo Arcano§7\n- Componente base para crear módulos\n§o§9@UC: Ascendant Technology
+item.utilitycraft:runic_core=Núcleo Rúnico\n§o§9@UC: Ascendant Technology
+item.utilitycraft:advanced_runic_core=Núcleo Rúnico Avanzado\n§o§9@UC: Ascendant Technology
+ui.utilitycraft:refining_table.stats=Estadísticas
+ui.utilitycraft:refining_table.all_statistics=Todas las estadísticas

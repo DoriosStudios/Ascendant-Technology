@@ -14,6 +14,12 @@
 		"utilitycraft_refined_aetherium_shard": {
 			"textures": "textures/items/ores/refined_aetherium_shard"
 		},
+		"utilitycraft_runic_core": {
+			"textures": "textures/items/ores/runic_core"
+		},
+		"utilitycraft_advanced_runic_core": {
+			"textures": "textures/items/ores/advanced_runic_core"
+		},
 		"utilitycraft_titanium_chunk":{
 			"textures": "textures/items/ores/titanium_chunk"
 		},

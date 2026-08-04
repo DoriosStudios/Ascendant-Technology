@@ -11,7 +11,7 @@
     "key": {
       "A": { "item": "utilitycraft:aetherium" },
       "B": { "item": "utilitycraft:aetherium_block" },
-      "S": { "item": "minecraft:stick" }
+      "S": { "item": "minecraft:netherite_ingot" }
     },
     "result": { "item": "utilitycraft:aetherium_hammer" },
     "unlock": [ { "item": "utilitycraft:aetherium_block" } ]

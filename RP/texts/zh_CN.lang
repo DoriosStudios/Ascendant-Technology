@@ -138,7 +138,7 @@ tile.utilitycraft:induction_anvil.name=感应铁砧\n§7接受的升级:\n  §a�
 entity.utilitycraft:induction_anvil.name=感应铁砧
 tile.utilitycraft:magmatic_chamber.name=岩浆室\n§7接受的升级:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
 entity.utilitycraft:magmatic_chamber.name=岩浆室
-item.utilitycraft:curse_protection_module=§d诅咒保护模块§7\n- 降低附魔时出现诅咒的概率\n§o§9@UC: Ascendant Technology
+item.utilitycraft:curse_protection_module=§d诅咒保护模块§7\n- 防止附魔时出现诅咒\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§d附魔能力模块 §r(Tier I)§7\n- 解锁附魔功能\n- 最大等级: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§d附魔能力模块 §r(Tier II)§7\n- 最大附魔等级: 2\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_3=§d附魔能力模块 §r(Tier III)§7\n- 最大附魔等级: 3\n- 可用中阶附魔\n§o§9@UC: Ascendant Technology
@@ -607,3 +607,7 @@ item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited 
 
 ## Modules
 item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules\n§o§9@UC: Ascendant Technology
+item.utilitycraft:runic_core=符文核心\n§o§9@UC: Ascendant Technology
+item.utilitycraft:advanced_runic_core=高级符文核心\n§o§9@UC: Ascendant Technology
+ui.utilitycraft:refining_table.stats=属性
+ui.utilitycraft:refining_table.all_statistics=全部属性

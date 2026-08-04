@@ -13,7 +13,7 @@
       "P": { "item": "utilitycraft:aetherium_pickaxe" },
       "S": { "item": "utilitycraft:aetherium_shovel" },
       "I": { "item": "utilitycraft:aetherium" },
-      "T": { "item": "minecraft:stick" }
+      "T": { "item": "minecraft:netherite_ingot" }
     },
     "result": { "item": "utilitycraft:aetherium_paxel" },
     "unlock": [ { "item": "utilitycraft:aetherium" } ]

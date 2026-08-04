@@ -138,7 +138,7 @@ tile.utilitycraft:induction_anvil.name=Enclume à Induction\n§7Améliorations a
 entity.utilitycraft:induction_anvil.name=Enclume à Induction
 tile.utilitycraft:magmatic_chamber.name=Chambre Magmatique\n§7Améliorations acceptées :\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
 entity.utilitycraft:magmatic_chamber.name=Chambre Magmatique
-item.utilitycraft:curse_protection_module=§dModule de Protection contre les Malédictions§7\n- Réduit le risque de malédiction pendant l'enchantement\n§o§9@UC: Ascendant Technology
+item.utilitycraft:curse_protection_module=§dModule de Protection contre les Malédictions§7\n- Empêche les malédictions pendant l'enchantement\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dModule d'Enchantabilité §r(Palier I)§7\n- Débloque l'enchantement\n- Niveau max: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dModule d'Enchantabilité §r(Palier II)§7\n- Niveau d'enchantement max: 2\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_3=§dModule d'Enchantabilité §r(Palier III)§7\n- Niveau d'enchantement max: 3\n- Enchantements intermédiaires disponibles\n§o§9@UC: Ascendant Technology
@@ -608,3 +608,7 @@ item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited 
 
 ## Modules
 item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules\n§o§9@UC: Ascendant Technology
+item.utilitycraft:runic_core=Noyau runique\n§o§9@UC: Ascendant Technology
+item.utilitycraft:advanced_runic_core=Noyau runique avancé\n§o§9@UC: Ascendant Technology
+ui.utilitycraft:refining_table.stats=Statistiques
+ui.utilitycraft:refining_table.all_statistics=Toutes les statistiques

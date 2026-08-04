@@ -138,7 +138,7 @@ tile.utilitycraft:induction_anvil.name=Induktionsamboss\n§7Akzeptiert Upgrades:
 entity.utilitycraft:induction_anvil.name=Induktionsamboss
 tile.utilitycraft:magmatic_chamber.name=Magmakammer\n§7Akzeptiert Upgrades:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
 entity.utilitycraft:magmatic_chamber.name=Magmakammer
-item.utilitycraft:curse_protection_module=§dFluchschutz-Modul§7\n- Verringert die Fluchchance beim Verzaubern\n§o§9UC: Ascendant Technology
+item.utilitycraft:curse_protection_module=§dFluchschutz-Modul§7\n- Verhindert Flüche beim Verzaubern\n§o§9UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dVerzauberbarkeits-Modul §r(Stufe I)§7\n- Schaltet Verzauberung frei\n- Max. Stufe: 1\n§o§9UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dVerzauberbarkeits-Modul §r(Stufe II)§7\n- Max. Verzauberungsstufe: 2\n§o§9UC: Ascendant Technology
 item.utilitycraft:enchantability_module_3=§dVerzauberbarkeits-Modul §r(Stufe III)§7\n- Max. Verzauberungsstufe: 3\n- Verzauberungen mittlerer Stufe verfügbar\n§o§9UC: Ascendant Technology
@@ -607,3 +607,7 @@ item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited 
 
 ## Modules
 item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules\n§o§9UC: Ascendant Technology
+item.utilitycraft:runic_core=Runenkern\n§o§9@UC: Ascendant Technology
+item.utilitycraft:advanced_runic_core=Verbesserter Runenkern\n§o§9@UC: Ascendant Technology
+ui.utilitycraft:refining_table.stats=Werte
+ui.utilitycraft:refining_table.all_statistics=Alle Werte

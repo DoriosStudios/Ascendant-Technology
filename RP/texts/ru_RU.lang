@@ -138,7 +138,7 @@ tile.utilitycraft:induction_anvil.name=Индукционная Наковаль
 entity.utilitycraft:induction_anvil.name=Индукционная Наковальня
 tile.utilitycraft:magmatic_chamber.name=Магматическая Камера\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
 entity.utilitycraft:magmatic_chamber.name=Магматическая Камера
-item.utilitycraft:curse_protection_module=§dМодуль Защиты от Проклятий§7\n- Снижает шанс проклятия при зачаровании\n§o§9@UC: Ascendant Technology
+item.utilitycraft:curse_protection_module=§dМодуль Защиты от Проклятий§7\n- Предотвращает проклятия при зачаровании\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dМодуль Зачаровываемости §r(Tier I)§7\n- Открывает зачарование\n- Макс. уровень: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dМодуль Зачаровываемости §r(Tier II)§7\n- Макс. уровень зачарования: 2\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_3=§dМодуль Зачаровываемости §r(Tier III)§7\n- Макс. уровень зачарования: 3\n- Доступны зачарования среднего уровня\n§o§9@UC: Ascendant Technology
@@ -607,3 +607,7 @@ item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited 
 
 ## Modules
 item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules\n§o§9@UC: Ascendant Technology
+item.utilitycraft:runic_core=Руническое ядро\n§o§9@UC: Ascendant Technology
+item.utilitycraft:advanced_runic_core=Улучшенное руническое ядро\n§o§9@UC: Ascendant Technology
+ui.utilitycraft:refining_table.stats=Характеристики
+ui.utilitycraft:refining_table.all_statistics=Все характеристики

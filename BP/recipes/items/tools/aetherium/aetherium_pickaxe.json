@@ -10,7 +10,7 @@
     ],
     "key": {
       "A": { "item": "utilitycraft:aetherium" },
-      "S": { "item": "minecraft:stick" }
+      "S": { "item": "minecraft:netherite_ingot" }
     },
     "result": { "item": "utilitycraft:aetherium_pickaxe" },
     "unlock": [ { "item": "utilitycraft:aetherium" } ]

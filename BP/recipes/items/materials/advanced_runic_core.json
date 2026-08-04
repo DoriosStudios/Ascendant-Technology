@@ -1,0 +1,36 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:advanced_runic_core"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            "ARA",
+            "RCR",
+            "ARA"
+        ],
+        "key": {
+            "A": {
+                "item": "utilitycraft:aetherium_shard"
+            },
+            "R": {
+                "item": "utilitycraft:refined_aetherium_shard"
+            },
+            "C": {
+                "item": "utilitycraft:runic_core"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:advanced_runic_core",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:refined_aetherium_shard"
+            }
+        ]
+    }
+}

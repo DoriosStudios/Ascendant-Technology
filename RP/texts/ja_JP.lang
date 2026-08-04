@@ -138,7 +138,7 @@ tile.utilitycraft:induction_anvil.name=誘導アンビル\n§7対応アップグ
 entity.utilitycraft:induction_anvil.name=誘導アンビル
 tile.utilitycraft:magmatic_chamber.name=マグマチックチャンバー\n§7対応アップグレード:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
 entity.utilitycraft:magmatic_chamber.name=マグマチックチャンバー
-item.utilitycraft:curse_protection_module=§d呪い保護モジュール§7\n- エンチャント時の呪い発生率を低下\n§o§9@UC: Ascendant Technology
+item.utilitycraft:curse_protection_module=§d呪い保護モジュール§7\n- エンチャント時の呪いを防ぐ\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dエンチャント適性モジュール §r(Tier I)§7\n- エンチャント機能を解放\n- 最大レベル: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dエンチャント適性モジュール §r(Tier II)§7\n- 最大エンチャントレベル: 2\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_3=§dエンチャント適性モジュール §r(Tier III)§7\n- 最大エンチャントレベル: 3\n- 中位エンチャントが利用可能\n§o§9@UC: Ascendant Technology
@@ -607,3 +607,7 @@ item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited 
 
 ## Modules
 item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules\n§o§9@UC: Ascendant Technology
+item.utilitycraft:runic_core=ルーンコア\n§o§9@UC: Ascendant Technology
+item.utilitycraft:advanced_runic_core=上級ルーンコア\n§o§9@UC: Ascendant Technology
+ui.utilitycraft:refining_table.stats=ステータス
+ui.utilitycraft:refining_table.all_statistics=すべてのステータス

@@ -34,10 +34,11 @@ Template-driven replication chamber that duplicates one item per craft using ene
 ## Restrictions
 - Cannot duplicate:
 	- Lucky tools (`utilitycraft:lucky_sword`, `utilitycraft:lucky_pickaxe`, `utilitycraft:lucky_aiot`)
-	- Data-sensitive templates (`minecraft:banner`, `minecraft:potion`)
-	- `minecraft:shulker_box`
+	- Data-sensitive template families (banners, potions, and Shulker Boxes)
+	- Unobtainable, command, and technical blocks
 - Singularity templates are routed to the **Singularity Fabricator**.
 - Cannot duplicate itself.
+- Addon integrations can exclude an item through the `ascendant:unclonnable` item tag or the `registerDuplicatorExclusion(s)` script API.
 
 ## Machine Capabilities
 - **Energy Capacity**: 512,000,000 DE (512 MDE)

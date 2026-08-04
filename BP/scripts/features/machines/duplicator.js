@@ -2,7 +2,7 @@
 
 import * as DoriosLib from "DoriosLib/index.js";
 import { EnergyStorage, FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
-import { getDuplicatorRecipe, getDuplicatorRestriction } from "../../ATCore/cloning/index.js";
+import { resolveDuplicatorTemplate } from "../../ATCore/cloning/index.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
     displayProgress,
@@ -83,17 +83,13 @@ DoriosLib.registry.blockComponent(ID, {
             return;
         }
 
-        const restriction = getDuplicatorRestriction(input.typeId);
-        if (restriction) {
-            resetProcess(machine, tank, settings.machine.energy_cost, restriction, "");
+        const resolution = resolveDuplicatorTemplate(input);
+        if (!resolution.allowed) {
+            resetProcess(machine, tank, settings.machine.energy_cost, resolution.restriction, "");
             return;
         }
 
-        const recipe = getDuplicatorRecipe(input.typeId);
-        if (!recipe) {
-            resetProcess(machine, tank, settings.machine.energy_cost, "Invalid Template", "");
-            return;
-        }
+        const recipe = resolution.recipe;
 
         if (machine.entity.getDynamicProperty(RECIPE_KEY) !== recipe.id) {
             setDynamicString(machine.entity, RECIPE_KEY, recipe.id);

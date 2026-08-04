@@ -12,6 +12,16 @@
  * @property {number} energyCost
  * @property {FluidRequirement} fluid
  */
+/**
+ * @typedef {Object} SingularityRecipeDefinition
+ * @property {string} [id]
+ * @property {string} [rarity]
+ * @property {string | Partial<ItemRequirement>} input
+ * @property {string | Partial<ItemRequirement>} [output]
+ * @property {number} [timeSeconds]
+ * @property {number} [energyCost]
+ * @property {Partial<FluidRequirement>} [fluid]
+ */
 
 /** @type {Map<string, SingularityRecipe>} */
 const recipesByInput = new Map();
@@ -21,7 +31,7 @@ const recipesById = new Map();
 /**
  * Registers or replaces one recipe. Inputs are unique so machine lookup stays O(1).
  *
- * @param {Partial<SingularityRecipe> & { input: string | Partial<ItemRequirement> }} definition
+ * @param {SingularityRecipeDefinition} definition
  * @returns {SingularityRecipe | undefined}
  */
 export function registerSingularityRecipe(definition) {
@@ -43,7 +53,7 @@ export function registerSingularityRecipe(definition) {
     return recipe;
 }
 
-/** @param {Iterable<Partial<SingularityRecipe> & { input: string | Partial<ItemRequirement> }>} definitions */
+/** @param {Iterable<SingularityRecipeDefinition>} definitions */
 export function registerSingularityRecipes(definitions) {
     let registered = 0;
     for (const definition of definitions) {
@@ -74,6 +84,7 @@ export function getSingularityRecipeMap() {
     return recipesByInput;
 }
 
+/** @param {SingularityRecipeDefinition} definition @returns {SingularityRecipe | undefined} */
 function normalizeRecipe(definition) {
     if (!definition || typeof definition !== "object") return undefined;
 
@@ -104,6 +115,7 @@ function normalizeRecipe(definition) {
     };
 }
 
+/** @param {string | Partial<ItemRequirement>} value @returns {ItemRequirement | undefined} */
 function normalizeItem(value) {
     if (typeof value === "string" && value.length > 0) {
         return { id: value, amount: 1 };
@@ -117,6 +129,7 @@ function normalizeItem(value) {
     };
 }
 
+/** @param {unknown} value @param {number} fallback */
 function positiveNumber(value, fallback) {
     const number = Number(value);
     return Number.isFinite(number) && number > 0 ? number : fallback;

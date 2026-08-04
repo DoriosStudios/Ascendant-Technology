@@ -9,7 +9,6 @@ Every processing machine now listens for `system` script events so you can regis
 | Liquifier | `utilitycraft:register_liquifier_recipe` | recipe ID string | Provide `input`, `fluid`, optional `byproduct`, and timing/energy overrides. |
 | Residue Processor | `utilitycraft:register_residue_processor_recipe` | recipe ID string | Supply `input`, `output`, and optional `byproduct`. |
 | Catalyst Weaver | `utilitycraft:register_catalyst_weaver_recipe` | recipe ID string | Accepts up to six `catalysts`, optional `fluid`, `byproduct`, and `speedModifier`. |
-| Duplicator | `utilitycraft:register_duplicator_recipe` | recipe ID string | Supports `rarity`, `time`, template `input`/`output`, energy cost overrides, and optional `fluid`. Legacy alias: `utilitycraft:register_duplicator_recipe`. |
 
 **Example command (Energizer):**
 
@@ -18,6 +17,12 @@ Every processing machine now listens for `system` script events so you can regis
 ```
 
 You can also fire these events from scripts using `system.sendScriptEvent` exactly like the Infuser sample in `BP/scripts/config/recipes/added/insert_infuser.js`.
+
+### Duplicator exclusions
+
+The Duplicator generates its normal recipe after the template passes its exclusion registry. Add exact exclusions from script with `registerDuplicatorExclusion(typeId, message)` or `registerDuplicatorExclusions(map)`, exported by `ATCore/cloning/index.js`. Item definitions can opt out without script code by adding the `ascendant:unclonnable` item tag.
+
+Built-in exclusions live in `BP/scripts/config/recipes/duplicator.js`. Templates assigned to the Singularity Fabricator are copied into that exclusion map automatically.
 
 ##### *Man, I need a Wiki for ts.*
 

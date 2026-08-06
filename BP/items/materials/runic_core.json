@@ -4,8 +4,7 @@
         "description": {
             "identifier": "utilitycraft:runic_core",
             "menu_category": {
-                "category": "items",
-                "group": "at:itemGroup.name.materials_resources"
+                "category": "items"
             }
         },
         "components": {

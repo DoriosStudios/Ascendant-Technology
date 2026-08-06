@@ -538,7 +538,7 @@ DoriosLib.registry.customCommand({
 });
 
 DoriosLib.registry.customCommand({
-    name: "sc:xp",
+    name: "sc:stats_xp",
     description: "Force-adds XP or levels to compatible mainhand equipment progression",
     permissionLevel: "admin",
     cheatsRequired: true,

@@ -12,7 +12,7 @@
             "minecraft:icon": "utilitycraft_aetherium_helmet",
             "minecraft:wearable": {
                 "slot": "slot.armor.head",
-                "protection": 5
+                "protection": 7
             },
             "minecraft:enchantable": {
                 "slot": "armor_head",

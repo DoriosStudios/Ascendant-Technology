@@ -12,7 +12,7 @@
             "minecraft:icon": "utilitycraft_aetherium_boots",
             "minecraft:wearable": {
                 "slot": "slot.armor.feet",
-                "protection": 6
+                "protection": 7
             },
             "minecraft:fire_resistant": { },
             "minecraft:knockback_resistance": {

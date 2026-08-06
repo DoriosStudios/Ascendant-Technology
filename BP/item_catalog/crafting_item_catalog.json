@@ -68,17 +68,6 @@
                     },
                     {
                         "group_identifier": {
-                            "icon": "utilitycraft:reinforced_cable",
-                            "name": "at:itemGroup.name.pipes"
-                        },
-                        "items": [
-                            "utilitycraft:reinforced_cable",
-                            "utilitycraft:reinforced_importer",
-                            "utilitycraft:reinforced_exporter"
-                        ]
-                    },
-                    {
-                        "group_identifier": {
                             "icon": "utilitycraft:copper_conveyor_horizontal",
                             "name": "at:itemGroup.name.conveyors"
                         },

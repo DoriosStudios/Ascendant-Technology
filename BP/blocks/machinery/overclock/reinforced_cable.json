@@ -5,7 +5,7 @@
 			"identifier": "utilitycraft:reinforced_cable",
 			"menu_category": {
 				"category": "construction",
-				"group": "at:itemGroup.name.pipes"
+				"group": "dorios:itemGroup.name.pipes"
 			},
 			"states": {
 				"utilitycraft:up": [false, true],

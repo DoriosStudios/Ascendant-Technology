@@ -27,3 +27,4 @@ changelog_preview.md
 issue_drafts/
 *.code-workspace
 ui_core.json
+log.md

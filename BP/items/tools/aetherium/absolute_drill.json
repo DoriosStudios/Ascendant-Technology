@@ -1,0 +1,65 @@
+{
+	"format_version": "1.21.90",
+	"minecraft:item": {
+		"description": {
+			"identifier": "utilitycraft:absolute_drill",
+			"menu_category": {
+				"category": "equipment"
+			}
+		},
+                "components": {
+                        "utilitycraft:drill": {
+                                "size": 7
+                        },
+                        "minecraft:tags": {
+                                "tags": [
+                                        "minecraft:diamond_tier"
+                                ]
+                        },
+			"minecraft:max_stack_size": 1,
+			"minecraft:hand_equipped": true,
+			"minecraft:durability": {
+				"max_durability": 8114
+			},
+			"minecraft:damage": 5,
+			"minecraft:icon": "utilitycraft_absolute_drill",
+			"minecraft:enchantable": {
+				"value": 30,
+				"slot": "pickaxe"
+			},
+			"minecraft:repairable": {
+				"repair_items": [
+					{
+						"items": [
+							"utilitycraft:aetherium"
+						],
+						"repair_amount": 2031
+					},
+					{
+						"items": [
+							"utilitycraft:drill"
+						],
+						"repair_amount": 2031
+					},
+					{
+						"items": [
+							"utilitycraft:heavy_drill"
+						],
+						"repair_amount": 4062
+					}
+				]
+			},
+			"minecraft:digger": {
+				"use_efficiency": true,
+				"destroy_speeds": [
+					{
+						"speed": 20,
+						"block": {
+							"tags": "q.any_tag('minecraft:is_pickaxe_item_destructible', 'minecraft:is_shovel_item_destructible', 'minecraft:is_axe_item_destructible', 'minecraft:is_shears_item_destructible')"
+						}
+					}
+				]
+			}
+		}
+	}
+}

@@ -200,6 +200,9 @@
 		"utilitycraft_aetherium_hammer": {
 			"textures": "textures/items/tools/aetherium_hammer"
 		},
+		"utilitycraft_absolute_drill": {
+			"textures": "textures/items/tools/absolute_drill"
+		},
 		"utilitycraft_void_essence": {
 			"textures": "textures/items/misc/void_essence"
 		},

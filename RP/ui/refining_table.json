@@ -4,36 +4,27 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [220, 136],
-        "offset": [-10, -46],
+        "size": [ 220, 136 ],
+        "offset": [ -10, -46 ],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
                 "machine_name@uc.machine_name": {
-                    "offset": [48, -52]
+                    "offset": [ 26, 20 ]
                 }
             },
             {
                 "status_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-86, -7],
-                    "$background_color": "purple",
-                    "$has_text": false,
-                    "$bg_size": [90, 166],
-                    "$info_size": [82, 158],
+                    "offset": [ -60, 31 ],
+                    "$background_color": "blue",
+                    "$has_text": true,
+                    "$bg_size": [ 90, 166 ],
+                    "$info_size": [ 82, 158 ],
+                    "$text_borders": [ 78, 152 ],
                     "layer": 0
-                }
-            },
-            {
-                "item_label@uc.text_label": {
-                    "collection_index": 1,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [72, 146],
-                    "$text_scale": 0.55,
-                    "offset": [-74, 4]
                 }
             },
             {
@@ -42,7 +33,7 @@
                     "$has_bg": false,
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-82, 28]
+                    "offset": [ 66, 4 ]
                 }
             },
             {
@@ -51,22 +42,25 @@
                     "$has_bg": false,
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-61, 28]
+                    "offset": [ 46, 4 ]
                 }
             },
             {
-                "equipment_slot@uc.input_1_slot": {
+                "input_item@common.container_item": {
+                    "collection_index": 3,
+                    "offset": [9, -2],
+                    "size": [28, 28],
+                    "$cell_image_size": [28, 28],
+                    "$item_renderer_size": [26, 26],
                     "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [-46, -16],
-                    "collection_index": 3
+                    "anchor_to": "center"
                 }
             },
             {
                 "progress@uc.progress_display": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-18, -16],
+                    "offset": [ 9, -2 ],
                     "collection_index": 2
                 }
             },
@@ -74,7 +68,7 @@
                 "ingot_slot@uc.input_2_slot": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-57, 18],
+                    "offset": [ -48, -12 ],
                     "collection_index": 4
                 }
             },
@@ -82,7 +76,7 @@
                 "chip_slot@uc.input_3_slot": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-35, 18],
+                    "offset": [ -48, 6 ],
                     "collection_index": 5
                 }
             },
@@ -90,7 +84,7 @@
                 "runic_core_slot@common.container_item": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-13, 18],
+                    "offset": [ -48, 24 ],
                     "collection_index": 8
                 }
             },
@@ -100,23 +94,24 @@
                     "texture": "textures/ui/outlines/yellow_outline",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-13, 18],
-                    "size": [18, 18]
+                    "offset": [ -48, 24 ],
+                    "size": [ 18, 18 ],
+                    "layer": 5
                 }
             },
             {
                 "confirm_button@uc.machine_button": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [15, 18],
+                    "offset": [ 9, 24 ],
                     "$index": 6,
-                    "$button_size": [38, 18],
+                    "$button_size": [ 56, 18 ],
                     "$default_texture": "textures/ui/cells/inverted_purple_cell_image",
                     "$hover_texture": "textures/ui/cells/hover_inverted_purple_cell_image",
                     "$pressed_texture": "textures/ui/cells/purple_cell_image",
                     "$button_text": "Refine"
                 }
-            },
+            }, /*
             {
                 "details_screen@ascendant_common.screen": {
                     "anchor_from": "center",
@@ -136,7 +131,7 @@
                     "offset": [67, -10],
                     "layer": 2
                 }
-            },
+            },*/
             {
                 "upgrades_tab@uc.upgrades_tab": {
                     "$upgrade_index_1": 9,
@@ -186,30 +181,33 @@
             }
         ]
     },
-    "stats_scroll_content": {
+    "stats_screen": {
         "type": "collection_panel",
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
-        "anchor_from": "top_left",
-        "anchor_to": "top_left",
+        "anchor_from": "center",
+        "anchor_to": "center",
         "layer": 6,
-        "size": [142, 166],
+        "size": [ 176, 166 ],
         "controls": [
             {
                 "all_stats_label@uc.text_label": {
                     "collection_index": 24,
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "size": [138, 162],
+                    "size": [ 168, 158 ],
                     "$text_scale": 0.6,
-                    "offset": [2, 2],
-                    "layer": 4
+                    "offset": [ 0, 0 ],
+                    "layer": 6
                 }
             },
             {
-                "bottom_padding": {
-                    "type": "panel",
-                    "size": [142, 8]
+                "stats_screen@ascendant_common.screen": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "size": [ "100%", "100% + 8px" ],
+                    "offset": [ 0, 4 ],
+                    "layer": 1
                 }
             }
         ]
@@ -218,26 +216,14 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [220, 136],
-        "offset": [-10, -46],
+        "size": [ 220, 136 ],
+        "offset": [ -10, -46 ],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
                 "machine_name@uc.machine_name": {
-                    "offset": [48, -52]
-                }
-            },
-            {
-                "stats_side_panel@ascendant_common.info_panel": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [-86, -7],
-                    "$background_color": "purple",
-                    "$has_text": false,
-                    "$bg_size": [90, 166],
-                    "$info_size": [82, 158],
-                    "layer": 0
+                    "offset": [ 48, -24 ]
                 }
             },
             {
@@ -245,32 +231,13 @@
                     "type": "label",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-74, 4],
-                    "size": [72, 20],
+                    "offset": [ -74, 4 ],
+                    "size": [ 72, 20 ],
                     "text": "ui.utilitycraft:refining_table.all_statistics",
-                    "color": [0.75, 0.55, 1.0],
+                    "color": [ 0.75, 0.55, 1.0 ],
                     "text_alignment": "center",
                     "font_scale_factor": 0.6,
                     "layer": 5
-                }
-            },
-            {
-                "stats_screen@ascendant_common.screen": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": [166, 116],
-                    "offset": [0, 8],
-                    "layer": 0
-                }
-            },
-            {
-                "stats_scroll@ascendant_common.scrolling_panel": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": [162, 110],
-                    "offset": [0, 9],
-                    "$scrolling_content": "refining_table.stats_scroll_content",
-                    "$scrolling_background": "ascendant_common.panel"
                 }
             }
         ]
@@ -278,21 +245,32 @@
     "utility_panel": {
         "type": "panel",
         "controls": [
-            { "container_gamepad_helpers@common.container_gamepad_helpers": {} },
+            { "container_gamepad_helpers@common.container_gamepad_helpers": { } },
             { "flying_item_renderer@common.flying_item_renderer": { "layer": 40 } },
-            { "selected_item_details_factory@common.selected_item_details_factory": {} },
-            { "item_lock_notification_factory@common.item_lock_notification_factory": {} },
+            { "selected_item_details_factory@common.selected_item_details_factory": { } },
+            { "item_lock_notification_factory@common.item_lock_notification_factory": { } },
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
-                    "offset": [32, 0],
+                    "offset": [ 32, 0 ],
                     "controls": [
                         {
-                            "panel@ascendant_common.panel": {
-                                "$panel_color": "purple",
-                                "$has_container_label": false,
-                                "$has_close_button": true,
-                                "$close_button": "light"
+                            "panel": {
+                                "type": "panel",
+                                "size": [ 176, 166 ],
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "controls": [
+                                    {
+                                        "bg": {
+                                            "type": "image",
+                                            "texture": "textures/ui/at_refining_table_bg"
+                                        }
+                                    },
+                                    {
+                                        "close_button@common.light_close_button": { }
+                                    }
+                                ]
                             }
                         },
                         {
@@ -304,10 +282,11 @@
                                         "stats_toggle@ascendant_common.tab_button_toggle": {
                                             "anchor_from": "center",
                                             "anchor_to": "center",
-                                            "offset": [134, -46],
-                                            "$tab_button_text": "ui.utilitycraft:refining_table.stats",
-                                            "$tab_button_size": [38, 18],
-                                            "$tab_button_text_scale": 0.5,
+                                            "offset": [ 99, 6 ],
+                                            "layer": -5,
+                                            "$tab_button_text": "",
+                                            "$tab_button_size": [ 24, 24 ],
+                                            "$tab_button_text_scale": 0.8,
                                             "$radio_toggle_group": false,
                                             "$toggle_property_bag": {
                                                 "#toggle_state": false
@@ -330,7 +309,9 @@
                                                 }
                                             ],
                                             "controls": [
-                                                { "refining_table_top@refining_table.refining_table_top": {} }
+                                                { "refining_table_top@refining_table.refining_table_top": { } },
+                                                { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": { } },
+                                                { "hotbar_grid@common.hotbar_grid_template": { } }
                                             ]
                                         }
                                     },
@@ -348,18 +329,16 @@
                                                 }
                                             ],
                                             "controls": [
-                                                { "stats_panel@refining_table.stats_panel": {} }
+                                                { "stats_panel@refining_table.stats_screen": { } }
                                             ]
                                         }
                                     },
-                                    { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {} },
-                                    { "hotbar_grid@common.hotbar_grid_template": {} },
-                                    { "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {} }
+                                    { "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": { } }
                                 ]
                             }
                         },
-                        { "inventory_selected_icon_button@common.inventory_selected_icon_button": {} },
-                        { "gamepad_cursor@common.gamepad_cursor_button": {} }
+                        { "inventory_selected_icon_button@common.inventory_selected_icon_button": { } },
+                        { "gamepad_cursor@common.gamepad_cursor_button": { } }
                     ]
                 }
             }

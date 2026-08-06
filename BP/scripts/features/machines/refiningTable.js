@@ -129,8 +129,8 @@ DoriosLib.registry.blockComponent(ID, {
             if (!machine.valid) return;
 
             machine.blockSlots([XP_DISPLAY_SLOT, STATS_DISPLAY_SLOT]);
-            setUiItem(machine.container, STATUS_SLOT, "utilitycraft:arrow_indicator_90");
-            setUiItem(machine.container, PROGRESS_SLOT, "utilitycraft:progress_right_big_bar_00");
+            setUiItem(machine.container, STATUS_SLOT, "utilitycraft:arcane_00");
+            setUiItem(machine.container, PROGRESS_SLOT, "utilitycraft:arcane_00");
             setUiItem(machine.container, DETAILS_SLOT, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, STATS_DISPLAY_SLOT, "utilitycraft:ui_filler");
             setUiItem(machine.container, CONFIRM_SLOT, "utilitycraft:ui_filler", "\u00A7rRefine");
@@ -438,7 +438,7 @@ function showState(machine, xpTank, preview, running, title) {
     const cost = Math.max(1, Number(preview.energyCost) || CONFIG.defaults.idleEnergyCost);
     machine.setEnergyCost(cost);
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
-    displayProgress(machine, cost, PROGRESS_SLOT);
+    machine.displayProgress(cost, { index: 0, slot: PROGRESS_SLOT, type: "arcane", scale: 16 });
     setRunning(machine, running);
     if (!machine.shouldUpdateUI) return;
 
@@ -449,7 +449,7 @@ function showState(machine, xpTank, preview, running, title) {
         `\u00A7r\u00A77Equipment: \u00A7f${formatItem(preview.equipment?.typeId)}`,
         `\u00A7r\u00A77Chip: \u00A7f${preview.chip?.label ?? "-"}`,
         `\u00A7r\u00A77XP: \u00A7f${FluidStorage.formatFluid(preview.availableXp)} / ${FluidStorage.formatFluid(preview.xpCost)}`,
-        `\u00A7r\u00A77Energy: \u00A7f${EnergyStorage.formatEnergyToText(cost)}`,
+        `\u00A7r\u00A77Energy: \u00A7f${EnergyStorage.formatEnergyToText(cost)}`
     ]), STATUS_SLOT);
     machine.setLabel(toMachineLabelStrings(buildDetails(preview)), DETAILS_SLOT);
     machine.setLabel(toMachineLabelStrings(buildAllStats(preview)), STATS_DISPLAY_SLOT);

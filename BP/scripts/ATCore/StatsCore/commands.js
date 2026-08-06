@@ -399,7 +399,7 @@ DoriosLib.registry.customCommand({
     permissionLevel: "admin",
     cheatsRequired: true,
     parameters: [
-        { name: "action", type: "enum", values: ["custom"] },
+        { name: "action", type: "enum", values: ["custom", "random"] },
         { name: "target", type: "player" },
         { name: "tier", type: "enum", values: Object.keys(REFINING_CONFIG.tierScales) },
         { name: "chip", type: "enum", values: [...REFINING_CONFIG.chips.keys()].map(entryAlias) },

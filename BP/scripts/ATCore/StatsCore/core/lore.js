@@ -127,7 +127,7 @@ function buildReadableElementEntries(attributes) {
     return elements.map(element => {
         const icon = getElementIcon(element.id);
         const damage = Math.max(0, Number(element.damage ?? 0) || 0);
-        return `\u00A7r${icon} \u00A78${formatPercent(element.chance)} \u00A79+${damage.toFixed(damage % 1 === 0 ? 0 : 1)} ${titleCaseIdentifier(element.id)} Damage`;
+        return `\u00A7r${icon} \u00A78${formatPercent(element.chance)} \u00A79+${damage.toFixed(damage % 1 === 0 ? 0 : 1)}`;
     });
 }
 
@@ -171,13 +171,13 @@ function buildLevelLoreEntry(definition, state) {
     const progression = state?.progression ?? {};
     const entries = [];
     if (isProgressionCategoryEnabled(definition, "offensive")) {
-        entries.push(`\u00A7cOffensive Level ${Math.max(1, Number(progression.offensive?.level ?? 1) || 1)}`);
+        entries.push(`\u00A7cATK Lv. ${Math.max(1, Number(progression.offensive?.level ?? 1) || 1)}`);
     }
     if (isProgressionCategoryEnabled(definition, "mining")) {
-        entries.push(`\u00A7qMining Level ${Math.max(1, Number(progression.mining?.level ?? 1) || 1)}`);
+        entries.push(`\u00A7qADV Lv. ${Math.max(1, Number(progression.mining?.level ?? 1) || 1)}`);
     }
     if (isProgressionCategoryEnabled(definition, "defensive")) {
-        entries.push(`\u00A73Defensive Level ${Math.max(1, Number(progression.defensive?.level ?? 1) || 1)}`);
+        entries.push(`\u00A73DEF Lv. ${Math.max(1, Number(progression.defensive?.level ?? 1) || 1)}`);
     }
     return entries.length > 0 ? `\u00A7r${entries.join(" \u00A78| ")}` : null;
 }

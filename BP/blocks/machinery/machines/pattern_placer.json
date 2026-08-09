@@ -22,18 +22,19 @@
             "utilitycraft:pattern_placer": {
                 "entity": {
                     "type": "machine",
-                    "inventory_size": 17
+                    "inventory_size": 23
                 },
                 "machine": {
                     "energy_cap": 512000,
                     "energy_cost": 400,
-                    "rate_speed_base": 40,
-                    "upgrades": [8, 9]
+                    "rate_speed_base": 10,
+                    "upgrades": [14, 15, 16]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 8 },
-                { "type": "energy", "slot": 9 }
+                { "type": "speed", "slot": 14 },
+                { "type": "energy", "slot": 15 },
+                { "type": "hyper_processing", "slot": 16 }
             ],
             "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {

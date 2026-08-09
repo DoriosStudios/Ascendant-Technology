@@ -1,4 +1,5 @@
 ## 发电机
+item.utilitycraft:absolute_drill=绝对钻机\n§7- 开采7x7区域\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_battery.name=绝对电池\n§7  速率: 800 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_furnator.name=绝对熔炉\n§7  速率: 320 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_magmator.name=绝对岩浆发电机\n§7  速率: 400 kDE/t\n§o§9@UC: Ascendant Technology

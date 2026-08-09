@@ -1,48 +1,47 @@
 {
     "namespace": "disenchanter",
+    "book_output_grid": {
+        "type": "collection_panel",
+        "size": [72, 54],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "controls": [
+            { "book_1@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "collection_index": 10 } },
+            { "book_2@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 0], "collection_index": 11 } },
+            { "book_3@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 0], "collection_index": 12 } },
+            { "book_4@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 0], "collection_index": 13 } },
+            { "book_5@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 18], "collection_index": 14 } },
+            { "book_6@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 18], "collection_index": 15 } },
+            { "book_7@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 18], "collection_index": 16 } },
+            { "book_8@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 18], "collection_index": 17 } },
+            { "book_9@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 36], "collection_index": 18 } },
+            { "book_10@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 36], "collection_index": 19 } },
+            { "book_11@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 36], "collection_index": 20 } },
+            { "book_12@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 36], "collection_index": 21 } }
+        ]
+    },
     "disenchanter_top": {
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [220, 136],
-        "offset": [-10, -46],
+        "size": [220, 166],
+        "offset": [-10, -27],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "chest_label@chest.chest_label": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [48, -52]
-                }
-            },
-            {
-                "simple_bar@ascendant_common.panel": {
-                    "$panel_size": [28, 166],
-                    "$panel_color": "orange",
-                    "$has_container_label": false,
-                    "$has_close_button": true,
-                    "$close_button": "light",
-                    "$panel_layer": -4,
-                    "layer": -4,
-                    "offset": [110, 46]
-                }
-            },
-            {
                 "energy_bar@uc.energy_bar": {
                     "$collection_index": 0,
-                    "$has_bg": false,
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [100, 64]
+                    "offset": [97, 64],
+                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
             {
                 "info_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-70, 28],
-                    "$panel_color": "orange",
+                    "offset": [-58, 27],
+                    "$panel_color": "dark",
                     "$has_text": true,
                     "$text_borders": [72, 150]
                 }
@@ -52,7 +51,7 @@
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-62, 36],
+                    "offset": [-54, 35.5],
                     "$text_scale": 0.55,
                     "size": [64, 140]
                 }
@@ -61,19 +60,21 @@
                 "progress@uc.progress_display": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [10, 0],
-                    "collection_index": 2
+                    "offset": [-16, -8],
+                    "collection_index": 2,
+                    "$item_renderer_size": [14, 14]
                 }
             },
             {
-                "mode_button@uc.machine_button": {
+                "mode_button@uc.dynamic_button": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-48, 24],
+                    "offset": [-48, 0],
                     "$index": 3,
-                    "$button_size": [16, 16],
+                    "$button_size": [42, 16],
+                    "$text_scale": 0.75,
                     "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
-                    "$hover_texture": "textures/ui/cells/orange_cell_image",
+                    "$hover_texture": "textures/ui/cells/hover_inverted_orange_cell_image",
                     "$pressed_texture": "textures/ui/cells/orange_cell_image"
                 }
             },
@@ -81,7 +82,10 @@
                 "source_slot@common.container_item": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-48, 0],
+                    "offset": [-40, -24],
+                    "size": [20, 20],
+                    "$cell_image_size": [20, 20],
+                    "$item_renderer_size": [18, 18],
                     "collection_index": 4
                 }
             },
@@ -89,39 +93,42 @@
                 "catalyst_slot@common.container_item": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-26, 0],
-                    "collection_index": 5
+                    "offset": [-58, -24],
+                    "collection_index": 5,
+                    "$size": [16, 16],
+                    "$cell_iamge_size": [16, 16],
+                    "$item_renderer_size": [14, 14]
                 }
             },
             {
-                "output_slot@common.container_item": {
+                "book_outputs@disenchanter.book_output_grid": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [52, 0],
-                    "collection_index": 6
+                    "offset": [32, -8]
                 }
             },
             {
                 "xp_display@uc.fluid_bar": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [20, 24],
-                    "$collection_index": 7,
+                    "offset": [68, -12],
+                    "$collection_index": 6,
                     "$has_bg": false
                 }
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "$upgrade_index_1": 8,
-                    "$upgrade_index_2": 9,
-                    "$upgrade_index_3": 8,
+                    "$upgrade_index_1": 7,
+                    "$upgrade_index_2": 8,
+                    "$upgrade_index_3": 9,
                     "$upgrade_index_4": 9,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
-                    "$has_third_upgrade": false,
+                    "$has_third_upgrade": true,
                     "$has_fourth_upgrade": false,
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade"
                 }
             },
             {
@@ -138,18 +145,18 @@
                     "$io_right_texture": "textures/blocks/machines/enchantment_station",
                     "$io_bottom_texture": "textures/blocks/machines/enchantment_station",
                     "$io_back_texture": "textures/blocks/machines/enchantment_station",
-                    "$io_item_top_index": 10,
-                    "$io_item_left_index": 11,
-                    "$io_item_front_index": 12,
-                    "$io_item_right_index": 13,
-                    "$io_item_bottom_index": 14,
-                    "$io_item_back_index": 15,
-                    "$io_fluid_top_index": 16,
-                    "$io_fluid_left_index": 17,
-                    "$io_fluid_front_index": 18,
-                    "$io_fluid_right_index": 19,
-                    "$io_fluid_bottom_index": 20,
-                    "$io_fluid_back_index": 21
+                    "$io_item_top_index": 22,
+                    "$io_item_left_index": 23,
+                    "$io_item_front_index": 24,
+                    "$io_item_right_index": 25,
+                    "$io_item_bottom_index": 26,
+                    "$io_item_back_index": 27,
+                    "$io_fluid_top_index": 28,
+                    "$io_fluid_left_index": 29,
+                    "$io_fluid_front_index": 30,
+                    "$io_fluid_right_index": 31,
+                    "$io_fluid_bottom_index": 32,
+                    "$io_fluid_back_index": 33
                 }
             },
             {
@@ -183,8 +190,11 @@
                     "controls": [
                         {
                             "panel@ascendant_common.panel": {
-                                "$panel_color": "orange",
-                                "$has_container_label": false
+                                "$panel_color": "dark",
+                                "$has_container_label": true,
+                                "$label_color": "white",
+                                "$has_close_button": true,
+                                "$close_button": "light"
                             }
                         },
                         {
@@ -196,7 +206,7 @@
                                         "disenchanter_top@disenchanter.disenchanter_top": {}
                                     },
                                     {
-                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": { }
                                     },
                                     {
                                         "hotbar_grid@common.hotbar_grid_template": {}

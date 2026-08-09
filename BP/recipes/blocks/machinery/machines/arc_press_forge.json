@@ -7,30 +7,31 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "A": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
-            "B": {
-                "item": "utilitycraft:hyper_processing_upgrade"
+            "I": {
+                "item": "minecraft:piston"
             },
-            "C": {
-                "item": "utilitycraft:energized_iron_ingot"
+            "G": {
+                "item": "utilitycraft:tungsten"
             },
-            "D": {
+            "M": {
                 "item": "utilitycraft:electro_press"
             },
-            "E": {
-                "item": "utilitycraft:titanium_block"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "ABA",
-            "CDC",
-            "EAE"
-        ],
         "result": {
-            "item": "utilitycraft:arc_press_forge"
+            "item": "utilitycraft:arc_press_forge",
+            "count": 1
         },
         "unlock": [
             {

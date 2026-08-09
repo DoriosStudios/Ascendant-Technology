@@ -22,18 +22,19 @@
             "utilitycraft:seismic_breaker": {
                 "entity": {
                     "type": "machine",
-                    "inventory_size": 18
+                    "inventory_size": 24
                 },
                 "machine": {
                     "energy_cap": 512000,
                     "energy_cost": 400,
-                    "rate_speed_base": 40,
-                    "upgrades": [9, 10]
+                    "rate_speed_base": 10,
+                    "upgrades": [6, 7, 8]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 9 },
-                { "type": "energy", "slot": 10 }
+                { "type": "speed", "slot": 6 },
+                { "type": "energy", "slot": 7 },
+                { "type": "hyper_processing", "slot": 8 }
             ],
             "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {

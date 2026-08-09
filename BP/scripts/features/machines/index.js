@@ -6,7 +6,7 @@ import "./centrifugalSiever.js";
 import "./dualSiever.js";
 import "./residueProcessor.js";
 import "./liquifier.js";
-import "./magmaticReactorChamber.js";
+import "./industrialCrucible.js";
 import "./catalystWeaver.js";
 import "./arcaneEnchanter.js";
 import "./disenchanter.js";

@@ -7,34 +7,35 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
-            "F": {
-                "item": "utilitycraft:advanced_fluid_tank"
+            "I": {
+                "item": "minecraft:heart_of_the_sea"
             },
-            "C": {
-                "item": "utilitycraft:machine_case"
+            "G": {
+                "item": "utilitycraft:tungsten"
             },
-            "N": {
-                "item": "utilitycraft:titanium_fishing_net"
+            "M": {
+                "item": "utilitycraft:autofisher"
             },
-            "A": {
-                "item": "utilitycraft:advanced_chip"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "PFP",
-            "NCN",
-            "PAP"
-        ],
         "result": {
-            "item": "utilitycraft:abyssal_fisher"
+            "item": "utilitycraft:abyssal_fisher",
+            "count": 1
         },
         "unlock": [
             {
-                "item": "utilitycraft:titanium_fishing_net"
+                "item": "utilitycraft:autofisher"
             }
         ]
     }

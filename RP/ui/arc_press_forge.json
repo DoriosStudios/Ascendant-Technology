@@ -90,6 +90,13 @@
                 }
             },
             {
+                "steam_bar@uc.liquid_input_1_bar": {
+                    "$collection_index": 16,
+                    "$has_bg": false,
+                    "offset": [72, -1]
+                }
+            },
+            {
                 "upgrades_tab@uc.upgrades_tab": {
                     "$right_machine_tabs_name": "$right_machine_tabs_name",
                     "$upgrade_toggle_control_name": "$upgrade_toggle_control_name",
@@ -104,7 +111,7 @@
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
                     "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
                     "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade",
-                    "$upgrade_overlay_4": "textures/items/machinery/quantity_upgrade"
+                    "$upgrade_overlay_4": "textures/items/machinery/stack_upgrade"
                 }
             },
             {
@@ -115,8 +122,10 @@
                     "$io_items_toggle_control_name": "$io_items_toggle_control_name",
                     "$io_fluids_toggle_control_name": "$io_fluids_toggle_control_name",
                     "$io_items_modes_description": "ui.utilitycraft:io.arc_press_forge.items",
+                    "$io_gases_modes_description": "ui.utilitycraft:io.arc_press_forge.gases",
                     "$has_item_io": true,
                     "$has_fluid_io": false,
+                    "$has_gas_io": true,
                     "$io_items_default": true,
                     "$io_top_texture": "textures/blocks/machines/superior/arc_press_forge_off_up",
                     "$io_left_texture": "textures/blocks/machines/superior/arc_press_forge_off_west",
@@ -124,12 +133,18 @@
                     "$io_right_texture": "textures/blocks/machines/superior/arc_press_forge_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/superior/arc_press_forge_off_down",
                     "$io_back_texture": "textures/blocks/machines/superior/arc_press_forge_off_south",
-                    "$io_item_top_index": 16,
-                    "$io_item_left_index": 17,
-                    "$io_item_front_index": 18,
-                    "$io_item_right_index": 19,
-                    "$io_item_bottom_index": 20,
-                    "$io_item_back_index": 21
+                    "$io_item_top_index": 17,
+                    "$io_item_left_index": 18,
+                    "$io_item_front_index": 19,
+                    "$io_item_right_index": 20,
+                    "$io_item_bottom_index": 21,
+                    "$io_item_back_index": 22,
+                    "$io_gas_top_index": 23,
+                    "$io_gas_left_index": 24,
+                    "$io_gas_front_index": 25,
+                    "$io_gas_right_index": 26,
+                    "$io_gas_bottom_index": 27,
+                    "$io_gas_back_index": 28
                 }
             },
             {

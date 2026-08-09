@@ -23,17 +23,21 @@
             "utilitycraft:cryo_freezer": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 30
+                    "inventory_size": 32
                 },
                 "machine": {
                     "energy_cap": 512000,
                     "energy_cost": 1600,
-                    "rate_speed_base": 640,
+                    "rate_speed_base": 4800,
                     "fluid_cap": 128000,
                     "fluid_types": 1,
-                    "upgrades": []
+                    "upgrades": [18, 19]
                 }
             },
+            "utilitycraft:machine_upgrades": [
+                { "type": "speed", "slot": 18 },
+                { "type": "energy", "slot": 19 }
+            ],
             "minecraft:redstone_conductivity": {
                 "allows_wire_to_step_down": true,
                 "redstone_conductor": true

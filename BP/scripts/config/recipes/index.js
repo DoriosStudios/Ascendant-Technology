@@ -7,9 +7,9 @@ export {
 } from "./catalystWeaver.js";
 export { liquifierRecipes } from "./liquifier.js";
 export {
-    getMagmaticReactorChamberRecipe,
-    magmaticReactorChamberRecipes,
-} from "./magmaticReactorChamber.js";
+    getIndustrialCrucibleRecipe,
+    industrialCrucibleRecipes,
+} from "./industrialCrucible.js";
 export { residueProcessorRecipes } from "./residueProcessor.js";
 export {
     energizerRecipeDefinitions,

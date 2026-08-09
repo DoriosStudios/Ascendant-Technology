@@ -26,6 +26,11 @@
             "minecraft:durability": {
                 "max_durability": 1125
             },
+            "utilitycraft:armor": {
+                "damage_reduction": 0.075,
+                "damage_negation": 0.025,
+                "reduces": "all"
+            },
             "minecraft:repairable": {
                 "repair_items": [
                     {

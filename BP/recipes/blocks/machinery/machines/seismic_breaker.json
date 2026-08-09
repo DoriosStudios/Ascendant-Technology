@@ -7,30 +7,31 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
-            "H": {
-                "item": "utilitycraft:hyper_processing_upgrade"
+            "I": {
+                "item": "minecraft:netherite_pickaxe"
             },
-            "C": {
-                "item": "utilitycraft:machine_case"
+            "G": {
+                "item": "utilitycraft:tungsten"
             },
-            "B": {
+            "M": {
                 "item": "utilitycraft:block_breaker"
             },
-            "A": {
-                "item": "utilitycraft:advanced_chip"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "PHP",
-            "CBC",
-            "PAP"
-        ],
         "result": {
-            "item": "utilitycraft:seismic_breaker"
+            "item": "utilitycraft:seismic_breaker",
+            "count": 1
         },
         "unlock": [
             {

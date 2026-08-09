@@ -305,32 +305,76 @@ function createEffectKey(label, fallback = "effect") {
     return raw.replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "") || fallback;
 }
 
-function inferBranch(id, type) {
+function getItemTags(stack) {
+    if (!stack || typeof stack.getTags !== "function") return [];
+    try {
+        return (stack.getTags() ?? []).map(tag => String(tag).toLowerCase());
+    } catch {
+        return [];
+    }
+}
+
+function hasItemComponent(stack, componentId) {
+    if (!stack || typeof stack.getComponent !== "function") return false;
+    try {
+        return Boolean(stack.getComponent(componentId));
+    } catch {
+        return false;
+    }
+}
+
+function hasEquipmentTag(tags, ...tokens) {
+    return tokens.some(token => tags.some(tag => (
+        tag === token
+        || tag === `minecraft:${token}`
+        || tag === `minecraft:is_${token}`
+        || tag.endsWith(`:${token}`)
+        || tag.endsWith(`:is_${token}`)
+    )));
+}
+
+function inferBranch(id, type, stack = undefined) {
     const normalizedId = String(id ?? "").toLowerCase();
+    const path = getItemPath(normalizedId);
+    const tags = getItemTags(stack);
 
     if (normalizedId === "minecraft:elytra") return "elytra";
-    if (normalizedId.includes("aiot")) return "aiot";
-    if (normalizedId.includes("paxel")) return "paxel";
-    if (normalizedId.includes("hammer")) return "hammer";
-    if (normalizedId.endsWith("_sword")) return "sword";
-    if (normalizedId.endsWith("_axe")) return "axe";
-    if (normalizedId.endsWith("_spear")) return "spear";
-    if (normalizedId.endsWith(":mace") || normalizedId.endsWith("_mace") || normalizedId === "minecraft:mace") return "mace";
-    if (normalizedId.endsWith(":trident") || normalizedId.endsWith("_trident")) return "trident";
-    if (normalizedId.endsWith(":bow") || normalizedId.endsWith("_bow")) return "bow";
-    if (normalizedId.endsWith("crossbow")) return "crossbow";
-    if (normalizedId.endsWith("_pickaxe")) return "pickaxe";
-    if (normalizedId.endsWith("_shovel")) return "shovel";
-    if (normalizedId.endsWith("_hoe")) return "hoe";
-    if (normalizedId.endsWith("_helmet")) return "helmet";
-    if (normalizedId.endsWith("_chestplate")) return "chestplate";
-    if (normalizedId.endsWith("_leggings")) return "leggings";
-    if (normalizedId.endsWith("_boots")) return "boots";
-    if (normalizedId.endsWith("shears")) return "shears";
-    if (normalizedId.endsWith("shield")) return "shield";
-    if (normalizedId.includes("heavy_drill") || normalizedId.endsWith(":drill") || normalizedId.includes("_drill")) return "drill";
-    if (normalizedId.endsWith("flint_knife") || normalizedId.endsWith("_knife")) return "knife";
-    if (normalizedId.includes("flint_and_steel")) return "lighter";
+    if (path.includes("aiot") || hasEquipmentTag(tags, "aiot")) return "aiot";
+    if (path.includes("paxel") || hasEquipmentTag(tags, "paxel")) return "paxel";
+    if (path.includes("pickaxe") || hasEquipmentTag(tags, "pickaxe")) return "pickaxe";
+    if (path.includes("shovel") || path.includes("spade") || hasEquipmentTag(tags, "shovel")) return "shovel";
+    if (/(^|_)hoe($|_)/.test(path) || hasEquipmentTag(tags, "hoe")) return "hoe";
+    if (path.includes("shears") || path.includes("scissors") || path.includes("tesoura") || hasEquipmentTag(tags, "shears")) return "shears";
+    if (path.includes("flint_and_steel") || path.includes("fire_starter") || path.includes("lighter") || path.includes("isqueiro") || hasEquipmentTag(tags, "lighter")) return "lighter";
+    if (path.includes("drill") || path.includes("excavator") || hasEquipmentTag(tags, "drill")) return "drill";
+    if (path.includes("hammer") || path.includes("sledge") || hasEquipmentTag(tags, "hammer")) return "hammer";
+    if (path.includes("wrench") || path.includes("chisel") || path.includes("saw") || path.includes("sickle")) return "tool";
+
+    if (path.includes("crossbow") || hasEquipmentTag(tags, "crossbow")) return "crossbow";
+    if (/(^|_)bow($|_)/.test(path) || hasEquipmentTag(tags, "bow")) return "bow";
+    if (path.includes("trident") || path.includes("harpoon") || hasEquipmentTag(tags, "trident")) return "trident";
+    if (path.includes("spear") || path.includes("lance") || hasEquipmentTag(tags, "spear")) return "spear";
+    if (path.includes("mace") || path.includes("club") || hasEquipmentTag(tags, "mace")) return "mace";
+    if (path.includes("dagger") || path.includes("knife") || hasEquipmentTag(tags, "dagger", "knife")) return "knife";
+    if (path.includes("sword") || path.includes("katana") || path.includes("blade") || hasEquipmentTag(tags, "sword")) return "sword";
+    if (/(^|_)(gun|rifle|pistol|musket|blaster|cannon|launcher|staff|wand|scythe|claw)(_|$)/.test(path)) return "weapon";
+    if (path.endsWith("axe") || /(^|_)axe($|_)/.test(path) || hasEquipmentTag(tags, "axe")) return "axe";
+    if (hasEquipmentTag(tags, "weapon")) return "weapon";
+    if (hasEquipmentTag(tags, "tool")) return "tool";
+
+    if (path.includes("helmet") || path.includes("headpiece") || hasEquipmentTag(tags, "helmet")) return "helmet";
+    if (path.includes("chestplate") || path.includes("chestpiece") || path.includes("cuirass") || hasEquipmentTag(tags, "chestplate")) return "chestplate";
+    if (path.includes("leggings") || path.includes("legguards") || hasEquipmentTag(tags, "leggings")) return "leggings";
+    if (path.includes("boots") || path.includes("greaves") || hasEquipmentTag(tags, "boots")) return "boots";
+    if (path.includes("shield") || hasEquipmentTag(tags, "shield")) return "shield";
+    if (path.includes("armor") || hasEquipmentTag(tags, "armor", "wearable") || hasItemComponent(stack, "utilitycraft:armor")) return "armor";
+
+    // Data-driven equipment from unknown add-ons often has no conventional
+    // suffix or vanilla tool tag. A single, damageable stack is still a safe
+    // equipment signal and receives the neutral utility profile.
+    if (hasItemComponent(stack, "minecraft:durability") && Number(stack?.maxAmount ?? 1) === 1) {
+        return "equipment";
+    }
     return type;
 }
 
@@ -1044,12 +1088,34 @@ function getItemPath(id) {
 }
 
 function inferItemType(branch) {
-    if (["drill", "knife", "lighter", "shears"].includes(branch)) return ITEM_TYPES.utility;
-    if (["helmet", "chestplate", "leggings", "boots", "shield", "elytra"].includes(branch)) return ITEM_TYPES.support;
-    if (["sword", "mace", "trident", "bow", "crossbow", "spear"].includes(branch)) return ITEM_TYPES.weapon;
+    if (["drill", "knife", "lighter", "shears", "equipment"].includes(branch)) return ITEM_TYPES.utility;
+    if (["helmet", "chestplate", "leggings", "boots", "shield", "elytra", "armor"].includes(branch)) return ITEM_TYPES.support;
+    if (["sword", "mace", "trident", "bow", "crossbow", "spear", "weapon"].includes(branch)) return ITEM_TYPES.weapon;
     if (["axe", "paxel", "aiot"].includes(branch)) return ITEM_TYPES.hybrid;
-    if (["pickaxe", "shovel", "hoe", "hammer"].includes(branch)) return ITEM_TYPES.tool;
+    if (["pickaxe", "shovel", "hoe", "hammer", "tool"].includes(branch)) return ITEM_TYPES.tool;
     return ITEM_TYPES.utility;
+}
+
+function getMaximumDurability(stack) {
+    if (!stack || typeof stack.getComponent !== "function") return 0;
+    try {
+        const durability = stack.getComponent("minecraft:durability") ?? stack.getComponent("durability");
+        return Math.max(0, Math.floor(Number(durability?.maxDurability ?? 0) || 0));
+    } catch {
+        return 0;
+    }
+}
+
+function inferTierFromItemProperties(stack) {
+    const durability = getMaximumDurability(stack);
+    if (durability <= 0) return null;
+    if (durability <= 160) return "wood";
+    if (durability <= 320) return "stone";
+    if (durability <= 640) return "iron";
+    if (durability <= 1800) return "diamond";
+    if (durability <= 2600) return "netherite";
+    if (durability <= 4200) return "titanium";
+    return "aetherium";
 }
 
 function inferTierName(id, branch) {
@@ -1213,19 +1279,25 @@ function getInferredSpecialOverrides(id, tierName, type, branch) {
  * Explicit registrations remain available for third-party extensions, but built-in
  * equipment no longer needs a per-item definition list.
  */
-export function inferDynamicDefinition(id) {
-    const normalizedId = String(id ?? "").toLowerCase();
-    const branch = inferBranch(normalizedId, null);
+export function inferDynamicDefinition(itemOrId) {
+    const stack = typeof itemOrId === "string" ? undefined : itemOrId;
+    const normalizedId = String(typeof itemOrId === "string" ? itemOrId : itemOrId?.typeId ?? "").toLowerCase();
+    const branch = inferBranch(normalizedId, null, stack);
     if (!branch) return null;
 
     const type = inferItemType(branch);
-    // Third-party axes are eligible for Berserk as long as their identifier
-    // ends in _axe, even when the addon uses an unknown material token.
-    const tierName = inferTierName(normalizedId, branch) ?? (branch === "axe" ? "iron" : null);
-    if (!tierName) return null;
+    // Runtime item properties are more reliable than a closed material list.
+    // Identifier-only lookups still receive a conservative iron fallback once
+    // the path has identified a real equipment family.
+    const tierName = inferTierName(normalizedId, branch)
+        ?? inferTierFromItemProperties(stack)
+        ?? "iron";
 
     const affinity = inferAffinity(type, branch, tierName);
-    return baseDefinition(normalizedId, tierName, type, affinity, getInferredSpecialOverrides(normalizedId, tierName, type, branch));
+    return baseDefinition(normalizedId, tierName, type, affinity, {
+        ...getInferredSpecialOverrides(normalizedId, tierName, type, branch),
+        branch,
+    });
 }
 
 // Built-in equipment is inferred from its typeId. Third-party addons can still

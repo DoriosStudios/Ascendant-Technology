@@ -1,7 +1,7 @@
 // @ts-check
 
 /**
- * Magmatic Reactor Chamber recipes indexed by exact input item id.
+ * Industrial Crucible recipes indexed by exact input item id.
  *
  * @type {Record<string, {
  *   input: { amount: number },
@@ -10,7 +10,7 @@
  *   lavaGain: number
  * }>}
  */
-export const magmaticReactorChamberRecipes = {
+export const industrialCrucibleRecipes = {
     "minecraft:cobblestone": {
         input: { amount: 1 },
         output: { id: "minecraft:stone", amount: 1 },
@@ -36,6 +36,6 @@ export const magmaticReactorChamberRecipes = {
  *
  * @param {string} inputTypeId
  */
-export function getMagmaticReactorChamberRecipe(inputTypeId) {
-    return magmaticReactorChamberRecipes[inputTypeId];
+export function getIndustrialCrucibleRecipe(inputTypeId) {
+    return industrialCrucibleRecipes[inputTypeId];
 }

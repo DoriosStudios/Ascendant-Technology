@@ -1,4 +1,5 @@
 ## Генераторы
+item.utilitycraft:absolute_drill=Абсолютный бур\n§7- Добывает блоки в области 7x7\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_battery.name=Абсолютная Батарея\n§7  Скорость: 800 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_furnator.name=Абсолютный Фурнатор\n§7  Скорость: 320 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_magmator.name=Абсолютный Магматор\n§7  Скорость: 400 kDE/t\n§o§9@UC: Ascendant Technology

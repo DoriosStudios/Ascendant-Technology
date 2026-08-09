@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:reinforcement_anvil"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
+        "key": {
+            "T": {
+                "item": "utilitycraft:titanium"
+            },
+            "I": {
+                "item": "minecraft:netherite_ingot"
+            },
+            "G": {
+                "item": "utilitycraft:tungsten"
+            },
+            "M": {
+                "item": "utilitycraft:induction_anvil"
+            },
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:reinforcement_anvil",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:induction_anvil"
+            }
+        ]
+    }
+}

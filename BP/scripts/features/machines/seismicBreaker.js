@@ -4,7 +4,6 @@ import { system, world } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
 import {
     ButtonManager,
-    EnergyStorage,
     Machine,
     registerIOInterface,
 } from "DoriosCore/index.js";
@@ -22,28 +21,46 @@ import {
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
+    renderMachineInfo,
     setDynamicNumber,
     setDynamicString,
-    setRunning,
     setUiItem,
 } from "./runtime.js";
+import { capitalizeFirst, formatIdentifier } from "DoriosLib/text/index.js";
 
 const ID = "utilitycraft:seismic_breaker";
-const INVENTORY_SIZE = 18;
-const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18,
+const INVENTORY_SIZE = 24;
+const LEGACY_SLOT_LAYOUT_18 = [
+    0, 1, 2, 3,
+    -1,
+    11, 9, 10, -1,
+    5, 6, 7, 8, -1, -1, -1, -1, -1,
+    12, 13, 14, 15, 16, 17,
 ];
+const LEGACY_SLOT_LAYOUT_19 = [
+    0, 1, 2, 3,
+    -1,
+    12, 9, 10, -1,
+    5, 6, 7, 8, -1, -1, -1, -1, -1,
+    13, 14, 15, 16, 17, 18,
+];
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 14, 15, 16, 17,
+    5, 6, 7, 8, 9, 10, 11, 12, 13,
+    18, 19, 20, 21, 22, 23,
+];
+const LAYOUT_KEY = "ascendant:seismic_breaker_layout";
+const LAYOUT_VERSION = "output_last_v2";
 const MODE_BUTTON_SLOT = 3;
-const PRECISION_BUTTON_SLOT = 4;
-const OUTPUT_SLOTS = [5, 6, 7, 8];
-const ACTIVATION_BUTTON_SLOT = 11;
-const IO_BUTTON_SLOTS = [12, 13, 14, 15, 16, 17];
+const TOOL_SLOT = 4;
+const ACTIVATION_BUTTON_SLOT = 5;
+const OUTPUT_SLOTS = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+const IO_BUTTON_SLOTS = [18, 19, 20, 21, 22, 23];
 const MODE_KEY = "ascendant:seismic_breaker_mode";
-const PRECISION_KEY = "ascendant:seismic_breaker_precision";
 const ENABLED_KEY = "ascendant:seismic_breaker_enabled";
 const OPERATION_KEY = "ascendant:seismic_breaker_operation";
 const EMPTY_RESCAN_TICKS = 20;
-const DROP_COLLECTION_DELAY = 3;
 const CACHE_CLEANUP_INTERVAL = 1200;
 const CACHE_EXPIRATION = 6000;
 
@@ -53,10 +70,6 @@ let lastCacheCleanupTick = 0;
 
 function getMode(entity) {
     return getPatternMode(entity.getDynamicProperty(MODE_KEY));
-}
-
-function isPrecisionEnabled(entity) {
-    return entity.getDynamicProperty(PRECISION_KEY) === "true";
 }
 
 function isEnabled(entity) {
@@ -72,13 +85,6 @@ ButtonManager.registerMachineButton(ID, MODE_BUTTON_SLOT, ({ entity }) => {
     return `\u00A7r\u00A76${next.short}`;
 });
 
-ButtonManager.registerMachineButton(ID, PRECISION_BUTTON_SLOT, ({ entity }) => {
-    const next = !isPrecisionEnabled(entity);
-    resetOperation(entity);
-    setDynamicString(entity, PRECISION_KEY, next ? "true" : "false");
-    return next ? "\u00A7r\u00A7bON" : "\u00A7r\u00A77OFF";
-});
-
 ButtonManager.registerMachineButton(ID, ACTIVATION_BUTTON_SLOT, ({ entity }) => {
     const next = !isEnabled(entity);
     resetOperation(entity);
@@ -89,10 +95,11 @@ ButtonManager.registerMachineButton(ID, ACTIVATION_BUTTON_SLOT, ({ entity }) => 
 registerIOInterface(ID, {
     items: {
         buttonSlots: IO_BUTTON_SLOTS,
-        anyInputSlots: [],
+        anyInputSlots: [TOOL_SLOT],
         anyOutputSlots: OUTPUT_SLOTS,
         modes: [
             { id: "disabled" },
+            { id: "input_2", inputSlots: [TOOL_SLOT] },
             { id: "output_1", outputSlots: OUTPUT_SLOTS },
         ],
     },
@@ -107,12 +114,11 @@ DoriosLib.registry.blockComponent(ID, {
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A761x1");
-            setUiItem(machine.container, PRECISION_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A77OFF");
             setUiItem(machine.container, ACTIVATION_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A7aON");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
             setDynamicString(machine.entity, MODE_KEY, "single");
-            setDynamicString(machine.entity, PRECISION_KEY, "false");
             setDynamicString(machine.entity, ENABLED_KEY, "true");
-            setDynamicString(machine.entity, OPERATION_KEY, "");
+            resetOperation(machine.entity);
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             initializeSeismicOutline(event.block, machine.entity, event.player);
         });
@@ -121,48 +127,57 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        const legacyLayout = machine.container.size >= 19
+            ? LEGACY_SLOT_LAYOUT_19
+            : LEGACY_SLOT_LAYOUT_18;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, legacyLayout,
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         machine.processIO();
         if (machine.shouldUpdateUI) ButtonManager.ensureWatching(machine.entity, ID);
         else ButtonManager.unwatchEntity(machine.entity);
 
         const mode = getMode(machine.entity);
-        const precision = isPrecisionEnabled(machine.entity);
         syncSeismicOutlineIfNeeded(machine, mode.id);
         cleanupTargetStates();
 
         if (!isEnabled(machine.entity)) {
-            pauseMachine(machine, settings.machine.energy_cost, "Disabled", mode, precision);
+            pauseMachine(machine, settings.machine.energy_cost, "Disabled", mode);
             return;
         }
-
         if (!getPatternDirection(machine.block)) {
-            resetMachine(machine, settings.machine.energy_cost, "Invalid Direction", mode, precision);
+            resetMachine(machine, settings.machine.energy_cost, "Invalid Direction", mode);
             return;
         }
 
+        const slottedTool = machine.container.getItem(TOOL_SLOT);
+        if (slottedTool && !isPickaxe(slottedTool)) {
+            resetMachine(machine, settings.machine.energy_cost, "Invalid Tool", mode, 0, slottedTool);
+            return;
+        }
         if (!hasOutputSpace(machine.container)) {
-            pauseMachine(machine, settings.machine.energy_cost, "Output Full", mode, precision);
+            pauseMachine(machine, settings.machine.energy_cost, "Output Full", mode, slottedTool);
             return;
         }
 
         const targetState = getTargetState(machine, mode.id);
         if (system.currentTick < targetState.nextScanTick) {
-            resetMachine(machine, settings.machine.energy_cost, "Nothing to Break", mode, precision, targetState.positions.length);
+            resetMachine(machine, settings.machine.energy_cost, "Nothing to Break", mode, targetState.positions.length, slottedTool);
             return;
         }
 
         const targets = findBreakableTargets(machine.dimension, targetState.positions);
         if (targets.length === 0) {
             targetState.nextScanTick = system.currentTick + EMPTY_RESCAN_TICKS;
-            resetMachine(machine, settings.machine.energy_cost, "Nothing to Break", mode, precision, targetState.positions.length);
+            resetMachine(machine, settings.machine.energy_cost, "Nothing to Break", mode, targetState.positions.length, slottedTool);
             return;
         }
         targetState.nextScanTick = 0;
 
         const energyCost = Math.max(1, settings.machine.energy_cost * targets.length);
-        const operationKey = `${mode.id}|${precision ? 1 : 0}|${targets.length}`;
+        const operationKey = `${mode.id}|${slottedTool?.typeId ?? "hand"}|${targets.length}`;
         if (machine.entity.getDynamicProperty(OPERATION_KEY) !== operationKey) {
             setDynamicString(machine.entity, OPERATION_KEY, operationKey);
             setDynamicNumber(machine.entity, "dorios:progress_0", 0);
@@ -173,13 +188,10 @@ DoriosLib.registry.blockComponent(ID, {
             cost: energyCost,
             maxCrafts: 1,
             batch: 1,
-            rateMultiplier: 1,
         });
 
         let completed = null;
-        if (result.processCount > 0) {
-            completed = breakTargets(machine, targets, precision, settings);
-        }
+        if (result.processCount > 0) completed = breakTargets(machine, targets, slottedTool);
 
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
         setDynamicNumber(machine.entity, "dorios:energy_cost_0", energyCost);
@@ -188,10 +200,10 @@ DoriosLib.registry.blockComponent(ID, {
         const active = result.energyUsed > 0 || (completed?.broken ?? 0) > 0;
         const message = completed?.broken > 0
             ? `Broke ${completed.broken}`
-            : active
-                ? "Charging"
-                : "No Energy";
-        renderStatus(machine, active, message, mode, precision, {
+            : (completed?.weak ?? 0) > 0
+                ? "Tool Too Weak"
+                : active ? "Charging" : "No Energy";
+        renderStatus(machine, active, message, mode, slottedTool, {
             total: targetState.positions.length,
             targets: targets.length,
             energyCost,
@@ -217,6 +229,14 @@ DoriosLib.registry.blockComponent(ID, {
         Machine.onDestroy(event);
     },
 });
+
+function isPickaxe(item) {
+    if (!item) return false;
+    try {
+        if (item.hasTag?.("minecraft:is_pickaxe") || item.hasTag?.("minecraft:pickaxe")) return true;
+    } catch {}
+    return item.typeId.split(":").pop()?.includes("pickaxe") === true;
+}
 
 function resetOperation(entity) {
     setDynamicString(entity, OPERATION_KEY, "");
@@ -256,67 +276,48 @@ function isBreakable(block) {
 }
 
 function hasOutputSpace(container) {
-    for (const slot of OUTPUT_SLOTS) {
+    return OUTPUT_SLOTS.some((slot) => {
         const item = container.getItem(slot);
-        if (!item || item.amount < item.maxAmount) return true;
-    }
-    return false;
+        return !item || item.amount < item.maxAmount;
+    });
 }
 
-function breakTargets(machine, targetPositions, precision, settings) {
-    const preexistingItemIds = getNearbyItemIds(machine.dimension, targetPositions);
-    const normalDropPositions = [];
+function breakTargets(machine, targetPositions, tool) {
     let broken = 0;
     let stored = 0;
     let overflow = 0;
-    let precisionDrops = 0;
+    let weak = 0;
 
     for (const position of targetPositions) {
         const block = machine.dimension.getBlock(position);
         if (!isBreakable(block)) continue;
 
-        if (precision) {
-            const drops = generatePrecisionDrops(block);
-            if (drops.length > 0 && clearBlock(block)) {
-                broken++;
-                precisionDrops++;
-                for (const stack of drops) {
-                    const inserted = storeStack(machine.container, stack);
-                    stored += inserted;
-                    const remaining = stack.amount - inserted;
-                    if (remaining > 0) {
-                        spawnStack(machine.dimension, stack, remaining, position);
-                        overflow += remaining;
-                    }
-                }
-                continue;
+        const drops = generateBlockLoot(block, tool);
+        if (!drops) {
+            weak++;
+            continue;
+        }
+        if (!clearBlock(block)) continue;
+        broken++;
+
+        for (const stack of drops) {
+            const inserted = storeStack(machine.container, stack);
+            stored += inserted;
+            const remaining = stack.amount - inserted;
+            if (remaining > 0) {
+                spawnStack(machine.dimension, stack, remaining, position);
+                overflow += remaining;
             }
         }
-
-        if (destroyWithDrops(machine.dimension, position)) {
-            broken++;
-            normalDropPositions.push(position);
-        }
     }
-
-    if (normalDropPositions.length > 0) {
-        scheduleDropCollection(machine, normalDropPositions, preexistingItemIds, settings);
-    }
-    return { broken, stored, overflow, precisionDrops };
+    return { broken, stored, overflow, weak };
 }
 
-function generatePrecisionDrops(block) {
+function generateBlockLoot(block, tool) {
     try {
-        const lootManager = world.getLootTableManager?.();
-        if (!lootManager) return [];
-        const fromPermutation = lootManager.generateLootFromBlockPermutation?.(block.permutation);
-        if (Array.isArray(fromPermutation) && fromPermutation.length > 0) {
-            return fromPermutation.filter(Boolean);
-        }
-        const fromBlock = lootManager.generateLootFromBlock?.(block);
-        return Array.isArray(fromBlock) ? fromBlock.filter(Boolean) : [];
+        return world.getLootTableManager().generateLootFromBlock(block, tool);
     } catch {
-        return [];
+        return undefined;
     }
 }
 
@@ -329,18 +330,9 @@ function clearBlock(block) {
     }
 }
 
-function destroyWithDrops(dimension, position) {
-    try {
-        dimension.runCommand(`setblock ${position.x} ${position.y} ${position.z} air destroy`);
-        return true;
-    } catch {
-        return false;
-    }
-}
-
 function storeStack(container, stack) {
     try {
-        return DoriosLib.containers.insert(container, {
+        return DoriosLib.container.insert(container, {
             item: stack,
             slots: OUTPUT_SLOTS,
         });
@@ -349,153 +341,65 @@ function storeStack(container, stack) {
     }
 }
 
-function spawnStack(dimension, template, amount, position, centerOnBlock = true) {
+function spawnStack(dimension, template, amount, position) {
     if (amount <= 0) return;
     try {
         const stack = template.clone();
         stack.amount = amount;
         dimension.spawnItem(stack, {
-            x: position.x + (centerOnBlock ? 0.5 : 0),
-            y: position.y + (centerOnBlock ? 0.5 : 0),
-            z: position.z + (centerOnBlock ? 0.5 : 0),
+            x: position.x + 0.5,
+            y: position.y + 0.5,
+            z: position.z + 0.5,
         });
     } catch {}
 }
 
-function scheduleDropCollection(machine, positions, excludedIds, settings) {
-    const machineLocation = { ...machine.block.location };
-    const positionKeys = new Set(positions.map(positionKey));
-    const bounds = collectionBounds(positions);
-
-    system.runTimeout(() => {
-        const block = machine.dimension.getBlock(machineLocation);
-        if (!block || block.typeId !== ID) return;
-        const delayed = new Machine(block, { ...settings, ignoreTick: true });
-        if (!delayed.valid) return;
-        delayed.processIO();
-        collectNewDrops(delayed, positionKeys, bounds, excludedIds);
-    }, DROP_COLLECTION_DELAY);
-}
-
-function collectNewDrops(machine, positionKeys, bounds, excludedIds) {
-    const entities = machine.dimension.getEntities({
-        type: "item",
-        location: bounds.center,
-        maxDistance: bounds.radius,
-    });
-
-    for (const entity of entities) {
-        if (excludedIds.has(entity.id) || !nearTargetCell(entity.location, positionKeys)) continue;
-        const stack = entity.getComponent("minecraft:item")?.itemStack;
-        if (!stack) continue;
-        const inserted = storeStack(machine.container, stack);
-        if (inserted <= 0) continue;
-
-        const remaining = stack.amount - inserted;
-        const location = entity.location;
-        try {
-            entity.remove();
-        } catch {
-            continue;
-        }
-        if (remaining > 0) spawnStack(machine.dimension, stack, remaining, location, false);
-    }
-}
-
-function getNearbyItemIds(dimension, positions) {
-    const bounds = collectionBounds(positions);
-    return new Set(dimension.getEntities({
-        type: "item",
-        location: bounds.center,
-        maxDistance: bounds.radius,
-    }).map((entity) => entity.id));
-}
-
-function collectionBounds(positions) {
-    let minX = positions[0].x;
-    let maxX = minX;
-    let minY = positions[0].y;
-    let maxY = minY;
-    let minZ = positions[0].z;
-    let maxZ = minZ;
-    for (let index = 1; index < positions.length; index++) {
-        const position = positions[index];
-        minX = Math.min(minX, position.x);
-        maxX = Math.max(maxX, position.x);
-        minY = Math.min(minY, position.y);
-        maxY = Math.max(maxY, position.y);
-        minZ = Math.min(minZ, position.z);
-        maxZ = Math.max(maxZ, position.z);
-    }
-    const center = {
-        x: (minX + maxX + 1) / 2,
-        y: (minY + maxY + 1) / 2,
-        z: (minZ + maxZ + 1) / 2,
-    };
-    const dx = maxX - minX + 2;
-    const dy = maxY - minY + 2;
-    const dz = maxZ - minZ + 2;
-    return { center, radius: Math.sqrt(dx * dx + dy * dy + dz * dz) / 2 + 1 };
-}
-
-function positionKey(position) {
-    return `${position.x},${position.y},${position.z}`;
-}
-
-function nearTargetCell(location, positionKeys) {
-    const baseX = Math.floor(location.x);
-    const baseY = Math.floor(location.y);
-    const baseZ = Math.floor(location.z);
-    for (let y = baseY - 1; y <= baseY + 1; y++) {
-        for (let x = baseX - 1; x <= baseX + 1; x++) {
-            for (let z = baseZ - 1; z <= baseZ + 1; z++) {
-                if (positionKeys.has(`${x},${y},${z}`)) return true;
-            }
-        }
-    }
-    return false;
-}
-
-function resetMachine(machine, cost, message, mode, precision, total = 0) {
+function resetMachine(machine, cost, message, mode, total = 0, tool) {
     resetOperation(machine.entity);
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
     displayProgress(machine, cost);
-    renderStatus(machine, false, message, mode, precision, {
+    renderStatus(machine, false, message, mode, tool, {
         total,
         targets: 0,
         energyCost: cost,
     });
 }
 
-function pauseMachine(machine, cost, message, mode, precision) {
+function pauseMachine(machine, cost, message, mode, tool) {
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
     displayProgress(machine, cost);
-    renderStatus(machine, false, message, mode, precision, {
+    renderStatus(machine, false, message, mode, tool, {
         total: 0,
         targets: 0,
         energyCost: cost,
     });
 }
 
-function renderStatus(machine, running, message, mode, precision, context) {
-    setRunning(machine, running);
-    if (!machine.shouldUpdateUI) return;
+function renderStatus(machine, running, message, mode, tool, context) {
+    const sections = [{
+        title: "Breaking Information",
+        lines: [
+            `\u00A7r\u00A77Mode \u00A7f${mode.title}`,
+            `\u00A7r\u00A77Tool \u00A7f${formatIdentifier(formatItem(tool?.typeId))}`,
+            `\u00A7r\u00A77Targets \u00A7f${context.targets}/${context.total}`,
+        ],
+    }];
+    if (context.completed) {
+        sections.push({
+            title: "Breaking Result",
+            lines: [
+                `\u00A7r\u00A7bStored \u00A7f${context.completed.stored ?? 0}`,
+                `\u00A7r\u00A76Overflow \u00A7f${context.completed.overflow ?? 0}`,
+                `\u00A7r\u00A7cTool Too Weak \u00A7f${context.completed.weak ?? 0}`,
+            ],
+        });
+    }
+    renderMachineInfo(machine, running, message, sections, { energyCost: context.energyCost, batch: 1 });
+}
 
-    machine.energy.display(0);
-    const lines = [
-        `\u00A7r${running ? "\u00A7a" : "\u00A7e"}${message}`,
-        `\u00A7r\u00A77Mode: \u00A7f${mode.title}`,
-        `\u00A7r\u00A77Precision: ${precision ? "\u00A7bOn" : "\u00A77Off"}`,
-        `\u00A7r\u00A77Targets: \u00A7f${context.targets}/${context.total}`,
-        `\u00A7r\u00A77Cost: \u00A7f${EnergyStorage.formatEnergyToText(context.energyCost)} DE`,
-    ];
-    if (context.completed?.precisionDrops > 0) {
-        lines.push(`\u00A7r\u00A7bPrecision blocks: ${context.completed.precisionDrops}`);
-    }
-    if (context.completed?.overflow > 0) {
-        lines.push(`\u00A7r\u00A76Overflow: ${context.completed.overflow}`);
-    }
-    machine.setLabel(lines);
+function formatItem(typeId) {
+    if (!typeId) return "None (bare hand)";
+    return typeId.split(":").pop().replace(/_/g, " ");
 }
 
 function cleanupTargetStates() {

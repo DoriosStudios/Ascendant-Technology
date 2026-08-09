@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:cryo_stabilizer"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
+        "key": {
+            "T": {
+                "item": "utilitycraft:titanium"
+            },
+            "I": {
+                "item": "utilitycraft:steel_block"
+            },
+            "G": {
+                "item": "utilitycraft:tungsten"
+            },
+            "M": {
+                "item": "utilitycraft:cryo_chamber"
+            },
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:cryo_stabilizer",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:cryo_chamber"
+            }
+        ]
+    }
+}

@@ -23,7 +23,7 @@
             "utilitycraft:disenchanter": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 22,
+                    "inventory_size": 34,
                     "fixed_fluid_types": true
                 },
                 "machine": {
@@ -32,12 +32,13 @@
                     "rate_speed_base": 1280,
                     "fluid_cap": 128000,
                     "fluid_types": 1,
-                    "upgrades": [8, 9]
+                    "upgrades": [7, 8, 9]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 8 },
-                { "type": "energy", "slot": 9 }
+                { "type": "speed", "slot": 7 },
+                { "type": "energy", "slot": 8 },
+                { "type": "hyper_processing", "slot": 9 }
             ],
             "utilitycraft:machine_recipes": {
                 "type": "disenchanter"

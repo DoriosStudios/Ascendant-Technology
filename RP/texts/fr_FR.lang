@@ -1,4 +1,5 @@
 ## Générateurs
+item.utilitycraft:absolute_drill=Foret absolu\n§7- Mine dans une zone de 7x7\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_battery.name=Batterie Absolue\n§7  Taux: 800 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_furnator.name=Furnator Absolu\n§7  Taux: 320 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_magmator.name=Magmator Absolu\n§7  Taux: 400 kDE/t\n§o§9@UC: Ascendant Technology

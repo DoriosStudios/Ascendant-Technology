@@ -11,6 +11,15 @@ const ENCHANTABILITY_MODULE_LEVELS = new Map([
     ["utilitycraft:enchantability_module_4", 4],
     ["utilitycraft:enchantability_module_5", 5],
 ]);
+const CURSE_PROTECTION_MODULES = new Set([
+    "utilitycraft:curse_protection_module",
+]);
+const CURSE_ENCHANTMENTS = new Set([
+    "binding",
+    "minecraft:binding",
+    "vanishing",
+    "minecraft:vanishing",
+]);
 
 const ENCHANTMENT_MAX_LEVELS = [5, 4, 3, 2, 1];
 const ENCHANTMENT_TARGETS = [
@@ -34,6 +43,17 @@ export function getEnchantabilityModuleLevel(stack) {
     return ENCHANTABILITY_MODULE_LEVELS.get(stack?.typeId ?? "") ?? 0;
 }
 
+/** @param {import("@minecraft/server").ItemStack | undefined} stack */
+export function hasCurseProtectionModule(stack) {
+    if (!stack) return false;
+    if (CURSE_PROTECTION_MODULES.has(stack.typeId)) return true;
+    try {
+        return stack.hasTag?.("utilitycraft:ascane_curse_protection") === true;
+    } catch {
+        return false;
+    }
+}
+
 /**
  * Produces a stable signature for one input/module combination. Enchantment
  * order is normalized so the same item state does not invalidate a locked plan.
@@ -42,13 +62,13 @@ export function getEnchantabilityModuleLevel(stack) {
  * @param {number} moduleLevel
  * @returns {string}
  */
-export function createArcaneEnchantSignature(stack, moduleLevel) {
+export function createArcaneEnchantSignature(stack, moduleLevel, curseProtection = false) {
     const enchantments = readEnchantments(stack)
         .map((entry) => `${entry.id}@${entry.level}`)
         .sort()
         .join(",");
 
-    return `${stack.typeId}|m${normalizeModuleLevel(moduleLevel)}|${enchantments}`;
+    return `${stack.typeId}|m${normalizeModuleLevel(moduleLevel)}|p${curseProtection ? 1 : 0}|${enchantments}`;
 }
 
 /**
@@ -60,7 +80,7 @@ export function createArcaneEnchantSignature(stack, moduleLevel) {
  * @param {number} moduleLevel
  * @returns {ArcaneEnchantPlan}
  */
-export function buildArcaneEnchantPlan(stack, moduleLevel) {
+export function buildArcaneEnchantPlan(stack, moduleLevel, curseProtection = false) {
     const enchantable = getEnchantableComponent(stack);
     if (!enchantable) return invalidPlan("Invalid Item");
 
@@ -93,6 +113,7 @@ export function buildArcaneEnchantPlan(stack, moduleLevel) {
             const type = catalog.all[index];
             const id = normalizeEnchantmentId(type?.id);
             if (!id || nextById.has(id)) continue;
+            if (curseProtection && CURSE_ENCHANTMENTS.has(id)) continue;
 
             const targetLevel = resolveModuleEnchantTarget(tier, type.maxLevel);
             if (targetLevel <= 0) continue;

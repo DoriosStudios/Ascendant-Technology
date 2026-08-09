@@ -4,7 +4,6 @@ import { BlockPermutation, system } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
 import {
     ButtonManager,
-    EnergyStorage,
     Machine,
     registerIOInterface,
 } from "DoriosCore/index.js";
@@ -22,21 +21,30 @@ import {
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
     displayProgress,
+    renderMachineInfo,
     setDynamicNumber,
     setDynamicString,
-    setRunning,
     setUiItem,
 } from "./runtime.js";
 
 const ID = "utilitycraft:pattern_placer";
-const INVENTORY_SIZE = 17;
-const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 12, 13, 14, 15, 16, 17, 18,
+const INVENTORY_SIZE = 23;
+const LEGACY_SLOT_LAYOUT_17 = [
+    0, 1, 2, 3,
+    4, 5, 6, 7, -1, -1, -1, -1, -1,
+    10, 8, 9, -1,
+    11, 12, 13, 14, 15, 16,
+];
+const LEGACY_SLOT_LAYOUT_19 = [
+    0, 1, 2, 3,
+    4, 5, 6, 7, -1, -1, -1, -1, -1,
+    12, 9, 10, -1,
+    13, 14, 15, 16, 17, 18,
 ];
 const MODE_BUTTON_SLOT = 3;
-const INPUT_SLOTS = [4, 5, 6, 7];
-const ACTIVATION_BUTTON_SLOT = 10;
-const IO_BUTTON_SLOTS = [11, 12, 13, 14, 15, 16];
+const INPUT_SLOTS = [4, 5, 6, 7, 8, 9, 10, 11, 12];
+const ACTIVATION_BUTTON_SLOT = 13;
+const IO_BUTTON_SLOTS = [17, 18, 19, 20, 21, 22];
 const MODE_KEY = "ascendant:pattern_placer_mode";
 const ENABLED_KEY = "ascendant:pattern_placer_enabled";
 const OPERATION_KEY = "ascendant:pattern_placer_operation";
@@ -107,7 +115,10 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        const legacyLayout = machine.container.size >= 19
+            ? LEGACY_SLOT_LAYOUT_19
+            : LEGACY_SLOT_LAYOUT_17;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, legacyLayout)) return;
 
         machine.processIO();
         if (machine.shouldUpdateUI) ButtonManager.ensureWatching(machine.entity, ID);
@@ -325,21 +336,18 @@ function pauseMachine(machine, cost, message, mode) {
 }
 
 function renderPatternStatus(machine, running, message, mode, input, targetCount, placeCount, energyCost) {
-    setRunning(machine, running);
-    if (!machine.shouldUpdateUI) return;
-
-    machine.energy.display(0);
     const blockName = input?.selected?.typeId
         ? input.selected.typeId.split(":").pop().replace(/_/g, " ")
         : "None";
-    machine.setLabel([
-        `\u00A7r${running ? "\u00A7a" : "\u00A7e"}${message}`,
-        `\u00A7r\u00A77Mode: \u00A7f${mode.title}`,
-        `\u00A7r\u00A77Block: \u00A7f${blockName}`,
-        `\u00A7r\u00A77Available: \u00A7f${input?.available ?? 0}`,
-        `\u00A7r\u00A77Targets: \u00A7f${placeCount}/${targetCount}`,
-        `\u00A7r\u00A77Cost: \u00A7f${EnergyStorage.formatEnergyToText(energyCost)} DE`,
-    ]);
+    renderMachineInfo(machine, running, message, [{
+        title: "Pattern Information",
+        lines: [
+            `\u00A7r\u00A77Mode \u00A7f${mode.title}`,
+            `\u00A7r\u00A77Block \u00A7f${blockName}`,
+            `\u00A7r\u00A77Available \u00A7f${input?.available ?? 0}`,
+            `\u00A7r\u00A77Targets \u00A7f${placeCount}/${targetCount}`,
+        ],
+    }], { energyCost, batch: 1 });
 }
 
 function cleanupTargetStates() {

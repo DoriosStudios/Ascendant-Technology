@@ -1,4 +1,5 @@
 ## Generatoren
+item.utilitycraft:absolute_drill=Absoluter Bohrer\n§7- Baut einen 7x7-Bereich ab\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_battery.name=Absolute Batterie\n§7  Rate: 800 kDE/t\n§o§9UC: Ascendant Technology
 tile.utilitycraft:absolute_furnator.name=Absoluter Furnator\n§7  Rate: 320 kDE/t\n§o§9UC: Ascendant Technology
 tile.utilitycraft:absolute_magmator.name=Absoluter Magmator\n§7  Rate: 400 kDE/t\n§o§9UC: Ascendant Technology

@@ -1,25 +1,31 @@
 {
     "namespace": "verdant_cultivator",
-    "output_grid_3x3": {
+    "output_grid_5x3": {
         "type": "collection_panel",
-        "size": [54, 54],
+        "size": [90, 54],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             { "slot_1@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "collection_index": 11 } },
             { "slot_2@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 0], "collection_index": 12 } },
             { "slot_3@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 0], "collection_index": 13 } },
-            { "slot_4@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 18], "collection_index": 14 } },
-            { "slot_5@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 18], "collection_index": 15 } },
-            { "slot_6@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 18], "collection_index": 16 } },
-            { "slot_7@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 36], "collection_index": 17 } },
-            { "slot_8@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 36], "collection_index": 18 } },
-            { "slot_9@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 36], "collection_index": 19 } },
+            { "slot_4@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 0], "collection_index": 14 } },
+            { "slot_5@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 0], "collection_index": 15 } },
+            { "slot_6@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 18], "collection_index": 16 } },
+            { "slot_7@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 18], "collection_index": 17 } },
+            { "slot_8@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 18], "collection_index": 18 } },
+            { "slot_9@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 18], "collection_index": 19 } },
+            { "slot_10@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 18], "collection_index": 20 } },
+            { "slot_11@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 36], "collection_index": 21 } },
+            { "slot_12@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 36], "collection_index": 22 } },
+            { "slot_13@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 36], "collection_index": 23 } },
+            { "slot_14@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 36], "collection_index": 24 } },
+            { "slot_15@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 36], "collection_index": 25 } },
             {
                 "grid_outline": {
                     "type": "image",
                     "texture": "textures/ui/slots/output_slot",
-                    "size": [56, 56],
+                    "size": [92, 56],
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [-1, -1],
@@ -101,7 +107,7 @@
                 }
             },
             {
-                "output_grid@verdant_cultivator.output_grid_3x3": {
+                "output_grid@verdant_cultivator.output_grid_5x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [66, 14]
@@ -143,12 +149,12 @@
                     "$io_right_texture": "textures/blocks/machines/superior/verdant_cultivator_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/superior/verdant_cultivator_off_down",
                     "$io_back_texture": "textures/blocks/machines/superior/verdant_cultivator_off_south",
-                    "$io_item_top_index": 20,
-                    "$io_item_left_index": 21,
-                    "$io_item_front_index": 22,
-                    "$io_item_right_index": 23,
-                    "$io_item_bottom_index": 24,
-                    "$io_item_back_index": 25
+                    "$io_item_top_index": 26,
+                    "$io_item_left_index": 27,
+                    "$io_item_front_index": 28,
+                    "$io_item_right_index": 29,
+                    "$io_item_bottom_index": 30,
+                    "$io_item_back_index": 31
                 }
             },
             {

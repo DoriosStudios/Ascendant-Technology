@@ -1,6 +1,6 @@
 {
-    "namespace": "magmatic_reactor_chamber",
-    "magmatic_reactor_chamber_top": {
+    "namespace": "industrial_crucible",
+    "industrial_crucible_top": {
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
@@ -38,7 +38,7 @@
                 "input_1@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-54, 20],
+                    "offset": [-46, 11],
                     "collection_index": 3
                 }
             },
@@ -46,7 +46,7 @@
                 "input_2@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-36, 20],
+                    "offset": [-28, 11],
                     "collection_index": 4
                 }
             },
@@ -54,7 +54,7 @@
                 "input_3@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-18, 20],
+                    "offset": [-46, 29],
                     "collection_index": 5
                 }
             },
@@ -62,7 +62,7 @@
                 "input_4@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-54, 38],
+                    "offset": [-28, 29],
                     "collection_index": 6
                 }
             },
@@ -70,7 +70,7 @@
                 "input_5@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-36, 38],
+                    "offset": [-46, 47],
                     "collection_index": 7
                 }
             },
@@ -78,7 +78,7 @@
                 "input_6@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-18, 38],
+                    "offset": [-28, 47],
                     "collection_index": 8
                 }
             },
@@ -86,68 +86,112 @@
                 "process_progress@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [7, 21],
+                    "offset": [0, 21],
                     "collection_index": 2
                 }
             },
             {
-                "solid_output@uc.output_1_slot": {
+                "solid_output_1@uc.output_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [39, 29],
-                    "collection_index": 9
+                    "offset": [29, 11],
+                    "collection_index": 14
+                }
+            },
+            {
+                "solid_output_2@uc.output_1_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [47, 11],
+                    "collection_index": 15
+                }
+            },
+            {
+                "solid_output_3@uc.output_1_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [29, 29],
+                    "collection_index": 16
+                }
+            },
+            {
+                "solid_output_4@uc.output_1_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [47, 29],
+                    "collection_index": 17
+                }
+            },
+            {
+                "solid_output_5@uc.output_1_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [29, 47],
+                    "collection_index": 18
+                }
+            },
+            {
+                "solid_output_6@uc.output_1_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [47, 47],
+                    "collection_index": 19
                 }
             },
             {
                 "lava_output@uc.liquid_output_1_bar": {
-                    "$collection_index": 10,
+                    "$collection_index": 9,
                     "$has_bg": false,
                     "offset": [58, 0]
                 }
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "$upgrade_index_1": 11,
-                    "$upgrade_index_2": 12,
+                    "$upgrade_index_1": 10,
+                    "$upgrade_index_2": 11,
+                    "$upgrade_index_3": 12,
+                    "$upgrade_index_4": 13,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
-                    "$has_third_upgrade": false,
-                    "$has_fourth_upgrade": false,
+                    "$has_third_upgrade": true,
+                    "$has_fourth_upgrade": true,
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade",
+                    "$upgrade_overlay_4": "textures/items/machinery/stack_upgrade"
                 }
             },
             {
                 "io_tab@uc.io_tab": {
-                    "$io_items_modes_description": "ui.utilitycraft:io.magmatic_reactor_chamber.items",
-                    "$io_fluids_modes_description": "ui.utilitycraft:io.magmatic_reactor_chamber.liquids",
+                    "$io_items_modes_description": "ui.utilitycraft:io.industrial_crucible.items",
+                    "$io_fluids_modes_description": "ui.utilitycraft:io.industrial_crucible.liquids",
                     "$has_item_io": true,
                     "$has_fluid_io": true,
                     "$io_items_default": true,
                     "$io_fluids_default": false,
-                    "$io_top_texture": "textures/blocks/generators/absolute_magmator_off_up",
-                    "$io_left_texture": "textures/blocks/generators/absolute_magmator_off_west",
-                    "$io_front_texture": "textures/blocks/generators/absolute_magmator_off_north",
-                    "$io_right_texture": "textures/blocks/generators/absolute_magmator_off_east",
-                    "$io_bottom_texture": "textures/blocks/generators/absolute_magmator_off_down",
-                    "$io_back_texture": "textures/blocks/generators/absolute_magmator_off_south",
-                    "$io_item_top_index": 13,
-                    "$io_item_left_index": 14,
-                    "$io_item_front_index": 15,
-                    "$io_item_right_index": 16,
-                    "$io_item_bottom_index": 17,
-                    "$io_item_back_index": 18,
-                    "$io_fluid_top_index": 19,
-                    "$io_fluid_left_index": 20,
-                    "$io_fluid_front_index": 21,
-                    "$io_fluid_right_index": 22,
-                    "$io_fluid_bottom_index": 23,
-                    "$io_fluid_back_index": 24
+                    "$io_top_texture": "textures/blocks/machines/superior/industrial_crucible_off_up",
+                    "$io_left_texture": "textures/blocks/machines/superior/industrial_crucible_off_west",
+                    "$io_front_texture": "textures/blocks/machines/superior/industrial_crucible_off_north",
+                    "$io_right_texture": "textures/blocks/machines/superior/industrial_crucible_off_east",
+                    "$io_bottom_texture": "textures/blocks/machines/superior/industrial_crucible_off_down",
+                    "$io_back_texture": "textures/blocks/machines/superior/industrial_crucible_off_south",
+                    "$io_item_top_index": 20,
+                    "$io_item_left_index": 21,
+                    "$io_item_front_index": 22,
+                    "$io_item_right_index": 23,
+                    "$io_item_bottom_index": 24,
+                    "$io_item_back_index": 25,
+                    "$io_fluid_top_index": 26,
+                    "$io_fluid_left_index": 27,
+                    "$io_fluid_front_index": 28,
+                    "$io_fluid_right_index": 29,
+                    "$io_fluid_bottom_index": 30,
+                    "$io_fluid_back_index": 31
                 }
             },
             {
                 "info_tab@uc.info_tab": {
-                    "$info_description": "ui.utilitycraft:info.magmatic_reactor_chamber"
+                    "$info_description": "ui.utilitycraft:info.industrial_crucible"
                 }
             }
         ]
@@ -182,7 +226,7 @@
                                 "layer": 5,
                                 "controls": [
                                     {
-                                        "magmatic_reactor_chamber_top@magmatic_reactor_chamber.magmatic_reactor_chamber_top": {}
+                                        "industrial_crucible_top@industrial_crucible.industrial_crucible_top": {}
                                     },
                                     {
                                         "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}

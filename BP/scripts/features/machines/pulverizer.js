@@ -68,7 +68,10 @@ DoriosLib.registry.blockComponent(ID, {
         if (!selected) {
             setDynamicNumber(machine.entity, "dorios:progress_0", 0);
             displayProgress(machine, settings.machine.energy_cost);
-            renderStatus(machine, false, "Insert Items");
+            renderStatus(machine, false, "Insert Items", [{
+                title: "Pulverizer Information",
+                lines: [`§r§7Steam Boost §fInactive`, `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`, `§r§7Input §fNone`],
+            }], { energyCost: settings.machine.energy_cost });
             if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
             return;
         }
@@ -82,7 +85,10 @@ DoriosLib.registry.blockComponent(ID, {
         if (resourceCrafts <= 0) {
             if (inputCrafts <= 0) setDynamicNumber(machine.entity, "dorios:progress_0", 0);
             displayProgress(machine, recipe.cost ?? settings.machine.energy_cost);
-            renderStatus(machine, false, outputCrafts <= 0 ? "Output Full" : "Needs More Input");
+            renderStatus(machine, false, outputCrafts <= 0 ? "Output Full" : "Needs More Input", [{
+                title: "Pulverizer Information",
+                lines: [`§r§7Steam Boost §fInactive`, `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`, `§r§7Input §f${DoriosLib.text.formatIdentifier(inputTypeId)}`],
+            }], { energyCost: recipe.cost ?? settings.machine.energy_cost });
             if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
             return;
         }
@@ -114,7 +120,16 @@ DoriosLib.registry.blockComponent(ID, {
         displayProgress(machine, cost);
         if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
         const active = result.energyUsed > 0 || result.processCount > 0;
-        renderStatus(machine, active, active ? (steamActive ? "Steam Boost" : "Running") : "No Energy");
+        renderStatus(machine, active, active ? (steamActive ? "Steam Boost" : "Running") : "No Energy", [{
+            title: "Pulverizer Information",
+            lines: [
+                `§r§7Input §f${DoriosLib.text.formatIdentifier(inputTypeId)}`,
+                `§r§7Output §f${DoriosLib.text.formatIdentifier(recipe.output)}`,
+                `§r§7Processed §f${result.processCount}`,
+                `§r§7Steam Boost §f${steamActive ? "x1.75" : "Inactive"}`,
+                `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
+            ],
+        }], { energyCost: cost, rateMultiplier: steamActive ? 1.75 : 1 });
     },
 
     onPlayerBreak: Machine.onDestroy,

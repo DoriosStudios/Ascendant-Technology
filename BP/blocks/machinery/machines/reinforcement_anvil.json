@@ -22,23 +22,24 @@
             "utilitycraft:reinforcement_anvil": {
                 "entity": {
                     "type": "machine",
-                    "inventory_size": 15
+                    "inventory_size": 14
                 },
                 "machine": {
                     "energy_cap": 512000,
-                    "energy_cost": 6400,
-                    "rate_speed_base": 640,
-                    "upgrades": [7, 8]
+                    "energy_cost": 8000,
+                    "rate_speed_base": 50,
+                    "upgrades": [5, 6, 7]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 7 },
-                { "type": "energy", "slot": 8 }
+                { "type": "speed", "slot": 5 },
+                { "type": "energy", "slot": 6 },
+                { "type": "hyper_processing", "slot": 7 }
             ],
-            "minecraft:geometry": "geometry.utilitycraft_enchantment_station",
+            "minecraft:geometry": "geometry.induction_anvil",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_enchantment_station",
+                    "texture": "utilitycraft_reinforcement_anvil_off",
                     "render_method": "alpha_test"
                 }
             },
@@ -60,7 +61,7 @@
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "utilitycraft_enchantment_station",
+                            "texture": "utilitycraft_reinforcement_anvil_on",
                             "render_method": "alpha_test"
                         }
                     },

@@ -7,34 +7,35 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
-            "C": {
-                "item": "utilitycraft:cryofluid_capsule_8"
+            "I": {
+                "item": "utilitycraft:heavy_drill"
             },
-            "L": {
-                "item": "utilitycraft:lava_capsule_8"
+            "G": {
+                "item": "utilitycraft:tungsten"
             },
-            "U": {
-                "item": "utilitycraft:pulverizer"
+            "M": {
+                "item": "utilitycraft:crusher"
             },
-            "A": {
-                "item": "utilitycraft:advanced_chip"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "PCP",
-            "LUL",
-            "PAP"
-        ],
         "result": {
-            "item": "utilitycraft:impact_crusher"
+            "item": "utilitycraft:impact_crusher",
+            "count": 1
         },
         "unlock": [
             {
-                "item": "utilitycraft:pulverizer"
+                "item": "utilitycraft:crusher"
             }
         ]
     }

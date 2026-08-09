@@ -7,30 +7,31 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
-            "H": {
-                "item": "utilitycraft:hyper_processing_upgrade"
+            "I": {
+                "item": "minecraft:dispenser"
             },
-            "C": {
-                "item": "utilitycraft:machine_case"
+            "G": {
+                "item": "utilitycraft:tungsten"
             },
-            "B": {
+            "M": {
                 "item": "utilitycraft:block_placer"
             },
-            "A": {
-                "item": "utilitycraft:advanced_chip"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "PHP",
-            "CBC",
-            "PAP"
-        ],
         "result": {
-            "item": "utilitycraft:pattern_placer"
+            "item": "utilitycraft:pattern_placer",
+            "count": 1
         },
         "unlock": [
             {

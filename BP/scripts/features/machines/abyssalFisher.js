@@ -4,7 +4,6 @@ import { system } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
 import {
     ButtonManager,
-    EnergyStorage,
     FluidStorage,
     Machine,
     registerIOInterface,
@@ -17,9 +16,9 @@ import { advanceProcess } from "../../ATCore/processing/index.js";
 import { abyssalFisherConfig } from "../../config/recipes/abyssalFisher.js";
 import {
     displayProgress,
+    renderMachineInfo,
     setDynamicNumber,
     setDynamicString,
-    setRunning,
     setUiItem,
 } from "./runtime.js";
 
@@ -30,13 +29,11 @@ const LEGACY_SLOT_LAYOUT = [
     11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
     29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
 ];
-const MODE_BUTTON_SLOT = 3;
 const NET_SLOT = 4;
 const WATER_DISPLAY_SLOT = 5;
 const OUTPUT_SLOTS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
 const ITEM_IO_BUTTON_SLOTS = [26, 27, 28, 29, 30, 31];
 const FLUID_IO_BUTTON_SLOTS = [32, 33, 34, 35, 36, 37];
-const MODE_KEY = "ascendant:abyssal_fisher_mode";
 const OPERATION_KEY = "ascendant:abyssal_fisher_operation";
 const WATER_TYPE = "water";
 const FLUID_IO_RATE = 128000;
@@ -51,56 +48,20 @@ const WATER_TYPES = new Set([
     "utilitycraft:sink",
 ]);
 
-const modes = new Map([
-    ["expedition", {
-        id: "expedition",
-        title: "Expedition",
-        short: "EXP",
-        color: "\u00A76",
-        baseCasts: 1,
-        energyMultiplier: 1.35,
-        waterPerCast: 350,
-        chanceMultiplier: 1.08,
-        amountMultiplier: 1,
-        tierBonus: 1,
-        luckBonus: 4,
-        minimumBatchSeconds: 3.6,
-        secondsPerCast: 1.25,
-    }],
-    ["mass", {
-        id: "mass",
-        title: "Mass",
-        short: "MASS",
-        color: "\u00A7b",
-        baseCasts: 2,
-        energyMultiplier: 1,
-        waterPerCast: 225,
-        chanceMultiplier: 0.92,
-        amountMultiplier: 1.15,
-        tierBonus: 0,
-        luckBonus: 0,
-        minimumBatchSeconds: 1.8,
-        secondsPerCast: 0.55,
-    }],
-]);
-const modeOrder = ["expedition", "mass"];
+const STANDARD_OPERATION = Object.freeze({
+    baseCasts: 1,
+    energyMultiplier: 1,
+    waterPerCast: 250,
+    chanceMultiplier: 1,
+    amountMultiplier: 1,
+    tierBonus: 0,
+    luckBonus: 0,
+    minimumBatchSeconds: 2.5,
+    secondsPerCast: 0.75,
+});
 const netProfiles = new Map();
 const environmentStates = new Map();
 let lastCacheCleanupTick = 0;
-
-function getMode(entity) {
-    return modes.get(entity.getDynamicProperty(MODE_KEY)) ?? modes.get("expedition");
-}
-
-ButtonManager.registerMachineButton(ID, MODE_BUTTON_SLOT, ({ entity }) => {
-    const current = getMode(entity);
-    const index = modeOrder.indexOf(current.id);
-    const next = modes.get(modeOrder[(index + 1) % modeOrder.length]);
-    setDynamicString(entity, MODE_KEY, next.id);
-    setDynamicString(entity, OPERATION_KEY, "");
-    setDynamicNumber(entity, "dorios:progress_0", 0);
-    return `\u00A7r${next.color}${next.short}`;
-});
 
 registerIOInterface(ID, {
     items: {
@@ -133,9 +94,7 @@ DoriosLib.registry.blockComponent(ID, {
             machine.blockSlots([WATER_DISPLAY_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
-            setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A76EXP");
             setUiItem(machine.container, WATER_DISPLAY_SLOT, "utilitycraft:empty_fluid_bar");
-            setDynamicString(machine.entity, MODE_KEY, "expedition");
             setDynamicString(machine.entity, OPERATION_KEY, "");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
 
@@ -157,31 +116,30 @@ DoriosLib.registry.blockComponent(ID, {
         else ButtonManager.unwatchEntity(machine.entity);
 
         cleanupCaches();
-        const mode = getMode(machine.entity);
         const netItem = machine.container.getItem(NET_SLOT);
         const net = resolveNetProfile(netItem);
         if (!net) {
-            resetProcess(machine, water, settings.machine.energy_cost, "Insert Fishing Net", mode);
+            resetProcess(machine, water, settings.machine.energy_cost, "Insert Fishing Net");
             return;
         }
 
         if (!hasOutputSpace(machine.container)) {
-            pauseProcess(machine, water, settings.machine.energy_cost, "Output Full", mode, net);
+            pauseProcess(machine, water, settings.machine.energy_cost, "Output Full", net);
             return;
         }
 
         const environment = getEnvironment(machine);
-        const operation = buildOperation(machine, settings, mode, net, environment);
+        const operation = buildOperation(machine, settings, net, environment);
         if (operation.table.empty) {
-            resetProcess(machine, water, operation.energyCost, "Net Too Weak", mode, net, environment);
+            resetProcess(machine, water, operation.energyCost, "Net Too Weak", net, environment);
             return;
         }
         if (water.getType() !== WATER_TYPE) {
-            pauseProcess(machine, water, operation.energyCost, "Wrong Liquid", mode, net, environment, operation);
+            pauseProcess(machine, water, operation.energyCost, "Wrong Liquid", net, environment, operation);
             return;
         }
         if (water.get() < operation.waterCost) {
-            pauseProcess(machine, water, operation.energyCost, "Low Water", mode, net, environment, operation);
+            pauseProcess(machine, water, operation.energyCost, "Low Water", net, environment, operation);
             return;
         }
 
@@ -226,11 +184,11 @@ DoriosLib.registry.blockComponent(ID, {
 
         const running = result.energyUsed > 0 || result.processCount > 0;
         const message = result.processCount > 0
-            ? mode.id === "expedition" ? "Survey Complete" : "Net Burst"
+            ? "Catch Complete"
             : running
-                ? mode.id === "expedition" ? "Surveying" : "Casting"
+                ? "Fishing"
                 : "No Energy";
-        renderStatus(machine, water, running, message, mode, net, environment, operation, distribution);
+        renderStatus(machine, water, running, message, net, environment, operation, distribution);
     },
 
     onPlayerBreak(event) {
@@ -268,7 +226,8 @@ function resolveNetProfile(item) {
     return profile;
 }
 
-function buildOperation(machine, settings, mode, net, environment) {
+function buildOperation(machine, settings, net, environment) {
+    const mode = STANDARD_OPERATION;
     const processBatch = Math.max(1, Math.floor(machine.boosts.process_batch ?? 1));
     const castCount = Math.max(1, mode.baseCasts * processBatch);
     const effectiveTier = Math.max(0, net.tier + mode.tierBonus + environment.tierBonus);
@@ -281,7 +240,7 @@ function buildOperation(machine, settings, mode, net, environment) {
     const cycleSeconds = mode.minimumBatchSeconds
         + Math.max(0, castCount - 1) * mode.secondsPerCast;
     return {
-        key: `${mode.id}|${net.typeId}|${effectiveTier}|${effectiveLuck}|${castCount}|${environment.signature}`,
+        key: `${net.typeId}|${effectiveTier}|${effectiveLuck}|${castCount}|${environment.signature}`,
         table: getAbyssalLootTable(effectiveTier),
         castCount,
         totalRolls: castCount * net.rolls,
@@ -389,7 +348,7 @@ function insertDrops(machine, drops) {
     let overflow = 0;
     for (let index = 0; index < drops.length; index++) {
         const stack = drops[index];
-        const accepted = DoriosLib.containers.insert(machine.container, {
+        const accepted = DoriosLib.container.insert(machine.container, {
             item: stack,
             slots: OUTPUT_SLOTS,
         });
@@ -427,42 +386,65 @@ function getRateMultiplier(baseRate, energyCost, cycleSeconds, netSpeed) {
         * Math.max(0.1, netSpeed);
 }
 
-function resetProcess(machine, water, cost, message, mode, net = null, environment = null) {
+function resetProcess(machine, water, cost, message, net = null, environment = null) {
     setDynamicString(machine.entity, OPERATION_KEY, "");
     setDynamicNumber(machine.entity, "dorios:progress_0", 0);
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
     displayProgress(machine, cost);
     if (machine.shouldUpdateUI) water.display(WATER_DISPLAY_SLOT);
-    renderStatus(machine, water, false, message, mode, net, environment);
+    renderStatus(machine, water, false, message, net, environment);
 }
 
-function pauseProcess(machine, water, cost, message, mode, net = null, environment = null, operation = null) {
+function pauseProcess(machine, water, cost, message, net = null, environment = null, operation = null) {
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
     displayProgress(machine, cost);
     if (machine.shouldUpdateUI) water.display(WATER_DISPLAY_SLOT);
-    renderStatus(machine, water, false, message, mode, net, environment, operation);
+    renderStatus(machine, water, false, message, net, environment, operation);
 }
 
-function renderStatus(machine, water, running, message, mode, net, environment, operation = null, distribution = null) {
-    setRunning(machine, running);
-    if (!machine.shouldUpdateUI) return;
-
-    machine.energy.display(0);
-    const lines = [
-        `\u00A7r${running ? "\u00A7a" : "\u00A7e"}${message}`,
-        `\u00A7r\u00A77Mode: \u00A7f${mode.title}`,
-        `\u00A7r\u00A77Net: \u00A7f${net ? formatTypeId(net.typeId) : "None"}`,
-        `\u00A7r\u00A77Water: \u00A7f${FluidStorage.formatFluid(water.get())}`,
-        `\u00A7r\u00A77Current: \u00A7f${environment?.label ?? "Unknown"}`,
+function renderStatus(machine, water, running, message, net, environment, operation = null, distribution = null) {
+    const fishingLines = [
+        `\u00A7r\u00A77Net \u00A7f${net ? formatTypeId(net.typeId) : "None"}`,
+        `\u00A7r\u00A77Current \u00A7f${environment?.label ?? "Unknown"}`,
     ];
     if (operation) {
-        lines.push(`\u00A7r\u00A77Casts: \u00A7f${operation.castCount} (${operation.totalRolls} rolls)`);
-        lines.push(`\u00A7r\u00A77Tier/Luck: \u00A7f${operation.effectiveTier}/${operation.effectiveLuck}`);
-        lines.push(`\u00A7r\u00A77Cycle: \u00A7f${EnergyStorage.formatEnergyToText(operation.energyCost)} DE`);
+        fishingLines.push(`\u00A7r\u00A77Casts \u00A7f${operation.castCount} (${operation.totalRolls} rolls)`);
+        fishingLines.push(`\u00A7r\u00A77Tier / Luck \u00A7f${operation.effectiveTier} / ${operation.effectiveLuck}`);
     }
-    if (distribution?.inserted > 0) lines.push(`\u00A7r\u00A7aCaught: ${distribution.inserted}`);
-    if (distribution?.overflow > 0) lines.push(`\u00A7r\u00A76Overflow: ${distribution.overflow}`);
-    machine.setLabel(lines);
+    const waterPercent = water.getCap() > 0 ? (water.get() / water.getCap()) * 100 : 0;
+    const sections = [
+        { title: "Fishing Information", lines: fishingLines },
+        {
+            title: "Water Information",
+            lines: [
+                `\u00A7r\u00A77Type \u00A7f${formatTypeId(water.getType())}`,
+                `\u00A7r\u00A77Stored \u00A7f${FluidStorage.formatFluid(water.get())} / ${FluidStorage.formatFluid(water.getCap())}`,
+                `\u00A7r\u00A77Capacity \u00A7f${waterPercent.toFixed(2)}%%`,
+            ],
+        },
+    ];
+    if (distribution) {
+        sections.push({
+            title: "Catch Result",
+            lines: [
+                `\u00A7r\u00A7aCaught \u00A7f${distribution.inserted ?? 0}`,
+                `\u00A7r\u00A76Overflow \u00A7f${distribution.overflow ?? 0}`,
+            ],
+        });
+    }
+    const rateMultiplier = operation
+        ? getRateMultiplier(
+            machine.settings.machine.rate_speed_base,
+            operation.energyCost,
+            operation.cycleSeconds,
+            net?.speed ?? 1,
+        )
+        : 1;
+    renderMachineInfo(machine, running, message, sections, {
+        energyCost: operation?.energyCost,
+        rateMultiplier,
+        batch: 1,
+    });
 }
 
 function formatTypeId(typeId) {

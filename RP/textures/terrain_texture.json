@@ -235,6 +235,12 @@
 		"utilitycraft_enchantment_station": {
 			"textures": "textures/blocks/machines/enchantment_station"
 		},
+		"utilitycraft_reinforcement_anvil_off": {
+			"textures": "textures/blocks/machines/reinforcement_anvil_off"
+		},
+		"utilitycraft_reinforcement_anvil_on": {
+			"textures": "textures/blocks/machines/reinforcement_anvil_on"
+		},
 		"utilitycraft_refining_table": {
 			"textures": "textures/blocks/machines/refining_table"
 		},
@@ -619,6 +625,42 @@
 		},
 		"utilitycraft_absolute_magmator_on_down": {
 			"textures": "textures/blocks/generators/absolute_magmator_on_down"
+		},
+		"utilitycraft_industrial_crucible_off_north": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_off_north"
+		},
+		"utilitycraft_industrial_crucible_off_south": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_off_south"
+		},
+		"utilitycraft_industrial_crucible_off_east": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_off_east"
+		},
+		"utilitycraft_industrial_crucible_off_west": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_off_west"
+		},
+		"utilitycraft_industrial_crucible_off_up": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_off_up"
+		},
+		"utilitycraft_industrial_crucible_off_down": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_off_down"
+		},
+		"utilitycraft_industrial_crucible_on_north": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_on_north"
+		},
+		"utilitycraft_industrial_crucible_on_south": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_on_south"
+		},
+		"utilitycraft_industrial_crucible_on_east": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_on_east"
+		},
+		"utilitycraft_industrial_crucible_on_west": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_on_west"
+		},
+		"utilitycraft_industrial_crucible_on_up": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_on_up"
+		},
+		"utilitycraft_industrial_crucible_on_down": {
+			"textures": "textures/blocks/machines/superior/industrial_crucible_on_down"
 		},
 		"utilitycraft_absolute_thermo_generator_off_north": {
 			"textures": "textures/blocks/generators/absolute_thermo_generator_off_north"

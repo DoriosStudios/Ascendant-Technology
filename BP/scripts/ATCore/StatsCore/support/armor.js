@@ -1,6 +1,7 @@
 import { system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
-import { persistEquipmentItem } from "../core/equipment.js";
+import { getEquipment, persistEquipmentItem } from "../core/equipment.js";
+import { getReinforcementMaximum, getReinforcementPoints } from "../../enchanting/reinforcement.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
 import { showAbilityFeedback, showLevelUp } from "../feedback/index.js";
 import { STATSCORE_ICONS } from "../icons.js";
@@ -11,6 +12,7 @@ import { repairItemDurability } from "../shared/durability.js";
 import { filterEffectsByKind } from "../shared/effectSelectors.js";
 import { applyEffectById } from "../shared/effects.js";
 import { OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity } from "../shared/entityCategories.js";
+import { getArmorComponentDefinition, resolveArmorComponentMitigation } from "./armorComponent.js";
 
 const MAX_TOTAL_DAMAGE_REDUCTION = 0.9;
 const supportEffectCooldowns = new Map();
@@ -70,43 +72,101 @@ function getArmorSupportEntries(target) {
     const entries = [];
 
     for (const slotName of STATSCORE.slots.armor) {
+        const access = getEquipment(target, slotName);
+        const item = access?.item;
+        if (!item) continue;
+
         const context = getEquipmentStatsContext(target, slotName);
-        if (!context || context.definition.type !== ITEM_TYPES.support) continue;
-        if (context.attributes?.refinement?.active !== true) continue;
+        const statsActive = context?.definition?.type === ITEM_TYPES.support
+            && context.attributes?.refinement?.active === true;
+        const componentDefinition = getArmorComponentDefinition(item);
+        if (!statsActive && !componentDefinition) continue;
 
         entries.push({
             slotName,
-            item: context.stack,
-            definition: context.definition,
-            attributes: context.attributes,
+            item: context?.stack ?? item,
+            definition: context?.definition ?? null,
+            attributes: statsActive ? context.attributes : null,
+            statsActive,
+            componentDefinition,
         });
     }
 
-    const offhandContext = getEquipmentStatsContext(target, STATSCORE.slots.offhand);
-    if (offhandContext?.definition?.type === ITEM_TYPES.support && offhandContext.attributes?.refinement?.active === true) {
+    const offhandAccess = getEquipment(target, STATSCORE.slots.offhand);
+    const offhandItem = offhandAccess?.item;
+    if (offhandItem) {
+        const offhandContext = getEquipmentStatsContext(target, STATSCORE.slots.offhand);
+        const statsActive = offhandContext?.definition?.type === ITEM_TYPES.support
+            && offhandContext.attributes?.refinement?.active === true;
+        const componentDefinition = getArmorComponentDefinition(offhandItem);
+        if (statsActive || componentDefinition) {
             entries.push({
                 slotName: STATSCORE.slots.offhand,
-                item: offhandContext.stack,
-                definition: offhandContext.definition,
-                attributes: offhandContext.attributes,
+                item: offhandContext?.stack ?? offhandItem,
+                definition: offhandContext?.definition ?? null,
+                attributes: statsActive ? offhandContext.attributes : null,
+                statsActive,
+                componentDefinition,
             });
+        }
     }
 
     return entries;
 }
 
-function getTotalDamageReduction(entries) {
+function resolveEntryMitigation(entry, damageType) {
+    const component = resolveArmorComponentMitigation(entry?.item, damageType);
+    const support = entry?.statsActive ? entry.attributes?.support ?? {} : {};
+    return {
+        damageReduction: Math.max(0, Number(component?.damageReduction ?? 0) || 0)
+            + Math.max(0, Number(support.damageReduction ?? 0) || 0),
+        negationChances: [
+            Number(component?.damageNegation ?? 0),
+            Number(support.negateAllDamageChance ?? 0),
+        ].filter(value => Number.isFinite(value) && value > 0),
+    };
+}
+
+function getTotalDamageReduction(entries, damageType = "all") {
     if (!Array.isArray(entries) || entries.length <= 0) return 0;
 
     const reduction = entries.reduce((sum, entry) => {
         const isOffhandShield = entry.slotName === STATSCORE.slots.offhand
             && String(entry.definition?.branch ?? "").toLowerCase() === "shield";
-        const value = isOffhandShield
-            ? 0.6
-            : Number(entry.attributes?.support?.damageReduction ?? 0);
+        const resolved = resolveEntryMitigation(entry, damageType);
+        const value = isOffhandShield && entry.statsActive
+            ? Math.max(0.6, resolved.damageReduction)
+            : resolved.damageReduction;
         return sum + (Number.isFinite(value) ? Math.max(0, value) : 0);
     }, 0);
     return Math.min(MAX_TOTAL_DAMAGE_REDUCTION, reduction);
+}
+
+function getArmorMitigationProfile(entries, damageType) {
+    const normalizedDamageType = normalizeDamageType(damageType);
+    const reductionValues = [];
+    const negationValues = [];
+    let reinforcement = 0;
+    let reinforcementMaximum = 0;
+
+    for (const entry of entries ?? []) {
+        const resolved = resolveEntryMitigation(entry, normalizedDamageType);
+        if (resolved.damageReduction > 0) reductionValues.push(resolved.damageReduction);
+        negationValues.push(...resolved.negationChances);
+        reinforcement += getReinforcementPoints(entry.item);
+        reinforcementMaximum += getReinforcementMaximum(entry.item);
+    }
+
+    return {
+        damageType: normalizedDamageType,
+        pieceCount: entries?.length ?? 0,
+        reductionValues,
+        negationValues,
+        totalReduction: getTotalDamageReduction(entries, normalizedDamageType),
+        totalNegation: combineNegationChances(negationValues),
+        reinforcement,
+        reinforcementMaximum,
+    };
 }
 
 /**
@@ -116,11 +176,7 @@ function getTotalDamageReduction(entries) {
  */
 export function getPlayerArmorMitigationProfile(target, damageType = "all") {
     const entries = getArmorSupportEntries(target);
-    return {
-        damageType: normalizeDamageType(damageType),
-        pieceCount: entries.length,
-        totalReduction: getTotalDamageReduction(entries),
-    };
+    return getArmorMitigationProfile(entries, damageType);
 }
 
 function getSupportEffects(entries, kind) {
@@ -217,27 +273,13 @@ function applyArmorMitigation(event, entries) {
     const damage = Number(event?.damage ?? 0);
     if (!Number.isFinite(damage) || damage <= 0) return;
 
-    const negationChances = [];
-
-    const totalReduction = getTotalDamageReduction(entries);
-
-    for (const entry of entries) {
-        const support = entry.attributes?.support ?? {};
-
-        const negateAllDamageChance = Math.max(0, Number(support.negateAllDamageChance ?? 0) || 0);
-        if (negateAllDamageChance > 0) {
-            negationChances.push(negateAllDamageChance);
-        }
-
-    }
-
-    const totalNegationChance = combineNegationChances(negationChances);
-    if (rollChance(totalNegationChance, 0)) {
+    const profile = getArmorMitigationProfile(entries, getEventDamageType(event));
+    if (rollChance(profile.totalNegation, 0)) {
         event.damage = 0;
         return;
     }
 
-    const mitigatedDamage = totalReduction > 0 ? damage * (1 - totalReduction) : damage;
+    const mitigatedDamage = profile.totalReduction > 0 ? damage * (1 - profile.totalReduction) : damage;
     event.damage = Math.max(0, mitigatedDamage);
 }
 
@@ -314,6 +356,7 @@ function processArmorProgress(target) {
     const entries = getArmorSupportEntries(target);
 
     for (const entry of entries) {
+        if (!entry.statsActive) continue;
         const { slotName, item, definition, attributes } = entry;
 
         const amount = getProgressAmount(definition, "armor", 1);

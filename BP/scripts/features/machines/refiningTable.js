@@ -232,7 +232,7 @@ function processActiveRefinement(machine, xpTank, preview, activeSignature) {
 
 function buildPreview(machine, xpTank) {
     const equipment = machine.container.getItem(EQUIPMENT_SLOT);
-    const definition = equipment ? getStatsCoreDefinition(equipment.typeId) : undefined;
+    const definition = equipment ? getStatsCoreDefinition(equipment) : undefined;
     const state = equipment && definition ? readStatsState(equipment, definition) : undefined;
     const chipStack = machine.container.getItem(CHIP_SLOT);
     const chip = CONFIG.chips.get(normalizeId(chipStack?.typeId));
@@ -394,7 +394,7 @@ function applyRefinement(machine, xpTank, preview) {
     const pending = readJson(machine.entity, PENDING_KEY);
     if (!equipment || !pending?.refinement || xpTank.get() < preview.xpCost) return false;
 
-    const definition = getStatsCoreDefinition(equipment.typeId);
+    const definition = getStatsCoreDefinition(equipment);
     if (!definition) return false;
     const state = readStatsState(equipment, definition);
     const awakenAbility = pending.awakenAbility === true;
@@ -421,10 +421,7 @@ function applyRefinement(machine, xpTank, preview) {
             advancedUnlocked: awakenAdvanced || state.abilityData?.advancedUnlocked === true,
         },
         refinement: pending.refinement,
-    }, {
-        syncLore: true,
-        forceLore: true,
-    });
+    }, { syncLore: false });
 
     machine.container.setItem(EQUIPMENT_SLOT, equipment);
     xpTank.consume(preview.xpCost);

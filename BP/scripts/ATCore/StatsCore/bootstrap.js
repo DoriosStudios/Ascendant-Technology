@@ -1,6 +1,7 @@
 import { initializeCombatModule } from "./combat/index.js";
 import { initializeMiningModule } from "./mining/index.js";
 import { initializeArmorSupportModule } from "./support/armor.js";
+import { initializeArmorComponentRegistry } from "./support/armorComponent.js";
 import { initializeBootDashModule } from "./support/dash.js";
 import { initializeElytraSupportModule } from "./support/elytra.js";
 import "./commands.js";
@@ -17,10 +18,11 @@ if (!globalThis.__statsCoreInitialized) {
     initializeStatsCoreActionbarBridge();
     // Register defensive before-event handlers first so cancelled hits do not
     // schedule combat or armor side effects in later subscribers.
+    initializeArmorComponentRegistry();
     initializeEventDrivenStatsModule();
+    initializeArmorSupportModule();
     initializeCombatModule();
     initializeMiningModule();
-    initializeArmorSupportModule();
     initializeBootDashModule();
     initializeElytraSupportModule();
     initializeUtilityInteractionModule();

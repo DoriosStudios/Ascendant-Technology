@@ -25,19 +25,24 @@
 			"utilitycraft:arc_press_forge": {
 				"entity": {
 					"type": "machine",
-					"inventory_size": 22
+					"inventory_size": 29
 				},
 				"machine": {
 					"energy_cap": 512000,
 					"energy_cost": 3200,
-					"rate_speed_base": 640,
+					"rate_speed_base": 40,
+					"gas_cap": 128000,
+					"gas_types": 1,
 					"upgrades": [12, 13, 14, 15]
 				}
 			},
 			"utilitycraft:machine_upgrades": [
 				{ "type": "speed", "slot": 12 },
-				{ "type": "energy", "slot": 13 }
+				{ "type": "energy", "slot": 13 },
+				{ "type": "hyper_processing", "slot": 14 },
+				{ "type": "stack", "slot": 15 }
 			],
+			"utilitycraft:gas_container": {},
 			"utilitycraft:machine_recipes": {
 				"type": "arc_press_forge"
 			},
@@ -81,6 +86,7 @@
 			"minecraft:destructible_by_explosion": false,
 			"tag:dorios:machine": {},
 			"tag:dorios:energy": {},
+			"tag:dorios:gas": {},
 			"tag:dorios:item": {},
 			"tag:minecraft:is_pickaxe_item_destructible": {}
 		},

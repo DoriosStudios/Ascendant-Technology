@@ -2,11 +2,12 @@
 
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
-import { advanceProcess } from "../../ATCore/processing/index.js";
+import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { advanceLanes } from "../../ATCore/processing/index.js";
 import { getCryoStabilizerRecipe } from "../../config/recipes/cryoStabilizer.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     renderStatus,
     setDynamicNumber,
     setDynamicString,
@@ -14,33 +15,42 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:cryo_stabilizer";
-const INPUT_SLOT = 3;
-const OUTPUT_SLOT = 4;
-const CONTAINER_INPUT_SLOT = 5;
-const CONTAINER_RETURN_SLOT = 6;
+const INVENTORY_SIZE = 28;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2,
+    3, -1, -1, -1,
+    7,
+    9, 10, -1, -1,
+    4, -1, -1, -1,
+    11, 12, 13, 14, 15, 16,
+    17, 18, 19, 20, 21, 22,
+];
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 11, 12, 13, 14, 15,
+    7, 8, 9, 10, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+];
+const LAYOUT_KEY = "ascendant:cryo_stabilizer_layout";
+const LAYOUT_VERSION = "output_last_v2";
+const INPUT_SLOTS = [3, 4, 5, 6];
 const CRYOFLUID_DISPLAY_SLOT = 7;
-const GUIDE_SLOT = 8;
-const RECIPE_KEY = "ascendant:cryo_stabilizer_recipe";
+const OUTPUT_SLOTS = [12, 13, 14, 15];
+const PROGRESS_PREFIX = "ascendant:cryo_stabilizer_progress_";
 const RESOURCE_IO_RATE = 64000;
 const itemMaximums = new Map();
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [11, 12, 13, 14, 15, 16],
-        anyInputSlots: [INPUT_SLOT, CONTAINER_INPUT_SLOT],
-        anyOutputSlots: [OUTPUT_SLOT, CONTAINER_RETURN_SLOT],
+        buttonSlots: [16, 17, 18, 19, 20, 21],
+        anyInputSlots: INPUT_SLOTS,
+        anyOutputSlots: OUTPUT_SLOTS,
         modes: [
             { id: "disabled" },
-            { id: "input_1", inputSlots: [INPUT_SLOT] },
-            { id: "input_2", inputSlots: [CONTAINER_INPUT_SLOT] },
-            { id: "input_3", inputSlots: [INPUT_SLOT, CONTAINER_INPUT_SLOT] },
-            { id: "output_1", outputSlots: [OUTPUT_SLOT] },
-            { id: "output_2", outputSlots: [CONTAINER_RETURN_SLOT] },
-            { id: "output_3", outputSlots: [OUTPUT_SLOT, CONTAINER_RETURN_SLOT] },
+            { id: "input_1", inputSlots: INPUT_SLOTS },
+            { id: "output_1", outputSlots: OUTPUT_SLOTS },
         ],
     },
     liquids: {
-        buttonSlots: [17, 18, 19, 20, 21, 22],
+        buttonSlots: [22, 23, 24, 25, 26, 27],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -56,115 +66,133 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([CRYOFLUID_DISPLAY_SLOT, GUIDE_SLOT]);
+            machine.blockSlots([CRYOFLUID_DISPLAY_SLOT]);
+            setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
-            setUiItem(
-                machine.container,
-                GUIDE_SLOT,
-                "utilitycraft:arrow_indicator_90",
-                "\u00A7rCryo Stabilizer\n\u00A77Unstable item + Cryofluid -> stabilized result",
-            );
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
-            setDynamicString(machine.entity, RECIPE_KEY, "");
 
             const cryofluid = new FluidStorage(machine.entity, 0);
             cryofluid.setType("cryofluid");
+            cryofluid.display(CRYOFLUID_DISPLAY_SLOT);
         });
     },
 
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, LEGACY_SLOT_LAYOUT,
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         const cryofluid = new FluidStorage(machine.entity, 0);
         if (cryofluid.getType() === "empty") cryofluid.setType("cryofluid");
-
         machine.processIO({ maxFluidMovedPerTick: RESOURCE_IO_RATE });
-        processCryofluidContainer(machine.container, cryofluid);
 
-        const input = machine.container.getItem(INPUT_SLOT);
-        if (!input) {
-            resetProcess(machine, cryofluid, settings.machine.energy_cost, "Insert Unstable Item", "");
-            return;
-        }
+        const lanes = [];
+        let fluidBudget = cryofluid.getType() === "cryofluid" ? cryofluid.get() : 0;
+        let occupied = 0;
+        let blocked = 0;
 
-        const recipe = getCryoStabilizerRecipe(input.typeId);
-        if (!recipe || input.amount < recipe.input.amount) {
-            resetProcess(
-                machine,
-                cryofluid,
-                recipe?.cost ?? settings.machine.energy_cost,
-                recipe ? "Needs More Input" : "Invalid Input",
-                "",
-            );
-            return;
-        }
+        for (let index = 0; index < INPUT_SLOTS.length; index++) {
+            const inputSlot = INPUT_SLOTS[index];
+            const outputSlot = OUTPUT_SLOTS[index];
+            const input = machine.container.getItem(inputSlot);
+            const progressKey = `${PROGRESS_PREFIX}${index}`;
+            if (!input) {
+                setDynamicNumber(machine.entity, progressKey, 0);
+                continue;
+            }
+            occupied++;
 
-        if (machine.entity.getDynamicProperty(RECIPE_KEY) !== recipe.id) {
-            setDynamicString(machine.entity, RECIPE_KEY, recipe.id);
-            setDynamicNumber(machine.entity, "dorios:progress_0", 0);
-        }
+            const recipe = getCryoStabilizerRecipe(input.typeId);
+            if (!recipe || input.amount < recipe.input.amount) {
+                setDynamicNumber(machine.entity, progressKey, 0);
+                blocked++;
+                continue;
+            }
 
-        const cost = recipe.cost ?? settings.machine.energy_cost;
-        const outputMaximum = getItemMaximum(recipe.output.id);
-        if (outputMaximum <= 0) {
-            pauseProcess(machine, cryofluid, cost, "Output Unavailable", recipe);
-            return;
-        }
-
-        const output = machine.container.getItem(OUTPUT_SLOT);
-        const inputCrafts = Math.floor(input.amount / recipe.input.amount);
-        const fluidCrafts = recipe.cryofluid > 0
-            ? Math.floor(cryofluid.get() / recipe.cryofluid)
-            : Number.MAX_SAFE_INTEGER;
-        const outputCrafts = getOutputCraftCapacity(
-            output,
-            recipe.output.id,
-            recipe.output.amount,
-            outputMaximum,
-        );
-
-        if (fluidCrafts <= 0 || outputCrafts <= 0) {
-            const message = fluidCrafts <= 0
-                ? "Needs Cryofluid"
-                : output?.typeId === recipe.output.id ? "Output Full" : "Output Conflict";
-            pauseProcess(machine, cryofluid, cost, message, recipe);
-            return;
-        }
-
-        const result = advanceProcess(machine, {
-            progress: machine.getProgress(),
-            cost,
-            maxCrafts: Math.min(inputCrafts, fluidCrafts, outputCrafts),
-            rateMultiplier: getRecipeRateMultiplier(settings.machine.rate_speed_base, cost, recipe.ticks),
-        });
-
-        if (result.processCount > 0) {
-            consumeInput(
-                machine.container,
-                input,
-                result.processCount * recipe.input.amount,
-            );
-            cryofluid.consume(result.processCount * recipe.cryofluid);
-            insertOutput(
-                machine.container,
+            const output = machine.container.getItem(outputSlot);
+            const inputCrafts = Math.floor(input.amount / recipe.input.amount);
+            const fluidCrafts = recipe.cryofluid > 0
+                ? Math.floor(fluidBudget / recipe.cryofluid)
+                : Number.MAX_SAFE_INTEGER;
+            const outputCrafts = getOutputCraftCapacity(
                 output,
                 recipe.output.id,
-                result.processCount * recipe.output.amount,
+                recipe.output.amount,
+                getItemMaximum(recipe.output.id),
             );
+            const maxCrafts = Math.min(
+                inputCrafts,
+                fluidCrafts,
+                outputCrafts,
+                Math.max(1, Math.floor(machine.boosts.process_batch ?? 1)),
+            );
+            if (maxCrafts <= 0) {
+                blocked++;
+                continue;
+            }
+
+            const reservedFluid = maxCrafts * recipe.cryofluid;
+            fluidBudget -= reservedFluid;
+            lanes.push({
+                index,
+                inputSlot,
+                outputSlot,
+                input,
+                output,
+                recipe,
+                progressKey,
+                progress: getDynamicNumber(machine.entity, progressKey),
+                cost: recipe.cost ?? settings.machine.energy_cost,
+                maxCrafts,
+                batch: machine.boosts.process_batch,
+            });
         }
 
-        setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
-        setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
-        displayResources(machine, cryofluid, cost);
+        const energyUsed = advanceLanes(machine, lanes);
+        let completed = 0;
+        let fluidUsed = 0;
+        for (const lane of lanes) {
+            if (lane.processCount > 0) {
+                consumeInput(machine.container, lane.inputSlot, lane.input, lane.processCount * lane.recipe.input.amount);
+                insertOutput(
+                    machine.container,
+                    lane.outputSlot,
+                    lane.output,
+                    lane.recipe.output.id,
+                    lane.processCount * lane.recipe.output.amount,
+                );
+                fluidUsed += lane.processCount * lane.recipe.cryofluid;
+                completed += lane.processCount;
+            }
+            setDynamicNumber(machine.entity, lane.progressKey, lane.progress);
+        }
+        if (fluidUsed > 0) cryofluid.consume(fluidUsed);
 
-        const active = result.energyUsed > 0 || result.processCount > 0;
-        renderStatus(
-            machine,
-            active,
-            active ? "Stabilizing" : "No Energy",
-            machine.shouldUpdateUI ? recipeStatusLines(recipe, cryofluid) : undefined,
-        );
+        const displayCost = lanes[0]?.cost ?? settings.machine.energy_cost;
+        const displayProgressValue = lanes.length > 0
+            ? Math.max(...lanes.map((lane) => lane.progress))
+            : 0;
+        setDynamicNumber(machine.entity, "dorios:progress_0", displayProgressValue);
+        setDynamicNumber(machine.entity, "dorios:energy_cost_0", displayCost);
+        displayProgress(machine, displayCost);
+        if (machine.shouldUpdateUI) cryofluid.display(CRYOFLUID_DISPLAY_SLOT);
+
+        const running = energyUsed > 0 || completed > 0;
+        const message = completed > 0
+            ? `Stabilized ${completed}`
+            : running ? "Stabilizing" : occupied === 0 ? "Insert Items" : blocked > 0 ? "Blocked" : "No Energy";
+        renderStatus(machine, running, message, [{
+            title: "Stabilizer Information",
+            lines: [
+                `\u00A7r\u00A77Active Lanes \u00A7f${lanes.length}/4`,
+                `\u00A7r\u00A77Blocked Lanes \u00A7f${blocked}`,
+                `\u00A7r\u00A77Cryofluid \u00A7f${FluidStorage.formatFluid(cryofluid.get())} / ${FluidStorage.formatFluid(cryofluid.getCap())}`,
+            ],
+        }], { energyCost: displayCost });
     },
 
     onPlayerBreak(event) {
@@ -172,28 +200,8 @@ DoriosLib.registry.blockComponent(ID, {
     },
 });
 
-function processCryofluidContainer(container, cryofluid) {
-    const input = container.getItem(CONTAINER_INPUT_SLOT);
-    if (!input) return false;
-
-    const definition = FluidStorage.getContainerData(input.typeId);
-    if (!definition || definition.type !== "cryofluid") return false;
-
-    const resultType = definition.output ?? (definition.infinite ? input.typeId : undefined);
-    if (resultType && !canInsertItem(container, CONTAINER_RETURN_SLOT, resultType)) return false;
-
-    const result = cryofluid.fluidItem(input.typeId);
-    if (result === false) return false;
-
-    consumeOne(container, CONTAINER_INPUT_SLOT, input);
-    if (result) insertOne(container, CONTAINER_RETURN_SLOT, result);
-    return true;
-}
-
-function canInsertItem(container, slot, typeId) {
-    const item = container.getItem(slot);
-    if (!item) return getItemMaximum(typeId) > 0;
-    return item.typeId === typeId && item.amount < item.maxAmount;
+function getDynamicNumber(entity, key) {
+    return Math.max(0, Number(entity.getDynamicProperty(key)) || 0);
 }
 
 function getItemMaximum(typeId) {
@@ -206,77 +214,25 @@ function getItemMaximum(typeId) {
     return maximum;
 }
 
-function consumeOne(container, slot, item) {
-    if (item.amount <= 1) container.setItem(slot, undefined);
-    else {
-        item.amount--;
-        container.setItem(slot, item);
-    }
-}
-
-function insertOne(container, slot, typeId) {
-    const item = container.getItem(slot);
-    if (!item) container.setItem(slot, new ItemStack(typeId, 1));
-    else {
-        item.amount++;
-        container.setItem(slot, item);
-    }
-}
-
 function getOutputCraftCapacity(item, typeId, amountPerCraft, emptyMaximum) {
     if (!item) return Math.floor(emptyMaximum / amountPerCraft);
     if (item.typeId !== typeId) return 0;
     return Math.floor(Math.max(0, item.maxAmount - item.amount) / amountPerCraft);
 }
 
-function getRecipeRateMultiplier(baseRate, cost, ticks) {
-    return cost / (Math.max(Number.EPSILON, baseRate) * Math.max(1, ticks));
-}
-
-function consumeInput(container, item, amount) {
-    if (amount >= item.amount) container.setItem(INPUT_SLOT, undefined);
+function consumeInput(container, slot, item, amount) {
+    if (amount >= item.amount) container.setItem(slot, undefined);
     else {
         item.amount -= amount;
-        container.setItem(INPUT_SLOT, item);
+        container.setItem(slot, item);
     }
 }
 
-function insertOutput(container, item, typeId, amount) {
+function insertOutput(container, slot, item, typeId, amount) {
     if (item) {
         item.amount += amount;
-        container.setItem(OUTPUT_SLOT, item);
+        container.setItem(slot, item);
     } else {
-        container.setItem(OUTPUT_SLOT, new ItemStack(typeId, amount));
+        container.setItem(slot, new ItemStack(typeId, amount));
     }
-}
-
-function resetProcess(machine, cryofluid, cost, message, recipeKey) {
-    setDynamicString(machine.entity, RECIPE_KEY, recipeKey);
-    setDynamicNumber(machine.entity, "dorios:progress_0", 0);
-    pauseProcess(machine, cryofluid, cost, message);
-}
-
-function pauseProcess(machine, cryofluid, cost, message, recipe) {
-    setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
-    displayResources(machine, cryofluid, cost);
-    renderStatus(
-        machine,
-        false,
-        message,
-        machine.shouldUpdateUI && recipe ? recipeStatusLines(recipe, cryofluid) : undefined,
-    );
-}
-
-function displayResources(machine, cryofluid, cost) {
-    displayProgress(machine, cost);
-    if (machine.shouldUpdateUI) cryofluid.display(CRYOFLUID_DISPLAY_SLOT);
-}
-
-function recipeStatusLines(recipe, cryofluid) {
-    return [
-        `\u00A7r\u00A77Output: \u00A7f${recipe.output.amount} x ${DoriosLib.text.formatIdentifier(recipe.output.id)}`,
-        `\u00A7r\u00A77Cryofluid Cost: \u00A7f${FluidStorage.formatFluid(recipe.cryofluid)}`,
-        `\u00A7r\u00A77Stored: \u00A7f${FluidStorage.formatFluid(cryofluid.get())} / ${FluidStorage.formatFluid(cryofluid.getCap())}`,
-        `\u00A7r\u00A77Energy Cost: \u00A7f${EnergyStorage.formatEnergyToText(recipe.cost)}`,
-    ];
 }

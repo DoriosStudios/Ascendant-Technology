@@ -30,6 +30,14 @@ export {
 } from "./core/abilities.js";
 export { resolveStatsAttributes } from "./attributes/resolve.js";
 export {
+    ARMOR_COMPONENT_ID,
+    REGISTER_ARMOR_MITIGATION_EVENT_ID,
+    getArmorComponentDefinition,
+    registerArmorMitigationDefinition,
+    registerArmorMitigationDefinitions,
+    resolveArmorComponentMitigation,
+} from "./support/armorComponent.js";
+export {
     ENTITY_CATEGORIES,
     ENTITY_CATEGORY_MEMBERS,
     ENTITY_TYPE_CATEGORY,

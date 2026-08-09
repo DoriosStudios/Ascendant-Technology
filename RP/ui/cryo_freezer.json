@@ -2,174 +2,94 @@
     "namespace": "cryo_freezer",
     "freezer_grid_5x3": {
         "type": "collection_panel",
-        "size": [132, 72],
+        "size": [90, 54],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
-            { "slot_1@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-48, 0], "collection_index": 3 } },
-            { "slot_2@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-24, 0], "collection_index": 4 } },
-            { "slot_3@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, 0], "collection_index": 5 } },
-            { "slot_4@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [24, 0], "collection_index": 6 } },
-            { "slot_5@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [48, 0], "collection_index": 7 } },
-            { "slot_6@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-48, 24], "collection_index": 8 } },
-            { "slot_7@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-24, 24], "collection_index": 9 } },
-            { "slot_8@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, 24], "collection_index": 10 } },
-            { "slot_9@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [24, 24], "collection_index": 11 } },
-            { "slot_10@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [48, 24], "collection_index": 12 } },
-            { "slot_11@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-48, 48], "collection_index": 13 } },
-            { "slot_12@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-24, 48], "collection_index": 14 } },
-            { "slot_13@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, 48], "collection_index": 15 } },
-            { "slot_14@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [24, 48], "collection_index": 16 } },
-            { "slot_15@uc.input_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [48, 48], "collection_index": 17 } },
-            { "outline_1": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-48, -2], "size": [22, 22], "layer": 8 } },
-            { "outline_2": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-24, -2], "size": [22, 22], "layer": 8 } },
-            { "outline_3": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, -2], "size": [22, 22], "layer": 8 } },
-            { "outline_4": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [24, -2], "size": [22, 22], "layer": 8 } },
-            { "outline_5": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [48, -2], "size": [22, 22], "layer": 8 } },
-            { "outline_6": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-48, 22], "size": [22, 22], "layer": 8 } },
-            { "outline_7": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-24, 22], "size": [22, 22], "layer": 8 } },
-            { "outline_8": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, 22], "size": [22, 22], "layer": 8 } },
-            { "outline_9": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [24, 22], "size": [22, 22], "layer": 8 } },
-            { "outline_10": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [48, 22], "size": [22, 22], "layer": 8 } },
-            { "outline_11": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-48, 46], "size": [22, 22], "layer": 8 } },
-            { "outline_12": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-24, 46], "size": [22, 22], "layer": 8 } },
-            { "outline_13": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, 46], "size": [22, 22], "layer": 8 } },
-            { "outline_14": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [24, 46], "size": [22, 22], "layer": 8 } },
-            { "outline_15": { "type": "image", "texture": "textures/ui/frozen_outline", "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [48, 46], "size": [22, 22], "layer": 8 } }
+            { "slot_1@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "collection_index": 3 } },
+            { "slot_2@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 0], "collection_index": 4 } },
+            { "slot_3@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 0], "collection_index": 5 } },
+            { "slot_4@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 0], "collection_index": 6 } },
+            { "slot_5@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 0], "collection_index": 7 } },
+            { "slot_6@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 18], "collection_index": 8 } },
+            { "slot_7@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 18], "collection_index": 9 } },
+            { "slot_8@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 18], "collection_index": 10 } },
+            { "slot_9@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 18], "collection_index": 11 } },
+            { "slot_10@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 18], "collection_index": 12 } },
+            { "slot_11@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 36], "collection_index": 13 } },
+            { "slot_12@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 36], "collection_index": 14 } },
+            { "slot_13@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 36], "collection_index": 15 } },
+            { "slot_14@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 36], "collection_index": 16 } },
+            { "slot_15@uc.input_slot": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 36], "collection_index": 17 } }
         ]
     },
     "cryo_freezer_top": {
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [248, 116],
-        "offset": [-10, -44],
+        "size": [162, 72],
+        "offset": [-10, -40],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
-            { "machine_name@uc.machine_name": { "offset": [10, 0] } },
-            {
-                "energy_bar@uc.energy_bar": {
-                    "$collection_index": 0,
-                    "$has_bg": false,
-                    "offset": [-84, 4]
-                }
-            },
             {
                 "screen": {
-                    "type": "image",
-                    "texture": "textures/ui/panels/half_long_panel_classic",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [96, 182],
-                    "offset": [-92, -10],
-                    "layer": 0
+                    "type": "image", "texture": "textures/ui/background_panel",
+                    "anchor_from": "center", "anchor_to": "center",
+                    "$cell_image_size": [200, 166], "size": [200, 166], "offset": [20, 40], "layer": -1
                 }
             },
+            {
+                "exit_button_panel": {
+                    "type": "panel", "anchor_from": "top_right", "anchor_to": "top_right", "offset": [42, -10],
+                    "controls": [{ "close_button@common.close_button": {} }]
+                }
+            },
+            { "machine_name@uc.machine_name": { "offset": [0, -2] } },
+            { "side_panel@uc.machine_side_panel": { "offset": [-2, 0] } },
             {
                 "item_label@uc.text_label": {
-                    "collection_index": 1,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [82, 154],
-                    "$text_scale": 0.55,
-                    "offset": [-82, 2]
+                    "collection_index": 1, "anchor_from": "top_left", "anchor_to": "top_left",
+                    "size": [74, 146], "$text_scale": 0.55, "offset": [-78, 2]
                 }
             },
-            {
-                "tank_label": {
-                    "type": "label",
-                    "text": "Coolant Tank",
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "offset": [18, -34],
-                    "$text_scale": 0.7,
-                    "shadow": true
-                }
-            },
-            {
-                "coolant_display@uc.liquid_input_1_bar": {
-                    "$collection_index": 2,
-                    "$has_bg": false,
-                    "offset": [6, 13]
-                }
-            },
-            {
-                "freezer_bg": {
-                    "type": "image",
-                    "texture": "textures/ui/frozen_panel",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [82, -4],
-                    "size": [132, 118],
-                    "layer": -1,
-                    "controls": [
-                        {
-                            "freezer_name": {
-                                "type": "label",
-                                "text": "Cryo Freezer",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [0, 12],
-                                "$text_scale": 0.7,
-                                "shadow": true
-                            }
-                        }
-                    ]
-                }
-            },
+            { "coolant_display@uc.liquid_input_1_bar": { "$collection_index": 2, "$has_bg": false, "offset": [-50, -1] } },
             {
                 "freezer_grid@cryo_freezer.freezer_grid_5x3": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [82, 34]
+                    "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [28, 11]
                 }
             },
+            { "energy_bar@uc.energy_bar": { "$collection_index": 0, "offset": [119, 64], "$bar_bg_texture": "textures/ui/toggle_button/right_bg" } },
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "offset": [76, 0],
-                    "$has_first_upgrade": false,
-                    "$has_second_upgrade": false,
-                    "$has_third_upgrade": false,
-                    "$has_fourth_upgrade": false
+                    "offset": [22, 0],
+                    "$upgrade_index_1": 18, "$upgrade_index_2": 19,
+                    "$has_first_upgrade": true, "$has_second_upgrade": true,
+                    "$has_third_upgrade": false, "$has_fourth_upgrade": false,
+                    "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
                 }
             },
             {
                 "io_tab@uc.io_tab": {
-                    "offset": [76, 0],
+                    "offset": [22, 0],
                     "$io_items_modes_description": "ui.utilitycraft:io.cryo_freezer.items",
                     "$io_fluids_modes_description": "ui.utilitycraft:io.cryo_freezer.liquids",
-                    "$has_item_io": true,
-                    "$has_fluid_io": true,
-                    "$has_gas_io": false,
-                    "$io_items_default": true,
-                    "$io_fluids_default": false,
+                    "$has_item_io": true, "$has_fluid_io": true, "$has_gas_io": false,
+                    "$io_items_default": true, "$io_fluids_default": false,
                     "$io_top_texture": "textures/blocks/machines/superior/cryo_freezer_off_up",
                     "$io_left_texture": "textures/blocks/machines/superior/cryo_freezer_off_west",
                     "$io_front_texture": "textures/blocks/machines/superior/cryo_freezer_off_north",
                     "$io_right_texture": "textures/blocks/machines/superior/cryo_freezer_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/superior/cryo_freezer_off_down",
                     "$io_back_texture": "textures/blocks/machines/superior/cryo_freezer_off_south",
-                    "$io_item_top_index": 18,
-                    "$io_item_left_index": 19,
-                    "$io_item_front_index": 20,
-                    "$io_item_right_index": 21,
-                    "$io_item_bottom_index": 22,
-                    "$io_item_back_index": 23,
-                    "$io_fluid_top_index": 24,
-                    "$io_fluid_left_index": 25,
-                    "$io_fluid_front_index": 26,
-                    "$io_fluid_right_index": 27,
-                    "$io_fluid_bottom_index": 28,
-                    "$io_fluid_back_index": 29
+                    "$io_item_top_index": 20, "$io_item_left_index": 21, "$io_item_front_index": 22,
+                    "$io_item_right_index": 23, "$io_item_bottom_index": 24, "$io_item_back_index": 25,
+                    "$io_fluid_top_index": 26, "$io_fluid_left_index": 27, "$io_fluid_front_index": 28,
+                    "$io_fluid_right_index": 29, "$io_fluid_bottom_index": 30, "$io_fluid_back_index": 31
                 }
             },
-            {
-                "info_tab@uc.info_tab": {
-                    "offset": [76, 0],
-                    "$info_description": "ui.utilitycraft:info.cryo_freezer"
-                }
-            }
+            { "info_tab@uc.info_tab": { "offset": [22, 0], "$info_description": "ui.utilitycraft:info.cryo_freezer" } }
         ]
     },
     "utility_panel": {
@@ -183,11 +103,10 @@
                 "root_panel@common.root_panel": {
                     "layer": 1,
                     "controls": [
-                        { "common_panel@common.common_panel": {} },
+                        { "common_panel@common.common_panel": { "$show_close_button": false } },
                         {
                             "chest_panel": {
-                                "type": "panel",
-                                "layer": 5,
+                                "type": "panel", "layer": 5,
                                 "controls": [
                                     { "cryo_freezer_top@cryo_freezer.cryo_freezer_top": {} },
                                     { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {} },

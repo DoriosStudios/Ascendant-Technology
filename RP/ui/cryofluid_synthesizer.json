@@ -50,10 +50,10 @@
                     "anchor_to": "top_middle",
                     "offset": [-58, 27],
                     "$slot_outline_texture": "textures/ui/slots/input_1_slot",
-                    "$collection_index_1": 4,
-                    "$collection_index_2": 5,
-                    "$collection_index_3": 6,
-                    "$collection_index_4": 7
+                    "$collection_index_1": 3,
+                    "$collection_index_2": 4,
+                    "$collection_index_3": 5,
+                    "$collection_index_4": 6
                 }
             },
             {
@@ -62,22 +62,10 @@
                     "anchor_to": "top_middle",
                     "offset": [-16, 27],
                     "$slot_outline_texture": "textures/ui/slots/input_2_slot",
-                    "$collection_index_1": 8,
-                    "$collection_index_2": 9,
-                    "$collection_index_3": 10,
-                    "$collection_index_4": 11
-                }
-            },
-            {
-                "mode_button@uc.machine_button": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [25, 11],
-                    "$index": 3,
-                    "$button_size": [16, 16],
-                    "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
-                    "$hover_texture": "textures/ui/cells/orange_cell_image",
-                    "$pressed_texture": "textures/ui/cells/orange_cell_image"
+                    "$collection_index_1": 7,
+                    "$collection_index_2": 8,
+                    "$collection_index_3": 9,
+                    "$collection_index_4": 10
                 }
             },
             {
@@ -90,14 +78,14 @@
             },
             {
                 "water_display@uc.liquid_input_1_bar": {
-                    "$collection_index": 12,
+                    "$collection_index": 11,
                     "$has_bg": false,
                     "offset": [53, -1]
                 }
             },
             {
                 "cryofluid_display@uc.liquid_output_1_bar": {
-                    "$collection_index": 13,
+                    "$collection_index": 12,
                     "$has_bg": false,
                     "offset": [77, -1]
                 }
@@ -112,14 +100,18 @@
             {
                 "upgrades_tab@uc.upgrades_tab": {
                     "offset": [22, 0],
-                    "$upgrade_index_1": 14,
-                    "$upgrade_index_2": 15,
+                    "$upgrade_index_1": 13,
+                    "$upgrade_index_2": 14,
+                    "$upgrade_index_3": 15,
+                    "$upgrade_index_4": 16,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
-                    "$has_third_upgrade": false,
-                    "$has_fourth_upgrade": false,
+                    "$has_third_upgrade": true,
+                    "$has_fourth_upgrade": true,
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade",
+                    "$upgrade_overlay_4": "textures/items/machinery/stack_upgrade"
                 }
             },
             {
@@ -138,18 +130,18 @@
                     "$io_right_texture": "textures/blocks/machines/faces/cryo_chamber/off/east",
                     "$io_bottom_texture": "textures/blocks/machines/faces/cryo_chamber/off/down",
                     "$io_back_texture": "textures/blocks/machines/faces/cryo_chamber/off/south",
-                    "$io_item_top_index": 16,
-                    "$io_item_left_index": 17,
-                    "$io_item_front_index": 18,
-                    "$io_item_right_index": 19,
-                    "$io_item_bottom_index": 20,
-                    "$io_item_back_index": 21,
-                    "$io_fluid_top_index": 22,
-                    "$io_fluid_left_index": 23,
-                    "$io_fluid_front_index": 24,
-                    "$io_fluid_right_index": 25,
-                    "$io_fluid_bottom_index": 26,
-                    "$io_fluid_back_index": 27
+                    "$io_item_top_index": 17,
+                    "$io_item_left_index": 18,
+                    "$io_item_front_index": 19,
+                    "$io_item_right_index": 20,
+                    "$io_item_bottom_index": 21,
+                    "$io_item_back_index": 22,
+                    "$io_fluid_top_index": 23,
+                    "$io_fluid_left_index": 24,
+                    "$io_fluid_front_index": 25,
+                    "$io_fluid_right_index": 26,
+                    "$io_fluid_bottom_index": 27,
+                    "$io_fluid_back_index": 28
                 }
             },
             {

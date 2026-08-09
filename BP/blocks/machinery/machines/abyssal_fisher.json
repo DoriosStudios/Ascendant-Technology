@@ -29,15 +29,16 @@
                 "machine": {
                     "energy_cap": 64000000,
                     "energy_cost": 2400,
-                    "rate_speed_base": 9600,
+                    "rate_speed_base": 80,
                     "fluid_cap": 32000,
                     "fluid_types": 1,
-                    "upgrades": [6, 7]
+                    "upgrades": [6, 7, 3]
                 }
             },
             "utilitycraft:machine_upgrades": [
                 { "type": "speed", "slot": 6 },
-                { "type": "energy", "slot": 7 }
+                { "type": "energy", "slot": 7 },
+                { "type": "hyper_processing", "slot": 3 }
             ],
             "utilitycraft:machine_recipes": {
                 "type": "abyssal_fisher"

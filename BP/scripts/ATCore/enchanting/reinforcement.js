@@ -12,9 +12,18 @@ const LORE_PREFIX = "\u00A7r\u00A79Reinforcement: ";
 const REINFORCEMENT_RATIOS = [0, 0.25, 0.5, 1];
 const REINFORCEMENT_MODULE_LEVELS = new Map([
     ["utilitycraft:reinforcement_module", 1],
+    ["utilitycraft:reinforcement_module_1", 1],
     ["utilitycraft:reinforcement_module_2", 2],
     ["utilitycraft:reinforcement_module_3", 3],
+    ["utilitycraft:reinforcement_module_tier_1", 1],
+    ["utilitycraft:reinforcement_module_tier_2", 2],
+    ["utilitycraft:reinforcement_module_tier_3", 3],
 ]);
+const REINFORCEMENT_MODULE_TAGS = [
+    ["utilitycraft:ascane_reinforcement_3", 3],
+    ["utilitycraft:ascane_reinforcement_2", 2],
+    ["utilitycraft:ascane_reinforcement_1", 1],
+];
 const ARMOR_SLOTS = ["Head", "Chest", "Legs", "Feet"];
 const pendingRepairs = new Set();
 
@@ -129,7 +138,24 @@ export function getReinforcementTarget(durability, moduleLevel) {
 
 /** @param {import("@minecraft/server").ItemStack | undefined} module */
 export function getReinforcementModuleLevel(module) {
-    return REINFORCEMENT_MODULE_LEVELS.get(module?.typeId) ?? 0;
+    if (!module) return 0;
+
+    const identifierLevel = REINFORCEMENT_MODULE_LEVELS.get(module.typeId);
+    if (identifierLevel) return identifierLevel;
+
+    let tags = [];
+    try {
+        tags = module.getTags?.() ?? [];
+    } catch {}
+    for (const [tag, level] of REINFORCEMENT_MODULE_TAGS) {
+        try {
+            if (module.hasTag?.(tag) || tags.includes(tag)) return level;
+        } catch {}
+    }
+
+    const tierTag = tags.find((tag) => /^utilitycraft:ascane_reinforcement_[123]$/.test(tag));
+    if (tierTag) return Number(tierTag.at(-1));
+    return 0;
 }
 
 /**

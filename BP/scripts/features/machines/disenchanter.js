@@ -3,7 +3,6 @@
 import * as DoriosLib from "DoriosLib/index.js";
 import {
     ButtonManager,
-    EnergyStorage,
     FluidStorage,
     Machine,
     registerIOInterface,
@@ -18,18 +17,34 @@ import {
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
+    renderMachineInfo,
     setDynamicNumber,
     setDynamicString,
-    setRunning,
     setUiItem,
 } from "./runtime.js";
 
 const ID = "utilitycraft:disenchanter";
-const INVENTORY_SIZE = 22;
+const INVENTORY_SIZE = 34;
 const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+    0, 1, 2, 3, 4, 5, 7, 8, 9, -1,
+    6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    10, 11, 12, 13, 14, 15,
+    16, 17, 18, 19, 20, 21,
 ];
+const OLDER_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 11, 8, 9, -1,
+    6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    12, 13, 14, 15, 16, 17,
+    18, 19, 20, 21, 22, 23,
+];
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 18, 19, 20, 21,
+    6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
+];
+const LAYOUT_KEY = "ascendant:disenchanter_layout";
+const LAYOUT_VERSION = "output_last_v2";
 const MODE_KEY = "ascendant:disenchanter_mode";
 const SIGNATURE_KEY = "ascendant:disenchanter_signature";
 const EXTRACTION_MODE = "extraction";
@@ -39,27 +54,27 @@ const ABSORPTION_COST = 7000;
 const MODE_BUTTON_SLOT = 3;
 const SOURCE_SLOT = 4;
 const CATALYST_SLOT = 5;
-const OUTPUT_SLOT = 6;
-const XP_DISPLAY_SLOT = 7;
+const XP_DISPLAY_SLOT = 6;
+const BOOK_OUTPUT_SLOTS = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 const XP_TYPE = "xp";
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [10, 11, 12, 13, 14, 15],
+        buttonSlots: [22, 23, 24, 25, 26, 27],
         anyInputSlots: [SOURCE_SLOT, CATALYST_SLOT],
-        anyOutputSlots: [SOURCE_SLOT, OUTPUT_SLOT],
+        anyOutputSlots: [SOURCE_SLOT, ...BOOK_OUTPUT_SLOTS],
         modes: [
             { id: "disabled" },
             { id: "input_1", inputSlots: [SOURCE_SLOT] },
             { id: "input_2", inputSlots: [CATALYST_SLOT] },
             { id: "input_3", inputSlots: [SOURCE_SLOT, CATALYST_SLOT] },
             { id: "output_1", outputSlots: [SOURCE_SLOT] },
-            { id: "output_2", outputSlots: [OUTPUT_SLOT] },
-            { id: "output_3", outputSlots: [SOURCE_SLOT, OUTPUT_SLOT] },
+            { id: "output_2", outputSlots: BOOK_OUTPUT_SLOTS },
+            { id: "output_3", outputSlots: [SOURCE_SLOT, ...BOOK_OUTPUT_SLOTS] },
         ],
     },
     liquids: {
-        buttonSlots: [16, 17, 18, 19, 20, 21],
+        buttonSlots: [28, 29, 30, 31, 32, 33],
         anyInputIndices: [],
         anyOutputIndices: [0],
         modes: [
@@ -92,6 +107,7 @@ DoriosLib.registry.blockComponent(ID, {
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A7aExtraction");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
             setDynamicString(machine.entity, MODE_KEY, EXTRACTION_MODE);
             resetOperation(machine.entity);
 
@@ -105,7 +121,11 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        const legacyLayout = machine.container.size >= 24 ? OLDER_SLOT_LAYOUT : LEGACY_SLOT_LAYOUT;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, legacyLayout,
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         machine.processIO();
 
@@ -159,7 +179,7 @@ DoriosLib.registry.blockComponent(ID, {
                 return;
             }
 
-            if (machine.container.getItem(OUTPUT_SLOT)) {
+            if (findEmptyBookOutputSlot(machine.container) < 0) {
                 showState(machine, xpTank, energyCost, false, "Output Full", {
                     mode,
                     source: formatItem(source.typeId),
@@ -258,7 +278,8 @@ DoriosLib.registry.blockComponent(ID, {
 function commitExtraction(machine, source, enchantments) {
     const catalyst = machine.container.getItem(CATALYST_SLOT);
     if (!catalyst || catalyst.typeId !== "minecraft:book") return false;
-    if (machine.container.getItem(OUTPUT_SLOT)) return false;
+    const outputSlot = findEmptyBookOutputSlot(machine.container);
+    if (outputSlot < 0) return false;
 
     const result = extractFirstEnchantment(source, enchantments);
     if (!result) return false;
@@ -275,16 +296,20 @@ function commitExtraction(machine, source, enchantments) {
             remaining.amount--;
             machine.container.setItem(CATALYST_SLOT, remaining);
         }
-        machine.container.setItem(OUTPUT_SLOT, result.book);
+        machine.container.setItem(outputSlot, result.book);
         return true;
     } catch {
         try {
-            machine.container.setItem(OUTPUT_SLOT, undefined);
+            machine.container.setItem(outputSlot, undefined);
             machine.container.setItem(SOURCE_SLOT, sourceBackup);
             machine.container.setItem(CATALYST_SLOT, catalystBackup);
         } catch {}
         return false;
     }
+}
+
+function findEmptyBookOutputSlot(container) {
+    return BOOK_OUTPUT_SLOTS.find((slot) => !container.getItem(slot)) ?? -1;
 }
 
 function commitAbsorption(machine, xpTank, source, xpGain) {
@@ -320,24 +345,30 @@ function resetOperation(entity) {
 }
 
 function showState(machine, xpTank, energyCost, running, message, context = {}) {
-    setRunning(machine, running);
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", energyCost);
-    if (!machine.shouldUpdateUI) return;
-
-    machine.energy.display(0);
     displayProgress(machine, energyCost);
-    xpTank.display(XP_DISPLAY_SLOT);
+    if (machine.shouldUpdateUI) xpTank.display(XP_DISPLAY_SLOT);
 
     const mode = context.mode === ABSORPTION_MODE ? "Absorption" : "Extraction";
-    machine.setLabel([
-        `\u00A7r${running ? "\u00A7a" : "\u00A7e"}${message}`,
-        `\u00A7r\u00A77Mode: \u00A7f${mode}`,
-        `\u00A7r\u00A77Source: \u00A7f${context.source ?? "-"}`,
-        `\u00A7r\u00A77Enchantments: \u00A7f${context.enchantments ?? 0}`,
-        `\u00A7r\u00A77Cost: \u00A7f${EnergyStorage.formatEnergyToText(energyCost)}`,
-        `\u00A7r\u00A77XP Gain: \u00A7f${context.xpGain ?? 0}`,
-        `\u00A7r\u00A77XP Tank: \u00A7f${Math.floor(xpTank.get())}/${Math.floor(xpTank.getCap())}`,
-    ]);
+    const xpPercent = xpTank.getCap() > 0 ? (xpTank.get() / xpTank.getCap()) * 100 : 0;
+    renderMachineInfo(machine, running, message, [
+        {
+            title: "Disenchantment Information",
+            lines: [
+                `\u00A7r\u00A77Mode \u00A7f${mode}`,
+                `\u00A7r\u00A77Source \u00A7f${context.source ?? "-"}`,
+                `\u00A7r\u00A77Enchantments \u00A7f${context.enchantments ?? 0}`,
+                `\u00A7r\u00A77XP Gain \u00A7f${context.xpGain ?? 0} mB`,
+            ],
+        },
+        {
+            title: "XP Information",
+            lines: [
+                `\u00A7r\u00A77Stored \u00A7f${Math.floor(xpTank.get())} / ${Math.floor(xpTank.getCap())} mB`,
+                `\u00A7r\u00A77Capacity \u00A7f${xpPercent.toFixed(2)}%%`,
+            ],
+        },
+    ], { energyCost, batch: 1 });
 }
 
 function formatItem(typeId) {

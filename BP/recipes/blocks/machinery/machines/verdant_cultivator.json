@@ -7,30 +7,31 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
-            "K": {
-                "item": "utilitycraft:accelerator_clock"
+            "I": {
+                "item": "minecraft:netherite_hoe"
             },
-            "C": {
-                "item": "utilitycraft:machine_case"
+            "G": {
+                "item": "utilitycraft:tungsten"
             },
-            "B": {
+            "M": {
                 "item": "utilitycraft:harvester"
             },
-            "A": {
-                "item": "utilitycraft:advanced_chip"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "PKP",
-            "CBC",
-            "PAP"
-        ],
         "result": {
-            "item": "utilitycraft:verdant_cultivator"
+            "item": "utilitycraft:verdant_cultivator",
+            "count": 1
         },
         "unlock": [
             {

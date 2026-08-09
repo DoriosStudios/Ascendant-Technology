@@ -2,7 +2,7 @@
 
 import { world } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
 import {
     applyArcaneEnchantPlan,
     buildArcaneEnchantPlan,
@@ -10,49 +10,61 @@ import {
     getArcaneEnchantCosts,
     getArcaneRateMultiplier,
     getEnchantabilityModuleLevel,
+    hasCurseProtectionModule,
     isArcaneEnchantPlan,
 } from "../../ATCore/enchanting/index.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
+    renderMachineInfo,
     setDynamicNumber,
     setDynamicString,
-    setRunning,
     setUiItem,
 } from "./runtime.js";
 
 const ID = "utilitycraft:arcane_enchanter";
-const INVENTORY_SIZE = 22;
+const INVENTORY_SIZE = 24;
 const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 11, 8, 9,
+    0, 1, 2, 3, 4, 5, -1, 7, 8, 9, -1, 6,
+    10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+];
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 7,
     12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
 ];
+const LAYOUT_KEY = "ascendant:arcane_enchanter_layout";
+const LAYOUT_VERSION = "output_last_v2";
 const INPUT_SLOT = 3;
 const LAPIS_SLOT = 4;
 const MODULE_SLOT = 5;
-const OUTPUT_SLOT = 6;
+const PROTECTION_SLOT = 6;
 const XP_DISPLAY_SLOT = 7;
+const OUTPUT_SLOT = 11;
 const XP_TYPE = "xp";
 const OPERATION_SECONDS = 6;
+const XP_PER_ENCHANTMENT = 300;
+const LAPIS_PER_ENCHANTMENT = 12;
 const OPERATION_SIGNATURE_KEY = "ascendant:arcane_enchanter_signature";
 const OPERATION_PLAN_KEY = "ascendant:arcane_enchanter_plan";
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [10, 11, 12, 13, 14, 15],
-        anyInputSlots: [INPUT_SLOT, LAPIS_SLOT, MODULE_SLOT],
+        buttonSlots: [12, 13, 14, 15, 16, 17],
+        anyInputSlots: [INPUT_SLOT, LAPIS_SLOT, MODULE_SLOT, PROTECTION_SLOT],
         anyOutputSlots: [OUTPUT_SLOT],
         modes: [
             { id: "disabled" },
             { id: "input_1", inputSlots: [INPUT_SLOT] },
             { id: "input_2", inputSlots: [LAPIS_SLOT] },
             { id: "input_3", inputSlots: [MODULE_SLOT] },
-            { id: "input_4", inputSlots: [INPUT_SLOT, LAPIS_SLOT, MODULE_SLOT] },
+            { id: "input_4", inputSlots: [PROTECTION_SLOT] },
+            { id: "input_5", inputSlots: [INPUT_SLOT, LAPIS_SLOT, MODULE_SLOT, PROTECTION_SLOT] },
             { id: "output_1", outputSlots: [OUTPUT_SLOT] },
         ],
     },
     liquids: {
-        buttonSlots: [16, 17, 18, 19, 20, 21],
+        buttonSlots: [18, 19, 20, 21, 22, 23],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -78,6 +90,7 @@ DoriosLib.registry.blockComponent(ID, {
             machine.blockSlots([XP_DISPLAY_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             clearOperation(machine, true);
 
@@ -90,7 +103,10 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, LEGACY_SLOT_LAYOUT,
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         machine.processIO();
 
@@ -122,7 +138,18 @@ DoriosLib.registry.blockComponent(ID, {
             return;
         }
 
-        const signature = createArcaneEnchantSignature(input, moduleLevel);
+        const protectionItem = machine.container.getItem(PROTECTION_SLOT);
+        const curseProtection = hasCurseProtectionModule(protectionItem);
+        if (protectionItem && !curseProtection) {
+            clearOperation(machine, true);
+            showState(machine, xpTank, settings.machine.energy_cost, false, "Invalid Protection Module", {
+                input: formatItem(input.typeId),
+                moduleLevel,
+            });
+            return;
+        }
+
+        const signature = createArcaneEnchantSignature(input, moduleLevel, curseProtection);
         resetChangedOperation(machine, signature);
 
         const lapis = machine.container.getItem(LAPIS_SLOT);
@@ -144,7 +171,7 @@ DoriosLib.registry.blockComponent(ID, {
             return;
         }
 
-        const plan = getOrCreateOperation(machine, input, moduleLevel, signature);
+        const plan = getOrCreateOperation(machine, input, moduleLevel, curseProtection, signature);
         if (!plan.ready) {
             setDynamicNumber(machine.entity, "dorios:progress_0", 0);
             showState(machine, xpTank, settings.machine.energy_cost, false, plan.message ?? "Invalid Item", {
@@ -165,12 +192,29 @@ DoriosLib.registry.blockComponent(ID, {
             return;
         }
 
-        const costs = getArcaneEnchantCosts(
+        const baseCosts = getArcaneEnchantCosts(
             settings.machine.energy_cost,
             moduleLevel,
             plan.changeCount,
         );
+        const enchantmentCount = Math.max(1, Math.floor(plan.changeCount));
+        const costs = {
+            ...baseCosts,
+            xp: XP_PER_ENCHANTMENT * enchantmentCount,
+            lapis: LAPIS_PER_ENCHANTMENT * enchantmentCount,
+        };
         setDynamicNumber(machine.entity, "dorios:energy_cost_0", costs.energy);
+
+        if (lapis.amount < costs.lapis) {
+            showState(machine, xpTank, costs.energy, false, "Need Lapis", {
+                input: formatItem(input.typeId),
+                target: plan.targetSummary,
+                moduleLevel,
+                xpCost: costs.xp,
+                lapisCost: costs.lapis,
+            });
+            return;
+        }
 
         if (xpTank.getType() !== XP_TYPE) {
             showState(machine, xpTank, costs.energy, false, "Need XP Tank", {
@@ -216,13 +260,22 @@ DoriosLib.registry.blockComponent(ID, {
 
         if (result.processCount > 0) {
             const enchanted = applyArcaneEnchantPlan(input, plan);
-            if (!enchanted || !commitEnchant(machine, xpTank, input, lapis, enchanted, costs.xp)) {
+            if (!enchanted || !commitEnchant(
+                machine,
+                xpTank,
+                input,
+                lapis,
+                enchanted,
+                costs.xp,
+                costs.lapis,
+            )) {
                 clearOperation(machine, true);
                 showState(machine, xpTank, costs.energy, false, "Enchant Failed", {
                     input: formatItem(input.typeId),
                     target: plan.targetSummary,
                     moduleLevel,
                     xpCost: costs.xp,
+                    lapisCost: costs.lapis,
                 });
                 return;
             }
@@ -233,6 +286,7 @@ DoriosLib.registry.blockComponent(ID, {
                 target: plan.targetSummary,
                 moduleLevel,
                 xpCost: costs.xp,
+                lapisCost: costs.lapis,
             });
             return;
         }
@@ -243,6 +297,7 @@ DoriosLib.registry.blockComponent(ID, {
             target: plan.targetSummary,
             moduleLevel,
             xpCost: costs.xp,
+            lapisCost: costs.lapis,
         });
     },
 
@@ -255,10 +310,11 @@ DoriosLib.registry.blockComponent(ID, {
  * @param {Machine} machine
  * @param {import("@minecraft/server").ItemStack} input
  * @param {number} moduleLevel
+ * @param {boolean} curseProtection
  * @param {string} signature
  * @returns {ReturnType<typeof buildArcaneEnchantPlan>}
  */
-function getOrCreateOperation(machine, input, moduleLevel, signature) {
+function getOrCreateOperation(machine, input, moduleLevel, curseProtection, signature) {
     const cached = operationCache.get(machine.entity.id);
     if (cached?.signature === signature) return cached.plan;
 
@@ -270,7 +326,7 @@ function getOrCreateOperation(machine, input, moduleLevel, signature) {
         }
     }
 
-    const plan = buildArcaneEnchantPlan(input, moduleLevel);
+    const plan = buildArcaneEnchantPlan(input, moduleLevel, curseProtection);
     operationCache.set(machine.entity.id, { signature, plan });
     setDynamicString(machine.entity, OPERATION_SIGNATURE_KEY, signature);
     setDynamicString(machine.entity, OPERATION_PLAN_KEY, JSON.stringify(plan));
@@ -324,9 +380,10 @@ function readPersistedPlan(raw) {
  * @param {import("@minecraft/server").ItemStack} lapis
  * @param {import("@minecraft/server").ItemStack} output
  * @param {number} xpCost
+ * @param {number} lapisCost
  * @returns {boolean}
  */
-function commitEnchant(machine, xpTank, input, lapis, output, xpCost) {
+function commitEnchant(machine, xpTank, input, lapis, output, xpCost, lapisCost) {
     const inputBackup = input.clone();
     const lapisBackup = lapis.clone();
     let consumedXp = 0;
@@ -335,11 +392,11 @@ function commitEnchant(machine, xpTank, input, lapis, output, xpCost) {
         machine.container.setItem(OUTPUT_SLOT, output);
         machine.container.setItem(INPUT_SLOT, undefined);
 
-        if (lapis.amount <= 1) {
+        if (lapis.amount <= lapisCost) {
             machine.container.setItem(LAPIS_SLOT, undefined);
         } else {
             const remainingLapis = lapis.clone();
-            remainingLapis.amount--;
+            remainingLapis.amount -= lapisCost;
             machine.container.setItem(LAPIS_SLOT, remainingLapis);
         }
 
@@ -363,26 +420,40 @@ function commitEnchant(machine, xpTank, input, lapis, output, xpCost) {
  * @param {number} energyCost
  * @param {boolean} running
  * @param {string} message
- * @param {{ input?: string, target?: string, moduleLevel?: number, xpCost?: number }} [context]
+ * @param {{ input?: string, target?: string, moduleLevel?: number, xpCost?: number, lapisCost?: number }} [context]
  */
 function showState(machine, xpTank, energyCost, running, message, context = {}) {
-    setRunning(machine, running);
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", energyCost);
-    if (!machine.shouldUpdateUI) return;
-
-    machine.energy.display(0);
     displayProgress(machine, energyCost);
-    xpTank.display(XP_DISPLAY_SLOT);
-
-    machine.setLabel([
-        `\u00A7r${running ? "\u00A7a" : "\u00A7e"}${message}`,
-        `\u00A7r\u00A77Input: \u00A7f${context.input ?? "-"}`,
-        `\u00A7r\u00A77Target: \u00A7f${context.target ?? "-"}`,
-        `\u00A7r\u00A77Module: \u00A7fLv.${context.moduleLevel ?? 0}`,
-        `\u00A7r\u00A77Cost: \u00A7f${EnergyStorage.formatEnergyToText(energyCost)}`,
-        `\u00A7r\u00A77XP Cost: \u00A7f${context.xpCost ?? 0}`,
-        `\u00A7r\u00A77XP Tank: \u00A7f${formatXpTank(xpTank)}`,
-    ]);
+    if (machine.shouldUpdateUI) xpTank.display(XP_DISPLAY_SLOT);
+    const protectedFromCurses = hasCurseProtectionModule(machine.container.getItem(PROTECTION_SLOT));
+    renderMachineInfo(machine, running, message, [
+        {
+            title: "Enchantment Information",
+            lines: [
+                `\u00A7r\u00A77Input \u00A7f${context.input ?? "-"}`,
+                `\u00A7r\u00A77Target \u00A7f${context.target ?? "-"}`,
+                `\u00A7r\u00A77Enchantability Module \u00A7fLv.${context.moduleLevel ?? 0}`,
+                `\u00A7r\u00A77Curse Protection \u00A7f${protectedFromCurses ? "Active" : "Inactive"}`,
+            ],
+        },
+        {
+            title: "Arcane Resources",
+            lines: [
+                `\u00A7r\u00A77XP Cost \u00A7f${context.xpCost ?? 0} mB`,
+                `\u00A7r\u00A77Lapis Cost \u00A7f${context.lapisCost ?? 0}`,
+                `\u00A7r\u00A77XP Tank \u00A7f${formatXpTank(xpTank)} mB`,
+            ],
+        },
+    ], {
+        energyCost,
+        rateMultiplier: getArcaneRateMultiplier(
+            machine.settings.machine.rate_speed_base,
+            energyCost,
+            OPERATION_SECONDS,
+        ),
+        batch: 1,
+    });
 }
 
 /** @param {FluidStorage} tank */

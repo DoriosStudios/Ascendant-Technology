@@ -5,6 +5,7 @@ export {
     getArcaneEnchantCosts,
     getArcaneRateMultiplier,
     getEnchantabilityModuleLevel,
+    hasCurseProtectionModule,
     isArcaneEnchantPlan,
 } from "./arcaneEnchanting.js";
 

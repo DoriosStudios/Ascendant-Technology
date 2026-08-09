@@ -7,30 +7,31 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
-            "F": {
-                "item": "utilitycraft:advanced_fluid_tank"
+            "I": {
+                "item": "minecraft:netherite_hoe"
             },
-            "C": {
-                "item": "utilitycraft:machine_case"
+            "G": {
+                "item": "utilitycraft:tungsten"
             },
-            "B": {
+            "M": {
                 "item": "utilitycraft:seed_synthesizer"
             },
-            "A": {
-                "item": "utilitycraft:advanced_chip"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "PFP",
-            "BCB",
-            "PAP"
-        ],
         "result": {
-            "item": "utilitycraft:genetic_seed_synthesizer"
+            "item": "utilitycraft:genetic_seed_synthesizer",
+            "count": 1
         },
         "unlock": [
             {

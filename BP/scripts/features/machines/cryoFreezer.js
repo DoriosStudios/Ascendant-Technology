@@ -10,13 +10,20 @@ import {
 import { renderStatus } from "./runtime.js";
 
 const ID = "utilitycraft:cryo_freezer";
+const INVENTORY_SIZE = 32;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+    -1, -1,
+    18, 19, 20, 21, 22, 23,
+    24, 25, 26, 27, 28, 29,
+];
 const COOLANT_DISPLAY_SLOT = 2;
 const FREEZER_SLOTS = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 const FLUID_IO_RATE = 64000;
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [18, 19, 20, 21, 22, 23],
+        buttonSlots: [20, 21, 22, 23, 24, 25],
         anyInputSlots: FREEZER_SLOTS,
         anyOutputSlots: FREEZER_SLOTS,
         modes: [
@@ -26,7 +33,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [24, 25, 26, 27, 28, 29],
+        buttonSlots: [26, 27, 28, 29, 30, 31],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -45,13 +52,17 @@ DoriosLib.registry.blockComponent(ID, {
             machine.blockSlots([COOLANT_DISPLAY_SLOT]);
             const coolant = new FluidStorage(machine.entity, 0);
             coolant.display(COOLANT_DISPLAY_SLOT);
-            renderStatus(machine, false, "Load Freezer Grid");
+            renderStatus(machine, false, "Load Freezer Grid", [{
+                title: "Freezer Grid",
+                lines: [`§r§7Occupied Lanes §f0/15`, `§r§7Coolant §fNone`],
+            }], { energyCost: settings.machine.energy_cost });
         });
     },
 
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
         const coolant = new FluidStorage(machine.entity, 0);
@@ -67,7 +78,8 @@ DoriosLib.registry.blockComponent(ID, {
             machine,
             result.running,
             result.running ? "Freezing" : result.blockedCount > 0 ? "Grid Blocked" : "Idle",
-            machine.shouldUpdateUI ? statusLines(result, coolant) : undefined,
+            machine.shouldUpdateUI ? [{ title: "Freezer Grid", lines: statusLines(result, coolant) }] : undefined,
+            { energyCost: settings.machine.energy_cost },
         );
     },
 
@@ -78,10 +90,10 @@ DoriosLib.registry.blockComponent(ID, {
 
 function statusLines(result, coolant) {
     return [
-        `\u00A7r\u00A77Ready Lanes: \u00A7f${result.activeCount}`,
-        `\u00A7r\u00A77Completed: \u00A7f${result.readyCount}`,
-        `\u00A7r\u00A77Blocked: \u00A7f${result.blockedCount}`,
-        `\u00A7r\u00A77Coolant: \u00A7f${DoriosLib.text.formatIdentifier(coolant.getType())}`,
-        `\u00A7r\u00A77Stored: \u00A7f${FluidStorage.formatFluid(coolant.get())} / ${FluidStorage.formatFluid(coolant.getCap())}`,
+        `\u00A7r\u00A77Active Lanes \u00A7f${result.activeCount}/15`,
+        `\u00A7r\u00A77Completed \u00A7f${result.readyCount}`,
+        `\u00A7r\u00A77Blocked \u00A7f${result.blockedCount}`,
+        `\u00A7r\u00A77Coolant \u00A7f${DoriosLib.text.formatIdentifier(coolant.getType())}`,
+        `\u00A7r\u00A77Stored \u00A7f${FluidStorage.formatFluid(coolant.get())} / ${FluidStorage.formatFluid(coolant.getCap())}`,
     ];
 }

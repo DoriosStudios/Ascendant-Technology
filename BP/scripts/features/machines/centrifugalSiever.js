@@ -16,16 +16,23 @@ import {
 import { displayProgress, renderStatus, setDynamicNumber, setDynamicString, setUiItem } from "./runtime.js";
 
 const ID = "utilitycraft:centrifugal_siever";
+const INVENTORY_SIZE = 40;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -1,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+    26, 27, 28, 29, 30, 31,
+    32, 33, 34, 35, 36, 37,
+];
 const INPUTS = Object.freeze([3, 4, 5, 6]);
 const MESH_SLOT = 7;
 const STEAM_DISPLAY_SLOT = 8;
-const OUTPUTS = Object.freeze([11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]);
+const OUTPUTS = Object.freeze([13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]);
 const LOCK_KEY = "ascendant:centrifugal_siever_input";
 const STEAM_PER_CRAFT = 125;
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [26, 27, 28, 29, 30, 31],
+        buttonSlots: [28, 29, 30, 31, 32, 33],
         anyInputSlots: [...INPUTS, MESH_SLOT],
         anyOutputSlots: OUTPUTS,
         modes: [
@@ -36,7 +43,7 @@ registerIOInterface(ID, {
         ],
     },
     gases: {
-        buttonSlots: [32, 33, 34, 35, 36, 37],
+        buttonSlots: [34, 35, 36, 37, 38, 39],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -70,6 +77,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
         const steam = new GasStorage(machine.entity, 0);
         if (steam.getType() === "empty") steam.setType("steam");
         machine.processIO();
@@ -79,7 +87,10 @@ DoriosLib.registry.blockComponent(ID, {
             reset(machine, settings.machine.energy_cost);
             displayProgress(machine, settings.machine.energy_cost);
             if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-            renderStatus(machine, false, "Insert Mesh");
+            renderStatus(machine, false, "Insert Mesh", [{
+                title: "Sieving Information",
+                lines: [`§r§7Mesh §fNone`, `§r§7Steam Boost §fInactive`, `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`],
+            }], { energyCost: settings.machine.energy_cost });
             return;
         }
 
@@ -89,7 +100,10 @@ DoriosLib.registry.blockComponent(ID, {
             reset(machine, settings.machine.energy_cost);
             displayProgress(machine, settings.machine.energy_cost);
             if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-            renderStatus(machine, false, "Insert Sieveable Items");
+            renderStatus(machine, false, "Insert Sieveable Items", [{
+                title: "Sieving Information",
+                lines: [`§r§7Mesh Tier §f${mesh.tier}`, `§r§7Steam Boost §fInactive`, `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`],
+            }], { energyCost: settings.machine.energy_cost });
             return;
         }
 
@@ -98,7 +112,10 @@ DoriosLib.registry.blockComponent(ID, {
             reset(machine, settings.machine.energy_cost);
             displayProgress(machine, settings.machine.energy_cost);
             if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-            renderStatus(machine, false, "Mesh Tier Too Low");
+            renderStatus(machine, false, "Mesh Tier Too Low", [{
+                title: "Sieving Information",
+                lines: [`§r§7Mesh Tier §f${mesh.tier}`, `§r§7Eligible Drops §f0`, `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`],
+            }], { energyCost: settings.machine.energy_cost });
             return;
         }
 
@@ -107,7 +124,10 @@ DoriosLib.registry.blockComponent(ID, {
             reset(machine, settings.machine.energy_cost);
             displayProgress(machine, settings.machine.energy_cost);
             if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-            renderStatus(machine, false, "Insert Sieveable Items");
+            renderStatus(machine, false, "Insert Sieveable Items", [{
+                title: "Sieving Information",
+                lines: [`§r§7Mesh Tier §f${mesh.tier}`, `§r§7Available Input §f0`, `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`],
+            }], { energyCost: settings.machine.energy_cost });
             return;
         }
 
@@ -115,7 +135,10 @@ DoriosLib.registry.blockComponent(ID, {
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             displayProgress(machine, settings.machine.energy_cost);
             if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-            renderStatus(machine, false, "Output Full");
+            renderStatus(machine, false, "Output Full", [{
+                title: "Sieving Information",
+                lines: [`§r§7Mesh Tier §f${mesh.tier}`, `§r§7Eligible Drops §f${eligibleDrops.length}`, `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`],
+            }], { energyCost: settings.machine.energy_cost });
             return;
         }
 
@@ -150,10 +173,16 @@ DoriosLib.registry.blockComponent(ID, {
         displayProgress(machine, cost);
         if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
         const active = result.energyUsed > 0 || result.processCount > 0;
-        renderStatus(machine, active, active ? (steamActive ? "Steam Boost" : "Sieving") : "No Energy", [
-            `§r§7Mesh tier: ${mesh.tier}`,
-            `§r§7Produced: ${produced}`,
-        ]);
+        renderStatus(machine, active, active ? (steamActive ? "Steam Boost" : "Sieving") : "No Energy", [{
+            title: "Sieving Information",
+            lines: [
+                `§r§7Mesh Tier §f${mesh.tier}`,
+                `§r§7Eligible Drops §f${eligibleDrops.length}`,
+                `§r§7Produced §f${produced}`,
+                `§r§7Steam Boost §f${steamActive ? "x1.50" : "Inactive"}`,
+                `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
+            ],
+        }], { energyCost: cost, rateMultiplier: steamActive ? 1.5 : 1 });
     },
 
     onPlayerBreak: Machine.onDestroy,

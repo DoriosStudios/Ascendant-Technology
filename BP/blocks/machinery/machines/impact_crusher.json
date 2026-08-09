@@ -22,22 +22,27 @@
             "utilitycraft:impact_crusher": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 29
+                    "inventory_size": 39
                 },
                 "machine": {
                     "energy_cap": 512000,
                     "energy_cost": 3200,
-                    "rate_speed_base": 640,
+                    "rate_speed_base": 60,
                     "fluid_cap": 128000,
-                    "fluid_types": 2,
-                    "upgrades": [11, 12, 13, 14]
+                    "fluid_types": 1,
+                    "gas_cap": 128000,
+                    "gas_types": 1,
+                    "upgrades": [9, 10, 11, 12]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 11 },
-                { "type": "energy", "slot": 12 }
+                { "type": "speed", "slot": 9 },
+                { "type": "energy", "slot": 10 },
+                { "type": "hyper_processing", "slot": 11 },
+                { "type": "stack", "slot": 12 }
             ],
             "utilitycraft:fluid_container": {},
+            "utilitycraft:gas_container": {},
             "utilitycraft:machine_recipes": {
                 "type": "impact_crusher"
             },
@@ -82,6 +87,7 @@
             "tag:dorios:machine": {},
             "tag:dorios:energy": {},
             "tag:dorios:fluid": {},
+            "tag:dorios:gas": {},
             "tag:dorios:item": {},
             "tag:minecraft:is_pickaxe_item_destructible": {}
         },

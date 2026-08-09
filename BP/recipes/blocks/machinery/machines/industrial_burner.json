@@ -7,30 +7,31 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
             "I": {
+                "item": "utilitycraft:expert_fluid_tank"
+            },
+            "G": {
+                "item": "utilitycraft:tungsten"
+            },
+            "M": {
                 "item": "utilitycraft:incinerator"
             },
-            "C": {
-                "item": "utilitycraft:machine_case"
-            },
-            "A": {
-                "item": "utilitycraft:advanced_chip"
-            },
-            "L": {
-                "item": "utilitycraft:lava_capsule_8"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "PLP",
-            "CIC",
-            "LAL"
-        ],
         "result": {
-            "item": "utilitycraft:industrial_burner"
+            "item": "utilitycraft:industrial_burner",
+            "count": 1
         },
         "unlock": [
             {

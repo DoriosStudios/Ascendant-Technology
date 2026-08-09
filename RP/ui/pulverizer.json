@@ -100,7 +100,7 @@
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
                     "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
                     "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade",
-                    "$upgrade_overlay_4": "textures/items/machinery/quantity_upgrade"
+                    "$upgrade_overlay_4": "textures/items/machinery/stack_upgrade"
                 }
             },
             {

@@ -217,7 +217,7 @@ export function grantStatsProgress(stack, definition, amount, reason = "use", op
     if (!shouldPersist) {
         setBuffer(bufferKey, buffered);
         if (!currentState.uid) {
-            const result = writeStatsState(stack, definition, { ...currentState, uid }, { syncLore: true });
+            const result = writeStatsState(stack, definition, { ...currentState, uid }, { syncLore: false });
             return { ...result, levelUp: false, buffered };
         }
         return { changed: false, levelUp: false, state: currentState, buffered };
@@ -238,7 +238,7 @@ export function grantStatsProgress(stack, definition, amount, reason = "use", op
     };
 
     const result = writeStatsState(stack, definition, nextState, {
-        syncLore: true,
+        syncLore: levelUp,
         levelChanged: levelUp,
         forceLore: options.forceLore === true
     });

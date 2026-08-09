@@ -56,8 +56,7 @@ function cycleOperatorMode(player, context) {
             operatorMode: next,
         }
     }, {
-        syncLore: true,
-        forceLore: true,
+        syncLore: false,
     });
 
     if (result.changed) {

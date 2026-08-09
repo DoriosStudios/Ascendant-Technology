@@ -3,8 +3,6 @@
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
 import {
-    ButtonManager,
-    EnergyStorage,
     FluidStorage,
     Machine,
     registerIOInterface,
@@ -14,84 +12,42 @@ import {
     getGeneticSoil,
 } from "../../ATCore/genetics/index.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
+import { coolants } from "../../config/resources/coolants.js";
 import {
     displayProgress,
+    renderMachineInfo,
     setDynamicNumber,
     setDynamicString,
-    setRunning,
     setUiItem,
 } from "./runtime.js";
 
 const ID = "utilitycraft:genetic_seed_synthesizer";
-const INVENTORY_SIZE = 39;
+const INVENTORY_SIZE = 38;
 const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12,
-    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
-    30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+    0, 1, 2, 3, 4, 7, 9, 10, 11, -1, -1,
+    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
 ];
-const SEED_SLOTS = [3, 4, 5, 6];
-const SOIL_SLOT = 7;
-const PROFILE_BUTTON_SLOT = 8;
-const CRYOFLUID_DISPLAY_SLOT = 9;
-const OUTPUT_SLOTS = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
-const PROFILE_KEY = "ascendant:genetic_seed_profile";
+const SEED_SLOTS = [3, 4];
+const SOIL_SLOT = 5;
+const COOLANT_DISPLAY_SLOT = 6;
+const OUTPUT_SLOTS = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
 const OPERATION_KEY = "ascendant:genetic_seed_operation";
-const CRYOFLUID = "cryofluid";
 const FLUID_IO_RATE = 128000;
 const MACHINE_UPDATES_PER_SECOND = 5;
 const itemMaximums = new Map();
 
-const profiles = new Map([
-    ["growth", {
-        id: "growth",
-        title: "Growth",
-        short: "GRW",
-        color: "\u00A7a",
-        speed: 1.45,
-        cryofluid: 1,
-        bonusRollChance: 0,
-        preserveLowFluidProgress: false,
-    }],
-    ["resilience", {
-        id: "resilience",
-        title: "Resilience",
-        short: "RES",
-        color: "\u00A7b",
-        speed: 1,
-        cryofluid: 0.65,
-        bonusRollChance: 0,
-        preserveLowFluidProgress: true,
-    }],
-    ["yield", {
-        id: "yield",
-        title: "Yield",
-        short: "YLD",
-        color: "\u00A76",
-        speed: 0.8,
-        cryofluid: 1.85,
-        bonusRollChance: 0.45,
-        preserveLowFluidProgress: false,
-    }],
-]);
-const profileOrder = ["growth", "resilience", "yield"];
-
-function getProfile(entity) {
-    return profiles.get(entity.getDynamicProperty(PROFILE_KEY)) ?? profiles.get("growth");
-}
-
-ButtonManager.registerMachineButton(ID, PROFILE_BUTTON_SLOT, ({ entity }) => {
-    const current = getProfile(entity);
-    const currentIndex = profileOrder.indexOf(current.id);
-    const next = profiles.get(profileOrder[(currentIndex + 1) % profileOrder.length]);
-    setDynamicString(entity, PROFILE_KEY, next.id);
-    setDynamicString(entity, OPERATION_KEY, "");
-    setDynamicNumber(entity, "dorios:progress_0", 0);
-    return `\u00A7r${next.color}${next.short}`;
+const STANDARD_PROFILE = Object.freeze({
+    id: "standard",
+    title: "Standard",
+    speed: 1,
+    coolant: 1,
+    bonusRollChance: 0,
 });
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [27, 28, 29, 30, 31, 32],
+        buttonSlots: [26, 27, 28, 29, 30, 31],
         anyInputSlots: [...SEED_SLOTS, SOIL_SLOT],
         anyOutputSlots: OUTPUT_SLOTS,
         modes: [
@@ -103,7 +59,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [33, 34, 35, 36, 37, 38],
+        buttonSlots: [32, 33, 34, 35, 36, 37],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -119,17 +75,13 @@ DoriosLib.registry.blockComponent(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([CRYOFLUID_DISPLAY_SLOT]);
+            machine.blockSlots([COOLANT_DISPLAY_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
-            setUiItem(machine.container, PROFILE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A7aGRW");
-            setDynamicString(machine.entity, PROFILE_KEY, "growth");
             setDynamicString(machine.entity, OPERATION_KEY, "");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
 
-            const cryofluid = new FluidStorage(machine.entity, 0);
-            cryofluid.setType(CRYOFLUID);
-            cryofluid.display(CRYOFLUID_DISPLAY_SLOT);
+            new FluidStorage(machine.entity, 0).display(COOLANT_DISPLAY_SLOT);
         });
     },
 
@@ -138,36 +90,31 @@ DoriosLib.registry.blockComponent(ID, {
         if (!machine.valid) return;
         if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
-        const cryofluid = new FluidStorage(machine.entity, 0);
-        if (cryofluid.getType() === "empty") cryofluid.setType(CRYOFLUID);
+        const coolantTank = new FluidStorage(machine.entity, 0);
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
-
-        if (machine.shouldUpdateUI) ButtonManager.ensureWatching(machine.entity, ID);
-        else ButtonManager.unwatchEntity(machine.entity);
-
-        const profile = getProfile(machine.entity);
+        const profile = STANDARD_PROFILE;
         const soilItem = machine.container.getItem(SOIL_SLOT);
         if (!soilItem) {
-            resetProcess(machine, cryofluid, settings.machine.energy_cost, "Insert Soil", profile);
+            resetProcess(machine, coolantTank, settings.machine.energy_cost, "Insert Soil", profile);
             return;
         }
 
         const soil = getGeneticSoil(soilItem.typeId);
         if (!soil) {
-            resetProcess(machine, cryofluid, settings.machine.energy_cost, "Invalid Soil", profile);
+            resetProcess(machine, coolantTank, settings.machine.energy_cost, "Invalid Soil", profile);
             return;
         }
 
         const outputState = inspectOutputs(machine.container);
         const operation = buildOperation(machine, soil, profile, outputState);
         if (operation.seedCount === 0) {
-            resetProcess(machine, cryofluid, settings.machine.energy_cost, "Insert Seeds", profile, soil);
+            resetProcess(machine, coolantTank, settings.machine.energy_cost, "Insert Seeds", profile, soil);
             return;
         }
         if (operation.validCount === 0) {
             resetProcess(
                 machine,
-                cryofluid,
+                coolantTank,
                 settings.machine.energy_cost,
                 operation.invalidCount > 0 ? "Invalid Seed" : "Output Full",
                 profile,
@@ -182,13 +129,15 @@ DoriosLib.registry.blockComponent(ID, {
             setDynamicNumber(machine.entity, "dorios:progress_0", 0);
         }
 
-        if (cryofluid.getType() !== CRYOFLUID) {
-            pauseProcess(machine, cryofluid, operation, "Wrong Liquid");
+        const coolant = coolants[coolantTank.getType()];
+        if (!coolant) {
+            pauseProcess(machine, coolantTank, operation, "Invalid Coolant");
             return;
         }
-        if (cryofluid.get() < operation.cryofluidCost) {
-            if (!profile.preserveLowFluidProgress) setDynamicNumber(machine.entity, "dorios:progress_0", 0);
-            pauseProcess(machine, cryofluid, operation, "Low Cryofluid");
+        const coolantCost = Math.max(1, Math.ceil(operation.coolantCost / coolant.efficiency));
+        if (coolantTank.get() < coolantCost) {
+            setDynamicNumber(machine.entity, "dorios:progress_0", 0);
+            pauseProcess(machine, coolantTank, operation, "Low Coolant", coolant, coolantCost);
             return;
         }
 
@@ -201,7 +150,7 @@ DoriosLib.registry.blockComponent(ID, {
                 settings.machine.rate_speed_base,
                 operation.energyCost,
                 operation.cycleSeconds,
-                profile.speed,
+                profile.speed * coolant.efficiency,
             ),
         });
 
@@ -212,26 +161,24 @@ DoriosLib.registry.blockComponent(ID, {
             const distribution = insertOutputs(machine, rolled);
             produced = distribution.inserted;
             overflow = distribution.overflow;
-            cryofluid.consume(operation.cryofluidCost);
+            coolantTank.consume(coolantCost);
         }
 
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
         setDynamicNumber(machine.entity, "dorios:energy_cost_0", operation.energyCost);
         displayProgress(machine, operation.energyCost);
-        if (machine.shouldUpdateUI) cryofluid.display(CRYOFLUID_DISPLAY_SLOT);
+        if (machine.shouldUpdateUI) coolantTank.display(COOLANT_DISPLAY_SLOT);
 
         const active = result.energyUsed > 0 || result.processCount > 0;
         const message = result.processCount > 0
             ? "Synthesized"
             : active
-                ? processingVerb(profile.id)
+                ? "Culturing"
                 : "No Energy";
-        renderMachineStatus(machine, cryofluid, active, message, profile, soil, operation, produced, overflow);
+        renderMachineStatus(machine, coolantTank, active, message, profile, soil, operation, produced, overflow, coolant, coolantCost);
     },
 
     onPlayerBreak(event) {
-        const entity = event.dimension.getEntitiesAtBlockLocation(event.block.location)[0];
-        if (entity) ButtonManager.unwatchEntity(entity);
         Machine.onDestroy(event);
     },
 });
@@ -241,7 +188,7 @@ function buildOperation(machine, soil, profile, outputState) {
     let seedCount = 0;
     let invalidCount = 0;
     let energyCost = 0;
-    let cryofluidCost = 0;
+    let coolantCost = 0;
     let cycleSeconds = 0;
     let expectedOutput = 0;
     let key = `${profile.id}|${soil.typeId}`;
@@ -265,14 +212,14 @@ function buildOperation(machine, soil, profile, outputState) {
         if (!canAcceptRecipe(outputState, recipe)) continue;
 
         const laneEnergy = Math.max(1, Math.ceil(recipe.cost * soil.cost * 4));
-        const laneCryofluid = Math.max(
+        const laneCoolant = Math.max(
             1,
-            Math.ceil(Math.max(25, Math.ceil(laneEnergy / 256)) * 1.75 * profile.cryofluid),
+            Math.ceil(Math.max(25, Math.ceil(laneEnergy / 256)) * 1.75 * profile.coolant),
         );
         lanes.push({ slot, recipe });
         activeKey += `${activeKey ? "," : ""}${slot}`;
         energyCost += laneEnergy;
-        cryofluidCost += laneCryofluid;
+        coolantCost += laneCoolant;
         cycleSeconds = Math.max(cycleSeconds, recipe.cycleSeconds);
         expectedOutput += recipe.expectedBase + recipe.expectedBonus * profile.bonusRollChance;
     }
@@ -287,7 +234,7 @@ function buildOperation(machine, soil, profile, outputState) {
         invalidCount,
         validCount: lanes.length,
         energyCost,
-        cryofluidCost,
+        coolantCost,
         cycleSeconds,
         expectedOutput: Math.round(expectedOutput),
     };
@@ -410,48 +357,66 @@ function getRateMultiplier(baseRate, energyCost, cycleSeconds, profileSpeed) {
     return energyCost / (Math.max(Number.EPSILON, baseRate) * updates) * profileSpeed;
 }
 
-function processingVerb(profileId) {
-    if (profileId === "growth") return "Culturing";
-    if (profileId === "resilience") return "Stabilizing";
-    return "Amplifying Yield";
-}
-
-function resetProcess(machine, cryofluid, cost, message, profile, soil = null) {
+function resetProcess(machine, coolantTank, cost, message, profile, soil = null) {
     setDynamicString(machine.entity, OPERATION_KEY, "");
     setDynamicNumber(machine.entity, "dorios:progress_0", 0);
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
     displayProgress(machine, cost);
-    if (machine.shouldUpdateUI) cryofluid.display(CRYOFLUID_DISPLAY_SLOT);
-    renderMachineStatus(machine, cryofluid, false, message, profile, soil);
+    if (machine.shouldUpdateUI) coolantTank.display(COOLANT_DISPLAY_SLOT);
+    renderMachineStatus(machine, coolantTank, false, message, profile, soil);
 }
 
-function pauseProcess(machine, cryofluid, operation, message) {
+function pauseProcess(machine, coolantTank, operation, message, coolant = null, coolantCost = 0) {
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", operation.energyCost);
     displayProgress(machine, operation.energyCost);
-    if (machine.shouldUpdateUI) cryofluid.display(CRYOFLUID_DISPLAY_SLOT);
-    renderMachineStatus(machine, cryofluid, false, message, operation.profile, operation.soil, operation);
+    if (machine.shouldUpdateUI) coolantTank.display(COOLANT_DISPLAY_SLOT);
+    renderMachineStatus(machine, coolantTank, false, message, operation.profile, operation.soil, operation, 0, 0, coolant, coolantCost);
 }
 
-function renderMachineStatus(machine, cryofluid, running, message, profile, soil, operation = null, produced = 0, overflow = 0) {
-    setRunning(machine, running);
-    if (!machine.shouldUpdateUI) return;
-
-    machine.energy.display(0);
-    const lines = [
-        `\u00A7r${running ? "\u00A7a" : "\u00A7e"}${message}`,
-        `\u00A7r\u00A77Profile: \u00A7f${profile.title}`,
-        `\u00A7r\u00A77Soil: \u00A7f${soil?.typeId ? formatTypeId(soil.typeId) : "None"}`,
-        `\u00A7r\u00A77Active Lanes: \u00A7f${operation?.validCount ?? 0}/4`,
-        `\u00A7r\u00A77Cryofluid: \u00A7f${FluidStorage.formatFluid(cryofluid.get())}`,
+function renderMachineStatus(machine, coolantTank, running, message, profile, soil, operation = null, produced = 0, overflow = 0, coolant = null, coolantCost = 0) {
+    const coolantPercent = coolantTank.getCap() > 0 ? (coolantTank.get() / coolantTank.getCap()) * 100 : 0;
+    const sections = [
+        {
+            title: "Culturing Information",
+            lines: [
+                `\u00A7r\u00A77Soil \u00A7f${soil?.typeId ? formatTypeId(soil.typeId) : "None"}`,
+                `\u00A7r\u00A77Active Seeds \u00A7f${operation?.validCount ?? 0}/2`,
+                `\u00A7r\u00A77Expected Yield \u00A7f~${operation?.expectedOutput ?? 0}`,
+            ],
+        },
+        {
+            title: "Coolant Information",
+            lines: [
+                `\u00A7r\u00A77Type \u00A7f${formatTypeId(coolantTank.getType())}`,
+                `\u00A7r\u00A77Efficiency \u00A7f${coolant ? coolant.efficiency.toFixed(2) : "-"}x`,
+                `\u00A7r\u00A77Cycle Cost \u00A7f${coolantCost} mB`,
+                `\u00A7r\u00A77Stored \u00A7f${FluidStorage.formatFluid(coolantTank.get())} / ${FluidStorage.formatFluid(coolantTank.getCap())}`,
+                `\u00A7r\u00A77Capacity \u00A7f${coolantPercent.toFixed(2)}%%`,
+            ],
+        },
     ];
-
-    if (operation?.energyCost) {
-        lines.push(`\u00A7r\u00A77Cycle: \u00A7f${EnergyStorage.formatEnergyToText(operation.energyCost)} DE`);
-        lines.push(`\u00A7r\u00A77Expected Yield: \u00A7f~${operation.expectedOutput}`);
+    if (produced > 0 || overflow > 0) {
+        sections.push({
+            title: "Synthesis Result",
+            lines: [
+                `\u00A7r\u00A7aProduced \u00A7f${produced}`,
+                `\u00A7r\u00A7cOverflow \u00A7f${overflow}`,
+            ],
+        });
     }
-    if (produced > 0) lines.push(`\u00A7r\u00A7aProduced: ${produced}`);
-    if (overflow > 0) lines.push(`\u00A7r\u00A7cOverflow: ${overflow}`);
-    machine.setLabel(lines);
+    const rateMultiplier = operation && profile && coolant
+        ? getRateMultiplier(
+            machine.settings.machine.rate_speed_base,
+            operation.energyCost,
+            operation.cycleSeconds,
+            profile.speed * coolant.efficiency,
+        )
+        : 1;
+    renderMachineInfo(machine, running, message, sections, {
+        energyCost: operation?.energyCost,
+        rateMultiplier,
+        batch: 1,
+    });
 }
 
 function formatTypeId(typeId) {

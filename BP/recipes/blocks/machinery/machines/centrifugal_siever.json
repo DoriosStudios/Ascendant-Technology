@@ -7,30 +7,31 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
-            "S": {
-                "item": "utilitycraft:steam_capsule_8"
+            "I": {
+                "item": "minecraft:brush"
             },
-            "C": {
-                "item": "utilitycraft:machine_case"
+            "G": {
+                "item": "utilitycraft:tungsten"
             },
-            "B": {
+            "M": {
                 "item": "utilitycraft:autosieve"
             },
-            "A": {
-                "item": "utilitycraft:advanced_chip"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "PSP",
-            "CBC",
-            "PAP"
-        ],
         "result": {
-            "item": "utilitycraft:centrifugal_siever"
+            "item": "utilitycraft:centrifugal_siever",
+            "count": 1
         },
         "unlock": [
             {

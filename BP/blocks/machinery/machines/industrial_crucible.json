@@ -2,7 +2,7 @@
     "format_version": "1.21.100",
     "minecraft:block": {
         "description": {
-            "identifier": "utilitycraft:magmatic_reactor_chamber",
+            "identifier": "utilitycraft:industrial_crucible",
             "menu_category": {
                 "category": "construction"
             },
@@ -20,56 +20,58 @@
         },
         "components": {
             "utilitycraft:fluid_container": {},
-            "utilitycraft:magmatic_reactor_chamber": {
+            "utilitycraft:industrial_crucible": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 25,
+                    "inventory_size": 32,
                     "fixed_fluid_types": true
                 },
                 "machine": {
                     "energy_cap": 5120000,
                     "energy_cost": 3200,
-                    "rate_speed_base": 640,
+                    "rate_speed_base": 80,
                     "fluid_cap": 128000,
                     "fluid_types": 1,
-                    "upgrades": [11, 12]
+                    "upgrades": [10, 11, 12, 13]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 11 },
-                { "type": "energy", "slot": 12 }
+                { "type": "speed", "slot": 10 },
+                { "type": "energy", "slot": 11 },
+                { "type": "hyper_processing", "slot": 12 },
+                { "type": "stack", "slot": 13 }
             ],
             "utilitycraft:machine_recipes": {
-                "type": "magmatic_reactor_chamber"
+                "type": "industrial_crucible"
             },
             "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_absolute_magmator_off_north",
+                    "texture": "utilitycraft_industrial_crucible_off_north",
                     "render_method": "alpha_test"
                 },
                 "north": {
-                    "texture": "utilitycraft_absolute_magmator_off_north",
+                    "texture": "utilitycraft_industrial_crucible_off_north",
                     "render_method": "alpha_test"
                 },
                 "south": {
-                    "texture": "utilitycraft_absolute_magmator_off_south",
+                    "texture": "utilitycraft_industrial_crucible_off_south",
                     "render_method": "alpha_test"
                 },
                 "east": {
-                    "texture": "utilitycraft_absolute_magmator_off_east",
+                    "texture": "utilitycraft_industrial_crucible_off_east",
                     "render_method": "alpha_test"
                 },
                 "west": {
-                    "texture": "utilitycraft_absolute_magmator_off_west",
+                    "texture": "utilitycraft_industrial_crucible_off_west",
                     "render_method": "alpha_test"
                 },
                 "up": {
-                    "texture": "utilitycraft_absolute_magmator_off_up",
+                    "texture": "utilitycraft_industrial_crucible_off_up",
                     "render_method": "alpha_test"
                 },
                 "down": {
-                    "texture": "utilitycraft_absolute_magmator_off_down",
+                    "texture": "utilitycraft_industrial_crucible_off_down",
                     "render_method": "alpha_test"
                 }
             },
@@ -92,31 +94,31 @@
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "utilitycraft_absolute_magmator_on_north",
+                            "texture": "utilitycraft_industrial_crucible_on_north",
                             "render_method": "alpha_test"
                         },
                         "north": {
-                            "texture": "utilitycraft_absolute_magmator_on_north",
+                            "texture": "utilitycraft_industrial_crucible_on_north",
                             "render_method": "alpha_test"
                         },
                         "south": {
-                            "texture": "utilitycraft_absolute_magmator_on_south",
+                            "texture": "utilitycraft_industrial_crucible_on_south",
                             "render_method": "alpha_test"
                         },
                         "east": {
-                            "texture": "utilitycraft_absolute_magmator_on_east",
+                            "texture": "utilitycraft_industrial_crucible_on_east",
                             "render_method": "alpha_test"
                         },
                         "west": {
-                            "texture": "utilitycraft_absolute_magmator_on_west",
+                            "texture": "utilitycraft_industrial_crucible_on_west",
                             "render_method": "alpha_test"
                         },
                         "up": {
-                            "texture": "utilitycraft_absolute_magmator_on_up",
+                            "texture": "utilitycraft_industrial_crucible_on_up",
                             "render_method": "alpha_test"
                         },
                         "down": {
-                            "texture": "utilitycraft_absolute_magmator_on_down",
+                            "texture": "utilitycraft_industrial_crucible_on_down",
                             "render_method": "alpha_test"
                         }
                     },

@@ -2,7 +2,7 @@
 
 import { BlockPermutation, ItemStack, system } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerIOInterface } from "DoriosCore/index.js";
 import {
     handleVerdantOutlineInteract,
     initializeVerdantOutline,
@@ -14,21 +14,23 @@ import {
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
     displayProgress,
+    renderMachineInfo,
     setDynamicNumber,
     setDynamicString,
-    setRunning,
     setUiItem,
 } from "./runtime.js";
 
 const ID = "utilitycraft:verdant_cultivator";
-const INVENTORY_SIZE = 26;
+const INVENTORY_SIZE = 32;
 const LEGACY_SLOT_LAYOUT = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    11, 12, 13, 14, 15, 16, 17, 18, 19,
+    -1, -1, -1, -1, -1, -1,
+    20, 21, 22, 23, 24, 25,
 ];
 const SEED_SLOTS = [3, 4, 5, 6];
 const CLOCK_SLOT = 7;
-const OUTPUT_SLOTS = [11, 12, 13, 14, 15, 16, 17, 18, 19];
+const OUTPUT_SLOTS = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
 const CONFIGURATION_KEY = "ascendant:verdant_configuration";
 const BASE_SIDE_LENGTH = 3;
 const MAX_RANGE_LEVEL = 4;
@@ -46,17 +48,16 @@ const tillableSoils = new Set([
     "minecraft:dirt_with_roots",
 ]);
 
-const clockTierChance = new Map([
-    [0, 0.8],
-    [1, 0.64],
-    [2, 0.48],
-    [3, 0.08],
-    [4, 0.04],
-]);
+const CLOCKS = Object.freeze({
+    "utilitycraft:accelerator_clock": Object.freeze({ title: "Accelerator", baseChance: 0.1875, bonusStepChance: 0, speed: 1, pulses: 1 }),
+    "utilitycraft:diamond_accelerator_clock": Object.freeze({ title: "Diamond", baseChance: 0.5, bonusStepChance: 0, speed: 2, pulses: 2 }),
+    "utilitycraft:nether_star_accelerator_clock": Object.freeze({ title: "Nether Star", baseChance: 1, bonusStepChance: 0.25, speed: 4, pulses: 4 }),
+});
+const CROP_TIER_MULTIPLIERS = Object.freeze({ 0: 1, 1: 1, 2: 4 / 7, 3: 4 / 11, 4: 1 / 4 });
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [20, 21, 22, 23, 24, 25],
+        buttonSlots: [26, 27, 28, 29, 30, 31],
         anyInputSlots: [...SEED_SLOTS, CLOCK_SLOT],
         anyOutputSlots: OUTPUT_SLOTS,
         modes: [
@@ -182,7 +183,8 @@ function readConfiguration(machine) {
     const vectors = directionVectors(direction);
     const rangeLevel = Math.max(0, Math.min(MAX_RANGE_LEVEL, Math.floor(machine.boosts.range ?? 0)));
     const sideLength = BASE_SIDE_LENGTH + rangeLevel * 2;
-    const clockInstalled = machine.container.getItem(CLOCK_SLOT)?.typeId === "utilitycraft:accelerator_clock";
+    const clockItem = machine.container.getItem(CLOCK_SLOT);
+    const clock = clockItem ? CLOCKS[clockItem.typeId] ?? null : null;
     const processBatch = Math.max(1, Math.floor(machine.boosts.process_batch ?? 1));
     const templates = new Array(SEED_SLOTS.length);
     let validSeedCount = 0;
@@ -200,13 +202,13 @@ function readConfiguration(machine) {
     }
 
     const layoutSignature = `${direction}|${sideLength}|${templateSignature}`;
-    const operationSignature = `${layoutSignature}|${clockInstalled ? 1 : 0}|${processBatch}`;
+    const operationSignature = `${layoutSignature}|${clockItem?.typeId ?? "-"}|${processBatch}`;
     return {
         direction,
         vectors,
         rangeLevel,
         sideLength,
-        clockInstalled,
+        clock,
         processBatch,
         templates,
         validSeedCount,
@@ -396,8 +398,8 @@ function buildOperation(machine, configuration, snapshot, biomeId) {
     }
 
     const biomeBonus = resolveBiomeBonus(configuration.templates, snapshot, biomeId);
-    const pulseCount = configuration.clockInstalled
-        ? Math.min(snapshot.growthTargets.length, configuration.processBatch + (biomeBonus.active ? 1 : 0))
+    const pulseCount = configuration.clock
+        ? Math.min(snapshot.growthTargets.length, configuration.processBatch * configuration.clock.pulses + (biomeBonus.active ? 1 : 0))
         : 0;
     const harvestCount = snapshot.harvestTargets.length;
     const plantCount = plantTargets.length + harvestCount;
@@ -416,6 +418,7 @@ function buildOperation(machine, configuration, snapshot, biomeId) {
             + Math.min(1.8, plantCount * 0.06)
             + pulseCount * 0.7
         : 0;
+    const acceleratedCycleSeconds = cycleSeconds / Math.max(1, configuration.clock?.speed ?? 1);
 
     let message = "Monitoring";
     if (!ready && snapshot.invalidSoilCount > 0) message = "Invalid Soil";
@@ -432,7 +435,7 @@ function buildOperation(machine, configuration, snapshot, biomeId) {
         ready,
         message,
         energyCost,
-        cycleSeconds,
+        cycleSeconds: acceleratedCycleSeconds,
         bufferFilledSlots: countFilledOutputs(machine.container),
     };
 }
@@ -464,7 +467,7 @@ function executeOperation(machine, operation, settings) {
         const start = Math.floor(Math.random() * operation.growthTargets.length);
         for (let offset = 0; offset < operation.pulseCount; offset++) {
             const target = operation.growthTargets[(start + offset) % operation.growthTargets.length];
-            if (growCrop(machine, target)) pulsed++;
+            if (growCrop(machine, target, operation.clock)) pulsed++;
         }
     }
 
@@ -490,15 +493,18 @@ function executeOperation(machine, operation, settings) {
     return { harvested, planted, pulsed };
 }
 
-function growCrop(machine, target) {
+function growCrop(machine, target, clock) {
     const block = machine.dimension.getBlock(target.position);
     if (!block || block.typeId !== target.spec.cropBlockId) return false;
     const age = block.permutation.getState(target.spec.ageState);
     if (typeof age !== "number" || age >= target.spec.maxAge) return false;
+    if (!clock) return false;
     const tier = Number(block.permutation.getState("utilitycraft:tier") ?? 0);
-    if (Math.random() > (clockTierChance.get(tier) ?? 0.8)) return false;
+    const chance = Math.min(1, clock.baseChance * (CROP_TIER_MULTIPLIERS[tier] ?? 1));
+    if (Math.random() > chance) return false;
     try {
-        block.setPermutation(block.permutation.withState(target.spec.ageState, age + 1));
+        const bonus = age + 1 < target.spec.maxAge && Math.random() < clock.bonusStepChance ? 1 : 0;
+        block.setPermutation(block.permutation.withState(target.spec.ageState, Math.min(target.spec.maxAge, age + 1 + bonus)));
         return true;
     } catch {
         return false;
@@ -756,24 +762,47 @@ function resetProcess(machine, cost, message, context, resetProgress = true) {
 }
 
 function renderStatus(machine, running, message, context, completed = null) {
-    setRunning(machine, running);
-    if (!machine.shouldUpdateUI) return;
-    machine.energy.display(0);
     const sideLength = context.sideLength ?? BASE_SIDE_LENGTH;
-    const lines = [
-        `\u00A7r${running ? "\u00A7a" : "\u00A7e"}${message}`,
-        `\u00A7r\u00A77Field: \u00A7f${sideLength}x${sideLength}`,
-        `\u00A7r\u00A77Seed Patterns: \u00A7f${context.validSeedCount ?? 0}/4`,
-        `\u00A7r\u00A77Clock: \u00A7f${context.clockInstalled ? "Pulse" : "Off"}`,
-        `\u00A7r\u00A77Buffer: \u00A7f${context.bufferFilledSlots ?? 0}/9`,
+    const fieldLines = [
+        `\u00A7r\u00A77Field \u00A7f${sideLength}x${sideLength}`,
+        `\u00A7r\u00A77Seed Patterns \u00A7f${context.validSeedCount ?? 0}/4`,
+        `\u00A7r\u00A77Clock \u00A7f${context.clock?.title ?? "Off"}`,
+        `\u00A7r\u00A77Buffer \u00A7f${context.bufferFilledSlots ?? 0}/15`,
     ];
-    if (context.biomeBonus?.active) lines.push(`\u00A7r\u00A7a${context.biomeBonus.title}`);
+    if (context.biomeBonus?.active) fieldLines.push(`\u00A7r\u00A7aBiome Bonus \u00A7f${context.biomeBonus.title}`);
+    const sections = [{ title: "Cultivator Information", lines: fieldLines }];
     if (context.ready) {
-        lines.push(`\u00A7r\u00A77Ready: \u00A7f${context.harvestTargets.length} harvest / ${context.plantTargets.length} plant / ${context.pulseCount} pulse`);
-        lines.push(`\u00A7r\u00A77Cycle: \u00A7f${EnergyStorage.formatEnergyToText(context.energyCost)} DE`);
+        sections.push({
+            title: "Field Operation",
+            lines: [
+                `\u00A7r\u00A77Harvest Targets \u00A7f${context.harvestTargets.length}`,
+                `\u00A7r\u00A77Plant Targets \u00A7f${context.plantTargets.length}`,
+                `\u00A7r\u00A77Growth Pulses \u00A7f${context.pulseCount}`,
+            ],
+        });
     }
-    if (completed) lines.push(`\u00A7r\u00A7aLast: ${completed.harvested} harvested / ${completed.planted} planted / ${completed.pulsed} pulsed`);
-    machine.setLabel(lines);
+    if (completed) {
+        sections.push({
+            title: "Last Cycle",
+            lines: [
+                `\u00A7r\u00A7aHarvested \u00A7f${completed.harvested}`,
+                `\u00A7r\u00A7aPlanted \u00A7f${completed.planted}`,
+                `\u00A7r\u00A7aPulsed \u00A7f${completed.pulsed}`,
+            ],
+        });
+    }
+    const rateMultiplier = context.ready
+        ? getRateMultiplier(
+            machine.settings.machine.rate_speed_base,
+            context.energyCost,
+            context.cycleSeconds,
+        )
+        : 1;
+    renderMachineInfo(machine, running, message, sections, {
+        energyCost: context.energyCost,
+        rateMultiplier,
+        batch: 1,
+    });
 }
 
 function cleanupFieldStates() {

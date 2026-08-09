@@ -23,13 +23,8 @@
             },
             {
                 "exit_button_panel": {
-                    "type": "panel",
-                    "anchor_from": "top_right",
-                    "anchor_to": "top_right",
-                    "offset": [42, -10],
-                    "controls": [
-                        { "close_button@common.close_button": {} }
-                    ]
+                    "type": "panel", "anchor_from": "top_right", "anchor_to": "top_right", "offset": [42, -10],
+                    "controls": [{ "close_button@common.close_button": {} }]
                 }
             },
             { "machine_name@uc.machine_name": { "offset": [0, -2] } },
@@ -37,122 +32,43 @@
             {
                 "item_label@uc.text_label": {
                     "collection_index": 1,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [74, 146],
-                    "$text_scale": 0.55,
-                    "offset": [-78, 2]
+                    "anchor_from": "top_left", "anchor_to": "top_left",
+                    "size": [74, 146], "$text_scale": 0.55, "offset": [-78, 2]
                 }
             },
             {
-                "cryofluid_display@uc.liquid_input_1_bar": {
-                    "$collection_index": 7,
-                    "$has_bg": false,
-                    "offset": [-78, -1]
-                }
-            },
-            {
-                "cryofluid_icon": {
-                    "type": "image",
-                    "texture": "textures/ui/at_icons/cryofluid_icon",
-                    "size": [16, 16],
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [-43, 6],
-                    "layer": 4
-                }
-            },
-            {
-                "cryofluid_input@uc.input_2_slot": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [-43, 22],
-                    "collection_index": 5
-                }
-            },
-            {
-                "capsule_return@uc.input_slot": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [-43, 44],
-                    "collection_index": 6,
-                    "$slot_background_texture": "textures/ui/slots/output_2_slot"
-                }
-            },
-            {
-                "input_slot@uc.input_1_slot": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [-12, 28],
-                    "collection_index": 3
-                }
-            },
-            {
-                "input_outline": {
-                    "type": "image",
-                    "texture": "textures/ui/frozen_outline",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [-12, 26],
-                    "size": [22, 22],
-                    "layer": 8
+                "input_grid@uc.slot_grid_2x2": {
+                    "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-35, 20],
+                    "$slot_outline_texture": "textures/ui/slots/input_1_slot",
+                    "$collection_index_1": 3, "$collection_index_2": 4,
+                    "$collection_index_3": 5, "$collection_index_4": 6
                 }
             },
             {
                 "process_progress@uc.progress_display": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [23, 20],
-                    "collection_index": 2
+                    "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [8, 22], "collection_index": 2
                 }
             },
             {
-                "guide_slot@uc.input_slot": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [23, 54],
-                    "collection_index": 8,
-                    "$slot_background_texture": "textures/ui/slots/normal_slot"
+                "output_grid@uc.slot_grid_2x2": {
+                    "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [51, 20],
+                    "$slot_outline_texture": "textures/ui/slots/output_slot",
+                    "$collection_index_1": 12, "$collection_index_2": 13,
+                    "$collection_index_3": 14, "$collection_index_4": 15
                 }
             },
-            {
-                "output_slot@uc.input_slot": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [58, 28],
-                    "collection_index": 4,
-                    "$slot_background_texture": "textures/ui/slots/output_1_slot"
-                }
-            },
-            {
-                "output_outline": {
-                    "type": "image",
-                    "texture": "textures/ui/frozen_outline",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [58, 26],
-                    "size": [22, 22],
-                    "layer": 8
-                }
-            },
-            {
-                "energy_bar@uc.energy_bar": {
-                    "$collection_index": 0,
-                    "offset": [119, 64],
-                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
-                }
-            },
+            { "energy_bar@uc.energy_bar": { "$collection_index": 0, "offset": [119, 64], "$bar_bg_texture": "textures/ui/toggle_button/right_bg" } },
+            { "cryofluid_bar@uc.liquid_input_1_bar": { "$collection_index": 7, "$has_bg": false, "offset": [91, 64] } },
             {
                 "upgrades_tab@uc.upgrades_tab": {
                     "offset": [22, 0],
-                    "$upgrade_index_1": 9,
-                    "$upgrade_index_2": 10,
-                    "$has_first_upgrade": true,
-                    "$has_second_upgrade": true,
-                    "$has_third_upgrade": false,
-                    "$has_fourth_upgrade": false,
+                    "$upgrade_index_1": 8, "$upgrade_index_2": 9, "$upgrade_index_3": 10, "$upgrade_index_4": 11,
+                    "$has_first_upgrade": true, "$has_second_upgrade": true,
+                    "$has_third_upgrade": true, "$has_fourth_upgrade": true,
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade",
+                    "$upgrade_overlay_4": "textures/items/machinery/stack_upgrade"
                 }
             },
             {
@@ -160,37 +76,21 @@
                     "offset": [22, 0],
                     "$io_items_modes_description": "ui.utilitycraft:io.cryo_stabilizer.items",
                     "$io_fluids_modes_description": "ui.utilitycraft:io.cryo_stabilizer.liquids",
-                    "$has_item_io": true,
-                    "$has_fluid_io": true,
-                    "$has_gas_io": false,
-                    "$io_items_default": true,
-                    "$io_fluids_default": false,
+                    "$has_item_io": true, "$has_fluid_io": true, "$has_gas_io": false,
+                    "$io_items_default": true, "$io_fluids_default": false,
                     "$io_top_texture": "textures/blocks/machines/superior/cryo_stabilizer_off_up",
                     "$io_left_texture": "textures/blocks/machines/superior/cryo_stabilizer_off_west",
                     "$io_front_texture": "textures/blocks/machines/superior/cryo_stabilizer_off_north",
                     "$io_right_texture": "textures/blocks/machines/superior/cryo_stabilizer_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/superior/cryo_stabilizer_off_down",
                     "$io_back_texture": "textures/blocks/machines/superior/cryo_stabilizer_off_south",
-                    "$io_item_top_index": 11,
-                    "$io_item_left_index": 12,
-                    "$io_item_front_index": 13,
-                    "$io_item_right_index": 14,
-                    "$io_item_bottom_index": 15,
-                    "$io_item_back_index": 16,
-                    "$io_fluid_top_index": 17,
-                    "$io_fluid_left_index": 18,
-                    "$io_fluid_front_index": 19,
-                    "$io_fluid_right_index": 20,
-                    "$io_fluid_bottom_index": 21,
-                    "$io_fluid_back_index": 22
+                    "$io_item_top_index": 16, "$io_item_left_index": 17, "$io_item_front_index": 18,
+                    "$io_item_right_index": 19, "$io_item_bottom_index": 20, "$io_item_back_index": 21,
+                    "$io_fluid_top_index": 22, "$io_fluid_left_index": 23, "$io_fluid_front_index": 24,
+                    "$io_fluid_right_index": 25, "$io_fluid_bottom_index": 26, "$io_fluid_back_index": 27
                 }
             },
-            {
-                "info_tab@uc.info_tab": {
-                    "offset": [22, 0],
-                    "$info_description": "ui.utilitycraft:info.cryo_stabilizer"
-                }
-            }
+            { "info_tab@uc.info_tab": { "offset": [22, 0], "$info_description": "ui.utilitycraft:info.cryo_stabilizer" } }
         ]
     },
     "utility_panel": {
@@ -207,8 +107,7 @@
                         { "common_panel@common.common_panel": { "$show_close_button": false } },
                         {
                             "chest_panel": {
-                                "type": "panel",
-                                "layer": 5,
+                                "type": "panel", "layer": 5,
                                 "controls": [
                                     { "cryo_stabilizer_top@cryo_stabilizer.cryo_stabilizer_top": {} },
                                     { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {} },

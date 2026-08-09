@@ -71,6 +71,13 @@ export const REFINING_TABLE_CONFIG = {
             durabilityPreserveChance: 0.10,
             negateAllDamageChance: 0.001,
         },
+        utility: {
+            extraDamage: 0.4,
+            bonusLootChance: 0.12,
+            durabilitySaveChance: 0.12,
+            elementalChance: 0.06,
+            elementalDamage: 0.8,
+        },
     },
     tierScales: {
         wood: 0.2,

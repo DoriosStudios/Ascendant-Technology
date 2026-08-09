@@ -7,30 +7,31 @@
         "tags": [
             "utilitycraft_workbench"
         ],
+        "pattern": [
+            "TIT",
+            "GMG",
+            "TST"
+        ],
         "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
+            "T": {
+                "item": "utilitycraft:titanium"
             },
-            "S": {
-                "item": "utilitycraft:steam_capsule_8"
+            "I": {
+                "item": "utilitycraft:netherite_hammer"
             },
-            "C": {
-                "item": "utilitycraft:machine_case"
+            "G": {
+                "item": "utilitycraft:tungsten"
             },
-            "B": {
+            "M": {
                 "item": "utilitycraft:crusher"
             },
-            "A": {
-                "item": "utilitycraft:advanced_chip"
+            "S": {
+                "item": "utilitycraft:superior_machine_case"
             }
         },
-        "pattern": [
-            "PSP",
-            "CBC",
-            "PAP"
-        ],
         "result": {
-            "item": "utilitycraft:pulverizer"
+            "item": "utilitycraft:pulverizer",
+            "count": 1
         },
         "unlock": [
             {

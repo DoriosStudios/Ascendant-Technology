@@ -139,19 +139,6 @@
                 }
             },
             {
-                "mode_button@uc.dynamic_button": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [-45, 46],
-                    "$index": 3,
-                    "$button_size": [38, 14],
-                    "$text_scale": 0.5,
-                    "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
-                    "$hover_texture": "textures/ui/cells/hover_inverted_orange_image",
-                    "$pressed_texture": "textures/ui/cells/orange_cell_image"
-                }
-            },
-            {
                 "output_grid@abyssal_fisher.output_grid_6x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
@@ -177,12 +164,14 @@
                     "offset": [35, 0],
                     "$upgrade_index_1": 6,
                     "$upgrade_index_2": 7,
+                    "$upgrade_index_3": 3,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
-                    "$has_third_upgrade": false,
+                    "$has_third_upgrade": true,
                     "$has_fourth_upgrade": false,
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade"
                 }
             },
             {

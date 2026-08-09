@@ -29,36 +29,72 @@
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [74, 146],
+                    "size": [60, 146],
                     "$text_scale": 0.55,
                     "offset": [-76, 2]
+                }
+            },
+            {
+                "tool_slot@uc.input_2_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-50, 29],
+                    "collection_index": 4
+                }
+            },
+            {
+                "pickaxe_overlay@uc.function_panel": {
+                    "collection_index": 4,
+                    "type": "panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "size": [16, 16],
+                    "offset": [-50, 30],
+                    "controls": [
+                        {
+                            "pickaxe_image": {
+                                "type": "image",
+                                "texture": "textures/ui/overlay/pickaxe_overlay",
+                                "layer": 4,
+                                "alpha": 0.5,
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "size": [16, 16]
+                            }
+                        }
+                    ]
                 }
             },
             {
                 "process_progress@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-35, 22],
+                    "offset": [-26, 22],
                     "collection_index": 2
                 }
             },
             {
-                "output_grid@uc.slot_grid_2x2": {
+                "output_grid@uc.slot_grid_3x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [4, 21],
+                    "offset": [13, 11],
                     "$slot_outline_texture": "textures/ui/slots/output_slot",
-                    "$collection_index_1": 5,
-                    "$collection_index_2": 6,
-                    "$collection_index_3": 7,
-                    "$collection_index_4": 8
+                    "$collection_index_1": 9,
+                    "$collection_index_2": 10,
+                    "$collection_index_3": 11,
+                    "$collection_index_4": 12,
+                    "$collection_index_5": 13,
+                    "$collection_index_6": 14,
+                    "$collection_index_7": 15,
+                    "$collection_index_8": 16,
+                    "$collection_index_9": 17
                 }
             },
             {
                 "mode_button@uc.dynamic_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [48, 5],
+                    "offset": [57, 17],
                     "$index": 3,
                     "$button_size": [38, 14],
                     "$text_scale": 0.5,
@@ -68,24 +104,11 @@
                 }
             },
             {
-                "precision_button@uc.dynamic_button": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [48, 26],
-                    "$index": 4,
-                    "$button_size": [38, 14],
-                    "$text_scale": 0.5,
-                    "$default_texture": "textures/ui/cells/inverted_light_blue_cell_image",
-                    "$hover_texture": "textures/ui/cells/light_blue_cell_image",
-                    "$pressed_texture": "textures/ui/cells/light_blue_cell_image"
-                }
-            },
-            {
                 "activation_button@uc.dynamic_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [48, 47],
-                    "$index": 11,
+                    "offset": [57, 38],
+                    "$index": 5,
                     "$button_size": [38, 14],
                     "$text_scale": 0.5,
                     "$default_texture": "textures/ui/cells/inverted_green_cell_image",
@@ -95,14 +118,16 @@
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "$upgrade_index_1": 9,
-                    "$upgrade_index_2": 10,
+                    "$upgrade_index_1": 6,
+                    "$upgrade_index_2": 7,
+                    "$upgrade_index_3": 8,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
-                    "$has_third_upgrade": false,
+                    "$has_third_upgrade": true,
                     "$has_fourth_upgrade": false,
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade"
                 }
             },
             {
@@ -118,12 +143,12 @@
                     "$io_right_texture": "textures/blocks/machines/superior/seismic_breaker_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/superior/seismic_breaker_off_down",
                     "$io_back_texture": "textures/blocks/machines/superior/seismic_breaker_off_south",
-                    "$io_item_top_index": 12,
-                    "$io_item_left_index": 13,
-                    "$io_item_front_index": 14,
-                    "$io_item_right_index": 15,
-                    "$io_item_bottom_index": 16,
-                    "$io_item_back_index": 17
+                    "$io_item_top_index": 18,
+                    "$io_item_left_index": 19,
+                    "$io_item_front_index": 20,
+                    "$io_item_right_index": 21,
+                    "$io_item_bottom_index": 22,
+                    "$io_item_back_index": 23
                 }
             },
             {

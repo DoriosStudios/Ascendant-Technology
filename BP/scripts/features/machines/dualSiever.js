@@ -16,16 +16,23 @@ import {
 import { displayProgress, renderStatus, setDynamicNumber, setDynamicString, setUiItem } from "./runtime.js";
 
 const ID = "utilitycraft:dual_siever";
+const INVENTORY_SIZE = 46;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, -1, -1,
+    12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+    32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43,
+];
 const MODE_KEY = "ascendant:dual_siever_mode";
 const MODE_BUTTON_SLOT = 7;
 const LANE_B_PROGRESS_SLOT = 8;
 const STEAM_DISPLAY_SLOT = 9;
 const STEAM_PER_CRAFT = 125;
 const OUTPUTS = Object.freeze([
-    12, 13, 14, 15, 16,
-    17, 18, 19, 20, 21,
-    22, 23, 24, 25, 26,
-    27, 28, 29, 30, 31,
+    14, 15, 16, 17, 18,
+    19, 20, 21, 22, 23,
+    24, 25, 26, 27, 28,
+    29, 30, 31, 32, 33,
 ]);
 const LANES = Object.freeze([
     Object.freeze({ index: 0, name: "A", inputs: Object.freeze([3]), meshSlot: 4, progressSlot: 2 }),
@@ -46,7 +53,7 @@ ButtonManager.registerMachineButton(ID, MODE_BUTTON_SLOT, ({ entity }) => {
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [32, 33, 34, 35, 36, 37],
+        buttonSlots: [34, 35, 36, 37, 38, 39],
         anyInputSlots: [3, 4, 5, 6],
         anyOutputSlots: OUTPUTS,
         modes: [
@@ -61,7 +68,7 @@ registerIOInterface(ID, {
         ],
     },
     gases: {
-        buttonSlots: [38, 39, 40, 41, 42, 43],
+        buttonSlots: [40, 41, 42, 43, 44, 45],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -209,6 +216,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
         const steam = new GasStorage(machine.entity, 0);
         if (steam.getType() === "empty") steam.setType("steam");
         machine.processIO();
@@ -232,7 +240,9 @@ DoriosLib.registry.blockComponent(ID, {
         let sharedCost = settings.machine.energy_cost;
 
         if (mode === "shared") {
-            const ready = lanes.filter((lane) => lane.ready);
+            const bothMatch = lanes.every((lane) => lane.ready)
+                && lanes[0].selected.inputTypeId === lanes[1].selected.inputTypeId;
+            const ready = bothMatch ? lanes : [];
             sharedCost = Math.max(1, Math.ceil(ready.reduce((sum, lane) => sum + lane.cost, 0) * 1.35));
             if (ready.length > 0) {
                 const result = advanceProcess(machine, {
@@ -284,15 +294,38 @@ DoriosLib.registry.blockComponent(ID, {
         syncDisplays(machine, steam, mode, lanes, sharedCost);
         const readyCount = lanes.filter((lane) => lane.ready).length;
         const active = energyUsed > 0 || crafted > 0;
-        const firstProblem = lanes.find((lane) => !lane.ready)?.reason ?? "Insert Items";
+        const sharedMismatch = mode === "shared"
+            && lanes.every((lane) => lane.ready)
+            && lanes[0].selected.inputTypeId !== lanes[1].selected.inputTypeId;
+        const firstProblem = sharedMismatch
+            ? "Inputs Must Match"
+            : (lanes.find((lane) => !lane.ready)?.reason ?? "Insert Items");
         const title = active
             ? (lanes.some((lane) => lane.steamActive) ? "Steam Boost" : "Sieving")
             : (readyCount > 0 ? "No Energy" : firstProblem);
-        renderStatus(machine, active, title, [
-            `§r§7Mode: ${mode === "shared" ? "Shared" : "Individual"}`,
-            `§r§7Ready lanes: ${readyCount}/2`,
-            `§r§7Processed: ${crafted} | Output: ${produced}`,
-        ]);
+        const steamRateMultiplier = mode === "shared"
+            ? 0.72 * (lanes.some((lane) => lane.steamActive) ? 1.5 : 1)
+            : (readyCount > 0
+                ? lanes.filter((lane) => lane.ready).reduce((sum, lane) => sum + (lane.steamActive ? 1.5 : 1), 0) / readyCount
+                : 1);
+        const displayedCost = mode === "shared"
+            ? sharedCost
+            : Math.max(settings.machine.energy_cost, ...lanes.map((lane) => lane.cost));
+        renderStatus(machine, active, title, [{
+            title: "Siever Information",
+            lines: [
+                `§r§7Mode §f${mode === "shared" ? "Shared" : "Individual"}`,
+                `§r§7Ready Lanes §f${readyCount}/2`,
+                `§r§7Steam Lanes §f${lanes.filter((lane) => lane.steamActive).length}/2`,
+                `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
+                `§r§7Processed §f${crafted}`,
+                `§r§7Output §f${produced}`,
+            ],
+        }], {
+            energyCost: displayedCost,
+            rateMultiplier: steamRateMultiplier,
+            batch: mode === "shared" ? 1 : machine.boosts.process_batch,
+        });
     },
 
     onPlayerBreak(event) {

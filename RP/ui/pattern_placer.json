@@ -35,15 +35,20 @@
                 }
             },
             {
-                "input_grid@uc.slot_grid_2x2": {
+                "input_grid@uc.slot_grid_3x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-34, 21],
+                    "offset": [-35, 11],
                     "$slot_outline_texture": "textures/ui/slots/input_1_slot",
                     "$collection_index_1": 4,
                     "$collection_index_2": 5,
                     "$collection_index_3": 6,
-                    "$collection_index_4": 7
+                    "$collection_index_4": 7,
+                    "$collection_index_5": 8,
+                    "$collection_index_6": 9,
+                    "$collection_index_7": 10,
+                    "$collection_index_8": 11,
+                    "$collection_index_9": 12
                 }
             },
             {
@@ -72,7 +77,7 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [47, 38],
-                    "$index": 10,
+                    "$index": 13,
                     "$button_size": [38, 14],
                     "$text_scale": 0.5,
                     "$default_texture": "textures/ui/cells/inverted_green_cell_image",
@@ -82,14 +87,16 @@
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "$upgrade_index_1": 8,
-                    "$upgrade_index_2": 9,
+                    "$upgrade_index_1": 14,
+                    "$upgrade_index_2": 15,
+                    "$upgrade_index_3": 16,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
-                    "$has_third_upgrade": false,
+                    "$has_third_upgrade": true,
                     "$has_fourth_upgrade": false,
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade"
                 }
             },
             {
@@ -105,12 +112,12 @@
                     "$io_right_texture": "textures/blocks/machines/superior/pattern_placer_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/superior/pattern_placer_off_down",
                     "$io_back_texture": "textures/blocks/machines/superior/pattern_placer_off_south",
-                    "$io_item_top_index": 11,
-                    "$io_item_left_index": 12,
-                    "$io_item_front_index": 13,
-                    "$io_item_right_index": 14,
-                    "$io_item_bottom_index": 15,
-                    "$io_item_back_index": 16
+                    "$io_item_top_index": 17,
+                    "$io_item_left_index": 18,
+                    "$io_item_front_index": 19,
+                    "$io_item_right_index": 20,
+                    "$io_item_bottom_index": 21,
+                    "$io_item_back_index": 22
                 }
             },
             {

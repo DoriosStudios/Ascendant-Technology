@@ -1,62 +1,41 @@
 // @ts-check
 
 import * as DoriosLib from "DoriosLib/index.js";
-import { ButtonManager, FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
+import {
+    CRYOFLUID_SYNTHESIS_RECIPE,
+    getCryofluidSynthesisInputValue,
+} from "../../config/recipes/cryofluidSynthesizer.js";
 import {
     displayProgress,
     renderStatus,
     setDynamicNumber,
-    setDynamicString,
     setUiItem,
 } from "./runtime.js";
 
 const ID = "utilitycraft:cryofluid_synthesizer";
-const MODE_BUTTON_SLOT = 3;
-const TITANIUM_INPUTS = [4, 5, 6, 7];
-const LAPIS_INPUTS = [8, 9, 10, 11];
-const WATER_DISPLAY_SLOT = 12;
-const CRYOFLUID_DISPLAY_SLOT = 13;
-const MODE_KEY = "ascendant:cryofluid_synthesizer_mode";
+const INVENTORY_SIZE = 29;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2,
+    4, 5, 6, 7,
+    8, 9, 10, 11,
+    12, 13,
+    14, 15, -1, -1,
+    16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27,
+];
+const TITANIUM_INPUTS = [3, 4, 5, 6];
+const LAPIS_INPUTS = [7, 8, 9, 10];
+const WATER_DISPLAY_SLOT = 11;
+const CRYOFLUID_DISPLAY_SLOT = 12;
+const TITANIUM_CREDIT_KEY = "ascendant:cryofluid_titanium_credit";
+const LAPIS_CREDIT_KEY = "ascendant:cryofluid_lapis_credit";
 const RESOURCE_IO_RATE = 128000;
-
-const modes = new Map([
-    ["stable", {
-        id: "stable",
-        title: "Stable",
-        cost: 6000,
-        titanium: 1,
-        lapis: 1,
-        water: 1000,
-        cryofluid: 1000,
-        ignoreSpeed: false,
-    }],
-    ["impulse", {
-        id: "impulse",
-        title: "Impulse",
-        cost: 18000,
-        titanium: 4,
-        lapis: 2,
-        water: 4000,
-        cryofluid: 4000,
-        ignoreSpeed: true,
-    }],
-]);
-
-function getMode(entity) {
-    return modes.get(entity.getDynamicProperty(MODE_KEY)) ?? modes.get("stable");
-}
-
-ButtonManager.registerMachineButton(ID, MODE_BUTTON_SLOT, ({ entity }) => {
-    const next = getMode(entity).id === "stable" ? modes.get("impulse") : modes.get("stable");
-    setDynamicString(entity, MODE_KEY, next.id);
-    setDynamicNumber(entity, "dorios:progress_0", 0);
-    return `\u00A7r${next.id === "stable" ? "\u00A7a" : "\u00A7c"}${next.title} Mode`;
-});
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [16, 17, 18, 19, 20, 21],
+        buttonSlots: [17, 18, 19, 20, 21, 22],
         anyInputSlots: [...TITANIUM_INPUTS, ...LAPIS_INPUTS],
         anyOutputSlots: [],
         modes: [
@@ -67,7 +46,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [22, 23, 24, 25, 26, 27],
+        buttonSlots: [23, 24, 25, 26, 27, 28],
         anyInputIndices: [0],
         anyOutputIndices: [1],
         modes: [
@@ -85,10 +64,9 @@ DoriosLib.registry.blockComponent(ID, {
             if (!machine.valid) return;
 
             machine.blockSlots([WATER_DISPLAY_SLOT, CRYOFLUID_DISPLAY_SLOT]);
+            setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
-            setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A7aStable Mode");
-            setDynamicString(machine.entity, MODE_KEY, "stable");
-            setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
+            setDynamicNumber(machine.entity, "dorios:energy_cost_0", CRYOFLUID_SYNTHESIS_RECIPE.energyCost);
 
             const water = new FluidStorage(machine.entity, 0);
             const cryofluid = new FluidStorage(machine.entity, 1);
@@ -100,142 +78,163 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
 
         const water = new FluidStorage(machine.entity, 0);
         const cryofluid = new FluidStorage(machine.entity, 1);
         if (water.getType() === "empty") water.setType("water");
         if (cryofluid.getType() === "empty") cryofluid.setType("cryofluid");
-
         machine.processIO({ maxFluidMovedPerTick: RESOURCE_IO_RATE });
-        if (machine.shouldUpdateUI) ButtonManager.ensureWatching(machine.entity, ID);
-        else ButtonManager.unwatchEntity(machine.entity);
 
-        const mode = getMode(machine.entity);
-        const titanium = countInputs(machine.container, TITANIUM_INPUTS, isTitanium);
-        const lapis = countInputs(machine.container, LAPIS_INPUTS, isLapis);
+        const titaniumGroup = CRYOFLUID_SYNTHESIS_RECIPE.inputs.titanium;
+        const lapisGroup = CRYOFLUID_SYNTHESIS_RECIPE.inputs.lapis;
+        const titaniumValue = getStoredInputValue(
+            machine,
+            TITANIUM_INPUTS,
+            titaniumGroup,
+            TITANIUM_CREDIT_KEY,
+        );
+        const lapisValue = getStoredInputValue(
+            machine,
+            LAPIS_INPUTS,
+            lapisGroup,
+            LAPIS_CREDIT_KEY,
+        );
         const inputCrafts = Math.min(
-            Math.floor(titanium / mode.titanium),
-            Math.floor(lapis / mode.lapis),
+            Math.floor(titaniumValue / titaniumGroup.requiredValue),
+            Math.floor(lapisValue / lapisGroup.requiredValue),
         );
 
         if (inputCrafts <= 0) {
-            resetProcess(machine, water, cryofluid, mode, "Needs Titanium + Lapis", titanium, lapis);
+            resetProcess(machine, water, cryofluid, "Needs Materials", titaniumValue, lapisValue);
             return;
         }
 
-        const waterCrafts = Math.floor(water.get() / mode.water);
-        const outputCrafts = Math.floor(cryofluid.getFreeSpace() / mode.cryofluid);
+        const waterCrafts = Math.floor(water.get() / CRYOFLUID_SYNTHESIS_RECIPE.water);
+        const outputCrafts = Math.floor(cryofluid.getFreeSpace() / CRYOFLUID_SYNTHESIS_RECIPE.cryofluid);
         if (waterCrafts <= 0 || outputCrafts <= 0) {
             pauseProcess(
                 machine,
                 water,
                 cryofluid,
-                mode,
                 waterCrafts <= 0 ? "Needs Water" : "Cryofluid Tank Full",
-                titanium,
-                lapis,
+                titaniumValue,
+                lapisValue,
             );
             return;
         }
 
-        const speed = Math.max(Number.EPSILON, Number(machine.boosts.speed) || 1);
         const result = advanceProcess(machine, {
             progress: machine.getProgress(),
-            cost: mode.cost,
+            cost: CRYOFLUID_SYNTHESIS_RECIPE.energyCost,
             maxCrafts: Math.min(inputCrafts, waterCrafts, outputCrafts),
-            rateMultiplier: mode.ignoreSpeed ? 1 / speed : 1,
+            batch: machine.boosts.process_batch,
         });
 
         if (result.processCount > 0) {
-            consumeInputs(machine.container, TITANIUM_INPUTS, isTitanium, result.processCount * mode.titanium);
-            consumeInputs(machine.container, LAPIS_INPUTS, isLapis, result.processCount * mode.lapis);
-            water.consume(result.processCount * mode.water);
-            cryofluid.add(result.processCount * mode.cryofluid);
+            consumeInputValue(
+                machine,
+                TITANIUM_INPUTS,
+                titaniumGroup,
+                TITANIUM_CREDIT_KEY,
+                result.processCount * titaniumGroup.requiredValue,
+            );
+            consumeInputValue(
+                machine,
+                LAPIS_INPUTS,
+                lapisGroup,
+                LAPIS_CREDIT_KEY,
+                result.processCount * lapisGroup.requiredValue,
+            );
+            water.consume(result.processCount * CRYOFLUID_SYNTHESIS_RECIPE.water);
+            cryofluid.add(result.processCount * CRYOFLUID_SYNTHESIS_RECIPE.cryofluid);
         }
 
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
-        setDynamicNumber(machine.entity, "dorios:energy_cost_0", mode.cost);
-        displayResources(machine, water, cryofluid, mode.cost);
+        setDynamicNumber(machine.entity, "dorios:energy_cost_0", CRYOFLUID_SYNTHESIS_RECIPE.energyCost);
+        displayResources(machine, water, cryofluid);
 
         const active = result.energyUsed > 0 || result.processCount > 0;
         renderStatus(
             machine,
             active,
-            active ? "Synthesizing Cryofluid" : "No Energy",
-            machine.shouldUpdateUI ? statusLines(mode, titanium, lapis, water, cryofluid) : undefined,
+            result.processCount > 0 ? `Synthesized ${result.processCount}` : active ? "Synthesizing Cryofluid" : "No Energy",
+            machine.shouldUpdateUI ? [{ title: "Synthesis Information", lines: statusLines(titaniumValue, lapisValue, water, cryofluid) }] : undefined,
+            { energyCost: CRYOFLUID_SYNTHESIS_RECIPE.energyCost, batch: 1 },
         );
     },
 
     onPlayerBreak(event) {
-        const entity = event.dimension.getEntitiesAtBlockLocation(event.block.location)[0];
-        if (entity) ButtonManager.unwatchEntity(entity);
         Machine.onDestroy(event);
     },
 });
 
-function isTitanium(item) {
-    return item?.typeId === "utilitycraft:titanium" || item?.typeId === "utilitycraft:raw_titanium";
-}
-
-function isLapis(item) {
-    return item?.typeId === "minecraft:lapis_lazuli";
-}
-
-function countInputs(container, slots, predicate) {
-    let total = 0;
+function getStoredInputValue(machine, slots, group, creditKey) {
+    let total = Math.max(0, Number(machine.entity.getDynamicProperty(creditKey)) || 0);
     for (const slot of slots) {
-        const item = container.getItem(slot);
-        if (predicate(item)) total += item.amount;
+        const item = machine.container.getItem(slot);
+        total += (item?.amount ?? 0) * getCryofluidSynthesisInputValue(group, item?.typeId);
     }
     return total;
 }
 
-function consumeInputs(container, slots, predicate, amount) {
-    let remaining = amount;
+function consumeInputValue(machine, slots, group, creditKey, requested) {
+    let credit = Math.max(0, Number(machine.entity.getDynamicProperty(creditKey)) || 0);
+    let remaining = Math.max(0, Math.floor(requested));
+    const creditUsed = Math.min(credit, remaining);
+    credit -= creditUsed;
+    remaining -= creditUsed;
+
     for (const slot of slots) {
-        if (remaining <= 0) return;
-        const item = container.getItem(slot);
-        if (!predicate(item)) continue;
+        if (remaining <= 0) break;
+        const item = machine.container.getItem(slot);
+        const value = getCryofluidSynthesisInputValue(group, item?.typeId);
+        if (!item || value <= 0) continue;
 
-        const consumed = Math.min(item.amount, remaining);
-        remaining -= consumed;
-        if (consumed >= item.amount) container.setItem(slot, undefined);
+        const amount = Math.min(item.amount, Math.ceil(remaining / value));
+        const consumedValue = amount * value;
+        if (amount >= item.amount) machine.container.setItem(slot, undefined);
         else {
-            item.amount -= consumed;
-            container.setItem(slot, item);
+            item.amount -= amount;
+            machine.container.setItem(slot, item);
         }
+        remaining -= consumedValue;
     }
+
+    if (remaining < 0) credit += -remaining;
+    setDynamicNumber(machine.entity, creditKey, credit);
+    return remaining <= 0;
 }
 
-function resetProcess(machine, water, cryofluid, mode, message, titanium, lapis) {
+function resetProcess(machine, water, cryofluid, message, titanium, lapis) {
     setDynamicNumber(machine.entity, "dorios:progress_0", 0);
-    pauseProcess(machine, water, cryofluid, mode, message, titanium, lapis);
+    pauseProcess(machine, water, cryofluid, message, titanium, lapis);
 }
 
-function pauseProcess(machine, water, cryofluid, mode, message, titanium, lapis) {
-    setDynamicNumber(machine.entity, "dorios:energy_cost_0", mode.cost);
-    displayResources(machine, water, cryofluid, mode.cost);
+function pauseProcess(machine, water, cryofluid, message, titanium, lapis) {
+    setDynamicNumber(machine.entity, "dorios:energy_cost_0", CRYOFLUID_SYNTHESIS_RECIPE.energyCost);
+    displayResources(machine, water, cryofluid);
     renderStatus(
         machine,
         false,
         message,
-        machine.shouldUpdateUI ? statusLines(mode, titanium, lapis, water, cryofluid) : undefined,
+        machine.shouldUpdateUI ? [{ title: "Synthesis Information", lines: statusLines(titanium, lapis, water, cryofluid) }] : undefined,
+        { energyCost: CRYOFLUID_SYNTHESIS_RECIPE.energyCost, batch: 1 },
     );
 }
 
-function displayResources(machine, water, cryofluid, cost) {
-    displayProgress(machine, cost);
+function displayResources(machine, water, cryofluid) {
+    displayProgress(machine, CRYOFLUID_SYNTHESIS_RECIPE.energyCost);
     if (!machine.shouldUpdateUI) return;
     water.display(WATER_DISPLAY_SLOT);
     cryofluid.display(CRYOFLUID_DISPLAY_SLOT);
 }
 
-function statusLines(mode, titanium, lapis, water, cryofluid) {
+function statusLines(titanium, lapis, water, cryofluid) {
     return [
-        `\u00A7r\u00A77Mode: \u00A7f${mode.title}`,
-        `\u00A7r\u00A77Titanium: \u00A7f${titanium} / ${mode.titanium}`,
-        `\u00A7r\u00A77Lapis: \u00A7f${lapis} / ${mode.lapis}`,
-        `\u00A7r\u00A77Water: \u00A7f${FluidStorage.formatFluid(water.get())} / ${FluidStorage.formatFluid(water.getCap())}`,
-        `\u00A7r\u00A77Cryofluid: \u00A7f${FluidStorage.formatFluid(cryofluid.get())} / ${FluidStorage.formatFluid(cryofluid.getCap())}`,
+        `\u00A7r\u00A77Titanium Value \u00A7f${titanium}/${CRYOFLUID_SYNTHESIS_RECIPE.inputs.titanium.requiredValue}`,
+        `\u00A7r\u00A77Lapis Value \u00A7f${lapis}/${CRYOFLUID_SYNTHESIS_RECIPE.inputs.lapis.requiredValue}`,
+        `\u00A7r\u00A77Water \u00A7f${FluidStorage.formatFluid(water.get())} / ${FluidStorage.formatFluid(water.getCap())}`,
+        `\u00A7r\u00A77Cryofluid \u00A7f${FluidStorage.formatFluid(cryofluid.get())} / ${FluidStorage.formatFluid(cryofluid.getCap())}`,
     ];
 }

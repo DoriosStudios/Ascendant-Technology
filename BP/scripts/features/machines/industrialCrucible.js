@@ -1,39 +1,53 @@
 // @ts-check
 
-import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
 import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
-import { advanceProcess } from "../../ATCore/processing/index.js";
-import { getMagmaticReactorChamberRecipe } from "../../config/recipes/magmaticReactorChamber.js";
+import { advanceProcess, getPooledOutputCapacity, insertPooledOutput } from "../../ATCore/processing/index.js";
+import { getIndustrialCrucibleRecipe } from "../../config/recipes/industrialCrucible.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     renderStatus,
     setDynamicNumber,
     setDynamicString,
     setUiItem,
 } from "./runtime.js";
 
-const ID = "utilitycraft:magmatic_reactor_chamber";
+const ID = "utilitycraft:industrial_crucible";
+const INVENTORY_SIZE = 32;
+const LEGACY_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 10,
+    11, 12, -1, -1, 9, -1, -1, -1, -1, -1,
+    13, 14, 15, 16, 17, 18,
+    19, 20, 21, 22, 23, 24,
+];
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18, 19,
+    9, 10, 11, 12, 13, 14,
+    20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+];
+const LAYOUT_KEY = "ascendant:industrial_crucible_layout";
+const LAYOUT_VERSION = "output_last_v2";
 const INPUT_SLOTS = [3, 4, 5, 6, 7, 8];
-const OUTPUT_SLOT = 9;
-const LAVA_DISPLAY_SLOT = 10;
-const RECIPE_KEY = "ascendant:magmatic_reactor_recipe";
+const LAVA_DISPLAY_SLOT = 9;
+const OUTPUT_SLOTS = [14, 15, 16, 17, 18, 19];
+const RECIPE_KEY = "ascendant:industrial_crucible_recipe";
 const FLUID_IO_RATE = 128000;
 const DEFAULT_STACK_SIZE = 64;
 
 registerIOInterface(ID, {
     items: {
-        buttonSlots: [13, 14, 15, 16, 17, 18],
+        buttonSlots: [20, 21, 22, 23, 24, 25],
         anyInputSlots: INPUT_SLOTS,
-        anyOutputSlots: [OUTPUT_SLOT],
+        anyOutputSlots: OUTPUT_SLOTS,
         modes: [
             { id: "disabled" },
             { id: "input_1", inputSlots: INPUT_SLOTS },
-            { id: "output_1", outputSlots: [OUTPUT_SLOT] },
+            { id: "output_1", outputSlots: OUTPUT_SLOTS },
         ],
     },
     liquids: {
-        buttonSlots: [19, 20, 21, 22, 23, 24],
+        buttonSlots: [26, 27, 28, 29, 30, 31],
         anyInputIndices: [],
         anyOutputIndices: [0],
         modes: [
@@ -51,6 +65,7 @@ DoriosLib.registry.blockComponent(ID, {
 
             machine.blockSlots([LAVA_DISPLAY_SLOT]);
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");
 
@@ -63,6 +78,10 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, LEGACY_SLOT_LAYOUT,
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         const lava = new FluidStorage(machine.entity, 0);
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
@@ -93,18 +112,18 @@ DoriosLib.registry.blockComponent(ID, {
 
         const cost = recipe.energyCost || settings.machine.energy_cost;
         const inputCrafts = Math.floor(stack.amount / recipe.input.amount);
-        const outputItem = machine.container.getItem(OUTPUT_SLOT);
-        const outputCrafts = getOutputCraftCapacity(
-            outputItem,
+        const outputCrafts = Math.floor(getPooledOutputCapacity(
+            machine.container,
+            OUTPUT_SLOTS,
             recipe.output.id,
-            recipe.output.amount,
-        );
+            DEFAULT_STACK_SIZE,
+        ) / recipe.output.amount);
         if (outputCrafts <= 0) {
             pauseProcess(
                 machine,
                 lava,
                 cost,
-                outputItem?.typeId === recipe.output.id ? "Output Full" : "Output Conflict",
+                "Output Full",
             );
             return;
         }
@@ -128,12 +147,7 @@ DoriosLib.registry.blockComponent(ID, {
                 stack,
                 result.processCount * recipe.input.amount,
             );
-            insertOutput(
-                machine.container,
-                outputItem,
-                recipe.output.id,
-                result.processCount * recipe.output.amount,
-            );
+            insertPooledOutput(machine.container, OUTPUT_SLOTS, recipe.output.id, result.processCount * recipe.output.amount);
             lava.add(result.processCount * recipe.lavaGain);
         }
 
@@ -145,8 +159,9 @@ DoriosLib.registry.blockComponent(ID, {
         renderStatus(
             machine,
             active,
-            active ? "Reactor Running" : "No Energy",
-            machine.shouldUpdateUI ? recipeStatusLines(stack.typeId, recipe, lava) : undefined,
+            active ? "Crucible Running" : "No Energy",
+            machine.shouldUpdateUI ? [{ title: "Crucible Information", lines: recipeStatusLines(stack.typeId, recipe, lava) }] : undefined,
+            { energyCost: cost },
         );
     },
 
@@ -165,7 +180,7 @@ function selectRecipe(container) {
         if (!stack) continue;
 
         hasAnyInput = true;
-        const recipe = getMagmaticReactorChamberRecipe(stack.typeId);
+        const recipe = getIndustrialCrucibleRecipe(stack.typeId);
         if (!recipe) continue;
 
         hasKnownInput = true;
@@ -174,12 +189,6 @@ function selectRecipe(container) {
     }
 
     return { candidate: undefined, hasAnyInput, hasKnownInput };
-}
-
-function getOutputCraftCapacity(item, typeId, amountPerCraft) {
-    if (!item) return Math.floor(DEFAULT_STACK_SIZE / amountPerCraft);
-    if (item.typeId !== typeId) return 0;
-    return Math.floor(Math.max(0, item.maxAmount - item.amount) / amountPerCraft);
 }
 
 function consumeInput(container, slot, item, amount) {
@@ -192,16 +201,6 @@ function consumeInput(container, slot, item, amount) {
     container.setItem(slot, item);
 }
 
-function insertOutput(container, item, typeId, amount) {
-    if (item) {
-        item.amount += amount;
-        container.setItem(OUTPUT_SLOT, item);
-        return;
-    }
-
-    container.setItem(OUTPUT_SLOT, new ItemStack(typeId, amount));
-}
-
 function resetProcess(machine, lava, cost, message, recipeKey) {
     setDynamicString(machine.entity, RECIPE_KEY, recipeKey);
     setDynamicNumber(machine.entity, "dorios:progress_0", 0);
@@ -211,7 +210,10 @@ function resetProcess(machine, lava, cost, message, recipeKey) {
 function pauseProcess(machine, lava, cost, message) {
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
     display(machine, lava, cost);
-    renderStatus(machine, false, message);
+    renderStatus(machine, false, message, [{
+        title: "Crucible Information",
+        lines: [`\u00A7r\u00A77Lava Stored \u00A7f${FluidStorage.formatFluid(lava.get())} / ${FluidStorage.formatFluid(lava.getCap())}`],
+    }], { energyCost: cost });
 }
 
 function display(machine, lava, cost) {
@@ -222,9 +224,9 @@ function display(machine, lava, cost) {
 
 function recipeStatusLines(inputTypeId, recipe, lava) {
     return [
-        `\u00A7r\u00A77Input: \u00A7f${recipe.input.amount} x ${DoriosLib.text.formatIdentifier(inputTypeId)}`,
-        `\u00A7r\u00A77Output: \u00A7f${recipe.output.amount} x ${DoriosLib.text.formatIdentifier(recipe.output.id)}`,
-        `\u00A7r\u00A77Lava: \u00A7f+${FluidStorage.formatFluid(recipe.lavaGain)}`,
-        `\u00A7r\u00A77Stored: \u00A7f${FluidStorage.formatFluid(lava.get())} / ${FluidStorage.formatFluid(lava.getCap())}`,
+        `\u00A7r\u00A77Input \u00A7f${recipe.input.amount} x ${DoriosLib.text.formatIdentifier(inputTypeId)}`,
+        `\u00A7r\u00A77Output \u00A7f${recipe.output.amount} x ${DoriosLib.text.formatIdentifier(recipe.output.id)}`,
+        `\u00A7r\u00A77Lava Gain \u00A7f+${FluidStorage.formatFluid(recipe.lavaGain)}`,
+        `\u00A7r\u00A77Stored \u00A7f${FluidStorage.formatFluid(lava.get())} / ${FluidStorage.formatFluid(lava.getCap())}`,
     ];
 }

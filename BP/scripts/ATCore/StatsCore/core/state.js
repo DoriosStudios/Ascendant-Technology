@@ -246,8 +246,8 @@ export function resetStatsState(stack) {
 /**
  * Writes a normalized StatsCore state back into the item's dynamic properties.
  *
- * When `syncLore` is requested, this helper also rebuilds the item's visible lore so
- * gameplay-facing text stays in sync with the new internal state.
+ * Dynamic properties are the source of truth. Lore is rebuilt only when explicitly
+ * requested (normally by the shared progression path after a level increase).
  *
  * @param {import("@minecraft/server").ItemStack} stack
  * @param {object} definition
@@ -282,7 +282,9 @@ export function writeStatsState(stack, definition, state, options = {}) {
     changed = setPropertyIfChanged(stack, STATSCORE.props.refined, nextState.refined ? true : undefined) || changed;
     changed = setPropertyIfChanged(stack, STATSCORE.props.refinement, serializeStatsRefinementData(nextState.refinement)) || changed;
 
-    if (options.syncLore === true || options.levelChanged === true || nextState.version !== state.version) {
+    // Dynamic properties are authoritative. Lore is only a presentation
+    // snapshot and must not be rewritten during ordinary state persistence.
+    if (options.syncLore === true || options.levelChanged === true) {
         const attributes = resolveStatsAttributes(definition, nextState);
         changed = syncStatsCoreLore(stack, definition, nextState, attributes, options.forceLore === true) || changed;
     }

@@ -45,19 +45,24 @@ export function getStatsCoreDefinition(itemOrId) {
     const normalized = normalizeId(id);
     if (!normalized) return null;
 
+    const stack = typeof itemOrId === "string" ? undefined : itemOrId;
+
     if (STATSCORE_REGISTRY.has(normalized)) {
         return STATSCORE_REGISTRY.get(normalized);
     }
-    if (UNSUPPORTED_ITEM_IDS.has(normalized)) return null;
+    // A previous identifier-only lookup cannot know about runtime tags,
+    // durability, enchantability, or custom armor components. Let a real
+    // ItemStack retry the inference instead of permanently rejecting it.
+    if (!stack && UNSUPPORTED_ITEM_IDS.has(normalized)) return null;
 
     // Attempt to dynamically generate and register a definition for future use.
-    const dynamicDefinition = inferDynamicDefinition(normalized);
+    const dynamicDefinition = inferDynamicDefinition(stack ?? normalized);
     if (dynamicDefinition) {
         registerStatsCoreDefinition(normalized, dynamicDefinition);
         return dynamicDefinition;
     }
 
-    UNSUPPORTED_ITEM_IDS.add(normalized);
+    if (!stack) UNSUPPORTED_ITEM_IDS.add(normalized);
     return null;
 }
 

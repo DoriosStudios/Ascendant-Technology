@@ -97,10 +97,11 @@ function getHeldStatsItem(player) {
     return { ok: true, item, definition, state: readStatsState(item, definition) };
 }
 
-function persistCommandState(player, item, definition, state) {
+function persistCommandState(player, item, definition, state, options = {}) {
+    const levelChanged = options.levelChanged === true;
     const result = writeStatsState(item, definition, state, {
-        syncLore: true,
-        forceLore: true,
+        syncLore: levelChanged,
+        levelChanged,
     });
     if (!persistEquipmentItem(player, "Mainhand", item)) {
         return { ok: false, message: "Could not persist the equipment." };
@@ -218,7 +219,7 @@ function addEquipmentProgress(player, xpType, unit, rawAmount) {
                 level: nextLevel,
             },
         },
-    });
+    }, { levelChanged: nextLevel > current.level });
     if (!persisted.ok) return persisted;
 
     return {
@@ -278,7 +279,7 @@ function refineHeldEquipment(player, tier, chip, ingot, amount, coreMode) {
             advancedUnlocked: awakenAdvanced || state.abilityData?.advancedUnlocked === true,
         },
         refinement,
-    }, { syncLore: true, forceLore: true });
+    }, { syncLore: false });
     if (!persistEquipmentItem(player, "Mainhand", item)) {
         return { ok: false, message: "Could not persist the refined equipment." };
     }

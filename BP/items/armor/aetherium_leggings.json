@@ -27,7 +27,7 @@
                 "max_durability": 1316
             },
             "utilitycraft:armor": {
-                "damage_reduction": 0.075,
+                "damage_reduction": 0.1,
                 "damage_negation": 0.025,
                 "reduces": "all"
             },

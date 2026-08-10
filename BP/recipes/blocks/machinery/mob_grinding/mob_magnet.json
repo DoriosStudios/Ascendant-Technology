@@ -1,48 +1,48 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:mob_magnet"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "LIR",
-            "IMI",
-            "RIL"
-        ],
-        "key": {
-            "R": {
-                "item": "minecraft:redstone_block"
-            },
-            "L": {
-                "item": "minecraft:lapis_block"
-            },
-            "M": {
-                "item": "minecraft:lodestone"
-            },
-            "I": {
-                "item": "minecraft:iron_ingot"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:mob_magnet",
-            "count": 1
-        },
-        "unlock": [
-            {
-                "item": "minecraft:redstone_block"
-            },
-            {
-                "item": "minecraft:lapis_lazuli"
-            },
-            {
-                "item": "minecraft:lodestone"
-            },
-            {
-                "item": "utilitycraft:machine_case"
-            }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:mob_magnet"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"LIR",
+			"IMI",
+			"RIL"
+		],
+		"key": {
+			"R": {
+				"item": "minecraft:redstone_block"
+			},
+			"L": {
+				"item": "minecraft:lapis_block"
+			},
+			"M": {
+				"item": "minecraft:lodestone"
+			},
+			"I": {
+				"item": "minecraft:iron_ingot"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:mob_magnet",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "minecraft:redstone_block"
+			},
+			{
+				"item": "minecraft:lapis_lazuli"
+			},
+			{
+				"item": "minecraft:lodestone"
+			},
+			{
+				"item": "utilitycraft:machine_case"
+			}
+		]
+	}
 }

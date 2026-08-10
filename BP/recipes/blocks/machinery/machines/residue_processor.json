@@ -1,22 +1,45 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": { "identifier": "utilitycraft:residue_processor" },
-        "tags": ["utilitycraft_workbench"],
-        "pattern": [
-            "SBS",
-            "MIM",
-            "CAC"
-        ],
-        "key": {
-            "S": { "item": "minecraft:soul_sand" },
-            "B": { "item": "minecraft:hopper" },
-            "M": { "item": "utilitycraft:machine_case" },
-            "I": { "item": "utilitycraft:crusher" },
-            "C": { "item": "utilitycraft:aetherium" },
-            "A": { "item": "utilitycraft:ultimate_chip" }
-        },
-        "result": { "item": "utilitycraft:residue_processor", "count": 1 },
-        "unlock": [ { "item": "utilitycraft:advanced_chip" } ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:residue_processor"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"HSH",
+			"CIC",
+			"ARA"
+		],
+		"key": {
+			"S": {
+				"item": "utilitycraft:steel_block"
+			},
+			"H": {
+				"item": "utilitycraft:mechanic_upper"
+			},
+			"R": {
+				"item": "utilitycraft:reinforced_machine_case"
+			},
+			"I": {
+				"item": "utilitycraft:crusher"
+			},
+			"C": {
+				"item": "utilitycraft:absolute_chip"
+			},
+			"A": {
+				"item": "utilitycraft:aetherium"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:residue_processor",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:aetherium"
+			}
+		]
+	}
 }

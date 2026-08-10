@@ -1,42 +1,42 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:pattern_placer"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "TIT",
-            "GMG",
-            "TST"
-        ],
-        "key": {
-            "T": {
-                "item": "utilitycraft:titanium"
-            },
-            "I": {
-                "item": "minecraft:dispenser"
-            },
-            "G": {
-                "item": "utilitycraft:tungsten"
-            },
-            "M": {
-                "item": "utilitycraft:block_placer"
-            },
-            "S": {
-                "item": "utilitycraft:superior_machine_case"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:pattern_placer",
-            "count": 1
-        },
-        "unlock": [
-            {
-                "item": "utilitycraft:block_placer"
-            }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:pattern_placer"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"TIT",
+			"GMG",
+			"TST"
+		],
+		"key": {
+			"T": {
+				"item": "utilitycraft:titanium"
+			},
+			"I": {
+				"item": "minecraft:dispenser"
+			},
+			"G": {
+				"item": "utilitycraft:tungsten"
+			},
+			"M": {
+				"item": "utilitycraft:block_placer"
+			},
+			"S": {
+				"item": "utilitycraft:superior_machine_case"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:pattern_placer",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:block_placer"
+			}
+		]
+	}
 }

@@ -1,29 +1,39 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:copper_conveyor_bridge_receiver"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "CBC",
-            "ACA",
-            "DDD"
-        ],
-        "key": {
-            "A": { "item": "minecraft:copper_ingot" },
-            "B": { "item": "minecraft:redstone" },
-            "C": { "item": "utilitycraft:energized_iron_dust" },
-            "D": { "item": "minecraft:redstone_block" }
-        },
-        "result": {
-            "item": "utilitycraft:copper_conveyor_bridge_receiver",
-            "count": 1
-        },
-        "unlock": [
-            { "item": "minecraft:copper_ingot" }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:copper_conveyor_bridge_receiver"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"CBC",
+			"ACA",
+			"DDD"
+		],
+		"key": {
+			"A": {
+				"item": "minecraft:copper_ingot"
+			},
+			"B": {
+				"item": "minecraft:redstone"
+			},
+			"C": {
+				"item": "utilitycraft:energized_iron_dust"
+			},
+			"D": {
+				"item": "minecraft:redstone_block"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:copper_conveyor_bridge_receiver",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "minecraft:copper_ingot"
+			}
+		]
+	}
 }

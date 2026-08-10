@@ -1,31 +1,45 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:absolute_container"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "ATA",
-            "NBN",
-            "SCS"
-        ],
-        "key": {
-            "B": { "item": "utilitycraft:absolute_battery" },
-            "T": {  "item": "utilitycraft:ultimate_fluid_tank"},
-            "S": { "item": "minecraft:chest" },
-            "N": { "item": "minecraft:netherite_block" },
-            "C": { "item": "utilitycraft:network_center" },
-            "A": { "item": "utilitycraft:aetherium" }
-        },
-        "result": {
-            "item": "utilitycraft:absolute_container",
-            "count": 1
-        },
-        "unlock": [
-            { "item": "utilitycraft:network_center" }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:absolute_container"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"ATA",
+			"NBN",
+			"SCS"
+		],
+		"key": {
+			"B": {
+				"item": "utilitycraft:absolute_battery"
+			},
+			"T": {
+				"item": "utilitycraft:ultimate_fluid_tank"
+			},
+			"S": {
+				"item": "minecraft:chest"
+			},
+			"N": {
+				"item": "minecraft:netherite_block"
+			},
+			"C": {
+				"item": "utilitycraft:network_center"
+			},
+			"A": {
+				"item": "utilitycraft:aetherium"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:absolute_container",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:network_center"
+			}
+		]
+	}
 }

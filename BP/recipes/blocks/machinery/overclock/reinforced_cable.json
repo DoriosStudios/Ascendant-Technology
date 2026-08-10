@@ -1,20 +1,39 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": { "identifier": "utilitycraft:reinforced_cable" },
-        "tags": ["utilitycraft_workbench"],
-        "pattern": [
-            "TRT",
-            "CAC",
-            "TRT"
-        ],
-        "key": {
-            "T": { "item": "utilitycraft:titanium_nugget" },
-            "R": { "item": "minecraft:redstone" },
-            "C": { "item": "minecraft:copper_nugget" },
-            "A": { "item": "utilitycraft:energized_iron_dust" }
-        },
-        "result": { "item": "utilitycraft:reinforced_cable", "count": 8 },
-        "unlock": [ { "item": "utilitycraft:advanced_chip" } ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:reinforced_cable"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"TRT",
+			"CAC",
+			"TRT"
+		],
+		"key": {
+			"T": {
+				"item": "utilitycraft:titanium_nugget"
+			},
+			"R": {
+				"item": "minecraft:redstone"
+			},
+			"C": {
+				"item": "minecraft:copper_nugget"
+			},
+			"A": {
+				"item": "utilitycraft:energized_iron_dust"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:reinforced_cable",
+			"count": 8
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:advanced_chip"
+			}
+		]
+	}
 }

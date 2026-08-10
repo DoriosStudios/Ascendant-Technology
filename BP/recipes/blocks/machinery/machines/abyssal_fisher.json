@@ -1,42 +1,42 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:abyssal_fisher"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "TIT",
-            "GMG",
-            "TST"
-        ],
-        "key": {
-            "T": {
-                "item": "utilitycraft:titanium"
-            },
-            "I": {
-                "item": "minecraft:heart_of_the_sea"
-            },
-            "G": {
-                "item": "utilitycraft:tungsten"
-            },
-            "M": {
-                "item": "utilitycraft:autofisher"
-            },
-            "S": {
-                "item": "utilitycraft:superior_machine_case"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:abyssal_fisher",
-            "count": 1
-        },
-        "unlock": [
-            {
-                "item": "utilitycraft:autofisher"
-            }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:abyssal_fisher"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"TIT",
+			"GMG",
+			"TST"
+		],
+		"key": {
+			"T": {
+				"item": "utilitycraft:titanium"
+			},
+			"I": {
+				"item": "minecraft:heart_of_the_sea"
+			},
+			"G": {
+				"item": "utilitycraft:tungsten"
+			},
+			"M": {
+				"item": "utilitycraft:autofisher"
+			},
+			"S": {
+				"item": "utilitycraft:superior_machine_case"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:abyssal_fisher",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:autofisher"
+			}
+		]
+	}
 }

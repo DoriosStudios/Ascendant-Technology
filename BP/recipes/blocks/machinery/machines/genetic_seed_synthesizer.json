@@ -1,42 +1,42 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:genetic_seed_synthesizer"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "TIT",
-            "GMG",
-            "TST"
-        ],
-        "key": {
-            "T": {
-                "item": "utilitycraft:titanium"
-            },
-            "I": {
-                "item": "minecraft:netherite_hoe"
-            },
-            "G": {
-                "item": "utilitycraft:tungsten"
-            },
-            "M": {
-                "item": "utilitycraft:seed_synthesizer"
-            },
-            "S": {
-                "item": "utilitycraft:superior_machine_case"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:genetic_seed_synthesizer",
-            "count": 1
-        },
-        "unlock": [
-            {
-                "item": "utilitycraft:seed_synthesizer"
-            }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:genetic_seed_synthesizer"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"TIT",
+			"GMG",
+			"TST"
+		],
+		"key": {
+			"T": {
+				"item": "utilitycraft:titanium"
+			},
+			"I": {
+				"item": "minecraft:netherite_hoe"
+			},
+			"G": {
+				"item": "utilitycraft:tungsten"
+			},
+			"M": {
+				"item": "utilitycraft:seed_synthesizer"
+			},
+			"S": {
+				"item": "utilitycraft:superior_machine_case"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:genetic_seed_synthesizer",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:seed_synthesizer"
+			}
+		]
+	}
 }

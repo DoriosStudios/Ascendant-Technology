@@ -1,42 +1,42 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:verdant_cultivator"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "TIT",
-            "GMG",
-            "TST"
-        ],
-        "key": {
-            "T": {
-                "item": "utilitycraft:titanium"
-            },
-            "I": {
-                "item": "minecraft:netherite_hoe"
-            },
-            "G": {
-                "item": "utilitycraft:tungsten"
-            },
-            "M": {
-                "item": "utilitycraft:harvester"
-            },
-            "S": {
-                "item": "utilitycraft:superior_machine_case"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:verdant_cultivator",
-            "count": 1
-        },
-        "unlock": [
-            {
-                "item": "utilitycraft:harvester"
-            }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:verdant_cultivator"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"TIT",
+			"GMG",
+			"TST"
+		],
+		"key": {
+			"T": {
+				"item": "utilitycraft:titanium"
+			},
+			"I": {
+				"item": "minecraft:netherite_hoe"
+			},
+			"G": {
+				"item": "utilitycraft:tungsten"
+			},
+			"M": {
+				"item": "utilitycraft:harvester"
+			},
+			"S": {
+				"item": "utilitycraft:superior_machine_case"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:verdant_cultivator",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:harvester"
+			}
+		]
+	}
 }

@@ -1,45 +1,42 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:liquifier"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "SBS",
-            "RCR",
-            "MAM"
-        ],
-        "key": {
-            "A": {
-                "item": "utilitycraft:aetherium"
-            },
-            "B": {
-                "item": "utilitycraft:ultimate_fluid_tank"
-            },
-            "S": {
-                "item": "utilitycraft:aetherium_shard"
-            },
-            "M": {
-                "item": "utilitycraft:compressed_steel_block"
-            },
-            "R": {
-                "item": "utilitycraft:compressed_energized_iron_block_2"
-            },
-            "C": {
-                "item": "utilitycraft:machine_case"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:liquifier",
-            "count": 1
-        },
-        "unlock": [
-            {
-                "item": "utilitycraft:aetherium_shard"
-            }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:liquifier"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"ACA",
+			"CBC",
+			"SRS"
+		],
+		"key": {
+			"A": {
+				"item": "utilitycraft:aetherium"
+			},
+			"B": {
+				"item": "utilitycraft:expert_fluid_tank"
+			},
+			"C": {
+				"item": "utilitycraft:absolute_chip"
+			},
+			"S": {
+				"item": "utilitycraft:steel_block"
+			},
+			"R": {
+				"item": "utilitycraft:reinforced_machine_case"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:liquifier",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:aetherium_shard"
+			}
+		]
+	}
 }

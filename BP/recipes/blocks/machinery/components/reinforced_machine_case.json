@@ -1,0 +1,38 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:reinforced_machine_case"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"key": {
+			"G": {
+				"item": "utilitycraft:netherite_plate"
+			},
+			"R": {
+				"item": "utilitycraft:superior_machine_case"
+			},
+			"S": {
+				"item": "minecraft:netherite_block"
+			},
+			"I": {
+				"item": "utilitycraft:energized_iron_block"
+			}
+		},
+		"pattern": [
+			"SIS",
+			"GRG",
+			"SIS"
+		],
+		"result": {
+			"item": "utilitycraft:reinforced_machine_case"
+		},
+		"unlock": [
+			{
+				"item": "minecraft:netherite_block"
+			}
+		]
+	}
+}

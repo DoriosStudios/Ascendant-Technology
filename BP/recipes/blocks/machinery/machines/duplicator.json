@@ -1,45 +1,54 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:duplicator"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "AHA",
-            "RER",
-            "MCM"
-        ],
-        "key": {
-            "A":{
-                "item": "utilitycraft:aetherium"
-            },
-            "H": {
-                "item": "utilitycraft:ender_hopper"
-            },
-            "M": {
-                "item": "utilitycraft:compressed_steel_block"
-            },
-            "R": {
-                "item": "utilitycraft:compressed_energized_iron_block_2"
-            },
-            "E": {
-                "item": "minecraft:ender_eye"
-            },
-            "C": {
-                "item": "utilitycraft:machine_case"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:duplicator",
-            "count": 1
-        },
-        "unlock": [
-            {
-                "item": "utilitycraft:aetherium"
-            }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:duplicator"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"AHA",
+			"SES",
+			"BRB"
+		],
+		"key": {
+			"A": {
+				"item": "utilitycraft:aetherium"
+			},
+			"H": {
+				"item": "utilitycraft:ender_hopper"
+			},
+			"B": {
+				"item": "utilitycraft:aetherium_block"
+			},
+			"R": {
+				"item": "utilitycraft:reinforced_machine_case"
+			},
+			"E": {
+				"item": "utilitycraft:expert_fluid_tank"
+			},
+			"S": {
+				"item": "utilitycraft:absolute_chip"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:duplicator",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:aetherium"
+			},
+			{
+				"item": "utilitycraft:ender_hopper"
+			},
+			{
+				"item": "utilitycraft:expert_fluid_tank"
+			},
+			{
+				"item": "utilitycraft:reinforced_machine_case"
+			}
+		]
+	}
 }

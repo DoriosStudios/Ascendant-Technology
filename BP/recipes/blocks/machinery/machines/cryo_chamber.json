@@ -1,31 +1,45 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:cryo_chamber"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "IBI",
-            "MCM",
-            "SAS"
-        ],
-        "key": {
-            "I": { "item": "minecraft:packed_ice" },
-            "B": { "item": "utilitycraft:ultimate_chip" },
-            "M": { "item": "utilitycraft:advanced_fluid_tank" },
-            "C": { "item": "utilitycraft:machine_case" },
-            "S": { "item": "utilitycraft:compressed_steel_block" },
-            "A": { "item": "utilitycraft:titanium_block" }
-        },
-        "result": {
-            "item": "utilitycraft:cryo_chamber",
-            "count": 1
-        },
-        "unlock": [
-            { "item": "utilitycraft:ultimate_chip" }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:cryo_chamber"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"PEP",
+			"CIC",
+			"TST"
+		],
+		"key": {
+			"I": {
+				"item": "minecraft:packed_ice"
+			},
+			"C": {
+				"item": "utilitycraft:absolute_chip"
+			},
+			"E": {
+				"item": "utilitycraft:expert_fluid_tank"
+			},
+			"S": {
+				"item": "utilitycraft:superior_machine_case"
+			},
+			"P": {
+				"item": "utilitycraft:titanium_plate"
+			},
+			"T": {
+				"item": "utilitycraft:titanium_block"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:cryo_chamber",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:absolute_chip"
+			}
+		]
+	}
 }

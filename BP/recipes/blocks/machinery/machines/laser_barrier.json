@@ -1,22 +1,57 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": { "identifier": "utilitycraft:laser_barrier" },
-        "tags": ["utilitycraft_workbench"],
-        "pattern": [
-            "GLG",
-            "RMR",
-            "CAC"
-        ],
-        "key": {
-            "G": { "item": "minecraft:glass" },
-            "L": { "item": "minecraft:redstone_lamp" },
-            "R": { "item": "minecraft:redstone_block" },
-            "M": { "item": "utilitycraft:machine_case" },
-            "C": { "item": "utilitycraft:advanced_chip" },
-            "A": { "item": "utilitycraft:ultimate_chip" }
-        },
-        "result": { "item": "utilitycraft:laser_barrier", "count": 1 },
-        "unlock": [ { "item": "utilitycraft:advanced_chip" } ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:laser_barrier"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"CVC",
+			"LRL",
+			"SMS"
+		],
+		"key": {
+			"V": {
+				"item": "minecraft:red_stained_glass"
+			},
+			"C": {
+				"item": "utilitycraft:ultimate_chip"
+			},
+			"R": {
+				"item": "minecraft:redstone_block"
+			},
+			"M": {
+				"item": "utilitycraft:machine_case"
+			},
+			"S": {
+				"item": "utilitycraft:steel_block"
+			},
+			"L": {
+				"item": "minecraft:redstone_lamp"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:laser_barrier",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:ultimate_chip"
+			},
+			{
+				"item": "minecraft:redstone_block"
+			},
+			{
+				"item": "utilitycraft:machine_case"
+			},
+			{
+				"item": "utilitycraft:steel_block"
+			},
+			{
+				"item": "minecraft:redstone_lamp"
+			}
+		]
+	}
 }

@@ -1,42 +1,42 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:seismic_breaker"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "TIT",
-            "GMG",
-            "TST"
-        ],
-        "key": {
-            "T": {
-                "item": "utilitycraft:titanium"
-            },
-            "I": {
-                "item": "minecraft:netherite_pickaxe"
-            },
-            "G": {
-                "item": "utilitycraft:tungsten"
-            },
-            "M": {
-                "item": "utilitycraft:block_breaker"
-            },
-            "S": {
-                "item": "utilitycraft:superior_machine_case"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:seismic_breaker",
-            "count": 1
-        },
-        "unlock": [
-            {
-                "item": "utilitycraft:block_breaker"
-            }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:seismic_breaker"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"TIT",
+			"GMG",
+			"TST"
+		],
+		"key": {
+			"T": {
+				"item": "utilitycraft:titanium"
+			},
+			"I": {
+				"item": "minecraft:netherite_pickaxe"
+			},
+			"G": {
+				"item": "utilitycraft:tungsten"
+			},
+			"M": {
+				"item": "utilitycraft:block_breaker"
+			},
+			"S": {
+				"item": "utilitycraft:superior_machine_case"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:seismic_breaker",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:block_breaker"
+			}
+		]
+	}
 }

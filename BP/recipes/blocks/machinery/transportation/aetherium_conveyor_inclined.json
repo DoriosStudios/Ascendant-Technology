@@ -1,28 +1,36 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:aetherium_conveyor_inclined"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "  A",
-            " AC",
-            "ACB"
-        ],
-        "key": {
-            "A": { "item": "utilitycraft:aetherium" },
-            "B": { "item": "minecraft:redstone" },
-            "C": { "item": "utilitycraft:energized_iron_dust" }
-        },
-        "result": {
-            "item": "utilitycraft:aetherium_conveyor_inclined",
-            "count": 16
-        },
-        "unlock": [
-            { "item": "utilitycraft:aetherium" }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:aetherium_conveyor_inclined"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"  A",
+			" AC",
+			"ACB"
+		],
+		"key": {
+			"A": {
+				"item": "utilitycraft:aetherium"
+			},
+			"B": {
+				"item": "minecraft:redstone"
+			},
+			"C": {
+				"item": "utilitycraft:energized_iron_dust"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:aetherium_conveyor_inclined",
+			"count": 16
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:aetherium"
+			}
+		]
+	}
 }

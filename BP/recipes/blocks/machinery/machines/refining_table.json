@@ -1,45 +1,54 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:refining_table"
-        },
-        "tags": [
-            "utilitycraft_workbench"
-        ],
-        "pattern": [
-            "PCP",
-            "EAE",
-            "PTP"
-        ],
-        "key": {
-            "P": {
-                "item": "utilitycraft:titanium_plate"
-            },
-            "C": {
-                "item": "utilitycraft:advanced_chip"
-            },
-            "E": {
-                "item": "utilitycraft:aetherium"
-            },
-            "A": {
-                "item": "minecraft:anvil"
-            },
-            "T": {
-                "item": "utilitycraft:machine_case"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:refining_table",
-            "count": 1
-        },
-        "unlock": [
-            {
-                "item": "minecraft:anvil"
-            },
-            {
-                "item": "utilitycraft:advanced_chip"
-            }
-        ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:refining_table"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"PCP",
+			"EAE",
+			"PTP"
+		],
+		"key": {
+			"P": {
+				"item": "utilitycraft:titanium_plate"
+			},
+			"E": {
+				"item": "utilitycraft:absolute_chip"
+			},
+			"C": {
+				"item": "utilitycraft:aetherium"
+			},
+			"A": {
+				"item": "utilitycraft:induction_anvil"
+			},
+			"T": {
+				"item": "utilitycraft:reinforced_machine_case"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:refining_table",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:induction_anvil"
+			},
+			{
+				"item": "utilitycraft:reinforced_machine_case"
+			},
+			{
+				"item": "utilitycraft:aetherium"
+			},
+			{
+				"item": "utilitycraft:titanium_plate"
+			},
+			{
+				"item": "utilitycraft:absolute_chip"
+			}
+		]
+	}
 }

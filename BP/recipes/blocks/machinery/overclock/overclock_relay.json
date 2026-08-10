@@ -1,20 +1,39 @@
 {
-    "format_version": "1.20.80",
-    "minecraft:recipe_shaped": {
-        "description": { "identifier": "utilitycraft:overclock_relay" },
-        "tags": ["utilitycraft_workbench"],
-        "pattern": [
-            "CSC",
-            "CAC",
-            " M "
-        ],
-        "key": {
-            "S": { "item": "utilitycraft:reinforced_cable" },
-            "C": { "item": "utilitycraft:titanium_plate" },
-            "A": { "item": "utilitycraft:ultimate_chip" },
-            "M": { "item": "utilitycraft:machine_case" }
-        },
-        "result": { "item": "utilitycraft:overclock_relay", "count": 1 },
-        "unlock": [ { "item": "utilitycraft:titanium_plate" } ]
-    }
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:overclock_relay"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"CSC",
+			"CAC",
+			" M "
+		],
+		"key": {
+			"S": {
+				"item": "utilitycraft:reinforced_cable"
+			},
+			"C": {
+				"item": "utilitycraft:titanium_plate"
+			},
+			"A": {
+				"item": "utilitycraft:absolute_chip"
+			},
+			"M": {
+				"item": "utilitycraft:superior_machine_case"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:overclock_relay",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:titanium_plate"
+			}
+		]
+	}
 }

@@ -15,10 +15,10 @@
 				"item": "utilitycraft:ultimate_magmator"
 			},
 			"D": {
-				"item": "utilitycraft:compressed_glass_2"
+				"item": "glass"
 			},
 			"E": {
-				"item": "utilitycraft:ultimate_chip"
+				"item": "utilitycraft:absolute_chip"
 			}
 		},
 		"pattern": [

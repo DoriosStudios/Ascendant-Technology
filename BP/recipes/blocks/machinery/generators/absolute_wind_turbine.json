@@ -9,19 +9,19 @@
 		],
 		"key": {
 			"A": {
-				"item": "utilitycraft:aetherium"
+				"item": "utilitycraft:steel_plate"
 			},
 			"B": {
 				"item": "utilitycraft:ultimate_wind_turbine"
 			},
 			"C": {
-				"item": "minecraft:netherite_block"
+				"item": "utilitycraft:aetherium"
 			},
 			"D": {
-				"item": "utilitycraft:compressed_energized_iron_block_2"
+				"item": "utilitycraft:energized_iron_block"
 			},
 			"E": {
-				"item": "utilitycraft:ultimate_chip"
+				"item": "utilitycraft:absolute_chip"
 			}
 		},
 		"pattern": [

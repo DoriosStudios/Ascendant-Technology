@@ -4,8 +4,7 @@
         "description": {
             "identifier": "utilitycraft:tungsten_plate",
             "menu_category": {
-                "category": "items",
-                "group": "dorios:itemGroup.name.plates"
+                "category": "items"
             }
         },
         "components": {

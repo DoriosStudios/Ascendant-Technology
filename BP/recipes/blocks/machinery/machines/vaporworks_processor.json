@@ -1,45 +1,57 @@
 {
-    "format_version": "1.21.100",
-    "minecraft:recipe_shaped": {
-        "description": {
-            "identifier": "utilitycraft:vaporworks_processor"
-        },
-        "tags": [ "utilitycraft_workbench" ],
-        "pattern": [
-            "CGC",
-            "ABA",
-            "PMP"
-        ],
-        "key": {
-            "A": {
-                "item": "utilitycraft:advanced_chip"
-            },
-            "B": {
-                "item": "minecraft:blast_furnace"
-            },
-            "C": {
-                "item": "minecraft:waxed_copper"
-            },
-            "G": {
-                "item": "minecraft:waxed_copper_grate"
-            },
-            "P": {
-                "item": "utilitycraft:compressed_copper_block"
-            },
-            "M": {
-                "item": "utilitycraft:machine_case"
-            }
-        },
-        "result": {
-            "item": "utilitycraft:vaporworks_processor",
-            "count": 1
-        },
-        "unlock": [
-            { "item": "utilitycraft:advanced_chip" },
-            { "item": "minecraft:blast_furnace" },
-            { "item": "minecraft:waxed_copper" },
-            { "item": "minecraft:waxed_copper_grate" },
-            { "item": "utilitycraft:compressed_copper_block" }
-        ]
-    }
+	"format_version": "1.21.100",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:vaporworks_processor"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"CGC",
+			"ABA",
+			"PMP"
+		],
+		"key": {
+			"A": {
+				"item": "utilitycraft:advanced_chip"
+			},
+			"B": {
+				"item": "minecraft:blast_furnace"
+			},
+			"C": {
+				"item": "minecraft:waxed_copper"
+			},
+			"G": {
+				"item": "minecraft:waxed_copper_grate"
+			},
+			"P": {
+				"item": "utilitycraft:compressed_copper_block"
+			},
+			"M": {
+				"item": "utilitycraft:machine_case"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:vaporworks_processor",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:advanced_chip"
+			},
+			{
+				"item": "minecraft:blast_furnace"
+			},
+			{
+				"item": "minecraft:waxed_copper"
+			},
+			{
+				"item": "minecraft:waxed_copper_grate"
+			},
+			{
+				"item": "utilitycraft:compressed_copper_block"
+			}
+		]
+	}
 }

@@ -18,10 +18,10 @@
 				"item": "utilitycraft:netherite_plate"
 			},
 			"D": {
-				"item": "utilitycraft:compressed_redstone_block"
+				"item": "minecraft:redstone_block"
 			},
 			"E": {
-				"item": "utilitycraft:ultimate_chip"
+				"item": "utilitycraft:absolute_chip"
 			}
 		},
 		"pattern": [

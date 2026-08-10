@@ -17,8 +17,8 @@
             {
                 "energy_bar@uc.energy_bar": {
                     "$collection_index": 0,
-                    "$has_bg": false,
-                    "offset": [-74, -1]
+                    "offset": [97, 64],
+                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
             {
@@ -38,7 +38,7 @@
                 "tool_slot@uc.input_2_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-50, 29],
+                    "offset": [-52, 29],
                     "collection_index": 4
                 }
             },
@@ -49,7 +49,7 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "size": [16, 16],
-                    "offset": [-50, 30],
+                    "offset": [-52, 30],
                     "controls": [
                         {
                             "pickaxe_image": {
@@ -77,7 +77,7 @@
                 "output_grid@uc.slot_grid_3x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [13, 11],
+                    "offset": [16, 11],
                     "$slot_outline_texture": "textures/ui/slots/output_slot",
                     "$collection_index_1": 9,
                     "$collection_index_2": 10,
@@ -94,25 +94,25 @@
                 "mode_button@uc.dynamic_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [57, 17],
+                    "offset": [64, 12],
                     "$index": 3,
-                    "$button_size": [38, 14],
+                    "$button_size": [22, 22],
                     "$text_scale": 0.5,
-                    "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
-                    "$hover_texture": "textures/ui/cells/orange_cell_image",
-                    "$pressed_texture": "textures/ui/cells/orange_cell_image"
+                    "$default_texture": "textures/ui/cells/inverted_light_gray_cell_image",
+                    "$hover_texture": "textures/ui/cells/hover_inverted_light_gray_cell_image",
+                    "$pressed_texture": "textures/ui/cells/light_gray_cell_image"
                 }
             },
             {
                 "activation_button@uc.dynamic_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [57, 38],
+                    "offset": [64, 36],
                     "$index": 5,
-                    "$button_size": [38, 14],
-                    "$text_scale": 0.5,
+                    "$button_size": [22, 22],
+                    "$text_scale": 0.75,
                     "$default_texture": "textures/ui/cells/inverted_green_cell_image",
-                    "$hover_texture": "textures/ui/cells/green_cell_image",
+                    "$hover_texture": "textures/ui/cells/hover_inverted_green_cell_image",
                     "$pressed_texture": "textures/ui/cells/green_cell_image"
                 }
             },

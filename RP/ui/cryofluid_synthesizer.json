@@ -26,7 +26,7 @@
                     "type": "panel",
                     "anchor_from": "top_right",
                     "anchor_to": "top_right",
-                    "offset": [42, -10],
+                    "offset": [40, -8],
                     "controls": [
                         { "close_button@common.close_button": {} }
                     ]
@@ -48,7 +48,7 @@
                 "titanium_grid@uc.slot_grid_2x2": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-58, 27],
+                    "offset": [-20, 22],
                     "$slot_outline_texture": "textures/ui/slots/input_1_slot",
                     "$collection_index_1": 3,
                     "$collection_index_2": 4,
@@ -60,7 +60,7 @@
                 "lapis_grid@uc.slot_grid_2x2": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-16, 27],
+                    "offset": [22, 22],
                     "$slot_outline_texture": "textures/ui/slots/input_2_slot",
                     "$collection_index_1": 7,
                     "$collection_index_2": 8,
@@ -72,7 +72,7 @@
                 "process_progress@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [25, 29],
+                    "offset": [60, 22],
                     "collection_index": 2
                 }
             },
@@ -80,7 +80,7 @@
                 "water_display@uc.liquid_input_1_bar": {
                     "$collection_index": 11,
                     "$has_bg": false,
-                    "offset": [53, -1]
+                    "offset": [-68, -1]
                 }
             },
             {

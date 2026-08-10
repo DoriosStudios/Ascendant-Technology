@@ -1,137 +1,202 @@
 {
-    "namespace": "arcane_enchanter",
-    "arcane_enchanter_top": {
-        "type": "collection_panel",
-        "anchor_from": "center",
-        "anchor_to": "center",
-        "size": [162, 72],
-        "offset": [-10, -40],
-        "collection_name": "container_items",
-        "$item_collection_name": "container_items",
-        "controls": [
-            { "machine_name@uc.machine_name": { "offset": [0, -2] } },
-            { "energy_bar@uc.energy_bar": { "$collection_index": 0, "$has_bg": false, "offset": [-74, -1] } },
-            { "side_panel@uc.machine_side_panel": {} },
-            {
-                "item_label@uc.text_label": {
-                    "collection_index": 1,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [74, 146],
-                    "$text_scale": 0.55,
-                    "offset": [-76, 2]
+	"namespace": "arcane_enchanter",
+	"arcane_enchanter_top": {
+		"type": "collection_panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [162, 72],
+		"offset": [-10, -40],
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"controls": [
+			{ "machine_name@uc.machine_name": { "offset": [0, -2] } },
+			{
+				"energy_bar@uc.energy_bar": {
+					"$collection_index": 0,
+					"$has_bg": false,
+					"offset": [-74, -1]
+				}
+			},
+			{ "side_panel@uc.machine_side_panel": {} },
+			{
+				"item_label@uc.text_label": {
+					"collection_index": 1,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"size": [74, 146],
+					"$text_scale": 0.55,
+					"offset": [-76, 2]
+				}
+			},
+			{
+				"xp_display@uc.liquid_input_1_bar": {
+					"$collection_index": 7,
+					"$has_bg": false,
+					"offset": [-52, -1]
+				}
+			},
+			{
+				"item_input@common.container_item": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [0, 19],
+					"collection_index": 3,
+                    "size": [22, 22],
+					"$cell_image_size": [22, 22],
+					"$item_renderer_size": [20, 20]
                 }
             },
-            { "xp_display@uc.liquid_input_1_bar": { "$collection_index": 7, "$has_bg": false, "offset": [-52, 0] } },
-            {
-                "item_input@uc.input_1_slot": {
-                    "anchor_from": "top_middle", "anchor_to": "top_middle",
-                    "offset": [-25, 20], "collection_index": 3
-                }
-            },
-            {
-                "lapis_input@uc.input_2_slot": {
-                    "anchor_from": "top_middle", "anchor_to": "top_middle",
-                    "offset": [-25, 42], "collection_index": 4
-                }
-            },
-            {
-                "enchantability_module@uc.input_3_slot": {
-                    "anchor_from": "top_middle", "anchor_to": "top_middle",
-                    "offset": [0, 20], "collection_index": 5
-                }
-            },
-            {
-                "protection_module@uc.input_4_slot": {
-                    "anchor_from": "top_middle", "anchor_to": "top_middle",
-                    "offset": [0, 42], "collection_index": 6
-                }
-            },
-            {
-                "process_progress@uc.progress_display": {
-                    "anchor_from": "top_middle", "anchor_to": "top_middle",
-                    "offset": [25, 22], "collection_index": 2
-                }
-            },
-            {
-                "output@uc.output_1_slot": {
-                    "anchor_from": "top_middle", "anchor_to": "top_middle",
-                    "offset": [61, 29], "collection_index": 11
-                }
-            },
-            {
-                "upgrades_tab@uc.upgrades_tab": {
-                    "$upgrade_index_1": 8,
-                    "$upgrade_index_2": 9,
-                    "$upgrade_index_3": 10,
-                    "$has_first_upgrade": true,
-                    "$has_second_upgrade": true,
-                    "$has_third_upgrade": true,
-                    "$has_fourth_upgrade": false,
-                    "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
-                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade"
-                }
-            },
-            {
-                "io_tab@uc.io_tab": {
-                    "$io_items_modes_description": "ui.utilitycraft:io.arcane_enchanter.items",
-                    "$io_fluids_modes_description": "ui.utilitycraft:io.arcane_enchanter.liquids",
-                    "$has_item_io": true,
-                    "$has_fluid_io": true,
-                    "$io_items_default": true,
-                    "$io_fluids_default": false,
-                    "$io_top_texture": "textures/blocks/machines/enchantment_station",
-                    "$io_left_texture": "textures/blocks/machines/enchantment_station",
-                    "$io_front_texture": "textures/blocks/machines/enchantment_station",
-                    "$io_right_texture": "textures/blocks/machines/enchantment_station",
-                    "$io_bottom_texture": "textures/blocks/machines/enchantment_station",
-                    "$io_back_texture": "textures/blocks/machines/enchantment_station",
-                    "$io_item_top_index": 12,
-                    "$io_item_left_index": 13,
-                    "$io_item_front_index": 14,
-                    "$io_item_right_index": 15,
-                    "$io_item_bottom_index": 16,
-                    "$io_item_back_index": 17,
-                    "$io_fluid_top_index": 18,
-                    "$io_fluid_left_index": 19,
-                    "$io_fluid_front_index": 20,
-                    "$io_fluid_right_index": 21,
-                    "$io_fluid_bottom_index": 22,
-                    "$io_fluid_back_index": 23
-                }
-            },
-            { "info_tab@uc.info_tab": { "$info_description": "ui.utilitycraft:info.arcane_enchanter" } }
-        ]
-    },
-    "utility_panel": {
-        "type": "panel",
-        "controls": [
-            { "container_gamepad_helpers@common.container_gamepad_helpers": {} },
-            { "flying_item_renderer@common.flying_item_renderer": { "layer": 40 } },
-            { "selected_item_details_factory@common.selected_item_details_factory": {} },
-            { "item_lock_notification_factory@common.item_lock_notification_factory": {} },
-            {
-                "root_panel@common.root_panel": {
-                    "layer": 1,
-                    "controls": [
-                        { "common_panel@common.common_panel": {} },
-                        {
-                            "chest_panel": {
-                                "type": "panel", "layer": 5,
-                                "controls": [
-                                    { "arcane_enchanter_top@arcane_enchanter.arcane_enchanter_top": {} },
-                                    { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {} },
-                                    { "hotbar_grid@common.hotbar_grid_template": {} },
-                                    { "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {} }
-                                ]
-                            }
-                        },
-                        { "inventory_selected_icon_button@common.inventory_selected_icon_button": {} },
-                        { "gamepad_cursor@common.gamepad_cursor_button": {} }
-                    ]
-                }
-            }
-        ]
-    }
+		    {
+							"grid_outline": {
+								"type": "image",
+								"texture": "textures/ui/slots/input_slot",
+								"size": [24, 24],
+								"anchor_from": "top_middle",
+								"anchor_to": "top_middle",
+								"offset": [0, 18],
+								"layer": 0
+							}
+				
+			},
+			{
+				"lapis_input@uc.input_2_slot": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [-18, 42],
+					"collection_index": 4
+				}
+			},
+			{
+				"enchantability_module@uc.input_3_slot": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [0, 42],
+					"collection_index": 5
+				}
+			},
+			{
+				"protection_module@uc.input_4_slot": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [18, 42],
+					"collection_index": 6
+				}
+			},
+			{
+				"process_progress@uc.progress_display": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [40, 24],
+					"collection_index": 2,
+                    "$item_renderer_size": [14, 14]
+				}
+			},
+			{
+				"output@uc.output_1_slot": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [66, 24],
+					"collection_index": 11
+				}
+			},
+			{
+				"upgrades_tab@uc.upgrades_tab": {
+					"$upgrade_index_1": 8,
+					"$upgrade_index_2": 9,
+					"$upgrade_index_3": 10,
+					"$has_first_upgrade": true,
+					"$has_second_upgrade": true,
+					"$has_third_upgrade": true,
+					"$has_fourth_upgrade": false,
+					"$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+					"$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+					"$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade"
+				}
+			},
+			{
+				"io_tab@uc.io_tab": {
+					"$io_items_modes_description": "ui.utilitycraft:io.arcane_enchanter.items",
+					"$io_fluids_modes_description": "ui.utilitycraft:io.arcane_enchanter.liquids",
+					"$has_item_io": true,
+					"$has_fluid_io": true,
+					"$io_items_default": true,
+					"$io_fluids_default": false,
+					"$io_top_texture": "textures/blocks/machines/enchantment_station",
+					"$io_left_texture": "textures/blocks/machines/enchantment_station",
+					"$io_front_texture": "textures/blocks/machines/enchantment_station",
+					"$io_right_texture": "textures/blocks/machines/enchantment_station",
+					"$io_bottom_texture": "textures/blocks/machines/enchantment_station",
+					"$io_back_texture": "textures/blocks/machines/enchantment_station",
+					"$io_item_top_index": 12,
+					"$io_item_left_index": 13,
+					"$io_item_front_index": 14,
+					"$io_item_right_index": 15,
+					"$io_item_bottom_index": 16,
+					"$io_item_back_index": 17,
+					"$io_fluid_top_index": 18,
+					"$io_fluid_left_index": 19,
+					"$io_fluid_front_index": 20,
+					"$io_fluid_right_index": 21,
+					"$io_fluid_bottom_index": 22,
+					"$io_fluid_back_index": 23
+				}
+			},
+			{
+				"info_tab@uc.info_tab": {
+					"$info_description": "ui.utilitycraft:info.arcane_enchanter"
+				}
+			}
+		]
+	},
+	"utility_panel": {
+		"type": "panel",
+		"controls": [
+			{
+				"container_gamepad_helpers@common.container_gamepad_helpers": {}
+			},
+			{
+				"flying_item_renderer@common.flying_item_renderer": {
+					"layer": 40
+				}
+			},
+			{
+				"selected_item_details_factory@common.selected_item_details_factory": {}
+			},
+			{
+				"item_lock_notification_factory@common.item_lock_notification_factory": {}
+			},
+			{
+				"root_panel@common.root_panel": {
+					"layer": 1,
+					"controls": [
+						{ "common_panel@common.common_panel": {} },
+						{
+							"chest_panel": {
+								"type": "panel",
+								"layer": 5,
+								"controls": [
+									{
+										"arcane_enchanter_top@arcane_enchanter.arcane_enchanter_top": {}
+									},
+									{
+										"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+									},
+									{
+										"hotbar_grid@common.hotbar_grid_template": {}
+									},
+									{
+										"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+									}
+								]
+							}
+						},
+						{
+							"inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+						},
+						{ "gamepad_cursor@common.gamepad_cursor_button": {} }
+					]
+				}
+			}
+		]
+	}
 }

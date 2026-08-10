@@ -71,7 +71,7 @@ ButtonManager.registerMachineButton(ID, MODE_BUTTON_SLOT, ({ entity }) => {
     setDynamicString(entity, MODE_KEY, next.id);
     setDynamicString(entity, OPERATION_KEY, "");
     setDynamicNumber(entity, "dorios:progress_0", 0);
-    return `\u00A7r\u00A76${next.short}`;
+    return `\u00A7r\u00A7f${next.short}`;
 });
 
 ButtonManager.registerMachineButton(ID, ACTIVATION_BUTTON_SLOT, ({ entity }) => {
@@ -102,7 +102,7 @@ DoriosLib.registry.blockComponent(ID, {
 
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
-            setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A761x1");
+            setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A7f1x1");
             setUiItem(machine.container, ACTIVATION_BUTTON_SLOT, "utilitycraft:ui_filler", "\u00A7r\u00A7aON");
             setDynamicString(machine.entity, MODE_KEY, "single");
             setDynamicString(machine.entity, ENABLED_KEY, "true");

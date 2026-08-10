@@ -17,8 +17,8 @@
             {
                 "energy_bar@uc.energy_bar": {
                     "$collection_index": 0,
-                    "$has_bg": false,
-                    "offset": [-74, -1]
+                    "offset": [97, 64],
+                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
             {
@@ -38,7 +38,7 @@
                 "input_grid@uc.slot_grid_3x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-35, 11],
+                    "offset": [-24, 11],
                     "$slot_outline_texture": "textures/ui/slots/input_1_slot",
                     "$collection_index_1": 4,
                     "$collection_index_2": 5,
@@ -55,7 +55,7 @@
                 "process_progress@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [8, 22],
+                    "offset": [18, 22],
                     "collection_index": 2
                 }
             },
@@ -63,23 +63,23 @@
                 "mode_button@uc.dynamic_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [47, 17],
+                    "offset": [64, 12],
                     "$index": 3,
-                    "$button_size": [38, 14],
+                    "$button_size": [22, 22],
                     "$text_scale": 0.5,
-                    "$default_texture": "textures/ui/cells/inverted_orange_cell_image",
-                    "$hover_texture": "textures/ui/cells/orange_cell_image",
-                    "$pressed_texture": "textures/ui/cells/orange_cell_image"
+                    "$default_texture": "textures/ui/cells/inverted_light_gray_cell_image",
+                    "$hover_texture": "textures/ui/cells/hover_inverted_light_gray_cell_image",
+                    "$pressed_texture": "textures/ui/cells/light_gray_cell_image"
                 }
             },
             {
                 "activation_button@uc.dynamic_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [47, 38],
+                    "offset": [64, 36],
                     "$index": 13,
-                    "$button_size": [38, 14],
-                    "$text_scale": 0.5,
+                    "$button_size": [22, 22],
+                    "$text_scale": 0.75,
                     "$default_texture": "textures/ui/cells/inverted_green_cell_image",
                     "$hover_texture": "textures/ui/cells/green_cell_image",
                     "$pressed_texture": "textures/ui/cells/green_cell_image"

@@ -28,7 +28,7 @@
 				"machine": {
 					"energy_cap": 1536000,
 					"energy_cost": 3200,
-					"rate_speed_base": 40,
+					"rate_speed_base": 120,
 					"fluid_cap": 128000,
 					"fluid_types": 1,
 					"upgrades": [9, 10, 11, 12]

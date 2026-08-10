@@ -35,7 +35,7 @@
                 }
             },
             {
-                "input_1@uc.input_1_slot": {
+                "input_1@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [-46, 11],
@@ -43,7 +43,7 @@
                 }
             },
             {
-                "input_2@uc.input_1_slot": {
+                "input_2@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [-28, 11],
@@ -51,7 +51,7 @@
                 }
             },
             {
-                "input_3@uc.input_1_slot": {
+                "input_3@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [-46, 29],
@@ -59,7 +59,7 @@
                 }
             },
             {
-                "input_4@uc.input_1_slot": {
+                "input_4@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [-28, 29],
@@ -67,7 +67,7 @@
                 }
             },
             {
-                "input_5@uc.input_1_slot": {
+                "input_5@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [-46, 47],
@@ -75,11 +75,22 @@
                 }
             },
             {
-                "input_6@uc.input_1_slot": {
+                "input_6@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [-28, 47],
                     "collection_index": 8
+                }
+            },
+             {
+                "grid_outline": {
+                    "type": "image",
+                    "texture": "textures/ui/slots/input_slot",
+                    "size": [38, 56],
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-37, 10],
+                    "layer": 4
                 }
             },
             {
@@ -91,7 +102,7 @@
                 }
             },
             {
-                "solid_output_1@uc.output_1_slot": {
+                "solid_output_1@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [29, 11],
@@ -99,7 +110,7 @@
                 }
             },
             {
-                "solid_output_2@uc.output_1_slot": {
+                "solid_output_2@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [47, 11],
@@ -107,7 +118,7 @@
                 }
             },
             {
-                "solid_output_3@uc.output_1_slot": {
+                "solid_output_3@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [29, 29],
@@ -115,7 +126,7 @@
                 }
             },
             {
-                "solid_output_4@uc.output_1_slot": {
+                "solid_output_4@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [47, 29],
@@ -123,15 +134,16 @@
                 }
             },
             {
-                "solid_output_5@uc.output_1_slot": {
+                "solid_output_5@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [29, 47],
                     "collection_index": 18
                 }
             },
+
             {
-                "solid_output_6@uc.output_1_slot": {
+                "solid_output_6@common.container_item": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [47, 47],
@@ -139,10 +151,21 @@
                 }
             },
             {
+                "grid_outline": {
+                    "type": "image",
+                    "texture": "textures/ui/slots/output_slot",
+                    "size": [38, 56],
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [38, 10],
+                    "layer": 4
+                }
+            },
+            {
                 "lava_output@uc.liquid_output_1_bar": {
                     "$collection_index": 9,
                     "$has_bg": false,
-                    "offset": [58, 0]
+                    "offset": [58, -2]
                 }
             },
             {

@@ -82,7 +82,7 @@
                 "seed_1@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-57, 20],
+                    "offset": [-50, 20],
                     "collection_index": 3
                 }
             },
@@ -90,7 +90,7 @@
                 "seed_2@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-37, 20],
+                    "offset": [-50, 40],
                     "collection_index": 4
                 }
             },
@@ -98,7 +98,7 @@
                 "soil_slot@uc.input_2_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-17, 20],
+                    "offset": [-28, 30],
                     "collection_index": 5
                 }
             },
@@ -106,15 +106,16 @@
                 "process_progress@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [14, 20],
-                    "collection_index": 2
+                    "offset": [-4, 24],
+                    "collection_index": 2,
+                    "$item_renderer_size": [20, 20]
                 }
             },
             {
                 "output_grid@genetic_seed_synthesizer.output_grid_5x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [70, 14]
+                    "offset": [56, 14]
                 }
             },
             {

@@ -119,11 +119,24 @@ function createLane(machine, index, settings, lavaCraftBudget) {
 function coolMachine(machine, steam, heat, activeLanes, locked) {
     const intervalScale = Math.max(1, machine.processingInterval / 4);
     let cooling = (4 + (activeLanes === 0 ? 4 : 0) + (locked ? 8 : 0)) * intervalScale;
-    const requested = Math.ceil(STEAM_COOLING_USE * (1 + activeLanes * 0.5) * intervalScale);
-    if (steam.getType() === "steam" && heat > 0 && steam.get() >= requested) {
-        steam.consume(requested);
-        cooling += (36 + activeLanes * 14 + (locked ? 20 : 0)) * intervalScale;
+
+    const requested = Math.ceil(
+        STEAM_COOLING_USE * (1 + activeLanes * 0.5) * intervalScale
+    );
+
+    if (steam.getType() === "steam" && heat > 0 && steam.get() > 0) {
+        const consumed = Math.min(requested, steam.get());
+        const efficiency = consumed / requested;
+
+        steam.consume(consumed);
+
+        cooling += (
+            36 +
+            activeLanes * 14 +
+            (locked ? 20 : 0)
+        ) * intervalScale * efficiency;
     }
+
     return Math.max(0, heat - cooling);
 }
 
@@ -251,8 +264,16 @@ DoriosLib.registry.blockComponent(ID, {
         if (crafted > 0) lava.consume(crafted * LAVA_PER_CRAFT);
 
         heat += activeLanes * 16 * intervalScale + crafted * 5 + (crafted > 0 ? 10 : 0);
+
+        const hasSteam = steam.getType() === "steam" && steam.get() > 0;
+
         heat = coolMachine(machine, steam, heat, activeLanes, false);
-        heat = Math.min(MAX_HEAT, heat);
+
+        const thermalLimit = hasSteam
+            ? MAX_HEAT * 0.5
+            : MAX_HEAT;
+
+        heat = Math.min(thermalLimit, heat);
         const overheated = heat >= MAX_HEAT;
         if (overheated) burnAndLock(machine);
 

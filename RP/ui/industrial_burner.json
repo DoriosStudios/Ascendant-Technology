@@ -38,7 +38,7 @@
                 "input_lane_1@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-17, 11],
+                    "offset": [-30, 11],
                     "collection_index": 2
                 }
             },
@@ -46,7 +46,7 @@
                 "input_lane_2@uc.input_2_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-17, 30],
+                    "offset": [-30, 30],
                     "collection_index": 3
                 }
             },
@@ -54,7 +54,7 @@
                 "input_lane_3@uc.input_3_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-17, 49],
+                    "offset": [-30, 49],
                     "collection_index": 4
                 }
             },
@@ -62,7 +62,7 @@
                 "lane_progress_1@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [10, 3],
+                    "offset": [-2, 3],
                     "collection_index": 5
                 }
             },
@@ -70,7 +70,7 @@
                 "lane_progress_2@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [10, 22],
+                    "offset": [-2, 22],
                     "collection_index": 6
                 }
             },
@@ -78,7 +78,7 @@
                 "lane_progress_3@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [10, 41],
+                    "offset": [-2, 41],
                     "collection_index": 7
                 }
             },
@@ -87,7 +87,7 @@
                     "$slot_background_texture": "textures/ui/slots/output_1_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [37, 11],
+                    "offset": [24, 11],
                     "collection_index": 13
                 }
             },
@@ -96,7 +96,7 @@
                     "$slot_background_texture": "textures/ui/slots/output_1_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [56, 11],
+                    "offset": [43, 11],
                     "collection_index": 14
                 }
             },
@@ -105,7 +105,7 @@
                     "$slot_background_texture": "textures/ui/slots/output_2_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [37, 30],
+                    "offset": [24, 30],
                     "collection_index": 15
                 }
             },
@@ -114,7 +114,7 @@
                     "$slot_background_texture": "textures/ui/slots/output_2_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [56, 30],
+                    "offset": [43, 30],
                     "collection_index": 16
                 }
             },
@@ -123,7 +123,7 @@
                     "$slot_background_texture": "textures/ui/slots/output_3_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [37, 49],
+                    "offset": [24, 49],
                     "collection_index": 17
                 }
             },
@@ -132,7 +132,7 @@
                     "$slot_background_texture": "textures/ui/slots/output_3_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [56, 49],
+                    "offset": [43, 49],
                     "collection_index": 18
                 }
             },

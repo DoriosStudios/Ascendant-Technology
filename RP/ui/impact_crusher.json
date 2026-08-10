@@ -13,7 +13,18 @@
             { "out_5@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 18], "collection_index": 17 } },
             { "out_6@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 18], "collection_index": 18 } },
             { "out_7@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 18], "collection_index": 19 } },
-            { "out_8@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 18], "collection_index": 20 } }
+            { "out_8@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 18], "collection_index": 20 } },
+            {
+                "grid_outline": {
+                    "type": "image",
+                    "texture": "textures/ui/slots/output_slot",
+                    "size": [74, 38],
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [0, -1],
+                    "layer": 4
+                }
+            }
         ]
     },
     "impact_crusher_top": {
@@ -34,6 +45,13 @@
         "$info_toggle_control_name|default": "info_toggle_button",
         "controls": [
             {
+                "screen": {
+                    "type": "image", "texture": "textures/ui/dialog_background_opaque",
+                    "anchor_from": "center", "anchor_to": "center",
+                    "$cell_image_size": [200, 166], "size": [200, 166], "offset": [21, 40], "layer": -1
+                }
+            },
+            {
                 "machine_name@uc.machine_name": {
                     "offset": [0, -2]
                 }
@@ -41,7 +59,7 @@
             {
                 "energy_bar@uc.energy_bar": {
                     "$collection_index": 0,
-                    "offset": [97, 64],
+                    "offset": [121, 64],
                     "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
@@ -74,7 +92,7 @@
                 "input_lane_1@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-30, 14],
+                    "offset": [-32, 14],
                     "collection_index": 3
                 }
             },
@@ -82,7 +100,7 @@
                 "input_lane_2@uc.input_2_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-30, 44],
+                    "offset": [-32, 44],
                     "collection_index": 4
                 }
             },
@@ -90,7 +108,7 @@
                 "lane_progress_1@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-7, 6],
+                    "offset": [-6, 6],
                     "collection_index": 5
                 }
             },
@@ -98,7 +116,7 @@
                 "lane_progress_2@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-7, 36],
+                    "offset": [-6, 36],
                     "collection_index": 6
                 }
             },
@@ -106,25 +124,26 @@
                 "output_grid@impact_crusher.output_grid_4x2": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [43, 20]
+                    "offset": [48, 20]
                 }
             },
             {
                 "lava_bar@uc.liquid_fuel_bar": {
                     "$collection_index": 7,
                     "$has_bg": false,
-                    "offset": [47, -1]
+                    "offset": [92, 65]
                 }
             },
             {
                 "steam_bar@uc.liquid_input_2_bar": {
                     "$collection_index": 8,
                     "$has_bg": false,
-                    "offset": [67, -1]
+                    "offset": [92, -1]
                 }
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
+                    "offset": [24, 0],
                     "$right_machine_tabs_name": "$right_machine_tabs_name",
                     "$upgrade_toggle_control_name": "$upgrade_toggle_control_name",
                     "$upgrade_index_1": 9,
@@ -143,6 +162,7 @@
             },
             {
                 "io_tab@uc.io_tab": {
+                    "offset": [24, 0],
                     "$right_machine_tabs_name": "$right_machine_tabs_name",
                     "$io_toggle_control_name": "$io_toggle_control_name",
                     "$io_config_tabs_name": "$io_config_tabs_name",
@@ -184,6 +204,7 @@
             },
             {
                 "info_tab@uc.info_tab": {
+                    "offset": [24, 0],
                     "$right_machine_tabs_name": "$right_machine_tabs_name",
                     "$info_toggle_control_name": "$info_toggle_control_name",
                     "$info_description": "ui.utilitycraft:info.impact_crusher"
@@ -247,12 +268,8 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "common_panel@common.common_panel": {
-                                                        "$show_close_button": false
-                                                    }
-                                                },
-                                                {
                                                     "view_top_bar@uc.machine_recipe_view_top_bar": {
+                                                        "offset": [60, -91],
                                                         "$machine_toggle_unchecked": "textures/ui/toggle_button/tab_pressed",
                                                         "$machine_toggle_checked": "textures/ui/toggle_button/tab_pressed",
                                                         "$machine_toggle_unchecked_hover": "textures/ui/toggle_button/tab_hover_pressed",
@@ -291,12 +308,8 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "common_panel@common.common_panel": {
-                                                        "$show_close_button": false
-                                                    }
-                                                },
-                                                {
                                                     "view_top_bar@uc.machine_recipe_view_top_bar": {
+                                                        "offset": [60, -91],
                                                         "$machine_toggle_default_state": false,
                                                         "$recipes_toggle_default_state": true,
                                                         "$machine_toggle_checked": "textures/ui/toggle_button/tab",

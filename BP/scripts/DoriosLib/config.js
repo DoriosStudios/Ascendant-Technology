@@ -10,15 +10,15 @@
  * @type {import("./dependencies/index.js").AddonMetadata}
  */
 export const ADDON_METADATA = {
-  name: "Ascendant Technology",
+  name: "UtilityCraft: Ascendant Technology",
   author: "Dorios Studios",
   identifier: "ascendant_technology",
   version: "0.9.0",
   dependencies: {
     utilitycraft: {
       name: "UtilityCraft",
-      version: "3.5.0",
-      warning: "Ascendant Technology requires UtilityCraft 3.5.0 or newer.",
+      version: "3.5.1",
+      warning: "Ascendant Technology requires UtilityCraft 3.5.1 or newer.",
     },
   },
 };

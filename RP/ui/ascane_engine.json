@@ -530,7 +530,7 @@
 					"offset": [ 64, -22 ],
 					"size": [ 18, 18 ]
 				}
-			},
+			},/*
 			{
 				"disenchant_progress_display@uc.progress_display": {
 					"anchor_from": "center",
@@ -542,7 +542,7 @@
 					"$item_renderer_size": [ 18, 18 ],
 					"$item_renderer_panel_size": [ 20, 20 ]
 				}
-			},
+			},*/
 			{
 				"book_output_slot_1@ascendant_common.slot_brown": {
 					"$slot_index": 21,

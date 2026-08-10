@@ -7,6 +7,7 @@ import { advanceProcess, processCryoCoolingGrid } from "../../ATCore/processing/
 import {
     cryoChamberGeneration,
     getCryoChamberCatalyst,
+    getCryoChamberLapisSource,
 } from "../../config/recipes/cryoChamber.js";
 import {
     getCryoCoolingRecipe,
@@ -244,21 +245,23 @@ function processGenerator(machine, water, cryofluid, settings) {
     const titanium = machine.container.getItem(TITANIUM_SLOT);
     const lapis = machine.container.getItem(LAPIS_SLOT);
     const catalyst = titanium ? getCryoChamberCatalyst(titanium.typeId) : undefined;
-    if (!catalyst || !lapis || lapis.typeId !== cryoChamberGeneration.lapis.id) {
+    const lapisSource = lapis ? getCryoChamberLapisSource(lapis.typeId) : undefined;
+    if (!catalyst || !lapisSource) {
         return resetGenerator(machine, "Insert Titanium + Lapis");
     }
 
+    const generation = getCryofluidGeneration(catalyst, lapisSource);
     const maxCrafts = Math.min(
         Math.floor(titanium.amount / catalyst.input.amount),
-        Math.floor(lapis.amount / cryoChamberGeneration.lapis.amount),
-        Math.floor(water.get() / catalyst.water),
-        Math.floor(cryofluid.getFreeSpace() / catalyst.cryofluid),
+        Math.floor(lapis.amount / lapisSource.input.amount),
+        Math.floor(water.get() / generation.water),
+        Math.floor(cryofluid.getFreeSpace() / generation.cryofluid),
     );
     if (maxCrafts <= 0) {
-        const message = water.get() < catalyst.water
+        const message = water.get() < generation.water
             ? "Needs Water"
-            : cryofluid.getFreeSpace() < catalyst.cryofluid ? "Cryofluid Full" : "Needs Materials";
-        return pauseGenerator(machine, message, water, cryofluid);
+            : cryofluid.getFreeSpace() < generation.cryofluid ? "Cryofluid Full" : "Needs Materials";
+        return pauseGenerator(machine, message, water, cryofluid, catalyst, lapisSource, generation);
     }
 
     const result = advanceProcess(machine, {
@@ -274,9 +277,9 @@ function processGenerator(machine, water, cryofluid, settings) {
 
     if (result.processCount > 0) {
         consumeStack(machine.container, TITANIUM_SLOT, result.processCount * catalyst.input.amount);
-        consumeStack(machine.container, LAPIS_SLOT, result.processCount * cryoChamberGeneration.lapis.amount);
-        water.consume(result.processCount * catalyst.water);
-        cryofluid.add(result.processCount * catalyst.cryofluid);
+        consumeStack(machine.container, LAPIS_SLOT, result.processCount * lapisSource.input.amount);
+        water.consume(result.processCount * generation.water);
+        cryofluid.add(result.processCount * generation.cryofluid);
     }
 
     setDynamicNumber(machine.entity, GENERATOR_PROGRESS_KEY, result.progress);
@@ -286,7 +289,7 @@ function processGenerator(machine, water, cryofluid, settings) {
         GENERATOR_STATUS_SLOT,
         "Cryofluid Generator",
         active ? "Generating" : "No Energy",
-        generatorLines(water, cryofluid, catalyst),
+        generatorLines(water, cryofluid, catalyst, lapisSource, generation),
         active,
     );
     return { active };
@@ -298,23 +301,35 @@ function resetGenerator(machine, message) {
     return { active: false };
 }
 
-function pauseGenerator(machine, message, water, cryofluid) {
+function pauseGenerator(machine, message, water, cryofluid, catalyst, lapisSource, generation) {
     setModuleStatus(
         machine,
         GENERATOR_STATUS_SLOT,
         "Cryofluid Generator",
         message,
-        generatorLines(water, cryofluid),
+        generatorLines(water, cryofluid, catalyst, lapisSource, generation),
     );
     return { active: false };
 }
 
-function generatorLines(water, cryofluid, catalyst) {
+function generatorLines(water, cryofluid, catalyst, lapisSource, generation) {
     return [
         `\u00A7r\u00A77Catalyst: \u00A7f${catalyst ? DoriosLib.text.formatIdentifier(catalyst.input.id) : "None"}`,
+        `\u00A7r\u00A77Lapis: \u00A7f${lapisSource ? DoriosLib.text.formatIdentifier(lapisSource.input.id) : "None"}`,
+        ...(generation ? [
+            `\u00A7r\u00A77Per Cycle: \u00A7f${FluidStorage.formatFluid(generation.cryofluid)}`,
+        ] : []),
         `\u00A7r\u00A77Water: \u00A7f${FluidStorage.formatFluid(water.get())}`,
         `\u00A7r\u00A77Cryofluid: \u00A7f${FluidStorage.formatFluid(cryofluid.get())}`,
     ];
+}
+
+function getCryofluidGeneration(catalyst, lapisSource) {
+    const multiplier = Math.max(0.01, Number(lapisSource.yieldMultiplier) || 1);
+    return {
+        water: Math.max(1, Math.round(catalyst.water * multiplier)),
+        cryofluid: Math.max(1, Math.round(catalyst.cryofluid * multiplier)),
+    };
 }
 
 function processFluidContainer(container, slot, tank) {

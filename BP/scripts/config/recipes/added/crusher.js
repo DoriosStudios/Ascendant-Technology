@@ -2,59 +2,53 @@ import * as DoriosLib from "DoriosLib/index.js";
 
 /** @type {Record<string, { output: string, amount: number, cost: number, tier: number }>} */
 export const crusherRecipeAdditions = {
-    "utilitycraft:deepslate_tungsten_chunk": {
-        output: "utilitycraft:raw_tungsten",
-        amount: 1,
-        cost: 2000,
-        tier: 5,
-    },
-    "utilitycraft:nether_tungsten_chunk": {
-        output: "utilitycraft:raw_tungsten",
-        amount: 1,
-        cost: 2000,
-        tier: 5,
-    },
-    "utilitycraft:tungsten_chunk": {
-        output: "utilitycraft:raw_tungsten",
-        amount: 1,
-        cost: 2000,
-        tier: 5,
-    },
     "utilitycraft:tungsten": {
         output: "utilitycraft:tungsten_dust",
         amount: 1,
-        cost: 2000,
+        cost: 1600,
         tier: 5,
     },
     "utilitycraft:tungsten_plate": {
         output: "utilitycraft:tungsten_dust",
         amount: 1,
-        cost: 2000,
+        cost: 1600,
         tier: 5,
     },
     "utilitycraft:raw_tungsten": {
         output: "utilitycraft:raw_tungsten_dust",
         amount: 2,
-        cost: 2000,
+        cost: 1600,
         tier: 5,
     },
     "utilitycraft:tungsten_block": {
         output: "utilitycraft:tungsten_dust",
         amount: 6,
-        cost: 18000,
+        cost: 14400,
         tier: 5,
     },
     "utilitycraft:raw_tungsten_block": {
         output: "utilitycraft:raw_tungsten_dust",
         amount: 12,
-        cost: 18000,
+        cost: 14400,
         tier: 5,
     },
-    "utilitycraft:titanium_chunk": {
-        output: "utilitycraft:raw_titanium",
-        amount: 1,
+    "utilitycraft:deepslate_tungsten_ore": {
+        output: "utilitycraft:raw_tungsten_dust",
+        amount: 2,
         cost: 1600,
-        tier: 5,
+        tier: 5
+    },
+    "utilitycraft:nether_tungsten_ore": {
+        output: "utilitycraft:raw_tungsten_dust",
+        amount: 2,
+        cost: 1600,
+        tier: 5
+    },
+    "utilitycraft:deepslate_titanium_ore": {
+        output: "utilitycraft:titanium_dust",
+        amount: 2,
+        cost: 1600,
+        tier: 5
     },
     "utilitycraft:titanium": {
         output: "utilitycraft:titanium_dust",

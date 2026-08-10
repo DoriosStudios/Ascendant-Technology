@@ -36,7 +36,7 @@ export const catalystWeaverRecipeDefinitions = {
         catalysts: [
             { id: "utilitycraft:energized_iron_dust", amount: 2 },
             { id: "utilitycraft:aetherium_dust", amount: 1 },
-            { id: "utilitycraft:titanium_plate", amount: 1 },
+            { id: "utilitycraft:titanium_dust", amount: 1 },
         ],
         output: { id: "utilitycraft:hyper_processing_upgrade", amount: 1 },
         cost: 12800,

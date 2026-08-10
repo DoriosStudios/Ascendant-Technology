@@ -16,32 +16,76 @@ export const cryoCoolingRecipeDefinitions = {
     "utilitycraft:cool_cooked_beef": {
         input: { id: "minecraft:cooked_beef", amount: 1 },
         output: { id: "minecraft:beef", amount: 1 },
-        cost: 2400,
+        cost: 1600,
         ticks: 40,
     },
     "utilitycraft:cool_cooked_porkchop": {
         input: { id: "minecraft:cooked_porkchop", amount: 1 },
         output: { id: "minecraft:porkchop", amount: 1 },
-        cost: 2400,
+        cost: 1600,
         ticks: 40,
     },
     "utilitycraft:cool_cooked_chicken": {
         input: { id: "minecraft:cooked_chicken", amount: 1 },
         output: { id: "minecraft:chicken", amount: 1 },
-        cost: 2400,
+        cost: 1600,
         ticks: 40,
+    },
+    "utilitycraft:cool_cooked_mutton": {
+        input: { id: "minecraft:cooked_mutton", amount: 1 },
+        output: { id: "minecraft:mutton", amount: 1 },
+        cost: 1600,
+        ticks: 40,
+    },
+    "utilitycraft:cool_cooked_rabbit": {
+        input: { id: "minecraft:cooked_rabbit", amount: 1 },
+        output: { id: "minecraft:rabbit", amount: 1 },
+        cost: 1600,
+        ticks: 40,
+    },
+    "utilitycraft:cool_cooked_cod": {
+        input: { id: "minecraft:cooked_cod", amount: 1 },
+        output: { id: "minecraft:cod", amount: 1 },
+        cost: 1600,
+        ticks: 40,
+    },
+    "utilitycraft:cool_cooked_salmon": {
+        input: { id: "minecraft:cooked_salmon", amount: 1 },
+        output: { id: "minecraft:salmon", amount: 1 },
+        cost: 1600,
+        ticks: 40,
+    },
+    "utilitycraft:cool_baked_potato": {
+        input: { id: "minecraft:baked_potato", amount: 1 },
+        output: { id: "minecraft:potato", amount: 1 },
+        cost: 1600,
+        ticks: 40,
+    },
+    "utilitycraft:quench_magma": {
+        input: { id: "minecraft:magma", amount: 1 },
+        output: { id: "minecraft:basalt", amount: 1 },
+        fluid: { type: "water", amount: 250 },
+        cost: 1600,
+        ticks: 80,
+    },
+    "utilitycraft:cool_magma_cream": {
+        input: { id: "minecraft:magma_cream", amount: 1 },
+        output: { id: "minecraft:slime_ball", amount: 1 },
+        fluid: { type: "water", amount: 100 },
+        cost: 1600,
+        ticks: 60,
     },
     "utilitycraft:snow_to_ice": {
         input: { id: "minecraft:snow", amount: 1 },
         output: { id: "minecraft:ice", amount: 1 },
         fluid: { type: "water", amount: 100 },
-        cost: 16000,
+        cost: 4000,
         ticks: 60,
     },
     "utilitycraft:ice_to_packed_ice": {
         input: { id: "minecraft:ice", amount: 1 },
         output: { id: "minecraft:packed_ice", amount: 1 },
-        cost: 16000,
+        cost: 8000,
         ticks: 100,
     },
     "utilitycraft:packed_ice_to_blue_ice": {
@@ -50,6 +94,12 @@ export const cryoCoolingRecipeDefinitions = {
         cost: 16000,
         ticks: 300,
     },
+    "utilitycraft:cool_rod": {
+        input: { id: "minecraft:blaze_rod", amount: 1 },
+        output: { id: "minecraft:breeze_rod", amount: 1 },
+        cost: 1600,
+        ticks: 100,
+    }
 };
 
 for (const [id, definition] of Object.entries(cryoCoolingRecipeDefinitions)) {

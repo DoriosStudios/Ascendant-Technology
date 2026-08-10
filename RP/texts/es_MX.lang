@@ -221,6 +221,7 @@ item.utilitycraft:void_essence=Esencia del Vacío\n§o§9@UC: Ascendant Technolo
 item.utilitycraft:liquid_void=Ampolla de Vacío Líquido\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enderling_tear=Lágrima de Enderling\n§7- Caída de mobs Enderling\n- Usada para craft Interdimensional\n§o§9@UC: Ascendant Technology
 item.utilitycraft:pure_enderling_tear=Lágrima Pura de Enderling\n§7- Caída rara de Enderlings\n- Material de craft premium\n§o§9@UC: Ascendant Technology
+item.utilitycraft:absolute_chip=§uChip Absoluto\n§o§9@UC: Ascendant Technology
 
 ## Módulos
 item.utilitycraft:size_upgrade=Mejora de §gTamaño§7\n- Aumenta el área de la Barrera Láser\n§o§9@UC: Ascendant Technology
@@ -230,33 +231,33 @@ upgrade.utilitycraft:stack_upgrade.name=Mejora de §6Pila§r
 
 ## Base UtilityCraft Machines
 
-tile.utilitycraft:autosieve.name=Tamiz Automático\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:autosieve.name=Tamiz Automático\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:autosieve.name=Tamiz Automático
-tile.utilitycraft:autofisher.name=Pescador Automático\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:autofisher.name=Pescador Automático\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:autofisher.name=Pescador Automático
-tile.utilitycraft:block_breaker.name=Rompebloques\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:block_breaker.name=Rompebloques\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UtilityCraft
 entity.utilitycraft:block_breaker.name=Rompebloques
-tile.utilitycraft:crusher.name=Triturador\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:crusher.name=Triturador\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:crusher.name=Triturador
-tile.utilitycraft:harvester.name=Cosechadora\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:harvester.name=Cosechadora\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UtilityCraft
 entity.utilitycraft:harvester.name=Cosechadora
-tile.utilitycraft:electro_press.name=Prensa Eléctrica\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:electro_press.name=Prensa Eléctrica\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:electro_press.name=Prensa Eléctrica
-tile.utilitycraft:block_placer.name=Colocador de Bloques\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:block_placer.name=Colocador de Bloques\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UtilityCraft
 entity.utilitycraft:block_placer.name=Colocador de Bloques
-tile.utilitycraft:seed_synthesizer.name=Sintetizador de Semillas\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:seed_synthesizer.name=Sintetizador de Semillas\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:seed_synthesizer.name=Sintetizador de Semillas
-tile.utilitycraft:incinerator.name=Incinerador\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:incinerator.name=Incinerador\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:incinerator.name=Incinerador
-tile.utilitycraft:infuser.name=Infusor\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:infuser.name=Infusor\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:infuser.name=Infusor
-tile.utilitycraft:assembler.name=Ensamblador\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:assembler.name=Ensamblador\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UtilityCraft
 entity.utilitycraft:assembler.name=Ensamblador
-tile.utilitycraft:digitizer.name=Digitalizador\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:digitizer.name=Digitalizador\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UtilityCraft
 entity.utilitycraft:digitizer.name=Digitalizador
-tile.utilitycraft:induction_anvil.name=Yunque de Inducción\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:induction_anvil.name=Yunque de Inducción\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:induction_anvil.name=Yunque de Inducción
-tile.utilitycraft:magmatic_chamber.name=Cámara Magmática\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:magmatic_chamber.name=Cámara Magmática\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:magmatic_chamber.name=Cámara Magmática
 item.utilitycraft:stack_upgrade=Mejora de §6Pila§7\n- Aumenta la cantidad de ítems\n  procesados a la vez.\n§o§9@UC: Ascendant Technology
 item.utilitycraft:curse_protection_module=§dMódulo de Protección contra Maldiciones§7\n- Impide maldiciones durante el encantamiento\n§o§9@UC: Ascendant Technology

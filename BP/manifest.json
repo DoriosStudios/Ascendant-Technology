@@ -7,7 +7,7 @@
 		"product_type": "addon"
 	},
 	"header": {
-		"name": "§uAscendant Technology§8",
+		"name": "§uUtilityCraft: Ascendant Technology§8",
 		"description": "v0.9.0 §6Requires UtilityCraft 3.5.0+",
 		"min_engine_version": [
 			1,
@@ -18,7 +18,7 @@
 		"version": [
 			0,
 			9,
-			1
+			0
 		]
 	},
 	"modules": [
@@ -57,7 +57,7 @@
 			"version": [
 				0,
 				9,
-				1
+				0
 			]
 		}
 	]

@@ -5,7 +5,7 @@
  *
  * @type {Record<string, {
  *   input: { amount: number },
- *   output: { id: string, amount: number },
+ *   output: { id: string | null, amount: number },
  *   energyCost: number,
  *   lavaGain: number
  * }>}
@@ -14,20 +14,62 @@ export const industrialCrucibleRecipes = {
     "minecraft:cobblestone": {
         input: { amount: 1 },
         output: { id: "minecraft:stone", amount: 1 },
-        energyCost: 4000,
-        lavaGain: 400,
+        energyCost: 1600,
+        lavaGain: 250,
     },
-    "minecraft:sand": {
+    "minecraft:stone": {
         input: { amount: 1 },
-        output: { id: "minecraft:glass", amount: 1 },
-        energyCost: 4800,
+        output: { id: "minecraft:smooth_stone", amount: 1 },
+        energyCost: 1600,
+        lavaGain: 250,
+    },
+    "minecraft:netherrack": {
+        input: { amount: 1 },
+        output: { id: "minecraft:nether_brick", amount: 1 },
+        energyCost: 1600,
+        lavaGain: 1000,
+    },
+    "minecraft:blackstone": {
+        input: { amount: 1 },
+        output: { id: "minecraft:polished_blackstone", amount: 1 },
+        energyCost: 1600,
         lavaGain: 500,
     },
-    "minecraft:clay_ball": {
-        input: { amount: 4 },
-        output: { id: "minecraft:brick", amount: 4 },
-        energyCost: 5200,
-        lavaGain: 650,
+    "minecraft:basalt": {
+        input: { amount: 1 },
+        output: { id: "minecraft:polished_basalt", amount: 1 },
+        energyCost: 1600,
+        lavaGain: 500,
+    },
+    "minecraft:granite": {
+        input: { amount: 1 },
+        output: { id: "minecraft:polished_granite", amount: 1 },
+        energyCost: 1600,
+        lavaGain: 250,
+    },
+    "minecraft:diorite": {
+        input: { amount: 1 },
+        output: { id: "minecraft:polished_diorite", amount: 1 },
+        energyCost: 1600,
+        lavaGain: 250,
+    },
+    "minecraft:andesite": {
+        input: { amount: 1 },
+        output: { id: "minecraft:polished_andesite", amount: 1 },
+        energyCost: 1600,
+        lavaGain: 250,
+    },
+    "minecraft:magma": {
+        input: { amount: 1 },
+        output: { id: "minecraft:magma_cream", amount: 1 },
+        energyCost: 1600,
+        lavaGain: 1000,
+    },
+    "minecraft:magma_cream": {
+        input: { amount: 1 },
+        output: { id: "utilitycraft:crushed_kelp", amount: 1 },
+        energyCost: 1600,
+        lavaGain: 1000,
     },
 };
 

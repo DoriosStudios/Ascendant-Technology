@@ -51,6 +51,50 @@
                 "$recipe_icon": "textures/items/ores/titanium_plate",
                 "offset": [0, 0]
               }
+            },
+            {
+              "at_tungsten_plate_toggle@uc.electro_press_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3001,
+                "$toggle_hover_text": "item.utilitycraft:tungsten_plate",
+                "$toggle_control_name": "at_tungsten_plate_recipe",
+                "$recipe_icon": "textures/items/ores/tungsten_plate",
+                "offset": [18, 0]
+              }
+            },
+            {
+              "at_titanium_ore_toggle@uc.electro_press_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3002,
+                "$toggle_hover_text": "tile.utilitycraft:deepslate_titanium_ore.name",
+                "$toggle_control_name": "at_titanium_ore_recipe",
+                "$recipe_icon": "textures/blocks/ores/deepslate_titanium_ore",
+                "offset": [36, 0]
+              }
+            },
+            {
+              "at_tungsten_ore_toggle@uc.electro_press_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3003,
+                "$toggle_hover_text": "tile.utilitycraft:deepslate_tungsten_ore.name",
+                "$toggle_control_name": "at_tungsten_ore_recipe",
+                "$recipe_icon": "textures/blocks/ores/deepslate_tungsten_ore",
+                "offset": [54, 0]
+              }
+            },
+            {
+              "at_nether_tungsten_ore_toggle@uc.electro_press_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3004,
+                "$toggle_hover_text": "tile.utilitycraft:nether_tungsten_ore.name",
+                "$toggle_control_name": "at_nether_tungsten_ore_recipe",
+                "$recipe_icon": "textures/blocks/ores/nether_tungsten_ore",
+                "offset": [72, 0]
+              }
             }
           ]
         }
@@ -71,15 +115,103 @@
               "input@uc.electro_press_recipe_input": {
                 "$slot_item_texture": "textures/items/ores/titanium_ingot",
                 "$slot_hover_text": "item.utilitycraft:titanium",
-                "$has_slot_hover": true,
-                "$slot_count_text": "2",
-                "$has_slot_count": true
+                "$has_slot_hover": true
               }
             },
             {
               "output@uc.electro_press_recipe_output": {
                 "$slot_item_texture": "textures/items/ores/titanium_plate",
                 "$slot_hover_text": "item.utilitycraft:titanium_plate",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_titanium_ore_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_titanium_ore_recipe",
+          "controls": [
+            {
+              "input@uc.electro_press_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/titanium_chunk",
+                "$slot_hover_text": "item.utilitycraft:titanium_chunk",
+                "$has_slot_hover": true,
+                "$slot_count_text": "4",
+                "$has_slot_count": true
+              }
+            },
+            {
+              "output@uc.electro_press_recipe_output": {
+                "$slot_item_texture": "textures/blocks/ores/deepslate_titanium_ore",
+                "$slot_hover_text": "tile.utilitycraft:deepslate_titanium_ore.name",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_tungsten_ore_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_tungsten_ore_recipe",
+          "controls": [
+            {
+              "input@uc.electro_press_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/deepslate_tungsten_chunk",
+                "$slot_hover_text": "item.utilitycraft:deepslate_tungsten_chunk",
+                "$has_slot_hover": true,
+                "$slot_count_text": "4",
+                "$has_slot_count": true
+              }
+            },
+            {
+              "output@uc.electro_press_recipe_output": {
+                "$slot_item_texture": "textures/blocks/ores/deepslate_tungsten_ore",
+                "$slot_hover_text": "tile.utilitycraft:deepslate_tungsten_ore.name",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_nether_tungsten_ore_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_nether_tungsten_ore_recipe",
+          "controls": [
+            {
+              "input@uc.electro_press_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/nether_tungsten_chunk",
+                "$slot_hover_text": "item.utilitycraft:nether_tungsten_chunk",
+                "$has_slot_hover": true,
+                "$slot_count_text": "4",
+                "$has_slot_count": true
+              }
+            },
+            {
+              "output@uc.electro_press_recipe_output": {
+                "$slot_item_texture": "textures/blocks/ores/nether_tungsten_ore",
+                "$slot_hover_text": "tile.utilitycraft:nether_tungsten_ore.name",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_tungsten_plate_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_tungsten_plate_recipe",
+          "controls": [
+            {
+              "input@uc.electro_press_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/tungsten_ingot",
+                "$slot_hover_text": "item.utilitycraft:tungsten_ingot",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.electro_press_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/tungsten_plate",
+                "$slot_hover_text": "item.utilitycraft:tungsten_plate",
                 "$has_slot_hover": true
               }
             }

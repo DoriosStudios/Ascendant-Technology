@@ -27,7 +27,7 @@ export const DUPLICATOR_EXCLUSION_TAG = "ascendant:unclonnable";
 const LIQUIFIED_AETHERIUM = "liquified_aetherium";
 const BASE_TIME_SECONDS = 30 * 60;
 const BASE_ENERGY_COST = 1600000;
-const FLUID_PER_CRAFT = 16;
+const FLUID_PER_CRAFT = 1000; // 1000mb = 1 bucket
 
 /** @type {ReadonlyMap<string, RarityProfile>} */
 const rarityProfiles = new Map([
@@ -131,7 +131,7 @@ export function getDuplicatorRestriction(template) {
     if (!typeId) return "Invalid Template";
 
     if (typeof template !== "string" && template.hasTag(DUPLICATOR_EXCLUSION_TAG)) {
-        return "Template Is Marked Unclonnable";
+        return "Unclonnable";
     }
 
     const cached = exclusionCache.get(typeId);

@@ -1,0 +1,31 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:nchunk_to_tungsten"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"key": {
+			"P": {
+				"item": "utilitycraft:nether_tungsten_chunk"
+			}
+		},
+		"pattern": [
+			"PP",
+			"PP"
+		],
+		"result": {
+			"item": "utilitycraft:nether_tungsten_ore"
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:nether_tungsten_chunk"
+			},
+			{
+				"item": "utilitycraft:nether_tungsten_ore"
+			}
+		]
+	}
+}

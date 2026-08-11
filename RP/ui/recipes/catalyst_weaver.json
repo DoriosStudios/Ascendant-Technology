@@ -111,7 +111,7 @@
             { "aetherium_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": { "anchor_from": "top_left", "anchor_to": "top_left", "$toggle_index": 4000, "$toggle_hover_text": "item.utilitycraft:aetherium", "$toggle_control_name": "cw_aetherium_recipe", "$recipe_icon": "textures/items/ores/aetherium_ingot", "offset": [0, 0] } },
             { "hyper_processing_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": { "anchor_from": "top_left", "anchor_to": "top_left", "$toggle_index": 4001, "$toggle_hover_text": "item.utilitycraft:hyper_processing_upgrade", "$toggle_control_name": "cw_hyper_processing_recipe", "$recipe_icon": "textures/items/machinery/hyper_processing_upgrade", "offset": [18, 0] } },
             { "refined_aetherium_shard_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": { "anchor_from": "top_left", "anchor_to": "top_left", "$toggle_index": 4002, "$toggle_hover_text": "item.utilitycraft:refined_aetherium_shard", "$toggle_control_name": "cw_refined_aetherium_shard_recipe", "$recipe_icon": "textures/items/ores/refined_aetherium_shard", "offset": [36, 0] } },
-            { "easter_egg_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": { "anchor_from": "top_left", "anchor_to": "top_left", "$toggle_index": 4003, "$toggle_hover_text": "tile.utilitycraft:compressed_block.name", "$toggle_control_name": "cw_easter_egg_recipe", "$recipe_icon": "textures/blocks/compressed/block", "offset": [54, 0] } },
+            
             { "diamond_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": { "anchor_from": "top_left", "anchor_to": "top_left", "$toggle_index": 4004, "$toggle_hover_text": "item.diamond.name", "$toggle_control_name": "cw_diamond_recovery_recipe", "$recipe_icon": "textures/items/diamond", "offset": [72, 0] } },
             { "emerald_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": { "anchor_from": "top_left", "anchor_to": "top_left", "$toggle_index": 4005, "$toggle_hover_text": "item.emerald.name", "$toggle_control_name": "cw_emerald_recovery_recipe", "$recipe_icon": "textures/items/emerald", "offset": [90, 0] } },
             { "quartz_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": { "anchor_from": "top_left", "anchor_to": "top_left", "$toggle_index": 4006, "$toggle_hover_text": "item.quartz.name", "$toggle_control_name": "cw_quartz_recovery_recipe", "$recipe_icon": "textures/items/quartz", "offset": [108, 0] } }
@@ -294,22 +294,6 @@
             { "catalyst_1@catalyst_weaver.recipe_catalyst_1": { "$slot_item_texture": "textures/items/amethyst_shard", "$slot_hover_text": "item.amethyst_shard.name", "$has_slot_hover": true } },
             { "output@catalyst_weaver.recipe_output": { "$slot_item_texture": "textures/items/ores/refined_aetherium_shard", "$slot_hover_text": "item.utilitycraft:refined_aetherium_shard", "$has_slot_hover": true } },
             { "fluid@catalyst_weaver.recipe_fluid_requirement": { "$fluid_texture": "textures/static/images/dark_matter", "$fluid_text": "Dark Matter\n800 mB" } }
-          ]
-        }
-      },
-      {
-        "easter_egg_panel@uc.recipe_panel": {
-          "$recipe_control_name": "cw_easter_egg_recipe",
-          "controls": [
-            { "input@catalyst_weaver.recipe_input": { "$slot_item_texture": "textures/blocks/redstone_block", "$slot_hover_text": "tile.redstone_block.name", "$has_slot_hover": true } },
-            { "catalyst_1@catalyst_weaver.recipe_catalyst_1": { "$slot_item_texture": "textures/blocks/obsidian", "$slot_hover_text": "tile.obsidian.name", "$has_slot_hover": true } },
-            { "catalyst_2@catalyst_weaver.recipe_catalyst_2": { "$slot_item_texture": "textures/blocks/crying_obsidian", "$slot_hover_text": "tile.crying_obsidian.name", "$has_slot_hover": true } },
-            { "catalyst_3@catalyst_weaver.recipe_catalyst_3": { "$slot_item_texture": "textures/blocks/amethyst_block", "$slot_hover_text": "tile.amethyst_block.name", "$has_slot_hover": true } },
-            { "catalyst_4@catalyst_weaver.recipe_catalyst_4": { "$slot_item_texture": "textures/items/ores/aetherium_shard", "$slot_hover_text": "item.utilitycraft:aetherium_shard", "$has_slot_hover": true, "$slot_count_text": "4", "$has_slot_count": true } },
-            { "catalyst_5@catalyst_weaver.recipe_catalyst_5": { "$slot_item_texture": "textures/items/compressed_items/bag_of_purple_dye", "$slot_hover_text": "item.utilitycraft:bag_of_purple_dye", "$has_slot_hover": true } },
-            { "catalyst_6@catalyst_weaver.recipe_catalyst_6": { "$slot_item_texture": "textures/items/compressed_items/bag_of_blue_dye", "$slot_hover_text": "item.utilitycraft:bag_of_blue_dye", "$has_slot_hover": true } },
-            { "output@catalyst_weaver.recipe_output": { "$slot_item_texture": "textures/blocks/compressed/block", "$slot_hover_text": "tile.utilitycraft:compressed_block.name", "$has_slot_hover": true } },
-            { "fluid@catalyst_weaver.recipe_fluid_requirement": { "$fluid_texture": "textures/static/images/dark_matter", "$fluid_text": "Dark Matter\n1000 mB" } }
           ]
         }
       },

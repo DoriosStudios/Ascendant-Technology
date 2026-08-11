@@ -1,0 +1,41 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:stack_upgrade"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "SDS",
+            "RBR",
+            "SIS"
+        ],
+        "key": {
+            "B": {
+                "item": "utilitycraft:base_upgrade"
+            },
+            "D": {
+                "item": "minecraft:orange_dye"
+            },
+            "I": {
+                "item": "utilitycraft:aetherium_block"
+            },
+            "R": {
+                "item": "minecraft:redstone_block"
+            },
+            "S": {
+                "item": "utilitycraft:steel_plate"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:stack_upgrade"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:base_upgrade"
+            }
+        ]
+    }
+}

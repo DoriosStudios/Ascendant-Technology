@@ -412,7 +412,6 @@
 		"utilitycraft_item_conduit": {
 			"textures": "textures/blocks/pipes/flat_conduit"
 		},
-		// Special Conveyors: Router, Smart Router, Sorter, Junction, Inverted Sorter, Underflow Conveyor, Overflow Conveyor
 		"utilitycraft_conveyor_1": {
 			"textures": "textures/blocks/transportation/conveyor_1"
 		},
@@ -437,7 +436,6 @@
 		"utilitycraft_overflow_conveyor": {
 			"textures": "textures/blocks/transportation/overflow_conveyor"
 		},
-		// Conveyor Bridges
 		"utilitycraft_copper_bridge_controller": {
 			"textures": "textures/blocks/transportation/conveyor_copper_bridge"
 		},
@@ -447,7 +445,6 @@
 		"utilitycraft_aetherium_bridge_controller": {
 			"textures": "textures/blocks/transportation/conveyor_aetherium_bridge"
 		},
-		// Regular Conveyors: Plain and Inclined | Copper, Titanium and Aetherium
 		"utilitycraft_conveyor_copper": {
 			"textures": "textures/blocks/transportation/conveyor_copper"
 		},
@@ -552,8 +549,7 @@
 		},
 		"utilitycraft_absolute_tank": {
 			"textures": "textures/blocks/pipes/fluid_tank_absolute"
-		}
-,
+		},
 		"utilitycraft_absolute_furnator_off_north": {
 			"textures": "textures/blocks/generators/absolute_furnator_off_north"
 		},
@@ -1480,6 +1476,66 @@
 		},
 		"utilitycraft_battery_absolute_6_down": {
 			"textures": "textures/blocks/generators/battery_absolute_6_down"
+		},
+		"utilitycraft_compressed_aetherium_block": {
+			"textures": "textures/blocks/compressed/aetherium"
+		},
+		"utilitycraft_compressed_aetherium_block_2": {
+			"textures": "textures/blocks/compressed/aetherium_2"
+		},
+		"utilitycraft_compressed_aetherium_block_3": {
+			"textures": "textures/blocks/compressed/aetherium_3"
+		},
+		"utilitycraft_compressed_aetherium_block_4": {
+			"textures": "textures/blocks/compressed/aetherium_4"
+		},
+		"utilitycraft_compressed_titanium_block": {
+			"textures": "textures/blocks/compressed/titanium"
+		},
+		"utilitycraft_compressed_titanium_block_2": {
+			"textures": "textures/blocks/compressed/titanium_2"
+		},
+		"utilitycraft_compressed_titanium_block_3": {
+			"textures": "textures/blocks/compressed/titanium_3"
+		},
+		"utilitycraft_compressed_titanium_block_4": {
+			"textures": "textures/blocks/compressed/titanium_4"
+		},
+		"utilitycraft_compressed_raw_titanium_block": {
+			"textures": "textures/blocks/compressed/raw_titanium"
+		},
+		"utilitycraft_compressed_raw_titanium_block_2": {
+			"textures": "textures/blocks/compressed/raw_titanium_2"
+		},
+		"utilitycraft_compressed_raw_titanium_block_3": {
+			"textures": "textures/blocks/compressed/raw_titanium_3"
+		},
+		"utilitycraft_compressed_raw_titanium_block_4": {
+			"textures": "textures/blocks/compressed/raw_titanium_4"
+		},
+		"utilitycraft_compressed_tungsten_block": {
+			"textures": "textures/blocks/compressed/tungsten"
+		},
+		"utilitycraft_compressed_tungsten_block_2": {
+			"textures": "textures/blocks/compressed/tungsten_2"
+		},
+		"utilitycraft_compressed_tungsten_block_3": {
+			"textures": "textures/blocks/compressed/tungsten_3"
+		},
+		"utilitycraft_compressed_tungsten_block_4": {
+			"textures": "textures/blocks/compressed/tungsten_4"
+		},
+		"utilitycraft_compressed_raw_tungsten_block": {
+			"textures": "textures/blocks/compressed/raw_tungsten"
+		},
+		"utilitycraft_compressed_raw_tungsten_block_2": {
+			"textures": "textures/blocks/compressed/raw_tungsten_2"
+		},
+		"utilitycraft_compressed_raw_tungsten_block_3": {
+			"textures": "textures/blocks/compressed/raw_tungsten_3"
+		},
+		"utilitycraft_compressed_raw_tungsten_block_4": {
+			"textures": "textures/blocks/compressed/raw_tungsten_4"
 		}
 	}
 }

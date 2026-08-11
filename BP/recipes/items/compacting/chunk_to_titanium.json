@@ -1,0 +1,31 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:chunk_to_titanium"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"key": {
+			"P": {
+				"item": "utilitycraft:titanium_chunk"
+			}
+		},
+		"pattern": [
+			"PP",
+			"PP"
+		],
+		"result": {
+			"item": "utilitycraft:deepslate_titanium_ore"
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:titanium_chunk"
+			},
+			{
+				"item": "utilitycraft:deepslate_titanium_ore"
+			}
+		]
+	}
+}

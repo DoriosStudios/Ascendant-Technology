@@ -4,6 +4,69 @@
 		1,
 		0
 	],
+	// BEGIN GENERATED COMPRESSED BLOCK SOUNDS
+	"utilitycraft:compressed_aetherium_block": {
+		"sound": "amethyst_block"
+	},
+	"utilitycraft:compressed_aetherium_block_2": {
+		"sound": "amethyst_block"
+	},
+	"utilitycraft:compressed_aetherium_block_3": {
+		"sound": "amethyst_block"
+	},
+	"utilitycraft:compressed_aetherium_block_4": {
+		"sound": "amethyst_block"
+	},
+	"utilitycraft:compressed_titanium_block": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_titanium_block_2": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_titanium_block_3": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_titanium_block_4": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_raw_titanium_block": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_raw_titanium_block_2": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_raw_titanium_block_3": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_raw_titanium_block_4": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_tungsten_block": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_tungsten_block_2": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_tungsten_block_3": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_tungsten_block_4": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_raw_tungsten_block": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_raw_tungsten_block_2": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_raw_tungsten_block_3": {
+		"sound": "metal"
+	},
+	"utilitycraft:compressed_raw_tungsten_block_4": {
+		"sound": "metal"
+	},
+// END GENERATED COMPRESSED BLOCK SOUNDS
+// Compressed Blocks
 	"utilitycraft:absolute_battery": {
 		"sound": "metal"
 	},

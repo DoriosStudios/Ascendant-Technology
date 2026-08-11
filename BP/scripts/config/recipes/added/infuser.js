@@ -14,6 +14,10 @@ export const infuserRecipeAdditions = {
         output: "utilitycraft:way_chip",
         required: 1,
     },
+    "utilitycraft:aetherium_dust|utilitycraft:ultimate_chip": {
+        output: "utilitycraft:absolute_chip",
+        required: 2,
+    },
 };
 
 DoriosLib.registry.registerInfuserRecipe(infuserRecipeAdditions);

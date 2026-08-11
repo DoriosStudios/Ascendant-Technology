@@ -42,47 +42,122 @@
           "size": [126, 18],
           "controls": [
             {
-              "at_raw_titanium_toggle@uc.crusher_recipe_toggle": {
+              "at_aetherium_dust_1_toggle@uc.crusher_recipe_toggle": {
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "$toggle_index": 3000,
-                "$toggle_hover_text": "item.utilitycraft:raw_titanium",
-                "$toggle_control_name": "at_raw_titanium_recipe",
-                "$recipe_icon": "textures/items/ores/raw_titanium",
+                "$toggle_hover_text": "item.utilitycraft:aetherium_dust",
+                "$toggle_control_name": "at_aetherium_dust_1_recipe",
+                "$recipe_icon": "textures/items/ores/aetherium_dust",
                 "offset": [0, 0]
               }
             },
             {
-              "at_titanium_dust_1_toggle@uc.crusher_recipe_toggle": {
+              "at_aetherium_dust_6_toggle@uc.crusher_recipe_toggle": {
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "$toggle_index": 3001,
-                "$toggle_hover_text": "item.utilitycraft:titanium_dust",
-                "$toggle_control_name": "at_titanium_dust_1_recipe",
-                "$recipe_icon": "textures/items/ores/titanium_dust",
+                "$toggle_hover_text": "item.utilitycraft:aetherium_dust",
+                "$toggle_control_name": "at_aetherium_dust_6_recipe",
+                "$recipe_icon": "textures/items/ores/aetherium_dust",
                 "offset": [18, 0]
               }
             },
             {
-              "at_titanium_dust_2_toggle@uc.crusher_recipe_toggle": {
+              "at_titanium_1_dust_toggle@uc.crusher_recipe_toggle": {
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "$toggle_index": 3002,
                 "$toggle_hover_text": "item.utilitycraft:titanium_dust",
-                "$toggle_control_name": "at_titanium_dust_2_recipe",
+                "$toggle_control_name": "at_titanium_dust_1_recipe",
                 "$recipe_icon": "textures/items/ores/titanium_dust",
                 "offset": [36, 0]
               }
             },
             {
-              "at_titanium_dust_6_toggle@uc.crusher_recipe_toggle": {
+              "at_titanium_2_dust_toggle@uc.crusher_recipe_toggle": {
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
                 "$toggle_index": 3003,
                 "$toggle_hover_text": "item.utilitycraft:titanium_dust",
-                "$toggle_control_name": "at_titanium_dust_6_recipe",
+                "$toggle_control_name": "at_titanium_dust_2_recipe",
                 "$recipe_icon": "textures/items/ores/titanium_dust",
                 "offset": [54, 0]
+              }
+            },
+            {
+              "at_titanium_6_dust_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3004,
+                "$toggle_hover_text": "item.utilitycraft:titanium_dust",
+                "$toggle_control_name": "at_titanium_dust_6_recipe",
+                "$recipe_icon": "textures/items/ores/titanium_dust",
+                "offset": [72, 0]
+              }
+            },
+            {
+              "at_titanium_12_dust_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3005,
+                "$toggle_hover_text": "item.utilitycraft:titanium_dust",
+                "$toggle_control_name": "at_titanium_dust_12_recipe",
+                "$recipe_icon": "textures/items/ores/titanium_dust",
+                "offset": [90, 0]
+              }
+            },
+            {
+              "at_tungsten_1_dust_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3006,
+                "$toggle_hover_text": "item.utilitycraft:tungsten_dust",
+                "$toggle_control_name": "at_tungsten_dust_1_recipe",
+                "$recipe_icon": "textures/items/ores/tungsten_dust",
+                "offset": [108, 0]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_crusher_recipe_row_0": {
+          "type": "panel",
+          "size": [126, 18],
+          "offset": [0, 18],
+          "controls": [
+            {
+              "at_tungsten_6_dust_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3007,
+                "$toggle_hover_text": "item.utilitycraft:tungsten_dust",
+                "$toggle_control_name": "at_tungsten_dust_6_recipe",
+                "$recipe_icon": "textures/items/ores/tungsten_dust",
+                "offset": [0, 0]
+              }
+            },
+            {
+              "at_raw_tungsten_2_dust_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3008,
+                "$toggle_hover_text": "item.utilitycraft:raw_tungsten_dust",
+                "$toggle_control_name": "at_raw_tungsten_dust_2_recipe",
+                "$recipe_icon": "textures/items/ores/raw_tungsten_dust",
+                "offset": [18, 0]
+              }
+            },
+            {
+              "at_raw_tungsten_1_dust_toggle@uc.crusher_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3009,
+                "$toggle_hover_text": "item.utilitycraft:raw_tungsten_dust",
+                "$toggle_control_name": "at_raw_tungsten_dust_12_recipe",
+                "$recipe_icon": "textures/items/ores/raw_tungsten_dust",
+                "offset": [36, 0]
               }
             }
           ]
@@ -97,21 +172,44 @@
     "size": [80, 108],
     "controls": [
       {
-        "at_raw_titanium_panel@uc.recipe_panel": {
-          "$recipe_control_name": "at_raw_titanium_recipe",
+        "at_aetherium_dust_1_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_aetherium_dust_1_recipe",
           "controls": [
             {
               "input@uc.crusher_recipe_input": {
-                "$slot_item_texture": "textures/items/ores/titanium_chunk",
-                "$slot_hover_text": "item.utilitycraft:titanium_chunk",
+                "$slot_item_texture": "textures/items/ores/aetherium_ingot",
+                "$slot_hover_text": "item.utilitycraft:aetherium_dust",
                 "$has_slot_hover": true
               }
             },
             {
               "output@uc.crusher_recipe_output": {
-                "$slot_item_texture": "textures/items/ores/raw_titanium",
-                "$slot_hover_text": "item.utilitycraft:raw_titanium",
+                "$slot_item_texture": "textures/items/ores/aetherium_dust",
+                "$slot_hover_text": "item.utilitycraft:aetherium_dust",
                 "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_aetherium_dust_6_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_aetherium_dust_6_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/blocks/ores/aetherium_block",
+                "$slot_hover_text": "tile.utilitycraft:aetherium_block.name",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/aetherium_dust",
+                "$slot_hover_text": "item.utilitycraft:aetherium_dust",
+                "$has_slot_hover": true,
+                "$slot_count_text": "6",
+                "$has_slot_count": true
               }
             }
           ]
@@ -167,6 +265,29 @@
           "controls": [
             {
               "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/blocks/ores/titanium_block",
+                "$slot_hover_text": "tile.utilitycraft:titanium_block.name",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/titanium_dust",
+                "$slot_hover_text": "item.utilitycraft:titanium_dust",
+                "$has_slot_hover": true,
+                "$slot_count_text": "6",
+                "$has_slot_count": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_titanium_dust_12_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_titanium_dust_12_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
                 "$slot_item_texture": "textures/blocks/ores/raw_titanium_block",
                 "$slot_hover_text": "tile.utilitycraft:raw_titanium_block.name",
                 "$has_slot_hover": true
@@ -177,7 +298,97 @@
                 "$slot_item_texture": "textures/items/ores/titanium_dust",
                 "$slot_hover_text": "item.utilitycraft:titanium_dust",
                 "$has_slot_hover": true,
+                "$slot_count_text": "12",
+                "$has_slot_count": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_tungsten_dust_1_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_tungsten_dust_1_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/tungsten_ingot",
+                "$slot_hover_text": "item.utilitycraft:tungsten",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/tungsten_dust",
+                "$slot_hover_text": "item.utilitycraft:tungsten_dust",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_raw_tungsten_dust_2_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_raw_tungsten_dust_2_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/raw_tungsten",
+                "$slot_hover_text": "item.utilitycraft:raw_tungsten",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/raw_tungsten_dust",
+                "$slot_hover_text": "item.utilitycraft:raw_tungsten_dust",
+                "$has_slot_hover": true,
+                "$slot_count_text": "2",
+                "$has_slot_count": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_tungsten_dust_6_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_tungsten_dust_6_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/blocks/ores/tungsten_block",
+                "$slot_hover_text": "tile.utilitycraft:tungsten_block.name",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/tungsten_dust",
+                "$slot_hover_text": "item.utilitycraft:tungsten_dust",
+                "$has_slot_hover": true,
                 "$slot_count_text": "6",
+                "$has_slot_count": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_raw_tungsten_dust_12_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_raw_tungsten_dust_12_recipe",
+          "controls": [
+            {
+              "input@uc.crusher_recipe_input": {
+                "$slot_item_texture": "textures/blocks/ores/raw_tungsten_block",
+                "$slot_hover_text": "tile.utilitycraft:raw_tungsten_block.name",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.crusher_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/raw_tungsten_dust",
+                "$slot_hover_text": "item.utilitycraft:raw_tungsten_dust",
+                "$has_slot_hover": true,
+                "$slot_count_text": "12",
                 "$has_slot_count": true
               }
             }

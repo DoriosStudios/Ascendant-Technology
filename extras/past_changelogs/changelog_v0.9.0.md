@@ -163,6 +163,9 @@ HUGE update, bringing new materials, machines, system changes, recipes changes..
     - Decreased transfer rate from 24 kDE/t to 640 DE/t.
     - Increased gas capacity from 64 B to 128 B.
     - Increased liquid capacity from 64 B to 128 B.
+### Overclock
+- Overclock can now be applied to UtiltyCraft machines.
+- Overclocking no longer increases the energy and fluid capacity.
 
 ### Transportation
 - Conveyors
@@ -199,58 +202,31 @@ HUGE update, bringing new materials, machines, system changes, recipes changes..
 ### Ores
 - Added **Tungsten Ore** family, including Tungsten Ore, Tungsten Ingot, and Tungsten Dust.
 
-## RECIPES
-- Added conversion recipes to convert gem dust into their gem from again.
-- Changed the **Lucky Mesh** recipe to use an Emerald Block instead of Emeralds.
-    - The change better reflects the mesh's tier and resource cost, while also making it more consistent with the other superior mesh recipes that use block-tier materials.
-
-## UI/UX
-
-- Impact Crusher now shows a dedicated temperature bar in its menu.
-    - The heat display now matches the machine's live thermal state, making coolant use and overheat risk easier to read at a glance.
-- Refining Table now keeps equipment inspection clearer and more focused.
-    - Item lore now shows up to three core stats and a green ability line when the item has a class or tool ability.
-    - Extra stats such as Evasion, Damage Immunity, Vulnerability, and Preserving remain available inside the machine details panel instead of crowding the item itself.
-- Refining Table now previews locked special abilities more clearly.
-    - The machine can now show when an item's class ability is still locked, which ability will be awakened, and when a Runic Core is optionally armed for that roll.
-- Refining Table displays now split machine and equipment information more cleanly.
-    - The primary display now stays focused on warnings, resources, input state, and refinement costs.
-    - The secondary display now focuses only on the inserted equipment, including its stats, awakened ability state, and a short ability description.
-- Added a dedicated documentation page for StatsCore special abilities.
-    - The page now uses a cascading list layout and explains what each special ability does and which equipment families can roll it.
-- Cryo Freezer and Cryo Stabilizer now use dedicated cryogenic machine menus.
-    - Both standalone Cryo Chamber branches now expose their own focused layouts instead of relying on the broader shared Cryo Chamber presentation.
-- Superior machine names now use consistent subtitle formatting across all supported languages.
-- Superior machine menus now follow the world's refresh speed setting.
-    - Progress arrows, status panels, tank displays, and mode panels now refresh on the same cadence as the configured world update speed.
-- Pattern Placer and Seismic Breaker now keep their activation toggle visually latched while enabled.
-    - Their machine buttons no longer bounce back to the same neutral look immediately after being switched on.
-
 ## FLUIDS
-
 - Liquid Capsules now interact more reliably with vanilla Water and Lava sources.
     - Pickup targeting now follows the block the player is looking at up to 6 blocks away, making source collection more consistent in tight spaces.
     - Placement now uses more precise face detection, so Water and Lava Capsules are much easier to place where intended.
-- Liquid Capsules now handle wider, deeper, and player-overlapping fluid spaces more naturally.
-    - Collecting while standing inside Water or Lava now prioritizes the closest valid source block instead of failing on awkward targets.
-    - Placement now looks for the nearest sensible open space around the aimed area, improving behavior in larger pools and cramped spots.
 - Infinite fluid capsules now behave as true infinite fillers when used on compatible tanks and fluid machines.
     - Water and Lava Infinite Capsules now keep refilling accepted fluid storage instead of acting like oversized single-use containers.
 
-## BUG FIXES
+## RECIPES
+### General
+- Added conversion recipes to convert gem dust into their gem from again.
+- Changed the **Lucky Mesh** recipe to use an Emerald Block instead of Emeralds.
+    - The change better reflects the mesh's tier and resource cost, while also making it more consistent with the other superior mesh recipes that use block-tier materials.
+- Tons of recipes were changed. I'll complete this later.
 
-- Fixed Pattern Placer and Seismic Breaker upgrade scaling.
-    - Speed and Hyper upgrades now shorten their charge time more noticeably, and Efficiency upgrades now also reduce their effective per-operation energy cost in line with regular UtilityCraft machine behavior.
-- Fixed Verdant Cultivator stopping when its internal seed grid was empty.
-    - The machine can now keep harvesting, replanting existing crops, pulsing growth, and buffering harvests without requiring internal seeds, while the 2x2 seed grid remains the optional path for filling empty field spaces.
-- Fixed Verdant Cultivator harvest routing mixing seed items into the output buffer unnecessarily.
-    - Supported seed drops now refill a compatible seed slot first when available, while crop produce continues to flow into the harvest buffer.
-- Fixed Verdant Cultivator leaving some harvest drops behind in larger fields.
-    - Expected crop drops are now pulled more reliably from the harvested area, including corner cells that could previously escape the pickup sweep before being routed into the machine.
-- Fixed stacked Liquid Capsules disappearing while collecting Water or Lava.
-    - Picking up a source with multiple capsules in hand no longer deletes the source block while losing the filled capsule.
+## UI/UX
+- Added the new I/O system to the UI of all machines that support it.
+- Updated many UIs and fixed most of their inconsistencies, including missing labels, misaligned slots, and missing hover effects.
+
+## BUG FIXES
+- Fixed Batteries not being able to share energy to machines.
+- Fixed Catalyst Weaver lagging the world highly.
 - Fixed capsule world-use priority around fluid tanks.
     - Fluid capsules now try to fill the tank or fluid storage you clicked before attempting to place their contents into the world.
+- Fixed Overclock Relay not applying its overclock effect to connected machines.
+- Fixed titanium dust not being smeltable.
 
 ## TECHNICAL CHANGES
 
@@ -260,7 +236,6 @@ HUGE update, bringing new materials, machines, system changes, recipes changes..
     - The registry accepts per-item mitigation definitions with damage reduction, damage negation chance, and optional damage-type overrides.
 
 ### StatsCore
-
 - Added the first full native `StatsCore` runtime stack to Ascendant Technology.
     - Introduced dedicated combat, mining, support, utility, progression, lore, and registry modules for supported equipment.
     - Supported items now persist level, XP, refinement data, and special-ability awakening state directly on the item.
@@ -279,7 +254,6 @@ HUGE update, bringing new materials, machines, system changes, recipes changes..
     - Reduced redundant one-off helper functions and documented the intended shared entry points inside `BP/scripts/StatsCore/README.md`.
 
 ### Runtime Registration
-
 - Added native runtime registration for Pulverizer, Centrifugal Siever, Dual Siever, Genetic Seed Synthesizer, Impact Crusher, Verdant Cultivator, Seismic Breaker, and Pattern Placer blocks, recipes, machine scripts, UI definitions, textures, and item catalog entries.
 - Added native runtime registration for Arcane Enchanter, Cryofluid Synthesizer, Disenchanter, Magmatic Reactor Chamber, and Reinforcement Anvil.
     - Includes machine scripts, block registration, and item catalog integration for each superior branch.
@@ -304,7 +278,6 @@ HUGE update, bringing new materials, machines, system changes, recipes changes..
 - Added a native Genetic Seed Synthesizer plant registry in Ascendant Technology, keeping compatibility with `utilitycraft:register_plant` and `utilitycraft:register_bonsai` custom insertions.
 
 ### Resource Pack
-
 - Converted Cryo Chamber, Residue Processor, and Seismic Breaker to `minecraft:geometry.full_block` with named per-face `material_instances`.
     - Replaced their box-UV atlas usage with generated face textures so directional rendering no longer flips the north and south sides on those machines.
     - Archived the previous atlas sheets under `RP/textures/blocks/machines/legacy_atlases` and `RP/textures/blocks/machines/superior/legacy_atlases` for reference and future art rework.

@@ -431,7 +431,7 @@ export function getClonerItemProfile(id) {
     const normalized = normalizeId(id);
     if (!normalized) {
         return {
-            rarity: "common",
+            rarity: "uncommon",
             declared: false,
             source: "fallback"
         };
@@ -483,7 +483,7 @@ export function getClonerItemProfile(id) {
     }
 
     return {
-        rarity: "common",
+        rarity: "uncommon",
         declared: false,
         source: "fallback"
     };

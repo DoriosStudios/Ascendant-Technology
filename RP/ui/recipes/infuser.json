@@ -73,6 +73,17 @@
                 "$recipe_icon": "textures/items/machinery/way_chip_anchored_v2",
                 "offset": [36, 0]
               }
+            },
+            {
+              "at_absolute_chip_toggle@uc.infuser_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3003,
+                "$toggle_hover_text": "item.utilitycraft:absolute_chip",
+                "$toggle_control_name": "at_absolute_chip_recipe",
+                "$recipe_icon": "textures/items/machinery/absolute_chip",
+                "offset": [36, 0]
+              }
             }
           ]
         }
@@ -165,6 +176,36 @@
               "output@uc.infuser_recipe_output": {
                 "$slot_item_texture": "textures/items/machinery/way_chip_anchored_v2",
                 "$slot_hover_text": "item.utilitycraft:way_chip",
+                "$has_slot_hover": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "at_absolute_chip_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_absolute_chip_recipe",
+          "controls": [
+            {
+              "catalyst@uc.infuser_recipe_catalyst": {
+                "$slot_item_texture": "textures/items/ores/aetherium_dust",
+                "$slot_hover_text": "item.utilitycraft:aetherium_dust",
+                "$has_slot_hover": true,
+                "$slot_count_text": "2",
+                "$has_slot_count": true
+              }
+            },
+            {
+              "input@uc.infuser_recipe_input": {
+                "$slot_item_texture": "textures/items/machinery/ultimate_chip",
+                "$slot_hover_text": "item.utilitycraft:ultimate_chip",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.infuser_recipe_output": {
+                "$slot_item_texture": "textures/items/machinery/absolute_chip",
+                "$slot_hover_text": "item.utilitycraft:absolute_chip",
                 "$has_slot_hover": true
               }
             }

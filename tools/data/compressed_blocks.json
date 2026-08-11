@@ -1,0 +1,557 @@
+{
+  "schema_version": 1,
+  "presets": {
+    "stone": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "stone"
+    },
+    "wood": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2,
+        3,
+        3.2,
+        4.5
+      ],
+      "tags": [
+        "tag:minecraft:is_axe_item_destructible",
+        "tag:wood"
+      ],
+      "redstone_conductor": true,
+      "sound": "wood"
+    },
+    "glass": {
+      "render_method": "blend",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [],
+      "redstone_conductor": false,
+      "sound": "glass",
+      "geometry": {
+        "identifier": "geometry.utilitycraft_glass",
+        "culling": "utilitycraft:glass"
+      }
+    },
+    "metal": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "metal"
+    },
+    "copper": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "copper"
+    },
+    "deepslate": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "deepslate"
+    },
+    "netherrack": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "netherrack"
+    },
+    "soil": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_shovel_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "gravel"
+    },
+    "sand": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_shovel_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "sand"
+    },
+    "gravel": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_shovel_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "gravel"
+    },
+    "obsidian": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        55,
+        60,
+        67.5,
+        80
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "stone"
+    },
+    "amethyst": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "amethyst_block"
+    },
+    "netherite": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "netherite"
+    },
+    "tuff": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "tuff"
+    },
+    "calcite": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "calcite"
+    },
+    "dripstone": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "dripstone_block"
+    },
+    "basalt": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_pickaxe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "basalt"
+    },
+    "mud": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_shovel_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "mud"
+    },
+    "soul_sand": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_shovel_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "soul_sand"
+    },
+    "soul_soil": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_shovel_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "soul_soil"
+    },
+    "bamboo": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_axe_item_destructible",
+        "tag:wood"
+      ],
+      "redstone_conductor": true,
+      "sound": "bamboo_wood"
+    },
+    "moss": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [
+        "tag:minecraft:is_hoe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "moss_block"
+    },
+    "aetherium": {
+      "render_method": "opaque",
+      "mining_speeds": [
+        2.9,
+        3.6,
+        4.2,
+        5.4
+      ],
+      "tags": [
+        "tag:minecraft:is_hoe_item_destructible"
+      ],
+      "redstone_conductor": true,
+      "sound": "amethyst_block"
+    },
+    "slime": {
+      "render_method": "blend",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [],
+      "redstone_conductor": false,
+      "sound": "slime"
+    },
+    "honey": {
+      "render_method": "blend",
+      "mining_speeds": [
+        2.5,
+        3.1,
+        3.8,
+        4.6
+      ],
+      "tags": [],
+      "redstone_conductor": false,
+      "sound": "honey_block"
+    }
+  },
+  "audit": {
+    "allow_unobtainable": [
+      "utilitycraft:compressed_block"
+    ]
+  },
+  "blocks": [
+    {
+      "key": "aetherium_block",
+      "source_item": "utilitycraft:aetherium_block",
+      "base_texture": "tools/input_textures/aetherium_block.png",
+      "texture_stem": "aetherium",
+      "type": "aetherium",
+      "names": {
+        "en_US": [
+          "Compressed Aetherium Block",
+          "Double Compressed Aetherium Block",
+          "Triple Compressed Aetherium Block",
+          "Quadruple Compressed Aetherium Block"
+        ],
+        "es_ES": [
+          "Bloque de Aetherium comprimido",
+          "Bloque de Aetherium doblemente comprimido",
+          "Bloque de Aetherium triplemente comprimido",
+          "Bloque de Aetherium Cuádruplemente comprimido"
+        ],
+        "es_MX": [
+          "Bloque de Aetherium comprimido",
+          "Bloque de Aetherium doblemente comprimido",
+          "Bloque de Aetherium triplemente comprimido",
+          "Bloque de Aetherium Cuádruplemente comprimido"
+        ],
+        "pt_BR": [
+          "Bloco de Aetherium Comprimido",
+          "Bloco de Aetherium Duplamente Comprimido",
+          "Bloco de Aetherium Triplemente Comprimido",
+          "Bloco de Aetherium Quadruplicadamente Comprimido"
+        ],
+        "pt_PT": [
+          "Bloco de Aetherium Comprimido",
+          "Bloco de Aetherium Duplamente Comprimido",
+          "Bloco de Aetherium Triplemente Comprimido",
+          "Bloco de Aetherium Quadruplicadamente Comprimido"
+        ]
+      }
+    },
+    {
+      "key": "titanium_block",
+      "source_item": "utilitycraft:titanium_block",
+      "base_texture": "tools/input_textures/titanium_block.png",
+      "texture_stem": "titanium",
+      "type": "metal",
+      "names": {
+        "en_US": [
+          "Compressed Titanium Block",
+          "Double Compressed Titanium Block",
+          "Triple Compressed Titanium Block",
+          "Quadruple Compressed Titanium Block"
+        ],
+        "es_ES": [
+          "Bloque de Titanio Comprimido",
+          "Bloque de Titanio Doble Comprimido",
+          "Bloque de Titanio Triplemente Comprimido",
+          "Bloque de Titanio Cuádruplemente Comprimido"
+        ],
+        "es_MX": [
+          "Bloque de Titanio Comprimido",
+          "Bloque de Titanio Doble Comprimido",
+          "Bloque de Titanio Triplemente Comprimido",
+          "Bloque de Titanio Cuádruplemente Comprimido"
+        ],
+        "pt_BR": [
+          "Bloco de Titânio Comprimido",
+          "Bloco de Titânio Duplamente Comprimido",
+          "Bloco de Titânio Triplemente Comprimido",
+          "Bloco de Titânio Quadruplicadamente Comprimido"
+        ],
+        "pt_PT": [
+          "Bloco de Titânio Comprimido",
+          "Bloco de Titânio Duplamente Comprimido",
+          "Bloco de Titânio Triplemente Comprimido",
+          "Bloco de Titânio Quadruplicadamente Comprimido"
+        ]
+      }
+    },
+    {
+      "key": "raw_titanium_block",
+      "source_item": "utilitycraft:raw_titanium_block",
+      "base_texture": "tools/input_textures/raw_titanium_block.png",
+      "texture_stem": "raw_titanium",
+      "type": "metal",
+      "names": {
+        "en_US": [
+          "Compressed Raw Titanium Block",
+          "Double Compressed Raw Titanium Block",
+          "Triple Compressed Raw Titanium Block",
+          "Quadruple Compressed Raw Titanium Block"
+        ],
+        "es_ES": [
+          "Bloque de Titanio en Bruto Comprimido",
+          "Bloque de Titanio en Bruto Doble Comprimido",
+          "Bloque de Titanio en Bruto Triplemente Comprimido",
+          "Bloque de Titanio en Bruto Cuádruplemente Comprimido"
+        ],
+        "es_MX": [
+          "Bloque de Titanio en Bruto Comprimido",
+          "Bloque de Titanio en Bruto Doble Comprimido",
+          "Bloque de Titanio en Bruto Triplemente Comprimido",
+          "Bloque de Titanio en Bruto Cuádruplemente Comprimido"
+        ],
+        "pt_BR": [
+          "Bloco de Titânio Bruto Comprimido",
+          "Bloco de Titânio Bruto Duplamente Comprimido",
+          "Bloco de Titânio Bruto Triplemente Comprimido",
+          "Bloco de Titânio Bruto Quadruplicadamente Comprimido"
+        ],
+        "pt_PT": [
+          "Bloco de Titânio Bruto Comprimido",
+          "Bloco de Titânio Bruto Duplamente Comprimido",
+          "Bloco de Titânio Bruto Triplemente Comprimido",
+          "Bloco de Titânio Bruto Quadruplicadamente Comprimido"
+        ]
+      }
+    },
+    {
+      "key": "tungsten_block",
+      "source_item": "utilitycraft:tungsten_block",
+      "base_texture": "tools/input_textures/tungsten_block.png",
+      "texture_stem": "tungsten",
+      "type": "metal",
+      "names": {
+        "en_US": [
+          "Compressed Tungsten Block",
+          "Double Compressed Tungsten Block",
+          "Triple Compressed Tungsten Block",
+          "Quadruple Compressed Tungsten Block"
+        ],
+        "es_ES": [
+          "Bloque de Tungsteno Comprimido",
+          "Bloque de Tungsteno Doblemente Comprimido",
+          "Bloque de Tungsteno Triplemente Comprimido",
+          "Bloque de Tungsteno Cuádruplemente Comprimido"
+        ],
+        "es_MX": [
+          "Bloque de Tungsteno Comprimido",
+          "Bloque de Tungsteno Doblemente Comprimido",
+          "Bloque de Tungsteno Triplemente Comprimido",
+          "Bloque de Tungsteno Cuádruplemente Comprimido"
+        ],
+        "pt_BR": [
+          "Bloco de Tungstênio Comprimido",
+          "Bloco de Tungstênio Duplamente Comprimido",
+          "Bloco de Tungstênio Triplemente Comprimido",
+          "Bloco de Tungstênio Quadruplicadamente Comprimido"
+        ],
+        "pt_PT": [
+          "Bloco de Tungstênio Comprimido",
+          "Bloco de Tungstênio Duplamente Comprimido",
+          "Bloco de Tungstênio Triplemente Comprimido",
+          "Bloco de Tungstênio Quadruplicadamente Comprimido"
+        ]
+      }
+    },
+    {
+      "key": "raw_tungsten_block",
+      "source_item": "utilitycraft:raw_tungsten_block",
+      "base_texture": "tools/input_textures/raw_tungsten_block.png",
+      "texture_stem": "raw_tungsten",
+      "type": "metal",
+      "names": {
+        "en_US": [
+          "Compressed Raw Tungsten Block",
+          "Double Compressed Raw Tungsten Block",
+          "Triple Compressed Raw Tungsten Block",
+          "Quadruple Compressed Raw Tungsten Block"
+        ],
+        "es_ES": [
+          "Bloque de Tungsteno en Bruto Comprimido",
+          "Bloque de Tungsteno en Bruto Doblemente Comprimido",
+          "Bloque de Tungsteno en Bruto Triplemente Comprimido",
+          "Bloque de Tungsteno en Bruto Cuádruplemente Comprimido"
+        ],
+        "es_MX": [
+          "Bloque de Tungsteno en Bruto Comprimido",
+          "Bloque de Tungsteno en Bruto Doblemente Comprimido",
+          "Bloque de Tungsteno en Bruto Triplemente Comprimido",
+          "Bloque de Tungsteno en Bruto Cuádruplemente Comprimido"
+        ],
+        "pt_BR": [
+          "Bloco de Tungstênio Bruto Comprimido",
+          "Bloco de Tungstênio Bruto Duplamente Comprimido",
+          "Bloco de Tungstênio Bruto Triplemente Comprimido",
+          "Bloco de Tungstênio Bruto Quadruplicadamente Comprimido"
+        ],
+        "pt_PT": [
+          "Bloco de Tungstênio Bruto Comprimido",
+          "Bloco de Tungstênio Bruto Duplamente Comprimido",
+          "Bloco de Tungstênio Bruto Triplemente Comprimido",
+          "Bloco de Tungstênio Bruto Quadruplicadamente Comprimido"
+        ]
+      }
+    }
+  ]
+}

@@ -21,11 +21,11 @@
                             "utilitycraft:disenchanter",
                             "utilitycraft:dual_siever",
                             "utilitycraft:genetic_seed_synthesizer",
-							"utilitycraft:impact_crusher",
-							"utilitycraft:industrial_burner",
+                            "utilitycraft:impact_crusher",
+                            "utilitycraft:industrial_burner",
                             "utilitycraft:industrial_crucible",
                             "utilitycraft:pattern_placer",
-							"utilitycraft:pulverizer",
+                            "utilitycraft:pulverizer",
                             "utilitycraft:reinforcement_anvil",
                             "utilitycraft:seismic_breaker",
                             "utilitycraft:verdant_cultivator"
@@ -37,7 +37,7 @@
                             "name": "at:itemGroup.name.machines"
                         },
                         "items": [
-                            "utilitycraft:catalyst_weaver", 
+                            "utilitycraft:catalyst_weaver",
                             "utilitycraft:cryo_chamber",
                             "utilitycraft:duplicator",
                             "utilitycraft:enchantment_station",
@@ -64,6 +64,34 @@
                             "utilitycraft:expert_power_beacon",
                             "utilitycraft:ultimate_power_beacon",
                             "utilitycraft:absolute_power_beacon"
+                        ]
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:compressed_titanium_block",
+                            "name": "at:itemGroup.name.compressed_blocks"
+                        },
+                        "items": [
+                            "utilitycraft:compressed_aetherium_block",
+                            "utilitycraft:compressed_aetherium_block_2",
+                            "utilitycraft:compressed_aetherium_block_3",
+                            "utilitycraft:compressed_aetherium_block_4",
+                            "utilitycraft:compressed_titanium_block",
+                            "utilitycraft:compressed_titanium_block_2",
+                            "utilitycraft:compressed_titanium_block_3",
+                            "utilitycraft:compressed_titanium_block_4",
+                            "utilitycraft:compressed_raw_titanium_block",
+                            "utilitycraft:compressed_raw_titanium_block_2",
+                            "utilitycraft:compressed_raw_titanium_block_3",
+                            "utilitycraft:compressed_raw_titanium_block_4",
+                            "utilitycraft:compressed_tungsten_block",
+                            "utilitycraft:compressed_tungsten_block_2",
+                            "utilitycraft:compressed_tungsten_block_3",
+                            "utilitycraft:compressed_tungsten_block_4",
+                            "utilitycraft:compressed_raw_tungsten_block",
+                            "utilitycraft:compressed_raw_tungsten_block_2",
+                            "utilitycraft:compressed_raw_tungsten_block_3",
+                            "utilitycraft:compressed_raw_tungsten_block_4"
                         ]
                     },
                     {
@@ -196,7 +224,6 @@
                             "utilitycraft:titanium_block",
                             "utilitycraft:raw_titanium_block",
                             "utilitycraft:raw_titanium",
-
                             "utilitycraft:titanium",
                             "utilitycraft:titanium_plate",
                             "utilitycraft:titanium_dust",

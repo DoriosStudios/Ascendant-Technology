@@ -2,12 +2,20 @@
   "devDependencies": {
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "esbuild": "^0.28.0"
+    "esbuild": "^0.28.0",
+    "pngjs": "^7.0.0"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "scripts": {
+    "audit:dorioscore": "node tools/audit-dorioscore-api.mjs",
+    "audit:dorioslib": "node tools/audit-dorioslib-api.mjs",
+    "generate:crops": "node tools/generate_bountiful_crops.mjs",
+    "generate:compressed": "node tools/manage_compressed_blocks.mjs generate",
+    "audit:compressed": "node tools/manage_compressed_blocks.mjs audit"
   },
   "dependencies": {
     "@minecraft/common": "^1.3.0",

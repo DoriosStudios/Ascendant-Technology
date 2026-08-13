@@ -17,25 +17,25 @@ Machine status legend:
 
 | New Machines | Superior Machines |
 |---|---|
-| 🟢 **Absolute Container** | 🟡 **Abyssal Fisher** |
-| 🟣 **Atmospheric Synchronizer** | 🟡 **Arcane Enchanter** |
+| 🟢 **Absolute Container** | 🟢 **Abyssal Fisher** |
+| 🟣 **Atmospheric Synchronizer** | 🟢 **Arcane Enchanter** |
 | 🟢 **Catalyst Weaver** | 🟢 **Arc-Press Forge** |
-| 🟣 **Cold Fusion Reactor** | 🟡 **Centrifugal Siever** |
-| 🟢 **Cryo Chamber** | 🟡 **Cryo Freezer** |
-| 🔴 **Dismantler** | 🟡 **Cryofluid Synthesizer** |
-| 🟢 **Duplicator** | 🟡 **Cryo Stabilizer** |
-| 🟢 **Enchantment Station** | 🟡 **Dense Active Generators** |
-| 🟢 **Energizer** | 🟡 **Disenchanter** |
-| 🟡 **Essence Collector** | 🟡 **Dual Siever** |
-| 🟡 **Fluid Crystallizer** | 🔵 **Impact Crusher** |
+| 🟣 **Cold Fusion Reactor** | 🟢 **Centrifugal Siever** |
+| 🟢 **Cryo Chamber** | 🟢 **Cryo Freezer** |
+| 🔴 **Dismantler** | 🟢 **Cryofluid Synthesizer** |
+| 🟢 **Duplicator** | 🟢 **Cryo Stabilizer** |
+| 🟢 **Enchantment Station** | 🔴 **Dense Active Generators** |
+| 🟢 **Energizer** | 🟢 **Disenchanter** |
+| 🟡 **Essence Collector** | 🟢 **Dual Siever** |
+| 🟡 **Fluid Crystallizer** | 🟢 **Impact Crusher** |
 | 🟡 **Interdimensional Infuser** | 🟢 **Industrial Burner** |
-| 🟢 **Laser Barrier** | 🟡 **Magmatic Reactor Chamber** |
+| 🟢 **Laser Barrier** | 🟢 **Industrial Crucible** |
 | 🟢 **Liquifier** | 🟢 **Pattern Placer** |
 | 🟡 **Mob Temporal Chamber** | 🟢 **Pulverizer** |
-| 🟣 **Orbital Command Terminal** | 🟡 **Reinforcement Anvil** |
-| 🟢 **Residue Processor** | 🟡 **Seed Mutator** |
+| 🟣 **Orbital Command Terminal** | 🟢 **Reinforcement Anvil** |
+| 🟢 **Residue Processor** | 🟢 **Seed Mutator** |
 | 🟢 **Singularity Fabricator** | 🟢 **Seismic Breaker** |
-| 🟢 **Vaporworks Processor** | 🟡 **Verdant Cultivator** |
+| 🟢 **Vaporworks Processor** | 🟢 **Verdant Cultivator** |
 
 ## Items, gear, and systems
 
@@ -44,7 +44,7 @@ Machine status legend:
 | 🟡 **Ascendant Omni-Tool** | 🟡 **Cryo Reservoir** |
 | 🟡 **Item Energizer Pad** | 🟡 **Dimensional Teleporter** |
 | 🟡 **Portable Power Cell** | 🟢 **Network Center** |
-| 🟡 **Tungsten Ore** | 🟢 **Overclock Boost Network** |
+| 🟢 **Tungsten Ore** | 🟢 **Overclock Boost Network** |
 | — | 🟢 **Overclock Relay** |
 | — | 🟢 **Overclock Tower** |
 | — | 🟢 **Reinforced Cable** |

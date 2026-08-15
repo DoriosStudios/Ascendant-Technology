@@ -21,7 +21,40 @@ const MAGNET = Object.freeze({
 	"minecraft:lightning_bolt",
 	"minecraft:falling_block",
 	"utilitycraft:machine",
-	"dorios:machine"
+	"utilitycraft:machine_entity",
+	"dorios:machine",
+	// UtilityCraft block-entities
+	"utilitycraft:hopper",
+	// Better Smelters block-entities
+	"better_smelters:furnace",
+	// UtilityCraft bonsai block-entities
+	"utilitycraft:acacia_tree",
+	"utilitycraft:apple_tree",
+	"utilitycraft:azalea_tree",
+	"utilitycraft:bamboo",
+	"utilitycraft:beetroot",
+	"utilitycraft:birch_tree",
+	"utilitycraft:cactus",
+	"utilitycraft:carrot",
+	"utilitycraft:cherry_tree",
+	"utilitycraft:chorus_fruit",
+	"utilitycraft:crimson_tree",
+	"utilitycraft:darkoak_tree",
+	"utilitycraft:jungle_tree",
+	"utilitycraft:kelp",
+	"utilitycraft:mangrove_tree",
+	"utilitycraft:melon",
+	"utilitycraft:mushroom",
+	"utilitycraft:nether_wart",
+	"utilitycraft:oak_tree",
+	"utilitycraft:pale_oak_tree",
+	"utilitycraft:potato",
+	"utilitycraft:pumpkin",
+	"utilitycraft:spruce_tree",
+	"utilitycraft:sugarcane",
+	"utilitycraft:sweet_berries",
+	"utilitycraft:warped_tree",
+	"utilitycraft:wheat"
 		]),
 		excludedFamilies: Object.freeze([
 	"player",
@@ -29,8 +62,10 @@ const MAGNET = Object.freeze({
 	"projectile",
 	"machine",
 	"dorios:battery",
+	"dorios:container",
 	"dorios:energy_container",
-	"dorios:fluid_container"
+	"dorios:fluid_container",
+	"dorios:hopper"
 		]),
 		modes: Object.freeze({
 			blacklist: "blacklist",

@@ -1,0 +1,47 @@
+name: Release Addon
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Optional explicit tag; blank uses the active changelog version
+        required: false
+        type: string
+        default: ""
+      release_channel:
+        description: Release channel
+        required: true
+        type: choice
+        default: project_default
+        options:
+          - project_default
+          - stable
+          - beta
+          - alpha
+      execution:
+        description: Preview is read-only; production publishes
+        required: true
+        type: choice
+        default: preview
+        options:
+          - preview
+          - production
+      production_confirmation:
+        description: Type PUBLISH when execution is production
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    uses: DoriosStudios/Dorios-Workflows/.github/workflows/release-addon.yml@v1.0.2
+    with:
+      operation: release_only
+      release_tag: ${{ inputs.release_tag }}
+      release_channel: ${{ inputs.release_channel }}
+      workflow_ref: v1.0.2
+      preview_only: ${{ inputs.execution == 'preview' }}
+      production_confirmation: ${{ inputs.production_confirmation }}

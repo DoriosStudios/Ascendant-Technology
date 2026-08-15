@@ -1,0 +1,38 @@
+{
+    "$schema":  "https://raw.githubusercontent.com/DoriosStudios/Dorios-Workflows/v1.0.2/releases/schemas/project.schema.json",
+    "schemaVersion":  1,
+    "project":  {
+                    "name":  "Ascendant Technology",
+                    "slug":  "ascendant-technology"
+                },
+    "release":  {
+                    "defaultChannel":  "stable",
+                    "bedrockManifestPaths":  [
+                                                 "BP/manifest.json",
+                                                 "RP/manifest.json"
+                                             ]
+                },
+    "build":  {
+                  "enabled":  true,
+                  "type":  "regolith",
+                  "developmentProfile":  "buildDev",
+                  "releaseProfile":  "buildMinify",
+                  "outputDirectory":  "build",
+                  "packDirectories":  [
+                                          "Ascendant Technology BP",
+                                          "Ascendant Technology RP"
+                                      ]
+              },
+    "distribution":  {
+                         "github":  true,
+                         "curseforge":  {
+                                            "enabled":  false
+                                        }
+                     },
+    "links":  {
+
+              },
+    "announcement":  {
+                         "enabled":  false
+                     }
+}

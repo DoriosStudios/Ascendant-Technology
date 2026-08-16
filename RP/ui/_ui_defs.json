@@ -27,6 +27,7 @@
                     "ui/ascane_engine.json",
                     "ui/reinforcement_anvil.json",
                     "ui/energizer.json",
+                    "ui/compactor.json",
                     "ui/laser_barrier.json",
                     "ui/liquifier.json",
                     "ui/industrial_crucible.json",

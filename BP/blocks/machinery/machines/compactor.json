@@ -1,0 +1,70 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "utilitycraft:compactor",
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": ["minecraft:cardinal_direction"],
+          "y_rotation_offset": 180
+        }
+      },
+      "states": { "utilitycraft:on": [false, true] }
+    },
+    "components": {
+      "utilitycraft:compactor": {
+        "entity": { "type": "machine", "inventory_size": 31 },
+        "machine": {
+          "energy_cap": 512000,
+          "energy_cost": 800,
+          "rate_speed_base": 1800,
+          "upgrades": [12, 13, 14, 15]
+        }
+      },
+      "utilitycraft:machine_upgrades": [
+        { "type": "speed", "slot": 12 },
+        { "type": "energy", "slot": 13 },
+        { "type": "hyper_processing", "slot": 14 },
+        { "type": "stack", "slot": 15 }
+      ],
+      "minecraft:geometry": "minecraft:geometry.full_block",
+      "minecraft:material_instances": {
+        "*": { "texture": "utilitycraft_energizer_off_north", "render_method": "alpha_test" },
+        "north": { "texture": "utilitycraft_energizer_off_north", "render_method": "alpha_test" },
+        "south": { "texture": "utilitycraft_energizer_off_south", "render_method": "alpha_test" },
+        "east": { "texture": "utilitycraft_energizer_off_east", "render_method": "alpha_test" },
+        "west": { "texture": "utilitycraft_energizer_off_west", "render_method": "alpha_test" },
+        "up": { "texture": "utilitycraft_energizer_off_up", "render_method": "alpha_test" },
+        "down": { "texture": "utilitycraft_energizer_off_down", "render_method": "alpha_test" }
+      },
+      "minecraft:tick": { "interval_range": [4, 4] },
+      "minecraft:destructible_by_mining": { "seconds_to_destroy": 1 },
+      "minecraft:destructible_by_explosion": false,
+      "tag:dorios:machine": {},
+      "tag:dorios:energy": {},
+      "tag:dorios:item": {},
+      "tag:minecraft:is_pickaxe_item_destructible": {}
+    },
+    "permutations": [
+      {
+        "condition": "q.block_state('utilitycraft:on') == 1",
+        "components": {
+          "minecraft:material_instances": {
+            "*": { "texture": "utilitycraft_energizer_on_north", "render_method": "alpha_test" },
+            "north": { "texture": "utilitycraft_energizer_on_north", "render_method": "alpha_test" },
+            "south": { "texture": "utilitycraft_energizer_on_south", "render_method": "alpha_test" },
+            "east": { "texture": "utilitycraft_energizer_on_east", "render_method": "alpha_test" },
+            "west": { "texture": "utilitycraft_energizer_on_west", "render_method": "alpha_test" },
+            "up": { "texture": "utilitycraft_energizer_on_up", "render_method": "alpha_test" },
+            "down": { "texture": "utilitycraft_energizer_on_down", "render_method": "alpha_test" }
+          },
+          "minecraft:light_emission": 4
+        }
+      },
+      { "condition": "q.block_state('minecraft:cardinal_direction') == 'north'", "components": { "minecraft:transformation": { "rotation": [0, 0, 0] } } },
+      { "condition": "q.block_state('minecraft:cardinal_direction') == 'south'", "components": { "minecraft:transformation": { "rotation": [0, 180, 0] } } },
+      { "condition": "q.block_state('minecraft:cardinal_direction') == 'east'", "components": { "minecraft:transformation": { "rotation": [0, -90, 0] } } },
+      { "condition": "q.block_state('minecraft:cardinal_direction') == 'west'", "components": { "minecraft:transformation": { "rotation": [0, 90, 0] } } }
+    ]
+  }
+}

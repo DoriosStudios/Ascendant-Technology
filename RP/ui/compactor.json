@@ -1,0 +1,168 @@
+{
+	"namespace": "compactor",
+	"compactor_top": {
+		"type": "collection_panel",
+		"anchor_from": "center",
+		"anchor_to": "center",
+		"size": [162, 72],
+		"offset": [-10, -40],
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"controls": [
+			{ "machine_name@uc.machine_name": { "offset": [0, -2] } },
+            {
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
+                    "offset": [97, 64],
+                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
+                }
+            },
+			{ "side_panel@uc.machine_side_panel": {} },
+			{
+				"item_label@uc.text_label": {
+					"collection_index": 1,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"size": [74, 146],
+					"$text_scale": 0.55,
+					"offset": [-76, 2]
+				}
+			},
+			{
+				"input_grid@uc.slot_grid_3x3": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [-35, 11],
+					"$slot_outline_texture": "textures/ui/slots/input_1_slot",
+					"$collection_index_1": 3,
+					"$collection_index_2": 4,
+					"$collection_index_3": 5,
+					"$collection_index_4": 6,
+					"$collection_index_5": 7,
+					"$collection_index_6": 8,
+					"$collection_index_7": 9,
+					"$collection_index_8": 10,
+					"$collection_index_9": 11
+				}
+			},
+			{
+				"process_progress@uc.progress_display": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [9, 22],
+					"collection_index": 2
+				}
+			},
+			{
+				"output_grid@uc.slot_grid_3x3": {
+					"anchor_from": "top_middle",
+					"anchor_to": "top_middle",
+					"offset": [53, 11],
+					"$slot_outline_texture": "textures/ui/slots/output_1_slot",
+					"$collection_index_1": 16,
+					"$collection_index_2": 17,
+					"$collection_index_3": 18,
+					"$collection_index_4": 19,
+					"$collection_index_5": 20,
+					"$collection_index_6": 21,
+					"$collection_index_7": 22,
+					"$collection_index_8": 23,
+					"$collection_index_9": 24
+				}
+			},
+			{
+				"upgrades_tab@uc.upgrades_tab": {
+					"$upgrade_index_1": 12,
+					"$upgrade_index_2": 13,
+					"$upgrade_index_3": 14,
+					"$upgrade_index_4": 15,
+					"$has_first_upgrade": true,
+					"$has_second_upgrade": true,
+					"$has_third_upgrade": true,
+					"$has_fourth_upgrade": true,
+					"$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+					"$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+					"$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade",
+					"$upgrade_overlay_4": "textures/items/machinery/stack_upgrade"
+				}
+			},
+			{
+				"io_tab@uc.io_tab": {
+					"$io_items_modes_description": "ui.utilitycraft:io.compactor.items",
+					"$has_item_io": true,
+					"$has_fluid_io": false,
+					"$has_gas_io": false,
+					"$io_items_default": true,
+					"$io_top_texture": "textures/blocks/machines/energizer_off_up",
+					"$io_left_texture": "textures/blocks/machines/energizer_off_west",
+					"$io_front_texture": "textures/blocks/machines/energizer_off_north",
+					"$io_right_texture": "textures/blocks/machines/energizer_off_east",
+					"$io_bottom_texture": "textures/blocks/machines/energizer_off_down",
+					"$io_back_texture": "textures/blocks/machines/energizer_off_south",
+					"$io_item_top_index": 25,
+					"$io_item_left_index": 26,
+					"$io_item_front_index": 27,
+					"$io_item_right_index": 28,
+					"$io_item_bottom_index": 29,
+					"$io_item_back_index": 30
+				}
+			},
+			{
+				"info_tab@uc.info_tab": {
+					"$info_description": "ui.utilitycraft:info.compactor"
+				}
+			}
+		]
+	},
+	"utility_panel": {
+		"type": "panel",
+		"controls": [
+			{
+				"container_gamepad_helpers@common.container_gamepad_helpers": {}
+			},
+			{
+				"flying_item_renderer@common.flying_item_renderer": {
+					"layer": 40
+				}
+			},
+			{
+				"selected_item_details_factory@common.selected_item_details_factory": {}
+			},
+			{
+				"item_lock_notification_factory@common.item_lock_notification_factory": {}
+			},
+			{
+				"root_panel@common.root_panel": {
+					"layer": 1,
+					"controls": [
+						{ "common_panel@common.common_panel": {} },
+						{
+							"chest_panel": {
+								"type": "panel",
+								"layer": 5,
+								"controls": [
+									{
+										"compactor_top@compactor.compactor_top": {}
+									},
+									{
+										"inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+									},
+									{
+										"hotbar_grid@common.hotbar_grid_template": {}
+									},
+									{
+										"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+									}
+								]
+							}
+						},
+						{
+							"inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+						},
+						{ "gamepad_cursor@common.gamepad_cursor_button": {} }
+					]
+				}
+			}
+		]
+	}
+}

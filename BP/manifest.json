@@ -8,7 +8,7 @@
 	},
 	"header": {
 		"name": "§uUtilityCraft: Ascendant Technology§8",
-		"description": "v0.9.0 §6Requires UtilityCraft 3.5.0+",
+		"description": "v0.9.1 §6Requires UtilityCraft 3.5.0+",
 		"min_engine_version": [
 			1,
 			21,
@@ -18,7 +18,7 @@
 		"version": [
 			0,
 			9,
-			1
+			2
 		]
 	},
 	"modules": [
@@ -57,7 +57,7 @@
 			"version": [
 				0,
 				9,
-				1
+				2
 			]
 		}
 	]

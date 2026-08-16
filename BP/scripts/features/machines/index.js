@@ -13,6 +13,7 @@ import "./disenchanter.js";
 import "./enchantmentStation.js";
 import "./reinforcementAnvil.js";
 import "./energizer.js";
+import "./compactor.js";
 import "./vaporworksProcessor.js";
 import "./cryofluidSynthesizer.js";
 import "./cryoStabilizer.js";

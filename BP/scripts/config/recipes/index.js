@@ -52,3 +52,4 @@ export {
     abyssalFisherConfig,
     abyssalFisherLootDefinitions,
 } from "./abyssalFisher.js";
+export * from "./compactor.js";

@@ -1,0 +1,110 @@
+{
+	"format_version": "1.21.100",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:universal_importer",
+			"menu_category": {
+				"category": "construction",
+				"group": "dorios:itemGroup.name.pipes"
+			},
+			"traits": {
+				"minecraft:placement_position": {
+					"enabled_states": ["minecraft:block_face"]
+				}
+			},
+			"states": {
+				"utilitycraft:up": [false, true],
+				"utilitycraft:down": [false, true],
+				"utilitycraft:north": [false, true],
+				"utilitycraft:south": [false, true],
+				"utilitycraft:east": [false, true],
+				"utilitycraft:west": [false, true]
+			}
+		},
+		"components": {
+			"utilitycraft:universal_endpoint": {},
+			"utilitycraft:universal_item_importer": {},
+			"utilitycraft:universal_fluid_importer": {},
+			"utilitycraft:universal_gas_importer": {},
+			"utilitycraft:upgradeable": {
+				"type": "persistent",
+				"filter_max": 1
+			},
+			"minecraft:geometry": {
+				"identifier": "geometry.utilitycraft_universal_importer",
+				"bone_visibility": {
+					"up": "q.block_state('utilitycraft:up')",
+					"cables_up": "q.block_state('utilitycraft:up')",
+					"down": "q.block_state('utilitycraft:down')",
+					"cables_down": "q.block_state('utilitycraft:down')",
+					"north": true,
+					"cables_north": true,
+					"south": "q.block_state('utilitycraft:south')",
+					"cables_south": "q.block_state('utilitycraft:south')",
+					"east": "q.block_state('utilitycraft:east')",
+					"energy": "q.block_state('utilitycraft:east')",
+					"liquid": "q.block_state('utilitycraft:east')",
+					"item": "q.block_state('utilitycraft:east')",
+					"gas": "q.block_state('utilitycraft:east')",
+					"west": "q.block_state('utilitycraft:west')"
+					,"cables_west": "q.block_state('utilitycraft:west')"
+				}
+			},
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "utilitycraft_universal_tube",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:collision_box": {
+				"origin": [0, 0, 0],
+				"size": [0, 0, 0]
+			},
+			"minecraft:selection_box": {
+				"origin": [-4, 4, -4],
+				"size": [8, 8, 8]
+			},
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 1
+			},
+			"minecraft:destructible_by_explosion": false,
+			"tag:dorios:upgradeable": {},
+			"tag:minecraft:is_pickaxe_item_destructible": {},
+			"tag:dorios:item": {},
+			"tag:dorios:fluid": {},
+			"tag:dorios:gas": {},
+			"tag:dorios:energy": {},
+			"tag:dorios:overclock_network": {},
+			"tag:dorios:isTube": {},
+			"tag:dorios:isImporter": {},
+			"tag:dorios:universal_pipe": {},
+			"tag:dorios:color.default": {}
+		},
+		"permutations": [
+			{
+				"condition": "q.block_state('minecraft:block_face') == 'up'",
+				"components": { "minecraft:transformation": { "rotation": [-90, 0, 0] } }
+			},
+			{
+				"condition": "q.block_state('minecraft:block_face') == 'down'",
+				"components": { "minecraft:transformation": { "rotation": [90, 0, 0] } }
+			},
+			{
+				"condition": "q.block_state('minecraft:block_face') == 'north'",
+				"components": { "minecraft:transformation": { "rotation": [0, 180, 0] } }
+			},
+			{
+				"condition": "q.block_state('minecraft:block_face') == 'south'",
+				"components": { "minecraft:transformation": { "rotation": [0, 0, 0] } }
+			},
+			{
+				"condition": "q.block_state('minecraft:block_face') == 'east'",
+				"components": { "minecraft:transformation": { "rotation": [0, 90, 0] } }
+			},
+			{
+				"condition": "q.block_state('minecraft:block_face') == 'west'",
+				"components": { "minecraft:transformation": { "rotation": [0, -90, 0] } }
+			}
+		]
+	}
+}

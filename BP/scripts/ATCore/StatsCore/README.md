@@ -155,9 +155,9 @@ depends on its type, material, branch, refinement grade, and unlock tier.
 | Attribute | What it does |
 | --- | --- |
 | Bonus Loot Chance | Gives eligible ore breaks one additional loot roll. It is intentionally hidden from item lore. |
-| Tool Preserving | Uses the item's Defense level: compatible mining equipment earns Defense progress while used. It starts at 1%, repairs 2 durability on a successful roll, gains 1% per level with no chance cap, and repairs one additional point for each full 100% passed. It never repairs a fully durable item. |
-| Double Trouble | Enables a configurable chance for an additional mining yield. |
-| Triple Trouble | Adds the triple-yield follow-up rule when Double Trouble is available. |
+| Tool Preserving | Scales from Mining and repairs the held refined item only after eligible hostile melee, projectile, explosion, Thorns, or ram damage; it neither creates a Defense category nor triggers from mining/environmental damage. |
+| Double Trouble | Duplicates complete block or entity loot-table results. Its chance advances through back-loaded 1–50, 51–100, and 101–200 level bands. |
+| Triple Trouble | Adds the complete third loot-table result after a separate scaled roll. |
 
 ### Defensive and armor attributes
 
@@ -165,7 +165,7 @@ depends on its type, material, branch, refinement grade, and unlock tier.
 | --- | --- |
 | Damage Reduction | Reduces all incoming damage. Equipment reduction is capped at 90% in total; an off-hand shield contributes a fixed 60%. Vanilla armor protection remains separate. |
 | Evasion | Gives a chance to avoid an incoming hit entirely. Armor starts at 1% and gains 1% per Defense level; an off-hand shield contributes a fixed 5%. |
-| Armor Preserving | Uses the item's Defense level and follows the same repair rules as Tool Preserving. |
+| Armor Preserving | Rolls only on eligible hostile damage, repairs 1 durability, and caps at 35%; Earth Toughness raises the cap to 55% and repairs 2. |
 
 ### Event-driven attributes
 
@@ -175,7 +175,7 @@ not modify every hit continuously.
 | Attribute | What it does |
 | --- | --- |
 | Adaptive Resilience | Builds defensive resilience from the configured combat conditions. |
-| Healing Efficiency | Improves compatible healing events, up to 25%. |
+| Healing Efficiency | Improves compatible healing events up to 25%; feedback shows only bonus healing and is throttled to one notice per two seconds. |
 | Charge Mastery | Tracks and improves charge-based behavior for compatible equipment. |
 | Persistence | Consecutive hits on the same target with the same weapon gain 2.5% damage each, up to 50%, and reset after the configured gap. |
 | Dimensional Attunement | Applies the configured dimensional travel or cooldown benefit. |
@@ -224,7 +224,7 @@ Unique effect pools can expose these event-driven abilities:
 ## Runic unlock tiers
 
 - `utilitycraft:runic_core` unlocks the item's primary/exclusive ability.
-- `utilitycraft:advanced_runic_core` uses the same Refining Table slot, unlocks both the primary and advanced event-driven abilities, raises the ingot/refinement ceiling, and boosts strong attributes, effects, and event-driven profiles.
+- `utilitycraft:advanced_runic_core` uses the same Refining Table slot, unlocks both the primary and advanced event-driven abilities, raises the ingot/refinement ceiling, and boosts strong attributes, effects, and event-driven profiles. When consumed by a refinement it also rolls a 10% same-category ability inheritance; every success grants an unowned `+` ability and recursively attempts another 10% roll without a fixed chain cap.
 - Advanced abilities are marked with `unlockTier: "advanced"` and `requiresAdvancedUnlock: true`; runtime effect resolution must enforce this gate.
 - Lore joins direct Extra Damage, bonus damage, and elemental damage into one Extra Damage entry, then shows the three attributes with the highest activation likelihood. It shows only the primary ability name and appends `+` when additional unlocked abilities exist. Bonus Loot Chance is not shown in lore.
 
@@ -235,6 +235,7 @@ Pinning Shot, Charge Mastery, Persistence, and Ballista resolve from confirmed p
 - `/sc:state <on|off>`
 - `/sc:style [only_text|only_icons|text_and_icons|both_partial]`
 - `/sc:insight_bridge [on|off]` — routes personal StatsCore notices through Dorios' Insight and prevents duplicate action-bar notices.
+- `/sc:effects <marked|bleeding|blessed|cursed|berserk|adaptive_resilience|soul_collector> <target> <duration_seconds>` — applies a StatsCore status to players or mobs for Insight HUD/WAILA testing.
 - `/sc:refine custom <target> <tier> <chip> <ingot> <core> [amount]`
 - `/sc:refine_attribute apply <target> <attribute> <float-value>`
 - `/sc:refine_ability apply <target> <ability> <int-level> <appliesTo>`

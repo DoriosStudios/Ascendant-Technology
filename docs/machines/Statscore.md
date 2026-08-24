@@ -7,7 +7,10 @@ equipment type, level, refinement quality, affinity, and unlocked abilities.
 Most special abilities are awakened through the **Refining Table**. The first
 successful awakening of a locked ability consumes a **Runic Core**. An
 **Advanced Runic Core** can unlock advanced abilities and strengthen supported
-attributes.
+attributes. Every refinement that actually consumes an Advanced Runic Core
+also starts a `10%` inheritance roll for an ability from another item in the
+same equipment category. Each success grants one previously unowned ability
+and immediately rolls another `10%`; the chain has no artificial success cap.
 
 ## Attributes
 
@@ -110,19 +113,23 @@ the item's material:
 
 **Tool Preserving** (weapons, tools, hybrids, and utility items):
 
-- Starts at `1%` and gains `+1%` per Defense level, regardless of material.
-- Compatible mining equipment gains Defense progress as it is used, so this
-  progression advances alongside normal mining progression.
-- Repairs 2 durability when it activates; it never repairs an undamaged item.
-- Has no level cap. Once its chance passes 100%, each additional complete 100%
-  repairs one
-  further durability point.
+- Scales from the item's Mining level; it does not create or display a Defense
+  progression category on non-support equipment.
+- Uses the item's resolved Preserving chance, but never activates from mining,
+  environmental damage, falling, fire, drowning, starvation, or similar
+  non-hostile sources.
+- Can repair the held item only after the player receives eligible hostile
+  melee, projectile, explosion, Thorns, or ram-attack damage.
+- Repairs 1 durability on activation and never repairs an undamaged item.
 
 **Double Trouble** (refined tools, hybrids, and utility items):
 
 - Requires active refinement.
-- Starts at `1%` chance to generate the block's loot a second time.
-- Gains `+1%` chance per 10 **Mining** levels.
+- Starts at `1%` chance to generate the complete loot-table result a second
+  time. It works for both blocks and killed entities without an item whitelist.
+- Growth is back-loaded: levels `1–50` traverse the first 10% of the distance
+  from the base chance to the cap, levels `51–100` reach 35%, and levels
+  `101–200` cover the remaining distance to the cap.
 - Caps at `20%`; an Advanced Runic Core raises the initial value and growth to
   `1.2%`, and the cap to `25%`.
 
@@ -157,12 +164,12 @@ the item's material:
 
 **Armor Preserving** (armor and shields):
 
-- Starts at `1%` and gains `+1%` per Defense level, independent of material.
-- Repairs 2 durability when it activates and never repairs full-durability
-  equipment.
-- Has no level cap. Once its chance passes 100%, each additional complete 100%
-  repairs one
-  further durability point.
+- Gains `+0.5%` per Defense level and caps at `35%` normally.
+- Rolls only after eligible hostile melee, projectile, explosion, Thorns, or
+  ram-attack damage. Environmental and self-inflicted sources are ignored.
+- Repairs 1 durability and never repairs full-durability equipment.
+- **Earth Toughness** raises the final cap to `55%`, improves damage reduction,
+  and repairs 2 durability per successful activation.
 
 ### Event-driven attributes
 
@@ -185,6 +192,8 @@ For these attributes, **P** is the event-tier power: `0.65` Wood, `0.75` Stone,
 - Starts at `1.2% × P` improved compatible healing.
 - Gains `0.025% × P` per **Defensive** level, up to `25%`.
 - Overhealing grants Absorption for 5 seconds.
+- HUD feedback reports only the healing added by Healing Efficiency, ignores
+  ordinary baseline healing, and is rate-limited to one notice every 2 seconds.
 - An Advanced Runic Core increases the resolved bonus by 20%, up to `25%`.
 
 **Charge Mastery** (bows, crossbows, and tridents):
@@ -242,6 +251,8 @@ For these attributes, **P** is the event-tier power: `0.65` Wood, `0.75` Stone,
   target.
 - Throws the target away with strong knockback and gives the user a short
   forward impulse.
+- Marked mobs render a short-lived marker about 1.5 blocks above their origin;
+  it is refreshed every two ticks so it follows the target's head.
 
 **Aftershock** (Mace):
 
@@ -288,8 +299,9 @@ For these attributes, **P** is the event-tier power: `0.65` Wood, `0.75` Stone,
 
 **Berserk** (Axe):
 
-- Builds temporary attack-damage stacks after kills.
-- Cannot exceed the configured stack cap.
+- Builds temporary attack-damage stacks after kills and applies the matching
+  vanilla Strength level to the wielder.
+- Cannot exceed five stacks/Strength V.
 - Can be used by every supported axe, including addon axes whose identifier
   ends in `_axe`.
 
@@ -361,6 +373,11 @@ For these attributes, **P** is the event-tier power: `0.65` Wood, `0.75` Stone,
 
 - Can reflect part of received damage back to the attacker.
 
+**Armored** (Chestplate):
+
+- Negates projectile damage completely.
+- Reduces damage from block and entity explosions by 50%.
+
 **Bulwark** (Leggings):
 
 - Provides a defensive identity focused on steady protection and survival.
@@ -398,6 +415,30 @@ For these attributes, **P** is the event-tier power: `0.65` Wood, `0.75` Stone,
 - Reduces damage from falling blocks, suffocation, lightning, and stalactites.
 
 ## Notes
+
+### Element behavior
+
+- **Earth Toughness** is exclusive to support equipment and improves armor
+  damage reduction and Preserving.
+- **Void** deals override damage, applies Weakness, and creates a 7.5-block
+  singularity for creatures matching the struck target. The center is captured
+  before damage, so later pull pulses, the purple converging ground ring, and
+  the teleport sound continue even if the original target dies.
+- **Water** extinguishes targets, deals increased damage to hot creatures, and
+  grants Water Breathing after eligible kills.
+- **Wind** can transform Blazes into Breezes, is resisted by Blazes, and grants
+  progressive Haste while continuously mining.
+- **Frost** can transform Skeletons into Strays.
+
+### Refining Table displays
+
+- The primary display now reports equipment profile, tier, affinity, current
+  grade/quality, category levels, chip/material, quality interval, grade odds,
+  XP, energy, core requirements, primary ability, inherited abilities, and the
+  Advanced Core inheritance rule.
+- The details and all-statistics displays expose the resolved Trouble chances,
+  elemental data, event-driven attributes, native abilities, and every inherited
+  `+` ability.
 
 - Named abilities complement normal StatsCore attributes; armor can still have
   damage reduction, evasion, and preservation.

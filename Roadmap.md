@@ -18,6 +18,7 @@ Machine status legend:
 | New Machines | Superior Machines |
 |---|---|
 | 🟢 **Absolute Container** | 🟢 **Abyssal Fisher** |
+| 🟡 **Alchemical Station** | — |
 | 🟠 **Atmospheric Synchronizer** | 🟢 **Arcane Enchanter** |
 | 🟡 **Aurora's Lance** | 🟢 **Arc-Press Forge** |
 | 🟢 **Catalyst Weaver** | 🟢 **Centrifugal Siever** |
@@ -52,7 +53,7 @@ Machine status legend:
 | 🟡 **Kyarium** | 🟢 **Network Center** |
 | 🟡 **Portable Power Cell** | 🟢 **Overclock Boost Network** |
 | 🟡 **Singularities** | 🟢 **Overclock Relay** |
-| 🟡 **Tungsten** | 🟢 **Overclock Tower** |
+| 🟢 **Tungsten** | 🟢 **Overclock Tower** |
 | 🟡 **Way Device** | 🟢 **Reinforced Cable** |
 | — | 🟠 **Rift Anchor** |
 | — | 🟡 **Universal Cable Network** |
@@ -65,6 +66,17 @@ Machine status legend:
   - **Purpose:** Singular vault for high-capacity item, fluid, and energy storage.
   - **Operating Mode:** 14×12 item grid + fluid/energy indicators.
   - **Notes:** Storage-only, no upgrade clutter.
+    - To be updated. Will receive a storage size buff, as long as upgrades for capacity.
+
+- 🟡 **Alchemical Station** *(formerly the `Enchanted Brewing Stand` concept)*
+  - **Purpose:** Late-game brewing machine that combines alchemy and science to produce stronger, longer-lasting, and otherwise unobtainable potions.
+  - **Operating Mode:** Uses a brewing input, effect reagents, catalysts, and optional conversion components to process upgraded potion recipes in a dedicated station interface.
+  - **Core Progression:** For each supported effect, the initial scope includes at least three new potion variants:
+    1. **Maximum Extended Level I:** the Level I effect with four times the duration of the normal long potion.
+    2. **Extended Level II:** the long-duration version of the Level II effect.
+    3. **Level III:** a stronger third-level version of the effect.
+  - **Missing Effects:** Adds new potion families for effects that are absent from the current brewing progression, subject to recipe, balance, and effect-availability review.
+  - **Potion Conversion:** Supports deliberate conversion paths between compatible potion forms and states, such as normal, splash, and lingering variants where the effect and recipe rules allow it. Conversion must preserve the intended effect tier and duration instead of silently resetting progression.
 
 - 🟡 **Aurora's Lance**
   - **Purpose:** Multiblock defensive turret designed to eliminate hostile targets with high-energy beams.
@@ -162,9 +174,8 @@ Machine status legend:
 - 🟡 **Universal Cable Network**
   - **Core Blocks:** Universal Cable + Universal Importer + Universal Exporter.
   - **Purpose:** Future premium unified logistics line for bases that want one duct family to carry items, fluids, energy, and overclock.
-  - **Operating Mode:** Not implemented in the current reinforced logistics pass.
+  - **Operating Mode:** Core cable routing is underway: the three blocks, shared-channel topology, per-resource face controls, and compatibility with the existing item/fluid/gas/energy/overclock graphs are implemented. Dedicated importer/exporter transfer configuration remains a separate follow-up.
   - **Design Requirement:** Universal routing must expose fine control per side, per resource type, and per importer/exporter endpoint.
-  - **Scope Rule:** The Universal line needs a more sophisticated configuration model than Reinforced Cable. It should not reuse the current reinforced importer/exporter UI without a dedicated design pass.
 
 - 🟡 **Vacuum Particle Condenser** *(Planned)*
   - **Purpose:** A late-game environmental machine that condenses ambient particles into solid resources by reading altitude, dimension, and biome instead of mining blocks directly.

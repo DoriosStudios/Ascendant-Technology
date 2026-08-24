@@ -1,6 +1,6 @@
 # Ascendant Technology feature inventory and status
 
-Last updated: 2026-07-22
+Last updated: 2026-08-24
 
 This document is the AT rebuild tracker. The inventory was obtained from the active
 `BP` and `RP` definitions and the runtime preserved under `data/legacy/BP/scripts`.
@@ -99,7 +99,7 @@ AT component and tick remain disabled.
 | ❌ | ⬜ | Network Center | Machine-network inspection and control center. | AT network class |
 | ❌ | ⬜ | Pattern Placer | Places blocks according to a pattern, orientation, and configured area. | AT world-action class |
 | ❌ | ⬜ | Pulverizer | Crushing with recipes, multiple results, and quantity upgrades. | `BasicMachine` + AT extension |
-| ❌ | ⬜ | Refining Table | Equipment and attribute refinement integrated with StatsCore. | AT class + new stats system |
+| ✅ | ⬜ | Refining Table | Equipment refinement, Runic awakening, chained advanced inheritance, immediate lore synchronization, and detailed displays are connected. | Manual in-game UI/gameplay verification |
 | ❌ | ⬜ | Reinforcement Anvil | Reinforces equipment through modules and persistent properties. | AT class + new stats system |
 | ❌ | ⬜ | Residue Processor | Converts residue through recipes and possible byproducts. | `BasicMachine` + AT extension |
 | ❌ | ⬜ | Seismic Breaker | Controlled area mining/breaking with energy and configuration. | AT world-action class |
@@ -156,9 +156,9 @@ filters, UI, break cleanup, and persistence after chunk reloads.
 | ❌ | ⬜ | Overclock | Network discovery, fuel, boost, efficiency, relays, and machine integration. ATCore. |
 | ❌ | ⬜ | Conveyors | Network, scheduling, ownership, routing, bridges, filters, and forms. ATCore. |
 | ❌ | ⬜ | Drop system | Tool-specific drops, fortune/silk touch, hammers, and AT ores. Evaluate what UC already covers. |
-| ❌ | ⬜ | StatsCore | Attributes, equipment, lore, abilities, refinement, commands, and persistent state. Keep separate from DoriosCore. |
-| ❌ | ⬜ | StatsCore combat | Critical hits, effects, lifesteal, and penetration. |
-| ❌ | ⬜ | StatsCore mining | Mining effects, tools, and shared durability behavior. |
+| ✅ | ⬜ | StatsCore | Attributes, equipment, lore, effects, refinement, commands, and persistent state are connected. |
+| ✅ | ⬜ | StatsCore combat | Critical hits, effects, lifesteal, penetration, elemental behavior, and entity Trouble loot are connected. |
+| ✅ | ⬜ | StatsCore mining | Mining effects, Trouble loot, tools, and shared durability behavior are connected. |
 | ❌ | ⬜ | Special AT armor | Additional Aetherium damage reduction/negation. Create an ATCore component, not a DoriosCore change. |
 | ❌ | ⬜ | AT script events and commands | Configuration/debug commands and events tied to legacy systems. Redesign only those still needed. |
 | ❌ | ⬜ | Inventory UI | Labels, buttons, progress bars, refresh throttling, and per-machine layouts. Work on this after runtime. |

@@ -7,7 +7,7 @@
  Diamond Sword
  Ground Walking Speed
  Lava Walking Speed
- Extra Arrow (I think?)
+ Arrow Plus (can be used for projectile stuff)
  ??? some white stone shi
  Falling Damage
  Green Particle
@@ -49,7 +49,20 @@
  Ice
  Darkness
  Lightning
+ Wind
+ Void
+ Cursed
+ Retaliation
+ Rage / Berserk
+ Earth Element (Pile of Dirl)
+ Holy Cross
+ Plant
+ Mark
+ Golden Drill (for operator)
+ Golden Ring
+ Dark Ring
  Healed Heart
+ Blessed Heart
  Full Heart /  Half Heart
  Full Heart /  Half Heart (Fire)
  Full Heart /  Half Heart (Hardcore)
@@ -130,6 +143,7 @@
  Lapis Lazuli Ore
 
 ## Effects
+ Absorption
  Bad Omen
  Blindness
  Conduit Power
@@ -149,6 +163,7 @@
  Mining Fatigue
  Poison
  Raid Omen
+ Regeneration
  Resistance
  Slow Falling
  Slowness

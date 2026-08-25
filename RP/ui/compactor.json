@@ -21,6 +21,7 @@
 			{
 				"item_label@uc.text_label": {
 					"collection_index": 1,
+					"layer": 3,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
 					"size": [88, 148],

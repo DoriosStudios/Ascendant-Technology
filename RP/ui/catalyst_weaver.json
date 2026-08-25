@@ -125,6 +125,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$text_scale": 0.55,
+                    "layer": 3,
                     "offset": [-12, 66],
                     "size": [88, 148],
                     "visible": "$show_side_content"

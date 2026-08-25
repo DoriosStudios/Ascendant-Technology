@@ -1,118 +1,8 @@
-# StatsCore Architecture Notes
+# StatsCore Player Guide
 
-`StatsCore` now follows a clearer split between runtime bootstrap, public API, and shared Bedrock helpers.
-
-## Entry points
-
-- `index.js` -> runtime entrypoint for the whole package.
-- `bootstrap.js` -> initializes default definitions and subscribes modules.
-- `eventDriven/index.js` -> owns input, healing, charging, projectile, pickup, explosion, death, and dimension-change mechanics.
-- `API.js` -> stable public surface for external systems such as machines or script tools.
-- `main.js` -> compatibility shim that re-exports `index.js`.
-
-## Public API rules
-
-When another system needs to read or mutate StatsCore data, prefer `API.js` instead of importing deep files directly.
-
-Use `API.js` for:
-- `getStatsCoreDefinition(...)`
-- `readStatsState(...)`
-- `writeStatsState(...)`
-- `resolveStatsAttributes(...)`
-- `collectStatsAbilityNames(...)`
-- progression helpers such as `grantStatsProgress(...)`
-
-## Shared helper rules
-
-When multiple runtime modules need the same Bedrock glue code, keep it in `shared/`.
-
-### `shared/context.js`
-
-Use these helpers whenever a module needs the full StatsCore runtime context for an item:
-
-- `readStatsItemContext(stack)`
-  - Reads `definition + state + attributes` from an already resolved item stack.
-- `getEquipmentStatsContext(entity, slotName, expectedTypeId?)`
-  - Reads the live item from a slot and validates the expected item type when needed.
-- `getHeldStatsContext(player, expectedTypeId?)`
-  - Shortcut for the mainhand item flow used by combat, mining, utility, and script tooling.
-
-### `shared/effects.js`
-
-Use these helpers for Bedrock status effects instead of rewriting `EffectTypes.get(...)` logic:
-
-- `resolveStatsEffectType(id)`
-- `applyEffectById(target, id, duration, amplifier?, showParticles?)`
-
-### `shared/effectSelectors.js`
-
-Use these helpers to scan StatsCore effect definitions:
-
-- `collectStatsEffectPool(attributes)`
-- `findEffectByKind(list, kind)`
-- `filterEffectsByKind(list, kind)`
-- `hasEffectKind(list, kind)`
-
-If the logic is only needed once, keep it inline near the caller instead of creating a new helper.
-
-### `shared/enchantments.js`
-
-Use these helpers for enchantment checks:
-
-- `hasEnchantmentToken(stack, token)`
-- `hasSilkTouch(stack)`
-
-### `shared/durability.js`
-
-Use `repairItemDurability(stack, amount?)` for all durability restoration.
-
-It uses the native item durability component and has no DoriosAPI dependency.
-
-### `shared/damage.js`
-
-Use these helpers for `entityHurt` parsing and damage-type normalization:
-
-- `getEntityHurtAttacker(event)`
-- `getEntityHurtTarget(event)`
-- `getEventDamageType(event)`
-- `normalizeDamageType(value)`
-- `uniqueDamageTypes(values)`
-- `matchesDamageType(values, damageType)`
-- `isBossLikeEntity(entity)`
-
-### `shared/entityCategories.js`
-
-Use the centralized entity taxonomy instead of local `monster`, pet, or boss checks:
-
-- `getEntityCategory(entity)` -> `ally`, `passive`, `neutral`, `hostile`, or `boss`
-- `entityMatchesAppliesTo(entity, appliesTo, fallback?)`
-- `effectAppliesToEntity(effect, entity, fallback?)`
-
-`appliesTo` accepts one category/typeId string or an array mixing both. Tamed
-entities and players resolve dynamically as allies; unknown addon mobs fall back
-through their Bedrock families.
-
-### `shared/messages.js`
-
-Use `setActionBarSafe(target, message)` for direct action bar writes.
-
-When Dorios' Insight announces its cooperative actionbar bridge, this helper
-automatically registers `ascendant.statscore` as
-`Ascendant Technology · StatsCore` and pins StatsCore feedback to the secondary
-JSON UI display above the actionbar. Minecraft's native actionbar remains the
-primary receiver for Insight and other addons.
-The bridge uses script events between behavior packs and falls back to the
-regular Ascendant Technology actionbar writer when Insight is absent.
-
-If a module needs cooldown or throttling, wrap it on top of this helper instead of duplicating the low-level `try/catch`.
-
-## Runtime style rules
-
-- Keep one-time logic inline when it only serves a single handler.
-- Extract only Bedrock glue, repeated selectors, or true cross-module behavior.
-- Comment the intent of unusual event timing, delayed `system.run(...)` blocks, or item persistence paths.
-- Prefer shared helpers over local duplicates.
-- Prefer `API.js` for external consumers and `shared/` for internal cross-module helpers.
+StatsCore gives compatible equipment levels, passive attributes, elemental
+affinities, and special abilities. Refinement writes the result directly to the
+item, so its lore and the Refining Table always describe the saved equipment.
 
 ## Feedback styles
 
@@ -130,56 +20,55 @@ the cooperative queue is available to prevent duplicate feedback.
 
 ## Attributes
 
-StatsCore resolves an item's base definition, equipment level, refinement
-bonuses, affinity, and unlocked abilities into one runtime attribute snapshot.
-Unless an entry explicitly says otherwise, chance values are normalized between
-`0` and `1`, where `1` means 100%. The actual value available on an item still
-depends on its type, material, branch, refinement grade, and unlock tier.
+Attributes are passive bonuses that work while the corresponding equipment is
+being used. In commands, decimal chances use `0` to `1`: for example, `0.25`
+means 25%. The number shown to the player already includes material, level,
+refinement quality, affinity, and relevant unlocks.
 
 ### Combat attributes
 
-| Attribute | What it does |
-| --- | --- |
-| Extra Damage | Adds direct damage to an eligible combat hit. |
-| Damage Multiplier | Multiplies eligible combat damage after StatsCore calculates its combat modifiers. |
-| Marked Damage | Adds bonus damage against targets currently marked by a compatible effect. |
-| Critical Chance | Gives attacks a chance to become critical hits. |
-| Critical Multiplier | Sets the damage multiplier used by a critical hit. |
-| Critical Damage | Adds an extra critical-damage bonus when a critical hit succeeds. |
-| Armor Penetration | Reduces the effective armor contribution of the target; bosses use the configured boss scalar. |
-| Lifesteal | Restores health from eligible damage, subject to the item's lifesteal cap and any critical-hit bonus. |
-| Elemental Damage | Applies configured fire, poison/plant, frost, lightning, or darkness effects when their individual roll succeeds. |
+| Attribute | What the player gets | Important details |
+| --- | --- | --- |
+| Flat Extra Damage | A fixed amount added to eligible hits. | `+4` damage equals two hearts before the target's reductions. |
+| Bonus Damage | A percentage increase to eligible attack damage. | A command value of `0.25` means `+25%`. |
+| Marked Damage | More damage against a target carrying Marked. | It does nothing until an ability such as Skewer or Pinning Shot marks the target. |
+| Critical Hit Chance | A chance for a normal hit to become critical. | The final chance respects the equipment profile's cap. |
+| Critical Multiplier | Controls how hard a successful critical hits. | `2.00x` means the critical deals twice its resolved normal damage. |
+| Critical Damage | Adds to the critical multiplier. | A command value of `0.50` adds `+0.50x`, not 50% critical chance. |
+| Armor Penetration | Ignores part of the target's effective armor. | Bosses receive a reduced amount and have their own penetration cap. |
+| Lifesteal | Restores health from eligible damage dealt. | Healing is based on damage and still respects the item's Lifesteal cap. |
+| Element | Gives attacks a chance to trigger Plant, Frost, Fire, Lightning, Darkness, Blessing, Wind, Water, or Void. | Every element has its own behavior; chance and extra damage are shown separately. |
 
 ### Mining attributes
 
-| Attribute | What it does |
-| --- | --- |
-| Bonus Loot Chance | Gives eligible ore breaks one additional loot roll. It is intentionally hidden from item lore. |
-| Tool Preserving | Scales from Mining and repairs the held refined item only after eligible hostile melee, projectile, explosion, Thorns, or ram damage; it neither creates a Defense category nor triggers from mining/environmental damage. |
-| Double Trouble | Duplicates complete block or entity loot-table results. Its chance advances through back-loaded 1–50, 51–100, and 101–200 level bands. |
-| Triple Trouble | Adds the complete third loot-table result after a separate scaled roll. |
+| Attribute | What the player gets | Important details |
+| --- | --- | --- |
+| Bonus Loot Chance | A chance for another eligible loot result. | Works with supported block and entity loot; it stays out of compact item lore but appears in the Refining Table. |
+| Tool Preserving | A chance to repair one durability on the held tool after hostile damage. | Melee, projectiles, explosions, Thorns, and ram attacks qualify. Environmental damage and mining do not. |
+| Double Trouble | A second complete loot-table result. | Growth is slower at levels 1–50, improves at 51–100, and is strongest at 101–200. |
+| Triple Trouble | A third complete loot-table result after Double Trouble succeeds. | It performs its own smaller roll and requires Double Trouble. |
 
 ### Defensive and armor attributes
 
-| Attribute | What it does |
-| --- | --- |
-| Damage Reduction | Reduces all incoming damage. Equipment reduction is capped at 90% in total; an off-hand shield contributes a fixed 60%. Vanilla armor protection remains separate. |
-| Evasion | Gives a chance to avoid an incoming hit entirely. Armor starts at 1% and gains 1% per Defense level; an off-hand shield contributes a fixed 5%. |
-| Armor Preserving | Rolls only on eligible hostile damage, repairs 1 durability, and caps at 35%; Earth Toughness raises the cap to 55% and repairs 2. |
+| Attribute | What the player gets | Important details |
+| --- | --- | --- |
+| Damage Reduction | Less incoming damage while the armor is equipped. | StatsCore pieces combine up to 90%; vanilla armor protection is separate. An off-hand shield contributes a fixed 60%. |
+| Evasion | A chance to cancel an eligible hit completely. | Armor begins at 1% and gains 1 percentage point per Defense level; an off-hand shield contributes a fixed 5%. |
+| Armor Preserving | A chance to repair damaged equipped armor after hostile damage. | Normally repairs 1 durability and caps at 35%. Earth Toughness raises the cap to 55% and repairs 2. |
 
 ### Event-driven attributes
 
 These attributes are evaluated only by their matching gameplay event; they do
 not modify every hit continuously.
 
-| Attribute | What it does |
-| --- | --- |
-| Adaptive Resilience | Builds defensive resilience from the configured combat conditions. |
-| Healing Efficiency | Improves compatible healing events up to 25%; feedback shows only bonus healing and is throttled to one notice per two seconds. |
-| Charge Mastery | Tracks and improves charge-based behavior for compatible equipment. |
-| Persistence | Consecutive hits on the same target with the same weapon gain 2.5% damage each, up to 50%, and reset after the configured gap. |
-| Dimensional Attunement | Applies the configured dimensional travel or cooldown benefit. |
-| Scavenging | Rolls on eligible pickups to grant extra XP and optional healing. |
+| Attribute | What the player gets | When it activates |
+| --- | --- | --- |
+| Adaptive Resilience | Stacking temporary damage reduction. | Holds up to three normal stacks for five seconds and can gain a fourth with an Advanced Runic Core. |
+| Healing Efficiency | More healing and temporary Absorption from overhealing. | Only on compatible healing events; HUD feedback is limited to once every two seconds. |
+| Charge Mastery | More damage from a properly charged bow, crossbow, or trident. | Scales with charge time and reaches its maximum at full charge. |
+| Persistence | `+2.5%` damage per consecutive projectile hit on the same target, up to `+50%`. | Resets when the target changes or ten seconds pass. |
+| Dimensional Attunement | A temporary dimensional travel/cooldown benefit. | Activates on its configured dimension-change event. |
+| Scavenging | A chance for extra XP and healing from eligible pickups. | Uses Utility level, or Mining when Mining is higher. |
 
 ### Refinement command attributes
 
@@ -187,19 +76,19 @@ not modify every hit continuously.
 an attribute when the held registered item does not support its equipment
 category. The command value is a float in the inclusive range shown below.
 
-| Key | Runtime attribute | Range | Equipment |
-| --- | --- | ---: | --- |
-| `damage_multiplier` | Damage Multiplier | 0–1 | Combat equipment |
-| `extra_damage` | Extra Damage | 0–18 | Combat equipment |
-| `critical_chance` | Critical Chance | 0–1 | Combat equipment |
-| `critical_damage` | Critical Damage | 0–1 | Combat equipment |
-| `penetration` | Armor Penetration | 0–1 | Combat equipment |
-| `lifesteal` | Lifesteal | 0–1 | Combat equipment |
-| `damage_reduction` | Damage Reduction | 0–1 | Support equipment |
-| `negate_all_damage` | Evasion | 0–1 | Support equipment |
-| `bonus_loot_chance` | Bonus Loot Chance | 0–1 | Mining equipment |
-| `durability_save` | Tool Preserving | 0–1 | Mining equipment |
-| `durability_preserve` | Armor Preserving | 0–1 | Support equipment |
+| Command key | Player-facing meaning | Accepted value | Example |
+| --- | --- | --- | --- |
+| `damage_multiplier` | Bonus attack damage | `0–1`, combat | `0.25` adds 25% |
+| `extra_damage` | Fixed extra damage | `0–18`, combat | `4` adds two hearts of raw damage |
+| `critical_chance` | Extra critical chance | `0–1`, combat | `0.20` adds 20 percentage points |
+| `critical_damage` | Extra critical multiplier | `0–1`, combat | `0.50` adds `+0.50x` |
+| `penetration` | Armor ignored | `0–1`, combat | `0.15` means 15% |
+| `lifesteal` | Damage returned as healing | `0–1`, combat | `0.08` means 8% |
+| `damage_reduction` | Incoming damage reduction | `0–1`, armor/support | `0.10` means 10% |
+| `negate_all_damage` | Evasion chance | `0–1`, armor/support | `0.05` means 5% |
+| `bonus_loot_chance` | Additional loot chance | `0–1`, mining | `0.12` means 12% |
+| `durability_save` | Tool Preserving bonus | `0–1`, mining | `0.10` adds 10 percentage points |
+| `durability_preserve` | Armor Preserving bonus | `0–1`, armor/support | `0.10` adds 10 percentage points |
 
 ## Event-driven profiles
 
@@ -239,5 +128,6 @@ Pinning Shot, Charge Mastery, Persistence, and Ballista resolve from confirmed p
 - `/sc:refine custom <target> <tier> <chip> <ingot> <core> [amount]`
 - `/sc:refine_attribute apply <target> <attribute> <float-value>`
 - `/sc:refine_ability apply <target> <ability> <int-level> <appliesTo>`
-- `/sc:refine_list <attributes|abilities>`
-- `/sc:xp add <target> <xp-type> <xp|levels> <amount>`
+- `/sc:refine_element apply <target> <element> <chance:0..1> <damage:0..18>`
+- `/sc:refine_list <attributes|abilities|elements>`
+- `/sc:stats_xp add <target> <xp-type> <xp|levels> <amount>`

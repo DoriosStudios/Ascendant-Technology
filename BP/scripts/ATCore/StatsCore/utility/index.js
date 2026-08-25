@@ -5,9 +5,12 @@ import { writeStatsState } from "../core/state.js";
 import { getHeldStatsContext } from "../shared/context.js";
 import { applyEffectById } from "../shared/effects.js";
 import { hasEnchantmentToken } from "../shared/enchantments.js";
-import { hasEffectKind } from "../shared/effectSelectors.js";
+import { findEffectByKind, hasEffectKind } from "../shared/effectSelectors.js";
 import { showAbilityFeedback } from "../feedback/index.js";
+import { resolveStatsAbilityName } from "../core/abilities.js";
+import { normalizeOperatorMode } from "../core/state.js";
 import { normalizeId } from "../utils.js";
+import { isStatsCoreOverrideDamage } from "../shared/damage.js";
 
 const operatorToggleTicks = new Map();
 const WORM_SOIL_CYCLE = Object.freeze([
@@ -38,10 +41,12 @@ function canToggleOperator(player) {
 }
 
 function cycleOperatorMode(player, context) {
-    if (!player?.isSneaking || !canToggleOperator(player)) return false;
-    if (!hasEffectKind(context?.attributes?.mining?.effects, "operator")) return false;
+    if (!player?.isSneaking) return false;
+    const operatorEffect = findEffectByKind(context?.attributes?.mining?.effects, "operator");
+    if (!operatorEffect) return false;
+    if (!canToggleOperator(player)) return false;
 
-    const current = normalizeId(context?.state?.abilityData?.operatorMode ?? "crushy");
+    const current = normalizeOperatorMode(context?.state?.abilityData?.operatorMode);
     const next = current === "crushy"
         ? "silky"
         : current === "silky"
@@ -52,18 +57,17 @@ function cycleOperatorMode(player, context) {
         ...context.state,
         abilityData: {
             ...(context.state?.abilityData ?? {}),
-            uniqueUnlocked: true,
             operatorMode: next,
         }
     }, {
-        syncLore: false,
+        syncLore: true,
     });
 
     if (result.changed) {
         persistEquipmentItem(player, STATSCORE.slots.mainhand, context.stack);
     }
 
-    showAbilityFeedback(player, `${next === "silky" ? "Silky" : next === "greedy" ? "Greedy" : "Crushy"} Operator`);
+    showAbilityFeedback(player, resolveStatsAbilityName(operatorEffect, { state: result.state }));
     return true;
 }
 
@@ -188,6 +192,7 @@ function handleWormUseOn(event, context) {
 
 function handleWormEvasion(event) {
     if (event?.cancel === true) return;
+    if (isStatsCoreOverrideDamage(event)) return;
 
     const player = event?.hurtEntity ?? event?.entity;
     if (!player || player.typeId !== "minecraft:player") return;
@@ -198,6 +203,7 @@ function handleWormEvasion(event) {
 
     if (Math.random() > 0.5) return;
     event.damage = 0;
+    event.cancel = true;
     showAbilityFeedback(player, "Worm");
 }
 

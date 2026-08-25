@@ -107,7 +107,7 @@ DoriosLib.registry.blockComponent(ID, {
                 machine,
                 tank,
                 recipe.energyCost,
-                `Needs ${FluidStorage.formatFluid(recipe.fluid.amount)} Liquified Aetherium`,
+                `Needs Aetherium`,
             );
             return;
         }

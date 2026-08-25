@@ -6,8 +6,8 @@ import { getProgressAmount, grantStatsProgress } from "../progression/refinement
 import { showAbilityFeedback, showLevelUp } from "../feedback/index.js";
 import { STATSCORE_ICONS } from "../icons.js";
 import { getCurrentTick, rollChance } from "../utils.js";
-import { getEquipmentStatsContext } from "../shared/context.js";
-import { getEntityHurtAttacker, getEntityHurtTarget, getEventDamageType, matchesDamageType, normalizeDamageType, uniqueDamageTypes } from "../shared/damage.js";
+import { getEquipmentStatsContext, getHeldStatsContext } from "../shared/context.js";
+import { getEntityHurtAttacker, getEntityHurtTarget, getEventDamageType, isStatsCoreOverrideDamage, matchesDamageType, normalizeDamageType, uniqueDamageTypes } from "../shared/damage.js";
 import { repairItemDurability } from "../shared/durability.js";
 import { filterEffectsByKind } from "../shared/effectSelectors.js";
 import { applyEffectById } from "../shared/effects.js";
@@ -15,6 +15,14 @@ import { OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity } from "../shared/en
 import { getArmorComponentDefinition, resolveArmorComponentMitigation } from "./armorComponent.js";
 
 const MAX_TOTAL_DAMAGE_REDUCTION = 0.9;
+const PRESERVING_DAMAGE_TYPES = new Set([
+    "entity_attack",
+    "projectile",
+    "block_explosion",
+    "entity_explosion",
+    "thorns",
+    "ram_attack",
+]);
 const supportEffectCooldowns = new Map();
 
 function combineNegationChances(chances) {
@@ -276,6 +284,7 @@ function applyArmorMitigation(event, entries) {
     const profile = getArmorMitigationProfile(entries, getEventDamageType(event));
     if (rollChance(profile.totalNegation, 0)) {
         event.damage = 0;
+        event.cancel = true;
         return;
     }
 
@@ -289,6 +298,8 @@ function applyCustomSupportAbilities(event, entries) {
 
     const damageType = getEventDamageType(event);
     let nextDamage = Math.max(0, Number(event?.damage ?? 0) || 0);
+    let fullyNegated = false;
+    let suppressKnockback = false;
     if (nextDamage <= 0) return;
 
     for (const { effect } of getSupportEffects(entries, "featherstep")) {
@@ -319,7 +330,33 @@ function applyCustomSupportAbilities(event, entries) {
         nextDamage *= (1 - reduction);
     }
 
+    for (const { effect } of getSupportEffects(entries, "armored")) {
+        const negatedTypes = uniqueDamageTypes(effect.negatedDamageTypes ?? ["projectile"]);
+        if (matchesDamageType(negatedTypes, damageType)) {
+            nextDamage = 0;
+            fullyNegated = true;
+            break;
+        }
+
+        const reducedTypes = uniqueDamageTypes(effect.reducedDamageTypes ?? ["block_explosion", "entity_explosion"]);
+        if (!matchesDamageType(reducedTypes, damageType)) continue;
+
+        const reduction = Math.max(0, Math.min(0.95, Number(effect.damageReduction ?? 0.5) || 0.5));
+        nextDamage *= (1 - reduction);
+        suppressKnockback = true;
+    }
+
     event.damage = Math.max(0, nextDamage);
+    if (fullyNegated) event.cancel = true;
+    else if (suppressKnockback) {
+        // Partial Armored mitigation keeps its reduced damage but removes the
+        // explosion impulse that Bedrock applies after the before-event.
+        system.run(() => {
+            try {
+                target.clearVelocity?.();
+            } catch { }
+        });
+    }
 }
 
 function isPlayerInWater(player) {
@@ -350,7 +387,35 @@ function refreshPassiveSupportEffects() {
     }
 }
 
-function processArmorProgress(target) {
+function isEnemyDamageForPreserving(event, target) {
+    if (!target || Number(event?.damage ?? 0) <= 0) return false;
+    const damageType = getEventDamageType(event);
+    if (!PRESERVING_DAMAGE_TYPES.has(damageType)) return false;
+
+    const attacker = getEntityHurtAttacker(event);
+    if (attacker) return attacker.id !== target.id;
+    // Bedrock does not consistently expose an owner for explosions. The cause
+    // itself is sufficiently specific to retain hostile Creeper/TNT damage.
+    return damageType === "block_explosion" || damageType === "entity_explosion";
+}
+
+function processHeldPreserving(target) {
+    const context = getHeldStatsContext(target);
+    const chance = Math.max(0, Number(context?.attributes?.mining?.durabilitySaveChance ?? 0) || 0);
+    if (!context || chance <= 0 || (chance < 1 && Math.random() > chance)) return false;
+
+    const repaired = repairItemDurability(
+        context.stack,
+        context.attributes?.mining?.preservationRepairAmount ?? 1,
+    );
+    if (!repaired) return false;
+
+    persistEquipmentItem(target, STATSCORE.slots.mainhand, context.stack);
+    showAbilityFeedback(target, "§aTool Preserving", STATSCORE_ICONS.preservingTool);
+    return true;
+}
+
+function processArmorProgress(target, allowPreserving = false) {
     if (!target || target.typeId !== "minecraft:player") return;
 
     const entries = getArmorSupportEntries(target);
@@ -363,8 +428,10 @@ function processArmorProgress(target) {
         if (amount <= 0) continue;
 
         const result = grantStatsProgress(item, definition, amount, "armor", { forcePersist: false });
-        const preservationChance = Math.max(0, Number(attributes?.support?.durabilityPreserveChance ?? 0) || 0);
-        const repaired = (preservationChance >= 1 || Math.random() <= preservationChance)
+        const preservationChance = allowPreserving
+            ? Math.max(0, Number(attributes?.support?.durabilityPreserveChance ?? 0) || 0)
+            : 0;
+        const repaired = preservationChance > 0 && (preservationChance >= 1 || Math.random() <= preservationChance)
             ? repairItemDurability(item, attributes?.support?.preservationRepairAmount ?? 2)
             : false;
 
@@ -387,16 +454,21 @@ export function initializeArmorSupportModule() {
     if (world.beforeEvents?.entityHurt?.subscribe) {
         world.beforeEvents.entityHurt.subscribe(event => {
             if (event?.cancel === true) return;
+            if (isStatsCoreOverrideDamage(event)) return;
 
             const target = getEntityHurtTarget(event);
             if (!target || target.typeId !== "minecraft:player") return;
 
             const entries = getArmorSupportEntries(target);
+            const allowPreserving = isEnemyDamageForPreserving(event, target);
             applyArmorMitigation(event, entries);
+            if (event.cancel === true) return;
             applyCustomSupportAbilities(event, entries);
+            if (event.cancel === true) return;
             system.run(() => {
-                applySupportEffects(event, entries);
-                processArmorProgress(target);
+                if (event.cancel !== true) applySupportEffects(event, entries);
+                processArmorProgress(target, allowPreserving);
+                if (allowPreserving) processHeldPreserving(target);
             });
         });
         return;
@@ -411,6 +483,10 @@ export function initializeArmorSupportModule() {
         const target = getEntityHurtTarget(event);
         if (!target || target.typeId !== "minecraft:player") return;
 
-        system.run(() => processArmorProgress(target));
+        const allowPreserving = isEnemyDamageForPreserving(event, target);
+        system.run(() => {
+            processArmorProgress(target, allowPreserving);
+            if (allowPreserving) processHeldPreserving(target);
+        });
     });
 }

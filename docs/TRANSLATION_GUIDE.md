@@ -1,12 +1,8 @@
 # Translation Guide for Ascendant Technology
 
-This document explains the localization structure and guidelines for translating Ascendant Technology.
+This document explains the guidelines for translating Ascendant Technology.
 
-## File Structure
-
-All language files are located in `/RP/texts/` and follow the Minecraft Bedrock Edition `.lang` format.
-
-### Available Languages
+## Available Languages
 
 The following languages are currently supported (defined in `languages.json`):
 

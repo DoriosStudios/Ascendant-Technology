@@ -8,6 +8,9 @@ export const furnaceRecipeAdditions = {
     "utilitycraft:tungsten_dust": {
         output: "utilitycraft:tungsten",
     },
+    "utilitycraft:raw_tungsten_dust": {
+        output: "utilitycraft:tungsten",
+    },
     "utilitycraft:raw_tungsten_block": {
         output: "utilitycraft:tungsten_block",
     },

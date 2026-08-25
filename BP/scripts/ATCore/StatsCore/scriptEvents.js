@@ -32,7 +32,7 @@ function inspectHeldItem(sourceEntity) {
     const state = readStatsState(item, definition);
     const attributes = resolveStatsAttributes(definition, state);
     const registrySize = getStatsCoreRegistrySize();
-    const abilityNames = collectStatsAbilityNames(attributes);
+    const abilityNames = collectStatsAbilityNames(attributes, { state });
     const categories = Object.values(state.progression ?? {});
     const level = categories.reduce((highest, entry) => Math.max(highest, Number(entry?.level ?? 1)), 1);
     const xp = categories.reduce((total, entry) => total + Math.max(0, Number(entry?.xp ?? 0)), 0);

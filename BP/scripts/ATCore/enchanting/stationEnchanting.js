@@ -31,6 +31,13 @@ const CURSE_IDS = new Set([
     "minecraft:vanishing",
 ]);
 
+// This tool deliberately has the `all` enchantable slot. Keep its station
+// source separate from ordinary equipment so armor, bow, trident and tool
+// enchantments all remain eligible.
+const UNIVERSAL_ENCHANTMENT_ITEMS = new Set([
+    "utilitycraft:aetherium_aiot",
+]);
+
 // Entries in the same group compete for one weighted source, matching the
 // station's legacy enchant pool without repeatedly rebuilding it at runtime.
 const ENCHANTMENT_SOURCES = [
@@ -125,9 +132,7 @@ export function buildStationEnchantPlan(stack, modules) {
     }
 
     const current = readEnchantments(stack);
-    const curated = modules.curseProtection > 0
-        ? current.filter((entry) => !isCurseId(entry.id))
-        : current.slice();
+    const curated = current.filter((entry) => modules.curseProtection <= 0 || !isCurseId(entry.id));
     const curatingChanged = curated.length !== current.length;
 
     if (modules.enchantability <= 0) {
@@ -148,7 +153,8 @@ export function buildStationEnchantPlan(stack, modules) {
     if (!replaceEnchantments(working, curated)) {
         return { plan: emptyPlan(), storedTargetsChanged: false };
     }
-    const workingEnchantable = getEnchantable(working);
+
+    let workingEnchantable = getEnchantable(working);
     if (!workingEnchantable) return { plan: emptyPlan(), storedTargetsChanged: false };
 
     const result = curated.map((entry) => ({ id: entry.id, level: entry.level }));
@@ -161,11 +167,22 @@ export function buildStationEnchantPlan(stack, modules) {
         entry.level = Math.max(entry.level, getTargetLevel(modules.enchantability, type.maxLevel));
     }
 
+    // Compatibility checks for new enchantments must include upgrades already
+    // planned for this item. Without this, a valid upgrade can leave the
+    // disposable component in an out-of-date state and prevent the station
+    // from finding an enchantment to add.
+    if (!replaceEnchantments(working, result)) {
+        return { plan: emptyPlan(), storedTargetsChanged: false };
+    }
+    workingEnchantable = getEnchantable(working);
+    if (!workingEnchantable) return { plan: emptyPlan(), storedTargetsChanged: false };
+
     const stored = readStoredTargets(stack);
     const storedMatchesTier = stored?.moduleLevel === modules.enchantability;
     const storedTargets = storedMatchesTier
         ? stored.ids.filter((id) => modules.curseProtection <= 0 || !isCurseId(id))
         : [];
+
     for (const id of resultIds) {
         if (!storedTargets.includes(id)) storedTargets.push(id);
     }
@@ -173,16 +190,19 @@ export function buildStationEnchantPlan(stack, modules) {
     let storedTargetsChanged = !storedMatchesTier
         || storedTargets.length !== (stored?.ids.length ?? 0)
         || !Number.isFinite(stored?.curseRoll);
+
     const curseRoll = storedMatchesTier && Number.isFinite(stored?.curseRoll)
         ? stored.curseRoll
         : Math.random();
+
     const desiredCount = Math.max(1, modules.enchantability);
-    const sourcePool = buildSourcePool(workingEnchantable);
+    const sourcePool = buildSourcePool(workingEnchantable, stack.typeId);
 
     while (storedTargets.length < desiredCount && sourcePool.length > 0) {
         const sourceIndex = Math.floor(Math.random() * sourcePool.length);
         const source = sourcePool[sourceIndex];
         const available = source.filter((id) => !storedTargets.includes(id));
+
         if (available.length === 0) {
             sourcePool.splice(sourceIndex, 1);
             continue;
@@ -199,6 +219,7 @@ export function buildStationEnchantPlan(stack, modules) {
 
         const type = getEnchantmentsById().get(id);
         if (!type) continue;
+
         const level = getTargetLevel(modules.enchantability, type.maxLevel);
         if (level <= 0 || !canAdd(workingEnchantable, type, level)) continue;
 
@@ -207,6 +228,7 @@ export function buildStationEnchantPlan(stack, modules) {
         } catch {
             continue;
         }
+
         result.push({ id, level });
         resultIds.add(id);
     }
@@ -214,8 +236,10 @@ export function buildStationEnchantPlan(stack, modules) {
     if (modules.curseProtection <= 0 && curseRoll <= Math.max(0, 0.15 - modules.enchantability * 0.01)) {
         for (const curseId of CURSE_IDS) {
             if (resultIds.has(curseId)) continue;
+
             const type = getEnchantmentsById().get(curseId);
             if (!type || !canAdd(workingEnchantable, type, 1)) continue;
+
             result.push({ id: curseId, level: 1 });
             resultIds.add(curseId);
             break;
@@ -223,7 +247,11 @@ export function buildStationEnchantPlan(stack, modules) {
     }
 
     if (storedTargetsChanged) {
-        writeStoredTargets(stack, { moduleLevel: modules.enchantability, ids: storedTargets, curseRoll });
+        writeStoredTargets(stack, {
+            moduleLevel: modules.enchantability,
+            ids: storedTargets,
+            curseRoll,
+        });
     }
 
     const changeCount = countPositiveChanges(curated, result);
@@ -294,15 +322,34 @@ function replaceEnchantments(stack, enchantments) {
     }
 }
 
-/** @param {import("@minecraft/server").ItemEnchantableComponent} enchantable */
-function buildSourcePool(enchantable) {
+/**
+ * @param {import("@minecraft/server").ItemEnchantableComponent} enchantable
+ * @param {string} itemId
+ */
+function buildSourcePool(enchantable, itemId) {
     const byId = getEnchantmentsById();
     const result = [];
     const included = new Set();
 
+    if (UNIVERSAL_ENCHANTMENT_ITEMS.has(itemId)) {
+        // The AIOT deliberately accepts every equipment family, but selection
+        // must remain within the station's curated enchantment catalogue. The
+        // registry also contains unrelated/internal entries that made results
+        // appear completely random.
+        for (const source of ENCHANTMENT_SOURCES) {
+            const valid = source.filter((id) => {
+                const type = byId.get(id);
+                return type && !isCurseId(id) && canAdd(enchantable, type, 1);
+            });
+            if (valid.length > 0) result.push(valid);
+        }
+        return result;
+    }
+
     for (let sourceIndex = 0; sourceIndex < ENCHANTMENT_SOURCES.length; sourceIndex++) {
         const source = ENCHANTMENT_SOURCES[sourceIndex];
         const valid = [];
+
         for (let idIndex = 0; idIndex < source.length; idIndex++) {
             const id = source[idIndex];
             const type = byId.get(id);
@@ -311,6 +358,7 @@ function buildSourcePool(enchantable) {
                 included.add(id);
             }
         }
+
         if (valid.length > 0) result.push(valid);
     }
 
@@ -320,7 +368,11 @@ function buildSourcePool(enchantable) {
         // Curses are deliberately excluded from the generic compatibility
         // fallback. They may only enter through the dedicated curse roll,
         // which the protection module disables completely.
-        if (!included.has(id) && !isCurseId(id) && canAdd(enchantable, type, 1)) {
+        if (
+            !included.has(id)
+            && !isCurseId(id)
+            && canAdd(enchantable, type, 1)
+        ) {
             result.push([id]);
         }
     }
@@ -330,19 +382,39 @@ function buildSourcePool(enchantable) {
 
 /** @returns {Map<string, import("@minecraft/server").EnchantmentType>} */
 function getEnchantmentsById() {
-    if (enchantmentsById) return enchantmentsById;
-    enchantmentsById = new Map();
+    if (enchantmentsById?.size) return enchantmentsById;
+    const catalog = new Map();
 
     try {
         const all = EnchantmentTypes.getAll() ?? [];
         for (let index = 0; index < all.length; index++) {
             const type = all[index];
             const id = normalizeId(type?.id);
-            if (id) enchantmentsById.set(id, type);
+            if (id) catalog.set(id, type);
         }
     } catch {}
 
-    return enchantmentsById;
+    // Some script runtimes expose the registry a tick later. Resolve the
+    // station's fixed pool individually and avoid caching an empty catalog.
+    if (catalog.size === 0) {
+        for (const source of ENCHANTMENT_SOURCES) {
+            for (const id of source) {
+                try {
+                    const type = EnchantmentTypes.get(id);
+                    if (type) catalog.set(id, type);
+                } catch {}
+            }
+        }
+        for (const id of CURSE_IDS) {
+            try {
+                const type = EnchantmentTypes.get(id);
+                if (type) catalog.set(id, type);
+            } catch {}
+        }
+    }
+
+    if (catalog.size > 0) enchantmentsById = catalog;
+    return catalog;
 }
 
 /**
@@ -370,10 +442,12 @@ function getTargetLevel(moduleLevel, maximum) {
 function countPositiveChanges(before, after) {
     const beforeById = new Map(before.map((entry) => [entry.id, entry.level]));
     let changes = 0;
+
     for (let index = 0; index < after.length; index++) {
         const entry = after[index];
         if (entry.level > (beforeById.get(entry.id) ?? 0)) changes++;
     }
+
     return changes;
 }
 
@@ -393,8 +467,10 @@ function readStoredTargets(stack) {
     try {
         const raw = stack.getDynamicProperty(STORED_TARGETS_KEY);
         if (typeof raw !== "string" || raw.length === 0) return undefined;
+
         const parsed = JSON.parse(raw);
         if (!parsed || typeof parsed !== "object" || !Array.isArray(parsed.ids)) return undefined;
+
         return {
             moduleLevel: Math.max(0, Math.floor(Number(parsed.moduleLevel) || 0)),
             ids: parsed.ids.map(normalizeId).filter(Boolean),
@@ -431,6 +507,7 @@ function normalizeId(value) {
 function isCurseId(value) {
     const id = normalizeId(value);
     const localId = id.includes(":") ? id.split(":").pop() : id;
+
     return CURSE_IDS.has(id)
         || localId === "binding"
         || localId === "vanishing"

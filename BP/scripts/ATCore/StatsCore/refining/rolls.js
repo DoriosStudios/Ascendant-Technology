@@ -16,14 +16,30 @@ function gradeFromQuality(quality) {
     return "rough";
 }
 
-function pickElement() {
-    const totalWeight = CONFIG.elements.reduce((sum, element) => sum + Math.max(0, element.weight), 0);
+function canRollElement(element, definitionType, coreMode) {
+    const allowedTypes = Array.isArray(element?.allowedTypes) ? element.allowedTypes : undefined;
+    if (allowedTypes && !allowedTypes.includes(definitionType)) return false;
+    if (!allowedTypes && definitionType === "support") return false;
+
+    const requirement = normalizeId(element?.coreRequirement);
+    if (requirement === "advanced") return coreMode === "advanced";
+    if (requirement === "runic") return coreMode === "normal" || coreMode === "advanced";
+    return true;
+}
+
+function pickElement(definitionType, coreMode) {
+    const candidates = CONFIG.elements.filter((element) =>
+        canRollElement(element, definitionType, coreMode)
+    );
+    if (!candidates.length) return undefined;
+
+    const totalWeight = candidates.reduce((sum, element) => sum + Math.max(0, element.weight), 0);
     let roll = Math.random() * Math.max(1, totalWeight);
-    for (const element of CONFIG.elements) {
+    for (const element of candidates) {
         roll -= Math.max(0, element.weight);
         if (roll <= 0) return element;
     }
-    return CONFIG.elements[0];
+    return candidates[0];
 }
 
 export function computeRefinementRollRange(chip, ingot, amount, options = {}) {
@@ -42,7 +58,7 @@ export function computeRefinementRollRange(chip, ingot, amount, options = {}) {
 }
 
 /** Rolls the same StatsCore refinement data used by the Refining Table. */
-export function rollStatsRefinement({ definition, state, chip, ingot, amount, range, xpCost = 0, tier = undefined, advanced = false }) {
+export function rollStatsRefinement({ definition, state, chip, ingot, amount, range, xpCost = 0, tier = undefined, advanced = false, coreMode = "none" }) {
     const maxIngots = advanced
         ? CONFIG.defaults.advancedMaxIngotsPerRoll
         : CONFIG.defaults.maxIngotsPerRoll;
@@ -64,13 +80,20 @@ export function rollStatsRefinement({ definition, state, chip, ingot, amount, ra
         bonuses[key] = roundBonus(Math.min(cap, Number(maxValue) * ceiling * quality * tierScale * variance));
     }
 
-    if ((bonuses.elementalChance ?? 0) > 0 && (bonuses.elementalDamage ?? 0) > 0) {
-        const element = pickElement();
+    const normalizedCoreMode = normalizeId(coreMode);
+    const canAwakenElement = (bonuses.elementalChance ?? 0) > 0
+        && ((bonuses.elementalDamage ?? 0) > 0 || definition?.type === "support");
+    if (canAwakenElement) {
+        const element = pickElement(definition?.type, normalizedCoreMode);
         if (element) {
             bonuses.elemental = {
                 ...element,
-                chance: bonuses.elementalChance,
-                damage: bonuses.elementalDamage,
+                chance: element.id === "light" ? 1 : bonuses.elementalChance,
+                // Blessing has a fixed holy-damage contract; other elements
+                // continue scaling from the refinement roll.
+                damage: element.id === "light"
+                    ? Math.max(1, Number(element.blessingDamage ?? 8) || 8)
+                    : bonuses.elementalDamage,
                 quality: roundBonus(quality),
             };
         }

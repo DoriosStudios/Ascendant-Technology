@@ -69,4 +69,15 @@ export {
     isStatsCoreEnabled,
     setStatsCoreEnabled,
 } from "./runtime.js";
+export {
+    STATSCORE_EFFECT_CATALOG,
+    STATSCORE_EFFECT_IDS,
+    clearStatsCoreEffects,
+    getStatsCoreEffect,
+    getStatsCoreEffectDefinition,
+    getStatsCoreEffects,
+    normalizeStatsCoreEffectId,
+    removeStatsCoreEffect,
+    upsertStatsCoreEffect,
+} from "./effects/index.js";
 

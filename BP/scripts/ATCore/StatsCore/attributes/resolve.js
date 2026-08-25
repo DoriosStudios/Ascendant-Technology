@@ -1,5 +1,5 @@
 import { AFFINITIES } from "../constants.js";
-import { clamp01, normalizeChance, toFiniteNumber } from "../utils.js";
+import { clamp01, normalizeChance, normalizeId, toFiniteNumber } from "../utils.js";
 import { getCategoriesForDefinition } from "../core/state.js";
 import { getStatsRefinementReserveXp, normalizeStatsRefinementData } from "../core/refinement.js";
 import { getWeakAttributePoints } from "../progression/attributes.js";
@@ -29,17 +29,21 @@ function normalizeElementalList(values) {
 
     return values
         .filter(value => value && typeof value === "object")
-        .map(value => ({
-            ...value,
-            id: String(value.id ?? value.key ?? value.type ?? "").trim().toLowerCase(),
-            label: typeof value.label === "string" ? value.label : "",
-            chance: normalizeChance(value.chance, 0),
-            damage: Math.max(0, toFiniteNumber(value.damage, 0)),
-            damageScale: Math.max(0, toFiniteNumber(value.damageScale, 0)),
-            durationTicks: Math.max(0, Math.floor(toFiniteNumber(value.durationTicks, 0))),
-            amplifier: Math.max(0, Math.floor(toFiniteNumber(value.amplifier, 0))),
-            seconds: Math.max(0, Math.floor(toFiniteNumber(value.seconds, 0)))
-        }))
+        .map(value => {
+            const id = String(value.id ?? value.key ?? value.type ?? "").trim().toLowerCase();
+            const alwaysActive = id === "light" || id === "blessing" || id === "blessed";
+            return {
+                ...value,
+                id,
+                label: typeof value.label === "string" ? value.label : "",
+                chance: alwaysActive ? 1 : normalizeChance(value.chance, 0),
+                damage: Math.max(0, toFiniteNumber(value.damage, 0)),
+                damageScale: Math.max(0, toFiniteNumber(value.damageScale, 0)),
+                durationTicks: Math.max(0, Math.floor(toFiniteNumber(value.durationTicks, 0))),
+                amplifier: Math.max(0, Math.floor(toFiniteNumber(value.amplifier, 0))),
+                seconds: Math.max(0, Math.floor(toFiniteNumber(value.seconds, 0)))
+            };
+        })
         .filter(value => value.id && (value.chance > 0 || value.damage > 0 || value.damageScale > 0));
 }
 
@@ -127,6 +131,21 @@ function resolveUnlockedEffects(values, unlocks, refinementActive, offensiveLeve
         }
         return [];
     });
+}
+
+function resolveInheritedEffects(state, channel, advancedUnlocked) {
+    const resolved = [];
+    const seen = new Set();
+    for (const entry of Array.isArray(state?.abilityData?.inheritedAbilities)
+        ? state.abilityData.inheritedAbilities
+        : []) {
+        if (normalizeId(entry?.channel) !== channel || !entry?.effect) continue;
+        const key = normalizeId(entry?.key ?? entry.effect?.key ?? entry.effect?.kind);
+        if (!key || seen.has(key)) continue;
+        seen.add(key);
+        resolved.push(advancedUnlocked ? boostAdvancedEffect(entry.effect) : { ...entry.effect });
+    }
+    return resolved;
 }
 
 function getAbilityUnlocks(definition, state) {
@@ -371,22 +390,45 @@ export function resolveStatsAttributes(definition, state) {
         + (mods.miningChance ?? 0)
         + toFiniteNumber(refinementBonuses.bonusLootChance, 0)
     );
+    const earthElementActive = isSupport && normalizeId(refinementElement?.id) === "earth";
+    const earthQuality = earthElementActive
+        ? normalizeChance(toFiniteNumber(refinementElement?.quality, refinement.quality))
+        : 0;
+    const earthDamageReductionBonus = earthElementActive ? 0.04 + earthQuality * 0.08 : 0;
     const supportDamageReduction = isSupport ? normalizeChance(Math.min(
         Math.max(0, toFiniteNumber(supportBase.maxDamageReduction, 1)),
         scaleAttributePoints(supportBase.damageReduction, supportBase.damageReductionPerLevel, damageReductionPoints)
             + toFiniteNumber(refinementBonuses.damageReduction, 0)
+            + earthDamageReductionBonus
     )) : 0;
-    // Both preservation systems are tied to Defense level: 1% at level one,
-    // then +1% per level. Keep the raw value above 100% to determine how many
-    // durability points a successful preservation repairs.
-    const preservationChance = Math.max(0, defensiveLevel * 0.01);
+    // Preserving is deliberately capped and grows at half its former rate.
+    // Earth armor regains part of that strength as an elemental specialty.
+    const preservationLevel = isSupport ? defensiveLevel : miningLevel;
+    const refinementPreservationChance = isSupport
+        ? toFiniteNumber(refinementBonuses.durabilityPreserveChance, 0)
+        : toFiniteNumber(refinementBonuses.durabilitySaveChance, 0);
+    const basePreservationChance = Math.min(0.35, Math.max(0,
+        preservationLevel * 0.005 + refinementPreservationChance
+    ));
+    const earthPreservationBonus = earthElementActive ? 0.08 + earthQuality * 0.12 : 0;
+    const preservationChance = Math.min(0.55, basePreservationChance + earthPreservationBonus);
+    const preservationRepairAmount = earthElementActive ? 2 : 1;
     const supportDurabilityPreserveChance = isSupport ? preservationChance : 0;
     const durabilitySaveChance = isSupport ? 0 : preservationChance;
     const supportNegateAllDamageChance = isSupport ? Math.max(0,
         scaleValue(supportBase.negateAllDamageChance, supportBase.negateAllDamageChancePerLevel, supportLevel, supportBase.maxNegateAllDamageChance ?? 0.2)
         + toFiniteNumber(refinementBonuses.negateAllDamageChance, 0)
     ) : 0;
-    const supportEffects = isSupport ? resolveUnlockedEffects(supportBase.effects, abilityUnlocks, refinementActive, offensiveLevel) : [];
+    const supportEffects = isSupport ? [
+        ...resolveUnlockedEffects(supportBase.effects, abilityUnlocks, refinementActive, offensiveLevel),
+        ...resolveInheritedEffects(state, "support", abilityUnlocks.advanced),
+    ] : [];
+    const inheritedAttributeEffects = refinementActive && !isSupport
+        ? resolveInheritedEffects(state, "attributes", abilityUnlocks.advanced)
+        : [];
+    const inheritedMiningEffects = refinementActive && !isSupport
+        ? resolveInheritedEffects(state, "mining", abilityUnlocks.advanced)
+        : [];
     const strongMiningAttributes = mining.strongAttributes ?? {};
     const baseDoubleTrouble = refinementActive && !isSupport
         ? normalizeTroubleAttribute(strongMiningAttributes.doubleTrouble, "double")
@@ -439,14 +481,20 @@ export function resolveStatsAttributes(definition, state) {
             cap: lifestealCap
         },
         elemental,
-        effects: isSupport ? [] : resolveUnlockedEffects(attributes.effects, abilityUnlocks, refinementActive, offensiveLevel),
+        effects: isSupport ? [] : [
+            ...resolveUnlockedEffects(attributes.effects, abilityUnlocks, refinementActive, offensiveLevel),
+            ...inheritedAttributeEffects,
+        ],
         mining: {
             bonusLootChance,
             durabilitySaveChance,
-            preservationRepairAmount: 2 + Math.floor(Math.max(0, preservationChance - 0.000001)),
+            preservationRepairAmount,
             doubleTrouble,
             tripleTrouble,
-            effects: isSupport ? [] : resolveUnlockedEffects(mining.effects, abilityUnlocks, refinementActive, offensiveLevel)
+            effects: isSupport ? [] : [
+                ...resolveUnlockedEffects(mining.effects, abilityUnlocks, refinementActive, offensiveLevel),
+                ...inheritedMiningEffects,
+            ]
         },
         eventDriven,
         refinement: {
@@ -484,8 +532,9 @@ export function resolveStatsAttributes(definition, state) {
         support: {
             damageReduction: supportDamageReduction,
             durabilityPreserveChance: supportDurabilityPreserveChance,
-            preservationRepairAmount: 2 + Math.floor(Math.max(0, preservationChance - 0.000001)),
+            preservationRepairAmount,
             negateAllDamageChance: supportNegateAllDamageChance,
+            elemental: earthElementActive ? { ...refinementElement } : undefined,
             effects: supportEffects
         }
     };

@@ -1,18 +1,28 @@
-import { EntityDamageCause, system, world } from "@minecraft/server";
+import { EntityDamageCause, system } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { getCurrentTick, normalizeChance, rollChance } from "../utils.js";
 import { applyEffectById } from "../shared/effects.js";
+import { markStatsCoreOverrideDamage } from "../shared/damage.js";
 import { getEquipmentStatsContext } from "../shared/context.js"; 
 import { ENTITY_CATEGORIES, ENTITY_CATEGORY_MEMBERS, OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity, getEntityCategory } from "../shared/entityCategories.js";
 import { resolveStatsAbilityName } from "../core/abilities.js";
+import {
+    getStatsCoreEffect,
+    removeStatsCoreEffect,
+    upsertStatsCoreEffect,
+} from "../effects/index.js";
 
-const marks = new Map();
 const procDamageTargets = new Map();
 const effectCooldowns = new Map();
 const bleedStates = new Map();
+const blessingStates = new Map();
 const HOT_ENTITY_TOKENS = Object.freeze(["blaze", "magma", "strider", "ghast", "piglin", "hoglin", "zoglin", "wither_skeleton"]);
 const COLD_ENTITY_TOKENS = Object.freeze(["stray", "snow_golem", "breeze", "ice", "frozen", "frost"]);
 const DARK_RESISTANT_TOKENS = Object.freeze(["wither", "warden", "ender", "shulker"]);
+const UNDEAD_ENTITY_TOKENS = Object.freeze([
+    "bogged", "drowned", "husk", "parched", "phantom", "skeleton", "stray",
+    "wither", "zoglin", "zombie",
+]);
 const SWEEP_ENTITY_CATEGORIES = Object.freeze([
     ...OFFENSIVE_ENTITY_CATEGORIES,
     ENTITY_CATEGORIES.passive,
@@ -20,6 +30,7 @@ const SWEEP_ENTITY_CATEGORIES = Object.freeze([
 const SWEEP_ENTITY_CATEGORY_SET = new Set(SWEEP_ENTITY_CATEGORIES);
 const SWEEP_EXCLUDED_ENTITY_TYPES = ENTITY_CATEGORY_MEMBERS[ENTITY_CATEGORIES.ally];
 let bleedProcessorRunId;
+let blessingProcessorRunId;
 
 function entityKey(entity) {
     return String(entity?.id ?? entity?.typeId ?? "unknown");
@@ -72,7 +83,83 @@ function isColdTarget(entity) {
     return hasEntityToken(entity, COLD_ENTITY_TOKENS);
 }
 
+function isUndeadTarget(entity) {
+    try {
+        if (entity?.matches?.({ families: ["undead"] }) === true) return true;
+    } catch { }
+    return hasEntityToken(entity, UNDEAD_ENTITY_TOKENS);
+}
+
+function isBlessingElement(value) {
+    const id = String(value?.id ?? value?.key ?? value?.type ?? value ?? "").trim().toLowerCase();
+    return id === "light" || id === "blessing" || id === "blessed";
+}
+
+function isWaterElement(value) {
+    const id = String(value?.id ?? value?.key ?? value?.type ?? value ?? "").trim().toLowerCase();
+    return id === "water";
+}
+
+function isBlessingFocus(weaponTypeId, definition) {
+    const normalizedId = String(weaponTypeId ?? definition?.id ?? "").trim().toLowerCase();
+    const path = normalizedId.split(":").pop() ?? "";
+    const branch = String(definition?.branch ?? "").trim().toLowerCase();
+    return normalizedId === "minecraft:stick"
+        || branch === "stick"
+        || branch === "wand"
+        || /(^|_)(wand|staff)(_|$)/.test(path);
+}
+
+/**
+ * Rolls Light before vanilla damage is committed so friendly hits can be
+ * cancelled. The actual mutation is deferred by the combat module.
+ */
+export function prepareBlessingForHit({ attacker, target, attributes, weaponTypeId, definition }) {
+    const aspects = Array.isArray(attributes?.elemental) ? attributes.elemental : [];
+    if (!target || !aspects.length) return null;
+    const category = getEntityCategory(target);
+    const friendly = category === ENTITY_CATEGORIES.ally || category === ENTITY_CATEGORIES.passive;
+    const onFire = (() => {
+        try {
+            return Number(target.getComponent?.("minecraft:onfire")?.onFireTicksRemaining ?? 0) > 0;
+        } catch {
+            return false;
+        }
+    })();
+    const waterAspect = aspects.find(isWaterElement);
+    if (waterAspect && friendly && onFire) {
+        return {
+            aspect: waterAspect,
+            elementId: "water",
+            cancelDamage: true,
+            extinguishTarget: true,
+        };
+    }
+
+    const aspect = aspects.find(isBlessingElement);
+    if (!aspect) return null;
+    const undead = isUndeadTarget(target);
+    if (!undead && !friendly) return null;
+
+    const playerTarget = String(target?.typeId ?? "").toLowerCase() === "minecraft:player";
+    if (playerTarget && !isBlessingFocus(weaponTypeId, definition)) return null;
+
+    const attackerIsPlayer = String(attacker?.typeId ?? "").toLowerCase() === "minecraft:player";
+    if (friendly && !undead && !playerTarget && attackerIsPlayer && attacker?.isSneaking === true) {
+        return {
+            aspect,
+            undead: false,
+            cancelDamage: false,
+            curseAttacker: true,
+        };
+    }
+
+    return { aspect, undead, cancelDamage: friendly && !undead };
+}
+
 function canDamageWithEffect(effect, entity) {
+    const id = String(effect?.id ?? effect?.key ?? "").trim().toLowerCase();
+    if (id === "void" && entity?.typeId === "minecraft:player") return true;
     return effectAppliesToEntity(effect, entity, OFFENSIVE_ENTITY_CATEGORIES);
 }
 
@@ -231,7 +318,9 @@ function ensureBleedProcessor() {
         const now = getCurrentTick();
         for (const [key, state] of bleedStates.entries()) {
             if (!state?.target || !hasHealthComponent(state.target) || Number(state.expiresAt ?? 0) <= now) {
+                const target = state?.target;
                 bleedStates.delete(key);
+                if (target) publishBleedingState(target);
                 continue;
             }
 
@@ -245,13 +334,17 @@ function ensureBleedProcessor() {
 
             try {
                 markProcDamageTarget(state.target, 3);
-                spawnParticleSafe(state.target, "minecraft:falling_dust_red_sand_particle");
-                state.target.applyDamage?.(amount, {
+                const damaged = state.target.applyDamage?.(amount, {
                     cause: "magic",
                     damagingEntity: state.attacker,
                 });
+                if (damaged === true) {
+                    spawnParticleSafe(state.target, "ascendant_technology:blood_particle");
+                }
             } catch {
+                const target = state?.target;
                 bleedStates.delete(key);
+                if (target) publishBleedingState(target);
                 continue;
             }
 
@@ -294,8 +387,161 @@ function applyBleed(target, attacker, effect, finalDamage) {
         });
     }
 
+    publishBleedingState(target);
     setEffectCooldown(attacker, effect);
     return true;
+}
+
+function publishBleedingState(target) {
+    const now = getCurrentTick();
+    const targetId = entityKey(target);
+    let expiresAt = 0;
+    let stacks = 1;
+
+    for (const state of bleedStates.values()) {
+        if (entityKey(state?.target) !== targetId || Number(state?.expiresAt ?? 0) <= now) continue;
+        expiresAt = Math.max(expiresAt, Number(state.expiresAt));
+        stacks = Math.max(stacks, Math.max(1, Number(state.stacks ?? 1)));
+    }
+
+    if (expiresAt <= now) {
+        removeStatsCoreEffect(target, "bleeding");
+        return;
+    }
+    upsertStatsCoreEffect(target, {
+        id: "bleeding",
+        expiresAtTick: expiresAt,
+        level: stacks,
+    });
+}
+
+function ensureBlessingProcessor() {
+    if (blessingProcessorRunId !== undefined) return;
+
+    blessingProcessorRunId = system.runInterval(() => {
+        if (blessingStates.size <= 0) {
+            const runId = blessingProcessorRunId;
+            blessingProcessorRunId = undefined;
+            try {
+                system.clearRun(runId);
+            } catch { }
+            return;
+        }
+
+        const now = getCurrentTick();
+        for (const [key, state] of blessingStates.entries()) {
+            if (!state?.target || !hasHealthComponent(state.target) || Number(state.expiresAt ?? 0) <= now) {
+                const target = state?.target;
+                blessingStates.delete(key);
+                if (target) removeStatsCoreEffect(target, "blessed");
+                continue;
+            }
+            if (Number(state.nextTickAt ?? 0) > now) continue;
+
+            const tickInterval = Math.max(5, Math.floor(Number(state.tickInterval ?? 10) || 10));
+            if (!tryApplyDamage(state.target, Math.max(1, Number(state.damage ?? 8) || 8), state.attacker, "magic")) {
+                const target = state?.target;
+                blessingStates.delete(key);
+                if (target) removeStatsCoreEffect(target, "blessed");
+                continue;
+            }
+            state.nextTickAt = now + tickInterval;
+        }
+    }, 5);
+}
+
+function publishBlessingState(target, durationTicks, undead) {
+    upsertStatsCoreEffect(target, {
+        id: "blessed",
+        polarity: undead ? "debuff" : "buff",
+        durationTicks,
+    });
+}
+
+function playStatsCoreSound(entity, soundId, options = {}) {
+    try {
+        entity?.dimension?.playSound?.(soundId, entity.location, options);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/** Applies the intentional cost for breaking Blessing's friendly-hit protection. */
+export function applyBlessingCurse(attacker) {
+    if (!attacker || !hasHealthComponent(attacker)) return false;
+
+    const durationTicks = 30 * 20;
+    applyEffectById(attacker, "slowness", durationTicks, 0, false);
+    applyEffectById(attacker, "weakness", durationTicks, 2, false);
+    applyEffectById(attacker, "hunger", durationTicks, 2, false);
+    upsertStatsCoreEffect(attacker, {
+        id: "cursed",
+        durationTicks,
+    });
+    playStatsCoreSound(attacker, "ascendant.statscore.blessing_curse", {
+        volume: 1,
+        pitch: 1,
+    });
+
+    try {
+        markStatsCoreOverrideDamage(attacker, 4);
+        attacker.applyDamage?.(8, {
+            cause: EntityDamageCause.override ?? "override",
+        });
+    } catch {
+        return false;
+    }
+    return true;
+}
+
+export function applyPreparedBlessing({ attacker, target, prepared }) {
+    const aspect = prepared?.aspect;
+    if (!target || !aspect || !hasHealthComponent(target)) return false;
+
+    if (prepared.extinguishTarget === true) {
+        try {
+            return target.extinguishFire?.(true) === true;
+        } catch {
+            return false;
+        }
+    }
+
+    const playerTarget = String(target?.typeId ?? "").toLowerCase() === "minecraft:player";
+    const durationTicks = playerTarget
+        ? Math.max(20, Math.floor(Number(aspect.playerDurationTicks ?? 2400) || 2400))
+        : Math.max(20, Math.floor(Number(aspect.mobDurationTicks ?? 18000) || 18000));
+    const regenerationAmplifier = Math.max(0, Math.floor(Number(aspect.regenerationAmplifier ?? 0) || 0));
+    let applied = applyEffectById(target, "regeneration", durationTicks, regenerationAmplifier, false);
+
+    if (prepared.undead === true) {
+        const tickInterval = Math.max(5, Math.floor(Number(aspect.tickInterval ?? 10) || 10));
+        const damage = Math.max(1, Number(aspect.blessingDamage ?? 8) || 8);
+        blessingStates.set(`${entityKey(target)}:blessing`, {
+            attacker,
+            target,
+            damage,
+            tickInterval,
+            expiresAt: getCurrentTick() + durationTicks,
+            nextTickAt: getCurrentTick() + tickInterval,
+        });
+        ensureBlessingProcessor();
+        applied = true;
+    } else {
+        // Effect amplifiers are zero-based: amplifier 5 is Health Boost VI.
+        const healthBoost = applyEffectById(target, "health_boost", durationTicks, 5, false);
+        const resistance = applyEffectById(target, "resistance", durationTicks, 0, false);
+        const healed = healTarget(target, Math.max(1, Number(aspect.healAmount ?? 8) || 8));
+        applied = applied || healthBoost || resistance || healed;
+    }
+
+    spawnParticleSafe(target, "dorios:light_blessing_burst");
+    playStatsCoreSound(target, "ascendant.statscore.blessing", {
+        volume: 0.9,
+        pitch: prepared.undead === true ? 0.9 : 1.05,
+    });
+    publishBlessingState(target, durationTicks, prepared.undead === true);
+    return applied;
 }
 
 function shouldTriggerEffect(effect, context) {
@@ -318,28 +564,14 @@ function shouldTriggerEffect(effect, context) {
     return rollChance(effect?.chance, 1);
 }
 
-function cleanupMarksIfNeeded() {
-    if (marks.size <= STATSCORE.runtime.markCleanupSize) return;
-
-    const now = getCurrentTick();
-    for (const [key, mark] of marks.entries()) {
-        if (Number(mark?.expiresAt ?? 0) <= now) {
-            marks.delete(key);
-        }
-    }
-}
-
 export function getMark(target) {
-    const key = entityKey(target);
-    const mark = marks.get(key);
-    if (!mark) return null;
-
-    if (Number(mark.expiresAt ?? 0) <= getCurrentTick()) {
-        marks.delete(key);
-        return null;
-    }
-
-    return mark;
+    const effect = getStatsCoreEffect(target, "marked");
+    if (!effect) return null;
+    return {
+        sourceId: effect.data?.sourceId,
+        expiresAt: effect.expiresAtTick,
+        damageBonus: Number(effect.data?.damageBonus ?? 0) || 0,
+    };
 }
 
 export function getMarkedDamageBonus(target, attributes) {
@@ -367,12 +599,14 @@ export function isProcDamageTarget(target) {
 
 function applyMark(target, attacker, effect) {
     const durationTicks = Math.max(20, Math.floor(Number(effect.durationTicks ?? effect.duration ?? 100) || 100));
-    marks.set(entityKey(target), {
-        sourceId: entityKey(attacker),
-        expiresAt: getCurrentTick() + durationTicks,
-        damageBonus: normalizeChance(effect.damageBonus, 0)
+    upsertStatsCoreEffect(target, {
+        id: "marked",
+        durationTicks,
+        data: {
+            sourceId: entityKey(attacker),
+            damageBonus: normalizeChance(effect.damageBonus, 0),
+        },
     });
-    cleanupMarksIfNeeded();
 }
 
 function applyStatusEffect(target, effect) {
@@ -391,6 +625,104 @@ function applyFire(target, effect) {
     } catch {
         return false;
     }
+}
+
+function transformEntity(target, nextTypeId, chance) {
+    if (!target || !nextTypeId || !rollChance(chance, 0)) return false;
+    const dimension = target.dimension;
+    const location = { ...target.location };
+    const nameTag = target.nameTag;
+    let rotation;
+    try { rotation = target.getRotation?.(); } catch { }
+
+    system.run(() => {
+        try {
+            if (target.isValid === false) return;
+            const sourceHealth = getHealthComponent(target);
+            const currentHealth = Number(sourceHealth?.currentValue ?? 0);
+            if (!Number.isFinite(currentHealth) || currentHealth <= 0) return;
+            const replacement = dimension?.spawnEntity?.(nextTypeId, location);
+            if (!replacement) return;
+            if (nameTag) replacement.nameTag = nameTag;
+            if (rotation) replacement.setRotation?.(rotation);
+            const replacementHealth = getHealthComponent(replacement);
+            replacementHealth?.setCurrentValue?.(Math.min(
+                Number(replacementHealth?.effectiveMax ?? replacementHealth?.defaultValue ?? currentHealth),
+                currentHealth,
+            ));
+            target.remove?.();
+        } catch { }
+    });
+    return true;
+}
+
+function pullMatchingEntitiesToCenter(dimension, typeId, center, excludedId, radius = 7.5, strength = 0.72) {
+    if (!dimension || !typeId || !center) return false;
+    let pulled = false;
+
+    try {
+        for (const entity of dimension.getEntities({
+            type: typeId,
+            location: center,
+            maxDistance: Math.max(2, Number(radius) || 7.5),
+        })) {
+            if (!entity || entity.id === excludedId) continue;
+            const dx = Number(center.x) - Number(entity.location.x);
+            const dy = Number(center.y) - Number(entity.location.y);
+            const dz = Number(center.z) - Number(entity.location.z);
+            const distance = Math.max(0.001, Math.hypot(dx, dy, dz));
+            const normalizedRadius = Math.max(2, Number(radius) || 7.5);
+            const baseForce = Math.max(0.05, Number(strength) || 0.72);
+            // Far entities receive the strongest pull while nearby entities
+            // settle around the struck target instead of overshooting it.
+            const distanceRatio = Math.min(1, distance / normalizedRadius);
+            const force = baseForce * (0.12 + distanceRatio * 0.88);
+            const horizontalDistance = Math.max(0.001, Math.hypot(dx, dz));
+            const verticalForce = Math.max(-0.18, Math.min(0.28, (dy / distance) * force + 0.06));
+            entity.applyImpulse?.({
+                x: dx / horizontalDistance * force,
+                y: verticalForce,
+                z: dz / horizontalDistance * force,
+            });
+            pulled = true;
+        }
+    } catch { }
+    return pulled;
+}
+
+function triggerVoidSingularity(target) {
+    const dimension = target?.dimension;
+    const typeId = target?.typeId;
+    const center = target?.location
+        ? { x: target.location.x, y: target.location.y, z: target.location.z }
+        : null;
+    if (!dimension || !typeId || !center) return false;
+
+    try {
+        dimension.spawnParticle?.("ascendant_technology:void_singularity", {
+            x: center.x,
+            y: center.y + 0.08,
+            z: center.z,
+        });
+        dimension.playSound?.("ascendant.statscore.void_singularity", center, {
+            volume: 1,
+            pitch: 0.9,
+        });
+    } catch { }
+
+    const pull = () => pullMatchingEntitiesToCenter(
+        dimension,
+        typeId,
+        center,
+        target.id,
+        7.5,
+        0.72,
+    );
+    pull();
+    // Subsequent pulses retain the captured center even when the struck entity
+    // dies or becomes invalid during the Void hit.
+    for (const delay of [2, 4, 6]) system.runTimeout(pull, delay);
+    return true;
 }
 
 function applyElementalAspect(attacker, target, aspect, finalDamage) {
@@ -443,7 +775,37 @@ function applyElementalAspect(attacker, target, aspect, finalDamage) {
         // apply a much stronger slowness (amplifier 2 or more)
         const heavySlownessAmp = Math.max(2, Math.floor(Number(amplifier) || 2));
         const slowed = applyEffectById(target, "slowness", Math.max(40, duration * 2), heavySlownessAmp, false);
+        if (target.typeId === "minecraft:skeleton") {
+            transformEntity(target, "minecraft:stray", 0.65);
+        }
         return tryApplyDamage(target, amount, attacker, "freezing") || slowed;
+    }
+
+    if (id === "wind") {
+        if (target.typeId === "minecraft:blaze") {
+            amount *= 0.35;
+            applyEffectById(target, "health_boost", 160, 1, false);
+            applyEffectById(target, "resistance", 160, 0, false);
+            applyEffectById(target, "regeneration", 160, 0, false);
+            transformEntity(target, "minecraft:breeze", 0.12);
+        }
+        try {
+            target.applyImpulse?.({ x: 0, y: 0.22, z: 0 });
+        } catch { }
+        return tryApplyDamage(target, amount, attacker, "magic");
+    }
+
+    if (id === "water") {
+        if (isNetherOrHotTarget(target)) amount *= 1.75;
+        try { target.extinguishFire?.(true); } catch { }
+        return tryApplyDamage(target, amount, attacker, "magic");
+    }
+
+    if (id === "void") {
+        triggerVoidSingularity(target);
+        applyEffectById(target, "weakness", Math.max(80, duration), 1, false);
+        markStatsCoreOverrideDamage(target, 4);
+        return tryApplyDamage(target, amount, attacker, EntityDamageCause.override);
     }
 
     // Fire - burns cold targets harder and loses bite vs hot targets
@@ -454,68 +816,34 @@ function applyElementalAspect(attacker, target, aspect, finalDamage) {
         return tryApplyDamage(target, amount, attacker, "fire") || ignited;
     }
 
-    // Lightning
-    // Sends a lightning strike to all nearby targets (useful with sweeping) and then
-    // extinguishes fire on nearby players and ground to avoid leaving dangerous lingering fires.
+    // Lightning remains a real lightning strike. Its entity damage/fire can
+    // land after this callback, so clean the local aftermath for the next few
+    // ticks instead of extinguishing only before the bolt resolves.
     if (id === "lightning" || id === "shock") {
         if (target?.isInWater === true || target?.isWet === true) amount *= 1.5; // stronger bonus vs wet
-
-        // radius to search for additional targets to strike with lightning
-        const strikeRadius = Math.max(2.5, Number(aspect?.radius ?? 3) || 3);
-
+        const impact = {
+            x: Number(target.location?.x ?? 0),
+            y: Number(target.location?.y ?? 0),
+            z: Number(target.location?.z ?? 0),
+        };
+        const dimension = target.dimension;
+        let struck = false;
         try {
-            const origin = target.location;
-            if (origin && target.dimension) {
-                // collect nearby entities (including the original target)
-                const struck = [];
-                for (const ent of target.dimension.getEntities({ location: origin, maxDistance: strikeRadius })) {
-                    if (!ent) continue;
-                    if (!canDamageWithEffect(aspect, ent)) continue;
-                    struck.push(ent);
-                }
+            dimension?.spawnEntity?.("minecraft:lightning_bolt", impact);
+            struck = true;
+        } catch {
+            try {
+                dimension?.runCommand(`summon lightning_bolt ${impact.x} ${impact.y} ${impact.z}`);
+                struck = true;
+            } catch {}
+        }
 
-                // Summon lightning at each struck entity's location
-                for (const ent of struck) {
-                    try {
-                        const loc = ent.location;
-                        if (!loc) continue;
-                        // summon lightning bolt at the entity
-                        if (typeof ent.dimension?.runCommand === "function") {
-                            ent.dimension.runCommand(`summon lightning_bolt ${Math.floor(loc.x)} ${Math.floor(loc.y)} ${Math.floor(loc.z)}`);
-                        }
-                    } catch { }
-                }
-
-                // A successful lightning proc cleans a 7×7×3 volume centred
-                // on the strike and extinguishes every online player.
-                const center = {
-                    x: Math.floor(Number(origin.x ?? 0)),
-                    y: Math.floor(Number(origin.y ?? 0)),
-                    z: Math.floor(Number(origin.z ?? 0)),
-                };
-                for (let x = -3; x <= 3; x++) {
-                    for (let y = -1; y <= 1; y++) {
-                        for (let z = -3; z <= 3; z++) {
-                            try {
-                                const block = target.dimension.getBlock?.({ x: center.x + x, y: center.y + y, z: center.z + z });
-                                const blockId = String(block?.typeId ?? "").toLowerCase();
-                                if (blockId === "minecraft:fire" || blockId === "minecraft:soul_fire") {
-                                    block.setType?.("minecraft:air");
-                                }
-                            } catch { }
-                        }
-                    }
-                }
-                for (const player of world.getPlayers?.() ?? []) {
-                    try {
-                        player.extinguishFire?.(true);
-                    } catch { }
-                }
-            }
-        } catch { }
-
+        clearLightningHazards(dimension, impact);
+        for (const delay of [1, 2, 4]) {
+            system.runTimeout(() => clearLightningHazards(dimension, impact), delay);
+        }
         const weakened = applyEffectById(target, "weakness", duration, amplifier, false);
-        return tryApplyDamage(target, amount, attacker, "lightning") || weakened;
+        return tryApplyDamage(target, amount, attacker, "lightning") || weakened || struck;
     }
 
     // Darkness
@@ -555,13 +883,16 @@ function applyElementalAspect(attacker, target, aspect, finalDamage) {
     return tryApplyDamage(target, amount, attacker, "magic");
 }
 
-function applyElementalAspects({ attacker, target, attributes, finalDamage }) {
+function applyElementalAspects({ attacker, target, attributes, finalDamage, skipElemental = [] }) {
     const aspects = Array.isArray(attributes?.elemental) ? attributes.elemental : [];
+    const skipped = new Set(skipElemental.map(value => String(value ?? "").trim().toLowerCase()));
     const applied = [];
 
     for (const aspect of aspects) {
+        const aspectId = String(aspect?.id ?? aspect?.type ?? "").trim().toLowerCase();
+        if (isBlessingElement(aspect) || skipped.has(aspectId)) continue;
         if (applyElementalAspect(attacker, target, aspect, finalDamage)) {
-            applied.push(String(aspect?.id ?? aspect?.type ?? "").trim().toLowerCase());
+            applied.push(aspectId);
         }
     }
 
@@ -664,6 +995,52 @@ function applyHarpoon(target, attacker, effect) {
     return true;
 }
 
+/**
+ * Extinguishes players and fire created around a lightning impact. The sphere
+ * is deliberately limited to ten blocks so it cannot alter distant builds.
+ *
+ * @param {import("@minecraft/server").Dimension | undefined} dimension
+ * @param {{x:number,y:number,z:number}} impact
+ */
+function clearLightningHazards(dimension, impact) {
+    if (!dimension) return;
+
+    try {
+        for (const player of dimension.getPlayers({ location: impact, maxDistance: 10 })) {
+            try {
+                player.extinguishFire?.(true);
+            } catch {}
+        }
+    } catch {}
+
+    const radius = 10;
+    const radiusSquared = radius * radius;
+    const minX = Math.floor(impact.x - radius);
+    const maxX = Math.floor(impact.x + radius);
+    const minY = Math.floor(impact.y - radius);
+    const maxY = Math.floor(impact.y + radius);
+    const minZ = Math.floor(impact.z - radius);
+    const maxZ = Math.floor(impact.z + radius);
+
+    for (let x = minX; x <= maxX; x++) {
+        for (let y = minY; y <= maxY; y++) {
+            for (let z = minZ; z <= maxZ; z++) {
+                const dx = x - impact.x;
+                const dy = y - impact.y;
+                const dz = z - impact.z;
+                if ((dx * dx) + (dy * dy) + (dz * dz) > radiusSquared) continue;
+
+                try {
+                    const block = dimension.getBlock({ x, y, z });
+                    if (block?.typeId === "minecraft:fire" || block?.typeId === "minecraft:soul_fire") {
+                        block.setType("minecraft:air");
+                    }
+                } catch {}
+            }
+        }
+    }
+}
+
 function applySkewer(attacker, target, effect) {
     if (!attacker || !target || !attacker.location || !target.location) return false;
     applyMark(target, attacker, effect);
@@ -763,12 +1140,15 @@ function applyBallista(attacker, target, effect, finalDamage) {
     return applied;
 }
 
-export function applyCombatEffects({ attacker, target, attributes, crit, finalDamage, damageSource, damagingProjectile }) {
+export function applyCombatEffects({ attacker, target, attributes, crit, finalDamage, damageSource, damagingProjectile, preAppliedElemental = [] }) {
     const effects = Array.isArray(attributes?.effects) ? attributes.effects : [];
     if (!target) return { count: 0, elemental: [], abilities: [] };
 
     const marked = Boolean(getMark(target));
-    const elemental = applyElementalAspects({ attacker, target, attributes, finalDamage });
+    const elemental = [
+        ...preAppliedElemental,
+        ...applyElementalAspects({ attacker, target, attributes, finalDamage, skipElemental: preAppliedElemental }),
+    ];
     const abilities = [];
     let applied = elemental.length;
 

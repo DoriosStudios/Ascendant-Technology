@@ -44,7 +44,7 @@ applicable.
 | ✅ | ⬜ | DoriosCore | Clean UC copy with no AT modifications. |
 | ✅ | ⬜ | DoriosAPI removed | There are no active imports. It remains only as a legacy reference. |
 | ✅ | ⬜ | Legacy isolated | `data/legacy` is not imported by the active runtime. |
-| 🟨 | ⬜ | ATCore | Directory structure exists, but it has no functional AT classes yet. |
+| 🟨 | ⬜ | ATCore | The shared AT runtime still has no functional AT classes. |
 | ✅ | ⬜ | esbuild bundle | The current entrypoint bundles successfully. |
 | ✅ | ⬜ | Base `Machine`, `BasicMachine`, `Generator`, and storage classes | Available from DoriosCore for new implementations. |
 | ❌ | ⬜ | AT feature registration | Feature indexes exist, but no AT feature has been rebuilt yet. |

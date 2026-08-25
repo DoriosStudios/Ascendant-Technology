@@ -1,0 +1,48 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:universal_cable"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"pattern": [
+			"FPE",
+			"PRP",
+			"GPI"
+		],
+		"key": {
+			"F": {
+				"item": "utilitycraft:fluid_pipe"
+			},
+			"G": {
+				"item": "utilitycraft:gas_pipe"
+			},
+			"E": {
+				"item": "utilitycraft:energy_cable"
+			},
+			"I": {
+				"item": "utilitycraft:item_conduit"
+			},
+			"R": {
+				"item": "utilitycraft:reinforced_cable"
+			},
+			"P": {
+				"item": "utilitycraft:netherite_plate"
+			}
+		},
+		"result": {
+			"item": "utilitycraft:universal_cable",
+			"count": 8
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:reinforced_cable"
+			},
+			{
+				"item": "utilitycraft:netherite_plate"
+			}
+		]
+	}
+}

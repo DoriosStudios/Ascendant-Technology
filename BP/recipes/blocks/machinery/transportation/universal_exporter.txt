@@ -1,0 +1,33 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "utilitycraft:universal_exporter"
+		},
+		"tags": [
+			"utilitycraft_workbench"
+		],
+		"key": {
+			"H": {
+				"item": "hopper"
+			},
+			"U": {
+				"item": "utilitycraft:universal_cable"
+			}
+		},
+		"pattern": [
+			" U",
+			"UHU",
+			" U"
+		],
+		"result": {
+			"item": "utilitycraft:universal_exporter"
+		},
+		"unlock": [
+			{
+				"item": "utilitycraft:universal_cable"
+			}
+		],
+		"priority": 0
+	}
+}

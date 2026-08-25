@@ -31,10 +31,15 @@ export function advanceProcess(machine, options) {
 /**
  * Charges independent lanes under one shared rate/energy budget and performs
  * exactly one scoreboard energy write. Lane objects are mutated in place.
+ *
+ * @param {{ energy: { get(): number, consume(amount: number): void }, rate: number, boosts: { consumption?: number, process_batch?: number } }} machine
+ * @param {Array<{ batch?: number, cost?: number, maxCrafts?: number, progress?: number, processCount?: number, energyUsed?: number }>} lanes
+ * @param {{ rateMultiplier?: number }} [options]
  */
-export function advanceLanes(machine, lanes) {
+export function advanceLanes(machine, lanes, options = {}) {
     const consumption = Math.max(Number.EPSILON, machine.boosts.consumption ?? 1);
-    let energyBudget = Math.min(machine.energy.get(), Math.max(0, machine.rate));
+    const rateMultiplier = Math.max(0, Number(options.rateMultiplier) || 1);
+    let energyBudget = Math.min(machine.energy.get(), Math.max(0, machine.rate * rateMultiplier));
     let activeLanes = 0;
 
     for (let index = 0; index < lanes.length; index++) {

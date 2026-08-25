@@ -496,6 +496,9 @@
 		"utilitycraft_reinforced_cable": {
 			"textures": "textures/blocks/pipes/reinforced_cable"
 		},
+		"utilitycraft_universal_tube": {
+			"textures": "textures/blocks/transportation/universal_tube"
+		},
 		"utilitycraft_deepslate_titanium_ore": {
 			"textures": "textures/blocks/ores/deepslate_titanium_ore"
 		},

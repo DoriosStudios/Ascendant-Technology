@@ -19,6 +19,12 @@ import {
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import { REFINING_TABLE_CONFIG as CONFIG } from "../../config/recipes/refiningTable.js";
 import { computeRefinementRollRange, rollStatsRefinement } from "../../ATCore/StatsCore/refining/rolls.js";
+import { getTroubleChance, getTripleTroubleChance } from "../../ATCore/StatsCore/shared/trouble.js";
+import { getCategoriesForDefinition } from "../../ATCore/StatsCore/core/state.js";
+import {
+    ADVANCED_INHERITANCE_CHANCE,
+    rollAdvancedInheritedAbilities,
+} from "../../ATCore/StatsCore/refining/inheritance.js";
 import {
     displayProgress,
     setDynamicNumber,
@@ -177,6 +183,10 @@ DoriosLib.registry.blockComponent(ID, {
                 refinement: rollRefinement(preview),
                 awakenAbility: preview.awakeningRequested,
                 awakenAdvanced: preview.advancedAwakeningRequested,
+                inheritedAbilities: rollAdvancedInheritedAbilities(
+                    preview.definition,
+                    preview.inheritedAbilities,
+                ),
             };
             setDynamicString(machine.entity, PENDING_KEY, JSON.stringify(pending));
             setDynamicString(machine.entity, ACTIVE_SIGNATURE_KEY, preview.signature);
@@ -304,9 +314,15 @@ function buildPreview(machine, xpTank) {
         awakeningRequested,
         advancedAwakeningRequested,
         advancedRoll,
+        runicCorePresent,
+        advancedCorePresent,
         primaryAbilities: primaryAbilities.map(entry => entry.name),
         advancedAbilities: advancedAbilities.map(entry => entry.name),
         potentialAbilities,
+        inheritanceChance: advancedCorePresent ? ADVANCED_INHERITANCE_CHANCE : 0,
+        inheritedAbilities: Array.isArray(state?.abilityData?.inheritedAbilities)
+            ? state.abilityData.inheritedAbilities
+            : [],
         signature: "",
     };
 
@@ -386,6 +402,9 @@ function rollRefinement(preview) {
         range: preview.range,
         xpCost: preview.xpCost,
         advanced: preview.advancedRoll,
+        coreMode: preview.advancedCorePresent
+            ? "advanced"
+            : preview.runicCorePresent ? "normal" : "none",
     });
 }
 
@@ -399,6 +418,14 @@ function applyRefinement(machine, xpTank, preview) {
     const state = readStatsState(equipment, definition);
     const awakenAbility = pending.awakenAbility === true;
     const awakenAdvanced = pending.awakenAdvanced === true;
+    const inheritedAbilities = Array.isArray(pending.inheritedAbilities)
+        ? pending.inheritedAbilities
+        : [];
+    const elementCoreRequirement = normalizeId(
+        pending.refinement?.bonuses?.elemental?.coreRequirement,
+    );
+    const elementNeedsRunicCore = elementCoreRequirement === "runic"
+        || elementCoreRequirement === "advanced";
 
     if (awakenAdvanced) {
         const runicCore = machine.container.getItem(RUNIC_CORE_SLOT);
@@ -407,6 +434,15 @@ function applyRefinement(machine, xpTank, preview) {
         const runicCore = machine.container.getItem(RUNIC_CORE_SLOT);
         const coreId = normalizeId(runicCore?.typeId);
         if (coreId !== CONFIG.defaults.unlockCatalystId && coreId !== CONFIG.defaults.advancedUnlockCatalystId) return false;
+    }
+    if (elementNeedsRunicCore) {
+        const runicCore = machine.container.getItem(RUNIC_CORE_SLOT);
+        const coreId = normalizeId(runicCore?.typeId);
+        if (elementCoreRequirement === "advanced") {
+            if (coreId !== CONFIG.defaults.advancedUnlockCatalystId) return false;
+        } else if (coreId !== CONFIG.defaults.unlockCatalystId && coreId !== CONFIG.defaults.advancedUnlockCatalystId) {
+            return false;
+        }
     }
 
     writeStatsState(equipment, definition, {
@@ -419,15 +455,21 @@ function applyRefinement(machine, xpTank, preview) {
             ...state.abilityData,
             uniqueUnlocked: awakenAbility || awakenAdvanced || state.abilityData?.uniqueUnlocked === true,
             advancedUnlocked: awakenAdvanced || state.abilityData?.advancedUnlocked === true,
+            inheritedAbilities: [
+                ...(Array.isArray(state.abilityData?.inheritedAbilities) ? state.abilityData.inheritedAbilities : []),
+                ...inheritedAbilities,
+            ],
         },
         refinement: pending.refinement,
-    }, { syncLore: false });
+    }, { syncLore: true, forceLore: true });
 
     machine.container.setItem(EQUIPMENT_SLOT, equipment);
     xpTank.consume(preview.xpCost);
     consumeSlot(machine.container, CHIP_SLOT, 1);
     consumeSlot(machine.container, INGOT_SLOT, preview.effectiveIngots);
-    if (awakenAbility || awakenAdvanced) consumeSlot(machine.container, RUNIC_CORE_SLOT, 1);
+    if (preview.advancedCorePresent || awakenAbility || awakenAdvanced || elementNeedsRunicCore) {
+        consumeSlot(machine.container, RUNIC_CORE_SLOT, 1);
+    }
     return true;
 }
 
@@ -441,15 +483,73 @@ function showState(machine, xpTank, preview, running, title) {
 
     machine.energy.display(ENERGY_SLOT);
     xpTank.display(XP_DISPLAY_SLOT);
-    machine.setLabel(toMachineLabelStrings([
-        `\u00A7r${running ? "\u00A7a" : "\u00A7e"}${title}`,
-        `\u00A7r\u00A77Equipment: \u00A7f${formatItem(preview.equipment?.typeId)}`,
-        `\u00A7r\u00A77Chip: \u00A7f${preview.chip?.label ?? "-"}`,
-        `\u00A7r\u00A77XP: \u00A7f${FluidStorage.formatFluid(preview.availableXp)} / ${FluidStorage.formatFluid(preview.xpCost)}`,
-        `\u00A7r\u00A77Energy: \u00A7f${EnergyStorage.formatEnergyToText(cost)}`
-    ]), STATUS_SLOT);
+    machine.setLabel(toMachineLabelStrings(
+        buildPrimaryDisplay(preview, running, title, cost),
+    ), STATUS_SLOT);
     machine.setLabel(toMachineLabelStrings(buildDetails(preview)), DETAILS_SLOT);
     machine.setLabel(toMachineLabelStrings(buildAllStats(preview)), STATS_DISPLAY_SLOT);
+}
+
+function buildPrimaryDisplay(preview, running, title, energyCost) {
+    const state = preview.state;
+    const refinement = state?.refinement;
+    const lines = [
+        `\u00A7r${running ? "\u00A7a" : "\u00A7e"}${title}`,
+        `\u00A7r\u00A77Item: \u00A7f${formatItem(preview.equipment?.typeId)}`,
+    ];
+
+    if (preview.definition && state) {
+        const levelSummary = buildCategoryLevelSummary(preview.definition, state, true);
+        lines.push(
+            `\u00A7r\u00A77Refine: \u00A7f${formatGrade(refinement?.grade)} \u00A78· \u00A7f${formatPercent(refinement?.quality)}`,
+            `\u00A7r\u00A77Level: ${levelSummary}`,
+        );
+    }
+
+    lines.push(
+        `\u00A7r\u00A77Chip: \u00A7f${formatCompactInputLabel(preview.chip?.label, "Chip")}`,
+        `\u00A7r\u00A77Ingot: \u00A7f${formatCompactInputLabel(preview.ingot?.label, "Ingot")}${preview.effectiveIngots > 0 ? ` ×${preview.effectiveIngots}` : ""}`,
+    );
+    if (preview.chip) {
+        lines.push(`\u00A7r\u00A77Roll: \u00A7f${formatPercent(preview.range.min)}–${formatPercent(preview.range.max)}`);
+    }
+    lines.push(
+        `\u00A7r\u00A77Cost: \u00A7f${FluidStorage.formatFluid(preview.xpCost)} XP`,
+        `\u00A7r\u00A77Power: \u00A7f${EnergyStorage.formatEnergyToText(energyCost)}`,
+    );
+    if (preview.advancedCorePresent) {
+        lines.push("\u00A7r\u00A77Core: \u00A7dAdvanced");
+    } else if (preview.runicCorePresent) {
+        lines.push("\u00A7r\u00A77Core: \u00A7eRunic");
+    } else if (preview.requiresRunicCore || preview.requiresAdvancedCore) {
+        lines.push(`\u00A7r\u00A78Needs: ${preview.requiresAdvancedCore ? "Advanced Core" : "Runic Core"}`);
+    }
+    lines.push(...buildPrimaryAbilityLines(preview));
+    return lines;
+}
+
+function formatCompactInputLabel(value, suffix) {
+    const label = String(value ?? "-").trim();
+    if (!label || label === "-") return "-";
+    return label.replace(new RegExp(`\\s+${suffix}$`, "i"), "");
+}
+
+function buildCategoryLevelSummary(definition, state, compact = false) {
+    const categories = getCategoriesForDefinition(definition);
+    const entries = [];
+    if (categories.has("offensive")) {
+        entries.push(`\u00A7c${compact ? "ATK" : "Offensive"} ${formatCompactNumber(state?.progression?.offensive?.level, 1)}`);
+    }
+    if (categories.has("mining")) {
+        entries.push(`\u00A7a${compact ? "MIN" : "Mining"} ${formatCompactNumber(state?.progression?.mining?.level, 1)}`);
+    }
+    if (categories.has("defensive")) {
+        entries.push(`\u00A7b${compact ? "DEF" : "Defensive"} ${formatCompactNumber(state?.progression?.defensive?.level, 1)}`);
+    }
+    if (categories.has("utility")) {
+        entries.push(`\u00A7e${compact ? "UTL" : "Utility"} ${formatCompactNumber(state?.progression?.utility?.level, 1)}`);
+    }
+    return entries.length > 0 ? entries.join(" \u00A78| ") : "\u00A78None";
 }
 
 /**
@@ -500,13 +600,13 @@ function buildDetails(preview) {
         return ["\u00A7r\u00A77Refinement Details", "\u00A7rInsert supported equipment"];
     }
 
-    const levels = Object.values(preview.state.progression ?? {}).map((entry) => Number(entry?.level ?? 1));
-    const level = Math.max(1, ...levels);
     const grade = formatGrade(preview.state.refinement?.grade);
     const type = formatItem(preview.definition.type);
     const lines = [
         `\u00A7r\u00A7d${type} Profile`,
-        `\u00A7r\u00A77Level: \u00A7f${level}`,
+        `\u00A7r\u00A77Tier: \u00A7f${formatItem(preview.definition.tier)}`,
+        `\u00A7r\u00A77Affinity: \u00A7f${formatItem(preview.state.affinity)}`,
+        `\u00A7r\u00A77Levels: ${buildCategoryLevelSummary(preview.definition, preview.state, true)}`,
         `\u00A7r\u00A77Current: \u00A7f${grade}`,
     ];
 
@@ -519,14 +619,19 @@ function buildDetails(preview) {
         lines.push(`\u00A7r\u00A77Masterwork: \u00A7f${formatPercent(preview.odds.masterwork)}`);
         lines.push(`\u00A7r\u00A77Transcendent: \u00A7f${formatPercent(preview.odds.transcendent)}`);
     }
-    if (preview.requiresRunicCore) {
-        lines.push(`\u00A7r\u00A77Primary Ability: ${preview.awakeningRequested ? "\u00A7eAwaken" : "\u00A78Locked"}`);
-    }
-    if (preview.requiresAdvancedCore) {
-        lines.push(`\u00A7r\u00A77Bonus Abilities: ${preview.advancedAwakeningRequested ? "\u00A7dAwaken +" : "\u00A78Advanced Core"}`);
+    const abilities = buildAbilityDisplayEntries(preview);
+    if (abilities.length > 0) {
+        lines.push("\u00A7r\u00A78Abilities");
+        for (const ability of abilities) {
+            const prefix = ability.primary ? "Primary" : "+";
+            lines.push(`\u00A7r${ability.primary ? "\u00A77" : "\u00A7d"}${prefix} ${ability.name}: ${ability.statusText}`);
+        }
     }
     if (preview.advancedRoll) {
         lines.push(`\u00A7r\u00A7dAdvanced ceiling: \u00A7f${CONFIG.defaults.advancedMaxIngotsPerRoll} ingots`);
+    }
+    if (preview.advancedCorePresent) {
+        lines.push(`\u00A7r\u00A7dInheritance chain: \u00A7f10% per success, uncapped retries`);
     }
     return lines;
 }
@@ -547,9 +652,7 @@ function buildAllStats(preview) {
         `\u00A7r\u00A77Grade: \u00A7f${formatGrade(refinement.grade)}`,
         `\u00A7r\u00A77Quality: \u00A7f${formatPercent(refinement.quality)}`,
         "\u00A7r\u00A78Levels",
-        `\u00A7r\u00A77Offensive: \u00A7f${formatCompactNumber(attributes.levels?.offensive, 1)}`,
-        `\u00A7r\u00A77Mining: \u00A7f${formatCompactNumber(attributes.levels?.mining, 1)}`,
-        `\u00A7r\u00A77Defensive: \u00A7f${formatCompactNumber(attributes.levels?.defensive, 1)}`,
+        `\u00A7r${buildCategoryLevelSummary(preview.definition, state)}`,
     ];
 
     if (refinement.active) {
@@ -574,7 +677,7 @@ function buildAllStats(preview) {
 
         for (const element of attributes.elemental ?? []) {
             const label = formatItem(element?.id);
-            lines.push(`\u00A7r\u00A77${label}: \u00A7f${formatPercent(element?.chance)} / +${formatCompactNumber(element?.damage)} damage`);
+            lines.push(`\u00A7r${getElementColor(element?.id)}${label}: \u00A7f${formatPercent(element?.chance)} / +${formatCompactNumber(element?.damage)} damage`);
         }
 
         lines.push("\u00A7r\u00A78Mining");
@@ -597,19 +700,123 @@ function buildAllStats(preview) {
         lines.push(...eventDrivenLines);
     }
 
-    const primaryUnlocked = state.abilityData?.uniqueUnlocked === true;
-    const advancedUnlocked = state.abilityData?.advancedUnlocked === true;
-    if (preview.primaryAbilities.length > 0 || preview.advancedAbilities.length > 0) {
+    const abilities = buildAbilityDisplayEntries(preview);
+    if (abilities.length > 0) {
         lines.push("\u00A7r\u00A78Abilities");
-        for (const ability of preview.primaryAbilities) {
-            lines.push(`\u00A7r\u00A77${ability}: ${primaryUnlocked ? "\u00A7aUnlocked" : "\u00A78Locked"}`);
-        }
-        for (const ability of preview.advancedAbilities) {
-            lines.push(`\u00A7r\u00A77${ability}: ${advancedUnlocked ? "\u00A7dUnlocked +" : "\u00A78Advanced Core"}`);
+        for (const ability of abilities) {
+            const prefix = ability.primary ? "" : "+ ";
+            lines.push(`\u00A7r${ability.primary ? "\u00A77" : "\u00A7d"}${prefix}${ability.name}: ${ability.statusText}`);
         }
     }
 
     return lines;
+}
+
+function buildPrimaryAbilityLines(preview) {
+    const entries = buildAbilityDisplayEntries(preview);
+    if (entries.length === 0) return [];
+
+    const primary = entries.find(entry => entry.primary);
+    const lines = [];
+    if (primary) {
+        lines.push(`\u00A7r\u00A77Ability: \u00A7g${primary.name}`);
+        if (!primary.active) lines.push(`\u00A7r\u00A78  ${stripFormatting(primary.statusText)}`);
+    }
+
+    const activeExtras = entries.filter(entry => !entry.primary && entry.active);
+    if (activeExtras.length > 0) {
+        for (const extra of activeExtras) {
+            lines.push(`\u00A7r\u00A7d+ ${extra.name}`);
+        }
+    }
+    return lines;
+}
+
+function stripFormatting(value) {
+    return String(value ?? "").replace(/\u00A7./g, "");
+}
+
+/**
+ * Builds one canonical, deduplicated ability list for every Refining Table
+ * display. Native abilities after the first one are extras, just like advanced
+ * and inherited abilities, and therefore always receive the "+" treatment.
+ *
+ * @param {object} preview
+ * @returns {{ name: string, primary: boolean, active: boolean, statusText: string }[]}
+ */
+function buildAbilityDisplayEntries(preview) {
+    const state = preview?.state;
+    const definition = preview?.definition;
+    if (!state || !definition) return [];
+
+    const requiresPrimaryCore = String(definition.uniqueAbilityUnlock ?? "").toLowerCase() === "totem";
+    const primaryUnlocked = !requiresPrimaryCore || state.abilityData?.uniqueUnlocked === true;
+    const primaryAwakening = !primaryUnlocked && (preview.awakeningRequested || preview.advancedAwakeningRequested);
+    const advancedUnlocked = state.abilityData?.advancedUnlocked === true;
+    const advancedAwakening = !advancedUnlocked && preview.advancedAwakeningRequested === true;
+    const entries = [];
+    const seen = new Set();
+
+    const push = (name, data) => {
+        const displayName = String(name ?? "").trim();
+        const key = displayName.toLowerCase();
+        if (!key || seen.has(key)) return;
+        seen.add(key);
+        entries.push({ name: displayName, ...data });
+    };
+
+    for (const [index, name] of (preview.primaryAbilities ?? []).entries()) {
+        push(name, {
+            primary: index === 0,
+            active: primaryUnlocked || primaryAwakening,
+            statusText: primaryUnlocked
+                ? "\u00A7aUnlocked"
+                : primaryAwakening
+                    ? "\u00A7eAwaken"
+                    : "\u00A78Runic Core",
+        });
+    }
+
+    for (const name of preview.advancedAbilities ?? []) {
+        push(name, {
+            primary: false,
+            active: advancedUnlocked || advancedAwakening,
+            statusText: advancedUnlocked
+                ? "\u00A7aUnlocked"
+                : advancedAwakening
+                    ? "\u00A7dAwaken +"
+                    : "\u00A78Advanced Core",
+        });
+    }
+
+    for (const inherited of preview.inheritedAbilities ?? []) {
+        push(inherited?.name, {
+            primary: false,
+            active: true,
+            statusText: "\u00A7aInherited",
+        });
+    }
+
+    return entries;
+}
+
+function getElementColor(elementId) {
+    switch (String(elementId ?? "").trim().toLowerCase()) {
+        case "plant":
+        case "poison": return "\u00A72";
+        case "darkness":
+        case "dark": return "\u00A78";
+        case "frost":
+        case "ice": return "\u00A7b";
+        case "fire": return "\u00A76";
+        case "lightning":
+        case "shock": return "\u00A7e";
+        case "wind": return "\u00A7f";
+        case "water": return "\u00A79";
+        case "void": return "\u00A75";
+        case "earth": return "\u00A76";
+        default: return "\u00A77";
+    }
 }
 
 function pushFlatStat(lines, label, value) {
@@ -627,14 +834,10 @@ function pushTroubleStats(lines, mining, miningLevel) {
     if (!doubleTrouble || typeof doubleTrouble !== "object") return;
 
     const level = Math.max(1, Number(miningLevel) || 1);
-    const baseChance = Math.max(0, Number(doubleTrouble.baseChance) || 0);
-    const chancePer10Levels = Math.max(0, Number(doubleTrouble.chancePer10Levels) || 0);
-    const maxChance = Math.max(0, Number(doubleTrouble.maxChance) || 0);
-    const doubleChance = Math.min(maxChance, baseChance + Math.floor(level / 10) * chancePer10Levels);
+    const doubleChance = getTroubleChance(doubleTrouble, level);
     if (doubleChance > 0) lines.push(`\u00A7r\u00A77Double Trouble: \u00A7f${formatPercent(doubleChance)}`);
 
-    const tripleScale = Math.max(0, Number(mining?.tripleTrouble?.chanceScale) || 0);
-    const tripleChance = doubleChance * tripleScale;
+    const tripleChance = getTripleTroubleChance(doubleTrouble, mining?.tripleTrouble, level);
     if (tripleChance > 0) lines.push(`\u00A7r\u00A77Triple Trouble: \u00A7f${formatPercent(tripleChance)}`);
 }
 

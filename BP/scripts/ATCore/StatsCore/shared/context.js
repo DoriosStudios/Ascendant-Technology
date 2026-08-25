@@ -1,10 +1,11 @@
 import { STATSCORE } from "../constants.js";
 import { system } from "@minecraft/server";
-import { getEquipment, getLiveEquipmentItem } from "../core/equipment.js";
+import { getEquipment, getLiveEquipmentItem, persistEquipmentItem } from "../core/equipment.js";
 import { getStatsCoreDefinition } from "../core/registry.js";
 import { readStatsState } from "../core/state.js";
 import { isStatsCoreEnabled } from "../runtime.js";
 import { resolveStatsAttributes } from "../attributes/resolve.js";
+import { syncStatsCoreLore } from "../core/lore.js";
 import { readEquipmentContextCache, writeEquipmentContextCache } from "./contextCache.js";
 
 /**
@@ -64,6 +65,18 @@ export function getEquipmentStatsContext(entity, slotName = STATSCORE.slots.main
     if (!itemContext) {
         writeEquipmentContextCache(entity, slotName, currentTick, access.item.typeId, null);
         return null;
+    }
+
+    // Definitions can remove obsolete progression categories without erasing
+    // the player's saved XP. Refresh the visible lore when this equipped item
+    // is first observed so legacy DEF lines disappear immediately.
+    if (syncStatsCoreLore(
+        access.item,
+        itemContext.definition,
+        itemContext.state,
+        itemContext.attributes,
+    )) {
+        persistEquipmentItem(entity, slotName, access.item);
     }
 
     const context = {

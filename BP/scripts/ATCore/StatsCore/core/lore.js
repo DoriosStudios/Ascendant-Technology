@@ -116,38 +116,42 @@ function buildReadableMultiplierEntry(label, value, icon) {
 }
 
 function buildReadableElementEntries(attributes) {
-    const elements = Array.isArray(attributes?.elemental)
-        ? attributes.elemental.filter(entry => (
+    const candidates = [
+        ...(Array.isArray(attributes?.elemental) ? attributes.elemental : []),
+        ...(attributes?.support?.elemental ? [attributes.support.elemental] : []),
+    ];
+    const elements = candidates.length
+        ? candidates.filter(entry => (
             entry?.id
             && Number(entry?.chance ?? 0) > 0
-            && Number(entry?.damage ?? 0) > 0
         ))
         : [];
 
     return elements.map(element => {
         const icon = getElementIcon(element.id);
+        const name = titleCaseIdentifier(element.id);
+        const color = getElementColor(element.id);
         const damage = Math.max(0, Number(element.damage ?? 0) || 0);
-        return `\u00A7r${icon} \u00A78${formatPercent(element.chance)} \u00A79+${damage.toFixed(damage % 1 === 0 ? 0 : 1)}`;
+        const formattedDamage = damage.toFixed(damage % 1 === 0 ? 0 : 1);
+        if (element.id === "earth") {
+            return `\u00A7r${icon} ${color}Earth Toughness`;
+        }
+        return `\u00A7r${icon} ${color}${name} \u00A77${formatPercent(element.chance)} chance \u00A78| \u00A7c+${formattedDamage} damage`;
     });
 }
 
-function buildCombinedExtraDamageEntry(attributes) {
+function buildExtraDamageEntries(attributes) {
     const flatDamage = Math.max(0, Number(attributes?.flatDamageBonus ?? 0) || 0);
     const bonusDamage = Math.max(0, Number(attributes?.damageMultiplier ?? 1) - 1);
-    const elements = buildReadableElementEntries(attributes)
-        .map(entry => entry.replace(/^§r[^\s]+\s+/, "").replace(/^§8/, ""));
-    const parts = [];
+    const entries = [];
 
     if (flatDamage > 0) {
-        parts.push(`+${flatDamage.toFixed(flatDamage % 1 === 0 ? 0 : 1)}`);
+        entries.push(`\u00A7r${STATSCORE_ICONS.attackDamage} \u00A79Extra Damage \u00A7c+${flatDamage.toFixed(flatDamage % 1 === 0 ? 0 : 1)}`);
     }
     if (bonusDamage > 0) {
-        parts.push(`+${formatPercent(bonusDamage)} Bonus`);
+        entries.push(`\u00A7r${STATSCORE_ICONS.attackDamage} \u00A79Bonus Damage \u00A7c+${formatPercent(bonusDamage)}`);
     }
-    parts.push(...elements);
-    if (parts.length <= 0) return null;
-
-    return `§r${STATSCORE_ICONS.attackDamage} §9Extra Damage §8| §7${parts.join(" §8+ §7")}`;
+    return [...entries, ...buildReadableElementEntries(attributes)];
 }
 
 function buildAbilityLoreEntry(attributes, state) {
@@ -157,6 +161,39 @@ function buildAbilityLoreEntry(attributes, state) {
     const icon = getAbilityIcon(summary.primary);
     const additional = summary.total > 1 ? " \u00A7e+" : "";
     return `\u00A7r${icon} \u00A77Ability: \u00A7g${summary.primary}${additional}`;
+}
+
+function getElementColor(elementId) {
+    switch (String(elementId ?? "").trim().toLowerCase()) {
+        case "plant":
+        case "poison":
+            return "\u00A72";
+        case "darkness":
+        case "dark":
+            return "\u00A78";
+        case "frost":
+        case "ice":
+            return "\u00A7b";
+        case "fire":
+            return "\u00A76";
+        case "lightning":
+        case "shock":
+            return "\u00A7e";
+        case "light":
+        case "blessing":
+        case "blessed":
+            return "\u00A7e";
+        case "wind":
+            return "\u00A7f";
+        case "water":
+            return "\u00A79";
+        case "void":
+            return "\u00A75";
+        case "earth":
+            return "\u00A76";
+        default:
+            return "\u00A79";
+    }
 }
 
 function isProgressionCategoryEnabled(definition, category) {
@@ -209,12 +246,11 @@ function buildReadableStatEntries(definition, attributes) {
     } : null;
     const directEntries = definition?.type === "support"
         ? []
-        : [
-            buildCombinedExtraDamageEntry(attributes),
-        ].filter(Boolean);
+        : buildExtraDamageEntries(attributes);
 
     const candidates = definition?.type === "support"
         ? [
+            ...buildReadableElementEntries(attributes).map((line) => candidate(line, 1)),
             candidate(buildReadableStatEntry("Damage Reduction", damageReduction, STATSCORE_ICONS.damageReduction), 1),
             candidate(buildReadableStatEntry("Adaptive Resilience", adaptiveResilience, STATSCORE_ICONS.damageReduction), 0.8),
             candidate(buildReadableStatEntry("Healing Efficiency", healingEfficiency, STATSCORE_ICONS.healedHeart), 0.75),

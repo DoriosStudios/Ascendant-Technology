@@ -105,13 +105,12 @@ DoriosLib.registry.blockComponent(ID, {
             return;
         }
 
-        const outputState = inspectOutputs(machine.container);
-        const operation = buildOperation(machine, soil, profile, outputState);
+        const operation = buildOperation(machine, soil, profile);
         if (operation.seedCount === 0) {
             resetProcess(machine, coolantTank, settings.machine.energy_cost, "Insert Seeds", profile, soil);
             return;
         }
-        if (operation.validCount === 0) {
+        if (operation.validCount === 0 || !canFitOperation(machine.container, operation)) {
             resetProcess(
                 machine,
                 coolantTank,
@@ -183,7 +182,7 @@ DoriosLib.registry.blockComponent(ID, {
     },
 });
 
-function buildOperation(machine, soil, profile, outputState) {
+function buildOperation(machine, soil, profile) {
     const lanes = [];
     let seedCount = 0;
     let invalidCount = 0;
@@ -209,8 +208,6 @@ function buildOperation(machine, soil, profile, outputState) {
             invalidCount++;
             continue;
         }
-        if (!canAcceptRecipe(outputState, recipe)) continue;
-
         const laneEnergy = Math.max(1, Math.ceil(recipe.cost * soil.cost * 4));
         const laneCoolant = Math.max(
             1,
@@ -240,26 +237,44 @@ function buildOperation(machine, soil, profile, outputState) {
     };
 }
 
-function inspectOutputs(container) {
-    let hasEmpty = false;
-    const stackableTypes = new Set();
+/**
+ * Reserves room for every possible result before an operation starts.  This
+ * avoids charging the machine and then dropping an overflow stack on the
+ * ground when a multi-drop recipe rolls more than the remaining space.
+ */
+function canFitOperation(container, operation) {
+    const required = new Map();
+    const freeInExistingStacks = new Map();
+    let emptySlots = 0;
+
+    for (const lane of operation.lanes) {
+        for (const drop of lane.recipe.drops) {
+            const maximum = Array.isArray(drop.amount) ? drop.amount[1] : drop.amount;
+            required.set(drop.item, (required.get(drop.item) ?? 0) + maximum);
+        }
+    }
+
     for (const slot of OUTPUT_SLOTS) {
         const item = container.getItem(slot);
         if (!item) {
-            hasEmpty = true;
+            emptySlots++;
             continue;
         }
-        if (item.amount < item.maxAmount) stackableTypes.add(item.typeId);
+        freeInExistingStacks.set(
+            item.typeId,
+            (freeInExistingStacks.get(item.typeId) ?? 0) + Math.max(0, item.maxAmount - item.amount),
+        );
     }
-    return { hasEmpty, stackableTypes };
-}
 
-function canAcceptRecipe(outputState, recipe) {
-    if (outputState.hasEmpty) return true;
-    for (const typeId of recipe.outputTypeIds) {
-        if (outputState.stackableTypes.has(typeId)) return true;
+    let requiredSlots = 0;
+    for (const [typeId, amount] of required) {
+        const remaining = Math.max(0, amount - (freeInExistingStacks.get(typeId) ?? 0));
+        if (remaining <= 0) continue;
+        const maximum = getItemMaximum(typeId);
+        if (maximum <= 0) return false;
+        requiredSlots += Math.ceil(remaining / maximum);
     }
-    return false;
+    return requiredSlots <= emptySlots;
 }
 
 function rollOperation(operation, profile) {
@@ -289,17 +304,11 @@ function addRoll(rolled, typeId, amount) {
 
 function insertOutputs(machine, rolled) {
     let inserted = 0;
-    let overflow = 0;
     for (const [typeId, amount] of rolled) {
         const accepted = insertSingleOutput(machine.container, typeId, amount);
         inserted += accepted;
-        const remaining = amount - accepted;
-        if (remaining > 0) {
-            overflow += remaining;
-            spawnOverflow(machine, typeId, remaining);
-        }
     }
-    return { inserted, overflow };
+    return { inserted, overflow: 0 };
 }
 
 function insertSingleOutput(container, typeId, amount) {
@@ -325,21 +334,6 @@ function insertSingleOutput(container, typeId, amount) {
         remaining -= moved;
     }
     return amount - remaining;
-}
-
-function spawnOverflow(machine, typeId, amount) {
-    const maximum = getItemMaximum(typeId);
-    if (maximum <= 0) return;
-    let remaining = amount;
-    while (remaining > 0) {
-        const moved = Math.min(remaining, maximum);
-        try {
-            machine.dimension.spawnItem(new ItemStack(typeId, moved), machine.block.center());
-        } catch {
-            return;
-        }
-        remaining -= moved;
-    }
 }
 
 function getItemMaximum(typeId) {

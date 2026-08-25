@@ -129,7 +129,8 @@ DoriosLib.registry.blockComponent(ID, {
         if (lava.getType() === "empty") lava.setType("lava");
         machine.processIO();
 
-        let lavaCraftBudget = lava.getType() === "lava"
+        const lavaBoostActive = lava.getType() === "lava" && lava.get() > 0;
+        let lavaCraftBudget = lavaBoostActive
             ? Math.floor(lava.get() / LAVA_PER_BONUS_CRAFT)
             : 0;
         const lanes = new Array(INPUTS.length);
@@ -140,7 +141,9 @@ DoriosLib.registry.blockComponent(ID, {
             lavaCraftBudget = Math.max(0, lavaCraftBudget - reserved);
         }
 
-        const energyUsed = advanceLanes(machine, lanes);
+        const energyUsed = advanceLanes(machine, lanes, {
+            rateMultiplier: lavaBoostActive ? 1.5 : 1,
+        });
         let crafted = 0;
         let lavaUsed = 0;
         let readyLanes = 0;
@@ -175,10 +178,13 @@ DoriosLib.registry.blockComponent(ID, {
             lines: [
                 `§r§7Active Lanes §f${readyLanes}/3`,
                 `§r§7Smelted §f${crafted}`,
-                `§r§7Lava Bonus §f${lavaUsed > 0 ? "Active" : "Inactive"}`,
+                `§r§7Lava Rate Boost §f${lavaBoostActive ? "Active (+50%)" : "Inactive"}`,
                 `§r§7Lava Stored §f${FluidStorage.formatFluid(lava.get())} / ${FluidStorage.formatFluid(lava.getCap())}`,
             ],
-        }], { energyCost: Math.max(settings.machine.energy_cost, ...lanes.map((lane) => lane.cost)) });
+        }], {
+            energyCost: Math.max(settings.machine.energy_cost, ...lanes.map((lane) => lane.cost)),
+            rateMultiplier: lavaBoostActive ? 1.5 : 1,
+        });
     },
 
     onPlayerBreak: Machine.onDestroy,

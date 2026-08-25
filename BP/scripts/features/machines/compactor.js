@@ -109,12 +109,16 @@ DoriosLib.registry.blockComponent(ID, {
 });
 
 function selectRecipe(container) {
+    const checkedTypes = new Set();
     for (const slot of INPUTS) {
         const input = container.getItem(slot);
-        if (!input) continue;
+        if (!input || checkedTypes.has(input.typeId)) continue;
+        checkedTypes.add(input.typeId);
         const inputCount = countPooledInput(container, INPUTS, input.typeId);
         const recipe = getCompactorRecipe(input.typeId, inputCount);
-        if (recipe) return { inputTypeId: input.typeId, inputCount, recipe };
+        // Invalid items and partial stacks must not block an eligible item in
+        // a later input slot.
+        if (recipe && inputCount >= recipe.required) return { inputTypeId: input.typeId, inputCount, recipe };
     }
     return undefined;
 }

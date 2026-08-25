@@ -37,7 +37,7 @@ function setPropertyIfChanged(stack, key, value) {
     }
 }
 
-function normalizeOperatorMode(value) {
+export function normalizeOperatorMode(value) {
     const normalized = normalizeId(value);
     if (normalized === "silky" || normalized === "greedy") {
         return normalized;
@@ -66,6 +66,21 @@ function normalizeStatsAbilityData(value) {
         const targets = normalizeAppliesTo(rawTargets);
         if (key && targets.length > 0) abilityTargets[key] = targets;
     }
+    const inheritedAbilities = [];
+    for (const rawEntry of Array.isArray(source.inheritedAbilities) ? source.inheritedAbilities : []) {
+        const effect = rawEntry?.effect && typeof rawEntry.effect === "object"
+            ? { ...rawEntry.effect }
+            : null;
+        const key = normalizeId(rawEntry?.key ?? effect?.key ?? effect?.kind);
+        const channel = normalizeId(rawEntry?.channel);
+        if (!key || !effect || !["attributes", "mining", "support"].includes(channel)) continue;
+        inheritedAbilities.push({
+            key,
+            name: String(rawEntry?.name ?? key).trim().slice(0, 80),
+            channel,
+            effect,
+        });
+    }
 
     return {
         uniqueUnlocked: source.uniqueUnlocked === true,
@@ -73,6 +88,7 @@ function normalizeStatsAbilityData(value) {
         operatorMode: normalizeOperatorMode(source.operatorMode),
         appliedAbilities,
         abilityTargets,
+        inheritedAbilities,
     };
 }
 

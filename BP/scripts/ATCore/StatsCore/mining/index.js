@@ -5,9 +5,10 @@ import { getProgressAmount, grantStatsProgress } from "../progression/refinement
 import { showLevelUp, showMiningFeedback } from "../feedback/index.js";
 import { normalizeId as normalizeBlockId, rollChance } from "../utils.js";
 import { getEquipmentStatsContext } from "../shared/context.js";
-import { repairItemDurability } from "../shared/durability.js";
+import { normalizeOperatorMode } from "../core/state.js";
 import { hasSilkTouch } from "./effects.js";
 import { findEffectByKind } from "../shared/effectSelectors.js";
+import { getTroubleChance, getTripleTroubleChance } from "../shared/trouble.js";
 
 const UNBREAKABLE_BLOCKS = new Set([
     "minecraft:air",
@@ -60,8 +61,13 @@ const ORE_PLATE_DROPS = Object.freeze({
     "minecraft:gold_ore": "utilitycraft:gold_plate",
     "minecraft:deepslate_gold_ore": "utilitycraft:gold_plate",
     "minecraft:nether_gold_ore": "utilitycraft:gold_plate",
-    "minecraft:ancient_debris": "utilitycraft:netherite_plate",
     "utilitycraft:deepslate_titanium_ore": "utilitycraft:titanium_plate",
+    "utilitycraft:deepslate_tungsten_ore": "utilitycraft:tungsten_plate",
+    "utilitycraft:nether_tungsten_ore": "utilitycraft:tungsten_plate",
+    "utilitycraft:tin_ore": "utilitycraft:tin_plate",
+    "utilitycraft:deepslate_tin_ore": "utilitycraft:tin_plate",
+    "utilitycraft:ryno_deepslate_lead_ore": "utilitycraft:ryno_lead_plate",
+    "utilitycraft:ryno_vanadium_ore": "neoutility:vanadium_plate",
 });
 
 const ORE_BONUS_DROPS = Object.freeze({
@@ -75,6 +81,8 @@ const ORE_BONUS_DROPS = Object.freeze({
     "minecraft:deepslate_gold_ore": "minecraft:raw_gold",
     "minecraft:redstone_ore": "minecraft:redstone",
     "minecraft:deepslate_redstone_ore": "minecraft:redstone",
+    "minecraft:lit_deepslate_redstone_ore": "minecraft:redstone",
+    "minecraft:lit_redstone_ore": "minecraft:redstone",
     "minecraft:lapis_ore": "minecraft:lapis_lazuli",
     "minecraft:deepslate_lapis_ore": "minecraft:lapis_lazuli",
     "minecraft:diamond_ore": "minecraft:diamond",
@@ -83,10 +91,19 @@ const ORE_BONUS_DROPS = Object.freeze({
     "minecraft:deepslate_emerald_ore": "minecraft:emerald",
     "minecraft:nether_gold_ore": "minecraft:gold_nugget",
     "minecraft:nether_quartz_ore": "minecraft:quartz",
-    "minecraft:ancient_debris": "minecraft:ancient_debris",
     "utilitycraft:deepslate_titanium_ore": "utilitycraft:raw_titanium",
     "utilitycraft:deepslate_aetherium_ore": "utilitycraft:aetherium_shard",
-    "utilitycraft:end_aetherium_ore": "utilitycraft:aetherium_shard"
+    "utilitycraft:end_aetherium_ore": "utilitycraft:aetherium_shard",
+    "utilitycraft:deepslate_tungsten_ore": "utilitycraft:raw_tungsten",
+    "utilitycraft:nether_tungsten_ore": "utilitycraft:raw_tungsten",
+    // UtilityCraft: Heavy Machinery
+    "utilitycraft:tin_ore": "utilitycraft:raw_tin",
+    "utilitycraft:deepslate_tin_ore": "utilitycraft:raw_tin",
+    "utilitycraft:deepslate_uranium_ore": "utilitycraft:raw_uranium",
+    // UtilityCraft Nuclear uses the ryno prefix to coexist with Heavy Machinery.
+    "utilitycraft:ryno_deepslate_lead_ore": "utilitycraft:ryno_raw_lead",
+    "utilitycraft:ryno_deepslate_uranium_ore": "utilitycraft:ryno_raw_uranium",
+    "utilitycraft:ryno_vanadium_ore": "utilitycraft:ryno_raw_vanadium",
 });
 
 const ORE_DUST_DROPS = Object.freeze({
@@ -98,7 +115,52 @@ const ORE_DUST_DROPS = Object.freeze({
     "minecraft:deepslate_iron_ore": "utilitycraft:iron_dust",
     "minecraft:gold_ore": "utilitycraft:gold_dust",
     "minecraft:deepslate_gold_ore": "utilitycraft:gold_dust",
+    "minecraft:nether_gold_ore": "utilitycraft:gold_dust",
+    "minecraft:redstone_ore": "minecraft:redstone",
+    "minecraft:lit_redstone_ore": "minecraft:redstone",
+    "minecraft:deepslate_redstone_ore": "minecraft:redstone",
+    "minecraft:lit_deepslate_redstone_ore": "minecraft:redstone",
+    "minecraft:lapis_ore": "minecraft:lapis_lazuli",
+    "minecraft:deepslate_lapis_ore": "minecraft:lapis_lazuli",
+    "minecraft:diamond_ore": "utilitycraft:diamond_dust",
+    "minecraft:deepslate_diamond_ore": "utilitycraft:diamond_dust",
+    "minecraft:emerald_ore": "utilitycraft:emerald_dust",
+    "minecraft:deepslate_emerald_ore": "utilitycraft:emerald_dust",
+    "minecraft:nether_quartz_ore": "utilitycraft:quartz_dust",
+    "minecraft:ancient_debris": "utilitycraft:netherite_scrap_dust",
     "utilitycraft:deepslate_titanium_ore": "utilitycraft:titanium_dust",
+    "utilitycraft:deepslate_tungsten_ore": "utilitycraft:raw_tungsten_dust",
+    "utilitycraft:nether_tungsten_ore": "utilitycraft:raw_tungsten_dust",
+    "utilitycraft:deepslate_aetherium_ore": "utilitycraft:aetherium_dust",
+    "utilitycraft:end_aetherium_ore": "utilitycraft:aetherium_dust",
+    "utilitycraft:tin_ore": "utilitycraft:tin_dust",
+    "utilitycraft:deepslate_tin_ore": "utilitycraft:tin_dust",
+    "utilitycraft:deepslate_uranium_ore": "utilitycraft:uranium_dust",
+    "utilitycraft:ryno_deepslate_lead_ore": "utilitycraft:ryno_lead_dust",
+    "utilitycraft:ryno_deepslate_uranium_ore": "utilitycraft:ryno_uranium_dust",
+    "utilitycraft:ryno_vanadium_ore": "utilitycraft:ryno_vanadium_dust",
+});
+
+const ORE_PROCESSED_DROPS = Object.freeze({
+    "minecraft:copper_ore": ["minecraft:copper_ingot"],
+    "minecraft:deepslate_copper_ore": ["minecraft:copper_ingot"],
+    "minecraft:iron_ore": ["minecraft:iron_ingot"],
+    "minecraft:deepslate_iron_ore": ["minecraft:iron_ingot"],
+    "minecraft:gold_ore": ["minecraft:gold_ingot"],
+    "minecraft:deepslate_gold_ore": ["minecraft:gold_ingot"],
+    "minecraft:nether_gold_ore": ["minecraft:raw_gold", "minecraft:gold_ingot"],
+    "minecraft:ancient_debris": ["minecraft:netherite_scrap"],
+    "utilitycraft:deepslate_titanium_ore": ["utilitycraft:titanium"],
+    "utilitycraft:deepslate_aetherium_ore": ["utilitycraft:aetherium"],
+    "utilitycraft:end_aetherium_ore": ["utilitycraft:aetherium"],
+    "utilitycraft:deepslate_tungsten_ore": ["utilitycraft:tungsten"],
+    "utilitycraft:nether_tungsten_ore": ["utilitycraft:tungsten"],
+    "utilitycraft:tin_ore": ["utilitycraft:tin_ingot"],
+    "utilitycraft:deepslate_tin_ore": ["utilitycraft:tin_ingot"],
+    "utilitycraft:deepslate_uranium_ore": ["utilitycraft:uranium_ingot"],
+    "utilitycraft:ryno_deepslate_lead_ore": ["utilitycraft:ryno_lead_ingot"],
+    "utilitycraft:ryno_deepslate_uranium_ore": ["utilitycraft:ryno_uranium_ingot"],
+    "utilitycraft:ryno_vanadium_ore": ["utilitycraft:ryno_vanadium_ingot"],
 });
 
 const PENDING_ORE_BREAKS = new WeakMap();
@@ -362,26 +424,17 @@ function consumePendingOreDropSnapshot(snapshot) {
 
 function getTrackedOreDropIds(blockId) {
     const normalized = normalizeBlockId(blockId);
+    const primaryDrop = ORE_BONUS_DROPS[normalized];
+    if (!primaryDrop) return [];
 
-    switch (normalized) {
-        case "minecraft:copper_ore":
-        case "minecraft:deepslate_copper_ore":
-            return ["minecraft:raw_copper", "minecraft:copper_ingot"];
-        case "minecraft:iron_ore":
-        case "minecraft:deepslate_iron_ore":
-            return ["minecraft:raw_iron", "minecraft:iron_ingot"];
-        case "minecraft:gold_ore":
-        case "minecraft:deepslate_gold_ore":
-            return ["minecraft:raw_gold", "minecraft:gold_ingot"];
-        case "minecraft:nether_gold_ore":
-            return ["minecraft:gold_nugget", "minecraft:raw_gold", "minecraft:gold_ingot"];
-        case "utilitycraft:deepslate_titanium_ore":
-            return ["utilitycraft:raw_titanium", "utilitycraft:titanium"];
-        case "minecraft:ancient_debris":
-            return ["minecraft:ancient_debris", "netherite_scrap"];
-        default:
-            return [];
-    }
+    // Include the block itself so Silk Touch is observable, the canonical raw
+    // drop for normal/Fortune breaks, and known processed outputs for tools or
+    // addons that smelt the block during mining.
+    return [...new Set([
+        normalized,
+        normalizeBlockId(primaryDrop),
+        ...(ORE_PROCESSED_DROPS[normalized] ?? []).map(normalizeBlockId),
+    ].filter(Boolean))];
 }
 
 function countTrackedOreDropAmount(dimension, location, trackedItemIds, knownItemIds = new Set()) {
@@ -490,34 +543,46 @@ function collectDrillBlocks(dimension, center, size) {
     return blocks;
 }
 
-function executeOperatorBreak(snapshot, attributes, state) {
-    const mode = normalizeBlockId(state?.abilityData?.operatorMode ?? "crushy");
-    const operatorEffect = findEffectByKind(attributes?.mining?.effects, "operator");
-    const size = Math.max(3, Number(operatorEffect?.size ?? (String(snapshot?.expected ?? "").includes("heavy_drill") ? 5 : 3)) || 3);
-    const blocks = collectDrillBlocks(snapshot.dimension, snapshot.location, size);
-    if (!blocks.length) return;
+function executeOperatorBreak(snapshot) { 
+    const context = getEquipmentStatsContext(snapshot?.player, STATSCORE.slots.mainhand, snapshot?.expected); 
+    if (!context) return; 
+ 
+    const { state, attributes } = context; 
+    const mode = normalizeOperatorMode(state?.abilityData?.operatorMode); 
+    const operatorEffect = findEffectByKind(attributes?.mining?.effects, "operator"); 
+    if (!operatorEffect || mode === "crushy") return;
 
-    for (const blockInfo of blocks) {
-        if (mode === "silky") {
-            const itemStack = blockInfo.permutation?.getItemStack?.(1);
-            if (clearBlockWithoutDrops(snapshot.dimension, blockInfo.location) && itemStack?.typeId) {
-                spawnBonusDropCount(snapshot.dimension, blockInfo.location, itemStack.typeId, itemStack.amount ?? 1);
-                continue;
-            }
-        }
+    const expected = String(snapshot?.expected ?? "");
+    const defaultSize =
+        expected.includes("absolute_drill") ? 7 :
+        expected.includes("heavy_drill") ? 5 :
+        3;
 
-        destroyBlockWithDrops(snapshot.dimension, blockInfo.location);
-
-        if (mode === "greedy") {
-            const dropId = ORE_BONUS_DROPS[normalizeBlockId(blockInfo.typeId)];
-            const bonusAmount = getFortune3BonusCount(blockInfo.typeId);
-            if (dropId && bonusAmount > 0) {
-                spawnBonusDropCount(snapshot.dimension, blockInfo.location, dropId, bonusAmount);
-            }
-        }
-    }
-
-    system.run(() => processMiningBreak(snapshot));
+    const size = Math.max(3, Number(operatorEffect?.size ?? defaultSize) || 3); 
+    const blocks = collectDrillBlocks(snapshot.dimension, snapshot.location, size); 
+    if (!blocks.length) return; 
+ 
+    for (const blockInfo of blocks) { 
+        if (mode === "silky") { 
+            const itemStack = blockInfo.permutation?.getItemStack?.(1); 
+            if (clearBlockWithoutDrops(snapshot.dimension, blockInfo.location) && itemStack?.typeId) { 
+                spawnBonusDropCount(snapshot.dimension, blockInfo.location, itemStack.typeId, itemStack.amount ?? 1); 
+                continue; 
+            } 
+        } 
+ 
+        destroyBlockWithDrops(snapshot.dimension, blockInfo.location); 
+ 
+        if (mode === "greedy") { 
+            const dropId = ORE_BONUS_DROPS[normalizeBlockId(blockInfo.typeId)]; 
+            const bonusAmount = getFortune3BonusCount(blockInfo.typeId); 
+            if (dropId && bonusAmount > 0) { 
+                spawnBonusDropCount(snapshot.dimension, blockInfo.location, dropId, bonusAmount); 
+            } 
+        } 
+    } 
+ 
+    system.run(() => processMiningBreak(snapshot)); 
 }
 
 function removeNativeBlockDrops(snapshot, acceptedItemIds) {
@@ -668,18 +733,6 @@ function executeWormBreak(snapshot) {
     return applied;
 }
 
-function getDoubleTroubleChance(effect, miningLevel) {
-    const baseChance = effect?.baseChance ?? 0.01;
-    const per10Levels = effect?.chancePer10Levels ?? 0.01;
-    const maxChance = effect?.maxChance ?? 0.2;
-    return Math.min(maxChance, baseChance + Math.floor(Math.max(1, miningLevel) / 10) * per10Levels);
-}
-
-function rollPreservation(chance) {
-    const numeric = Math.max(0, Number(chance ?? 0) || 0);
-    return numeric >= 1 || Math.random() <= numeric;
-}
-
 /**
  * Resolves the complete loot-table result for this block. No item-id filtering
  * is applied: Trouble effects duplicate every stack the loot manager returns.
@@ -723,7 +776,7 @@ function executeDoubleTrouble(snapshot) {
     if (!doubleTrouble) return;
 
     const miningLevel = attributes.levels?.mining ?? 1;
-    if (!rollChance(getDoubleTroubleChance(doubleTrouble, miningLevel))) return;
+    if (!rollChance(getTroubleChance(doubleTrouble, miningLevel))) return;
 
     const doubleDrops = generateAllBlockLoot(snapshot);
     if (!spawnAllGeneratedLoot(snapshot, doubleDrops)) return;
@@ -731,8 +784,7 @@ function executeDoubleTrouble(snapshot) {
     let label = "\u00A7dDouble Trouble";
     let tripleTriggered = false;
     const triple = attributes?.mining?.tripleTrouble;
-    const tripleChance = getDoubleTroubleChance(doubleTrouble, miningLevel)
-        * Math.max(0, Number(triple?.chanceScale ?? 0.1));
+    const tripleChance = getTripleTroubleChance(doubleTrouble, triple, miningLevel);
     if (triple && rollChance(tripleChance) && spawnAllGeneratedLoot(snapshot, generateAllBlockLoot(snapshot))) {
         label = "\u00A75Triple Trouble";
         tripleTriggered = true;
@@ -892,13 +944,6 @@ function processMiningBreak(snapshot) {
 
     let changed = false;
     let bonusXp = false;
-    let preserved = false;
-
-    if (rollPreservation(attributes.mining.durabilitySaveChance)) {
-        preserved = repairItemDurability(stack, attributes.mining.preservationRepairAmount ?? 2);
-        changed = preserved || changed;
-    }
-
     const effectResult = applyMiningEffects({ attributes, isOre, dimension, location });
     bonusXp = effectResult.bonusXp;
 
@@ -912,7 +957,7 @@ function processMiningBreak(snapshot) {
     if (changed) persistEquipmentItem(player, STATSCORE.slots.mainhand, stack);
     showLevelUp(player, stack, progress);
     showLevelUp(player, stack, defenseProgress);
-    showMiningFeedback(player, blockId, { bonusXp, preserved });
+    showMiningFeedback(player, blockId, { bonusXp, preserved: false });
 }
 
 function snapshotBreakEvent(event) {
@@ -960,10 +1005,10 @@ function handleBeforeBreak(event) {
         const forgerEffect = findEffectByKind(attributes?.mining?.effects, "forger");
         const reaperEffect = findEffectByKind(attributes?.mining?.effects, "reaper");
         if (operatorEffect) {
-            const mode = normalizeBlockId(state?.abilityData?.operatorMode ?? "crushy");
+            const mode = normalizeOperatorMode(state?.abilityData?.operatorMode);
             if (mode !== "crushy") {
                 event.cancel = true;
-                system.run(() => executeOperatorBreak(snapshot, attributes, state));
+                system.run(() => executeOperatorBreak(snapshot));
                 return;
             }
         }

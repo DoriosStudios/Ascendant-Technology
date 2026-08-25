@@ -70,6 +70,7 @@ export const REFINING_TABLE_CONFIG = {
             damageReduction: 0.025,
             durabilityPreserveChance: 0.10,
             negateAllDamageChance: 0.001,
+            elementalChance: 0.12,
         },
         utility: {
             extraDamage: 0.4,
@@ -92,10 +93,15 @@ export const REFINING_TABLE_CONFIG = {
         aetherium: 1,
     },
     elements: [
-        { id: "plant", label: `\u00A7a${STATSCORE_ICONS.poison} Poison`, weight: 22, damageScale: 0.05, durationTicks: 120, amplifier: 0 },
+        { id: "plant", label: `\u00A7a${STATSCORE_ICONS.plant} Plant`, weight: 22, damageScale: 0.05, durationTicks: 120, amplifier: 0 },
         { id: "frost", label: `\u00A7b${STATSCORE_ICONS.ice} Frost`, weight: 20, damageScale: 0.07, durationTicks: 90, amplifier: 1 },
         { id: "fire", label: `\u00A7c${STATSCORE_ICONS.fire} Fire`, weight: 20, damageScale: 0.08, seconds: 4 },
         { id: "lightning", label: `\u00A7e${STATSCORE_ICONS.lightning} Lightning`, weight: 18, damageScale: 0.09, durationTicks: 60, amplifier: 0 },
         { id: "darkness", label: `\u00A78${STATSCORE_ICONS.darkness} Darkness`, weight: 20, damageScale: 0.07, durationTicks: 100, amplifier: 0 },
+        { id: "light", label: `\u00A7e${STATSCORE_ICONS.holy} Blessing`, weight: 18, blessingDamage: 8, healAmount: 8, tickInterval: 10, mobDurationTicks: 18000, playerDurationTicks: 2400 },
+        { id: "wind", label: `\u00A7f${STATSCORE_ICONS.wind} Wind`, weight: 9, damageScale: 0.055, durationTicks: 100 },
+        { id: "water", label: `\u00A79${STATSCORE_ICONS.water} Water`, weight: 11, damageScale: 0.06, durationTicks: 100 },
+        { id: "void", label: `\u00A75${STATSCORE_ICONS.void} Void`, weight: 2, damageScale: 0.08, durationTicks: 120, coreRequirement: "advanced", allowedTypes: ["weapon", "tool", "hybrid", "utility"] },
+        { id: "earth", label: `\u00A76${STATSCORE_ICONS.earth} Earth`, weight: 8, damageScale: 0, coreRequirement: "runic", allowedTypes: ["support"] },
     ],
 };

@@ -8,7 +8,7 @@
     },
     "simple_bg": {
         "type": "image",
-        "texture": "textures/ui/panels/background_panel",
+        "texture": "textures/ui/dialog_background_opaque",
         "size": [18, 18],
         "layer": 2
     },
@@ -93,7 +93,7 @@
             {
                 "screen": {
                     "type": "image",
-                    "texture": "textures/ui/background_panel",
+                    "texture": "textures/ui/dialog_background_opaque",
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "$cell_image_size": [215, 166],
@@ -111,7 +111,7 @@
                 "info_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "$has_text": true,
+                    "$has_text": false,
                     "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
                     "offset": [-24, 57],

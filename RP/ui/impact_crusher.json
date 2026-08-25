@@ -46,7 +46,7 @@
         "controls": [
             {
                 "screen": {
-                    "type": "image", "texture": "textures/ui/dialog_background_opaque",
+                    "type": "image", "texture": "textures/ui/dialog_background_opaque_opaque",
                     "anchor_from": "center", "anchor_to": "center",
                     "$cell_image_size": [200, 166], "size": [200, 166], "offset": [21, 40], "layer": -1
                 }
@@ -64,7 +64,13 @@
                 }
             },
             {
-                "side_panel@uc.machine_side_panel": {
+                "side_panel@ascendant_common.info_panel": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$has_text": false, "$text_borders": [88, 150],
+                    "$bg_size": [104, 166],
+                    "$info_size": [96, 158],
+                    "offset": [-100, -7],
                     "visible": "$show_side_content"
                 }
             },
@@ -73,9 +79,10 @@
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [74, 146],
+                    "size": [88, 148],
+                    "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-76, 2],
+                    "offset": [-88, 2],
                     "visible": "$show_side_content"
                 }
             },

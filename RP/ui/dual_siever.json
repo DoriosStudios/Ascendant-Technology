@@ -59,7 +59,7 @@
             {
                 "screen": {
                     "type": "image",
-                    "texture": "textures/ui/background_panel",
+                    "texture": "textures/ui/dialog_background_opaque",
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "$cell_image_size": [200, 182],
@@ -69,14 +69,14 @@
                 }
             },
             {
-                "extended_side_panel": {
-                    "type": "image",
-                    "texture": "textures/ui/side_panel",
+                "extended_side_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "$cell_image_size": [90, 182],
-                    "size": [90, 182],
-                    "offset": [-89, -13],
+                    "$has_text": false,
+                    "$text_borders": [88, 164],
+                    "$bg_size": [104, 182],
+                    "$info_size": [96, 174],
+                    "offset": [-103, -4],
                     "layer": 0
                 }
             },
@@ -97,9 +97,10 @@
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [74, 178],
+                    "size": [88, 164],
+                    "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-79, 2]
+                    "offset": [-91, 8]
                 }
             },
             { "lane_a_input@uc.input_1_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-57, 21], "collection_index": 3 } },

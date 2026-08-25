@@ -6,6 +6,25 @@ import {
     touchesOverclockNetwork,
 } from "./network.js";
 
+const UNIVERSAL_PIPE_FACE_UPDATE_EVENT = "utilitycraft:universal_pipe_face_update";
+
+system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
+    if (id !== UNIVERSAL_PIPE_FACE_UPDATE_EVENT) return;
+
+    try {
+        const update = JSON.parse(message);
+        const location = update?.location;
+        const dimensionId = update?.dimensionId;
+        if (typeof dimensionId !== "string"
+            || !location
+            || ![location.x, location.y, location.z].every(Number.isFinite)) return;
+        const dimension = world.getDimension(dimensionId);
+        scheduleOverclockNetworkRescan(location, dimension);
+    } catch {}
+}, {
+    namespaces: ["utilitycraft"],
+});
+
 world.afterEvents.playerPlaceBlock.subscribe(({ block }) => {
     const dimension = block.dimension;
     const location = { ...block.location };

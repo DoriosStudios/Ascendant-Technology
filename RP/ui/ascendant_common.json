@@ -1356,6 +1356,17 @@
 		},
 		"controls": [
 			{
+				"info@uc.text_label": {
+					"visible": "$has_text",
+					"$text_scale": 0.55,
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"size": "$text_borders",
+					"layer": 5,
+					"collection_index": "$label_index"
+				}
+			},
+			{
 				"background_panel@$panel_bg_control": {
 					"visible": "$has_bg",
 					"$panel_size": "$bg_size",
@@ -1369,17 +1380,6 @@
 					"anchor_to": "center",
 					"size": "$info_size",
 					"layer": 2
-				}
-			},
-			{
-				"info@uc.text_label": {
-					"visible": "$has_text",
-					"$text_scale": 0.55,
-					"anchor_from": "center",
-					"anchor_to": "center",
-					"size": "$text_borders",
-					"layer": 3,
-					"collection_index": "$label_index"
 				}
 			}
 		]
@@ -1958,18 +1958,18 @@
 	 * Base background images for dialog panels.
 	 */
 
-	/* ELEMENT: dialog_background_dark
+	/* ELEMENT: dialog_background_opaque_dark
 	 * Dark dialog background image.
 	 */
-	"dialog_background_dark": {
+	"dialog_background_opaque_dark": {
 		"type": "image",
 		"texture": "textures/ui/panels/background_panel_dark"
 	},
 
-	/* ELEMENT: dialog_background_blue
+	/* ELEMENT: dialog_background_opaque_blue
 	 * Blue dialog background image.
 	 */
-	"dialog_background_blue": {
+	"dialog_background_opaque_blue": {
 		"type": "image",
 		"texture": "textures/ui/panels/background_panel_blue"
 	},
@@ -1983,7 +1983,7 @@
 	 */
 	"dark_panel": {
 		"type": "panel",
-		"$dialog_background|default": "ascendant_common.dialog_background_dark",
+		"$dialog_background_opaque|default": "ascendant_common.dialog_background_opaque_dark",
 		"$show_close_button|default": true,
 		"$close_button_visible_binding_name|default": "#close_button_visible",
 		"$close_button_offset|default": [0, 0],
@@ -1996,7 +1996,7 @@
 		"$divider_size|default": ["5px", "100% - 29px"],
 		"controls": [
 			{
-				"bg_image@$dialog_background": {
+				"bg_image@$dialog_background_opaque": {
 					"layer": 1
 				}
 			},
@@ -2051,7 +2051,7 @@
 	 * Blue dialog panel using the dark panel behavior.
 	 */
 	"blue_panel@ascendant_common.dark_panel": {
-		"$dialog_background": "ascendant_common.dialog_background_blue"
+		"$dialog_background_opaque": "ascendant_common.dialog_background_opaque_blue"
 	},
 
 	/* SECTION: SLOTS

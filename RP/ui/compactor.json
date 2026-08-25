@@ -17,15 +17,15 @@
                     "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
-			{ "side_panel@uc.machine_side_panel": {} },
+			{ "side_panel@ascendant_common.info_panel": { "anchor_from": "top_left", "anchor_to": "top_left", "$has_text": false, "$text_borders": [88, 150], "$bg_size": [104, 166], "$info_size": [96, 158], "offset": [-100, -7] } },
 			{
 				"item_label@uc.text_label": {
 					"collection_index": 1,
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"size": [74, 146],
+					"size": [88, 148],
 					"$text_scale": 0.55,
-					"offset": [-76, 2]
+					"offset": [-88, 2]
 				}
 			},
 			{

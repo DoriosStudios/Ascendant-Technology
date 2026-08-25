@@ -13,6 +13,7 @@ import {
     OVERCLOCK_TARGET_POSITION_PREFIX,
     OVERCLOCK_TARGET_TAG,
 } from "./constants.js";
+import { isOverclockNetworkConnectionOpen } from "./pipeFaces.js";
 
 const networksById = new Map();
 const networksByRelayId = new Map();
@@ -151,6 +152,7 @@ async function scanComponent(startPosition, dimension) {
     const relaysById = new Map();
     const targetsByKey = new Map();
     const checkedTargetKeys = new Set();
+    const pipeFaceCache = new Map();
 
     while (queueHead < queue.length) {
         if (processed > 0 && processed % NETWORK_SCAN_BATCH_SIZE === 0) {
@@ -178,14 +180,23 @@ async function scanComponent(startPosition, dimension) {
             if (entity) relaysById.set(entity.id, entity);
         }
 
+        const isUniversalEndpoint = block.hasTag?.("dorios:universal_pipe")
+            && (block.hasTag?.("dorios:isExporter") || block.hasTag?.("dorios:isImporter"));
+        const isImporter = isUniversalEndpoint && block.hasTag?.("dorios:isImporter");
+        const attachment = isUniversalEndpoint ? getEndpointAttachmentPosition(block) : undefined;
+
         for (const offset of NETWORK_OFFSETS) {
             const adjacent = offsetPosition(position, offset);
             const adjacentBlock = safeGetBlock(dimension, adjacent);
+            if (!isOverclockNetworkConnectionOpen(block, offset, adjacentBlock, pipeFaceCache)) continue;
+            const isAttachment = attachment && isSamePosition(attachment, adjacent);
             if (adjacentBlock?.hasTag?.(OVERCLOCK_NETWORK_TAG)) {
+                if (isImporter && isAttachment) continue;
                 queue.push(adjacent);
                 continue;
             }
             if (!adjacentBlock) continue;
+            if (isUniversalEndpoint && (!isImporter || !isAttachment)) continue;
 
             const targetKey = localPositionKey(adjacent);
             if (checkedTargetKeys.has(targetKey)) continue;
@@ -217,6 +228,30 @@ async function scanComponent(startPosition, dimension) {
         targets,
         energyTargets,
     };
+}
+
+function getEndpointAttachmentPosition(block) {
+    let face;
+    try {
+        face = block.permutation.getState("minecraft:block_face");
+    } catch {
+        return undefined;
+    }
+    const offset = {
+        down: { x: 0, y: 1, z: 0 },
+        up: { x: 0, y: -1, z: 0 },
+        south: { x: 0, y: 0, z: -1 },
+        north: { x: 0, y: 0, z: 1 },
+        east: { x: -1, y: 0, z: 0 },
+        west: { x: 1, y: 0, z: 0 },
+    }[face];
+    return offset ? offsetPosition(block.location, offset) : undefined;
+}
+
+function isSamePosition(left, right) {
+    return Math.floor(left.x) === Math.floor(right.x)
+        && Math.floor(left.y) === Math.floor(right.y)
+        && Math.floor(left.z) === Math.floor(right.z);
 }
 
 function registerNetwork(component) {

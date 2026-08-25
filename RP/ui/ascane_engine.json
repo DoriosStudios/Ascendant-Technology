@@ -244,18 +244,22 @@
 			},
 			{
 				"info_panel@ascendant_common.info_panel": {
-					"offset": [ -134, 4 ],
-					"$panel_color": "black"
+					"offset": [ -141, 4 ],
+					"$background_color": "black",
+					"$has_text": false,
+					"$text_borders": [ 88, 150 ],
+					"$bg_size": [ 104, 166 ],
+					"$info_size": [ 96, 158 ]
 				}
 			},
 			{
-				"status_label@uc.text_label": {
+				"item_label@uc.text_label": {
 					"collection_index": 1,
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"$text_scale": 0.55,
-					"offset": [ -132, 2 ],
-					"size": [ 76, 148 ],
+					"offset": [ -137, 2 ],
+					"size": [ 88, 148 ],
 					"layer": 4
 				}
 			},
@@ -473,18 +477,22 @@
 		"controls": [
 			{
 				"info_panel@ascendant_common.info_panel": {
-					"offset": [ -134, 4 ],
-					"$panel_color": "black"
+					"offset": [ -141, 4 ],
+					"$background_color": "black",
+					"$has_text": false,
+					"$text_borders": [ 88, 150 ],
+					"$bg_size": [ 104, 166 ],
+					"$info_size": [ 96, 158 ]
 				}
 			},
 			{
-				"status_label@uc.text_label": {
+				"item_label@uc.text_label": {
 					"collection_index": 30,
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"$text_scale": 0.55,
-					"offset": [ -132, 2 ],
-					"size": [ 76, 148 ],
+					"offset": [ -137, 2 ],
+					"size": [ 88, 148 ],
 					"layer": 4
 				}
 			},

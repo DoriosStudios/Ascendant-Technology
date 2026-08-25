@@ -98,6 +98,24 @@
 				"sounds/statscore/wind_launch0",
 				"sounds/statscore/wind_launch1"
 			]
+		},
+		"ascendant.statscore.blessing": {
+			"category": "player",
+			"sounds": [
+				"sounds/statscore/blessing"
+			]
+		},
+		"ascendant.statscore.blessing_curse": {
+			"category": "player",
+			"sounds": [
+				"sounds/statscore/blessing_curse"
+			]
+		},
+		"ascendant.statscore.void_singularity": {
+			"category": "player",
+			"sounds": [
+				"sounds/statscore/void_singularity"
+			]
 		}
 	}
 }

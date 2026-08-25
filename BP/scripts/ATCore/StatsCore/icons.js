@@ -36,6 +36,18 @@ export const STATSCORE_ICONS = Object.freeze({
     ice: "",
     darkness: "",
     lightning: "",
+    wind: "",
+    void: "",
+    curse: "",
+    retaliation: "",
+    rage: "",
+    earth: "",
+    holy: "",
+    plant: "",
+    mark: "",
+    operator: "",
+    blessedHeart: "",
+    water: "",
     healedHeart: "",
     fullHeart: "",
     emptyHeart: "",
@@ -57,6 +69,7 @@ function normalizeLabel(label) {
 export function getElementIcon(elementId) {
     switch (normalizeLabel(elementId)) {
         case "plant":
+            return STATSCORE_ICONS.plant;
         case "poison":
             return STATSCORE_ICONS.poison;
         case "frost":
@@ -70,6 +83,18 @@ export function getElementIcon(elementId) {
         case "darkness":
         case "dark":
             return STATSCORE_ICONS.darkness;
+        case "light":
+        case "blessing":
+        case "blessed":
+            return STATSCORE_ICONS.holy;
+        case "wind":
+            return STATSCORE_ICONS.wind;
+        case "void":
+            return STATSCORE_ICONS.void;
+        case "earth":
+            return STATSCORE_ICONS.earth;
+        case "water":
+            return STATSCORE_ICONS.water;
         default:
             return STATSCORE_ICONS.unknown;
     }
@@ -111,9 +136,15 @@ export function getAbilityIcon(label) {
     }
     if (normalized.includes("sweep")) return STATSCORE_ICONS.sweeping;
     if (normalized.includes("bleed")) return STATSCORE_ICONS.blood;
+    if (normalized.includes("luck")) return STATSCORE_ICONS.luck;
+    if (normalized.includes("mark") || normalized.includes("skewer")) return STATSCORE_ICONS.mark;
+    if (normalized.includes("retaliat")) return STATSCORE_ICONS.retaliation;
+    if (normalized.includes("operator")) return STATSCORE_ICONS.operator;
+    if (normalized.includes("berserk") || normalized.includes("rage")) return STATSCORE_ICONS.rage;
+    if (normalized.includes("wind launch")) return STATSCORE_ICONS.wind;
     if (normalized.includes("poison")) return STATSCORE_ICONS.poison;
     if (normalized.includes("feather") || normalized.includes("dash")) return STATSCORE_ICONS.walkingSpeed;
-    if (normalized.includes("tough") || normalized.includes("spikes")) return STATSCORE_ICONS.fullArmor;
+    if (normalized.includes("armored") || normalized.includes("tough") || normalized.includes("spikes")) return STATSCORE_ICONS.fullArmor;
     if (normalized.includes("clarity")) return STATSCORE_ICONS.healedHeart;
     if (normalized.includes("perfect guard") || normalized.includes("blast ward")) return STATSCORE_ICONS.fullArmor;
     if (normalized.includes("overcharge")) return STATSCORE_ICONS.lightning;
@@ -123,8 +154,7 @@ export function getAbilityIcon(label) {
     if (normalized.includes("scaveng")) return STATSCORE_ICONS.scavenger;
     if (normalized.includes("reaper")) return STATSCORE_ICONS.death;
     if (
-        normalized.includes("operator")
-        || normalized.includes("crush")
+        normalized.includes("crush")
         || normalized.includes("gardener")
         || normalized.includes("forger")
         || normalized.includes("aftershock")
@@ -136,7 +166,6 @@ export function getAbilityIcon(label) {
         normalized.includes("harpoon")
         || normalized.includes("pinning shot")
         || normalized.includes("ballista")
-        || normalized.includes("berserk")
         || normalized.includes("primal")
     ) {
         return STATSCORE_ICONS.sword;

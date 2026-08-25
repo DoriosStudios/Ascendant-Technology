@@ -172,9 +172,14 @@
 				}
 			},
 			{
-				"side_panel@uc.machine_side_panel": {
-					"offset": [-51, 4]
-				}
+                "side_panel@ascendant_common.info_panel": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$has_text": false,
+                    "$bg_size": [104, 166],
+                    "$info_size": [96, 158],
+                    "offset": [-151, -3]
+                }
 			},
 			{
 				"stabilizer_label@uc.text_label": {

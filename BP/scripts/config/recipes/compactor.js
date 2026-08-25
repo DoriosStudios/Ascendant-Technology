@@ -10,6 +10,8 @@ import { UTILITYCRAFT_COMPRESSED_ITEM_RECIPES } from "./compactorCompressedItems
  * this pack. `chains` cover nugget/ingot/block progression and every shipped
  * compressed-block tier; `materialCompactions` covers the remaining vanilla
  * material-to-block conversions from UtilityCraft's press reference.
+ * `fragmentCompactions` mirrors every solid-form consolidation recipe from
+ * UtilityCraft's pebbles collection and this pack's chunk recipes.
  */
 export const COMPACTOR_CONFIG = Object.freeze({
     defaults: Object.freeze({
@@ -55,6 +57,42 @@ export const COMPACTOR_CONFIG = Object.freeze({
         ["minecraft:magma_cream", "minecraft:magma", 4],
         ["minecraft:string", "minecraft:wool", 4],
     ]),
+    fragmentCompactions: Object.freeze([
+        ["utilitycraft:mud_ball", "minecraft:mud", 4],
+        ["utilitycraft:ancient_debris_chunk", "minecraft:ancient_debris", 4],
+        ["utilitycraft:coal_chunk", "minecraft:coal_ore", 4],
+        ["utilitycraft:copper_chunk", "minecraft:copper_ore", 4],
+        ["utilitycraft:gold_chunk", "minecraft:gold_ore", 4],
+        ["utilitycraft:iron_chunk", "minecraft:iron_ore", 4],
+        ["utilitycraft:nether_gold_chunk", "minecraft:nether_gold_ore", 4],
+        ["utilitycraft:nether_quartz_chunk", "minecraft:quartz_ore", 4],
+        ["utilitycraft:deepslate_coal_chunk", "minecraft:deepslate_coal_ore", 4],
+        ["utilitycraft:deepslate_gold_chunk", "minecraft:deepslate_gold_ore", 4],
+        ["utilitycraft:deepslate_iron_chunk", "minecraft:deepslate_iron_ore", 4],
+        ["utilitycraft:gravel_fragments", "minecraft:gravel", 4],
+        ["utilitycraft:nether_star_fragment", "minecraft:nether_star", 9],
+        ["utilitycraft:dirt_handful", "minecraft:dirt", 4],
+        ["utilitycraft:red_sand_handful", "minecraft:red_sand", 4],
+        ["utilitycraft:sand_handful", "minecraft:sand", 4],
+        ["utilitycraft:andesite_pebble", "minecraft:andesite", 4],
+        ["utilitycraft:basalt_pebble", "minecraft:basalt", 4],
+        ["utilitycraft:blackstone_pebble", "minecraft:blackstone", 4],
+        ["utilitycraft:calcite_pebble", "minecraft:calcite", 4],
+        ["utilitycraft:stone_pebble", "minecraft:cobblestone", 4],
+        ["utilitycraft:diorite_pebble", "minecraft:diorite", 4],
+        ["utilitycraft:dripstone_pebble", "minecraft:dripstone_block", 4],
+        ["utilitycraft:gilded_blackstone_pebble", "minecraft:gilded_blackstone", 4],
+        ["utilitycraft:granite_pebble", "minecraft:granite", 4],
+        ["utilitycraft:tuff_pebble", "minecraft:tuff", 4],
+        ["utilitycraft:diamond_shard", "minecraft:diamond", 4],
+        ["utilitycraft:emerald_shard", "minecraft:emerald", 4],
+        ["utilitycraft:shulker_shell_shard", "minecraft:shulker_shell", 9],
+        ["utilitycraft:totem_shard", "minecraft:totem_of_undying", 9],
+        ["utilitycraft:wither_skull_shard", "minecraft:wither_skeleton_skull", 9],
+        ["utilitycraft:titanium_chunk", "utilitycraft:deepslate_titanium_ore", 4],
+        ["utilitycraft:deepslate_tungsten_chunk", "utilitycraft:deepslate_tungsten_ore", 4],
+        ["utilitycraft:nether_tungsten_chunk", "utilitycraft:nether_tungsten_ore", 4],
+    ]),
 });
 
 /** @type {Map<string, Array<{ input: string, output: string, required: number, amount: number, cost: number, ticks: number, level: number, final: string }>>} */
@@ -68,6 +106,10 @@ for (const chain of COMPACTOR_CONFIG.chains) {
 }
 
 for (const [input, output, required] of COMPACTOR_CONFIG.materialCompactions) {
+    registerRecipe(input, output, required, 1, output);
+}
+
+for (const [input, output, required] of COMPACTOR_CONFIG.fragmentCompactions) {
     registerRecipe(input, output, required, 1, output);
 }
 

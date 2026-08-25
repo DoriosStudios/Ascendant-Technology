@@ -1,5 +1,6 @@
 // @ts-check
 
+import { BlockPermutation } from "@minecraft/server";
 import { getClonerItemProfile } from "./duplicatorProfiles.js";
 
 /** @typedef {import("@minecraft/server").ItemStack} ItemStack */
@@ -121,7 +122,8 @@ export function getDuplicatorProfile(typeId) {
 
 /**
  * Resolves why a template cannot be cloned.
- * Item tags are checked per stack; ID and pattern results are cached.
+ * Item and matching block tags are checked per stack; ID and pattern results
+ * are cached. This lets block definitions opt out with ascendant:unclonnable.
  *
  * @param {ItemStack | string} template
  * @returns {string | undefined}
@@ -130,7 +132,10 @@ export function getDuplicatorRestriction(template) {
     const typeId = getTemplateTypeId(template);
     if (!typeId) return "Invalid Template";
 
-    if (typeof template !== "string" && template.hasTag(DUPLICATOR_EXCLUSION_TAG)) {
+    if (
+        (typeof template !== "string" && template.hasTag(DUPLICATOR_EXCLUSION_TAG))
+        || hasBlockExclusionTag(typeId)
+    ) {
         return "Unclonnable";
     }
 
@@ -144,6 +149,15 @@ export function getDuplicatorRestriction(template) {
 
     exclusionCache.set(typeId, restriction ?? false);
     return restriction;
+}
+
+/** @param {string} typeId */
+function hasBlockExclusionTag(typeId) {
+    try {
+        return BlockPermutation.resolve(typeId).getTags().includes(DUPLICATOR_EXCLUSION_TAG);
+    } catch {
+        return false;
+    }
 }
 
 /**

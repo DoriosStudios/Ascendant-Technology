@@ -1,24 +1,29 @@
-import { ButtonState, InputButton, system, world } from "@minecraft/server";
+import { ButtonState, EntityTypes, InputButton, system, world } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { applyStatsProcDamage, isProcDamageTarget } from "../combat/effects.js";
-import { showAbilityFeedback } from "../feedback/index.js";
+import { showAbilityFeedback, showHealingFeedback } from "../feedback/index.js";
 import { STATSCORE_ICONS } from "../icons.js";
 import { getEquipmentStatsContext, getHeldStatsContext } from "../shared/context.js";
-import { getEntityHurtAttacker, getEntityHurtTarget, getEventDamageType } from "../shared/damage.js";
+import { getEntityHurtAttacker, getEntityHurtTarget, getEventDamageType, isStatsCoreOverrideDamage } from "../shared/damage.js";
 import { findEffectByKind } from "../shared/effectSelectors.js";
 import { applyEffectById } from "../shared/effects.js";
 import { OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity } from "../shared/entityCategories.js";
 import { getCurrentTick, rollChance } from "../utils.js";
+import { getTroubleChance, getTripleTroubleChance } from "../shared/trouble.js";
+import {
+    getStatsCoreEffect,
+    removeStatsCoreEffect,
+    upsertStatsCoreEffect,
+} from "../effects/index.js";
 
-const adaptiveStates = new Map();
 const guardWindows = new Map();
 const effectCooldowns = new Map();
 const chargeStates = new Map();
 const recentShots = new Map();
 const projectileProfiles = new Map();
 const persistenceStacks = new Map();
-const soulCharges = new Map();
 const pendingOverheal = new Map();
+const healingFeedbackTicks = new Map();
 const blastProtectionWindows = new Map();
 
 function entityKey(entity) {
@@ -40,16 +45,18 @@ function cleanupTimedMap(map) {
 }
 
 function cleanupEventDrivenState() {
-    cleanupTimedMap(adaptiveStates);
     cleanupTimedMap(guardWindows);
     cleanupTimedMap(effectCooldowns);
     cleanupTimedMap(chargeStates);
     cleanupTimedMap(recentShots);
     cleanupTimedMap(projectileProfiles);
     cleanupTimedMap(persistenceStacks);
-    cleanupTimedMap(soulCharges);
     cleanupTimedMap(pendingOverheal);
     cleanupTimedMap(blastProtectionWindows);
+    const feedbackCutoff = getCurrentTick() - 200;
+    for (const [key, tick] of healingFeedbackTicks) {
+        if (Number(tick) <= feedbackCutoff) healingFeedbackTicks.delete(key);
+    }
 }
 
 function cooldownKey(entity, kind) {
@@ -171,15 +178,12 @@ function applyAdaptiveResilience(event, target, entries) {
     const profiles = combineArmorAttribute(entries, "adaptiveResilience");
     if (!profiles.length) return;
 
-    const key = entityKey(target);
     const now = getCurrentTick();
     const damageType = getEventDamageType(event);
-    const cached = adaptiveStates.get(key);
-    const previous = Number(cached?.expiresAt ?? 0) > now ? cached : null;
-    if (cached && !previous) adaptiveStates.delete(key);
-    const sameType = previous?.damageType === damageType;
+    const previous = getStatsCoreEffect(target, "adaptive_resilience");
+    const sameType = previous?.data?.damageType === damageType;
     const maxStacks = Math.max(...profiles.map(value => Number(value.maxStacks ?? 1) || 1));
-    const stacks = sameType ? Math.min(maxStacks, Math.max(1, Number(previous?.stacks ?? 1) || 1)) : 1;
+    const stacks = sameType ? Math.min(maxStacks, Math.max(1, Number(previous?.level ?? 1) || 1)) : 1;
     const reductionPerStack = profiles.reduce((sum, value) => sum + Math.max(0, Number(value.reductionPerStack ?? 0) || 0), 0);
     const reduction = Math.min(0.45, reductionPerStack * stacks);
 
@@ -188,10 +192,11 @@ function applyAdaptiveResilience(event, target, entries) {
     }
 
     const durationTicks = Math.max(...profiles.map(value => Number(value.durationTicks ?? 100) || 100));
-    adaptiveStates.set(key, {
-        damageType,
-        stacks: Math.min(maxStacks, stacks + 1),
-        expiresAt: now + durationTicks,
+    upsertStatsCoreEffect(target, {
+        id: "adaptive_resilience",
+        level: Math.min(maxStacks, stacks + 1),
+        expiresAtTick: now + durationTicks,
+        data: { damageType },
     });
 
     if (stacks > 1) {
@@ -316,19 +321,18 @@ function applyProjectileAttributes(event, attacker, target) {
 
 function consumeSoulCollector(event, attacker, attributes) {
     const effect = findEffectByKind(attributes?.effects, "soul_collector");
-    const key = entityKey(attacker);
-    const state = soulCharges.get(key);
-    if (!effect || !state || Number(state.expiresAt ?? 0) <= getCurrentTick()) return;
+    const state = getStatsCoreEffect(attacker, "soul_collector");
+    if (!effect || !state) return;
 
     const maxCharges = Math.max(1, Math.floor(Number(effect.maxCharges ?? 5) || 5));
-    const charges = Math.min(maxCharges, Math.max(0, Math.floor(Number(state.charges ?? 0) || 0)));
+    const charges = Math.min(maxCharges, Math.max(0, Math.floor(Number(state.level ?? 0) || 0)));
     // Soul Collector is a full-charge payoff. Keeping partial charges makes
     // the ability predictable and gives players a meaningful burst to plan for.
     if (charges < maxCharges) return;
 
     const damageBonus = Math.max(0, Number(effect.damagePerCharge ?? 0) || 0) * charges;
     event.damage = Math.max(0, Number(event.damage ?? 0) * (1 + damageBonus));
-    soulCharges.delete(key);
+    removeStatsCoreEffect(attacker, "soul_collector");
 
     const healAmount = Math.max(0, Number(effect.healPerCharge ?? 0) || 0) * charges;
     const target = getEntityHurtTarget(event);
@@ -396,6 +400,7 @@ function applyGuardWorm(event, player) {
 
 function handleEntityHurtBefore(event) {
     if (event?.cancel === true) return;
+    if (isStatsCoreOverrideDamage(event)) return;
 
     const target = getEntityHurtTarget(event);
     if (!target) return;
@@ -435,10 +440,11 @@ function handleHealBefore(event) {
 
     const { current, max } = getHealthValues(player);
     const excess = Math.max(0, current + boostedHealing - max);
-    if (excess <= 0) return;
-
     pendingOverheal.set(entityKey(player), {
         excess,
+        healthBefore: current,
+        baseHealing,
+        missingHealthBefore: Math.max(0, max - current),
         durationTicks: Math.max(...profiles.map(value => Number(value.overhealAbsorptionDurationTicks ?? 100) || 100)),
         expiresAt: getCurrentTick() + 4,
     });
@@ -452,9 +458,24 @@ function handleHealAfter(event) {
     if (!pending || Number(pending.expiresAt ?? 0) < getCurrentTick()) return;
     pendingOverheal.delete(entityKey(player));
 
-    const amplifier = Math.max(0, Math.min(3, Math.ceil(Number(pending.excess ?? 0) / 4) - 1));
-    applyEffectById(player, "absorption", Math.max(20, Math.floor(Number(pending.durationTicks ?? 100))), amplifier, false);
-    showAbilityFeedback(player, "Healing Efficiency", STATSCORE_ICONS.healedHeart);
+    const actualHealing = Math.max(0, getHealthValues(player).current - Number(pending.healthBefore ?? 0));
+    const baselineHealing = Math.min(
+        Math.max(0, Number(pending.baseHealing ?? 0) || 0),
+        Math.max(0, Number(pending.missingHealthBefore ?? 0) || 0),
+    );
+    const efficiencyHealing = Math.max(0, actualHealing - baselineHealing);
+    const feedbackKey = entityKey(player);
+    const now = getCurrentTick();
+    if (efficiencyHealing > 0.2 && now - Number(healingFeedbackTicks.get(feedbackKey) ?? -Infinity) >= 40) {
+        healingFeedbackTicks.set(feedbackKey, now);
+        showHealingFeedback(player, efficiencyHealing);
+    }
+
+    const excess = Math.max(0, Number(pending.excess ?? 0));
+    if (excess > 0) {
+        const amplifier = Math.max(0, Math.min(3, Math.ceil(excess / 4) - 1));
+        applyEffectById(player, "absorption", Math.max(20, Math.floor(Number(pending.durationTicks ?? 100))), amplifier, false);
+    }
 }
 
 function getEventItemContext(player, itemStack) {
@@ -623,22 +644,104 @@ function handleEntityDie(event) {
     const shot = projectile
         ? projectileProfiles.get(entityKey(projectile)) ?? getRecentShot(attacker)
         : getRecentShot(attacker);
-    const context = shot?.attributes ? null : getHeldStatsContext(attacker);
+    const context = getHeldStatsContext(attacker);
     const attributes = shot?.attributes ?? context?.attributes;
+    applyEntityTroubleLoot(event, attacker, context, attributes);
     const effect = findEffectByKind(attributes?.effects, "soul_collector");
     if (!effect) return;
 
-    const key = entityKey(attacker);
-    const previous = soulCharges.get(key);
+    const previous = getStatsCoreEffect(attacker, "soul_collector");
     const maxCharges = Math.max(1, Math.floor(Number(effect.maxCharges ?? 5) || 5));
     const branch = String(shot?.branch ?? context?.definition?.branch ?? "").toLowerCase();
     const gainedCharges = branch === "hoe" ? 2 : 1;
-    const charges = Math.min(maxCharges, Math.max(0, Number(previous?.charges ?? 0) || 0) + gainedCharges);
-    soulCharges.set(key, {
-        charges,
-        expiresAt: getCurrentTick() + Math.max(20, Math.floor(Number(effect.durationTicks ?? 600) || 600)),
+    const charges = Math.min(maxCharges, Math.max(0, Number(previous?.level ?? 0) || 0) + gainedCharges);
+    upsertStatsCoreEffect(attacker, {
+        id: "soul_collector",
+        level: charges,
+        displayMode: "charges",
+        currentCharges: charges,
+        maxCharges,
+        durationTicks: Math.max(20, Math.floor(Number(effect.durationTicks ?? 600) || 600)),
     });
     showAbilityFeedback(attacker, `Soul Collector ${charges}/${maxCharges}`, STATSCORE_ICONS.soul);
+}
+
+function spawnEntityLootStacks(dimension, location, stacks) {
+    let spawned = false;
+    for (const stack of Array.isArray(stacks) ? stacks : []) {
+        try {
+            dimension?.spawnItem?.(stack, location);
+            spawned = true;
+        } catch { }
+    }
+    return spawned;
+}
+
+function generateCompleteEntityLoot(event, tool) {
+    try {
+        const manager = world.getLootTableManager?.();
+        const deadEntity = event?.deadEntity;
+        if (!manager || !deadEntity) return [];
+        let generated;
+        try {
+            generated = manager.generateLootFromEntity?.(deadEntity, tool);
+        } catch { }
+        if (!Array.isArray(generated)) {
+            const entityType = EntityTypes.get?.(deadEntity.typeId);
+            generated = entityType
+                ? manager.generateLootFromEntityType?.(entityType, tool)
+                : [];
+        }
+        return Array.isArray(generated) ? generated.filter(Boolean) : [];
+    } catch (error) {
+        console.warn("[StatsCore] Entity Trouble loot generation failed.", error);
+        return [];
+    }
+}
+
+function applyEntityTroubleLoot(event, attacker, context, attributes) {
+    const doubleTrouble = attributes?.mining?.doubleTrouble;
+    if (!doubleTrouble || attributes?.refinement?.active !== true) return false;
+
+    const level = attributes?.levels?.mining ?? attributes?.levels?.offensive ?? 1;
+    if (!rollChance(getTroubleChance(doubleTrouble, level), 0)) return false;
+
+    const deadEntity = event?.deadEntity;
+    const location = deadEntity?.location;
+    const dimension = deadEntity?.dimension;
+    if (!location || !dimension) return false;
+
+    if (!spawnEntityLootStacks(dimension, location, generateCompleteEntityLoot(event, context?.stack))) {
+        return false;
+    }
+
+    let tripleTriggered = false;
+    const tripleTrouble = attributes?.mining?.tripleTrouble;
+    if (rollChance(getTripleTroubleChance(doubleTrouble, tripleTrouble, level), 0)) {
+        tripleTriggered = spawnEntityLootStacks(
+            dimension,
+            location,
+            generateCompleteEntityLoot(event, context?.stack),
+        );
+    }
+
+    try {
+        dimension.playSound?.("random.levelup", location, {
+            pitch: tripleTriggered ? 0.55 : 1,
+            volume: 0.7,
+        });
+        dimension.spawnParticle?.("minecraft:village_hero_effect", {
+            x: location.x,
+            y: location.y + 0.8,
+            z: location.z,
+        });
+    } catch { }
+    showAbilityFeedback(
+        attacker,
+        tripleTriggered ? "Triple Trouble" : "Double Trouble",
+        tripleTriggered ? STATSCORE_ICONS.tripleTrouble : STATSCORE_ICONS.doubleTrouble,
+    );
+    return true;
 }
 
 function handleItemPickup(event) {

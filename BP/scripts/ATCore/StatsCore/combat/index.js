@@ -4,18 +4,30 @@ import { getLiveEquipmentItem, persistEquipmentItem } from "../core/equipment.js
 import { getStatsCoreDefinition } from "../core/registry.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
 import { showAbilityFeedback, showCombatFeedback, showLevelUp } from "../feedback/index.js";
-import { applyCombatEffects, getMarkedDamageBonus, isProcDamageTarget } from "./effects.js";
+import {
+    applyCombatEffects,
+    applyBlessingCurse,
+    applyPreparedBlessing,
+    getMarkedDamageBonus,
+    isProcDamageTarget,
+    prepareBlessingForHit,
+} from "./effects.js";
 import { rollStatsCrit, rememberCombatContact } from "./crit.js";
 import { applyArmorPenetration } from "./penetration.js";
 import { applyLifeSteal } from "./lifesteal.js";
 import { getEquipmentStatsContext } from "../shared/context.js";
 import { getEntityHurtAttacker, getEntityHurtTarget } from "../shared/damage.js";
 import { findEffectByKind } from "../shared/effectSelectors.js";
+import { applyEffectById } from "../shared/effects.js";
+import { OFFENSIVE_ENTITY_CATEGORIES, getEntityCategory } from "../shared/entityCategories.js";
+import { getStatsCoreEffect, getStatsCoreEffects, upsertStatsCoreEffect } from "../effects/index.js";
 
-const berserkStates = new Map();
 const pendingCombatFollowUps = new Map();
+const blessingCurseCooldowns = new Map();
+const preparedBlessings = new WeakMap();
 let useImmediateAfterHurtFollowUp = false;
 let pendingFollowUpCleanupScheduled = false;
+let blessingGateInitialized = false;
 
 function getCombatFollowUpKey(attacker, target) {
     return `${String(target?.id ?? "target")}:${String(attacker?.id ?? "attacker")}`;
@@ -73,49 +85,30 @@ function canUseDefinitionForCombat(definition, attributes = undefined) {
         || (Array.isArray(attributes?.effects) && attributes.effects.length > 0);
 }
 
-function getBerserkStateKey(entity) {
-    return String(entity?.id ?? entity?.name ?? "berserk");
-}
-
-function cleanupBerserkStates() {
-    const now = Number(system.currentTick ?? 0) || 0;
-    for (const [key, value] of berserkStates.entries()) {
-        if (Number(value?.expiresAt ?? 0) <= now) {
-            berserkStates.delete(key);
-        }
-    }
-}
-
 function getBerserkDamageBonus(attacker, effect) {
     if (!attacker || !effect) return 0;
 
-    const key = getBerserkStateKey(attacker);
-    const state = berserkStates.get(key);
+    const state = getStatsCoreEffect(attacker, "berserk");
     if (!state) return 0;
-    if (Number(state.expiresAt ?? 0) <= (Number(system.currentTick ?? 0) || 0)) {
-        berserkStates.delete(key);
-        return 0;
-    }
 
     const perStack = Math.max(0, Number(effect.damagePerStack ?? 1) || 1);
-    return Math.max(0, Number(state.stacks ?? 0) || 0) * perStack;
+    return Math.max(0, Number(state.level ?? 0) || 0) * perStack;
 }
 
 function addBerserkStack(attacker, effect) {
     if (!attacker || !effect) return 0;
 
-    const now = Number(system.currentTick ?? 0) || 0;
-    const key = getBerserkStateKey(attacker);
     const durationTicks = Math.max(20, Math.floor(Number(effect.durationTicks ?? 300) || 300));
-    const maxStacks = Math.max(1, Math.floor(Number(effect.maxStacks ?? 10) || 10));
-    const currentStacks = Number(berserkStates.get(key)?.stacks ?? 0) || 0;
+    const maxStacks = Math.min(5, Math.max(1, Math.floor(Number(effect.maxStacks ?? 5) || 5)));
+    const currentStacks = Number(getStatsCoreEffect(attacker, "berserk")?.level ?? 0) || 0;
     const nextStacks = Math.min(maxStacks, currentStacks + 1);
 
-    berserkStates.set(key, {
-        stacks: nextStacks,
-        expiresAt: now + durationTicks,
+    upsertStatsCoreEffect(attacker, {
+        id: "berserk",
+        level: nextStacks,
+        durationTicks,
     });
-    if (berserkStates.size > STATSCORE.runtime.markCleanupSize) cleanupBerserkStates();
+    applyEffectById(attacker, "strength", durationTicks, nextStacks - 1, false);
 
     showAbilityFeedback(attacker, `\u00A7cBerserk x${nextStacks}`);
 
@@ -156,6 +149,7 @@ function processCombatFollowUp(followUp) {
         baseDamage,
         markedDamageBonus,
         berserkDamageBonus,
+        preAppliedElemental,
     } = followUp;
     let lifestealHealed = 0;
     let effects = { elemental: [], abilities: [] };
@@ -169,6 +163,7 @@ function processCombatFollowUp(followUp) {
             finalDamage,
             damageSource,
             damagingProjectile,
+            preAppliedElemental,
         });
     } catch (error) {
         console.warn("[StatsCore] combat effects failed:", error);
@@ -207,6 +202,66 @@ function handleCombatAfterHurt(event) {
     }
 }
 
+function handleBlessingGate(event) {
+    try {
+        if (event?.cancel === true) return;
+
+        const target = getEntityHurtTarget(event);
+        if (!target) return;
+
+        const attacker = getEntityHurtAttacker(event);
+        if (!attacker || target.id === attacker.id) return;
+
+        const activeBlessing = getStatsCoreEffects(target).find((effect) =>
+            effect.id === "blessed" && effect.polarity !== "debuff"
+        );
+        if (activeBlessing) {
+            const curseKey = `${attacker.id}:${target.id}`;
+            const now = Number(system.currentTick ?? 0);
+            if (Number(blessingCurseCooldowns.get(curseKey) ?? 0) <= now) {
+                blessingCurseCooldowns.set(curseKey, now + 10);
+                system.runTimeout(() => blessingCurseCooldowns.delete(curseKey), 11);
+                system.run(() => applyBlessingCurse(attacker));
+            }
+        }
+
+        if (isProcDamageTarget(target)) return;
+
+        const context = getEquipmentStatsContext(attacker, STATSCORE.slots.mainhand);
+        if (!context) return;
+
+        const { stack: weapon, definition, attributes } = context;
+        if (!canUseDefinitionForCombat(definition, attributes)) return;
+
+        const baseDamage = Number(event.damage ?? 0);
+        if (!Number.isFinite(baseDamage) || baseDamage <= 0) return;
+
+        const prepared = prepareBlessingForHit({
+            attacker,
+            target,
+            attributes,
+            weaponTypeId: weapon.typeId,
+            definition,
+        });
+        if (!prepared) return;
+
+        preparedBlessings.set(event, prepared);
+        if (prepared.curseAttacker === true && !activeBlessing) {
+            system.run(() => applyBlessingCurse(attacker));
+        } else if (prepared.curseAttacker !== true) {
+            system.run(() => applyPreparedBlessing({ attacker, target, prepared }));
+        }
+
+        if (prepared.cancelDamage) {
+            event.damage = 0;
+            event.cancel = true;
+            rememberCombatContact(attacker, target);
+        }
+    } catch (error) {
+        console.warn("[StatsCore] blessing gate failed:", error);
+    }
+}
+
 function handleCombatHurt(event) {
     try {
         if (event?.cancel === true) return;
@@ -225,6 +280,9 @@ function handleCombatHurt(event) {
 
         const baseDamage = Number(event.damage ?? 0);
         if (!Number.isFinite(baseDamage) || baseDamage <= 0) return;
+
+        const preparedBlessing = preparedBlessings.get(event) ?? null;
+        preparedBlessings.delete(event);
 
         const berserkEffect = findEffectByKind(attributes?.effects, "berserk");
         const markedDamageBonus = getMarkedDamageBonus(target, attributes);
@@ -271,6 +329,9 @@ function handleCombatHurt(event) {
             baseDamage,
             markedDamageBonus,
             berserkDamageBonus,
+            preAppliedElemental: preparedBlessing
+                ? [preparedBlessing.elementId ?? "light"]
+                : [],
             expiresAt: (Number(system.currentTick ?? 0) || 0) + 1,
         };
         if (useImmediateAfterHurtFollowUp) enqueueCombatFollowUp(followUp);
@@ -292,6 +353,15 @@ function handleEntityDie(event) {
         if (!canUseDefinitionForCombat(definition, attributes)) return;
 
         const berserkEffect = findEffectByKind(attributes?.effects, "berserk");
+        const hasWaterElement = (attributes?.elemental ?? []).some((element) =>
+            String(element?.id ?? "").trim().toLowerCase() === "water"
+        );
+        if (
+            hasWaterElement &&
+            OFFENSIVE_ENTITY_CATEGORIES.includes(getEntityCategory(event?.deadEntity))
+        ) {
+            applyEffectById(attacker, "water_breathing", 200, 0, false);
+        }
         const killXp = getProgressAmount(definition, "kill", 0);
         if (killXp <= 0 && !berserkEffect) return;
 
@@ -304,6 +374,18 @@ function handleEntityDie(event) {
         }
     } catch (error) {
         console.warn("[StatsCore] kill handler failed:", error);
+    }
+}
+
+/** Registers the Light/Blessing decision before all other StatsCore damage handlers. */
+export function initializeBlessingGate() {
+    if (blessingGateInitialized) return;
+    blessingGateInitialized = true;
+
+    if (world.beforeEvents?.entityHurt?.subscribe) {
+        world.beforeEvents.entityHurt.subscribe(handleBlessingGate);
+    } else {
+        console.warn("[StatsCore] beforeEvents.entityHurt unavailable; Blessing gate disabled.");
     }
 }
 

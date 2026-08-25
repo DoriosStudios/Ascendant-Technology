@@ -226,6 +226,34 @@ For these attributes, **P** is the event-tier power: `0.65` Wood, `0.75` Stone,
 - An Advanced Runic Core increases the resolved chance and healing by 20%,
   caps chance at `45%`, and adds one extra XP.
 
+## Equipment test commands
+
+These administrator commands modify the registered item in each target
+player's main hand. Every successful command persists the new StatsCore state,
+recalculates the resolved attributes, replaces the item in the correct slot,
+and refreshes its lore immediately.
+
+- `/sc:refine_attribute apply <target> <attribute> <value>` adds a compatible
+  refinement attribute. Chance values use `0–1`, while Extra Damage uses
+  `0–18`.
+- `/sc:refine_element apply <target> <element> <chance> <damage>` assigns an
+  elemental affinity. Use `/sc:refine_list elements` for the accepted IDs.
+- `/sc:refine_ability apply <target> <ability> <level> <appliesTo>` unlocks a
+  native ability or installs it as an inherited `+` ability when the target's
+  combat/mining/support category accepts it. `appliesTo` accepts an entity
+  category such as `hostile` or an exact entity type ID.
+- `/sc:refine_list <attributes|abilities|elements>` explains the available
+  test values in chat.
+
+Examples:
+
+```text
+/sc:refine_attribute apply @s critical_chance 0.25
+/sc:refine_element apply @s void 1 8
+/sc:refine_ability apply @s bleeding 1 hostile
+/sc:refine_ability apply @s reaper 1 hostile,boss
+```
+
 ## Special abilities
 
 ### Combat and hybrid abilities
@@ -251,8 +279,8 @@ For these attributes, **P** is the event-tier power: `0.65` Wood, `0.75` Stone,
   target.
 - Throws the target away with strong knockback and gives the user a short
   forward impulse.
-- Marked mobs render a short-lived marker about 1.5 blocks above their origin;
-  it is refreshed every two ticks so it follows the target's head.
+- Marked mobs render a glowing short-lived marker 2.5 blocks above their
+  origin; it is refreshed every two ticks so it follows the target.
 
 **Aftershock** (Mace):
 
@@ -432,13 +460,13 @@ For these attributes, **P** is the event-tier power: `0.65` Wood, `0.75` Stone,
 
 ### Refining Table displays
 
-- The primary display now reports equipment profile, tier, affinity, current
-  grade/quality, category levels, chip/material, quality interval, grade odds,
-  XP, energy, core requirements, primary ability, inherited abilities, and the
-  Advanced Core inheritance rule.
-- The details and all-statistics displays expose the resolved Trouble chances,
-  elemental data, event-driven attributes, native abilities, and every inherited
-  `+` ability.
+- The primary display is a compact summary: item, grade/quality, relevant
+  category levels, shortened inputs, roll interval, operation costs, core,
+  primary ability, and active `+` abilities. It intentionally omits technical
+  unlock labels and long probability explanations.
+- Tier, affinity, individual grade odds, unlock requirements, the NRA chain
+  rule, resolved Trouble chances, elemental data, event-driven attributes, and
+  every inherited `+` ability remain available in the detailed displays.
 
 - Named abilities complement normal StatsCore attributes; armor can still have
   damage reduction, evasion, and preservation.

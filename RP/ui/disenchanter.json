@@ -40,10 +40,12 @@
                 "info_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-58, 27],
-                    "$panel_color": "dark",
-                    "$has_text": true,
-                    "$text_borders": [72, 150]
+                    "offset": [-72, 27],
+                    "$background_color": "dark",
+                    "$has_text": false,
+                    "$text_borders": [88, 150],
+                    "$bg_size": [104, 166],
+                    "$info_size": [96, 158]
                 }
             },
             {
@@ -51,9 +53,10 @@
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-54, 35.5],
+                    "layer": 3,
+                    "offset": [-60, 35.5],
                     "$text_scale": 0.55,
-                    "size": [64, 140]
+                    "size": [88, 148]
                 }
             },
             {

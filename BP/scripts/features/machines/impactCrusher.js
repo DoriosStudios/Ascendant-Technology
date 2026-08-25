@@ -44,6 +44,8 @@ const OUTPUTS = Object.freeze([[13, 14, 15, 16], [17, 18, 19, 20]]);
 const ALL_OUTPUTS = Object.freeze(OUTPUTS.flat());
 const LAVA_PER_CRAFT = 400;
 const LAVA_HEAT_USE = 50;
+const LAVA_HEAT_GAIN_WITH_STEAM = 45;
+const LAVA_HEAT_GAIN_WITHOUT_STEAM = 12;
 const STEAM_COOLING_USE = 75;
 const MIN_OPERATING_HEAT = 350;
 const MAX_HEAT = 1000;
@@ -148,14 +150,40 @@ function burnAndLock(machine) {
     setDynamicNumber(machine.entity, LOCK_UNTIL_KEY, system.currentTick + LOCK_DURATION_TICKS);
 }
 
-function display(machine, lava, steam, heat, lanes) {
+function display(machine, lava, steam, heat, lanes, thermalTooltip) {
     if (!machine.shouldUpdateUI) return;
     lava.display(LAVA_DISPLAY_SLOT);
     steam.display(STEAM_DISPLAY_SLOT);
-    displayTemperature(machine, heat, MAX_HEAT, 2);
+    displayTemperature(machine, heat, MAX_HEAT, 2, thermalTooltip.title, thermalTooltip.lines);
     for (let index = 0; index < lanes.length; index++) {
         displayProgress(machine, lanes[index].cost, PROGRESS_SLOTS[index], index);
     }
+}
+
+function buildThermalTooltip(heat, steam, heatIncrease, processingInterval, locked = false) {
+    const steamAvailable = steam.getType() === "steam" && steam.get() > 0;
+    const lines = [
+        `§r§cHeat §f${Math.floor(heat)}/${MAX_HEAT}`,
+        `§r§7Steam Cooling §f${steamAvailable ? "Active" : "Unavailable"}`,
+    ];
+
+    if (locked) {
+        lines.push("§r§cThermal Lock Active");
+    } else if (!steamAvailable) {
+        const seconds = estimateOverheatSeconds(heat, heatIncrease, processingInterval);
+        lines.push(seconds === undefined
+            ? "§r§aOverheating §fStable"
+            : `§r§cOverheating §f~${seconds}s`);
+        lines.push(`§r§6Lava Heat §f+${LAVA_HEAT_GAIN_WITHOUT_STEAM}/cycle`);
+    }
+
+    return { title: "§r§cImpact Crusher Heat", lines };
+}
+
+function estimateOverheatSeconds(heat, heatIncrease, processingInterval) {
+    if (heat >= MAX_HEAT) return 0;
+    if (heatIncrease <= 0) return undefined;
+    return Math.max(1, Math.ceil(((MAX_HEAT - heat) / heatIncrease) * (processingInterval / 20)));
 }
 
 DoriosLib.registry.blockComponent(ID, {
@@ -196,6 +224,7 @@ DoriosLib.registry.blockComponent(ID, {
         let heat = Number(machine.entity.getDynamicProperty(HEAT_KEY)) || 0;
         const locked = Number(machine.entity.getDynamicProperty(LOCK_KEY)) === 1;
         if (locked) {
+            const previousHeat = heat;
             heat = coolMachine(machine, steam, heat, 0, true);
             const lockUntil = Number(machine.entity.getDynamicProperty(LOCK_UNTIL_KEY)) || 0;
             if (system.currentTick >= lockUntil && heat < MIN_OPERATING_HEAT) {
@@ -207,7 +236,9 @@ DoriosLib.registry.blockComponent(ID, {
                 { cost: settings.machine.energy_cost },
                 { cost: settings.machine.energy_cost },
             ];
-            display(machine, lava, steam, heat, idleLanes);
+            display(machine, lava, steam, heat, idleLanes, buildThermalTooltip(
+                heat, steam, heat - previousHeat, machine.processingInterval, true,
+            ));
             const seconds = Math.max(0, Math.ceil((lockUntil - system.currentTick) / 20));
             renderStatus(machine, false, "Thermal Lock", [{
                 title: "Thermal Information",
@@ -222,10 +253,14 @@ DoriosLib.registry.blockComponent(ID, {
             return;
         }
 
+        const initialHeat = heat;
         const intervalScale = Math.max(1, machine.processingInterval / 4);
+        const steamAvailableBeforeHeating = steam.getType() === "steam" && steam.get() > 0;
         if (lava.getType() === "lava" && lava.get() >= LAVA_HEAT_USE * intervalScale && heat < MAX_HEAT) {
             lava.consume(LAVA_HEAT_USE * intervalScale);
-            heat += 45 * intervalScale;
+            heat += (steamAvailableBeforeHeating
+                ? LAVA_HEAT_GAIN_WITH_STEAM
+                : LAVA_HEAT_GAIN_WITHOUT_STEAM) * intervalScale;
         }
         let lavaCraftBudget = heat >= MIN_OPERATING_HEAT && lava.getType() === "lava"
             ? Math.floor(lava.get() / LAVA_PER_CRAFT)
@@ -278,7 +313,9 @@ DoriosLib.registry.blockComponent(ID, {
         if (overheated) burnAndLock(machine);
 
         setDynamicNumber(machine.entity, HEAT_KEY, heat);
-        display(machine, lava, steam, heat, lanes);
+        display(machine, lava, steam, heat, lanes, buildThermalTooltip(
+            heat, steam, Math.max(0, heat - initialHeat), machine.processingInterval,
+        ));
         const waitingTitle = heat < MIN_OPERATING_HEAT ? "Heating" : "Waiting";
         renderStatus(machine, !overheated && (energyUsed > 0 || crafted > 0), overheated ? "Thermal Lock" : (activeLanes > 0 ? "Crushing" : waitingTitle), [{
             title: "Thermal Information",

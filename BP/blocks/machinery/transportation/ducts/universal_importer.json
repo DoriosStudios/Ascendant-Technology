@@ -21,7 +21,7 @@
 				"utilitycraft:west": [false, true]
 			}
 		},
-		"components": {
+		"components": {/*
 			"utilitycraft:universal_endpoint": {},
 			"utilitycraft:universal_item_importer": {},
 			"utilitycraft:universal_fluid_importer": {},
@@ -29,7 +29,7 @@
 			"utilitycraft:upgradeable": {
 				"type": "persistent",
 				"filter_max": 1
-			},
+			},*/
 			"minecraft:geometry": {
 				"identifier": "geometry.utilitycraft_universal_importer",
 				"bone_visibility": {

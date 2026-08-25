@@ -5,6 +5,7 @@ Desktop.ini
 .bridge/*
 !.bridge/compiler/
 !.bridge/extensions
+.tmp/
 
 .agents/
 /.vscode

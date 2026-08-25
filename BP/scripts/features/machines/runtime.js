@@ -22,9 +22,10 @@ export function setRunning(machine, running) {
     DoriosLib.block.setState(machine.block, "utilitycraft:on", running);
 }
 
-export function setUiItem(container, slot, typeId, nameTag = " ") {
+export function setUiItem(container, slot, typeId, nameTag = " ", lore = []) {
     const item = new ItemStack(typeId, 1);
     item.nameTag = nameTag;
+    item.setLore(Array.isArray(lore) ? lore : []);
     container.setItem(slot, item);
 }
 
@@ -36,10 +37,10 @@ export function displayProgress(machine, cost, slot = 2, index = 0) {
     });
 }
 
-export function displayTemperature(machine, heat, maxHeat, slot = 2) {
+export function displayTemperature(machine, heat, maxHeat, slot = 2, nameTag = " ", lore = []) {
     if (!machine.shouldUpdateUI) return;
     const frame = Math.max(0, Math.min(31, Math.floor((heat / maxHeat) * 31)));
-    setUiItem(machine.container, slot, `utilitycraft:temperature_${String(frame).padStart(2, "0")}`);
+    setUiItem(machine.container, slot, `utilitycraft:temperature_${String(frame).padStart(2, "0")}`, nameTag, lore);
 }
 
 /**

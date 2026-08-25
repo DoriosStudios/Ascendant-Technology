@@ -182,6 +182,15 @@
 	"utilitycraft:reinforced_cable": {
 		"sound": "metal"
 	},
+	"utilitycraft:universal_cable": {
+		"sound": "metal"
+	},
+	"utilitycraft:universal_importer": {
+		"sound": "metal"
+	},
+	"utilitycraft:universal_exporter": {
+		"sound": "metal"
+	},
 	"utilitycraft:overclock_tower": {
 		"sound": "metal"
 	},

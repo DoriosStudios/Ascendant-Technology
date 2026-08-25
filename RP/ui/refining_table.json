@@ -18,13 +18,24 @@
                 "status_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [ -60, 31 ],
+                    "offset": [ -74, 31 ],
                     "$background_color": "blue",
-                    "$has_text": true,
-                    "$bg_size": [ 90, 166 ],
-                    "$info_size": [ 82, 158 ],
-                    "$text_borders": [ 78, 152 ],
+                    "$has_text": false,
+                    "$bg_size": [ 104, 166 ],
+                    "$info_size": [ 96, 158 ],
+                    "$text_borders": [ 88, 150 ],
                     "layer": 0
+                }
+            },
+            {
+                "item_label@uc.text_label": {
+                    "collection_index": 1,
+                    "layer": 3,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$text_scale": 0.55,
+                    "offset": [ -62, 40 ],
+                    "size": [ 88, 148 ]
                 }
             },
             {
@@ -188,7 +199,7 @@
         "anchor_from": "center",
         "anchor_to": "center",
         "layer": 6,
-        "size": [ 176, 166 ],
+        "size": [ 176, "100%c"],
         "controls": [
             {
                 "all_stats_label@uc.text_label": {

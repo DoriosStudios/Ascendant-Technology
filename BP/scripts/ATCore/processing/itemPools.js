@@ -2,13 +2,24 @@
 
 import { ItemStack } from "@minecraft/server";
 
-/** Finds the first valid input and resolves its recipe in O(slot count). */
+/**
+ * Finds the first pooled input that can start a recipe in O(slot count).
+ * Known but incomplete stacks are skipped so they cannot block a later,
+ * eligible input type in the same grid.
+ */
 export function selectPooledRecipe(container, inputSlots, recipes) {
+    const checkedTypes = new Set();
     for (let index = 0; index < inputSlots.length; index++) {
         const item = container.getItem(inputSlots[index]);
-        if (!item) continue;
+        if (!item || checkedTypes.has(item.typeId)) continue;
+        checkedTypes.add(item.typeId);
         const recipe = recipes[item.typeId];
-        if (recipe) return { inputTypeId: item.typeId, recipe };
+        if (!recipe) continue;
+
+        const required = Math.max(1, Math.floor(Number(recipe.required) || 1));
+        if (countPooledInput(container, inputSlots, item.typeId) >= required) {
+            return { inputTypeId: item.typeId, recipe };
+        }
     }
     return undefined;
 }

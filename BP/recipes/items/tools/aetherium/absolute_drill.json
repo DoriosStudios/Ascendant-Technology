@@ -1,0 +1,27 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": { "identifier": "utilitycraft:absolute_drill" },
+    "pattern": [
+      " ZX",
+      "ASZ",
+      "DA"
+    ],
+    "tags": ["crafting_table"],
+    "key": {
+      "Z": { "item": "utilitycraft:aetherium" },
+      "X": { "item": "utilitycraft:aetherium_block" },
+      "A": { "item": "minecraft:repeater" },
+      "S": { "item": "utilitycraft:heavy_drill" },
+      "D": { "item": "minecraft:redstone_block" }
+    },
+    "result": [{ "item": "utilitycraft:absolute_drill" }],
+    "unlock": [
+      { "item": "utilitycraft:aetherium" },
+      { "item": "utilitycraft:aetherium_block" },
+      { "item": "minecraft:repeater" },
+      { "item": "utilitycraft:heavy_drill" },
+      { "item": "minecraft:redstone_block" }
+    ]
+  }
+}

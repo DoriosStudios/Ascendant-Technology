@@ -46,7 +46,7 @@
             {
                 "screen": {
                     "type": "image",
-                    "texture": "textures/ui/background_panel",
+                    "texture": "textures/ui/dialog_background_opaque",
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "$cell_image_size": [200, 166],
@@ -67,15 +67,16 @@
                 }
             },
             { "machine_name@uc.machine_name": { "offset": [0, -2] } },
-            { "side_panel@uc.machine_side_panel": { "offset": [-2, 0] } },
+            { "side_panel@ascendant_common.info_panel": { "anchor_from": "top_left", "anchor_to": "top_left", "$has_text": false, "$text_borders": [88, 150], "$bg_size": [104, 166], "$info_size": [96, 158], "offset": [-102, -7] } },
             {
                 "item_label@uc.text_label": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [74, 146],
+                    "size": [88, 148],
+                    "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-78, 2]
+                    "offset": [-90, 2]
                 }
             },
             {

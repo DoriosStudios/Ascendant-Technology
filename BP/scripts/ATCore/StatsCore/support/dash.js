@@ -27,13 +27,13 @@ function performDash(player, effect) {
         const direction = player.getViewDirection?.();
         if (!direction) return false;
         const horizontalLength = Math.max(0.001, Math.hypot(Number(direction.x ?? 0), Number(direction.z ?? 0)));
-        const strength = Math.max(0.4, Number(effect?.strength ?? 1.35) || 1.35);
+        const strength = Math.max(0.4, Number(effect?.strength ?? 1.5) || 1.5);
         player.applyImpulse?.({
             x: (Number(direction.x ?? 0) / horizontalLength) * strength,
             y: Math.max(0.06, Number(effect?.verticalBoost ?? 0.12) || 0.12),
             z: (Number(direction.z ?? 0) / horizontalLength) * strength,
         });
-        cooldowns.set(playerKey(player), getCurrentTick() + Math.max(10, Number(effect?.cooldownTicks ?? 70) || 70));
+        cooldowns.set(playerKey(player), getCurrentTick() + Math.max(10, Number(effect?.cooldownTicks ?? 40) || 40));
         showAbilityFeedback(player, "Boot Dash", STATSCORE_ICONS.walkingSpeed);
         return true;
     } catch {

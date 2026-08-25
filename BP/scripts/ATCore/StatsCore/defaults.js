@@ -350,6 +350,9 @@ function inferBranch(id, type, stack = undefined) {
     if (path.includes("hammer") || path.includes("sledge") || hasEquipmentTag(tags, "hammer")) return "hammer";
     if (path.includes("wrench") || path.includes("chisel") || path.includes("saw") || path.includes("sickle")) return "tool";
 
+    if (normalizedId === "minecraft:stick") return "stick";
+    if (/(^|_)(wand|staff)(_|$)/.test(path)) return "wand";
+
     if (path.includes("crossbow") || hasEquipmentTag(tags, "crossbow")) return "crossbow";
     if (/(^|_)bow($|_)/.test(path) || hasEquipmentTag(tags, "bow")) return "bow";
     if (path.includes("trident") || path.includes("harpoon") || hasEquipmentTag(tags, "trident")) return "trident";
@@ -357,7 +360,7 @@ function inferBranch(id, type, stack = undefined) {
     if (path.includes("mace") || path.includes("club") || hasEquipmentTag(tags, "mace")) return "mace";
     if (path.includes("dagger") || path.includes("knife") || hasEquipmentTag(tags, "dagger", "knife")) return "knife";
     if (path.includes("sword") || path.includes("katana") || path.includes("blade") || hasEquipmentTag(tags, "sword")) return "sword";
-    if (/(^|_)(gun|rifle|pistol|musket|blaster|cannon|launcher|staff|wand|scythe|claw)(_|$)/.test(path)) return "weapon";
+    if (/(^|_)(gun|rifle|pistol|musket|blaster|cannon|launcher|scythe|claw)(_|$)/.test(path)) return "weapon";
     if (path.endsWith("axe") || /(^|_)axe($|_)/.test(path) || hasEquipmentTag(tags, "axe")) return "axe";
     if (hasEquipmentTag(tags, "weapon")) return "weapon";
     if (hasEquipmentTag(tags, "tool")) return "tool";
@@ -672,7 +675,7 @@ function createBerserkEffect(overrides = {}) {
         kind: "berserk",
         label: "Berserk",
         durationTicks: 300,
-        maxStacks: 10,
+        maxStacks: 5,
         damagePerStack: 1,
         extraPlanksMin: 1,
         extraPlanksMax: 4,
@@ -723,6 +726,18 @@ function createToughEffect(overrides = {}) {
         refreshTicks: 200,
         damageReduction: 0.5,
         reducedDamageTypes: ["falling_block", "suffocation", "lightning", "stalactite"],
+        ...overrides,
+    };
+}
+
+function createArmoredEffect(overrides = {}) {
+    return {
+        key: "armored",
+        kind: "armored",
+        label: "Armored",
+        negatedDamageTypes: ["projectile"],
+        reducedDamageTypes: ["block_explosion", "entity_explosion"],
+        damageReduction: 0.5,
         ...overrides,
     };
 }
@@ -925,7 +940,7 @@ function createArmorAbilitySet(id, slot, tierName) {
     }
 
     if (slotKey === "chestplate") {
-        return [createRetaliateEffect(tierName)];
+        return [createArmoredEffect(), createRetaliateEffect(tierName)];
     }
 
     if (slotKey === "leggings") {
@@ -969,9 +984,10 @@ function baseDefinition(id, tierName, type, affinity, overrides = {}) {
             blockXp: isWeapon || isSupport ? 0 : (isTool || isHybrid ? 0 : tier.blockXp),
             oreXp: isWeapon || isSupport ? 0 : (isTool || isHybrid ? 0 : tier.oreXp),
             toolXp: isTool || isHybrid ? tier.toolXp : 0,
-            // Preservation is tied to Defense for both armor and compatible
-            // mining equipment, so both categories need a real Defense track.
-            armorXp: isSupport || supportsMiningTrouble ? 2 : 0,
+            // Defense belongs exclusively to worn support equipment. Tool
+            // Preserving scales from Mining and must not create a hidden DEF
+            // track on weapons, tools, hybrids, or utility equipment.
+            armorXp: isSupport ? 2 : 0,
             baseXp: 60,
             growth: 1.22
         },
@@ -1090,7 +1106,7 @@ function getItemPath(id) {
 function inferItemType(branch) {
     if (["drill", "knife", "lighter", "shears", "equipment"].includes(branch)) return ITEM_TYPES.utility;
     if (["helmet", "chestplate", "leggings", "boots", "shield", "elytra", "armor"].includes(branch)) return ITEM_TYPES.support;
-    if (["sword", "mace", "trident", "bow", "crossbow", "spear", "weapon"].includes(branch)) return ITEM_TYPES.weapon;
+    if (["sword", "mace", "trident", "bow", "crossbow", "spear", "weapon", "stick", "wand"].includes(branch)) return ITEM_TYPES.weapon;
     if (["axe", "paxel", "aiot"].includes(branch)) return ITEM_TYPES.hybrid;
     if (["pickaxe", "shovel", "hoe", "hammer", "tool"].includes(branch)) return ITEM_TYPES.tool;
     return ITEM_TYPES.utility;
@@ -1179,14 +1195,20 @@ function getInferredSpecialOverrides(id, tierName, type, branch) {
         };
     }
 
-    if (branch === "drill") {
-        const heavy = path.includes("heavy");
-        return {
-            rarity: "utility",
-            mining: {
-                bonusLootChance: heavy ? 0.15 : 0.12,
-                ...(heavy ? { durabilitySaveChance: 0.035 } : {}),
-                effects: [createOperatorEffect({ size: heavy ? 5 : 3 })],
+   if (branch === "drill") {
+    const heavy = path.includes("heavy");
+    const absolute = path.includes("absolute");
+
+    return {
+        rarity: "utility",
+        mining: {
+            bonusLootChance: absolute ? 0.18 : heavy ? 0.15 : 0.12,
+            ...(heavy || absolute ? { durabilitySaveChance: absolute ? 0.05 : 0.035 } : {}),
+            effects: [createOperatorEffect({ size: 
+                absolute ? 7 
+                : heavy ? 5 
+                : 3 
+                })],
             },
         };
     }
@@ -1266,6 +1288,7 @@ function getInferredSpecialOverrides(id, tierName, type, branch) {
     if (branch === "hammer") return { mining: { effects: [createCrushingEffect()] } };
     if (branch === "aiot") {
         return {
+            progression: { armorXp: 0 },
             attributes: { effects: [createSweepEffect(tierName)] },
             mining: {},
         };

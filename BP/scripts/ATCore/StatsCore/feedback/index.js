@@ -53,7 +53,7 @@ const FEEDBACK_STYLE_ALIASES = Object.freeze({
 function normalizeFeedbackStyle(style) {
     const normalized = String(style ?? "").trim().toLowerCase();
     const canonical = FEEDBACK_STYLE_ALIASES[normalized] ?? normalized;
-    return STATSCORE_FEEDBACK_STYLES.includes(canonical) ? canonical : "text_and_icons";
+    return STATSCORE_FEEDBACK_STYLES.includes(canonical) ? canonical : "both_partial";
 }
 
 function getPlayerKey(player) {
@@ -100,7 +100,7 @@ export function getStatsCoreFeedbackStyle(player) {
     try {
         cached.style = normalizeFeedbackStyle(player?.getDynamicProperty?.(STATSCORE.playerProperties.feedbackStyle));
     } catch {
-        cached.style = "text_and_icons";
+        cached.style = "both_partial";
     }
     return cached.style;
 }
@@ -255,6 +255,7 @@ function spawnParticle(entity, particleId, offset = { x: 0, y: 1, z: 0 }) {
 export function showCombatFeedback(attacker, target, result) {
     if (!attacker) return;
 
+    const damage = Math.max(0, Number(result?.damage ?? 0) || 0);
     const elemental = Array.isArray(result?.elemental) ? result.elemental.filter(Boolean) : [];
     const extraDamage = Math.max(0, Number(result?.extraDamage ?? 0) || 0);
     const flatDamageBonus = Math.max(0, Number(result?.flatDamageBonus ?? 0) || 0);
@@ -262,6 +263,11 @@ export function showCombatFeedback(attacker, target, result) {
     const berserkDamageBonus = Math.max(0, Number(result?.berserkDamageBonus ?? 0) || 0);
     const segments = [];
     const hudAttributes = [];
+    if (damage > 0.001) {
+        const formatted = Number.isInteger(damage) ? String(damage) : damage.toFixed(1);
+        segments.push(`\u00A7cDamage ${formatted}`);
+        hudAttributes.push(formatInsightIcon(STATSCORE_ICONS.attackDamage));
+    }
     if (result?.crit?.active === true) {
         const critText = `\u00A7eCrit \u00A77x${Number(result.crit.multiplier ?? 1).toFixed(2)}`;
         segments.push(critText);
@@ -320,16 +326,21 @@ export function showCombatFeedback(attacker, target, result) {
 
     const icons = uniqueIcons([
         result?.crit?.active === true ? STATSCORE_ICONS.criticalMultiplier : "",
-        extraDamage > 0.001 ? STATSCORE_ICONS.attackDamage : "",
+        damage > 0.001 || extraDamage > 0.001 ? STATSCORE_ICONS.attackDamage : "",
         result.penetration?.restored > 0 ? STATSCORE_ICONS.fullArmor : "",
         ...elemental.map(getElementIcon),
     ]);
+    const partialStyle = getStatsCoreFeedbackStyle(attacker) === "both_partial";
+    const totalDamageText = damage > 0.001
+        ? `§cDamage ${Number.isInteger(damage) ? damage : damage.toFixed(1)}`
+        : "";
+    if (partialStyle && !totalDamageText) return;
     showActionBar(
         attacker,
-        segments.join(" \u00A78| "),
+        partialStyle ? totalDamageText : segments.join(" \u00A78| "),
         "combat",
         10,
-        icons,
+        partialStyle ? STATSCORE_ICONS.attackDamage : icons,
         70
     );
 
@@ -480,5 +491,25 @@ export function showAbilityFeedback(player, label, emoji = "") {
         4,
         emoji || getAbilityIcon(label),
         80
+    );
+}
+
+/** Shows a real health gain in every feedback style, including both_partial. */
+export function showHealingFeedback(player, amount) {
+    const healed = Math.max(0, Number(amount) || 0);
+    // One heart is two health points. Tiny fractional regeneration ticks are
+    // intentionally silent so they do not hide progression feedback.
+    if (!player || healed <= 0.2) return;
+
+    const hearts = healed / 2;
+    const formatted = Number.isInteger(hearts) ? String(hearts) : hearts.toFixed(1);
+    publishInsightActivity(player, { attributes: [STATSCORE_ICONS.healedHeart] });
+    showActionBar(
+        player,
+        `\u00A7aHealing +${formatted} hearts`,
+        "healing",
+        4,
+        STATSCORE_ICONS.healedHeart,
+        75,
     );
 }

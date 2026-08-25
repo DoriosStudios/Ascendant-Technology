@@ -1,6 +1,6 @@
 // @ts-check
 
-import { EnchantmentTypes } from "@minecraft/server";
+import { EnchantmentTypes, ItemStack } from "@minecraft/server";
 
 const ENCHANTABLE_COMPONENT_ID = "minecraft:enchantable";
 
@@ -81,11 +81,12 @@ export function createArcaneEnchantSignature(stack, moduleLevel, curseProtection
  * @returns {ArcaneEnchantPlan}
  */
 export function buildArcaneEnchantPlan(stack, moduleLevel, curseProtection = false) {
-    const enchantable = getEnchantableComponent(stack);
+    const target = createEnchantableTarget(stack);
+    const enchantable = getEnchantableComponent(target);
     if (!enchantable) return invalidPlan("Invalid Item");
 
     const tier = normalizeModuleLevel(moduleLevel);
-    const current = readEnchantments(stack);
+    const current = readEnchantments(target);
     const next = current.map((entry) => ({ id: entry.id, level: entry.level }));
     const nextById = new Map(next.map((entry, index) => [entry.id, index]));
     const catalog = getEnchantmentCatalog();
@@ -104,7 +105,7 @@ export function buildArcaneEnchantPlan(stack, moduleLevel, curseProtection = fal
         upgradedCount++;
     }
 
-    const workingStack = stack.clone();
+    const workingStack = target.clone();
     const workingEnchantable = getEnchantableComponent(workingStack);
     const candidates = [];
 
@@ -182,7 +183,7 @@ export function buildArcaneEnchantPlan(stack, moduleLevel, curseProtection = fal
 export function applyArcaneEnchantPlan(stack, plan) {
     if (!isArcaneEnchantPlan(plan) || !plan.ready) return undefined;
 
-    const result = stack.clone();
+    const result = createEnchantableTarget(stack);
     const enchantable = getEnchantableComponent(result);
     if (!enchantable) return undefined;
 
@@ -205,6 +206,24 @@ export function applyArcaneEnchantPlan(stack, plan) {
     } catch {
         return undefined;
     }
+}
+
+/**
+ * A normal Book has no enchantable component, while an Enchanted Book does.
+ * Treat the former as the blank form of the latter so the Arcane Enchanter
+ * produces an actual enchanted book instead of returning a plain book.
+ *
+ * @param {import("@minecraft/server").ItemStack} stack
+ */
+function createEnchantableTarget(stack) {
+    if (stack.typeId !== "minecraft:book") return stack.clone();
+
+    const result = new ItemStack("minecraft:enchanted_book", 1);
+    try {
+        result.nameTag = stack.nameTag;
+        result.setLore(stack.getLore());
+    } catch {}
+    return result;
 }
 
 /**

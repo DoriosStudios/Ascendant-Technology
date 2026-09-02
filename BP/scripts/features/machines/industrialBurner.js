@@ -41,6 +41,7 @@ const ALL_OUTPUTS = Object.freeze(OUTPUTS.flat());
 const LAVA_PER_BONUS_CRAFT = 250;
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [19, 20, 21, 22, 23, 24],
         anyInputSlots: INPUTS,

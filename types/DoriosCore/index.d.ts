@@ -276,6 +276,8 @@ export interface ItemIOGroupConfig {
   anyOutputSlots: number[];
   /** Ordered visual modes cycled independently on each face. */
   modes: ItemIOModeConfig[];
+  /** Modes assigned only when no persisted item face policy exists. */
+  initialModes?: Partial<Record<DirectionName, string>>;
 }
 
 /** One visual fluid IO mode and the indexed tanks represented by that mode. */
@@ -298,6 +300,8 @@ export interface LiquidIOGroupConfig {
   anyOutputIndices: number[];
   /** Ordered visual modes cycled independently on each face. */
   modes: FluidIOModeConfig[];
+  /** Modes assigned only when no persisted fluid face policy exists. */
+  initialModes?: Partial<Record<DirectionName, string>>;
 }
 
 /** One visual gas IO mode and the indexed tanks represented by that mode. */
@@ -313,10 +317,14 @@ export interface GasIOGroupConfig {
   anyInputIndices: number[];
   anyOutputIndices: number[];
   modes: GasIOModeConfig[];
+  /** Modes assigned only when no persisted gas face policy exists. */
+  initialModes?: Partial<Record<DirectionName, string>>;
 }
 
 /** Complete IO registration for one machine block type. */
 export interface IOInterfaceConfig {
+  /** Apply south input, north output, and up auxiliary-input defaults on first initialization. */
+  automaticDefaults?: boolean;
   /** Slot-based item policy and optional item face buttons. */
   items?: ItemIOGroupConfig;
   /** Indexed-fluid policy and optional fluid face buttons. */
@@ -396,6 +404,7 @@ export interface FluidIODefinition {
   anyInputIndices: number[];
   anyOutputIndices: number[];
   modes: FluidIOMode[];
+  initialModes: Partial<Record<DirectionName, string>>;
 }
 
 export const FLUID_CONFIG_VERSION: 1;
@@ -403,7 +412,8 @@ export const FLUID_CONFIG_KEY: "liquids";
 export const FLUID_CONTAINER_FAMILY: "dorios:fluid_container";
 export const FLUID_CONFIG_EVENT_NAMESPACE: "dorios_fluid";
 export const SET_FLUID_CONFIG_EVENT_ID: "dorios_fluid:set_config";
-export const DEFAULT_FLUID_IO_MODE: "disabled";
+export const DEFAULT_FLUID_IO_MODE: "default";
+export const DISABLED_FLUID_IO_MODE: "disabled";
 
 export function registerFluidIODefinition(blockTypeId: string, value: LiquidIOGroupConfig): FluidIODefinition;
 export function getFluidIODefinition(blockTypeId: string): FluidIODefinition | undefined;
@@ -412,8 +422,8 @@ export function setFluidConfig(entity: Entity, config: FluidConfig): boolean;
 export function getFluidConfig(entity: Entity): FluidConfig | undefined;
 export function getFluidConfigRevision(entity: Entity): number;
 export function getFluidStatus(entity: Entity): "basic" | "simple" | "complex" | "invalid" | "unsupported";
-export function getInputFluidIndices(entity: Entity, options?: { face?: DirectionName }): ReadonlyArray<number>;
-export function getOutputFluidIndices(entity: Entity, options?: { face?: DirectionName }): ReadonlyArray<number>;
+export function getInputFluidIndices(entity: Entity, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
+export function getOutputFluidIndices(entity: Entity, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
 export function getFluidIODirectionMode(entity: Entity, blockTypeId: string, direction: string): string;
 export function cycleFluidIODirectionMode(entity: Entity, blockTypeId: string, direction: string): string;
 export function normalizeFluidConfig(value: unknown, count: number): FluidConfig;
@@ -446,8 +456,8 @@ export interface FluidInsertOptions {
 
 export function resolveFluidContainer(target: FluidContainerTarget): ResolvedFluidContainer | undefined;
 export function resolveFluidContainerAt(dimension: Dimension, location: Vector3): ResolvedFluidContainer | undefined;
-export function getFluidInputIndices(target: FluidContainerTarget, options?: { face?: DirectionName }): ReadonlyArray<number>;
-export function getFluidOutputIndices(target: FluidContainerTarget, options?: { face?: DirectionName }): ReadonlyArray<number>;
+export function getFluidInputIndices(target: FluidContainerTarget, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
+export function getFluidOutputIndices(target: FluidContainerTarget, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
 export function getFluidContainerRevision(target: FluidContainerTarget): number;
 export function transferFluid(source: FluidContainerTarget, options: FluidTransferOptions): number;
 export function insertFluid(target: FluidContainerTarget, options: FluidInsertOptions): number;
@@ -485,6 +495,7 @@ export interface GasIODefinition {
   anyInputIndices: number[];
   anyOutputIndices: number[];
   modes: GasIOMode[];
+  initialModes: Partial<Record<DirectionName, string>>;
 }
 
 export const GAS_CONFIG_VERSION: 1;
@@ -492,7 +503,8 @@ export const GAS_CONFIG_KEY: "gases";
 export const GAS_CONTAINER_FAMILY: "dorios:gas_container";
 export const GAS_CONFIG_EVENT_NAMESPACE: "dorios_gas";
 export const SET_GAS_CONFIG_EVENT_ID: "dorios_gas:set_config";
-export const DEFAULT_GAS_IO_MODE: "disabled";
+export const DEFAULT_GAS_IO_MODE: "default";
+export const DISABLED_GAS_IO_MODE: "disabled";
 
 export function registerGasIODefinition(blockTypeId: string, value: GasIOGroupConfig): GasIODefinition;
 export function getGasIODefinition(blockTypeId: string): GasIODefinition | undefined;
@@ -501,8 +513,8 @@ export function setGasConfig(entity: Entity, config: GasConfig): boolean;
 export function getGasConfig(entity: Entity): GasConfig | undefined;
 export function getGasConfigRevision(entity: Entity): number;
 export function getGasStatus(entity: Entity): "basic" | "simple" | "complex" | "invalid" | "unsupported";
-export function getInputGasIndices(entity: Entity, options?: { face?: DirectionName }): ReadonlyArray<number>;
-export function getOutputGasIndices(entity: Entity, options?: { face?: DirectionName }): ReadonlyArray<number>;
+export function getInputGasIndices(entity: Entity, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
+export function getOutputGasIndices(entity: Entity, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
 export function getGasIODirectionMode(entity: Entity, blockTypeId: string, direction: string): string;
 export function cycleGasIODirectionMode(entity: Entity, blockTypeId: string, direction: string): string;
 export function normalizeGasConfig(value: unknown, count: number): GasConfig;
@@ -534,8 +546,8 @@ export interface GasInsertOptions {
 
 export function resolveGasContainer(target: GasContainerTarget): ResolvedGasContainer | undefined;
 export function resolveGasContainerAt(dimension: Dimension, location: Vector3): ResolvedGasContainer | undefined;
-export function getGasInputIndices(target: GasContainerTarget, options?: { face?: DirectionName }): ReadonlyArray<number>;
-export function getGasOutputIndices(target: GasContainerTarget, options?: { face?: DirectionName }): ReadonlyArray<number>;
+export function getGasInputIndices(target: GasContainerTarget, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
+export function getGasOutputIndices(target: GasContainerTarget, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
 export function getGasContainerRevision(target: GasContainerTarget): number;
 export function transferGas(source: GasContainerTarget, options: GasTransferOptions): number;
 export function insertGas(target: GasContainerTarget, options: GasInsertOptions): number;

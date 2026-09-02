@@ -100,6 +100,7 @@ function cachePreview(machine, inputs, preview) {
 }
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: ITEM_IO_SLOTS,
         anyInputSlots: [EQUIPMENT_SLOT, ...MATERIAL_SLOTS],

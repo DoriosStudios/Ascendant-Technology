@@ -28,6 +28,7 @@ const MACHINE_UPDATES_PER_SECOND = 5;
 const FLUID_IO_RATE = 128000;
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [9, 10, 11, 12, 13, 14],
         anyInputSlots: [INPUT_SLOT],

@@ -31,6 +31,7 @@ const LOCK_KEY = "ascendant:centrifugal_siever_input";
 const STEAM_PER_CRAFT = 125;
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [28, 29, 30, 31, 32, 33],
         anyInputSlots: [...INPUTS, MESH_SLOT],

@@ -3,6 +3,10 @@
 import { system, world } from "@minecraft/server";
 import { isPlainObject } from "../../DoriosLib/utils/index.js";
 import { IO_CONFIG_PROPERTY } from "../../DoriosLib/containers/constants.js";
+import {
+  isIOFaceDisabled,
+  setIOFaceDisabled,
+} from "../../DoriosLib/containers/ioFaceState.js";
 import { FluidStorage } from "../machinery/fluidStorage.js";
 import { DIRECTIONS } from "../utils/directions.js";
 
@@ -11,7 +15,8 @@ export const FLUID_CONFIG_KEY = "liquids";
 export const FLUID_CONTAINER_FAMILY = "dorios:fluid_container";
 export const FLUID_CONFIG_EVENT_NAMESPACE = "dorios_fluid";
 export const SET_FLUID_CONFIG_EVENT_ID = `${FLUID_CONFIG_EVENT_NAMESPACE}:set_config`;
-export const DEFAULT_FLUID_IO_MODE = "disabled";
+export const DEFAULT_FLUID_IO_MODE = "default";
+export const DISABLED_FLUID_IO_MODE = "disabled";
 
 /** @typedef {"north"|"south"|"east"|"west"|"up"|"down"} FluidFace */
 /** @typedef {Partial<Record<FluidFace, number[]>>} FaceIndexConfig */
@@ -48,6 +53,7 @@ export const DEFAULT_FLUID_IO_MODE = "disabled";
  * @property {number[]} anyInputIndices
  * @property {number[]} anyOutputIndices
  * @property {FluidIOMode[]} modes
+ * @property {Partial<Record<FluidFace,string>>} initialModes
  */
 
 /** @type {Map<string,FluidIODefinition>} */
@@ -76,7 +82,11 @@ let nextConfigRevision = 1;
 const EMPTY_DEFINITION = {
   anyInputIndices: [],
   anyOutputIndices: [],
-  modes: [{ id: DEFAULT_FLUID_IO_MODE, inputIndices: [], outputIndices: [] }],
+  initialModes: {},
+  modes: [
+    { id: DEFAULT_FLUID_IO_MODE, inputIndices: [], outputIndices: [] },
+    { id: DISABLED_FLUID_IO_MODE, inputIndices: [], outputIndices: [] },
+  ],
 };
 
 world.afterEvents.entityRemove.subscribe(({ removedEntityId }) => {
@@ -156,7 +166,7 @@ export function ensureFluidIOConfig(entity, blockTypeId) {
       && validated.configRevision === configRevision
       && validated.definitionRevision === definitionRevision) return true;
 
-    const reconciled = reconcileConfig(current, definition);
+    const reconciled = reconcileConfig(current, definition, entity);
     if (reconciled.changed) {
       publishConfig(entity, reconciled.config, blockTypeId, definitionRevision);
       return false;
@@ -217,20 +227,20 @@ export function getFluidStatus(entity) {
 
 /**
  * @param {import("@minecraft/server").Entity} entity
- * @param {{face?:FluidFace}} [options]
+ * @param {{face?:FluidFace,automatic?:boolean}} [options]
  * @returns {ReadonlyArray<number>}
  */
 export function getInputFluidIndices(entity, options = {}) {
-  return resolveIndices(entity, "input", options.face);
+  return resolveIndices(entity, "input", options.face, options.automatic === true);
 }
 
 /**
  * @param {import("@minecraft/server").Entity} entity
- * @param {{face?:FluidFace}} [options]
+ * @param {{face?:FluidFace,automatic?:boolean}} [options]
  * @returns {ReadonlyArray<number>}
  */
 export function getOutputFluidIndices(entity, options = {}) {
-  return resolveIndices(entity, "output", options.face);
+  return resolveIndices(entity, "output", options.face, options.automatic === true);
 }
 
 /**
@@ -242,14 +252,13 @@ export function getFluidIODirectionMode(entity, blockTypeId, direction) {
   if (!DIRECTIONS.includes(direction)) return DEFAULT_FLUID_IO_MODE;
   const definition = definitions.get(blockTypeId) ?? EMPTY_DEFINITION;
   const pending = pendingEntities.get(entity.id);
-  if (pending) return findModeForFace(pending.config, definition, direction)?.id ?? DEFAULT_FLUID_IO_MODE;
+  if (pending) return findModeForFace(entity, pending.config, definition, direction)?.id ?? DEFAULT_FLUID_IO_MODE;
   if (!ensureFluidIOConfig(entity, blockTypeId)) return DEFAULT_FLUID_IO_MODE;
 
-  return findModeForIndices(
-    definition,
-    getInputFluidIndices(entity, { face: /** @type {FluidFace} */ (direction) }),
-    getOutputFluidIndices(entity, { face: /** @type {FluidFace} */ (direction) }),
-  )?.id ?? DEFAULT_FLUID_IO_MODE;
+  const config = getFluidConfig(entity);
+  return config?.type === "complex"
+    ? findModeForFace(entity, config, definition, direction)?.id ?? DEFAULT_FLUID_IO_MODE
+    : DEFAULT_FLUID_IO_MODE;
 }
 
 /**
@@ -266,9 +275,9 @@ export function cycleFluidIODirectionMode(entity, blockTypeId, direction) {
   const current = pending ? cloneFluidConfig(pending.config) : getFluidConfig(entity);
   if (current?.type !== "complex") return DEFAULT_FLUID_IO_MODE;
 
-  const currentMode = findModeForFace(current, definition, direction);
-  const disabledIndex = definition.modes.findIndex((mode) => mode.id === DEFAULT_FLUID_IO_MODE);
-  const currentIndex = currentMode ? definition.modes.indexOf(currentMode) : disabledIndex;
+  const currentMode = findModeForFace(entity, current, definition, direction);
+  const defaultIndex = definition.modes.findIndex((mode) => mode.id === DEFAULT_FLUID_IO_MODE);
+  const currentIndex = currentMode ? definition.modes.indexOf(currentMode) : defaultIndex;
   const nextMode = definition.modes[(currentIndex + 1) % definition.modes.length]
     ?? definition.modes[0]
     ?? EMPTY_DEFINITION.modes[0];
@@ -276,8 +285,13 @@ export function cycleFluidIODirectionMode(entity, blockTypeId, direction) {
 
   delete current.inputConfig[face];
   delete current.outputConfig[face];
-  if (nextMode.inputIndices.length > 0) current.inputConfig[face] = [...nextMode.inputIndices];
-  if (nextMode.outputIndices.length > 0) current.outputConfig[face] = [...nextMode.outputIndices];
+  setIOFaceDisabled(entity, "liquids", direction, nextMode.id === DISABLED_FLUID_IO_MODE);
+  if (nextMode.id !== DEFAULT_FLUID_IO_MODE
+    && nextMode.id !== DISABLED_FLUID_IO_MODE
+    && nextMode.inputIndices.length > 0) current.inputConfig[face] = [...nextMode.inputIndices];
+  if (nextMode.id !== DEFAULT_FLUID_IO_MODE
+    && nextMode.id !== DISABLED_FLUID_IO_MODE
+    && nextMode.outputIndices.length > 0) current.outputConfig[face] = [...nextMode.outputIndices];
 
   publishConfig(entity, current, blockTypeId, definitionRevisions.get(blockTypeId) ?? 0);
   return nextMode.id;
@@ -338,11 +352,32 @@ function normalizeDefinition(value) {
   const anyInputIndices = normalizeDeclaredIndices(value.anyInputIndices, "liquids.anyInputIndices");
   const anyOutputIndices = normalizeDeclaredIndices(value.anyOutputIndices, "liquids.anyOutputIndices");
   const modes = normalizeModes(value.modes);
+  const initialModes = normalizeInitialModes(value.initialModes, modes, "liquids.initialModes");
   const declaredInputs = new Set(modes.flatMap((mode) => mode.inputIndices));
   const declaredOutputs = new Set(modes.flatMap((mode) => mode.outputIndices));
   assertSubset(anyInputIndices, declaredInputs, "liquids.anyInputIndices", "mode inputIndices");
   assertSubset(anyOutputIndices, declaredOutputs, "liquids.anyOutputIndices", "mode outputIndices");
-  return { anyInputIndices, anyOutputIndices, modes };
+  return { anyInputIndices, anyOutputIndices, modes, initialModes };
+}
+
+/** @param {unknown} value @param {FluidIOMode[]} modes @param {string} path @returns {Partial<Record<FluidFace,string>>} */
+function normalizeInitialModes(value, modes, path) {
+  if (value === undefined) return {};
+  if (!isPlainObject(value)) throw new TypeError(`${path} must be an object`);
+  const operationalIds = new Set(modes
+    .filter((mode) => mode.id !== DEFAULT_FLUID_IO_MODE && mode.id !== DISABLED_FLUID_IO_MODE)
+    .map((mode) => mode.id));
+  /** @type {Partial<Record<FluidFace,string>>} */
+  const initialModes = {};
+  for (const direction of DIRECTIONS) {
+    const modeId = value[direction];
+    if (modeId === undefined) continue;
+    if (typeof modeId !== "string" || !operationalIds.has(modeId)) {
+      throw new RangeError(`${path}.${direction} must reference an operational mode`);
+    }
+    initialModes[/** @type {FluidFace} */ (direction)] = modeId;
+  }
+  return initialModes;
 }
 
 /** @param {unknown} value @returns {FluidIOMode[]} */
@@ -366,26 +401,38 @@ function normalizeModes(value) {
     const outputIndices = entry.outputIndices === undefined
       ? []
       : normalizeDeclaredIndices(entry.outputIndices, `liquids.modes[${index}].outputIndices`);
-    if (entry.id === DEFAULT_FLUID_IO_MODE && (inputIndices.length > 0 || outputIndices.length > 0)) {
-      throw new RangeError(`${DEFAULT_FLUID_IO_MODE} cannot expose fluid indices`);
+    const isPassiveMode = entry.id === DEFAULT_FLUID_IO_MODE || entry.id === DISABLED_FLUID_IO_MODE;
+    if (isPassiveMode && (inputIndices.length > 0 || outputIndices.length > 0)) {
+      throw new RangeError(`${entry.id} cannot expose fluid indices`);
     }
-    if (entry.id !== DEFAULT_FLUID_IO_MODE && inputIndices.length === 0 && outputIndices.length === 0) {
+    if (!isPassiveMode && inputIndices.length === 0 && outputIndices.length === 0) {
       throw new RangeError(`Fluid IO mode ${entry.id} must expose at least one index`);
     }
 
     const signature = getModeSignature(inputIndices, outputIndices);
-    if (signatures.has(signature)) {
+    if (!isPassiveMode && signatures.has(signature)) {
       throw new RangeError(`Fluid IO mode ${entry.id} duplicates another mode's index configuration`);
     }
     ids.add(entry.id);
-    signatures.add(signature);
+    if (!isPassiveMode) signatures.add(signature);
     modes.push({ id: entry.id, inputIndices, outputIndices });
   }
 
   if (!ids.has(DEFAULT_FLUID_IO_MODE)) {
-    modes.unshift({ id: DEFAULT_FLUID_IO_MODE, inputIndices: [], outputIndices: [] });
+    modes.push({ id: DEFAULT_FLUID_IO_MODE, inputIndices: [], outputIndices: [] });
   }
-  return modes;
+  if (!ids.has(DISABLED_FLUID_IO_MODE)) {
+    modes.push({ id: DISABLED_FLUID_IO_MODE, inputIndices: [], outputIndices: [] });
+  }
+
+  const operationalModes = modes.filter((mode) => (
+    mode.id !== DEFAULT_FLUID_IO_MODE && mode.id !== DISABLED_FLUID_IO_MODE
+  ));
+  return [
+    { id: DEFAULT_FLUID_IO_MODE, inputIndices: [], outputIndices: [] },
+    ...operationalModes,
+    { id: DISABLED_FLUID_IO_MODE, inputIndices: [], outputIndices: [] },
+  ];
 }
 
 /** @param {unknown} value @param {string} path */
@@ -463,26 +510,41 @@ function getRequiredFluidCount(definition) {
 
 /** @param {FluidIODefinition} definition @returns {ComplexFluidConfig} */
 function createEmptyConfig(definition) {
-  return {
+  const config = /** @type {ComplexFluidConfig} */ ({
     version: FLUID_CONFIG_VERSION,
     type: "complex",
     anyInputIndices: [...definition.anyInputIndices],
     anyOutputIndices: [...definition.anyOutputIndices],
     inputConfig: {},
     outputConfig: {},
-  };
+  });
+  for (const direction of DIRECTIONS) {
+    const face = /** @type {FluidFace} */ (direction);
+    const mode = definition.modes.find((entry) => entry.id === definition.initialModes[face]);
+    if (!mode) continue;
+    if (mode.inputIndices.length > 0) config.inputConfig[face] = [...mode.inputIndices];
+    if (mode.outputIndices.length > 0) config.outputConfig[face] = [...mode.outputIndices];
+  }
+  return config;
 }
 
-/** @param {ComplexFluidConfig} current @param {FluidIODefinition} definition */
-function reconcileConfig(current, definition) {
-  const config = createEmptyConfig(definition);
+/** @param {ComplexFluidConfig} current @param {FluidIODefinition} definition @param {import("@minecraft/server").Entity} entity */
+function reconcileConfig(current, definition, entity) {
+  const config = /** @type {ComplexFluidConfig} */ ({
+    version: FLUID_CONFIG_VERSION,
+    type: "complex",
+    anyInputIndices: [...definition.anyInputIndices],
+    anyOutputIndices: [...definition.anyOutputIndices],
+    inputConfig: {},
+    outputConfig: {},
+  });
   let changed = !arraysEqual(current.anyInputIndices, definition.anyInputIndices)
     || !arraysEqual(current.anyOutputIndices, definition.anyOutputIndices);
 
   for (const direction of DIRECTIONS) {
     const face = /** @type {FluidFace} */ (direction);
-    const mode = findModeForFace(current, definition, direction);
-    if (!mode || mode.id === DEFAULT_FLUID_IO_MODE) {
+    const mode = findModeForFace(entity, current, definition, direction);
+    if (!mode || mode.id === DEFAULT_FLUID_IO_MODE || mode.id === DISABLED_FLUID_IO_MODE) {
       if (current.inputConfig[face]?.length || current.outputConfig[face]?.length) changed = true;
       continue;
     }
@@ -494,16 +556,28 @@ function reconcileConfig(current, definition) {
   return { changed, config };
 }
 
-/** @param {ComplexFluidConfig} config @param {FluidIODefinition} definition @param {string} direction */
-function findModeForFace(config, definition, direction) {
+/** @param {import("@minecraft/server").Entity} entity @param {ComplexFluidConfig} config @param {FluidIODefinition} definition @param {string} direction */
+function findModeForFace(entity, config, definition, direction) {
+  if (isIOFaceDisabled(entity, "liquids", direction)) {
+    return definition.modes.find((mode) => mode.id === DISABLED_FLUID_IO_MODE);
+  }
+
   const face = /** @type {FluidFace} */ (direction);
-  return findModeForIndices(definition, config.inputConfig[face] ?? [], config.outputConfig[face] ?? []);
+  const inputs = config.inputConfig[face] ?? [];
+  const outputs = config.outputConfig[face] ?? [];
+  if (inputs.length === 0 && outputs.length === 0) {
+    return definition.modes.find((mode) => mode.id === DEFAULT_FLUID_IO_MODE);
+  }
+  return findModeForIndices(definition, inputs, outputs);
 }
 
 /** @param {FluidIODefinition} definition @param {ReadonlyArray<number>} inputs @param {ReadonlyArray<number>} outputs */
 function findModeForIndices(definition, inputs, outputs) {
   return definition.modes.find((mode) => (
-    arraysEqual(inputs, mode.inputIndices) && arraysEqual(outputs, mode.outputIndices)
+    mode.id !== DEFAULT_FLUID_IO_MODE
+    && mode.id !== DISABLED_FLUID_IO_MODE
+    && arraysEqual(inputs, mode.inputIndices)
+    && arraysEqual(outputs, mode.outputIndices)
   ));
 }
 
@@ -534,6 +608,7 @@ function cloneDefinition(definition) {
   return {
     anyInputIndices: [...definition.anyInputIndices],
     anyOutputIndices: [...definition.anyOutputIndices],
+    initialModes: { ...definition.initialModes },
     modes: definition.modes.map((mode) => ({
       id: mode.id,
       inputIndices: [...mode.inputIndices],
@@ -563,8 +638,8 @@ function publishConfig(entity, config, blockTypeId, definitionRevision) {
   }, 20);
 }
 
-/** @param {import("@minecraft/server").Entity} entity @param {"input"|"output"} operation @param {FluidFace|undefined} face */
-function resolveIndices(entity, operation, face) {
+/** @param {import("@minecraft/server").Entity} entity @param {"input"|"output"} operation @param {FluidFace|undefined} face @param {boolean} automatic */
+function resolveIndices(entity, operation, face, automatic = false) {
   const entry = resolveCacheEntry(entity);
   if (entry.status === "basic") return entry.indices;
   if (entry.status !== "configured") return EMPTY_INDICES;
@@ -572,7 +647,15 @@ function resolveIndices(entity, operation, face) {
   if (config.type === "simple") return operation === "input" ? config.inputConfig : config.outputConfig;
   if (face === undefined) return operation === "input" ? config.anyInputIndices : config.anyOutputIndices;
   if (!DIRECTIONS.includes(face)) return EMPTY_INDICES;
-  return (operation === "input" ? config.inputConfig[face] : config.outputConfig[face]) ?? EMPTY_INDICES;
+  if (isIOFaceDisabled(entity, "liquids", face)) return EMPTY_INDICES;
+
+  const configured = operation === "input" ? config.inputConfig[face] : config.outputConfig[face];
+  if (configured) return configured;
+  if (automatic) return EMPTY_INDICES;
+
+  const opposite = operation === "input" ? config.outputConfig[face] : config.inputConfig[face];
+  if (opposite) return EMPTY_INDICES;
+  return operation === "input" ? config.anyInputIndices : config.anyOutputIndices;
 }
 
 /** @param {import("@minecraft/server").Entity} entity @returns {CacheEntry} */

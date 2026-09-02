@@ -20,6 +20,7 @@ const STEAM_DISPLAY_SLOT = 11;
 const STEAM_PER_CRAFT = 250;
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [16, 17, 18, 19, 20, 21],
         anyInputSlots: INPUTS,

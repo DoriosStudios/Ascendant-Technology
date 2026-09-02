@@ -34,6 +34,7 @@ const LAPIS_CREDIT_KEY = "ascendant:cryofluid_lapis_credit";
 const RESOURCE_IO_RATE = 128000;
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [17, 18, 19, 20, 21, 22],
         anyInputSlots: [...TITANIUM_INPUTS, ...LAPIS_INPUTS],

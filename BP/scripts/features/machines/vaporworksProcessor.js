@@ -25,6 +25,7 @@ const RESOURCE_IO_RATE = 128000;
 const itemMaximums = new Map();
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [11, 12, 13, 14, 15, 16],
         anyInputSlots: [FLUID_CONTAINER_INPUT_SLOT, GAS_CONTAINER_INPUT_SLOT],

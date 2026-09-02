@@ -19,6 +19,7 @@ const BYPRODUCT_SLOT = 5;
 const DEFAULT_STACK_SIZE = 64;
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [8, 9, 10, 11, 12, 13],
         anyInputSlots: [INPUT_SLOT],

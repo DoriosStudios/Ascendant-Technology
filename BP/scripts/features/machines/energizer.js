@@ -21,6 +21,7 @@ const RECIPE_KEY = "ascendant:energizer_recipe";
 const itemMaximums = new Map();
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [8, 9, 10, 11, 12, 13],
         anyInputSlots: [PRIMARY_INPUT_SLOT, AUXILIARY_INPUT_SLOT],

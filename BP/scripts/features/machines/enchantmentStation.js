@@ -47,6 +47,7 @@ const ABSORB_SIGNATURE_KEY = "ascendant:station_absorb_signature";
 const ABSORB_START_KEY = "ascendant:station_absorb_start";
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [31, 32, 33, 34, 35, 36],
         anyInputSlots: [...GRID_SLOTS, ...MODULE_SLOTS, SOURCE_SLOT, CATALYST_SLOT, BOOK_SLOT],

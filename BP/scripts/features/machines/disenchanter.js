@@ -59,6 +59,7 @@ const BOOK_OUTPUT_SLOTS = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
 const XP_TYPE = "xp";
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [22, 23, 24, 25, 26, 27],
         anyInputSlots: [SOURCE_SLOT, CATALYST_SLOT],

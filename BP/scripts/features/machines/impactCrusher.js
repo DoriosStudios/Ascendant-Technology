@@ -55,6 +55,7 @@ const LOCK_UNTIL_KEY = "ascendant:impact_crusher_lock_until";
 const LOCK_DURATION_TICKS = 20 * 30;
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [21, 22, 23, 24, 25, 26],
         anyInputSlots: INPUTS,

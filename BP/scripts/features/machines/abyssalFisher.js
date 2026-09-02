@@ -70,6 +70,7 @@ const pendingCatches = new Map();
 let lastCacheCleanupTick = 0;
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: ITEM_IO_BUTTON_SLOTS,
         anyInputSlots: [NET_SLOT],

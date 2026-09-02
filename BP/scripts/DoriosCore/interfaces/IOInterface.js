@@ -75,22 +75,23 @@ const warnedTagConflicts = new Set();
 /**
  * @typedef {object} ItemIOGroupConfig
  * @property {number[]|[number, number]} [buttonSlots] Six face-button slots, explicit or inclusive range.
- * @property {number[]} anyInputSlots Explicit fallback inputs when no face is available.
- * @property {number[]} anyOutputSlots Explicit fallback outputs when no face is available.
+ * @property {number[]} anyInputSlots Inputs exposed without a face or through passive default faces.
+ * @property {number[]} anyOutputSlots Outputs exposed without a face or through passive default faces.
  * @property {ItemModeConfig[]} modes Ordered modes cycled by each face button.
  */
 
 /**
  * @typedef {object} LiquidIOGroupConfig
  * @property {number[]|[number, number]} [buttonSlots] Six face-button slots, explicit or inclusive range.
- * @property {number[]} anyInputIndices Explicit fallback inputs when no face is available.
- * @property {number[]} anyOutputIndices Explicit fallback outputs when no face is available.
+ * @property {number[]} anyInputIndices Inputs exposed without a face or through passive default faces.
+ * @property {number[]} anyOutputIndices Outputs exposed without a face or through passive default faces.
  * @property {Array<{id:string,inputIndices?:number[],outputIndices?:number[]}>} modes Ordered modes cycled by each face button.
  */
 
 /**
  * @typedef {object} IOInterfaceConfig
  * @property {boolean} [invertFaces] Whether every visual face resolves to its opposite physical direction.
+ * @property {boolean} [automaticDefaults] Initialize automatic faces as south input, north output, and up auxiliary input.
  * @property {ItemIOGroupConfig} [items] Item policy and optional face buttons.
  * @property {LiquidIOGroupConfig} [liquids] Fluid-index policy and optional face buttons.
  * @property {LiquidIOGroupConfig} [gases] Gas-index policy and optional face buttons.
@@ -125,6 +126,74 @@ function normalizeButtonSlots(value, path) {
   }
   if (new Set(slots).size !== slots.length) throw new RangeError(`${path} contains duplicate slots`);
   return slots;
+}
+
+/** @param {ReadonlyArray<number>} left @param {ReadonlyArray<number>} right */
+function arraysEqual(left, right) {
+  return left.length === right.length && left.every((value, index) => value === right[index]);
+}
+
+/**
+ * Adds the AT machine convention without changing the caller's declaration.
+ * The auxiliary mode is synthesized when the registered modes do not already
+ * expose all non-primary inputs as one selectable face mode.
+ *
+ * @param {Record<string,any>} definition
+ * @param {{input:string,output:string,anyInput:string,anyOutput:string}} keys
+ */
+function addAutomaticFaceDefaults(definition, keys) {
+  const modes = definition.modes.map((mode) => ({ ...mode }));
+  const inputModes = modes.filter((mode) => (
+    (mode[keys.input]?.length ?? 0) > 0 && (mode[keys.output]?.length ?? 0) === 0
+  ));
+  const outputModes = modes.filter((mode) => (
+    (mode[keys.output]?.length ?? 0) > 0 && (mode[keys.input]?.length ?? 0) === 0
+  ));
+  const allInputs = definition[keys.anyInput] ?? [];
+  const primaryInput = inputModes[0];
+  let mainInput = inputModes.find((mode) => arraysEqual(mode[keys.input] ?? [], allInputs));
+  const allOutputs = definition[keys.anyOutput] ?? [];
+  const mainOutput = outputModes.find((mode) => arraysEqual(mode[keys.output] ?? [], allOutputs))
+    ?? outputModes[0];
+
+  const usedIds = new Set(modes.map((mode) => mode.id));
+  const nextInputId = () => Array.from({ length: 9 }, (_, index) => `input_${index + 1}`)
+    .find((candidate) => !usedIds.has(candidate));
+
+  if (allInputs.length > 0 && !mainInput) {
+    const id = nextInputId();
+    if (id) {
+      mainInput = { id, [keys.input]: allInputs };
+      usedIds.add(id);
+      modes.push(mainInput);
+    }
+  }
+
+  const primaryValues = new Set(primaryInput?.[keys.input] ?? []);
+  const auxiliaryValues = allInputs
+    .filter((value) => !primaryValues.has(value));
+  let auxiliaryInput = inputModes.find((mode) => (
+    arraysEqual(mode[keys.input] ?? [], auxiliaryValues)
+  ));
+
+  if (auxiliaryValues.length > 0 && !auxiliaryInput) {
+    const id = nextInputId();
+    if (id) {
+      auxiliaryInput = { id, [keys.input]: auxiliaryValues };
+      modes.push(auxiliaryInput);
+    }
+  }
+
+  return {
+    ...definition,
+    modes,
+    initialModes: {
+      ...(mainInput ? { south: mainInput.id } : {}),
+      ...(mainOutput ? { north: mainOutput.id } : {}),
+      ...(auxiliaryInput ? { up: auxiliaryInput.id } : {}),
+      ...(definition.initialModes ?? {}),
+    },
+  };
 }
 
 /**
@@ -270,20 +339,38 @@ function registerIOInterfaceDefinition(blockTypeId, config = {}, sourceTag) {
   const invertFaces = config.invertFaces === true;
 
   if (config.items !== undefined) {
-    const definition = registerItemIODefinition(blockTypeId, config.items);
-    addItemButtons(buttons, blockTypeId, config.items, definition, invertFaces);
+    const itemConfig = config.automaticDefaults === true
+      ? addAutomaticFaceDefaults(config.items, {
+        input: "inputSlots", output: "outputSlots",
+        anyInput: "anyInputSlots", anyOutput: "anyOutputSlots",
+      })
+      : config.items;
+    const definition = registerItemIODefinition(blockTypeId, itemConfig);
+    addItemButtons(buttons, blockTypeId, itemConfig, definition, invertFaces);
     registered = true;
   }
 
   if (config.liquids !== undefined) {
-    const definition = registerFluidIODefinition(blockTypeId, config.liquids);
-    addLiquidButtons(buttons, blockTypeId, config.liquids, definition, invertFaces);
+    const liquidConfig = config.automaticDefaults === true
+      ? addAutomaticFaceDefaults(config.liquids, {
+        input: "inputIndices", output: "outputIndices",
+        anyInput: "anyInputIndices", anyOutput: "anyOutputIndices",
+      })
+      : config.liquids;
+    const definition = registerFluidIODefinition(blockTypeId, liquidConfig);
+    addLiquidButtons(buttons, blockTypeId, liquidConfig, definition, invertFaces);
     registered = true;
   }
 
   if (config.gases !== undefined) {
-    const definition = registerGasIODefinition(blockTypeId, config.gases);
-    addGasButtons(buttons, blockTypeId, config.gases, definition, invertFaces);
+    const gasConfig = config.automaticDefaults === true
+      ? addAutomaticFaceDefaults(config.gases, {
+        input: "inputIndices", output: "outputIndices",
+        anyInput: "anyInputIndices", anyOutput: "anyOutputIndices",
+      })
+      : config.gases;
+    const definition = registerGasIODefinition(blockTypeId, gasConfig);
+    addGasButtons(buttons, blockTypeId, gasConfig, definition, invertFaces);
     registered = true;
   }
 

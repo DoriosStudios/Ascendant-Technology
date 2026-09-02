@@ -56,6 +56,7 @@ const CLOCKS = Object.freeze({
 const CROP_TIER_MULTIPLIERS = Object.freeze({ 0: 1, 1: 1, 2: 4 / 7, 3: 4 / 11, 4: 1 / 4 });
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [26, 27, 28, 29, 30, 31],
         anyInputSlots: [...SEED_SLOTS, CLOCK_SLOT],

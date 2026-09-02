@@ -37,6 +37,7 @@ const MODULE_SLOT = 4;
 installReinforcementRuntime();
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [8, 9, 10, 11, 12, 13],
         anyInputSlots: [ITEM_SLOT, MODULE_SLOT],

@@ -49,6 +49,7 @@ const OPERATION_SIGNATURE_KEY = "ascendant:arcane_enchanter_signature";
 const OPERATION_PLAN_KEY = "ascendant:arcane_enchanter_plan";
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [12, 13, 14, 15, 16, 17],
         anyInputSlots: [INPUT_SLOT, LAPIS_SLOT, MODULE_SLOT, PROTECTION_SLOT],

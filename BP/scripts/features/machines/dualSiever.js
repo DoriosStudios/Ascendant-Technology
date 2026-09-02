@@ -52,6 +52,7 @@ ButtonManager.registerMachineButton(ID, MODE_BUTTON_SLOT, ({ entity }) => {
 });
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [34, 35, 36, 37, 38, 39],
         anyInputSlots: [3, 4, 5, 6],

@@ -46,6 +46,7 @@ const STANDARD_PROFILE = Object.freeze({
 });
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [26, 27, 28, 29, 30, 31],
         anyInputSlots: [...SEED_SLOTS, SOIL_SLOT],

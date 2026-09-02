@@ -93,6 +93,7 @@ ButtonManager.registerMachineButton(ID, ACTIVATION_BUTTON_SLOT, ({ entity }) => 
 });
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: IO_BUTTON_SLOTS,
         anyInputSlots: [TOOL_SLOT],

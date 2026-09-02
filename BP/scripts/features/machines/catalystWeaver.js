@@ -33,6 +33,7 @@ const FLUID_IO_RATE = 128000;
 const itemMaximums = new Map();
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [16, 17, 18, 19, 20, 21],
         anyInputSlots: [INPUT_SLOT, ...CATALYST_SLOTS],

@@ -36,6 +36,7 @@ const FLUID_IO_RATE = 128000;
 const DEFAULT_STACK_SIZE = 64;
 
 registerIOInterface(ID, {
+    automaticDefaults: true,
     items: {
         buttonSlots: [20, 21, 22, 23, 24, 25],
         anyInputSlots: INPUT_SLOTS,

@@ -1,3 +1,5 @@
+import { EQUIPMENT_SLOTS } from "../config/equipmentTypes.js";
+import { CACHE_LIMITS } from "../config/values.js";
 const equipmentContextCache = new Map();
 
 function getEntityCacheKey(entity, slotName) {
@@ -7,13 +9,13 @@ function getEntityCacheKey(entity, slotName) {
 }
 
 function getMainhandSelection(entity, slotName) {
-    if (slotName !== "Mainhand") return -1;
+    if (slotName !== EQUIPMENT_SLOTS.mainhand) return -1;
     const selectedSlotIndex = Number(entity?.selectedSlotIndex ?? entity?.selectedSlot);
     return Number.isInteger(selectedSlotIndex) ? selectedSlotIndex : -1;
 }
 
 function trimContextCache(currentTick) {
-    if (equipmentContextCache.size <= 128) return;
+    if (equipmentContextCache.size <= CACHE_LIMITS.equipmentContexts) return;
 
     for (const [key, entry] of equipmentContextCache) {
         if (entry.tick !== currentTick) equipmentContextCache.delete(key);

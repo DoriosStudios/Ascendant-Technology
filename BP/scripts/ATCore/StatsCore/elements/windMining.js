@@ -1,10 +1,11 @@
+import { MOBILITY_VALUES } from "../config/values.js";
 import { system, world } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { getEquipmentStatsContext } from "../shared/context.js";
 import { applyEffectById } from "../shared/effects.js";
 
-const HASTE_STEP_TICKS = 24;
-const MAX_HASTE_LEVEL = 5;
+const HASTE_STEP_TICKS = MOBILITY_VALUES.windMiningHasteStepTicks;
+const MAX_HASTE_LEVEL = MOBILITY_VALUES.windMiningMaxHasteLevel;
 const sessions = new Map();
 let initialized = false;
 

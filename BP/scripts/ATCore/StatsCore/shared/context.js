@@ -70,7 +70,7 @@ export function getEquipmentStatsContext(entity, slotName = STATSCORE.slots.main
     // Definitions can remove obsolete progression categories without erasing
     // the player's saved XP. Refresh the visible lore when this equipped item
     // is first observed so legacy DEF lines disappear immediately.
-    if (syncStatsCoreLore(
+    if (itemContext.state.refined === true && syncStatsCoreLore(
         access.item,
         itemContext.definition,
         itemContext.state,

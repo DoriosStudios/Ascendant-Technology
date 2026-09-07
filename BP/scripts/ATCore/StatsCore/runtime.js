@@ -1,7 +1,7 @@
+import { STATSCORE_ENABLED_CACHE_KEY } from "./config/definitions.js";
 import { world } from "@minecraft/server";
 import { STATSCORE } from "./constants.js";
 
-const STATSCORE_ENABLED_CACHE_KEY = "__statsCoreEnabled";
 
 function cacheStatsCoreEnabled(value) {
     const normalized = value === true;

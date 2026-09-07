@@ -1,3 +1,4 @@
+import { WORM_SOIL_CYCLE, WORM_DIG_DROPS } from "../config/mining.js";
 import { ItemStack, system, world } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { persistEquipmentItem } from "../core/equipment.js";
@@ -11,25 +12,11 @@ import { resolveStatsAbilityName } from "../core/abilities.js";
 import { normalizeOperatorMode } from "../core/state.js";
 import { normalizeId } from "../utils.js";
 import { isStatsCoreOverrideDamage } from "../shared/damage.js";
+import { rollToolPreserving } from "../shared/durability.js";
+import { STATSCORE_ICONS } from "../icons.js";
 
 const operatorToggleTicks = new Map();
-const WORM_SOIL_CYCLE = Object.freeze([
-    "minecraft:dirt",
-    "minecraft:grass_path",
-    "minecraft:grass_block",
-    "minecraft:podzol",
-    "minecraft:mycelium",
-    "minecraft:coarse_dirt",
-    "minecraft:rooted_dirt",
-]);
-const WORM_DIG_DROPS = Object.freeze([
-    "minecraft:wheat_seeds",
-    "minecraft:beetroot_seeds",
-    "minecraft:melon_seeds",
-    "minecraft:pumpkin_seeds",
-    "minecraft:torchflower_seeds",
-]);
-
+const toolPreservingUseTicks = new WeakMap();
 function canToggleOperator(player) {
     const key = String(player?.id ?? "operator");
     const tick = Number(system.currentTick ?? 0) || 0;
@@ -68,6 +55,17 @@ function cycleOperatorMode(player, context) {
     }
 
     showAbilityFeedback(player, resolveStatsAbilityName(operatorEffect, { state: result.state }));
+    return true;
+}
+
+function processToolPreservingUse(player, context, actionTick = Number(system.currentTick ?? 0) || 0) {
+    if (Number(toolPreservingUseTicks.get(player) ?? -1) === actionTick) return false;
+
+    toolPreservingUseTicks.set(player, actionTick);
+    if (!rollToolPreserving(context)) return false;
+
+    persistEquipmentItem(player, context.slotName, context.stack);
+    showAbilityFeedback(player, "§aTool Preserving", STATSCORE_ICONS.preservingTool);
     return true;
 }
 
@@ -213,7 +211,9 @@ function handleItemUse(event) {
     if (!player || player.typeId !== "minecraft:player" || !itemStack) return;
 
     const context = getHeldStatsContext(player, itemStack.typeId);
-    if (!context) return;
+    if (!context || context.state?.refined !== true) return;
+
+    processToolPreservingUse(player, context);
 
     if (cycleOperatorMode(player, context)) {
         return;
@@ -232,7 +232,15 @@ function handleItemUseOn(event) {
     if (!player || player.typeId !== "minecraft:player" || !itemStack) return;
 
     const context = getHeldStatsContext(player, itemStack.typeId);
-    if (!context) return;
+    if (!context || context.state?.refined !== true) return;
+
+    const actionTick = Number(system.currentTick ?? 0) || 0;
+    system.run(() => {
+        const liveContext = getHeldStatsContext(player, itemStack.typeId);
+        if (liveContext?.state?.refined === true) {
+            processToolPreservingUse(player, liveContext, actionTick);
+        }
+    });
 
     if (cycleOperatorMode(player, context)) {
         return;

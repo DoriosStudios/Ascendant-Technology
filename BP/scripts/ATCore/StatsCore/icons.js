@@ -1,63 +1,5 @@
-/**
- * StatsCore glyph allowlist.
- *
- * Every value in this file is declared in root_extras/emojis.lang. Keeping the
- * mapping centralized prevents system Unicode symbols or unsupported glyphs
- * from leaking into lore and action-bar feedback.
- */
-export const STATSCORE_ICONS = Object.freeze({
-    attackDamage: "",
-    damageReduction: "",
-    walkingSpeed: "",
-    swimmingSpeed: "",
-    evasion: "",
-    luck: "",
-    doubleTrouble: "",
-    tripleTrouble: "",
-    sweeping: "",
-    criticalMultiplier: "",
-    criticalDamage: "",
-    criticalChance: "",
-    preservingTool: "",
-    preservingArmor: "",
-    blood: "",
-    death: "",
-    scavenger: "",
-    random: "",
-    soul: "",
-    newItem: "",
-    miningLevelUp: "",
-    defensiveLevelUp: "",
-    offensiveLevelUp: "",
-    abilityLevelUp: "",
-    oreYield: "",
-    fire: "",
-    poison: "",
-    ice: "",
-    darkness: "",
-    lightning: "",
-    wind: "",
-    void: "",
-    curse: "",
-    retaliation: "",
-    rage: "",
-    earth: "",
-    holy: "",
-    plant: "",
-    mark: "",
-    operator: "",
-    blessedHeart: "",
-    water: "",
-    healedHeart: "",
-    fullHeart: "",
-    emptyHeart: "",
-    fullArmor: "",
-    hunger: "",
-    waterBubble: "",
-    sword: "",
-    pickaxe: "",
-    unknown: "",
-});
+import { STATSCORE_ICONS } from "./config/presentation.js";
+export { STATSCORE_ICONS } from "./config/presentation.js";
 
 function normalizeLabel(label) {
     return String(label ?? "")
@@ -166,6 +108,7 @@ export function getAbilityIcon(label) {
         normalized.includes("harpoon")
         || normalized.includes("pinning shot")
         || normalized.includes("ballista")
+        || normalized.includes("arrow volley")
         || normalized.includes("primal")
     ) {
         return STATSCORE_ICONS.sword;

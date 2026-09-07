@@ -1,10 +1,11 @@
+import { HOT_ENTITY_TOKENS, COLD_ENTITY_TOKENS, DARK_RESISTANT_TOKENS, UNDEAD_ENTITY_TOKENS, SWEEP_ENTITY_CATEGORIES, SWEEP_EXCLUDED_ENTITY_TYPES } from "../config/entities.js";
 import { EntityDamageCause, system } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { getCurrentTick, normalizeChance, rollChance } from "../utils.js";
 import { applyEffectById } from "../shared/effects.js";
 import { markStatsCoreOverrideDamage } from "../shared/damage.js";
 import { getEquipmentStatsContext } from "../shared/context.js"; 
-import { ENTITY_CATEGORIES, ENTITY_CATEGORY_MEMBERS, OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity, getEntityCategory } from "../shared/entityCategories.js";
+import { ENTITY_CATEGORIES, OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity, getEntityCategory } from "../shared/entityCategories.js";
 import { resolveStatsAbilityName } from "../core/abilities.js";
 import {
     getStatsCoreEffect,
@@ -16,19 +17,7 @@ const procDamageTargets = new Map();
 const effectCooldowns = new Map();
 const bleedStates = new Map();
 const blessingStates = new Map();
-const HOT_ENTITY_TOKENS = Object.freeze(["blaze", "magma", "strider", "ghast", "piglin", "hoglin", "zoglin", "wither_skeleton"]);
-const COLD_ENTITY_TOKENS = Object.freeze(["stray", "snow_golem", "breeze", "ice", "frozen", "frost"]);
-const DARK_RESISTANT_TOKENS = Object.freeze(["wither", "warden", "ender", "shulker"]);
-const UNDEAD_ENTITY_TOKENS = Object.freeze([
-    "bogged", "drowned", "husk", "parched", "phantom", "skeleton", "stray",
-    "wither", "zoglin", "zombie",
-]);
-const SWEEP_ENTITY_CATEGORIES = Object.freeze([
-    ...OFFENSIVE_ENTITY_CATEGORIES,
-    ENTITY_CATEGORIES.passive,
-]);
 const SWEEP_ENTITY_CATEGORY_SET = new Set(SWEEP_ENTITY_CATEGORIES);
-const SWEEP_EXCLUDED_ENTITY_TYPES = ENTITY_CATEGORY_MEMBERS[ENTITY_CATEGORIES.ally];
 let bleedProcessorRunId;
 let blessingProcessorRunId;
 
@@ -390,6 +379,20 @@ function applyBleed(target, attacker, effect, finalDamage) {
     publishBleedingState(target);
     setEffectCooldown(attacker, effect);
     return true;
+}
+
+/** Applies the real Bleeding runtime used by combat from admin/test commands. */
+export function applyCommandBleeding(target, durationTicks) {
+    return applyBleed(target, undefined, {
+        key: "command_bleeding",
+        kind: "bleed",
+        chance: 1,
+        cooldownTicks: 0,
+        durationTicks: Math.max(20, Math.floor(Number(durationTicks) || 20)),
+        tickInterval: 20,
+        maxStacks: 1,
+        damageRatio: 0.25,
+    }, 4);
 }
 
 function publishBleedingState(target) {
@@ -1140,6 +1143,83 @@ function applyBallista(attacker, target, effect, finalDamage) {
     return applied;
 }
 
+function applyArrowVolley(attacker, target, effect) {
+    if (!attacker || !target?.dimension || isEffectOnCooldown(attacker, effect)) return false;
+
+    const range = Math.max(1.5, Number(effect?.range ?? 8) || 8);
+    const maxTargets = Math.max(1, Math.floor(Number(effect?.maxTargets ?? 4) || 4));
+    const targets = target.dimension.getEntities({
+        location: target.location,
+        maxDistance: range,
+    })
+        .filter((entity) => entity && entity.id !== attacker.id && entity.id !== target.id)
+        .filter((entity) => hasHealthComponent(entity) && getEntityCategory(entity) === ENTITY_CATEGORIES.hostile)
+        .sort((left, right) => distanceSquared(target.location, left.location) - distanceSquared(target.location, right.location))
+        .slice(0, maxTargets);
+
+    let arrowsFired = 0;
+    for (const nextTarget of targets) {
+        if (fireVolleyArrow(target.dimension, target.location, nextTarget.location, effect)) {
+            arrowsFired++;
+            spawnParticleTrail(target.dimension, target.location, nextTarget.location);
+        }
+    }
+
+    if (arrowsFired > 0) setEffectCooldown(attacker, effect);
+    return arrowsFired > 0;
+}
+
+function fireVolleyArrow(dimension, origin, target, effect) {
+    const direction = directionTo(origin, target);
+    const spawnLocation = {
+        x: origin.x + direction.x * 0.75,
+        y: origin.y + 0.9 + direction.y * 0.75,
+        z: origin.z + direction.z * 0.75,
+    };
+
+    try {
+        const arrow = dimension.spawnEntity("minecraft:arrow", spawnLocation);
+        const velocity = scaleVector(direction, Math.max(0.1, Number(effect?.arrowSpeed ?? 2.5) || 2.5));
+        const impulse = scaleVector(direction, Math.max(0, Number(effect?.arrowImpulse ?? 0.15) || 0.15));
+        const motion = /** @type {ArrowMotionMethods} */ (arrow);
+
+        if (typeof motion.setVelocity === "function" && typeof motion.addImpulse === "function") {
+            motion.setVelocity(velocity);
+            motion.addImpulse(impulse);
+        } else {
+            const projectile = arrow.getComponent?.("minecraft:projectile") ?? arrow.getComponent?.("projectile");
+            if (typeof projectile?.shoot === "function") {
+                projectile.shoot(velocity);
+            } else {
+                arrow.clearVelocity?.();
+                arrow.applyImpulse?.(scaleVector(direction, Math.hypot(velocity.x, velocity.y, velocity.z) + Math.hypot(impulse.x, impulse.y, impulse.z)));
+            }
+        }
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/**
+ * @typedef {import("@minecraft/server").Entity & {
+ *   setVelocity?: (velocity: import("@minecraft/server").Vector3) => void,
+ *   addImpulse?: (impulse: import("@minecraft/server").Vector3) => void,
+ * }} ArrowMotionMethods
+ */
+
+function directionTo(origin, target) {
+    const x = Number(target?.x ?? 0) - Number(origin?.x ?? 0);
+    const y = Number(target?.y ?? 0) + 0.9 - Number(origin?.y ?? 0);
+    const z = Number(target?.z ?? 0) - Number(origin?.z ?? 0);
+    const length = Math.hypot(x, y, z) || 1;
+    return { x: x / length, y: y / length, z: z / length };
+}
+
+function scaleVector(vector, amount) {
+    return { x: vector.x * amount, y: vector.y * amount, z: vector.z * amount };
+}
+
 export function applyCombatEffects({ attacker, target, attributes, crit, finalDamage, damageSource, damagingProjectile, preAppliedElemental = [] }) {
     const effects = Array.isArray(attributes?.effects) ? attributes.effects : [];
     if (!target) return { count: 0, elemental: [], abilities: [] };
@@ -1210,6 +1290,14 @@ export function applyCombatEffects({ attacker, target, attributes, crit, finalDa
 
         if (kind === "ballista") {
             if (applyBallista(attacker, target, effect, finalDamage)) {
+                applied++;
+                recordAbility(effect);
+            }
+            continue;
+        }
+
+        if (kind === "arrow_volley") {
+            if (applyArrowVolley(attacker, target, effect)) {
                 applied++;
                 recordAbility(effect);
             }

@@ -1,12 +1,13 @@
+import {
+    EFFECTS_NAMESPACE,
+    EFFECTS_DISCOVER_EVENT,
+    EFFECTS_READY_EVENT,
+    EFFECTS_SEND_EVENT,
+    LEGACY_DISCOVER_EVENT,
+    LEGACY_READY_EVENT,
+    LEGACY_SEND_EVENT,
+} from "../config/definitions.js";
 import { system } from "@minecraft/server";
-
-const EFFECTS_NAMESPACE = "ascendant.statscore";
-const EFFECTS_DISCOVER_EVENT = "insight:effects_discover_v1";
-const EFFECTS_READY_EVENT = "insight:effects_ready_v1";
-const EFFECTS_SEND_EVENT = "insight:effects_send_v1";
-const LEGACY_DISCOVER_EVENT = "insight:custom_effects_discover_v1";
-const LEGACY_READY_EVENT = "insight:custom_effects_ready_v1";
-const LEGACY_SEND_EVENT = "insight:custom_effects_send_v1";
 
 let initialized = false;
 let outboundEventId = EFFECTS_SEND_EVENT;
@@ -17,8 +18,7 @@ function isEntity(target) {
 }
 
 function getInsightEffectsApi() {
-    return globalThis.DoriosAPI?.insight?.effects
-        ?? globalThis.DoriosAPI?.insight?.customEffects;
+    return globalThis.DoriosAPI?.insight?.effects ?? globalThis.DoriosAPI?.insight?.customEffects;
 }
 
 /**
@@ -41,13 +41,16 @@ export function publishStatsCoreEffects(target, effects) {
     }
 
     try {
-        system.sendScriptEvent(outboundEventId, JSON.stringify({
-            targetId: target.id,
-            playerId: target.typeId === "minecraft:player" ? target.id : undefined,
-            namespace: EFFECTS_NAMESPACE,
-            action: "replace",
-            effects: list,
-        }));
+        system.sendScriptEvent(
+            outboundEventId,
+            JSON.stringify({
+                targetId: target.id,
+                playerId: target.typeId === "minecraft:player" ? target.id : undefined,
+                namespace: EFFECTS_NAMESPACE,
+                action: "replace",
+                effects: list,
+            }),
+        );
         return true;
     } catch {
         return false;
@@ -70,10 +73,13 @@ export function initializeStatsCoreEffectsBridge() {
     system.run(() => {
         for (const eventId of [EFFECTS_DISCOVER_EVENT, LEGACY_DISCOVER_EVENT]) {
             try {
-                system.sendScriptEvent(eventId, JSON.stringify({
-                    namespace: EFFECTS_NAMESPACE,
-                    version: 2,
-                }));
+                system.sendScriptEvent(
+                    eventId,
+                    JSON.stringify({
+                        namespace: EFFECTS_NAMESPACE,
+                        version: 2,
+                    }),
+                );
             } catch {
                 // Dorios' Insight is optional.
             }

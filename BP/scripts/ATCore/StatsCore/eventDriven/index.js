@@ -22,7 +22,7 @@ const chargeStates = new Map();
 const recentShots = new Map();
 const projectileProfiles = new Map();
 const persistenceStacks = new Map();
-const pendingOverheal = new Map();
+const pendingHealingEfficiency = new Map();
 const healingFeedbackTicks = new Map();
 const blastProtectionWindows = new Map();
 
@@ -51,7 +51,7 @@ function cleanupEventDrivenState() {
     cleanupTimedMap(recentShots);
     cleanupTimedMap(projectileProfiles);
     cleanupTimedMap(persistenceStacks);
-    cleanupTimedMap(pendingOverheal);
+    cleanupTimedMap(pendingHealingEfficiency);
     cleanupTimedMap(blastProtectionWindows);
     const feedbackCutoff = getCurrentTick() - 200;
     for (const [key, tick] of healingFeedbackTicks) {
@@ -439,13 +439,10 @@ function handleHealBefore(event) {
     event.healing = boostedHealing;
 
     const { current, max } = getHealthValues(player);
-    const excess = Math.max(0, current + boostedHealing - max);
-    pendingOverheal.set(entityKey(player), {
-        excess,
+    pendingHealingEfficiency.set(entityKey(player), {
         healthBefore: current,
         baseHealing,
         missingHealthBefore: Math.max(0, max - current),
-        durationTicks: Math.max(...profiles.map(value => Number(value.overhealAbsorptionDurationTicks ?? 100) || 100)),
         expiresAt: getCurrentTick() + 4,
     });
 }
@@ -454,9 +451,9 @@ function handleHealAfter(event) {
     const player = event?.healedEntity;
     if (!player || player.typeId !== "minecraft:player") return;
 
-    const pending = pendingOverheal.get(entityKey(player));
+    const pending = pendingHealingEfficiency.get(entityKey(player));
     if (!pending || Number(pending.expiresAt ?? 0) < getCurrentTick()) return;
-    pendingOverheal.delete(entityKey(player));
+    pendingHealingEfficiency.delete(entityKey(player));
 
     const actualHealing = Math.max(0, getHealthValues(player).current - Number(pending.healthBefore ?? 0));
     const baselineHealing = Math.min(
@@ -469,12 +466,6 @@ function handleHealAfter(event) {
     if (efficiencyHealing > 0.2 && now - Number(healingFeedbackTicks.get(feedbackKey) ?? -Infinity) >= 40) {
         healingFeedbackTicks.set(feedbackKey, now);
         showHealingFeedback(player, efficiencyHealing);
-    }
-
-    const excess = Math.max(0, Number(pending.excess ?? 0));
-    if (excess > 0) {
-        const amplifier = Math.max(0, Math.min(3, Math.ceil(excess / 4) - 1));
-        applyEffectById(player, "absorption", Math.max(20, Math.floor(Number(pending.durationTicks ?? 100))), amplifier, false);
     }
 }
 

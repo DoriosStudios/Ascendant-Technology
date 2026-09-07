@@ -1,3 +1,6 @@
+import { EQUIPMENT_SLOTS } from "./config/equipmentTypes.js";
+import { REFINEMENT_LIMITS } from "./config/values.js";
+import { REFINEMENT_PRESETS, REFINEMENT_ACTIONS } from "./config/refinement.js";
 import * as DoriosLib from "DoriosLib/index.js";
 import {
     getEquipment,
@@ -36,6 +39,38 @@ import {
     getStatsCoreEffectDefinition,
     upsertStatsCoreEffect,
 } from "./effects/index.js";
+import { applyCommandBleeding } from "./combat/effects.js";
+import { applyEffectById } from "./shared/effects.js";
+
+function applyCommandEffectGameplay(entity, effect, durationTicks) {
+    if (effect.id === "bleeding") {
+        return applyCommandBleeding(entity, durationTicks);
+    }
+
+    const applied = upsertStatsCoreEffect(entity, {
+        ...effect,
+        source: "command",
+        durationTicks,
+        ...(effect.displayMode === "charges"
+            ? { level: effect.maxCharges, currentCharges: effect.maxCharges }
+            : {}),
+    });
+    if (!applied) return false;
+
+    if (effect.id === "blessed") {
+        applyEffectById(entity, "regeneration", durationTicks, 0, false);
+        applyEffectById(entity, "health_boost", durationTicks, 5, false);
+        applyEffectById(entity, "resistance", durationTicks, 0, false);
+    } else if (effect.id === "cursed") {
+        applyEffectById(entity, "slowness", durationTicks, 0, false);
+        applyEffectById(entity, "weakness", durationTicks, 2, false);
+        applyEffectById(entity, "hunger", durationTicks, 2, false);
+    } else if (effect.id === "berserk") {
+        applyEffectById(entity, "strength", durationTicks, 0, false);
+    }
+
+    return true;
+}
 
 function sendCommandMessage(sourceEntity, message) {
     try {
@@ -69,25 +104,20 @@ function getRefinementElementSummary(refinement) {
     const elementId = normalizeId(element?.id);
     if (!elementId) return "§8None";
 
-    const configured = REFINING_CONFIG.elements.find(entry => normalizeId(entry?.id) === elementId);
-    const label = element?.label || configured?.label || elementId
-        .split(/[_\s-]+/g)
-        .filter(Boolean)
-        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-        .join(" ");
+    const configured = REFINING_CONFIG.elements.find(
+        (entry) => normalizeId(entry?.id) === elementId,
+    );
+    const label =
+        element?.label ||
+        configured?.label ||
+        elementId
+            .split(/[_\s-]+/g)
+            .filter(Boolean)
+            .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+            .join(" ");
     const chance = Math.round(Math.max(0, Number(element?.chance ?? 0) || 0) * 100);
     return `${label} §7(${chance}%)`;
 }
-
-const REFINEMENT_PRESETS = Object.freeze({
-    worst: Object.freeze({ tier: "wood", chip: "chip", ingot: "copper_ingot", core: "none", amount: 1 }),
-    basic: Object.freeze({ tier: "stone", chip: "basic_chip", ingot: "iron_ingot", core: "none", amount: 2 }),
-    standard: Object.freeze({ tier: "iron", chip: "advanced_chip", ingot: "steel_ingot", core: "normal", amount: 4 }),
-    elite: Object.freeze({ tier: "netherite", chip: "ultimate_chip", ingot: "netherite_ingot", core: "normal", amount: 8 }),
-    absolute: Object.freeze({ tier: "aetherium", chip: "absolute_chip", ingot: "aetherium", core: "normal", amount: 8 }),
-    best: Object.freeze({ tier: "aetherium", chip: "absolute_chip", ingot: "aetherium", core: "advanced", amount: 12 }),
-});
-const REFINEMENT_ACTIONS = Object.freeze(["custom", "random", ...Object.keys(REFINEMENT_PRESETS)]);
 
 function reportRefineSyntax(source, reason) {
     const message = [
@@ -105,9 +135,10 @@ function randomEntry(entries) {
 
 function getRandomRefinementOptions() {
     const coreMode = randomEntry(["none", "normal", "advanced"]);
-    const maxIngots = coreMode === "advanced"
-        ? REFINING_CONFIG.defaults.advancedMaxIngotsPerRoll
-        : REFINING_CONFIG.defaults.maxIngotsPerRoll;
+    const maxIngots =
+        coreMode === "advanced"
+            ? REFINING_CONFIG.defaults.advancedMaxIngotsPerRoll
+            : REFINING_CONFIG.defaults.maxIngotsPerRoll;
     return {
         label: "random",
         tier: randomEntry(Object.keys(REFINING_CONFIG.tierScales)),
@@ -135,11 +166,12 @@ function getRefinementOptions(action, tierValue, chipValue, ingotValue, coreValu
     const coreMode = normalizeId(values.core);
     const tier = normalizeId(values.tier);
     if (
-        !chip
-        || !ingot
-        || !REFINING_CONFIG.tierScales[tier]
-        || !["none", "normal", "advanced"].includes(coreMode)
-    ) return undefined;
+        !chip ||
+        !ingot ||
+        !REFINING_CONFIG.tierScales[tier] ||
+        !["none", "normal", "advanced"].includes(coreMode)
+    )
+        return undefined;
 
     return {
         label: preset ? normalizedAction : "custom",
@@ -152,12 +184,13 @@ function getRefinementOptions(action, tierValue, chipValue, ingotValue, coreValu
 }
 
 function getSelectedPlayers(value) {
-    if (Array.isArray(value)) return value.filter(entity => entity?.typeId === "minecraft:player");
+    if (Array.isArray(value))
+        return value.filter((entity) => entity?.typeId === "minecraft:player");
     return value?.typeId === "minecraft:player" ? [value] : [];
 }
 
 function getSelectedEntities(value) {
-    if (Array.isArray(value)) return value.filter(entity => entity?.id);
+    if (Array.isArray(value)) return value.filter((entity) => entity?.id);
     return value?.id ? [value] : [];
 }
 
@@ -172,17 +205,15 @@ function getDefinitionEffects(definition) {
         ...(Array.isArray(definition?.attributes?.effects) ? definition.attributes.effects : []),
         ...(Array.isArray(definition?.mining?.effects) ? definition.mining.effects : []),
         ...(Array.isArray(definition?.support?.effects) ? definition.support.effects : []),
-    ].filter(effect => effect && typeof effect === "object");
+    ].filter((effect) => effect && typeof effect === "object");
 }
 
 function definitionHasAbility(definition, abilityKey) {
     const expected = normalizeAbilityKey(abilityKey);
-    return getDefinitionEffects(definition).some(effect => {
-        return [
-            effect?.key,
-            effect?.kind,
-            effect?.label,
-        ].some(value => normalizeAbilityKey(value) === expected);
+    return getDefinitionEffects(definition).some((effect) => {
+        return [effect?.key, effect?.kind, effect?.label].some(
+            (value) => normalizeAbilityKey(value) === expected,
+        );
     });
 }
 
@@ -203,7 +234,7 @@ function persistCommandState(player, item, definition, state, options = {}) {
         levelChanged,
         forceLore: options.forceLore === true,
     });
-    if (!persistEquipmentItem(player, "Mainhand", item)) {
+    if (!persistEquipmentItem(player, EQUIPMENT_SLOTS.mainhand, item)) {
         return { ok: false, message: "Could not persist the equipment." };
     }
     return { ok: true, state: result.state };
@@ -216,11 +247,15 @@ function applySpecificAttribute(player, attributeKey, rawValue) {
     const option = getRefinementAttributeOption(attributeKey);
     if (!option) return { ok: false, message: "Unknown refinement attribute." };
     if (!option.itemTypes.includes(context.definition.type)) {
-        return { ok: false, message: `${option.label} is incompatible with ${context.definition.type} equipment.` };
+        return {
+            ok: false,
+            message: `${option.label} is incompatible with ${context.definition.type} equipment.`,
+        };
     }
 
     const requested = Number(rawValue);
-    if (!Number.isFinite(requested)) return { ok: false, message: `${option.label} requires a float value.` };
+    if (!Number.isFinite(requested))
+        return { ok: false, message: `${option.label} requires a float value.` };
     const value = Math.min(option.max, Math.max(option.min, requested));
     const nextRefinement = {
         ...context.state.refinement,
@@ -231,11 +266,17 @@ function applySpecificAttribute(player, attributeKey, rawValue) {
             [option.property]: value,
         },
     };
-    const persisted = persistCommandState(player, context.item, context.definition, {
-        ...context.state,
-        refined: true,
-        refinement: nextRefinement,
-    }, { syncLore: true, forceLore: true });
+    const persisted = persistCommandState(
+        player,
+        context.item,
+        context.definition,
+        {
+            ...context.state,
+            refined: true,
+            refinement: nextRefinement,
+        },
+        { syncLore: true, forceLore: true },
+    );
     if (!persisted.ok) return persisted;
 
     return {
@@ -251,7 +292,10 @@ function applySpecificAbility(player, abilityKey, rawLevel, appliesTo) {
     const option = getRefinementAbilityOption(abilityKey);
     if (!option) return { ok: false, message: "Unknown StatsCore ability." };
 
-    const level = Math.min(option.max, Math.max(option.min, Math.floor(Number(rawLevel) || option.min)));
+    const level = Math.min(
+        option.max,
+        Math.max(option.min, Math.floor(Number(rawLevel) || option.min)),
+    );
     const targets = normalizeAppliesTo(appliesTo);
     if (targets.length <= 0) {
         return { ok: false, message: "appliesTo requires categories or exact entity typeIds." };
@@ -260,43 +304,55 @@ function applySpecificAbility(player, abilityKey, rawLevel, appliesTo) {
     const currentInherited = Array.isArray(context.state.abilityData?.inheritedAbilities)
         ? context.state.abilityData.inheritedAbilities
         : [];
-    const existingInherited = currentInherited.find(entry => normalizeAbilityKey(entry?.key) === option.key);
+    const existingInherited = currentInherited.find(
+        (entry) => normalizeAbilityKey(entry?.key) === option.key,
+    );
     const inheritedRecord = nativeAbility
         ? null
-        : existingInherited ?? getInheritableAbilityRecord(context.definition, option.key, currentInherited);
+        : (existingInherited ??
+          getInheritableAbilityRecord(context.definition, option.key, currentInherited));
     if (!nativeAbility && !inheritedRecord) {
-        return { ok: false, message: `${option.label} is not compatible with this equipment category.` };
+        return {
+            ok: false,
+            message: `${option.label} is not compatible with this equipment category.`,
+        };
     }
 
     const nextInherited = nativeAbility
         ? currentInherited
         : [
-            ...currentInherited.filter(entry => normalizeAbilityKey(entry?.key) !== option.key),
-            {
-                ...inheritedRecord,
-                effect: {
-                    ...inheritedRecord.effect,
-                    appliesTo: [...targets],
-                    commandLevel: level,
+              ...currentInherited.filter((entry) => normalizeAbilityKey(entry?.key) !== option.key),
+              {
+                  ...inheritedRecord,
+                  effect: {
+                      ...inheritedRecord.effect,
+                      appliesTo: [...targets],
+                      commandLevel: level,
+                  },
+              },
+          ];
+    const persisted = persistCommandState(
+        player,
+        context.item,
+        context.definition,
+        {
+            ...context.state,
+            refined: true,
+            abilityData: {
+                ...context.state.abilityData,
+                appliedAbilities: {
+                    ...context.state.abilityData?.appliedAbilities,
+                    [option.key]: level,
                 },
+                abilityTargets: {
+                    ...context.state.abilityData?.abilityTargets,
+                    [option.key]: targets,
+                },
+                inheritedAbilities: nextInherited,
             },
-        ];
-    const persisted = persistCommandState(player, context.item, context.definition, {
-        ...context.state,
-        refined: true,
-        abilityData: {
-            ...context.state.abilityData,
-            appliedAbilities: {
-                ...context.state.abilityData?.appliedAbilities,
-                [option.key]: level,
-            },
-            abilityTargets: {
-                ...context.state.abilityData?.abilityTargets,
-                [option.key]: targets,
-            },
-            inheritedAbilities: nextInherited,
         },
-    }, { syncLore: true, forceLore: true });
+        { syncLore: true, forceLore: true },
+    );
     if (!persisted.ok) return persisted;
 
     return {
@@ -307,7 +363,9 @@ function applySpecificAbility(player, abilityKey, rawLevel, appliesTo) {
 
 function getRefinementElementOption(elementId) {
     const expected = normalizeId(elementId);
-    return REFINING_CONFIG.elements.find(element => normalizeId(element?.id) === expected) ?? null;
+    return (
+        REFINING_CONFIG.elements.find((element) => normalizeId(element?.id) === expected) ?? null
+    );
 }
 
 function applySpecificElement(player, elementId, rawChance, rawDamage) {
@@ -318,8 +376,14 @@ function applySpecificElement(player, elementId, rawChance, rawDamage) {
     if (!element) return { ok: false, message: "Unknown StatsCore element." };
     const allowedTypes = Array.isArray(element.allowedTypes) ? element.allowedTypes : null;
     const support = context.definition.type === "support";
-    if ((support && element.id !== "earth") || (allowedTypes && !allowedTypes.includes(context.definition.type))) {
-        return { ok: false, message: `${element.id} is incompatible with ${context.definition.type} equipment.` };
+    if (
+        (support && element.id !== "earth") ||
+        (allowedTypes && !allowedTypes.includes(context.definition.type))
+    ) {
+        return {
+            ok: false,
+            message: `${element.id} is incompatible with ${context.definition.type} equipment.`,
+        };
     }
 
     const requestedChance = Number(rawChance);
@@ -328,7 +392,7 @@ function applySpecificElement(player, elementId, rawChance, rawDamage) {
         return { ok: false, message: "Element chance and damage must be numeric." };
     }
     const chance = Math.min(1, Math.max(0, requestedChance));
-    const damage = Math.min(18, Math.max(0, requestedDamage));
+    const damage = Math.min(REFINEMENT_LIMITS.directDamage, Math.max(0, requestedDamage));
     const nextRefinement = {
         ...context.state.refinement,
         version: 1,
@@ -341,18 +405,25 @@ function applySpecificElement(player, elementId, rawChance, rawDamage) {
             elemental: {
                 ...element,
                 chance: element.id === "light" ? 1 : chance,
-                damage: element.id === "light"
-                    ? Math.max(1, Number(element.blessingDamage ?? damage) || 8)
-                    : damage,
+                damage:
+                    element.id === "light"
+                        ? Math.max(1, Number(element.blessingDamage ?? damage) || 8)
+                        : damage,
                 quality: 1,
             },
         },
     };
-    const persisted = persistCommandState(player, context.item, context.definition, {
-        ...context.state,
-        refined: true,
-        refinement: nextRefinement,
-    }, { syncLore: true, forceLore: true });
+    const persisted = persistCommandState(
+        player,
+        context.item,
+        context.definition,
+        {
+            ...context.state,
+            refined: true,
+            refinement: nextRefinement,
+        },
+        { syncLore: true, forceLore: true },
+    );
     if (!persisted.ok) return persisted;
 
     return {
@@ -370,7 +441,10 @@ function addEquipmentProgress(player, xpType, unit, rawAmount) {
 
     const category = getCategoryForReason(xpType) || normalizeId(xpType);
     if (!getCategoriesForDefinition(context.definition).has(category)) {
-        return { ok: false, message: `${category || xpType} XP is incompatible with this equipment.` };
+        return {
+            ok: false,
+            message: `${category || xpType} XP is incompatible with this equipment.`,
+        };
     }
 
     const amount = Math.max(1, Math.floor(Number(rawAmount) || 1));
@@ -383,22 +457,30 @@ function addEquipmentProgress(player, xpType, unit, rawAmount) {
         const currentLevel = getLevelFromXp(currentXp, context.definition);
         const currentLevelStart = getTotalXpForLevel(currentLevel, context.definition);
         const progressInsideLevel = Math.max(0, currentXp - currentLevelStart);
-        nextXp = getTotalXpForLevel(currentLevel + addedLevels, context.definition) + progressInsideLevel;
+        nextXp =
+            getTotalXpForLevel(currentLevel + addedLevels, context.definition) +
+            progressInsideLevel;
     } else {
         nextXp += Math.min(2_000_000_000, amount);
     }
 
     const nextLevel = getLevelFromXp(nextXp, context.definition);
-    const persisted = persistCommandState(player, context.item, context.definition, {
-        ...context.state,
-        progression: {
-            ...context.state.progression,
-            [category]: {
-                xp: nextXp,
-                level: nextLevel,
+    const persisted = persistCommandState(
+        player,
+        context.item,
+        context.definition,
+        {
+            ...context.state,
+            progression: {
+                ...context.state.progression,
+                [category]: {
+                    xp: nextXp,
+                    level: nextLevel,
+                },
             },
         },
-    }, { levelChanged: nextLevel > current.level });
+        { levelChanged: nextLevel > current.level },
+    );
     if (!persisted.ok) return persisted;
 
     return {
@@ -409,7 +491,7 @@ function addEquipmentProgress(player, xpType, unit, rawAmount) {
 
 function sendCatalog(source, title, entries) {
     sendCommandMessage(source, `\u00A76${title}`);
-    const lines = entries.map(entry => {
+    const lines = entries.map((entry) => {
         const targetType = entry.appliesToType ? ` | appliesTo: ${entry.appliesToType}` : "";
         const details = entry.description ? `\n\u00A78${entry.description}` : "";
         const example = entry.valueHelp ? `\n\u00A77Example: \u00A7f${entry.valueHelp}` : "";
@@ -435,10 +517,7 @@ function refineHeldEquipment(player, tier, chip, ingot, amount, coreMode) {
     const maxIngots = advancedRoll
         ? REFINING_CONFIG.defaults.advancedMaxIngotsPerRoll
         : REFINING_CONFIG.defaults.maxIngotsPerRoll;
-    const effectiveAmount = Math.min(
-        maxIngots,
-        Math.max(1, Math.floor(Number(amount) || 1)),
-    );
+    const effectiveAmount = Math.min(maxIngots, Math.max(1, Math.floor(Number(amount) || 1)));
     const refinement = rollStatsRefinement({
         definition,
         state,
@@ -451,18 +530,23 @@ function refineHeldEquipment(player, tier, chip, ingot, amount, coreMode) {
     });
     if (!refinement) return { ok: false, message: "This equipment has no refining profile." };
 
-    const result = writeStatsState(item, definition, {
-        ...state,
-        attributeProgress: {},
-        refined: true,
-        abilityData: {
-            ...state.abilityData,
-            uniqueUnlocked: awakenPrimary || state.abilityData?.uniqueUnlocked === true,
-            advancedUnlocked: awakenAdvanced || state.abilityData?.advancedUnlocked === true,
+    const result = writeStatsState(
+        item,
+        definition,
+        {
+            ...state,
+            attributeProgress: {},
+            refined: true,
+            abilityData: {
+                ...state.abilityData,
+                uniqueUnlocked: awakenPrimary || state.abilityData?.uniqueUnlocked === true,
+                advancedUnlocked: awakenAdvanced || state.abilityData?.advancedUnlocked === true,
+            },
+            refinement,
         },
-        refinement,
-    }, { syncLore: true, forceLore: true });
-    if (!persistEquipmentItem(player, "Mainhand", item)) {
+        { syncLore: true, forceLore: true },
+    );
+    if (!persistEquipmentItem(player, EQUIPMENT_SLOTS.mainhand, item)) {
         return { ok: false, message: "Could not persist the refined equipment." };
     }
 
@@ -503,7 +587,7 @@ DoriosLib.registry.customCommand({
 
         sendCommandMessage(
             source,
-            `\u00A7${nextState ? "a" : "c"}StatsCore ${nextState ? "enabled" : "disabled"}.`
+            `\u00A7${nextState ? "a" : "c"}StatsCore ${nextState ? "enabled" : "disabled"}.`,
         );
 
         if (previousState === nextState) {
@@ -529,16 +613,25 @@ DoriosLib.registry.customCommand({
         }
 
         if (style === undefined) {
-            sendCommandMessage(source, `\u00A77StatsCore feedback style: \u00A7f${getStatsCoreFeedbackStyle(source)}`);
+            sendCommandMessage(
+                source,
+                `\u00A77StatsCore feedback style: \u00A7f${getStatsCoreFeedbackStyle(source)}`,
+            );
             return;
         }
 
         if (!setStatsCoreFeedbackStyle(source, style)) {
-            sendCommandMessage(source, "\u00A7cUse only_text, only_icons, text_and_icons, or both_partial.");
+            sendCommandMessage(
+                source,
+                "\u00A7cUse only_text, only_icons, text_and_icons, or both_partial.",
+            );
             return;
         }
 
-        sendCommandMessage(source, `\u00A7aStatsCore feedback style: \u00A7f${getStatsCoreFeedbackStyle(source)}`);
+        sendCommandMessage(
+            source,
+            `\u00A7aStatsCore feedback style: \u00A7f${getStatsCoreFeedbackStyle(source)}`,
+        );
     },
 });
 
@@ -546,9 +639,7 @@ DoriosLib.registry.customCommand({
     name: "sc:insight_bridge",
     description: "Routes this player's StatsCore alerts through Dorios' Insight",
     permissionLevel: "any",
-    parameters: [
-        { name: "mode", type: "enum", values: ["on", "off"], optional: true },
-    ],
+    parameters: [{ name: "mode", type: "enum", values: ["on", "off"], optional: true }],
     callback(origin, mode) {
         const source = origin.sourceEntity;
         if (!source || source.typeId !== "minecraft:player") {
@@ -557,7 +648,10 @@ DoriosLib.registry.customCommand({
         }
 
         if (mode === undefined) {
-            sendCommandMessage(source, `§7StatsCore Insight bridge: §f${isStatsCoreInsightBridgeEnabled(source) ? "on" : "off"}`);
+            sendCommandMessage(
+                source,
+                `§7StatsCore Insight bridge: §f${isStatsCoreInsightBridgeEnabled(source) ? "on" : "off"}`,
+            );
             return;
         }
 
@@ -572,7 +666,10 @@ DoriosLib.registry.customCommand({
             return;
         }
 
-        sendCommandMessage(source, `§aStatsCore Insight bridge ${enabled ? "enabled" : "disabled"}.`);
+        sendCommandMessage(
+            source,
+            `§aStatsCore Insight bridge ${enabled ? "enabled" : "disabled"}.`,
+        );
     },
 });
 
@@ -584,7 +681,11 @@ DoriosLib.registry.customCommand({
     parameters: [
         { name: "action", type: "enum", values: ["apply"] },
         { name: "target", type: "player" },
-        { name: "element", type: "enum", values: REFINING_CONFIG.elements.map(entry => entry.id) },
+        {
+            name: "element",
+            type: "enum",
+            values: REFINING_CONFIG.elements.map((entry) => entry.id),
+        },
         { name: "chance", type: "float" },
         { name: "damage", type: "float" },
     ],
@@ -603,16 +704,19 @@ DoriosLib.registry.customCommand({
         }
         for (const player of players) {
             const result = applySpecificElement(player, element, chance, damage);
-            sendCommandMessage(source, result.ok
-                ? `\u00A7a${player.name}: \u00A7f${result.message}`
-                : `\u00A7c${player.name}: ${result.message}`);
+            sendCommandMessage(
+                source,
+                result.ok
+                    ? `\u00A7a${player.name}: \u00A7f${result.message}`
+                    : `\u00A7c${player.name}: ${result.message}`,
+            );
         }
     },
 });
 
 DoriosLib.registry.customCommand({
     name: "sc:effects",
-    description: "Applies a timed StatsCore status for HUD and WAILA testing",
+    description: "Applies a timed StatsCore status and its gameplay behavior",
     permissionLevel: "admin",
     cheatsRequired: true,
     parameters: [
@@ -641,11 +745,7 @@ DoriosLib.registry.customCommand({
 
         let applied = 0;
         for (const entity of entities) {
-            if (upsertStatsCoreEffect(entity, {
-                ...effect,
-                source: "command",
-                durationTicks: seconds * 20,
-            })) {
+            if (applyCommandEffectGameplay(entity, effect, seconds * 20)) {
                 applied++;
             }
         }
@@ -665,9 +765,24 @@ DoriosLib.registry.customCommand({
     parameters: [
         { name: "action", type: "enum", values: REFINEMENT_ACTIONS },
         { name: "target", type: "player" },
-        { name: "tier", type: "enum", values: Object.keys(REFINING_CONFIG.tierScales), optional: true },
-        { name: "chip", type: "enum", values: [...REFINING_CONFIG.chips.keys()].map(entryAlias), optional: true },
-        { name: "ingot", type: "enum", values: [...REFINING_CONFIG.ingots.keys()].map(entryAlias), optional: true },
+        {
+            name: "tier",
+            type: "enum",
+            values: Object.keys(REFINING_CONFIG.tierScales),
+            optional: true,
+        },
+        {
+            name: "chip",
+            type: "enum",
+            values: [...REFINING_CONFIG.chips.keys()].map(entryAlias),
+            optional: true,
+        },
+        {
+            name: "ingot",
+            type: "enum",
+            values: [...REFINING_CONFIG.ingots.keys()].map(entryAlias),
+            optional: true,
+        },
         { name: "core", type: "enum", values: ["none", "normal", "advanced"], optional: true },
         { name: "amount", type: "int", optional: true },
     ],
@@ -683,9 +798,10 @@ DoriosLib.registry.customCommand({
             return;
         }
 
-        const fixedOptions = normalizedAction === "random"
-            ? undefined
-            : getRefinementOptions(normalizedAction, tier, chipValue, ingotValue, core, amount);
+        const fixedOptions =
+            normalizedAction === "random"
+                ? undefined
+                : getRefinementOptions(normalizedAction, tier, chipValue, ingotValue, core, amount);
         if (normalizedAction !== "random" && !fixedOptions) {
             reportRefineSyntax(
                 source,
@@ -712,9 +828,12 @@ DoriosLib.registry.customCommand({
                 options.amount,
                 options.coreMode,
             );
-            sendCommandMessage(source, result.ok
-                ? `\u00A7aRefined \u00A7f${player.name}: \u00A77[${options.label}] ${options.tier}, ${options.chip.label}, ${options.ingot.label}, ${options.coreMode}, x${options.amount} | ${result.message}${result.troubles.length ? ` \u00A78| \u00A7d${result.troubles.join(" + ")} active` : ""}`
-                : `\u00A7c${player.name}: ${result.message}`);
+            sendCommandMessage(
+                source,
+                result.ok
+                    ? `\u00A7aRefined \u00A7f${player.name}: \u00A77[${options.label}] ${options.tier}, ${options.chip.label}, ${options.ingot.label}, ${options.coreMode}, x${options.amount} | ${result.message}${result.troubles.length ? ` \u00A78| \u00A7d${result.troubles.join(" + ")} active` : ""}`
+                    : `\u00A7c${player.name}: ${result.message}`,
+            );
         }
     },
 });
@@ -746,9 +865,12 @@ DoriosLib.registry.customCommand({
 
         for (const player of players) {
             const result = applySpecificAttribute(player, attribute, value);
-            sendCommandMessage(source, result.ok
-                ? `\u00A7a${player.name}: \u00A7f${result.message}`
-                : `\u00A7c${player.name}: ${result.message}`);
+            sendCommandMessage(
+                source,
+                result.ok
+                    ? `\u00A7a${player.name}: \u00A7f${result.message}`
+                    : `\u00A7c${player.name}: ${result.message}`,
+            );
         }
     },
 });
@@ -781,9 +903,12 @@ DoriosLib.registry.customCommand({
 
         for (const player of players) {
             const result = applySpecificAbility(player, ability, level, appliesTo);
-            sendCommandMessage(source, result.ok
-                ? `\u00A7a${player.name}: \u00A7f${result.message}`
-                : `\u00A7c${player.name}: ${result.message}`);
+            sendCommandMessage(
+                source,
+                result.ok
+                    ? `\u00A7a${player.name}: \u00A7f${result.message}`
+                    : `\u00A7c${player.name}: ${result.message}`,
+            );
         }
     },
 });
@@ -792,31 +917,38 @@ DoriosLib.registry.customCommand({
     name: "sc:refine_list",
     description: "Lists typed StatsCore refinement attributes or abilities",
     permissionLevel: "any",
-    parameters: [
-        { name: "kind", type: "enum", values: ["attributes", "abilities", "elements"] },
-    ],
+    parameters: [{ name: "kind", type: "enum", values: ["attributes", "abilities", "elements"] }],
     callback(origin, kind) {
         const source = origin.sourceEntity;
         if (normalizeId(kind) === "attributes") {
-            sendCatalog(source, "StatsCore refinement attributes", Object.values(REFINEMENT_ATTRIBUTE_CATALOG));
+            sendCatalog(
+                source,
+                "StatsCore refinement attributes",
+                Object.values(REFINEMENT_ATTRIBUTE_CATALOG),
+            );
             return;
         }
         if (normalizeId(kind) === "elements") {
-            const entries = REFINING_CONFIG.elements.map(element => ({
+            const entries = REFINING_CONFIG.elements.map((element) => ({
                 key: element.id,
                 label: String(element.label ?? element.id),
                 valueType: "chance + damage",
                 min: 0,
-                max: element.id === "earth" ? "armor only" : 18,
-                description: element.id === "earth"
-                    ? "Armor affinity that improves damage reduction and Preserving."
-                    : "Applies this elemental behavior to eligible combat equipment.",
+                max: element.id === "earth" ? "armor only" : REFINEMENT_LIMITS.directDamage,
+                description:
+                    element.id === "earth"
+                        ? "Armor affinity that improves damage reduction and Preserving."
+                        : "Applies this elemental behavior to eligible combat equipment.",
                 valueHelp: "chance uses 0..1; damage uses 0..18",
             }));
             sendCatalog(source, "StatsCore refinement elements", entries);
             return;
         }
-        sendCatalog(source, "StatsCore refinement abilities", Object.values(REFINEMENT_ABILITY_CATALOG));
+        sendCatalog(
+            source,
+            "StatsCore refinement abilities",
+            Object.values(REFINEMENT_ABILITY_CATALOG),
+        );
     },
 });
 
@@ -864,9 +996,12 @@ DoriosLib.registry.customCommand({
 
         for (const player of players) {
             const result = addEquipmentProgress(player, xpType, unit, amount);
-            sendCommandMessage(source, result.ok
-                ? `\u00A7a${player.name}: \u00A7f${result.message}`
-                : `\u00A7c${player.name}: ${result.message}`);
+            sendCommandMessage(
+                source,
+                result.ok
+                    ? `\u00A7a${player.name}: \u00A7f${result.message}`
+                    : `\u00A7c${player.name}: ${result.message}`,
+            );
         }
     },
 });

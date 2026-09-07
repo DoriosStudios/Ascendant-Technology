@@ -1,9 +1,11 @@
+import { PRESENTATION_VALUES } from "../config/values.js";
+import { getCategoriesForDefinition } from "./categories.js";
 import { STATSCORE } from "../constants.js";
 import { getStatsAbilitySummary } from "./abilities.js";
 import { formatPercent, titleCaseIdentifier } from "../utils.js";
 import { getAbilityIcon, getElementIcon, STATSCORE_ICONS } from "../icons.js";
 
-const MAX_VISIBLE_LORE_ATTRIBUTES = 3;
+const MAX_VISIBLE_LORE_ATTRIBUTES = PRESENTATION_VALUES.maxVisibleLoreAttributes;
 
 function getLore(stack) {
     if (!stack || typeof stack.getLore !== "function") return [];
@@ -196,24 +198,17 @@ function getElementColor(elementId) {
     }
 }
 
-function isProgressionCategoryEnabled(definition, category) {
-    const progression = definition?.progression ?? {};
-    if (category === "offensive") return Number(progression.combatXp ?? 0) > 0 || Number(progression.killXp ?? 0) > 0;
-    if (category === "mining") return Number(progression.blockXp ?? 0) > 0 || Number(progression.oreXp ?? 0) > 0 || Number(progression.toolXp ?? 0) > 0;
-    if (category === "defensive") return Number(progression.armorXp ?? 0) > 0;
-    return false;
-}
-
 function buildLevelLoreEntry(definition, state) {
     const progression = state?.progression ?? {};
     const entries = [];
-    if (isProgressionCategoryEnabled(definition, "offensive")) {
+    const categories = getCategoriesForDefinition(definition);
+    if (categories.has("offensive")) {
         entries.push(`\u00A7cATK Lv. ${Math.max(1, Number(progression.offensive?.level ?? 1) || 1)}`);
     }
-    if (isProgressionCategoryEnabled(definition, "mining")) {
+    if (categories.has("mining")) {
         entries.push(`\u00A7qADV Lv. ${Math.max(1, Number(progression.mining?.level ?? 1) || 1)}`);
     }
-    if (isProgressionCategoryEnabled(definition, "defensive")) {
+    if (categories.has("defensive")) {
         entries.push(`\u00A73DEF Lv. ${Math.max(1, Number(progression.defensive?.level ?? 1) || 1)}`);
     }
     return entries.length > 0 ? `\u00A7r${entries.join(" \u00A78| ")}` : null;

@@ -1,3 +1,5 @@
+import { EFFECT_STATE_VALUES } from "../config/values.js";
+import { DEFAULT_EFFECT_SOURCE } from "../config/definitions.js";
 import { system, world } from "@minecraft/server";
 import {
     getStatsCoreEffectDefinition,
@@ -8,10 +10,9 @@ import {
     publishStatsCoreEffects,
 } from "./insightBridge.js";
 
-const CLEANUP_INTERVAL_TICKS = 20;
-const INSIGHT_RESYNC_INTERVAL_TICKS = 40;
-const MAX_EFFECT_LEVEL = 20;
-const DEFAULT_EFFECT_SOURCE = "gameplay";
+const CLEANUP_INTERVAL_TICKS = EFFECT_STATE_VALUES.cleanupIntervalTicks;
+const INSIGHT_RESYNC_INTERVAL_TICKS = EFFECT_STATE_VALUES.insightResyncIntervalTicks;
+const MAX_EFFECT_LEVEL = EFFECT_STATE_VALUES.maxEffectLevel;
 
 const statesByEntity = new Map();
 let sequence = 0;
@@ -170,6 +171,9 @@ function activeEffects(state) {
 }
 
 function toPublicEffect(effect) {
+    const remainingTicks = Number.isFinite(effect.expiresAtTick)
+        ? Math.max(0, effect.expiresAtTick - system.currentTick)
+        : null;
     return {
         id: effect.id,
         name: effect.name,
@@ -181,6 +185,7 @@ function toPublicEffect(effect) {
         expiresAtTick: Number.isFinite(effect.expiresAtTick)
             ? effect.expiresAtTick
             : null,
+        remainingTicks,
         persistent: !Number.isFinite(effect.expiresAtTick),
         displayMode: effect.displayMode,
         currentCharges: effect.currentCharges,

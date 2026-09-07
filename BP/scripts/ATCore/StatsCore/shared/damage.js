@@ -1,38 +1,4 @@
-const DAMAGE_TYPE_ALIASES = Object.freeze({
-    all: "all",
-    anvil: "anvil",
-    blockexplosion: "block_explosion",
-    charging: "charging",
-    contact: "contact",
-    drowning: "drowning",
-    entityattack: "entity_attack",
-    entityexplosion: "entity_explosion",
-    fall: "fall",
-    fallingblock: "falling_block",
-    fire: "fire",
-    firetick: "fire_tick",
-    flyintowall: "fly_into_wall",
-    freezing: "freezing",
-    lava: "lava",
-    lightning: "lightning",
-    magic: "magic",
-    magma: "magma",
-    none: "none",
-    override: "override",
-    piston: "piston",
-    projectile: "projectile",
-    ramattack: "ram_attack",
-    sonicboom: "sonic_boom",
-    stalactite: "stalactite",
-    stalagmite: "stalagmite",
-    starve: "starve",
-    suffocation: "suffocation",
-    suicide: "suicide",
-    temperature: "temperature",
-    thorns: "thorns",
-    void: "void",
-    wither: "wither"
-});
+import { DAMAGE_TYPE_ALIASES } from "../config/definitions.js";
 
 /**
  * Normalizes Bedrock damage causes into a stable snake_case identifier used across StatsCore.

@@ -1,3 +1,5 @@
+import { ARMOR_VALUES } from "../config/values.js";
+import { PRESERVING_DAMAGE_TYPES, KNOCKBACK_DAMAGE_TYPES } from "../config/definitions.js";
 import { system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
 import { getEquipment, persistEquipmentItem } from "../core/equipment.js";
@@ -6,24 +8,27 @@ import { getProgressAmount, grantStatsProgress } from "../progression/refinement
 import { showAbilityFeedback, showLevelUp } from "../feedback/index.js";
 import { STATSCORE_ICONS } from "../icons.js";
 import { getCurrentTick, rollChance } from "../utils.js";
-import { getEquipmentStatsContext, getHeldStatsContext } from "../shared/context.js";
-import { getEntityHurtAttacker, getEntityHurtTarget, getEventDamageType, isStatsCoreOverrideDamage, matchesDamageType, normalizeDamageType, uniqueDamageTypes } from "../shared/damage.js";
+import { getEquipmentStatsContext } from "../shared/context.js";
+import {
+    getEntityHurtAttacker,
+    getEntityHurtTarget,
+    getEventDamageType,
+    isStatsCoreOverrideDamage,
+    matchesDamageType,
+    normalizeDamageType,
+    uniqueDamageTypes,
+} from "../shared/damage.js";
 import { repairItemDurability } from "../shared/durability.js";
 import { filterEffectsByKind } from "../shared/effectSelectors.js";
 import { applyEffectById } from "../shared/effects.js";
 import { OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity } from "../shared/entityCategories.js";
 import { getArmorComponentDefinition, resolveArmorComponentMitigation } from "./armorComponent.js";
 
-const MAX_TOTAL_DAMAGE_REDUCTION = 0.9;
-const PRESERVING_DAMAGE_TYPES = new Set([
-    "entity_attack",
-    "projectile",
-    "block_explosion",
-    "entity_explosion",
-    "thorns",
-    "ram_attack",
-]);
+const MAX_TOTAL_DAMAGE_REDUCTION = ARMOR_VALUES.totalDamageReduction;
+const MAX_TOTAL_KNOCKBACK_RESISTANCE = ARMOR_VALUES.totalKnockbackResistance;
 const supportEffectCooldowns = new Map();
+/** @type {Map<string, { velocity: import("@minecraft/server").Vector3, resistance: number, damageType: string }>} */
+const pendingArmorKnockback = new Map();
 
 function combineNegationChances(chances) {
     if (!Array.isArray(chances) || chances.length <= 0) return 0;
@@ -31,7 +36,7 @@ function combineNegationChances(chances) {
     let remainingDamageChance = 1;
     for (const chance of chances) {
         const value = Math.min(1, Math.max(0, Number(chance) || 0));
-        remainingDamageChance *= (1 - value);
+        remainingDamageChance *= 1 - value;
     }
 
     return 1 - remainingDamageChance;
@@ -85,8 +90,9 @@ function getArmorSupportEntries(target) {
         if (!item) continue;
 
         const context = getEquipmentStatsContext(target, slotName);
-        const statsActive = context?.definition?.type === ITEM_TYPES.support
-            && context.attributes?.refinement?.active === true;
+        const statsActive =
+            context?.definition?.type === ITEM_TYPES.support &&
+            context.attributes?.refinement?.active === true;
         const componentDefinition = getArmorComponentDefinition(item);
         if (!statsActive && !componentDefinition) continue;
 
@@ -104,8 +110,9 @@ function getArmorSupportEntries(target) {
     const offhandItem = offhandAccess?.item;
     if (offhandItem) {
         const offhandContext = getEquipmentStatsContext(target, STATSCORE.slots.offhand);
-        const statsActive = offhandContext?.definition?.type === ITEM_TYPES.support
-            && offhandContext.attributes?.refinement?.active === true;
+        const statsActive =
+            offhandContext?.definition?.type === ITEM_TYPES.support &&
+            offhandContext.attributes?.refinement?.active === true;
         const componentDefinition = getArmorComponentDefinition(offhandItem);
         if (statsActive || componentDefinition) {
             entries.push({
@@ -124,14 +131,16 @@ function getArmorSupportEntries(target) {
 
 function resolveEntryMitigation(entry, damageType) {
     const component = resolveArmorComponentMitigation(entry?.item, damageType);
-    const support = entry?.statsActive ? entry.attributes?.support ?? {} : {};
+    const support = entry?.statsActive ? (entry.attributes?.support ?? {}) : {};
     return {
-        damageReduction: Math.max(0, Number(component?.damageReduction ?? 0) || 0)
-            + Math.max(0, Number(support.damageReduction ?? 0) || 0),
+        damageReduction:
+            Math.max(0, Number(component?.damageReduction ?? 0) || 0) +
+            Math.max(0, Number(support.damageReduction ?? 0) || 0),
         negationChances: [
             Number(component?.damageNegation ?? 0),
             Number(support.negateAllDamageChance ?? 0),
-        ].filter(value => Number.isFinite(value) && value > 0),
+        ].filter((value) => Number.isFinite(value) && value > 0),
+        knockbackResistance: Math.max(0, Number(component?.knockbackResistance ?? 0) || 0),
     };
 }
 
@@ -139,12 +148,14 @@ function getTotalDamageReduction(entries, damageType = "all") {
     if (!Array.isArray(entries) || entries.length <= 0) return 0;
 
     const reduction = entries.reduce((sum, entry) => {
-        const isOffhandShield = entry.slotName === STATSCORE.slots.offhand
-            && String(entry.definition?.branch ?? "").toLowerCase() === "shield";
+        const isOffhandShield =
+            entry.slotName === STATSCORE.slots.offhand &&
+            String(entry.definition?.branch ?? "").toLowerCase() === "shield";
         const resolved = resolveEntryMitigation(entry, damageType);
-        const value = isOffhandShield && entry.statsActive
-            ? Math.max(0.6, resolved.damageReduction)
-            : resolved.damageReduction;
+        const value =
+            isOffhandShield && entry.statsActive
+                ? Math.max(ARMOR_VALUES.offhandShieldReduction, resolved.damageReduction)
+                : resolved.damageReduction;
         return sum + (Number.isFinite(value) ? Math.max(0, value) : 0);
     }, 0);
     return Math.min(MAX_TOTAL_DAMAGE_REDUCTION, reduction);
@@ -154,6 +165,7 @@ function getArmorMitigationProfile(entries, damageType) {
     const normalizedDamageType = normalizeDamageType(damageType);
     const reductionValues = [];
     const negationValues = [];
+    const knockbackResistanceValues = [];
     let reinforcement = 0;
     let reinforcementMaximum = 0;
 
@@ -161,6 +173,8 @@ function getArmorMitigationProfile(entries, damageType) {
         const resolved = resolveEntryMitigation(entry, normalizedDamageType);
         if (resolved.damageReduction > 0) reductionValues.push(resolved.damageReduction);
         negationValues.push(...resolved.negationChances);
+        if (resolved.knockbackResistance > 0)
+            knockbackResistanceValues.push(resolved.knockbackResistance);
         reinforcement += getReinforcementPoints(entry.item);
         reinforcementMaximum += getReinforcementMaximum(entry.item);
     }
@@ -170,8 +184,13 @@ function getArmorMitigationProfile(entries, damageType) {
         pieceCount: entries?.length ?? 0,
         reductionValues,
         negationValues,
+        knockbackResistanceValues,
         totalReduction: getTotalDamageReduction(entries, normalizedDamageType),
         totalNegation: combineNegationChances(negationValues),
+        totalKnockbackResistance: Math.min(
+            MAX_TOTAL_KNOCKBACK_RESISTANCE,
+            knockbackResistanceValues.reduce((sum, value) => sum + value, 0),
+        ),
         reinforcement,
         reinforcementMaximum,
     };
@@ -243,7 +262,7 @@ function pullNearbyTargets(target, attacker, effect) {
                 z: (dz / distance) * strength,
             });
             moved = true;
-        } catch { }
+        } catch {}
     }
 
     return moved;
@@ -263,33 +282,103 @@ function applySupportEffects(event, entries) {
         if (isSupportEffectOnCooldown(target, effect)) continue;
         if (!rollChance(effect.chance, 0)) continue;
 
-        const reflectedDamage = Math.max(1, damage * Math.max(0.05, Number(effect.damageRatio ?? 0.15) || 0.15));
+        const reflectedDamage = Math.max(
+            1,
+            damage * Math.max(0.05, Number(effect.damageRatio ?? 0.15) || 0.15),
+        );
         try {
             attacker.applyDamage?.(reflectedDamage, {
                 cause: "thorns",
                 damagingEntity: target,
             });
             setSupportEffectCooldown(target, effect);
-        } catch { }
+        } catch {}
     }
-
 }
 
 function applyArmorMitigation(event, entries) {
-    if (!entries.length) return;
+    if (!entries.length) return null;
 
     const damage = Number(event?.damage ?? 0);
-    if (!Number.isFinite(damage) || damage <= 0) return;
+    if (!Number.isFinite(damage) || damage <= 0) return null;
 
     const profile = getArmorMitigationProfile(entries, getEventDamageType(event));
     if (rollChance(profile.totalNegation, 0)) {
         event.damage = 0;
         event.cancel = true;
-        return;
+        return profile;
     }
 
-    const mitigatedDamage = profile.totalReduction > 0 ? damage * (1 - profile.totalReduction) : damage;
+    const mitigatedDamage =
+        profile.totalReduction > 0 ? damage * (1 - profile.totalReduction) : damage;
     event.damage = Math.max(0, mitigatedDamage);
+    return profile;
+}
+
+function captureArmorKnockback(target, profile, event) {
+    const resistance = Math.max(
+        0,
+        Math.min(
+            MAX_TOTAL_KNOCKBACK_RESISTANCE,
+            Number(profile?.totalKnockbackResistance ?? 0) || 0,
+        ),
+    );
+    if (resistance <= 0 || Number(event?.damage ?? 0) <= 0) return;
+
+    try {
+        pendingArmorKnockback.set(target.id, {
+            velocity: target.getVelocity(),
+            resistance,
+            damageType: getEventDamageType(event),
+        });
+    } catch {
+        pendingArmorKnockback.delete(target.id);
+    }
+}
+
+function reduceArmorKnockback(target, pending) {
+    if (!target?.isValid || !pending) return true;
+    try {
+        const currentVelocity = target.getVelocity();
+        const velocityDelta = {
+            x: currentVelocity.x - pending.velocity.x,
+            y: currentVelocity.y - pending.velocity.y,
+            z: currentVelocity.z - pending.velocity.z,
+        };
+        const deltaSquared =
+            velocityDelta.x * velocityDelta.x +
+            velocityDelta.y * velocityDelta.y +
+            velocityDelta.z * velocityDelta.z;
+        if (deltaSquared < 1e-8) return false;
+
+        const retainedKnockback = 1 - pending.resistance;
+        target.clearVelocity();
+        target.applyImpulse({
+            x: pending.velocity.x + velocityDelta.x * retainedKnockback,
+            y: pending.velocity.y + velocityDelta.y * retainedKnockback,
+            z: pending.velocity.z + velocityDelta.z * retainedKnockback,
+        });
+        return true;
+    } catch {
+        // Fatal damage and dimension changes may invalidate the player here.
+        return true;
+    }
+}
+
+function applyArmorKnockbackResistance(event) {
+    const target = getEntityHurtTarget(event);
+    if (!target || target.typeId !== "minecraft:player") return;
+
+    const pending = pendingArmorKnockback.get(target.id);
+    pendingArmorKnockback.delete(target.id);
+    if (!pending) return;
+
+    if (reduceArmorKnockback(target, pending)) return;
+    if (!KNOCKBACK_DAMAGE_TYPES.has(pending.damageType)) return;
+
+    // Some Bedrock damage sources apply their impulse after entityHurt. Recheck
+    // on the following tick only for causes known to produce knockback.
+    system.run(() => reduceArmorKnockback(target, pending));
 }
 
 function applyCustomSupportAbilities(event, entries) {
@@ -305,7 +394,10 @@ function applyCustomSupportAbilities(event, entries) {
     for (const { effect } of getSupportEffects(entries, "featherstep")) {
         if (damageType !== "fall") continue;
 
-        const multiplier = Math.max(0, Math.min(1, Number(effect.fallDamageMultiplier ?? 0.2) || 0.2));
+        const multiplier = Math.max(
+            0,
+            Math.min(1, Number(effect.fallDamageMultiplier ?? 0.2) || 0.2),
+        );
         nextDamage *= multiplier;
 
         if (!isSupportEffectOnCooldown(target, effect)) {
@@ -316,7 +408,7 @@ function applyCustomSupportAbilities(event, entries) {
                     "absorption",
                     Math.max(20, Math.floor(Number(effect.absorptionDurationTicks ?? 100) || 100)),
                     Math.max(0, Math.floor(Number(effect.absorptionAmplifier ?? 0) || 0)),
-                    false
+                    false,
                 );
             });
         }
@@ -327,7 +419,7 @@ function applyCustomSupportAbilities(event, entries) {
         if (!matchesDamageType(supportedTypes, damageType)) continue;
 
         const reduction = Math.max(0, Math.min(0.95, Number(effect.damageReduction ?? 0.5) || 0.5));
-        nextDamage *= (1 - reduction);
+        nextDamage *= 1 - reduction;
     }
 
     for (const { effect } of getSupportEffects(entries, "armored")) {
@@ -338,11 +430,13 @@ function applyCustomSupportAbilities(event, entries) {
             break;
         }
 
-        const reducedTypes = uniqueDamageTypes(effect.reducedDamageTypes ?? ["block_explosion", "entity_explosion"]);
+        const reducedTypes = uniqueDamageTypes(
+            effect.reducedDamageTypes ?? ["block_explosion", "entity_explosion"],
+        );
         if (!matchesDamageType(reducedTypes, damageType)) continue;
 
         const reduction = Math.max(0, Math.min(0.95, Number(effect.damageReduction ?? 0.5) || 0.5));
-        nextDamage *= (1 - reduction);
+        nextDamage *= 1 - reduction;
         suppressKnockback = true;
     }
 
@@ -354,13 +448,15 @@ function applyCustomSupportAbilities(event, entries) {
         system.run(() => {
             try {
                 target.clearVelocity?.();
-            } catch { }
+            } catch {}
         });
     }
 }
 
 function isPlayerInWater(player) {
-    return player?.isInWater === true || player?.isSwimming === true || player?.isUnderwater === true;
+    return (
+        player?.isInWater === true || player?.isSwimming === true || player?.isUnderwater === true
+    );
 }
 
 function refreshPassiveSupportEffects() {
@@ -375,13 +471,25 @@ function refreshPassiveSupportEffects() {
 
         if (overworld && belowClarityDepth) {
             for (const { effect } of getSupportEffects(entries, "clarity")) {
-                applyEffectById(player, "night_vision", Math.max(80, Math.floor(Number(effect.durationTicks ?? 250) || 250)), 0, false);
+                applyEffectById(
+                    player,
+                    "night_vision",
+                    Math.max(80, Math.floor(Number(effect.durationTicks ?? 250) || 250)),
+                    0,
+                    false,
+                );
             }
         }
 
         if (isPlayerInWater(player)) {
             for (const { effect } of getSupportEffects(entries, "tough")) {
-                applyEffectById(player, "conduit_power", Math.max(80, Math.floor(Number(effect.conduitDurationTicks ?? 600) || 600)), 0, false);
+                applyEffectById(
+                    player,
+                    "conduit_power",
+                    Math.max(80, Math.floor(Number(effect.conduitDurationTicks ?? 600) || 600)),
+                    0,
+                    false,
+                );
             }
         }
     }
@@ -399,22 +507,6 @@ function isEnemyDamageForPreserving(event, target) {
     return damageType === "block_explosion" || damageType === "entity_explosion";
 }
 
-function processHeldPreserving(target) {
-    const context = getHeldStatsContext(target);
-    const chance = Math.max(0, Number(context?.attributes?.mining?.durabilitySaveChance ?? 0) || 0);
-    if (!context || chance <= 0 || (chance < 1 && Math.random() > chance)) return false;
-
-    const repaired = repairItemDurability(
-        context.stack,
-        context.attributes?.mining?.preservationRepairAmount ?? 1,
-    );
-    if (!repaired) return false;
-
-    persistEquipmentItem(target, STATSCORE.slots.mainhand, context.stack);
-    showAbilityFeedback(target, "§aTool Preserving", STATSCORE_ICONS.preservingTool);
-    return true;
-}
-
 function processArmorProgress(target, allowPreserving = false) {
     if (!target || target.typeId !== "minecraft:player") return;
 
@@ -427,13 +519,17 @@ function processArmorProgress(target, allowPreserving = false) {
         const amount = getProgressAmount(definition, "armor", 1);
         if (amount <= 0) continue;
 
-        const result = grantStatsProgress(item, definition, amount, "armor", { forcePersist: false });
+        const result = grantStatsProgress(item, definition, amount, "armor", {
+            forcePersist: false,
+        });
         const preservationChance = allowPreserving
             ? Math.max(0, Number(attributes?.support?.durabilityPreserveChance ?? 0) || 0)
             : 0;
-        const repaired = preservationChance > 0 && (preservationChance >= 1 || Math.random() <= preservationChance)
-            ? repairItemDurability(item, attributes?.support?.preservationRepairAmount ?? 2)
-            : false;
+        const repaired =
+            preservationChance > 0 &&
+            (preservationChance >= 1 || Math.random() <= preservationChance)
+                ? repairItemDurability(item, attributes?.support?.preservationRepairAmount ?? 2)
+                : false;
 
         if (result.changed || repaired) {
             persistEquipmentItem(target, slotName, item);
@@ -451,33 +547,36 @@ export function initializeArmorSupportModule() {
 
     system.runInterval(refreshPassiveSupportEffects, 40);
 
-    if (world.beforeEvents?.entityHurt?.subscribe) {
-        world.beforeEvents.entityHurt.subscribe(event => {
+    const beforeHurt = world.beforeEvents?.entityHurt;
+    const afterHurt = world.afterEvents?.entityHurt;
+
+    if (beforeHurt?.subscribe) {
+        beforeHurt.subscribe((event) => {
+            const target = getEntityHurtTarget(event);
+            if (!target || target.typeId !== "minecraft:player") return;
+            pendingArmorKnockback.delete(target.id);
             if (event?.cancel === true) return;
             if (isStatsCoreOverrideDamage(event)) return;
 
-            const target = getEntityHurtTarget(event);
-            if (!target || target.typeId !== "minecraft:player") return;
-
             const entries = getArmorSupportEntries(target);
             const allowPreserving = isEnemyDamageForPreserving(event, target);
-            applyArmorMitigation(event, entries);
+            const mitigationProfile = applyArmorMitigation(event, entries);
             if (event.cancel === true) return;
             applyCustomSupportAbilities(event, entries);
             if (event.cancel === true) return;
+            captureArmorKnockback(target, mitigationProfile, event);
             system.run(() => {
                 if (event.cancel !== true) applySupportEffects(event, entries);
                 processArmorProgress(target, allowPreserving);
-                if (allowPreserving) processHeldPreserving(target);
             });
         });
-        return;
     }
 
-    const hurtEvents = world.afterEvents?.entityHurt;
-    if (!hurtEvents?.subscribe) return;
+    if (!afterHurt?.subscribe) return;
 
-    hurtEvents.subscribe(event => {
+    afterHurt.subscribe((event) => {
+        applyArmorKnockbackResistance(event);
+        if (beforeHurt?.subscribe) return;
         if (event?.cancel === true) return;
 
         const target = getEntityHurtTarget(event);
@@ -486,7 +585,6 @@ export function initializeArmorSupportModule() {
         const allowPreserving = isEnemyDamageForPreserving(event, target);
         system.run(() => {
             processArmorProgress(target, allowPreserving);
-            if (allowPreserving) processHeldPreserving(target);
         });
     });
 }

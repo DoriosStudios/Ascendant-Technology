@@ -1,6 +1,6 @@
+import { PROGRESSION_CATEGORIES as CATEGORIES } from "../config/definitions.js";
 import { normalizeId, toPositiveInteger } from "../utils.js";
 
-const CATEGORIES = Object.freeze(["offensive", "defensive", "mining", "utility"]);
 
 export function normalizeAttributeProgress(value) {
     const source = value && typeof value === "object" ? value : {};

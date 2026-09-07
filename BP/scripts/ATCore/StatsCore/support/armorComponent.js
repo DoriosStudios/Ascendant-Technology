@@ -1,13 +1,16 @@
+import { ARMOR_VALUES } from "../config/values.js";
+import { ARMOR_COMPONENT_ID, REGISTER_ARMOR_MITIGATION_EVENT_ID } from "../config/definitions.js";
 import { system } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
 import { matchesDamageType, normalizeDamageType } from "../shared/damage.js";
 
-export const ARMOR_COMPONENT_ID = "utilitycraft:armor";
-export const REGISTER_ARMOR_MITIGATION_EVENT_ID = "utilitycraft:register_armor_mitigation";
+export { ARMOR_COMPONENT_ID, REGISTER_ARMOR_MITIGATION_EVENT_ID } from "../config/definitions.js";
 
-const DEFAULT_DAMAGE_REDUCTION = 0.05;
-const DEFAULT_DAMAGE_NEGATION = 0.025;
-const MAX_COMPONENT_REDUCTION = 0.9;
+const DEFAULT_DAMAGE_REDUCTION = ARMOR_VALUES.componentDamageReduction;
+const DEFAULT_DAMAGE_NEGATION = ARMOR_VALUES.componentDamageNegation;
+const DEFAULT_KNOCKBACK_RESISTANCE = ARMOR_VALUES.componentKnockbackResistance;
+const MAX_COMPONENT_REDUCTION = ARMOR_VALUES.maxComponentReduction;
+const MAX_KNOCKBACK_RESISTANCE = ARMOR_VALUES.maxComponentKnockbackResistance;
 const externalArmorProfiles = new Map();
 
 // Registration makes custom component parameters readable through
@@ -83,12 +86,12 @@ export function getArmorComponentDefinition(stack) {
     }
 }
 
-function toFraction(value, fallback) {
+function toFraction(value, fallback, maximum = MAX_COMPONENT_REDUCTION) {
     if (value === undefined || value === null || value === false) return 0;
     if (value === true) return fallback;
     const numeric = Number(value);
     if (!Number.isFinite(numeric) || numeric <= 0) return 0;
-    return Math.min(MAX_COMPONENT_REDUCTION, numeric > 1 ? numeric / 100 : numeric);
+    return Math.min(maximum, numeric > 1 ? numeric / 100 : numeric);
 }
 
 function getDamageCase(profile, damageType) {
@@ -102,7 +105,7 @@ function getDamageCase(profile, damageType) {
 
 function profileMatchesDamageType(profile, damageType) {
     const reduces = profile?.reduces
-        ?? (profile?.damage_reduction || profile?.damage_negation ? "all" : "none");
+        ?? (profile?.damage_reduction || profile?.damage_negation || profile?.knockback_resistance ? "all" : "none");
     if (Array.isArray(reduces)) {
         const allowed = reduces.filter(value => normalizeDamageType(value) !== "none");
         return allowed.length > 0 && matchesDamageType(allowed, damageType);
@@ -120,9 +123,14 @@ export function resolveArmorComponentMitigation(stack, damageType = "all") {
 
     const damageReduction = toFraction(profile.damage_reduction, DEFAULT_DAMAGE_REDUCTION);
     const damageNegation = toFraction(profile.damage_negation, DEFAULT_DAMAGE_NEGATION);
-    if (damageReduction <= 0 && damageNegation <= 0) return null;
+    const knockbackResistance = toFraction(
+        profile.knockback_resistance,
+        DEFAULT_KNOCKBACK_RESISTANCE,
+        MAX_KNOCKBACK_RESISTANCE
+    );
+    if (damageReduction <= 0 && damageNegation <= 0 && knockbackResistance <= 0) return null;
 
-    return { damageReduction, damageNegation };
+    return { damageReduction, damageNegation, knockbackResistance };
 }
 
 export function initializeArmorComponentRegistry() {

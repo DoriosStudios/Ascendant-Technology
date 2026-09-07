@@ -26,3 +26,21 @@ export function repairItemDurability(stack, amount = 1) {
         return false;
     }
 }
+
+/**
+ * Rolls Tool Preserving for an already resolved held-item context and repairs
+ * the stack in-place when it succeeds.
+ *
+ * @param {{ stack?: import("@minecraft/server").ItemStack, attributes?: object }} context
+ * @returns {boolean}
+ */
+export function rollToolPreserving(context) {
+    const chance = Math.max(0, Number(context?.attributes?.mining?.durabilitySaveChance ?? 0) || 0);
+    if (!context?.stack || !rollChance(chance)) return false;
+
+    return repairItemDurability(
+        context.stack,
+        context.attributes?.mining?.preservationRepairAmount ?? 1,
+    );
+}
+import { rollChance } from "../utils.js";

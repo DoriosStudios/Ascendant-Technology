@@ -1,56 +1,26 @@
+import { ADVANCED_INHERITANCE_CHANCE } from "../config/values.js";
+import { CATEGORY_CHANNEL, INHERITANCE_DONOR_IDS } from "../config/refinement.js";
+export { ADVANCED_INHERITANCE_CHANCE } from "../config/values.js";
 import { inferDynamicDefinition } from "../defaults.js";
 import { resolveStatsAbilityName } from "../core/abilities.js";
 import { normalizeId, titleCaseIdentifier } from "../utils.js";
-
-export const ADVANCED_INHERITANCE_CHANCE = 0.1;
-
-const CATEGORY_CHANNEL = Object.freeze({
-    combat: "attributes",
-    mining: "mining",
-    support: "support",
-});
-
-// Diamond definitions are the canonical ability donors. Using the receiver's
-// material here made tier-gated abilities disappear from the pool on Iron and
-// lower equipment even when an Advanced Runic Core was consumed.
-const INHERITANCE_DONOR_IDS = Object.freeze({
-    combat: Object.freeze([
-        "statscore:diamond_sword",
-        "statscore:diamond_axe",
-        "statscore:diamond_aiot",
-        "statscore:diamond_spear",
-        "minecraft:mace",
-        "minecraft:trident",
-        "minecraft:bow",
-        "minecraft:crossbow",
-        "statscore:diamond_hoe",
-        "statscore:diamond_knife",
-    ]),
-    mining: Object.freeze([
-        "statscore:diamond_pickaxe",
-        "statscore:diamond_shovel",
-        "statscore:diamond_hoe",
-        "statscore:diamond_hammer",
-        "statscore:diamond_drill",
-        "statscore:diamond_shears",
-        "statscore:diamond_lighter",
-        "statscore:diamond_axe",
-        "statscore:diamond_aiot",
-    ]),
-    support: Object.freeze([
-        "statscore:diamond_helmet",
-        "statscore:diamond_chestplate",
-        "statscore:diamond_leggings",
-        "statscore:diamond_boots",
-        "statscore:diamond_shield",
-        "statscore:diamond_elytra",
-    ]),
-});
 
 export function getInheritanceCategory(definition) {
     if (definition?.type === "support") return "support";
     if (definition?.type === "weapon" || definition?.type === "hybrid") return "combat";
     return "mining";
+}
+
+function getInheritanceChannels(definition) {
+    if (normalizeId(definition?.branch) === "aiot") {
+        return [
+            { category: "combat", channel: CATEGORY_CHANNEL.combat },
+            { category: "mining", channel: CATEGORY_CHANNEL.mining },
+        ];
+    }
+
+    const category = getInheritanceCategory(definition);
+    return [{ category, channel: CATEGORY_CHANNEL[category] }];
 }
 
 export function getDefinitionAbilityRecords(definition, channel = undefined) {
@@ -77,8 +47,6 @@ export function getDefinitionAbilityRecords(definition, channel = undefined) {
 
 export function getAdvancedInheritancePool(definition, inheritedAbilities = []) {
     if (!definition) return [];
-    const category = getInheritanceCategory(definition);
-    const channel = CATEGORY_CHANNEL[category];
     const owned = new Set([
         ...getDefinitionAbilityRecords(definition).map(entry => entry.key),
         ...(Array.isArray(inheritedAbilities) ? inheritedAbilities : []).map(entry => normalizeId(entry?.key)),
@@ -86,12 +54,14 @@ export function getAdvancedInheritancePool(definition, inheritedAbilities = []) 
     const pool = [];
     const seen = new Set(owned);
 
-    for (const donorId of INHERITANCE_DONOR_IDS[category] ?? []) {
-        const donor = inferDynamicDefinition(donorId);
-        for (const entry of getDefinitionAbilityRecords(donor, channel)) {
-            if (seen.has(entry.key)) continue;
-            seen.add(entry.key);
-            pool.push(entry);
+    for (const { category, channel } of getInheritanceChannels(definition)) {
+        for (const donorId of INHERITANCE_DONOR_IDS[category] ?? []) {
+            const donor = inferDynamicDefinition(donorId);
+            for (const entry of getDefinitionAbilityRecords(donor, channel)) {
+                if (seen.has(entry.key)) continue;
+                seen.add(entry.key);
+                pool.push(entry);
+            }
         }
     }
     return pool;

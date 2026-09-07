@@ -1,34 +1,6 @@
+import { DEFAULT_REFINEMENT_BONUSES, REFINEMENT_LIMITS } from "../config/values.js";
 import { STATSCORE } from "../constants.js";
 import { clamp01, normalizeId, safeJsonParse, titleCaseIdentifier, toFiniteNumber, toPositiveInteger } from "../utils.js";
-
-const DEFAULT_REFINEMENT_BONUSES = Object.freeze({
-    damageMultiplier: 0,
-    extraDamage: 0,
-    flatDamageBonus: 0,
-    critChance: 0,
-    critMultiplier: 0,
-    critDamageBonus: 0,
-    penetration: 0,
-    lifesteal: 0,
-    elementalChance: 0,
-    elementalDamage: 0,
-    elemental: Object.freeze({
-        id: "",
-        label: "",
-        chance: 0,
-        damage: 0,
-        damageScale: 0,
-        durationTicks: 0,
-        amplifier: 0,
-        seconds: 0,
-        quality: 0
-    }),
-    damageReduction: 0,
-    negateAllDamageChance: 0,
-    bonusLootChance: 0,
-    durabilitySaveChance: 0,
-    durabilityPreserveChance: 0
-});
 
 export function createDefaultStatsRefinementData() {
     return {
@@ -63,7 +35,7 @@ function normalizeRefinementElement(value, fallbackChance, fallbackDamage) {
         id,
         label: id ? label : "",
         chance: clamp01(toFiniteNumber(element.chance, fallbackChance)),
-        damage: clampPositive(toFiniteNumber(element.damage, fallbackDamage), 18),
+        damage: clampPositive(toFiniteNumber(element.damage, fallbackDamage), REFINEMENT_LIMITS.directDamage),
         damageScale: clampPositive(element.damageScale, 1),
         durationTicks: toPositiveInteger(element.durationTicks, 0),
         amplifier: toPositiveInteger(element.amplifier, 0),
@@ -75,20 +47,20 @@ function normalizeRefinementElement(value, fallbackChance, fallbackDamage) {
 function normalizeRefinementBonuses(value) {
     const bonuses = value && typeof value === "object" ? value : {};
     const elementalChance = clamp01(toFiniteNumber(bonuses.elementalChance, bonuses.elemental?.chance ?? 0));
-    const elementalDamage = clampPositive(toFiniteNumber(bonuses.elementalDamage, bonuses.elemental?.damage ?? 0), 18);
+    const elementalDamage = clampPositive(toFiniteNumber(bonuses.elementalDamage, bonuses.elemental?.damage ?? 0), REFINEMENT_LIMITS.directDamage);
     const elemental = normalizeRefinementElement(bonuses.elemental, elementalChance, elementalDamage);
 
     return {
         damageMultiplier: clamp01(toFiniteNumber(bonuses.damageMultiplier, 0)),
-        extraDamage: clampPositive(toFiniteNumber(bonuses.extraDamage, bonuses.flatDamageBonus ?? 0), 18),
-        flatDamageBonus: clampPositive(toFiniteNumber(bonuses.flatDamageBonus, 0), 18),
+        extraDamage: clampPositive(toFiniteNumber(bonuses.extraDamage, bonuses.flatDamageBonus ?? 0), REFINEMENT_LIMITS.directDamage),
+        flatDamageBonus: clampPositive(toFiniteNumber(bonuses.flatDamageBonus, 0), REFINEMENT_LIMITS.directDamage),
         critChance: clamp01(toFiniteNumber(bonuses.critChance, 0)),
         critMultiplier: clamp01(toFiniteNumber(bonuses.critMultiplier, 0)),
         critDamageBonus: clamp01(toFiniteNumber(bonuses.critDamageBonus, 0)),
         penetration: clamp01(toFiniteNumber(bonuses.penetration, 0)),
         lifesteal: clamp01(toFiniteNumber(bonuses.lifesteal, 0)),
         elementalChance,
-        elementalDamage: clampPositive(elementalDamage, 18),
+        elementalDamage: clampPositive(elementalDamage, REFINEMENT_LIMITS.directDamage),
         elemental,
         damageReduction: clamp01(toFiniteNumber(bonuses.damageReduction, 0)),
         negateAllDamageChance: clamp01(toFiniteNumber(bonuses.negateAllDamageChance, 0)),

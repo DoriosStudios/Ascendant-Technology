@@ -1,0 +1,191 @@
+// Block classification and loot tables; handlers own loot generation and world changes.
+export const UNBREAKABLE_BLOCKS = new Set([
+    "minecraft:air",
+    "minecraft:bedrock",
+    "minecraft:end_portal",
+    "minecraft:end_portal_frame",
+    "minecraft:barrier",
+    "minecraft:command_block",
+    "minecraft:chain_command_block",
+    "minecraft:repeating_command_block",
+    "minecraft:structure_block",
+    "minecraft:jigsaw",
+]);
+
+export const GARDENER_PLANT_TOKENS = Object.freeze([
+    "grass",
+    "fern",
+    "flower",
+    "tulip",
+    "rose",
+    "dandelion",
+    "orchid",
+    "bush",
+    "fungus",
+    "roots",
+    "vine",
+    "mushroom",
+    "sapling",
+]);
+
+export const GARDENER_EXACT_BLOCKS = new Set([
+    "minecraft:pumpkin",
+    "minecraft:carved_pumpkin",
+    "minecraft:melon_block",
+]);
+
+export const PRIMAL_FIBER_TOKENS = Object.freeze([
+    "grass",
+    "fern",
+    "vine",
+    "roots",
+    "fungus",
+]);
+
+export const ORE_PLATE_DROPS = Object.freeze({
+    "minecraft:copper_ore": "utilitycraft:copper_plate",
+    "minecraft:deepslate_copper_ore": "utilitycraft:copper_plate",
+    "minecraft:iron_ore": "utilitycraft:iron_plate",
+    "minecraft:deepslate_iron_ore": "utilitycraft:iron_plate",
+    "minecraft:gold_ore": "utilitycraft:gold_plate",
+    "minecraft:deepslate_gold_ore": "utilitycraft:gold_plate",
+    "minecraft:nether_gold_ore": "utilitycraft:gold_plate",
+    "utilitycraft:deepslate_titanium_ore": "utilitycraft:titanium_plate",
+    "utilitycraft:deepslate_tungsten_ore": "utilitycraft:tungsten_plate",
+    "utilitycraft:nether_tungsten_ore": "utilitycraft:tungsten_plate",
+    "utilitycraft:tin_ore": "utilitycraft:tin_plate",
+    "utilitycraft:deepslate_tin_ore": "utilitycraft:tin_plate",
+    "utilitycraft:ryno_deepslate_lead_ore": "utilitycraft:ryno_lead_plate",
+    "utilitycraft:ryno_vanadium_ore": "neoutility:vanadium_plate",
+});
+
+export const ORE_BONUS_DROPS = Object.freeze({
+    "minecraft:coal_ore": "minecraft:coal",
+    "minecraft:deepslate_coal_ore": "minecraft:coal",
+    "minecraft:copper_ore": "minecraft:raw_copper",
+    "minecraft:deepslate_copper_ore": "minecraft:raw_copper",
+    "minecraft:iron_ore": "minecraft:raw_iron",
+    "minecraft:deepslate_iron_ore": "minecraft:raw_iron",
+    "minecraft:gold_ore": "minecraft:raw_gold",
+    "minecraft:deepslate_gold_ore": "minecraft:raw_gold",
+    "minecraft:redstone_ore": "minecraft:redstone",
+    "minecraft:deepslate_redstone_ore": "minecraft:redstone",
+    "minecraft:lit_deepslate_redstone_ore": "minecraft:redstone",
+    "minecraft:lit_redstone_ore": "minecraft:redstone",
+    "minecraft:lapis_ore": "minecraft:lapis_lazuli",
+    "minecraft:deepslate_lapis_ore": "minecraft:lapis_lazuli",
+    "minecraft:diamond_ore": "minecraft:diamond",
+    "minecraft:deepslate_diamond_ore": "minecraft:diamond",
+    "minecraft:emerald_ore": "minecraft:emerald",
+    "minecraft:deepslate_emerald_ore": "minecraft:emerald",
+    "minecraft:nether_gold_ore": "minecraft:gold_nugget",
+    "minecraft:nether_quartz_ore": "minecraft:quartz",
+    "minecraft:ancient_debris": "minecraft:ancient_debris",
+    "utilitycraft:deepslate_titanium_ore": "utilitycraft:raw_titanium",
+    "utilitycraft:deepslate_aetherium_ore": "utilitycraft:aetherium_shard",
+    "utilitycraft:end_aetherium_ore": "utilitycraft:aetherium_shard",
+    "utilitycraft:deepslate_tungsten_ore": "utilitycraft:raw_tungsten",
+    "utilitycraft:nether_tungsten_ore": "utilitycraft:raw_tungsten",
+    // UtilityCraft: Heavy Machinery
+    "utilitycraft:tin_ore": "utilitycraft:raw_tin",
+    "utilitycraft:deepslate_tin_ore": "utilitycraft:raw_tin",
+    "utilitycraft:deepslate_uranium_ore": "utilitycraft:raw_uranium",
+    // UtilityCraft Nuclear uses the ryno prefix to coexist with Heavy Machinery.
+    "utilitycraft:ryno_deepslate_lead_ore": "utilitycraft:ryno_raw_lead",
+    "utilitycraft:ryno_deepslate_uranium_ore": "utilitycraft:ryno_raw_uranium",
+    "utilitycraft:ryno_vanadium_ore": "utilitycraft:ryno_raw_vanadium",
+});
+
+export const ORE_DUST_DROPS = Object.freeze({
+    "minecraft:coal_ore": "utilitycraft:coal_dust",
+    "minecraft:deepslate_coal_ore": "utilitycraft:coal_dust",
+    "minecraft:copper_ore": "utilitycraft:copper_dust",
+    "minecraft:deepslate_copper_ore": "utilitycraft:copper_dust",
+    "minecraft:iron_ore": "utilitycraft:iron_dust",
+    "minecraft:deepslate_iron_ore": "utilitycraft:iron_dust",
+    "minecraft:gold_ore": "utilitycraft:gold_dust",
+    "minecraft:deepslate_gold_ore": "utilitycraft:gold_dust",
+    "minecraft:nether_gold_ore": "utilitycraft:gold_dust",
+    "minecraft:redstone_ore": "minecraft:redstone",
+    "minecraft:lit_redstone_ore": "minecraft:redstone",
+    "minecraft:deepslate_redstone_ore": "minecraft:redstone",
+    "minecraft:lit_deepslate_redstone_ore": "minecraft:redstone",
+    "minecraft:lapis_ore": "minecraft:lapis_lazuli",
+    "minecraft:deepslate_lapis_ore": "minecraft:lapis_lazuli",
+    "minecraft:diamond_ore": "utilitycraft:diamond_dust",
+    "minecraft:deepslate_diamond_ore": "utilitycraft:diamond_dust",
+    "minecraft:emerald_ore": "utilitycraft:emerald_dust",
+    "minecraft:deepslate_emerald_ore": "utilitycraft:emerald_dust",
+    "minecraft:nether_quartz_ore": "utilitycraft:quartz_dust",
+    "minecraft:ancient_debris": "utilitycraft:netherite_scrap_dust",
+    "utilitycraft:deepslate_titanium_ore": "utilitycraft:titanium_dust",
+    "utilitycraft:deepslate_tungsten_ore": "utilitycraft:raw_tungsten_dust",
+    "utilitycraft:nether_tungsten_ore": "utilitycraft:raw_tungsten_dust",
+    "utilitycraft:deepslate_aetherium_ore": "utilitycraft:aetherium_dust",
+    "utilitycraft:end_aetherium_ore": "utilitycraft:aetherium_dust",
+    "utilitycraft:tin_ore": "utilitycraft:tin_dust",
+    "utilitycraft:deepslate_tin_ore": "utilitycraft:tin_dust",
+    "utilitycraft:deepslate_uranium_ore": "utilitycraft:uranium_dust",
+    "utilitycraft:ryno_deepslate_lead_ore": "utilitycraft:ryno_lead_dust",
+    "utilitycraft:ryno_deepslate_uranium_ore": "utilitycraft:ryno_uranium_dust",
+    "utilitycraft:ryno_vanadium_ore": "utilitycraft:ryno_vanadium_dust",
+});
+
+export const ORE_PROCESSED_DROPS = Object.freeze({
+    "minecraft:copper_ore": ["minecraft:copper_ingot"],
+    "minecraft:deepslate_copper_ore": ["minecraft:copper_ingot"],
+    "minecraft:iron_ore": ["minecraft:iron_ingot"],
+    "minecraft:deepslate_iron_ore": ["minecraft:iron_ingot"],
+    "minecraft:gold_ore": ["minecraft:gold_ingot"],
+    "minecraft:deepslate_gold_ore": ["minecraft:gold_ingot"],
+    "minecraft:nether_gold_ore": ["minecraft:raw_gold", "minecraft:gold_ingot"],
+    "minecraft:ancient_debris": ["minecraft:netherite_scrap"],
+    "utilitycraft:deepslate_titanium_ore": ["utilitycraft:titanium"],
+    "utilitycraft:deepslate_aetherium_ore": ["utilitycraft:aetherium"],
+    "utilitycraft:end_aetherium_ore": ["utilitycraft:aetherium"],
+    "utilitycraft:deepslate_tungsten_ore": ["utilitycraft:tungsten"],
+    "utilitycraft:nether_tungsten_ore": ["utilitycraft:tungsten"],
+    "utilitycraft:tin_ore": ["utilitycraft:tin_ingot"],
+    "utilitycraft:deepslate_tin_ore": ["utilitycraft:tin_ingot"],
+    "utilitycraft:deepslate_uranium_ore": ["utilitycraft:uranium_ingot"],
+    "utilitycraft:ryno_deepslate_lead_ore": ["utilitycraft:ryno_lead_ingot"],
+    "utilitycraft:ryno_deepslate_uranium_ore": ["utilitycraft:ryno_uranium_ingot"],
+    "utilitycraft:ryno_vanadium_ore": ["utilitycraft:ryno_vanadium_ingot"],
+});
+
+export const WORM_SOIL_DROPS = Object.freeze({
+    "minecraft:dirt": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
+    "minecraft:grass_block": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
+    "minecraft:coarse_dirt": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
+    "minecraft:rooted_dirt": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 6 }),
+    "minecraft:podzol": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
+    "minecraft:mycelium": Object.freeze({ itemId: "utilitycraft:dirt_handful", min: 1, max: 4 }),
+    "minecraft:sand": Object.freeze({ itemId: "utilitycraft:sand_handful", min: 1, max: 4 }),
+    "minecraft:red_sand": Object.freeze({ itemId: "utilitycraft:red_sand_handful", min: 1, max: 4 }),
+    "minecraft:gravel": Object.freeze({ itemId: "utilitycraft:gravel_fragments", min: 1, max: 4 }),
+});
+
+export const CROP_GROWTH_CONFIG = Object.freeze({
+    "minecraft:wheat": Object.freeze({ ageState: "growth", maxAge: 7 }),
+    "minecraft:carrots": Object.freeze({ ageState: "growth", maxAge: 7 }),
+    "minecraft:potatoes": Object.freeze({ ageState: "growth", maxAge: 7 }),
+    "minecraft:beetroot": Object.freeze({ ageState: "growth", maxAge: 7 }),
+    "minecraft:nether_wart": Object.freeze({ ageState: "age", maxAge: 3 }),
+});
+
+export const WORM_SOIL_CYCLE = Object.freeze([
+    "minecraft:dirt",
+    "minecraft:grass_path",
+    "minecraft:grass_block",
+    "minecraft:podzol",
+    "minecraft:mycelium",
+    "minecraft:coarse_dirt",
+    "minecraft:rooted_dirt",
+]);
+export const WORM_DIG_DROPS = Object.freeze([
+    "minecraft:wheat_seeds",
+    "minecraft:beetroot_seeds",
+    "minecraft:melon_seeds",
+    "minecraft:pumpkin_seeds",
+    "minecraft:torchflower_seeds",
+]);

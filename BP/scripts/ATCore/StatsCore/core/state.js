@@ -1,3 +1,7 @@
+import { ABILITY_CHANNELS } from "../config/definitions.js";
+import { BOOT_MOBILITY_MODES } from "../config/equipmentTypes.js";
+import { CACHE_LIMITS, REFINEMENT_LIMITS } from "../config/values.js";
+export { getCategoryForReason, getCategoriesForDefinition } from "./categories.js";
 import { STATSCORE } from "../constants.js";
 import { createRuntimeUid, normalizeId, safeJsonParse, toPositiveInteger } from "../utils.js";
 import { normalizeStatsRefinementData, parseStatsRefinementData, serializeStatsRefinementData } from "./refinement.js";
@@ -6,7 +10,7 @@ import { resolveStatsAttributes } from "../attributes/resolve.js";
 import { normalizeAttributeProgress } from "../progression/attributes.js";
 import { normalizeAppliesTo } from "../shared/entityCategories.js";
 
-const MAX_CACHED_STATES_PER_DEFINITION = 128;
+const MAX_CACHED_STATES_PER_DEFINITION = CACHE_LIMITS.statesPerDefinition;
 const stateCacheByDefinition = new WeakMap();
 
 function getProperty(stack, key) {
@@ -46,6 +50,14 @@ export function normalizeOperatorMode(value) {
     return "crushy";
 }
 
+function normalizeBootMobilityMode(value) {
+    const normalized = normalizeId(value);
+    if (BOOT_MOBILITY_MODES.includes(normalized)) return normalized;
+    // Existing boots received Boot Dash before this setting existed. Keep that
+    // behavior until the player deliberately selects another mode.
+    return "dash";
+}
+
 function normalizeStatsAbilityData(value) {
     const source = value && typeof value === "object" ? value : {};
     const appliedSource = source.appliedAbilities && typeof source.appliedAbilities === "object"
@@ -54,7 +66,7 @@ function normalizeStatsAbilityData(value) {
     const appliedAbilities = {};
     for (const [rawKey, rawLevel] of Object.entries(appliedSource)) {
         const key = normalizeId(rawKey);
-        const level = Math.min(5, toPositiveInteger(rawLevel, 0));
+        const level = Math.min(REFINEMENT_LIMITS.appliedAbilityLevel, toPositiveInteger(rawLevel, 0));
         if (key && level > 0) appliedAbilities[key] = level;
     }
     const targetSource = source.abilityTargets && typeof source.abilityTargets === "object"
@@ -73,10 +85,10 @@ function normalizeStatsAbilityData(value) {
             : null;
         const key = normalizeId(rawEntry?.key ?? effect?.key ?? effect?.kind);
         const channel = normalizeId(rawEntry?.channel);
-        if (!key || !effect || !["attributes", "mining", "support"].includes(channel)) continue;
+        if (!key || !effect || !ABILITY_CHANNELS.includes(channel)) continue;
         inheritedAbilities.push({
             key,
-            name: String(rawEntry?.name ?? key).trim().slice(0, 80),
+            name: String(rawEntry?.name ?? key).trim().slice(0, REFINEMENT_LIMITS.inheritedAbilityNameLength),
             channel,
             effect,
         });
@@ -86,6 +98,7 @@ function normalizeStatsAbilityData(value) {
         uniqueUnlocked: source.uniqueUnlocked === true,
         advancedUnlocked: source.advancedUnlocked === true,
         operatorMode: normalizeOperatorMode(source.operatorMode),
+        bootMobilityMode: normalizeBootMobilityMode(source.bootMobilityMode),
         appliedAbilities,
         abilityTargets,
         inheritedAbilities,
@@ -141,35 +154,6 @@ function cacheState(definition, cacheKey, signature, state) {
     if (cache.size > MAX_CACHED_STATES_PER_DEFINITION) {
         cache.delete(cache.keys().next().value);
     }
-}
-
-export function getCategoryForReason(reason) {
-    const normalized = normalizeId(reason);
-    if (normalized === "combat" || normalized === "kill") return "offensive";
-    if (normalized === "hurt" || normalized === "armor") return "defensive";
-    if (normalized === "block" || normalized === "ore" || normalized === "tool") return "mining";
-    if (normalized === "utility") return "utility";
-    return null;
-}
-
-export function getCategoriesForDefinition(definition) {
-    const categories = new Set();
-    if (!definition) return categories;
-
-    if (definition.progression?.combatXp > 0 || definition.progression?.killXp > 0) {
-        categories.add("offensive");
-    }
-    if (definition.progression?.armorXp > 0) {
-        categories.add("defensive");
-    }
-    if (definition.progression?.blockXp > 0 || definition.progression?.oreXp > 0 || definition.progression?.toolXp > 0) {
-        categories.add("mining");
-    }
-    if (definition.type === "utility") {
-        categories.add("utility");
-    }
-
-    return categories;
 }
 
 function normalizeProgressionState(value) {

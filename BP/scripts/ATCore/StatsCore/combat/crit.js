@@ -1,3 +1,4 @@
+import { CACHE_LIMITS, ATTRIBUTE_DEFAULTS } from "../config/values.js";
 import { STATSCORE } from "../constants.js";
 import { getCurrentTick, normalizeChance, rollChance } from "../utils.js";
 
@@ -25,7 +26,7 @@ export function rollStatsCrit({ attacker, target, attributes }) {
     const isPrecision = attacker?.isSneaking === true;
 
     const crit = attributes?.crit ?? {};
-    const maxChance = normalizeChance(crit.maxChance, 0.35);
+    const maxChance = normalizeChance(crit.maxChance, ATTRIBUTE_DEFAULTS.critMaxChance);
     const chance = Math.min(
         maxChance,
         normalizeChance(crit.chance, 0)
@@ -45,7 +46,7 @@ export function rollStatsCrit({ attacker, target, attributes }) {
 export function rememberCombatContact(attacker, target) {
     recentHits.set(contactKey(attacker, target), getCurrentTick());
 
-    if (recentHits.size <= 512) return;
+    if (recentHits.size <= CACHE_LIMITS.recentCombatContacts) return;
 
     const now = getCurrentTick();
     for (const [key, tick] of recentHits.entries()) {

@@ -1,6 +1,7 @@
+import { AFFINITY_MODIFIERS, ATTRIBUTE_DEFAULTS, PRESERVATION_VALUES } from "../config/values.js";
 import { AFFINITIES } from "../constants.js";
 import { clamp01, normalizeChance, normalizeId, toFiniteNumber } from "../utils.js";
-import { getCategoriesForDefinition } from "../core/state.js";
+import { getCategoriesForDefinition } from "../core/categories.js";
 import { getStatsRefinementReserveXp, normalizeStatsRefinementData } from "../core/refinement.js";
 import { getWeakAttributePoints } from "../progression/attributes.js";
 
@@ -161,18 +162,18 @@ function getAbilityUnlocks(definition, state) {
 function affinityModifiers(affinity) {
     switch (affinity) {
         case AFFINITIES.aggression:
-            return { damage: 0.03, critChance: 0.012, lifesteal: 0 };
+            return { ...AFFINITY_MODIFIERS.aggression };
         case AFFINITIES.sustain:
         case AFFINITIES.survival:
-            return { damage: 0, critChance: 0, lifesteal: 0.008 };
+            return { ...AFFINITY_MODIFIERS.sustain };
         case AFFINITIES.precision:
-            return { damage: 0, critChance: 0.018, lifesteal: 0, precisionBonus: 0.04 };
+            return { ...AFFINITY_MODIFIERS.precision };
         case AFFINITIES.control:
-            return { damage: 0, critChance: 0.006, lifesteal: 0, effectChance: 0.02 };
+            return { ...AFFINITY_MODIFIERS.control };
         case AFFINITIES.mining:
-            return { damage: 0, critChance: 0, lifesteal: 0, miningChance: 0.018 };
+            return { ...AFFINITY_MODIFIERS.mining };
         default:
-            return { damage: 0.01, critChance: 0.004, lifesteal: 0.002, miningChance: 0.006 };
+            return { ...AFFINITY_MODIFIERS.default };
     }
 }
 
@@ -211,10 +212,6 @@ function resolveEventDrivenAttributes(source, levels) {
                 defensiveLevel,
                 healing.maxBonus ?? 0.05
             )),
-            overhealAbsorptionDurationTicks: Math.max(
-                20,
-                Math.floor(toFiniteNumber(healing.overhealAbsorptionDurationTicks, 100))
-            ),
         } : null,
         chargeMastery: charge && typeof charge === "object" && Number(charge.maxDamageBonus ?? 0) > 0 ? {
             maxDamageBonus: normalizeChance(scaleValue(
@@ -356,10 +353,10 @@ export function resolveStatsAttributes(definition, state) {
     ];
 
     const critChance = isSupport ? 0 : normalizeChance(
-        scaleAttributePoints(critBase.chance, critBase.chancePerLevel, criticalChancePoints, critBase.maxChance ?? 0.35)
+        scaleAttributePoints(critBase.chance, critBase.chancePerLevel, criticalChancePoints, critBase.maxChance ?? ATTRIBUTE_DEFAULTS.critMaxChance)
         + (mods.critChance ?? 0)
     );
-    const lifestealCap = normalizeChance(lifestealBase.cap, 0.08);
+    const lifestealCap = normalizeChance(lifestealBase.cap, ATTRIBUTE_DEFAULTS.lifestealCap);
     const lifesteal = isSupport ? 0 : Math.min(lifestealCap, normalizeChance(
         scaleAttributePoints(lifestealBase.percent, lifestealBase.perLevel, lifestealPoints, lifestealCap)
         + (mods.lifesteal ?? 0)
@@ -369,12 +366,12 @@ export function resolveStatsAttributes(definition, state) {
     const critMultiplier = isSupport
         ? 1
         : Math.min(
-            Math.max(1, toFiniteNumber(critBase.maxMultiplier, 2.25)),
+            Math.max(1, toFiniteNumber(critBase.maxMultiplier, ATTRIBUTE_DEFAULTS.critMaxMultiplier)),
             scaleValue(
                 critBase.multiplier,
                 critBase.multiplierPerLevel,
                 offensiveLevel,
-                critBase.maxMultiplier ?? 2.25
+                critBase.maxMultiplier ?? ATTRIBUTE_DEFAULTS.critMaxMultiplier
             ) + refinementCritDamage
         );
     const damageMultiplier = isSupport ? 1 : 1
@@ -382,7 +379,7 @@ export function resolveStatsAttributes(definition, state) {
         + (mods.damage ?? 0)
         + toFiniteNumber(refinementBonuses.damageMultiplier, 0);
     const penetrationPercent = isSupport ? 0 : normalizeChance(
-        scaleAttributePoints(penetrationBase.percent, penetrationBase.perLevel, penetrationPoints, penetrationBase.cap ?? 0.35)
+        scaleAttributePoints(penetrationBase.percent, penetrationBase.perLevel, penetrationPoints, penetrationBase.cap ?? ATTRIBUTE_DEFAULTS.penetrationCap)
         + toFiniteNumber(refinementBonuses.penetration, 0)
     );
     const bonusLootChance = isSupport ? 0 : normalizeChance(
@@ -394,7 +391,7 @@ export function resolveStatsAttributes(definition, state) {
     const earthQuality = earthElementActive
         ? normalizeChance(toFiniteNumber(refinementElement?.quality, refinement.quality))
         : 0;
-    const earthDamageReductionBonus = earthElementActive ? 0.04 + earthQuality * 0.08 : 0;
+    const earthDamageReductionBonus = earthElementActive ? PRESERVATION_VALUES.earthReductionBonus + earthQuality * PRESERVATION_VALUES.earthQualityReductionBonus : 0;
     const supportDamageReduction = isSupport ? normalizeChance(Math.min(
         Math.max(0, toFiniteNumber(supportBase.maxDamageReduction, 1)),
         scaleAttributePoints(supportBase.damageReduction, supportBase.damageReductionPerLevel, damageReductionPoints)
@@ -407,12 +404,12 @@ export function resolveStatsAttributes(definition, state) {
     const refinementPreservationChance = isSupport
         ? toFiniteNumber(refinementBonuses.durabilityPreserveChance, 0)
         : toFiniteNumber(refinementBonuses.durabilitySaveChance, 0);
-    const basePreservationChance = Math.min(0.35, Math.max(0,
-        preservationLevel * 0.005 + refinementPreservationChance
+    const basePreservationChance = Math.min(PRESERVATION_VALUES.baseCap, Math.max(0,
+        preservationLevel * PRESERVATION_VALUES.perLevel + refinementPreservationChance
     ));
-    const earthPreservationBonus = earthElementActive ? 0.08 + earthQuality * 0.12 : 0;
-    const preservationChance = Math.min(0.55, basePreservationChance + earthPreservationBonus);
-    const preservationRepairAmount = earthElementActive ? 2 : 1;
+    const earthPreservationBonus = earthElementActive ? PRESERVATION_VALUES.earthBonus + earthQuality * PRESERVATION_VALUES.earthQualityBonus : 0;
+    const preservationChance = Math.min(PRESERVATION_VALUES.earthCap, basePreservationChance + earthPreservationBonus);
+    const preservationRepairAmount = earthElementActive ? PRESERVATION_VALUES.earthRepairAmount : PRESERVATION_VALUES.repairAmount;
     const supportDurabilityPreserveChance = isSupport ? preservationChance : 0;
     const durabilitySaveChance = isSupport ? 0 : preservationChance;
     const supportNegateAllDamageChance = isSupport ? Math.max(0,
@@ -467,13 +464,13 @@ export function resolveStatsAttributes(definition, state) {
             multiplier: critMultiplier,
             openingBonus: normalizeChance(critBase.openingBonus, 0),
             precisionBonus: normalizeChance((critBase.precisionBonus ?? 0) + (mods.precisionBonus ?? 0), 0),
-            maxChance: normalizeChance(critBase.maxChance, 0.35)
+            maxChance: normalizeChance(critBase.maxChance, ATTRIBUTE_DEFAULTS.critMaxChance)
         },
         penetration: {
             percent: penetrationPercent,
-            cap: normalizeChance(penetrationBase.cap, 0.35),
-            bossScalar: clamp01(toFiniteNumber(penetrationBase.bossScalar, 0.55)),
-            bossCap: normalizeChance(penetrationBase.bossCap, 0.2)
+            cap: normalizeChance(penetrationBase.cap, ATTRIBUTE_DEFAULTS.penetrationCap),
+            bossScalar: clamp01(toFiniteNumber(penetrationBase.bossScalar, ATTRIBUTE_DEFAULTS.bossPenetrationScalar)),
+            bossCap: normalizeChance(penetrationBase.bossCap, ATTRIBUTE_DEFAULTS.bossPenetrationCap)
         },
         lifesteal: {
             percent: lifesteal,

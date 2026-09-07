@@ -1,3 +1,4 @@
+import { ATTRIBUTE_DEFAULTS } from "../config/values.js";
 import { system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
 import { getLiveEquipmentItem, persistEquipmentItem } from "../core/equipment.js";
@@ -21,13 +22,30 @@ import { findEffectByKind } from "../shared/effectSelectors.js";
 import { applyEffectById } from "../shared/effects.js";
 import { OFFENSIVE_ENTITY_CATEGORIES, getEntityCategory } from "../shared/entityCategories.js";
 import { getStatsCoreEffect, getStatsCoreEffects, upsertStatsCoreEffect } from "../effects/index.js";
+import { rollToolPreserving } from "../shared/durability.js";
+import { STATSCORE_ICONS } from "../icons.js";
 
 const pendingCombatFollowUps = new Map();
 const blessingCurseCooldowns = new Map();
 const preparedBlessings = new WeakMap();
+const toolPreservingAttackTicks = new WeakMap();
 let useImmediateAfterHurtFollowUp = false;
 let pendingFollowUpCleanupScheduled = false;
 let blessingGateInitialized = false;
+
+function scheduleToolPreservingAttack(attacker, expectedTypeId) {
+    const attackTick = Number(system.currentTick ?? 0) || 0;
+    if (Number(toolPreservingAttackTicks.get(attacker) ?? -1) === attackTick) return;
+    toolPreservingAttackTicks.set(attacker, attackTick);
+
+    system.run(() => {
+        const context = getEquipmentStatsContext(attacker, STATSCORE.slots.mainhand, expectedTypeId);
+        if (!context || !rollToolPreserving(context)) return;
+
+        persistEquipmentItem(attacker, context.slotName, context.stack);
+        showAbilityFeedback(attacker, "§aTool Preserving", STATSCORE_ICONS.preservingTool);
+    });
+}
 
 function getCombatFollowUpKey(attacker, target) {
     return `${String(target?.id ?? "target")}:${String(attacker?.id ?? "attacker")}`;
@@ -281,6 +299,8 @@ function handleCombatHurt(event) {
         const baseDamage = Number(event.damage ?? 0);
         if (!Number.isFinite(baseDamage) || baseDamage <= 0) return;
 
+        scheduleToolPreservingAttack(attacker, weapon.typeId);
+
         const preparedBlessing = preparedBlessings.get(event) ?? null;
         preparedBlessings.delete(event);
 
@@ -303,7 +323,7 @@ function handleCombatHurt(event) {
             nextDamage *= Math.max(1, Number(crit.multiplier) || 1);
         }
 
-        const damageCap = Math.max(baseDamage, penetration.damage) * Number(definition?.limits?.maxDamageMultiplier ?? 3.25);
+        const damageCap = Math.max(baseDamage, penetration.damage) * Number(definition?.limits?.maxDamageMultiplier ?? ATTRIBUTE_DEFAULTS.maxDamageMultiplier);
         event.damage = Math.max(0, Math.min(damageCap, nextDamage));
 
         rememberCombatContact(attacker, target);

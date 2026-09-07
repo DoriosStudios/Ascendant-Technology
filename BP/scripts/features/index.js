@@ -5,3 +5,4 @@ import "./machines/index.js";
 import "./transportation/index.js";
 import "./drops/index.js";
 import "./overclock/index.js";
+import "./debug/arrowVelocityTest.js";

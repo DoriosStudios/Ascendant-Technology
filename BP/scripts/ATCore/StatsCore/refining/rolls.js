@@ -1,3 +1,4 @@
+import { REFINEMENT_ROLL_VALUES } from "../config/values.js";
 import { REFINING_TABLE_CONFIG as CONFIG } from "../../../config/recipes/refiningTable.js";
 
 function normalizeId(value) {
@@ -12,7 +13,7 @@ function gradeFromQuality(quality) {
     if (quality >= CONFIG.defaults.transcendentThreshold) return "transcendent";
     if (quality >= CONFIG.defaults.masterworkThreshold) return "masterwork";
     if (quality >= CONFIG.defaults.strongThreshold) return "exceptional";
-    if (quality >= 0.32) return "steady";
+    if (quality >= REFINEMENT_ROLL_VALUES.steadyThreshold) return "steady";
     return "rough";
 }
 
@@ -29,7 +30,7 @@ function canRollElement(element, definitionType, coreMode) {
 
 function pickElement(definitionType, coreMode) {
     const candidates = CONFIG.elements.filter((element) =>
-        canRollElement(element, definitionType, coreMode)
+        canRollElement(element, definitionType, coreMode),
     );
     if (!candidates.length) return undefined;
 
@@ -49,16 +50,37 @@ export function computeRefinementRollRange(chip, ingot, amount, options = {}) {
         ? CONFIG.defaults.advancedMaxIngotsPerRoll
         : CONFIG.defaults.maxIngotsPerRoll;
     const safeAmount = Math.min(maxIngots, Math.max(0, Math.floor(Number(amount) || 0)));
-    const min = Math.min(advanced ? 0.99 : 0.98, chip.minQuality + safeAmount * 0.012 * power);
+    const min = Math.min(
+        advanced
+            ? REFINEMENT_ROLL_VALUES.advancedMinQualityCap
+            : REFINEMENT_ROLL_VALUES.normalMinQualityCap,
+        chip.minQuality + safeAmount * REFINEMENT_ROLL_VALUES.minQualityPerIngotPower * power,
+    );
     const max = Math.min(
-        advanced ? 1 : 0.99,
-        Math.max(min + CONFIG.defaults.minRollSpread, chip.maxQuality + safeAmount * 0.018 * power),
+        advanced
+            ? REFINEMENT_ROLL_VALUES.advancedMaxQualityCap
+            : REFINEMENT_ROLL_VALUES.normalMaxQualityCap,
+        Math.max(
+            min + CONFIG.defaults.minRollSpread,
+            chip.maxQuality + safeAmount * REFINEMENT_ROLL_VALUES.maxQualityPerIngotPower * power,
+        ),
     );
     return { min, max };
 }
 
 /** Rolls the same StatsCore refinement data used by the Refining Table. */
-export function rollStatsRefinement({ definition, state, chip, ingot, amount, range, xpCost = 0, tier = undefined, advanced = false, coreMode = "none" }) {
+export function rollStatsRefinement({
+    definition,
+    state,
+    chip,
+    ingot,
+    amount,
+    range,
+    xpCost = 0,
+    tier = undefined,
+    advanced = false,
+    coreMode = "none",
+}) {
     const maxIngots = advanced
         ? CONFIG.defaults.advancedMaxIngotsPerRoll
         : CONFIG.defaults.maxIngotsPerRoll;
@@ -71,18 +93,25 @@ export function rollStatsRefinement({ definition, state, chip, ingot, amount, ra
     const tierScale = CONFIG.tierScales[normalizeId(tier ?? definition?.tier)] ?? 1;
     const bonuses = {};
     for (const [key, maxValue] of Object.entries(template)) {
-        const variance = 0.92 + Math.random() * 0.16;
+        const variance =
+            REFINEMENT_ROLL_VALUES.varianceBase +
+            Math.random() * REFINEMENT_ROLL_VALUES.varianceSpread;
         const directDamage = key === "extraDamage" || key === "elementalDamage";
         const cap = directDamage
-            ? (advanced ? CONFIG.defaults.advancedDirectDamageCap : 12)
-            : 0.99;
+            ? advanced
+                ? CONFIG.defaults.advancedDirectDamageCap
+                : REFINEMENT_ROLL_VALUES.normalDirectDamageCap
+            : REFINEMENT_ROLL_VALUES.chanceCap;
         const ceiling = advanced ? CONFIG.defaults.advancedStrongMultiplier : 1;
-        bonuses[key] = roundBonus(Math.min(cap, Number(maxValue) * ceiling * quality * tierScale * variance));
+        bonuses[key] = roundBonus(
+            Math.min(cap, Number(maxValue) * ceiling * quality * tierScale * variance),
+        );
     }
 
     const normalizedCoreMode = normalizeId(coreMode);
-    const canAwakenElement = (bonuses.elementalChance ?? 0) > 0
-        && ((bonuses.elementalDamage ?? 0) > 0 || definition?.type === "support");
+    const canAwakenElement =
+        (bonuses.elementalChance ?? 0) > 0 &&
+        ((bonuses.elementalDamage ?? 0) > 0 || definition?.type === "support");
     if (canAwakenElement) {
         const element = pickElement(definition?.type, normalizedCoreMode);
         if (element) {
@@ -91,9 +120,10 @@ export function rollStatsRefinement({ definition, state, chip, ingot, amount, ra
                 chance: element.id === "light" ? 1 : bonuses.elementalChance,
                 // Blessing has a fixed holy-damage contract; other elements
                 // continue scaling from the refinement roll.
-                damage: element.id === "light"
-                    ? Math.max(1, Number(element.blessingDamage ?? 8) || 8)
-                    : bonuses.elementalDamage,
+                damage:
+                    element.id === "light"
+                        ? Math.max(1, Number(element.blessingDamage ?? 8) || 8)
+                        : bonuses.elementalDamage,
                 quality: roundBonus(quality),
             };
         }
@@ -105,7 +135,9 @@ export function rollStatsRefinement({ definition, state, chip, ingot, amount, ra
         quality: roundBonus(quality),
         minQuality: roundBonus(rollRange.min),
         maxQuality: roundBonus(rollRange.max),
-        spentXp: Math.max(0, Number(state?.refinement?.spentXp ?? 0)) + Math.max(0, Math.floor(Number(xpCost) || 0)),
+        spentXp:
+            Math.max(0, Number(state?.refinement?.spentXp ?? 0)) +
+            Math.max(0, Math.floor(Number(xpCost) || 0)),
         rerolls: Math.max(0, Number(state?.refinement?.rerolls ?? 0)) + 1,
         chipId: chip.id,
         chipLabel: chip.label,

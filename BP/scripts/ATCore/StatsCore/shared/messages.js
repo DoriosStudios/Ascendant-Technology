@@ -1,13 +1,10 @@
+import { PRESENTATION_VALUES } from "../config/values.js";
+import { INSIGHT_ACTIONBAR_NAMESPACE, INSIGHT_NAMESPACE_NAME, INSIGHT_QUEUE_DISCOVER_EVENT, INSIGHT_QUEUE_READY_EVENT, INSIGHT_QUEUE_SEND_EVENT } from "../config/definitions.js";
 import { system } from "@minecraft/server";
 import { actionBar } from "../../../DoriosLib/messages/index.js";
 
-const INSIGHT_ACTIONBAR_NAMESPACE = "ascendant.statscore";
-const INSIGHT_NAMESPACE_NAME = "Ascendant Technology · StatsCore";
-const ACTIONBAR_LIFETIME_TICKS = 100;
-const INSIGHT_QUEUE_DISCOVER_EVENT = "insight:actionbar_queue_discover_v1";
-const INSIGHT_QUEUE_READY_EVENT = "insight:actionbar_queue_ready_v1";
-const INSIGHT_QUEUE_SEND_EVENT = "insight:actionbar_queue_send_v1";
-const INSIGHT_READY_GRACE_TICKS = 60;
+const ACTIONBAR_LIFETIME_TICKS = PRESENTATION_VALUES.actionbarLifetimeTicks;
+const INSIGHT_READY_GRACE_TICKS = PRESENTATION_VALUES.insightReadyGraceTicks;
 
 let registeredInsightApi;
 let remoteInsightReadyUntil = -Infinity;

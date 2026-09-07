@@ -1,3 +1,4 @@
+import { ATTRIBUTE_DEFAULTS } from "../config/values.js";
 import { getPlayerArmorMitigationProfile } from "../support/armor.js";
 import { clamp01, normalizeChance } from "../utils.js";
 import { getEventDamageType, isBossLikeEntity } from "../shared/damage.js";
@@ -5,7 +6,7 @@ import { getEventDamageType, isBossLikeEntity } from "../shared/damage.js";
 export function applyArmorPenetration({ damage, target, event, attributes }) {
     const penetration = attributes?.penetration ?? {};
     let percent = Math.min(
-        normalizeChance(penetration.cap, 0.35),
+        normalizeChance(penetration.cap, ATTRIBUTE_DEFAULTS.penetrationCap),
         normalizeChance(penetration.percent, 0)
     );
 
@@ -14,8 +15,8 @@ export function applyArmorPenetration({ damage, target, event, attributes }) {
     }
 
     if (isBossLikeEntity(target)) {
-        const bossScalar = clamp01(penetration.bossScalar ?? 0.55);
-        const bossCap = clamp01(penetration.bossCap ?? 0.2);
+        const bossScalar = clamp01(penetration.bossScalar ?? ATTRIBUTE_DEFAULTS.bossPenetrationScalar);
+        const bossCap = clamp01(penetration.bossCap ?? ATTRIBUTE_DEFAULTS.bossPenetrationCap);
         percent = Math.min(bossCap, percent * bossScalar);
     }
 

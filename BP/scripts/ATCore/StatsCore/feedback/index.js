@@ -1,3 +1,7 @@
+import { CACHE_LIMITS } from "../config/values.js";
+import { INSIGHT_ACTIVITY_EVENT } from "../config/definitions.js";
+import { MINING_ABILITY_TOKENS, STATSCORE_FEEDBACK_STYLES, FEEDBACK_STYLE_ALIASES } from "../config/presentation.js";
+export { STATSCORE_FEEDBACK_STYLES } from "../config/presentation.js";
 import { system } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { getCurrentTick, titleCaseIdentifier } from "../utils.js";
@@ -18,38 +22,6 @@ const feedbackCooldowns = new Map();
 const feedbackPreferences = new Map();
 const pendingActionBars = new Map();
 const pendingLevelUps = new Map();
-const INSIGHT_ACTIVITY_EVENT = "insight:statscore_activity_v1";
-const MINING_ABILITY_TOKENS = Object.freeze([
-    "double trouble",
-    "triple trouble",
-    "green thumb",
-    "primal",
-    "forger",
-    "crushing",
-    "berserk",
-    "worm",
-]);
-
-/**
- * The canonical names make the presentation choice explicit. Legacy values are
- * accepted on read so players do not lose their saved preference after updating.
- */
-export const STATSCORE_FEEDBACK_STYLES = Object.freeze([
-    "only_text",
-    "only_icons",
-    "text_and_icons",
-    "both_partial",
-    "text",
-    "emoji",
-    "both",
-]);
-
-const FEEDBACK_STYLE_ALIASES = Object.freeze({
-    text: "only_text",
-    emoji: "only_icons",
-    both: "text_and_icons",
-});
-
 function normalizeFeedbackStyle(style) {
     const normalized = String(style ?? "").trim().toLowerCase();
     const canonical = FEEDBACK_STYLE_ALIASES[normalized] ?? normalized;
@@ -69,7 +41,7 @@ function getPreferenceCache(player) {
         feedbackPreferences.set(playerKey, cached);
     }
 
-    if (feedbackPreferences.size > 128) {
+    if (feedbackPreferences.size > CACHE_LIMITS.feedbackPreferences) {
         for (const [key, entry] of feedbackPreferences) {
             if (entry.tick !== tick) feedbackPreferences.delete(key);
         }
@@ -86,7 +58,7 @@ function canShow(player, key, cooldownTicks = STATSCORE.runtime.feedbackCooldown
     if (nextAllowed > now) return false;
 
     feedbackCooldowns.set(id, now + Math.max(1, Math.floor(Number(cooldownTicks) || 1)));
-    if (feedbackCooldowns.size > 256) {
+    if (feedbackCooldowns.size > CACHE_LIMITS.feedbackCooldowns) {
         for (const [cachedId, expiresAt] of feedbackCooldowns) {
             if (Number(expiresAt ?? 0) <= now) feedbackCooldowns.delete(cachedId);
         }

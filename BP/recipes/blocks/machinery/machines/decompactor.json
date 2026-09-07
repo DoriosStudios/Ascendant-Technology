@@ -1,0 +1,39 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:decompactor"
+        },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": ["ASA", "CRC", "EAE"],
+        "key": {
+            "A": {
+                "item": "utilitycraft:steel_ingot"
+            },
+            "S": {
+                "item": "minecraft:sticky_piston"
+            },
+            "C": {
+                "item": "utilitycraft:basic_chip"
+            },
+            "R": {
+                "item": "utilitycraft:machine_case"
+            },
+            "E": {
+                "item": "utilitycraft:energized_iron_ingot"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:decompactor",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:machine_case"
+            },
+            {
+                "item": "utilitycraft:basic_chip"
+            }
+        ]
+    }
+}

@@ -2,34 +2,28 @@
     "format_version": "1.20.80",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "utilitycraft:advanced_runic_core"
+            "identifier": "utilitycraft:aetherium_crystal_block"
         },
         "tags": [
             "crafting_table"
         ],
         "pattern": [
-            "ARA",
-            "RCR",
-            "ARA"
+            "AAA",
+            "AAA",
+            "AAA"
         ],
         "key": {
             "A": {
                 "item": "utilitycraft:aetherium_shard"
-            },
-            "R": {
-                "item": "utilitycraft:refined_aetherium_crystal"
-            },
-            "C": {
-                "item": "utilitycraft:runic_core"
             }
         },
         "result": {
-            "item": "utilitycraft:advanced_runic_core",
+            "item": "utilitycraft:aetherium_crystal_block",
             "count": 1
         },
         "unlock": [
             {
-                "item": "utilitycraft:refined_aetherium_crystal"
+                "item": "utilitycraft:aetherium_shard"
             }
         ]
     }

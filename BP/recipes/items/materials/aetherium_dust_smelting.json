@@ -1,0 +1,14 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_furnace": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_dust_smelting"
+        },
+        "tags": [
+            "furnace",
+            "blast_furnace"
+        ],
+        "input": "utilitycraft:aetherium_dust",
+        "output": "utilitycraft:aetherium"
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:basic_power_beacon"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "ASA",
+            "CBC",
+            "AMA"
+        ],
+        "key": {
+            "A": {
+                "item": "minecraft:gold_ingot"
+            },
+            "C": {
+                "item": "utilitycraft:basic_chip"
+            },
+            "S": {
+                "item": "minecraft:echo_shard"
+            },
+            "B": {
+                "item": "minecraft:beacon"
+            },
+            "M": {
+                "item": "utilitycraft:machine_case"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:basic_power_beacon",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "minecraft:beacon"
+            }
+        ]
+    }
+}

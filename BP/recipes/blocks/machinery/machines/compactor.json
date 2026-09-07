@@ -1,0 +1,39 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:compactor"
+        },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": ["APA", "CRC", "EAE"],
+        "key": {
+            "A": {
+                "item": "utilitycraft:steel_ingot"
+            },
+            "P": {
+                "item": "minecraft:piston"
+            },
+            "C": {
+                "item": "utilitycraft:basic_chip"
+            },
+            "R": {
+                "item": "utilitycraft:machine_case"
+            },
+            "E": {
+                "item": "utilitycraft:energized_iron_ingot"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:compactor",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:machine_case"
+            },
+            {
+                "item": "utilitycraft:basic_chip"
+            }
+        ]
+    }
+}

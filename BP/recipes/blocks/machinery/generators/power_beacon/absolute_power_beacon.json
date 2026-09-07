@@ -1,0 +1,39 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:absolute_power_beacon"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "ASA",
+            "CBC",
+            "ACA"
+        ],
+        "key": {
+            "A": {
+                "item": "utilitycraft:aetherium"
+            },
+            "S": {
+                "item": "minecraft:echo_shard"
+            },
+            "C": {
+                "item": "utilitycraft:absolute_chip"
+            },
+            "B": {
+                "item": "utilitycraft:ultimate_power_beacon"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:absolute_power_beacon",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ultimate_power_beacon"
+            }
+        ]
+    }
+}

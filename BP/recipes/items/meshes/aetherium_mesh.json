@@ -1,18 +1,26 @@
 {
-  "format_version": "1.20.80",
-  "minecraft:recipe_shaped": {
-    "description": { "identifier": "utilitycraft:aetherium_mesh_craft" },
-    "tags": ["crafting_table"],
-    "pattern": [
-      "AAA",
-      "ANA",
-      "AAA"
-    ],
-    "key": {
-      "A": { "item": "utilitycraft:aetherium" },
-      "N": { "item": "utilitycraft:netherite_mesh" }
-    },
-    "result": { "item": "utilitycraft:aetherium_mesh" },
-    "unlock": [ { "item": "utilitycraft:aetherium" } ]
-  }
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_mesh_craft"
+        },
+        "tags": ["crafting_table"],
+        "pattern": ["AAA", "ANA", "AAA"],
+        "key": {
+            "A": {
+                "item": "utilitycraft:aetherium"
+            },
+            "N": {
+                "item": "utilitycraft:netherite_mesh"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:aetherium_mesh"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:aetherium"
+            }
+        ]
+    }
 }

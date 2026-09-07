@@ -1,0 +1,39 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:advanced_power_beacon"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "ASA",
+            "CBC",
+            "ACA"
+        ],
+        "key": {
+            "A": {
+                "item": "utilitycraft:energized_iron_ingot"
+            },
+            "C": {
+                "item": "utilitycraft:advanced_chip"
+            },
+            "S": {
+                "item": "minecraft:echo_shard"
+            },
+            "B": {
+                "item": "utilitycraft:basic_power_beacon"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:advanced_power_beacon",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:basic_power_beacon"
+            }
+        ]
+    }
+}

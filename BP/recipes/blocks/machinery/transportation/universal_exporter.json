@@ -9,19 +9,20 @@
 		],
 		"key": {
 			"H": {
-				"item": "hopper"
+				"item": "minecraft:hopper"
 			},
 			"U": {
 				"item": "utilitycraft:universal_cable"
 			}
 		},
 		"pattern": [
-			" U",
+			" U ",
 			"UHU",
-			" U"
+			" U "
 		],
 		"result": {
-			"item": "utilitycraft:universal_exporter"
+			"item": "utilitycraft:universal_exporter",
+			"count": 1
 		},
 		"unlock": [
 			{

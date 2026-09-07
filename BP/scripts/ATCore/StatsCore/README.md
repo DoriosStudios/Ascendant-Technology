@@ -44,7 +44,7 @@ refinement quality, affinity, and relevant unlocks.
 | Attribute | What the player gets | Important details |
 | --- | --- | --- |
 | Bonus Loot Chance | A chance for another eligible loot result. | Works with supported block and entity loot; it stays out of compact item lore but appears in the Refining Table. |
-| Tool Preserving | A chance to repair one durability on the held tool after hostile damage. | Melee, projectiles, explosions, Thorns, and ram attacks qualify. Environmental damage and mining do not. |
+| Tool Preserving | A chance to repair one durability when the held item is used. | Mining, attacking creatures, and item-use actions qualify. Receiving damage does not. |
 | Double Trouble | A second complete loot-table result. | Growth is slower at levels 1–50, improves at 51–100, and is strongest at 101–200. |
 | Triple Trouble | A third complete loot-table result after Double Trouble succeeds. | It performs its own smaller roll and requires Double Trouble. |
 
@@ -56,6 +56,12 @@ refinement quality, affinity, and relevant unlocks.
 | Evasion | A chance to cancel an eligible hit completely. | Armor begins at 1% and gains 1 percentage point per Defense level; an off-hand shield contributes a fixed 5%. |
 | Armor Preserving | A chance to repair damaged equipped armor after hostile damage. | Normally repairs 1 durability and caps at 35%. Earth Toughness raises the cap to 55% and repairs 2. |
 
+The `utilitycraft:armor` item component also accepts `knockback_resistance`.
+Values from equipped pieces are added together and capped at `1`; `0.25`
+reduces damage-induced velocity by 25%, while `1` fully suppresses it. The
+original player movement is preserved, and `reduces`/`cases` can restrict the
+damage sources that receive this resistance.
+
 ### Event-driven attributes
 
 These attributes are evaluated only by their matching gameplay event; they do
@@ -64,7 +70,7 @@ not modify every hit continuously.
 | Attribute | What the player gets | When it activates |
 | --- | --- | --- |
 | Adaptive Resilience | Stacking temporary damage reduction. | Holds up to three normal stacks for five seconds and can gain a fourth with an Advanced Runic Core. |
-| Healing Efficiency | More healing and temporary Absorption from overhealing. | Only on compatible healing events; HUD feedback is limited to once every two seconds. |
+| Healing Efficiency | More healing. | Multiplies `EntityHealBeforeEvent.healing` on compatible healing events; HUD feedback is limited to once every two seconds. |
 | Charge Mastery | More damage from a properly charged bow, crossbow, or trident. | Scales with charge time and reaches its maximum at full charge. |
 | Persistence | `+2.5%` damage per consecutive projectile hit on the same target, up to `+50%`. | Resets when the target changes or ten seconds pass. |
 | Dimensional Attunement | A temporary dimensional travel/cooldown benefit. | Activates on its configured dimension-change event. |

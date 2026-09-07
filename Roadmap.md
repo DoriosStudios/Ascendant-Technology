@@ -23,7 +23,7 @@ Machine status legend:
 | 🟡 **Aurora's Lance** | 🟢 **Arc-Press Forge** |
 | 🟢 **Catalyst Weaver** | 🟢 **Centrifugal Siever** |
 | 🟠 **Cold Fusion Reactor** | 🟢 **Cryo Freezer** |
-| 🟣 **Compactor** | 🟢 **Cryofluid Synthesizer** |
+| 🟢 **Compactor** | 🟢 **Cryofluid Synthesizer** |
 | 🟢 **Cryo Chamber** | 🟢 **Cryo Stabilizer** |
 | 🟥 **Dismantler** | 🟢 **Dense Active Generators** |
 | 🟢 **Duplicator** | 🟢 **Disenchanter** |
@@ -42,7 +42,7 @@ Machine status legend:
 | 🟢 **Singularity Fabricator** | — |
 | 🟡 **Vacuum Particle Condenser** | — |
 | 🟢 **Vaporworks Processor** | — |
-| 🟡 **Decompactor** | — |
+| 🟢 **Decompactor** | — |
 
 ## Items, gear, materials, and systems
 
@@ -91,7 +91,7 @@ Machine status legend:
   - **Operating Mode:** Up to 6 catalysts + fluid interaction + residue handling.
   - **Notes:** Built for unstable and expensive reactions.
 
-- 🟣 **Compactor**
+- 🟢 **Compactor**
   - **Purpose:** Automatically compress compatible materials into denser forms.
   - **Operating Mode:** Converts materials into their corresponding compressed variants.
   - **Examples:** Nuggets → Ingots, Ingots → Blocks, Quartz → Quartz Blocks.
@@ -105,15 +105,15 @@ Machine status legend:
     3. Cryofluid Generator
   - **Notes:** Core machine for future cold-chain industry.
 
-- 🟡 **Decompactor** *(Planned)*
+- 🟢 **Decompactor**
   - **Purpose:** Reverse only the material and item compactions registered for the Compactor.
   - **Operating Mode:** Uses 3×3 input and output buffers; one dense item is converted into its exact preceding material quantity.
   - **Upgrades:** Uses the same four upgrade fields as the Compactor: Speed, Energy, Hyper Processing, and Stack.
   - **Layout:** The four upgrade slots must be positioned immediately before its 3×3 output buffer.
   - **Recipe Source:** Builds its reverse mapping from the Compactor configuration, including all compressed blocks and compatible items such as bags and bundles.
   - **Safety:** Stops when output space is insufficient and never acts as a general reverse-crafting or item-recovery machine.
-  - **Branch Handling:** Any compressed result with more than one valid predecessor must expose an explicit selection rule before implementation; it must never guess and destroy value.
-  - **Scope:** Separate from the paused Dismantler. No runtime, recipe, menu category, or assets are planned until this design is approved.
+  - **Branch Handling:** Ambiguous reverse mappings fail closed; the current Compactor registry exposes 401 unique outputs and no conflicts.
+  - **Scope:** Implemented as a dedicated machine, separate from the paused Dismantler, with its own runtime, recipe, creative entry, and routed 3×3 interface.
 
 - 🟥 **Dismantler** *(Paused)*
   - **Status:** Removed from active implementation scope in Ascendant Technology.
@@ -166,7 +166,7 @@ Machine status legend:
 - 🟢 **Residue Processor**
   - **Purpose:** Turn production residues into recovered outputs or neutral waste.
 
-- 🟢 **Singularity Fabricator**
+- 🟥 **Singularity Fabricator** *(Pending Rework)*
   - **Purpose:** Massively compact eligible materials into their corresponding Singularities.
   - **Operating Mode:** Consumes extreme quantities of one supported material to produce its Singularity.
   - **Progression Role:** Primary machine for producing the Singularities required by Kyarium.
@@ -370,6 +370,31 @@ Unless explicitly stated otherwise, Superior Machines use a **single operating p
   - **Type:** Gem.
   - **Purpose:** Supreme material of Ascendant Technology and the endpoint of its material progression.
   - **Acquisition:** Crafted through Singularities.
+
+- 🟡 **Niobium**
+  - **Purpose:** High-tier technical metal used in pre-Kyarium machinery and advanced energy-handling components.
+  - **Identity:** Focused on thermal stability, high electrical loads, and extreme machine operation rather than structural strength.
+  - **Integration:** Primary material for Thermal Regulators, Energy Cores, and other late-game machine components.
+
+- 🟡 **Thermal Regulator**
+  - **Purpose:** Advanced machine component responsible for cooling, thermal control, and sustained operation under extreme loads.
+  - **Integration:** Used by high-output machines, Overclock-capable systems, cryogenic machinery, and other heat-intensive equipment.
+  - **Progression Role:** One of the primary component families for pre-Kyarium machines.
+
+- 🟡 **Energy Core**
+  - **Purpose:** High-capacity energy component designed to absorb, buffer, and release sudden DE loads.
+  - **Integration:** Used by machines with extreme power demand, high transfer rates, or large instantaneous energy requirements.
+  - **Progression Role:** One of the primary component families for pre-Kyarium machines.
+
+- 🟡 **Containment Matrix**
+  - **Purpose:** Specialized component for safely containing highly compressed matter, unstable materials, and extreme energy phenomena.
+  - **Integration:** Reserved for machines involving Singularities, matter manipulation, teleportation, replication, or similar end-game processes.
+  - **Progression Role:** Rare specialized component rather than a standard requirement for every advanced machine.
+
+- 🟡 **Absolute Machine Case**
+  - **Purpose:** Final structural machine casing tier above the Reinforced Machine Case.
+  - **Integration:** Used as the primary chassis for the most advanced pre-Kyarium and end-game machinery.
+  - **Progression Role:** Structural foundation for machines that exceed the operating limits of Reinforced machinery.
 
 - 🟡 **Singularities**
   - **Purpose:** Extreme-compression items representing massive quantities of supported materials.

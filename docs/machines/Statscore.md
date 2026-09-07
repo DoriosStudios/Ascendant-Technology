@@ -115,11 +115,10 @@ the item's material:
 
 - Scales from the item's Mining level; it does not create or display a Defense
   progression category on non-support equipment.
-- Uses the item's resolved Preserving chance, but never activates from mining,
-  environmental damage, falling, fire, drowning, starvation, or similar
-  non-hostile sources.
-- Can repair the held item only after the player receives eligible hostile
-  melee, projectile, explosion, Thorns, or ram-attack damage.
+- Uses the item's resolved Preserving chance whenever that item mines a block,
+  attacks a creature, or performs an item-use action.
+- Receiving hostile or environmental damage does not activate Tool Preserving;
+  hostile damage is the activation condition for Armor Preserving instead.
 - Repairs 1 durability on activation and never repairs an undamaged item.
 
 **Double Trouble** (refined tools, hybrids, and utility items):
@@ -191,7 +190,7 @@ For these attributes, **P** is the event-tier power: `0.65` Wood, `0.75` Stone,
 
 - Starts at `1.2% × P` improved compatible healing.
 - Gains `0.025% × P` per **Defensive** level, up to `25%`.
-- Overhealing grants Absorption for 5 seconds.
+- Multiplies the healing amount through `EntityHealBeforeEvent.healing`.
 - HUD feedback reports only the healing added by Healing Efficiency, ignores
   ordinary baseline healing, and is rate-limited to one notice every 2 seconds.
 - An Advanced Runic Core increases the resolved bonus by 20%, up to `25%`.
@@ -299,6 +298,11 @@ Examples:
 - Activates after a confirmed projectile hit.
 - Slows and weakens the struck target.
 - Marks the target for compatible follow-up damage.
+
+**Arrow Volley** (Bow):
+
+- On a confirmed projectile hit, may fire up to four additional arrows at nearby hostile mobs.
+- Uses the struck target as the firing point and never selects the original target.
 
 **Ballista** (Crossbow):
 
@@ -419,17 +423,30 @@ Examples:
 
 **Boot Dash** (Boots):
 
-- Double-jump within six ticks to apply a forward dash.
-- Has a brief cooldown after each dash.
+- Double-jump within five ticks to apply a forward dash.
+- Double-sneak within five ticks while wearing the boots to cycle between
+  **Boot Dash**, **Bunny Jump**, and **None**. The selected mode is saved on
+  the boots.
+- Bunny Jump grants one intensified extra jump while airborne.
+- Swinging while holding compatible boots shows their selected mobility mode in chat.
+- Boot Dash has a brief cooldown after each dash.
 
 **Wind Launch** (Elytra):
 
 - The Elytra is a refined chest-slot armor item with a fixed `45%` damage
   reduction, plus the regular StatsCore armor progression, evasion, and
   preservation attributes.
-- Jump once from the ground, then press Jump again while airborne to fire a
-  native Wind Charge upward from below the player and gain a forward/upward
-  launch without using a firework rocket. The launch plays a wind sound.
+- Jump once from the ground, then press Jump again while airborne to launch in
+  the exact direction the player is looking without using a firework rocket.
+  The launch plays a wind sound and emits a short trail of wind particles.
+- Punching the air while descending or gliding with the Elytra triggers Wind
+  Launch again once its cooldown is ready. Hitting an entity does not trigger it.
+- The scripted impulse follows the complete camera vector, including its
+  vertical angle. Current momentum, movement, gliding state, and height tune
+  its strength without changing the chosen direction.
+- While the refined Elytra is equipped, Wind Launch takes priority over Boot
+  Dash and Bunny Jump, preventing both boot abilities from consuming the same
+  jump input.
 - Has a short cooldown between launches.
 
 **Spikes** (Shield):

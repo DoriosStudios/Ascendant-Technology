@@ -14,7 +14,9 @@
                 "tags": [
                     "minecraft:is_pickaxe",
                     "minecraft:is_tool",
-                    "minecraft:transformable_items"
+                    "minecraft:transformable_items",
+                    "minecraft:diamond_tier",
+                    "minecraft:netherite_tier"
                 ]
             },
             "minecraft:max_stack_size": 1,

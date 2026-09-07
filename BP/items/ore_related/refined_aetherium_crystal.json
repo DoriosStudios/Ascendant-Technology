@@ -2,13 +2,13 @@
     "format_version": "1.20.80",
     "minecraft:item": {
         "description": {
-            "identifier": "utilitycraft:refined_aetherium_shard",
+            "identifier": "utilitycraft:refined_aetherium_crystal",
             "menu_category": {
                 "category": "items"
             }
         },
         "components": {
-            "minecraft:icon": "utilitycraft_refined_aetherium_shard",
+            "minecraft:icon": "utilitycraft_refined_aetherium_crystal",
             "minecraft:allow_off_hand": false,
             "minecraft:glint": true
         }

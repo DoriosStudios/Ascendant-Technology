@@ -15,9 +15,6 @@
                 "protection": 7
             },
             "minecraft:fire_resistant": { },
-            "minecraft:knockback_resistance": {
-                "value": 1
-            },
             "minecraft:enchantable": {
                 "slot": "armor_feet",
                 "value": 30
@@ -29,6 +26,7 @@
             "utilitycraft:armor": {
                 "damage_reduction": 0.075,
                 "damage_negation": 0.025,
+                "knockback_resistance": 1,
                 "reduces": "all"
             },
             "minecraft:repairable": {

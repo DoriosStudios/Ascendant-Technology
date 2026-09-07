@@ -12,7 +12,7 @@ const recipesByInput = new Map();
 const recipesById = new Map();
 const outputIds = new Set();
 
-export const cryoCoolingRecipeDefinitions = {
+export const freezingRecipeDefinitions = {
     "utilitycraft:cool_cooked_beef": {
         input: { id: "minecraft:cooked_beef", amount: 1 },
         output: { id: "minecraft:beef", amount: 1 },
@@ -102,8 +102,8 @@ export const cryoCoolingRecipeDefinitions = {
     }
 };
 
-for (const [id, definition] of Object.entries(cryoCoolingRecipeDefinitions)) {
-    registerCryoCoolingRecipe(id, definition);
+for (const [id, definition] of Object.entries(freezingRecipeDefinitions)) {
+    registerFreezingRecipe(id, definition);
 }
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
@@ -118,23 +118,23 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (!payload || typeof payload !== "object" || Array.isArray(payload)) return;
 
     for (const [recipeId, definition] of Object.entries(payload)) {
-        registerCryoCoolingRecipe(recipeId, definition);
+        registerFreezingRecipe(recipeId, definition);
     }
 });
 
-export function getCryoCoolingRecipe(inputTypeId) {
+export function getFreezingRecipe(inputTypeId) {
     return recipesByInput.get(inputTypeId);
 }
 
-export function isCryoCoolingOutput(typeId) {
+export function isFreezingOutput(typeId) {
     return outputIds.has(typeId);
 }
 
-export function getCryoCoolingRecipeCount() {
+export function getFreezingRecipeCount() {
     return recipesById.size;
 }
 
-export function registerCryoCoolingRecipe(id, definition) {
+export function registerFreezingRecipe(id, definition) {
     const recipe = normalizeRecipe(id, definition);
     if (!recipe) return false;
 
@@ -199,3 +199,4 @@ function positiveInteger(value, fallback) {
     const parsed = Math.floor(Number(value));
     return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 }
+

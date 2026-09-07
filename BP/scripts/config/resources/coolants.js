@@ -8,10 +8,23 @@ export const coolantAdditions = {
     },
 };
 
+// Known coolant owned by Heavy Machinery. It is kept local so Ascendant
+// machines remain compatible even if the remote registration is dispatched
+// after their first processing tick.
+export const compatibleCoolants = {
+    saline_coolant: {
+        efficiency: 1.25,
+        tier: 1,
+    },
+};
+
 // Keep this map event-driven, matching UtilityCraft and Heavy Machinery.
 // UtilityCraft publishes Water, Heavy Machinery publishes Saline Coolant, and
 // this pack publishes Cryofluid; every loaded pack receives the same registry.
-export const coolants = {};
+export const coolants = {
+    ...coolantAdditions,
+    ...compatibleCoolants,
+};
 
 DoriosLib.registry.registerCoolant(coolantAdditions);
 

@@ -14,6 +14,7 @@ import "./enchantmentStation.js";
 import "./reinforcementAnvil.js";
 import "./energizer.js";
 import "./compactor.js";
+import "./decompactor.js";
 import "./vaporworksProcessor.js";
 import "./cryofluidSynthesizer.js";
 import "./cryoStabilizer.js";

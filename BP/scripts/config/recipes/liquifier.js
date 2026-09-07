@@ -27,10 +27,17 @@ export const liquifierRecipes = {
         cost: 3200,
         ticks: 200,
     },
+    "utilitycraft:aetherium_crystal_dust": {
+        required: 8,
+        liquid: "liquified_aetherium",
+        amount: 25,
+        cost: 3200,
+        ticks: 200,
+    },
     "utilitycraft:aetherium_dust": {
         required: 1,
         liquid: "liquified_aetherium",
-        amount: 50,
+        amount: 250,
         cost: 3200,
         ticks: 300,
     },

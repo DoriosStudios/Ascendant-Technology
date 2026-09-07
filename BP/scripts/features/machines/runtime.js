@@ -40,7 +40,13 @@ export function displayProgress(machine, cost, slot = 2, index = 0) {
 export function displayTemperature(machine, heat, maxHeat, slot = 2, nameTag = " ", lore = []) {
     if (!machine.shouldUpdateUI) return;
     const frame = Math.max(0, Math.min(31, Math.floor((heat / maxHeat) * 31)));
-    setUiItem(machine.container, slot, `utilitycraft:temperature_${String(frame).padStart(2, "0")}`, nameTag, lore);
+    setUiItem(
+        machine.container,
+        slot,
+        `utilitycraft:temperature_${String(frame).padStart(2, "0")}`,
+        nameTag,
+        lore,
+    );
 }
 
 /**
@@ -77,9 +83,9 @@ export function renderMachineInfo(machine, running, title, sections = [], option
         `§r§7Status: ${running ? "§a" : "§e"}${title}\n\n§r§eMachine Information`,
         `\n§r§aSpeed §fx${speed.toFixed(2)}\n§r§aEfficiency §fx${efficiency.toFixed(2)}\n§r§aRecipe Batch §fx${batch}\n§r§aCycle Cost §f${EnergyStorage.formatEnergyToText(cycleCost)}`,
         `\n§r§eEnergy Information\n\n§r§bCapacity §f${percent.toFixed(2)}%%\n§r§bStored §f${EnergyStorage.formatEnergyToText(stored)} / ${EnergyStorage.formatEnergyToText(capacity)}\n§r§bRate §f${EnergyStorage.formatEnergyToText(drawRate)}/t`,
-        ...normalizedSections.map(({ title: sectionTitle, lines }) => (
-            `\n§r§e${sectionTitle}\n\n${lines.join("\n")}`
-        )),
+        ...normalizedSections.map(
+            ({ title: sectionTitle, lines }) => `\n§r§e${sectionTitle}\n\n${lines.join("\n")}`,
+        ),
     ]);
 }
 
@@ -124,7 +130,9 @@ export function ensureMachineInventoryLayout(
     }
 
     if (!isInventoryPermutation(previousSlots, targetSize)) return false;
-    const migrated = previousSlots.map((sourceSlot) => machine.container.getItem(sourceSlot)?.clone());
+    const migrated = previousSlots.map((sourceSlot) =>
+        machine.container.getItem(sourceSlot)?.clone(),
+    );
     for (let slot = 0; slot < targetSize; slot++) machine.container.setItem(slot, undefined);
     for (let slot = 0; slot < migrated.length; slot++) {
         if (migrated[slot]) machine.container.setItem(slot, migrated[slot]);
@@ -136,10 +144,10 @@ export function ensureMachineInventoryLayout(
 
 function resolveEnergyCost(machine, explicitCost) {
     const cost = Number(
-        explicitCost
-        ?? machine.entity.getDynamicProperty("dorios:energy_cost_0")
-        ?? machine.settings?.machine?.energy_cost
-        ?? machine.getEnergyCost?.(),
+        explicitCost ??
+            machine.entity.getDynamicProperty("dorios:energy_cost_0") ??
+            machine.settings?.machine?.energy_cost ??
+            machine.getEnergyCost?.(),
     );
     return Number.isFinite(cost) && cost > 0 ? cost : 0;
 }
@@ -162,8 +170,10 @@ function normalizeSections(sections, fallbackTitle = "Machine State") {
 function isInventoryPermutation(sourceSlots, size) {
     if (!Array.isArray(sourceSlots) || sourceSlots.length !== size) return false;
     const normalized = sourceSlots.map(Number);
-    return normalized.every((slot) => Number.isInteger(slot) && slot >= 0 && slot < size)
-        && new Set(normalized).size === size;
+    return (
+        normalized.every((slot) => Number.isInteger(slot) && slot >= 0 && slot < size) &&
+        new Set(normalized).size === size
+    );
 }
 
 export function halveStack(container, slot) {

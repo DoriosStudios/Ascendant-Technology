@@ -16,6 +16,7 @@ import { singularityFabricatorRecipeDefinitions } from "./singularityFabricator.
 export const duplicatorExclusions = new Map([
     ["utilitycraft:duplicator", "Cannot Duplicate Itself"],
     ["utilitycraft:singularity_fabricator", "Cannot Duplicate \nSingularity Machinery"],
+    ["utilitycraft:aetherium_crystal_block", "Cannot Duplicate \nMineral Blocks"],
     ["utilitycraft:lucky_sword", "Cannot Duplicate \nLucky Tools"],
     ["utilitycraft:lucky_pickaxe", "Cannot Duplicate \nLucky Tools"],
     ["utilitycraft:lucky_aiot", "Cannot Duplicate \nLucky Tools"],
@@ -35,10 +36,7 @@ for (const recipe of singularityFabricatorRecipeDefinitions) {
 
 registerDuplicatorExclusions(duplicatorExclusions);
 
-registerDuplicatorPatternExclusion(
-    /^minecraft:(?:[a-z_]+_)?banner$/,
-    "Cannot Duplicate Banners",
-);
+registerDuplicatorPatternExclusion(/^minecraft:(?:[a-z_]+_)?banner$/, "Cannot Duplicate Banners");
 registerDuplicatorPatternExclusion(
     /^minecraft:(?:splash_|lingering_)?potion$/,
     "Cannot Duplicate Potions",

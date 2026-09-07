@@ -33,7 +33,11 @@ export class Machine extends BasicMachine {
    */
   constructor(block, settings) {
     const baseRate = settings.machine.rate_speed_base ?? 0;
-    super(block, { rate: baseRate, ignoreTick: settings.ignoreTick });
+    super(block, {
+      rate: baseRate,
+      ignoreTick: settings.ignoreTick,
+      processingInterval: settings.processingInterval,
+    });
     if (!this.valid) return;
 
     this.settings = settings;

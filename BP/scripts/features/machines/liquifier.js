@@ -7,6 +7,7 @@ import { advanceProcess } from "../../ATCore/processing/index.js";
 import { liquifierRecipes } from "../../config/recipes/liquifier.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     renderStatus,
     setDynamicNumber,
     setDynamicString,
@@ -14,9 +15,26 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:liquifier";
+const INVENTORY_SIZE = 22;
+const SLOT_LAYOUTS = {
+    21: [
+        0, 1, 2, 3, 4, 5, 6, -1,
+        7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    ],
+    20: [
+        0, 1, 2, 3, 6, 7, -1, -1, 5, 4,
+        8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    ],
+};
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 21,
+    7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+];
+const LAYOUT_KEY = "ascendant:liquifier_layout";
+const LAYOUT_VERSION = "contiguous_upgrades_v1";
 const INPUT_SLOT = 3;
-const LIQUID_DISPLAY_SLOT = 4;
-const BYPRODUCT_SLOT = 5;
+const BYPRODUCT_SLOT = 8;
+const LIQUID_DISPLAY_SLOT = 9;
 const RECIPE_KEY = "ascendant:liquifier_recipe";
 const DEFAULT_STACK_SIZE = 64;
 const FLUID_IO_RATE = 128000;
@@ -24,7 +42,7 @@ const FLUID_IO_RATE = 128000;
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [8, 9, 10, 11, 12, 13],
+        buttonSlots: [10, 11, 12, 13, 14, 15],
         anyInputSlots: [INPUT_SLOT],
         anyOutputSlots: [BYPRODUCT_SLOT],
         modes: [
@@ -34,7 +52,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [14, 15, 16, 17, 18, 19],
+        buttonSlots: [16, 17, 18, 19, 20, 21],
         anyInputIndices: [],
         anyOutputIndices: [0],
         modes: [
@@ -54,6 +72,7 @@ DoriosLib.registry.blockComponent(ID, {
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
 
             const tank = new FluidStorage(machine.entity, 0);
             tank.display(LIQUID_DISPLAY_SLOT);
@@ -63,6 +82,10 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
 

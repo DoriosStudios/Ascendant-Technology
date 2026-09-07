@@ -6,10 +6,30 @@ import {
     touchesOverclockNetwork,
 } from "./network.js";
 
-const UNIVERSAL_PIPE_FACE_UPDATE_EVENT = "utilitycraft:universal_pipe_face_update";
+const PIPE_FACE_UPDATE_EVENT = "utilitycraft:pipe_face_update";
+const PIPE_RESOURCE_REGISTER_EVENT = "utilitycraft:register_pipe_resource";
+const PIPE_RESOURCE_REGISTRY_READY_EVENT = "utilitycraft:pipe_resource_registry_ready";
+const OVERCLOCK_PIPE_RESOURCE = Object.freeze({
+    id: "overclock",
+    tag: "dorios:overclock_network",
+    translationKey: "ui.utilitycraft:universal_pipe.channel_overclock",
+});
+
+function registerOverclockPipeResource() {
+    try {
+        system.sendScriptEvent(
+            PIPE_RESOURCE_REGISTER_EVENT,
+            JSON.stringify(OVERCLOCK_PIPE_RESOURCE),
+        );
+    } catch {}
+}
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
-    if (id !== UNIVERSAL_PIPE_FACE_UPDATE_EVENT) return;
+    if (id === PIPE_RESOURCE_REGISTRY_READY_EVENT) {
+        registerOverclockPipeResource();
+        return;
+    }
+    if (id !== PIPE_FACE_UPDATE_EVENT) return;
 
     try {
         const update = JSON.parse(message);
@@ -24,6 +44,10 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
 }, {
     namespaces: ["utilitycraft"],
 });
+
+// Register on the next tick as the normal path; the ready-event response above
+// makes the handshake independent of behavior-pack evaluation order.
+system.run(registerOverclockPipeResource);
 
 world.afterEvents.playerPlaceBlock.subscribe(({ block }) => {
     const dimension = block.dimension;

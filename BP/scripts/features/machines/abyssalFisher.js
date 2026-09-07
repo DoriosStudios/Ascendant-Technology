@@ -16,6 +16,7 @@ import { advanceProcess } from "../../ATCore/processing/index.js";
 import { abyssalFisherConfig } from "../../config/recipes/abyssalFisher.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     renderMachineInfo,
     setDynamicNumber,
     setDynamicString,
@@ -23,18 +24,32 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:abyssal_fisher";
-const INVENTORY_SIZE = 38;
-const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 6, 7, 8,
-    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
-    29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+const INVENTORY_SIZE = 39;
+const SLOT_LAYOUTS = {
+    38: [
+        0, 1, 2, 6, 7, 3, -1, 4, 5,
+        8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+        26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+    ],
+    41: [
+        0, 1, 2, 7, 8, 3, -1, 4, 6,
+        11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+        29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    ],
+};
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 6, 7, 3, 38, 4, 5,
+    8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+    26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
 ];
+const LAYOUT_KEY = "ascendant:abyssal_fisher_layout";
+const LAYOUT_VERSION = "contiguous_upgrades_v1";
 
-const NET_SLOT = 4;
-const WATER_DISPLAY_SLOT = 5;
-const OUTPUT_SLOTS = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
-const ITEM_IO_BUTTON_SLOTS = [26, 27, 28, 29, 30, 31];
-const FLUID_IO_BUTTON_SLOTS = [32, 33, 34, 35, 36, 37];
+const NET_SLOT = 7;
+const WATER_DISPLAY_SLOT = 8;
+const OUTPUT_SLOTS = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
+const ITEM_IO_BUTTON_SLOTS = [27, 28, 29, 30, 31, 32];
+const FLUID_IO_BUTTON_SLOTS = [33, 34, 35, 36, 37, 38];
 
 const OPERATION_KEY = "ascendant:abyssal_fisher_operation";
 const WATER_TYPE = "water";
@@ -102,6 +117,7 @@ DoriosLib.registry.blockComponent(ID, {
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setUiItem(machine.container, WATER_DISPLAY_SLOT, "utilitycraft:empty_fluid_bar");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
             setDynamicString(machine.entity, OPERATION_KEY, "");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
 
@@ -114,7 +130,10 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         const water = new FluidStorage(machine.entity, 0);
         if (water.getType() === "empty") water.setType(WATER_TYPE);

@@ -180,10 +180,10 @@ async function scanComponent(startPosition, dimension) {
             if (entity) relaysById.set(entity.id, entity);
         }
 
-        const isUniversalEndpoint = block.hasTag?.("dorios:universal_pipe")
-            && (block.hasTag?.("dorios:isExporter") || block.hasTag?.("dorios:isImporter"));
-        const isImporter = isUniversalEndpoint && block.hasTag?.("dorios:isImporter");
-        const attachment = isUniversalEndpoint ? getEndpointAttachmentPosition(block) : undefined;
+        const isMultiEndpoint = block.hasTag?.("dorios:multi_exporter")
+            || block.hasTag?.("dorios:multi_importer");
+        const isImporter = block.hasTag?.("dorios:multi_importer") === true;
+        const attachment = isMultiEndpoint ? getEndpointAttachmentPosition(block) : undefined;
 
         for (const offset of NETWORK_OFFSETS) {
             const adjacent = offsetPosition(position, offset);
@@ -196,7 +196,7 @@ async function scanComponent(startPosition, dimension) {
                 continue;
             }
             if (!adjacentBlock) continue;
-            if (isUniversalEndpoint && (!isImporter || !isAttachment)) continue;
+            if (isMultiEndpoint && (!isImporter || !isAttachment)) continue;
 
             const targetKey = localPositionKey(adjacent);
             if (checkedTargetKeys.has(targetKey)) continue;

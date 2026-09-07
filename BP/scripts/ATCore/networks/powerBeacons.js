@@ -15,7 +15,7 @@ const POWER_BEACON_RANGES = new Map([
     ["utilitycraft:absolute_power_beacon", 48],
 ]);
 
-/** @typedef {{entity: import("@minecraft/server").Entity, range: number, location: {x:number,y:number,z:number}, targets: Map<string, EnergyStorage>, targetIds: string[], orderDirty: boolean, activeTargets: Array<{energy:EnergyStorage,space:number}>, nextRebuildTick: number}} PowerBeaconRecord */
+/** @typedef {{entity: import("@minecraft/server").Entity, range: number, location: {x:number,y:number,z:number}, targets: Map<string, EnergyStorage>, targetIds: string[], orderDirty: boolean, nextTargetIndex: number, activeTargets: Array<{energy:EnergyStorage,space:number}>, nextRebuildTick: number}} PowerBeaconRecord */
 
 /** @type {Map<string, PowerBeaconRecord>} */
 const beacons = new Map();
@@ -45,7 +45,7 @@ function distanceSquared(first, second) {
 function staggerOffset(entityId) {
     let hash = 0;
     for (let index = 0; index < entityId.length; index++) {
-        hash = ((hash * 31) + entityId.charCodeAt(index)) >>> 0;
+        hash = (hash * 31 + entityId.charCodeAt(index)) >>> 0;
     }
     return 1 + (hash % REBUILD_INTERVAL_TICKS);
 }
@@ -72,30 +72,42 @@ function isPowerBeaconTarget(entity) {
     if (!entity?.isValid || entity.typeId === POWER_BEACON_ENTITY_ID) return false;
 
     const families = entity.getComponent("minecraft:type_family");
-    return families?.hasTypeFamily("dorios:machine") === true
-        && families.hasTypeFamily("dorios:energy_container")
-        && !families.hasTypeFamily("dorios:energy_source")
-        && !families.hasTypeFamily("dorios:battery");
+    return (
+        families?.hasTypeFamily("dorios:machine") === true &&
+        families.hasTypeFamily("dorios:energy_container") &&
+        !families.hasTypeFamily("dorios:energy_source") &&
+        !families.hasTypeFamily("dorios:battery")
+    );
 }
 
 function isInsideBeacon(record, entity) {
-    if (!record.entity?.isValid || !entity?.isValid || entity.dimension.id !== record.entity.dimension.id) return false;
-    return distanceSquared(record.location, integerLocation(entity.location)) <= record.range * record.range;
+    if (
+        !record.entity?.isValid ||
+        !entity?.isValid ||
+        entity.dimension.id !== record.entity.dimension.id
+    )
+        return false;
+    return (
+        distanceSquared(record.location, integerLocation(entity.location)) <=
+        record.range * record.range
+    );
 }
 
 function shouldClassifyEntity(entity) {
     if (!entity?.isValid) return false;
     if (
-        entity.typeId === "utilitycraft:machine_entity"
-        || entity.typeId === "utilitycraft:machine"
-        || entity.typeId === POWER_BEACON_ENTITY_ID
+        entity.typeId === "utilitycraft:machine_entity" ||
+        entity.typeId === "utilitycraft:machine" ||
+        entity.typeId === POWER_BEACON_ENTITY_ID
     ) {
         return true;
     }
 
     const families = entity.getComponent("minecraft:type_family");
-    return families?.hasTypeFamily("dorios:machine") === true
-        && families.hasTypeFamily("dorios:energy_container");
+    return (
+        families?.hasTypeFamily("dorios:machine") === true &&
+        families.hasTypeFamily("dorios:energy_container")
+    );
 }
 
 function unlinkTarget(record, targetId) {
@@ -203,7 +215,8 @@ function classifyEntity(entity) {
 }
 
 function scheduleClassification(entity) {
-    if (!entity?.id || !shouldClassifyEntity(entity) || pendingClassification.has(entity.id)) return;
+    if (!entity?.id || !shouldClassifyEntity(entity) || pendingClassification.has(entity.id))
+        return;
     pendingClassification.add(entity.id);
     system.run(() => {
         pendingClassification.delete(entity.id);
@@ -222,7 +235,10 @@ function scheduleClassification(entity) {
 export function ensurePowerBeacon(entity, range) {
     if (!entity?.isValid) return undefined;
 
-    const normalizedRange = Math.max(1, Math.min(MAX_POWER_BEACON_RANGE, Math.floor(Number(range) || 1)));
+    const normalizedRange = Math.max(
+        1,
+        Math.min(MAX_POWER_BEACON_RANGE, Math.floor(Number(range) || 1)),
+    );
     const location = integerLocation(entity.location);
     let record = beacons.get(entity.id);
     if (!record) {
@@ -233,6 +249,7 @@ export function ensurePowerBeacon(entity, range) {
             targets: new Map(),
             targetIds: [],
             orderDirty: false,
+            nextTargetIndex: 0,
             activeTargets: [],
             nextRebuildTick: system.currentTick + staggerOffset(entity.id),
         };
@@ -289,7 +306,9 @@ export function unregisterPowerBeacon(beaconId) {
  */
 export function transferPowerBeaconEnergy(record, source, limit) {
     let available = source.get();
-    let remainingLimit = Math.min(available, Math.max(0, Math.floor(limit)));
+    let remainingLimit = Number.isFinite(limit)
+        ? Math.min(available, Math.max(0, Math.floor(limit)))
+        : 0;
     if (available <= 0 || remainingLimit <= 0) return { transferred: 0, targetCount: 0 };
 
     const activeTargets = record.activeTargets;
@@ -301,8 +320,9 @@ export function transferPowerBeaconEnergy(record, source, limit) {
             if (!first?.isValid && !second?.isValid) return firstId.localeCompare(secondId);
             if (!first?.isValid) return 1;
             if (!second?.isValid) return -1;
-            const difference = distanceSquared(record.location, integerLocation(first.location))
-                - distanceSquared(record.location, integerLocation(second.location));
+            const difference =
+                distanceSquared(record.location, integerLocation(first.location)) -
+                distanceSquared(record.location, integerLocation(second.location));
             return difference || firstId.localeCompare(secondId);
         });
         record.orderDirty = false;
@@ -325,15 +345,34 @@ export function transferPowerBeaconEnergy(record, source, limit) {
         activeTargets[activeCount++] = active;
     }
     activeTargets.length = activeCount;
+    // Rotate the receivers of integer remainders, including when the budget
+    // is smaller than the number of machines that need power.
+    const startIndex = record.nextTargetIndex % Math.max(1, activeCount);
+    record.nextTargetIndex = (startIndex + 1) % Math.max(1, activeCount);
+
+    // Find the equal share after accounting for receivers that fill early.
+    // Allocate the remainder in rotated order, never in capacity order.
+    let budgetForShare = remainingLimit;
+    let remainingTargets = activeCount;
+    let fairShare = 0;
+    for (const space of activeTargets.map((target) => target.space).sort((a, b) => a - b)) {
+        fairShare = Math.floor(budgetForShare / remainingTargets);
+        if (space > fairShare) break;
+        budgetForShare -= space;
+        remainingTargets--;
+    }
+    let remainder = remainingLimit;
+    for (const target of activeTargets) remainder -= Math.min(target.space, fairShare);
 
     let transferred = 0;
+    let targetCount = 0;
     for (let index = 0; index < activeCount; index++) {
         if (available <= 0 || remainingLimit <= 0) break;
 
-        const target = activeTargets[index];
-        const remainingTargets = activeCount - index;
-        const fairShare = Math.max(1, Math.ceil(remainingLimit / remainingTargets));
-        const amount = Math.min(target.space, available, remainingLimit, fairShare);
+        const target = activeTargets[(startIndex + index) % activeCount];
+        const extra = remainder > 0 && target.space > fairShare ? 1 : 0;
+        remainder -= extra;
+        const amount = Math.min(target.space, available, remainingLimit, fairShare + extra);
         if (amount <= 0) continue;
 
         const sent = source.transferTo(target.energy, amount);
@@ -341,9 +380,10 @@ export function transferPowerBeaconEnergy(record, source, limit) {
         available -= sent;
         remainingLimit -= sent;
         transferred += sent;
+        targetCount++;
     }
 
-    return { transferred, targetCount: activeCount };
+    return { transferred, targetCount };
 }
 
 function removeEntityFromCaches(entityId) {
@@ -361,4 +401,6 @@ function removeEntityFromCaches(entityId) {
 
 world.afterEvents.entitySpawn.subscribe(({ entity }) => scheduleClassification(entity));
 world.afterEvents.entityLoad.subscribe(({ entity }) => scheduleClassification(entity));
-world.afterEvents.entityRemove.subscribe(({ removedEntityId }) => removeEntityFromCaches(removedEntityId));
+world.afterEvents.entityRemove.subscribe(({ removedEntityId }) =>
+    removeEntityFromCaches(removedEntityId),
+);

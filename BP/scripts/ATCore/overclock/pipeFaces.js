@@ -3,7 +3,9 @@
 import { world } from "@minecraft/server";
 
 const PIPE_FACE_PROPERTY_PREFIX = "utilitycraft:pf";
-const UNIVERSAL_PIPE_TAG = "dorios:universal_pipe";
+const MULTI_TUBE_TAG = "dorios:multi_tube";
+const MULTI_EXPORTER_TAG = "dorios:multi_exporter";
+const MULTI_IMPORTER_TAG = "dorios:multi_importer";
 
 const OPPOSITE_DIRECTIONS = Object.freeze({
     north: "south",
@@ -71,7 +73,7 @@ function isOverclockFaceDisabled(block, direction, cache) {
     if (!document) return false;
 
     if (Array.isArray(document.disabled) && document.disabled.includes(direction)) return true;
-    if (block.hasTag(UNIVERSAL_PIPE_TAG)) {
+    if (block.hasTag(MULTI_TUBE_TAG)) {
         const resources = document.resources?.[direction];
         return Array.isArray(resources) && resources.includes("overclock");
     }
@@ -79,7 +81,10 @@ function isOverclockFaceDisabled(block, direction, cache) {
 }
 
 function getConnectionStateDirection(block, physicalDirection) {
-    if (!block.hasTag("dorios:isExporter") && !block.hasTag("dorios:isImporter")) {
+    if (!block.hasTag("dorios:isExporter")
+        && !block.hasTag("dorios:isImporter")
+        && !block.hasTag(MULTI_EXPORTER_TAG)
+        && !block.hasTag(MULTI_IMPORTER_TAG)) {
         return physicalDirection;
     }
     let facing;
@@ -94,9 +99,11 @@ function getConnectionStateDirection(block, physicalDirection) {
 function isPipeConnectionOpen(block, direction, cache) {
     if (!block?.hasTag?.("dorios:isTube")) return true;
     if (isOverclockFaceDisabled(block, direction, cache)) return false;
-    // Universal topology is capability-driven. Its six visual states are a
+    // Multi-resource topology is capability-driven. Its six visual states are a
     // derived union of all channels and may lag one tick behind placement.
-    if (block.hasTag(UNIVERSAL_PIPE_TAG)) return true;
+    if (block.hasTag(MULTI_TUBE_TAG)
+        || block.hasTag(MULTI_EXPORTER_TAG)
+        || block.hasTag(MULTI_IMPORTER_TAG)) return true;
     try {
         const stateDirection = getConnectionStateDirection(block, direction);
         return block.permutation.getState(`utilitycraft:${stateDirection}`) === true;
@@ -106,7 +113,7 @@ function isPipeConnectionOpen(block, direction, cache) {
 }
 
 /**
- * Applies the physical state union and the Universal Cable's dedicated
+ * Applies the physical state union and Ascendant Technology's dedicated
  * overclock toggle before the overclock graph crosses a pipe edge.
  */
 export function isOverclockNetworkConnectionOpen(block, offset, neighbor, cache) {

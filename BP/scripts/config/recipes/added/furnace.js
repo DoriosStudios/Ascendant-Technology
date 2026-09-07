@@ -2,6 +2,9 @@ import * as DoriosLib from "DoriosLib/index.js";
 
 /** @type {Record<string, { output: string }>} */
 export const furnaceRecipeAdditions = {
+    "utilitycraft:aetherium_dust": {
+        output: "utilitycraft:aetherium",
+    },
     "utilitycraft:raw_tungsten": {
         output: "utilitycraft:tungsten",
     },

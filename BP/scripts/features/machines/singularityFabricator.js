@@ -7,6 +7,7 @@ import { getSingularityRecipe } from "../../ATCore/cloning/index.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     renderStatus,
     setDynamicNumber,
     setDynamicString,
@@ -14,15 +15,31 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:singularity_fabricator";
-const INVENTORY_SIZE = 21;
-const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 11, 18, 19,
-    20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+const INVENTORY_SIZE = 23;
+const SLOT_LAYOUTS = {
+    22: [
+        0, 1, 2, 3, 4, 5, 6, -1,
+        7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    ],
+    21: [
+        0, 1, 2, 3, 4, 5, -1, -1, 6, 7, 8,
+        9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    ],
+    32: [
+        0, 1, 2, 3, 4, 5, -1, -1, 11, 18, 19,
+        20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+    ],
+};
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 22,
+    7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
 ];
+const LAYOUT_KEY = "ascendant:singularity_fabricator_layout";
+const LAYOUT_VERSION = "contiguous_upgrades_v1";
 const INPUT_SLOT = 3;
-const FLUID_DISPLAY_SLOT = 6;
-const ORIGINAL_OUTPUT_SLOT = 7;
-const COPY_OUTPUT_SLOT = 8;
+const FLUID_DISPLAY_SLOT = 8;
+const ORIGINAL_OUTPUT_SLOT = 9;
+const COPY_OUTPUT_SLOT = 10;
 const DARK_MATTER = "dark_matter";
 const RECIPE_KEY = "ascendant:singularity_fabricator_recipe";
 const MACHINE_UPDATES_PER_SECOND = 5;
@@ -32,7 +49,7 @@ const itemMaximums = new Map();
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [9, 10, 11, 12, 13, 14],
+        buttonSlots: [11, 12, 13, 14, 15, 16],
         anyInputSlots: [INPUT_SLOT],
         anyOutputSlots: [ORIGINAL_OUTPUT_SLOT, COPY_OUTPUT_SLOT],
         modes: [
@@ -44,7 +61,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [15, 16, 17, 18, 19, 20],
+        buttonSlots: [17, 18, 19, 20, 21, 22],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -64,6 +81,7 @@ DoriosLib.registry.blockComponent(ID, {
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
 
             const tank = new FluidStorage(machine.entity, 0);
             tank.setType(DARK_MATTER);
@@ -74,7 +92,10 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
         const tank = new FluidStorage(machine.entity, 0);

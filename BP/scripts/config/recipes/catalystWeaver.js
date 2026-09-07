@@ -13,6 +13,20 @@ const recipesByInput = new Map();
 const recipesById = new Map();
 
 export const catalystWeaverRecipeDefinitions = {
+    "utilitycraft:aetherium_ingot_from_crystal_dust": {
+        input: { id: "minecraft:gold_ingot", amount: 1 },
+        catalysts: [
+            { id: "utilitycraft:steel_ingot", amount: 1 },
+            { id: "utilitycraft:energized_iron_ingot", amount: 1 },
+            { id: "utilitycraft:ender_pearl_dust", amount: 4 },
+            { id: "utilitycraft:aetherium_crystal_dust", amount: 8 },
+        ],
+        fluid: { type: "lava", amount: 8000 },
+        output: { id: "utilitycraft:aetherium", amount: 1 },
+        byproduct: { id: "utilitycraft:stabilized_obsidian_dust", amount: [0, 2], chance: 0.05 },
+        cost: 12000,
+        speed: 0.5,
+    },
     "utilitycraft:aetherium_ingot": {
         input: { id: "minecraft:gold_ingot", amount: 1 },
         catalysts: [
@@ -42,11 +56,111 @@ export const catalystWeaverRecipeDefinitions = {
         cost: 12800,
         speed: 0.25,
     },
-    "utilitycraft:refined_aetherium_shard": {
+    "utilitycraft:base_upgrade": {
+        input: { id: "utilitycraft:steel_plate", amount: 1 },
+        catalysts: [
+            { id: "minecraft:redstone_block", amount: 1 },
+            { id: "utilitycraft:gold_dust", amount: 1 },
+            { id: "utilitycraft:energized_iron_dust", amount: 1 },
+        ],
+        output: { id: "utilitycraft:base_upgrade", amount: 1 },
+        cost: 800,
+    },
+    "utilitycraft:stack_upgrade": {
+        input: { id: "utilitycraft:base_upgrade", amount: 1 },
+        catalysts: [
+            { id: "utilitycraft:steel_plate", amount: 4 },
+            { id: "minecraft:orange_dye", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 2 },
+            { id: "utilitycraft:aetherium_block", amount: 1 },
+        ],
+        output: { id: "utilitycraft:stack_upgrade", amount: 1 },
+        cost: 6400,
+        speed: 0.5,
+    },
+    "utilitycraft:size_upgrade": {
+        input: { id: "utilitycraft:base_upgrade", amount: 1 },
+        catalysts: [
+            { id: "utilitycraft:basic_chip", amount: 4 },
+            { id: "utilitycraft:gold_dust", amount: 3 },
+            { id: "minecraft:ender_pearl", amount: 1 },
+        ],
+        output: { id: "utilitycraft:size_upgrade", amount: 1 },
+        cost: 3200,
+    },
+    "utilitycraft:energy_upgrade": {
+        input: { id: "utilitycraft:base_upgrade", amount: 1 },
+        catalysts: [
+            { id: "utilitycraft:diamond_dust", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+        ],
+        output: { id: "utilitycraft:energy_upgrade", amount: 1 },
+        cost: 1600,
+    },
+    "utilitycraft:speed_upgrade": {
+        input: { id: "utilitycraft:base_upgrade", amount: 1 },
+        catalysts: [
+            { id: "utilitycraft:emerald_dust", amount: 1 },
+            { id: "minecraft:emerald_block", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+        ],
+        output: { id: "utilitycraft:speed_upgrade", amount: 1 },
+        cost: 1600,
+    },
+    "utilitycraft:range_upgrade": {
+        input: { id: "utilitycraft:base_upgrade", amount: 1 },
+        catalysts: [
+            { id: "minecraft:blue_dye", amount: 1 },
+            { id: "minecraft:gold_ingot", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+        ],
+        output: { id: "utilitycraft:range_upgrade", amount: 1 },
+        cost: 1600,
+    },
+    "utilitycraft:dimensional_range_upgrade": {
+        input: { id: "utilitycraft:range_upgrade", amount: 8 },
+        catalysts: [
+            { id: "minecraft:nether_star", amount: 1 },
+        ],
+        output: { id: "utilitycraft:dimensional_range_upgrade", amount: 1 },
+        cost: 12800,
+        speed: 0.25,
+    },
+    "utilitycraft:damage_upgrade": {
+        input: { id: "utilitycraft:base_upgrade", amount: 1 },
+        catalysts: [
+            { id: "minecraft:iron_sword", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+        ],
+        output: { id: "utilitycraft:damage_upgrade", amount: 1 },
+        cost: 1600,
+    },
+    "utilitycraft:quantity_upgrade": {
+        input: { id: "utilitycraft:base_upgrade", amount: 1 },
+        catalysts: [
+            { id: "minecraft:cyan_dye", amount: 1 },
+            { id: "utilitycraft:spawner_core", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+        ],
+        output: { id: "utilitycraft:quantity_upgrade", amount: 1 },
+        cost: 1600,
+    },
+    "utilitycraft:filter_upgrade": {
+        input: { id: "utilitycraft:base_upgrade", amount: 1 },
+        catalysts: [
+            { id: "minecraft:comparator", amount: 1 },
+            { id: "minecraft:hopper", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+        ],
+        output: { id: "utilitycraft:filter_upgrade", amount: 1 },
+        cost: 1600,
+    },
+    "utilitycraft:refined_aetherium_crystal": {
         input: { id: "utilitycraft:aetherium_shard", amount: 1 },
         catalysts: [{ id: "minecraft:amethyst_shard", amount: 1 }],
         fluid: { type: "dark_matter", amount: 800 },
-        output: { id: "utilitycraft:refined_aetherium_shard", amount: 1 },
+        output: { id: "utilitycraft:refined_aetherium_crystal", amount: 1 },
         speed: 1,
     },
     "at:easter_egg": {

@@ -46,6 +46,7 @@ export class BasicMachine {
    * @param {Object} options Constructor options.
    * @param {number} [options.rate=16] Base rate designed for 20 TPS logic.
    * @param {boolean} [options.ignoreTick=false] Whether to bypass scheduler throttling.
+   * @param {number} [options.processingInterval] Explicit processing interval for machines that bypass the scheduler.
    */
   constructor(block, options) {
     this.valid = false;
@@ -61,7 +62,10 @@ export class BasicMachine {
     this.container = inventory.container;
     ensureBlockIOInterface(block);
     this.baseRate = options.rate;
-    this.processingInterval = TickScheduler.getProcessingInterval(this.entity);
+    const explicitInterval = Math.floor(Number(options.processingInterval));
+    this.processingInterval = Number.isFinite(explicitInterval) && explicitInterval > 0
+      ? explicitInterval
+      : TickScheduler.getProcessingInterval(this.entity);
     this.rate = options.rate * this.processingInterval;
     this.itemIOReady = ensureItemIOConfig(this.entity, block.typeId);
     this.fluidIOReady = ensureFluidIOConfig(this.entity, block.typeId);
@@ -482,17 +486,21 @@ export class BasicMachine {
    * script tick, so callers must stop processing when this returns `false`.
    *
    * @param {number} targetSize Final inventory size.
-   * @param {number[]} sourceSlots Legacy source slot for every target slot.
+   * @param {number[]|Record<number, number[]>} sourceSlots Legacy source slot for every target slot, optionally keyed by current inventory size.
    * @returns {boolean} Whether the inventory already uses the target layout.
    */
   ensureInventoryLayout(targetSize, sourceSlots) {
     const normalizedSize = Math.max(1, Math.floor(Number(targetSize) || 1));
     if (this.container.size === normalizedSize) return true;
 
+    const layout = Array.isArray(sourceSlots)
+      ? sourceSlots
+      : sourceSlots?.[this.container.size];
+
     const contents = new Array(normalizedSize);
     const retainedSources = new Set();
     for (let targetSlot = 0; targetSlot < normalizedSize; targetSlot++) {
-      const sourceSlot = Math.floor(Number(sourceSlots?.[targetSlot]));
+      const sourceSlot = Math.floor(Number(layout?.[targetSlot]));
       if (!Number.isInteger(sourceSlot) || sourceSlot < 0 || sourceSlot >= this.container.size) continue;
       retainedSources.add(sourceSlot);
       contents[targetSlot] = this.container.getItem(sourceSlot)?.clone();

@@ -2,6 +2,10 @@ import * as DoriosLib from "DoriosLib/index.js";
 
 /** @type {Record<string, { output: string, required: number }>} */
 export const pressRecipeAdditions = {
+    "utilitycraft:aetherium_shard": {
+        output: "utilitycraft:aetherium_crystal_block",
+        required: 9,
+    },
     "utilitycraft:tungsten": {
         output: "utilitycraft:tungsten_plate"
     },

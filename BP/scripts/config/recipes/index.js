@@ -1,4 +1,5 @@
 export * from "./added/index.js";
+export { crafterRecipeAdditions } from "./crafter.js";
 export {
     catalystWeaverRecipeDefinitions,
     createCatalystSignature,
@@ -24,23 +25,27 @@ export {
     vaporworksRecipeDefinitions,
 } from "./vaporworksProcessor.js";
 export {
-    cryoStabilizerRecipeDefinitions,
-    getCryoStabilizerRecipe,
-    getCryoStabilizerRecipeCount,
-    registerCryoStabilizerRecipe,
-} from "./cryoStabilizer.js";
+    stabilizerRecipeDefinitions,
+    getStabilizerRecipe,
+    getStabilizerRecipeCount,
+    registerStabilizerRecipe,
+} from "./stabilizer.js";
 export {
-    cryoCoolingRecipeDefinitions,
-    getCryoCoolingRecipe,
-    getCryoCoolingRecipeCount,
-    isCryoCoolingOutput,
-    registerCryoCoolingRecipe,
-} from "./cryoCooling.js";
+    freezingRecipeDefinitions,
+    getFreezingRecipe,
+    getFreezingRecipeCount,
+    isFreezingOutput,
+    registerFreezingRecipe,
+} from "./freezing.js";
 export {
-    cryoChamberCatalystDefinitions,
-    cryoChamberGeneration,
-    getCryoChamberCatalyst,
-} from "./cryoChamber.js";
+    cryogenCatalystDefinitions,
+    cryogenGeneration,
+    cryogenLapisDefinitions,
+    cryogenSynthesisRecipe,
+    getCryogenCatalyst,
+    getCryogenLapisSource,
+    getCryogenSynthesisInputValue,
+} from "./cryogen.js";
 export { singularityFabricatorRecipeDefinitions } from "./singularityFabricator.js";
 export { duplicatorExclusions } from "./duplicator.js";
 export {
@@ -53,3 +58,4 @@ export {
     abyssalFisherLootDefinitions,
 } from "./abyssalFisher.js";
 export * from "./compactor.js";
+export * from "./decompactor.js";

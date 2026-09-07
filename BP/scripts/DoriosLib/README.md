@@ -35,6 +35,23 @@ DoriosLib.entity.setEquipment(player, {
 });
 ```
 
+Player-relative entities can be attached to one shared one-tick tracking
+manager. Starting the same entity again updates its target and options:
+
+```js
+DoriosLib.entity.startPlayerTracking(entity, player, {
+  anchor: "head",
+  viewOffset: 0.5,
+  velocityFactor: 5,
+});
+
+DoriosLib.entity.stopPlayerTracking(entity);
+```
+
+Stopping an attachment does not remove the entity. Invalid entities and
+players are discarded automatically, and the shared interval is released when
+no attachments remain.
+
 Items can be created independently:
 
 ```js
@@ -132,7 +149,7 @@ registrar
   .install();
 ```
 
-UtilityCraft runtime registrations can be sent without manually serializing a
+UtilityCraft runtime registrations can be queued without manually serializing a
 ScriptEvent payload:
 
 ```js
@@ -145,6 +162,29 @@ DoriosLib.registry.registerCrusherRecipe({
   },
 });
 ```
+
+Machine upgrades use the same queued cross-addon protocol. Every addon keeps
+its own compiled DoriosCore registry, and every DoriosCore receiver applies the
+same broadcast definition to its local registry:
+
+```js
+DoriosLib.registry.registerMachineUpgrade({
+  "example:super_upgrade": {
+    type: "super_upgrade",
+    levels: {
+      1: { speed: 0.25, energy_cost: 0.5 },
+      2: { speed: 0.75, energy_cost: 1, process_batch: 1 },
+    },
+  },
+});
+```
+
+The underlying event is `utilitycraft:register_machine_upgrade`. Queueing it
+through DoriosLib ensures every addon's receiver is installed before dispatch.
+
+Calls preserve their insertion order. DoriosLib waits for `worldLoad` and then
+dispatches exactly one queued registration ScriptEvent per tick. Registrations
+queued after the world has loaded join the same dispatcher.
 
 Coolants use their fluid type as the key. `efficiency` divides consumption, so
 an efficiency of `2` consumes half as much coolant. The Thermo Generator keeps
@@ -161,8 +201,22 @@ event: `registerAutoFisherDrop`, `registerBonsai` (legacy),
 `registerCoolant`, `registerCrafterRecipe`, `registerCrusherRecipe`,
 `registerFluidHolder`, `registerFluidItem`, `registerFuel`, `registerFurnaceRecipe`,
 `registerGasHolder`, `registerGasItem`, `registerInfuserRecipe`,
-`registerMelterRecipe`, `registerPlant`, `registerPressRecipe`,
+`registerMachineUpgrade`, `registerMelterRecipe`, `registerPlant`, `registerPressRecipe`,
 `registerSieveDrop`, and `registerSpecialContainerSlots`.
+
+Item Ducts compatibility uses the same world-load queue and its public runtime
+ScriptEvent protocol:
+
+```js
+DoriosLib.registry.registerItemDuctCompatibility({
+  typeId: "example:machine",
+  insertSlots: [0, 1],
+  extractSlots: [4],
+});
+
+DoriosLib.registry.registerItemDuctChest("example:storage");
+DoriosLib.registry.unregisterItemDuctCompatibility("example:old_machine");
+```
 
 Dependency discovery starts automatically when the main DoriosLib entry point
 is imported. It uses:
@@ -228,13 +282,18 @@ They belong to the interface registry that translates a visual choice such as
 `input_1` into the input/output slot arrays persisted for that face.
 
 Fallback lists are explicit security boundaries declared by the interface
-registration. A call without `face` uses `anyInputSlots` or `anyOutputSlots`;
-DoriosLib never derives them from the currently configured faces.
+registration. A call without `face`, or through a face in passive `default`
+mode, uses `anyInputSlots` or `anyOutputSlots`. A `disabled` face exposes no
+slots. DoriosLib never derives fallback lists from configured faces.
 
 ```js
-const automaticInputs = DoriosLib.container.getInputSlots(entity);
-const northInputs = DoriosLib.container.getInputSlots(entity, {
+const fallbackInputs = DoriosLib.container.getInputSlots(entity);
+const passiveNorthInputs = DoriosLib.container.getInputSlots(entity, {
   face: "north",
+});
+const activeNorthInputs = DoriosLib.container.getInputSlots(entity, {
+  face: "north",
+  automatic: true,
 });
 ```
 

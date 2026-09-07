@@ -21,6 +21,7 @@ export const COMPACTOR_CONFIG = Object.freeze({
         ticks: 80,
     }),
     chains: Object.freeze([
+        ["utilitycraft:aetherium_shard", "utilitycraft:aetherium_crystal_block"],
         ["minecraft:iron_nugget", "minecraft:iron_ingot", "minecraft:iron_block"],
         ["minecraft:gold_nugget", "minecraft:gold_ingot", "minecraft:gold_block"],
         ["minecraft:copper_ingot", "minecraft:copper_block"],
@@ -28,11 +29,48 @@ export const COMPACTOR_CONFIG = Object.freeze({
         ["minecraft:raw_iron", "minecraft:raw_iron_block"],
         ["minecraft:raw_gold", "minecraft:raw_gold_block"],
         ["minecraft:raw_copper", "minecraft:raw_copper_block"],
-        ["utilitycraft:titanium_nugget", "utilitycraft:titanium", "utilitycraft:titanium_block", "utilitycraft:compressed_titanium_block", "utilitycraft:compressed_titanium_block_2", "utilitycraft:compressed_titanium_block_3", "utilitycraft:compressed_titanium_block_4"],
-        ["utilitycraft:tungsten_nugget", "utilitycraft:tungsten", "utilitycraft:tungsten_block", "utilitycraft:compressed_tungsten_block", "utilitycraft:compressed_tungsten_block_2", "utilitycraft:compressed_tungsten_block_3", "utilitycraft:compressed_tungsten_block_4"],
-        ["utilitycraft:aetherium", "utilitycraft:aetherium_block", "utilitycraft:compressed_aetherium_block", "utilitycraft:compressed_aetherium_block_2", "utilitycraft:compressed_aetherium_block_3", "utilitycraft:compressed_aetherium_block_4"],
-        ["utilitycraft:raw_titanium", "utilitycraft:raw_titanium_block", "utilitycraft:compressed_raw_titanium_block", "utilitycraft:compressed_raw_titanium_block_2", "utilitycraft:compressed_raw_titanium_block_3", "utilitycraft:compressed_raw_titanium_block_4"],
-        ["utilitycraft:raw_tungsten", "utilitycraft:raw_tungsten_block", "utilitycraft:compressed_raw_tungsten_block", "utilitycraft:compressed_raw_tungsten_block_2", "utilitycraft:compressed_raw_tungsten_block_3", "utilitycraft:compressed_raw_tungsten_block_4"],
+        [
+            "utilitycraft:titanium_nugget",
+            "utilitycraft:titanium",
+            "utilitycraft:titanium_block",
+            "utilitycraft:compressed_titanium_block",
+            "utilitycraft:compressed_titanium_block_2",
+            "utilitycraft:compressed_titanium_block_3",
+            "utilitycraft:compressed_titanium_block_4",
+        ],
+        [
+            "utilitycraft:tungsten_nugget",
+            "utilitycraft:tungsten",
+            "utilitycraft:tungsten_block",
+            "utilitycraft:compressed_tungsten_block",
+            "utilitycraft:compressed_tungsten_block_2",
+            "utilitycraft:compressed_tungsten_block_3",
+            "utilitycraft:compressed_tungsten_block_4",
+        ],
+        [
+            "utilitycraft:aetherium",
+            "utilitycraft:aetherium_block",
+            "utilitycraft:compressed_aetherium_block",
+            "utilitycraft:compressed_aetherium_block_2",
+            "utilitycraft:compressed_aetherium_block_3",
+            "utilitycraft:compressed_aetherium_block_4",
+        ],
+        [
+            "utilitycraft:raw_titanium",
+            "utilitycraft:raw_titanium_block",
+            "utilitycraft:compressed_raw_titanium_block",
+            "utilitycraft:compressed_raw_titanium_block_2",
+            "utilitycraft:compressed_raw_titanium_block_3",
+            "utilitycraft:compressed_raw_titanium_block_4",
+        ],
+        [
+            "utilitycraft:raw_tungsten",
+            "utilitycraft:raw_tungsten_block",
+            "utilitycraft:compressed_raw_tungsten_block",
+            "utilitycraft:compressed_raw_tungsten_block_2",
+            "utilitycraft:compressed_raw_tungsten_block_3",
+            "utilitycraft:compressed_raw_tungsten_block_4",
+        ],
     ]),
     materialCompactions: Object.freeze([
         ["minecraft:coal", "minecraft:coal_block", 9],
@@ -101,7 +139,13 @@ const recipesByInput = new Map();
 for (const chain of COMPACTOR_CONFIG.chains) {
     const final = chain.at(-1);
     for (let stage = 0; stage < chain.length - 1; stage++) {
-        registerRecipe(chain[stage], chain[stage + 1], COMPACTOR_CONFIG.defaults.ratio, stage, final);
+        registerRecipe(
+            chain[stage],
+            chain[stage + 1],
+            COMPACTOR_CONFIG.defaults.ratio,
+            stage,
+            final,
+        );
     }
 }
 
@@ -121,7 +165,13 @@ const compressedLevelCache = new Map();
 const compressedFinalCache = new Map();
 
 for (const [input, output] of UTILITYCRAFT_COMPRESSED_BLOCK_RECIPES) {
-    registerRecipe(input, output, COMPACTOR_CONFIG.defaults.ratio, getCompressedBlockLevel(input), getCompressedBlockFinal(output));
+    registerRecipe(
+        input,
+        output,
+        COMPACTOR_CONFIG.defaults.ratio,
+        getCompressedBlockLevel(input),
+        getCompressedBlockFinal(output),
+    );
 }
 
 for (const [input, output, required, amount] of UTILITYCRAFT_COMPRESSED_ITEM_RECIPES) {
@@ -134,17 +184,19 @@ function registerRecipe(input, output, required, level, final, amount = 1) {
         output,
         required,
         amount,
-        cost: Math.ceil(COMPACTOR_CONFIG.defaults.ingotCost * (
-            COMPACTOR_CONFIG.defaults.costMultiplierPerLevel ** level
-        )),
+        cost: Math.ceil(
+            COMPACTOR_CONFIG.defaults.ingotCost *
+                COMPACTOR_CONFIG.defaults.costMultiplierPerLevel ** level,
+        ),
         ticks: COMPACTOR_CONFIG.defaults.ticks,
         level,
         final,
     });
     const recipes = recipesByInput.get(input) ?? [];
-    const existingIndex = recipes.findIndex((entry) => (
-        entry.output === output && entry.required === required && entry.amount === amount
-    ));
+    const existingIndex = recipes.findIndex(
+        (entry) =>
+            entry.output === output && entry.required === required && entry.amount === amount,
+    );
     if (existingIndex >= 0) recipes[existingIndex] = recipe;
     else recipes.push(recipe);
     recipes.sort((left, right) => right.required - left.required);
@@ -190,4 +242,13 @@ export function getCompactorRecipeCount() {
     let count = 0;
     for (const recipes of recipesByInput.values()) count += recipes.length;
     return count;
+}
+
+/**
+ * Returns the immutable registered recipe records used by reverse-processing
+ * machines. The array itself is a snapshot so callers cannot mutate this
+ * module's input index.
+ */
+export function getCompactorRecipes() {
+    return Object.freeze([...recipesByInput.values()].flat());
 }

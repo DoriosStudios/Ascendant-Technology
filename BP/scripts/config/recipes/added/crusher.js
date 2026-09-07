@@ -87,14 +87,20 @@ export const crusherRecipeAdditions = {
         tier: 6
     },
     "utilitycraft:aetherium_shard": {
-        output: "utilitycraft:aetherium_dust",
+        output: "utilitycraft:aetherium_crystal_dust",
         amount: 2,
         cost: 2400,
         tier: 6
     },
+    "utilitycraft:aetherium_crystal_block": {
+        output: "utilitycraft:aetherium_crystal_dust",
+        amount: 18,
+        cost: 21600,
+        tier: 6
+    },
     "utilitycraft:aetherium_block": {
         output: "utilitycraft:aetherium_dust",
-        amount: 6,
+        amount: 9,
         cost: 21600,
         tier: 6
     },

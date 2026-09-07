@@ -23,24 +23,31 @@ import { setDynamicNumber, setDynamicString, setRunning, setUiItem } from "./run
 const ID = "utilitycraft:enchantment_station";
 const GRID_SLOTS = [3, 4, 5, 6, 7, 8, 9, 10, 11];
 const MODULE_SLOTS = [12, 13, 14];
-const OUTPUT_SLOTS = [21, 22, 23, 24, 25, 26, 27, 28, 29];
+const OUTPUT_SLOTS = [22, 23, 24, 25, 26, 27, 28, 29, 30];
 const SOURCE_SLOT = 15;
 const CATALYST_SLOT = 16;
 const BOOK_SLOT = 17;
 const DISENCHANT_PROGRESS_SLOT = 18;
-const DISENCHANT_STATUS_SLOT = 30;
-const INVENTORY_SIZE = 43;
-const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-    33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
-];
+const DISENCHANT_STATUS_SLOT = 31;
+const INVENTORY_SIZE = 44;
+const SLOT_LAYOUTS = {
+    43: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        -1, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+        31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42,
+    ],
+    45: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        -1, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+        33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44,
+    ],
+};
 const BASE_COST = 64_000;
 const XP_PER_CHANGE = 1_000;
 const REPAIR_AMOUNT = 2_000;
 const ABSORB_DELAY_TICKS = 100;
 const XP_TYPE = "xp";
-const CATALYST_ID = "utilitycraft:refined_aetherium_shard";
+const CATALYST_ID = "utilitycraft:refined_aetherium_crystal";
 const LANE_PROGRESS_PREFIX = "ascendant:station_progress_";
 const LANE_SIGNATURE_PREFIX = "ascendant:station_signature_";
 const ABSORB_SIGNATURE_KEY = "ascendant:station_absorb_signature";
@@ -49,7 +56,7 @@ const ABSORB_START_KEY = "ascendant:station_absorb_start";
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [31, 32, 33, 34, 35, 36],
+        buttonSlots: [32, 33, 34, 35, 36, 37],
         anyInputSlots: [...GRID_SLOTS, ...MODULE_SLOTS, SOURCE_SLOT, CATALYST_SLOT, BOOK_SLOT],
         anyOutputSlots: [...GRID_SLOTS, SOURCE_SLOT, ...OUTPUT_SLOTS],
         modes: [
@@ -67,7 +74,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [37, 38, 39, 40, 41, 42],
+        buttonSlots: [38, 39, 40, 41, 42, 43],
         anyInputIndices: [0],
         anyOutputIndices: [0],
         modes: [
@@ -111,7 +118,7 @@ DoriosLib.registry.blockComponent(ID, {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
 
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, SLOT_LAYOUTS)) return;
 
         machine.processIO();
 

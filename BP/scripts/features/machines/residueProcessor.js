@@ -7,21 +7,31 @@ import { advanceProcess } from "../../ATCore/processing/index.js";
 import { residueProcessorRecipes } from "../../config/recipes/residueProcessor.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     renderStatus,
     setDynamicNumber,
+    setDynamicString,
     setUiItem,
 } from "./runtime.js";
 
 const ID = "utilitycraft:residue_processor";
+const INVENTORY_SIZE = 16;
+const SLOT_LAYOUTS = {
+    15: [0, 1, 2, 3, 4, 5, 6, -1, 7, 8, 9, 10, 11, 12, 13, 14],
+    14: [0, 1, 2, 3, 6, 7, -1, -1, 4, 5, 8, 9, 10, 11, 12, 13],
+};
+const PREVIOUS_SLOT_LAYOUT = [0, 1, 2, 3, 4, 5, 6, 15, 7, 8, 9, 10, 11, 12, 13, 14];
+const LAYOUT_KEY = "ascendant:residue_processor_layout";
+const LAYOUT_VERSION = "contiguous_upgrades_v1";
 const INPUT_SLOT = 3;
-const OUTPUT_SLOT = 4;
-const BYPRODUCT_SLOT = 5;
+const OUTPUT_SLOT = 8;
+const BYPRODUCT_SLOT = 9;
 const DEFAULT_STACK_SIZE = 64;
 
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [8, 9, 10, 11, 12, 13],
+        buttonSlots: [10, 11, 12, 13, 14, 15],
         anyInputSlots: [INPUT_SLOT],
         anyOutputSlots: [OUTPUT_SLOT, BYPRODUCT_SLOT],
         modes: [
@@ -42,12 +52,17 @@ DoriosLib.registry.blockComponent(ID, {
 
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
         });
     },
 
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         machine.processIO();
 

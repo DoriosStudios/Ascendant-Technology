@@ -7,6 +7,7 @@ import { advanceProcess } from "../../ATCore/processing/index.js";
 import { getEnergizerRecipe } from "../../config/recipes/energizer.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     renderStatus,
     setDynamicNumber,
     setDynamicString,
@@ -14,16 +15,24 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:energizer";
+const INVENTORY_SIZE = 16;
+const SLOT_LAYOUTS = {
+    15: [0, 1, 2, 3, 4, 5, 6, 7, -1, 8, 9, 10, 11, 12, 13, 14],
+    14: [0, 1, 2, 3, 4, 6, 7, -1, -1, 5, 8, 9, 10, 11, 12, 13],
+};
+const PREVIOUS_SLOT_LAYOUT = [0, 1, 2, 3, 4, 5, 6, 7, 15, 8, 9, 10, 11, 12, 13, 14];
+const LAYOUT_KEY = "ascendant:energizer_layout";
+const LAYOUT_VERSION = "contiguous_upgrades_v1";
 const PRIMARY_INPUT_SLOT = 3;
 const AUXILIARY_INPUT_SLOT = 4;
-const OUTPUT_SLOT = 5;
+const OUTPUT_SLOT = 9;
 const RECIPE_KEY = "ascendant:energizer_recipe";
 const itemMaximums = new Map();
 
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [8, 9, 10, 11, 12, 13],
+        buttonSlots: [10, 11, 12, 13, 14, 15],
         anyInputSlots: [PRIMARY_INPUT_SLOT, AUXILIARY_INPUT_SLOT],
         anyOutputSlots: [OUTPUT_SLOT],
         modes: [
@@ -45,12 +54,17 @@ DoriosLib.registry.blockComponent(ID, {
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
         });
     },
 
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         machine.processIO();
 

@@ -21,16 +21,23 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:verdant_cultivator";
-const INVENTORY_SIZE = 32;
-const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-    11, 12, 13, 14, 15, 16, 17, 18, 19,
-    -1, -1, -1, -1, -1, -1,
-    20, 21, 22, 23, 24, 25,
-];
+const INVENTORY_SIZE = 33;
+const SLOT_LAYOUTS = {
+    32: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1,
+        11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+        26, 27, 28, 29, 30, 31,
+    ],
+    26: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1,
+        11, 12, 13, 14, 15, 16, 17, 18, 19,
+        -1, -1, -1, -1, -1, -1,
+        20, 21, 22, 23, 24, 25,
+    ],
+};
 const SEED_SLOTS = [3, 4, 5, 6];
 const CLOCK_SLOT = 7;
-const OUTPUT_SLOTS = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
+const OUTPUT_SLOTS = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26];
 const CONFIGURATION_KEY = "ascendant:verdant_configuration";
 const BASE_SIDE_LENGTH = 3;
 const MAX_RANGE_LEVEL = 4;
@@ -49,16 +56,16 @@ const tillableSoils = new Set([
 ]);
 
 const CLOCKS = Object.freeze({
-    "utilitycraft:accelerator_clock": Object.freeze({ title: "Accelerator", baseChance: 0.1875, bonusStepChance: 0, speed: 1, pulses: 1 }),
-    "utilitycraft:diamond_accelerator_clock": Object.freeze({ title: "Diamond", baseChance: 0.5, bonusStepChance: 0, speed: 2, pulses: 2 }),
-    "utilitycraft:nether_star_accelerator_clock": Object.freeze({ title: "Nether Star", baseChance: 1, bonusStepChance: 0.25, speed: 4, pulses: 4 }),
+    "utilitycraft:accelerator_clock": Object.freeze({ title: "Accelerator", baseChance: 0.1875, bonusStepChance: 0, targetsPerPulse: 27 }),
+    "utilitycraft:diamond_accelerator_clock": Object.freeze({ title: "Diamond", baseChance: 0.5, bonusStepChance: 0, targetsPerPulse: 54 }),
+    "utilitycraft:nether_star_accelerator_clock": Object.freeze({ title: "Nether Star", baseChance: 1, bonusStepChance: 0.25, targetsPerPulse: 108 }),
 });
 const CROP_TIER_MULTIPLIERS = Object.freeze({ 0: 1, 1: 1, 2: 4 / 7, 3: 4 / 11, 4: 1 / 4 });
 
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [26, 27, 28, 29, 30, 31],
+        buttonSlots: [27, 28, 29, 30, 31, 32],
         anyInputSlots: [...SEED_SLOTS, CLOCK_SLOT],
         anyOutputSlots: OUTPUT_SLOTS,
         modes: [
@@ -85,9 +92,13 @@ DoriosLib.registry.blockComponent(ID, {
     },
 
     onTick(event, { params: settings }) {
-        const machine = new Machine(event.block, settings);
+        const machine = new Machine(event.block, {
+            ...settings,
+            ignoreTick: true,
+            processingInterval: 4,
+        });
         if (!machine.valid) return;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, SLOT_LAYOUTS)) return;
         machine.processIO();
 
         const configuration = readConfiguration(machine);
@@ -400,7 +411,10 @@ function buildOperation(machine, configuration, snapshot, biomeId) {
 
     const biomeBonus = resolveBiomeBonus(configuration.templates, snapshot, biomeId);
     const pulseCount = configuration.clock
-        ? Math.min(snapshot.growthTargets.length, configuration.processBatch * configuration.clock.pulses + (biomeBonus.active ? 1 : 0))
+        ? Math.min(
+            snapshot.growthTargets.length,
+            configuration.processBatch * configuration.clock.targetsPerPulse + (biomeBonus.active ? 1 : 0),
+        )
         : 0;
     const harvestCount = snapshot.harvestTargets.length;
     const plantCount = plantTargets.length + harvestCount;
@@ -417,9 +431,8 @@ function buildOperation(machine, configuration, snapshot, biomeId) {
             + configuration.sideLength * 0.18
             + Math.min(2.4, harvestCount * 0.08)
             + Math.min(1.8, plantCount * 0.06)
-            + pulseCount * 0.7
+            + (pulseCount > 0 ? 0.7 : 0)
         : 0;
-    const acceleratedCycleSeconds = cycleSeconds / Math.max(1, configuration.clock?.speed ?? 1);
 
     let message = "Monitoring";
     if (!ready && snapshot.invalidSoilCount > 0) message = "Invalid Soil";
@@ -436,7 +449,7 @@ function buildOperation(machine, configuration, snapshot, biomeId) {
         ready,
         message,
         energyCost,
-        cycleSeconds: acceleratedCycleSeconds,
+        cycleSeconds,
         bufferFilledSlots: countFilledOutputs(machine.container),
     };
 }
@@ -768,6 +781,7 @@ function renderStatus(machine, running, message, context, completed = null) {
         `\u00A7r\u00A77Field \u00A7f${sideLength}x${sideLength}`,
         `\u00A7r\u00A77Seed Patterns \u00A7f${context.validSeedCount ?? 0}/4`,
         `\u00A7r\u00A77Clock \u00A7f${context.clock?.title ?? "Off"}`,
+        `\u00A7r\u00A77Plants per Pulse \u00A7f${context.clock?.targetsPerPulse ?? 0}`,
         `\u00A7r\u00A77Buffer \u00A7f${context.bufferFilledSlots ?? 0}/15`,
     ];
     if (context.biomeBonus?.active) fieldLines.push(`\u00A7r\u00A7aBiome Bonus \u00A7f${context.biomeBonus.title}`);

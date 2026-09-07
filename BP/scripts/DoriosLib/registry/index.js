@@ -1,4 +1,3 @@
-import * as DoriosLib from "DoriosLib/index.js";
 // @ts-check
 
 import {
@@ -19,6 +18,8 @@ export const PARAMETER_TYPES = COMMAND_PARAMETER_TYPES;
 
 /** Script events exposed by UtilityCraft's runtime registries. */
 export const REGISTRATION_EVENT_IDS = Object.freeze({
+  ELECTROLYZER_RECIPE: "utilitycraft:register_electrolyzer_recipe",
+  CHEMICAL_CONVERTER_RECIPE: "utilitycraft:register_chemical_converter_recipe",
   AUTO_FISHER_DROP: "utilitycraft:register_autofisher_drop",
   BONSAI: "utilitycraft:register_bonsai",
   COOLANT: "utilitycraft:register_coolant",
@@ -31,6 +32,9 @@ export const REGISTRATION_EVENT_IDS = Object.freeze({
   GAS_HOLDER: "utilitycraft:register_gas_holder",
   GAS_ITEM: "utilitycraft:register_gas_item",
   INFUSER_RECIPE: "utilitycraft:register_infuser_recipe",
+  ITEM_DUCT_REGISTER: "item_ducts:register",
+  ITEM_DUCT_UNREGISTER: "item_ducts:unregister",
+  LINK_NODE_IO: "dorios_link_node:register_io",
   MELTER_RECIPE: "utilitycraft:register_melter_recipe",
   MACHINE_UPGRADE: "utilitycraft:register_machine_upgrade",
   PLANT: "utilitycraft:register_plant",
@@ -40,6 +44,15 @@ export const REGISTRATION_EVENT_IDS = Object.freeze({
 });
 
 /** @typedef {Record<string, unknown>} RegistrationPayload */
+
+/**
+ * @typedef {object} ItemDuctCompatibilityRegistration
+ * @property {string} typeId Compatible block identifier.
+ * @property {number[]} [insertSlots] Slots exposed for insertion.
+ * @property {number[]} [extractSlots] Slots exposed for extraction.
+ * @property {("north"|"south"|"east"|"west"|"up"|"down")[]} [insertFaces] Faces allowed for insertion.
+ * @property {("north"|"south"|"east"|"west"|"up"|"down")[]} [extractFaces] Faces allowed for extraction.
+ */
 
 /**
  * @typedef {object} CoolantRegistration
@@ -115,6 +128,48 @@ export function registerInfuserRecipe(payload) {
   enqueueRegistration(REGISTRATION_EVENT_IDS.INFUSER_RECIPE, payload);
 }
 
+/**
+ * Registers one block type with Item Ducts through its runtime ScriptEvent API.
+ *
+ * @param {ItemDuctCompatibilityRegistration} payload
+ */
+export function registerItemDuctCompatibility(payload) {
+  enqueueRegistration(REGISTRATION_EVENT_IDS.ITEM_DUCT_REGISTER, payload);
+}
+
+/**
+ * Exposes every inventory slot of one block type to Item Ducts.
+ *
+ * @param {string} typeId
+ */
+export function registerItemDuctChest(typeId) {
+  assertTypeId(typeId);
+  enqueueRegistration(REGISTRATION_EVENT_IDS.ITEM_DUCT_REGISTER, {
+    typeId,
+    mode: "chest",
+  });
+}
+
+/**
+ * Removes one persisted Item Ducts runtime registration.
+ *
+ * @param {string} typeId
+ */
+export function unregisterItemDuctCompatibility(typeId) {
+  assertTypeId(typeId);
+  enqueueRegistrationMessage(REGISTRATION_EVENT_IDS.ITEM_DUCT_UNREGISTER, typeId);
+}
+
+/**
+ * Publishes one controller's link-node IO definition to every loaded addon.
+ * Each DoriosCore runtime receives and installs the definition independently.
+ *
+ * @param {{blockTypeId:string,config:RegistrationPayload}} payload
+ */
+export function registerLinkNodeIO(payload) {
+  enqueueRegistration(REGISTRATION_EVENT_IDS.LINK_NODE_IO, payload);
+}
+
 /** @param {RegistrationPayload} payload */
 export function registerMelterRecipe(payload) {
   enqueueRegistration(REGISTRATION_EVENT_IDS.MELTER_RECIPE, payload);
@@ -173,8 +228,25 @@ function enqueueRegistration(eventId, payload) {
     throw new TypeError(`Registration payload for ${eventId} must be JSON serializable`);
   }
 
+  enqueueRegistrationMessage(eventId, message);
+}
+
+/**
+ * Queues an already serialized ScriptEvent message.
+ *
+ * @param {string} eventId
+ * @param {string} message
+ */
+function enqueueRegistrationMessage(eventId, message) {
   registrationQueue.push({ eventId, message });
   scheduleNextRegistration();
+}
+
+/** @param {string} typeId */
+function assertTypeId(typeId) {
+  if (typeof typeId !== "string" || typeId.length === 0 || !typeId.includes(":")) {
+    throw new TypeError(`A fully qualified block typeId is required: ${typeId}`);
+  }
 }
 
 /** Schedules exactly one queued registration for the next tick. */
@@ -481,4 +553,14 @@ function assertMutable(installed) {
  */
 function defaultErrorHandler(error, context) {
   console.warn(`[DoriosLib:${context}]`, error);
+}
+
+/** Queue liquid/gas separation recipes for the Electrolyzer. */
+export function registerElectrolyzerRecipe(payload) {
+  enqueueRegistration(REGISTRATION_EVENT_IDS.ELECTROLYZER_RECIPE, payload);
+}
+
+/** Queue item/liquid/gas conversion recipes for the Chemical Converter. */
+export function registerChemicalConverterRecipe(payload) {
+  enqueueRegistration(REGISTRATION_EVENT_IDS.CHEMICAL_CONVERTER_RECIPE, payload);
 }

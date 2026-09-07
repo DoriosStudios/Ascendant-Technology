@@ -40,24 +40,30 @@ const PROGRESS_SLOT = 2;
 const EQUIPMENT_SLOT = 3;
 const INGOT_SLOT = 4;
 const CHIP_SLOT = 5;
-const CONFIRM_SLOT = 6;
-const DETAILS_SLOT = 7;
-const RUNIC_CORE_SLOT = 8;
-const SPEED_UPGRADE_SLOT = 9;
-const ENERGY_UPGRADE_SLOT = 10;
-const XP_DISPLAY_SLOT = 11;
-const STATS_DISPLAY_SLOT = 24;
-const INVENTORY_SIZE = 25;
+const RUNIC_CORE_SLOT = 6;
+const SPEED_UPGRADE_SLOT = 7;
+const ENERGY_UPGRADE_SLOT = 8;
+const XP_DISPLAY_SLOT = 10;
+const STATS_DISPLAY_SLOT = 11;
+const CONFIRM_SLOT = 12;
+const DETAILS_SLOT = 13;
+const INVENTORY_SIZE = 26;
 const LABEL_NAME_TAG_LIMIT = 255;
 const LABEL_LORE_ENTRY_LIMIT = 1000;
 const LABEL_STRING_LIMIT = 100;
-const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-    12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
-];
+const SLOT_LAYOUTS = {
+    25: [
+        0, 1, 2, 3, 4, 5, 8, 9, 10, -1, 11, 24, 6, 7,
+        12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+    ],
+    24: [
+        0, 1, 2, 3, 4, 5, 8, 9, 10, -1, 11, -1, 6, 7,
+        12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+    ],
+};
 
-const ITEM_IO_SLOTS = [12, 13, 14, 15, 16, 17];
-const FLUID_IO_SLOTS = [18, 19, 20, 21, 22, 23];
+const ITEM_IO_SLOTS = [14, 15, 16, 17, 18, 19];
+const FLUID_IO_SLOTS = [20, 21, 22, 23, 24, 25];
 const MATERIAL_SLOTS = [INGOT_SLOT, CHIP_SLOT, RUNIC_CORE_SLOT];
 
 const QUEUED_KEY = "ascendant:refining_table_queued";
@@ -153,7 +159,7 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, SLOT_LAYOUTS)) return;
 
         machine.processIO();
         if (machine.shouldUpdateUI) ButtonManager.ensureWatching(machine.entity, ID);

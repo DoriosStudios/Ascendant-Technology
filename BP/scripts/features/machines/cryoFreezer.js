@@ -4,19 +4,42 @@ import * as DoriosLib from "DoriosLib/index.js";
 import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
 import { processCryoCoolingGrid } from "../../ATCore/processing/index.js";
 import {
-    getCryoCoolingRecipe,
-    isCryoCoolingOutput,
-} from "../../config/recipes/cryoCooling.js";
-import { renderStatus } from "./runtime.js";
+    getFreezingRecipe,
+    isFreezingOutput,
+} from "../../config/recipes/freezing.js";
+import { ensureMachineInventoryLayout, renderStatus, setDynamicString } from "./runtime.js";
 
 const ID = "utilitycraft:cryo_freezer";
-const INVENTORY_SIZE = 32;
-const LEGACY_SLOT_LAYOUT = [
+const INVENTORY_SIZE = 34;
+const SLOT_LAYOUTS = {
+    33: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, 20,
+        -1,
+        21, 22, 23, 24, 25, 26,
+        27, 28, 29, 30, 31, 32,
+    ],
+    32: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+        18, 19, -1, -1,
+        20, 21, 22, 23, 24, 25,
+        26, 27, 28, 29, 30, 31,
+    ],
+    30: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+        -1, -1, -1, -1,
+        18, 19, 20, 21, 22, 23,
+        24, 25, 26, 27, 28, 29,
+    ],
+};
+const PREVIOUS_SLOT_LAYOUT = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-    -1, -1,
-    18, 19, 20, 21, 22, 23,
-    24, 25, 26, 27, 28, 29,
+    18, 19, 20, 33,
+    21, 22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31, 32,
 ];
+const LAYOUT_KEY = "ascendant:cryo_freezer_layout";
+const LAYOUT_VERSION = "contiguous_upgrades_v1";
 const COOLANT_DISPLAY_SLOT = 2;
 const FREEZER_SLOTS = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
 const FLUID_IO_RATE = 64000;
@@ -24,7 +47,7 @@ const FLUID_IO_RATE = 64000;
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [20, 21, 22, 23, 24, 25],
+        buttonSlots: [22, 23, 24, 25, 26, 27],
         anyInputSlots: FREEZER_SLOTS,
         anyOutputSlots: FREEZER_SLOTS,
         modes: [
@@ -34,7 +57,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [26, 27, 28, 29, 30, 31],
+        buttonSlots: [28, 29, 30, 31, 32, 33],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -52,6 +75,7 @@ DoriosLib.registry.blockComponent(ID, {
 
             machine.blockSlots([COOLANT_DISPLAY_SLOT]);
             const coolant = new FluidStorage(machine.entity, 0);
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
             coolant.display(COOLANT_DISPLAY_SLOT);
             renderStatus(machine, false, "Load Freezer Grid", [{
                 title: "Freezer Grid",
@@ -63,15 +87,18 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, LEGACY_SLOT_LAYOUT)) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
         const coolant = new FluidStorage(machine.entity, 0);
         const result = processCryoCoolingGrid(machine, coolant, {
             slots: FREEZER_SLOTS,
             progressPrefix: "ascendant:cryo_freezer_progress_",
-            getRecipe: getCryoCoolingRecipe,
-            isOutput: isCryoCoolingOutput,
+            getRecipe: getFreezingRecipe,
+            isOutput: isFreezingOutput,
         });
 
         if (machine.shouldUpdateUI) coolant.display(COOLANT_DISPLAY_SLOT);

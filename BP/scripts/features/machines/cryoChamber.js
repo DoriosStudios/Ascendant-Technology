@@ -5,17 +5,18 @@ import * as DoriosLib from "DoriosLib/index.js";
 import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
 import { advanceProcess, processCryoCoolingGrid } from "../../ATCore/processing/index.js";
 import {
-    cryoChamberGeneration,
-    getCryoChamberCatalyst,
-    getCryoChamberLapisSource,
-} from "../../config/recipes/cryoChamber.js";
+    cryogenGeneration,
+    getCryogenCatalyst,
+    getCryogenLapisSource,
+} from "../../config/recipes/cryogen.js";
 import {
-    getCryoCoolingRecipe,
-    isCryoCoolingOutput,
-} from "../../config/recipes/cryoCooling.js";
-import { getCryoStabilizerRecipe } from "../../config/recipes/cryoStabilizer.js";
+    getFreezingRecipe,
+    isFreezingOutput,
+} from "../../config/recipes/freezing.js";
+import { getStabilizerRecipe } from "../../config/recipes/stabilizer.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     setDynamicNumber,
     setDynamicString,
     setRunning,
@@ -23,6 +24,26 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:cryo_chamber";
+const INVENTORY_SIZE = 38;
+const SLOT_LAYOUTS = {
+    37: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+        19, 20, 21, -1,
+        22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
+    ],
+    36: [
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+        19, 20, -1, -1,
+        21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
+    ],
+};
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+    19, 20, 21, 37,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
+];
+const LAYOUT_KEY = "ascendant:cryo_chamber_layout";
+const LAYOUT_VERSION = "contiguous_upgrades_v1";
 const STABILIZER_STATUS_SLOT = 1;
 const STABILIZER_PROGRESS_SLOT = 2;
 const STABILIZER_INPUT_SLOT = 3;
@@ -33,9 +54,9 @@ const CRYO_CONTAINER_SLOT = 15;
 const CRYO_DISPLAY_SLOT = 16;
 const TITANIUM_SLOT = 17;
 const LAPIS_SLOT = 18;
-const COOLING_STATUS_SLOT = 21;
-const GENERATOR_STATUS_SLOT = 22;
-const STABILIZER_OUTPUT_SLOT = 23;
+const COOLING_STATUS_SLOT = 23;
+const GENERATOR_STATUS_SLOT = 24;
+const STABILIZER_OUTPUT_SLOT = 25;
 const STABILIZER_RECIPE_KEY = "ascendant:cryo_chamber_stabilizer_recipe";
 const GENERATOR_PROGRESS_KEY = "ascendant:cryo_chamber_generator_progress";
 const RESOURCE_IO_RATE = 64000;
@@ -44,7 +65,7 @@ const itemMaximums = new Map();
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [24, 25, 26, 27, 28, 29],
+        buttonSlots: [26, 27, 28, 29, 30, 31],
         anyInputSlots: [
             STABILIZER_INPUT_SLOT,
             ...COOLING_SLOTS,
@@ -79,7 +100,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [30, 31, 32, 33, 34, 35],
+        buttonSlots: [32, 33, 34, 35, 36, 37],
         anyInputIndices: [0],
         anyOutputIndices: [1],
         modes: [
@@ -100,6 +121,7 @@ DoriosLib.registry.blockComponent(ID, {
             setUiItem(machine.container, STABILIZER_PROGRESS_SLOT, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, STABILIZER_RECIPE_KEY, "");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
             setDynamicNumber(machine.entity, GENERATOR_PROGRESS_KEY, 0);
 
             const water = new FluidStorage(machine.entity, 0);
@@ -117,6 +139,10 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         const water = new FluidStorage(machine.entity, 0);
         const cryofluid = new FluidStorage(machine.entity, 1);
@@ -131,8 +157,8 @@ DoriosLib.registry.blockComponent(ID, {
         const cooling = processCryoCoolingGrid(machine, water, {
             slots: COOLING_SLOTS,
             progressPrefix: "ascendant:cryo_chamber_cooling_progress_",
-            getRecipe: getCryoCoolingRecipe,
-            isOutput: isCryoCoolingOutput,
+            getRecipe: getFreezingRecipe,
+            isOutput: isFreezingOutput,
         });
         const generator = processGenerator(machine, water, cryofluid, settings);
 
@@ -165,7 +191,7 @@ function processStabilizer(machine, cryofluid, settings) {
     const input = machine.container.getItem(STABILIZER_INPUT_SLOT);
     if (!input) return resetStabilizer(machine, settings.machine.energy_cost, "Insert Unstable Item");
 
-    const recipe = getCryoStabilizerRecipe(input.typeId);
+    const recipe = getStabilizerRecipe(input.typeId);
     if (!recipe || input.amount < recipe.input.amount) {
         return resetStabilizer(machine, recipe?.cost ?? settings.machine.energy_cost, recipe ? "Needs More Input" : "Invalid Input");
     }
@@ -245,8 +271,8 @@ function pauseStabilizer(machine, cost, message, recipe, cryofluid) {
 function processGenerator(machine, water, cryofluid, settings) {
     const titanium = machine.container.getItem(TITANIUM_SLOT);
     const lapis = machine.container.getItem(LAPIS_SLOT);
-    const catalyst = titanium ? getCryoChamberCatalyst(titanium.typeId) : undefined;
-    const lapisSource = lapis ? getCryoChamberLapisSource(lapis.typeId) : undefined;
+    const catalyst = titanium ? getCryogenCatalyst(titanium.typeId) : undefined;
+    const lapisSource = lapis ? getCryogenLapisSource(lapis.typeId) : undefined;
     if (!catalyst || !lapisSource) {
         return resetGenerator(machine, "Insert Titanium + Lapis");
     }
@@ -267,12 +293,12 @@ function processGenerator(machine, water, cryofluid, settings) {
 
     const result = advanceProcess(machine, {
         progress: getDynamicNumber(machine.entity, GENERATOR_PROGRESS_KEY),
-        cost: cryoChamberGeneration.cost,
+        cost: cryogenGeneration.cost,
         maxCrafts,
         rateMultiplier: getRateMultiplier(
             settings.machine.rate_speed_base,
-            cryoChamberGeneration.cost,
-            cryoChamberGeneration.ticks,
+            cryogenGeneration.cost,
+            cryogenGeneration.ticks,
         ),
     });
 

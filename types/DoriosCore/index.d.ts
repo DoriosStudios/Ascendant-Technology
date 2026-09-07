@@ -75,6 +75,8 @@ export interface BaseMachineConfig {
   required_case?: string;
   /** Bypass the scheduler for this runtime instance. */
   ignoreTick?: boolean;
+  /** Explicit interval used to scale work when scheduler throttling is bypassed. */
+  processingInterval?: number;
 }
 
 /** Runtime processing/storage settings for a normal machine. */
@@ -254,6 +256,8 @@ export interface BasicMachineOptions {
   rate?: number;
   /** Bypasses scheduler throttling. */
   ignoreTick?: boolean;
+  /** Explicit interval used to scale work when scheduler throttling is bypassed. */
+  processingInterval?: number;
 }
 
 /** One visual item IO mode and the machine slots represented by that mode. */
@@ -622,6 +626,11 @@ export class BasicMachine {
   blockSlots(slots: number[]): void;
   /** Removes blocker items from the provided slots. */
   unblockSlots(slots: number[]): void;
+  /** Resizes a legacy inventory and migrates slots using a direct or source-size-specific map. */
+  ensureInventoryLayout(
+    targetSize: number,
+    sourceSlots: number[] | Record<number, number[]>,
+  ): boolean;
 }
 
 /**

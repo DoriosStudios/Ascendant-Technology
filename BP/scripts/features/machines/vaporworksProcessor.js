@@ -7,6 +7,7 @@ import { advanceProcess } from "../../ATCore/processing/index.js";
 import { getVaporworksRecipe } from "../../config/recipes/vaporworksProcessor.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     renderStatus,
     setDynamicNumber,
     setDynamicString,
@@ -14,12 +15,29 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:vaporworks_processor";
+const INVENTORY_SIZE = 31;
+const SLOT_LAYOUTS = {
+    30: [
+        0, 1, 2, 3, 4, 5, 6, 7, -1,
+        8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+    ],
+    29: [
+        0, 1, 2, 3, 5, 9, 10, -1, -1, 4, 6, 7, 8,
+        11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+    ],
+};
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 30,
+    8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+];
+const LAYOUT_KEY = "ascendant:vaporworks_processor_layout";
+const LAYOUT_VERSION = "contiguous_upgrades_v1";
 const FLUID_CONTAINER_INPUT_SLOT = 3;
-const FLUID_CONTAINER_RETURN_SLOT = 4;
-const GAS_CONTAINER_INPUT_SLOT = 5;
-const GAS_CONTAINER_OUTPUT_SLOT = 6;
-const FLUID_DISPLAY_SLOT = 7;
-const GAS_DISPLAY_SLOT = 8;
+const GAS_CONTAINER_INPUT_SLOT = 4;
+const FLUID_CONTAINER_RETURN_SLOT = 9;
+const GAS_CONTAINER_OUTPUT_SLOT = 10;
+const FLUID_DISPLAY_SLOT = 11;
+const GAS_DISPLAY_SLOT = 12;
 const RECIPE_KEY = "ascendant:vaporworks_recipe";
 const RESOURCE_IO_RATE = 128000;
 const itemMaximums = new Map();
@@ -27,7 +45,7 @@ const itemMaximums = new Map();
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [11, 12, 13, 14, 15, 16],
+        buttonSlots: [13, 14, 15, 16, 17, 18],
         anyInputSlots: [FLUID_CONTAINER_INPUT_SLOT, GAS_CONTAINER_INPUT_SLOT],
         anyOutputSlots: [FLUID_CONTAINER_RETURN_SLOT, GAS_CONTAINER_OUTPUT_SLOT],
         modes: [
@@ -41,7 +59,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [17, 18, 19, 20, 21, 22],
+        buttonSlots: [19, 20, 21, 22, 23, 24],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -50,7 +68,7 @@ registerIOInterface(ID, {
         ],
     },
     gases: {
-        buttonSlots: [23, 24, 25, 26, 27, 28],
+        buttonSlots: [25, 26, 27, 28, 29, 30],
         anyInputIndices: [],
         anyOutputIndices: [0],
         modes: [
@@ -70,6 +88,7 @@ DoriosLib.registry.blockComponent(ID, {
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
 
             const steam = new GasStorage(machine.entity, 0);
             steam.setType("steam");
@@ -79,6 +98,10 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         const liquid = new FluidStorage(machine.entity, 0);
         const steam = new GasStorage(machine.entity, 0);

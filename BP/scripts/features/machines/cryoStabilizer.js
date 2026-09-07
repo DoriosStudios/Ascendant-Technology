@@ -4,7 +4,7 @@ import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
 import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
 import { advanceLanes } from "../../ATCore/processing/index.js";
-import { getCryoStabilizerRecipe } from "../../config/recipes/cryoStabilizer.js";
+import { getStabilizerRecipe } from "../../config/recipes/stabilizer.js";
 import {
     displayProgress,
     ensureMachineInventoryLayout,
@@ -107,7 +107,7 @@ DoriosLib.registry.blockComponent(ID, {
             }
             occupied++;
 
-            const recipe = getCryoStabilizerRecipe(input.typeId);
+            const recipe = getStabilizerRecipe(input.typeId);
             if (!recipe || input.amount < recipe.input.amount) {
                 setDynamicNumber(machine.entity, progressKey, 0);
                 blocked++;

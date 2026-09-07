@@ -7,6 +7,7 @@ import { advanceProcess } from "../../ATCore/processing/index.js";
 import { getCatalystWeaverRecipe } from "../../config/recipes/catalystWeaver.js";
 import {
     displayProgress,
+    ensureMachineInventoryLayout,
     renderStatus,
     setDynamicNumber,
     setDynamicString,
@@ -14,20 +15,31 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:catalyst_weaver";
-const INVENTORY_SIZE = 28;
+const INVENTORY_SIZE = 29;
+const CURRENT_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+    -1,
+    14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+];
 const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, -1,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, -1, -1,
     13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
 ];
 const LEGACY_UPGRADE_SLOT_LAYOUT = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-    -1, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    -1, -1, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
 ];
+const PREVIOUS_SLOT_LAYOUT = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 28,
+    14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+];
+const LAYOUT_KEY = "ascendant:catalyst_weaver_layout";
+const LAYOUT_VERSION = "contiguous_upgrades_v1";
 const INPUT_SLOT = 3;
 const CATALYST_SLOTS = [4, 5, 6, 7, 8, 9];
 const FLUID_DISPLAY_SLOT = 10;
-const BYPRODUCT_SLOT = 14;
-const OUTPUT_SLOT = 15;
+const BYPRODUCT_SLOT = 15;
+const OUTPUT_SLOT = 16;
 const RECIPE_KEY = "ascendant:catalyst_weaver_recipe";
 const FLUID_IO_RATE = 128000;
 const itemMaximums = new Map();
@@ -35,7 +47,7 @@ const itemMaximums = new Map();
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [16, 17, 18, 19, 20, 21],
+        buttonSlots: [17, 18, 19, 20, 21, 22],
         anyInputSlots: [INPUT_SLOT, ...CATALYST_SLOTS],
         anyOutputSlots: [OUTPUT_SLOT, BYPRODUCT_SLOT],
         modes: [
@@ -54,7 +66,7 @@ registerIOInterface(ID, {
         ],
     },
     liquids: {
-        buttonSlots: [22, 23, 24, 25, 26, 27],
+        buttonSlots: [23, 24, 25, 26, 27, 28],
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -74,6 +86,7 @@ DoriosLib.registry.blockComponent(ID, {
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");
+            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
 
             const tank = new FluidStorage(machine.entity, 0);
             tank.display(FLUID_DISPLAY_SLOT);
@@ -86,10 +99,15 @@ DoriosLib.registry.blockComponent(ID, {
         const legacySlot13 = machine.container.size === 27
             ? machine.container.getItem(13)
             : undefined;
-        const migrationLayout = isMachineUpgrade(legacySlot13)
-            ? LEGACY_UPGRADE_SLOT_LAYOUT
-            : LEGACY_SLOT_LAYOUT;
-        if (!machine.ensureInventoryLayout(INVENTORY_SIZE, migrationLayout)) return;
+        const migrationLayout = machine.container.size === 28
+            ? CURRENT_SLOT_LAYOUT
+            : isMachineUpgrade(legacySlot13)
+                ? LEGACY_UPGRADE_SLOT_LAYOUT
+                : LEGACY_SLOT_LAYOUT;
+        if (!ensureMachineInventoryLayout(
+            machine, INVENTORY_SIZE, migrationLayout,
+            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+        )) return;
 
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
         const tank = new FluidStorage(machine.entity, 0);

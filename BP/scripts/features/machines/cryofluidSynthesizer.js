@@ -4,9 +4,9 @@ import * as DoriosLib from "DoriosLib/index.js";
 import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
-    CRYOFLUID_SYNTHESIS_RECIPE,
-    getCryofluidSynthesisInputValue,
-} from "../../config/recipes/cryofluidSynthesizer.js";
+    cryogenSynthesisRecipe,
+    getCryogenSynthesisInputValue,
+} from "../../config/recipes/cryogen.js";
 import {
     displayProgress,
     renderStatus,
@@ -67,7 +67,7 @@ DoriosLib.registry.blockComponent(ID, {
             machine.blockSlots([WATER_DISPLAY_SLOT, CRYOFLUID_DISPLAY_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
-            setDynamicNumber(machine.entity, "dorios:energy_cost_0", CRYOFLUID_SYNTHESIS_RECIPE.energyCost);
+            setDynamicNumber(machine.entity, "dorios:energy_cost_0", cryogenSynthesisRecipe.energyCost);
 
             const water = new FluidStorage(machine.entity, 0);
             const cryofluid = new FluidStorage(machine.entity, 1);
@@ -87,8 +87,8 @@ DoriosLib.registry.blockComponent(ID, {
         if (cryofluid.getType() === "empty") cryofluid.setType("cryofluid");
         machine.processIO({ maxFluidMovedPerTick: RESOURCE_IO_RATE });
 
-        const titaniumGroup = CRYOFLUID_SYNTHESIS_RECIPE.inputs.titanium;
-        const lapisGroup = CRYOFLUID_SYNTHESIS_RECIPE.inputs.lapis;
+        const titaniumGroup = cryogenSynthesisRecipe.inputs.titanium;
+        const lapisGroup = cryogenSynthesisRecipe.inputs.lapis;
         const titaniumValue = getStoredInputValue(
             machine,
             TITANIUM_INPUTS,
@@ -111,8 +111,8 @@ DoriosLib.registry.blockComponent(ID, {
             return;
         }
 
-        const waterCrafts = Math.floor(water.get() / CRYOFLUID_SYNTHESIS_RECIPE.water);
-        const outputCrafts = Math.floor(cryofluid.getFreeSpace() / CRYOFLUID_SYNTHESIS_RECIPE.cryofluid);
+        const waterCrafts = Math.floor(water.get() / cryogenSynthesisRecipe.water);
+        const outputCrafts = Math.floor(cryofluid.getFreeSpace() / cryogenSynthesisRecipe.cryofluid);
         if (waterCrafts <= 0 || outputCrafts <= 0) {
             pauseProcess(
                 machine,
@@ -127,7 +127,7 @@ DoriosLib.registry.blockComponent(ID, {
 
         const result = advanceProcess(machine, {
             progress: machine.getProgress(),
-            cost: CRYOFLUID_SYNTHESIS_RECIPE.energyCost,
+            cost: cryogenSynthesisRecipe.energyCost,
             maxCrafts: Math.min(inputCrafts, waterCrafts, outputCrafts),
             batch: machine.boosts.process_batch,
         });
@@ -147,12 +147,12 @@ DoriosLib.registry.blockComponent(ID, {
                 LAPIS_CREDIT_KEY,
                 result.processCount * lapisGroup.requiredValue,
             );
-            water.consume(result.processCount * CRYOFLUID_SYNTHESIS_RECIPE.water);
-            cryofluid.add(result.processCount * CRYOFLUID_SYNTHESIS_RECIPE.cryofluid);
+            water.consume(result.processCount * cryogenSynthesisRecipe.water);
+            cryofluid.add(result.processCount * cryogenSynthesisRecipe.cryofluid);
         }
 
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
-        setDynamicNumber(machine.entity, "dorios:energy_cost_0", CRYOFLUID_SYNTHESIS_RECIPE.energyCost);
+        setDynamicNumber(machine.entity, "dorios:energy_cost_0", cryogenSynthesisRecipe.energyCost);
         displayResources(machine, water, cryofluid);
 
         const active = result.energyUsed > 0 || result.processCount > 0;
@@ -161,7 +161,7 @@ DoriosLib.registry.blockComponent(ID, {
             active,
             result.processCount > 0 ? `Synthesized ${result.processCount}` : active ? "Synthesizing Cryofluid" : "No Energy",
             machine.shouldUpdateUI ? [{ title: "Synthesis Information", lines: statusLines(titaniumValue, lapisValue, water, cryofluid) }] : undefined,
-            { energyCost: CRYOFLUID_SYNTHESIS_RECIPE.energyCost, batch: 1 },
+            { energyCost: cryogenSynthesisRecipe.energyCost, batch: 1 },
         );
     },
 
@@ -174,7 +174,7 @@ function getStoredInputValue(machine, slots, group, creditKey) {
     let total = Math.max(0, Number(machine.entity.getDynamicProperty(creditKey)) || 0);
     for (const slot of slots) {
         const item = machine.container.getItem(slot);
-        total += (item?.amount ?? 0) * getCryofluidSynthesisInputValue(group, item?.typeId);
+        total += (item?.amount ?? 0) * getCryogenSynthesisInputValue(group, item?.typeId);
     }
     return total;
 }
@@ -189,7 +189,7 @@ function consumeInputValue(machine, slots, group, creditKey, requested) {
     for (const slot of slots) {
         if (remaining <= 0) break;
         const item = machine.container.getItem(slot);
-        const value = getCryofluidSynthesisInputValue(group, item?.typeId);
+        const value = getCryogenSynthesisInputValue(group, item?.typeId);
         if (!item || value <= 0) continue;
 
         const amount = Math.min(item.amount, Math.ceil(remaining / value));
@@ -213,19 +213,19 @@ function resetProcess(machine, water, cryofluid, message, titanium, lapis) {
 }
 
 function pauseProcess(machine, water, cryofluid, message, titanium, lapis) {
-    setDynamicNumber(machine.entity, "dorios:energy_cost_0", CRYOFLUID_SYNTHESIS_RECIPE.energyCost);
+    setDynamicNumber(machine.entity, "dorios:energy_cost_0", cryogenSynthesisRecipe.energyCost);
     displayResources(machine, water, cryofluid);
     renderStatus(
         machine,
         false,
         message,
         machine.shouldUpdateUI ? [{ title: "Synthesis Information", lines: statusLines(titanium, lapis, water, cryofluid) }] : undefined,
-        { energyCost: CRYOFLUID_SYNTHESIS_RECIPE.energyCost, batch: 1 },
+        { energyCost: cryogenSynthesisRecipe.energyCost, batch: 1 },
     );
 }
 
 function displayResources(machine, water, cryofluid) {
-    displayProgress(machine, CRYOFLUID_SYNTHESIS_RECIPE.energyCost);
+    displayProgress(machine, cryogenSynthesisRecipe.energyCost);
     if (!machine.shouldUpdateUI) return;
     water.display(WATER_DISPLAY_SLOT);
     cryofluid.display(CRYOFLUID_DISPLAY_SLOT);
@@ -233,8 +233,8 @@ function displayResources(machine, water, cryofluid) {
 
 function statusLines(titanium, lapis, water, cryofluid) {
     return [
-        `\u00A7r\u00A77Titanium Value \u00A7f${titanium}/${CRYOFLUID_SYNTHESIS_RECIPE.inputs.titanium.requiredValue}`,
-        `\u00A7r\u00A77Lapis Value \u00A7f${lapis}/${CRYOFLUID_SYNTHESIS_RECIPE.inputs.lapis.requiredValue}`,
+        `\u00A7r\u00A77Titanium Value \u00A7f${titanium}/${cryogenSynthesisRecipe.inputs.titanium.requiredValue}`,
+        `\u00A7r\u00A77Lapis Value \u00A7f${lapis}/${cryogenSynthesisRecipe.inputs.lapis.requiredValue}`,
         `\u00A7r\u00A77Water \u00A7f${FluidStorage.formatFluid(water.get())} / ${FluidStorage.formatFluid(water.getCap())}`,
         `\u00A7r\u00A77Cryofluid \u00A7f${FluidStorage.formatFluid(cryofluid.get())} / ${FluidStorage.formatFluid(cryofluid.getCap())}`,
     ];

@@ -11,7 +11,7 @@ const recipesByInput = new Map();
 /** @type {Map<string, any>} */
 const recipesById = new Map();
 
-export const cryoStabilizerRecipeDefinitions = {
+export const stabilizerRecipeDefinitions = {
     "utilitycraft:stabilize_darloonite_crystal": {
         input: { id: "utilitycraft:charged_darloonite_crystal", amount: 1 },
         output: { id: "utilitycraft:darloonite_crystal", amount: 1 },
@@ -54,8 +54,8 @@ export const cryoStabilizerRecipeDefinitions = {
         cost: 64000,
         ticks: 1200,
     },
-    "utilitycraft:refined_aetherium_shard_cooling": {
-        input: { id: "utilitycraft:refined_aetherium_shard", amount: 1 },
+    "utilitycraft:refined_aetherium_crystal_cooling": {
+        input: { id: "utilitycraft:refined_aetherium_crystal", amount: 1 },
         output: { id: "utilitycraft:aetherium_shard", amount: 1 },
         cryofluid: 400,
         cost: 12000,
@@ -63,8 +63,8 @@ export const cryoStabilizerRecipeDefinitions = {
     },
 };
 
-for (const [id, definition] of Object.entries(cryoStabilizerRecipeDefinitions)) {
-    registerCryoStabilizerRecipe(id, definition);
+for (const [id, definition] of Object.entries(stabilizerRecipeDefinitions)) {
+    registerStabilizerRecipe(id, definition);
 }
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
@@ -79,20 +79,20 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (!payload || typeof payload !== "object" || Array.isArray(payload)) return;
 
     for (const [recipeId, definition] of Object.entries(payload)) {
-        registerCryoStabilizerRecipe(recipeId, definition);
+        registerStabilizerRecipe(recipeId, definition);
     }
 });
 
 /** Resolves one exact recipe without scanning the registry. */
-export function getCryoStabilizerRecipe(inputTypeId) {
+export function getStabilizerRecipe(inputTypeId) {
     return recipesByInput.get(inputTypeId);
 }
 
-export function getCryoStabilizerRecipeCount() {
+export function getStabilizerRecipeCount() {
     return recipesById.size;
 }
 
-export function registerCryoStabilizerRecipe(id, definition) {
+export function registerStabilizerRecipe(id, definition) {
     const recipe = normalizeRecipe(id, definition);
     if (!recipe) return false;
 
@@ -148,3 +148,4 @@ function nonNegativeInteger(value, fallback) {
     const parsed = Math.floor(Number(value));
     return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
 }
+

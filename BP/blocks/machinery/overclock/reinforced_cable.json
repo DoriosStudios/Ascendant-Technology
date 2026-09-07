@@ -50,6 +50,7 @@
 			"tag:minecraft:is_pickaxe_item_destructible": {},
 			"tag:dorios:energy": {},
 			"tag:dorios:isTube": {},
+			"tag:dorios:multi_tube": {},
 			"tag:dorios:color.default": {},
 			"tag:dorios:overclock_network": {}
 		}

@@ -2,7 +2,7 @@
     "format_version": "1.21.100",
     "minecraft:block": {
         "description": {
-            "identifier": "utilitycraft:singularity_fabricator",
+            "identifier": "utilitycraft:decompactor",
             "menu_category": {
                 "category": "construction"
             },
@@ -17,71 +17,64 @@
             }
         },
         "components": {
-            "utilitycraft:fluid_container": {},
-            "utilitycraft:singularity_fabricator": {
+            "utilitycraft:decompactor": {
                 "entity": {
-                    "type": "fluid_machine",
-                    "inventory_size": 23,
-                    "fixed_fluid_types": true
+                    "type": "machine",
+                    "inventory_size": 31
                 },
                 "machine": {
-                    "energy_cap": 1000000000,
-                    "energy_cost": 30000,
-                    "rate_speed_base": 2560000,
-                    "fluid_cap": 1024000,
-                    "fluid_types": 1,
-                    "upgrades": [4, 5, 6, 7]
+                    "energy_cap": 512000,
+                    "energy_cost": 800,
+                    "rate_speed_base": 1800,
+                    "upgrades": [12, 13, 14, 15]
                 }
             },
             "utilitycraft:machine_upgrades": [
                 {
                     "type": "speed",
-                    "slot": 4
+                    "slot": 12
                 },
                 {
                     "type": "energy",
-                    "slot": 5
+                    "slot": 13
                 },
                 {
                     "type": "hyper",
-                    "slot": 6
+                    "slot": 14
                 },
                 {
                     "type": "stack",
-                    "slot": 7
+                    "slot": 15
                 }
             ],
-            "utilitycraft:machine_recipes": {
-                "type": "singularity_fabricator"
-            },
             "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_singularity_fabricator_off_north",
+                    "texture": "utilitycraft_decompactor_off_north",
                     "render_method": "alpha_test"
                 },
                 "north": {
-                    "texture": "utilitycraft_singularity_fabricator_off_north",
+                    "texture": "utilitycraft_decompactor_off_north",
                     "render_method": "alpha_test"
                 },
                 "south": {
-                    "texture": "utilitycraft_singularity_fabricator_off_south",
+                    "texture": "utilitycraft_compactor_off_south",
                     "render_method": "alpha_test"
                 },
                 "east": {
-                    "texture": "utilitycraft_singularity_fabricator_off_east",
+                    "texture": "utilitycraft_compactor_off_east",
                     "render_method": "alpha_test"
                 },
                 "west": {
-                    "texture": "utilitycraft_singularity_fabricator_off_west",
+                    "texture": "utilitycraft_compactor_off_west",
                     "render_method": "alpha_test"
                 },
                 "up": {
-                    "texture": "utilitycraft_singularity_fabricator_off_up",
+                    "texture": "utilitycraft_compactor_off_up",
                     "render_method": "alpha_test"
                 },
                 "down": {
-                    "texture": "utilitycraft_singularity_fabricator_off_down",
+                    "texture": "utilitycraft_compactor_off_down",
                     "render_method": "alpha_test"
                 }
             },
@@ -94,7 +87,6 @@
             "minecraft:destructible_by_explosion": false,
             "tag:dorios:machine": {},
             "tag:dorios:energy": {},
-            "tag:dorios:fluid": {},
             "tag:dorios:item": {},
             "tag:minecraft:is_pickaxe_item_destructible": {}
         },
@@ -104,35 +96,35 @@
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "utilitycraft_singularity_fabricator_on_north",
+                            "texture": "utilitycraft_decompactor_on_north",
                             "render_method": "alpha_test"
                         },
                         "north": {
-                            "texture": "utilitycraft_singularity_fabricator_on_north",
+                            "texture": "utilitycraft_decompactor_on_north",
                             "render_method": "alpha_test"
                         },
                         "south": {
-                            "texture": "utilitycraft_singularity_fabricator_on_south",
+                            "texture": "utilitycraft_compactor_on_south",
                             "render_method": "alpha_test"
                         },
                         "east": {
-                            "texture": "utilitycraft_singularity_fabricator_on_east",
+                            "texture": "utilitycraft_compactor_on_east",
                             "render_method": "alpha_test"
                         },
                         "west": {
-                            "texture": "utilitycraft_singularity_fabricator_on_west",
+                            "texture": "utilitycraft_compactor_on_west",
                             "render_method": "alpha_test"
                         },
                         "up": {
-                            "texture": "utilitycraft_singularity_fabricator_on_up",
+                            "texture": "utilitycraft_compactor_on_up",
                             "render_method": "alpha_test"
                         },
                         "down": {
-                            "texture": "utilitycraft_singularity_fabricator_on_down",
+                            "texture": "utilitycraft_compactor_on_down",
                             "render_method": "alpha_test"
                         }
                     },
-                    "minecraft:light_emission": 6
+                    "minecraft:light_emission": 4
                 }
             },
             {

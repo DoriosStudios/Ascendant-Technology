@@ -21,7 +21,7 @@
             "utilitycraft:refining_table": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 25,
+                    "inventory_size": 26,
                     "fixed_fluid_types": true
                 },
                 "machine": {
@@ -30,12 +30,22 @@
                     "fluid_cap": 512000,
                     "fluid_types": 1,
                     "rate_speed_base": 1800,
-                    "upgrades": [9, 10]
+                    "upgrades": [7, 8, 9]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 9 },
-                { "type": "energy", "slot": 10 }
+                {
+                    "type": "speed",
+                    "slot": 7
+                },
+                {
+                    "type": "energy",
+                    "slot": 8
+                },
+                {
+                    "type": "hyper",
+                    "slot": 9
+                }
             ],
             "minecraft:geometry": "geometry.refining_table",
             "minecraft:material_instances": {
@@ -73,25 +83,33 @@
             {
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
-                    "minecraft:transformation": { "rotation": [0, 0, 0] }
+                    "minecraft:transformation": {
+                        "rotation": [0, 0, 0]
+                    }
                 }
             },
             {
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
-                    "minecraft:transformation": { "rotation": [0, 180, 0] }
+                    "minecraft:transformation": {
+                        "rotation": [0, 180, 0]
+                    }
                 }
             },
             {
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
                 "components": {
-                    "minecraft:transformation": { "rotation": [0, -90, 0] }
+                    "minecraft:transformation": {
+                        "rotation": [0, -90, 0]
+                    }
                 }
             },
             {
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
-                    "minecraft:transformation": { "rotation": [0, 90, 0] }
+                    "minecraft:transformation": {
+                        "rotation": [0, 90, 0]
+                    }
                 }
             }
         ]

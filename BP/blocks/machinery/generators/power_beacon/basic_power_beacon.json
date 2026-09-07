@@ -23,10 +23,10 @@
                     "range": 4
                 }
             },
-            "minecraft:geometry": "geometry.energy_transmitter",
+            "minecraft:geometry": "geometry.utilitycraft_power_beacon",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_basic_energy_transmitter_off",
+                    "texture": "utilitycraft_basic_power_beacon_off",
                     "render_method": "alpha_test"
                 }
             },
@@ -47,7 +47,7 @@
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "utilitycraft_basic_energy_transmitter_on",
+                            "texture": "utilitycraft_basic_power_beacon_on",
                             "render_method": "alpha_test"
                         }
                     },

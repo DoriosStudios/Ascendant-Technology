@@ -2,29 +2,28 @@
     "format_version": "1.20.80",
     "minecraft:block": {
         "description": {
-            "identifier": "utilitycraft:nether_tungsten_ore",
+            "identifier": "utilitycraft:aetherium_crystal_block",
             "menu_category": {
-                "category": "nature",
-                "group": "itemGroup.name.ore"
+                "category": "items"
             }
         },
         "components": {
             "minecraft:destructible_by_mining": {
-                "seconds_to_destroy": 3.0
+                "seconds_to_destroy": 5.5
             },
             "minecraft:destructible_by_explosion": {
-                "explosion_resistance": 30.0
+                "explosion_resistance": 8
             },
+            "minecraft:loot": "loot_tables/blocks/aetherium_crystal_block.json",
             "minecraft:geometry": "minecraft:geometry.full_block",
-            "minecraft:loot": "loot_tables/blocks/nether_tungsten_ore.json",
             "minecraft:material_instances": {
                 "*": {
-                    "texture": "utilitycraft_nether_tungsten_ore",
+                    "texture": "utilitycraft_aetherium_crystal_block",
                     "render_method": "opaque"
                 }
             },
             "tag:minecraft:is_pickaxe_item_destructible": {},
-            "tag:minecraft:iron_tier_destructible": {}
+            "tag:minecraft:diamond_tier_destructible": {}
         }
     }
 }

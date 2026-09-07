@@ -8,9 +8,7 @@
             },
             "traits": {
                 "minecraft:placement_direction": {
-                    "enabled_states": [
-                        "minecraft:cardinal_direction"
-                    ],
+                    "enabled_states": ["minecraft:cardinal_direction"],
                     "y_rotation_offset": 180
                 }
             },
@@ -22,19 +20,33 @@
             "utilitycraft:verdant_cultivator": {
                 "entity": {
                     "type": "machine",
-                    "inventory_size": 32
+                    "inventory_size": 33
                 },
                 "machine": {
                     "energy_cap": 1024000,
                     "energy_cost": 3200,
                     "rate_speed_base": 160,
-                    "upgrades": [8, 9, 10]
+                    "upgrades": [8, 9, 10, 11]
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 8 },
-                { "type": "energy", "slot": 9 },
-                { "type": "range", "slot": 10, "max": 4 }
+                {
+                    "type": "speed",
+                    "slot": 8
+                },
+                {
+                    "type": "energy",
+                    "slot": 9
+                },
+                {
+                    "type": "range",
+                    "slot": 10,
+                    "max": 4
+                },
+                {
+                    "type": "hyper",
+                    "slot": 11
+                }
             ],
             "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
@@ -119,11 +131,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            0,
-                            0
-                        ]
+                        "rotation": [0, 0, 0]
                     }
                 }
             },
@@ -131,11 +139,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            180,
-                            0
-                        ]
+                        "rotation": [0, 180, 0]
                     }
                 }
             },
@@ -143,11 +147,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            -90,
-                            0
-                        ]
+                        "rotation": [0, -90, 0]
                     }
                 }
             },
@@ -155,11 +155,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            90,
-                            0
-                        ]
+                        "rotation": [0, 90, 0]
                     }
                 }
             }

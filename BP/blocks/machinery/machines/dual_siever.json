@@ -8,9 +8,7 @@
             },
             "traits": {
                 "minecraft:placement_direction": {
-                    "enabled_states": [
-                        "minecraft:cardinal_direction"
-                    ],
+                    "enabled_states": ["minecraft:cardinal_direction"],
                     "y_rotation_offset": 180
                 }
             },
@@ -35,10 +33,22 @@
                 }
             },
             "utilitycraft:machine_upgrades": [
-                { "type": "speed", "slot": 10 },
-                { "type": "energy", "slot": 11 },
-                { "type": "hyper_processing", "slot": 12 },
-                { "type": "stack", "slot": 13 }
+                {
+                    "type": "speed",
+                    "slot": 10
+                },
+                {
+                    "type": "energy",
+                    "slot": 11
+                },
+                {
+                    "type": "hyper",
+                    "slot": 12
+                },
+                {
+                    "type": "stack",
+                    "slot": 13
+                }
             ],
             "utilitycraft:gas_container": {},
             "utilitycraft:machine_recipes": {
@@ -129,11 +139,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            0,
-                            0
-                        ]
+                        "rotation": [0, 0, 0]
                     }
                 }
             },
@@ -141,11 +147,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            180,
-                            0
-                        ]
+                        "rotation": [0, 180, 0]
                     }
                 }
             },
@@ -153,11 +155,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            -90,
-                            0
-                        ]
+                        "rotation": [0, -90, 0]
                     }
                 }
             },
@@ -165,11 +163,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            90,
-                            0
-                        ]
+                        "rotation": [0, 90, 0]
                     }
                 }
             }

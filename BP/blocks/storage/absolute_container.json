@@ -9,9 +9,7 @@
             },
             "traits": {
                 "minecraft:placement_direction": {
-                    "enabled_states": [
-                        "minecraft:cardinal_direction"
-                    ],
+                    "enabled_states": ["minecraft:cardinal_direction"],
                     "y_rotation_offset": 180
                 }
             },
@@ -44,8 +42,12 @@
                 }
             },
             "minecraft:light_emission": 2,
-            "minecraft:tick": { "interval_range": [4, 4] },
-            "minecraft:destructible_by_mining": { "seconds_to_destroy": 12 },
+            "minecraft:tick": {
+                "interval_range": [4, 4]
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 12
+            },
             "minecraft:destructible_by_explosion": false,
             "tag:dorios:machine": {},
             "tag:dorios:energy": {},
@@ -70,11 +72,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            0,
-                            0
-                        ]
+                        "rotation": [0, 0, 0]
                     }
                 }
             },
@@ -82,11 +80,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            180,
-                            0
-                        ]
+                        "rotation": [0, 180, 0]
                     }
                 }
             },
@@ -94,11 +88,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            -90,
-                            0
-                        ]
+                        "rotation": [0, -90, 0]
                     }
                 }
             },
@@ -106,11 +96,7 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [
-                            0,
-                            90,
-                            0
-                        ]
+                        "rotation": [0, 90, 0]
                     }
                 }
             }

@@ -16,20 +16,20 @@ Template-driven replication chamber that duplicates one item per craft using ene
 2. Fill the internal tank with **Liquified Aetherium**.
 3. Wait for processing.
 4. Collect items from:
-	 - **Slot 7**: original stream
-	 - **Slot 8**: copy stream
+	 - **Slot 8**: original stream
+	 - **Slot 9**: copy stream
 
-## Slot layout (inventory size: 21)
+## Slot layout (inventory size: 23)
 - **0**: energy HUD
 - **1**: status indicator
 - **2**: progress display
 - **3**: template input
-- **4, 5**: upgrade slots
-- **6**: fluid display (internal)
-- **7**: original output
-- **8**: copied output
-- **9-14**: item I/O configuration
-- **15-20**: fluid I/O configuration
+- **4-7**: upgrade slots
+- **8**: fluid display (internal)
+- **9**: original output
+- **10**: copied output
+- **11-16**: item I/O configuration
+- **17-22**: fluid I/O configuration
 
 ## Restrictions
 - Cannot duplicate:
@@ -45,7 +45,7 @@ Template-driven replication chamber that duplicates one item per craft using ene
 - **Processing Rate**: 16,000 DE/tick (16 kDE/t)
 - **Fluid Tank Capacity**: 512,000 mB (512 buckets)
 - **Fluid Consumption**: 50 mB/s of effective recipe time
-- **Upgrade Slots**: 2 (slots 4 and 5)
+- **Upgrade Slots**: 4 (Speed, Energy, Hyper Processing, and Stack)
 
 ## Runtime model
 

@@ -24,7 +24,7 @@ Thermal crucible that melts solids into fluid, with a chance of residue.
 - **Energy Consumption**: Varies per recipe (3,600 - 12,800 DE per craft)
 - **Processing Rate**: 3,600 DE/tick
 - **Fluid Tank Capacity**: 128,000 mB (128 buckets)
-- **Upgrade Slots**: 2 slots (supports speed and energy upgrades)
+- **Upgrade Slots**: 4 slots (Speed, Energy, Hyper Processing, and Stack)
 
 ## Fluids
 - The tank receives the fluid produced by the recipe.
@@ -37,8 +37,10 @@ Thermal crucible that melts solids into fluid, with a chance of residue.
 ### Native Recipes
 | Input | Fluid (output) | Energy (DE) | Time (s) | Byproduct |
 | --- | --- | --- | --- | --- |
-| Aetherium ×1 | Liquified Aetherium - 1000 mB | 9600 | 15 | Obsidian ×1 (25%) |
-| Aetherium Shard ×4 | Liquified Aetherium - 1000 mB | 5400 | 10 | — |
+| Aetherium Ingot ×1 | Liquified Aetherium - 250 mB | 3200 | 15 | — |
+| Aetherium Metal Dust ×1 | Liquified Aetherium - 250 mB | 3200 | 15 | — |
+| Aetherium Shard ×4 | Liquified Aetherium - 25 mB | 3200 | 10 | — |
+| Aetherium Crystal Dust ×8 | Liquified Aetherium - 25 mB | 3200 | 10 | — |
 | Ancient Debris ×2 | Dark Matter - 1000 mB | 12800 | 20 | Netherrack ×2 (35%) |
 | Void Essence ×3 | Dark Matter - 750 mB | 6400 | 9 | Ender Pearl ×1 (20%) |
 | Obsidian ×2 | Dark Matter - 500 mB | 5200 | 8 | Crying Obsidian ×1 (10%) |

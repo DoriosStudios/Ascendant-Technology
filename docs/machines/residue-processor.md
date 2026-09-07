@@ -24,7 +24,7 @@ Residue processor that converts debris into reclaimed materials, with a chance o
 - **Energy Capacity**: 12,800,000 DE (12.8 MDE)
 - **Energy Consumption**: Varies per recipe (2,600 - 7,800 DE per craft)
 - **Processing Rate**: 16,000 DE/tick
-- **Upgrade Slots**: Supports the machine's standard upgrade system
+- **Upgrade Slots**: 4 slots (Speed, Energy, Hyper Processing, and Stack)
 
 ## Recipes
 

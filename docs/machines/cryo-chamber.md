@@ -29,7 +29,7 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 - **Energy Consumption**: Varies by recipe and module (1,600 - 64,000 DE per operation)
 - **Processing Rate**: 2,400 DE/tick
 - **Fluid Tank Capacity**: 64,000 mB (64 buckets) per tank (Water and Cryofluid)
-- **Upgrade Slots**: Speed/efficiency upgrades affect all modules
+- **Upgrade Slots**: 4 slots (Speed, Energy, Hyper Processing, and Stack); upgrades affect all modules
 
 ## Tanks
 - **Water tank** (input): 64,000 mB capacity
@@ -48,7 +48,7 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 | Brute Energized Iron ×1 | Raw Iron ×1 | 500 mB | 8000 | 200 ticks (10s) |
 | Energized Iron Block ×1 | Iron Block ×1 | 4000 mB | 64000 | 1200 ticks (60s) |
 | Brute Energized Iron Block ×1 | Raw Iron Block ×1 | 4000 mB | 64000 | 1200 ticks (60s) |
-| Refined Aetherium Shard ×1 | Aetherium Shard ×1 | 400 mB | 12000 | 300 ticks (15s) |
+| Refined Aetherium Crystal ×1 | Aetherium Shard ×1 | 400 mB | 12000 | 300 ticks (15s) |
 
 ### Cooling (Cooling Chamber)
 | Accepted inputs | Output | Fluid | Energy (DE) | Time |

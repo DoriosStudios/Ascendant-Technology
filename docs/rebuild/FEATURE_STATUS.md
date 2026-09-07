@@ -1,6 +1,6 @@
 # Ascendant Technology feature inventory and status
 
-Last updated: 2026-08-24
+Last updated: 2026-09-07
 
 This document is the AT rebuild tracker. The inventory was obtained from the active
 `BP` and `RP` definitions and the runtime preserved under `data/legacy/BP/scripts`.
@@ -66,7 +66,7 @@ old `main.js`, so they are not part of the confirmed behavior of the previous re
 | ✅ | ⬜ | Absolute Solar Panel — `utilitycraft:absolute_solar_panel` | UC `utilitycraft:solar_panel` | Day/night cycle, generation, and transfer. |
 | ✅ | ⬜ | Absolute Thermo Generator — `utilitycraft:absolute_thermo_generator` | UC `utilitycraft:thermo_generator` + `utilitycraft:io.thermo_generator` | Heat source, coolant, IO, and energy. |
 | ✅ | ⬜ | Absolute Wind Turbine — `utilitycraft:absolute_wind_turbine` | UC `utilitycraft:wind_turbine` | Altitude, weather, generation, and transfer. |
-| ❌ | ⬜ | Power Beacon — `basic`, `advanced`, `expert`, `ultimate`, `absolute` | The `power_beacon` component and ticks are disabled | Rebuild tiers, consumption, range, UI, and effects. |
+| ✅ | ⬜ | Power Beacon — `basic`, `advanced`, `expert`, `ultimate`, `absolute` | Dedicated models/textures, recipes, protected UI slots and fair wireless distribution | Test placement, cable input, toggle, destruction and reload in-game; runtime fixtures pass. |
 
 ## Machines
 

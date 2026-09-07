@@ -16,6 +16,8 @@
  Golden Armor
  Generic Speed
  Swimming Speed
+ Explosion
+ Explosion/Blast Resistance
  Evasion
  Luck
  Double Trouble
@@ -61,7 +63,7 @@
  Golden Drill (for operator)
  Golden Ring
  Dark Ring
- Healed Heart
+ Healed Hear
  Blessed Heart
  Full Heart /  Half Heart
  Full Heart /  Half Heart (Fire)

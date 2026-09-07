@@ -27,7 +27,7 @@ Advanced catalyst weaving: combines a base item, up to six catalysts, and option
 - **Energy Consumption**: Varies per recipe (3,200 - 601,600 DE per craft)
 - **Processing Rate**: 180 DE/tick (very slow, precision crafting)
 - **Fluid Tank Capacity**: 128,000 mB (128 buckets)
-- **Upgrade Slots**: 3 slots (standard upgrade system)
+- **Upgrade Slots**: 4 slots (Speed, Energy, Hyper Processing, and Stack)
 
 ## Fluids
 - Internal tank with display.
@@ -42,12 +42,12 @@ Advanced catalyst weaving: combines a base item, up to six catalysts, and option
 | Input | Catalysts | Fluid | Output | Byproduct | Cost (DE) | Speed |
 | --- | --- | --- | --- | --- | --- | --- |
 | Gold Ingot ×1 | Steel Ingot ×1<br>Energized Iron Ingot ×1<br>Ender Pearl Dust ×4<br>Aetherium Shard ×4 | Lava <br>- 8000 mB | Aetherium Ingot ×1 | Stabilized Obsidian Dust 0–2 (5%) | 12000 | 0.5x |
-| Netherite Ingot ×1 | Aetherium Shard ×4 | Lava <br>- 8000 mB | Aetherium Ingot ×1 | — | 512000 | 12.0x |
+| Gold Ingot ×1 | Steel Ingot ×1<br>Energized Iron Ingot ×1<br>Ender Pearl Dust ×4<br>Aetherium Crystal Dust ×8 | Lava <br>- 8000 mB | Aetherium Ingot ×1 | Stabilized Obsidian Dust 0–2 (5%) | 12000 | 0.5x |
 | Crying Obsidian Dust ×4 | Glowstone Dust ×2<br>Energized Iron Dust ×1 | Liquified Aetherium <br>- 250 mB | Stabilized Obsidian Dust ×2 | Obsidian ×1 (0.1%) | 5400 | 1.0x |
 | Gold Ingot ×1 | Copper Dust ×4 | — | Bronze Ingot ×1 | — | 6400 | 1.0x |
-| Speed Upgrade ×1 | Energized Iron Dust ×2<br>Aetherium Shard ×1<br>Titanium Plate ×1 | — | Hyper Processing Upgrade ×1 | — | 12800 | 0.25x |
+| Speed Upgrade ×1 | Energized Iron Dust ×2<br>Aetherium Metal Dust ×1<br>Titanium Dust ×1 | — | Hyper Processing Upgrade ×1 | — | 12800 | 0.25x |
 | Quadruple Compressed Cobblestone ×1 | Compressed Coal Block 4 ×1 | — | Compressed Blackstone 4 ×1 | — | 601600 | 0.5x |
-| Aetherium Shard ×1 | Amethyst Shard ×1 | Dark Matter <br>- 800 mB | Refined Aetherium Shard ×1 | — | 6400 | 1.0x |
+| Aetherium Shard ×1 | Amethyst Shard ×1 | Dark Matter <br>- 800 mB | Refined Aetherium Crystal ×1 | — | 3200 | 1.0x |
 | Diamond Dust ×2 | Iron Ingot ×1 | Lava <br>- 100 mB | Diamond ×1 | — | 3200 | 1.0x |
 | Emerald Dust ×2 | Iron Ingot ×1 | Lava <br>- 100 mB | Emerald ×1 | — | 3200 | 1.0x |
 | Quartz Dust ×2 | Iron Ingot ×1 | Lava <br>- 100 mB | Quartz ×1 | — | 3200 | 1.0x |

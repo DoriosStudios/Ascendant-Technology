@@ -15,7 +15,7 @@ The Vaporworks Processor converts fluid inputs (primarily water) into pressurize
 - **Energy Capacity:** 9.6M DE
 - **Base Energy Cost:** 2,400 DE per operation
 - **Processing Rate:** 12,000 DE/t base
-- **Upgrade Slots:** 2 (Speed, Hyper, Efficiency upgrades supported)
+- **Upgrade Slots:** 4 (Speed, Energy, Hyper Processing, and Stack)
 
 ## Features
 - Dual fluid tanks (input and output)

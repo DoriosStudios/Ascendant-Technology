@@ -21,7 +21,7 @@ Extreme variant of the Duplicator, focused on singularity items and absurdly hig
 - **Processing Rate**: 2,560,000 DE/tick (extremely fast to meet absurd energy demands)
 - **Fluid Tank Capacity**: 1,024,000 mB (1024 buckets)
 - **Processing Time**: Minimum 3,600s (1 hour) per craft in real time
-- **Upgrade Slots**: Does not support upgrades; You will suffer.
+- **Upgrade Slots**: 4 slots (Speed, Energy, Hyper Processing, and Stack)
 
 ## Energy and Time
 - **Minimum time per craft**: 3,600s (1h).

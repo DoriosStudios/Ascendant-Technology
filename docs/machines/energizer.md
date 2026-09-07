@@ -23,7 +23,7 @@ Converter that turns common items into energized variants without catalysts.
 - **Energy Capacity**: 256,000,000 DE (256 MDE)
 - **Energy Consumption**: Varies per recipe (72,000 - 2,400,000 DE per craft)
 - **Processing Rate**: 24,000 DE/tick
-- **Upgrade Slots**: 3 slots (supports speed, energy, and advanced upgrades)
+- **Upgrade Slots**: 4 slots (Speed, Energy, Hyper Processing, and Stack)
 
 ## Recipes
 

@@ -17,7 +17,7 @@ Below are the native Catalyst Weaver recipes. Infuser recipes are also imported 
 | Gold Ingot ×1 | Copper Dust ×4 | — | Bronze Ingot ×1 | — | 6400 | 1.0x |
 | Speed Upgrade ×1 | Energized Iron Dust ×2<br>Aetherium Shard ×1<br>Titanium Plate ×1 | — | Hyper Processing Upgrade ×1 | — | 12800 | 0.25x |
 | Quadruple Compressed Cobblestone ×1 | Compressed Coal Block 4 ×1 | — | Compressed Blackstone 4 ×1 | — | 601600 | 0.5x |
-| Aetherium Shard ×1 | Amethyst Shard ×1 | Dark Matter <br>- 800 mB | Refined Aetherium Shard ×1 | — | 6400 | 1.0x |
+| Aetherium Shard ×1 | Amethyst Shard ×1 | Dark Matter <br>- 800 mB | Refined Aetherium Crystal ×1 | — | 6400 | 1.0x |
 | Diamond Dust ×2 | Iron Ingot ×1 | Lava <br>- 100 mB | Diamond ×1 | — | 3200 | 1.0x |
 | Emerald Dust ×2 | Iron Ingot ×1 | Lava <br>- 100 mB | Emerald ×1 | — | 3200 | 1.0x |
 | Quartz Dust ×2 | Iron Ingot ×1 | Lava <br>- 100 mB | Quartz ×1 | — | 3200 | 1.0x |

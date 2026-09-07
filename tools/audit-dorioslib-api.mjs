@@ -1,4 +1,5 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { dirname, join, resolve } from "node:path";
 
 const projectRoot = resolve(import.meta.dirname, "..");
@@ -7,158 +8,225 @@ const declarationEntry = join(projectRoot, "types", "DoriosLib", "index.d.ts");
 const inventoryPath = join(projectRoot, "types", "DoriosLib", "API_INVENTORY.md");
 
 function resolveModule(fromFile, specifier) {
-  if (!specifier.startsWith(".")) return undefined;
-  const candidate = resolve(dirname(fromFile), specifier);
-  if (existsSync(candidate)) return candidate;
-  if (existsSync(`${candidate}.js`)) return `${candidate}.js`;
-  return undefined;
+    if (!specifier.startsWith(".")) return undefined;
+    const candidate = resolve(dirname(fromFile), specifier);
+    if (existsSync(candidate)) return candidate;
+    if (existsSync(`${candidate}.js`)) return `${candidate}.js`;
+    return undefined;
 }
 
 function collectRuntimeExports(filePath, visited = new Set()) {
-  const normalizedPath = resolve(filePath);
-  if (visited.has(normalizedPath)) return new Map();
-  visited.add(normalizedPath);
+    const normalizedPath = resolve(filePath);
+    if (visited.has(normalizedPath)) return new Map();
+    visited.add(normalizedPath);
 
-  const source = readFileSync(normalizedPath, "utf8");
-  const exports = new Map();
-  const add = (name, kind, children) => exports.set(name, { kind, children });
+    const source = readFileSync(normalizedPath, "utf8");
+    const exports = new Map();
+    const add = (name, kind, children) => exports.set(name, { kind, children });
 
-  for (const match of source.matchAll(/export\s+\*\s+from\s+["']([^"']+)["']/g)) {
-    const modulePath = resolveModule(normalizedPath, match[1]);
-    if (!modulePath) continue;
-    for (const [name, data] of collectRuntimeExports(modulePath, new Set(visited))) {
-      exports.set(name, data);
+    for (const match of source.matchAll(/export\s+\*\s+from\s+["']([^"']+)["']/g)) {
+        const modulePath = resolveModule(normalizedPath, match[1]);
+        if (!modulePath) continue;
+        for (const [name, data] of collectRuntimeExports(modulePath, new Set(visited))) {
+            exports.set(name, data);
+        }
     }
-  }
 
-  for (const match of source.matchAll(/export\s+\*\s+as\s+([A-Za-z_$][\w$]*)\s+from\s+["']([^"']+)["']/g)) {
-    const modulePath = resolveModule(normalizedPath, match[2]);
-    add(match[1], "namespace", modulePath ? collectRuntimeExports(modulePath, new Set(visited)) : new Map());
-  }
-
-  for (const match of source.matchAll(/export\s*\{([\s\S]*?)\}\s*(?:from\s*["']([^"']+)["'])?\s*;/g)) {
-    for (const rawSpecifier of match[1].split(",")) {
-      const specifier = rawSpecifier.trim();
-      if (!specifier) continue;
-      const parts = specifier.split(/\s+as\s+/);
-      add(parts.at(-1), "re-export");
+    for (const match of source.matchAll(
+        /export\s+\*\s+as\s+([A-Za-z_$][\w$]*)\s+from\s+["']([^"']+)["']/g,
+    )) {
+        const modulePath = resolveModule(normalizedPath, match[2]);
+        add(
+            match[1],
+            "namespace",
+            modulePath ? collectRuntimeExports(modulePath, new Set(visited)) : new Map(),
+        );
     }
-  }
 
-  for (const match of source.matchAll(/^export\s+(?:async\s+)?(class|function|const|let|var)\s+([A-Za-z_$][\w$]*)/gm)) {
-    add(match[2], match[1] === "function" ? "function" : match[1] === "class" ? "class" : "variable");
-  }
+    for (const match of source.matchAll(
+        /export\s*\{([\s\S]*?)\}\s*(?:from\s*["']([^"']+)["'])?\s*;/g,
+    )) {
+        for (const rawSpecifier of match[1].split(",")) {
+            const specifier = rawSpecifier.trim();
+            if (!specifier) continue;
+            const parts = specifier.split(/\s+as\s+/);
+            add(parts.at(-1), "re-export");
+        }
+    }
 
-  return exports;
+    for (const match of source.matchAll(
+        /^export\s+(?:async\s+)?(class|function|const|let|var)\s+([A-Za-z_$][\w$]*)/gm,
+    )) {
+        add(
+            match[2],
+            match[1] === "function" ? "function" : match[1] === "class" ? "class" : "variable",
+        );
+    }
+
+    return exports;
 }
 
 function findMatchingBrace(source, openIndex) {
-  let depth = 0;
-  for (let index = openIndex; index < source.length; index++) {
-    if (source[index] === "{") depth++;
-    else if (source[index] === "}" && --depth === 0) return index;
-  }
-  throw new SyntaxError(`Unclosed declaration block at character ${openIndex}`);
+    let depth = 0;
+    for (let index = openIndex; index < source.length; index++) {
+        if (source[index] === "{") depth++;
+        else if (source[index] === "}" && --depth === 0) return index;
+    }
+    throw new SyntaxError(`Unclosed declaration block at character ${openIndex}`);
 }
 
 function collectNamespaceMembers(body) {
-  const members = new Map();
-  let depth = 0;
-  let offset = 0;
+    const members = new Map();
+    let depth = 0;
+    let offset = 0;
 
-  for (const line of body.split(/\r?\n/)) {
-    const trimmed = line.trim();
-    if (depth === 0) {
-      const valueMatch = /^(?:export\s+)?(const|let|var|function|class)\s+([A-Za-z_$][\w$]*)/.exec(trimmed);
-      if (valueMatch) members.set(valueMatch[2], { kind: valueMatch[1] === "function" ? "function" : "variable" });
+    for (const line of body.split(/\r?\n/)) {
+        const trimmed = line.trim();
+        if (depth === 0) {
+            const valueMatch =
+                /^(?:export\s+)?(const|let|var|function|class)\s+([A-Za-z_$][\w$]*)/.exec(trimmed);
+            if (valueMatch)
+                members.set(valueMatch[2], {
+                    kind: valueMatch[1] === "function" ? "function" : "variable",
+                });
 
-      const namespaceMatch = /^(?:export\s+)?namespace\s+([A-Za-z_$][\w$]*)\s*\{/.exec(trimmed);
-      if (namespaceMatch) {
-        const lineStart = offset + line.indexOf("namespace");
-        const openIndex = body.indexOf("{", lineStart);
-        const closeIndex = findMatchingBrace(body, openIndex);
-        members.set(namespaceMatch[1], {
-          kind: "namespace",
-          children: collectNamespaceMembers(body.slice(openIndex + 1, closeIndex)),
-        });
-      }
+            const namespaceMatch = /^(?:export\s+)?namespace\s+([A-Za-z_$][\w$]*)\s*\{/.exec(
+                trimmed,
+            );
+            if (namespaceMatch) {
+                const lineStart = offset + line.indexOf("namespace");
+                const openIndex = body.indexOf("{", lineStart);
+                const closeIndex = findMatchingBrace(body, openIndex);
+                members.set(namespaceMatch[1], {
+                    kind: "namespace",
+                    children: collectNamespaceMembers(body.slice(openIndex + 1, closeIndex)),
+                });
+            }
+        }
+
+        for (const character of line) {
+            if (character === "{") depth++;
+            else if (character === "}") depth--;
+        }
+        offset += line.length + 1;
     }
 
-    for (const character of line) {
-      if (character === "{") depth++;
-      else if (character === "}") depth--;
-    }
-    offset += line.length + 1;
-  }
-
-  return members;
+    return members;
 }
 
 function collectDeclarationExports(filePath) {
-  const source = readFileSync(filePath, "utf8");
-  const exports = new Map();
+    const source = readFileSync(filePath, "utf8");
+    const exports = new Map();
 
-  for (const match of source.matchAll(/^export\s+(const|let|var|function|class)\s+([A-Za-z_$][\w$]*)/gm)) {
-    exports.set(match[2], { kind: match[1] === "function" ? "function" : "variable" });
-  }
+    for (const match of source.matchAll(
+        /^export\s+(const|let|var|function|class)\s+([A-Za-z_$][\w$]*)/gm,
+    )) {
+        exports.set(match[2], { kind: match[1] === "function" ? "function" : "variable" });
+    }
 
-  for (const match of source.matchAll(/^export\s+namespace\s+([A-Za-z_$][\w$]*)\s*\{/gm)) {
-    const openIndex = source.indexOf("{", match.index);
-    const closeIndex = findMatchingBrace(source, openIndex);
-    exports.set(match[1], {
-      kind: "namespace",
-      children: collectNamespaceMembers(source.slice(openIndex + 1, closeIndex)),
-    });
-  }
+    for (const match of source.matchAll(/^export\s+namespace\s+([A-Za-z_$][\w$]*)\s*\{/gm)) {
+        const openIndex = source.indexOf("{", match.index);
+        const closeIndex = findMatchingBrace(source, openIndex);
+        exports.set(match[1], {
+            kind: "namespace",
+            children: collectNamespaceMembers(source.slice(openIndex + 1, closeIndex)),
+        });
+    }
 
-  return exports;
+    return exports;
 }
 
 function flattenExports(exports, prefix = "") {
-  const paths = new Set();
-  for (const [name, data] of exports) {
-    const path = prefix ? `${prefix}.${name}` : name;
-    paths.add(path);
-    if (data.children) {
-      for (const child of flattenExports(data.children, path)) paths.add(child);
+    const paths = new Set();
+    for (const [name, data] of exports) {
+        const path = prefix ? `${prefix}.${name}` : name;
+        paths.add(path);
+        if (data.children) {
+            for (const child of flattenExports(data.children, path)) paths.add(child);
+        }
     }
-  }
-  return paths;
+    return paths;
 }
 
 function collectTypeExports(source) {
-  return new Set(
-    [...source.matchAll(/^export\s+(?:interface|type)\s+([A-Za-z_$][\w$]*)/gm)]
-      .map((match) => match[1]),
-  );
+    return new Set(
+        [...source.matchAll(/^export\s+(?:interface|type)\s+([A-Za-z_$][\w$]*)/gm)].map(
+            (match) => match[1],
+        ),
+    );
 }
 
 function collectInventoryNames(source, marker) {
-  const start = `<!-- ${marker}:start -->`;
-  const end = `<!-- ${marker}:end -->`;
-  const startIndex = source.indexOf(start);
-  const endIndex = source.indexOf(end);
-  if (startIndex < 0 || endIndex < startIndex) return [];
-  return [...source.slice(startIndex + start.length, endIndex).matchAll(/`([A-Za-z_$][\w$.]*)`/g)]
-    .map((match) => match[1]);
+    const start = `<!-- ${marker}:start -->`;
+    const end = `<!-- ${marker}:end -->`;
+    const startIndex = source.indexOf(start);
+    const endIndex = source.indexOf(end);
+    if (startIndex < 0 || endIndex < startIndex) return [];
+    return [
+        ...source.slice(startIndex + start.length, endIndex).matchAll(/`([A-Za-z_$][\w$.]*)`/g),
+    ].map((match) => match[1]);
 }
 
 function compare(expected, actualValues) {
-  const actual = new Set(actualValues);
-  return {
-    duplicates: [...new Set(actualValues.filter((name, index) => actualValues.indexOf(name) !== index))].sort(),
-    missing: [...expected].filter((name) => !actual.has(name)).sort(),
-    stale: [...actual].filter((name) => !expected.has(name)).sort(),
-  };
+    const actual = new Set(actualValues);
+    return {
+        duplicates: [
+            ...new Set(actualValues.filter((name, index) => actualValues.indexOf(name) !== index)),
+        ].sort(),
+        missing: [...expected].filter((name) => !actual.has(name)).sort(),
+        stale: [...actual].filter((name) => !expected.has(name)).sort(),
+    };
 }
 
 function reportComparison(label, comparison) {
-  if (comparison.missing.length) console.log(`Missing ${label}:\n${comparison.missing.join("\n")}`);
-  if (comparison.stale.length) console.log(`Stale ${label}:\n${comparison.stale.join("\n")}`);
-  if (comparison.duplicates.length) console.log(`Duplicate ${label}:\n${comparison.duplicates.join("\n")}`);
+    if (comparison.missing.length)
+        console.log(`Missing ${label}:\n${comparison.missing.join("\n")}`);
+    if (comparison.stale.length) console.log(`Stale ${label}:\n${comparison.stale.join("\n")}`);
+    if (comparison.duplicates.length)
+        console.log(`Duplicate ${label}:\n${comparison.duplicates.join("\n")}`);
 }
 
 const runtimePaths = flattenExports(collectRuntimeExports(runtimeEntry));
+// This project resolves DoriosLib types from runtime JSDoc. Older checkouts
+// also carried handwritten declarations; retain that audit when they exist.
+if (!existsSync(declarationEntry)) {
+    const snapshot = JSON.parse(
+        readFileSync(join(projectRoot, "docs", "dependencies", "dorioslib-upstream.json"), "utf8"),
+    );
+    const failures = [];
+    for (const [file, expected] of Object.entries(snapshot.files)) {
+        const absolute = join(projectRoot, file);
+        if (!existsSync(absolute)) {
+            failures.push(`Missing upstream file: ${file}`);
+            continue;
+        }
+        const source = readFileSync(absolute, "utf8").replaceAll("\r\n", "\n");
+        const actual = createHash("sha256").update(source).digest("hex");
+        if (actual !== expected) failures.push(`Changed upstream file: ${file}`);
+    }
+    const libRoot = dirname(runtimeEntry);
+    for (const file of readdirSync(libRoot, { recursive: true, withFileTypes: true })) {
+        if (!file.isFile()) continue;
+        const absolute = join(file.parentPath, file.name);
+        const relative = `BP/scripts/DoriosLib/${absolute.slice(libRoot.length + 1).replaceAll("\\", "/")}`;
+        if (!snapshot.files[relative] && !snapshot.localFiles.includes(relative))
+            failures.push(`Untracked library file: ${relative}`);
+    }
+    if (process.argv.includes("--list")) {
+        for (const path of [...runtimePaths].sort()) console.log(path);
+    }
+    if (failures.length) {
+        console.error(failures.join("\n"));
+        process.exit(1);
+    }
+    console.log(
+        `DoriosLib JSDoc runtime audit passed: ${runtimePaths.size} API paths; ${Object.keys(snapshot.files).length} files match UtilityCraft ${snapshot.commit.slice(0, 8)} (LF-normalized SHA-256).`,
+    );
+    console.log(
+        "Addon config.js is intentionally local; no handwritten declaration files are used.",
+    );
+    process.exit(0);
+}
 const declarationSource = readFileSync(declarationEntry, "utf8");
 const declarationPaths = flattenExports(collectDeclarationExports(declarationEntry));
 const typeExports = collectTypeExports(declarationSource);
@@ -173,13 +241,16 @@ console.log(`Declared runtime API paths: ${declarationPaths.size}`);
 console.log(`Declared type-only exports: ${typeExports.size}`);
 
 if (process.argv.includes("--list")) {
-  for (const path of [...runtimePaths].sort()) console.log(path);
+    for (const path of [...runtimePaths].sort()) console.log(path);
 }
 
 reportComparison("declarations", declarations);
 reportComparison("runtime inventory paths", runtimeInventory);
 reportComparison("type inventory names", typeInventory);
 
-if ([declarations, runtimeInventory, typeInventory].some((result) =>
-  result.missing.length || result.stale.length || result.duplicates.length
-)) process.exitCode = 1;
+if (
+    [declarations, runtimeInventory, typeInventory].some(
+        (result) => result.missing.length || result.stale.length || result.duplicates.length,
+    )
+)
+    process.exitCode = 1;

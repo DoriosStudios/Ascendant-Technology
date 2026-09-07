@@ -1,0 +1,34 @@
+{
+  "repository": "https://github.com/DoriosStudios/UtilityCraft",
+  "commit": "4cc859f5475cbe055d08bba39bfea5873f2313bf",
+  "version": "2.1.0",
+  "normalization": "UTF-8 text with CRLF converted to LF before SHA-256",
+  "localFiles": [
+    "BP/scripts/DoriosLib/config.js"
+  ],
+  "files": {
+    "BP/scripts/DoriosLib/README.md": "ca218c676e2dceb55e9945c407632a92109d55f3a96377ec6fc0030e6842d110",
+    "BP/scripts/DoriosLib/block/index.js": "e5799d923482c3f88de09476f10fe0afad6e8785d09f18368abbf9e3273334ee",
+    "BP/scripts/DoriosLib/constants/index.js": "48b13caac17250da23789219478c9377cace4b53a7378fa9ef4e19335096492f",
+    "BP/scripts/DoriosLib/containers/config.js": "b52e2d6537ad3589ecae2ac95bf9b65edc149c7a67df363da5cc7858f823b6d1",
+    "BP/scripts/DoriosLib/containers/constants.js": "2e6ba1de4289f9ccdd233fed96d59898e68bd284e65a10509d33c4c35ba0e242",
+    "BP/scripts/DoriosLib/containers/index.js": "d95fce5174d9381d554c39ea735b73211e92df413552265108706cbf991190b5",
+    "BP/scripts/DoriosLib/containers/ioFaceState.js": "a0517682deece0834029d8e4393acd769db23db4b6898f616e8a15436e4ac4f3",
+    "BP/scripts/DoriosLib/dependencies/index.js": "69e2543551fa7f9e89daddf8effa0fc2906da23de75bf0eeb99a0a2e8edf87d0",
+    "BP/scripts/DoriosLib/entity/index.js": "8bed9f1a49c125de6f668251148506560060a7ada20cf74a59349a7187b083c7",
+    "BP/scripts/DoriosLib/index.js": "fdfbdc365ef195aa41fcb61dcbda62c53f05a5ec31541112b0335f48841f856f",
+    "BP/scripts/DoriosLib/item/durability.js": "86d80a6314a122dba04cd8f032a45dc63edaeede135c2bd3f402f74dd596bdcb",
+    "BP/scripts/DoriosLib/item/index.js": "3d68cb83aa3e78c6b0da0a6319a209542b1f2a371ea7f9447e59bdddddb0298a",
+    "BP/scripts/DoriosLib/linkNodes/index.js": "aefb56075605de97880c41f7591d49135fdbeb4a9015368800f916f09ae44a27",
+    "BP/scripts/DoriosLib/linkNodes/io.js": "47313676f2a9ea78334cae3c515f3c2cec2904f81870b9590811f1bba09d93ba",
+    "BP/scripts/DoriosLib/math/index.js": "e4398855464b56fa1bd54457b83f6996192ec512b16d28f620433c47b7bff6d7",
+    "BP/scripts/DoriosLib/messages/index.js": "c101fe758c8716d0b2ebd7b7232e5f69a3f5246e320d9721cabcdc04e47cc40f",
+    "BP/scripts/DoriosLib/player/index.js": "b8f1ac9bc61089dd462526bff830fd794106c6d55a6397f0e4802d24b17c7b7e",
+    "BP/scripts/DoriosLib/registry/index.js": "4bc865658ac95223ec425c6d6f789c801709a30becbf390beb6399bbb760434e",
+    "BP/scripts/DoriosLib/text/index.js": "247112b5026a2d47123dfd4607beb461316c7a7d7ea99af8665384f15ccab240",
+    "BP/scripts/DoriosLib/time/index.js": "4faa886a8620652f824292ba3d2fdc75a91f3a7d53ef6d469b82a18489698912",
+    "BP/scripts/DoriosLib/utils/index.js": "36c052506907a3ead9904132bb5e3335f9986b502970ccec7e4581a22a78ddd6",
+    "BP/scripts/DoriosLib/utils/json.js": "23a585022b800dc2fcb6757ad43ca17de0223cc8d24727e1b3a9c5ce4a39a55f",
+    "BP/scripts/DoriosCore/buttons/index.js": "6591864fcde14459895e9f1d5a9cff7de0cfeea492eb4cb9f0c2d9211a8b7a20"
+  }
+}

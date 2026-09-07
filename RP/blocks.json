@@ -142,6 +142,12 @@
 	"utilitycraft:energizer": {
 		"sound": "metal"
 	},
+	"utilitycraft:compactor": {
+		"sound": "metal"
+	},
+	"utilitycraft:decompactor": {
+		"sound": "metal"
+	},
 	"utilitycraft:laser_barrier": {
 		"sound": "metal"
 	},
@@ -206,8 +212,11 @@
 	"utilitycraft:titanium_block": {
 		"sound": "metal"
 	},
-	"utilitycraft:aetherium_block": {
+	"utilitycraft:aetherium_crystal_block": {
 		"sound": "amethyst_block"
+	},
+	"utilitycraft:aetherium_block": {
+		"sound": "metal"
 	},
 	"utilitycraft:deepslate_aetherium_ore": {
 		"sound": "deepslate"

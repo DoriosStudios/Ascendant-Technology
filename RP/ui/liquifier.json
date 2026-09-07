@@ -64,26 +64,30 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [39, 29],
-                    "collection_index": 5
+                    "collection_index": 8
                 }
             },
             {
                 "liquid_output@uc.liquid_output_1_bar": {
-                    "$collection_index": 4,
+                    "$collection_index": 9,
                     "$has_bg": false,
                     "offset": [55, 0]
                 }
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "$upgrade_index_1": 6,
-                    "$upgrade_index_2": 7,
+                    "$upgrade_index_1": 4,
+                    "$upgrade_index_2": 5,
+                    "$upgrade_index_3": 6,
+                    "$upgrade_index_4": 7,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
-                    "$has_third_upgrade": false,
-                    "$has_fourth_upgrade": false,
+                    "$has_third_upgrade": true,
+                    "$has_fourth_upgrade": true,
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade",
+                    "$upgrade_overlay_4": "textures/items/machinery/stack_upgrade"
                 }
             },
             {
@@ -100,18 +104,18 @@
                     "$io_right_texture": "textures/blocks/machines/liquifier_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/liquifier_off_down",
                     "$io_back_texture": "textures/blocks/machines/liquifier_off_south",
-                    "$io_item_top_index": 8,
-                    "$io_item_left_index": 9,
-                    "$io_item_front_index": 10,
-                    "$io_item_right_index": 11,
-                    "$io_item_bottom_index": 12,
-                    "$io_item_back_index": 13,
-                    "$io_fluid_top_index": 14,
-                    "$io_fluid_left_index": 15,
-                    "$io_fluid_front_index": 16,
-                    "$io_fluid_right_index": 17,
-                    "$io_fluid_bottom_index": 18,
-                    "$io_fluid_back_index": 19
+                    "$io_item_top_index": 10,
+                    "$io_item_left_index": 11,
+                    "$io_item_front_index": 12,
+                    "$io_item_right_index": 13,
+                    "$io_item_bottom_index": 14,
+                    "$io_item_back_index": 15,
+                    "$io_fluid_top_index": 16,
+                    "$io_fluid_left_index": 17,
+                    "$io_fluid_front_index": 18,
+                    "$io_fluid_right_index": 19,
+                    "$io_fluid_bottom_index": 20,
+                    "$io_fluid_back_index": 21
                 }
             },
             {

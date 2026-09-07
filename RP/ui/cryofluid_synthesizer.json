@@ -28,12 +28,28 @@
                     "anchor_to": "top_right",
                     "offset": [40, -8],
                     "controls": [
-                        { "close_button@common.close_button": {} }
+                        {
+                            "close_button@common.close_button": {}
+                        }
                     ]
                 }
             },
-            { "machine_name@uc.machine_name": { "offset": [0, -2] } },
-            { "side_panel@ascendant_common.info_panel": { "anchor_from": "top_left", "anchor_to": "top_left", "$has_text": false, "$text_borders": [88, 150], "$bg_size": [104, 166], "$info_size": [96, 158], "offset": [-102, -7] } },
+            {
+                "machine_name@uc.machine_name": {
+                    "offset": [0, -2]
+                }
+            },
+            {
+                "side_panel@ascendant_common.info_panel": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$has_text": false,
+                    "$text_borders": [88, 150],
+                    "$bg_size": [104, 166],
+                    "$info_size": [96, 158],
+                    "offset": [-102, -7]
+                }
+            },
             {
                 "item_label@uc.text_label": {
                     "collection_index": 1,
@@ -156,29 +172,55 @@
     "utility_panel": {
         "type": "panel",
         "controls": [
-            { "container_gamepad_helpers@common.container_gamepad_helpers": {} },
-            { "flying_item_renderer@common.flying_item_renderer": { "layer": 40 } },
-            { "selected_item_details_factory@common.selected_item_details_factory": {} },
-            { "item_lock_notification_factory@common.item_lock_notification_factory": {} },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {}
+            },
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 40
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {}
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
                     "controls": [
-                        { "common_panel@common.common_panel": { "$show_close_button": false } },
+                        {
+                            "common_panel@common.common_panel": {
+                                "$show_close_button": false
+                            }
+                        },
                         {
                             "chest_panel": {
                                 "type": "panel",
                                 "layer": 5,
                                 "controls": [
-                                    { "cryofluid_synthesizer_top@cryofluid_synthesizer.cryofluid_synthesizer_top": {} },
-                                    { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {} },
-                                    { "hotbar_grid@common.hotbar_grid_template": {} },
-                                    { "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {} }
+                                    {
+                                        "cryofluid_synthesizer_top@cryofluid_synthesizer.cryofluid_synthesizer_top": {}
+                                    },
+                                    {
+                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+                                    },
+                                    {
+                                        "hotbar_grid@common.hotbar_grid_template": {}
+                                    },
+                                    {
+                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+                                    }
                                 ]
                             }
                         },
-                        { "inventory_selected_icon_button@common.inventory_selected_icon_button": {} },
-                        { "gamepad_cursor@common.gamepad_cursor_button": {} }
+                        {
+                            "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                        },
+                        {
+                            "gamepad_cursor@common.gamepad_cursor_button": {}
+                        }
                     ]
                 }
             }

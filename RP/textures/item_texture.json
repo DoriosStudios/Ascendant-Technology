@@ -2,6 +2,9 @@
 	"resource_pack_name": "UtilityCraft Expanded",
 	"texture_name": "atlas.items",
 	"texture_data": {
+		"utilitycraft_aetherium_crystal_dust": {
+			"textures": "textures/items/ores/aetherium_crystal_dust"
+		},
 		"utilitycraft_aetherium": {
 			"textures": "textures/items/ores/aetherium_ingot"
 		},
@@ -9,10 +12,13 @@
 			"textures": "textures/items/ores/aetherium_dust"
 		},
 		"utilitycraft_aetherium_shard": {
-			"textures": "textures/items/ores/aetherium_shard"
+			"textures": "textures/items/ores/aetherium_shards"
 		},
-		"utilitycraft_refined_aetherium_shard": {
-			"textures": "textures/items/ores/refined_aetherium_shard"
+		"utilitycraft_aetherium_crystal": {
+			"textures": "textures/items/ores/aetherium_crystal"
+		},
+		"utilitycraft_refined_aetherium_crystal": {
+			"textures": "textures/items/ores/refined_aetherium_crystal"
 		},
 		"utilitycraft_runic_core": {
 			"textures": "textures/items/ores/runic_core"

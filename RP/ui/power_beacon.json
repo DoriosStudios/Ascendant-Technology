@@ -25,9 +25,9 @@
         "transmission_button@uc.machine_button": {
           "anchor_from": "top_left",
           "anchor_to": "top_left",
-          "offset": [105, 57],
+          "offset": [179, 24],
           "$index": 2,
-          "$button_size": [18, 18]
+          "$button_size": [22, 22]
         }
       },
       {
@@ -36,7 +36,7 @@
           "anchor_from": "top_left",
           "anchor_to": "top_left",
           "$text_scale": 0.55,
-          "offset": [14, 12]
+          "offset": [16, 16]
         }
       },
       {

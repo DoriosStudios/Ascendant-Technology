@@ -6,14 +6,70 @@
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
-            { "out_1@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "collection_index": 13 } },
-            { "out_2@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 0], "collection_index": 14 } },
-            { "out_3@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 0], "collection_index": 15 } },
-            { "out_4@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 0], "collection_index": 16 } },
-            { "out_5@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 18], "collection_index": 17 } },
-            { "out_6@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 18], "collection_index": 18 } },
-            { "out_7@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 18], "collection_index": 19 } },
-            { "out_8@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 18], "collection_index": 20 } },
+            {
+                "out_1@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 0],
+                    "collection_index": 13
+                }
+            },
+            {
+                "out_2@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 0],
+                    "collection_index": 14
+                }
+            },
+            {
+                "out_3@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [36, 0],
+                    "collection_index": 15
+                }
+            },
+            {
+                "out_4@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [54, 0],
+                    "collection_index": 16
+                }
+            },
+            {
+                "out_5@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 18],
+                    "collection_index": 17
+                }
+            },
+            {
+                "out_6@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 18],
+                    "collection_index": 18
+                }
+            },
+            {
+                "out_7@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [36, 18],
+                    "collection_index": 19
+                }
+            },
+            {
+                "out_8@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [54, 18],
+                    "collection_index": 20
+                }
+            },
             {
                 "grid_outline": {
                     "type": "image",
@@ -46,9 +102,14 @@
         "controls": [
             {
                 "screen": {
-                    "type": "image", "texture": "textures/ui/dialog_background_opaque_opaque",
-                    "anchor_from": "center", "anchor_to": "center",
-                    "$cell_image_size": [200, 166], "size": [200, 166], "offset": [21, 40], "layer": -1
+                    "type": "image",
+                    "texture": "textures/ui/dialog_background_opaque_opaque",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "$cell_image_size": [200, 166],
+                    "size": [200, 166],
+                    "offset": [21, 40],
+                    "layer": -1
                 }
             },
             {
@@ -67,7 +128,8 @@
                 "side_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "$has_text": false, "$text_borders": [88, 150],
+                    "$has_text": false,
+                    "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
                     "$info_size": [96, 158],
                     "offset": [-100, -7],

@@ -4,26 +4,26 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [ 220, 136 ],
-        "offset": [ -10, -46 ],
+        "size": [220, 136],
+        "offset": [-10, -46],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
                 "machine_name@uc.machine_name": {
-                    "offset": [ 26, 20 ]
+                    "offset": [26, 20]
                 }
             },
             {
                 "status_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [ -74, 31 ],
+                    "offset": [-74, 31],
                     "$background_color": "blue",
                     "$has_text": false,
-                    "$bg_size": [ 104, 166 ],
-                    "$info_size": [ 96, 158 ],
-                    "$text_borders": [ 88, 150 ],
+                    "$bg_size": [104, 166],
+                    "$info_size": [96, 158],
+                    "$text_borders": [88, 150],
                     "layer": 0
                 }
             },
@@ -34,8 +34,8 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$text_scale": 0.55,
-                    "offset": [ -62, 40 ],
-                    "size": [ 88, 148 ]
+                    "offset": [-62, 40],
+                    "size": [88, 148]
                 }
             },
             {
@@ -44,16 +44,16 @@
                     "$has_bg": false,
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ 66, 4 ]
+                    "offset": [66, 4]
                 }
             },
             {
                 "xp_bar@uc.liquid_input_1_bar": {
-                    "$collection_index": 11,
+                    "$collection_index": 10,
                     "$has_bg": false,
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ 46, 4 ]
+                    "offset": [46, 4]
                 }
             },
             {
@@ -71,7 +71,7 @@
                 "progress@uc.progress_display": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ 9, -2 ],
+                    "offset": [9, -2],
                     "collection_index": 2
                 }
             },
@@ -79,7 +79,7 @@
                 "ingot_slot@uc.input_2_slot": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ -48, -12 ],
+                    "offset": [-48, -12],
                     "collection_index": 4
                 }
             },
@@ -87,7 +87,7 @@
                 "chip_slot@uc.input_3_slot": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ -48, 6 ],
+                    "offset": [-48, 6],
                     "collection_index": 5
                 }
             },
@@ -95,8 +95,8 @@
                 "runic_core_slot@common.container_item": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ -48, 24 ],
-                    "collection_index": 8
+                    "offset": [-48, 24],
+                    "collection_index": 6
                 }
             },
             {
@@ -105,8 +105,8 @@
                     "texture": "textures/ui/outlines/yellow_outline",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ -48, 24 ],
-                    "size": [ 18, 18 ],
+                    "offset": [-48, 24],
+                    "size": [18, 18],
                     "layer": 5
                 }
             },
@@ -114,15 +114,15 @@
                 "confirm_button@uc.machine_button": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [ 9, 24 ],
-                    "$index": 6,
-                    "$button_size": [ 56, 18 ],
+                    "offset": [9, 24],
+                    "$index": 12,
+                    "$button_size": [56, 18],
                     "$default_texture": "textures/ui/cells/inverted_purple_cell_image",
                     "$hover_texture": "textures/ui/cells/hover_inverted_purple_cell_image",
                     "$pressed_texture": "textures/ui/cells/purple_cell_image",
                     "$button_text": "Refine"
                 }
-            }, /*
+            } /*
             {
                 "details_screen@ascendant_common.screen": {
                     "anchor_from": "center",
@@ -134,7 +134,7 @@
             },
             {
                 "details_label@uc.text_label": {
-                    "collection_index": 7,
+                    "collection_index": 13,
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "size": [52, 102],
@@ -142,19 +142,20 @@
                     "offset": [67, -10],
                     "layer": 2
                 }
-            },*/
+            },*/,
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "$upgrade_index_1": 9,
-                    "$upgrade_index_2": 10,
+                    "$upgrade_index_1": 7,
+                    "$upgrade_index_2": 8,
                     "$upgrade_index_3": 9,
-                    "$upgrade_index_4": 10,
+                    "$upgrade_index_4": 9,
                     "$has_first_upgrade": true,
                     "$has_second_upgrade": true,
-                    "$has_third_upgrade": false,
+                    "$has_third_upgrade": true,
                     "$has_fourth_upgrade": false,
                     "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
-                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade"
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade"
                 }
             },
             {
@@ -171,18 +172,18 @@
                     "$io_right_texture": "textures/blocks/machines/enchantment_station",
                     "$io_bottom_texture": "textures/blocks/machines/enchantment_station",
                     "$io_back_texture": "textures/blocks/machines/enchantment_station",
-                    "$io_item_top_index": 12,
-                    "$io_item_left_index": 13,
-                    "$io_item_front_index": 14,
-                    "$io_item_right_index": 15,
-                    "$io_item_bottom_index": 16,
-                    "$io_item_back_index": 17,
-                    "$io_fluid_top_index": 18,
-                    "$io_fluid_left_index": 19,
-                    "$io_fluid_front_index": 20,
-                    "$io_fluid_right_index": 21,
-                    "$io_fluid_bottom_index": 22,
-                    "$io_fluid_back_index": 23
+                    "$io_item_top_index": 14,
+                    "$io_item_left_index": 15,
+                    "$io_item_front_index": 16,
+                    "$io_item_right_index": 17,
+                    "$io_item_bottom_index": 18,
+                    "$io_item_back_index": 19,
+                    "$io_fluid_top_index": 20,
+                    "$io_fluid_left_index": 21,
+                    "$io_fluid_front_index": 22,
+                    "$io_fluid_right_index": 23,
+                    "$io_fluid_bottom_index": 24,
+                    "$io_fluid_back_index": 25
                 }
             },
             {
@@ -199,16 +200,16 @@
         "anchor_from": "center",
         "anchor_to": "center",
         "layer": 6,
-        "size": [ 176, "100%c"],
+        "size": [176, "100%c"],
         "controls": [
             {
                 "all_stats_label@uc.text_label": {
-                    "collection_index": 24,
+                    "collection_index": 11,
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "size": [ 168, 158 ],
+                    "size": [168, 158],
                     "$text_scale": 0.6,
-                    "offset": [ 0, 0 ],
+                    "offset": [0, 0],
                     "layer": 6
                 }
             },
@@ -216,8 +217,8 @@
                 "stats_screen@ascendant_common.screen": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "size": [ "100%", "100% + 8px" ],
-                    "offset": [ 0, 4 ],
+                    "size": ["100%", "100% + 8px"],
+                    "offset": [0, 4],
                     "layer": 1
                 }
             }
@@ -227,14 +228,14 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [ 220, 136 ],
-        "offset": [ -10, -46 ],
+        "size": [220, 136],
+        "offset": [-10, -46],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
                 "machine_name@uc.machine_name": {
-                    "offset": [ 48, -24 ]
+                    "offset": [48, -24]
                 }
             },
             {
@@ -242,10 +243,10 @@
                     "type": "label",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [ -74, 4 ],
-                    "size": [ 72, 20 ],
+                    "offset": [-74, 4],
+                    "size": [72, 20],
                     "text": "ui.utilitycraft:refining_table.all_statistics",
-                    "color": [ 0.75, 0.55, 1.0 ],
+                    "color": [0.75, 0.55, 1.0],
                     "text_alignment": "center",
                     "font_scale_factor": 0.6,
                     "layer": 5
@@ -256,19 +257,29 @@
     "utility_panel": {
         "type": "panel",
         "controls": [
-            { "container_gamepad_helpers@common.container_gamepad_helpers": { } },
-            { "flying_item_renderer@common.flying_item_renderer": { "layer": 40 } },
-            { "selected_item_details_factory@common.selected_item_details_factory": { } },
-            { "item_lock_notification_factory@common.item_lock_notification_factory": { } },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {}
+            },
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 40
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {}
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
-                    "offset": [ 32, 0 ],
+                    "offset": [32, 0],
                     "controls": [
                         {
                             "panel": {
                                 "type": "panel",
-                                "size": [ 176, 166 ],
+                                "size": [176, 166],
                                 "anchor_from": "center",
                                 "anchor_to": "center",
                                 "controls": [
@@ -279,7 +290,7 @@
                                         }
                                     },
                                     {
-                                        "close_button@common.light_close_button": { }
+                                        "close_button@common.light_close_button": {}
                                     }
                                 ]
                             }
@@ -293,10 +304,10 @@
                                         "stats_toggle@ascendant_common.tab_button_toggle": {
                                             "anchor_from": "center",
                                             "anchor_to": "center",
-                                            "offset": [ 99, 6 ],
+                                            "offset": [99, 6],
                                             "layer": -5,
                                             "$tab_button_text": "",
-                                            "$tab_button_size": [ 24, 24 ],
+                                            "$tab_button_size": [24, 24],
                                             "$tab_button_text_scale": 0.8,
                                             "$radio_toggle_group": false,
                                             "$toggle_property_bag": {
@@ -320,9 +331,15 @@
                                                 }
                                             ],
                                             "controls": [
-                                                { "refining_table_top@refining_table.refining_table_top": { } },
-                                                { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": { } },
-                                                { "hotbar_grid@common.hotbar_grid_template": { } }
+                                                {
+                                                    "refining_table_top@refining_table.refining_table_top": {}
+                                                },
+                                                {
+                                                    "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+                                                },
+                                                {
+                                                    "hotbar_grid@common.hotbar_grid_template": {}
+                                                }
                                             ]
                                         }
                                     },
@@ -340,16 +357,24 @@
                                                 }
                                             ],
                                             "controls": [
-                                                { "stats_panel@refining_table.stats_screen": { } }
+                                                {
+                                                    "stats_panel@refining_table.stats_screen": {}
+                                                }
                                             ]
                                         }
                                     },
-                                    { "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": { } }
+                                    {
+                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+                                    }
                                 ]
                             }
                         },
-                        { "inventory_selected_icon_button@common.inventory_selected_icon_button": { } },
-                        { "gamepad_cursor@common.gamepad_cursor_button": { } }
+                        {
+                            "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                        },
+                        {
+                            "gamepad_cursor@common.gamepad_cursor_button": {}
+                        }
                     ]
                 }
             }

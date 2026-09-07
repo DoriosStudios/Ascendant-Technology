@@ -1,0 +1,631 @@
+{
+    "namespace": "enchantment_station_variant",
+
+    "section_label": {
+        "type": "label",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [54, 10],
+        "text": "$section_text",
+        "$section_text|default": "",
+        "font_scale_factor": 0.55,
+        "color": [0.72, 0.72, 0.72],
+        "text_alignment": "center",
+        "layer": 6
+    },
+
+    "mode_surface": {
+        "type": "image",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [194, 74],
+        "texture": "$surface_texture",
+        "$surface_texture|default": "textures/ui/realms_button_borderless_no_hover_pressed",
+        "layer": 1
+    },
+
+    "required_item_preview": {
+        "type": "image",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [14, 14],
+        "texture": "$preview_texture",
+        "$preview_texture|default": "textures/items/book_normal",
+        "$preview_alpha|default": 0.45,
+        "alpha": "$preview_alpha",
+        "layer": 7,
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "$item_collection_name"
+            },
+            {
+                "binding_name": "#item_id_aux",
+                "binding_type": "collection",
+                "binding_collection_name": "$item_collection_name",
+                "binding_condition": "none"
+            },
+            {
+                "binding_type": "view",
+                "source_property_name": "(not(#item_id_aux > 0))",
+                "target_property_name": "#visible"
+            }
+        ]
+    },
+
+    "station_tab_left_idle@ascendant_common.tab_button_state_base": {
+        "$tab_button_panel_texture": "textures/ui/TabTopBackLeftMost"
+    },
+
+    "station_tab_left_active@ascendant_common.tab_button_state_base": {
+        "$tab_button_panel_texture": "textures/ui/TabTopBackLeftMost"
+    },
+
+    "station_tab_right_idle@ascendant_common.tab_button_state_base": {
+        "$tab_button_panel_texture": "textures/ui/TabTopBackRightMost"
+    },
+
+    "station_tab_right_active@ascendant_common.tab_button_state_base": {
+        "$tab_button_panel_texture": "textures/ui/TabTopBackRightMostDark"
+    },
+
+    "station_tab_right_hover@ascendant_common.tab_button_state_base": {
+        "$tab_button_panel_texture": "textures/ui/TabTopBackRightMostHover"
+    },
+
+    "enchant_mode": {
+        "type": "collection_panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [188, 74],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "$slot_size": [18, 18],
+        "$slot_panel_size": [18, 18],
+        "$slot_panel_offset": [0, 0],
+        "controls": [
+            {
+                "surface@enchantment_station_variant.mode_surface": {
+                    "offset": [-3, 0]
+                }
+            },
+            {
+                "target_grid@uc.slot_grid_3x3": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [64, 15],
+                    "$slot_outline_texture": "textures/ui/slots/input_slot",
+                    "$collection_index_1": 3,
+                    "$collection_index_2": 4,
+                    "$collection_index_3": 5,
+                    "$collection_index_4": 6,
+                    "$collection_index_5": 7,
+                    "$collection_index_6": 8,
+                    "$collection_index_7": 9,
+                    "$collection_index_8": 10,
+                    "$collection_index_9": 11
+                }
+            },
+            {
+                "enchant_progress@uc.progress_display": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [61, 12],
+                    "collection_index": 2,
+                    "size": [60, 60],
+                    "$cell_image_size": [34, 34],
+                    "$item_renderer_size": [60, 60],
+                    "$item_renderer_panel_size": [36, 36]
+                }
+            },
+            {
+                "module_slot_1@ascendant_common.slot_orange": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [144, 15],
+                    "size": [18, 18],
+                    "$slot_index": 12
+                }
+            },
+            {
+                "module_slot_2@ascendant_common.slot_orange": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [144, 33],
+                    "size": [18, 18],
+                    "$slot_index": 13
+                }
+            },
+            {
+                "module_slot_3@ascendant_common.slot_orange": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [144, 51],
+                    "size": [18, 18],
+                    "$slot_index": 14
+                }
+            },
+            {
+                "enchantability_module_preview@enchantment_station_variant.required_item_preview": {
+                    "offset": [146, 17],
+                    "collection_index": 12,
+                    "$preview_texture": "textures/items/machinery/modules/ench_mod_1"
+                }
+            },
+            {
+                "reinforcement_module_preview@enchantment_station_variant.required_item_preview": {
+                    "offset": [146, 35],
+                    "collection_index": 13,
+                    "$preview_texture": "textures/items/machinery/modules/reinforce_mod_1"
+                }
+            },
+            {
+                "curse_protection_module_preview@enchantment_station_variant.required_item_preview": {
+                    "offset": [146, 53],
+                    "collection_index": 14,
+                    "$preview_texture": "textures/items/machinery/modules/curs_prot_mod_2"
+                }
+            }
+        ]
+    },
+
+    "disenchant_mode": {
+        "type": "collection_panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [188, 74],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "$slot_size": [18, 18],
+        "$slot_panel_size": [18, 18],
+        "$slot_panel_offset": [0, 0],
+        "controls": [
+            {
+                "surface@enchantment_station_variant.mode_surface": {
+                    "$surface_texture": "textures/ui/panels/background_panel_black"
+                }
+            },
+            {
+                "source_label@enchantment_station_variant.section_label": {
+                    "offset": [1, 3],
+                    "$section_text": "ui.utilitycraft:enchantment_station.variant.source"
+                }
+            },
+            {
+                "materials_label@enchantment_station_variant.section_label": {
+                    "offset": [53, 3],
+                    "$section_text": "ui.utilitycraft:enchantment_station.variant.materials"
+                }
+            },
+            {
+                "output_label@enchantment_station_variant.section_label": {
+                    "offset": [126, 3],
+                    "$section_text": "ui.utilitycraft:enchantment_station.variant.output"
+                }
+            },
+            {
+                "source_slot@ascendant_common.slot_magenta": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [16, 23],
+                    "size": [24, 24],
+                    "$slot_index": 15
+                }
+            },
+            {
+                "catalyst_slot@ascendant_common.slot_purple": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [59, 16],
+                    "size": [18, 18],
+                    "$slot_index": 16
+                }
+            },
+            {
+                "book_slot@ascendant_common.slot_brown": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [83, 16],
+                    "size": [18, 18],
+                    "$slot_index": 17
+                }
+            },
+            {
+                "disenchant_progress@uc.progress_display": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [66, 41],
+                    "collection_index": 18,
+                    "size": [28, 28],
+                    "$cell_image_size": [28, 28],
+                    "$item_renderer_size": [26, 26],
+                    "$item_renderer_panel_size": [30, 30]
+                }
+            },
+            {
+                "book_outputs@uc.slot_grid_3x3": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [126, 15],
+                    "$slot_outline_texture": "textures/ui/slots/output_slot",
+                    "$collection_index_1": 22,
+                    "$collection_index_2": 23,
+                    "$collection_index_3": 24,
+                    "$collection_index_4": 25,
+                    "$collection_index_5": 26,
+                    "$collection_index_6": 27,
+                    "$collection_index_7": 28,
+                    "$collection_index_8": 29,
+                    "$collection_index_9": 30
+                }
+            },
+            {
+                "refined_aetherium_preview@enchantment_station_variant.required_item_preview": {
+                    "offset": [61, 18],
+                    "collection_index": 16,
+                    "$preview_texture": "textures/items/ores/refined_aetherium_crystal"
+                }
+            },
+            {
+                "book_preview@enchantment_station_variant.required_item_preview": {
+                    "offset": [85, 18],
+                    "collection_index": 17,
+                    "$preview_texture": "textures/items/book_normal"
+                }
+            }
+        ]
+    },
+
+    "station_top": {
+        "type": "collection_panel",
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "size": [320, 200],
+        "offset": [-10, -40],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "controls": [
+            {
+                "exit_button_panel": {
+                    "type": "panel",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [-43, 58],
+                    "controls": [
+                        {
+                            "close_button@common.close_button": {}
+                        }
+                    ]
+                }
+            },
+            {
+                "screen": {
+                    "type": "image",
+                    "texture": "textures/ui/dialog_background_opaque",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "$cell_image_size": [215, 166],
+                    "size": [199, 206],
+                    "offset": [19.5, 60],
+                    "layer": -1
+                }
+            },
+            {
+                "machine_name@uc.machine_name": {
+                    "offset": [80.5, 62]
+                }
+            },
+            {
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
+                    "offset": [118, 84],
+                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
+                }
+            },
+            {
+                "status_panel@ascendant_common.info_panel": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$has_text": false,
+                    "$text_borders": [88, 190],
+                    "$bg_size": [104, 206],
+                    "$info_size": [96, 198],
+                    "offset": [-24, 57],
+                    "layer": 0
+                }
+            },
+            {
+                "enchant_status_panel": {
+                    "type": "collection_panel",
+                    "size": [320, 200],
+                    "collection_name": "container_items",
+                    "$item_collection_name": "container_items",
+                    "layer": 10,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "enchant_mode_tab",
+                            "source_property_name": "#toggle_state",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": true
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "enchant_status@uc.text_label": {
+                                "collection_index": 1,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$text_scale": 0.55,
+                                "layer": 12,
+                                "offset": [-12, 66],
+                                "size": [88, 188]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "disenchant_status_panel": {
+                    "type": "collection_panel",
+                    "size": [320, 200],
+                    "collection_name": "container_items",
+                    "$item_collection_name": "container_items",
+                    "layer": 10,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "disenchant_mode_tab",
+                            "source_property_name": "#toggle_state",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": true
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "disenchant_status@uc.text_label": {
+                                "collection_index": 31,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$text_scale": 0.55,
+                                "layer": 12,
+                                "offset": [-12, 66],
+                                "size": [88, 188]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "enchant_mode_tab@ascendant_common.tab_button_toggle": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-30, 41],
+                    "$tab_group_name": "enchantment_station_variant_modes",
+                    "$tab_index": 0,
+                    "$active_tab_index": 0,
+                    "$tab_button_text": "ui.utilitycraft:enchantment_station.variant.tab.enchant",
+                    "$tab_button_size": [98, 20],
+                    "$tab_button_text_scale": 0.75,
+                    "$unchecked_control": "enchantment_station_variant.station_tab_left_idle",
+                    "$checked_control": "enchantment_station_variant.station_tab_left_active",
+                    "$unchecked_hover_control": "enchantment_station_variant.station_tab_left_active",
+                    "$checked_hover_control": "enchantment_station_variant.station_tab_left_active",
+                    "$unchecked_locked_control": "enchantment_station_variant.station_tab_left_idle",
+                    "$checked_locked_control": "enchantment_station_variant.station_tab_left_active",
+                    "$unchecked_locked_hover_control": "enchantment_station_variant.station_tab_left_idle",
+                    "$checked_locked_hover_control": "enchantment_station_variant.station_tab_left_active",
+                    "$toggle_on_button": "button.enchantment_station_tab_previous",
+                    "$toggle_property_bag": {
+                        "#toggle_state": true
+                    }
+                }
+            },
+            {
+                "disenchant_mode_tab@ascendant_common.tab_button_toggle": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [70, 41],
+                    "$tab_group_name": "enchantment_station_variant_modes",
+                    "$tab_index": 1,
+                    "$active_tab_index": 0,
+                    "$tab_button_text": "ui.utilitycraft:enchantment_station.variant.tab.disenchant",
+                    "$tab_button_size": [98, 20],
+                    "$tab_button_text_scale": 0.75,
+                    "$unchecked_control": "enchantment_station_variant.station_tab_right_idle",
+                    "$checked_control": "enchantment_station_variant.station_tab_right_active",
+                    "$unchecked_hover_control": "enchantment_station_variant.station_tab_right_active",
+                    "$checked_hover_control": "enchantment_station_variant.station_tab_right_active",
+                    "$unchecked_locked_control": "enchantment_station_variant.station_tab_right_idle",
+                    "$checked_locked_control": "enchantment_station_variant.station_tab_right_active",
+                    "$unchecked_locked_hover_control": "enchantment_station_variant.station_tab_right_hover",
+                    "$checked_locked_hover_control": "enchantment_station_variant.station_tab_right_hover",
+                    "$toggle_on_button": "button.enchantment_station_tab_next",
+                    "$toggle_property_bag": {
+                        "#toggle_state": false
+                    }
+                }
+            },
+            {
+                "enchant_mode_panel": {
+                    "type": "panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [188, 74],
+                    "offset": [86, 96],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "enchant_mode_tab",
+                            "source_property_name": "#toggle_state",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": true
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "content@enchantment_station_variant.enchant_mode": {}
+                        }
+                    ]
+                }
+            },
+            {
+                "disenchant_mode_panel": {
+                    "type": "panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [188, 74],
+                    "offset": [86, 96],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "disenchant_mode_tab",
+                            "source_property_name": "#toggle_state",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": true
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "content@enchantment_station_variant.disenchant_mode": {}
+                        }
+                    ]
+                }
+            },
+            {
+                "upgrades_tab@uc.upgrades_tab": {
+                    "offset": [21, 0],
+                    "$upgrade_index_1": 19,
+                    "$upgrade_index_2": 20,
+                    "$upgrade_index_3": 21,
+                    "$upgrade_index_4": 21,
+                    "$has_first_upgrade": true,
+                    "$has_second_upgrade": true,
+                    "$has_third_upgrade": true,
+                    "$has_fourth_upgrade": false,
+                    "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade"
+                }
+            },
+            {
+                "io_tab@uc.io_tab": {
+                    "offset": [21, 0],
+                    "$io_items_modes_description": "ui.utilitycraft:io.enchantment_station.items",
+                    "$io_fluids_modes_description": "ui.utilitycraft:io.enchantment_station.liquids",
+                    "$has_item_io": true,
+                    "$has_fluid_io": true,
+                    "$io_items_default": true,
+                    "$io_fluids_default": false,
+                    "$io_top_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_left_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_front_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_right_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_bottom_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_back_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_item_top_index": 32,
+                    "$io_item_left_index": 33,
+                    "$io_item_front_index": 34,
+                    "$io_item_right_index": 35,
+                    "$io_item_bottom_index": 36,
+                    "$io_item_back_index": 37,
+                    "$io_fluid_top_index": 38,
+                    "$io_fluid_left_index": 39,
+                    "$io_fluid_front_index": 40,
+                    "$io_fluid_right_index": 41,
+                    "$io_fluid_bottom_index": 42,
+                    "$io_fluid_back_index": 43
+                }
+            },
+            {
+                "info_tab@uc.info_tab": {
+                    "offset": [21, 0],
+                    "$info_description": "ui.utilitycraft:info.enchantment_station"
+                }
+            }
+        ]
+    },
+
+    "utility_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {}
+            },
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 40
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {}
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "chest_panel": {
+                                "type": "input_panel",
+                                "layer": 5,
+                                "button_mappings": [
+                                    {
+                                        "from_button_id": "button.menu_tab_left",
+                                        "to_button_id": "button.enchantment_station_tab_previous",
+                                        "mapping_type": "global"
+                                    },
+                                    {
+                                        "from_button_id": "button.menu_tab_right",
+                                        "to_button_id": "button.enchantment_station_tab_next",
+                                        "mapping_type": "global"
+                                    },
+                                    {
+                                        "from_button_id": "button.menu_alternate_tab_left",
+                                        "to_button_id": "button.enchantment_station_tab_previous",
+                                        "mapping_type": "global"
+                                    },
+                                    {
+                                        "from_button_id": "button.menu_alternate_tab_right",
+                                        "to_button_id": "button.enchantment_station_tab_next",
+                                        "mapping_type": "global"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "station_top@enchantment_station_variant.station_top": {}
+                                    },
+                                    {
+                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
+                                            "offset": [0, 40],
+                                            "layer": 4
+                                        }
+                                    },
+                                    {
+                                        "hotbar_grid@common.hotbar_grid_template": {
+                                            "offset": [0, 40],
+                                            "layer": 4
+                                        }
+                                    },
+                                    {
+                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {
+                                            "offset": [0, 40]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                        },
+                        {
+                            "gamepad_cursor@common.gamepad_cursor_button": {}
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

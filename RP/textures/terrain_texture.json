@@ -4,6 +4,39 @@
 	"resource_pack_name": "UtilityCraft Expanded",
 	"texture_name": "atlas.terrain",
 	"texture_data": {
+		"utilitycraft_absolute_power_beacon_off": {
+			"textures": "textures/blocks/generators/absolute_power_beacon_off"
+		},
+		"utilitycraft_absolute_power_beacon_on": {
+			"textures": "textures/blocks/generators/absolute_power_beacon_on"
+		},
+		"utilitycraft_ultimate_power_beacon_on": {
+			"textures": "textures/blocks/generators/ultimate_power_beacon_on"
+		},
+		"utilitycraft_ultimate_power_beacon_off": {
+			"textures": "textures/blocks/generators/ultimate_power_beacon_off"
+		},
+		"utilitycraft_expert_power_beacon_on": {
+			"textures": "textures/blocks/generators/expert_power_beacon_on"
+		},
+		"utilitycraft_expert_power_beacon_off": {
+			"textures": "textures/blocks/generators/expert_power_beacon_off"
+		},
+		"utilitycraft_advanced_power_beacon_on": {
+			"textures": "textures/blocks/generators/advanced_power_beacon_on"
+		},
+		"utilitycraft_advanced_power_beacon_off": {
+			"textures": "textures/blocks/generators/advanced_power_beacon_off"
+		},
+		"utilitycraft_basic_power_beacon_on": {
+			"textures": "textures/blocks/generators/basic_power_beacon_on"
+		},
+		"utilitycraft_basic_power_beacon_off": {
+			"textures": "textures/blocks/generators/basic_power_beacon_off"
+		},
+		"utilitycraft_aetherium_crystal_block": {
+			"textures": "textures/blocks/ores/aetherium_crystal_block"
+		},
 		"utilitycraft_absolute_furnator_off": {
 			"textures": "textures/blocks/generators/absolute_furnator_off"
 		},
@@ -1020,6 +1053,48 @@
 		},
 		"utilitycraft_energizer_on_down": {
 			"textures": "textures/blocks/machines/energizer_on_down"
+		},
+		"utilitycraft_compactor_off_north": {
+			"textures": "textures/blocks/machines/faces/compactor/off/north"
+		},
+		"utilitycraft_compactor_off_south": {
+			"textures": "textures/blocks/machines/faces/compactor/off/south"
+		},
+		"utilitycraft_compactor_off_east": {
+			"textures": "textures/blocks/machines/faces/compactor/off/east"
+		},
+		"utilitycraft_compactor_off_west": {
+			"textures": "textures/blocks/machines/faces/compactor/off/west"
+		},
+		"utilitycraft_compactor_off_up": {
+			"textures": "textures/blocks/machines/faces/compactor/off/up"
+		},
+		"utilitycraft_compactor_off_down": {
+			"textures": "textures/blocks/machines/faces/compactor/off/down"
+		},
+		"utilitycraft_compactor_on_north": {
+			"textures": "textures/blocks/machines/faces/compactor/on/north"
+		},
+		"utilitycraft_compactor_on_south": {
+			"textures": "textures/blocks/machines/faces/compactor/on/south"
+		},
+		"utilitycraft_compactor_on_east": {
+			"textures": "textures/blocks/machines/faces/compactor/on/east"
+		},
+		"utilitycraft_compactor_on_west": {
+			"textures": "textures/blocks/machines/faces/compactor/on/west"
+		},
+		"utilitycraft_compactor_on_up": {
+			"textures": "textures/blocks/machines/faces/compactor/on/up"
+		},
+		"utilitycraft_compactor_on_down": {
+			"textures": "textures/blocks/machines/faces/compactor/on/down"
+		},
+		"utilitycraft_decompactor_off_north": {
+			"textures": "textures/blocks/machines/faces/decompactor/off/north"
+		},
+		"utilitycraft_decompactor_on_north": {
+			"textures": "textures/blocks/machines/faces/decompactor/on/north"
 		},
 		"utilitycraft_genetic_seed_synthesizer_off_north": {
 			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_off_north"

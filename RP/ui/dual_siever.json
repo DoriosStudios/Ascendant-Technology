@@ -14,26 +14,166 @@
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
-            { "slot_1@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "collection_index": 14 } },
-            { "slot_2@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 0], "collection_index": 15 } },
-            { "slot_3@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 0], "collection_index": 16 } },
-            { "slot_4@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 0], "collection_index": 17 } },
-            { "slot_5@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 0], "collection_index": 18 } },
-            { "slot_6@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 18], "collection_index": 19 } },
-            { "slot_7@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 18], "collection_index": 20 } },
-            { "slot_8@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 18], "collection_index": 21 } },
-            { "slot_9@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 18], "collection_index": 22 } },
-            { "slot_10@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 18], "collection_index": 23 } },
-            { "slot_11@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 36], "collection_index": 24 } },
-            { "slot_12@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 36], "collection_index": 25 } },
-            { "slot_13@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 36], "collection_index": 26 } },
-            { "slot_14@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 36], "collection_index": 27 } },
-            { "slot_15@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 36], "collection_index": 28 } },
-            { "slot_16@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 54], "collection_index": 29 } },
-            { "slot_17@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [18, 54], "collection_index": 30 } },
-            { "slot_18@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [36, 54], "collection_index": 31 } },
-            { "slot_19@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [54, 54], "collection_index": 32 } },
-            { "slot_20@common.container_item": { "anchor_from": "top_left", "anchor_to": "top_left", "offset": [72, 54], "collection_index": 33 } },
+            {
+                "slot_1@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 0],
+                    "collection_index": 14
+                }
+            },
+            {
+                "slot_2@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 0],
+                    "collection_index": 15
+                }
+            },
+            {
+                "slot_3@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [36, 0],
+                    "collection_index": 16
+                }
+            },
+            {
+                "slot_4@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [54, 0],
+                    "collection_index": 17
+                }
+            },
+            {
+                "slot_5@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [72, 0],
+                    "collection_index": 18
+                }
+            },
+            {
+                "slot_6@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 18],
+                    "collection_index": 19
+                }
+            },
+            {
+                "slot_7@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 18],
+                    "collection_index": 20
+                }
+            },
+            {
+                "slot_8@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [36, 18],
+                    "collection_index": 21
+                }
+            },
+            {
+                "slot_9@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [54, 18],
+                    "collection_index": 22
+                }
+            },
+            {
+                "slot_10@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [72, 18],
+                    "collection_index": 23
+                }
+            },
+            {
+                "slot_11@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 36],
+                    "collection_index": 24
+                }
+            },
+            {
+                "slot_12@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 36],
+                    "collection_index": 25
+                }
+            },
+            {
+                "slot_13@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [36, 36],
+                    "collection_index": 26
+                }
+            },
+            {
+                "slot_14@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [54, 36],
+                    "collection_index": 27
+                }
+            },
+            {
+                "slot_15@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [72, 36],
+                    "collection_index": 28
+                }
+            },
+            {
+                "slot_16@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [0, 54],
+                    "collection_index": 29
+                }
+            },
+            {
+                "slot_17@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [18, 54],
+                    "collection_index": 30
+                }
+            },
+            {
+                "slot_18@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [36, 54],
+                    "collection_index": 31
+                }
+            },
+            {
+                "slot_19@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [54, 54],
+                    "collection_index": 32
+                }
+            },
+            {
+                "slot_20@common.container_item": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [72, 54],
+                    "collection_index": 33
+                }
+            },
             {
                 "grid_outline": {
                     "type": "image",
@@ -87,11 +227,17 @@
                     "anchor_to": "top_right",
                     "offset": [42, -10],
                     "controls": [
-                        { "close_button@common.close_button": {} }
+                        {
+                            "close_button@common.close_button": {}
+                        }
                     ]
                 }
             },
-            { "machine_name@uc.machine_name": { "offset": [0, -2] } },
+            {
+                "machine_name@uc.machine_name": {
+                    "offset": [0, -2]
+                }
+            },
             {
                 "item_label@uc.text_label": {
                     "collection_index": 1,
@@ -103,8 +249,22 @@
                     "offset": [-91, 8]
                 }
             },
-            { "lane_a_input@uc.input_1_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-57, 21], "collection_index": 3 } },
-            { "lane_a_mesh@uc.input_2_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-37, 21], "collection_index": 4 } },
+            {
+                "lane_a_input@uc.input_1_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-57, 21],
+                    "collection_index": 3
+                }
+            },
+            {
+                "lane_a_mesh@uc.input_2_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-37, 21],
+                    "collection_index": 4
+                }
+            },
             {
                 "lane_a_mesh_overlay@uc.function_panel": {
                     "collection_index": 4,
@@ -130,9 +290,30 @@
                     ]
                 }
             },
-            { "lane_a_progress@uc.progress_display": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-9, 13], "collection_index": 2 } },
-            { "lane_b_input@uc.input_3_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-57, 57], "collection_index": 5 } },
-            { "lane_b_mesh@uc.input_4_slot": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-37, 57], "collection_index": 6 } },
+            {
+                "lane_a_progress@uc.progress_display": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-9, 13],
+                    "collection_index": 2
+                }
+            },
+            {
+                "lane_b_input@uc.input_3_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-57, 57],
+                    "collection_index": 5
+                }
+            },
+            {
+                "lane_b_mesh@uc.input_4_slot": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-37, 57],
+                    "collection_index": 6
+                }
+            },
             {
                 "lane_b_mesh_overlay@uc.function_panel": {
                     "collection_index": 6,
@@ -158,7 +339,14 @@
                     ]
                 }
             },
-            { "lane_b_progress@uc.progress_display": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [-9, 49], "collection_index": 8 } },
+            {
+                "lane_b_progress@uc.progress_display": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [-9, 49],
+                    "collection_index": 8
+                }
+            },
             {
                 "mode_button@uc.dynamic_button": {
                     "anchor_from": "top_middle",
@@ -172,7 +360,13 @@
                     "$pressed_texture": "textures/ui/cells/orange_cell_image"
                 }
             },
-            { "output_grid@dual_siever.output_grid_5x4": { "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [60, 12] } },
+            {
+                "output_grid@dual_siever.output_grid_5x4": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [60, 12]
+                }
+            },
             {
                 "energy_bar@uc.energy_bar": {
                     "$collection_index": 0,
@@ -180,7 +374,13 @@
                     "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
-            { "steam_bar@uc.liquid_input_1_bar": { "$collection_index": 9, "$has_bg": false, "offset": [91, 64] } },
+            {
+                "steam_bar@uc.liquid_input_1_bar": {
+                    "$collection_index": 9,
+                    "$has_bg": false,
+                    "offset": [91, 64]
+                }
+            },
             {
                 "upgrades_tab@uc.upgrades_tab": {
                     "offset": [22, -8],
@@ -228,35 +428,72 @@
                     "$io_gas_back_index": 45
                 }
             },
-            { "info_tab@uc.info_tab": { "offset": [22, -8], "$info_description": "ui.utilitycraft:info.dual_siever" } }
+            {
+                "info_tab@uc.info_tab": {
+                    "offset": [22, -8],
+                    "$info_description": "ui.utilitycraft:info.dual_siever"
+                }
+            }
         ]
     },
     "utility_panel": {
         "type": "panel",
         "controls": [
-            { "container_gamepad_helpers@common.container_gamepad_helpers": {} },
-            { "flying_item_renderer@common.flying_item_renderer": { "layer": 40 } },
-            { "selected_item_details_factory@common.selected_item_details_factory": {} },
-            { "item_lock_notification_factory@common.item_lock_notification_factory": {} },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {}
+            },
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 40
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {}
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
                     "controls": [
-                        { "common_panel@common.common_panel": { "$show_close_button": false } },
+                        {
+                            "common_panel@common.common_panel": {
+                                "$show_close_button": false
+                            }
+                        },
                         {
                             "chest_panel": {
                                 "type": "panel",
                                 "layer": 5,
                                 "controls": [
-                                    { "dual_siever_top@dual_siever.dual_siever_top": {} },
-                                    { "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": { "offset": [0, 11] } },
-                                    { "hotbar_grid@common.hotbar_grid_template": { "offset": [0, 11] } },
-                                    { "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": { "offset": [0, 11] } }
+                                    {
+                                        "dual_siever_top@dual_siever.dual_siever_top": {}
+                                    },
+                                    {
+                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
+                                            "offset": [0, 11]
+                                        }
+                                    },
+                                    {
+                                        "hotbar_grid@common.hotbar_grid_template": {
+                                            "offset": [0, 11]
+                                        }
+                                    },
+                                    {
+                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {
+                                            "offset": [0, 11]
+                                        }
+                                    }
                                 ]
                             }
                         },
-                        { "inventory_selected_icon_button@common.inventory_selected_icon_button": {} },
-                        { "gamepad_cursor@common.gamepad_cursor_button": {} }
+                        {
+                            "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                        },
+                        {
+                            "gamepad_cursor@common.gamepad_cursor_button": {}
+                        }
                     ]
                 }
             }

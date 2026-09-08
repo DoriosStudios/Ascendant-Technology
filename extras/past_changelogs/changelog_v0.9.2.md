@@ -2,9 +2,28 @@
 
 This update brings the Compactor and Decompactor, Universal transportation blocks, five new StatsCore elements, and a lot of recipe and UI changes. It also fixes several machine issues and centralizes shared recipes so they can be used by more than one machine.
 
+## Aetherium, Power Beacons and DoriosLib
+- Added the original Aetherium Crystal: four shards form one crystal; nine crystals form one crystal block. Refined crystals now start from ordinary crystals.
+- See **BLOCKS / Ores** for the player-facing Aetherium generation changes and its direct comparison with v0.9.1.
+- Added the Aetherium Storage Cell and Part to AT; the cell declares 3,276,800 storage capacity through Digital Storage item tags (8× Ultimate).
+- Renamed Refined Aetherium Shard to **Refined Aetherium Crystal** (`utilitycraft:refined_aetherium_crystal`), including recipes, catalysts, catalog entries and textures.
+- Power Beacons now use Echo Shards and tier-specific corner materials: Gold, Energized Iron, Diamond Dust, Netherite and Aetherium. Basic uses a Machine Case instead of its bottom Basic Chip.
+- Split crystalline and metallic Aetherium processing. Added Crystal Dust and Crystal Block, reversible shard storage, and a crystal-dust alloy recipe in the Catalyst Weaver.
+- Metal dust now smelts back into ingots. Liquification yields are now 250/150/100/50/25 mB per ingot/metal dust/crystal/crystal dust/shard; refined crystals cannot be liquified.
+- Rebuilt all five Power Beacons with dedicated on/off textures, the new model, tiered Workbench/Assembler recipes, protected UI slots and rotating fair energy distribution.
+- Updated DoriosLib to the UtilityCraft snapshot at `4cc859f5` (library version 2.1.0), preserving Ascendant metadata. Included the upstream button watcher fix to prevent lost transmission clicks.
+
 ## BLOCKS
+### Ores
+- **Aetherium generation compared with v0.9.1**
+    - The End previously used 40 attempts per chunk for clustered ores of up to 7 blocks across Y 0–80. It now keeps visible diagonal veins of 7–13 ore blocks at 24 attempts per chunk across Y 16–72, alongside a separate rare deposit.
+    - Rare End deposits occur at Y 8–48 with a 1/64 chunk chance. Their 51–97-block core is fully buried in End Sand, including its tips, and has a 25% chance of an Aetherium Crystal Block at the center. The ore and crystal blocks reject positions touching air, so only End Sand can reveal the deposit.
+    - The Overworld previously had only 3-block Deepslate Aetherium clusters in the narrow Y −61 to −54 band, with three 1/64 generation rolls. Its ordinary veins are now 33% more common (1/48), and a new rare 51–97-block deposit can generate anywhere from Y −60 to −8 at a 1/512 chunk chance.
+    - The Overworld special deposit is completely buried in Crushed Cobbled Deepslate. Its Aetherium ore and center crystal block never generate exposed; only the surrounding Crushed Cobbled Deepslate signals it underground.
+
 ### Machines (Additions)
 - Added **Compactor**
+    - Completed UtilityCraft small-material coverage with steel, energized-iron and netherite nuggets, plus missing ingot/raw-metal/silicon block recipes. Added source-recipe coverage validation.
     - Compresses supported materials using a 3x3 input grid.
     - Has a 3x3 output grid and four upgrade slots.
     - Accepts Speed, Energy, Hyper Processing, and Stack Upgrades.
@@ -15,6 +34,11 @@ This update brings the Compactor and Decompactor, Universal transportation block
     - Accepts Speed, Energy, Hyper Processing, and Stack Upgrades.
 
 ### Machines (Changes)
+- Added five AT upgrades that share existing upgrade slots: **Multi Processing**, **Energy Capacity**, **Liquid Capacity**, **Gas Capacity**, and **Resource Efficiency**. Use an upgrade on a compatible AT machine to install one; sneak-use to install a stack, up to eight.
+- Capacity upgrades add 50% of the original capacity per item, reaching 5×. Removing them preserves stored excess until it is consumed.
+- Resource Efficiency grants 5% preservation chance per item (up to 40%) for consumed ingredients, catalysts, liquids, gases and other operation resources. Energy is still paid normally. In-place cooling requires spare grid space for preserved inputs.
+- Multi Processing adds one simultaneous operation per item: up to four in Cryo Stabilizer, three in Industrial Burner, two in Impact Crusher and nine across Cryo Freezer's 15 positions. Each active operation pays its energy cost; idle operations retain their progress.
+- Catalyst Weaver I/O now offers **All Catalysts** for its six catalyst slots instead of All Inputs. Its panel is 168×126 px (+24 px wide, +12 px high), with automatic recreation of All Inputs disabled.
 - Machine inventories
     - Reorganized processing, upgrade, display, and blocked slots across several machines.
 - Superior machines now prioritize available inputs instead of missing ones.
@@ -166,6 +190,9 @@ This update brings the Compactor and Decompactor, Universal transportation block
 - Updated Nether Tungsten processing.
 
 ## UI/UX
+- Removed the AT Upgrades section from machine displays.
+- Item and block tooltip descriptions now wrap at 31 visible characters per line in every supported language, preserving their titles and formatting.
+- Added descriptions and distinct name colors for the five AT upgrades: Gas Capacity (§u), Energy Capacity (§b), Liquid Capacity (§p), Resource Efficiency (§t), and Multi Processing (§m).
 - Catalyst Weaver Recipe Book
     - Recipes are now organized by material.
     - Similar materials and related Upgrades are kept close to each other.

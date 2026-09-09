@@ -1,1092 +1,1113 @@
 {
-	"resource_pack_name": "UtilityCraft Expanded",
-	"texture_name": "atlas.items",
-	"texture_data": {
-		"utilitycraft_aetherium_crystal_dust": {
-			"textures": "textures/items/ores/aetherium_crystal_dust"
-		},
-		"utilitycraft_aetherium": {
-			"textures": "textures/items/ores/aetherium_ingot"
-		},
-		"utilitycraft_aetherium_dust": {
-			"textures": "textures/items/ores/aetherium_dust"
-		},
-		"utilitycraft_aetherium_shard": {
-			"textures": "textures/items/ores/aetherium_shards"
-		},
-		"utilitycraft_aetherium_crystal": {
-			"textures": "textures/items/ores/aetherium_crystal"
-		},
-		"utilitycraft_refined_aetherium_crystal": {
-			"textures": "textures/items/ores/refined_aetherium_crystal"
-		},
-		"utilitycraft_runic_core": {
-			"textures": "textures/items/ores/runic_core"
-		},
-		"utilitycraft_advanced_runic_core": {
-			"textures": "textures/items/ores/advanced_runic_core"
-		},
-		"utilitycraft_titanium_chunk":{
-			"textures": "textures/items/ores/titanium_chunk"
-		},
-		"utilitycraft_raw_titanium": {
-			"textures": "textures/items/ores/raw_titanium"
-		},
-		"utilitycraft_titanium_ingot": {
-			"textures": "textures/items/ores/titanium_ingot"
-		},
-		"utilitycraft_titanium_dust": {
-			"textures": "textures/items/ores/titanium_dust"
-		},
-		"utilitycraft_titanium_nugget": {
-			"textures": "textures/items/ores/titanium_nugget"
-		},
-		"utilitycraft_titanium_plate": {
-			"textures": "textures/items/ores/titanium_plate"
-		},
-		"utilitycraft_raw_tungsten": {
-			"textures": "textures/items/ores/raw_tungsten"
-		},
-		"utilitycraft_tungsten_chunk": {
-			"textures": "textures/items/ores/tungsten_chunk"
-		},
-		"utilitycraft_deepslate_tungsten_chunk": {
-			"textures": "textures/items/ores/deepslate_tungsten_chunk"
-		},
-		"utilitycraft_nether_tungsten_chunk": {
-			"textures": "textures/items/ores/nether_tungsten_chunk"
-		},
-		"utilitycraft_raw_tungsten_dust": {
-			"textures": "textures/items/ores/raw_tungsten_dust"
-		},
-		"utilitycraft_tungsten": {
-			"textures": "textures/items/ores/tungsten_ingot"
-		},
-		"utilitycraft_tungsten_dust": {
-			"textures": "textures/items/ores/tungsten_dust"
-		},
-		"utilitycraft_tungsten_nugget": {
-			"textures": "textures/items/ores/tungsten_nugget"
-		},
-		"utilitycraft_tungsten_plate": {
-			"textures": "textures/items/ores/tungsten_plate"
-		},
-		"utilitycraft_aetherium_helmet": {
-			"textures": "textures/items/armor/aetherium_helmet"
-		},
-		"utilitycraft_aetherium_chestplate": {
-			"textures": "textures/items/armor/aetherium_chestplate"
-		},
-		"utilitycraft_aetherium_leggings": {
-			"textures": "textures/items/armor/aetherium_leggings"
-		},
-		"utilitycraft_aetherium_boots": {
-			"textures": "textures/items/armor/aetherium_boots"
-		},
-		"utilitycraft_absolute_chip": {
-			"textures": "textures/items/machinery/absolute_chip"
-		},
-		"utilitycraft_kyarium": {
-			"textures": "textures/items/ores/kyarium"
-		},
-		"utilitycraft_kyarium_aiot": {
-			"textures": "textures/items/tools/kyarium_aiot"
-		},
-		"utilitycraft_kyarium_hammer": {
-			"textures": "textures/items/tools/kyarium_hammer"
-		},
-		"utilitycraft_kyarium_mesh": {
-			"textures": "textures/items/meshes/kyarium_mesh"
-		},
-		"utilitycraft_kyarium_fishing_net":{
-			"textures": "textures/items/nets/kyarium_net"
-		},
-		"utilitycraft_kyarium_helmet": {
-			"textures": "textures/items/armor/kyarium_helmet"
-		},
-		"utilitycraft_kyarium_chestplate": {
-			"textures": "textures/items/armor/kyarium_chestplate"
-		},
-		"utilitycraft_kyarium_leggings": {
-			"textures": "textures/items/armor/kyarium_leggings"
-		},
-		"utilitycraft_kyarium_boots": {
-			"textures": "textures/items/armor/kyarium_boots"
-		},
-		"utilitycraft_kyarium_sword": {
-			"textures": "textures/items/tools/kyarium_sword"
-		},
-		"utilitycraft_kyarium_pickaxe": {
-			"textures": "textures/items/tools/kyarium_pickaxe"
-		},
-		"utilitycraft_kyarium_axe": {
-			"textures": "textures/items/tools/kyarium_axe"
-		},
-		"utilitycraft_kyarium_shovel": {
-			"textures": "textures/items/tools/kyarium_shovel"
-		},
-		"utilitycraft_kyarium_hoe": {
-			"textures": "textures/items/tools/kyarium_hoe"
-		},
-		"utilitycraft_kyarium_paxel": {
-			"textures": "textures/items/tools/kyarium_paxel"
-		},
-		"utilitycraft_kyarium_chip": {
-			"textures": "textures/items/machinery/kyarium_chip"
-		},
-		"utilitycraft_titanium_helmet": {
-			"textures": "textures/items/armor/titanium_helmet"
-		},
-		"utilitycraft_titanium_chestplate": {
-			"textures": "textures/items/armor/titanium_chestplate"
-		},
-		"utilitycraft_titanium_leggings": {
-			"textures": "textures/items/armor/titanium_leggings"
-		},
-		"utilitycraft_titanium_boots": {
-			"textures": "textures/items/armor/titanium_boots"
-		},
-		"utilitycraft_titanium_sword": {
-			"textures": "textures/items/tools/titanium_sword"
-		},
-		"utilitycraft_titanium_pickaxe": {
-			"textures": "textures/items/tools/titanium_pickaxe"
-		},
-		"utilitycraft_titanium_axe": {
-			"textures": "textures/items/tools/titanium_axe"
-		},
-		"utilitycraft_titanium_shovel": {
-			"textures": "textures/items/tools/titanium_shovel"
-		},
-		"utilitycraft_titanium_hoe": {
-			"textures": "textures/items/tools/titanium_hoe"
-		},
-		"utilitycraft_titanium_paxel": {
-			"textures": "textures/items/tools/titanium_paxel"
-		},
-		"utilitycraft_titanium_aiot": {
-			"textures": "textures/items/tools/titanium_aiot"
-		},
-		"utilitycraft_titanium_hammer": {
-			"textures": "textures/items/tools/titanium_hammer"
-		},
-		"utilitycraft_titanium_mesh": {
-			"textures": "textures/items/meshes/titanium_mesh"
-		},
-		"utilitycraft_aetherium_mesh": {
-			"textures": "textures/items/meshes/aetherium_mesh"
-		},
-		"utilitycraft_titanium_fishing_net":{
-			"textures": "textures/items/nets/titanium_net"
-		},
-		"utilitycraft_aetherium_fishing_net":{
-			"textures": "textures/items/nets/aetherium_net"
-		},
-		"utilitycraft_aetherium_sword": {
-			"textures": "textures/items/tools/aetherium_sword"
-		},
-		"utilitycraft_aetherium_pickaxe": {
-			"textures": "textures/items/tools/aetherium_pickaxe"
-		},
-		"utilitycraft_aetherium_axe": {
-			"textures": "textures/items/tools/aetherium_axe"
-		},
-		"utilitycraft_aetherium_shovel": {
-			"textures": "textures/items/tools/aetherium_shovel"
-		},
-		"utilitycraft_aetherium_hoe": {
-			"textures": "textures/items/tools/aetherium_hoe"
-		},
-		"utilitycraft_aetherium_paxel": {
-			"textures": "textures/items/tools/aetherium_paxel"
-		},
-		"utilitycraft_aetherium_aiot": {
-			"textures": "textures/items/tools/aetherium_aiot"
-		},
-		"utilitycraft_aetherium_hammer": {
-			"textures": "textures/items/tools/aetherium_hammer"
-		},
-		"utilitycraft_absolute_drill": {
-			"textures": "textures/items/tools/absolute_drill"
-		},
-		"utilitycraft_void_essence": {
-			"textures": "textures/items/misc/void_essence"
-		},
-		"utilitycraft_liquid_void": {
-			"textures": "textures/items/misc/liquid_void"
-		},
-		"utilitycraft_enderling_tear": {
-			"textures": "textures/items/misc/enderling_tear"
-		},
-		"utilitycraft_pure_enderling_tear": {
-			"textures": "textures/items/misc/pure_enderling_tear"
-		},
-		"utilitycraft:snareling": {
-			"textures": "textures/items/mobs/snareling"
-		},
-		"utilitycraft:watchling": {
-			"textures": "textures/items/mobs/watchling"
-		},
-		"utilitycraft:blastling": {
-			"textures": "textures/items/mobs/blastling"
-		},
-		"utilitycraft:endersent": {
-			"textures": "textures/items/mobs/endersent"
-		},
-		"utilitycraft_size_upgrade": {
-			"textures": "textures/items/machinery/size_upgrade"
-		},
-		"utilitycraft_stack_upgrade": {
-			"textures": "textures/items/machinery/stack_upgrade"
-		},
-		"utilitycraft_hyper_processing_upgrade": {
-			"textures": "textures/items/machinery/hyper_processing_upgrade"
-		},
-		"utilitycraft_ascane_module_base": {
-			"textures": "textures/items/machinery/modules/base_mod"
-		},
-		"utilitycraft_enchantability_module": {
-			"textures": "textures/items/machinery/modules/ench_mod_1"
-		},
-		"utilitycraft_enchantability_module_2": {
-			"textures": "textures/items/machinery/modules/ench_mod_2"
-		},
-		"utilitycraft_enchantability_module_3": {
-			"textures": "textures/items/machinery/modules/ench_mod_3"
-		},
-		"utilitycraft_enchantability_module_4": {
-			"textures": "textures/items/machinery/modules/ench_mod_4"
-		},
-		"utilitycraft_enchantability_module_5": {
-			"textures": "textures/items/machinery/modules/ench_mod_5"
-		},
-		"utilitycraft_reinforcement_module": {
-			"textures": "textures/items/machinery/modules/reinforce_mod_1"
-		},
-		"utilitycraft_reinforcement_module_2": {
-			"textures": "textures/items/machinery/modules/reinforce_mod_2"
-		},
-		"utilitycraft_reinforcement_module_3": {
-			"textures": "textures/items/machinery/modules/reinforce_mod_3"
-		},
-		"utilitycraft_curse_protection_module": {
-			"textures": "textures/items/machinery/modules/curs_prot_mod_2"
-		},
-		"utilitycraft_empty_liquid_capsule": {
-			"textures": "textures/items/misc/liquid_capsule_0"
-		},
-		"utilitycraft_water_capsule_1": {
-			"textures": "textures/items/tools/capsules/water_capsule_1"
-		},
-		"utilitycraft_water_capsule_2": {
-			"textures": "textures/items/tools/capsules/water_capsule_2"
-		},
-		"utilitycraft_water_capsule_3": {
-			"textures": "textures/items/tools/capsules/water_capsule_3"
-		},
-		"utilitycraft_water_capsule_4": {
-			"textures": "textures/items/tools/capsules/water_capsule_4"
-		},
-		"utilitycraft_water_capsule_5": {
-			"textures": "textures/items/tools/capsules/water_capsule_5"
-		},
-		"utilitycraft_water_capsule_6": {
-			"textures": "textures/items/tools/capsules/water_capsule_6"
-		},
-		"utilitycraft_water_capsule_7": {
-			"textures": "textures/items/tools/capsules/water_capsule_7"
-		},
-		"utilitycraft_water_capsule_8": {
-			"textures": "textures/items/tools/capsules/water_capsule_8"
-		},
-		"utilitycraft_lava_capsule_1": {
-			"textures": "textures/items/tools/capsules/lava_capsule_1"
-		},
-		"utilitycraft_lava_capsule_2": {
-			"textures": "textures/items/tools/capsules/lava_capsule_2"
-		},
-		"utilitycraft_lava_capsule_3": {
-			"textures": "textures/items/tools/capsules/lava_capsule_3"
-		},
-		"utilitycraft_lava_capsule_4": {
-			"textures": "textures/items/tools/capsules/lava_capsule_4"
-		},
-		"utilitycraft_lava_capsule_5": {
-			"textures": "textures/items/tools/capsules/lava_capsule_5"
-		},
-		"utilitycraft_lava_capsule_6": {
-			"textures": "textures/items/tools/capsules/lava_capsule_6"
-		},
-		"utilitycraft_lava_capsule_7": {
-			"textures": "textures/items/tools/capsules/lava_capsule_7"
-		},
-		"utilitycraft_lava_capsule_8": {
-			"textures": "textures/items/tools/capsules/lava_capsule_8"
-		},
-		"utilitycraft_xp_capsule_1": {
-			"textures": "textures/items/tools/capsules/xp_capsule_1"
-		},
-		"utilitycraft_xp_capsule_2": {
-			"textures": "textures/items/tools/capsules/xp_capsule_2"
-		},
-		"utilitycraft_xp_capsule_3": {
-			"textures": "textures/items/tools/capsules/xp_capsule_3"
-		},
-		"utilitycraft_xp_capsule_4": {
-			"textures": "textures/items/tools/capsules/xp_capsule_4"
-		},
-		"utilitycraft_xp_capsule_5": {
-			"textures": "textures/items/tools/capsules/xp_capsule_5"
-		},
-		"utilitycraft_xp_capsule_6": {
-			"textures": "textures/items/tools/capsules/xp_capsule_6"
-		},
-		"utilitycraft_xp_capsule_7": {
-			"textures": "textures/items/tools/capsules/xp_capsule_7"
-		},
-		"utilitycraft_xp_capsule_8": {
-			"textures": "textures/items/tools/capsules/xp_capsule_8"
-		},
-		"utilitycraft_cryofluid_capsule_1": {
-			"textures": "textures/items/tools/capsules/cryofluid_capsule_1"
-		},
-		"utilitycraft_cryofluid_capsule_2": {
-			"textures": "textures/items/tools/capsules/cryofluid_capsule_2"
-		},
-		"utilitycraft_cryofluid_capsule_3": {
-			"textures": "textures/items/tools/capsules/cryofluid_capsule_3"
-		},
-		"utilitycraft_cryofluid_capsule_4": {
-			"textures": "textures/items/tools/capsules/cryofluid_capsule_4"
-		},
-		"utilitycraft_cryofluid_capsule_5": {
-			"textures": "textures/items/tools/capsules/cryofluid_capsule_5"
-		},
-		"utilitycraft_cryofluid_capsule_6": {
-			"textures": "textures/items/tools/capsules/cryofluid_capsule_6"
-		},
-		"utilitycraft_cryofluid_capsule_7": {
-			"textures": "textures/items/tools/capsules/cryofluid_capsule_7"
-		},
-		"utilitycraft_cryofluid_capsule_8": {
-			"textures": "textures/items/tools/capsules/cryofluid_capsule_8"
-		},
-		"utilitycraft_aetherium_liquid_capsule_1": {
-			"textures": "textures/items/misc/aetherium_liquid_capsule_1"
-		},
-		"utilitycraft_aetherium_liquid_capsule_2": {
-			"textures": "textures/items/misc/aetherium_liquid_capsule_2"
-		},
-		"utilitycraft_aetherium_liquid_capsule_3": {
-			"textures": "textures/items/misc/aetherium_liquid_capsule_3"
-		},
-		"utilitycraft_aetherium_liquid_capsule_4": {
-			"textures": "textures/items/misc/aetherium_liquid_capsule_4"
-		},
-		"utilitycraft_aetherium_liquid_capsule_5": {
-			"textures": "textures/items/misc/aetherium_liquid_capsule_5"
-		},
-		"utilitycraft_aetherium_liquid_capsule_6": {
-			"textures": "textures/items/misc/aetherium_liquid_capsule_6"
-		},
-		"utilitycraft_aetherium_liquid_capsule_7": {
-			"textures": "textures/items/misc/aetherium_liquid_capsule_7"
-		},
-		"utilitycraft_aetherium_liquid_capsule_8": {
-			"textures": "textures/items/misc/aetherium_liquid_capsule_8"
-		},
-		"utilitycraft_dark_matter_liquid_capsule_1": {
-			"textures": "textures/items/misc/dark_matter_liquid_capsule_1"
-		},
-		"utilitycraft_dark_matter_liquid_capsule_2": {
-			"textures": "textures/items/misc/dark_matter_liquid_capsule_2"
-		},
-		"utilitycraft_dark_matter_liquid_capsule_3": {
-			"textures": "textures/items/misc/dark_matter_liquid_capsule_3"
-		},
-		"utilitycraft_dark_matter_liquid_capsule_4": {
-			"textures": "textures/items/misc/dark_matter_liquid_capsule_4"
-		},
-		"utilitycraft_dark_matter_liquid_capsule_5": {
-			"textures": "textures/items/misc/dark_matter_liquid_capsule_5"
-		},
-		"utilitycraft_dark_matter_liquid_capsule_6": {
-			"textures": "textures/items/misc/dark_matter_liquid_capsule_6"
-		},
-		"utilitycraft_dark_matter_liquid_capsule_7": {
-			"textures": "textures/items/misc/dark_matter_liquid_capsule_7"
-		},
-		"utilitycraft_dark_matter_liquid_capsule_8": {
-			"textures": "textures/items/misc/dark_matter_liquid_capsule_8"
-		},
-		"utilitycraft_steam_capsule_1": {
-			"textures": "textures/items/tools/capsules/steam_capsule_1"
-		},
-		"utilitycraft_steam_capsule_2": {
-			"textures": "textures/items/tools/capsules/steam_capsule_2"
-		},
-		"utilitycraft_steam_capsule_3": {
-			"textures": "textures/items/tools/capsules/steam_capsule_3"
-		},
-		"utilitycraft_steam_capsule_4": {
-			"textures": "textures/items/tools/capsules/steam_capsule_4"
-		},
-		"utilitycraft_steam_capsule_5": {
-			"textures": "textures/items/tools/capsules/steam_capsule_5"
-		},
-		"utilitycraft_steam_capsule_6": {
-			"textures": "textures/items/tools/capsules/steam_capsule_6"
-		},
-		"utilitycraft_steam_capsule_7": {
-			"textures": "textures/items/tools/capsules/steam_capsule_7"
-		},
-		"utilitycraft_steam_capsule_8": {
-			"textures": "textures/items/tools/capsules/steam_capsule_8"
-		},
-		"utilitycraft:switch_button": {
-			"textures": "textures/ui/buttons/switch_button"
-		},
-		"utilitycraft:switch_button_pressed": {
-			"textures": "textures/ui/cells/green_cell_image"
-		},
-		"utilitycraft_liquified_aetherium_bar_00": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_00"
-		},
-		"utilitycraft_liquified_aetherium_bar_01": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_01"
-		},
-		"utilitycraft_liquified_aetherium_bar_02": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_02"
-		},
-		"utilitycraft_liquified_aetherium_bar_03": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_03"
-		},
-		"utilitycraft_liquified_aetherium_bar_04": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_04"
-		},
-		"utilitycraft_liquified_aetherium_bar_05": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_05"
-		},
-		"utilitycraft_liquified_aetherium_bar_06": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_06"
-		},
-		"utilitycraft_liquified_aetherium_bar_07": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_07"
-		},
-		"utilitycraft_liquified_aetherium_bar_08": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_08"
-		},
-		"utilitycraft_liquified_aetherium_bar_09": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_09"
-		},
-		"utilitycraft_liquified_aetherium_bar_10": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_10"
-		},
-		"utilitycraft_liquified_aetherium_bar_11": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_11"
-		},
-		"utilitycraft_liquified_aetherium_bar_12": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_12"
-		},
-		"utilitycraft_liquified_aetherium_bar_13": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_13"
-		},
-		"utilitycraft_liquified_aetherium_bar_14": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_14"
-		},
-		"utilitycraft_liquified_aetherium_bar_15": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_15"
-		},
-		"utilitycraft_liquified_aetherium_bar_16": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_16"
-		},
-		"utilitycraft_liquified_aetherium_bar_17": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_17"
-		},
-		"utilitycraft_liquified_aetherium_bar_18": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_18"
-		},
-		"utilitycraft_liquified_aetherium_bar_19": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_19"
-		},
-		"utilitycraft_liquified_aetherium_bar_20": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_20"
-		},
-		"utilitycraft_liquified_aetherium_bar_21": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_21"
-		},
-		"utilitycraft_liquified_aetherium_bar_22": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_22"
-		},
-		"utilitycraft_liquified_aetherium_bar_23": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_23"
-		},
-		"utilitycraft_liquified_aetherium_bar_24": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_24"
-		},
-		"utilitycraft_liquified_aetherium_bar_25": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_25"
-		},
-		"utilitycraft_liquified_aetherium_bar_26": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_26"
-		},
-		"utilitycraft_liquified_aetherium_bar_27": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_27"
-		},
-		"utilitycraft_liquified_aetherium_bar_28": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_28"
-		},
-		"utilitycraft_liquified_aetherium_bar_29": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_29"
-		},
-		"utilitycraft_liquified_aetherium_bar_30": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_30"
-		},
-		"utilitycraft_liquified_aetherium_bar_31": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_31"
-		},
-		"utilitycraft_liquified_aetherium_bar_32": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_32"
-		},
-		"utilitycraft_liquified_aetherium_bar_33": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_33"
-		},
-		"utilitycraft_liquified_aetherium_bar_34": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_34"
-		},
-		"utilitycraft_liquified_aetherium_bar_35": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_35"
-		},
-		"utilitycraft_liquified_aetherium_bar_36": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_36"
-		},
-		"utilitycraft_liquified_aetherium_bar_37": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_37"
-		},
-		"utilitycraft_liquified_aetherium_bar_38": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_38"
-		},
-		"utilitycraft_liquified_aetherium_bar_39": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_39"
-		},
-		"utilitycraft_liquified_aetherium_bar_40": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_40"
-		},
-		"utilitycraft_liquified_aetherium_bar_41": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_41"
-		},
-		"utilitycraft_liquified_aetherium_bar_42": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_42"
-		},
-		"utilitycraft_liquified_aetherium_bar_43": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_43"
-		},
-		"utilitycraft_liquified_aetherium_bar_44": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_44"
-		},
-		"utilitycraft_liquified_aetherium_bar_45": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_45"
-		},
-		"utilitycraft_liquified_aetherium_bar_46": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_46"
-		},
-		"utilitycraft_liquified_aetherium_bar_47": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_47"
-		},
-		"utilitycraft_liquified_aetherium_bar_48": {
-			"textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_48"
-		},
-		"utilitycraft_dark_matter_bar_00": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_00"
-		},
-		"utilitycraft_dark_matter_bar_01": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_01"
-		},
-		"utilitycraft_dark_matter_bar_02": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_02"
-		},
-		"utilitycraft_dark_matter_bar_03": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_03"
-		},
-		"utilitycraft_dark_matter_bar_04": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_04"
-		},
-		"utilitycraft_dark_matter_bar_05": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_05"
-		},
-		"utilitycraft_dark_matter_bar_06": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_06"
-		},
-		"utilitycraft_dark_matter_bar_07": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_07"
-		},
-		"utilitycraft_dark_matter_bar_08": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_08"
-		},
-		"utilitycraft_dark_matter_bar_09": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_09"
-		},
-		"utilitycraft_dark_matter_bar_10": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_10"
-		},
-		"utilitycraft_dark_matter_bar_11": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_11"
-		},
-		"utilitycraft_dark_matter_bar_12": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_12"
-		},
-		"utilitycraft_dark_matter_bar_13": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_13"
-		},
-		"utilitycraft_dark_matter_bar_14": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_14"
-		},
-		"utilitycraft_dark_matter_bar_15": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_15"
-		},
-		"utilitycraft_dark_matter_bar_16": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_16"
-		},
-		"utilitycraft_dark_matter_bar_17": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_17"
-		},
-		"utilitycraft_dark_matter_bar_18": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_18"
-		},
-		"utilitycraft_dark_matter_bar_19": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_19"
-		},
-		"utilitycraft_dark_matter_bar_20": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_20"
-		},
-		"utilitycraft_dark_matter_bar_21": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_21"
-		},
-		"utilitycraft_dark_matter_bar_22": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_22"
-		},
-		"utilitycraft_dark_matter_bar_23": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_23"
-		},
-		"utilitycraft_dark_matter_bar_24": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_24"
-		},
-		"utilitycraft_dark_matter_bar_25": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_25"
-		},
-		"utilitycraft_dark_matter_bar_26": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_26"
-		},
-		"utilitycraft_dark_matter_bar_27": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_27"
-		},
-		"utilitycraft_dark_matter_bar_28": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_28"
-		},
-		"utilitycraft_dark_matter_bar_29": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_29"
-		},
-		"utilitycraft_dark_matter_bar_30": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_30"
-		},
-		"utilitycraft_dark_matter_bar_31": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_31"
-		},
-		"utilitycraft_dark_matter_bar_32": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_32"
-		},
-		"utilitycraft_dark_matter_bar_33": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_33"
-		},
-		"utilitycraft_dark_matter_bar_34": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_34"
-		},
-		"utilitycraft_dark_matter_bar_35": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_35"
-		},
-		"utilitycraft_dark_matter_bar_36": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_36"
-		},
-		"utilitycraft_dark_matter_bar_37": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_37"
-		},
-		"utilitycraft_dark_matter_bar_38": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_38"
-		},
-		"utilitycraft_dark_matter_bar_39": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_39"
-		},
-		"utilitycraft_dark_matter_bar_40": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_40"
-		},
-		"utilitycraft_dark_matter_bar_41": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_41"
-		},
-		"utilitycraft_dark_matter_bar_42": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_42"
-		},
-		"utilitycraft_dark_matter_bar_43": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_43"
-		},
-		"utilitycraft_dark_matter_bar_44": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_44"
-		},
-		"utilitycraft_dark_matter_bar_45": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_45"
-		},
-		"utilitycraft_dark_matter_bar_46": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_46"
-		},
-		"utilitycraft_dark_matter_bar_47": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_47"
-		},
-		"utilitycraft_dark_matter_bar_48": {
-			"textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_48"
-		},
-		"utilitycraft:cryofluid_00": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_00"
-		},
-		"utilitycraft:cryofluid_01": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_01"
-		},
-		"utilitycraft:cryofluid_02": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_02"
-		},
-		"utilitycraft:cryofluid_03": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_03"
-		},
-		"utilitycraft:cryofluid_04": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_04"
-		},
-		"utilitycraft:cryofluid_05": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_05"
-		},
-		"utilitycraft:cryofluid_06": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_06"
-		},
-		"utilitycraft:cryofluid_07": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_07"
-		},
-		"utilitycraft:cryofluid_08": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_08"
-		},
-		"utilitycraft:cryofluid_09": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_09"
-		},
-		"utilitycraft:cryofluid_10": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_10"
-		},
-		"utilitycraft:cryofluid_11": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_11"
-		},
-		"utilitycraft:cryofluid_12": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_12"
-		},
-		"utilitycraft:cryofluid_13": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_13"
-		},
-		"utilitycraft:cryofluid_14": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_14"
-		},
-		"utilitycraft:cryofluid_15": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_15"
-		},
-		"utilitycraft:cryofluid_16": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_16"
-		},
-		"utilitycraft:cryofluid_17": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_17"
-		},
-		"utilitycraft:cryofluid_18": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_18"
-		},
-		"utilitycraft:cryofluid_19": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_19"
-		},
-		"utilitycraft:cryofluid_20": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_20"
-		},
-		"utilitycraft:cryofluid_21": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_21"
-		},
-		"utilitycraft:cryofluid_22": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_22"
-		},
-		"utilitycraft:cryofluid_23": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_23"
-		},
-		"utilitycraft:cryofluid_24": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_24"
-		},
-		"utilitycraft:cryofluid_25": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_25"
-		},
-		"utilitycraft:cryofluid_26": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_26"
-		},
-		"utilitycraft:cryofluid_27": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_27"
-		},
-		"utilitycraft:cryofluid_28": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_28"
-		},
-		"utilitycraft:cryofluid_29": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_29"
-		},
-		"utilitycraft:cryofluid_30": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_30"
-		},
-		"utilitycraft:cryofluid_31": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_31"
-		},
-		"utilitycraft:cryofluid_32": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_32"
-		},
-		"utilitycraft:cryofluid_33": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_33"
-		},
-		"utilitycraft:cryofluid_34": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_34"
-		},
-		"utilitycraft:cryofluid_35": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_35"
-		},
-		"utilitycraft:cryofluid_36": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_36"
-		},
-		"utilitycraft:cryofluid_37": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_37"
-		},
-		"utilitycraft:cryofluid_38": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_38"
-		},
-		"utilitycraft:cryofluid_39": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_39"
-		},
-		"utilitycraft:cryofluid_40": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_40"
-		},
-		"utilitycraft:cryofluid_41": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_41"
-		},
-		"utilitycraft:cryofluid_42": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_42"
-		},
-		"utilitycraft:cryofluid_43": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_43"
-		},
-		"utilitycraft:cryofluid_44": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_44"
-		},
-		"utilitycraft:cryofluid_45": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_45"
-		},
-		"utilitycraft:cryofluid_46": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_46"
-		},
-		"utilitycraft:cryofluid_47": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_47"
-		},
-		"utilitycraft:cryofluid_48": {
-			"textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_48"
-		},
-		"utilitycraft:arcane_00": {
-			"textures": "textures/ui/bars/enchanting/arcane_00"
-		},
-		"utilitycraft:arcane_01": {
-			"textures": "textures/ui/bars/enchanting/arcane_01"
-		},
-		"utilitycraft:arcane_02": {
-			"textures": "textures/ui/bars/enchanting/arcane_02"
-		},
-		"utilitycraft:arcane_03": {
-			"textures": "textures/ui/bars/enchanting/arcane_03"
-		},
-		"utilitycraft:arcane_04": {
-			"textures": "textures/ui/bars/enchanting/arcane_04"
-		},
-		"utilitycraft:arcane_05": {
-			"textures": "textures/ui/bars/enchanting/arcane_05"
-		},
-		"utilitycraft:arcane_06": {
-			"textures": "textures/ui/bars/enchanting/arcane_05"
-		},
-		"utilitycraft:arcane_07": {
-			"textures": "textures/ui/bars/enchanting/arcane_07"
-		},
-		"utilitycraft:arcane_08": {
-			"textures": "textures/ui/bars/enchanting/arcane_08"
-		},
-		"utilitycraft:arcane_09": {
-			"textures": "textures/ui/bars/enchanting/arcane_09"
-		},
-		"utilitycraft:arcane_10": {
-			"textures": "textures/ui/bars/enchanting/arcane_10"
-		},
-		"utilitycraft:arcane_11": {
-			"textures": "textures/ui/bars/enchanting/arcane_11"
-		},
-		"utilitycraft:arcane_12": {
-			"textures": "textures/ui/bars/enchanting/arcane_12"
-		},
-		"utilitycraft:arcane_13": {
-			"textures": "textures/ui/bars/enchanting/arcane_13"
-		},
-		"utilitycraft:arcane_14": {
-			"textures": "textures/ui/bars/enchanting/arcane_14"
-		},
-		"utilitycraft:arcane_15": {
-			"textures": "textures/ui/bars/enchanting/arcane_15"
-		},
-		"utilitycraft:arcane_16": {
-			"textures": "textures/ui/bars/enchanting/arcane_16"
-		},
-		"utilitycraft:overclock_00": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_00"
-		},
-		"utilitycraft:overclock_01": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_01"
-		},
-		"utilitycraft:overclock_02": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_02"
-		},
-		"utilitycraft:overclock_03": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_03"
-		},
-		"utilitycraft:overclock_04": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_04"
-		},
-		"utilitycraft:overclock_05": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_05"
-		},
-		"utilitycraft:overclock_06": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_06"
-		},
-		"utilitycraft:overclock_07": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_07"
-		},
-		"utilitycraft:overclock_08": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_08"
-		},
-		"utilitycraft:overclock_09": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_09"
-		},
-		"utilitycraft:overclock_10": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_10"
-		},
-		"utilitycraft:overclock_11": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_11"
-		},
-		"utilitycraft:overclock_12": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_12"
-		},
-		"utilitycraft:overclock_13": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_13"
-		},
-		"utilitycraft:overclock_14": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_14"
-		},
-		"utilitycraft:overclock_15": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_15"
-		},
-		"utilitycraft:overclock_16": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_16"
-		},
-		"utilitycraft:overclock_17": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_17"
-		},
-		"utilitycraft:overclock_18": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_18"
-		},
-		"utilitycraft:overclock_19": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_19"
-		},
-		"utilitycraft:overclock_20": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_20"
-		},
-		"utilitycraft:overclock_21": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_21"
-		},
-		"utilitycraft:overclock_22": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_22"
-		},
-		"utilitycraft:overclock_23": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_23"
-		},
-		"utilitycraft:overclock_24": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_24"
-		},
-		"utilitycraft:overclock_25": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_25"
-		},
-		"utilitycraft:overclock_26": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_26"
-		},
-		"utilitycraft:overclock_27": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_27"
-		},
-		"utilitycraft:overclock_28": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_28"
-		},
-		"utilitycraft:overclock_29": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_29"
-		},
-		"utilitycraft:overclock_30": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_30"
-		},
-		"utilitycraft:overclock_31": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_31"
-		},
-		"utilitycraft:overclock_32": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_32"
-		},
-		"utilitycraft:overclock_33": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_33"
-		},
-		"utilitycraft:overclock_34": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_34"
-		},
-		"utilitycraft:overclock_35": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_35"
-		},
-		"utilitycraft:overclock_36": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_36"
-		},
-		"utilitycraft:overclock_37": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_37"
-		},
-		"utilitycraft:overclock_38": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_38"
-		},
-		"utilitycraft:overclock_39": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_39"
-		},
-		"utilitycraft:overclock_40": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_40"
-		},
-		"utilitycraft:overclock_41": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_41"
-		},
-		"utilitycraft:overclock_42": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_42"
-		},
-		"utilitycraft:overclock_43": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_43"
-		},
-		"utilitycraft:overclock_44": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_44"
-		},
-		"utilitycraft:overclock_45": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_45"
-		},
-		"utilitycraft:overclock_46": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_46"
-		},
-		"utilitycraft:overclock_47": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_47"
-		},
-		"utilitycraft:overclock_48": {
-			"textures": "textures/items/ui/overclock_bar/overclock_frame_48"
-		}
-	}
+    "resource_pack_name": "UtilityCraft Expanded",
+    "texture_name": "atlas.items",
+    "texture_data": {
+        "utilitycraft_aetherium_storage_part": {
+            "textures": "textures/items/machinery/absolute_storage_part"
+        },
+        "utilitycraft_aetherium_storage_cell": {
+            "textures": "textures/items/machinery/absolute_storage_cell"
+        },
+        "utilitycraft_aetherium_crystal": {
+            "textures": "textures/items/ores/aetherium_crystal"
+        },
+        "utilitycraft_aetherium_crystal_dust": {
+            "textures": "textures/items/ores/aetherium_crystal_dust"
+        },
+        "utilitycraft_aetherium": {
+            "textures": "textures/items/ores/aetherium_ingot"
+        },
+        "utilitycraft_aetherium_dust": {
+            "textures": "textures/items/ores/aetherium_dust"
+        },
+        "utilitycraft_aetherium_shard": {
+            "textures": "textures/items/ores/aetherium_shards"
+        },
+        "utilitycraft_refined_aetherium_crystal": {
+            "textures": "textures/items/ores/refined_aetherium_crystal"
+        },
+        "utilitycraft_runic_core": {
+            "textures": "textures/items/ores/runic_core"
+        },
+        "utilitycraft_advanced_runic_core": {
+            "textures": "textures/items/ores/advanced_runic_core"
+        },
+        "utilitycraft_titanium_chunk": {
+            "textures": "textures/items/ores/titanium_chunk"
+        },
+        "utilitycraft_raw_titanium": {
+            "textures": "textures/items/ores/raw_titanium"
+        },
+        "utilitycraft_titanium_ingot": {
+            "textures": "textures/items/ores/titanium_ingot"
+        },
+        "utilitycraft_titanium_dust": {
+            "textures": "textures/items/ores/titanium_dust"
+        },
+        "utilitycraft_titanium_nugget": {
+            "textures": "textures/items/ores/titanium_nugget"
+        },
+        "utilitycraft_titanium_plate": {
+            "textures": "textures/items/ores/titanium_plate"
+        },
+        "utilitycraft_raw_tungsten": {
+            "textures": "textures/items/ores/raw_tungsten"
+        },
+        "utilitycraft_tungsten_chunk": {
+            "textures": "textures/items/ores/tungsten_chunk"
+        },
+        "utilitycraft_deepslate_tungsten_chunk": {
+            "textures": "textures/items/ores/deepslate_tungsten_chunk"
+        },
+        "utilitycraft_nether_tungsten_chunk": {
+            "textures": "textures/items/ores/nether_tungsten_chunk"
+        },
+        "utilitycraft_raw_tungsten_dust": {
+            "textures": "textures/items/ores/raw_tungsten_dust"
+        },
+        "utilitycraft_tungsten": {
+            "textures": "textures/items/ores/tungsten_ingot"
+        },
+        "utilitycraft_tungsten_dust": {
+            "textures": "textures/items/ores/tungsten_dust"
+        },
+        "utilitycraft_tungsten_nugget": {
+            "textures": "textures/items/ores/tungsten_nugget"
+        },
+        "utilitycraft_tungsten_plate": {
+            "textures": "textures/items/ores/tungsten_plate"
+        },
+        "utilitycraft_aetherium_helmet": {
+            "textures": "textures/items/armor/aetherium_helmet"
+        },
+        "utilitycraft_aetherium_chestplate": {
+            "textures": "textures/items/armor/aetherium_chestplate"
+        },
+        "utilitycraft_aetherium_leggings": {
+            "textures": "textures/items/armor/aetherium_leggings"
+        },
+        "utilitycraft_aetherium_boots": {
+            "textures": "textures/items/armor/aetherium_boots"
+        },
+        "utilitycraft_absolute_chip": {
+            "textures": "textures/items/machinery/absolute_chip"
+        },
+        "utilitycraft_kyarium": {
+            "textures": "textures/items/ores/kyarium"
+        },
+        "utilitycraft_kyarium_aiot": {
+            "textures": "textures/items/tools/kyarium_aiot"
+        },
+        "utilitycraft_kyarium_hammer": {
+            "textures": "textures/items/tools/kyarium_hammer"
+        },
+        "utilitycraft_kyarium_mesh": {
+            "textures": "textures/items/meshes/kyarium_mesh"
+        },
+        "utilitycraft_kyarium_fishing_net": {
+            "textures": "textures/items/nets/kyarium_net"
+        },
+        "utilitycraft_kyarium_helmet": {
+            "textures": "textures/items/armor/kyarium_helmet"
+        },
+        "utilitycraft_kyarium_chestplate": {
+            "textures": "textures/items/armor/kyarium_chestplate"
+        },
+        "utilitycraft_kyarium_leggings": {
+            "textures": "textures/items/armor/kyarium_leggings"
+        },
+        "utilitycraft_kyarium_boots": {
+            "textures": "textures/items/armor/kyarium_boots"
+        },
+        "utilitycraft_kyarium_sword": {
+            "textures": "textures/items/tools/kyarium_sword"
+        },
+        "utilitycraft_kyarium_pickaxe": {
+            "textures": "textures/items/tools/kyarium_pickaxe"
+        },
+        "utilitycraft_kyarium_axe": {
+            "textures": "textures/items/tools/kyarium_axe"
+        },
+        "utilitycraft_kyarium_shovel": {
+            "textures": "textures/items/tools/kyarium_shovel"
+        },
+        "utilitycraft_kyarium_hoe": {
+            "textures": "textures/items/tools/kyarium_hoe"
+        },
+        "utilitycraft_kyarium_paxel": {
+            "textures": "textures/items/tools/kyarium_paxel"
+        },
+        "utilitycraft_kyarium_chip": {
+            "textures": "textures/items/machinery/kyarium_chip"
+        },
+        "utilitycraft_titanium_helmet": {
+            "textures": "textures/items/armor/titanium_helmet"
+        },
+        "utilitycraft_titanium_chestplate": {
+            "textures": "textures/items/armor/titanium_chestplate"
+        },
+        "utilitycraft_titanium_leggings": {
+            "textures": "textures/items/armor/titanium_leggings"
+        },
+        "utilitycraft_titanium_boots": {
+            "textures": "textures/items/armor/titanium_boots"
+        },
+        "utilitycraft_titanium_sword": {
+            "textures": "textures/items/tools/titanium_sword"
+        },
+        "utilitycraft_titanium_pickaxe": {
+            "textures": "textures/items/tools/titanium_pickaxe"
+        },
+        "utilitycraft_titanium_axe": {
+            "textures": "textures/items/tools/titanium_axe"
+        },
+        "utilitycraft_titanium_shovel": {
+            "textures": "textures/items/tools/titanium_shovel"
+        },
+        "utilitycraft_titanium_hoe": {
+            "textures": "textures/items/tools/titanium_hoe"
+        },
+        "utilitycraft_titanium_paxel": {
+            "textures": "textures/items/tools/titanium_paxel"
+        },
+        "utilitycraft_titanium_aiot": {
+            "textures": "textures/items/tools/titanium_aiot"
+        },
+        "utilitycraft_titanium_hammer": {
+            "textures": "textures/items/tools/titanium_hammer"
+        },
+        "utilitycraft_titanium_mesh": {
+            "textures": "textures/items/meshes/titanium_mesh"
+        },
+        "utilitycraft_aetherium_mesh": {
+            "textures": "textures/items/meshes/aetherium_mesh"
+        },
+        "utilitycraft_titanium_fishing_net": {
+            "textures": "textures/items/nets/titanium_net"
+        },
+        "utilitycraft_aetherium_fishing_net": {
+            "textures": "textures/items/nets/aetherium_net"
+        },
+        "utilitycraft_aetherium_sword": {
+            "textures": "textures/items/tools/aetherium_sword"
+        },
+        "utilitycraft_aetherium_pickaxe": {
+            "textures": "textures/items/tools/aetherium_pickaxe"
+        },
+        "utilitycraft_aetherium_axe": {
+            "textures": "textures/items/tools/aetherium_axe"
+        },
+        "utilitycraft_aetherium_shovel": {
+            "textures": "textures/items/tools/aetherium_shovel"
+        },
+        "utilitycraft_aetherium_hoe": {
+            "textures": "textures/items/tools/aetherium_hoe"
+        },
+        "utilitycraft_aetherium_paxel": {
+            "textures": "textures/items/tools/aetherium_paxel"
+        },
+        "utilitycraft_aetherium_aiot": {
+            "textures": "textures/items/tools/aetherium_aiot"
+        },
+        "utilitycraft_aetherium_hammer": {
+            "textures": "textures/items/tools/aetherium_hammer"
+        },
+        "utilitycraft_absolute_drill": {
+            "textures": "textures/items/tools/absolute_drill"
+        },
+        "utilitycraft_void_essence": {
+            "textures": "textures/items/misc/void_essence"
+        },
+        "utilitycraft_liquid_void": {
+            "textures": "textures/items/misc/liquid_void"
+        },
+        "utilitycraft_enderling_tear": {
+            "textures": "textures/items/misc/enderling_tear"
+        },
+        "utilitycraft_pure_enderling_tear": {
+            "textures": "textures/items/misc/pure_enderling_tear"
+        },
+        "utilitycraft:snareling": {
+            "textures": "textures/items/mobs/snareling"
+        },
+        "utilitycraft:watchling": {
+            "textures": "textures/items/mobs/watchling"
+        },
+        "utilitycraft:blastling": {
+            "textures": "textures/items/mobs/blastling"
+        },
+        "utilitycraft:endersent": {
+            "textures": "textures/items/mobs/endersent"
+        },
+        "utilitycraft_size_upgrade": {
+            "textures": "textures/items/machinery/size_upgrade"
+        },
+        "utilitycraft_stack_upgrade": {
+            "textures": "textures/items/machinery/stack_upgrade"
+        },
+        "utilitycraft_hyper_processing_upgrade": {
+            "textures": "textures/items/machinery/hyper_processing_upgrade"
+        },
+        "utilitycraft_ascane_module_base": {
+            "textures": "textures/items/machinery/modules/base_mod"
+        },
+        "utilitycraft_enchantability_module": {
+            "textures": "textures/items/machinery/modules/ench_mod_1"
+        },
+        "utilitycraft_enchantability_module_2": {
+            "textures": "textures/items/machinery/modules/ench_mod_2"
+        },
+        "utilitycraft_enchantability_module_3": {
+            "textures": "textures/items/machinery/modules/ench_mod_3"
+        },
+        "utilitycraft_enchantability_module_4": {
+            "textures": "textures/items/machinery/modules/ench_mod_4"
+        },
+        "utilitycraft_enchantability_module_5": {
+            "textures": "textures/items/machinery/modules/ench_mod_5"
+        },
+        "utilitycraft_reinforcement_module": {
+            "textures": "textures/items/machinery/modules/reinforce_mod_1"
+        },
+        "utilitycraft_reinforcement_module_2": {
+            "textures": "textures/items/machinery/modules/reinforce_mod_2"
+        },
+        "utilitycraft_reinforcement_module_3": {
+            "textures": "textures/items/machinery/modules/reinforce_mod_3"
+        },
+        "utilitycraft_curse_protection_module": {
+            "textures": "textures/items/machinery/modules/curs_prot_mod_2"
+        },
+        "utilitycraft_empty_liquid_capsule": {
+            "textures": "textures/items/misc/liquid_capsule_0"
+        },
+        "utilitycraft_water_capsule_1": {
+            "textures": "textures/items/tools/capsules/water_capsule_1"
+        },
+        "utilitycraft_water_capsule_2": {
+            "textures": "textures/items/tools/capsules/water_capsule_2"
+        },
+        "utilitycraft_water_capsule_3": {
+            "textures": "textures/items/tools/capsules/water_capsule_3"
+        },
+        "utilitycraft_water_capsule_4": {
+            "textures": "textures/items/tools/capsules/water_capsule_4"
+        },
+        "utilitycraft_water_capsule_5": {
+            "textures": "textures/items/tools/capsules/water_capsule_5"
+        },
+        "utilitycraft_water_capsule_6": {
+            "textures": "textures/items/tools/capsules/water_capsule_6"
+        },
+        "utilitycraft_water_capsule_7": {
+            "textures": "textures/items/tools/capsules/water_capsule_7"
+        },
+        "utilitycraft_water_capsule_8": {
+            "textures": "textures/items/tools/capsules/water_capsule_8"
+        },
+        "utilitycraft_lava_capsule_1": {
+            "textures": "textures/items/tools/capsules/lava_capsule_1"
+        },
+        "utilitycraft_lava_capsule_2": {
+            "textures": "textures/items/tools/capsules/lava_capsule_2"
+        },
+        "utilitycraft_lava_capsule_3": {
+            "textures": "textures/items/tools/capsules/lava_capsule_3"
+        },
+        "utilitycraft_lava_capsule_4": {
+            "textures": "textures/items/tools/capsules/lava_capsule_4"
+        },
+        "utilitycraft_lava_capsule_5": {
+            "textures": "textures/items/tools/capsules/lava_capsule_5"
+        },
+        "utilitycraft_lava_capsule_6": {
+            "textures": "textures/items/tools/capsules/lava_capsule_6"
+        },
+        "utilitycraft_lava_capsule_7": {
+            "textures": "textures/items/tools/capsules/lava_capsule_7"
+        },
+        "utilitycraft_lava_capsule_8": {
+            "textures": "textures/items/tools/capsules/lava_capsule_8"
+        },
+        "utilitycraft_xp_capsule_1": {
+            "textures": "textures/items/tools/capsules/xp_capsule_1"
+        },
+        "utilitycraft_xp_capsule_2": {
+            "textures": "textures/items/tools/capsules/xp_capsule_2"
+        },
+        "utilitycraft_xp_capsule_3": {
+            "textures": "textures/items/tools/capsules/xp_capsule_3"
+        },
+        "utilitycraft_xp_capsule_4": {
+            "textures": "textures/items/tools/capsules/xp_capsule_4"
+        },
+        "utilitycraft_xp_capsule_5": {
+            "textures": "textures/items/tools/capsules/xp_capsule_5"
+        },
+        "utilitycraft_xp_capsule_6": {
+            "textures": "textures/items/tools/capsules/xp_capsule_6"
+        },
+        "utilitycraft_xp_capsule_7": {
+            "textures": "textures/items/tools/capsules/xp_capsule_7"
+        },
+        "utilitycraft_xp_capsule_8": {
+            "textures": "textures/items/tools/capsules/xp_capsule_8"
+        },
+        "utilitycraft_cryofluid_capsule_1": {
+            "textures": "textures/items/tools/capsules/cryofluid_capsule_1"
+        },
+        "utilitycraft_cryofluid_capsule_2": {
+            "textures": "textures/items/tools/capsules/cryofluid_capsule_2"
+        },
+        "utilitycraft_cryofluid_capsule_3": {
+            "textures": "textures/items/tools/capsules/cryofluid_capsule_3"
+        },
+        "utilitycraft_cryofluid_capsule_4": {
+            "textures": "textures/items/tools/capsules/cryofluid_capsule_4"
+        },
+        "utilitycraft_cryofluid_capsule_5": {
+            "textures": "textures/items/tools/capsules/cryofluid_capsule_5"
+        },
+        "utilitycraft_cryofluid_capsule_6": {
+            "textures": "textures/items/tools/capsules/cryofluid_capsule_6"
+        },
+        "utilitycraft_cryofluid_capsule_7": {
+            "textures": "textures/items/tools/capsules/cryofluid_capsule_7"
+        },
+        "utilitycraft_cryofluid_capsule_8": {
+            "textures": "textures/items/tools/capsules/cryofluid_capsule_8"
+        },
+        "utilitycraft_aetherium_liquid_capsule_1": {
+            "textures": "textures/items/misc/aetherium_liquid_capsule_1"
+        },
+        "utilitycraft_aetherium_liquid_capsule_2": {
+            "textures": "textures/items/misc/aetherium_liquid_capsule_2"
+        },
+        "utilitycraft_aetherium_liquid_capsule_3": {
+            "textures": "textures/items/misc/aetherium_liquid_capsule_3"
+        },
+        "utilitycraft_aetherium_liquid_capsule_4": {
+            "textures": "textures/items/misc/aetherium_liquid_capsule_4"
+        },
+        "utilitycraft_aetherium_liquid_capsule_5": {
+            "textures": "textures/items/misc/aetherium_liquid_capsule_5"
+        },
+        "utilitycraft_aetherium_liquid_capsule_6": {
+            "textures": "textures/items/misc/aetherium_liquid_capsule_6"
+        },
+        "utilitycraft_aetherium_liquid_capsule_7": {
+            "textures": "textures/items/misc/aetherium_liquid_capsule_7"
+        },
+        "utilitycraft_aetherium_liquid_capsule_8": {
+            "textures": "textures/items/misc/aetherium_liquid_capsule_8"
+        },
+        "utilitycraft_dark_matter_liquid_capsule_1": {
+            "textures": "textures/items/misc/dark_matter_liquid_capsule_1"
+        },
+        "utilitycraft_dark_matter_liquid_capsule_2": {
+            "textures": "textures/items/misc/dark_matter_liquid_capsule_2"
+        },
+        "utilitycraft_dark_matter_liquid_capsule_3": {
+            "textures": "textures/items/misc/dark_matter_liquid_capsule_3"
+        },
+        "utilitycraft_dark_matter_liquid_capsule_4": {
+            "textures": "textures/items/misc/dark_matter_liquid_capsule_4"
+        },
+        "utilitycraft_dark_matter_liquid_capsule_5": {
+            "textures": "textures/items/misc/dark_matter_liquid_capsule_5"
+        },
+        "utilitycraft_dark_matter_liquid_capsule_6": {
+            "textures": "textures/items/misc/dark_matter_liquid_capsule_6"
+        },
+        "utilitycraft_dark_matter_liquid_capsule_7": {
+            "textures": "textures/items/misc/dark_matter_liquid_capsule_7"
+        },
+        "utilitycraft_dark_matter_liquid_capsule_8": {
+            "textures": "textures/items/misc/dark_matter_liquid_capsule_8"
+        },
+        "utilitycraft_steam_capsule_1": {
+            "textures": "textures/items/tools/capsules/steam_capsule_1"
+        },
+        "utilitycraft_steam_capsule_2": {
+            "textures": "textures/items/tools/capsules/steam_capsule_2"
+        },
+        "utilitycraft_steam_capsule_3": {
+            "textures": "textures/items/tools/capsules/steam_capsule_3"
+        },
+        "utilitycraft_steam_capsule_4": {
+            "textures": "textures/items/tools/capsules/steam_capsule_4"
+        },
+        "utilitycraft_steam_capsule_5": {
+            "textures": "textures/items/tools/capsules/steam_capsule_5"
+        },
+        "utilitycraft_steam_capsule_6": {
+            "textures": "textures/items/tools/capsules/steam_capsule_6"
+        },
+        "utilitycraft_steam_capsule_7": {
+            "textures": "textures/items/tools/capsules/steam_capsule_7"
+        },
+        "utilitycraft_steam_capsule_8": {
+            "textures": "textures/items/tools/capsules/steam_capsule_8"
+        },
+        "utilitycraft:switch_button": {
+            "textures": "textures/ui/buttons/switch_button"
+        },
+        "utilitycraft:switch_button_pressed": {
+            "textures": "textures/ui/cells/green_cell_image"
+        },
+        "utilitycraft_liquified_aetherium_bar_00": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_00"
+        },
+        "utilitycraft_liquified_aetherium_bar_01": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_01"
+        },
+        "utilitycraft_liquified_aetherium_bar_02": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_02"
+        },
+        "utilitycraft_liquified_aetherium_bar_03": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_03"
+        },
+        "utilitycraft_liquified_aetherium_bar_04": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_04"
+        },
+        "utilitycraft_liquified_aetherium_bar_05": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_05"
+        },
+        "utilitycraft_liquified_aetherium_bar_06": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_06"
+        },
+        "utilitycraft_liquified_aetherium_bar_07": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_07"
+        },
+        "utilitycraft_liquified_aetherium_bar_08": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_08"
+        },
+        "utilitycraft_liquified_aetherium_bar_09": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_09"
+        },
+        "utilitycraft_liquified_aetherium_bar_10": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_10"
+        },
+        "utilitycraft_liquified_aetherium_bar_11": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_11"
+        },
+        "utilitycraft_liquified_aetherium_bar_12": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_12"
+        },
+        "utilitycraft_liquified_aetherium_bar_13": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_13"
+        },
+        "utilitycraft_liquified_aetherium_bar_14": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_14"
+        },
+        "utilitycraft_liquified_aetherium_bar_15": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_15"
+        },
+        "utilitycraft_liquified_aetherium_bar_16": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_16"
+        },
+        "utilitycraft_liquified_aetherium_bar_17": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_17"
+        },
+        "utilitycraft_liquified_aetherium_bar_18": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_18"
+        },
+        "utilitycraft_liquified_aetherium_bar_19": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_19"
+        },
+        "utilitycraft_liquified_aetherium_bar_20": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_20"
+        },
+        "utilitycraft_liquified_aetherium_bar_21": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_21"
+        },
+        "utilitycraft_liquified_aetherium_bar_22": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_22"
+        },
+        "utilitycraft_liquified_aetherium_bar_23": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_23"
+        },
+        "utilitycraft_liquified_aetherium_bar_24": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_24"
+        },
+        "utilitycraft_liquified_aetherium_bar_25": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_25"
+        },
+        "utilitycraft_liquified_aetherium_bar_26": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_26"
+        },
+        "utilitycraft_liquified_aetherium_bar_27": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_27"
+        },
+        "utilitycraft_liquified_aetherium_bar_28": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_28"
+        },
+        "utilitycraft_liquified_aetherium_bar_29": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_29"
+        },
+        "utilitycraft_liquified_aetherium_bar_30": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_30"
+        },
+        "utilitycraft_liquified_aetherium_bar_31": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_31"
+        },
+        "utilitycraft_liquified_aetherium_bar_32": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_32"
+        },
+        "utilitycraft_liquified_aetherium_bar_33": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_33"
+        },
+        "utilitycraft_liquified_aetherium_bar_34": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_34"
+        },
+        "utilitycraft_liquified_aetherium_bar_35": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_35"
+        },
+        "utilitycraft_liquified_aetherium_bar_36": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_36"
+        },
+        "utilitycraft_liquified_aetherium_bar_37": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_37"
+        },
+        "utilitycraft_liquified_aetherium_bar_38": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_38"
+        },
+        "utilitycraft_liquified_aetherium_bar_39": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_39"
+        },
+        "utilitycraft_liquified_aetherium_bar_40": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_40"
+        },
+        "utilitycraft_liquified_aetherium_bar_41": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_41"
+        },
+        "utilitycraft_liquified_aetherium_bar_42": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_42"
+        },
+        "utilitycraft_liquified_aetherium_bar_43": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_43"
+        },
+        "utilitycraft_liquified_aetherium_bar_44": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_44"
+        },
+        "utilitycraft_liquified_aetherium_bar_45": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_45"
+        },
+        "utilitycraft_liquified_aetherium_bar_46": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_46"
+        },
+        "utilitycraft_liquified_aetherium_bar_47": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_47"
+        },
+        "utilitycraft_liquified_aetherium_bar_48": {
+            "textures": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_48"
+        },
+        "utilitycraft_dark_matter_bar_00": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_00"
+        },
+        "utilitycraft_dark_matter_bar_01": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_01"
+        },
+        "utilitycraft_dark_matter_bar_02": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_02"
+        },
+        "utilitycraft_dark_matter_bar_03": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_03"
+        },
+        "utilitycraft_dark_matter_bar_04": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_04"
+        },
+        "utilitycraft_dark_matter_bar_05": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_05"
+        },
+        "utilitycraft_dark_matter_bar_06": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_06"
+        },
+        "utilitycraft_dark_matter_bar_07": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_07"
+        },
+        "utilitycraft_dark_matter_bar_08": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_08"
+        },
+        "utilitycraft_dark_matter_bar_09": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_09"
+        },
+        "utilitycraft_dark_matter_bar_10": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_10"
+        },
+        "utilitycraft_dark_matter_bar_11": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_11"
+        },
+        "utilitycraft_dark_matter_bar_12": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_12"
+        },
+        "utilitycraft_dark_matter_bar_13": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_13"
+        },
+        "utilitycraft_dark_matter_bar_14": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_14"
+        },
+        "utilitycraft_dark_matter_bar_15": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_15"
+        },
+        "utilitycraft_dark_matter_bar_16": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_16"
+        },
+        "utilitycraft_dark_matter_bar_17": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_17"
+        },
+        "utilitycraft_dark_matter_bar_18": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_18"
+        },
+        "utilitycraft_dark_matter_bar_19": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_19"
+        },
+        "utilitycraft_dark_matter_bar_20": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_20"
+        },
+        "utilitycraft_dark_matter_bar_21": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_21"
+        },
+        "utilitycraft_dark_matter_bar_22": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_22"
+        },
+        "utilitycraft_dark_matter_bar_23": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_23"
+        },
+        "utilitycraft_dark_matter_bar_24": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_24"
+        },
+        "utilitycraft_dark_matter_bar_25": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_25"
+        },
+        "utilitycraft_dark_matter_bar_26": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_26"
+        },
+        "utilitycraft_dark_matter_bar_27": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_27"
+        },
+        "utilitycraft_dark_matter_bar_28": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_28"
+        },
+        "utilitycraft_dark_matter_bar_29": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_29"
+        },
+        "utilitycraft_dark_matter_bar_30": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_30"
+        },
+        "utilitycraft_dark_matter_bar_31": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_31"
+        },
+        "utilitycraft_dark_matter_bar_32": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_32"
+        },
+        "utilitycraft_dark_matter_bar_33": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_33"
+        },
+        "utilitycraft_dark_matter_bar_34": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_34"
+        },
+        "utilitycraft_dark_matter_bar_35": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_35"
+        },
+        "utilitycraft_dark_matter_bar_36": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_36"
+        },
+        "utilitycraft_dark_matter_bar_37": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_37"
+        },
+        "utilitycraft_dark_matter_bar_38": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_38"
+        },
+        "utilitycraft_dark_matter_bar_39": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_39"
+        },
+        "utilitycraft_dark_matter_bar_40": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_40"
+        },
+        "utilitycraft_dark_matter_bar_41": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_41"
+        },
+        "utilitycraft_dark_matter_bar_42": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_42"
+        },
+        "utilitycraft_dark_matter_bar_43": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_43"
+        },
+        "utilitycraft_dark_matter_bar_44": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_44"
+        },
+        "utilitycraft_dark_matter_bar_45": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_45"
+        },
+        "utilitycraft_dark_matter_bar_46": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_46"
+        },
+        "utilitycraft_dark_matter_bar_47": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_47"
+        },
+        "utilitycraft_dark_matter_bar_48": {
+            "textures": "textures/items/ui/dark_matter_bar/dark_matter_bar_48"
+        },
+        "utilitycraft:cryofluid_00": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_00"
+        },
+        "utilitycraft:cryofluid_01": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_01"
+        },
+        "utilitycraft:cryofluid_02": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_02"
+        },
+        "utilitycraft:cryofluid_03": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_03"
+        },
+        "utilitycraft:cryofluid_04": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_04"
+        },
+        "utilitycraft:cryofluid_05": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_05"
+        },
+        "utilitycraft:cryofluid_06": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_06"
+        },
+        "utilitycraft:cryofluid_07": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_07"
+        },
+        "utilitycraft:cryofluid_08": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_08"
+        },
+        "utilitycraft:cryofluid_09": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_09"
+        },
+        "utilitycraft:cryofluid_10": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_10"
+        },
+        "utilitycraft:cryofluid_11": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_11"
+        },
+        "utilitycraft:cryofluid_12": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_12"
+        },
+        "utilitycraft:cryofluid_13": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_13"
+        },
+        "utilitycraft:cryofluid_14": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_14"
+        },
+        "utilitycraft:cryofluid_15": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_15"
+        },
+        "utilitycraft:cryofluid_16": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_16"
+        },
+        "utilitycraft:cryofluid_17": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_17"
+        },
+        "utilitycraft:cryofluid_18": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_18"
+        },
+        "utilitycraft:cryofluid_19": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_19"
+        },
+        "utilitycraft:cryofluid_20": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_20"
+        },
+        "utilitycraft:cryofluid_21": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_21"
+        },
+        "utilitycraft:cryofluid_22": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_22"
+        },
+        "utilitycraft:cryofluid_23": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_23"
+        },
+        "utilitycraft:cryofluid_24": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_24"
+        },
+        "utilitycraft:cryofluid_25": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_25"
+        },
+        "utilitycraft:cryofluid_26": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_26"
+        },
+        "utilitycraft:cryofluid_27": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_27"
+        },
+        "utilitycraft:cryofluid_28": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_28"
+        },
+        "utilitycraft:cryofluid_29": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_29"
+        },
+        "utilitycraft:cryofluid_30": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_30"
+        },
+        "utilitycraft:cryofluid_31": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_31"
+        },
+        "utilitycraft:cryofluid_32": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_32"
+        },
+        "utilitycraft:cryofluid_33": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_33"
+        },
+        "utilitycraft:cryofluid_34": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_34"
+        },
+        "utilitycraft:cryofluid_35": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_35"
+        },
+        "utilitycraft:cryofluid_36": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_36"
+        },
+        "utilitycraft:cryofluid_37": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_37"
+        },
+        "utilitycraft:cryofluid_38": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_38"
+        },
+        "utilitycraft:cryofluid_39": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_39"
+        },
+        "utilitycraft:cryofluid_40": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_40"
+        },
+        "utilitycraft:cryofluid_41": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_41"
+        },
+        "utilitycraft:cryofluid_42": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_42"
+        },
+        "utilitycraft:cryofluid_43": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_43"
+        },
+        "utilitycraft:cryofluid_44": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_44"
+        },
+        "utilitycraft:cryofluid_45": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_45"
+        },
+        "utilitycraft:cryofluid_46": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_46"
+        },
+        "utilitycraft:cryofluid_47": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_47"
+        },
+        "utilitycraft:cryofluid_48": {
+            "textures": "textures/items/ui/cryofluid_bar/cryofluid_frame_48"
+        },
+        "utilitycraft:arcane_00": {
+            "textures": "textures/ui/bars/enchanting/arcane_00"
+        },
+        "utilitycraft:arcane_01": {
+            "textures": "textures/ui/bars/enchanting/arcane_01"
+        },
+        "utilitycraft:arcane_02": {
+            "textures": "textures/ui/bars/enchanting/arcane_02"
+        },
+        "utilitycraft:arcane_03": {
+            "textures": "textures/ui/bars/enchanting/arcane_03"
+        },
+        "utilitycraft:arcane_04": {
+            "textures": "textures/ui/bars/enchanting/arcane_04"
+        },
+        "utilitycraft:arcane_05": {
+            "textures": "textures/ui/bars/enchanting/arcane_05"
+        },
+        "utilitycraft:arcane_06": {
+            "textures": "textures/ui/bars/enchanting/arcane_05"
+        },
+        "utilitycraft:arcane_07": {
+            "textures": "textures/ui/bars/enchanting/arcane_07"
+        },
+        "utilitycraft:arcane_08": {
+            "textures": "textures/ui/bars/enchanting/arcane_08"
+        },
+        "utilitycraft:arcane_09": {
+            "textures": "textures/ui/bars/enchanting/arcane_09"
+        },
+        "utilitycraft:arcane_10": {
+            "textures": "textures/ui/bars/enchanting/arcane_10"
+        },
+        "utilitycraft:arcane_11": {
+            "textures": "textures/ui/bars/enchanting/arcane_11"
+        },
+        "utilitycraft:arcane_12": {
+            "textures": "textures/ui/bars/enchanting/arcane_12"
+        },
+        "utilitycraft:arcane_13": {
+            "textures": "textures/ui/bars/enchanting/arcane_13"
+        },
+        "utilitycraft:arcane_14": {
+            "textures": "textures/ui/bars/enchanting/arcane_14"
+        },
+        "utilitycraft:arcane_15": {
+            "textures": "textures/ui/bars/enchanting/arcane_15"
+        },
+        "utilitycraft:arcane_16": {
+            "textures": "textures/ui/bars/enchanting/arcane_16"
+        },
+        "utilitycraft:overclock_00": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_00"
+        },
+        "utilitycraft:overclock_01": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_01"
+        },
+        "utilitycraft:overclock_02": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_02"
+        },
+        "utilitycraft:overclock_03": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_03"
+        },
+        "utilitycraft:overclock_04": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_04"
+        },
+        "utilitycraft:overclock_05": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_05"
+        },
+        "utilitycraft:overclock_06": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_06"
+        },
+        "utilitycraft:overclock_07": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_07"
+        },
+        "utilitycraft:overclock_08": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_08"
+        },
+        "utilitycraft:overclock_09": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_09"
+        },
+        "utilitycraft:overclock_10": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_10"
+        },
+        "utilitycraft:overclock_11": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_11"
+        },
+        "utilitycraft:overclock_12": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_12"
+        },
+        "utilitycraft:overclock_13": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_13"
+        },
+        "utilitycraft:overclock_14": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_14"
+        },
+        "utilitycraft:overclock_15": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_15"
+        },
+        "utilitycraft:overclock_16": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_16"
+        },
+        "utilitycraft:overclock_17": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_17"
+        },
+        "utilitycraft:overclock_18": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_18"
+        },
+        "utilitycraft:overclock_19": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_19"
+        },
+        "utilitycraft:overclock_20": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_20"
+        },
+        "utilitycraft:overclock_21": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_21"
+        },
+        "utilitycraft:overclock_22": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_22"
+        },
+        "utilitycraft:overclock_23": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_23"
+        },
+        "utilitycraft:overclock_24": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_24"
+        },
+        "utilitycraft:overclock_25": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_25"
+        },
+        "utilitycraft:overclock_26": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_26"
+        },
+        "utilitycraft:overclock_27": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_27"
+        },
+        "utilitycraft:overclock_28": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_28"
+        },
+        "utilitycraft:overclock_29": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_29"
+        },
+        "utilitycraft:overclock_30": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_30"
+        },
+        "utilitycraft:overclock_31": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_31"
+        },
+        "utilitycraft:overclock_32": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_32"
+        },
+        "utilitycraft:overclock_33": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_33"
+        },
+        "utilitycraft:overclock_34": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_34"
+        },
+        "utilitycraft:overclock_35": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_35"
+        },
+        "utilitycraft:overclock_36": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_36"
+        },
+        "utilitycraft:overclock_37": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_37"
+        },
+        "utilitycraft:overclock_38": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_38"
+        },
+        "utilitycraft:overclock_39": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_39"
+        },
+        "utilitycraft:overclock_40": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_40"
+        },
+        "utilitycraft:overclock_41": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_41"
+        },
+        "utilitycraft:overclock_42": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_42"
+        },
+        "utilitycraft:overclock_43": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_43"
+        },
+        "utilitycraft:overclock_44": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_44"
+        },
+        "utilitycraft:overclock_45": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_45"
+        },
+        "utilitycraft:overclock_46": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_46"
+        },
+        "utilitycraft:overclock_47": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_47"
+        },
+        "utilitycraft:overclock_48": {
+            "textures": "textures/items/ui/overclock_bar/overclock_frame_48"
+        },
+        "utilitycraft_multi_processing_upgrade": {
+            "textures": "textures/items/machinery/multi_processing_upgrade"
+        },
+        "utilitycraft_energy_capacity_upgrade": {
+            "textures": "textures/items/machinery/energy_capacity_upgrade"
+        },
+        "utilitycraft_liquid_capacity_upgrade": {
+            "textures": "textures/items/machinery/liquid_capacity_upgrade"
+        },
+        "utilitycraft_gas_capacity_upgrade": {
+            "textures": "textures/items/machinery/gas_capacity_upgrade"
+        },
+        "utilitycraft_resource_efficiency_upgrade": {
+            "textures": "textures/items/machinery/resource_efficiency_upgrade"
+        }
+    }
 }

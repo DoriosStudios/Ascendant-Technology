@@ -173,7 +173,7 @@ This update brings the Compactor and Decompactor, Universal transportation block
 - Two Shards or one Crystal can be crushed into one or two Crystal Dust respectively.
 - Four Crystals now form one Crystal Block, which can be crushed into eight Crystal Dust.
 - Crushing either Aetherium Ore variant now produces two Aetherium Shards.
-- The Catalyst Weaver now accepts one Crystal or two Crystal Dust when producing an Aetherium Ingot.
+- Aetherium Ingots now require one Netherite Ingot as input, plus eight Titanium Dust, eight Tungsten Dust, eight Ender Pearl Dust, 1,600 mB of Cryofluid, and either eight Aetherium Shards or two Aetherium Crystals in the Catalyst Weaver.
 - Hyper Processing Upgrades now require both Aetherium Dust and Aetherium Crystal Dust.
 - Added a smelting recipe that turns Aetherium Dust back into Aetherium Ingots.
 

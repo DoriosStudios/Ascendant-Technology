@@ -11,8 +11,8 @@ Below are the native Catalyst Weaver recipes. Infuser recipes are also imported 
 ## Native recipes
 | Input | Catalysts | Fluid | Output | Byproduct | Cost (DE) | Speed |
 | --- | --- | --- | --- | --- | --- | --- |
-| Gold Ingot ×1 | Steel Ingot ×1<br>Energized Iron Ingot ×1<br>Ender Pearl Dust ×4<br>Aetherium Crystal ×1 | Lava <br>- 8000 mB | Aetherium Ingot ×1 | Stabilized Obsidian Dust 0–2 (5%) | 12000 | 0.5x |
-| Gold Ingot ×1 | Steel Ingot ×1<br>Energized Iron Ingot ×1<br>Ender Pearl Dust ×4<br>Aetherium Crystal Dust ×2 | Lava <br>- 8000 mB | Aetherium Ingot ×1 | Stabilized Obsidian Dust 0–2 (5%) | 12000 | 0.5x |
+| Netherite Ingot ×1 | Titanium Dust ×8<br>Tungsten Dust ×8<br>Ender Pearl Dust ×8<br>Aetherium Crystal ×2 | Cryofluid <br>- 1600 mB | Aetherium Ingot ×1 | — | 12000 | 0.5x |
+| Netherite Ingot ×1 | Titanium Dust ×8<br>Tungsten Dust ×8<br>Ender Pearl Dust ×8<br>Aetherium Shard ×8 | Cryofluid <br>- 1600 mB | Aetherium Ingot ×1 | — | 12000 | 0.5x |
 | Crying Obsidian Dust ×4 | Glowstone Dust ×2<br>Energized Iron Dust ×1 | Liquified Aetherium <br>- 250 mB | Stabilized Obsidian Dust ×2 | Obsidian ×1 (0.1%) | 5400 | 1.0x |
 | Gold Ingot ×1 | Copper Dust ×4 | — | Bronze Ingot ×1 | — | 6400 | 1.0x |
 | Speed Upgrade ×1 | Energized Iron Dust ×2<br>Aetherium Metal Dust ×1<br>Aetherium Crystal Dust ×1<br>Titanium Dust ×1 | — | Hyper Processing Upgrade ×1 | — | 12800 | 0.25x |

@@ -48,7 +48,7 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 | Brute Energized Iron ×1 | Raw Iron ×1 | 500 mB | 8000 | 200 ticks (10s) |
 | Energized Iron Block ×1 | Iron Block ×1 | 4000 mB | 64000 | 1200 ticks (60s) |
 | Brute Energized Iron Block ×1 | Raw Iron Block ×1 | 4000 mB | 64000 | 1200 ticks (60s) |
-| Refined Aetherium Crystal ×1 | Aetherium Shard ×1 | 400 mB | 12000 | 300 ticks (15s) |
+| Refined Aetherium Crystal ×1 | Aetherium Crystal ×1 | 400 mB | 12000 | 300 ticks (15s) |
 
 ### Cooling (Cooling Chamber)
 | Accepted inputs | Output | Fluid | Energy (DE) | Time |

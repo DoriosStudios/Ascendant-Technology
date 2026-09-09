@@ -56,7 +56,7 @@ export const stabilizerRecipeDefinitions = {
     },
     "utilitycraft:refined_aetherium_crystal_cooling": {
         input: { id: "utilitycraft:refined_aetherium_crystal", amount: 1 },
-        output: { id: "utilitycraft:aetherium_shard", amount: 1 },
+        output: { id: "utilitycraft:aetherium_crystal", amount: 1 },
         cryofluid: 400,
         cost: 12000,
         ticks: 300,
@@ -148,4 +148,3 @@ function nonNegativeInteger(value, fallback) {
     const parsed = Math.floor(Number(value));
     return Number.isFinite(parsed) && parsed >= 0 ? parsed : fallback;
 }
-

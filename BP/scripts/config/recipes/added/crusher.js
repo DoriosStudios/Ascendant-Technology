@@ -1,6 +1,6 @@
 import * as DoriosLib from "DoriosLib/index.js";
 
-/** @type {Record<string, { output: string, amount: number, cost: number, tier: number }>} */
+/** @type {Record<string, { output: string, required?: number, amount: number, cost: number, tier: number }>} */
 export const crusherRecipeAdditions = {
     "utilitycraft:tungsten": {
         output: "utilitycraft:tungsten_dust",
@@ -36,19 +36,19 @@ export const crusherRecipeAdditions = {
         output: "utilitycraft:raw_tungsten_dust",
         amount: 2,
         cost: 1600,
-        tier: 5
+        tier: 5,
     },
     "utilitycraft:nether_tungsten_ore": {
         output: "utilitycraft:raw_tungsten_dust",
         amount: 2,
         cost: 1600,
-        tier: 5
+        tier: 5,
     },
     "utilitycraft:deepslate_titanium_ore": {
         output: "utilitycraft:titanium_dust",
         amount: 2,
         cost: 1600,
-        tier: 5
+        tier: 5,
     },
     "utilitycraft:titanium": {
         output: "utilitycraft:titanium_dust",
@@ -84,25 +84,44 @@ export const crusherRecipeAdditions = {
         output: "utilitycraft:aetherium_dust",
         amount: 1,
         cost: 2400,
-        tier: 6
+        tier: 6,
+    },
+    "utilitycraft:end_aetherium_ore": {
+        output: "utilitycraft:aetherium_shard",
+        amount: 2,
+        cost: 2400,
+        tier: 6,
+    },
+    "utilitycraft:deepslate_aetherium_ore": {
+        output: "utilitycraft:aetherium_shard",
+        amount: 2,
+        cost: 2400,
+        tier: 6,
     },
     "utilitycraft:aetherium_shard": {
         output: "utilitycraft:aetherium_crystal_dust",
+        required: 2,
+        amount: 1,
+        cost: 2400,
+        tier: 6,
+    },
+    "utilitycraft:aetherium_crystal": {
+        output: "utilitycraft:aetherium_crystal_dust",
         amount: 2,
         cost: 2400,
-        tier: 6
+        tier: 6,
     },
     "utilitycraft:aetherium_crystal_block": {
         output: "utilitycraft:aetherium_crystal_dust",
-        amount: 18,
-        cost: 21600,
-        tier: 6
+        amount: 8,
+        cost: 9600,
+        tier: 6,
     },
     "utilitycraft:aetherium_block": {
         output: "utilitycraft:aetherium_dust",
         amount: 9,
         cost: 21600,
-        tier: 6
+        tier: 6,
     },
 };
 

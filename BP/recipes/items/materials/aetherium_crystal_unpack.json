@@ -2,21 +2,21 @@
     "format_version": "1.20.80",
     "minecraft:recipe_shapeless": {
         "description": {
-            "identifier": "utilitycraft:aetherium_crystal_block_unpack"
+            "identifier": "utilitycraft:aetherium_crystal_unpack"
         },
         "tags": ["crafting_table"],
         "ingredients": [
             {
-                "item": "utilitycraft:aetherium_crystal_block"
+                "item": "utilitycraft:aetherium_crystal"
             }
         ],
         "result": {
-            "item": "utilitycraft:aetherium_crystal",
+            "item": "utilitycraft:aetherium_shard",
             "count": 4
         },
         "unlock": [
             {
-                "item": "utilitycraft:aetherium_crystal_block"
+                "item": "utilitycraft:aetherium_crystal"
             }
         ]
     }

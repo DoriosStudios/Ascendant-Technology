@@ -47,7 +47,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -85,7 +85,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -123,7 +123,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -161,7 +161,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -199,7 +199,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -237,7 +237,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -275,7 +275,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -313,7 +313,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -351,7 +351,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -389,7 +389,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -426,7 +426,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",
@@ -446,7 +446,7 @@
             "entries": [
                 {
                     "type": "item",
-                    "name": "utilitycraft:aetherium_shard",
+                    "name": "utilitycraft:aetherium_crystal",
                     "functions": [
                         {
                             "function": "set_count",

@@ -3,27 +3,31 @@ import * as DoriosLib from "DoriosLib/index.js";
 /** @type {Record<string, { output: string, required: number }>} */
 export const pressRecipeAdditions = {
     "utilitycraft:aetherium_shard": {
+        output: "utilitycraft:aetherium_crystal",
+        required: 4,
+    },
+    "utilitycraft:aetherium_crystal": {
         output: "utilitycraft:aetherium_crystal_block",
-        required: 9,
+        required: 4,
     },
     "utilitycraft:tungsten": {
-        output: "utilitycraft:tungsten_plate"
+        output: "utilitycraft:tungsten_plate",
     },
     "utilitycraft:titanium": {
-        output: "utilitycraft:titanium_plate"
+        output: "utilitycraft:titanium_plate",
     },
     "utilitycraft:titanium_chunk": {
         output: "utilitycraft:deepslate_titanium_ore",
-        required: 4
+        required: 4,
     },
     "utilitycraft:deepslate_tungsten_chunk": {
         output: "utilitycraft:deepslate_tungsten_ore",
-        required: 4
+        required: 4,
     },
     "utilitycraft:nether_tungsten_chunk": {
         output: "utilitycraft:nether_tungsten_ore",
-        required: 4
-    }
+        required: 4,
+    },
 };
 
 DoriosLib.registry.registerPressRecipe(pressRecipeAdditions);

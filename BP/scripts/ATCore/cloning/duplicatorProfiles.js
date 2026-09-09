@@ -1,9 +1,9 @@
 // @ts-check
 
 // Classification data migrated from legacy. Runtime lookup is cached in duplicatorRegistry.js.
-const CLONER_RARITY_DATA = ({
-    ascendant: ({
-        blocks: ({
+const CLONER_RARITY_DATA = {
+    ascendant: {
+        blocks: {
             "utilitycraft:duplicator": "legendary",
             "utilitycraft:enchantment_station": "epic",
             "utilitycraft:catalyst_weaver": "epic",
@@ -63,10 +63,11 @@ const CLONER_RARITY_DATA = ({
             "utilitycraft:absolute_magmator": "legendary",
             "utilitycraft:absolute_solar_panel": "legendary",
             "utilitycraft:absolute_thermo_generator": "legendary",
-            "utilitycraft:absolute_wind_turbine": "legendary"
-        }),
-        items: ({
+            "utilitycraft:absolute_wind_turbine": "legendary",
+        },
+        items: {
             "utilitycraft:aetherium_shard": "legendary",
+            "utilitycraft:aetherium_crystal": "legendary",
             "utilitycraft:refined_aetherium_crystal": "mythic",
             "utilitycraft:aetherium_ingot": "mythic",
             "utilitycraft:aetherium_boots": "mythic",
@@ -80,17 +81,17 @@ const CLONER_RARITY_DATA = ({
             "utilitycraft:aetherium_hoe": "mythic",
             "utilitycraft:void_essence": "legendary",
             "utilitycraft:enderling_tear": "mythic",
-            "utilitycraft:pure_enderling_tear": "transcendent"
-        })
-    }),
-    generators: ({
-        tierToRarity: ({
+            "utilitycraft:pure_enderling_tear": "transcendent",
+        },
+    },
+    generators: {
+        tierToRarity: {
             basic: "common",
             advanced: "uncommon",
             expert: "rare",
             ultimate: "epic",
-            absolute: "legendary"
-        }),
+            absolute: "legendary",
+        },
         tieredSuffixes: new Set([
             "battery",
             "solar_panel",
@@ -98,17 +99,17 @@ const CLONER_RARITY_DATA = ({
             "thermo_generator",
             "magmator",
             "furnator",
-            "generator"
-        ])
-    }),
-    vanilla: ({
-        blocks: ({
+            "generator",
+        ]),
+    },
+    vanilla: {
+        blocks: {
             transcendent: new Set([
                 "minecraft:barrier",
                 "minecraft:bedrock",
                 "minecraft:command_block",
                 "minecraft:structure_block",
-                "minecraft:jigsaw"
+                "minecraft:jigsaw",
             ]),
             mythic: new Set([
                 "minecraft:chain_command_block",
@@ -116,7 +117,7 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:end_portal_frame",
                 "minecraft:reinforced_deepslate",
                 "minecraft:repeating_command_block",
-                "minecraft:spawner"
+                "minecraft:spawner",
             ]),
             legendary: new Set([
                 "minecraft:ancient_debris",
@@ -125,7 +126,7 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:end_gateway",
                 "minecraft:lodestone",
                 "minecraft:netherite_block",
-                "minecraft:respawn_anchor"
+                "minecraft:respawn_anchor",
             ]),
             epic: new Set([
                 "minecraft:diamond_block",
@@ -135,7 +136,7 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:emerald_block",
                 "minecraft:emerald_ore",
                 "minecraft:enchanting_table",
-                "minecraft:ender_chest"
+                "minecraft:ender_chest",
             ]),
             rare: new Set([
                 "minecraft:crying_obsidian",
@@ -149,7 +150,7 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:sculk_sensor",
                 "minecraft:sculk_shrieker",
                 "minecraft:sea_lantern",
-                "minecraft:spore_blossom"
+                "minecraft:spore_blossom",
             ]),
             uncommon: new Set([
                 "minecraft:amethyst_block",
@@ -180,7 +181,7 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:redstone_ore",
                 "minecraft:deepslate_redstone_ore",
                 "minecraft:tuff",
-                "minecraft:dripstone_block"
+                "minecraft:dripstone_block",
             ]),
             common: new Set([
                 "minecraft:clay",
@@ -198,21 +199,18 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:red_sand",
                 "minecraft:snow_block",
                 "minecraft:stone",
-                "minecraft:glass"
-            ])
-        }),
-        items: ({
+                "minecraft:glass",
+            ]),
+        },
+        items: {
             transcendent: new Set([
                 "minecraft:command_block",
                 "minecraft:structure_block",
                 "minecraft:jigsaw",
                 "minecraft:barrier",
-                "minecraft:bedrock"
+                "minecraft:bedrock",
             ]),
-            mythic: new Set([
-                "minecraft:dragon_egg",
-                "minecraft:nether_star"
-            ]),
+            mythic: new Set(["minecraft:dragon_egg", "minecraft:nether_star"]),
             legendary: new Set([
                 "minecraft:elytra",
                 "minecraft:enchanted_golden_apple",
@@ -220,7 +218,7 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:netherite_upgrade_smithing_template",
                 "minecraft:silence_armor_trim_smithing_template",
                 "minecraft:ward_armor_trim_smithing_template",
-                "minecraft:spire_armor_trim_smithing_template"
+                "minecraft:spire_armor_trim_smithing_template",
             ]),
             epic: new Set([
                 "minecraft:wither_skeleton_skull",
@@ -231,7 +229,7 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:trident",
                 "minecraft:netherite_scrap",
                 "minecraft:prismarine_shard",
-                "minecraft:prismarine_crystals"
+                "minecraft:prismarine_crystals",
             ]),
             rare: new Set([
                 "minecraft:diamond",
@@ -254,7 +252,7 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:diamond_chestplate",
                 "minecraft:diamond_leggings",
                 "minecraft:diamond_helmet",
-                "minecraft:diamond_boots"
+                "minecraft:diamond_boots",
             ]),
             uncommon: new Set([
                 "minecraft:amethyst_shard",
@@ -272,7 +270,7 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:bucket",
                 "minecraft:milk_bucket",
                 "minecraft:water_bucket",
-                "minecraft:lava_bucket"
+                "minecraft:lava_bucket",
             ]),
             common: new Set([
                 "minecraft:coal",
@@ -290,11 +288,11 @@ const CLONER_RARITY_DATA = ({
                 "minecraft:flint",
                 "minecraft:clay_ball",
                 "minecraft:sugar",
-                "minecraft:ink_sac"
-            ])
-        }),
-        patterns: ({
-            commonBlocks: ([
+                "minecraft:ink_sac",
+            ]),
+        },
+        patterns: {
+            commonBlocks: [
                 /^minecraft:.*_planks$/,
                 /^minecraft:.*_log$/,
                 /^minecraft:.*_wood$/,
@@ -336,9 +334,9 @@ const CLONER_RARITY_DATA = ({
                 /^minecraft:.*_mud$/,
                 /^minecraft:.*_granite$/,
                 /^minecraft:.*_diorite$/,
-                /^minecraft:.*_andesite$/
-            ]),
-            commonItems: ([
+                /^minecraft:.*_andesite$/,
+            ],
+            commonItems: [
                 /^minecraft:.*_planks$/,
                 /^minecraft:.*_log$/,
                 /^minecraft:.*_wood$/,
@@ -353,20 +351,12 @@ const CLONER_RARITY_DATA = ({
                 /^minecraft:.*_wool$/,
                 /^minecraft:.*_dye$/,
                 /^minecraft:.*_seeds$/,
-                /^minecraft:.*_sapling$/
-            ])
-        })
-    }),
-    rarities: ([
-        "common",
-        "uncommon",
-        "rare",
-        "epic",
-        "legendary",
-        "mythic",
-        "transcendent"
-    ])
-});
+                /^minecraft:.*_sapling$/,
+            ],
+        },
+    },
+    rarities: ["common", "uncommon", "rare", "epic", "legendary", "mythic", "transcendent"],
+};
 
 function normalizeId(value) {
     if (typeof value !== "string") return "";
@@ -376,7 +366,7 @@ function normalizeId(value) {
 function isCommonConstructionBlock(id) {
     if (!id.startsWith("minecraft:")) return false;
     if (CLONER_RARITY_DATA.vanilla.blocks.common.has(id)) return true;
-    return CLONER_RARITY_DATA.vanilla.patterns.commonBlocks.some(pattern => pattern.test(id));
+    return CLONER_RARITY_DATA.vanilla.patterns.commonBlocks.some((pattern) => pattern.test(id));
 }
 
 function resolveVanillaBlockRarity(id) {
@@ -411,7 +401,8 @@ function resolveVanillaItemRarity(id) {
     if (/_nugget$/.test(id)) return "common";
     if (/^minecraft:(diamond|netherite)_/.test(id)) return "rare";
     if (/^minecraft:(raw_|deepslate_).*_/.test(id)) return "uncommon";
-    if (CLONER_RARITY_DATA.vanilla.patterns.commonItems.some(pattern => pattern.test(id))) return "common";
+    if (CLONER_RARITY_DATA.vanilla.patterns.commonItems.some((pattern) => pattern.test(id)))
+        return "common";
 
     return null;
 }
@@ -433,7 +424,7 @@ export function getClonerItemProfile(id) {
         return {
             rarity: "uncommon",
             declared: false,
-            source: "fallback"
+            source: "fallback",
         };
     }
 
@@ -442,7 +433,7 @@ export function getClonerItemProfile(id) {
         return {
             rarity: ascendantBlockRarity,
             declared: true,
-            source: "ascendant_block"
+            source: "ascendant_block",
         };
     }
 
@@ -451,7 +442,7 @@ export function getClonerItemProfile(id) {
         return {
             rarity: ascendantItemRarity,
             declared: true,
-            source: "ascendant_item"
+            source: "ascendant_item",
         };
     }
 
@@ -460,7 +451,7 @@ export function getClonerItemProfile(id) {
         return {
             rarity: tieredGeneratorRarity,
             declared: true,
-            source: "ascendant_generator_tier"
+            source: "ascendant_generator_tier",
         };
     }
 
@@ -469,7 +460,7 @@ export function getClonerItemProfile(id) {
         return {
             rarity: vanillaBlockRarity,
             declared: true,
-            source: "vanilla_block"
+            source: "vanilla_block",
         };
     }
 
@@ -478,14 +469,13 @@ export function getClonerItemProfile(id) {
         return {
             rarity: vanillaItemRarity,
             declared: true,
-            source: "vanilla_item"
+            source: "vanilla_item",
         };
     }
 
     return {
         rarity: "uncommon",
         declared: false,
-        source: "fallback"
+        source: "fallback",
     };
 }
-

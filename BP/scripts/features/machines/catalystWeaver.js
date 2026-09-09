@@ -1,8 +1,12 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+import { commitProcess } from "../../ATCore/processing/commitProcess.js";
+
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import { getCatalystWeaverRecipe } from "../../config/recipes/catalystWeaver.js";
 import {
@@ -45,11 +49,14 @@ const FLUID_IO_RATE = 128000;
 const itemMaximums = new Map();
 
 registerIOInterface(ID, {
-    automaticDefaults: true,
+    // Automatic defaults synthesize an all-inputs mode; this machine exposes
+    // the base input separately from the combined catalyst group.
+    automaticDefaults: false,
     items: {
         buttonSlots: [17, 18, 19, 20, 21, 22],
         anyInputSlots: [INPUT_SLOT, ...CATALYST_SLOTS],
         anyOutputSlots: [OUTPUT_SLOT, BYPRODUCT_SLOT],
+        initialModes: { south: "input_1", up: "input_8", north: "output_3" },
         modes: [
             { id: "disabled" },
             { id: "input_1", inputSlots: [INPUT_SLOT] },
@@ -59,7 +66,7 @@ registerIOInterface(ID, {
             { id: "input_5", inputSlots: [CATALYST_SLOTS[3]] },
             { id: "input_6", inputSlots: [CATALYST_SLOTS[4]] },
             { id: "input_7", inputSlots: [CATALYST_SLOTS[5]] },
-            { id: "input_8", inputSlots: [INPUT_SLOT, ...CATALYST_SLOTS] },
+            { id: "input_8", inputSlots: CATALYST_SLOTS },
             { id: "output_1", outputSlots: [OUTPUT_SLOT] },
             { id: "output_2", outputSlots: [BYPRODUCT_SLOT] },
             { id: "output_3", outputSlots: [OUTPUT_SLOT, BYPRODUCT_SLOT] },
@@ -69,6 +76,7 @@ registerIOInterface(ID, {
         buttonSlots: [23, 24, 25, 26, 27, 28],
         anyInputIndices: [0],
         anyOutputIndices: [],
+        initialModes: { south: "input_1" },
         modes: [
             { id: "disabled" },
             { id: "input_1", inputIndices: [0] },
@@ -76,7 +84,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -185,17 +193,19 @@ DoriosLib.registry.blockComponent(ID, {
         });
 
         if (result.processCount > 0) {
-            consumeStack(machine.container, INPUT_SLOT, result.processCount * recipe.input.amount);
-            consumeCatalysts(machine.container, recipe.catalysts, result.processCount);
-            if (recipe.fluid) tank.consume(result.processCount * recipe.fluid.amount);
-            insertStack(
-                machine.container,
-                OUTPUT_SLOT,
-                output,
-                recipe.output.id,
-                result.processCount * recipe.output.amount,
-            );
-            produceByproduct(machine.container, recipe.byproduct, result.processCount);
+            commitProcess(machine, result, [INPUT_SLOT, ...CATALYST_SLOTS, OUTPUT_SLOT, BYPRODUCT_SLOT], [tank], () => {
+                consumeStack(machine.container, INPUT_SLOT, resourceCost(machine, result.processCount * recipe.input.amount, recipe.input.amount));
+                consumeCatalysts(machine, recipe.catalysts, result.processCount);
+                if (recipe.fluid) tank.consume(resourceCost(machine, result.processCount * recipe.fluid.amount, recipe.fluid.amount));
+                insertStack(
+                    machine.container,
+                    OUTPUT_SLOT,
+                    output,
+                    recipe.output.id,
+                    result.processCount * recipe.output.amount,
+                );
+                produceByproduct(machine.container, recipe.byproduct, result.processCount);
+            });
         }
 
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
@@ -253,10 +263,11 @@ function getOutputCraftCapacity(item, typeId, amountPerCraft) {
     return Math.floor(Math.max(0, item.maxAmount - item.amount) / amountPerCraft);
 }
 
-function consumeCatalysts(container, catalysts, crafts) {
+function consumeCatalysts(machine, catalysts, crafts) {
+    const container = machine.container;
     for (let requirementIndex = 0; requirementIndex < catalysts.length; requirementIndex++) {
         const requirement = catalysts[requirementIndex];
-        let remaining = requirement.amount * crafts;
+        let remaining = resourceCost(machine, requirement.amount * crafts, requirement.amount);
         for (let slotIndex = 0; slotIndex < CATALYST_SLOTS.length && remaining > 0; slotIndex++) {
             const slot = CATALYST_SLOTS[slotIndex];
             const item = container.getItem(slot);

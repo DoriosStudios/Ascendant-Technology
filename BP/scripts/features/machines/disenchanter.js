@@ -1,12 +1,10 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import * as DoriosLib from "DoriosLib/index.js";
-import {
-    ButtonManager,
-    FluidStorage,
-    Machine,
-    registerIOInterface,
-} from "DoriosCore/index.js";
+import { ButtonManager, FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     createDisenchantSignature,
     extractFirstEnchantment,
@@ -98,7 +96,7 @@ ButtonManager.registerMachineButton(ID, MODE_BUTTON_SLOT, ({ entity }) => {
     return next === EXTRACTION_MODE ? "\u00A7r\u00A7aExtraction" : "\u00A7r\u00A76Absorption";
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -290,7 +288,9 @@ function commitExtraction(machine, source, enchantments) {
 
     try {
         machine.container.setItem(SOURCE_SLOT, result.source);
-        if (catalyst.amount <= 1) {
+        if (resourceCost(machine, 1) === 0) {
+            // Keep the book requirement when preservation succeeds.
+        } else if (catalyst.amount <= 1) {
             machine.container.setItem(CATALYST_SLOT, undefined);
         } else {
             const remaining = catalyst.clone();

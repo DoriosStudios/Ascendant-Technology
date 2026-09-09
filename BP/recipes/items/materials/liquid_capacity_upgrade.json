@@ -1,0 +1,41 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:liquid_capacity_upgrade"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "SDS",
+            "RBR",
+            "SIS"
+        ],
+        "key": {
+            "B": {
+                "item": "utilitycraft:base_upgrade"
+            },
+            "D": {
+                "item": "minecraft:cyan_dye"
+            },
+            "I": {
+                "item": "utilitycraft:expert_fluid_tank"
+            },
+            "R": {
+                "item": "minecraft:redstone_block"
+            },
+            "S": {
+                "item": "utilitycraft:steel_plate"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:liquid_capacity_upgrade"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:base_upgrade"
+            }
+        ]
+    }
+}

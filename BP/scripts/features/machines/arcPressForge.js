@@ -1,31 +1,81 @@
 // @ts-check
 
-import * as DoriosLib from "DoriosLib/index.js";
-import { ButtonManager, GasStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { parallelLimit, resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
+import { ButtonManager, GasStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
-    advanceProcess,
-    consumePooledInput,
-    countPooledInput,
-    getPooledOutputCapacity,
+    advanceSlotCycle,
+    createPooledOutputReservation,
     insertPooledOutput,
     pressRecipes,
-    selectPooledRecipe,
 } from "../../ATCore/processing/index.js";
-import { displayProgress, renderStatus, setDynamicNumber, setDynamicString, setUiItem } from "./runtime.js";
+import {
+    displayProgress,
+    renderStatus,
+    setDynamicNumber,
+    setDynamicString,
+    setUiItem,
+} from "./runtime.js";
 
 const ID = "utilitycraft:arc_press_forge";
 const INVENTORY_SIZE = 29;
 const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-    -1, 16, 17, 18, 19, 20, 21,
-    -1, -1, -1, -1, -1, -1,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, -1, 16, 17, 18, 19, 20, 21, -1, -1, -1,
+    -1, -1, -1,
 ];
 const INPUTS = Object.freeze([3, 4, 5, 6]);
 const OUTPUTS = Object.freeze([7, 8, 9, 10]);
 const MODE_BUTTON_SLOT = 11;
 const MODE_KEY = "ascendant:arc_press_forge_mode";
+const CYCLE_KEY = "ascendant:arc_press_forge_cycle";
 const STEAM_DISPLAY_SLOT = 16;
 const STEAM_PER_CRAFT = 125;
+
+function selectOperations(machine, settings, mode) {
+    const operations = [];
+    const reservation = createPooledOutputReservation(machine.container, OUTPUTS);
+    const limit = parallelLimit(machine, INPUTS.length);
+    const stackBatch = Math.max(1, Math.floor(machine.boosts.process_batch ?? 1));
+    const batch = mode === "high_speed" ? stackBatch * 2 : stackBatch;
+    const intervalScale = Math.max(1, Math.floor(machine.processingInterval / 4));
+    const craftLimit = batch * intervalScale;
+    let hasInput = false;
+    let hasRecipe = false;
+    let outputBlocked = false;
+
+    for (const slot of INPUTS) {
+        const input = machine.container.getItem(slot);
+        if (!input) continue;
+        hasInput = true;
+        const recipe = pressRecipes[input.typeId];
+        if (!recipe || input.amount < recipe.required) continue;
+        hasRecipe = true;
+        const crafts = Math.min(Math.floor(input.amount / recipe.required), craftLimit);
+        if (!reservation.reserve(recipe.output, crafts * recipe.amount, recipe.outputMaxAmount)) {
+            outputBlocked = true;
+            continue;
+        }
+        operations.push({
+            slot,
+            input,
+            recipe,
+            crafts,
+            batch,
+            cost: recipe.cost ?? settings.machine.energy_cost,
+        });
+        if (operations.length >= limit) break;
+    }
+    return { operations, hasInput, hasRecipe, outputBlocked, batch };
+}
+
+function consumeSlot(container, slot, item, amount) {
+    if (amount >= item.amount) container.setItem(slot, undefined);
+    else {
+        item.amount -= amount;
+        container.setItem(slot, item);
+    }
+}
 
 function getMode(entity) {
     return entity.getDynamicProperty(MODE_KEY) === "high_speed" ? "high_speed" : "low_loss";
@@ -54,21 +104,23 @@ registerIOInterface(ID, {
         buttonSlots: [23, 24, 25, 26, 27, 28],
         anyInputIndices: [0],
         anyOutputIndices: [],
-        modes: [
-            { id: "disabled" },
-            { id: "input_1", inputIndices: [0] },
-        ],
+        modes: [{ id: "disabled" }, { id: "input_1", inputIndices: [0] }],
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
             setUiItem(machine.container, 1, "utilitycraft:arrow_indicator_90");
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
-            setUiItem(machine.container, MODE_BUTTON_SLOT, "utilitycraft:ui_filler", "§r§aLow Loss");
+            setUiItem(
+                machine.container,
+                MODE_BUTTON_SLOT,
+                "utilitycraft:ui_filler",
+                "§r§aLow Loss",
+            );
             setUiItem(machine.container, STEAM_DISPLAY_SLOT, "utilitycraft:steam_00");
             new GasStorage(machine.entity, 0).setType("steam");
             setDynamicString(machine.entity, MODE_KEY, "low_loss");
@@ -87,94 +139,126 @@ DoriosLib.registry.blockComponent(ID, {
         else ButtonManager.unwatchEntity(machine.entity);
 
         const mode = getMode(machine.entity);
-        const selected = selectPooledRecipe(machine.container, INPUTS, pressRecipes);
-        if (!selected) {
+        const highSpeed = mode === "high_speed";
+        const selection = selectOperations(machine, settings, mode);
+        const operations = selection.operations;
+        if (operations.length === 0) {
+            setDynamicString(machine.entity, CYCLE_KEY, "");
             setDynamicNumber(machine.entity, "dorios:progress_0", 0);
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             displayProgress(machine, settings.machine.energy_cost);
             if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-            renderStatus(machine, false, "Insert Items", [{
-                title: "Forge Information",
-                lines: [
-                    `§r§7Mode §f${mode === "high_speed" ? "High Speed" : "Low Loss"}`,
-                    `§r§7Steam Boost §fInactive`,
-                    `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
+            const message = selection.outputBlocked
+                ? "Output Full"
+                : selection.hasRecipe
+                  ? "Needs More Input"
+                  : selection.hasInput
+                    ? "Invalid Input"
+                    : "Insert Items";
+            renderStatus(
+                machine,
+                false,
+                message,
+                [
+                    {
+                        title: "Forge Information",
+                        lines: [
+                            `§r§7Selected Slots §f0/${parallelLimit(machine, INPUTS.length)}`,
+                            `§r§7Mode §f${highSpeed ? "High Speed" : "Low Loss"}`,
+                            `§r§7Steam Boost §fInactive`,
+                            `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
+                        ],
+                    },
                 ],
-            }], { energyCost: settings.machine.energy_cost });
+                { energyCost: settings.machine.energy_cost },
+            );
             return;
         }
 
-        const { inputTypeId, recipe } = selected;
-        const inputCrafts = Math.floor(countPooledInput(machine.container, INPUTS, inputTypeId) / recipe.required);
-        const outputCrafts = Math.floor(getPooledOutputCapacity(
-            machine.container, OUTPUTS, recipe.output, recipe.outputMaxAmount,
-        ) / recipe.amount);
-        const resourceCrafts = Math.min(inputCrafts, outputCrafts);
-        if (resourceCrafts <= 0) {
-            const idleCost = recipe.cost ?? settings.machine.energy_cost;
-            if (inputCrafts <= 0) setDynamicNumber(machine.entity, "dorios:progress_0", 0);
-            setDynamicNumber(machine.entity, "dorios:energy_cost_0", idleCost);
-            displayProgress(machine, idleCost);
-            if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-            renderStatus(machine, false, outputCrafts <= 0 ? "Output Full" : "Needs More Input", [{
-                title: "Forge Information",
-                lines: [
-                    `§r§7Mode §f${mode === "high_speed" ? "High Speed" : "Low Loss"}`,
-                    `§r§7Steam Boost §fInactive`,
-                    `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
-                ],
-            }], { energyCost: idleCost });
-            return;
+        const signature = `${mode}|${operations.map((operation) => `${operation.slot}:${operation.input.typeId}`).join("|")}`;
+        if (machine.entity.getDynamicProperty(CYCLE_KEY) !== signature) {
+            setDynamicString(machine.entity, CYCLE_KEY, signature);
+            setDynamicNumber(machine.entity, "dorios:progress_0", 0);
         }
-
-        const cost = recipe.cost ?? settings.machine.energy_cost;
-        const processBatch = Math.max(1, Math.floor(machine.boosts.process_batch ?? 1));
-        const highSpeed = mode === "high_speed";
-        const modeBatch = highSpeed ? processBatch * 2 : processBatch;
-        const intervalScale = Math.max(1, Math.floor(machine.processingInterval / 4));
-        const maxCrafts = Math.min(resourceCrafts, modeBatch * intervalScale);
-        const steamNeeded = maxCrafts * STEAM_PER_CRAFT;
+        const totalCrafts = operations.reduce((sum, operation) => sum + operation.crafts, 0);
+        const steamNeeded = totalCrafts * STEAM_PER_CRAFT;
         const steamActive = steam.getType() === "steam" && steam.get() >= steamNeeded;
-        const operationCost = Math.ceil(cost * (steamActive ? 1.25 : 1));
-        const result = advanceProcess(machine, {
+        const cycleOperations = operations.map((operation) => ({
+            ...operation,
+            cost: Math.ceil(operation.cost * (steamActive ? 1.25 : 1)),
+        }));
+        const rateMultiplier = (highSpeed ? 2 : 1) * (steamActive ? 1.5 : 1);
+        const result = advanceSlotCycle(machine, {
             progress: machine.getProgress(),
-            cost: operationCost,
-            batch: modeBatch,
-            maxCrafts,
-            rateMultiplier: (highSpeed ? 2 : 1) * (steamActive ? 1.5 : 1),
+            operations: cycleOperations,
+            rateMultiplier,
         });
 
-        if (result.processCount > 0) {
-            consumePooledInput(machine.container, INPUTS, inputTypeId, result.processCount * recipe.required);
-            let outputAmount = result.processCount * recipe.amount;
-            if (highSpeed && outputAmount > 0) {
-                const completedBatches = Math.ceil(result.processCount / modeBatch);
-                for (let batchIndex = 0; batchIndex < completedBatches && outputAmount > 0; batchIndex++) {
-                    if (Math.random() < 0.5) outputAmount--;
+        let processed = 0;
+        if (result.completed) {
+            for (const operation of operations) {
+                consumeSlot(
+                    machine.container,
+                    operation.slot,
+                    operation.input,
+                    resourceCost(
+                        machine,
+                        operation.crafts * operation.recipe.required,
+                        operation.recipe.required,
+                    ),
+                );
+                let outputAmount = operation.crafts * operation.recipe.amount;
+                if (highSpeed) {
+                    const completedBatches = Math.ceil(operation.crafts / operation.batch);
+                    for (
+                        let batchIndex = 0;
+                        batchIndex < completedBatches && outputAmount > 0;
+                        batchIndex++
+                    ) {
+                        if (Math.random() < 0.5) outputAmount--;
+                    }
                 }
+                if (outputAmount > 0) {
+                    insertPooledOutput(
+                        machine.container,
+                        OUTPUTS,
+                        operation.recipe.output,
+                        outputAmount,
+                    );
+                }
+                processed += operation.crafts;
             }
-            if (outputAmount > 0) insertPooledOutput(machine.container, OUTPUTS, recipe.output, outputAmount);
-            if (steamActive) steam.consume(result.processCount * STEAM_PER_CRAFT);
+            if (steamActive) steam.consume(resourceCost(machine, steamNeeded, STEAM_PER_CRAFT));
         }
 
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
-        setDynamicNumber(machine.entity, "dorios:energy_cost_0", operationCost);
-        displayProgress(machine, operationCost);
+        setDynamicNumber(machine.entity, "dorios:energy_cost_0", result.cost);
+        displayProgress(machine, result.cost);
         if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-        const active = result.energyUsed > 0 || result.processCount > 0;
-        renderStatus(machine, active, active ? "Running" : "No Energy", [{
-            title: "Forge Information",
-            lines: [
-                `§r§7Mode §f${highSpeed ? "High Speed" : "Low Loss"}`,
-                `§r§7Steam Boost §f${steamActive ? "x1.50" : "Inactive"}`,
-                `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
-                `§r§7Mode Rate §f${highSpeed ? "x2.00" : "x1.00"}`,
+        const active = result.energyUsed > 0 || result.completed;
+        renderStatus(
+            machine,
+            active,
+            active ? "Running" : "No Energy",
+            [
+                {
+                    title: "Forge Information",
+                    lines: [
+                        `§r§7Selected Slots §f${operations.length}/${parallelLimit(machine, INPUTS.length)}`,
+                        `§r§7Processed §f${processed}`,
+                        `§r§7Mode §f${highSpeed ? "High Speed" : "Low Loss"}`,
+                        `§r§7Steam Boost §f${steamActive ? "x1.50" : "Inactive"}`,
+                        `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
+                        `§r§7Mode Rate §f${highSpeed ? "x2.00" : "x1.00"}`,
+                    ],
+                },
             ],
-        }], {
-            energyCost: operationCost,
-            rateMultiplier: (highSpeed ? 2 : 1) * (steamActive ? 1.5 : 1),
-            batch: modeBatch,
-        });
+            {
+                energyCost: result.cost,
+                rateMultiplier,
+                batch: selection.batch,
+            },
+        );
     },
 
     onPlayerBreak(event) {

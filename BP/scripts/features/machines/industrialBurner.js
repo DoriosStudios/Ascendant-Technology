@@ -1,7 +1,10 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     advanceLanes,
     furnaceRecipes,
@@ -73,6 +76,12 @@ function createLane(machine, laneIndex, settings, lavaCraftBudget) {
     const inputSlot = INPUTS[laneIndex];
     const outputSlots = OUTPUTS[laneIndex];
     const input = machine.container.getItem(inputSlot);
+    const signatureKey = `ascendant:parallel_recipe_${laneIndex}`;
+    const signature = input?.typeId ?? "";
+    if (machine.entity.getDynamicProperty(signatureKey) !== signature) {
+        machine.entity.setDynamicProperty(signatureKey, signature);
+        setDynamicNumber(machine.entity, `dorios:progress_${laneIndex}`, 0);
+    }
     const recipe = input ? furnaceRecipes[input.typeId] : undefined;
     const batch = Math.max(1, Math.floor(machine.boosts.process_batch ?? 1));
 
@@ -102,7 +111,7 @@ function createLane(machine, laneIndex, settings, lavaCraftBudget) {
     };
 }
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -151,9 +160,9 @@ DoriosLib.registry.blockComponent(ID, {
 
         for (let index = 0; index < lanes.length; index++) {
             const lane = lanes[index];
-            if (lane.maxCrafts > 0) readyLanes++;
+            if (lane.active) readyLanes++;
             if (lane.processCount > 0 && lane.input && lane.recipe) {
-                const inputAmount = lane.processCount * lane.recipe.required;
+                const inputAmount = resourceCost(machine, lane.processCount * lane.recipe.required, lane.recipe.required);
                 const outputAmount = lane.processCount * lane.recipe.amount;
                 if (inputAmount >= lane.input.amount) machine.container.setItem(lane.inputSlot, undefined);
                 else {
@@ -172,7 +181,7 @@ DoriosLib.registry.blockComponent(ID, {
             displayProgress(machine, lane.cost, PROGRESS_SLOTS[index], index);
         }
 
-        if (lavaUsed > 0) lava.consume(lavaUsed);
+        if (lavaUsed > 0) lava.consume(resourceCost(machine, lavaUsed, LAVA_PER_BONUS_CRAFT));
         if (machine.shouldUpdateUI) lava.display(LAVA_DISPLAY_SLOT);
         renderStatus(machine, energyUsed > 0 || crafted > 0, readyLanes > 0 ? "Running" : "Insert Items", [{
             title: "Incinerator Information",

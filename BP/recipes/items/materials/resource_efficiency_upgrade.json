@@ -1,0 +1,41 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:resource_efficiency_upgrade"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "SDS",
+            "RBR",
+            "SIS"
+        ],
+        "key": {
+            "B": {
+                "item": "utilitycraft:base_upgrade"
+            },
+            "D": {
+                "item": "minecraft:green_dye"
+            },
+            "I": {
+                "item": "utilitycraft:refined_aetherium_crystal"
+            },
+            "R": {
+                "item": "minecraft:redstone_block"
+            },
+            "S": {
+                "item": "utilitycraft:steel_plate"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:resource_efficiency_upgrade"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:base_upgrade"
+            }
+        ]
+    }
+}

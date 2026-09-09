@@ -1,7 +1,10 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import * as DoriosLib from "DoriosLib/index.js";
-import { ButtonManager, GasStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { ButtonManager, GasStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     advanceProcess,
     consumePooledInput,
@@ -162,8 +165,8 @@ function commitLane(machine, lane, steam) {
 
     const rolled = rollSieveDrops(lane.eligibleDrops, lane.maxCrafts, lane.mesh);
     lane.produced = insertSieveOutputs(machine.container, OUTPUTS, rolled).insertedTotal;
-    consumePooledInput(machine.container, lane.inputs, lane.selected.inputTypeId, lane.maxCrafts);
-    if (lane.steamActive) steam.consume(lane.steamNeeded);
+    consumePooledInput(machine.container, lane.inputs, lane.selected.inputTypeId, resourceCost(machine, lane.maxCrafts, 1));
+    if (lane.steamActive) steam.consume(resourceCost(machine, lane.steamNeeded, STEAM_PER_CRAFT));
     lane.progress = Math.max(0, lane.progress - lane.cost);
     lane.crafted = lane.maxCrafts;
     if (countPooledInput(machine.container, lane.inputs, lane.selected.inputTypeId) <= 0) {
@@ -193,7 +196,7 @@ function syncDisplays(machine, steam, mode, lanes, sharedCost) {
     displayProgress(machine, lanes[1]?.cost ?? 1, LANE_B_PROGRESS_SLOT, 1);
 }
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -263,8 +266,8 @@ DoriosLib.registry.blockComponent(ID, {
                         for (const [itemId, amount] of rolled) {
                             combined.set(itemId, (combined.get(itemId) ?? 0) + amount);
                         }
-                        consumePooledInput(machine.container, lane.inputs, lane.selected.inputTypeId, lane.maxCrafts);
-                        if (lane.steamActive) steam.consume(lane.steamNeeded);
+                        consumePooledInput(machine.container, lane.inputs, lane.selected.inputTypeId, resourceCost(machine, lane.maxCrafts, 1));
+                        if (lane.steamActive) steam.consume(resourceCost(machine, lane.steamNeeded, STEAM_PER_CRAFT));
                         lane.crafted = lane.maxCrafts;
                         crafted += lane.maxCrafts;
                         if (countPooledInput(machine.container, lane.inputs, lane.selected.inputTypeId) <= 0) {

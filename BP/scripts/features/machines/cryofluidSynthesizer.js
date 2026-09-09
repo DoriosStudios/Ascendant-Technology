@@ -1,7 +1,10 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
     cryogenSynthesisRecipe,
@@ -58,7 +61,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -133,21 +136,9 @@ DoriosLib.registry.blockComponent(ID, {
         });
 
         if (result.processCount > 0) {
-            consumeInputValue(
-                machine,
-                TITANIUM_INPUTS,
-                titaniumGroup,
-                TITANIUM_CREDIT_KEY,
-                result.processCount * titaniumGroup.requiredValue,
-            );
-            consumeInputValue(
-                machine,
-                LAPIS_INPUTS,
-                lapisGroup,
-                LAPIS_CREDIT_KEY,
-                result.processCount * lapisGroup.requiredValue,
-            );
-            water.consume(result.processCount * cryogenSynthesisRecipe.water);
+            consumeInputValue(machine, TITANIUM_INPUTS, titaniumGroup, TITANIUM_CREDIT_KEY, resourceCost(machine, result.processCount * titaniumGroup.requiredValue, titaniumGroup.requiredValue));
+            consumeInputValue(machine, LAPIS_INPUTS, lapisGroup, LAPIS_CREDIT_KEY, resourceCost(machine, result.processCount * lapisGroup.requiredValue, lapisGroup.requiredValue));
+            water.consume(resourceCost(machine, result.processCount * cryogenSynthesisRecipe.water, cryogenSynthesisRecipe.water));
             cryofluid.add(result.processCount * cryogenSynthesisRecipe.cryofluid);
         }
 

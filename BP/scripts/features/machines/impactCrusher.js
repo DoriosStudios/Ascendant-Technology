@@ -1,8 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { system } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, GasStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, GasStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     advanceLanes,
     crusherRecipes,
@@ -94,6 +97,12 @@ function createLane(machine, index, settings, lavaCraftBudget) {
     const inputSlot = INPUTS[index];
     const outputSlots = OUTPUTS[index];
     const input = machine.container.getItem(inputSlot);
+    const signatureKey = `ascendant:parallel_recipe_${index}`;
+    const signature = input?.typeId ?? "";
+    if (machine.entity.getDynamicProperty(signatureKey) !== signature) {
+        machine.entity.setDynamicProperty(signatureKey, signature);
+        setDynamicNumber(machine.entity, `dorios:progress_${index}`, 0);
+    }
     const recipe = input ? crusherRecipes[input.typeId] : undefined;
     const cost = recipe?.cost ?? settings.machine.energy_cost;
     if (!input || !recipe) {
@@ -131,7 +140,7 @@ function coolMachine(machine, steam, heat, activeLanes, locked) {
         const consumed = Math.min(requested, steam.get());
         const efficiency = consumed / requested;
 
-        steam.consume(consumed);
+        steam.consume(resourceCost(machine, consumed, consumed));
 
         cooling += (
             36 +
@@ -187,7 +196,7 @@ function estimateOverheatSeconds(heat, heatIncrease, processingInterval) {
     return Math.max(1, Math.ceil(((MAX_HEAT - heat) / heatIncrease) * (processingInterval / 20)));
 }
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -258,7 +267,7 @@ DoriosLib.registry.blockComponent(ID, {
         const intervalScale = Math.max(1, machine.processingInterval / 4);
         const steamAvailableBeforeHeating = steam.getType() === "steam" && steam.get() > 0;
         if (lava.getType() === "lava" && lava.get() >= LAVA_HEAT_USE * intervalScale && heat < MAX_HEAT) {
-            lava.consume(LAVA_HEAT_USE * intervalScale);
+            lava.consume(resourceCost(machine, LAVA_HEAT_USE * intervalScale, LAVA_HEAT_USE * intervalScale));
             heat += (steamAvailableBeforeHeating
                 ? LAVA_HEAT_GAIN_WITH_STEAM
                 : LAVA_HEAT_GAIN_WITHOUT_STEAM) * intervalScale;
@@ -280,7 +289,7 @@ DoriosLib.registry.blockComponent(ID, {
             const lane = lanes[index];
             if (lane.energyUsed > 0 || lane.processCount > 0) activeLanes++;
             if (lane.processCount > 0 && lane.input && lane.recipe) {
-                const used = lane.processCount * lane.recipe.required;
+                const used = resourceCost(machine, lane.processCount * lane.recipe.required, lane.recipe.required);
                 if (used >= lane.input.amount) machine.container.setItem(lane.inputSlot, undefined);
                 else {
                     lane.input.amount -= used;
@@ -297,7 +306,7 @@ DoriosLib.registry.blockComponent(ID, {
             setDynamicNumber(machine.entity, `dorios:progress_${index}`, lane.progress);
             setDynamicNumber(machine.entity, `dorios:energy_cost_${index}`, lane.cost);
         }
-        if (crafted > 0) lava.consume(crafted * LAVA_PER_CRAFT);
+        if (crafted > 0) lava.consume(resourceCost(machine, crafted * LAVA_PER_CRAFT, LAVA_PER_CRAFT));
 
         heat += activeLanes * 16 * intervalScale + crafted * 5 + (crafted > 0 ? 10 : 0);
 

@@ -1,13 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { system } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import {
-    ButtonManager,
-    FluidStorage,
-    Machine,
-    registerIOInterface,
-} from "DoriosCore/index.js";
+import { ButtonManager, FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     getAbyssalLootTable,
     rollAbyssalDrops,
@@ -107,7 +105,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -262,8 +260,8 @@ DoriosLib.registry.blockComponent(ID, {
                 config: abyssalFisherConfig,
             });
 
-            water.consume(operation.waterCost);
-            damageNet(machine.container, operation.castCount);
+            water.consume(resourceCost(machine, operation.waterCost, operation.waterCost / operation.castCount));
+            damageNet(machine.container, resourceCost(machine, operation.castCount, 1));
 
             if (canFitDrops(machine.container, drops)) {
                 distribution = insertDrops(machine, drops);
@@ -564,6 +562,7 @@ function insertDrops(machine, drops) {
 }
 
 function damageNet(container, amount) {
+    if (amount <= 0) return;
     const item = container.getItem(NET_SLOT);
     if (!item) return;
 

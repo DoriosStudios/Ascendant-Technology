@@ -1,17 +1,13 @@
-export {
-    crusherRecipes,
-    furnaceRecipes,
-    pressRecipes,
-    sieveRecipes,
-} from "./recipeTables.js";
+export { crusherRecipes, furnaceRecipes, pressRecipes, sieveRecipes } from "./recipeTables.js";
 export {
     countPooledInput,
     consumePooledInput,
+    createPooledOutputReservation,
     getPooledOutputCapacity,
     insertPooledOutput,
     selectPooledRecipe,
 } from "./itemPools.js";
-export { advanceLanes, advanceProcess } from "./processEngine.js";
+export { advanceLanes, advanceProcess, advanceSlotCycle } from "./processEngine.js";
 export { processCryoCoolingGrid } from "./cryoCoolingGrid.js";
 export {
     getEligibleSieveDrops,

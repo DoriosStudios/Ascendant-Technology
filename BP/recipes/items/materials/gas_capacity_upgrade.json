@@ -1,0 +1,41 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:gas_capacity_upgrade"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "SDS",
+            "RBR",
+            "SIS"
+        ],
+        "key": {
+            "B": {
+                "item": "utilitycraft:base_upgrade"
+            },
+            "D": {
+                "item": "minecraft:lime_dye"
+            },
+            "I": {
+                "item": "utilitycraft:expert_gas_tank"
+            },
+            "R": {
+                "item": "minecraft:redstone_block"
+            },
+            "S": {
+                "item": "utilitycraft:steel_plate"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:gas_capacity_upgrade"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:base_upgrade"
+            }
+        ]
+    }
+}

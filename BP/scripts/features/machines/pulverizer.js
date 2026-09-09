@@ -1,23 +1,73 @@
 // @ts-check
 
-import * as DoriosLib from "DoriosLib/index.js";
-import { GasStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { parallelLimit, resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
+import { GasStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
-    advanceProcess,
-    consumePooledInput,
-    countPooledInput,
+    advanceSlotCycle,
+    createPooledOutputReservation,
     crusherRecipes,
-    getPooledOutputCapacity,
     insertPooledOutput,
-    selectPooledRecipe,
 } from "../../ATCore/processing/index.js";
-import { displayProgress, renderStatus, setDynamicNumber, setUiItem } from "./runtime.js";
+import {
+    displayProgress,
+    renderStatus,
+    setDynamicNumber,
+    setDynamicString,
+    setUiItem,
+} from "./runtime.js";
 
 const ID = "utilitycraft:pulverizer";
 const INPUTS = Object.freeze([3, 4, 5, 6]);
 const OUTPUTS = Object.freeze([7, 8, 9, 10]);
 const STEAM_DISPLAY_SLOT = 11;
 const STEAM_PER_CRAFT = 250;
+const CYCLE_KEY = "ascendant:pulverizer_cycle";
+
+function selectOperations(machine, settings) {
+    const operations = [];
+    const reservation = createPooledOutputReservation(machine.container, OUTPUTS);
+    const limit = parallelLimit(machine, INPUTS.length);
+    const batch = Math.max(1, Math.floor(machine.boosts.process_batch ?? 1));
+    const intervalScale = Math.max(1, Math.floor(machine.processingInterval / 4));
+    const craftLimit = batch * intervalScale;
+    let hasInput = false;
+    let hasRecipe = false;
+    let outputBlocked = false;
+
+    for (const slot of INPUTS) {
+        const input = machine.container.getItem(slot);
+        if (!input) continue;
+        hasInput = true;
+        const recipe = crusherRecipes[input.typeId];
+        if (!recipe || input.amount < recipe.required) continue;
+        hasRecipe = true;
+        const crafts = Math.min(Math.floor(input.amount / recipe.required), craftLimit);
+        const outputAmount = crafts * recipe.amount;
+        if (!reservation.reserve(recipe.output, outputAmount, recipe.outputMaxAmount)) {
+            outputBlocked = true;
+            continue;
+        }
+        operations.push({
+            slot,
+            input,
+            recipe,
+            crafts,
+            cost: recipe.cost ?? settings.machine.energy_cost,
+        });
+        if (operations.length >= limit) break;
+    }
+    return { operations, hasInput, hasRecipe, outputBlocked };
+}
+
+function consumeSlot(container, slot, item, amount) {
+    if (amount >= item.amount) container.setItem(slot, undefined);
+    else {
+        item.amount -= amount;
+        container.setItem(slot, item);
+    }
+}
 
 registerIOInterface(ID, {
     automaticDefaults: true,
@@ -39,7 +89,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -62,104 +112,88 @@ DoriosLib.registry.blockComponent(ID, {
         if (steam.getType() === "empty") steam.setType("steam");
         machine.processIO();
 
-        const selected = selectPooledRecipe(machine.container, INPUTS, crusherRecipes);
-        if (!selected) {
+        const selection = selectOperations(machine, settings);
+        const operations = selection.operations;
+        if (operations.length === 0) {
+            setDynamicString(machine.entity, CYCLE_KEY, "");
             setDynamicNumber(machine.entity, "dorios:progress_0", 0);
             displayProgress(machine, settings.machine.energy_cost);
+            if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
+            const message = selection.outputBlocked
+                ? "Output Full"
+                : selection.hasRecipe
+                  ? "Needs More Input"
+                  : selection.hasInput
+                    ? "Invalid Input"
+                    : "Insert Items";
             renderStatus(
                 machine,
                 false,
-                "Insert Items",
+                message,
                 [
                     {
                         title: "Pulverizer Information",
                         lines: [
+                            `§r§7Selected Slots §f0/${parallelLimit(machine, INPUTS.length)}`,
                             `§r§7Steam Boost §fInactive`,
                             `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
-                            `§r§7Input §fNone`,
                         ],
                     },
                 ],
                 { energyCost: settings.machine.energy_cost },
             );
-            if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
             return;
         }
 
-        const { inputTypeId, recipe } = selected;
-        const inputCrafts = Math.floor(
-            countPooledInput(machine.container, INPUTS, inputTypeId) / recipe.required,
-        );
-        const outputCrafts = Math.floor(
-            getPooledOutputCapacity(
-                machine.container,
-                OUTPUTS,
-                recipe.output,
-                recipe.outputMaxAmount,
-            ) / recipe.amount,
-        );
-        const resourceCrafts = Math.min(inputCrafts, outputCrafts);
-        if (resourceCrafts <= 0) {
-            if (inputCrafts <= 0) setDynamicNumber(machine.entity, "dorios:progress_0", 0);
-            displayProgress(machine, recipe.cost ?? settings.machine.energy_cost);
-            renderStatus(
-                machine,
-                false,
-                outputCrafts <= 0 ? "Output Full" : "Needs More Input",
-                [
-                    {
-                        title: "Pulverizer Information",
-                        lines: [
-                            `§r§7Steam Boost §fInactive`,
-                            `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
-                            `§r§7Input §f${DoriosLib.text.formatIdentifier(inputTypeId)}`,
-                        ],
-                    },
-                ],
-                { energyCost: recipe.cost ?? settings.machine.energy_cost },
-            );
-            if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-            return;
+        const signature = operations
+            .map((operation) => `${operation.slot}:${operation.input.typeId}`)
+            .join("|");
+        if (machine.entity.getDynamicProperty(CYCLE_KEY) !== signature) {
+            setDynamicString(machine.entity, CYCLE_KEY, signature);
+            setDynamicNumber(machine.entity, "dorios:progress_0", 0);
         }
-
-        const baseCost = recipe.cost ?? settings.machine.energy_cost;
-        const configuredBatch = Math.max(1, Math.floor(machine.boosts.process_batch ?? 1));
-        const intervalScale = Math.max(1, Math.floor(machine.processingInterval / 4));
-        let maxCrafts = Math.min(resourceCrafts, configuredBatch * intervalScale);
-        const steamCrafts =
-            steam.getType() === "steam" ? Math.floor(steam.get() / STEAM_PER_CRAFT) : 0;
-        const steamActive = steamCrafts > 0;
-        if (steamActive) maxCrafts = Math.min(maxCrafts, steamCrafts);
-        const cost = baseCost * (steamActive ? 1.5 : 1);
-        const result = advanceProcess(machine, {
+        const totalCrafts = operations.reduce((sum, operation) => sum + operation.crafts, 0);
+        const steamNeeded = totalCrafts * STEAM_PER_CRAFT;
+        const steamActive = steam.getType() === "steam" && steam.get() >= steamNeeded;
+        const cycleOperations = operations.map((operation) => ({
+            ...operation,
+            cost: operation.cost * (steamActive ? 1.5 : 1),
+        }));
+        const result = advanceSlotCycle(machine, {
             progress: machine.getProgress(),
-            cost,
-            batch: configuredBatch,
-            maxCrafts,
+            operations: cycleOperations,
             rateMultiplier: steamActive ? 1.75 : 1,
         });
 
-        if (result.processCount > 0) {
-            consumePooledInput(
-                machine.container,
-                INPUTS,
-                inputTypeId,
-                result.processCount * recipe.required,
-            );
-            insertPooledOutput(
-                machine.container,
-                OUTPUTS,
-                recipe.output,
-                result.processCount * recipe.amount,
-            );
-            if (steamActive) steam.consume(result.processCount * STEAM_PER_CRAFT);
+        let processed = 0;
+        if (result.completed) {
+            for (const operation of operations) {
+                consumeSlot(
+                    machine.container,
+                    operation.slot,
+                    operation.input,
+                    resourceCost(
+                        machine,
+                        operation.crafts * operation.recipe.required,
+                        operation.recipe.required,
+                    ),
+                );
+                insertPooledOutput(
+                    machine.container,
+                    OUTPUTS,
+                    operation.recipe.output,
+                    operation.crafts * operation.recipe.amount,
+                );
+                processed += operation.crafts;
+            }
+            if (steamActive) steam.consume(resourceCost(machine, steamNeeded, STEAM_PER_CRAFT));
         }
 
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
-        setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
-        displayProgress(machine, cost);
+        setDynamicNumber(machine.entity, "dorios:energy_cost_0", result.cost);
+        displayProgress(machine, result.cost);
         if (machine.shouldUpdateUI) steam.display(STEAM_DISPLAY_SLOT);
-        const active = result.energyUsed > 0 || result.processCount > 0;
+        const active = result.energyUsed > 0 || result.completed;
         renderStatus(
             machine,
             active,
@@ -168,15 +202,14 @@ DoriosLib.registry.blockComponent(ID, {
                 {
                     title: "Pulverizer Information",
                     lines: [
-                        `§r§7Input §f${DoriosLib.text.formatIdentifier(inputTypeId)}`,
-                        `§r§7Output §f${DoriosLib.text.formatIdentifier(recipe.output)}`,
-                        `§r§7Processed §f${result.processCount}`,
+                        `§r§7Selected Slots §f${operations.length}/${parallelLimit(machine, INPUTS.length)}`,
+                        `§r§7Processed §f${processed}`,
                         `§r§7Steam Boost §f${steamActive ? "x1.75" : "Inactive"}`,
                         `§r§7Steam Stored §f${GasStorage.formatGas(steam.get())} / ${GasStorage.formatGas(steam.getCap())}`,
                     ],
                 },
             ],
-            { energyCost: cost, rateMultiplier: steamActive ? 1.75 : 1 },
+            { energyCost: result.cost, rateMultiplier: steamActive ? 1.75 : 1 },
         );
     },
 

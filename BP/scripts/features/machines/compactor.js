@@ -1,8 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { EnergyStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess, consumePooledInput, countPooledInput, getPooledOutputCapacity, insertPooledOutput } from "../../ATCore/processing/index.js";
 import { getCompactorRecipe } from "../../config/recipes/compactor.js";
 import { displayProgress, ensureMachineInventoryLayout, renderStatus, setDynamicNumber, setDynamicString, setUiItem } from "./runtime.js";
@@ -36,7 +39,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -89,7 +92,7 @@ DoriosLib.registry.blockComponent(ID, {
             rateMultiplier: recipe.cost / (Math.max(Number.EPSILON, settings.machine.rate_speed_base) * recipe.ticks),
         });
         if (result.processCount > 0) {
-            consumePooledInput(machine.container, INPUTS, inputTypeId, result.processCount * recipe.required);
+            consumePooledInput(machine.container, INPUTS, inputTypeId, resourceCost(machine, result.processCount * recipe.required, recipe.required));
             insertPooledOutput(machine.container, OUTPUTS, recipe.output, result.processCount * recipe.amount);
         }
 

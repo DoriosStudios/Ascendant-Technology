@@ -1,8 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { EnergyStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import { getEnergizerRecipe } from "../../config/recipes/energizer.js";
 import {
@@ -45,7 +48,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -120,12 +123,7 @@ DoriosLib.registry.blockComponent(ID, {
         });
 
         if (result.processCount > 0) {
-            consumeInput(
-                machine.container,
-                channel.slot,
-                channel.stack,
-                result.processCount * recipe.input.amount,
-            );
+            consumeInput(machine.container, channel.slot, channel.stack, resourceCost(machine, result.processCount * recipe.input.amount, recipe.input.amount));
             insertOutput(
                 machine.container,
                 output,

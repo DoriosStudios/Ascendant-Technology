@@ -1,8 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess, processCryoCoolingGrid } from "../../ATCore/processing/index.js";
 import {
     cryogenGeneration,
@@ -111,7 +114,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -228,8 +231,8 @@ function processStabilizer(machine, cryofluid, settings) {
     });
 
     if (result.processCount > 0) {
-        consumeStack(machine.container, STABILIZER_INPUT_SLOT, result.processCount * recipe.input.amount);
-        cryofluid.consume(result.processCount * recipe.cryofluid);
+        consumeStack(machine.container, STABILIZER_INPUT_SLOT, resourceCost(machine, result.processCount * recipe.input.amount, recipe.input.amount));
+        cryofluid.consume(resourceCost(machine, result.processCount * recipe.cryofluid, recipe.cryofluid));
         insertStack(machine.container, STABILIZER_OUTPUT_SLOT, recipe.output.id, result.processCount * recipe.output.amount);
     }
 
@@ -303,9 +306,9 @@ function processGenerator(machine, water, cryofluid, settings) {
     });
 
     if (result.processCount > 0) {
-        consumeStack(machine.container, TITANIUM_SLOT, result.processCount * catalyst.input.amount);
-        consumeStack(machine.container, LAPIS_SLOT, result.processCount * lapisSource.input.amount);
-        water.consume(result.processCount * generation.water);
+        consumeStack(machine.container, TITANIUM_SLOT, resourceCost(machine, result.processCount * catalyst.input.amount, catalyst.input.amount));
+        consumeStack(machine.container, LAPIS_SLOT, resourceCost(machine, result.processCount * lapisSource.input.amount, lapisSource.input.amount));
+        water.consume(resourceCost(machine, result.processCount * generation.water, generation.water));
         cryofluid.add(result.processCount * generation.cryofluid);
     }
 

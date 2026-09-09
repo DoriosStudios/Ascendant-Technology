@@ -1,7 +1,8 @@
 // @ts-check
 
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { processCryoCoolingGrid } from "../../ATCore/processing/index.js";
 import {
     getFreezingRecipe,
@@ -67,7 +68,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });

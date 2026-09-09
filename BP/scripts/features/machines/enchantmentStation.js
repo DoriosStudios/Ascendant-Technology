@@ -1,8 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { system, world } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { EnergyStorage, FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     applyStationEnchantPlan,
     buildStationEnchantPlan,
@@ -95,7 +98,7 @@ world.afterEvents.entityRemove.subscribe(({ removedEntityId }) => {
     planCache.delete(removedEntityId);
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -416,12 +419,13 @@ function commitMainLane(machine, slot, signature, plan, reinforcementTarget, rep
         setReinforcementPoints(result, reinforcementTarget, reinforcementTarget);
     }
 
+    const paidXp = resourceCost(machine, xpCost);
     let consumedXp = 0;
     try {
         machine.container.setItem(slot, result);
         if (xpCost > 0) {
-            consumedXp = xpTank.consume(xpCost);
-            if (consumedXp !== xpCost) throw new Error("XP commit failed");
+            consumedXp = xpTank.consume(paidXp);
+            if (consumedXp !== paidXp) throw new Error("XP commit failed");
         }
         return true;
     } catch {
@@ -454,8 +458,8 @@ function commitExtraction(machine, source, enchantments, outputSlots, count) {
             machine.container.setItem(outputSlots[index], extracted.books[index]);
         }
         machine.container.setItem(SOURCE_SLOT, extracted.source);
-        setReducedStack(machine, CATALYST_SLOT, catalyst, count);
-        setReducedStack(machine, BOOK_SLOT, books, count);
+        setReducedStack(machine, CATALYST_SLOT, catalyst, resourceCost(machine, count, 1));
+        setReducedStack(machine, BOOK_SLOT, books, resourceCost(machine, count, 1));
         return true;
     } catch {
         try {

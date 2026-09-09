@@ -2,11 +2,8 @@
 
 import { system, world } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import {
-    ButtonManager,
-    Machine,
-    registerIOInterface,
-} from "DoriosCore/index.js";
+import { ButtonManager, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     PATTERN_MODE_ORDER,
     buildPatternPositions,
@@ -106,7 +103,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });

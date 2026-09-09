@@ -13,13 +13,163 @@ const recipesByInput = new Map();
 const recipesById = new Map();
 
 export const catalystWeaverRecipeDefinitions = {
+    "utilitycraft:multi_processing_upgrade": {
+        input: {
+            id: "utilitycraft:base_upgrade",
+            amount: 1,
+        },
+        catalysts: [
+            {
+                id: "utilitycraft:steel_plate",
+                amount: 4,
+            },
+            {
+                id: "minecraft:red_dye",
+                amount: 1,
+            },
+            {
+                id: "minecraft:redstone_block",
+                amount: 2,
+            },
+            {
+                id: "utilitycraft:aetherium_block",
+                amount: 1,
+            },
+        ],
+        output: {
+            id: "utilitycraft:multi_processing_upgrade",
+            amount: 1,
+        },
+        cost: 12800,
+        speed: 0.5,
+    },
+    "utilitycraft:energy_capacity_upgrade": {
+        input: {
+            id: "utilitycraft:base_upgrade",
+            amount: 1,
+        },
+        catalysts: [
+            {
+                id: "utilitycraft:steel_plate",
+                amount: 4,
+            },
+            {
+                id: "minecraft:yellow_dye",
+                amount: 1,
+            },
+            {
+                id: "minecraft:redstone_block",
+                amount: 2,
+            },
+            {
+                id: "minecraft:diamond_block",
+                amount: 1,
+            },
+        ],
+        output: {
+            id: "utilitycraft:energy_capacity_upgrade",
+            amount: 1,
+        },
+        cost: 6400,
+        speed: 0.5,
+    },
+    "utilitycraft:liquid_capacity_upgrade": {
+        input: {
+            id: "utilitycraft:base_upgrade",
+            amount: 1,
+        },
+        catalysts: [
+            {
+                id: "utilitycraft:steel_plate",
+                amount: 4,
+            },
+            {
+                id: "minecraft:cyan_dye",
+                amount: 1,
+            },
+            {
+                id: "minecraft:redstone_block",
+                amount: 2,
+            },
+            {
+                id: "utilitycraft:expert_fluid_tank",
+                amount: 1,
+            },
+        ],
+        output: {
+            id: "utilitycraft:liquid_capacity_upgrade",
+            amount: 1,
+        },
+        cost: 6400,
+        speed: 0.5,
+    },
+    "utilitycraft:gas_capacity_upgrade": {
+        input: {
+            id: "utilitycraft:base_upgrade",
+            amount: 1,
+        },
+        catalysts: [
+            {
+                id: "utilitycraft:steel_plate",
+                amount: 4,
+            },
+            {
+                id: "minecraft:lime_dye",
+                amount: 1,
+            },
+            {
+                id: "minecraft:redstone_block",
+                amount: 2,
+            },
+            {
+                id: "utilitycraft:expert_gas_tank",
+                amount: 1,
+            },
+        ],
+        output: {
+            id: "utilitycraft:gas_capacity_upgrade",
+            amount: 1,
+        },
+        cost: 6400,
+        speed: 0.5,
+    },
+    "utilitycraft:resource_efficiency_upgrade": {
+        input: {
+            id: "utilitycraft:base_upgrade",
+            amount: 1,
+        },
+        catalysts: [
+            {
+                id: "utilitycraft:steel_plate",
+                amount: 4,
+            },
+            {
+                id: "minecraft:green_dye",
+                amount: 1,
+            },
+            {
+                id: "minecraft:redstone_block",
+                amount: 2,
+            },
+            {
+                id: "utilitycraft:refined_aetherium_crystal",
+                amount: 1,
+            },
+        ],
+        output: {
+            id: "utilitycraft:resource_efficiency_upgrade",
+            amount: 1,
+        },
+        cost: 12800,
+        speed: 0.5,
+    },
     "utilitycraft:aetherium_ingot_from_crystal_dust": {
         input: { id: "minecraft:gold_ingot", amount: 1 },
         catalysts: [
             { id: "utilitycraft:steel_ingot", amount: 1 },
             { id: "utilitycraft:energized_iron_ingot", amount: 1 },
             { id: "utilitycraft:ender_pearl_dust", amount: 4 },
-            { id: "utilitycraft:aetherium_crystal_dust", amount: 8 },
+            { id: "utilitycraft:aetherium_crystal_dust", amount: 2 },
         ],
         fluid: { type: "lava", amount: 8000 },
         output: { id: "utilitycraft:aetherium", amount: 1 },
@@ -33,7 +183,7 @@ export const catalystWeaverRecipeDefinitions = {
             { id: "utilitycraft:steel_ingot", amount: 1 },
             { id: "utilitycraft:energized_iron_ingot", amount: 1 },
             { id: "utilitycraft:ender_pearl_dust", amount: 4 },
-            { id: "utilitycraft:aetherium_shard", amount: 4 },
+            { id: "utilitycraft:aetherium_crystal", amount: 1 },
         ],
         fluid: { type: "lava", amount: 8000 },
         output: { id: "utilitycraft:aetherium", amount: 1 },
@@ -50,6 +200,7 @@ export const catalystWeaverRecipeDefinitions = {
         catalysts: [
             { id: "utilitycraft:energized_iron_dust", amount: 2 },
             { id: "utilitycraft:aetherium_dust", amount: 1 },
+            { id: "utilitycraft:aetherium_crystal_dust", amount: 1 },
             { id: "utilitycraft:titanium_dust", amount: 1 },
         ],
         output: { id: "utilitycraft:hyper_processing_upgrade", amount: 1 },
@@ -120,9 +271,7 @@ export const catalystWeaverRecipeDefinitions = {
     },
     "utilitycraft:dimensional_range_upgrade": {
         input: { id: "utilitycraft:range_upgrade", amount: 8 },
-        catalysts: [
-            { id: "minecraft:nether_star", amount: 1 },
-        ],
+        catalysts: [{ id: "minecraft:nether_star", amount: 1 }],
         output: { id: "utilitycraft:dimensional_range_upgrade", amount: 1 },
         cost: 12800,
         speed: 0.25,
@@ -157,7 +306,7 @@ export const catalystWeaverRecipeDefinitions = {
         cost: 1600,
     },
     "utilitycraft:refined_aetherium_crystal": {
-        input: { id: "utilitycraft:aetherium_shard", amount: 1 },
+        input: { id: "utilitycraft:aetherium_crystal", amount: 1 },
         catalysts: [{ id: "minecraft:amethyst_shard", amount: 1 }],
         fluid: { type: "dark_matter", amount: 800 },
         output: { id: "utilitycraft:refined_aetherium_crystal", amount: 1 },
@@ -216,7 +365,7 @@ export const catalystWeaverRecipeDefinitions = {
         output: { id: "utilitycraft:void_essence", amount: 1 },
         cost: 32000,
         speed: 0.5,
-    }
+    },
 };
 
 for (const [id, definition] of Object.entries(catalystWeaverRecipeDefinitions)) {
@@ -361,9 +510,20 @@ function convertInfuserRecipe(key, definition) {
     const inputId = key.slice(separator + 1);
     /** @type {any} */
     const recipe = {
-        input: { id: inputId, amount: positiveInteger(definition.input_required ?? definition.inputAmount, 1) },
-        catalysts: [{ id: catalystId, amount: positiveInteger(definition.required ?? definition.catalystAmount, 1) }],
-        output: { id: definition.output, amount: positiveInteger(definition.amount ?? definition.outputAmount, 1) },
+        input: {
+            id: inputId,
+            amount: positiveInteger(definition.input_required ?? definition.inputAmount, 1),
+        },
+        catalysts: [
+            {
+                id: catalystId,
+                amount: positiveInteger(definition.required ?? definition.catalystAmount, 1),
+            },
+        ],
+        output: {
+            id: definition.output,
+            amount: positiveInteger(definition.amount ?? definition.outputAmount, 1),
+        },
         cost: positiveNumber(definition.cost, DEFAULT_COST) / INFUSER_SPEED,
         speed: positiveNumber(definition.speedModifier, INFUSER_SPEED),
     };

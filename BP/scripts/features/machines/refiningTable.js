@@ -1,13 +1,10 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import * as DoriosLib from "DoriosLib/index.js";
-import {
-    ButtonManager,
-    EnergyStorage,
-    FluidStorage,
-    Machine,
-    registerIOInterface,
-} from "DoriosCore/index.js";
+import { ButtonManager, EnergyStorage, FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     collectStatsAbilityEntries,
     getStatsCoreDefinition,
@@ -135,7 +132,7 @@ ButtonManager.registerMachineButton(ID, CONFIRM_SLOT, ({ entity }) => {
     setDynamicString(entity, QUEUED_KEY, "true");
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -471,11 +468,11 @@ function applyRefinement(machine, xpTank, preview) {
     }, { syncLore: true, forceLore: true });
 
     machine.container.setItem(EQUIPMENT_SLOT, equipment);
-    xpTank.consume(preview.xpCost);
-    consumeSlot(machine.container, CHIP_SLOT, 1);
-    consumeSlot(machine.container, INGOT_SLOT, preview.effectiveIngots);
+    xpTank.consume(resourceCost(machine, preview.xpCost, preview.xpCost));
+    consumeSlot(machine.container, CHIP_SLOT, resourceCost(machine, 1, 1));
+    consumeSlot(machine.container, INGOT_SLOT, resourceCost(machine, preview.effectiveIngots, preview.effectiveIngots));
     if (preview.advancedCorePresent || awakenAbility || awakenAdvanced || elementNeedsRunicCore) {
-        consumeSlot(machine.container, RUNIC_CORE_SLOT, 1);
+        consumeSlot(machine.container, RUNIC_CORE_SLOT, resourceCost(machine, 1, 1));
     }
     return true;
 }

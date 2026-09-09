@@ -1,8 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { BlockPermutation, ItemStack, system } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { Machine, registerIOInterface } from "DoriosCore/index.js";
+import { registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     handleVerdantOutlineInteract,
     initializeVerdantOutline,
@@ -78,7 +81,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -496,9 +499,10 @@ function executeOperation(machine, operation, settings) {
     }
 
     for (const target of operation.plantTargets) {
-        if (!consumeSeed(machine.container, target.templateSlot, target.spec.seedItemId)) continue;
+        const paidSeed = consumeSeed(machine, target.templateSlot, target.spec.seedItemId);
+        if (paidSeed < 0) continue;
         if (plantAt(machine, target.position, target.spec)) planted++;
-        else restoreSeed(machine.container, target.templateSlot, target.spec.seedItemId);
+        else if (paidSeed > 0) restoreSeed(machine.container, target.templateSlot, target.spec.seedItemId);
     }
 
     if (harvestedPositions.length > 0) {
@@ -563,15 +567,17 @@ function resolveSoil(soilTypeId, spec) {
     return { valid: false, till: false };
 }
 
-function consumeSeed(container, slot, typeId) {
+function consumeSeed(machine, slot, typeId) {
+    const container = machine.container;
     const item = container.getItem(slot);
-    if (!item || item.typeId !== typeId) return false;
+    if (!item || item.typeId !== typeId) return -1;
+    if (resourceCost(machine, 1) === 0) return 0;
     if (item.amount <= 1) container.setItem(slot, undefined);
     else {
         item.amount--;
         container.setItem(slot, item);
     }
-    return true;
+    return 1;
 }
 
 function restoreSeed(container, slot, typeId) {

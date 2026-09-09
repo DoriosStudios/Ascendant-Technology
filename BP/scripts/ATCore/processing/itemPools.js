@@ -39,9 +39,53 @@ export function getPooledOutputCapacity(container, slots, outputTypeId, emptySta
     for (let index = 0; index < slots.length; index++) {
         const item = container.getItem(slots[index]);
         if (!item) capacity += emptyStackSize;
-        else if (item.typeId === outputTypeId) capacity += Math.max(0, item.maxAmount - item.amount);
+        else if (item.typeId === outputTypeId)
+            capacity += Math.max(0, item.maxAmount - item.amount);
     }
     return capacity;
+}
+
+/**
+ * Creates a non-mutating output-grid reservation. Sequential reservations see
+ * the space claimed by earlier operations, including empty slots claimed by a
+ * different output type.
+ */
+export function createPooledOutputReservation(container, slots) {
+    let state = slots.map((slot) => {
+        const item = container.getItem(slot);
+        return item
+            ? {
+                  typeId: item.typeId,
+                  amount: item.amount,
+                  maxAmount: item.maxAmount,
+              }
+            : undefined;
+    });
+
+    return {
+        reserve(typeId, requested, emptyStackSize = 64) {
+            let remaining = Math.max(0, Math.floor(requested));
+            if (!typeId || remaining <= 0) return false;
+            const trial = state.map((item) => (item ? { ...item } : undefined));
+
+            for (let index = 0; index < trial.length && remaining > 0; index++) {
+                const item = trial[index];
+                if (!item || item.typeId !== typeId || item.amount >= item.maxAmount) continue;
+                const added = Math.min(remaining, item.maxAmount - item.amount);
+                item.amount += added;
+                remaining -= added;
+            }
+            for (let index = 0; index < trial.length && remaining > 0; index++) {
+                if (trial[index]) continue;
+                const added = Math.min(remaining, emptyStackSize);
+                trial[index] = { typeId, amount: added, maxAmount: emptyStackSize };
+                remaining -= added;
+            }
+            if (remaining > 0) return false;
+            state = trial;
+            return true;
+        },
+    };
 }
 
 export function consumePooledInput(container, slots, typeId, requested) {

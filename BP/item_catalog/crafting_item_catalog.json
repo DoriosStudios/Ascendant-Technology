@@ -91,7 +91,11 @@
                             "utilitycraft:compressed_raw_tungsten_block",
                             "utilitycraft:compressed_raw_tungsten_block_2",
                             "utilitycraft:compressed_raw_tungsten_block_3",
-                            "utilitycraft:compressed_raw_tungsten_block_4"
+                            "utilitycraft:compressed_raw_tungsten_block_4",
+                            "utilitycraft:compressed_aetherium_crystal_block",
+                            "utilitycraft:compressed_aetherium_crystal_block_2",
+                            "utilitycraft:compressed_aetherium_crystal_block_3",
+                            "utilitycraft:compressed_aetherium_crystal_block_4"
                         ]
                     },
                     {
@@ -219,6 +223,11 @@
                             "utilitycraft:aetherium_block",
                             "utilitycraft:aetherium",
                             "utilitycraft:aetherium_shard",
+                            "utilitycraft:aetherium_crystal",
+                            "utilitycraft:aetherium_crystal_dust",
+                            "utilitycraft:aetherium_crystal_block",
+                            "utilitycraft:aetherium_storage_cell",
+                            "utilitycraft:aetherium_storage_part",
                             "utilitycraft:aetherium_dust",
                             "utilitycraft:refined_aetherium_crystal",
                             "utilitycraft:titanium_block",
@@ -262,6 +271,19 @@
                             "utilitycraft:enchantability_module_4",
                             "utilitycraft:enchantability_module_5",
                             "utilitycraft:curse_protection_module"
+                        ]
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:multi_processing_upgrade",
+                            "name": "dorios:itemGroup.name.upgrades"
+                        },
+                        "items": [
+                            "utilitycraft:multi_processing_upgrade",
+                            "utilitycraft:energy_capacity_upgrade",
+                            "utilitycraft:liquid_capacity_upgrade",
+                            "utilitycraft:gas_capacity_upgrade",
+                            "utilitycraft:resource_efficiency_upgrade"
                         ]
                     }
                 ]

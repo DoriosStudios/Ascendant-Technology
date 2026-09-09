@@ -2,6 +2,7 @@
 
 import { ItemStack } from "@minecraft/server";
 import { advanceLanes } from "./processEngine.js";
+import { resourceCost } from "../machinery/upgradeEffects.js";
 
 const itemMaximums = new Map();
 
@@ -11,6 +12,10 @@ const itemMaximums = new Map();
  */
 export function processCryoCoolingGrid(machine, tank, options) {
     const lanes = [];
+    const preserve = machine.boosts.resource_preservation_chance > 0;
+    const returnSlots = preserve
+        ? options.slots.filter((slot) => !machine.container.getItem(slot))
+        : [];
     let availableFluid = tank.get();
     const tankType = tank.getType();
     let idleCount = 0;
@@ -36,6 +41,18 @@ export function processCryoCoolingGrid(machine, tank, options) {
             continue;
         }
 
+        const signatureKey = `${progressKey}_recipe`;
+        const signature = `${item.typeId}:${item.amount}`;
+        if (machine.entity.getDynamicProperty(signatureKey) !== signature) {
+            machine.entity.setDynamicProperty(signatureKey, signature);
+            setDynamicNumber(machine.entity, progressKey, 0);
+        }
+        // An in-place transformation must reserve room for the original input.
+        if (preserve && returnSlots.length === 0) {
+            blockedCount++;
+            continue;
+        }
+
         const inputAmount = Math.max(1, recipe.input.amount);
         if (item.amount % inputAmount !== 0) {
             blockedCount++;
@@ -51,7 +68,10 @@ export function processCryoCoolingGrid(machine, tank, options) {
 
         const fluidAmount = (recipe.fluid?.amount ?? 0) * crafts;
         if (fluidAmount > 0) {
-            if ((tankType !== "empty" && tankType !== recipe.fluid.type) || availableFluid < fluidAmount) {
+            if (
+                (tankType !== "empty" && tankType !== recipe.fluid.type) ||
+                availableFluid < fluidAmount
+            ) {
                 blockedCount++;
                 continue;
             }
@@ -60,6 +80,9 @@ export function processCryoCoolingGrid(machine, tank, options) {
 
         lanes.push({
             slot,
+            item,
+            crafts,
+            returnSlot: preserve ? returnSlots.shift() : undefined,
             recipe,
             outputAmount,
             fluidAmount,
@@ -76,19 +99,42 @@ export function processCryoCoolingGrid(machine, tank, options) {
     for (let index = 0; index < lanes.length; index++) {
         const lane = lanes[index];
         if (lane.processCount > 0) {
-            machine.container.setItem(
-                lane.slot,
-                new ItemStack(lane.recipe.output.id, lane.outputAmount),
+            const saved =
+                lane.item.amount -
+                resourceCost(machine, lane.item.amount, lane.recipe.input.amount);
+            const fluidPaid = resourceCost(
+                machine,
+                lane.fluidAmount,
+                lane.recipe.fluid?.amount ?? 0,
             );
-            if (lane.fluidAmount > 0) tank.consume(lane.fluidAmount);
-            completedCount++;
+            let consumed = 0;
+            try {
+                if (saved > 0) {
+                    const retained = lane.item.clone();
+                    retained.amount = saved;
+                    machine.container.setItem(lane.returnSlot, retained);
+                }
+                machine.container.setItem(
+                    lane.slot,
+                    new ItemStack(lane.recipe.output.id, lane.outputAmount),
+                );
+                consumed = fluidPaid > 0 ? tank.consume(fluidPaid) : 0;
+                if (consumed !== fluidPaid) throw new Error("Coolant changed before commit");
+                completedCount++;
+            } catch {
+                machine.container.setItem(lane.slot, lane.item);
+                if (lane.returnSlot !== undefined)
+                    machine.container.setItem(lane.returnSlot, undefined);
+                if (consumed > 0) tank.add(consumed);
+                lane.progress += lane.cost;
+            }
         }
         setDynamicNumber(machine.entity, lane.progressKey, lane.progress);
     }
 
     return {
         running: energyUsed > 0 || completedCount > 0,
-        activeCount: lanes.length,
+        activeCount: lanes.filter((lane) => lane.active).length,
         idleCount,
         blockedCount,
         readyCount,

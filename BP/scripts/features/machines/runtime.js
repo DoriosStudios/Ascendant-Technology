@@ -76,7 +76,7 @@ export function renderMachineInfo(machine, running, title, sections = [], option
     const progressCost = resolveEnergyCost(machine, options.energyCost);
     const cycleCost = progressCost * consumption;
     const rateMultiplier = Math.max(0, Number(options.rateMultiplier) || 1);
-    const drawRate = Math.max(0, (Number(machine.baseRate) || 0) * rateMultiplier);
+    const drawRate = Math.max(0, (Number(machine.baseRate) || 0) * rateMultiplier * (machine.activeParallelOperations ?? 1));
 
     const normalizedSections = normalizeSections(sections, options.sectionTitle);
     machine.setLabel([

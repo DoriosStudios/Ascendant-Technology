@@ -1,8 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { EnergyStorage, FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { getSingularityRecipe } from "../../ATCore/cloning/index.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import {
@@ -71,7 +74,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -193,8 +196,9 @@ DoriosLib.registry.blockComponent(ID, {
             const copyTemplate = recipe.output.id === input.typeId
                 ? cloneWithAmount(input, recipe.output.amount)
                 : new ItemStack(recipe.output.id, recipe.output.amount);
+            // The original is returned separately; preserving that transfer would duplicate it.
             consumeInput(machine.container, input, result.processCount * recipe.input.amount);
-            tank.consume(result.processCount * recipe.fluid.amount);
+            tank.consume(resourceCost(machine, result.processCount * recipe.fluid.amount, recipe.fluid.amount));
             insertClonedOutput(
                 machine.container,
                 ORIGINAL_OUTPUT_SLOT,

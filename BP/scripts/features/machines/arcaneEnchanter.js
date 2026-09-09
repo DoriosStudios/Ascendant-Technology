@@ -1,8 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { world } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     applyArcaneEnchantPlan,
     buildArcaneEnchantPlan,
@@ -82,7 +85,7 @@ world.afterEvents.entityRemove.subscribe(({ removedEntityId }) => {
     operationCache.delete(removedEntityId);
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -387,11 +390,14 @@ function readPersistedPlan(raw) {
 function commitEnchant(machine, xpTank, input, lapis, output, xpCost, lapisCost) {
     const inputBackup = input.clone();
     const lapisBackup = lapis.clone();
+    const paidXp = resourceCost(machine, xpCost);
+    lapisCost = resourceCost(machine, lapisCost);
+    const preserveInput = resourceCost(machine, 1) === 0;
     let consumedXp = 0;
 
     try {
         machine.container.setItem(OUTPUT_SLOT, output);
-        machine.container.setItem(INPUT_SLOT, undefined);
+        if (!preserveInput) machine.container.setItem(INPUT_SLOT, undefined);
 
         if (lapis.amount <= lapisCost) {
             machine.container.setItem(LAPIS_SLOT, undefined);
@@ -401,8 +407,8 @@ function commitEnchant(machine, xpTank, input, lapis, output, xpCost, lapisCost)
             machine.container.setItem(LAPIS_SLOT, remainingLapis);
         }
 
-        consumedXp = xpTank.consume(xpCost);
-        if (consumedXp !== xpCost) throw new Error("XP changed before commit");
+        consumedXp = xpTank.consume(paidXp);
+        if (consumedXp !== paidXp) throw new Error("XP changed before commit");
         return true;
     } catch {
         try {

@@ -1,0 +1,24 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:liquid_capacity_upgrade",
+            "menu_category": {
+                "category": "items",
+                "group": "dorios:itemGroup.name.upgrades"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_liquid_capacity_upgrade",
+            "minecraft:max_stack_size": 8,
+            "minecraft:tags": {
+                "tags": [
+                    "utilitycraft:is_upgrade",
+                    "ascendant:is_upgrade",
+                    "utilitycraft:liquid_capacity_upgrade"
+                ]
+            },
+            "ascendant:machine_upgrade": {}
+        }
+    }
+}

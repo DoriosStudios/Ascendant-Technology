@@ -1,8 +1,11 @@
 // @ts-check
 
+import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceLanes } from "../../ATCore/processing/index.js";
 import { getStabilizerRecipe } from "../../config/recipes/stabilizer.js";
 import {
@@ -61,7 +64,7 @@ registerIOInterface(ID, {
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -107,6 +110,11 @@ DoriosLib.registry.blockComponent(ID, {
             }
             occupied++;
 
+            const signatureKey = `${progressKey}_recipe`;
+            if (machine.entity.getDynamicProperty(signatureKey) !== input.typeId) {
+                machine.entity.setDynamicProperty(signatureKey, input.typeId);
+                setDynamicNumber(machine.entity, progressKey, 0);
+            }
             const recipe = getStabilizerRecipe(input.typeId);
             if (!recipe || input.amount < recipe.input.amount) {
                 setDynamicNumber(machine.entity, progressKey, 0);
@@ -158,7 +166,7 @@ DoriosLib.registry.blockComponent(ID, {
         let fluidUsed = 0;
         for (const lane of lanes) {
             if (lane.processCount > 0) {
-                consumeInput(machine.container, lane.inputSlot, lane.input, lane.processCount * lane.recipe.input.amount);
+                consumeInput(machine.container, lane.inputSlot, lane.input, resourceCost(machine, lane.processCount * lane.recipe.input.amount, lane.recipe.input.amount));
                 insertOutput(
                     machine.container,
                     lane.outputSlot,
@@ -166,7 +174,7 @@ DoriosLib.registry.blockComponent(ID, {
                     lane.recipe.output.id,
                     lane.processCount * lane.recipe.output.amount,
                 );
-                fluidUsed += lane.processCount * lane.recipe.cryofluid;
+                fluidUsed += resourceCost(machine, lane.processCount * lane.recipe.cryofluid, lane.recipe.cryofluid);
                 completed += lane.processCount;
             }
             setDynamicNumber(machine.entity, lane.progressKey, lane.progress);
@@ -189,7 +197,7 @@ DoriosLib.registry.blockComponent(ID, {
         renderStatus(machine, running, message, [{
             title: "Stabilizer Information",
             lines: [
-                `\u00A7r\u00A77Active Lanes \u00A7f${lanes.length}/4`,
+                `\u00A7r\u00A77Active Lanes \u00A7f${lanes.filter(lane => lane.active).length}/4`,
                 `\u00A7r\u00A77Blocked Lanes \u00A7f${blocked}`,
                 `\u00A7r\u00A77Cryofluid \u00A7f${FluidStorage.formatFluid(cryofluid.get())} / ${FluidStorage.formatFluid(cryofluid.getCap())}`,
             ],

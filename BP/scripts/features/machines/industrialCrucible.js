@@ -1,8 +1,14 @@
 // @ts-check
 
-import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, Machine, registerIOInterface } from "DoriosCore/index.js";
-import { advanceProcess, getPooledOutputCapacity, insertPooledOutput } from "../../ATCore/processing/index.js";
+import { parallelLimit, resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
+
+import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
+import {
+    advanceSlotCycle,
+    createPooledOutputReservation,
+    insertPooledOutput,
+} from "../../ATCore/processing/index.js";
 import { getIndustrialCrucibleRecipe } from "../../config/recipes/industrialCrucible.js";
 import {
     displayProgress,
@@ -16,15 +22,12 @@ import {
 const ID = "utilitycraft:industrial_crucible";
 const INVENTORY_SIZE = 32;
 const LEGACY_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 10,
-    11, 12, -1, -1, 9, -1, -1, -1, -1, -1,
-    13, 14, 15, 16, 17, 18,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, -1, -1, 9, -1, -1, -1, -1, -1, 13, 14, 15, 16, 17, 18,
     19, 20, 21, 22, 23, 24,
 ];
 const PREVIOUS_SLOT_LAYOUT = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18, 19,
-    9, 10, 11, 12, 13, 14,
-    20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18, 19, 9, 10, 11, 12, 13, 14, 20, 21, 22, 23, 24, 25,
+    26, 27, 28, 29, 30, 31,
 ];
 const LAYOUT_KEY = "ascendant:industrial_crucible_layout";
 const LAYOUT_VERSION = "output_last_v2";
@@ -51,14 +54,11 @@ registerIOInterface(ID, {
         buttonSlots: [26, 27, 28, 29, 30, 31],
         anyInputIndices: [],
         anyOutputIndices: [0],
-        modes: [
-            { id: "disabled" },
-            { id: "output_1", outputIndices: [0] },
-        ],
+        modes: [{ id: "disabled" }, { id: "output_1", outputIndices: [0] }],
     },
 });
 
-DoriosLib.registry.blockComponent(ID, {
+registerATMachine(ID, {
     beforeOnPlayerPlace(event, { params: settings }) {
         Machine.spawnEntity(event, settings, () => {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
@@ -79,10 +79,17 @@ DoriosLib.registry.blockComponent(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!ensureMachineInventoryLayout(
-            machine, INVENTORY_SIZE, LEGACY_SLOT_LAYOUT,
-            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
-        )) return;
+        if (
+            !ensureMachineInventoryLayout(
+                machine,
+                INVENTORY_SIZE,
+                LEGACY_SLOT_LAYOUT,
+                LAYOUT_KEY,
+                LAYOUT_VERSION,
+                PREVIOUS_SLOT_LAYOUT,
+            )
+        )
+            return;
 
         const lava = new FluidStorage(machine.entity, 0);
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
@@ -94,75 +101,82 @@ DoriosLib.registry.blockComponent(ID, {
         }
         if (storedFluid !== "lava") lava.setType("lava");
 
-        const selection = selectRecipe(machine.container);
-        if (!selection.candidate) {
+        const selection = selectOperations(machine, lava, settings);
+        const operations = selection.operations;
+        if (operations.length === 0) {
             const message = selection.hasKnownInput
-                ? "Needs More Input"
+                ? selection.outputBlocked
+                    ? "Output Full"
+                    : selection.tankBlocked
+                      ? "Lava Tank Full"
+                      : "Needs More Input"
                 : selection.hasAnyInput
-                    ? "Invalid Input"
-                    : "Insert Process Item";
+                  ? "Invalid Input"
+                  : "Insert Process Item";
             resetProcess(machine, lava, settings.machine.energy_cost, message, "");
             return;
         }
 
-        const { slot, stack, recipe } = selection.candidate;
-        if (machine.entity.getDynamicProperty(RECIPE_KEY) !== stack.typeId) {
-            setDynamicString(machine.entity, RECIPE_KEY, stack.typeId);
+        const signature = operations
+            .map((operation) => `${operation.slot}:${operation.stack.typeId}`)
+            .join("|");
+        if (machine.entity.getDynamicProperty(RECIPE_KEY) !== signature) {
+            setDynamicString(machine.entity, RECIPE_KEY, signature);
             setDynamicNumber(machine.entity, "dorios:progress_0", 0);
         }
 
-        const cost = recipe.energyCost || settings.machine.energy_cost;
-        const inputCrafts = Math.floor(stack.amount / recipe.input.amount);
-        const outputCrafts = Math.floor(getPooledOutputCapacity(
-            machine.container,
-            OUTPUT_SLOTS,
-            recipe.output.id,
-            DEFAULT_STACK_SIZE,
-        ) / recipe.output.amount);
-        if (outputCrafts <= 0) {
-            pauseProcess(
-                machine,
-                lava,
-                cost,
-                "Output Full",
-            );
-            return;
-        }
-
-        const lavaCrafts = Math.floor(lava.getFreeSpace() / recipe.lavaGain);
-        if (lavaCrafts <= 0) {
-            pauseProcess(machine, lava, cost, "Lava Tank Full");
-            return;
-        }
-
-        const result = advanceProcess(machine, {
+        const result = advanceSlotCycle(machine, {
             progress: machine.getProgress(),
-            cost,
-            maxCrafts: Math.min(inputCrafts, outputCrafts, lavaCrafts),
+            operations,
         });
 
-        if (result.processCount > 0) {
-            consumeInput(
-                machine.container,
-                slot,
-                stack,
-                result.processCount * recipe.input.amount,
-            );
-            insertPooledOutput(machine.container, OUTPUT_SLOTS, recipe.output.id, result.processCount * recipe.output.amount);
-            lava.add(result.processCount * recipe.lavaGain);
+        let processed = 0;
+        if (result.completed) {
+            for (const operation of operations) {
+                consumeInput(
+                    machine.container,
+                    operation.slot,
+                    operation.stack,
+                    resourceCost(
+                        machine,
+                        operation.crafts * operation.recipe.input.amount,
+                        operation.recipe.input.amount,
+                    ),
+                );
+                insertPooledOutput(
+                    machine.container,
+                    OUTPUT_SLOTS,
+                    operation.recipe.output.id,
+                    operation.crafts * operation.recipe.output.amount,
+                );
+                lava.add(operation.crafts * operation.recipe.lavaGain);
+                processed += operation.crafts;
+            }
         }
 
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
-        setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
-        display(machine, lava, cost);
+        setDynamicNumber(machine.entity, "dorios:energy_cost_0", result.cost);
+        display(machine, lava, result.cost);
 
-        const active = result.energyUsed > 0 || result.processCount > 0;
+        const active = result.energyUsed > 0 || result.completed;
         renderStatus(
             machine,
             active,
             active ? "Crucible Running" : "No Energy",
-            machine.shouldUpdateUI ? [{ title: "Crucible Information", lines: recipeStatusLines(stack.typeId, recipe, lava) }] : undefined,
-            { energyCost: cost },
+            machine.shouldUpdateUI
+                ? [
+                      {
+                          title: "Crucible Information",
+                          lines: [
+                              `§r§7Selected Slots §f${operations.length}/${parallelLimit(machine, INPUT_SLOTS.length)}`,
+                              `§r§7Processed §f${processed}`,
+                              `§r§7Lava Gain §f+${FluidStorage.formatFluid(operations.reduce((sum, operation) => sum + operation.crafts * operation.recipe.lavaGain, 0))}`,
+                              `§r§7Stored §f${FluidStorage.formatFluid(lava.get())} / ${FluidStorage.formatFluid(lava.getCap())}`,
+                          ],
+                      },
+                  ]
+                : undefined,
+            { energyCost: result.cost },
         );
     },
 
@@ -171,13 +185,19 @@ DoriosLib.registry.blockComponent(ID, {
     },
 });
 
-function selectRecipe(container) {
+function selectOperations(machine, lava, settings) {
+    const operations = [];
+    const reservation = createPooledOutputReservation(machine.container, OUTPUT_SLOTS);
+    const limit = parallelLimit(machine, INPUT_SLOTS.length);
+    const batch = Math.max(1, Math.floor(machine.boosts.process_batch ?? 1));
     let hasAnyInput = false;
     let hasKnownInput = false;
+    let outputBlocked = false;
+    let tankBlocked = false;
+    let availableLavaSpace = lava.getFreeSpace();
 
-    for (let index = 0; index < INPUT_SLOTS.length; index++) {
-        const slot = INPUT_SLOTS[index];
-        const stack = container.getItem(slot);
+    for (const slot of INPUT_SLOTS) {
+        const stack = machine.container.getItem(slot);
         if (!stack) continue;
 
         hasAnyInput = true;
@@ -186,10 +206,34 @@ function selectRecipe(container) {
 
         hasKnownInput = true;
         if (stack.amount < recipe.input.amount) continue;
-        return { candidate: { slot, stack, recipe }, hasAnyInput, hasKnownInput };
+        const crafts = Math.min(Math.floor(stack.amount / recipe.input.amount), batch);
+        const lavaAmount = crafts * recipe.lavaGain;
+        if (lavaAmount > availableLavaSpace) {
+            tankBlocked = true;
+            continue;
+        }
+        if (
+            !reservation.reserve(
+                recipe.output.id,
+                crafts * recipe.output.amount,
+                DEFAULT_STACK_SIZE,
+            )
+        ) {
+            outputBlocked = true;
+            continue;
+        }
+        operations.push({
+            slot,
+            stack,
+            recipe,
+            crafts,
+            cost: recipe.energyCost || settings.machine.energy_cost,
+        });
+        availableLavaSpace -= lavaAmount;
+        if (operations.length >= limit) break;
     }
 
-    return { candidate: undefined, hasAnyInput, hasKnownInput };
+    return { operations, hasAnyInput, hasKnownInput, outputBlocked, tankBlocked };
 }
 
 function consumeInput(container, slot, item, amount) {
@@ -211,23 +255,24 @@ function resetProcess(machine, lava, cost, message, recipeKey) {
 function pauseProcess(machine, lava, cost, message) {
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
     display(machine, lava, cost);
-    renderStatus(machine, false, message, [{
-        title: "Crucible Information",
-        lines: [`\u00A7r\u00A77Lava Stored \u00A7f${FluidStorage.formatFluid(lava.get())} / ${FluidStorage.formatFluid(lava.getCap())}`],
-    }], { energyCost: cost });
+    renderStatus(
+        machine,
+        false,
+        message,
+        [
+            {
+                title: "Crucible Information",
+                lines: [
+                    `\u00A7r\u00A77Lava Stored \u00A7f${FluidStorage.formatFluid(lava.get())} / ${FluidStorage.formatFluid(lava.getCap())}`,
+                ],
+            },
+        ],
+        { energyCost: cost },
+    );
 }
 
 function display(machine, lava, cost) {
     if (!machine.shouldUpdateUI) return;
     displayProgress(machine, cost);
     lava.display(LAVA_DISPLAY_SLOT);
-}
-
-function recipeStatusLines(inputTypeId, recipe, lava) {
-    return [
-        `\u00A7r\u00A77Input \u00A7f${recipe.input.amount} x ${DoriosLib.text.formatIdentifier(inputTypeId)}`,
-        `\u00A7r\u00A77Output \u00A7f${recipe.output.amount} x ${DoriosLib.text.formatIdentifier(recipe.output.id)}`,
-        `\u00A7r\u00A77Lava Gain \u00A7f+${FluidStorage.formatFluid(recipe.lavaGain)}`,
-        `\u00A7r\u00A77Stored \u00A7f${FluidStorage.formatFluid(lava.get())} / ${FluidStorage.formatFluid(lava.getCap())}`,
-    ];
 }

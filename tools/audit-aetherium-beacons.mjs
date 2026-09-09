@@ -399,13 +399,20 @@ check(
     "Only metal dust can be smelted into ingots",
 );
 const alloy = catalyst["utilitycraft:aetherium_ingot"];
-const dustAlloy = catalyst["utilitycraft:aetherium_ingot_from_crystal_dust"];
+const shardAlloy = catalyst["utilitycraft:aetherium_ingot_from_shards"];
 check(
-    alloy.catalysts[3].amount * crusher["utilitycraft:aetherium_crystal"].amount ===
-        dustAlloy.catalysts[3].amount &&
-        alloy.cost === dustAlloy.cost &&
-        alloy.fluid.amount === dustAlloy.fluid.amount,
-    "Both alloy routes consume equivalent crystal and energy",
+    alloy.input.id === "minecraft:netherite_ingot" &&
+        alloy.input.amount === 1 &&
+        alloy.catalysts.some((entry) => entry.id === "utilitycraft:titanium_dust" && entry.amount === 8) &&
+        alloy.catalysts.some((entry) => entry.id === "utilitycraft:tungsten_dust" && entry.amount === 8) &&
+        alloy.catalysts.some((entry) => entry.id === "utilitycraft:ender_pearl_dust" && entry.amount === 8) &&
+        alloy.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_crystal" && entry.amount === 2) &&
+        shardAlloy.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_shard" && entry.amount === 8) &&
+        alloy.cost === shardAlloy.cost &&
+        alloy.fluid.type === "cryofluid" &&
+        alloy.fluid.amount === 1600 &&
+        alloy.fluid.amount === shardAlloy.fluid.amount,
+    "Both alloy routes follow the titanium, tungsten, crystal and cryofluid progression",
 );
 const hyper = catalyst["utilitycraft:hyper_processing_upgrade"];
 check(
@@ -591,9 +598,9 @@ for (const tier of ["basic", "advanced", "expert", "ultimate", "absolute"]) {
 const alloyPreview = json("RP/ui/recipes/catalyst_weaver.json");
 const previewText = JSON.stringify(alloyPreview);
 check(
-    previewText.includes("cw_aetherium_dust_recipe") &&
-        previewText.includes("textures/items/ores/aetherium_crystal_dust"),
-    "Crystal dust alloy has a recipe preview",
+    previewText.includes("cw_aetherium_shards_recipe") &&
+        previewText.includes("textures/items/ores/aetherium_shards"),
+    "Aetherium shard alloy has a recipe preview",
 );
 check(
     previewText.includes("cw_hyper_processing_recipe") &&

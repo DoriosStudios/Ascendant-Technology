@@ -31,7 +31,7 @@ const vanillaHammerDrops = {
 
 /** @type {Record<string, Record<string, any>>} */
 const definitions = {
-  "utilitycraft:deepslate_aetherium_ore": {
+  /*"utilitycraft:deepslate_aetherium_ore": {
     dropId: "utilitycraft:aetherium_shard",
     silkDropId: "utilitycraft:deepslate_aetherium_ore",
     baseRange: [1, 1],
@@ -39,25 +39,21 @@ const definitions = {
     originalDropId: "utilitycraft:aetherium_shard",
     replaceDropId: "utilitycraft:aetherium_shard",
     fortuneMath: { mode: "multiplier", perLevel: [0.2, 0.5] },
-  },
+  },*/
   "utilitycraft:end_aetherium_ore": {
-    dropId: "utilitycraft:aetherium_shard",
-    silkDropId: "utilitycraft:end_aetherium_ore",
-    baseRange: [1, 1],
-    dropMode: "vanilla",
-    originalDropId: "utilitycraft:aetherium_shard",
-    replaceDropId: "utilitycraft:aetherium_shard",
-    fortuneMath: { mode: "multiplier", perLevel: [0.5, 0.75] },
+    specialTools: [
+    {
+        toolType: "utilitycraft:is_hammer",
+        dropId: "utilitycraft:aetherium_shard",
+        originalDropId: "utilitycraft:aetherium_crystal",
+        replaceDropId: "utilitycraft:aetherium_shard",
+        baseRange: [2, 6],
+        fortuneMath: { mode: "bonus", perLevel: [1, 3] },
+        sound: HAMMER_SOUND,
+      },
+    ]
   },
   "utilitycraft:deepslate_titanium_ore": {
-    dropId: "utilitycraft:raw_titanium",
-    silkDropId: "utilitycraft:deepslate_titanium_ore",
-    baseRange: [1, 1],
-    dropMode: "vanilla",
-    originalDropId: "utilitycraft:raw_titanium",
-    replaceDropId: "utilitycraft:raw_titanium",
-    fortuneMath: { mode: "bonus", perLevel: [0.6, 1] },
-    baseSound: { id: "dig.deepslate", volume: 1, pitch: 1 },
     specialTools: [
       {
         toolId: "utilitycraft:smelting_pickaxe",
@@ -81,14 +77,6 @@ const definitions = {
     ],
   },
   "utilitycraft:deepslate_tungsten_ore": {
-    dropId: "utilitycraft:raw_tungsten",
-    silkDropId: "utilitycraft:deepslate_tungsten_ore",
-    baseRange: [1, 1],
-    dropMode: "vanilla",
-    originalDropId: "utilitycraft:raw_tungsten",
-    replaceDropId: "utilitycraft:raw_tungsten",
-    fortuneMath: { mode: "bonus", perLevel: [0.6, 1] },
-    baseSound: { id: "dig.deepslate", volume: 1, pitch: 0.85 },
     specialTools: [{
       toolType: "utilitycraft:is_hammer",
       dropId: "utilitycraft:raw_tungsten_dust",
@@ -100,14 +88,6 @@ const definitions = {
     }],
   },
   "utilitycraft:nether_tungsten_ore": {
-    dropId: "utilitycraft:raw_tungsten",
-    silkDropId: "utilitycraft:nether_tungsten_ore",
-    baseRange: [1, 1],
-    dropMode: "vanilla",
-    originalDropId: "utilitycraft:raw_tungsten",
-    replaceDropId: "utilitycraft:raw_tungsten",
-    fortuneMath: { mode: "bonus", perLevel: [0.6, 1] },
-    baseSound: HAMMER_SOUND,
     specialTools: [{
       toolType: "utilitycraft:is_hammer",
       dropId: "utilitycraft:raw_tungsten_dust",

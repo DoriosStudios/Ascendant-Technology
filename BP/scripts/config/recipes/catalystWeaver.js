@@ -193,8 +193,18 @@ export const catalystWeaverRecipeDefinitions = {
         input: { id: "utilitycraft:speed_upgrade", amount: 1 },
         catalysts: [
             { id: "utilitycraft:energized_iron_dust", amount: 2 },
-            { id: "utilitycraft:aetherium_dust", amount: 1 },
             { id: "utilitycraft:aetherium_crystal_dust", amount: 1 },
+            { id: "utilitycraft:titanium_dust", amount: 1 },
+        ],
+        output: { id: "utilitycraft:hyper_processing_upgrade", amount: 1 },
+        cost: 12800,
+        speed: 0.25,
+    },
+    "utilitycraft:hyper_processing_upgrade_alternative": {
+        input: { id: "utilitycraft:speed_upgrade", amount: 1 },
+        catalysts: [
+            { id: "utilitycraft:energized_iron_dust", amount: 2 },
+            { id: "utilitycraft:aetherium_dust", amount: 1 },
             { id: "utilitycraft:titanium_dust", amount: 1 },
         ],
         output: { id: "utilitycraft:hyper_processing_upgrade", amount: 1 },

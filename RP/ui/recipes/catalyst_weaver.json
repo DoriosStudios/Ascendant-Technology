@@ -3,61 +3,62 @@
     "catalyst_weaver_recipe_toggle@uc.recipe_toggle": {
         "$toggle_name": "infuser_recipes"
     },
+    "": { },
     "recipe_input@uc.recipe_slot_overlay": {
         "collection_index": 3,
-        "$slot_offset": [-27, 23],
-        "$slot_red_size": [16, 16]
+        "$slot_offset": [ -27, 23 ],
+        "$slot_red_size": [ 16, 16 ]
     },
     "recipe_catalyst_1@uc.recipe_slot_overlay": {
         "collection_index": 4,
-        "$slot_offset": [-57, 3],
-        "$slot_red_size": [16, 16]
+        "$slot_offset": [ -57, 3 ],
+        "$slot_red_size": [ 16, 16 ]
     },
     "recipe_catalyst_2@uc.recipe_slot_overlay": {
         "collection_index": 5,
-        "$slot_offset": [-59, 23],
-        "$slot_red_size": [16, 16]
+        "$slot_offset": [ -59, 23 ],
+        "$slot_red_size": [ 16, 16 ]
     },
     "recipe_catalyst_3@uc.recipe_slot_overlay": {
         "collection_index": 6,
-        "$slot_offset": [-57, 43],
-        "$slot_red_size": [16, 16]
+        "$slot_offset": [ -57, 43 ],
+        "$slot_red_size": [ 16, 16 ]
     },
     "recipe_catalyst_4@uc.recipe_slot_overlay": {
         "collection_index": 7,
-        "$slot_offset": [3, 3],
-        "$slot_red_size": [16, 16]
+        "$slot_offset": [ 3, 3 ],
+        "$slot_red_size": [ 16, 16 ]
     },
     "recipe_catalyst_5@uc.recipe_slot_overlay": {
         "collection_index": 8,
-        "$slot_offset": [5, 23],
-        "$slot_red_size": [16, 16]
+        "$slot_offset": [ 5, 23 ],
+        "$slot_red_size": [ 16, 16 ]
     },
     "recipe_catalyst_6@uc.recipe_slot_overlay": {
         "collection_index": 9,
-        "$slot_offset": [3, 43],
-        "$slot_red_size": [16, 16]
+        "$slot_offset": [ 3, 43 ],
+        "$slot_red_size": [ 16, 16 ]
     },
     "recipe_output@uc.recipe_slot_overlay": {
         "collection_index": 16,
-        "$slot_offset": [71, 23],
-        "$slot_red_size": [24, 24]
+        "$slot_offset": [ 71, 23 ],
+        "$slot_red_size": [ 24, 24 ]
     },
     "recipe_byproduct@uc.recipe_slot_overlay": {
         "collection_index": 15,
-        "$slot_offset": [99, 23],
-        "$slot_red_size": [16, 16]
+        "$slot_offset": [ 99, 23 ],
+        "$slot_red_size": [ 16, 16 ]
     },
     "recipe_byproduct_chance": {
         "type": "label",
         "text": "$chance_text",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [36, 18],
-        "offset": [99, 11],
+        "size": [ 36, 18 ],
+        "offset": [ 99, 11 ],
         "text_alignment": "center",
         "line_padding": 0,
-        "color": [0.3, 0.3, 0.3],
+        "color": [ 0.3, 0.3, 0.3 ],
         "font_scale_factor": 0.65,
         "layer": 7
     },
@@ -65,8 +66,8 @@
         "type": "panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [100, 18],
-        "offset": [63, 54],
+        "size": [ 100, 18 ],
+        "offset": [ 63, 54 ],
         "$fluid_texture|default": "",
         "$fluid_text|default": "",
         "controls": [
@@ -76,11 +77,11 @@
                     "text": "$fluid_text",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "size": [80, 18],
-                    "offset": [-10, 0],
+                    "size": [ 80, 18 ],
+                    "offset": [ -10, 0 ],
                     "text_alignment": "right",
                     "line_padding": 0,
-                    "color": [0.3, 0.3, 0.3],
+                    "color": [ 0.3, 0.3, 0.3 ],
                     "font_scale_factor": 0.65,
                     "layer": 7
                 }
@@ -91,8 +92,8 @@
                     "texture": "$fluid_texture",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "size": [16, 16],
-                    "offset": [40, 0],
+                    "size": [ 16, 16 ],
+                    "offset": [ 40, 0 ],
                     "layer": 7
                 }
             }
@@ -100,13 +101,13 @@
     },
     "catalyst_weaver_recipe_rows": {
         "type": "stack_panel",
-        "size": [126, "100%c"],
+        "size": [ 126, "100%c" ],
         "orientation": "vertical",
         "controls": [
             {
                 "recipe_row_0": {
                     "type": "panel",
-                    "size": [126, 18],
+                    "size": [ 126, 18 ],
                     "controls": [
                         {
                             "aetherium_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
@@ -116,7 +117,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:aetherium",
                                 "$toggle_control_name": "cw_aetherium_recipe",
                                 "$recipe_icon": "textures/items/ores/aetherium_ingot",
-                                "offset": [0, 0]
+                                "offset": [ 0, 0 ]
                             }
                         },
                         {
@@ -127,7 +128,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:aetherium",
                                 "$toggle_control_name": "cw_aetherium_shards_recipe",
                                 "$recipe_icon": "textures/items/ores/aetherium_ingot",
-                                "offset": [18, 0]
+                                "offset": [ 18, 0 ]
                             }
                         },
                         {
@@ -138,7 +139,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:refined_aetherium_crystal",
                                 "$toggle_control_name": "cw_refined_aetherium_crystal_recipe",
                                 "$recipe_icon": "textures/items/ores/refined_aetherium_crystal",
-                                "offset": [36, 0]
+                                "offset": [ 36, 0 ]
                             }
                         },
                         {
@@ -149,50 +150,50 @@
                                 "$toggle_hover_text": "item.utilitycraft:void_essence",
                                 "$toggle_control_name": "cw_void_essence_recipe",
                                 "$recipe_icon": "textures/items/misc/void_essence",
-                                "offset": [54, 0]
+                                "offset": [ 54, 0 ]
                             }
                         },
-                            {
-                                "diamond_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
-                                    "anchor_from": "top_left",
-                                    "anchor_to": "top_left",
-                                    "$toggle_index": 4004,
-                                    "$toggle_hover_text": "item.diamond.name",
-                                    "$toggle_control_name": "cw_diamond_recovery_recipe",
-                                    "$recipe_icon": "textures/items/diamond",
-                                    "offset": [72, 0]
-                                }
-                            },
-                            {
-                                "emerald_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
-                                    "anchor_from": "top_left",
-                                    "anchor_to": "top_left",
-                                    "$toggle_index": 4005,
-                                    "$toggle_hover_text": "item.emerald.name",
-                                    "$toggle_control_name": "cw_emerald_recovery_recipe",
-                                    "$recipe_icon": "textures/items/emerald",
-                                    "offset": [90, 0]
-                                }
-                            },
-                            {
-                                "quartz_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
-                                    "anchor_from": "top_left",
-                                    "anchor_to": "top_left",
-                                    "$toggle_index": 4006,
-                                    "$toggle_hover_text": "item.quartz.name",
-                                    "$toggle_control_name": "cw_quartz_recovery_recipe",
-                                    "$recipe_icon": "textures/items/quartz",
-                                    "offset": [108, 0]
-                                }
+                        {
+                            "diamond_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4004,
+                                "$toggle_hover_text": "item.diamond.name",
+                                "$toggle_control_name": "cw_diamond_recovery_recipe",
+                                "$recipe_icon": "textures/items/diamond",
+                                "offset": [ 72, 0 ]
                             }
-                        
+                        },
+                        {
+                            "emerald_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4005,
+                                "$toggle_hover_text": "item.emerald.name",
+                                "$toggle_control_name": "cw_emerald_recovery_recipe",
+                                "$recipe_icon": "textures/items/emerald",
+                                "offset": [ 90, 0 ]
+                            }
+                        },
+                        {
+                            "quartz_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4006,
+                                "$toggle_hover_text": "item.quartz.name",
+                                "$toggle_control_name": "cw_quartz_recovery_recipe",
+                                "$recipe_icon": "textures/items/quartz",
+                                "offset": [ 108, 0 ]
+                            }
+                        }
+
                     ]
                 }
             },
             {
                 "recipe_row_1": {
                     "type": "panel",
-                    "size": [126, 18],
+                    "size": [ 126, 18 ],
                     "controls": [
                         {
                             "amethyst_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
@@ -202,7 +203,7 @@
                                 "$toggle_hover_text": "item.amethyst_shard.name",
                                 "$toggle_control_name": "cw_amethyst_recovery_recipe",
                                 "$recipe_icon": "textures/items/amethyst_shard",
-                                "offset": [0, 0]
+                                "offset": [ 0, 0 ]
                             }
                         },
                         {
@@ -213,7 +214,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:base_upgrade",
                                 "$toggle_control_name": "cw_base_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/base_upgrade",
-                                "offset": [18, 0]
+                                "offset": [ 18, 0 ]
                             }
                         },
                         {
@@ -224,7 +225,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:energy_upgrade",
                                 "$toggle_control_name": "cw_energy_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/energy_upgrade",
-                                "offset": [36, 0]
+                                "offset": [ 36, 0 ]
                             }
                         },
                         {
@@ -235,7 +236,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:speed_upgrade",
                                 "$toggle_control_name": "cw_speed_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/speed_upgrade",
-                                "offset": [54, 0]
+                                "offset": [ 54, 0 ]
                             }
                         },
                         {
@@ -246,7 +247,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:hyper_processing_upgrade",
                                 "$toggle_control_name": "cw_hyper_processing_recipe",
                                 "$recipe_icon": "textures/items/machinery/hyper_processing_upgrade",
-                                "offset": [72, 0]
+                                "offset": [ 72, 0 ]
                             }
                         },
                         {
@@ -257,7 +258,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:stack_upgrade",
                                 "$toggle_control_name": "cw_stack_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/stack_upgrade",
-                                "offset": [90, 0]
+                                "offset": [ 90, 0 ]
                             }
                         },
                         {
@@ -268,7 +269,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:size_upgrade",
                                 "$toggle_control_name": "cw_size_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/size_upgrade",
-                                "offset": [108, 0]
+                                "offset": [ 108, 0 ]
                             }
                         }
                     ]
@@ -277,7 +278,7 @@
             {
                 "recipe_row_2": {
                     "type": "panel",
-                    "size": [126, 18],
+                    "size": [ 126, 18 ],
                     "controls": [
                         {
                             "range_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
@@ -287,7 +288,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:range_upgrade",
                                 "$toggle_control_name": "cw_range_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/range_upgrade",
-                                "offset": [0, 0]
+                                "offset": [ 0, 0 ]
                             }
                         },
                         {
@@ -298,7 +299,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:damage_upgrade",
                                 "$toggle_control_name": "cw_damage_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/damage_upgrade",
-                                "offset": [18, 0]
+                                "offset": [ 18, 0 ]
                             }
                         },
                         {
@@ -309,7 +310,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:quantity_upgrade",
                                 "$toggle_control_name": "cw_quantity_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/quantity_upgrade",
-                                "offset": [36, 0]
+                                "offset": [ 36, 0 ]
                             }
                         },
                         {
@@ -320,7 +321,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:filter_upgrade",
                                 "$toggle_control_name": "cw_filter_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/filter_upgrade",
-                                "offset": [54, 0]
+                                "offset": [ 54, 0 ]
                             }
                         },
                         {
@@ -331,7 +332,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:dimensional_range_upgrade",
                                 "$toggle_control_name": "cw_dimensional_range_upgrade_recipe",
                                 "$recipe_icon": "textures/items/dimensional_range_upgrade",
-                                "offset": [72, 0]
+                                "offset": [ 72, 0 ]
                             }
                         },
                         {
@@ -342,7 +343,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:multi_processing_upgrade",
                                 "$toggle_control_name": "cw_multi_processing_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/multi_processing_upgrade",
-                                "offset": [90, 0]
+                                "offset": [ 90, 0 ]
                             }
                         },
                         {
@@ -353,7 +354,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:energy_capacity_upgrade",
                                 "$toggle_control_name": "cw_energy_capacity_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/energy_capacity_upgrade",
-                                "offset": [108, 0]
+                                "offset": [ 108, 0 ]
                             }
                         }
                     ]
@@ -362,7 +363,7 @@
             {
                 "recipe_row_3": {
                     "type": "panel",
-                    "size": [126, 18],
+                    "size": [ 126, 18 ],
                     "controls": [
                         {
                             "liquid_capacity_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
@@ -372,7 +373,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:liquid_capacity_upgrade",
                                 "$toggle_control_name": "cw_liquid_capacity_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/liquid_capacity_upgrade",
-                                "offset": [0, 0]
+                                "offset": [ 0, 0 ]
                             }
                         },
                         {
@@ -383,7 +384,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:gas_capacity_upgrade",
                                 "$toggle_control_name": "cw_gas_capacity_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/gas_capacity_upgrade",
-                                "offset": [18, 0]
+                                "offset": [ 18, 0 ]
                             }
                         },
                         {
@@ -394,7 +395,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:resource_efficiency_upgrade",
                                 "$toggle_control_name": "cw_resource_efficiency_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/resource_efficiency_upgrade",
-                                "offset": [36, 0]
+                                "offset": [ 36, 0 ]
                             }
                         }
                     ]
@@ -404,11 +405,11 @@
     },
     "catalyst_weaver_recipe_buttons": {
         "type": "stack_panel",
-        "size": [126, "100%c"],
+        "size": [ 126, "100%c" ],
         "orientation": "vertical",
         "controls": [
             {
-                "weaver_recipes@catalyst_weaver.catalyst_weaver_recipe_rows": {}
+                "weaver_recipes@catalyst_weaver.catalyst_weaver_recipe_rows": { }
             },
             {
                 "infuser_separator@uc.addon_recipe_separator": {
@@ -416,7 +417,7 @@
                 }
             },
             {
-                "infuser_recipes@uc.infuser_recipes_buttons": {}
+                "infuser_recipes@uc.infuser_recipes_buttons": { }
             }
         ]
     },
@@ -424,8 +425,8 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [154, 166],
-        "offset": [-91, 0],
+        "size": [ 154, 166 ],
+        "offset": [ -91, 0 ],
         "layer": 10,
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
@@ -443,8 +444,8 @@
                 "panel_bg": {
                     "type": "image",
                     "texture": "textures/ui/background/background_panel",
-                    "size": [140, 145],
-                    "offset": [7, 10.5],
+                    "size": [ 140, 145 ],
+                    "offset": [ 7, 10.5 ],
                     "layer": -5
                 }
             },
@@ -454,8 +455,8 @@
                     "texture": "textures/ui/background/dark_top_tab",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "size": [140, 24],
-                    "offset": [7, 0],
+                    "size": [ 140, 24 ],
+                    "offset": [ 7, 0 ],
                     "layer": -6
                 }
             },
@@ -465,8 +466,8 @@
                     "text": "ui.utilitycraft:recipes_panel.name",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [7, 7],
-                    "color": [0.9, 0.9, 0.9],
+                    "offset": [ 7, 7 ],
+                    "color": [ 0.9, 0.9, 0.9 ],
                     "layer": -3,
                     "font_scale_factor": 1
                 }
@@ -477,8 +478,8 @@
                     "texture": "textures/ui/recipe_grid_bg",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [128, 134],
-                    "offset": [20, 27],
+                    "size": [ 128, 134 ],
+                    "offset": [ 20, 27 ],
                     "layer": -4
                 }
             },
@@ -488,8 +489,8 @@
                     "texture": "textures/ui/background_border",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [128, 134],
-                    "offset": [20, 27],
+                    "size": [ 128, 134 ],
+                    "offset": [ 20, 27 ],
                     "layer": 4
                 }
             },
@@ -497,22 +498,22 @@
                 "recipes_scroll@common.scrolling_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [142, 130],
-                    "offset": [13, -2],
+                    "size": [ 142, 130 ],
+                    "offset": [ 13, -2 ],
                     "$show_background": false,
                     "layer": -2,
-                    "$scroll_size": [4, "100% - 4px"],
-                    "$scrolling_pane_size": ["100% + 6px", "100% + 3px"],
-                    "$scrolling_pane_offset": [-2, 30],
-                    "$scroll_view_port_size": ["100% + 80px", "100% + 3px"],
-                    "$scroll_view_port_max_size": ["100% + 80px", "100% + 3px"],
-                    "$scroll_view_port_offset": [-44, 0],
-                    "$scrolling_pane_size_touch": ["100% + 6px", "100% + 3px"],
-                    "$scrolling_pane_offset_touch": [0, 30],
-                    "$scroll_view_port_size_touch": ["100% + 80px", "100% + 3px"],
-                    "$scroll_view_port_max_size_touch": ["100% + 80px", "100% + 3px"],
-                    "$scroll_view_port_offset_touch": [-46, 0],
-                    "$scroll_size_touch": [4, "100% - 4px"],
+                    "$scroll_size": [ 4, "100% - 4px" ],
+                    "$scrolling_pane_size": [ "100% + 6px", "100% + 3px" ],
+                    "$scrolling_pane_offset": [ -2, 30 ],
+                    "$scroll_view_port_size": [ "100% + 80px", "100% + 3px" ],
+                    "$scroll_view_port_max_size": [ "100% + 80px", "100% + 3px" ],
+                    "$scroll_view_port_offset": [ -44, 0 ],
+                    "$scrolling_pane_size_touch": [ "100% + 6px", "100% + 3px" ],
+                    "$scrolling_pane_offset_touch": [ 0, 30 ],
+                    "$scroll_view_port_size_touch": [ "100% + 80px", "100% + 3px" ],
+                    "$scroll_view_port_max_size_touch": [ "100% + 80px", "100% + 3px" ],
+                    "$scroll_view_port_offset_touch": [ -46, 0 ],
+                    "$scroll_size_touch": [ 4, "100% - 4px" ],
                     "$scroll_box_visible_touch": true,
                     "$use_touch_mode": false,
                     "$scrolling_content": "catalyst_weaver.catalyst_weaver_recipe_buttons",
@@ -525,7 +526,7 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [320, 160],
+        "size": [ 320, 160 ],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "bindings": [
@@ -686,22 +687,17 @@
                         },
                         {
                             "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
-                                "$slot_item_texture": "textures/items/ores/aetherium_dust",
-                                "$slot_hover_text": "item.utilitycraft:aetherium_dust",
-                                "$has_slot_hover": true
+                                "$has_slot_hover": true,
+                                "$has_slot_item": false,
+                                "$has_slot_flipbook": true,
+                                "$slot_item_flipbook_texture": "textures/static/infuser_aetherium_dust_catalyst_flipbook",
+                                "$slot_item_flipbook_uv": "@uc.infuser_mycelium_catalyst_animation"
                             }
                         },
                         {
                             "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
                                 "$slot_item_texture": "textures/items/ores/titanium_dust",
                                 "$slot_hover_text": "item.utilitycraft:titanium_dust",
-                                "$has_slot_hover": true
-                            }
-                        },
-                        {
-                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
-                                "$slot_item_texture": "textures/items/ores/aetherium_crystal_dust",
-                                "$slot_hover_text": "item.utilitycraft:aetherium_crystal_dust",
                                 "$has_slot_hover": true
                             }
                         },
@@ -1315,7 +1311,7 @@
                     "controls": [
                         {
                             "input@catalyst_weaver.recipe_input": {
-                                "$slot_item_texture": "textures/items/glass_bottle",
+                                "$slot_item_texture": "textures/items/potion_bottle_empty",
                                 "$slot_hover_text": "item.glass_bottle.name",
                                 "$has_slot_hover": true
                             }
@@ -1336,7 +1332,7 @@
                         },
                         {
                             "fluid@catalyst_weaver.recipe_fluid_requirement": {
-                                "$fluid_texture": "textures/static/images/dark_matter",
+                                "$fluid_texture": "textures/ui/at_icons/dark_matter",
                                 "$fluid_text": "Dark Matter\n100 mB"
                             }
                         }

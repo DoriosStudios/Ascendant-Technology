@@ -1,5 +1,5 @@
 ## Generadores
-item.utilitycraft:absolute_drill=Taladro de Mano Absoluto\n§7- Mina en un área de 7x7 enfrente de ti\n§o§9@UC: Ascendant Technology
+item.utilitycraft:absolute_drill=Taladro de Mano Absoluto\n§7- Mina en un área de 7x7\n  enfrente de ti\n§o§9@UC: Ascendant Technology
 ui.utilitycraft:info.power_beacon=Almacena Dorios Energy recibida desde una red de energia conectada y la distribuye de forma inalambrica a las maquinas compatibles dentro del rango de su tier. La transferencia se reparte equitativamente entre los receptores que tengan capacidad disponible. Usa el boton de encendido del panel principal para activar o desactivar la transmision.
 ui.utilitycraft:info.laser_barrier=Proyecta una pared de energia solida e indestructible en linea recta desde el frente de la maquina. El campo base mide 3 bloques de largo y 3 bloques de alto. Las entidades que tocan o permanecen muy cerca de la pared proyectada reciben dano por contacto. La barrera nunca reemplaza bloques existentes, por lo que las celdas obstruidas permanecen vacias y aparecen en la pantalla de estado.\n\nEl slot izquierdo de Mejora de Tamano aumenta el largo y el slot central aumenta la altura, hasta ocho niveles cada uno. El slot de Mejora de Energia reduce el mantenimiento. Usa el boton de encendido para activar o desactivar la proyeccion. El campo se apaga automaticamente cuando no hay energia suficiente.
 ui.utilitycraft:info.refining_table=Refina armas, herramientas y armaduras registradas en StatsCore. Inserta un objeto y un Chip; opcionalmente agrega hasta ocho lingotes compatibles para mejorar el rango de calidad. Suministra XP liquido y presiona Refine. Repetir el refinamiento vuelve a tirar sus atributos con costos de XP y energia progresivamente mayores.\n\nUn Runic Core puede despertar una habilidad unica bloqueada durante la tirada. El refinamiento se guarda directamente en el objeto y puede otorgar atributos de combate, mineria o defensa segun su perfil de StatsCore. Las mejoras de Velocidad y Energia afectan el proceso.\n\nE/S de objetos:\n§9Entrada de equipo§r inserta objetos compatibles.\n§bEntrada de materiales§r inserta Chips, lingotes y Runic Cores.\n§1Todas las entradas§r expone todas las entradas.\n§cSalida de equipo§r extrae el objeto refinado.\n\nE/S de liquidos:\n§9Entrada de XP§r llena el tanque de XP liquido.
@@ -50,8 +50,8 @@ ui.utilitycraft:io.vaporworks_processor.liquids=Modos de E/S:\n§r- §9Entrada d
 ui.utilitycraft:io.vaporworks_processor.gases=Modos de E/S:\n§r- §cSalida de Vapor
 ui.utilitycraft:info.energizer=Convierte materiales de hierro compatibles en componentes energizados. Coloca materiales en cualquier entrada; primero se revisa el canal Primario y despues el Auxiliar. Cada receta define su propio tiempo de proceso y costo total de energia.\n\nAmbos canales resuelven recetas mediante una busqueda indexada directa. Las mejoras de Velocidad y Energia afectan el proceso, mientras que el Lote de Procesos controla cuantos objetos terminan por ciclo pagado.\n\nE/S de objetos:\n§9Entrada primaria§r expone el canal prioritario.\n§bEntrada auxiliar§r expone el canal alternativo.\n§9Todas las entradas§r expone ambas entradas.\n§cSalida§r expone el resultado.
 ui.utilitycraft:io.energizer.items=Modos de E/S:\n§r- §9Entrada primaria\n§r- §bEntrada auxiliar\n§r- §9Todas las entradas\n§r- §cSalida
-ui.utilitycraft:info.catalyst_weaver=Combina un objeto base con un conjunto exacto de hasta seis catalizadores. La posicion de los catalizadores no importa, pero los tipos adicionales impiden encontrar una receta. Algunas recetas tambien consumen Lava, Aetherium Liquido o Materia Oscura del tanque interno de 128,000 mB.\n\nLas recetas de la Camara Catalizadora y las recetas registradas del Infuser de UtilityCraft se indexan al cargarse. La busqueda no recorre el registro completo mientras funcionan las maquinas.\n\nE/S de objetos:\n§9Entrada base§r expone el objeto base.\n§bCatalizador 1§r, §1Catalizador 2§r, §bCatalizador 3§r, §9Catalizador 4§r, §bCatalizador 5§r y §1Catalizador 6§r exponen un slot de catalizador cada uno.\n§3Todas las entradas§r expone todas las entradas de objetos.\n§cSalida principal§r y §cSalida de residuo§r exponen sus resultados.\n§cTodas las salidas§r expone ambas salidas.\n\nE/S de liquidos:\n§9Entrada de fluido catalizador§r expone el tanque interno.
-ui.utilitycraft:io.catalyst_weaver.items=Modos de E/S:\n§r- §9Entrada base\n§r- §bCatalizador 1\n§r- §1Catalizador 2\n§r- §bCatalizador 3\n§r- §9Catalizador 4\n§r- §bCatalizador 5\n§r- §1Catalizador 6\n§r- §3Todas las entradas\n§r- §cSalida principal\n§r- §cSalida de residuo\n§r- §cTodas las salidas
+ui.utilitycraft:info.catalyst_weaver=Combina un objeto base con un conjunto exacto de hasta seis catalizadores. La posicion de los catalizadores no importa, pero los tipos adicionales impiden encontrar una receta. Algunas recetas tambien consumen Lava, Aetherium Liquido o Materia Oscura del tanque interno de 128,000 mB.\n\nLas recetas de la Camara Catalizadora y las recetas registradas del Infuser de UtilityCraft se indexan al cargarse. La busqueda no recorre el registro completo mientras funcionan las maquinas.\n\nE/S de objetos:\n§9Entrada base§r expone el objeto base.\n§bCatalizador 1§r, §1Catalizador 2§r, §bCatalizador 3§r, §9Catalizador 4§r, §bCatalizador 5§r y §1Catalizador 6§r exponen un slot de catalizador cada uno.\n§3Todos los catalizadores§r expone los seis slots de catalizadores.\n§cSalida principal§r y §cSalida de residuo§r exponen sus resultados.\n§cTodas las salidas§r expone ambas salidas.\n\nE/S de liquidos:\n§9Entrada de fluido catalizador§r expone el tanque interno.
+ui.utilitycraft:io.catalyst_weaver.items=Modos de E/S:\n§r- §9Entrada base\n§r- §bCatalizador 1\n§r- §1Catalizador 2\n§r- §bCatalizador 3\n§r- §9Catalizador 4\n§r- §bCatalizador 5\n§r- §1Catalizador 6\n§r- §3Todos los catalizadores\n§r- §cSalida principal\n§r- §cSalida de residuo\n§r- §cTodas las salidas
 ui.utilitycraft:io.catalyst_weaver.liquids=Modos de E/S:\n§r- §9Entrada de fluido catalizador
 ui.utilitycraft:info.liquifier=Convierte materiales solidos compatibles en Aetherium Liquido o Materia Oscura. Coloca el material solido a la izquierda; el liquido producido se acumula en el tanque de salida a la derecha. Algunas recetas tambien pueden crear un residuo solido opcional.\n\nEl tanque acepta un solo tipo de liquido a la vez y almacena hasta 640,000 mB. Vacialo antes de cambiar entre Aetherium Liquido y Materia Oscura. El liquido puede extraerse mediante E/S de liquidos o contenedores de fluidos de UtilityCraft.\n\nE/S de objetos:\n§9Entrada§r expone la entrada de material solido.\n§cSalida de residuo§r expone el subproducto opcional.\n\nE/S de liquidos:\n§cSalida de liquido§r expone el tanque producido.
 ui.utilitycraft:io.liquifier.items=Modos de E/S:\n§r- §9Entrada\n§r- §cSalida de residuo
@@ -80,7 +80,7 @@ tile.utilitycraft:absolute_furnator.name=Furnator Absoluto\n§7  Velocidad: 320 
 tile.utilitycraft:absolute_magmator.name=Magmator Absoluto\n§7  Velocidad: 400 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_solar_panel.name=Panel Solar Absoluto\n§7  Velocidad Máx: 96 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_thermo_generator.name=Generador Termal Absoluto\n§7   Velocidad: 16 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velocidad Base: 64 kDE/t\n  Multiplicador de Altura Máximo: 300%\n  No funciona debajo de y12\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_wind_turbine.name=Turbina Eólica Absoluta\n§7  Velocidad Base: 64 kDE/t\n  Multiplicador de Altura\n  Máximo: 300%\n  No funciona debajo de y12\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:basic_power_beacon.name=§eBasic Power Beacon\n§7  Rate: 1 kDE/t\n§7  Capacity: 128 kDE\n§7  Range: 4 blocks\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:advanced_power_beacon.name=§cAdvanced Power Beacon\n§7  Rate: 4 kDE/t\n§7  Capacity: 512 kDE\n§7  Range: 8 blocks\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16 kDE/t\n§7  Capacity: 2.048 MDE\n§7  Range: 12 blocks\n§o§9@UC: Ascendant Technology
@@ -94,8 +94,8 @@ tile.utilitycraft:cobble_gen_7.name=Gerador de Adoquín (§aN§bi§3v§1e§ul §
 tile.utilitycraft:industrial_crucible.name=Crisol Industrial\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:catalyst_weaver.name=Cámara Catalizadora\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:cryo_chamber.name=Cámara Criogénica\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica ítems usando materia oscura\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:enchantment_station.name=Estación de Encantamiento\n§7- Repara, encanta, refuerza equipamiento\n- Acepta mejoras: §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:duplicator.name=Duplicador\n§7- Duplica ítems usando materia\n  oscura\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:enchantment_station.name=Estación de Encantamiento\n§7- Repara, encanta, refuerza\n  equipamiento\n- Acepta mejoras: §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:energizer.name=Energizador\n§7Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:liquifier.name=Licuefactor\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:laser_barrier.name=Barrera Láser\n§7Acepta mejoras:\n  §a§r, §e§r\n§o§9@UC: Ascendant Technology
@@ -103,13 +103,13 @@ tile.utilitycraft:residue_processor.name=Procesador de Residuos\n§7Acepta mejor
 tile.utilitycraft:singularity_fabricator.name=Fabricador de Singularidad\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:network_center.name=Centro de Red\n§7- Muestra estadísticas de red\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:tabs_test_machine.name=Máquina de Prueba (Pestañas)\n§7- Bloque de prueba de pestañas\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:vaporworks_processor.name=Procesador de Vapor\n§7- Genera Vapor desde Agua o Cryofluid\n- Acepta mejoras: §a§r, §b§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Genera carga de overclock (Titanio + energía)\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica la carga de la torre en la red\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:overclock_injector.name=Inyector de Overclock\n§7- Aplica overclock a la máquina frente a él\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:vaporworks_processor.name=Procesador de Vapor\n§7- Genera Vapor desde Agua o\n  Cryofluid\n- Acepta mejoras: §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:overclock_tower.name=Torre de Overclock\n§7- Genera carga de overclock\n  (Titanio + energía)\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:overclock_relay.name=Relé de Overclock\n§7- Replica la carga de la torre\n  en la red\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:overclock_injector.name=Inyector de Overclock\n§7- Aplica overclock a la máquina\n  frente a él\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:reinforced_extractor.name=Extractor Reforzado\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:reinforced_importer.name=Importador Reforzado\n§7- Entrada dedicada de fluidos de red\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:reinforced_exporter.name=Exportador Reforzado\n§7- Salida dedicada de fluidos de red\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:reinforced_importer.name=Importador Reforzado\n§7- Entrada dedicada de fluidos\n  de red\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:reinforced_exporter.name=Exportador Reforzado\n§7- Salida dedicada de fluidos de\n  red\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:smart_importer.name=Importador Inteligente\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 
 ## Máquinas Superiores
@@ -117,11 +117,11 @@ tile.utilitycraft:abyssal_fisher.name=Pescador Abisal\n§9Pescador Automático S
 tile.utilitycraft:arc_press_forge.name=Forja Arco-Prensa\n§9Prensa Eléctrica Superior\n§7- Acepta mejoras: §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:dual_siever.name=Tamiz Doble\n§9Tamiz Automático Superior B\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:centrifugal_siever.name=Tamiz Centrífugo\n§9Tamiz Automático Superior A\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:cryo_freezer.name=Congelador Criogénico\n§9Rama Superior de la Cámara Criogénica\n§7- Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:cryo_stabilizer.name=Estabilizador Criogénico\n§9Rama Superior de la Cámara Criogénica\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:cryo_freezer.name=Congelador Criogénico\n§9Rama Superior de la Cámara\nCriogénica\n§7- Acepta mejoras:\n  §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:cryo_stabilizer.name=Estabilizador Criogénico\n§9Rama Superior de la Cámara\nCriogénica\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:industrial_burner.name=Incinerador Industrial\n§9Incinerador Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:impact_crusher.name=Triturador de Impacto\n§9Triturador Superior B\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:genetic_seed_synthesizer.name=Sintetizador Genético de Semillas\n§9Sintetizador de Semillas Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:genetic_seed_synthesizer.name=Sintetizador Genético de Semillas\n§9Sintetizador de Semillas\nSuperior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pattern_placer.name=Colocador de Patrones\n§9Colocador de Bloques Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pulverizer.name=Pulverizador\n§9Triturador Superior A\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:seismic_breaker.name=Quebrador Sísmico\n§9Rompe Bloques Superior\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
@@ -129,9 +129,9 @@ tile.utilitycraft:verdant_cultivator.name=Cultivador Verdante\n§9Cosechador Sup
 
 ## Otros Bloques
 tile.utilitycraft:flat_conduit.name=Conduíte Plano\n§7  Versión Estética\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7  Atrae mobs en un radio configurable\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:laser_barrier_field.name=Campo de Barrera Láser\n§7  Zona activa proyectada por la barrera\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:reinforced_cable.name=Cable Reforzado\n§7- Espina dorsal reforzada para energía, fluidos y overclock\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:mob_magnet.name=Imán de Mobs\n§7 Atrae mobs en un radio\nconfigurable\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:laser_barrier_field.name=Campo de Barrera Láser\n§7 Zona activa proyectada por la\nbarrera\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:reinforced_cable.name=Cable Reforzado\n§7- Espina dorsal reforzada para\n  energía, fluidos y overclock\n- Acepta mejoras: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 
 ## Transporte - Transportadores
 tile.utilitycraft:copper_conveyor_horizontal.name=§vTransportador de Cobre\n§7  Velocidad: 1 bloque/s\n§o§9@UC: Ascendant Technology
@@ -163,16 +163,16 @@ tile.utilitycraft:aetherium_conveyor_bridge_receiver.name=§uReceptor de Puente 
 tile.utilitycraft:aetherium_conveyor_bridge_path.name=§uRuta de Puente de Aetherium\n§o§9@UC: Ascendant Technology
 
 ## Transporte - Transportadores Especiales
-tile.utilitycraft:conveyor_junction.name=Unión de Transportador\n§7- Permite que las líneas se crucen\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:conveyor_overflow.name=Transportador de Desbordamiento\n§7- Avanza primero; alterna salidas laterales\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:conveyor_router.name=Enrutador de Transportador\n§7- Mantiene una salida y rota cada 10 ticks\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:conveyor_sorter.name=Transportador Clasificador\n§7- Los ítems filtrados van al frente; los demás a los lados\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:conveyor_smart_router.name=Enrutador Inteligente\n§7- Enruta basado en asignaciones de ítems\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:conveyor_inverted_sorter.name=Transportador Clasificador Invertido\n§7- Los ítems filtrados van a los lados; los demás al frente\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:conveyor_junction.name=Unión de Transportador\n§7- Permite que las líneas se\n  crucen\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:conveyor_overflow.name=Transportador de Desbordamiento\n§7- Avanza primero; alterna\n  salidas laterales\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:conveyor_router.name=Enrutador de Transportador\n§7- Mantiene una salida y rota\n  cada 10 ticks\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:conveyor_sorter.name=Transportador Clasificador\n§7- Los ítems filtrados van al\n  frente; los demás a los lados\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:conveyor_smart_router.name=Enrutador Inteligente\n§7- Enruta basado en asignaciones\n  de ítems\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:conveyor_inverted_sorter.name=Transportador Clasificador Invertido\n§7- Los ítems filtrados van a los\n  lados; los demás al frente\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:conveyor_underflow.name=Transportador de Subdesbordamiento\n§7- Prioriza salidas laterales\n§o§9@UC: Ascendant Technology
 
 ## Transporte - Utilidades
-tile.utilitycraft:conveyor_bridge_path.name=§aCamino Puente de Transportador\n§7- Conexión de puente activa entre transmisor y receptor\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:conveyor_bridge_path.name=§aCamino Puente de Transportador\n§7- Conexión de puente activa\n  entre transmisor y receptor\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:conveyor_network_updater.name=Actualizador de Red de Transportador\n§7- Reconstruye caché de red\n§o§9@UC: Ascendant Technology
 
 ## Otros Bloques
@@ -219,13 +219,13 @@ item.utilitycraft:aetherium_shard=Fragmento de Aetherium\n§o§9@UC: Ascendant T
 item.utilitycraft:refined_aetherium_crystal=Cristal de Aetherium Refinado\n§o§9@UC: Ascendant Technology
 item.utilitycraft:void_essence=Esencia del Vacío\n§o§9@UC: Ascendant Technology
 item.utilitycraft:liquid_void=Ampolla de Vacío Líquido\n§o§9@UC: Ascendant Technology
-item.utilitycraft:enderling_tear=Lágrima de Enderling\n§7- Caída de mobs Enderling\n- Usada para craft Interdimensional\n§o§9@UC: Ascendant Technology
+item.utilitycraft:enderling_tear=Lágrima de Enderling\n§7- Caída de mobs Enderling\n- Usada para craft\n  Interdimensional\n§o§9@UC: Ascendant Technology
 item.utilitycraft:pure_enderling_tear=Lágrima Pura de Enderling\n§7- Caída rara de Enderlings\n- Material de craft premium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:absolute_chip=§uChip Absoluto\n§o§9@UC: Ascendant Technology
 
 ## Módulos
-item.utilitycraft:size_upgrade=Mejora de §gTamaño§7\n- Aumenta el área de la Barrera Láser\n§o§9@UC: Ascendant Technology
-item.utilitycraft:hyper_processing_upgrade=Mejora de §dProcesamiento Híper§7\n- Aumenta la velocidad de operación de las máquinas\n- No aumenta el consumo de energía\n§o§9@UC: Ascendant Technology
+item.utilitycraft:size_upgrade=Mejora de §gTamaño§7\n- Aumenta el área de la Barrera\n  Láser\n§o§9@UC: Ascendant Technology
+item.utilitycraft:hyper_processing_upgrade=Mejora de §dProcesamiento Híper§7\n- Aumenta la velocidad de\n  operación de las máquinas\n- No aumenta el consumo de\n  energía\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:hyper_processing_upgrade.name=Mejora de §dProcesamiento Híper§r
 upgrade.utilitycraft:stack_upgrade.name=Mejora de §6Pila§r
 
@@ -260,15 +260,15 @@ entity.utilitycraft:induction_anvil.name=Yunque de Inducción
 tile.utilitycraft:magmatic_chamber.name=Cámara Magmática\n§7Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:magmatic_chamber.name=Cámara Magmática
 item.utilitycraft:stack_upgrade=Mejora de §6Pila§7\n- Aumenta la cantidad de ítems\n  procesados a la vez.\n§o§9@UC: Ascendant Technology
-item.utilitycraft:curse_protection_module=§dMódulo de Protección contra Maldiciones§7\n- Impide maldiciones durante el encantamiento\n§o§9@UC: Ascendant Technology
+item.utilitycraft:curse_protection_module=§dMódulo de Protección contra Maldiciones§7\n- Impide maldiciones durante el\n  encantamiento\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dMódulo de Encantabilidad §r(Tier I)§7\n- Desbloquea encantamiento\n- Nivel máx: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dMódulo de Encantabilidad §r(Tier II)§7\n- Nivel de encantamiento máx: 2\n§o§9@UC: Ascendant Technology
-item.utilitycraft:enchantability_module_3=§dMódulo de Encantabilidad §r(Tier III)§7\n- Nivel de encantamiento máx: 3\n- Encantamientos mid-tier disponibles\n§o§9@UC: Ascendant Technology
+item.utilitycraft:enchantability_module_3=§dMódulo de Encantabilidad §r(Tier III)§7\n- Nivel de encantamiento máx: 3\n- Encantamientos mid-tier\n  disponibles\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_4=§dMódulo de Encantabilidad §r(Tier IV)§7\n- Nivel de encantamiento máx: 4\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_5=§dMódulo de Encantabilidad §r(Tier V)§7\n- Nivel de encantamiento máx: 5\n- Mending, Infinity disponibles\n§o§9@UC: Ascendant Technology
-item.utilitycraft:reinforcement_module=§dMódulo de Refuerzo §r(Tier I)§7\n- Desbloquea refuerzo de armadura\n§o§9@UC: Ascendant Technology
-item.utilitycraft:reinforcement_module_2=§dMódulo de Refuerzo §r(Tier II)§7\n- Bonificación de durabilidad mejorada\n§o§9@UC: Ascendant Technology
-item.utilitycraft:reinforcement_module_3=§dMódulo de Refuerzo §r(Tier III)§7\n- Bonificación de durabilidad máxima\n§o§9@UC: Ascendant Technology
+item.utilitycraft:reinforcement_module=§dMódulo de Refuerzo §r(Tier I)§7\n- Desbloquea refuerzo de\n  armadura\n§o§9@UC: Ascendant Technology
+item.utilitycraft:reinforcement_module_2=§dMódulo de Refuerzo §r(Tier II)§7\n- Bonificación de durabilidad\n  mejorada\n§o§9@UC: Ascendant Technology
+item.utilitycraft:reinforcement_module_3=§dMódulo de Refuerzo §r(Tier III)§7\n- Bonificación de durabilidad\n  máxima\n§o§9@UC: Ascendant Technology
 
 ## Mallas y Redes
 item.utilitycraft:aetherium_mesh=Malla de §uAetherium\n§7- Nivel Máx: Interdimensional\n§7- Multiplicador de Ítems: 1.5x\n§o§9@UC: Ascendant Technology
@@ -402,6 +402,7 @@ at:itemGroup.name.materials_resources=Materiales y Recursos \n§u(Ascendant Tech
 at:itemGroup.name.pipes=Tuberías \n§u(Ascendant Technology)
 at:itemGroup.name.conveyors=Cintas Transportadoras \n§u(Ascendant Technology)
 at:itemGroup.name.modules=Módulos Arcanos \n§u(Ascendant Technology)
+at:itemGroup.name.compressed_blocks=Bloques Comprimidos \n§u(Ascendant Technology)
 
 at:ui.h=A
 at:ui.l=L
@@ -765,23 +766,23 @@ item.utilitycraft:arcane_15=Energía Arcana\n§o§9@UC: Ascendant Technology
 item.utilitycraft:arcane_16=Energía Arcana\n§o§9@UC: Ascendant Technology
 
 ## Cápsulas Infinitas (Faltantes)
-item.utilitycraft:aetherium_liquid_capsule_infinite=Cápsula de Aetherium Licuado Infinita\n§7- Contiene aetherium licuado ilimitado\n§o§9@UC: Ascendant Technology
-item.utilitycraft:cryofluid_capsule_infinite=Cápsula de Criolíquido Infinita\n§7- Contiene criolíquido ilimitado\n§o§9@UC: Ascendant Technology
-item.utilitycraft:dark_matter_liquid_capsule_infinite=Cápsula de Materia Oscura Infinita\n§7- Contiene materia oscura ilimitada\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_liquid_capsule_infinite=Cápsula de Aetherium Licuado Infinita\n§7- Contiene aetherium licuado\n  ilimitado\n§o§9@UC: Ascendant Technology
+item.utilitycraft:cryofluid_capsule_infinite=Cápsula de Criolíquido Infinita\n§7- Contiene criolíquido\n  ilimitado\n§o§9@UC: Ascendant Technology
+item.utilitycraft:dark_matter_liquid_capsule_infinite=Cápsula de Materia Oscura Infinita\n§7- Contiene materia oscura\n  ilimitada\n§o§9@UC: Ascendant Technology
 item.utilitycraft:lava_capsule_infinite=Cápsula de Lava Infinita\n§7- Contiene lava ilimitada\n§o§9@UC: Ascendant Technology
 item.utilitycraft:milk_capsule_infinite=Cápsula de Leche Infinita\n§7- Contiene leche ilimitada\n§o§9@UC: Ascendant Technology
 item.utilitycraft:water_capsule_infinite=Cápsula de Agua Infinita\n§7- Contiene agua ilimitada\n§o§9@UC: Ascendant Technology
 item.utilitycraft:xp_capsule_infinite=Cápsula de XP Infinita\n§7- Contiene XP líquido ilimitado\n§o§9@UC: Ascendant Technology
 
 ## Módulos (Faltantes)
-item.utilitycraft:ascane_module_base=§dBase de Módulo Arcano§7\n- Componente base para crear módulos\n§o§9@UC: Ascendant Technology
+item.utilitycraft:ascane_module_base=§dBase de Módulo Arcano§7\n- Componente base para crear\n  módulos\n§o§9@UC: Ascendant Technology
 item.utilitycraft:runic_core=Núcleo Rúnico\n§o§9@UC: Ascendant Technology
 item.utilitycraft:advanced_runic_core=Núcleo Rúnico Avanzado\n§o§9@UC: Ascendant Technology
 ui.utilitycraft:refining_table.stats=Estadísticas
 ui.utilitycraft:refining_table.all_statistics=Todas las estadísticas
 
 ## E/S del lote de máquinas superiores
-tile.utilitycraft:cryofluid_synthesizer.name=Sintetizador de Cryofluid\n§9Rama Superior de Síntesis Criogénica\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:cryofluid_synthesizer.name=Sintetizador de Cryofluid\n§9Rama Superior de Síntesis\nCriogénica\n§7- Acepta mejoras:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UC: Ascendant Technology
 entity.utilitycraft:cryofluid_synthesizer.name=§fSintetizador de Cryofluid
 ui.utilitycraft:info.cryo_freezer=Congela hasta quince stacks simultáneamente en la misma cuadrícula. Los resultados reemplazan sus entradas en el mismo slot, y el tanque acepta el refrigerante requerido por cada receta. Acepta mejoras de Velocidad y Energía.
 ui.utilitycraft:io.cryo_freezer.items=Modos de E/S:\n§r- §9Entrada de cuadrícula\n§r- §cSalida de cuadrícula
@@ -809,3 +810,29 @@ tile.utilitycraft:compressed_raw_tungsten_block.name=Bloque de Tungsteno en Brut
 tile.utilitycraft:compressed_raw_tungsten_block_2.name=Bloque de Tungsteno en Bruto Doblemente Comprimido\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_raw_tungsten_block_3.name=Bloque de Tungsteno en Bruto Triplemente Comprimido\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_raw_tungsten_block_4.name=Bloque de Tungsteno en Bruto Cuádruplemente Comprimido\n§o§9@UC: Ascendant Technology
+
+item.utilitycraft:aetherium_crystal=Cristal de Aetherium\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_storage_cell=§uCelda de Almacenamiento de Aetherium\n§7- Almacenamiento: §f3200 KB\n  (3276800)\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_storage_part=Componente de Almacenamiento de Aetherium\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:end_sand.name=Arena del End\n§o§9@UC: Ascendant Technology
+
+## AT machine upgrades
+item.utilitycraft:multi_processing_upgrade=§mMejora de procesamiento múltiple§7\n- Procesa 1 ranura adicional\n  por mejora.\n- Ocupa una ranura de mejora\n  existente.\n- Máximo: 8 mejoras.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:multi_processing_upgrade.name=§mMejora de procesamiento múltiple§r
+item.utilitycraft:energy_capacity_upgrade=§bMejora de capacidad de energía§7\n- Añade 50% de capacidad de\n  energía por mejora.\n- Ocupa una ranura de mejora\n  existente.\n- Máximo: 8 mejoras.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:energy_capacity_upgrade.name=§bMejora de capacidad de energía§r
+item.utilitycraft:liquid_capacity_upgrade=§pMejora de capacidad de líquidos§7\n- Añade 50% de capacidad de\n  líquidos por mejora.\n- Ocupa una ranura de mejora\n  existente.\n- Máximo: 8 mejoras.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:liquid_capacity_upgrade.name=§pMejora de capacidad de líquidos§r
+item.utilitycraft:gas_capacity_upgrade=§uMejora de capacidad de gases§7\n- Añade 50% de capacidad de\n  gases por mejora.\n- Ocupa una ranura de mejora\n  existente.\n- Máximo: 8 mejoras.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:gas_capacity_upgrade.name=§uMejora de capacidad de gases§r
+item.utilitycraft:resource_efficiency_upgrade=§tMejora de ahorro de recursos§7\n- 5% de probabilidad por mejora\n  de conservar recursos\n  consumidos.\n- Ocupa una ranura de mejora\n  existente.\n- Máximo: 8 mejoras.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:resource_efficiency_upgrade.name=§tMejora de ahorro de recursos§r
+message.ascendant.upgrade.unsupported=This AT machine does not support this upgrade.
+message.ascendant.upgrade.failed=Could not install the upgrade.
+message.ascendant.upgrade.occupied=Free an existing upgrade slot first.
+message.ascendant.upgrade.max=Upgrade stack is already at level 8.
+message.ascendant.upgrade.applied=AT upgrade installed.
+tile.utilitycraft:compressed_aetherium_crystal_block.name=Bloque de Cristal de Aetherium Comprimido\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_2.name=Bloque de Cristal de Aetherium Doblemente Comprimido\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_3.name=Bloque de Cristal de Aetherium Triplemente Comprimido\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_4.name=Bloque de Cristal de Aetherium Cuádruplemente Comprimido\n§o§9@UC: Ascendant Technology

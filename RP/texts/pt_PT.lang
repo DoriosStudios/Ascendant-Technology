@@ -19,3 +19,24 @@ tile.utilitycraft:compressed_raw_tungsten_block.name=Bloco de Tungstênio Bruto 
 tile.utilitycraft:compressed_raw_tungsten_block_2.name=Bloco de Tungstênio Bruto Duplamente Comprimido\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_raw_tungsten_block_3.name=Bloco de Tungstênio Bruto Triplemente Comprimido\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_raw_tungsten_block_4.name=Bloco de Tungstênio Bruto Quadruplicadamente Comprimido\n§o§9@UC: Ascendant Technology
+
+## AT machine upgrades
+item.utilitycraft:multi_processing_upgrade=§mMelhoria de Multiprocessamento§7\n- Processa 1 slot adicional por\n  melhoria.\n- Ocupa um slot de melhoria\n  existente.\n- Máximo: 8 melhorias.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:multi_processing_upgrade.name=§mMelhoria de Multiprocessamento§r
+item.utilitycraft:energy_capacity_upgrade=§bMelhoria de Capacidade de Energia§7\n- Adiciona 50% de capacidade de\n  energia por melhoria.\n- Ocupa um slot de melhoria\n  existente.\n- Máximo: 8 melhorias.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:energy_capacity_upgrade.name=§bMelhoria de Capacidade de Energia§r
+item.utilitycraft:liquid_capacity_upgrade=§pMelhoria de Capacidade de Líquidos§7\n- Adiciona 50% de capacidade de\n  líquidos por melhoria.\n- Ocupa um slot de melhoria\n  existente.\n- Máximo: 8 melhorias.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:liquid_capacity_upgrade.name=§pMelhoria de Capacidade de Líquidos§r
+item.utilitycraft:gas_capacity_upgrade=§uMelhoria de Capacidade de Gases§7\n- Adiciona 50% de capacidade de\n  gases por melhoria.\n- Ocupa um slot de melhoria\n  existente.\n- Máximo: 8 melhorias.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:gas_capacity_upgrade.name=§uMelhoria de Capacidade de Gases§r
+item.utilitycraft:resource_efficiency_upgrade=§tMelhoria de Economia de Recursos§7\n- 5% de chance por melhoria de\n  preservar recursos\n  consumidos.\n- Ocupa um slot de melhoria\n  existente.\n- Máximo: 8 melhorias.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:resource_efficiency_upgrade.name=§tMelhoria de Economia de Recursos§r
+message.ascendant.upgrade.unsupported=Esta máquina do AT não aceita esta melhoria.
+message.ascendant.upgrade.failed=Não foi possível instalar a melhoria.
+message.ascendant.upgrade.occupied=Libere um dos slots de melhoria existentes.
+message.ascendant.upgrade.max=A melhoria já está no nível 8.
+message.ascendant.upgrade.applied=Melhoria do AT instalada.
+tile.utilitycraft:compressed_aetherium_crystal_block.name=Bloco de Cristal Aetherium Comprimido\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_2.name=Bloco de Cristal Aetherium Duplamente Comprimido\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_3.name=Bloco de Cristal Aetherium Triplemente Comprimido\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_4.name=Bloco de Cristal Aetherium Quadruplicadamente Comprimido\n§o§9@UC: Ascendant Technology

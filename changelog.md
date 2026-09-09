@@ -2,13 +2,7 @@
 
 This update brings the Compactor and Decompactor, Universal transportation blocks, five new StatsCore elements, and a lot of recipe and UI changes. It also fixes several machine issues and centralizes shared recipes so they can be used by more than one machine.
 
-## Aetherium, Power Beacons and DoriosLib
-- Renamed Refined Aetherium Shard to **Refined Aetherium Crystal** (`utilitycraft:refined_aetherium_crystal`), including recipes, catalysts, catalog entries and textures.
-- Power Beacons now use Echo Shards and tier-specific corner materials: Gold, Energized Iron, Diamond Dust, Netherite and Aetherium. Basic uses a Machine Case instead of its bottom Basic Chip.
-- Split crystalline and metallic Aetherium processing. Added Crystal Dust and Crystal Block, reversible shard storage, and a crystal-dust alloy recipe in the Catalyst Weaver.
-- Metal dust now smelts back into ingots. Grinding and liquifying equivalent solid forms preserves their material yield.
-- Rebuilt all five Power Beacons with dedicated on/off textures, the new model, tiered Workbench/Assembler recipes, protected UI slots and rotating fair energy distribution.
-- Updated DoriosLib to the UtilityCraft snapshot at `4cc859f5` (library version 2.1.0), preserving Ascendant metadata. Included the upstream button watcher fix to prevent lost transmission clicks.
+Current v0.9.2 changes are maintained in [the versioned changelog](extras/past_changelogs/changelog_v0.9.2.md).
 
 ## BLOCKS
 ### Machines (Additions)

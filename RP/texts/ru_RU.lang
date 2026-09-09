@@ -17,8 +17,8 @@ tile.utilitycraft:absolute_container.name=Абсолютный Контейне�
 ## Машины
 tile.utilitycraft:catalyst_weaver.name=Катализаторный Ткач\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:cryo_chamber.name=Криокамера\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:duplicator.name=Дупликатор\n§7- Дублирует предметы с помощью тёмной материи\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:enchantment_station.name=Станция Зачарования\n§7- Ремонтирует, зачаровывает, усиливает снаряжение\n- Принимает улучшения: §a§r, §b§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:duplicator.name=Дупликатор\n§7- Дублирует предметы с помощью\n  тёмной материи\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:enchantment_station.name=Станция Зачарования\n§7- Ремонтирует, зачаровывает,\n  усиливает снаряжение\n- Принимает улучшения: §a§r, §b§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:energizer.name=Энергизатор\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:liquifier.name=Ожижитель\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:laser_barrier.name=Лазерный Барьер\n§7Принимает улучшения:\n  §a§r, §e§r\n§o§9@UC: Ascendant Technology
@@ -26,18 +26,18 @@ tile.utilitycraft:residue_processor.name=Процессор Остатков\n§
 tile.utilitycraft:singularity_fabricator.name=Фабрикатор Сингулярности\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:network_center.name=Сетевой Центр\n§7- Показывает сетевую статистику\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:tabs_test_machine.name=Тестовая Машина Вкладок\n§7- Блок тестирования вкладок UI\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:overclock_tower.name=Башня Разгона\n§7- Генерирует заряд разгона (Титан + энергия)\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:overclock_tower.name=Башня Разгона\n§7- Генерирует заряд разгона\n  (Титан + энергия)\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:overclock_relay.name=Реле Разгона\n§7- Отражает заряд башни в сеть\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:overclock_injector.name=Инжектор Разгона\n§7- Применяет разгон к обращенной машине\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:overclock_injector.name=Инжектор Разгона\n§7- Применяет разгон к обращенной\n  машине\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:reinforced_extractor.name=Усиленный Экстрактор\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:reinforced_importer.name=Усиленный Импортер\n§7- Выделенный ввод жидкостей в сеть\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:reinforced_exporter.name=Усиленный Экспортер\n§7- Выделенный вывод жидкостей из сети\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:reinforced_importer.name=Усиленный Импортер\n§7- Выделенный ввод жидкостей в\n  сеть\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:reinforced_exporter.name=Усиленный Экспортер\n§7- Выделенный вывод жидкостей из\n  сети\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:smart_importer.name=Умный Импортер\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:reinforced_cable.name=Усиленный Кабель\n§7- Высокоемкостная основа энергии/жидкости/разгона\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:reinforced_cable.name=Усиленный Кабель\n§7- Высокоемкостная основа\n  энергии/жидкости/разгона\n- Принимает улучшения: §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
 
 ## Улучшенные Машины
 tile.utilitycraft:abyssal_fisher.name=Абиссальный Рыбак\n§9Улучшенный Auto Fisher\n§7- Принимаемые обновления: §a§r, §b§r\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:arc_press_forge.name=Кузня Дугового Пресса\n§9Улучшенный Электро Пресс\n§7- Принимаемые обновления: §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:arc_press_forge.name=Кузня Дугового Пресса\n§9Улучшенный Электро Пресс\n§7- Принимаемые обновления: §a§r, §b§r,\n  §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:dual_siever.name=Двойное Сито\n§9Улучшенный Autosieve B\n§7- Принимаемые обновления:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:centrifugal_siever.name=Центрифужное Сито\n§9Улучшенный Autosieve A\n§7- Принимаемые обновления:\n  §a§r, §b§r, §d§r, §s§r\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:cryo_freezer.name=Криоморозильник\n§9Улучшенная ветвь Криокамеры\n§7- Принимаемые обновления:\n  §a§r, §b§r, §d§r\n§o§9@UC: Ascendant Technology
@@ -52,8 +52,8 @@ tile.utilitycraft:verdant_cultivator.name=Пышный Культиватор\n�
 
 ## Другие Блоки
 tile.utilitycraft:flat_conduit.name=Плоский Канал\n§7  Эстетическая Версия\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:laser_barrier_field.name=Лазерный Барьер Field\n§7  Активная зона, проецируемая барьером\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:mob_magnet.name=Магнит Мобов\n§7  Притягивает мобов в настраиваемый радиус\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:laser_barrier_field.name=Лазерный Барьер Field\n§7 Активная зона, проецируемая\nбарьером\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:mob_magnet.name=Магнит Мобов\n§7 Притягивает мобов в\nнастраиваемый радиус\n§o§9@UC: Ascendant Technology
 
 tile.utilitycraft:aetherium_block.name=Aetherium Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:titanium_block.name=Титан Block\n§o§9@UC: Ascendant Technology
@@ -104,8 +104,8 @@ item.utilitycraft:titanium_hammer=Титан Hammer\n§o§9@UC: Ascendant Techno
 item.utilitycraft:void_essence=Сущность Пустоты\n§o§9@UC: Ascendant Technology
 item.utilitycraft:liquid_void=Капсула Жидкой Пустоты\n§o§9@UC: Ascendant Technology
 ## Модули
-item.utilitycraft:size_upgrade=§gУлучшение Размера§7\n- Увеличивает область Лазерного Барьера\n§o§9@UC: Ascendant Technology
-item.utilitycraft:hyper_processing_upgrade=§dУлучшение Гиперобработки§7\n- Увеличивает скорость работы машин\n- Без дополнительных энергозатрат\n§o§9@UC: Ascendant Technology
+item.utilitycraft:size_upgrade=§gУлучшение Размера§7\n- Увеличивает область Лазерного\n  Барьера\n§o§9@UC: Ascendant Technology
+item.utilitycraft:hyper_processing_upgrade=§dУлучшение Гиперобработки§7\n- Увеличивает скорость работы\n  машин\n- Без дополнительных\n  энергозатрат\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:hyper_processing_upgrade.name=§dУлучшение Гиперобработки§r
 upgrade.utilitycraft:stack_upgrade.name=§6Улучшение Стопки§r
 item.utilitycraft:absolute_chip=§uАбсолютный Чип\n§o§9@UC: Ascendant Technology
@@ -140,18 +140,18 @@ tile.utilitycraft:induction_anvil.name=Индукционная Наковаль
 entity.utilitycraft:induction_anvil.name=Индукционная Наковальня
 tile.utilitycraft:magmatic_chamber.name=Магматическая Камера\n§7Принимает улучшения:\n  §a§r, §b§r, §d§r, §6§r\n§o§9@UtilityCraft
 entity.utilitycraft:magmatic_chamber.name=Магматическая Камера
-item.utilitycraft:curse_protection_module=§dМодуль Защиты от Проклятий§7\n- Предотвращает проклятия при зачаровании\n§o§9@UC: Ascendant Technology
+item.utilitycraft:curse_protection_module=§dМодуль Защиты от Проклятий§7\n- Предотвращает проклятия при\n  зачаровании\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module=§dМодуль Зачаровываемости §r(Tier I)§7\n- Открывает зачарование\n- Макс. уровень: 1\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_2=§dМодуль Зачаровываемости §r(Tier II)§7\n- Макс. уровень зачарования: 2\n§o§9@UC: Ascendant Technology
-item.utilitycraft:enchantability_module_3=§dМодуль Зачаровываемости §r(Tier III)§7\n- Макс. уровень зачарования: 3\n- Доступны зачарования среднего уровня\n§o§9@UC: Ascendant Technology
+item.utilitycraft:enchantability_module_3=§dМодуль Зачаровываемости §r(Tier III)§7\n- Макс. уровень зачарования: 3\n- Доступны зачарования среднего\n  уровня\n§o§9@UC: Ascendant Technology
 item.utilitycraft:enchantability_module_4=§dМодуль Зачаровываемости §r(Tier IV)§7\n- Макс. уровень зачарования: 4\n§o§9@UC: Ascendant Technology
-item.utilitycraft:enchantability_module_5=§dМодуль Зачаровываемости §r(Tier V)§7\n- Макс. уровень зачарования: 5\n- Доступны Починка и Бесконечность\n§o§9@UC: Ascendant Technology
+item.utilitycraft:enchantability_module_5=§dМодуль Зачаровываемости §r(Tier V)§7\n- Макс. уровень зачарования: 5\n- Доступны Починка и\n  Бесконечность\n§o§9@UC: Ascendant Technology
 item.utilitycraft:reinforcement_module=§dМодуль Усиления §r(Tier I)§7\n- Открывает усиление брони\n§o§9@UC: Ascendant Technology
 item.utilitycraft:reinforcement_module_2=§dМодуль Усиления §r(Tier II)§7\n- Улучшенный бонус прочности\n§o§9@UC: Ascendant Technology
 item.utilitycraft:reinforcement_module_3=§dМодуль Усиления §r(Tier III)§7\n- Максимальный бонус прочности\n§o§9@UC: Ascendant Technology
 
 ## Meshes & Nets
-item.utilitycraft:aetherium_mesh=§uAetherium §7Mesh\n§7- Max Drop Tier: Interdimensional\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_mesh=§uAetherium §7Mesh\n§7- Max Drop Tier:\n  Interdimensional\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_fishing_net=§uAetherium §7Fishing Net\n§7- Hook Speed Tier: 8\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_mesh=§3Титан §7Mesh\n§7- Max Drop Tier: Diamond\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_fishing_net=§3Титан §7Fishing Net\n§7- Hook Speed Tier: 6\n§o§9@UC: Ascendant Technology
@@ -235,6 +235,7 @@ at:itemGroup.name.armor=Броня §u(Ascendant Technology)
 at:itemGroup.name.materials_resources=Материалы и ресурсы §u(Ascendant Technology)
 at:itemGroup.name.pipes=Трубы §u(Ascendant Technology)
 at:itemGroup.name.conveyors=Конвейеры §u(Ascendant Technology)
+at:itemGroup.name.compressed_blocks=Сжатые блоки §u(Ascendant Technology)
 dorios:itemGroup.name.pipes=Трубы
 dorios:itemGroup.name.mob_grinding=Измельчение мобов
 
@@ -599,7 +600,7 @@ item.utilitycraft:arcane_15=Arcane Energy\n§o§9@UC: Ascendant Technology
 item.utilitycraft:arcane_16=Arcane Energy\n§o§9@UC: Ascendant Technology
 
 ## Infinite Capsules
-item.utilitycraft:aetherium_liquid_capsule_infinite=Infinite Liquified Aetherium Capsule\n§7- Holds unlimited liquified aetherium\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_liquid_capsule_infinite=Infinite Liquified Aetherium Capsule\n§7- Holds unlimited liquified\n  aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:cryofluid_capsule_infinite=Infinite Cryofluid Capsule\n§7- Holds unlimited cryofluid\n§o§9@UC: Ascendant Technology
 item.utilitycraft:dark_matter_liquid_capsule_infinite=Infinite Dark Matter Capsule\n§7- Holds unlimited dark matter\n§o§9@UC: Ascendant Technology
 item.utilitycraft:lava_capsule_infinite=Infinite Lava Capsule\n§7- Holds unlimited lava\n§o§9@UC: Ascendant Technology
@@ -608,7 +609,7 @@ item.utilitycraft:water_capsule_infinite=Infinite Water Capsule\n§7- Holds unli
 item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited liquid XP\n§o§9@UC: Ascendant Technology
 
 ## Modules
-item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules\n§o§9@UC: Ascendant Technology
+item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting\n  modules\n§o§9@UC: Ascendant Technology
 item.utilitycraft:runic_core=Руническое ядро\n§o§9@UC: Ascendant Technology
 item.utilitycraft:advanced_runic_core=Улучшенное руническое ядро\n§o§9@UC: Ascendant Technology
 ui.utilitycraft:refining_table.stats=Характеристики
@@ -633,3 +634,29 @@ tile.utilitycraft:compressed_raw_tungsten_block.name=Compressed Raw Tungsten Blo
 tile.utilitycraft:compressed_raw_tungsten_block_2.name=Double Compressed Raw Tungsten Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_raw_tungsten_block_3.name=Triple Compressed Raw Tungsten Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_raw_tungsten_block_4.name=Quadruple Compressed Raw Tungsten Block\n§o§9@UC: Ascendant Technology
+
+item.utilitycraft:aetherium_crystal=Кристалл Эфириума\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_storage_cell=§uЯчейка хранения Эфириума\n§7- Хранилище: §f3200 KB (3276800)\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_storage_part=Компонент хранения Эфириума\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:end_sand.name=Песок Края\n§o§9@UC: Ascendant Technology
+
+## AT machine upgrades
+item.utilitycraft:multi_processing_upgrade=§mУлучшение параллельной обработки§7\n- Обрабатывает 1 дополнительный\n  слот за улучшение.\n- Занимает существующий слот\n  улучшения.\n- Максимум: 8 улучшений.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:multi_processing_upgrade.name=§mУлучшение параллельной обработки§r
+item.utilitycraft:energy_capacity_upgrade=§bУлучшение ёмкости энергии§7\n- +50% ёмкости энергии за\n  улучшение.\n- Занимает существующий слот\n  улучшения.\n- Максимум: 8 улучшений.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:energy_capacity_upgrade.name=§bУлучшение ёмкости энергии§r
+item.utilitycraft:liquid_capacity_upgrade=§pУлучшение ёмкости жидкостей§7\n- +50% ёмкости жидкостей за\n  улучшение.\n- Занимает существующий слот\n  улучшения.\n- Максимум: 8 улучшений.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:liquid_capacity_upgrade.name=§pУлучшение ёмкости жидкостей§r
+item.utilitycraft:gas_capacity_upgrade=§uУлучшение ёмкости газов§7\n- +50% ёмкости газов за\n  улучшение.\n- Занимает существующий слот\n  улучшения.\n- Максимум: 8 улучшений.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:gas_capacity_upgrade.name=§uУлучшение ёмкости газов§r
+item.utilitycraft:resource_efficiency_upgrade=§tУлучшение экономии ресурсов§7\n- 5% шанса за улучшение\n  сохранить расходуемые\n  ресурсы.\n- Занимает существующий слот\n  улучшения.\n- Максимум: 8 улучшений.\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:resource_efficiency_upgrade.name=§tУлучшение экономии ресурсов§r
+message.ascendant.upgrade.unsupported=This AT machine does not support this upgrade.
+message.ascendant.upgrade.failed=Could not install the upgrade.
+message.ascendant.upgrade.occupied=Free an existing upgrade slot first.
+message.ascendant.upgrade.max=Upgrade stack is already at level 8.
+message.ascendant.upgrade.applied=AT upgrade installed.
+tile.utilitycraft:compressed_aetherium_crystal_block.name=Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_2.name=Double Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_3.name=Triple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_4.name=Quadruple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology

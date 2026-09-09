@@ -151,7 +151,7 @@ item.utilitycraft:reinforcement_module_2=§d强化模块 §r(Tier II)§7\n- 提�
 item.utilitycraft:reinforcement_module_3=§d强化模块 §r(Tier III)§7\n- 最大耐久加成\n§o§9@UC: Ascendant Technology
 
 ## Meshes & Nets
-item.utilitycraft:aetherium_mesh=§uAetherium §7Mesh\n§7- Max Drop Tier: Interdimensional\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_mesh=§uAetherium §7Mesh\n§7- Max Drop Tier:\n  Interdimensional\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_fishing_net=§uAetherium §7Fishing Net\n§7- Hook Speed Tier: 8\n§7- Item Multiplier: 1.5x\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_mesh=§3钛 §7Mesh\n§7- Max Drop Tier: Diamond\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_fishing_net=§3钛 §7Fishing Net\n§7- Hook Speed Tier: 6\n§o§9@UC: Ascendant Technology
@@ -235,6 +235,7 @@ at:itemGroup.name.armor=盔甲 §u(Ascendant Technology)
 at:itemGroup.name.materials_resources=材料与资源 §u(Ascendant Technology)
 at:itemGroup.name.pipes=管道 §u(Ascendant Technology)
 at:itemGroup.name.conveyors=传送带 §u(Ascendant Technology)
+at:itemGroup.name.compressed_blocks=压缩方块 §u(Ascendant Technology)
 dorios:itemGroup.name.pipes=管道
 dorios:itemGroup.name.mob_grinding=生物研磨
 
@@ -599,7 +600,7 @@ item.utilitycraft:arcane_15=Arcane Energy\n§o§9@UC: Ascendant Technology
 item.utilitycraft:arcane_16=Arcane Energy\n§o§9@UC: Ascendant Technology
 
 ## Infinite Capsules
-item.utilitycraft:aetherium_liquid_capsule_infinite=Infinite Liquified Aetherium Capsule\n§7- Holds unlimited liquified aetherium\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_liquid_capsule_infinite=Infinite Liquified Aetherium Capsule\n§7- Holds unlimited liquified\n  aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:cryofluid_capsule_infinite=Infinite Cryofluid Capsule\n§7- Holds unlimited cryofluid\n§o§9@UC: Ascendant Technology
 item.utilitycraft:dark_matter_liquid_capsule_infinite=Infinite Dark Matter Capsule\n§7- Holds unlimited dark matter\n§o§9@UC: Ascendant Technology
 item.utilitycraft:lava_capsule_infinite=Infinite Lava Capsule\n§7- Holds unlimited lava\n§o§9@UC: Ascendant Technology
@@ -608,7 +609,7 @@ item.utilitycraft:water_capsule_infinite=Infinite Water Capsule\n§7- Holds unli
 item.utilitycraft:xp_capsule_infinite=Infinite XP Capsule\n§7- Holds unlimited liquid XP\n§o§9@UC: Ascendant Technology
 
 ## Modules
-item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting modules\n§o§9@UC: Ascendant Technology
+item.utilitycraft:ascane_module_base=§dAscane Module Base§7\n- Base component for crafting\n  modules\n§o§9@UC: Ascendant Technology
 item.utilitycraft:runic_core=符文核心\n§o§9@UC: Ascendant Technology
 item.utilitycraft:advanced_runic_core=高级符文核心\n§o§9@UC: Ascendant Technology
 ui.utilitycraft:refining_table.stats=属性
@@ -633,3 +634,29 @@ tile.utilitycraft:compressed_raw_tungsten_block.name=Compressed Raw Tungsten Blo
 tile.utilitycraft:compressed_raw_tungsten_block_2.name=Double Compressed Raw Tungsten Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_raw_tungsten_block_3.name=Triple Compressed Raw Tungsten Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_raw_tungsten_block_4.name=Quadruple Compressed Raw Tungsten Block\n§o§9@UC: Ascendant Technology
+
+item.utilitycraft:aetherium_crystal=以太水晶\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_storage_cell=§u以太存储元件\n§7- 存储容量: §f3200 KB (3276800)\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_storage_part=以太存储组件\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:end_sand.name=末地沙\n§o§9@UC: Ascendant Technology
+
+## AT machine upgrades
+item.utilitycraft:multi_processing_upgrade=§m并行处理升级§7\n- 每个升级可额外处理1个槽位。\n- 占用一个已有的升级槽。\n- 最多8个升级。\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:multi_processing_upgrade.name=§m并行处理升级§r
+item.utilitycraft:energy_capacity_upgrade=§b能量容量升级§7\n- 每个升级增加50%能量容量。\n- 占用一个已有的升级槽。\n- 最多8个升级。\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:energy_capacity_upgrade.name=§b能量容量升级§r
+item.utilitycraft:liquid_capacity_upgrade=§p液体容量升级§7\n- 每个升级增加50%液体容量。\n- 占用一个已有的升级槽。\n- 最多8个升级。\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:liquid_capacity_upgrade.name=§p液体容量升级§r
+item.utilitycraft:gas_capacity_upgrade=§u气体容量升级§7\n- 每个升级增加50%气体容量。\n- 占用一个已有的升级槽。\n- 最多8个升级。\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:gas_capacity_upgrade.name=§u气体容量升级§r
+item.utilitycraft:resource_efficiency_upgrade=§t资源节约升级§7\n- 每个升级有5%几率保留消耗的资源。\n- 占用一个已有的升级槽。\n- 最多8个升级。\n§o§9@UC: Ascendant Technology
+upgrade.utilitycraft:resource_efficiency_upgrade.name=§t资源节约升级§r
+message.ascendant.upgrade.unsupported=This AT machine does not support this upgrade.
+message.ascendant.upgrade.failed=Could not install the upgrade.
+message.ascendant.upgrade.occupied=Free an existing upgrade slot first.
+message.ascendant.upgrade.max=Upgrade stack is already at level 8.
+message.ascendant.upgrade.applied=AT upgrade installed.
+tile.utilitycraft:compressed_aetherium_crystal_block.name=Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_2.name=Double Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_3.name=Triple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:compressed_aetherium_crystal_block_4.name=Quadruple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology

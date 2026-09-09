@@ -359,197 +359,41 @@
   },
   "blocks": [
     {
-      "key": "aetherium_block",
-      "source_item": "utilitycraft:aetherium_block",
-      "base_texture": "tools/input_textures/aetherium_block.png",
-      "texture_stem": "aetherium",
+      "key": "aetherium_crystal_block",
+      "source_item": "utilitycraft:aetherium_crystal_block",
+      "base_texture": "tools/input_textures/aetherium_crystal_block.png",
+      "texture_stem": "aetherium_crystal",
       "type": "aetherium",
       "names": {
         "en_US": [
-          "Compressed Aetherium Block",
-          "Double Compressed Aetherium Block",
-          "Triple Compressed Aetherium Block",
-          "Quadruple Compressed Aetherium Block"
+          "Compressed Aetherium Crystal Block",
+          "Double Compressed Aetherium Crystal Block",
+          "Triple Compressed Aetherium Crystal Block",
+          "Quadruple Compressed Aetherium Crystal Block"
         ],
         "es_ES": [
-          "Bloque de Aetherium comprimido",
-          "Bloque de Aetherium doblemente comprimido",
-          "Bloque de Aetherium triplemente comprimido",
-          "Bloque de Aetherium Cuádruplemente comprimido"
+          "Bloque de Cristal de Aetherium Comprimido",
+          "Bloque de Cristal de Aetherium Doblemente Comprimido",
+          "Bloque de Cristal de Aetherium Triplemente Comprimido",
+          "Bloque de Cristal de Aetherium Cuádruplemente Comprimido"
         ],
         "es_MX": [
-          "Bloque de Aetherium comprimido",
-          "Bloque de Aetherium doblemente comprimido",
-          "Bloque de Aetherium triplemente comprimido",
-          "Bloque de Aetherium Cuádruplemente comprimido"
+          "Bloque de Cristal de Aetherium Comprimido",
+          "Bloque de Cristal de Aetherium Doblemente Comprimido",
+          "Bloque de Cristal de Aetherium Triplemente Comprimido",
+          "Bloque de Cristal de Aetherium Cuádruplemente Comprimido"
         ],
         "pt_BR": [
-          "Bloco de Aetherium Comprimido",
-          "Bloco de Aetherium Duplamente Comprimido",
-          "Bloco de Aetherium Triplemente Comprimido",
-          "Bloco de Aetherium Quadruplicadamente Comprimido"
+          "Bloco de Cristal Aetherium Comprimido",
+          "Bloco de Cristal Aetherium Duplamente Comprimido",
+          "Bloco de Cristal Aetherium Triplemente Comprimido",
+          "Bloco de Cristal Aetherium Quadruplicadamente Comprimido"
         ],
         "pt_PT": [
-          "Bloco de Aetherium Comprimido",
-          "Bloco de Aetherium Duplamente Comprimido",
-          "Bloco de Aetherium Triplemente Comprimido",
-          "Bloco de Aetherium Quadruplicadamente Comprimido"
-        ]
-      }
-    },
-    {
-      "key": "titanium_block",
-      "source_item": "utilitycraft:titanium_block",
-      "base_texture": "tools/input_textures/titanium_block.png",
-      "texture_stem": "titanium",
-      "type": "metal",
-      "names": {
-        "en_US": [
-          "Compressed Titanium Block",
-          "Double Compressed Titanium Block",
-          "Triple Compressed Titanium Block",
-          "Quadruple Compressed Titanium Block"
-        ],
-        "es_ES": [
-          "Bloque de Titanio Comprimido",
-          "Bloque de Titanio Doble Comprimido",
-          "Bloque de Titanio Triplemente Comprimido",
-          "Bloque de Titanio Cuádruplemente Comprimido"
-        ],
-        "es_MX": [
-          "Bloque de Titanio Comprimido",
-          "Bloque de Titanio Doble Comprimido",
-          "Bloque de Titanio Triplemente Comprimido",
-          "Bloque de Titanio Cuádruplemente Comprimido"
-        ],
-        "pt_BR": [
-          "Bloco de Titânio Comprimido",
-          "Bloco de Titânio Duplamente Comprimido",
-          "Bloco de Titânio Triplemente Comprimido",
-          "Bloco de Titânio Quadruplicadamente Comprimido"
-        ],
-        "pt_PT": [
-          "Bloco de Titânio Comprimido",
-          "Bloco de Titânio Duplamente Comprimido",
-          "Bloco de Titânio Triplemente Comprimido",
-          "Bloco de Titânio Quadruplicadamente Comprimido"
-        ]
-      }
-    },
-    {
-      "key": "raw_titanium_block",
-      "source_item": "utilitycraft:raw_titanium_block",
-      "base_texture": "tools/input_textures/raw_titanium_block.png",
-      "texture_stem": "raw_titanium",
-      "type": "metal",
-      "names": {
-        "en_US": [
-          "Compressed Raw Titanium Block",
-          "Double Compressed Raw Titanium Block",
-          "Triple Compressed Raw Titanium Block",
-          "Quadruple Compressed Raw Titanium Block"
-        ],
-        "es_ES": [
-          "Bloque de Titanio en Bruto Comprimido",
-          "Bloque de Titanio en Bruto Doble Comprimido",
-          "Bloque de Titanio en Bruto Triplemente Comprimido",
-          "Bloque de Titanio en Bruto Cuádruplemente Comprimido"
-        ],
-        "es_MX": [
-          "Bloque de Titanio en Bruto Comprimido",
-          "Bloque de Titanio en Bruto Doble Comprimido",
-          "Bloque de Titanio en Bruto Triplemente Comprimido",
-          "Bloque de Titanio en Bruto Cuádruplemente Comprimido"
-        ],
-        "pt_BR": [
-          "Bloco de Titânio Bruto Comprimido",
-          "Bloco de Titânio Bruto Duplamente Comprimido",
-          "Bloco de Titânio Bruto Triplemente Comprimido",
-          "Bloco de Titânio Bruto Quadruplicadamente Comprimido"
-        ],
-        "pt_PT": [
-          "Bloco de Titânio Bruto Comprimido",
-          "Bloco de Titânio Bruto Duplamente Comprimido",
-          "Bloco de Titânio Bruto Triplemente Comprimido",
-          "Bloco de Titânio Bruto Quadruplicadamente Comprimido"
-        ]
-      }
-    },
-    {
-      "key": "tungsten_block",
-      "source_item": "utilitycraft:tungsten_block",
-      "base_texture": "tools/input_textures/tungsten_block.png",
-      "texture_stem": "tungsten",
-      "type": "metal",
-      "names": {
-        "en_US": [
-          "Compressed Tungsten Block",
-          "Double Compressed Tungsten Block",
-          "Triple Compressed Tungsten Block",
-          "Quadruple Compressed Tungsten Block"
-        ],
-        "es_ES": [
-          "Bloque de Tungsteno Comprimido",
-          "Bloque de Tungsteno Doblemente Comprimido",
-          "Bloque de Tungsteno Triplemente Comprimido",
-          "Bloque de Tungsteno Cuádruplemente Comprimido"
-        ],
-        "es_MX": [
-          "Bloque de Tungsteno Comprimido",
-          "Bloque de Tungsteno Doblemente Comprimido",
-          "Bloque de Tungsteno Triplemente Comprimido",
-          "Bloque de Tungsteno Cuádruplemente Comprimido"
-        ],
-        "pt_BR": [
-          "Bloco de Tungstênio Comprimido",
-          "Bloco de Tungstênio Duplamente Comprimido",
-          "Bloco de Tungstênio Triplemente Comprimido",
-          "Bloco de Tungstênio Quadruplicadamente Comprimido"
-        ],
-        "pt_PT": [
-          "Bloco de Tungstênio Comprimido",
-          "Bloco de Tungstênio Duplamente Comprimido",
-          "Bloco de Tungstênio Triplemente Comprimido",
-          "Bloco de Tungstênio Quadruplicadamente Comprimido"
-        ]
-      }
-    },
-    {
-      "key": "raw_tungsten_block",
-      "source_item": "utilitycraft:raw_tungsten_block",
-      "base_texture": "tools/input_textures/raw_tungsten_block.png",
-      "texture_stem": "raw_tungsten",
-      "type": "metal",
-      "names": {
-        "en_US": [
-          "Compressed Raw Tungsten Block",
-          "Double Compressed Raw Tungsten Block",
-          "Triple Compressed Raw Tungsten Block",
-          "Quadruple Compressed Raw Tungsten Block"
-        ],
-        "es_ES": [
-          "Bloque de Tungsteno en Bruto Comprimido",
-          "Bloque de Tungsteno en Bruto Doblemente Comprimido",
-          "Bloque de Tungsteno en Bruto Triplemente Comprimido",
-          "Bloque de Tungsteno en Bruto Cuádruplemente Comprimido"
-        ],
-        "es_MX": [
-          "Bloque de Tungsteno en Bruto Comprimido",
-          "Bloque de Tungsteno en Bruto Doblemente Comprimido",
-          "Bloque de Tungsteno en Bruto Triplemente Comprimido",
-          "Bloque de Tungsteno en Bruto Cuádruplemente Comprimido"
-        ],
-        "pt_BR": [
-          "Bloco de Tungstênio Bruto Comprimido",
-          "Bloco de Tungstênio Bruto Duplamente Comprimido",
-          "Bloco de Tungstênio Bruto Triplemente Comprimido",
-          "Bloco de Tungstênio Bruto Quadruplicadamente Comprimido"
-        ],
-        "pt_PT": [
-          "Bloco de Tungstênio Bruto Comprimido",
-          "Bloco de Tungstênio Bruto Duplamente Comprimido",
-          "Bloco de Tungstênio Bruto Triplemente Comprimido",
-          "Bloco de Tungstênio Bruto Quadruplicadamente Comprimido"
+          "Bloco de Cristal Aetherium Comprimido",
+          "Bloco de Cristal Aetherium Duplamente Comprimido",
+          "Bloco de Cristal Aetherium Triplemente Comprimido",
+          "Bloco de Cristal Aetherium Quadruplicadamente Comprimido"
         ]
       }
     }

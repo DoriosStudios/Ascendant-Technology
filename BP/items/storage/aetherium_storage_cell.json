@@ -1,0 +1,25 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_storage_cell",
+            "menu_category": {
+                "category": "items"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_aetherium_storage_cell",
+            "minecraft:max_stack_size": 1,
+            "minecraft:durability": {
+                "max_durability": 1000,
+                "damage_chance": {
+                    "min": 0,
+                    "max": 0
+                }
+            },
+            "minecraft:tags": {
+                "tags": ["utilitycraft:ds.is_storage_cell", "utilitycraft:ds.capacity.3276800"]
+            }
+        }
+    }
+}

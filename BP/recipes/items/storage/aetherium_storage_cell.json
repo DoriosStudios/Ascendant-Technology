@@ -1,0 +1,26 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_storage_cell"
+        },
+        "tags": ["utilitycraft_workbench"],
+        "ingredients": [
+            {
+                "item": "utilitycraft:cell_casing"
+            },
+            {
+                "item": "utilitycraft:aetherium_storage_part"
+            }
+        ],
+        "result": {
+            "item": "utilitycraft:aetherium_storage_cell",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:aetherium_storage_part"
+            }
+        ]
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_storage_part"
+        },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": ["PAP", "ACA", "PAP"],
+        "key": {
+            "P": {
+                "item": "utilitycraft:ultimate_storage_part"
+            },
+            "A": {
+                "item": "utilitycraft:aetherium"
+            },
+            "C": {
+                "item": "utilitycraft:refined_aetherium_crystal"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:aetherium_storage_part",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:ultimate_storage_part"
+            }
+        ]
+    }
+}

@@ -1,4 +1,7 @@
 {
+	"utilitycraft:end_sand": {
+		"sound": "sand"
+	},
 	"format_version": [
 		1,
 		1,
@@ -64,6 +67,18 @@
 	},
 	"utilitycraft:compressed_raw_tungsten_block_4": {
 		"sound": "metal"
+	},
+	"utilitycraft:compressed_aetherium_crystal_block": {
+		"sound": "amethyst_block"
+	},
+	"utilitycraft:compressed_aetherium_crystal_block_2": {
+		"sound": "amethyst_block"
+	},
+	"utilitycraft:compressed_aetherium_crystal_block_3": {
+		"sound": "amethyst_block"
+	},
+	"utilitycraft:compressed_aetherium_crystal_block_4": {
+		"sound": "amethyst_block"
 	},
 // END GENERATED COMPRESSED BLOCK SOUNDS
 // Compressed Blocks

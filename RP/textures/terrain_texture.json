@@ -4,6 +4,9 @@
 	"resource_pack_name": "UtilityCraft Expanded",
 	"texture_name": "atlas.terrain",
 	"texture_data": {
+		"utilitycraft_end_sand": {
+			"textures": "textures/blocks/nature/end_sand"
+		},
 		"utilitycraft_absolute_power_beacon_off": {
 			"textures": "textures/blocks/generators/absolute_power_beacon_off"
 		},
@@ -1614,6 +1617,18 @@
 		},
 		"utilitycraft_compressed_raw_tungsten_block_4": {
 			"textures": "textures/blocks/compressed/raw_tungsten_4"
+		},
+		"utilitycraft_compressed_aetherium_crystal_block": {
+			"textures": "textures/blocks/compressed/aetherium_crystal"
+		},
+		"utilitycraft_compressed_aetherium_crystal_block_2": {
+			"textures": "textures/blocks/compressed/aetherium_crystal_2"
+		},
+		"utilitycraft_compressed_aetherium_crystal_block_3": {
+			"textures": "textures/blocks/compressed/aetherium_crystal_3"
+		},
+		"utilitycraft_compressed_aetherium_crystal_block_4": {
+			"textures": "textures/blocks/compressed/aetherium_crystal_4"
 		}
 	}
 }

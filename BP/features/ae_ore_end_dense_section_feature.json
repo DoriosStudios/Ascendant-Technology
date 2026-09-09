@@ -1,0 +1,16 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:scatter_feature": {
+        "description": {
+            "identifier": "utilitycraft:ae_ore_end_dense_section_feature"
+        },
+        "places_feature": "utilitycraft:ae_ore_end_dense_materials_feature",
+        "distribution": {
+            "iterations": "v.at_ae_cell = -1; return 49;",
+            "coordinate_eval_order": "xyz",
+            "x": 0,
+            "y": "v.at_ae_cell = v.at_ae_cell + 1; v.at_ae_v = math.floor(v.at_ae_cell / 7) - 3; return v.at_ae_v;",
+            "z": "v.at_ae_u = math.mod(v.at_ae_cell, 7) - 3; v.at_ae_inside = math.abs(v.at_ae_u) + math.abs(v.at_ae_v) <= v.at_ae_radius; v.at_ae_center = v.at_ae_step == 0 && v.at_ae_u == 0 && v.at_ae_v == 0; v.at_ae_shell = !v.at_ae_inside && (math.abs(v.at_ae_u) + math.abs(v.at_ae_v) <= v.at_ae_radius + 1 || (math.abs(v.at_ae_step - 1) <= v.at_ae_half && math.abs(v.at_ae_u + v.at_ae_diagonal) + math.abs(v.at_ae_v + v.at_ae_y - v.at_ae_before_y) <= v.at_ae_before_radius) || (math.abs(v.at_ae_step + 1) <= v.at_ae_half && math.abs(v.at_ae_u - v.at_ae_diagonal) + math.abs(v.at_ae_v + v.at_ae_y - v.at_ae_after_y) <= v.at_ae_after_radius)); return v.at_ae_u;"
+        }
+    }
+}

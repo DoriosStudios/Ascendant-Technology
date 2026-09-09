@@ -1,0 +1,18 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:weighted_random_feature": {
+        "description": {
+            "identifier": "utilitycraft:ae_ore_end_dense_center_feature"
+        },
+        "features": [
+            [
+                "utilitycraft:ae_ore_end_dense_block_feature",
+                3
+            ],
+            [
+                "utilitycraft:ae_ore_end_dense_crystal_block_feature",
+                1
+            ]
+        ]
+    }
+}

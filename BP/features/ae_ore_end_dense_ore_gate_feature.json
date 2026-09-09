@@ -1,0 +1,16 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:scatter_feature": {
+        "description": {
+            "identifier": "utilitycraft:ae_ore_end_dense_ore_gate_feature"
+        },
+        "places_feature": "utilitycraft:ae_ore_end_dense_block_feature",
+        "distribution": {
+            "iterations": "(v.at_ae_inside && !v.at_ae_center) ? 1 : 0",
+            "coordinate_eval_order": "xyz",
+            "x": 0,
+            "y": 0,
+            "z": 0
+        }
+    }
+}

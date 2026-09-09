@@ -1,19 +1,16 @@
 {
-  "format_version": "1.17.0",
-  "minecraft:ore_feature": {
-    "description": {
-      "identifier": "utilitycraft:ae_ore_end_feature"
-    },
-    "count": 7,
-    "replace_rules": [
-      {
-        "places_block": "utilitycraft:deepslate_aetherium_ore",
-        "may_replace": ["minecraft:deepslate"]
-      },
-      {
-        "places_block": "utilitycraft:end_aetherium_ore",
-        "may_replace": ["minecraft:end_stone"]
-      }
-    ]
-  }
+    "format_version": "1.21.10",
+    "minecraft:scatter_feature": {
+        "description": {
+            "identifier": "utilitycraft:ae_ore_end_feature"
+        },
+        "places_feature": "utilitycraft:ae_ore_end_block_feature",
+        "distribution": {
+            "iterations": "v.at_ae_half = math.random_integer(3, 6); v.at_ae_step = -v.at_ae_half - 1; v.at_ae_diagonal = math.random_integer(0, 1) * 2 - 1; v.at_ae_vertical = math.random_integer(0, 1) * 2 - 1; return v.at_ae_half * 2 + 1;",
+            "coordinate_eval_order": "xyz",
+            "x": "v.at_ae_step = v.at_ae_step + 1; return v.at_ae_step;",
+            "y": "math.floor(math.abs(v.at_ae_step) / 2) * (v.at_ae_step < 0 ? -1 : 1) * v.at_ae_vertical",
+            "z": "v.at_ae_step * v.at_ae_diagonal"
+        }
+    }
 }

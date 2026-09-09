@@ -1,0 +1,16 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:scatter_feature": {
+        "description": {
+            "identifier": "utilitycraft:ae_ore_ow_dense_feature"
+        },
+        "places_feature": "utilitycraft:ae_ore_ow_dense_section_feature",
+        "distribution": {
+            "iterations": "v.at_ae_half = math.random_integer(3, 6); v.at_ae_step = -v.at_ae_half - 2; v.at_ae_diagonal = math.random_integer(0, 1) * 2 - 1; v.at_ae_vertical = math.random_integer(0, 1) * 2 - 1; return v.at_ae_half * 2 + 3;",
+            "coordinate_eval_order": "xyz",
+            "x": "v.at_ae_step = v.at_ae_step + 1; v.at_ae_radius = (math.abs(v.at_ae_step) > v.at_ae_half ? -1 : (math.abs(v.at_ae_step) <= math.floor(v.at_ae_half / 3) ? 2 : (math.abs(v.at_ae_step) < v.at_ae_half ? 1 : 0))); v.at_ae_y = (math.floor(math.abs(v.at_ae_step) / 2) * ((v.at_ae_step) < 0 ? -1 : 1) * v.at_ae_vertical); v.at_ae_before_y = (math.floor(math.abs(v.at_ae_step - 1) / 2) * ((v.at_ae_step - 1) < 0 ? -1 : 1) * v.at_ae_vertical); v.at_ae_after_y = (math.floor(math.abs(v.at_ae_step + 1) / 2) * ((v.at_ae_step + 1) < 0 ? -1 : 1) * v.at_ae_vertical); v.at_ae_before_radius = (math.abs(v.at_ae_step - 1) > v.at_ae_half ? -1 : (math.abs(v.at_ae_step - 1) <= math.floor(v.at_ae_half / 3) ? 2 : (math.abs(v.at_ae_step - 1) < v.at_ae_half ? 1 : 0))); v.at_ae_after_radius = (math.abs(v.at_ae_step + 1) > v.at_ae_half ? -1 : (math.abs(v.at_ae_step + 1) <= math.floor(v.at_ae_half / 3) ? 2 : (math.abs(v.at_ae_step + 1) < v.at_ae_half ? 1 : 0))); return v.at_ae_step;",
+            "y": "v.at_ae_y",
+            "z": "v.at_ae_step * v.at_ae_diagonal"
+        }
+    }
+}

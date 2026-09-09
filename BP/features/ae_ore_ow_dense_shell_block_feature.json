@@ -1,0 +1,14 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:single_block_feature": {
+        "description": {
+            "identifier": "utilitycraft:ae_ore_ow_dense_shell_block_feature"
+        },
+        "places_block": "utilitycraft:crushed_cobbled_deepslate",
+        "enforce_placement_rules": false,
+        "enforce_survivability_rules": false,
+        "may_replace": [
+            "minecraft:deepslate"
+        ]
+    }
+}

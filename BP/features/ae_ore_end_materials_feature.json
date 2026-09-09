@@ -1,0 +1,14 @@
+{
+    "format_version": "1.21.10",
+    "minecraft:aggregate_feature": {
+        "description": {
+            "identifier": "utilitycraft:ae_ore_end_materials_feature"
+        },
+        "features": [
+            "utilitycraft:ae_ore_end_ore_gate_feature",
+            "utilitycraft:ae_ore_end_center_gate_feature",
+            "utilitycraft:ae_ore_end_sand_gate_feature"
+        ],
+        "early_out": "none"
+    }
+}

@@ -2,8 +2,8 @@
     "format_version": "1.13.0",
     "minecraft:feature_rules": {
         "description": {
-            "identifier": "utilitycraft:ae_ore_ow_low_feature_rule",
-            "places_feature": "utilitycraft:ae_ore_ow_feature"
+            "identifier": "utilitycraft:ae_ore_ow_dense_feature_rule",
+            "places_feature": "utilitycraft:ae_ore_ow_dense_feature"
         },
         "conditions": {
             "placement_pass": "underground_pass",
@@ -27,29 +27,29 @@
         "distribution": {
             "scatter_chance": {
                 "numerator": 1,
-                "denominator": 48
+                "denominator": 512
             },
-            "iterations": 8,
-            "coordinate_eval_order": "zyx",
+            "iterations": 1,
+            "coordinate_eval_order": "xyz",
             "x": {
                 "distribution": "uniform",
                 "extent": [
                     0,
-                    16
+                    15
                 ]
             },
             "y": {
                 "distribution": "uniform",
                 "extent": [
-                    -61,
-                    -59
+                    -60,
+                    -8
                 ]
             },
             "z": {
                 "distribution": "uniform",
                 "extent": [
                     0,
-                    16
+                    15
                 ]
             }
         }

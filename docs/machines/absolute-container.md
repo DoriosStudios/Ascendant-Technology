@@ -11,6 +11,11 @@ A late-game singular vault that combines massive item storage with internal ener
 - Provides automatic item transfer to adjacent blocks.
 - Integrates with energy and fluid networks.
 
+## Recipe
+- Crafted in the UtilityCraft Workbench with two Aetherium Ingots, two Netherite
+  Ingots, an Ultimate Fluid Tank, an Absolute Battery, two Chests, and a Network
+  Center.
+
 ## How to use
 1. Place the block and open its inventory.
 2. Store items in the main grid.

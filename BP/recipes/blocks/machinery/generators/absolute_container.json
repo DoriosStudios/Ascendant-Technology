@@ -1,0 +1,51 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:absolute_container"
+        },
+        "tags": ["utilitycraft_workbench"],
+        "pattern": ["ATA", "NBN", "SCS"],
+        "key": {
+            "B": {
+                "item": "utilitycraft:expert_battery"
+            },
+            "T": {
+                "item": "utilitycraft:expert_fluid_tank"
+            },
+            "S": {
+                "item": "minecraft:chest"
+            },
+            "N": {
+                "item": "minecraft:tungsten"
+            },
+            "C": {
+                "item": "utilitycraft:machine_case"
+            },
+            "A": {
+                "item": "utilitycraft:steel_ingot"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:absolute_container",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:machine_case"
+            },
+            {
+                "item": "utilitycraft:expert_fluid_tank"
+            },
+            {
+                "item": "utilitycraft:expert_battery"
+            },
+            {
+                "item": "utilitycraft:steel_ingot"
+            },
+            {
+                "item": "minecraft:tungsten"
+            }
+        ]
+    }
+}

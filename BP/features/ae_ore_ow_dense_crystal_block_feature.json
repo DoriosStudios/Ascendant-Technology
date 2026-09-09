@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.10",
+    "format_version": "1.21.40",
     "minecraft:single_block_feature": {
         "description": {
             "identifier": "utilitycraft:ae_ore_ow_dense_crystal_block_feature"
@@ -12,9 +12,7 @@
         ],
         "may_not_attach_to": {
             "all": [
-                "minecraft:air",
-                "minecraft:cave_air",
-                "minecraft:void_air"
+                "minecraft:air"
             ]
         }
     }

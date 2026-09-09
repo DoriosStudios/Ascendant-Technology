@@ -36,7 +36,6 @@
                     "anchor_to": "top_left",
                     "$has_text": false, "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
-                    "layer": 3,
                     "$info_size": [96, 158],
                     "offset": [-100, -7],
                     "visible": "$show_side_content"

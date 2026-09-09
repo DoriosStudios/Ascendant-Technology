@@ -241,6 +241,7 @@
                     "$io_items_toggle_control_name": "$io_items_toggle_control_name",
                     "$io_fluids_toggle_control_name": "$io_fluids_toggle_control_name",
                     "offset": [21, 20],
+                    "$io_panel_size": [168, 126],
                     "$io_items_modes_description": "ui.utilitycraft:io.catalyst_weaver.items",
                     "$io_fluids_modes_description": "ui.utilitycraft:io.catalyst_weaver.liquids",
                     "$has_item_io": true,

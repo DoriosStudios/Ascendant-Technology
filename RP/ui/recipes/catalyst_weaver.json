@@ -39,12 +39,12 @@
         "$slot_red_size": [16, 16]
     },
     "recipe_output@uc.recipe_slot_overlay": {
-        "collection_index": 15,
+        "collection_index": 16,
         "$slot_offset": [71, 23],
         "$slot_red_size": [24, 24]
     },
     "recipe_byproduct@uc.recipe_slot_overlay": {
-        "collection_index": 14,
+        "collection_index": 15,
         "$slot_offset": [99, 23],
         "$slot_red_size": [16, 16]
     },
@@ -335,6 +335,69 @@
                         }
                     ]
                 }
+            },
+            {
+                "at_upgrade_row": {
+                    "type": "panel",
+                    "size": [126, 18],
+                    "controls": [
+                        {
+                            "multi_processing_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4101,
+                                "$toggle_hover_text": "item.utilitycraft:multi_processing_upgrade",
+                                "$toggle_control_name": "cw_multi_processing_upgrade_recipe",
+                                "$recipe_icon": "textures/items/machinery/multi_processing_upgrade",
+                                "offset": [0, 0]
+                            }
+                        },
+                        {
+                            "energy_capacity_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4102,
+                                "$toggle_hover_text": "item.utilitycraft:energy_capacity_upgrade",
+                                "$toggle_control_name": "cw_energy_capacity_upgrade_recipe",
+                                "$recipe_icon": "textures/items/machinery/energy_capacity_upgrade",
+                                "offset": [18, 0]
+                            }
+                        },
+                        {
+                            "liquid_capacity_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4103,
+                                "$toggle_hover_text": "item.utilitycraft:liquid_capacity_upgrade",
+                                "$toggle_control_name": "cw_liquid_capacity_upgrade_recipe",
+                                "$recipe_icon": "textures/items/machinery/liquid_capacity_upgrade",
+                                "offset": [36, 0]
+                            }
+                        },
+                        {
+                            "gas_capacity_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4104,
+                                "$toggle_hover_text": "item.utilitycraft:gas_capacity_upgrade",
+                                "$toggle_control_name": "cw_gas_capacity_upgrade_recipe",
+                                "$recipe_icon": "textures/items/machinery/gas_capacity_upgrade",
+                                "offset": [54, 0]
+                            }
+                        },
+                        {
+                            "resource_efficiency_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4105,
+                                "$toggle_hover_text": "item.utilitycraft:resource_efficiency_upgrade",
+                                "$toggle_control_name": "cw_resource_efficiency_upgrade_recipe",
+                                "$recipe_icon": "textures/items/machinery/resource_efficiency_upgrade",
+                                "offset": [72, 0]
+                            }
+                        }
+                    ]
+                }
             }
         ]
     },
@@ -513,7 +576,7 @@
                                 "$slot_item_texture": "textures/items/ores/aetherium_crystal_dust",
                                 "$slot_hover_text": "item.utilitycraft:aetherium_crystal_dust",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "8",
+                                "$slot_count_text": "2",
                                 "$has_slot_count": true
                             }
                         },
@@ -583,10 +646,10 @@
                         },
                         {
                             "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
-                                "$slot_item_texture": "textures/items/ores/aetherium_shards",
-                                "$slot_hover_text": "item.utilitycraft:aetherium_shard",
+                                "$slot_item_texture": "textures/items/ores/aetherium_crystal",
+                                "$slot_hover_text": "item.utilitycraft:aetherium_crystal",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "4",
+                                "$slot_count_text": "1",
                                 "$has_slot_count": true
                             }
                         },
@@ -651,6 +714,13 @@
                             "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
                                 "$slot_item_texture": "textures/items/ores/titanium_dust",
                                 "$slot_hover_text": "item.utilitycraft:titanium_dust",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                                "$slot_item_texture": "textures/items/ores/aetherium_crystal_dust",
+                                "$slot_hover_text": "item.utilitycraft:aetherium_crystal_dust",
                                 "$has_slot_hover": true
                             }
                         },
@@ -1086,8 +1156,8 @@
                     "controls": [
                         {
                             "input@catalyst_weaver.recipe_input": {
-                                "$slot_item_texture": "textures/items/ores/aetherium_shards",
-                                "$slot_hover_text": "item.utilitycraft:aetherium_shard",
+                                "$slot_item_texture": "textures/items/ores/aetherium_crystal",
+                                "$slot_hover_text": "item.utilitycraft:aetherium_crystal",
                                 "$has_slot_hover": true
                             }
                         },
@@ -1287,6 +1357,271 @@
                             "fluid@catalyst_weaver.recipe_fluid_requirement": {
                                 "$fluid_texture": "textures/static/images/dark_matter",
                                 "$fluid_text": "Dark Matter\n100 mB"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "multi_processing_upgrade_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "cw_multi_processing_upgrade_recipe",
+                    "controls": [
+                        {
+                            "input@catalyst_weaver.recipe_input": {
+                                "$slot_item_texture": "textures/items/machinery/base_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:base_upgrade",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
+                                "$slot_item_texture": "textures/items/plates/steel_plate",
+                                "$slot_hover_text": "item.utilitycraft:steel_plate",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
+                                "$slot_item_texture": "textures/items/dye_powder_red",
+                                "$slot_hover_text": "item.dye.red.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                                "$slot_item_texture": "textures/blocks/materials/redstone_block",
+                                "$slot_hover_text": "tile.redstone_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                                "$slot_item_texture": "textures/blocks/ores/aetherium_block",
+                                "$slot_hover_text": "tile.utilitycraft:aetherium_block.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "output@catalyst_weaver.recipe_output": {
+                                "$slot_item_texture": "textures/items/machinery/multi_processing_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:multi_processing_upgrade",
+                                "$has_slot_hover": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "energy_capacity_upgrade_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "cw_energy_capacity_upgrade_recipe",
+                    "controls": [
+                        {
+                            "input@catalyst_weaver.recipe_input": {
+                                "$slot_item_texture": "textures/items/machinery/base_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:base_upgrade",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
+                                "$slot_item_texture": "textures/items/plates/steel_plate",
+                                "$slot_hover_text": "item.utilitycraft:steel_plate",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
+                                "$slot_item_texture": "textures/items/dye_powder_yellow",
+                                "$slot_hover_text": "item.dye.yellow.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                                "$slot_item_texture": "textures/blocks/materials/redstone_block",
+                                "$slot_hover_text": "tile.redstone_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                                "$slot_item_texture": "textures/blocks/diamond_block",
+                                "$slot_hover_text": "tile.minecraft:diamond_block.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "output@catalyst_weaver.recipe_output": {
+                                "$slot_item_texture": "textures/items/machinery/energy_capacity_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:energy_capacity_upgrade",
+                                "$has_slot_hover": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "liquid_capacity_upgrade_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "cw_liquid_capacity_upgrade_recipe",
+                    "controls": [
+                        {
+                            "input@catalyst_weaver.recipe_input": {
+                                "$slot_item_texture": "textures/items/machinery/base_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:base_upgrade",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
+                                "$slot_item_texture": "textures/items/plates/steel_plate",
+                                "$slot_hover_text": "item.utilitycraft:steel_plate",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
+                                "$slot_item_texture": "textures/items/dye_powder_cyan",
+                                "$slot_hover_text": "item.dye.cyan.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                                "$slot_item_texture": "textures/blocks/materials/redstone_block",
+                                "$slot_hover_text": "tile.redstone_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                                "$slot_item_texture": "textures/blocks/tanks/fluid_tank_expert",
+                                "$slot_hover_text": "tile.utilitycraft:expert_fluid_tank.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "output@catalyst_weaver.recipe_output": {
+                                "$slot_item_texture": "textures/items/machinery/liquid_capacity_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:liquid_capacity_upgrade",
+                                "$has_slot_hover": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "gas_capacity_upgrade_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "cw_gas_capacity_upgrade_recipe",
+                    "controls": [
+                        {
+                            "input@catalyst_weaver.recipe_input": {
+                                "$slot_item_texture": "textures/items/machinery/base_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:base_upgrade",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
+                                "$slot_item_texture": "textures/items/plates/steel_plate",
+                                "$slot_hover_text": "item.utilitycraft:steel_plate",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
+                                "$slot_item_texture": "textures/items/dye_powder_lime",
+                                "$slot_hover_text": "item.dye.lime.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                                "$slot_item_texture": "textures/blocks/materials/redstone_block",
+                                "$slot_hover_text": "tile.redstone_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                                "$slot_item_texture": "textures/blocks/tanks/expert_gas_tank",
+                                "$slot_hover_text": "tile.utilitycraft:expert_gas_tank.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "output@catalyst_weaver.recipe_output": {
+                                "$slot_item_texture": "textures/items/machinery/gas_capacity_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:gas_capacity_upgrade",
+                                "$has_slot_hover": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "resource_efficiency_upgrade_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "cw_resource_efficiency_upgrade_recipe",
+                    "controls": [
+                        {
+                            "input@catalyst_weaver.recipe_input": {
+                                "$slot_item_texture": "textures/items/machinery/base_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:base_upgrade",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
+                                "$slot_item_texture": "textures/items/plates/steel_plate",
+                                "$slot_hover_text": "item.utilitycraft:steel_plate",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
+                                "$slot_item_texture": "textures/items/dye_powder_green",
+                                "$slot_hover_text": "item.dye.green.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                                "$slot_item_texture": "textures/blocks/materials/redstone_block",
+                                "$slot_hover_text": "tile.redstone_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                                "$slot_item_texture": "textures/items/ores/refined_aetherium_crystal",
+                                "$slot_hover_text": "item.utilitycraft:refined_aetherium_crystal",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "output@catalyst_weaver.recipe_output": {
+                                "$slot_item_texture": "textures/items/machinery/resource_efficiency_upgrade",
+                                "$slot_hover_text": "item.utilitycraft:resource_efficiency_upgrade",
+                                "$has_slot_hover": true
                             }
                         }
                     ]

@@ -1,0 +1,103 @@
+{
+    "variables": {
+        "$desktop_screen": true,
+        "$pocket_screen": false,
+        "$is_pregame": false,
+        "$is_gamepad": false,
+        "$touch": false,
+        "$container_title": "Catalyst Weaver",
+        "$localize_title": false
+    },
+    "bindings": {
+        "#title_text": "Catalyst Weaver",
+        "#container_title": "Catalyst Weaver",
+        "#item_id_aux": 0,
+        "#hover_text": "",
+        "#item_count": "",
+        "#item_visible": true,
+        "#visible": true,
+        "#enabled": true,
+        "#show_gamepad_helpers": false,
+        "#gamepad_cursor_visible": false,
+        "#mouse_mode": true,
+        "#is_using_gamepad": false,
+        "#close_button_visible": true,
+        "#container_cell_background_texture": "textures/ui/slot",
+        "#container_cell_background_texture_file_system": "InUserPackage",
+        "#hotbar_grid_dimensions": [9, 1],
+        "#inventory_grid_dimensions": [9, 3],
+        "#inventory_stack_count": "",
+        "#toggle_state": false,
+        "#toggle_enabled": true
+    },
+    "collections": {
+        "container_items": {
+            "0": {
+                "#item_id_aux": 1,
+                "#hover_text": "§rEnergy\n§7Stored: 12.8 MDE / 25.6 MDE",
+                "texture": "textures/ui/energy_bar/energy_frame_24"
+            },
+            "1": {
+                "#item_id_aux": 1,
+                "#hover_text": "§r§7Status: §aWeaving\n\n§r§eMachine Information\n\n§r§aSpeed §fx1.00\n§r§aEfficiency §fx1.00\n§r§aRecipe Batch §fx1\n§r§aCycle Cost §f12.8 kDE\n\n§r§eEnergy Information\n\n§r§bCapacity §f50.00%%\n§r§bStored §f12.8 MDE / 25.6 MDE\n§r§bRate §f3.2 kDE/t"
+            },
+            "2": {
+                "#item_id_aux": 1,
+                "#hover_text": "§rProgress\n§750%",
+                "texture": "textures/ui/progress_bar/arrow_right_12"
+            },
+            "3": {
+                "#item_id_aux": 1,
+                "#hover_text": "Aetherium Crystal",
+                "#inventory_stack_count": "8",
+                "texture": "textures/items/ores/aetherium_crystal"
+            },
+            "4": {
+                "#item_id_aux": 1,
+                "#hover_text": "Aetherium Crystal Dust",
+                "#inventory_stack_count": "16",
+                "texture": "textures/items/ores/aetherium_crystal_dust"
+            },
+            "5": {
+                "#item_id_aux": 1,
+                "#hover_text": "Aetherium Dust",
+                "#inventory_stack_count": "12",
+                "texture": "textures/items/ores/aetherium_dust"
+            },
+            "6": {
+                "#item_id_aux": 1,
+                "#hover_text": "Aetherium Ingot",
+                "#inventory_stack_count": "4",
+                "texture": "textures/items/ores/aetherium_ingot"
+            },
+            "7": {
+                "#item_id_aux": 1,
+                "#hover_text": "Refined Aetherium Crystal",
+                "#inventory_stack_count": "2",
+                "texture": "textures/items/ores/refined_aetherium_crystal"
+            },
+            "10": {
+                "#item_id_aux": 1,
+                "#hover_text": "§rLiquified Aetherium\n§7Liquid: 32 B / 64 B",
+                "texture": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_24"
+            },
+            "16": {
+                "#item_id_aux": 1,
+                "#hover_text": "Multi Processing Upgrade",
+                "texture": "textures/items/machinery/multi_processing_upgrade"
+            }
+        },
+        "inventory_items": {},
+        "hotbar_items": {}
+    },
+    "controls": {},
+    "_preview": {
+        "name": "Catalyst Weaver - weaving",
+        "root": "catalyst_weaver.utility_panel",
+        "viewport": {
+            "width": 480,
+            "height": 270
+        },
+        "notes": "Valores ilustrativos para inspecionar o layout; não executa a lógica da máquina."
+    }
+}

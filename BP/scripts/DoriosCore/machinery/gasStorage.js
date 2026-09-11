@@ -397,11 +397,13 @@ export class GasStorage {
     const current = inventory.getItem(slot);
     if (!current || current.typeId !== expectedTypeId) return false;
 
+    if (nextTypeId === undefined) {
+      return DoriosLib.entity.changeItemAmount(player, { slot, amount: -1 });
+    }
+
     if (current.amount > 1) {
       current.amount -= 1;
       inventory.setItem(slot, current);
-
-      if (!nextTypeId) return true;
 
       const overflow = inventory.addItem(new ItemStack(nextTypeId, 1));
       if (overflow) {
@@ -584,7 +586,7 @@ export class GasStorage {
    * - Producing filled items based on stored gas type
    *
    * @param {string} typeId The item identifier being used (e.g., "minecraft:water_bucket", "minecraft:bucket", "gascells:empty_cell").
-   * @returns {string|false} Returns the output item ID if successful, or false if the action failed.
+   * @returns {string|undefined|false} Returns the output item ID, undefined when the input is consumed, or false if the action failed.
    */
   gasItem(typeId) {
     // 1. INSERTION: item adds gas into tank
@@ -606,7 +608,7 @@ export class GasStorage {
 
       if (!this.tryInsert(type, amount)) return false;
 
-      return output ?? false;
+      return output ?? undefined;
     }
 
     // 2. EXTRACTION: item converts stored gas into an output container
@@ -830,7 +832,7 @@ export class GasStorage {
    *
    * @param {number} speed Total transfer speed limit (mB/tick).
    * @param {"nearest"|"farthest"|"round"} [mode="nearest"] Transfer mode.
-   * @param {Array<{x:number, y:number, z:number}>} nodes Precomputed network node positions.
+   * @param {Array<{x:number, y:number, z:number}>} [nodes] Precomputed network node positions.
    * @returns {number} Total amount of gas transferred (in mB).
    */
   transferToNetwork(speed, mode = "nearest", nodes) {
@@ -1015,18 +1017,19 @@ export class GasStorage {
 
     if (type === Constants.EMPTY_GAS_TYPE) {
       let emptyBar = new ItemStack(Constants.EMPTY_GAS_BAR_ITEM_ID);
-      emptyBar.nameTag = "§rEmpty";
+      emptyBar.nameTag = "§rEmpty §7(Gas)";
       inv.setItem(slot, emptyBar);
       return;
     }
 
-    const frame = Math.max(0, Math.min(Constants.GAS_BAR_FRAME_COUNT, Math.floor((gas / cap) * Constants.GAS_BAR_FRAME_COUNT)));
+    const ratio = cap > 0 ? Math.max(0, Math.min(1, gas / cap)) : 0;
+    const frame = Math.floor(ratio * Constants.GAS_BAR_FRAME_COUNT);
     const frameName = frame.toString().padStart(2, "0");
 
     const item = new ItemStack(`utilitycraft:${type}_${frameName}`, 1);
-    item.nameTag = `§r${DoriosLib.text.formatIdentifier(type)}
+    item.nameTag = `§r${DoriosLib.text.formatIdentifier(type.replace(/_gas$/, ""))} §7(Gas)
 §r§7  Stored: ${GasStorage.formatGas(gas)} / ${GasStorage.formatGas(cap)}
-§r§7  Percentage: ${((gas / cap) * 100).toFixed(2)}%`;
+§r§7  Percentage: ${(ratio * 100).toFixed(2)}%`;
 
     inv.setItem(slot, item);
   }
@@ -1043,7 +1046,7 @@ export class GasStorage {
    * @param {Block} block The block representing the tank.
    * @param {string} type The type of gas to insert.
    * @param {number} amount Amount of gas to insert in mB.
-   * @returns {Entity | undefined} The tank entity if insertion was successful.
+   * @returns {Entity | undefined | false} The tank entity if insertion was successful.
   */
   static addGasToTank(block, type, amount) {
     if (!type || type === Constants.EMPTY_GAS_TYPE) return undefined;

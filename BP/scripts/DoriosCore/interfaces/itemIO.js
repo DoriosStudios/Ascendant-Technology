@@ -338,12 +338,6 @@ function normalizeDefinition(value) {
   const modes = normalizeModes(raw.modes);
   const initialModes = normalizeInitialModes(raw.initialModes, modes, "items.initialModes");
 
-  const declaredInputSlots = new Set(modes.flatMap((mode) => mode.inputSlots));
-  const declaredOutputSlots = new Set(modes.flatMap((mode) => mode.outputSlots));
-
-  assertSubset(anyInputSlots, declaredInputSlots, "items.anyInputSlots", "mode inputSlots");
-  assertSubset(anyOutputSlots, declaredOutputSlots, "items.anyOutputSlots", "mode outputSlots");
-
   return { anyInputSlots, anyOutputSlots, modes, initialModes };
 }
 
@@ -464,20 +458,6 @@ function normalizeSlots(value, path) {
     slots.push(slot);
   }
   return slots;
-}
-
-/**
- * @param {number[]} values
- * @param {Set<number>} allowed
- * @param {string} valuePath
- * @param {string} allowedPath
- */
-function assertSubset(values, allowed, valuePath, allowedPath) {
-  for (const slot of values) {
-    if (!allowed.has(slot)) {
-      throw new RangeError(`${valuePath} slot ${slot} is not declared by any ${allowedPath}`);
-    }
-  }
 }
 
 /**

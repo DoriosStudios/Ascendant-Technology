@@ -47,10 +47,14 @@ export class BasicMachine {
    * @param {number} [options.rate=16] Base rate designed for 20 TPS logic.
    * @param {boolean} [options.ignoreTick=false] Whether to bypass scheduler throttling.
    * @param {number} [options.processingInterval] Explicit processing interval for machines that bypass the scheduler.
+   * @param {(block: import("@minecraft/server").Block) => import("@minecraft/server").Entity|undefined} [options.entityResolver]
+   * Optional helper-entity resolver used by specialized machine runtimes.
    */
   constructor(block, options) {
     this.valid = false;
-    this.entity = Utils.tryGetEntityFromBlock(block);
+    this.entity = options.entityResolver
+      ? options.entityResolver(block)
+      : Utils.tryGetEntityFromBlock(block);
     if (!this.entity) return;
     this.shouldUpdateUI = Utils.hasOpenUI(this.entity);
     if (!options.ignoreTick && !TickScheduler.shouldProcessMachine(this.entity)) return;

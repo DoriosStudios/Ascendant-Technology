@@ -95,6 +95,8 @@ export interface MachineRuntimeConfig {
   gas_types?: number;
   /** Ordered inventory slots scanned for registered machine upgrades. */
   upgrades?: number[];
+  /** Set to false to ignore the entity's `utilitycraft:overclock` property. */
+  overclock?: boolean;
 }
 
 /** Runtime generation/storage settings for a generator. */
@@ -215,6 +217,8 @@ export interface MachineBoosts {
   energy_efficiency: number;
   /** Final recipe operations produced per completed process, including the base value of 1. */
   process_batch: number;
+  /** Current overclock level read from the machine entity. */
+  overclock: number;
   /** Energy consumption multiplier. Lower values are more efficient. */
   consumption: number;
 }
@@ -258,6 +262,8 @@ export interface BasicMachineOptions {
   ignoreTick?: boolean;
   /** Explicit interval used to scale work when scheduler throttling is bypassed. */
   processingInterval?: number;
+  /** Optional helper-entity resolver used by specialized machine runtimes. */
+  entityResolver?: (block: Block) => Entity | undefined;
 }
 
 /** One visual item IO mode and the machine slots represented by that mode. */
@@ -327,6 +333,8 @@ export interface GasIOGroupConfig {
 
 /** Complete IO registration for one machine block type. */
 export interface IOInterfaceConfig {
+  /** Resolves every visual face button to the opposite physical direction. */
+  invertFaces?: boolean;
   /** Apply south input, north output, and up auxiliary-input defaults on first initialization. */
   automaticDefaults?: boolean;
   /** Slot-based item policy and optional item face buttons. */
@@ -365,6 +373,62 @@ export function ensureBlockIOInterface(block?: Block): boolean;
 /** Returns whether one exact block type already owns an IO registration. */
 export function hasRegisteredIOInterface(blockTypeId: string): boolean;
 
+/** One named item-slot group selectable by a physical link node. */
+export interface LinkNodeItemGroupConfig {
+  id: string;
+  label?: string;
+  color?: string;
+  slots: number[];
+}
+
+/** One named storage-index group selectable by a liquid or gas link node. */
+export interface LinkNodeIndexedGroupConfig {
+  id: string;
+  label?: string;
+  color?: string;
+  indices: number[];
+}
+
+export interface LinkNodeItemIOConfig {
+  anyInputSlots: number[];
+  anyOutputSlots: number[];
+  inputs: LinkNodeItemGroupConfig[];
+  outputs: LinkNodeItemGroupConfig[];
+}
+
+export interface LinkNodeIndexedIOConfig {
+  anyInputIndices: number[];
+  anyOutputIndices: number[];
+  inputs: LinkNodeIndexedGroupConfig[];
+  outputs: LinkNodeIndexedGroupConfig[];
+}
+
+export interface LinkNodeIOConfig {
+  items?: LinkNodeItemIOConfig;
+  liquids?: LinkNodeIndexedIOConfig;
+  gases?: LinkNodeIndexedIOConfig;
+}
+
+export interface LinkNodeIOGroup {
+  id: string;
+  label: string;
+  color: string;
+  values: number[];
+}
+
+export interface LinkNodeResourceDefinition {
+  anyInput: number[];
+  anyOutput: number[];
+  inputs: LinkNodeIOGroup[];
+  outputs: LinkNodeIOGroup[];
+}
+
+export type LinkNodeIODefinition = Partial<Record<"items" | "liquids" | "gases", LinkNodeResourceDefinition>>;
+
+export function registerLinkNodeIO(blockTypeId: string, config: LinkNodeIOConfig): boolean;
+export function getLinkNodeIODefinition(blockTypeId: string): LinkNodeIODefinition | undefined;
+export function openLinkNodeIOForm(block: Block, player: Player): Promise<boolean>;
+
 /** Namespace-style IO interface export. */
 export const IOInterface: {
   ensureBlockIOInterface: typeof ensureBlockIOInterface;
@@ -372,6 +436,21 @@ export const IOInterface: {
   registerIOInterface: typeof registerIOInterface;
   registerIOInterfaceForBlockTag: typeof registerIOInterfaceForBlockTag;
 };
+
+/** Canonical item inventory reference returned for a block, entity, or link node. */
+export interface ResolvedItemContainer {
+  kind: "block" | "entity" | "raw";
+  owner: Block | Entity | Container;
+  container: Container;
+  block?: Block;
+  entity?: Entity;
+  via?: "link_node";
+}
+
+export function resolveItemContainerAt(
+  dimension: Dimension,
+  location: Vector3,
+): ResolvedItemContainer | undefined;
 
 /** Per-face fluid tank-index arrays stored by Complex fluid containers. */
 export type FaceFluidIndexConfig = Partial<Record<DirectionName, number[]>>;
@@ -438,6 +517,7 @@ export interface ResolvedFluidContainer {
   kind: "entity" | "tank";
   block: Block | undefined;
   entity: Entity | undefined;
+  via?: "link_node";
 }
 
 export type FluidContainerTarget = Block | Entity | ResolvedFluidContainer;
@@ -462,7 +542,7 @@ export function resolveFluidContainer(target: FluidContainerTarget): ResolvedFlu
 export function resolveFluidContainerAt(dimension: Dimension, location: Vector3): ResolvedFluidContainer | undefined;
 export function getFluidInputIndices(target: FluidContainerTarget, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
 export function getFluidOutputIndices(target: FluidContainerTarget, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
-export function getFluidContainerRevision(target: FluidContainerTarget): number;
+export function getFluidContainerRevision(target: FluidContainerTarget): number | string;
 export function transferFluid(source: FluidContainerTarget, options: FluidTransferOptions): number;
 export function insertFluid(target: FluidContainerTarget, options: FluidInsertOptions): number;
 export function getFluidStorage(target: FluidContainerTarget, fluidIndex: number): FluidStorage | undefined;
@@ -528,6 +608,7 @@ export interface ResolvedGasContainer {
   kind: "entity" | "tank";
   block: Block | undefined;
   entity: Entity | undefined;
+  via?: "link_node";
 }
 
 export type GasContainerTarget = Block | Entity | ResolvedGasContainer;
@@ -552,7 +633,7 @@ export function resolveGasContainer(target: GasContainerTarget): ResolvedGasCont
 export function resolveGasContainerAt(dimension: Dimension, location: Vector3): ResolvedGasContainer | undefined;
 export function getGasInputIndices(target: GasContainerTarget, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
 export function getGasOutputIndices(target: GasContainerTarget, options?: { face?: DirectionName; automatic?: boolean }): ReadonlyArray<number>;
-export function getGasContainerRevision(target: GasContainerTarget): number;
+export function getGasContainerRevision(target: GasContainerTarget): number | string;
 export function transferGas(source: GasContainerTarget, options: GasTransferOptions): number;
 export function insertGas(target: GasContainerTarget, options: GasInsertOptions): number;
 export function getGasStorage(target: GasContainerTarget, gasIndex: number): GasStorage | undefined;
@@ -589,6 +670,8 @@ export class BasicMachine {
   itemIOReady: boolean;
   /** Whether the entity's indexed-fluid Complex config is ready locally. */
   fluidIOReady: boolean;
+  /** Whether the entity's indexed-gas Complex config is ready locally. */
+  gasIOReady: boolean;
 
   /**
    * Creates a base machine runtime for a machine block.
@@ -692,7 +775,11 @@ export class Generator extends BasicMachine {
   settings: GeneratorSettings;
 
   /** Creates a generator runtime bound to a generator block. */
-  constructor(block: Block, settings: GeneratorSettings);
+  constructor(
+    block: Block,
+    settings: GeneratorSettings,
+    entityResolver?: (block: Block) => Entity | undefined,
+  );
   /**
    * Handles generator destruction, drops inventory contents, preserves stored
    * energy/fluid in item lore, releases the tick group, and removes the helper entity.
@@ -879,7 +966,7 @@ export class FluidStorage {
   /** Attempts to insert a fluid type and amount into this tank. */
   tryInsert(type: string, amount: number): boolean;
   /** Handles a fluid item interaction and returns the output item id or false. */
-  fluidItem(typeId: string): string | false;
+  fluidItem(typeId: string): string | undefined | false;
   /** Sets this tank's maximum fluid capacity. */
   setCap(amount: number): void;
   /** Reads and caches this tank's maximum fluid capacity. */
@@ -963,7 +1050,7 @@ export class GasStorage {
   static findType(entity: Entity, type: string): GasStorage | null;
   static handleGasItemInteraction(player: Player, entity: Entity, mainHand?: ItemStack): void;
   tryInsert(type: string, amount: number): boolean;
-  gasItem(typeId: string): string | false;
+  gasItem(typeId: string): string | undefined | false;
   setCap(amount: number): void;
   getCap(): number;
   set(amount: number): void;
@@ -1093,6 +1180,8 @@ export class OutputTracker {
   static isOutputTarget(block: Block | undefined, type: OutputTransferType): boolean;
   /** Reads cached compatibility for all six item/liquid/gas faces. */
   static getIOTargets(entity: Entity | undefined): Record<string, Record<string, boolean>>;
+  /** Returns the adjacent location for one absolute direction. */
+  static getNeighborLocation(block: Block, direction: DirectionName | string): Vector3 | undefined;
   /** Rebuilds cached compatibility for all resources supported by the block. */
   static refreshIOTargets(block: Block | undefined): Record<string, Record<string, boolean>> | undefined;
   /** Refreshes IO target caches on adjacent machine blocks. */
@@ -1296,6 +1385,8 @@ export interface MachineStats {
  * multiblock-friendly progress display.
  */
 export class MultiblockMachine extends BasicMachine {
+  /** Base rate from `config.machine.rate_speed_base`, before custom multipliers. */
+  configuredRate: number;
   /** Full multiblock machine config. */
   config: MachineSettings;
   /** Alias for {@link config}. */
@@ -1305,6 +1396,8 @@ export class MultiblockMachine extends BasicMachine {
   static defaultOnInteractWithoutWrench(context: { entity?: Entity; player: Player }): void;
   /** Creates a multiblock machine runtime bound to a controller block. */
   constructor(block: Block, config: MachineSettings);
+  /** Applies a non-compounding multiplier to the configured base rate. */
+  setRateMultiplier(multiplier?: number): void;
   /** Spawns and initializes a multiblock machine controller helper entity. */
   static spawnEntity(event: PlacementEventLike, config: MachineSettings, callback?: (entity: Entity) => void): void;
   /** Shared wrench interaction pipeline for multiblock machine controllers. */
@@ -1336,12 +1429,18 @@ export class MultiblockMachine extends BasicMachine {
   setProgress(value: number, options?: ProgressOptions): void;
   /** Displays progress using the configured multiblock energy cost. */
   displayProgress(options?: ProgressOptions): void;
+  /** Displays progress using an explicit maximum value. */
+  displayProgress(maxValue: number, options?: ProgressOptions): void;
   /** Stores the energy cost used as the default progress maximum. */
   setEnergyCost(value: number, index?: number): void;
   /** Reads the energy cost used as the default progress maximum. */
   getEnergyCost(index?: number): number;
   /** Computes processing, speed, efficiency, and energy multipliers from components. */
   static computeMachineStats(components: Record<string, number>): MachineStats;
+  /** Builds the standard machine information label without writing it. */
+  static getMachineInfoLabel(data: MachineStats & { cost?: number }, status?: string): string;
+  /** Builds the standard energy information label without writing it. */
+  static getEnergyInfoLabel(controller: MultiblockMachine): string;
   /** Writes the standard multiblock machine information label into the controller UI. */
   static setMachineInfoLabel(controller: MultiblockMachine, data: MachineStats & { cost?: number }, status?: string): string;
 }
@@ -1419,12 +1518,21 @@ export class DeactivationManager {
   static emptyBlocks(entity: Entity, blockId?: string): void;
   /** Deactivates a structure associated with a controller or internal block. */
   static deactivateMultiblock(block: Block, player?: Player, emptyBlocksConfig?: FillBlocksConfig): Entity | undefined;
+  /** Deactivates an already-resolved multiblock controller entity. */
+  static deactivateEntity(entity: Entity, player?: Player, emptyBlocksConfig?: FillBlocksConfig): Entity | undefined;
   /** Deactivates a multiblock and removes its controller entity shortly after. */
-  static handleBreakController(block: Block, player?: Player, emptyBlocksConfig?: FillBlocksConfig): Entity | undefined;
+  static handleBreakController(
+    block: Block,
+    player?: Player,
+    emptyBlocksConfig?: FillBlocksConfig,
+    controllerPermutation?: BlockPermutation,
+  ): Entity | undefined;
 }
 
 /** Utility methods for locating and measuring multiblock controller entities. */
 export class EntityManager {
+  /** Resolves the helper entity stored directly on a tagged controller block. */
+  static getControllerEntityFromBlock(block: Block, permutation?: BlockPermutation): Entity | undefined;
   /** Returns the geometric center of a bounding box. */
   static getCenter(min: Vector3, max: Vector3): Vector3;
   /** Calculates inclusive volume of a bounding box. */

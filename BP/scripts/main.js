@@ -10,3 +10,4 @@ import "./features/index.js";
 
 DoriosLib.registry.install();
 DoriosLib.container.initialize();
+DoriosLib.linkNode.initializeLinkNodeIO();

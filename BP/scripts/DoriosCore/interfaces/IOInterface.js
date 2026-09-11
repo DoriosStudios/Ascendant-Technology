@@ -1,5 +1,6 @@
 // @ts-check
 
+import * as DoriosLib from "DoriosLib/index.js";
 import { InterfaceManager } from "./index.js";
 import {
   OPPOSITE_DIRECTIONS,
@@ -89,12 +90,20 @@ const warnedTagConflicts = new Set();
  */
 
 /**
+ * @typedef {object} GasIOGroupConfig
+ * @property {number[]|[number, number]} [buttonSlots] Six face-button slots, explicit or inclusive range.
+ * @property {number[]} anyInputIndices Inputs exposed without a face or through passive default faces.
+ * @property {number[]} anyOutputIndices Outputs exposed without a face or through passive default faces.
+ * @property {Array<{id:string,inputIndices?:number[],outputIndices?:number[]}>} modes Ordered modes cycled by each face button.
+ */
+
+/**
  * @typedef {object} IOInterfaceConfig
  * @property {boolean} [invertFaces] Whether every visual face resolves to its opposite physical direction.
  * @property {boolean} [automaticDefaults] Initialize automatic faces as south input, north output, and up auxiliary input.
  * @property {ItemIOGroupConfig} [items] Item policy and optional face buttons.
  * @property {LiquidIOGroupConfig} [liquids] Fluid-index policy and optional face buttons.
- * @property {LiquidIOGroupConfig} [gases] Gas-index policy and optional face buttons.
+ * @property {GasIOGroupConfig} [gases] Gas-index policy and optional face buttons.
  */
 
 /**
@@ -330,7 +339,7 @@ function addGasButtons(buttons, blockTypeId, definition, registeredDefinition, i
  * @param {IOInterfaceConfig} [config={}] Item/liquid declaration.
  * @returns {boolean} True when a backend group or visual interface was registered.
  */
-function registerIOInterfaceDefinition(blockTypeId, config = {}, sourceTag) {
+function registerIOInterfaceDefinition(blockTypeId, config = {}, sourceTag = undefined) {
   if (typeof blockTypeId !== "string" || blockTypeId.length === 0) return false;
 
   /** @type {Record<string, any>} */
@@ -346,6 +355,11 @@ function registerIOInterfaceDefinition(blockTypeId, config = {}, sourceTag) {
       })
       : config.items;
     const definition = registerItemIODefinition(blockTypeId, itemConfig);
+    DoriosLib.registry.registerItemDuctCompatibility({
+      typeId: blockTypeId,
+      insertSlots: definition.anyInputSlots,
+      extractSlots: definition.anyOutputSlots,
+    });
     addItemButtons(buttons, blockTypeId, itemConfig, definition, invertFaces);
     registered = true;
   }

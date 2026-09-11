@@ -521,6 +521,11 @@ export {
   registerIOInterfaceForBlockTag,
 } from "./IOInterface.js";
 export {
+  getLinkNodeIODefinition,
+  openLinkNodeIOForm,
+  registerLinkNodeIO,
+} from "./linkNodeIO.js";
+export {
   DEFAULT_FLUID_IO_MODE,
   DISABLED_FLUID_IO_MODE,
   FLUID_CONTAINER_FAMILY,

@@ -90,7 +90,7 @@ export const ORE_BONUS_DROPS = Object.freeze({
     "utilitycraft:tin_ore": "utilitycraft:raw_tin",
     "utilitycraft:deepslate_tin_ore": "utilitycraft:raw_tin",
     "utilitycraft:deepslate_uranium_ore": "utilitycraft:raw_uranium",
-    // UtilityCraft Nuclear uses the ryno prefix to coexist with Heavy Machinery.
+    // UtilityCraft: Nuclear 
     "utilitycraft:ryno_deepslate_lead_ore": "utilitycraft:ryno_raw_lead",
     "utilitycraft:ryno_deepslate_uranium_ore": "utilitycraft:ryno_raw_uranium",
     "utilitycraft:ryno_vanadium_ore": "utilitycraft:ryno_raw_vanadium",
@@ -121,8 +121,8 @@ export const ORE_DUST_DROPS = Object.freeze({
     "utilitycraft:deepslate_titanium_ore": "utilitycraft:titanium_dust",
     "utilitycraft:deepslate_tungsten_ore": "utilitycraft:raw_tungsten_dust",
     "utilitycraft:nether_tungsten_ore": "utilitycraft:raw_tungsten_dust",
-    "utilitycraft:deepslate_aetherium_ore": "utilitycraft:aetherium_dust",
-    "utilitycraft:end_aetherium_ore": "utilitycraft:aetherium_dust",
+    "utilitycraft:deepslate_aetherium_ore": "utilitycraft:aetherium_crystal_dust",
+    "utilitycraft:end_aetherium_ore": "utilitycraft:aetherium_crystal_dust",
     "utilitycraft:tin_ore": "utilitycraft:tin_dust",
     "utilitycraft:deepslate_tin_ore": "utilitycraft:tin_dust",
     "utilitycraft:deepslate_uranium_ore": "utilitycraft:uranium_dust",

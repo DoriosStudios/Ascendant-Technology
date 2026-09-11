@@ -396,11 +396,13 @@ export class FluidStorage {
     const current = inventory.getItem(slot);
     if (!current || current.typeId !== expectedTypeId) return false;
 
+    if (nextTypeId === undefined) {
+      return DoriosLib.entity.changeItemAmount(player, { slot, amount: -1 });
+    }
+
     if (current.amount > 1) {
       current.amount -= 1;
       inventory.setItem(slot, current);
-
-      if (!nextTypeId) return true;
 
       const overflow = inventory.addItem(new ItemStack(nextTypeId, 1));
       if (overflow) {
@@ -583,7 +585,7 @@ export class FluidStorage {
    * - Producing filled items based on stored fluid type
    *
    * @param {string} typeId The item identifier being used (e.g., "minecraft:water_bucket", "minecraft:bucket", "fluidcells:empty_cell").
-   * @returns {string|false} Returns the output item ID if successful, or false if the action failed.
+   * @returns {string|undefined|false} Returns the output item ID, undefined when the input is consumed, or false if the action failed.
    */
   fluidItem(typeId) {
     // 1. INSERTION: item adds fluid into tank
@@ -605,7 +607,7 @@ export class FluidStorage {
 
       if (!this.tryInsert(type, amount)) return false;
 
-      return output ?? false;
+      return output ?? undefined;
     }
 
     // 2. EXTRACTION: item converts stored fluid into an output container
@@ -829,7 +831,7 @@ export class FluidStorage {
    *
    * @param {number} speed Total transfer speed limit (mB/tick).
    * @param {"nearest"|"farthest"|"round"} [mode="nearest"] Transfer mode.
-   * @param {Array<{x:number, y:number, z:number}>} nodes Precomputed network node positions.
+   * @param {Array<{x:number, y:number, z:number}>} [nodes] Precomputed network node positions.
    * @returns {number} Total amount of fluid transferred (in mB).
    */
   transferToNetwork(speed, mode = "nearest", nodes) {
@@ -1013,18 +1015,19 @@ export class FluidStorage {
 
     if (type === Constants.EMPTY_FLUID_TYPE) {
       let emptyBar = new ItemStack(Constants.EMPTY_FLUID_BAR_ITEM_ID);
-      emptyBar.nameTag = "§rEmpty";
+      emptyBar.nameTag = "§rEmpty §7(Liquid)";
       inv.setItem(slot, emptyBar);
       return;
     }
 
-    const frame = Math.max(0, Math.min(Constants.FLUID_BAR_FRAME_COUNT, Math.floor((fluid / cap) * Constants.FLUID_BAR_FRAME_COUNT)));
+    const ratio = cap > 0 ? Math.max(0, Math.min(1, fluid / cap)) : 0;
+    const frame = Math.floor(ratio * Constants.FLUID_BAR_FRAME_COUNT);
     const frameName = frame.toString().padStart(2, "0");
 
     const item = new ItemStack(`utilitycraft:${type}_${frameName}`, 1);
-    item.nameTag = `§r${DoriosLib.text.formatIdentifier(type)}
+    item.nameTag = `§r${DoriosLib.text.formatIdentifier(type.replace(/_liquid$/, ""))} §7(Liquid)
 §r§7  Stored: ${FluidStorage.formatFluid(fluid)} / ${FluidStorage.formatFluid(cap)}
-§r§7  Percentage: ${((fluid / cap) * 100).toFixed(2)}%`;
+§r§7  Percentage: ${(ratio * 100).toFixed(2)}%`;
 
     inv.setItem(slot, item);
   }
@@ -1041,7 +1044,7 @@ export class FluidStorage {
    * @param {Block} block The block representing the tank.
    * @param {string} type The type of fluid to insert.
    * @param {number} amount Amount of fluid to insert in mB.
-   * @returns {Entity | undefined} The tank entity if insertion was successful.
+   * @returns {Entity | undefined | false} The tank entity if insertion was successful.
   */
   static addfluidToTank(block, type, amount) {
     const dim = block.dimension;

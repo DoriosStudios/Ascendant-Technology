@@ -52,7 +52,7 @@ behavior. Its terrain-atlas key is `utilitycraft_end_sand`.
 The shell contains every non-mineral block sharing a face with the mineral body,
 including the two axial end caps. Every ore, crystal and sand placement replaces
 **only End Stone**. The ore and crystal feature also refuses positions touching
-normal, cave or void air. Existing air, builds and other blocks remain untouched;
+normal air. Existing air, builds and other blocks remain untouched;
 at island edges or caves, the shell may appear but its mineral interior will not.
 
 The atlas entry in `RP/textures/terrain_texture.json` points to the dedicated file

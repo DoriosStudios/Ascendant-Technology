@@ -17,7 +17,7 @@
 				"item": "minecraft:packed_ice"
 			},
 			"C": {
-				"item": "utilitycraft:absolute_chip"
+				"item": "utilitycraft:ultimate_chip"
 			},
 			"E": {
 				"item": "utilitycraft:expert_fluid_tank"
@@ -38,7 +38,7 @@
 		},
 		"unlock": [
 			{
-				"item": "utilitycraft:absolute_chip"
+				"item": "utilitycraft:ultimate_chip"
 			}
 		]
 	}

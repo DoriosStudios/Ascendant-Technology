@@ -1,11 +1,11 @@
 ## Geradores
 item.utilitycraft:absolute_drill=Broca Absoluta\n§7- Minera em escala 7x7\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_battery.name=§uBateria Absoluta \n§7  Velocidade: 800 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_furnator.name=§uFurnator Absoluto \n§7  Velocidade: 320 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_furnator.name=§uFurnator Absoluto \n§7  Velocidade: 32 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_magmator.name=§uMagmator Absoluto \n§7  Velocidade: 400 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_solar_panel.name=§uPainel Solar Absoluto \n§7  Velocidade Máx: 96 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_solar_panel.name=§uPainel Solar Absoluto \n§7  Velocidade Máx: 9,6 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_thermo_generator.name=§uGerador Térmico Absoluto \n§7  Velocidade: 16 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_wind_turbine.name=§uTurbina Eólica Absoluta \n§7  Velocidade Base: 64 kDE/t\n  Multiplicador de Altura\n  Máximo: 3x\n  Não funciona abaixo de y12\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_wind_turbine.name=§uTurbina Eólica Absoluta \n§7  Velocidade Base: 6,4 kDE/t\n  Multiplicador de Altura\n  Máximo: 3x\n  Não funciona abaixo de y12\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:basic_power_beacon.name=§eSinalizador de Energia Básico\n§7  Velocidade: 1 kDE/t\n§7  Capacidade: 128 kDE\n§7  Alcance: 4 blocos\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:advanced_power_beacon.name=§cSinalizador de Energia Avançado\n§7  Velocidade: 4 kDE/t\n§7  Capacidade: 512 kDE\n§7  Alcance: 8 blocos\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:expert_power_beacon.name=§bSinalizador de Energia Expert\n§7  Velocidade: 16 kDE/t\n§7  Capacidade: 2.048 MDE\n§7  Alcance: 12 blocos\n§o§9@UC: Ascendant Technology

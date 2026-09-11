@@ -1,11 +1,11 @@
 ## 発電機
 item.utilitycraft:absolute_drill=アブソリュートドリル\n§7- 7x7の範囲を採掘する\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_battery.name=アブソリュートバッテリー\n§7  レート: 800 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_furnator.name=アブソリュートファーナター\n§7  レート: 320 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_furnator.name=アブソリュートファーナター\n§7  レート: 32 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_magmator.name=アブソリュートマグマター\n§7  レート: 400 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_solar_panel.name=アブソリュートソーラーパネル\n§7  Max レート: 96 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_solar_panel.name=アブソリュートソーラーパネル\n§7  Max レート: 9.6 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_thermo_generator.name=アブソリュートサーモジェネレーター\n§7   レート: 16 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_wind_turbine.name=アブソリュートウィンドタービン\n§7  Base レート: 64 kDE/t\n  最大高度乗数: 300%\n  y12以下では動作しません\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_wind_turbine.name=アブソリュートウィンドタービン\n§7  Base レート: 6.4 kDE/t\n  最大高度乗数: 300%\n  y12以下では動作しません\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:basic_power_beacon.name=§eBasic Power Beacon\n§7  Rate: 1 kDE/t\n§7  Capacity: 128 kDE\n§7  Range: 4 blocks\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:advanced_power_beacon.name=§cAdvanced Power Beacon\n§7  Rate: 4 kDE/t\n§7  Capacity: 512 kDE\n§7  Range: 8 blocks\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16 kDE/t\n§7  Capacity: 2.048 MDE\n§7  Range: 12 blocks\n§o§9@UC: Ascendant Technology

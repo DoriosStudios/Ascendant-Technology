@@ -1,11 +1,11 @@
 ## Генераторы
 item.utilitycraft:absolute_drill=Абсолютный бур\n§7- Добывает блоки в области 7x7\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_battery.name=Абсолютная Батарея\n§7  Скорость: 800 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_furnator.name=Абсолютный Фурнатор\n§7  Скорость: 320 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_furnator.name=Абсолютный Фурнатор\n§7  Скорость: 32 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_magmator.name=Абсолютный Магматор\n§7  Скорость: 400 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_solar_panel.name=Абсолютная Солнечная Панель\n§7  Max Скорость: 96 kDE/t\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_solar_panel.name=Абсолютная Солнечная Панель\n§7  Max Скорость: 9,6 kDE/t\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:absolute_thermo_generator.name=Абсолютный Термогенератор\n§7   Скорость: 16 kDE/t\n§o§9@UC: Ascendant Technology
-tile.utilitycraft:absolute_wind_turbine.name=Абсолютная Ветряная Турбина\n§7  Base Скорость: 64 kDE/t\n  Макс. Множитель Высоты: 300%\n  Не работает ниже y12\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:absolute_wind_turbine.name=Абсолютная Ветряная Турбина\n§7  Base Скорость: 6,4 kDE/t\n  Макс. Множитель Высоты: 300%\n  Не работает ниже y12\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:basic_power_beacon.name=§eBasic Power Beacon\n§7  Rate: 1 kDE/t\n§7  Capacity: 128 kDE\n§7  Range: 4 blocks\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:advanced_power_beacon.name=§cAdvanced Power Beacon\n§7  Rate: 4 kDE/t\n§7  Capacity: 512 kDE\n§7  Range: 8 blocks\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:expert_power_beacon.name=§bExpert Power Beacon\n§7  Rate: 16 kDE/t\n§7  Capacity: 2.048 MDE\n§7  Range: 12 blocks\n§o§9@UC: Ascendant Technology

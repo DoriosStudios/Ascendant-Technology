@@ -389,6 +389,9 @@ This update brings the Compactor and Decompactor, Universal transportation block
     - Void Singularity
 - Converted the Compactor atlas into named per-face textures.
     - Compactor and Decompactor now use the same directional texture set.
+- Regenerated the Absolute Furnator, Magmator, and Thermo Generator directional
+  textures from their Box-UV atlases.
+- Corrected Absolute generator rate descriptions to match their block settings.
 - Updated UI definitions for the expanded machine interface set.
 
 ### StatsCore
@@ -403,7 +406,8 @@ This update brings the Compactor and Decompactor, Universal transportation block
 
 ### Release Tooling
 - Added a Decompactor recipe audit tool.
-- Added a tool for splitting Compactor atlas textures into directional faces.
+- Added a tool for splitting machine and full-block generator atlases into
+  directional faces.
 - Updated project dependencies, build metadata, feature status documentation, localization documentation, and the Machine Roadmap.
 
 > Note: Element target policy still needs final validation. This changelog will remain a Draft until that validation is finished.

@@ -12,6 +12,7 @@ export const geneticSoilDefinitions = {
     "utilitycraft:red_soil": { cost: 0.75 },
     "utilitycraft:blue_soil": { cost: 0.5 },
     "utilitycraft:black_soil": { cost: 0.25 },
+    "utilitycraft:pink_soil": { cost: 0.1 },
 };
 
 const geneticDropItemOverrides = {
@@ -497,6 +498,27 @@ export const geneticSeedRecipeDefinitions = {
 		cost: 8000,
 		drops: [
 			{ item: "minecraft:glow_berries", amount: [1, 16], chance: 1 }
+		]
+	},
+	"utilitycraft:titanium_seeds": {
+		cost: 512000,
+		drops: [
+			{ item: "utilitycraft:raw_titanium", amount: [2, 4], chance: 1 },
+			{ item: "utilitycraft:titanium_seeds", amount: 1, chance: 0.08 }
+		]
+	},
+	"utilitycraft:tungsten_seeds": {
+		cost: 512000,
+		drops: [
+			{ item: "utilitycraft:raw_tungsten", amount: [2, 4], chance: 1 },
+			{ item: "utilitycraft:tungsten_seeds", amount: 1, chance: 0.08 }
+		]
+	},
+	"utilitycraft:aetherium_crystal_seeds": {
+		cost: 4096000,
+		drops: [
+			{ item: "utilitycraft:aetherium_crystal", amount: [1, 2], chance: 1 },
+			{ item: "utilitycraft:aetherium_crystal_seeds", amount: 1, chance: 0.04 }
 		]
 	}
 };

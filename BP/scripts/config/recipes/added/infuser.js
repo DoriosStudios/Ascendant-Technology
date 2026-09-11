@@ -1,7 +1,13 @@
 import * as DoriosLib from "DoriosLib/index.js";
 
-/** @type {Record<string, { output: string, required: number }>} */
+/** @type {Record<string, { output: string, required: number, input_required?: number, amount?: number }>} */
 export const infuserRecipeAdditions = {
+    "utilitycraft:titanium_dust|utilitycraft:tungsten_dust": {
+        output: "utilitycraft:tingstanium_dust",
+        required: 1,
+        input_required: 1,
+        amount: 2,
+    },
     "minecraft:glowstone_dust|utilitycraft:crying_obsidian_dust": {
         output: "utilitycraft:stabilized_obsidian_dust",
         required: 4,

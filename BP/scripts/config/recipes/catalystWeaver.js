@@ -189,6 +189,30 @@ export const catalystWeaverRecipeDefinitions = {
         cost: 12000,
         speed: 0.5,
     },
+    "utilitycraft:aetherium_ingot_from_mixed_dust_and_shards": {
+        input: { id: "minecraft:netherite_ingot", amount: 1 },
+        catalysts: [
+            { id: "utilitycraft:tingstanium_dust", amount: 16 },
+            { id: "utilitycraft:ender_pearl_dust", amount: 8 },
+            { id: "utilitycraft:aetherium_shard", amount: 8 },
+        ],
+        fluid: { type: "cryofluid", amount: 1600 },
+        output: { id: "utilitycraft:aetherium", amount: 1 },
+        cost: 12000,
+        speed: 0.5,
+    },
+    "utilitycraft:aetherium_ingot_from_mixed_dust": {
+        input: { id: "minecraft:netherite_ingot", amount: 1 },
+        catalysts: [
+            { id: "utilitycraft:tingstanium_dust", amount: 16 },
+            { id: "utilitycraft:ender_pearl_dust", amount: 8 },
+            { id: "utilitycraft:aetherium_crystal", amount: 2 },
+        ],
+        fluid: { type: "cryofluid", amount: 1600 },
+        output: { id: "utilitycraft:aetherium", amount: 1 },
+        cost: 12000,
+        speed: 0.5,
+    },
     "utilitycraft:hyper_processing_upgrade": {
         input: { id: "utilitycraft:speed_upgrade", amount: 1 },
         catalysts: [

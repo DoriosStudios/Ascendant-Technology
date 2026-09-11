@@ -1,0 +1,35 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_crystal_seeds"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "key": {
+            "O": {
+                "item": "utilitycraft:aetherium_crystal"
+            },
+            "S": {
+                "item": "utilitycraft:base_seeds"
+            }
+        },
+        "pattern": [
+            "OOO",
+            "OSO",
+            "OOO"
+        ],
+        "result": {
+            "item": "utilitycraft:aetherium_crystal_seeds"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:aetherium_crystal"
+            },
+            {
+                "item": "utilitycraft:base_seeds"
+            }
+        ]
+    }
+}

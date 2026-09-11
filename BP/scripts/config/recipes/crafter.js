@@ -4,9 +4,14 @@ import * as DoriosLib from "DoriosLib/index.js";
 
 /**
  * Ascendant Technology recipes accepted by the UtilityCraft Digitizer/Assembler.
- * Patterns mirror every shaped recipe tagged with `utilitycraft_workbench`.
+ * Patterns mirror shaped `utilitycraft_workbench` recipes and explicit
+ * crafting-table recipes intended for automation.
  */
 export const crafterRecipeAdditions = {
+    "titanium_dust,tungsten_dust,air,air,air,air,air,air,air": {
+        output: "utilitycraft:tingstanium_dust",
+        amount: 2,
+    },
     "steel_plate,red_dye,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,aetherium_block,steel_plate":
         {
             output: "utilitycraft:multi_processing_upgrade",

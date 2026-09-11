@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_crystal_seeds",
+            "menu_category": {
+                "category": "nature",
+                "group": "minecraft:itemGroup.name.seed"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_aetherium_crystal_seeds",
+            "minecraft:block_placer": {
+                "block": "utilitycraft:aetherium_crystal_seeds",
+                "replace_block_item": true
+            }
+        }
+    }
+}

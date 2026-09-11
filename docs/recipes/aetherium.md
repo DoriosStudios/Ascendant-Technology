@@ -29,11 +29,18 @@ Crystalline grinding preserves the exact material ratio. Crystals and crystal
 blocks cannot bypass shard cloning restrictions through the ordinary Duplicator.
 Crystal dust has no furnace recipe and cannot become Aetherium metal directly.
 
+Combining **one titanium dust + one tungsten dust** produces two
+`utilitycraft:tingstanium_dust`, displayed as **Titanium & Tungsten Dust** with
+the gray subtitle **Mixed**. The recipe is available through shapeless crafting,
+the UtilityCraft Assembler and the Infuser.
+
 The Catalyst Weaver makes one Aetherium ingot from **one netherite ingot** as the
-input plus **eight titanium dust, eight tungsten dust, eight ender pearl dust,
-and either eight shards or two crystals** as catalysts, with 1,600 mB cryofluid.
-Both routes cost 12,000 DE at 0.5x speed and require the cryogenic family before
-Aetherium production.
+input, **eight ender pearl dust**, either **eight shards or two crystals**, and
+1,600 mB cryofluid. The metal catalyst may be supplied either as **eight
+titanium dust plus eight tungsten dust** or as **sixteen mixed Titanium & Tungsten
+Dust**. The mixed dust recipes are automation alternatives; they do not replace
+the original separate-dust recipes. All four routes cost 12,000 DE at 0.5x
+speed and require the cryogenic family before Aetherium production.
 The existing metal ingot ID remains `utilitycraft:aetherium`.
 
 Refinement is a separate branch: **one crystal + one amethyst shard + 800 mB dark

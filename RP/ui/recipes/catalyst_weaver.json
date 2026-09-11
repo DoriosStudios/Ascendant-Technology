@@ -132,6 +132,28 @@
                             }
                         },
                         {
+                            "aetherium_mixed_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4106,
+                                "$toggle_hover_text": "item.utilitycraft:aetherium",
+                                "$toggle_control_name": "cw_aetherium_mixed_recipe",
+                                "$recipe_icon": "textures/items/ores/aetherium_ingot",
+                                "offset": [ 36, 0 ]
+                            }
+                        },
+                        {
+                            "aetherium_mixed_shards_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4107,
+                                "$toggle_hover_text": "item.utilitycraft:aetherium",
+                                "$toggle_control_name": "cw_aetherium_mixed_shards_recipe",
+                                "$recipe_icon": "textures/items/ores/aetherium_ingot",
+                                "offset": [ 54, 0 ]
+                            }
+                        },
+                        {
                             "refined_aetherium_crystal_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
@@ -139,7 +161,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:refined_aetherium_crystal",
                                 "$toggle_control_name": "cw_refined_aetherium_crystal_recipe",
                                 "$recipe_icon": "textures/items/ores/refined_aetherium_crystal",
-                                "offset": [ 36, 0 ]
+                                "offset": [ 72, 0 ]
                             }
                         },
                         {
@@ -150,7 +172,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:void_essence",
                                 "$toggle_control_name": "cw_void_essence_recipe",
                                 "$recipe_icon": "textures/items/misc/void_essence",
-                                "offset": [ 54, 0 ]
+                                "offset": [ 90, 0 ]
                             }
                         },
                         {
@@ -161,28 +183,6 @@
                                 "$toggle_hover_text": "item.diamond.name",
                                 "$toggle_control_name": "cw_diamond_recovery_recipe",
                                 "$recipe_icon": "textures/items/diamond",
-                                "offset": [ 72, 0 ]
-                            }
-                        },
-                        {
-                            "emerald_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$toggle_index": 4005,
-                                "$toggle_hover_text": "item.emerald.name",
-                                "$toggle_control_name": "cw_emerald_recovery_recipe",
-                                "$recipe_icon": "textures/items/emerald",
-                                "offset": [ 90, 0 ]
-                            }
-                        },
-                        {
-                            "quartz_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$toggle_index": 4006,
-                                "$toggle_hover_text": "item.quartz.name",
-                                "$toggle_control_name": "cw_quartz_recovery_recipe",
-                                "$recipe_icon": "textures/items/quartz",
                                 "offset": [ 108, 0 ]
                             }
                         }
@@ -196,6 +196,28 @@
                     "size": [ 126, 18 ],
                     "controls": [
                         {
+                            "emerald_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4005,
+                                "$toggle_hover_text": "item.emerald.name",
+                                "$toggle_control_name": "cw_emerald_recovery_recipe",
+                                "$recipe_icon": "textures/items/emerald",
+                                "offset": [ 0, 0 ]
+                            }
+                        },
+                        {
+                            "quartz_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4006,
+                                "$toggle_hover_text": "item.quartz.name",
+                                "$toggle_control_name": "cw_quartz_recovery_recipe",
+                                "$recipe_icon": "textures/items/quartz",
+                                "offset": [ 18, 0 ]
+                            }
+                        },
+                        {
                             "amethyst_recovery_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
@@ -203,7 +225,7 @@
                                 "$toggle_hover_text": "item.amethyst_shard.name",
                                 "$toggle_control_name": "cw_amethyst_recovery_recipe",
                                 "$recipe_icon": "textures/items/amethyst_shard",
-                                "offset": [ 0, 0 ]
+                                "offset": [ 36, 0 ]
                             }
                         },
                         {
@@ -214,7 +236,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:base_upgrade",
                                 "$toggle_control_name": "cw_base_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/base_upgrade",
-                                "offset": [ 18, 0 ]
+                                "offset": [ 54, 0 ]
                             }
                         },
                         {
@@ -225,7 +247,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:energy_upgrade",
                                 "$toggle_control_name": "cw_energy_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/energy_upgrade",
-                                "offset": [ 36, 0 ]
+                                "offset": [ 72, 0 ]
                             }
                         },
                         {
@@ -236,7 +258,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:speed_upgrade",
                                 "$toggle_control_name": "cw_speed_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/speed_upgrade",
-                                "offset": [ 54, 0 ]
+                                "offset": [ 90, 0 ]
                             }
                         },
                         {
@@ -247,28 +269,6 @@
                                 "$toggle_hover_text": "item.utilitycraft:hyper_processing_upgrade",
                                 "$toggle_control_name": "cw_hyper_processing_recipe",
                                 "$recipe_icon": "textures/items/machinery/hyper_processing_upgrade",
-                                "offset": [ 72, 0 ]
-                            }
-                        },
-                        {
-                            "stack_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$toggle_index": 4016,
-                                "$toggle_hover_text": "item.utilitycraft:stack_upgrade",
-                                "$toggle_control_name": "cw_stack_upgrade_recipe",
-                                "$recipe_icon": "textures/items/machinery/stack_upgrade",
-                                "offset": [ 90, 0 ]
-                            }
-                        },
-                        {
-                            "size_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$toggle_index": 4017,
-                                "$toggle_hover_text": "item.utilitycraft:size_upgrade",
-                                "$toggle_control_name": "cw_size_upgrade_recipe",
-                                "$recipe_icon": "textures/items/machinery/size_upgrade",
                                 "offset": [ 108, 0 ]
                             }
                         }
@@ -281,6 +281,28 @@
                     "size": [ 126, 18 ],
                     "controls": [
                         {
+                            "stack_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4016,
+                                "$toggle_hover_text": "item.utilitycraft:stack_upgrade",
+                                "$toggle_control_name": "cw_stack_upgrade_recipe",
+                                "$recipe_icon": "textures/items/machinery/stack_upgrade",
+                                "offset": [ 0, 0 ]
+                            }
+                        },
+                        {
+                            "size_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4017,
+                                "$toggle_hover_text": "item.utilitycraft:size_upgrade",
+                                "$toggle_control_name": "cw_size_upgrade_recipe",
+                                "$recipe_icon": "textures/items/machinery/size_upgrade",
+                                "offset": [ 18, 0 ]
+                            }
+                        },
+                        {
                             "range_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
@@ -288,7 +310,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:range_upgrade",
                                 "$toggle_control_name": "cw_range_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/range_upgrade",
-                                "offset": [ 0, 0 ]
+                                "offset": [ 36, 0 ]
                             }
                         },
                         {
@@ -299,7 +321,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:damage_upgrade",
                                 "$toggle_control_name": "cw_damage_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/damage_upgrade",
-                                "offset": [ 18, 0 ]
+                                "offset": [ 54, 0 ]
                             }
                         },
                         {
@@ -310,7 +332,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:quantity_upgrade",
                                 "$toggle_control_name": "cw_quantity_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/quantity_upgrade",
-                                "offset": [ 36, 0 ]
+                                "offset": [ 72, 0 ]
                             }
                         },
                         {
@@ -321,7 +343,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:filter_upgrade",
                                 "$toggle_control_name": "cw_filter_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/filter_upgrade",
-                                "offset": [ 54, 0 ]
+                                "offset": [ 90, 0 ]
                             }
                         },
                         {
@@ -332,28 +354,6 @@
                                 "$toggle_hover_text": "item.utilitycraft:dimensional_range_upgrade",
                                 "$toggle_control_name": "cw_dimensional_range_upgrade_recipe",
                                 "$recipe_icon": "textures/items/dimensional_range_upgrade",
-                                "offset": [ 72, 0 ]
-                            }
-                        },
-                        {
-                            "multi_processing_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$toggle_index": 4101,
-                                "$toggle_hover_text": "item.utilitycraft:multi_processing_upgrade",
-                                "$toggle_control_name": "cw_multi_processing_upgrade_recipe",
-                                "$recipe_icon": "textures/items/machinery/multi_processing_upgrade",
-                                "offset": [ 90, 0 ]
-                            }
-                        },
-                        {
-                            "energy_capacity_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "$toggle_index": 4102,
-                                "$toggle_hover_text": "item.utilitycraft:energy_capacity_upgrade",
-                                "$toggle_control_name": "cw_energy_capacity_upgrade_recipe",
-                                "$recipe_icon": "textures/items/machinery/energy_capacity_upgrade",
                                 "offset": [ 108, 0 ]
                             }
                         }
@@ -366,6 +366,28 @@
                     "size": [ 126, 18 ],
                     "controls": [
                         {
+                            "multi_processing_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4101,
+                                "$toggle_hover_text": "item.utilitycraft:multi_processing_upgrade",
+                                "$toggle_control_name": "cw_multi_processing_upgrade_recipe",
+                                "$recipe_icon": "textures/items/machinery/multi_processing_upgrade",
+                                "offset": [ 0, 0 ]
+                            }
+                        },
+                        {
+                            "energy_capacity_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 4102,
+                                "$toggle_hover_text": "item.utilitycraft:energy_capacity_upgrade",
+                                "$toggle_control_name": "cw_energy_capacity_upgrade_recipe",
+                                "$recipe_icon": "textures/items/machinery/energy_capacity_upgrade",
+                                "offset": [ 18, 0 ]
+                            }
+                        },
+                        {
                             "liquid_capacity_upgrade_toggle@catalyst_weaver.catalyst_weaver_recipe_toggle": {
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
@@ -373,7 +395,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:liquid_capacity_upgrade",
                                 "$toggle_control_name": "cw_liquid_capacity_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/liquid_capacity_upgrade",
-                                "offset": [ 0, 0 ]
+                                "offset": [ 36, 0 ]
                             }
                         },
                         {
@@ -384,7 +406,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:gas_capacity_upgrade",
                                 "$toggle_control_name": "cw_gas_capacity_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/gas_capacity_upgrade",
-                                "offset": [ 18, 0 ]
+                                "offset": [ 54, 0 ]
                             }
                         },
                         {
@@ -395,7 +417,7 @@
                                 "$toggle_hover_text": "item.utilitycraft:resource_efficiency_upgrade",
                                 "$toggle_control_name": "cw_resource_efficiency_upgrade_recipe",
                                 "$recipe_icon": "textures/items/machinery/resource_efficiency_upgrade",
-                                "offset": [ 36, 0 ]
+                                "offset": [ 72, 0 ]
                             }
                         }
                     ]
@@ -646,6 +668,114 @@
                                 "$slot_hover_text": "item.utilitycraft:aetherium_crystal",
                                 "$has_slot_hover": true,
                                 "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output@catalyst_weaver.recipe_output": {
+                                "$slot_item_texture": "textures/items/ores/aetherium_ingot",
+                                "$slot_hover_text": "item.utilitycraft:aetherium",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "fluid@catalyst_weaver.recipe_fluid_requirement": {
+                                "$fluid_texture": "textures/ui/at_icons/cryofluid_icon",
+                                "$fluid_text": "Cryofluid\n1600 mB"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "aetherium_mixed_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "cw_aetherium_mixed_recipe",
+                    "controls": [
+                        {
+                            "input@catalyst_weaver.recipe_input": {
+                                "$slot_item_texture": "textures/items/netherite_ingot",
+                                "$slot_hover_text": "item.netherite_ingot.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
+                                "$slot_item_texture": "textures/items/ores/tingstanium_dust",
+                                "$slot_hover_text": "item.utilitycraft:tingstanium_dust",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "16",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
+                                "$slot_item_texture": "textures/items/dusts/ender_pearl_dust",
+                                "$slot_hover_text": "item.utilitycraft:ender_pearl_dust",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "8",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                                "$slot_item_texture": "textures/items/ores/aetherium_crystal",
+                                "$slot_hover_text": "item.utilitycraft:aetherium_crystal",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output@catalyst_weaver.recipe_output": {
+                                "$slot_item_texture": "textures/items/ores/aetherium_ingot",
+                                "$slot_hover_text": "item.utilitycraft:aetherium",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "fluid@catalyst_weaver.recipe_fluid_requirement": {
+                                "$fluid_texture": "textures/ui/at_icons/cryofluid_icon",
+                                "$fluid_text": "Cryofluid\n1600 mB"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "aetherium_mixed_shards_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "cw_aetherium_mixed_shards_recipe",
+                    "controls": [
+                        {
+                            "input@catalyst_weaver.recipe_input": {
+                                "$slot_item_texture": "textures/items/netherite_ingot",
+                                "$slot_hover_text": "item.netherite_ingot.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
+                                "$slot_item_texture": "textures/items/ores/tingstanium_dust",
+                                "$slot_hover_text": "item.utilitycraft:tingstanium_dust",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "16",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
+                                "$slot_item_texture": "textures/items/dusts/ender_pearl_dust",
+                                "$slot_hover_text": "item.utilitycraft:ender_pearl_dust",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "8",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                                "$slot_item_texture": "textures/items/ores/aetherium_shards",
+                                "$slot_hover_text": "item.utilitycraft:aetherium_shard",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "8",
                                 "$has_slot_count": true
                             }
                         },

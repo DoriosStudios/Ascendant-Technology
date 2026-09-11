@@ -170,12 +170,19 @@ This update brings the Compactor and Decompactor, Universal transportation block
 
 ### Aetherium
 - Four Aetherium Shards now form one Crystal through crafting, pressing, or compacting.
+- One Titanium Dust and one Tungsten Dust now form two **Titanium & Tungsten Dust**, shown with the **Mixed** subtitle, through shapeless crafting, the Assembler or the Infuser.
 - Two Shards or one Crystal can be crushed into one or two Crystal Dust respectively.
 - Four Crystals now form one Crystal Block, which can be crushed into eight Crystal Dust.
 - Crushing either Aetherium Ore variant now produces two Aetherium Shards.
-- Aetherium Ingots now require one Netherite Ingot as input, plus eight Titanium Dust, eight Tungsten Dust, eight Ender Pearl Dust, 1,600 mB of Cryofluid, and either eight Aetherium Shards or two Aetherium Crystals in the Catalyst Weaver.
-- Hyper Processing Upgrades now require both Aetherium Dust and Aetherium Crystal Dust.
+- Aetherium Ingots now require one Netherite Ingot as input, eight Titanium Dust, eight Tungsten Dust, eight Ender Pearl Dust, 1,600 mB of Cryofluid, and either eight Aetherium Shards or two Aetherium Crystals in the Catalyst Weaver.
+- Added alternative Aetherium Ingot recipes where sixteen mixed Titanium & Tungsten Dust replace the separate Titanium and Tungsten catalysts.
+- Hyper Processing Upgrades now accept either Aetherium Crystal Dust or metallic Aetherium Dust.
 - Added a smelting recipe that turns Aetherium Dust back into Aetherium Ingots.
+
+### Bountiful Crops
+- Added Tier 3 Titanium and Tungsten Seeds.
+- Added Tier 5 Aetherium Crystal Seeds.
+- Added Tier 5 Pink Soil with 2.5x the Black Soil boost values and support in the Seed Synthesizer.
 
 ### Assembler
 - Added all Ascendant Technology Workbench recipes to the Assembler.

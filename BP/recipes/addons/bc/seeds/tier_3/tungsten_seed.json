@@ -1,0 +1,35 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:tungsten_seeds"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "key": {
+            "O": {
+                "item": "utilitycraft:tungsten"
+            },
+            "S": {
+                "item": "utilitycraft:base_seeds"
+            }
+        },
+        "pattern": [
+            "OOO",
+            "OSO",
+            "OOO"
+        ],
+        "result": {
+            "item": "utilitycraft:tungsten_seeds"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:tungsten"
+            },
+            {
+                "item": "utilitycraft:base_seeds"
+            }
+        ]
+    }
+}

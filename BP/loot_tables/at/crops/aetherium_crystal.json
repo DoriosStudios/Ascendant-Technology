@@ -1,0 +1,37 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "utilitycraft:aetherium_crystal",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "conditions": [
+                {
+                    "condition": "random_chance",
+                    "chance": 0.04
+                }
+            ],
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "utilitycraft:aetherium_crystal_seeds"
+                }
+            ]
+        }
+    ]
+}

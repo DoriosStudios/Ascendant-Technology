@@ -43,9 +43,12 @@ Advanced catalyst weaving: combines a base item, up to six catalysts, and option
 | --- | --- | --- | --- | --- | --- | --- |
 | Netherite Ingot ×1 | Titanium Dust ×8<br>Tungsten Dust ×8<br>Ender Pearl Dust ×8<br>Aetherium Crystal ×2 | Cryofluid <br>- 1600 mB | Aetherium Ingot ×1 | — | 12000 | 0.5x |
 | Netherite Ingot ×1 | Titanium Dust ×8<br>Tungsten Dust ×8<br>Ender Pearl Dust ×8<br>Aetherium Shard ×8 | Cryofluid <br>- 1600 mB | Aetherium Ingot ×1 | — | 12000 | 0.5x |
+| Netherite Ingot ×1 | Titanium & Tungsten Dust ×16<br>Ender Pearl Dust ×8<br>Aetherium Crystal ×2 | Cryofluid <br>- 1600 mB | Aetherium Ingot ×1 | — | 12000 | 0.5x |
+| Netherite Ingot ×1 | Titanium & Tungsten Dust ×16<br>Ender Pearl Dust ×8<br>Aetherium Shard ×8 | Cryofluid <br>- 1600 mB | Aetherium Ingot ×1 | — | 12000 | 0.5x |
 | Crying Obsidian Dust ×4 | Glowstone Dust ×2<br>Energized Iron Dust ×1 | Liquified Aetherium <br>- 250 mB | Stabilized Obsidian Dust ×2 | Obsidian ×1 (0.1%) | 5400 | 1.0x |
 | Gold Ingot ×1 | Copper Dust ×4 | — | Bronze Ingot ×1 | — | 6400 | 1.0x |
-| Speed Upgrade ×1 | Energized Iron Dust ×2<br>Aetherium Metal Dust ×1<br>Aetherium Crystal Dust ×1<br>Titanium Dust ×1 | — | Hyper Processing Upgrade ×1 | — | 12800 | 0.25x |
+| Speed Upgrade ×1 | Energized Iron Dust ×2<br>Aetherium Crystal Dust ×1<br>Titanium Dust ×1 | — | Hyper Processing Upgrade ×1 | — | 12800 | 0.25x |
+| Speed Upgrade ×1 | Energized Iron Dust ×2<br>Aetherium Dust ×1<br>Titanium Dust ×1 | — | Hyper Processing Upgrade ×1 | — | 12800 | 0.25x |
 | Quadruple Compressed Cobblestone ×1 | Compressed Coal Block 4 ×1 | — | Compressed Blackstone 4 ×1 | — | 601600 | 0.5x |
 | Aetherium Crystal ×1 | Amethyst Shard ×1 | Dark Matter <br>- 800 mB | Refined Aetherium Crystal ×1 | — | 3200 | 1.0x |
 | Diamond Dust ×2 | Iron Ingot ×1 | Lava <br>- 100 mB | Diamond ×1 | — | 3200 | 1.0x |

@@ -1,0 +1,48 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:pink_soil"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "key": {
+            "B": {
+                "item": "utilitycraft:aetherium_crystal_block"
+            },
+            "D": {
+                "item": "utilitycraft:black_soil"
+            },
+            "R": {
+                "item": "utilitycraft:aetherium_block"
+            },
+            "N": {
+                "item": "utilitycraft:refined_aetherium_crystal"
+            }
+        },
+        "pattern": [
+            "DND",
+            "BRB",
+            "DND"
+        ],
+        "result": {
+            "item": "utilitycraft:pink_soil",
+            "count": 4
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:black_soil"
+            },
+            {
+                "item": "utilitycraft:aetherium_crystal_block"
+            },
+            {
+                "item": "utilitycraft:aetherium_block"
+            },
+            {
+                "item": "utilitycraft:refined_aetherium_crystal"
+            }
+        ]
+    }
+}

@@ -44,6 +44,9 @@
         "utilitycraft_titanium_dust": {
             "textures": "textures/items/ores/titanium_dust"
         },
+        "utilitycraft_tingstanium_dust": {
+            "textures": "textures/items/ores/tingstanium_dust"
+        },
         "utilitycraft_titanium_nugget": {
             "textures": "textures/items/ores/titanium_nugget"
         },
@@ -1108,6 +1111,15 @@
         },
         "utilitycraft_resource_efficiency_upgrade": {
             "textures": "textures/items/machinery/resource_efficiency_upgrade"
+        },
+        "utilitycraft_titanium_seeds": {
+            "textures": "textures/items/ores/titanium_seeds"
+        },
+        "utilitycraft_tungsten_seeds": {
+            "textures": "textures/items/ores/tungsten_seeds"
+        },
+        "utilitycraft_aetherium_crystal_seeds": {
+            "textures": "textures/items/ores/aetherium_crystal_seeds"
         }
     }
 }

@@ -1629,6 +1629,30 @@
 		},
 		"utilitycraft_compressed_aetherium_crystal_block_4": {
 			"textures": "textures/blocks/compressed/aetherium_crystal_4"
+		},
+		"utilitycraft_pink_soil": {
+			"textures": "textures/blocks/soil_5"
+		},
+		"utilitycraft_pink_soil_side": {
+			"textures": "textures/blocks/soil_side_5"
+		},
+		"utilitycraft_titanium_crop0": {
+			"textures": "textures/blocks/crops/titanium_0"
+		},
+		"utilitycraft_titanium_crop1": {
+			"textures": "textures/blocks/crops/titanium_1"
+		},
+		"utilitycraft_tungsten_crop0": {
+			"textures": "textures/blocks/crops/tungsten_0"
+		},
+		"utilitycraft_tungsten_crop1": {
+			"textures": "textures/blocks/crops/tungsten_1"
+		},
+		"utilitycraft_aetherium_crystal_crop0": {
+			"textures": "textures/blocks/crops/aetherium_crystal_0"
+		},
+		"utilitycraft_aetherium_crystal_crop1": {
+			"textures": "textures/blocks/crops/aetherium_crystal_1"
 		}
 	}
 }

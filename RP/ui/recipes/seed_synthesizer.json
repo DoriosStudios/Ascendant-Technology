@@ -1,0 +1,21 @@
+{
+    "namespace": "uc",
+    "seed_soils_category_content/addon_soil_rows": {
+        "modifications": [
+            {
+                "array_name": "controls",
+                "operation": "insert_back",
+                "value": [
+                    {
+                        "at_pink_soil_strip@uc.seed_soil_strip": {
+                            "$soil_texture": "textures/blocks/soil_5",
+                            "$soil_name": "Pink Soil",
+                            "$soil_speed_text": "x10",
+                            "$soil_efficiency_text": "x0.1"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

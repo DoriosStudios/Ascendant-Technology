@@ -334,5 +334,25 @@
 	},
 	"utilitycraft:aetherium_conveyor_bridge_receiver": {
 		"sound": "metal"
+	},
+	"utilitycraft:pink_soil": {
+		"textures": {
+			"up": "utilitycraft_pink_soil",
+			"down": "utilitycraft_pink_soil_side",
+			"east": "utilitycraft_pink_soil_side",
+			"north": "utilitycraft_pink_soil_side",
+			"south": "utilitycraft_pink_soil_side",
+			"west": "utilitycraft_pink_soil_side"
+		},
+		"sound": "grass"
+	},
+	"utilitycraft:titanium_seeds": {
+		"sound": "grass"
+	},
+	"utilitycraft:tungsten_seeds": {
+		"sound": "grass"
+	},
+	"utilitycraft:aetherium_crystal_seeds": {
+		"sound": "grass"
 	}
 }

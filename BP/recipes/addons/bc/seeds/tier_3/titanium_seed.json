@@ -1,0 +1,35 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:titanium_seeds"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "key": {
+            "O": {
+                "item": "utilitycraft:titanium"
+            },
+            "S": {
+                "item": "utilitycraft:base_seeds"
+            }
+        },
+        "pattern": [
+            "OOO",
+            "OSO",
+            "OOO"
+        ],
+        "result": {
+            "item": "utilitycraft:titanium_seeds"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:titanium"
+            },
+            {
+                "item": "utilitycraft:base_seeds"
+            }
+        ]
+    }
+}

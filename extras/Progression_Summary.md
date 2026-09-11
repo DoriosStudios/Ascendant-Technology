@@ -44,7 +44,7 @@ Infraestrutura do UtilityCraft
 
 ### Decisões confirmadas na conversa
 
-- **Aetherium:** a nova receita usará 1 barra de netherita como input; os catalisadores serão 8 pós de titanium, 8 pós de tungsten, 8 novos fragmentos de aetherium **ou** 2 cristais atuais e 8 pós de Ender Pearl, com 1.600 mB de Cryofluid. Um pó misturado reunirá titanium e tungsten para facilitar a automação; o nome e o rendimento desse intermediário ainda precisam ser fechados.
+- **Aetherium:** as receitas usam 1 barra de netherita como input, 8 pós de titanium, 8 pós de tungsten, 8 fragmentos de aetherium **ou** 2 cristais, 8 pós de Ender Pearl e 1.600 mB de Cryofluid. Como alternativa de automação, os dois pós metálicos podem ser previamente combinados: cada 1 Titanium Dust + 1 Tungsten Dust produz 2 `tingstanium_dust` (**Titanium & Tungsten Dust**, com o subtítulo **Mixed**), e 16 unidades da mistura substituem somente esses dois catalisadores nas duas receitas alternativas. As receitas originais com os pós separados continuam disponíveis.
 - **Criogenia:** toda a família ficará antes do Catalyst Weaver. As receitas de entrada precisarão respeitar essa ordem, sem depender do aetherium que a própria cadeia produzirá.
 - **Nióbio:** material técnico intermediário entre aetherium e kyarium, encontrado no End, menos abundante que o aetherium local, mas sem raridade extrema. Seu processamento passará por quatro fases, sendo elas a obteção primária (minério bruto obtido por mineração ou peneiramento), instabilização (Energizador com uma quantidade de energia considerável), condicionamento (Catalyst Weaver com aetherium líquido) e estabilização (criogenia).
 - **Duplicador:** será movido para a etapa de nióbio. O Liquifier continuará necessário à sua operação.

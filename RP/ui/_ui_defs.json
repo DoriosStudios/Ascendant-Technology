@@ -43,6 +43,7 @@
                     "ui/vaporworks_processor.json",
                     "ui/recipes/infuser.json",
                     "ui/recipes/crusher.json",
-                    "ui/recipes/electro_press.json"
+                    "ui/recipes/electro_press.json",
+                    "ui/recipes/seed_synthesizer.json"
                 ]
 }

@@ -1,0 +1,37 @@
+{
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "utilitycraft:raw_tungsten",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 2,
+                                "max": 4
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "conditions": [
+                {
+                    "condition": "random_chance",
+                    "chance": 0.08
+                }
+            ],
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "utilitycraft:tungsten_seeds"
+                }
+            ]
+        }
+    ]
+}

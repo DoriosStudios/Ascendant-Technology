@@ -42,6 +42,17 @@
           "size": [126, 18],
           "controls": [
             {
+              "at_tingstanium_dust_toggle@uc.infuser_recipe_toggle": {
+                "anchor_from": "top_left",
+                "anchor_to": "top_left",
+                "$toggle_index": 3004,
+                "$toggle_hover_text": "item.utilitycraft:tingstanium_dust",
+                "$toggle_control_name": "at_tingstanium_dust_recipe",
+                "$recipe_icon": "textures/items/ores/tingstanium_dust",
+                "offset": [0, 0]
+              }
+            },
+            {
               "at_stabilized_obsidian_dust_toggle@uc.infuser_recipe_toggle": {
                 "anchor_from": "top_left",
                 "anchor_to": "top_left",
@@ -49,7 +60,7 @@
                 "$toggle_hover_text": "item.utilitycraft:stabilized_obsidian_dust",
                 "$toggle_control_name": "at_stabilized_obsidian_dust_recipe",
                 "$recipe_icon": "textures/items/dusts/stabilized_obsidian_dust",
-                "offset": [0, 0]
+                "offset": [18, 0]
               }
             },
             {
@@ -60,7 +71,7 @@
                 "$toggle_hover_text": "tile.crying_obsidian.name",
                 "$toggle_control_name": "at_crying_obsidian_recipe",
                 "$recipe_icon": "textures/blocks/crying_obsidian",
-                "offset": [18, 0]
+                "offset": [36, 0]
               }
             },
             {
@@ -71,7 +82,7 @@
                 "$toggle_hover_text": "item.utilitycraft:way_chip",
                 "$toggle_control_name": "at_way_chip_recipe",
                 "$recipe_icon": "textures/items/machinery/way_chip_anchored_v2",
-                "offset": [36, 0]
+                "offset": [54, 0]
               }
             },
             {
@@ -82,7 +93,7 @@
                 "$toggle_hover_text": "item.utilitycraft:absolute_chip",
                 "$toggle_control_name": "at_absolute_chip_recipe",
                 "$recipe_icon": "textures/items/machinery/absolute_chip",
-                "offset": [36, 0]
+                "offset": [72, 0]
               }
             }
           ]
@@ -96,6 +107,36 @@
     "anchor_to": "center",
     "size": [80, 108],
     "controls": [
+      {
+        "at_tingstanium_dust_panel@uc.recipe_panel": {
+          "$recipe_control_name": "at_tingstanium_dust_recipe",
+          "controls": [
+            {
+              "catalyst@uc.infuser_recipe_catalyst": {
+                "$slot_item_texture": "textures/items/ores/titanium_dust",
+                "$slot_hover_text": "item.utilitycraft:titanium_dust",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "input@uc.infuser_recipe_input": {
+                "$slot_item_texture": "textures/items/ores/tungsten_dust",
+                "$slot_hover_text": "item.utilitycraft:tungsten_dust",
+                "$has_slot_hover": true
+              }
+            },
+            {
+              "output@uc.infuser_recipe_output": {
+                "$slot_item_texture": "textures/items/ores/tingstanium_dust",
+                "$slot_hover_text": "item.utilitycraft:tingstanium_dust",
+                "$has_slot_hover": true,
+                "$slot_count_text": "2",
+                "$has_slot_count": true
+              }
+            }
+          ]
+        }
+      },
       {
         "at_stabilized_obsidian_dust_panel@uc.recipe_panel": {
           "$recipe_control_name": "at_stabilized_obsidian_dust_recipe",

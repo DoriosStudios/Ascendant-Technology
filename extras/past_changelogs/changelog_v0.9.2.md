@@ -227,10 +227,12 @@ This update brings the Compactor and Decompactor, Universal transportation block
 - Freezing recipes
     - Cryo Chamber and Cryo Freezer now use the same recipes.
 - Cryofluid generation
-    - Cryo Chamber and Cryofluid Synthesizer now use the same generation settings and catalyst list.
+    - Cryo Chamber and Cryofluid Synthesizer now accept Titanium and Lapis forms through all compressed block tiers, valued from their crafting conversions.
+    - Cryofluid Synthesizer recipes now consume 4 Titanium points and 8 Lapis points.
+    - Cryo Chamber keeps its direct recipe consumption instead of storing resource credits.
 - Stabilization recipes
     - Cryo Chamber and Cryo Stabilizer now use the same recipes.
-- Existing inputs, outputs, costs, processing times, and temperatures were kept during this change.
+- Existing stabilization, cooling, and temperature settings were kept during this change.
 
 ### Decompactor
 - Added reverse recipes for every supported Compactor recipe.

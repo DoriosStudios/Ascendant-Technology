@@ -18,8 +18,13 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 
 ### Cryofluid Generator
 - Converts water into Cryofluid.
-- Requires energy, a titanium catalyst (Titanium or Raw Titanium), and Lapis Lazuli.
-- Consumes 8 Lapis Lazuli per 1000 mB of water processed.
+- Uses direct Titanium and Lapis recipes; it does not convert items into stored
+  point credits.
+- Accepts Titanium nuggets, chunks, dust, raw material, ingots, plates, blocks,
+  raw blocks, and every compressed block tier.
+- Accepts Lapis Lazuli, Lapis Blocks, both Lapis ores, and every compressed
+  Lapis Block tier.
+- Added forms scale from the amount of material used to craft them.
 - Outputs Cryofluid into the dedicated tank.
 > [!NOTE]
 > Cryofluid will be a better coolant for [Heavy Machinery Expansion](https://github.com/doriosstudios/utilitycraft-heavy-machinery) reactors in the future.
@@ -64,9 +69,16 @@ Multifunction thermal stabilizer running three modules in parallel: Cryo Stabili
 - **Input:** Water in the tank.
 - **Output:** Cryofluid in the dedicated tank.
 - **Base conversion:** 1000 mB water → 800 mB Cryofluid (0.8×).
-- **Energy cost:** 32,000 DE per 1000 mB of water.
-- **Limits:** Minimum 100 mB of water, minimum 50 mB of output space, up to 1000 mB processed per tick.
-- **Supplement:** 8 Lapis Lazuli per 1000 mB water processed.
-- **Accepted catalysts:**
-  - **Titanium**: 1000 mB water → 800 mB Cryofluid.
-  - **Raw Titanium**: 1000 mB water → 1600 mB Cryofluid.
+- **Energy cost:** 1,600 DE per cycle.
+- **Inputs:** One configured Titanium recipe and one configured Lapis recipe.
+- **Accepted forms:** Every configured Titanium form from nuggets through the
+  fourth compressed block tier, including raw forms, plus Lapis Lazuli, both
+  ores, blocks, and all four compressed block tiers.
+
+### Cryofluid Synthesizer
+- **Base conversion:** 1000 mB water → 1000 mB Cryofluid.
+- **Energy cost:** 6,000 DE per cycle.
+- **Inputs:** 4 Titanium points and 8 Lapis points, keeping Titanium at half the
+  Lapis requirement.
+- **Accepted forms:** Titanium and Lapis forms through the fourth compressed
+  block tier, valued from their crafting conversions.

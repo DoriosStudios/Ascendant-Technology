@@ -27,9 +27,16 @@ Recipes are split by module: stabilization (Cryo Stabilizer), cooling (Cooling C
 - **Input:** water in the tank.
 - **Output:** Cryofluid in the dedicated tank.
 - **Base conversion:** 1000 mB water → 800 mB Cryofluid (0.8×).
-- **Energy cost:** 32,000 DE per 1000 mB of water.
-- **Limits:** minimum 100 mB of water, minimum 50 mB of output space, up to 1000 mB processed per tick.
-- **Supplement:** 8 Lapis Lazuli or 16 Lapis Lazuli Dust per 1000 mB water processed.
-- **Accepted catalysts:**
-  - Titanium: 1000 mB water → 800 mB Cryofluid.
-  - Raw Titanium: 1000 mB water → 1600 mB Cryofluid.
+- **Energy cost:** 1,600 DE per cycle.
+- **Inputs:** One configured Titanium recipe and one configured Lapis recipe.
+- **Accepted forms:** Titanium nuggets, chunks, dust, raw material, ingots,
+  plates, blocks and compressed blocks; Lapis Lazuli, Lapis ores, blocks and
+  compressed blocks. These remain direct recipes rather than stored point
+  credits, with added forms scaled from their crafting conversions.
+
+## Cryofluid Synthesizer
+- **Base conversion:** 1000 mB water → 1000 mB Cryofluid.
+- **Energy cost:** 6,000 DE per cycle.
+- **Inputs:** 4 Titanium points and 8 Lapis points.
+- **Accepted forms:** Titanium and Lapis forms through the fourth compressed
+  block tier, valued from their crafting conversions.

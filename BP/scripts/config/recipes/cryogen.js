@@ -3,6 +3,36 @@
 const catalystsByInput = new Map();
 const lapisSourcesByInput = new Map();
 
+const cryogenTitaniumValues = Object.freeze({
+    "utilitycraft:titanium_nugget": 1,
+    "utilitycraft:titanium_dust": 4,
+    "utilitycraft:titanium_chunk": 4,
+    "utilitycraft:raw_titanium": 16,
+    "utilitycraft:titanium": 8,
+    "utilitycraft:titanium_plate": 8,
+    "utilitycraft:raw_titanium_block": 144,
+    "utilitycraft:titanium_block": 72,
+    "utilitycraft:compressed_raw_titanium_block": 1_296,
+    "utilitycraft:compressed_titanium_block": 648,
+    "utilitycraft:compressed_raw_titanium_block_2": 11_664,
+    "utilitycraft:compressed_titanium_block_2": 5_832,
+    "utilitycraft:compressed_raw_titanium_block_3": 104_976,
+    "utilitycraft:compressed_titanium_block_3": 52_488,
+    "utilitycraft:compressed_raw_titanium_block_4": 944_784,
+    "utilitycraft:compressed_titanium_block_4": 472_392,
+});
+
+const cryogenLapisValues = Object.freeze({
+    "minecraft:lapis_lazuli": 1,
+    "minecraft:lapis_ore": 2,
+    "minecraft:deepslate_lapis_ore": 5,
+    "minecraft:lapis_block": 9,
+    "utilitycraft:compressed_lapislazuli_block": 81,
+    "utilitycraft:compressed_lapislazuli_block_2": 729,
+    "utilitycraft:compressed_lapislazuli_block_3": 6_561,
+    "utilitycraft:compressed_lapislazuli_block_4": 59_049,
+});
+
 export const cryogenGeneration = {
     lapis: { id: "minecraft:lapis_lazuli", amount: 8 },
     cost: 1600,
@@ -10,14 +40,7 @@ export const cryogenGeneration = {
 };
 
 export const cryogenLapisDefinitions = {
-    "minecraft:lapis_lazuli": {
-        input: { id: "minecraft:lapis_lazuli", amount: 8 },
-        yieldMultiplier: 1,
-    },
-    "minecraft:lapis_block": {
-        input: { id: "minecraft:lapis_block", amount: 1 },
-        yieldMultiplier: 1.125,
-    },
+    ...createLapisDefinitions(cryogenLapisValues),
     "minecraft:lapis_ore": {
         input: { id: "minecraft:lapis_ore", amount: 4 },
         yieldMultiplier: 0.75,
@@ -29,11 +52,7 @@ export const cryogenLapisDefinitions = {
 };
 
 export const cryogenCatalystDefinitions = {
-    "utilitycraft:titanium": {
-        input: { id: "utilitycraft:titanium", amount: 1 },
-        water: 1000,
-        cryofluid: 800,
-    },
+    ...createTitaniumDefinitions(cryogenTitaniumValues),
     "utilitycraft:raw_titanium": {
         input: { id: "utilitycraft:raw_titanium", amount: 1 },
         water: 1000,
@@ -42,7 +61,7 @@ export const cryogenCatalystDefinitions = {
     "utilitycraft:raw_titanium_block": {
         input: { id: "utilitycraft:raw_titanium_block", amount: 1 },
         water: 8000,
-        cryofluid: 12800,
+        cryofluid: 25600,
     },
     "utilitycraft:titanium_block": {
         input: { id: "utilitycraft:titanium_block", amount: 1 },
@@ -73,22 +92,12 @@ export const cryogenSynthesisRecipe = Object.freeze({
     cryofluid: 1_000,
     inputs: Object.freeze({
         titanium: Object.freeze({
-            requiredValue: 8,
-            alternatives: Object.freeze({
-                "utilitycraft:titanium": 8,
-                "utilitycraft:titanium_plate": 8,
-                "utilitycraft:raw_titanium": 4,
-                "utilitycraft:titanium_dust": 2,
-                "utilitycraft:titanium_chunk": 2,
-                "utilitycraft:titanium_nugget": 1,
-            }),
+            requiredValue: 4,
+            alternatives: cryogenTitaniumValues,
         }),
         lapis: Object.freeze({
-            requiredValue: 1,
-            alternatives: Object.freeze({
-                "minecraft:lapis_lazuli": 1,
-                "minecraft:lapis_block": 9,
-            }),
+            requiredValue: 8,
+            alternatives: cryogenLapisValues,
         }),
     }),
 });
@@ -97,3 +106,20 @@ export function getCryogenSynthesisInputValue(group, typeId) {
     return Math.max(0, Number(group?.alternatives?.[typeId]) || 0);
 }
 
+function createTitaniumDefinitions(values) {
+    return Object.fromEntries(Object.entries(values).map(([id, value]) => {
+        const batches = Math.max(1, value / 8);
+        return [id, {
+            input: { id, amount: Math.max(1, Math.ceil(8 / value)) },
+            water: Math.round(1_000 * batches),
+            cryofluid: Math.round(800 * batches),
+        }];
+    }));
+}
+
+function createLapisDefinitions(values) {
+    return Object.fromEntries(Object.entries(values).map(([id, value]) => [id, {
+        input: { id, amount: Math.max(1, Math.ceil(8 / value)) },
+        yieldMultiplier: Math.max(1, value / 8),
+    }]));
+}

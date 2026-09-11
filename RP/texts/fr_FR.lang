@@ -68,6 +68,7 @@ tile.utilitycraft:end_aetherium_ore.name=Minerai d'Aetherium de l'End\n§o§9@UC
 ### Aetherium
 item.utilitycraft:aetherium_dust=Poudre d'Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium=Lingot d'Aetherium\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_nugget=Pépite d'Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_shard=Fragment d'Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:refined_aetherium_crystal=Cristal d'Aetherium Raffiné\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_helmet=Casque en Aetherium\n§o§9@UC: Ascendant Technology

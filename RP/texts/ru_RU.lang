@@ -68,6 +68,7 @@ tile.utilitycraft:end_aetherium_ore.name=End Aetherium Ore\n§o§9@UC: Ascendant
 ### Aetherium
 item.utilitycraft:aetherium_dust=Пыль эфириума\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium=Слиток Эфириума\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_nugget=Самородок Эфириума\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_shard=Осколок Эфириума\n§o§9@UC: Ascendant Technology
 item.utilitycraft:refined_aetherium_crystal=Очищенный кристалл Эфириума\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_helmet=Aetherium Helmet\n§o§9@UC: Ascendant Technology

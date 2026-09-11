@@ -54,6 +54,7 @@ export const COMPACTOR_CONFIG = Object.freeze({
             "utilitycraft:compressed_tungsten_block_4",
         ],
         [
+            "utilitycraft:aetherium_nugget",
             "utilitycraft:aetherium",
             "utilitycraft:aetherium_block",
             "utilitycraft:compressed_aetherium_block",

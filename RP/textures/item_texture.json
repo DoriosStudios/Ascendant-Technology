@@ -17,6 +17,9 @@
         "utilitycraft_aetherium": {
             "textures": "textures/items/ores/aetherium_ingot"
         },
+        "utilitycraft_aetherium_nugget": {
+            "textures": "textures/items/ores/aetherium_nugget"
+        },
         "utilitycraft_aetherium_dust": {
             "textures": "textures/items/ores/aetherium_dust"
         },

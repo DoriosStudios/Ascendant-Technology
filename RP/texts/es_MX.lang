@@ -188,6 +188,7 @@ tile.utilitycraft:end_aetherium_ore.name=Mineral de Aetherium del End\n§o§9@UC
 ## Ítems
 item.utilitycraft:aetherium_dust=Polvo de Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium=Lingote de Aetherium\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_nugget=Pepita de Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium=Lingote de Titanio\n§o§9@UC: Ascendant Technology
 item.utilitycraft:raw_titanium=Titanio en bruto\n§o§9@UC: Ascendant Technology
 item.utilitycraft:titanium_nugget=Pepita de Titanio\n§o§9@UC: Ascendant Technology

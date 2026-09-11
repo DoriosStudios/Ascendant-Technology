@@ -20,7 +20,7 @@ shapeless crafting recipe, including ingredient counts and result quantities.
 Geodes have no compaction recipe: UtilityCraft opens them in the Crusher.
 Dusts retain their existing machine-specific processing.
 
-The steel and energized-iron chains now continue from nugget to ingot to block.
+The steel, energized-iron and Aetherium metal chains continue from nugget to ingot to block.
 Raw steel, raw energized iron and silicon also consolidate into their respective
 blocks at 9:1. The pre-existing compressed-block recipes continue those chains.
 Nugget-to-ingot steps cost 800 DE; ingot-to-block steps cost 7,200 DE, including

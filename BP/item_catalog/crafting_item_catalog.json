@@ -222,6 +222,7 @@
                         "items": [
                             "utilitycraft:aetherium_block",
                             "utilitycraft:aetherium",
+                            "utilitycraft:aetherium_nugget",
                             "utilitycraft:aetherium_shard",
                             "utilitycraft:aetherium_crystal",
                             "utilitycraft:aetherium_crystal_dust",

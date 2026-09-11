@@ -1,0 +1,23 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:aetherium_from_nuggets"
+        },
+        "tags": ["crafting_table"],
+        "pattern": ["AAA", "AAA", "AAA"],
+        "key": {
+            "A": {
+                "item": "utilitycraft:aetherium_nugget"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:aetherium"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:aetherium_nugget"
+            }
+        ]
+    }
+}

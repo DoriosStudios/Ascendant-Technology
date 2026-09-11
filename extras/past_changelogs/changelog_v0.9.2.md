@@ -63,6 +63,8 @@ This update brings the Compactor and Decompactor, Universal transportation block
 
 ## ITEMS
 ### Aetherium
+- Added **Aetherium Nuggets** for the metallic Aetherium progression.
+    - Nine Nuggets form one Aetherium Ingot, and one Ingot can be unpacked into nine Nuggets.
 - Added **Aetherium Shards**.
     - Four Aetherium Shards can be combined into one crystal.
     - Used as the starting material for Refined Aetherium Crystals.

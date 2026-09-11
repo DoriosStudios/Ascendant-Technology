@@ -14,6 +14,8 @@ using `aetherium_crystal.png`. Loose fragments retain
 | 1 End / Deepslate Aetherium Ore | Crusher / Pulverizer | 2 shards |
 | 4 shards | Crafting table / Press / Compactor | 1 crystal |
 | 1 crystal | Crafting table / Decompactor | 4 shards |
+| 9 metal nuggets | Crafting table / Compactor | 1 metal ingot |
+| 1 metal ingot | Crafting table / Decompactor | 9 metal nuggets |
 | 2 shards | Crusher / Pulverizer | 1 crystal dust |
 | 1 crystal | Crusher / Pulverizer | 2 crystal dust |
 | 4 crystals | Crafting table / Press / Compactor | 1 crystal block |

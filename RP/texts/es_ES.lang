@@ -40,6 +40,7 @@ item.utilitycraft:aetherium_crystal_seeds=Semillas de Cristal de Aetherium\n§o�
 tile.utilitycraft:aetherium_crystal_seeds.name=Semillas de Cristal de Aetherium\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:pink_soil.name=§dTierra Rosa\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_crystal=Cristal de Aetherium\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_nugget=Pepita de Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_crystal_dust=Polvo de Cristal de Aetherium\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:end_sand.name=Arena del End\n§o§9@UC: Ascendant Technology
 message.ascendant.upgrade.unsupported=This AT machine does not support this upgrade.

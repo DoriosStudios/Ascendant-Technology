@@ -68,6 +68,7 @@ tile.utilitycraft:end_aetherium_ore.name=End Aetherium Ore\n§o§9@UC: Ascendant
 ### Aetherium
 item.utilitycraft:aetherium_dust=エーテリウムの粉\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium=エーテリウムインゴット\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_nugget=エーテリウムナゲット\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_shard=エーテリウムシャード\n§o§9@UC: Ascendant Technology
 item.utilitycraft:refined_aetherium_crystal=精製エーテリウムクリスタル\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_helmet=Aetherium Helmet\n§o§9@UC: Ascendant Technology

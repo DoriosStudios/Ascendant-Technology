@@ -270,6 +270,7 @@ tile.utilitycraft:nether_tungsten_ore.name=Nether Tungsten Ore\n§o§9@UC: Ascen
 ### Aetherium
 item.utilitycraft:aetherium_dust=Aetherium Dust\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium=Aetherium Ingot\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_nugget=Aetherium Nugget\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_shard=Aetherium Shard\n§o§9@UC: Ascendant Technology
 item.utilitycraft:refined_aetherium_crystal=Refined Aetherium Crystal\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_helmet=Aetherium Helmet\n§o§9@UC: Ascendant Technology

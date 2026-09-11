@@ -187,6 +187,7 @@ tile.utilitycraft:nether_tungsten_ore.name=Minério de Tungstênio do Nether\n§
 ### Aetherium
 item.utilitycraft:aetherium_dust=Pó de Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium=Barra de Aetherium\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_nugget=Pepita de Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_shard=Fragmento de Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:refined_aetherium_crystal=Cristal de Aetherium Refinado\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_helmet=Capacete de Aetherium\n§o§9@UC: Ascendant Technology

@@ -636,21 +636,30 @@ tile.utilitycraft:compressed_raw_tungsten_block_3.name=Triple Compressed Raw Tun
 tile.utilitycraft:compressed_raw_tungsten_block_4.name=Quadruple Compressed Raw Tungsten Block\n§o§9@UC: Ascendant Technology
 
 item.utilitycraft:aetherium_crystal=Aetherium-Kristall\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_crystal_dust=Aetheriumkristallstaub\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_storage_cell=§uAetherium-Speicherzelle\n§7- Speicher: §f3200 KB (3276800)\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_storage_part=Aetherium-Speicherkomponente\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:end_sand.name=Endsand\n§o§9@UC: Ascendant Technology
 
 ## AT machine upgrades
-item.utilitycraft:multi_processing_upgrade=§mMehrfachverarbeitungs-Upgrade§7\n- Verarbeitet 1 zusätzlichen\n  Slot je Upgrade.\n- Belegt einen vorhandenen\n  Upgrade-Platz.\n- Maximum: 8 Upgrades.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:multi_processing_upgrade=§mMehrfachverarbeitungs-Upgrade§7\n- Verarbeitet zusätzliche\n  Eingabeslots im selben Zyklus.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:multi_processing_upgrade.name=§mMehrfachverarbeitungs-Upgrade§r
-item.utilitycraft:energy_capacity_upgrade=§bEnergiekapazitäts-Upgrade§7\n- 50% mehr Energiekapazität je\n  Upgrade.\n- Belegt einen vorhandenen\n  Upgrade-Platz.\n- Maximum: 8 Upgrades.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:energy_capacity_upgrade=§bEnergiekapazitäts-Upgrade§7\n- Erhöht die Energiekapazität\n  der Maschine.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:energy_capacity_upgrade.name=§bEnergiekapazitäts-Upgrade§r
-item.utilitycraft:liquid_capacity_upgrade=§pFlüssigkeitskapazitäts-Upgrade§7\n- 50% mehr\n  Flüssigkeitskapazität je\n  Upgrade.\n- Belegt einen vorhandenen\n  Upgrade-Platz.\n- Maximum: 8 Upgrades.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:liquid_capacity_upgrade=§pFlüssigkeitskapazitäts-Upgrade§7\n- Erhöht die Kapazität des\n  Flüssigkeitstanks.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:liquid_capacity_upgrade.name=§pFlüssigkeitskapazitäts-Upgrade§r
-item.utilitycraft:gas_capacity_upgrade=§uGaskapazitäts-Upgrade§7\n- 50% mehr Gaskapazität je\n  Upgrade.\n- Belegt einen vorhandenen\n  Upgrade-Platz.\n- Maximum: 8 Upgrades.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:gas_capacity_upgrade=§uGaskapazitäts-Upgrade§7\n- Erhöht die Kapazität des\n  Gastanks.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:gas_capacity_upgrade.name=§uGaskapazitäts-Upgrade§r
-item.utilitycraft:resource_efficiency_upgrade=§tRessourceneffizienz-Upgrade§7\n- 5% Chance je Upgrade,\n  verbrauchte Ressourcen zu\n  sparen.\n- Belegt einen vorhandenen\n  Upgrade-Platz.\n- Maximum: 8 Upgrades.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:resource_efficiency_upgrade=§tRessourceneffizienz-Upgrade§7\n- Kann beim Verarbeiten eine\n  verbrauchte Zutat erhalten.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:resource_efficiency_upgrade.name=§tRessourceneffizienz-Upgrade§r
+item.utilitycraft:tingstanium_dust=Titanium & Tungsten Dust\n§8Mixed\n§o§9@UC: Ascendant Technology
+item.utilitycraft:titanium_seeds=Titansamen\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:titanium_seeds.name=Titansamen\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_seeds=Wolframsamen\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:tungsten_seeds.name=Wolframsamen\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_crystal_seeds=Aetherium-Kristallsamen\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:aetherium_crystal_seeds.name=Aetherium-Kristallsamen\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:pink_soil.name=§dRosa Erde\n§o§9@UC: Ascendant Technology
 message.ascendant.upgrade.unsupported=This AT machine does not support this upgrade.
 message.ascendant.upgrade.failed=Could not install the upgrade.
 message.ascendant.upgrade.occupied=Free an existing upgrade slot first.

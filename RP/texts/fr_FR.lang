@@ -637,21 +637,30 @@ tile.utilitycraft:compressed_raw_tungsten_block_3.name=Triple Compressed Raw Tun
 tile.utilitycraft:compressed_raw_tungsten_block_4.name=Quadruple Compressed Raw Tungsten Block\n§o§9@UC: Ascendant Technology
 
 item.utilitycraft:aetherium_crystal=Cristal d’Aetherium\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_crystal_dust=Poussière de cristal d’Aetherium\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_storage_cell=§uCellule de stockage d’Aetherium\n§7- Stockage: §f3200 KB (3276800)\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_storage_part=Composant de stockage d’Aetherium\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:end_sand.name=Sable de l’End\n§o§9@UC: Ascendant Technology
 
 ## AT machine upgrades
-item.utilitycraft:multi_processing_upgrade=§mAmélioration de traitement multiple§7\n- Traite 1 emplacement\n  supplémentaire par\n  amélioration.\n- Occupe un emplacement\n  d’amélioration existant.\n- Maximum : 8 améliorations.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:multi_processing_upgrade=§mAmélioration de traitement multiple§7\n- Traite plus d'entrées pendant\n  le même cycle.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:multi_processing_upgrade.name=§mAmélioration de traitement multiple§r
-item.utilitycraft:energy_capacity_upgrade=§bAmélioration de capacité énergétique§7\n- Ajoute 50% de capacité\n  énergétique par amélioration.\n- Occupe un emplacement\n  d’amélioration existant.\n- Maximum : 8 améliorations.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:energy_capacity_upgrade=§bAmélioration de capacité énergétique§7\n- Augmente la capacité\n  énergétique de la machine.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:energy_capacity_upgrade.name=§bAmélioration de capacité énergétique§r
-item.utilitycraft:liquid_capacity_upgrade=§pAmélioration de capacité des liquides§7\n- Ajoute 50% de capacité des\n  liquides par amélioration.\n- Occupe un emplacement\n  d’amélioration existant.\n- Maximum : 8 améliorations.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:liquid_capacity_upgrade=§pAmélioration de capacité des liquides§7\n- Augmente la capacité du\n  réservoir de liquide.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:liquid_capacity_upgrade.name=§pAmélioration de capacité des liquides§r
-item.utilitycraft:gas_capacity_upgrade=§uAmélioration de capacité des gaz§7\n- Ajoute 50% de capacité des\n  gaz par amélioration.\n- Occupe un emplacement\n  d’amélioration existant.\n- Maximum : 8 améliorations.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:gas_capacity_upgrade=§uAmélioration de capacité des gaz§7\n- Augmente la capacité du\n  réservoir de gaz.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:gas_capacity_upgrade.name=§uAmélioration de capacité des gaz§r
-item.utilitycraft:resource_efficiency_upgrade=§tAmélioration d’économie de ressources§7\n- 5% de chance par amélioration\n  de préserver les ressources\n  consommées.\n- Occupe un emplacement\n  d’amélioration existant.\n- Maximum : 8 améliorations.\n§o§9@UC: Ascendant Technology
+item.utilitycraft:resource_efficiency_upgrade=§tAmélioration d’économie de ressources§7\n- Peut préserver un ingrédient\n  consommé pendant le traitement.\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:resource_efficiency_upgrade.name=§tAmélioration d’économie de ressources§r
+item.utilitycraft:tingstanium_dust=Titanium & Tungsten Dust\n§8Mixed\n§o§9@UC: Ascendant Technology
+item.utilitycraft:titanium_seeds=Graines de titane\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:titanium_seeds.name=Graines de titane\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_seeds=Graines de tungstène\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:tungsten_seeds.name=Graines de tungstène\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_crystal_seeds=Graines de cristal d’Aetherium\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:aetherium_crystal_seeds.name=Graines de cristal d’Aetherium\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:pink_soil.name=§dSol rose\n§o§9@UC: Ascendant Technology
 message.ascendant.upgrade.unsupported=This AT machine does not support this upgrade.
 message.ascendant.upgrade.failed=Could not install the upgrade.
 message.ascendant.upgrade.occupied=Free an existing upgrade slot first.

@@ -636,21 +636,30 @@ tile.utilitycraft:compressed_raw_tungsten_block_3.name=Triple Compressed Raw Tun
 tile.utilitycraft:compressed_raw_tungsten_block_4.name=Quadruple Compressed Raw Tungsten Block\n§o§9@UC: Ascendant Technology
 
 item.utilitycraft:aetherium_crystal=エーテリウムクリスタル\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_crystal_dust=エーテリウムクリスタルダスト\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_storage_cell=§uエーテリウムストレージセル\n§7- ストレージ: §f3200 KB (3276800)\n§o§9@UC: Ascendant Technology
 item.utilitycraft:aetherium_storage_part=エーテリウムストレージ部品\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:end_sand.name=エンドの砂\n§o§9@UC: Ascendant Technology
 
 ## AT machine upgrades
-item.utilitycraft:multi_processing_upgrade=§m並列処理アップグレード§7\n- 1個につき処理スロットが1つ増加。\n- 既存のアップグレードスロットを使用。\n- 最大8個まで。\n§o§9@UC: Ascendant Technology
+item.utilitycraft:multi_processing_upgrade=§m並列処理アップグレード§7\n- 同じサイクルで追加の入力\n  スロットを処理します。\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:multi_processing_upgrade.name=§m並列処理アップグレード§r
-item.utilitycraft:energy_capacity_upgrade=§bエネルギー容量アップグレード§7\n- 1個につきエネルギー容量が50%増加。\n- 既存のアップグレードスロットを使用。\n- 最大8個まで。\n§o§9@UC: Ascendant Technology
+item.utilitycraft:energy_capacity_upgrade=§bエネルギー容量アップグレード§7\n- マシンのエネルギー容量を\n  増加させます。\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:energy_capacity_upgrade.name=§bエネルギー容量アップグレード§r
-item.utilitycraft:liquid_capacity_upgrade=§p液体容量アップグレード§7\n- 1個につき液体容量が50%増加。\n- 既存のアップグレードスロットを使用。\n- 最大8個まで。\n§o§9@UC: Ascendant Technology
+item.utilitycraft:liquid_capacity_upgrade=§p液体容量アップグレード§7\n- 液体タンクの容量を\n  増加させます。\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:liquid_capacity_upgrade.name=§p液体容量アップグレード§r
-item.utilitycraft:gas_capacity_upgrade=§u気体容量アップグレード§7\n- 1個につき気体容量が50%増加。\n- 既存のアップグレードスロットを使用。\n- 最大8個まで。\n§o§9@UC: Ascendant Technology
+item.utilitycraft:gas_capacity_upgrade=§u気体容量アップグレード§7\n- ガスタンクの容量を\n  増加させます。\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:gas_capacity_upgrade.name=§u気体容量アップグレード§r
-item.utilitycraft:resource_efficiency_upgrade=§t資源節約アップグレード§7\n- 1個につき消費資源を節約する確率が5%増加。\n- 既存のアップグレードスロットを使用。\n- 最大8個まで。\n§o§9@UC: Ascendant Technology
+item.utilitycraft:resource_efficiency_upgrade=§t資源節約アップグレード§7\n- 処理時に消費する材料を1つ\n  保持することがあります。\n§o§9@UC: Ascendant Technology
 upgrade.utilitycraft:resource_efficiency_upgrade.name=§t資源節約アップグレード§r
+item.utilitycraft:tingstanium_dust=Titanium & Tungsten Dust\n§8Mixed\n§o§9@UC: Ascendant Technology
+item.utilitycraft:titanium_seeds=チタンの種\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:titanium_seeds.name=チタンの種\n§o§9@UC: Ascendant Technology
+item.utilitycraft:tungsten_seeds=タングステンの種\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:tungsten_seeds.name=タングステンの種\n§o§9@UC: Ascendant Technology
+item.utilitycraft:aetherium_crystal_seeds=エーテリウムクリスタルの種\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:aetherium_crystal_seeds.name=エーテリウムクリスタルの種\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:pink_soil.name=§dピンクの土\n§o§9@UC: Ascendant Technology
 message.ascendant.upgrade.unsupported=This AT machine does not support this upgrade.
 message.ascendant.upgrade.failed=Could not install the upgrade.
 message.ascendant.upgrade.occupied=Free an existing upgrade slot first.

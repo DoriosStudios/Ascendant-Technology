@@ -400,6 +400,8 @@ check(
 );
 const alloy = catalyst["utilitycraft:aetherium_ingot"];
 const shardAlloy = catalyst["utilitycraft:aetherium_ingot_from_shards"];
+const mixedAlloy = catalyst["utilitycraft:aetherium_ingot_from_mixed_dust"];
+const mixedShardAlloy = catalyst["utilitycraft:aetherium_ingot_from_mixed_dust_and_shards"];
 check(
     alloy.input.id === "minecraft:netherite_ingot" &&
         alloy.input.amount === 1 &&
@@ -408,17 +410,22 @@ check(
         alloy.catalysts.some((entry) => entry.id === "utilitycraft:ender_pearl_dust" && entry.amount === 8) &&
         alloy.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_crystal" && entry.amount === 2) &&
         shardAlloy.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_shard" && entry.amount === 8) &&
-        alloy.cost === shardAlloy.cost &&
+        mixedAlloy.catalysts.some((entry) => entry.id === "utilitycraft:tingstanium_dust" && entry.amount === 16) &&
+        mixedAlloy.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_crystal" && entry.amount === 2) &&
+        mixedShardAlloy.catalysts.some((entry) => entry.id === "utilitycraft:tingstanium_dust" && entry.amount === 16) &&
+        mixedShardAlloy.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_shard" && entry.amount === 8) &&
+        [shardAlloy, mixedAlloy, mixedShardAlloy].every((entry) => entry.cost === alloy.cost) &&
         alloy.fluid.type === "cryofluid" &&
         alloy.fluid.amount === 1600 &&
-        alloy.fluid.amount === shardAlloy.fluid.amount,
-    "Both alloy routes follow the titanium, tungsten, crystal and cryofluid progression",
+        [shardAlloy, mixedAlloy, mixedShardAlloy].every((entry) => entry.fluid.amount === alloy.fluid.amount),
+    "Original and mixed-dust alloy routes remain available",
 );
 const hyper = catalyst["utilitycraft:hyper_processing_upgrade"];
+const hyperAlternative = catalyst["utilitycraft:hyper_processing_upgrade_alternative"];
 check(
-    hyper.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_dust") &&
-        hyper.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_crystal_dust"),
-    "Hyper Processing consumes both metallic and crystalline Aetherium dust",
+    hyper.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_crystal_dust") &&
+        hyperAlternative.catalysts.some((entry) => entry.id === "utilitycraft:aetherium_dust"),
+    "Hyper Processing accepts crystalline or metallic Aetherium dust",
 );
 for (const [material, amount] of Object.entries({
     aetherium: 250,
@@ -458,6 +465,19 @@ check(
     "Crystal block texture resolves",
 );
 const crafter = (await load("BP/scripts/config/recipes/crafter.js")).crafterRecipeAdditions;
+const infuser = (await load("BP/scripts/config/recipes/added/infuser.js")).infuserRecipeAdditions;
+const mixedDustCraft = json("BP/recipes/items/materials/tingstanium_dust.json")[
+    "minecraft:recipe_shapeless"
+];
+check(
+    mixedDustCraft.ingredients.some((entry) => entry.item === "utilitycraft:titanium_dust") &&
+        mixedDustCraft.ingredients.some((entry) => entry.item === "utilitycraft:tungsten_dust") &&
+        mixedDustCraft.result.item === "utilitycraft:tingstanium_dust" &&
+        mixedDustCraft.result.count === 2 &&
+        crafter["titanium_dust,tungsten_dust,air,air,air,air,air,air,air"]?.amount === 2 &&
+        infuser["utilitycraft:titanium_dust|utilitycraft:tungsten_dust"]?.amount === 2,
+    "Mixed dust preserves both inputs through crafting, Assembler and Infuser",
+);
 const compactor = await load("BP/scripts/config/recipes/compactor.js");
 const crystalCraft = json("BP/recipes/items/materials/aetherium_crystal.json")[
     "minecraft:recipe_shaped"
@@ -604,8 +624,8 @@ check(
 );
 check(
     previewText.includes("cw_hyper_processing_recipe") &&
-        previewText.includes("catalyst_4@catalyst_weaver.recipe_catalyst_4"),
-    "Hyper Processing preview includes both Aetherium dust types",
+        previewText.includes("infuser_aetherium_dust_catalyst_flipbook"),
+    "Hyper Processing preview cycles both accepted Aetherium dusts",
 );
 const crusherPreview = JSON.stringify(json("RP/ui/recipes/crusher.json"));
 check(

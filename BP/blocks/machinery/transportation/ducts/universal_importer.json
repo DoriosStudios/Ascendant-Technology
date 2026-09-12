@@ -22,7 +22,7 @@
             }
         },
         "components": {
-            // "utilitycraft:multi_importer": {},
+            "utilitycraft:multi_importer": {},
             "utilitycraft:upgradeable": {
                 "type": "persistent",
                 "filter_max": 1

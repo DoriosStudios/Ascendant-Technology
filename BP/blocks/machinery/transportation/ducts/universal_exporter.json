@@ -22,7 +22,7 @@
             }
         },
         "components": {
-            // "utilitycraft:multi_exporter": {},
+            "utilitycraft:multi_exporter": {},
             "utilitycraft:upgradeable": {
                 "type": "persistent",
                 "speed_max": 4,

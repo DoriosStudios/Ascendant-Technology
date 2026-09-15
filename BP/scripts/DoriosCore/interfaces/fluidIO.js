@@ -33,6 +33,7 @@ export const DISABLED_FLUID_IO_MODE = "disabled";
  * @typedef {object} ComplexFluidConfig
  * @property {1} version
  * @property {"complex"} type
+ * @property {"explicit"} [networkFaces] Absent preserves legacy network access.
  * @property {number[]} anyInputIndices
  * @property {number[]} anyOutputIndices
  * @property {FaceIndexConfig} inputConfig
@@ -50,6 +51,7 @@ export const DISABLED_FLUID_IO_MODE = "disabled";
 
 /**
  * @typedef {object} FluidIODefinition
+ * @property {"explicit"} [networkFaces] Applied only when creating a new policy.
  * @property {number[]} anyInputIndices
  * @property {number[]} anyOutputIndices
  * @property {FluidIOMode[]} modes
@@ -186,7 +188,7 @@ export function ensureFluidIOConfig(entity, blockTypeId) {
   }
 
   validatedEntities.delete(entity.id);
-  publishConfig(entity, createEmptyConfig(definition), blockTypeId, definitionRevision);
+  publishConfig(entity, createEmptyConfig({ ...definition, networkFaces: status === "basic" ? definition.networkFaces : undefined }), blockTypeId, definitionRevision);
   return false;
 }
 
@@ -317,6 +319,7 @@ export function normalizeFluidConfig(value, count) {
     return {
       version: FLUID_CONFIG_VERSION,
       type: "complex",
+      ...(value.networkFaces === "explicit" ? { networkFaces: "explicit" } : {}),
       anyInputIndices: normalizeIndices(value.anyInputIndices, count, "anyInputIndices"),
       anyOutputIndices: normalizeIndices(value.anyOutputIndices, count, "anyOutputIndices"),
       inputConfig: normalizeFaceConfig(value.inputConfig, count, "inputConfig"),
@@ -339,6 +342,7 @@ export function cloneFluidConfig(config) {
   return {
     version: FLUID_CONFIG_VERSION,
     type: "complex",
+    ...(config.networkFaces === "explicit" ? { networkFaces: "explicit" } : {}),
     anyInputIndices: [...config.anyInputIndices],
     anyOutputIndices: [...config.anyOutputIndices],
     inputConfig: cloneFaceConfig(config.inputConfig),
@@ -353,7 +357,7 @@ function normalizeDefinition(value) {
   const anyOutputIndices = normalizeDeclaredIndices(value.anyOutputIndices, "liquids.anyOutputIndices");
   const modes = normalizeModes(value.modes);
   const initialModes = normalizeInitialModes(value.initialModes, modes, "liquids.initialModes");
-  return { anyInputIndices, anyOutputIndices, modes, initialModes };
+  return { anyInputIndices, anyOutputIndices, modes, initialModes, ...(value.networkFaces === "explicit" ? { networkFaces: "explicit" } : {}), };
 }
 
 /** @param {unknown} value @param {FluidIOMode[]} modes @param {string} path @returns {Partial<Record<FluidFace,string>>} */
@@ -500,6 +504,7 @@ function createEmptyConfig(definition) {
   const config = /** @type {ComplexFluidConfig} */ ({
     version: FLUID_CONFIG_VERSION,
     type: "complex",
+    ...(definition.networkFaces === "explicit" ? { networkFaces: "explicit" } : {}),
     anyInputIndices: [...definition.anyInputIndices],
     anyOutputIndices: [...definition.anyOutputIndices],
     inputConfig: {},
@@ -520,6 +525,7 @@ function reconcileConfig(current, definition, entity) {
   const config = /** @type {ComplexFluidConfig} */ ({
     version: FLUID_CONFIG_VERSION,
     type: "complex",
+    ...(current.networkFaces === "explicit" ? { networkFaces: "explicit" } : {}),
     anyInputIndices: [...definition.anyInputIndices],
     anyOutputIndices: [...definition.anyOutputIndices],
     inputConfig: {},
@@ -581,6 +587,7 @@ function getModeSignature(inputs, outputs) {
 /** @param {ComplexFluidConfig} config */
 function getConfigSignature(config) {
   return JSON.stringify({
+    ...(config.networkFaces === "explicit" ? { networkFaces: "explicit" } : {}),
     anyInputIndices: config.anyInputIndices,
     anyOutputIndices: config.anyOutputIndices,
     faces: DIRECTIONS.map((direction) => {
@@ -593,6 +600,7 @@ function getConfigSignature(config) {
 /** @param {FluidIODefinition} definition */
 function cloneDefinition(definition) {
   return {
+    ...(definition.networkFaces === "explicit" ? { networkFaces: "explicit" } : {}),
     anyInputIndices: [...definition.anyInputIndices],
     anyOutputIndices: [...definition.anyOutputIndices],
     initialModes: { ...definition.initialModes },

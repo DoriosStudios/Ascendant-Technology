@@ -10,6 +10,27 @@
   Vector3,
 } from "@minecraft/server";
 
+/** Durability-backed energy. Callers must save the modified ItemStack. */
+export class ItemEnergyStorage {
+  static TAG: string;
+  static ENERGY_PER_POINT: number;
+  static MARGIN: number;
+  constructor(item: ItemStack);
+  item: ItemStack;
+  isValid: boolean;
+  getCap(): number;
+  get(): number;
+  getFreeSpace(): number;
+  /** Set charge, rounded down to complete durability points. */
+  set(amount: number): number;
+  /** Return the actual energy accepted in complete points. */
+  add(amount: number): number;
+  /** Return the energy debited, rounded up to complete points. */
+  consume(amount: number): number;
+  /** Refresh the durability bar/lore and report whether anything changed. */
+  display(): boolean;
+}
+
 /** Axis/facing names supported by UtilityCraft rotation states. */
 export type DirectionName = "up" | "down" | "north" | "south" | "east" | "west";
 /** Horizontal direction names used by vanilla cardinal rotation states. */
@@ -278,6 +299,8 @@ export interface ItemIOModeConfig {
 
 /** Static item policy registered for one machine block type. */
 export interface ItemIOGroupConfig {
+  /** Absent preserves legacy network access. Only new policies opt in. */
+  networkFaces?: "explicit";
   /** Optional six UI button slots, explicit or as an inclusive start/end range. */
   buttonSlots?: number[] | [number, number];
   /** Explicit insertion fallback used when no source face is known. */
@@ -302,6 +325,8 @@ export interface FluidIOModeConfig {
 
 /** Static indexed-fluid policy registered for one machine block type. */
 export interface LiquidIOGroupConfig {
+  /** Absent preserves legacy network access. Only new policies opt in. */
+  networkFaces?: "explicit";
   /** Optional six UI button slots, explicit or as an inclusive start/end range. */
   buttonSlots?: number[] | [number, number];
   /** Explicit insertion fallback used when no source face is known. */
@@ -323,6 +348,8 @@ export interface GasIOModeConfig {
 
 /** Static indexed-gas policy registered for one machine block type. */
 export interface GasIOGroupConfig {
+  /** Absent preserves legacy network access. Only new policies opt in. */
+  networkFaces?: "explicit";
   buttonSlots?: number[] | [number, number];
   anyInputIndices: number[];
   anyOutputIndices: number[];
@@ -465,6 +492,8 @@ export interface SimpleFluidConfig {
 
 /** Face-aware fluid policy stored under `utilitycraft:io_config.liquids`. */
 export interface ComplexFluidConfig {
+  /** Absent preserves legacy network access. Only new policies opt in. */
+  networkFaces?: "explicit";
   version: 1;
   type: "complex";
   anyInputIndices: number[];
@@ -484,6 +513,8 @@ export interface FluidIOMode {
 
 /** Normalized static fluid policy returned by the registration API. */
 export interface FluidIODefinition {
+  /** Absent preserves legacy network access. Only new policies opt in. */
+  networkFaces?: "explicit";
   anyInputIndices: number[];
   anyOutputIndices: number[];
   modes: FluidIOMode[];
@@ -559,6 +590,8 @@ export interface SimpleGasConfig {
 
 /** Face-aware gas policy stored under `utilitycraft:io_config.gases`. */
 export interface ComplexGasConfig {
+  /** Absent preserves legacy network access. Only new policies opt in. */
+  networkFaces?: "explicit";
   version: 1;
   type: "complex";
   anyInputIndices: number[];
@@ -576,6 +609,8 @@ export interface GasIOMode {
 }
 
 export interface GasIODefinition {
+  /** Absent preserves legacy network access. Only new policies opt in. */
+  networkFaces?: "explicit";
   anyInputIndices: number[];
   anyOutputIndices: number[];
   modes: GasIOMode[];

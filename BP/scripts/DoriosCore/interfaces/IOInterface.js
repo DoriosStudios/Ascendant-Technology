@@ -195,6 +195,7 @@ function addAutomaticFaceDefaults(definition, keys) {
 
   return {
     ...definition,
+    networkFaces: "explicit",
     modes,
     initialModes: {
       ...(mainInput ? { south: mainInput.id } : {}),

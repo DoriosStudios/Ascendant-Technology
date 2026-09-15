@@ -80,6 +80,8 @@ export type FaceSlotConfig = Partial<Record<ContainerFace, number[]>>;
 
 /** Item-slot rules that may vary by absolute block face. */
 export interface ComplexItemConfig {
+  /** Absent preserves legacy network access. Only new policies opt in. */
+  networkFaces?: "explicit";
   /** DoriosLib item-configuration schema version. */
   version: 1;
   /** Selects the face-aware configuration format. */
@@ -952,4 +954,3 @@ export namespace utils {
   /** Checks for a non-null object whose prototype is Object.prototype or null. */
   function isPlainObject(value: unknown): value is Record<string, unknown>;
 }
-

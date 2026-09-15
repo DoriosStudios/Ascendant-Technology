@@ -182,6 +182,7 @@ export const WORM_SOIL_CYCLE = Object.freeze([
     "minecraft:coarse_dirt",
     "minecraft:rooted_dirt",
 ]);
+
 export const WORM_DIG_DROPS = Object.freeze([
     "minecraft:wheat_seeds",
     "minecraft:beetroot_seeds",

@@ -34,6 +34,18 @@ This update brings the Compactor and Decompactor, Universal transportation block
     - Accepts Speed, Energy, Hyper Processing, and Stack Upgrades.
 
 ### Machines (Changes)
+- Residue Processor
+    - Expanded the output area from two to four slots, with support for three secondary products.
+    - Added recovery recipes for dead coral, terracotta, string, rooted dirt, and muddy mangrove roots.
+    - Dead coral produces Calcite Pebbles and sand, with a chance of recovering a sponge.
+    - Added a Crusher-style recipe book showing ingredients, output quantities, and chances.
+    - Updated automatic extraction and preserved existing machine inventories.
+- Enchantment Station
+    - Fixed enchantability modules leaving target slots empty after incompatible or unavailable enchantment choices.
+    - Tier V now applies every mutually compatible non-curse enchantment at its maximum level, without the previous five-enchantment limit.
+    - Now absorbs enchantments from enchanted books even when the XP tank is full.
+    - Stores as much recovered XP as the tank can hold and discards the excess.
+    - Shows the stored and discarded XP amounts in the disenchanting display.
 - Machine inventories
     - Reorganized processing, upgrade, display, and blocked slots across several machines.
 - Multi Processing

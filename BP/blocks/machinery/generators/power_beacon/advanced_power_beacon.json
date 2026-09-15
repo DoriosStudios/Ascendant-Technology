@@ -24,6 +24,10 @@
                 }
             },
             "minecraft:geometry": "geometry.utilitycraft_power_beacon",
+            "minecraft:collision_box": {
+                "origin": [-8, 0, -8],
+                "size": [16, 24, 16]
+            },
             "minecraft:material_instances": {
                 "*": {
                     "texture": "utilitycraft_advanced_power_beacon_off",

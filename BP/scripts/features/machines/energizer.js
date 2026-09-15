@@ -4,7 +4,8 @@ import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
 
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, registerIOInterface } from "DoriosCore/index.js";
+import { EnergyStorage } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import { getEnergizerRecipe } from "../../config/recipes/energizer.js";

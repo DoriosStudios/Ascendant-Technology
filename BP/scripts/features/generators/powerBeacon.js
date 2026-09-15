@@ -2,12 +2,8 @@
 
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import {
-    ButtonManager,
-    EnergyStorage,
-    Generator,
-    registerIOInterface,
-} from "DoriosCore/index.js";
+import { ButtonManager, EnergyStorage, Generator } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import {
     POWER_BEACON_ENTITY_ID,
     ensurePowerBeacon,

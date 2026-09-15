@@ -3,7 +3,8 @@
 import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
 
 import * as DoriosLib from "DoriosLib/index.js";
-import { ButtonManager, FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { ButtonManager, FluidStorage } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     createDisenchantSignature,

@@ -3,7 +3,8 @@
 import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
 
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { EnergyStorage, FluidStorage } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { resolveDuplicatorTemplate } from "../../ATCore/cloning/index.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";

@@ -2,7 +2,8 @@
 
 import { parallelLimit, resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
 
-import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     advanceSlotCycle,

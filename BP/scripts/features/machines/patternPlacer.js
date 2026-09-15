@@ -4,7 +4,8 @@ import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
 
 import { BlockPermutation, system } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { ButtonManager, registerIOInterface } from "DoriosCore/index.js";
+import { ButtonManager } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     PATTERN_MODE_ORDER,

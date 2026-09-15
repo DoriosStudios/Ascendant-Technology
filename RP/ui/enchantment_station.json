@@ -1,0 +1,985 @@
+{
+    "namespace": "enchantment_station",
+    "required_item_preview": {
+        "type": "image",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [
+            14,
+            14
+        ],
+        "texture": "$preview_texture",
+        "$preview_texture|default": "textures/items/book_normal",
+        "$preview_alpha|default": 0.45,
+        "alpha": "$preview_alpha",
+        "layer": 7,
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "$item_collection_name"
+            },
+            {
+                "binding_name": "#item_id_aux",
+                "binding_type": "collection",
+                "binding_collection_name": "$item_collection_name",
+                "binding_condition": "none"
+            },
+            {
+                "binding_type": "view",
+                "source_property_name": "(not(#item_id_aux > 0))",
+                "target_property_name": "#visible"
+            }
+        ]
+    },
+    "enchant_page": {
+        "type": "collection_panel",
+        "size": [
+            176,
+            166
+        ],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "bindings": [
+            {
+                "binding_type": "view",
+                "source_control_name": "station_disenchant_tab",
+                "source_property_name": "(not #toggle_state)",
+                "target_property_name": "#visible",
+                "resolve_sibling_scope": false
+            }
+        ],
+        "controls": [
+            {
+                "custom_background": {
+                    "type": "image",
+                    "texture": "textures/ui/panels/custom/green_gradient",
+                    "size": [
+                        172,
+                        162
+                    ],
+                    "offset": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
+                }
+            },
+            {
+                "display": {
+                    "type": "image",
+                    "texture": "textures/ui/panels/background_panel_black",
+                    "size": [
+                        104,
+                        166
+                    ],
+                    "offset": [
+                        -142,
+                        0
+                    ],
+                    "layer": 1
+                }
+            },
+            {
+                "item_label@uc.text_label": {
+                    "collection_index": 1,
+                    "size": [
+                        84,
+                        146
+                    ],
+                    "offset": [
+                        -142,
+                        0
+                    ],
+                    "$text_scale": 0.55,
+                    "layer": 12,
+                    "controls": [
+                        {
+                            "label_v1@uc._text_label_v1": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "size": [
+                                    "100%",
+                                    "default"
+                                ],
+                                "text_alignment": "left"
+                            }
+                        },
+                        {
+                            "label_v2@uc._text_label_v2": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "size": [
+                                    "100%",
+                                    "default"
+                                ],
+                                "text_alignment": "left"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "progress@uc.progress_display": {
+                    "collection_index": 2,
+                    "offset": [
+                        0,
+                        -38
+                    ],
+                    "size": [
+                        62,
+                        62
+                    ],
+                    "$cell_image_size": [
+                        62,
+                        62
+                    ],
+                    "$item_renderer_size": [
+                        64,
+                        64
+                    ],
+                    "$item_renderer_panel_size": [
+                        64,
+                        64
+                    ],
+                    "layer": 3,
+                    "$item_renderer_offset": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "target_0@ascendant_common.slot_pink": {
+                    "$slot_index": 3,
+                    "offset": [
+                        -18,
+                        -56
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "target_1@ascendant_common.slot_pink": {
+                    "$slot_index": 4,
+                    "offset": [
+                        0,
+                        -56
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "target_2@ascendant_common.slot_pink": {
+                    "$slot_index": 5,
+                    "offset": [
+                        18,
+                        -56
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "target_3@ascendant_common.slot_pink": {
+                    "$slot_index": 6,
+                    "offset": [
+                        -18,
+                        -38
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "target_4@ascendant_common.slot_pink": {
+                    "$slot_index": 7,
+                    "offset": [
+                        0,
+                        -38
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "target_5@ascendant_common.slot_pink": {
+                    "$slot_index": 8,
+                    "offset": [
+                        18,
+                        -38
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "target_6@ascendant_common.slot_pink": {
+                    "$slot_index": 9,
+                    "offset": [
+                        -18,
+                        -20
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "target_7@ascendant_common.slot_pink": {
+                    "$slot_index": 10,
+                    "offset": [
+                        0,
+                        -20
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "target_8@ascendant_common.slot_pink": {
+                    "$slot_index": 11,
+                    "offset": [
+                        18,
+                        -20
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "module_0@ascendant_common.slot_orange": {
+                    "$slot_index": 12,
+                    "offset": [
+                        98,
+                        -24
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "module_1@ascendant_common.slot_orange": {
+                    "$slot_index": 13,
+                    "offset": [
+                        98,
+                        -6
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "module_2@ascendant_common.slot_orange": {
+                    "$slot_index": 14,
+                    "offset": [
+                        98,
+                        12
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "module_hint_0@enchantment_station.required_item_preview": {
+                    "collection_index": 12,
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        98,
+                        -24
+                    ],
+                    "$preview_texture": "textures/items/machinery/modules/ench_mod_1"
+                }
+            },
+            {
+                "module_hint_1@enchantment_station.required_item_preview": {
+                    "collection_index": 13,
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        98,
+                        -6
+                    ],
+                    "$preview_texture": "textures/items/machinery/modules/reinforce_mod_1"
+                }
+            },
+            {
+                "module_hint_2@enchantment_station.required_item_preview": {
+                    "collection_index": 14,
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        98,
+                        12
+                    ],
+                    "$preview_texture": "textures/items/machinery/modules/curs_prot_mod_2"
+                }
+            },
+            {
+                "xp_tank@uc.liquid_bar": {
+                    "$collection_index": 44,
+                    "$has_bg": false,
+                    "offset": [
+                        -67.1,
+                        -43
+                    ],
+                    "layer": 10
+                }
+            }
+        ],
+        "$slot_size": [
+            18,
+            18
+        ],
+        "$slot_panel_size": [
+            18,
+            18
+        ],
+        "$slot_panel_offset": [
+            0,
+            0
+        ]
+    },
+    "disenchant_page": {
+        "type": "collection_panel",
+        "size": [
+            176,
+            166
+        ],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "bindings": [
+            {
+                "binding_type": "view",
+                "source_control_name": "station_disenchant_tab",
+                "source_property_name": "#toggle_state",
+                "target_property_name": "#visible",
+                "resolve_sibling_scope": false
+            }
+        ],
+        "controls": [
+            {
+                "display": {
+                    "type": "image",
+                    "texture": "textures/ui/panels/background_panel_black",
+                    "size": [
+                        104,
+                        166
+                    ],
+                    "offset": [
+                        -142,
+                        0
+                    ],
+                    "layer": 1
+                }
+            },
+            {
+                "item_label@uc.text_label": {
+                    "collection_index": 31,
+                    "size": [
+                        84,
+                        146
+                    ],
+                    "offset": [
+                        -142,
+                        0
+                    ],
+                    "$text_scale": 0.55,
+                    "layer": 12,
+                    "controls": [
+                        {
+                            "label_v1@uc._text_label_v1": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "size": [
+                                    "100%",
+                                    "default"
+                                ],
+                                "text_alignment": "left"
+                            }
+                        },
+                        {
+                            "label_v2@uc._text_label_v2": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "size": [
+                                    "100%",
+                                    "default"
+                                ],
+                                "text_alignment": "left"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "source@ascendant_common.slot_pink": {
+                    "$slot_index": 15,
+                    "offset": [
+                        -52,
+                        -48
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "crystal@ascendant_common.slot_orange": {
+                    "$slot_index": 16,
+                    "offset": [
+                        -62,
+                        -23
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "books@ascendant_common.slot_orange": {
+                    "$slot_index": 17,
+                    "offset": [
+                        -42,
+                        -23
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "output_0@ascendant_common.slot_brown": {
+                    "$slot_index": 22,
+                    "offset": [
+                        8,
+                        -56
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "output_1@ascendant_common.slot_brown": {
+                    "$slot_index": 23,
+                    "offset": [
+                        26,
+                        -56
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "output_2@ascendant_common.slot_brown": {
+                    "$slot_index": 24,
+                    "offset": [
+                        44,
+                        -56
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "output_3@ascendant_common.slot_brown": {
+                    "$slot_index": 25,
+                    "offset": [
+                        8,
+                        -38
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "output_4@ascendant_common.slot_brown": {
+                    "$slot_index": 26,
+                    "offset": [
+                        26,
+                        -38
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "output_5@ascendant_common.slot_brown": {
+                    "$slot_index": 27,
+                    "offset": [
+                        44,
+                        -38
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "output_6@ascendant_common.slot_brown": {
+                    "$slot_index": 28,
+                    "offset": [
+                        8,
+                        -20
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "output_7@ascendant_common.slot_brown": {
+                    "$slot_index": 29,
+                    "offset": [
+                        26,
+                        -20
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "output_8@ascendant_common.slot_brown": {
+                    "$slot_index": 30,
+                    "offset": [
+                        44,
+                        -20
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "progress@uc.progress_display": {
+                    "collection_index": 18,
+                    "offset": [
+                        -20,
+                        -42
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$cell_image_size": [
+                        18,
+                        18
+                    ],
+                    "$item_renderer_size": [
+                        18,
+                        18
+                    ],
+                    "$item_renderer_panel_size": [
+                        18,
+                        18
+                    ],
+                    "$item_renderer_offset": [
+                        0,
+                        0
+                    ],
+                    "layer": 3
+                }
+            },
+            {
+                "crystal_hint@enchantment_station.required_item_preview": {
+                    "collection_index": 16,
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        -62,
+                        -23
+                    ],
+                    "$preview_texture": "textures/items/ores/refined_aetherium_crystal"
+                }
+            },
+            {
+                "book_hint@enchantment_station.required_item_preview": {
+                    "collection_index": 17,
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        -42,
+                        -23
+                    ],
+                    "$preview_texture": "textures/items/book_normal"
+                }
+            },
+            {
+                "xp_tank@uc.liquid_bar": {
+                    "$collection_index": 44,
+                    "$has_bg": false,
+                    "offset": [
+                        85.9,
+                        -27
+                    ],
+                    "layer": 10
+                }
+            }
+        ],
+        "$slot_size": [
+            18,
+            18
+        ],
+        "$slot_panel_size": [
+            18,
+            18
+        ],
+        "$slot_panel_offset": [
+            0,
+            0
+        ]
+    },
+    "station_shell": {
+        "type": "panel",
+        "size": [
+            176,
+            166
+        ],
+        "offset": [
+            0,
+            0
+        ],
+        "controls": [
+            {
+                "body@ascendant_common.panel": {
+                    "$panel_color": "black",
+                    "$panel_size": [
+                        176,
+                        166
+                    ],
+                    "$has_container_label": false,
+                    "$has_close_button": false
+                }
+            },
+            {
+                "module_sidebar@ascendant_common.panel": {
+                    "$panel_color": "black",
+                    "$panel_size": [
+                        28,
+                        166
+                    ],
+                    "offset": [
+                        98,
+                        0
+                    ],
+                    "$has_container_label": false,
+                    "$has_close_button": true,
+                    "$close_button": "light"
+                }
+            },
+            {
+                "station_enchant_tab_wrapper@uc.toggle_button": {
+                    "size": [
+                        86,
+                        20
+                    ],
+                    "offset": [
+                        -44,
+                        -92
+                    ],
+                    "$toggle_size": [
+                        86,
+                        20
+                    ],
+                    "$toggle_name": "station_pages",
+                    "$toggle_control_name": "station_enchant_tab",
+                    "$toggle_index": 0,
+                    "$toggle_group": true,
+                    "$toggle_default_state": true,
+                    "$toggle_lost_reset": false,
+                    "$toggle_unchecked": "textures/ui/button_borderless_dark",
+                    "$toggle_checked": "textures/ui/button_borderless_darkpressednohover",
+                    "$toggle_unchecked_hover": "textures/ui/button_borderless_darkhover",
+                    "$toggle_checked_hover": "textures/ui/button_borderless_darkpressed"
+                }
+            },
+            {
+                "station_enchant_tab_title": {
+                    "type": "label",
+                    "text": "ui.utilitycraft:enchantment_station.variant.tab.enchant",
+                    "size": [
+                        80,
+                        12
+                    ],
+                    "offset": [
+                        -44,
+                        -92
+                    ],
+                    "font_scale_factor": 0.7,
+                    "text_alignment": "center",
+                    "color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ],
+                    "layer": 12
+                }
+            },
+            {
+                "station_disenchant_tab_wrapper@uc.toggle_button": {
+                    "size": [
+                        86,
+                        20
+                    ],
+                    "offset": [
+                        44,
+                        -92
+                    ],
+                    "$toggle_size": [
+                        86,
+                        20
+                    ],
+                    "$toggle_name": "station_pages",
+                    "$toggle_control_name": "station_disenchant_tab",
+                    "$toggle_index": 1,
+                    "$toggle_group": true,
+                    "$toggle_default_state": false,
+                    "$toggle_lost_reset": false,
+                    "$toggle_unchecked": "textures/ui/button_borderless_dark",
+                    "$toggle_checked": "textures/ui/button_borderless_darkpressednohover",
+                    "$toggle_unchecked_hover": "textures/ui/button_borderless_darkhover",
+                    "$toggle_checked_hover": "textures/ui/button_borderless_darkpressed"
+                }
+            },
+            {
+                "station_disenchant_tab_title": {
+                    "type": "label",
+                    "text": "ui.utilitycraft:enchantment_station.variant.tab.disenchant",
+                    "size": [
+                        80,
+                        12
+                    ],
+                    "offset": [
+                        44,
+                        -92
+                    ],
+                    "font_scale_factor": 0.7,
+                    "text_alignment": "center",
+                    "color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ],
+                    "layer": 12
+                }
+            },
+            {
+                "enchant_page@enchantment_station.enchant_page": {}
+            },
+            {
+                "disenchant_page@enchantment_station.disenchant_page": {}
+            },
+            {
+                "energy_bar@uc.energy_bar": {
+                    "$collection_index": 0,
+                    "offset": [
+                        86,
+                        46
+                    ],
+                    "$has_bg": false
+                }
+            },
+            {
+                "upgrades_tab@uc.upgrades_tab": {
+                    "offset": [
+                        13,
+                        0
+                    ],
+                    "$upgrade_index_1": 19,
+                    "$upgrade_index_2": 20,
+                    "$upgrade_index_3": 21,
+                    "$upgrade_index_4": 21,
+                    "$has_first_upgrade": true,
+                    "$has_second_upgrade": true,
+                    "$has_third_upgrade": true,
+                    "$has_fourth_upgrade": false,
+                    "$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+                    "$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+                    "$upgrade_overlay_3": "textures/items/machinery/hyper_processing_upgrade"
+                }
+            },
+            {
+                "io_tab@uc.io_tab": {
+                    "offset": [
+                        13,
+                        0
+                    ],
+                    "$io_items_modes_description": "ui.utilitycraft:io.enchantment_station.items",
+                    "$io_fluids_modes_description": "ui.utilitycraft:io.enchantment_station.liquids",
+                    "$has_item_io": true,
+                    "$has_fluid_io": true,
+                    "$io_items_default": true,
+                    "$io_fluids_default": false,
+                    "$io_top_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_left_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_front_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_right_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_bottom_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_back_texture": "textures/blocks/machines/enchantment_station",
+                    "$io_item_top_index": 32,
+                    "$io_item_left_index": 33,
+                    "$io_item_front_index": 34,
+                    "$io_item_right_index": 35,
+                    "$io_item_bottom_index": 36,
+                    "$io_item_back_index": 37,
+                    "$io_fluid_top_index": 38,
+                    "$io_fluid_left_index": 39,
+                    "$io_fluid_front_index": 40,
+                    "$io_fluid_right_index": 41,
+                    "$io_fluid_bottom_index": 42,
+                    "$io_fluid_back_index": 43
+                }
+            },
+            {
+                "info_tab@uc.info_tab": {
+                    "offset": [
+                        13,
+                        0
+                    ],
+                    "$info_description": "ui.utilitycraft:info.enchantment_station"
+                }
+            },
+            {
+                "title": {
+                    "type": "label",
+                    "text": "entity.utilitycraft:enchantment_station.name",
+                    "size": [
+                        160,
+                        10
+                    ],
+                    "offset": [
+                        0,
+                        -73
+                    ],
+                    "font_scale_factor": 0.7,
+                    "color": [
+                        0.85,
+                        0.85,
+                        0.85
+                    ],
+                    "text_alignment": "center",
+                    "layer": 8
+                }
+            }
+        ]
+    },
+    "utility_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {}
+            },
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 10
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {}
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "chest_panel": {
+                                "type": "panel",
+                                "layer": 5,
+                                "controls": [
+                                    {
+                                        "station_shell@enchantment_station.station_shell": {}
+                                    },
+                                    {
+                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+                                    },
+                                    {
+                                        "hotbar_grid@common.hotbar_grid_template": {}
+                                    },
+                                    {
+                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                        },
+                        {
+                            "gamepad_cursor@common.gamepad_cursor_button": {}
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -4,31 +4,65 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [162, 72],
-        "offset": [-10, -40],
+        "size": [
+            162,
+            72
+        ],
+        "offset": [
+            -10,
+            -40
+        ],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
                 "machine_name@uc.machine_name": {
-                    "offset": [0, -2]
+                    "offset": [
+                        0,
+                        -2
+                    ]
                 }
             },
             {
                 "energy_bar@uc.energy_bar": {
                     "$collection_index": 0,
                     "$has_bg": false,
-                    "offset": [-74, -1]
+                    "offset": [
+                        -74,
+                        -1
+                    ]
                 }
             },
             {
                 "side_panel@ascendant_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "$has_text": false, "$text_borders": [88, 150],
-                    "$bg_size": [104, 166],
-                    "$info_size": [96, 158],
-                    "offset": [-100, -7]
+                    "$has_text": false,
+                    "$text_borders": [
+                        88,
+                        150
+                    ],
+                    "$bg_size": [
+                        104,
+                        166
+                    ],
+                    "$info_size": [
+                        96,
+                        158
+                    ],
+                    "offset": [
+                        -100,
+                        -7
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "recipes_toggle_button",
+                            "source_property_name": "(not (#toggle_state))",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": false
+                        }
+                    ]
                 }
             },
             {
@@ -36,17 +70,35 @@
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [88, 148],
+                    "size": [
+                        88,
+                        148
+                    ],
                     "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-88, 2]
+                    "offset": [
+                        -88,
+                        2
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "recipes_toggle_button",
+                            "source_property_name": "(not (#toggle_state))",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": false
+                        }
+                    ]
                 }
             },
             {
                 "input@uc.input_1_slot": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [-28, 29],
+                    "offset": [
+                        -28,
+                        29
+                    ],
                     "collection_index": 3
                 }
             },
@@ -54,7 +106,10 @@
                 "process_progress@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [0, 22],
+                    "offset": [
+                        0,
+                        22
+                    ],
                     "collection_index": 2
                 }
             },
@@ -63,7 +118,10 @@
                     "$slot_background_texture": "textures/ui/slots/output_1_slot",
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [39, 29],
+                    "offset": [
+                        32,
+                        29
+                    ],
                     "collection_index": 8
                 }
             },
@@ -71,7 +129,29 @@
                 "liquid_output@uc.liquid_output_1_bar": {
                     "$collection_index": 9,
                     "$has_bg": false,
-                    "offset": [55, 0]
+                    "offset": [
+                        48,
+                        0
+                    ]
+                }
+            },
+            {
+                "eject_fluid_button@uc.machine_button": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        82,
+                        32
+                    ],
+                    "$index": 22,
+                    "$button_size": [
+                        18,
+                        18
+                    ],
+                    "$default_texture": "textures/ui/buttons/eject_fluid_unchecked",
+                    "$hover_texture": "textures/ui/buttons/eject_fluid_unchecked_hover",
+                    "$pressed_texture": "textures/ui/buttons/eject_fluid_checked",
+                    "layer": 15
                 }
             },
             {
@@ -122,6 +202,12 @@
                 "info_tab@uc.info_tab": {
                     "$info_description": "ui.utilitycraft:info.liquifier"
                 }
+            },
+            {
+                "recipe_book@liquifier.recipe_book": {}
+            },
+            {
+                "recipe_overlays@liquifier.recipe_overlays": {}
             }
         ]
     },
@@ -154,6 +240,9 @@
                                 "type": "panel",
                                 "layer": 5,
                                 "controls": [
+                                    {
+                                        "view_top_bar@uc.machine_recipe_view_top_bar": {}
+                                    },
                                     {
                                         "liquifier_top@liquifier.liquifier_top": {}
                                     },

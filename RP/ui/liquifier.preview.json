@@ -1,0 +1,82 @@
+{
+    "variables": {
+        "$desktop_screen": true,
+        "$pocket_screen": false,
+        "$is_pregame": false,
+        "$is_gamepad": false,
+        "$touch": false,
+        "$container_title": "Liquifier",
+        "$localize_title": false
+    },
+    "bindings": {
+        "#title_text": "Liquifier",
+        "#container_title": "Liquifier",
+        "#item_id_aux": 0,
+        "#hover_text": "",
+        "#item_count": "",
+        "#item_visible": true,
+        "#visible": true,
+        "#enabled": true,
+        "#show_gamepad_helpers": false,
+        "#gamepad_cursor_visible": false,
+        "#mouse_mode": true,
+        "#is_using_gamepad": false,
+        "#close_button_visible": true,
+        "#container_cell_background_texture": "textures/ui/slot",
+        "#container_cell_background_texture_file_system": "InUserPackage",
+        "#hotbar_grid_dimensions": [
+            9,
+            1
+        ],
+        "#inventory_grid_dimensions": [
+            9,
+            3
+        ],
+        "#inventory_stack_count": "",
+        "#toggle_state": false,
+        "#toggle_enabled": true
+    },
+    "collections": {
+        "container_items": {
+            "0": {
+                "#item_id_aux": 1,
+                "#hover_text": "§rEnergy\n§7Stored: 1.0 MDE",
+                "texture": "textures/ui/energy_bar/energy_frame_24"
+            },
+            "1": {
+                "#item_id_aux": 1,
+                "#hover_text": "§r§7Status: §aLiquifying\n\n§r§eMachine Information\n\n§aSpeed §fx1.00\n§aEfficiency §fx1.00\n\n§eEnergy Information\n\n§bStored: §f1.0 MDE"
+            },
+            "2": {
+                "#item_id_aux": 1,
+                "texture": "textures/ui/progress_bar/arrow_right_12"
+            },
+            "3": {
+                "#item_id_aux": 1,
+                "#item_count": "8",
+                "texture": "textures/items/ores/aetherium_ingot"
+            },
+            "9": {
+                "#item_id_aux": 1,
+                "#hover_text": "Liquified Aetherium: 38.6 B",
+                "texture": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_24"
+            },
+            "22": {
+                "#item_id_aux": 1,
+                "#hover_text": "Eject Fluid"
+            }
+        },
+        "inventory_items": {},
+        "hotbar_items": {}
+    },
+    "controls": {},
+    "_preview": {
+        "name": "Catalyst Weaver - weaving",
+        "root": "catalyst_weaver.utility_panel",
+        "viewport": {
+            "width": 480,
+            "height": 270
+        },
+        "notes": "Valores ilustrativos para inspecionar o layout; não executa a lógica da máquina."
+    }
+}

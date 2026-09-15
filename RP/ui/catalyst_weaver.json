@@ -93,6 +93,19 @@
                 }
             },
             {
+                "eject_fluid_button@uc.machine_button": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [103, 124],
+                    "$index": 29,
+                    "$button_size": [18, 18],
+                    "$default_texture": "textures/ui/buttons/eject_fluid_unchecked",
+                    "$hover_texture": "textures/ui/buttons/eject_fluid_unchecked_hover",
+                    "$pressed_texture": "textures/ui/buttons/eject_fluid_checked",
+                    "layer": 15
+                }
+            },
+            {
                 "screen": {
                     "type": "image",
                     "texture": "textures/ui/dialog_background_opaque",
@@ -110,27 +123,15 @@
                 }
             },
             {
-                "info_panel@ascendant_common.info_panel": {
+                "info_panel@ascendant_common.scrollable_info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "$has_text": false,
-                    "$text_borders": [88, 150],
+                    "$label_index": 1,
+                    "$text_scale": 0.55,
                     "$bg_size": [104, 166],
                     "offset": [-24, 57],
                     "visible": "$show_side_content",
                     "layer": 0
-                }
-            },
-            {
-                "item_label@uc.text_label": {
-                    "collection_index": 1,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "$text_scale": 0.55,
-                    "layer": 3,
-                    "offset": [-14, 64],
-                    "size": [88, 148],
-                    "visible": "$show_side_content"
                 }
             },
             {

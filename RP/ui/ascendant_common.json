@@ -1283,6 +1283,122 @@
     /* ELEMENT: info_panel
      * Basic machine info panel with customizable background.
      */
+    "scrollable_info_panel@ascendant_common.info_panel": {
+        "type": "collection_panel",
+        "collection_name": "container_items",
+        "$info_content|default": "ascendant_common.scrollable_info_text",
+        "$label_index|default": 1,
+        "$text_scale|default": 0.55,
+        "controls": [
+            {
+                "background_panel@$panel_bg_control": {
+                    "visible": "$has_bg",
+                    "$panel_size": "$bg_size",
+                    "$has_close_button": "$has_close_button",
+                    "layer": 1
+                }
+            },
+            {
+                "screen@ascendant_common.screen": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "size": "$info_size",
+                    "layer": 2
+                }
+            },
+            {
+                "info_scroll@ascendant_common.info_scroll_view": {
+                    "size": ["100%", "100% - 14px"],
+                    "offset": [4, 0],
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "scrollable_info_text": {
+        "type": "stack_panel",
+        "orientation": "vertical",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": ["100%", "default"],
+        "controls": [
+            {
+                "top_padding": {
+                    "type": "panel",
+                    "size": ["100%", 4]
+                }
+            },
+            { "label_collection@ascendant_common.scrollable_machine_label": {} },
+            {
+                "bottom_padding": {
+                    "type": "panel",
+                    "size": ["100%", 4]
+                }
+            }
+        ]
+    },
+    "scrollable_machine_label": {
+        "type": "collection_panel",
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": ["100%", "100%c"],
+        "controls": [
+            {
+                "machine_label@uc.text_label": {
+                    "collection_index": "$label_index",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": ["100% - 8px", "100%c"],
+                    "offset": [4, 0],
+                    "$text_scale": "$text_scale",
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "label_v1@uc._text_label_v1": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "size": ["100%", "default"],
+                                "text_alignment": "left",
+                                "$text_scale": "$text_scale"
+                            }
+                        },
+                        {
+                            "label_v2@uc._text_label_v2": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "size": ["100%", "default"],
+                                "text_alignment": "left",
+                                "$text_scale": "$text_scale"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "info_scroll_view@common.scrolling_panel": {
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "size": ["100%", "100%"],
+        "$scrolling_content": "$info_content",
+        "$show_background": false,
+        "$scroll_size": [4, "100% - 4px"],
+        "$scrolling_pane_size": ["100%", "100%"],
+        "$scrolling_pane_offset": [0, 0],
+        "$scroll_view_port_size": ["100% - 16px", "100%"],
+        "$scroll_view_port_max_size": ["100% - 16px", "100%"],
+        "$scroll_view_port_offset": [0, 0],
+        "$scroll_size_touch": [4, "100% - 4px"],
+        "$scrolling_pane_size_touch": ["100%", "100%"],
+        "$scrolling_pane_offset_touch": [0, 0],
+        "$scroll_view_port_size_touch": ["100% - 16px", "100%"],
+        "$scroll_view_port_max_size_touch": ["100% - 16px", "100%"],
+        "$scroll_view_port_offset_touch": [0, 0],
+        "$scroll_box_visible_touch": true,
+        "$scroll_track_image_control": "common.empty_image"
+    },
     "info_panel": {
         "type": "collection_panel",
         "collection_name": "container_items",

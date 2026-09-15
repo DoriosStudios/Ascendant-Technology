@@ -847,27 +847,20 @@
                     "controls": [
                         {
                             "input@catalyst_weaver.recipe_input": {
-                                "$slot_item_texture": "textures/items/plates/steel_plate",
-                                "$slot_hover_text": "item.utilitycraft:steel_plate",
-                                "$has_slot_hover": true
-                            }
-                        },
-                        {
-                            "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
                                 "$slot_item_texture": "textures/blocks/materials/redstone_block",
                                 "$slot_hover_text": "tile.redstone_block.name",
                                 "$has_slot_hover": true
                             }
                         },
                         {
-                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
+                            "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
                                 "$slot_item_texture": "textures/items/dusts/gold_dust",
                                 "$slot_hover_text": "item.utilitycraft:gold_dust",
                                 "$has_slot_hover": true
                             }
                         },
                         {
-                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/items/dusts/energized_iron_dust",
                                 "$slot_hover_text": "item.utilitycraft:energized_iron_dust",
                                 "$has_slot_hover": true
@@ -896,31 +889,22 @@
                         },
                         {
                             "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
-                                "$slot_item_texture": "textures/items/plates/steel_plate",
-                                "$slot_hover_text": "item.utilitycraft:steel_plate",
-                                "$has_slot_hover": true,
-                                "$slot_count_text": "4",
-                                "$has_slot_count": true
-                            }
-                        },
-                        {
-                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/items/dye_powder_orange",
                                 "$slot_hover_text": "item.dye.orange.name",
                                 "$has_slot_hover": true
                             }
                         },
                         {
-                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/blocks/materials/redstone_block",
                                 "$slot_hover_text": "tile.redstone_block.name",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "2",
-                                "$has_slot_count": true
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
                             }
                         },
                         {
-                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
                                 "$slot_item_texture": "textures/blocks/ores/aetherium_block",
                                 "$slot_hover_text": "tile.utilitycraft:aetherium_block.name",
                                 "$has_slot_hover": true
@@ -952,8 +936,8 @@
                                 "$slot_item_texture": "textures/items/machinery/basic_chip",
                                 "$slot_hover_text": "item.utilitycraft:basic_chip",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "4",
-                                "$has_slot_count": true
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
                             }
                         },
                         {
@@ -961,8 +945,8 @@
                                 "$slot_item_texture": "textures/items/dusts/gold_dust",
                                 "$slot_hover_text": "item.utilitycraft:gold_dust",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "3",
-                                "$has_slot_count": true
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
                             }
                         },
                         {
@@ -991,8 +975,8 @@
                                 "$slot_item_texture": "textures/items/machinery/range_upgrade",
                                 "$slot_hover_text": "item.utilitycraft:range_upgrade",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "8",
-                                "$has_slot_count": true
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
                             }
                         },
                         {
@@ -1032,13 +1016,6 @@
                         },
                         {
                             "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
-                                "$slot_item_texture": "textures/blocks/materials/redstone_block",
-                                "$slot_hover_text": "tile.redstone_block.name",
-                                "$has_slot_hover": true
-                            }
-                        },
-                        {
-                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
                                 "$slot_item_texture": "textures/blocks/materials/redstone_block",
                                 "$slot_hover_text": "tile.redstone_block.name",
                                 "$has_slot_hover": true
@@ -1482,31 +1459,22 @@
                         },
                         {
                             "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
-                                "$slot_item_texture": "textures/items/plates/steel_plate",
-                                "$slot_hover_text": "item.utilitycraft:steel_plate",
-                                "$has_slot_hover": true,
-                                "$slot_count_text": "4",
-                                "$has_slot_count": true
-                            }
-                        },
-                        {
-                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/items/dye_powder_red",
                                 "$slot_hover_text": "item.dye.red.name",
                                 "$has_slot_hover": true
                             }
                         },
                         {
-                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/blocks/materials/redstone_block",
                                 "$slot_hover_text": "tile.redstone_block.name",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "2",
-                                "$has_slot_count": true
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
                             }
                         },
                         {
-                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
                                 "$slot_item_texture": "textures/blocks/ores/aetherium_block",
                                 "$slot_hover_text": "tile.utilitycraft:aetherium_block.name",
                                 "$has_slot_hover": true
@@ -1535,31 +1503,22 @@
                         },
                         {
                             "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
-                                "$slot_item_texture": "textures/items/plates/steel_plate",
-                                "$slot_hover_text": "item.utilitycraft:steel_plate",
-                                "$has_slot_hover": true,
-                                "$slot_count_text": "4",
-                                "$has_slot_count": true
-                            }
-                        },
-                        {
-                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/items/dye_powder_yellow",
                                 "$slot_hover_text": "item.dye.yellow.name",
                                 "$has_slot_hover": true
                             }
                         },
                         {
-                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/blocks/materials/redstone_block",
                                 "$slot_hover_text": "tile.redstone_block.name",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "2",
-                                "$has_slot_count": true
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
                             }
                         },
                         {
-                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
                                 "$slot_item_texture": "textures/blocks/diamond_block",
                                 "$slot_hover_text": "tile.minecraft:diamond_block.name",
                                 "$has_slot_hover": true
@@ -1588,31 +1547,22 @@
                         },
                         {
                             "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
-                                "$slot_item_texture": "textures/items/plates/steel_plate",
-                                "$slot_hover_text": "item.utilitycraft:steel_plate",
-                                "$has_slot_hover": true,
-                                "$slot_count_text": "4",
-                                "$has_slot_count": true
-                            }
-                        },
-                        {
-                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/items/dye_powder_cyan",
                                 "$slot_hover_text": "item.dye.cyan.name",
                                 "$has_slot_hover": true
                             }
                         },
                         {
-                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/blocks/materials/redstone_block",
                                 "$slot_hover_text": "tile.redstone_block.name",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "2",
-                                "$has_slot_count": true
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
                             }
                         },
                         {
-                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
                                 "$slot_item_texture": "textures/blocks/tanks/fluid_tank_expert",
                                 "$slot_hover_text": "tile.utilitycraft:expert_fluid_tank.name",
                                 "$has_slot_hover": true
@@ -1641,31 +1591,22 @@
                         },
                         {
                             "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
-                                "$slot_item_texture": "textures/items/plates/steel_plate",
-                                "$slot_hover_text": "item.utilitycraft:steel_plate",
-                                "$has_slot_hover": true,
-                                "$slot_count_text": "4",
-                                "$has_slot_count": true
-                            }
-                        },
-                        {
-                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/items/dye_powder_lime",
                                 "$slot_hover_text": "item.dye.lime.name",
                                 "$has_slot_hover": true
                             }
                         },
                         {
-                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/blocks/materials/redstone_block",
                                 "$slot_hover_text": "tile.redstone_block.name",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "2",
-                                "$has_slot_count": true
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
                             }
                         },
                         {
-                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
                                 "$slot_item_texture": "textures/blocks/tanks/expert_gas_tank",
                                 "$slot_hover_text": "tile.utilitycraft:expert_gas_tank.name",
                                 "$has_slot_hover": true
@@ -1694,31 +1635,22 @@
                         },
                         {
                             "catalyst_1@catalyst_weaver.recipe_catalyst_1": {
-                                "$slot_item_texture": "textures/items/plates/steel_plate",
-                                "$slot_hover_text": "item.utilitycraft:steel_plate",
-                                "$has_slot_hover": true,
-                                "$slot_count_text": "4",
-                                "$has_slot_count": true
-                            }
-                        },
-                        {
-                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/items/dye_powder_green",
                                 "$slot_hover_text": "item.dye.green.name",
                                 "$has_slot_hover": true
                             }
                         },
                         {
-                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
+                            "catalyst_2@catalyst_weaver.recipe_catalyst_2": {
                                 "$slot_item_texture": "textures/blocks/materials/redstone_block",
                                 "$slot_hover_text": "tile.redstone_block.name",
                                 "$has_slot_hover": true,
-                                "$slot_count_text": "2",
-                                "$has_slot_count": true
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
                             }
                         },
                         {
-                            "catalyst_4@catalyst_weaver.recipe_catalyst_4": {
+                            "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
                                 "$slot_item_texture": "textures/items/ores/refined_aetherium_crystal",
                                 "$slot_hover_text": "item.utilitycraft:refined_aetherium_crystal",
                                 "$has_slot_hover": true

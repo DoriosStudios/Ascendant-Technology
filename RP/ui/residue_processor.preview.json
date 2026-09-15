@@ -1,0 +1,63 @@
+{
+    "variables": {
+        "$desktop_screen": true,
+        "$pocket_screen": false,
+        "$is_pregame": false,
+        "$is_gamepad": false,
+        "$touch": false,
+        "$container_title": "Residue Processor",
+        "$localize_title": false
+    },
+    "bindings": {
+        "#title_text": "Residue Processor",
+        "#container_title": "Residue Processor",
+        "#item_id_aux": 0,
+        "#hover_text": "",
+        "#item_count": "",
+        "#item_visible": true,
+        "#visible": true,
+        "#enabled": true,
+        "#show_gamepad_helpers": false,
+        "#gamepad_cursor_visible": false,
+        "#mouse_mode": true,
+        "#is_using_gamepad": false,
+        "#close_button_visible": true,
+        "#container_cell_background_texture": "textures/ui/slot",
+        "#container_cell_background_texture_file_system": "InUserPackage",
+        "#hotbar_grid_dimensions": [
+            9,
+            1
+        ],
+        "#inventory_grid_dimensions": [
+            9,
+            3
+        ],
+        "#inventory_stack_count": "",
+        "#toggle_state": false,
+        "#toggle_enabled": true
+    },
+    "collections": {
+        "container_items": {
+            "0": {
+                "#item_id_aux": 1,
+                "texture": "textures/ui/energy_bar/energy_frame_24"
+            },
+            "1": {
+                "#item_id_aux": 1,
+                "#hover_text": "Residue Processor\nSelect an input to recover materials."
+            }
+        },
+        "inventory_items": {},
+        "hotbar_items": {}
+    },
+    "controls": {},
+    "_preview": {
+        "name": "Catalyst Weaver - weaving",
+        "root": "catalyst_weaver.utility_panel",
+        "viewport": {
+            "width": 480,
+            "height": 270
+        },
+        "notes": "Valores ilustrativos para inspecionar o layout; n\u00c3\u00a3o executa a l\u00c3\u00b3gica da m\u00c3\u00a1quina."
+    }
+}

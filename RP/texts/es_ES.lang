@@ -52,3 +52,21 @@ tile.utilitycraft:compressed_aetherium_crystal_block.name=Bloque de Cristal de A
 tile.utilitycraft:compressed_aetherium_crystal_block_2.name=Bloque de Cristal de Aetherium Doblemente Comprimido\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_aetherium_crystal_block_3.name=Bloque de Cristal de Aetherium Triplemente Comprimido\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_aetherium_crystal_block_4.name=Bloque de Cristal de Aetherium Cuádruplemente Comprimido\n§o§9@UC: Ascendant Technology
+
+ui.ascendant:catalyst_weaver.eject=Expulsar
+chat.ascendant:catalyst_weaver.fluid_lost=§cCatalyst Weaver: se perdió todo el fluido (%s de %s) porque no existe una cápsula para él.
+chat.ascendant:liquifier.fluid_lost=§cLiquifier: se perdió todo el fluido (%s de %s) porque no existe una cápsula para él.
+
+ui.ascendant:liquifier.recipe.aetherium=aetherium
+ui.ascendant:liquifier.recipe.aetherium_crystal=Cristal de Aetherium
+ui.ascendant:liquifier.recipe.aetherium_shard=aetherium shard
+ui.ascendant:liquifier.recipe.aetherium_crystal_dust=Polvo de Cristal de Aetherium
+ui.ascendant:liquifier.recipe.aetherium_dust=aetherium dust
+ui.ascendant:liquifier.recipe.void_essence=void essence
+ui.ascendant:liquifier.recipe.obsidian=Obsidiana
+ui.ascendant:liquifier.recipe.stabilized_obsidian_dust=Polvo de Obsidiana Refinada
+ui.ascendant:liquifier.recipe.compressed_obsidian=Obsidiana Comprimida
+ui.ascendant:liquifier.recipe.compressed_obsidian_2=Obsidiana Doblemente Comprimida
+ui.ascendant:liquifier.recipe.compressed_obsidian_3=Obsidiana Triplemente Comprimida
+ui.ascendant:liquifier.recipes.liquified_aetherium=Aetherium licuado
+ui.ascendant:liquifier.recipes.dark_matter=Materia oscura

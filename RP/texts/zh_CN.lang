@@ -670,3 +670,21 @@ tile.utilitycraft:compressed_aetherium_crystal_block.name=Compressed Aetherium C
 tile.utilitycraft:compressed_aetherium_crystal_block_2.name=Double Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_aetherium_crystal_block_3.name=Triple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_aetherium_crystal_block_4.name=Quadruple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
+
+ui.ascendant:catalyst_weaver.eject=排出
+chat.ascendant:catalyst_weaver.fluid_lost=§cCatalyst Weaver：由于该流体没有对应的胶囊，全部流体（%s，%s）已丢失。
+chat.ascendant:liquifier.fluid_lost=§cLiquifier：由于该流体没有对应的胶囊，全部流体（%s，%s）已丢失。
+
+ui.ascendant:liquifier.recipe.aetherium=以太锭
+ui.ascendant:liquifier.recipe.aetherium_crystal=以太水晶
+ui.ascendant:liquifier.recipe.aetherium_shard=以太碎片
+ui.ascendant:liquifier.recipe.aetherium_crystal_dust=以太水晶粉
+ui.ascendant:liquifier.recipe.aetherium_dust=以太粉末
+ui.ascendant:liquifier.recipe.void_essence=虚空精华
+ui.ascendant:liquifier.recipe.obsidian=黑曜石
+ui.ascendant:liquifier.recipe.stabilized_obsidian_dust=稳定黑曜石粉
+ui.ascendant:liquifier.recipe.compressed_obsidian=压缩黑曜石
+ui.ascendant:liquifier.recipe.compressed_obsidian_2=双重压缩黑曜石
+ui.ascendant:liquifier.recipe.compressed_obsidian_3=三重压缩黑曜石
+ui.ascendant:liquifier.recipes.liquified_aetherium=液化以太
+ui.ascendant:liquifier.recipes.dark_matter=暗物质

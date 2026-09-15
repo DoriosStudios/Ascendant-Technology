@@ -1,0 +1,67 @@
+{
+    "variables": {
+        "$desktop_screen": true,
+        "$pocket_screen": false,
+        "$is_pregame": false,
+        "$is_gamepad": false,
+        "$touch": false,
+        "$container_title": "Enchantment Station",
+        "$localize_title": false
+    },
+    "bindings": {
+        "#title_text": "Enchantment Station",
+        "#container_title": "Enchantment Station",
+        "#item_id_aux": 0,
+        "#hover_text": "",
+        "#item_count": "",
+        "#item_visible": true,
+        "#visible": true,
+        "#enabled": true,
+        "#show_gamepad_helpers": false,
+        "#gamepad_cursor_visible": false,
+        "#mouse_mode": true,
+        "#is_using_gamepad": false,
+        "#close_button_visible": true,
+        "#container_cell_background_texture": "textures/ui/slot",
+        "#container_cell_background_texture_file_system": "InUserPackage",
+        "#hotbar_grid_dimensions": [
+            9,
+            1
+        ],
+        "#inventory_grid_dimensions": [
+            9,
+            3
+        ],
+        "#inventory_stack_count": "",
+        "#toggle_state": false,
+        "#toggle_enabled": true
+    },
+    "collections": {
+        "container_items": {
+            "0": {
+                "#item_id_aux": 1,
+                "texture": "textures/ui/energy_bar/energy_frame_24"
+            },
+            "1": {
+                "#item_id_aux": 1,
+                "#hover_text": "\u00a7r\u00a7eEnchanting & Repair\n\u00a77Status: \u00a7aProcessing\n\u00a77Items: \u00a7f3/9\n\n\u00a7eInstalled Modules\n\u00a77Enchantability: \u00a7f1\n\u00a77Reinforcement: \u00a7f1\n\u00a77Curse protection: \u00a7f0\n\n\u00a7eResources\n\u00a77XP stored: \u00a7f4000 / 16000 mB\n\u00a77XP required: \u00a7f1000 mB\n\n\u00a7eEquipment Slots\n\u00a7b1. Diamond pickaxe\n\u00a77Status: \u00a7fProcessing\n\u00a77Repair / Reinforce\n\u00a77Progress: \u00a7f35%"
+            },
+            "31": {
+                "#item_id_aux": 1,
+                "#hover_text": "\u00a7r\u00a7eDisenchanting\n\u00a77Status: \u00a7aExtracting\n\u00a77Mode: \u00a7fExtraction\n\u00a77Enchantments: \u00a7f3\n\n\u00a7eBook Extraction\n\u00a77Books this cycle: \u00a7f3\n\u00a77Crystals available: \u00a7f8\n\u00a77Books available: \u00a7f8\n\u00a77Free output slots: \u00a7f9/9\n\u00a77Progress: \u00a7f45%\n\n\u00a7eSource Enchantments\n\u00a77Unbreaking \u00a7f3\n\u00a77Efficiency \u00a7f4\n\u00a77Fortune \u00a7f3"
+            }
+        },
+        "inventory_items": {},
+        "hotbar_items": {}
+    },
+    "controls": {},
+    "_preview": {
+        "name": "Catalyst Weaver - weaving",
+        "root": "catalyst_weaver.utility_panel",
+        "viewport": {
+            "width": 480,
+            "height": 270
+        },
+        "notes": "Valores ilustrativos para inspecionar o layout; n\u00c3\u00a3o executa a l\u00c3\u00b3gica da m\u00c3\u00a1quina."
+    }
+}

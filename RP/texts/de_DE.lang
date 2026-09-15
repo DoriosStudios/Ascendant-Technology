@@ -670,3 +670,21 @@ tile.utilitycraft:compressed_aetherium_crystal_block.name=Compressed Aetherium C
 tile.utilitycraft:compressed_aetherium_crystal_block_2.name=Double Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_aetherium_crystal_block_3.name=Triple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_aetherium_crystal_block_4.name=Quadruple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
+
+ui.ascendant:catalyst_weaver.eject=Auswurf
+chat.ascendant:catalyst_weaver.fluid_lost=§cCatalyst Weaver: Die gesamten %s %s gingen verloren, da es für diese Flüssigkeit keine Kapsel gibt.
+chat.ascendant:liquifier.fluid_lost=§cLiquifier: Die gesamten %s %s gingen verloren, da es für diese Flüssigkeit keine Kapsel gibt.
+
+ui.ascendant:liquifier.recipe.aetherium=Aetherium-Barren
+ui.ascendant:liquifier.recipe.aetherium_crystal=Aetherium-Kristall
+ui.ascendant:liquifier.recipe.aetherium_shard=Aetherium-Scherbe
+ui.ascendant:liquifier.recipe.aetherium_crystal_dust=Aetheriumkristallstaub
+ui.ascendant:liquifier.recipe.aetherium_dust=Aetheriumstaub
+ui.ascendant:liquifier.recipe.void_essence=Leerenessenz
+ui.ascendant:liquifier.recipe.obsidian=Obsidian
+ui.ascendant:liquifier.recipe.stabilized_obsidian_dust=Stabilisierter Obsidianstaub
+ui.ascendant:liquifier.recipe.compressed_obsidian=Komprimierter Obsidian
+ui.ascendant:liquifier.recipe.compressed_obsidian_2=Doppelt komprimierter Obsidian
+ui.ascendant:liquifier.recipe.compressed_obsidian_3=Dreifach komprimierter Obsidian
+ui.ascendant:liquifier.recipes.liquified_aetherium=Verflüssigtes Aetherium
+ui.ascendant:liquifier.recipes.dark_matter=Dunkle Materie

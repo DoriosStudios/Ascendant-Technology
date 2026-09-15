@@ -103,7 +103,7 @@
             {
                 "screen": {
                     "type": "image",
-                    "texture": "textures/ui/dialog_background_opaque_opaque",
+                    "texture": "textures/ui/dialog_background_opaque",
                     "anchor_from": "center",
                     "anchor_to": "center",
                     "$cell_image_size": [200, 166],

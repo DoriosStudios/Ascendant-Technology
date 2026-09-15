@@ -670,3 +670,21 @@ tile.utilitycraft:compressed_aetherium_crystal_block.name=Compressed Aetherium C
 tile.utilitycraft:compressed_aetherium_crystal_block_2.name=Double Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_aetherium_crystal_block_3.name=Triple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
 tile.utilitycraft:compressed_aetherium_crystal_block_4.name=Quadruple Compressed Aetherium Crystal Block\n§o§9@UC: Ascendant Technology
+
+ui.ascendant:catalyst_weaver.eject=Выброс
+chat.ascendant:catalyst_weaver.fluid_lost=§cCatalyst Weaver: вся жидкость (%s %s) потеряна, поскольку для неё нет капсулы.
+chat.ascendant:liquifier.fluid_lost=§cLiquifier: вся жидкость (%s %s) потеряна, поскольку для неё нет капсулы.
+
+ui.ascendant:liquifier.recipe.aetherium=Слиток Эфириума
+ui.ascendant:liquifier.recipe.aetherium_crystal=Кристалл Эфириума
+ui.ascendant:liquifier.recipe.aetherium_shard=Осколок Эфириума
+ui.ascendant:liquifier.recipe.aetherium_crystal_dust=Пыль кристалла Эфириума
+ui.ascendant:liquifier.recipe.aetherium_dust=Пыль эфириума
+ui.ascendant:liquifier.recipe.void_essence=Сущность Пустоты
+ui.ascendant:liquifier.recipe.obsidian=Обсидиан
+ui.ascendant:liquifier.recipe.stabilized_obsidian_dust=Стабилизированная обсидиановая пыль
+ui.ascendant:liquifier.recipe.compressed_obsidian=Сжатый обсидиан
+ui.ascendant:liquifier.recipe.compressed_obsidian_2=Двойной сжатый обсидиан
+ui.ascendant:liquifier.recipe.compressed_obsidian_3=Тройной сжатый обсидиан
+ui.ascendant:liquifier.recipes.liquified_aetherium=Жидкий аэтериум
+ui.ascendant:liquifier.recipes.dark_matter=Тёмная материя

@@ -1,0 +1,1654 @@
+{
+    "namespace": "residue_processor",
+    "recipe_book": {
+        "type": "panel",
+        "size": [
+            104,
+            166
+        ],
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [
+            -100,
+            -7
+        ],
+        "layer": 6,
+        "bindings": [
+            {
+                "binding_type": "view",
+                "source_control_name": "recipes_toggle_button",
+                "source_property_name": "#toggle_state",
+                "target_property_name": "#visible",
+                "resolve_sibling_scope": false
+            }
+        ],
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "texture": "textures/ui/background/background_panel",
+                    "size": [
+                        104,
+                        166
+                    ]
+                }
+            },
+            {
+                "title_bg": {
+                    "type": "image",
+                    "texture": "textures/ui/background/dark_top_tab",
+                    "size": [
+                        104,
+                        22
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "title": {
+                    "type": "label",
+                    "text": "ui.utilitycraft:recipes_panel.name",
+                    "size": [
+                        88,
+                        14
+                    ],
+                    "offset": [
+                        0,
+                        -72
+                    ],
+                    "font_scale_factor": 0.85,
+                    "color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ],
+                    "layer": 2
+                }
+            },
+            {
+                "grid_bg": {
+                    "type": "image",
+                    "texture": "textures/ui/recipe_grid_bg",
+                    "size": [
+                        92,
+                        138
+                    ],
+                    "offset": [
+                        0,
+                        10
+                    ],
+                    "layer": 1
+                }
+            },
+            {
+                "scroll@ascendant_common.info_scroll_view": {
+                    "size": [
+                        104,
+                        134
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        8,
+                        26
+                    ],
+                    "$info_content": "residue_processor.recipe_rows",
+                    "$scroll_view_port_size": [
+                        88,
+                        "100%"
+                    ],
+                    "$scroll_view_port_max_size": [
+                        88,
+                        "100%"
+                    ],
+                    "$scroll_view_port_size_touch": [
+                        88,
+                        "100%"
+                    ],
+                    "$scroll_view_port_max_size_touch": [
+                        88,
+                        "100%"
+                    ],
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "recipe_rows": {
+        "type": "stack_panel",
+        "orientation": "vertical",
+        "size": [
+            88,
+            "default"
+        ],
+        "controls": [
+            {
+                "row_0": {
+                    "type": "panel",
+                    "size": [
+                        88,
+                        18
+                    ],
+                    "controls": [
+                        {
+                            "residue_recipe_0@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    4,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7000,
+                                "$toggle_control_name": "residue_recipe_0",
+                                "$toggle_hover_text": "item.utilitycraft:void_essence",
+                                "$recipe_icon": "textures/items/misc/void_essence",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_1@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    22,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7001,
+                                "$toggle_control_name": "residue_recipe_1",
+                                "$toggle_hover_text": "tile.podzol.name",
+                                "$recipe_icon": "textures/blocks/dirt_podzol_top",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_2@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    40,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7002,
+                                "$toggle_control_name": "residue_recipe_2",
+                                "$toggle_hover_text": "tile.bone_block.name",
+                                "$recipe_icon": "textures/blocks/bone_block_side",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_3@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    58,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7003,
+                                "$toggle_control_name": "residue_recipe_3",
+                                "$toggle_hover_text": "item.rotten_flesh.name",
+                                "$recipe_icon": "textures/items/rotten_flesh",
+                                "$toggle_layer": 2
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "row_4": {
+                    "type": "panel",
+                    "size": [
+                        88,
+                        18
+                    ],
+                    "controls": [
+                        {
+                            "residue_recipe_4@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    4,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7004,
+                                "$toggle_control_name": "residue_recipe_4",
+                                "$toggle_hover_text": "item.utilitycraft:ender_pearl_dust",
+                                "$recipe_icon": "textures/items/dusts/ender_pearl_dust",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_5@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    22,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7005,
+                                "$toggle_control_name": "residue_recipe_5",
+                                "$toggle_hover_text": "item.string.name",
+                                "$recipe_icon": "textures/items/string",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_6@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    40,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7006,
+                                "$toggle_control_name": "residue_recipe_6",
+                                "$toggle_hover_text": "tile.hardened_clay.name",
+                                "$recipe_icon": "textures/blocks/hardened_clay",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_7@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    58,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7007,
+                                "$toggle_control_name": "residue_recipe_7",
+                                "$toggle_hover_text": "tile.dead_tube_coral_block.name",
+                                "$recipe_icon": "textures/blocks/coral_blue_dead",
+                                "$toggle_layer": 2
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "row_8": {
+                    "type": "panel",
+                    "size": [
+                        88,
+                        18
+                    ],
+                    "controls": [
+                        {
+                            "residue_recipe_8@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    4,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7008,
+                                "$toggle_control_name": "residue_recipe_8",
+                                "$toggle_hover_text": "tile.dead_brain_coral_block.name",
+                                "$recipe_icon": "textures/blocks/coral_pink_dead",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_9@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    22,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7009,
+                                "$toggle_control_name": "residue_recipe_9",
+                                "$toggle_hover_text": "tile.dead_bubble_coral_block.name",
+                                "$recipe_icon": "textures/blocks/coral_purple_dead",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_10@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    40,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7010,
+                                "$toggle_control_name": "residue_recipe_10",
+                                "$toggle_hover_text": "tile.dead_fire_coral_block.name",
+                                "$recipe_icon": "textures/blocks/coral_red_dead",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_11@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    58,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7011,
+                                "$toggle_control_name": "residue_recipe_11",
+                                "$toggle_hover_text": "tile.dead_horn_coral_block.name",
+                                "$recipe_icon": "textures/blocks/coral_yellow_dead",
+                                "$toggle_layer": 2
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "row_12": {
+                    "type": "panel",
+                    "size": [
+                        88,
+                        18
+                    ],
+                    "controls": [
+                        {
+                            "residue_recipe_12@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    4,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7012,
+                                "$toggle_control_name": "residue_recipe_12",
+                                "$toggle_hover_text": "tile.dirt_with_roots.name",
+                                "$recipe_icon": "textures/blocks/dirt_with_roots",
+                                "$toggle_layer": 2
+                            }
+                        },
+                        {
+                            "residue_recipe_13@uc.recipe_toggle": {
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    22,
+                                    0
+                                ],
+                                "$toggle_name": "residue_recipes",
+                                "$toggle_index": 7013,
+                                "$toggle_control_name": "residue_recipe_13",
+                                "$toggle_hover_text": "tile.muddy_mangrove_roots.name",
+                                "$recipe_icon": "textures/blocks/muddy_mangrove_roots_side",
+                                "$toggle_layer": 2
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "recipe_overlays": {
+        "type": "panel",
+        "size": [
+            162,
+            72
+        ],
+        "bindings": [
+            {
+                "binding_type": "view",
+                "source_control_name": "recipes_toggle_button",
+                "source_property_name": "#toggle_state",
+                "target_property_name": "#visible",
+                "resolve_sibling_scope": false
+            }
+        ],
+        "layer": 20,
+        "controls": [
+            {
+                "residue_recipe_0_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_0",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/items/misc/void_essence",
+                                "$slot_hover_text": "item.utilitycraft:void_essence",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/ores/aetherium_shards",
+                                "$slot_hover_text": "item.utilitycraft:aetherium_shard",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/iron_nugget",
+                                "$slot_hover_text": "item.iron_nugget.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "chance_1": {
+                                "type": "label",
+                                "text": "35%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    64,
+                                    1
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_1_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_1",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/dirt_podzol_top",
+                                "$slot_hover_text": "tile.podzol.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/dye_powder_white",
+                                "$slot_hover_text": "item.bone_meal.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/rotten_flesh",
+                                "$slot_hover_text": "item.rotten_flesh.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_1": {
+                                "type": "label",
+                                "text": "65%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    64,
+                                    1
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_2_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_2",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/bone_block_side",
+                                "$slot_hover_text": "tile.bone_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/dye_powder_white",
+                                "$slot_hover_text": "item.bone_meal.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "9",
+                                "$has_slot_count": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_3_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_3",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/items/rotten_flesh",
+                                "$slot_hover_text": "item.rotten_flesh.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/leather",
+                                "$slot_hover_text": "item.leather.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/dye_powder_white",
+                                "$slot_hover_text": "item.bone_meal.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_1": {
+                                "type": "label",
+                                "text": "35%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    64,
+                                    1
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_4_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_4",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/items/dusts/ender_pearl_dust",
+                                "$slot_hover_text": "item.utilitycraft:ender_pearl_dust",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "2",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/ender_pearl",
+                                "$slot_hover_text": "item.ender_pearl.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/gravel",
+                                "$slot_hover_text": "tile.gravel.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_1": {
+                                "type": "label",
+                                "text": "50%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    64,
+                                    1
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_5_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_5",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/items/string",
+                                "$slot_hover_text": "item.string.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "9",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/web",
+                                "$slot_hover_text": "tile.web.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_6_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_6",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/hardened_clay",
+                                "$slot_hover_text": "tile.hardened_clay.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/clay_ball",
+                                "$slot_hover_text": "item.clay_ball.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "8",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/brick",
+                                "$slot_hover_text": "item.brick.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_1": {
+                                "type": "label",
+                                "text": "50%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    64,
+                                    1
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        },
+                        {
+                            "output_2@uc.recipe_slot_overlay": {
+                                "collection_index": 16,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    16
+                                ],
+                                "$slot_item_texture": "textures/items/miner_pottery_sherd",
+                                "$slot_hover_text": "item.miner_pottery_sherd.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_2": {
+                                "type": "label",
+                                "text": "4%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    44,
+                                    29
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        },
+                        {
+                            "output_3@uc.recipe_slot_overlay": {
+                                "collection_index": 17,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    16
+                                ],
+                                "$slot_item_texture": "textures/items/explorer_pottery_sherd",
+                                "$slot_hover_text": "item.explorer_pottery_sherd.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_3": {
+                                "type": "label",
+                                "text": "4%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    64,
+                                    29
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_7_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_7",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/coral_blue_dead",
+                                "$slot_hover_text": "tile.dead_tube_coral_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/pebbles/calcite_pebble",
+                                "$slot_hover_text": "item.utilitycraft:calcite_pebble",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/sand",
+                                "$slot_hover_text": "tile.sand.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_2@uc.recipe_slot_overlay": {
+                                "collection_index": 16,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    16
+                                ],
+                                "$slot_item_texture": "textures/blocks/sponge",
+                                "$slot_hover_text": "tile.sponge.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_2": {
+                                "type": "label",
+                                "text": "5%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    44,
+                                    29
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_8_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_8",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/coral_pink_dead",
+                                "$slot_hover_text": "tile.dead_brain_coral_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/pebbles/calcite_pebble",
+                                "$slot_hover_text": "item.utilitycraft:calcite_pebble",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/sand",
+                                "$slot_hover_text": "tile.sand.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_2@uc.recipe_slot_overlay": {
+                                "collection_index": 16,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    16
+                                ],
+                                "$slot_item_texture": "textures/blocks/sponge",
+                                "$slot_hover_text": "tile.sponge.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_2": {
+                                "type": "label",
+                                "text": "5%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    44,
+                                    29
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_9_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_9",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/coral_purple_dead",
+                                "$slot_hover_text": "tile.dead_bubble_coral_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/pebbles/calcite_pebble",
+                                "$slot_hover_text": "item.utilitycraft:calcite_pebble",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/sand",
+                                "$slot_hover_text": "tile.sand.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_2@uc.recipe_slot_overlay": {
+                                "collection_index": 16,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    16
+                                ],
+                                "$slot_item_texture": "textures/blocks/sponge",
+                                "$slot_hover_text": "tile.sponge.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_2": {
+                                "type": "label",
+                                "text": "5%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    44,
+                                    29
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_10_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_10",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/coral_red_dead",
+                                "$slot_hover_text": "tile.dead_fire_coral_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/pebbles/calcite_pebble",
+                                "$slot_hover_text": "item.utilitycraft:calcite_pebble",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/sand",
+                                "$slot_hover_text": "tile.sand.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_2@uc.recipe_slot_overlay": {
+                                "collection_index": 16,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    16
+                                ],
+                                "$slot_item_texture": "textures/blocks/sponge",
+                                "$slot_hover_text": "tile.sponge.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_2": {
+                                "type": "label",
+                                "text": "5%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    44,
+                                    29
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_11_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_11",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/coral_yellow_dead",
+                                "$slot_hover_text": "tile.dead_horn_coral_block.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/items/pebbles/calcite_pebble",
+                                "$slot_hover_text": "item.utilitycraft:calcite_pebble",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "4",
+                                "$has_slot_count": true
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/sand",
+                                "$slot_hover_text": "tile.sand.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_2@uc.recipe_slot_overlay": {
+                                "collection_index": 16,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    16
+                                ],
+                                "$slot_item_texture": "textures/blocks/sponge",
+                                "$slot_hover_text": "tile.sponge.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_2": {
+                                "type": "label",
+                                "text": "5%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    44,
+                                    29
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_12_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_12",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/dirt_with_roots",
+                                "$slot_hover_text": "tile.dirt_with_roots.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/dirt",
+                                "$slot_hover_text": "tile.dirt.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/hanging_roots",
+                                "$slot_hover_text": "tile.hanging_roots.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_1": {
+                                "type": "label",
+                                "text": "50%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    64,
+                                    1
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        },
+                        {
+                            "output_2@uc.recipe_slot_overlay": {
+                                "collection_index": 16,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    16
+                                ],
+                                "$slot_item_texture": "textures/items/dye_powder_white",
+                                "$slot_hover_text": "item.bone_meal.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "chance_2": {
+                                "type": "label",
+                                "text": "25%",
+                                "size": [
+                                    20,
+                                    8
+                                ],
+                                "offset": [
+                                    44,
+                                    29
+                                ],
+                                "font_scale_factor": 0.5,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "text_alignment": "center",
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "residue_recipe_13_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "residue_recipe_13",
+                    "size": [
+                        162,
+                        72
+                    ],
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "collection_index": 3,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    -18,
+                                    1
+                                ],
+                                "$slot_item_texture": "textures/blocks/muddy_mangrove_roots_side",
+                                "$slot_hover_text": "tile.muddy_mangrove_roots.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_0@uc.recipe_slot_overlay": {
+                                "collection_index": 8,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    44,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/mud",
+                                "$slot_hover_text": "tile.mud.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        },
+                        {
+                            "output_1@uc.recipe_slot_overlay": {
+                                "collection_index": 9,
+                                "bindings": [],
+                                "$slot_offset": [
+                                    64,
+                                    -12
+                                ],
+                                "$slot_item_texture": "textures/blocks/mangrove_roots_side",
+                                "$slot_hover_text": "tile.mangrove_roots.name",
+                                "$has_slot_hover": true,
+                                "$slot_count_text": "1",
+                                "$has_slot_count": false
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

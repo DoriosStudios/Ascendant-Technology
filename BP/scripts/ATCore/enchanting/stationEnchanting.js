@@ -195,43 +195,39 @@ export function buildStationEnchantPlan(stack, modules) {
         ? stored.curseRoll
         : Math.random();
 
-    const desiredCount = Math.max(1, modules.enchantability);
-    const sourcePool = buildSourcePool(workingEnchantable, stack.typeId);
-
-    while (storedTargets.length < desiredCount && sourcePool.length > 0) {
+    const desiredCount = modules.enchantability >= 5 ? Infinity : Math.max(1, modules.enchantability);
+    // Keep accepted choices stable, but never let an unavailable/zero-level
+    // target consume a slot. Check compatibility after every successful add.
+    const sourcePool = buildSourcePool(workingEnchantable, stack.typeId, modules.enchantability >= 5);
+    const candidates = [...storedTargets];
+    while (sourcePool.length > 0) {
         const sourceIndex = Math.floor(Math.random() * sourcePool.length);
-        const source = sourcePool[sourceIndex];
-        const available = source.filter((id) => !storedTargets.includes(id));
-
-        if (available.length === 0) {
-            sourcePool.splice(sourceIndex, 1);
-            continue;
+        const source = sourcePool.splice(sourceIndex, 1)[0];
+        while (source.length > 0) {
+            const id = source.splice(Math.floor(Math.random() * source.length), 1)[0];
+            if (!candidates.includes(id)) candidates.push(id);
         }
-
-        const id = available[Math.floor(Math.random() * available.length)];
-        storedTargets.push(id);
-        storedTargetsChanged = true;
     }
-
-    for (let index = 0; index < storedTargets.length && result.length < desiredCount; index++) {
-        const id = storedTargets[index];
-        if (resultIds.has(id)) continue;
-
+    let regularCount = result.filter(entry => !isCurseId(entry.id)).length;
+    for (const id of candidates) {
+        if (regularCount >= desiredCount) break;
+        if (resultIds.has(id) || isCurseId(id)) continue;
         const type = getEnchantmentsById().get(id);
         if (!type) continue;
-
         const level = getTargetLevel(modules.enchantability, type.maxLevel);
         if (level <= 0 || !canAdd(workingEnchantable, type, level)) continue;
-
         try {
             workingEnchantable.addEnchantment({ type, level });
         } catch {
             continue;
         }
-
         result.push({ id, level });
         resultIds.add(id);
+        regularCount++;
     }
+    const acceptedTargets = result.filter(entry => !isCurseId(entry.id)).map(entry => entry.id);
+    if (acceptedTargets.join("|") !== storedTargets.join("|")) storedTargetsChanged = true;
+    storedTargets.splice(0, storedTargets.length, ...acceptedTargets);
 
     if (modules.curseProtection <= 0 && curseRoll <= Math.max(0, 0.15 - modules.enchantability * 0.01)) {
         for (const curseId of CURSE_IDS) {
@@ -326,12 +322,12 @@ function replaceEnchantments(stack, enchantments) {
  * @param {import("@minecraft/server").ItemEnchantableComponent} enchantable
  * @param {string} itemId
  */
-function buildSourcePool(enchantable, itemId) {
+function buildSourcePool(enchantable, itemId, includeFullCatalog = false) {
     const byId = getEnchantmentsById();
     const result = [];
     const included = new Set();
 
-    if (UNIVERSAL_ENCHANTMENT_ITEMS.has(itemId)) {
+    if (!includeFullCatalog && UNIVERSAL_ENCHANTMENT_ITEMS.has(itemId)) {
         // The AIOT deliberately accepts every equipment family, but selection
         // must remain within the station's curated enchantment catalogue. The
         // registry also contains unrelated/internal entries that made results
@@ -433,7 +429,9 @@ function canAdd(enchantable, type, level) {
 /** @param {number} moduleLevel @param {number} maximum */
 function getTargetLevel(moduleLevel, maximum) {
     const tier = Math.max(1, Math.min(5, Math.floor(moduleLevel)));
-    const max = Math.max(1, Math.min(5, Math.floor(Number(maximum) || 1)));
+    const nativeMax = Math.max(1, Math.floor(Number(maximum) || 1));
+    if (tier === 5) return nativeMax;
+    const max = Math.min(5, nativeMax);
     const maxIndex = TARGET_MAX_LEVELS.indexOf(max);
     return maxIndex < 0 ? 0 : Math.min(max, TARGET_LEVELS[tier - 1]?.[maxIndex] ?? 0);
 }

@@ -16,6 +16,15 @@ Advanced catalyst weaving: combines a base item, up to six catalysts, and option
 3. If the recipe requires it, fill the fluid tank.
 4. Wait for processing and take the main output and byproduct.
 
+The information panel scrolls vertically inside its existing frame. It shows possible
+outputs, catalyst options, the next missing catalyst, insufficient quantities, and
+the required fluid. Scroll over the panel or drag its scrollbar to read longer details.
+
+When several recipes share the same ingredients, selection checks their quantities
+and the tank's fluid type in registration order. Native Weaver recipes take priority
+over imported Infuser recipes. An empty tank allows a recipe to be selected so its
+fluid requirement can be displayed; crafting still waits for enough matching fluid.
+
 ## Inputs and outputs
 - **Input**: Base item.
 - **Catalysts**: Up to 6 slots (the combination must match the recipe).

@@ -20,7 +20,7 @@
             "utilitycraft:residue_processor": {
                 "entity": {
                     "type": "machine",
-                    "inventory_size": 16
+                    "inventory_size": 18
                 },
                 "machine": {
                     "energy_cap": 512000,

@@ -15,13 +15,18 @@ Station for enchanting, curse curation, reinforcement management and disenchanti
   - **Extract mode**: Uses catalysts and books to convert enchantments into enchanted books.
   - **Absorb mode**: Converts enchantments directly into XP fluid when catalysts/books are missing, with a processing delay.
 
+## Interface
+The Enchant and Disenchant tabs have separate slot layouts and fixed status displays. The enchanting display lists installed modules, XP requirements and each occupied equipment slot. The disenchanting display explains extraction versus absorption, output space, resource costs, progress and source enchantments. Page selection changes the view; both processing areas continue to run.
+
+The UI is registered in `RP/ui/enchantment_station.json` (formerly `ascane_engine.json`).
+
 ## Machine capabilities
 - **Energy Capacity**: 25,600,000 DE (25.6 MDE)
 - **Base Energy Cost**: 8,000 DE (scaled by operation inflation rules)
 - **Base Machine Rate**: `rate_speed_base = 64,000` (dynamic runtime enabled)
 - **XP Tank Capacity**: 128,000 mB (fluid type `xp`)
-- **Inventory Size**: 43 slots
-- **Upgrade Slots**: 2 (19, 20)
+- **Inventory Size**: 46 slots
+- **Upgrade Slots**: 3 (19, 20, 21)
 
 ## Slot layout
 - **0**: Energy HUD
@@ -33,15 +38,17 @@ Station for enchanting, curse curation, reinforcement management and disenchanti
 - **16**: Disenchant catalyst
 - **17**: Book storage
 - **18**: Disenchant progress
-- **19-20**: Upgrades
-- **21-29**: Disenchant outputs
-- **30**: Disenchant HUD status
-- **31-36**: Item I/O configuration
-- **37-42**: Fluid I/O configuration
+- **19-21**: Upgrades
+- **22-30**: Disenchant outputs
+- **31**: Disenchant HUD status
+- **32-37**: Item I/O configuration
+- **38-43**: Fluid I/O configuration
+- **44**: XP tank display (shared by both pages)
+- **45**: Reserved UI slot
 
 ## Modules
 ### Enchantability Modules
-Controls enchanting behavior and available enchantments, with a total of 5 levels:
+Controls enchanting behavior and available enchantments, with a total of 5 levels. Tiers I–IV target 1, 2, 3 and 4 compatible non-curse enchantments respectively, using the levels below. Tier V has no count limit: it attempts every compatible enchantment in the runtime catalog at its native maximum level, including on the Aetherium AIOT. Mutually exclusive enchantments still obey item compatibility. Existing enchantments are preserved and never downgraded. Invalid choices do not consume target slots.
 - **Level 1 Enchantments**: 
   - Sharpness, Smite, Bane of Arthropods, Impaling, Efficiency, Power, Density - I
   - Protection, Fire Protection, Blast Protection, Projectile Protection, Feather Falling, Piercing, Breach - I

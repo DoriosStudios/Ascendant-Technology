@@ -21,7 +21,7 @@
             "utilitycraft:liquifier": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 22
+                    "inventory_size": 23
                 },
                 "machine": {
                     "energy_cap": 512000,

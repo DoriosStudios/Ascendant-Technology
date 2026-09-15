@@ -5,10 +5,13 @@ import { commitProcess } from "../../ATCore/processing/commitProcess.js";
 
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
-import { getCatalystWeaverRecipe } from "../../config/recipes/catalystWeaver.js";
+import { getCatalystWeaverCandidates } from "../../config/recipes/catalystWeaver.js";
+import { resolveCatalystWeaver, getCatalystWeaverHints } from "./catalystWeaverResolver.js";
+import { registerFluidEjection } from "./fluidEjection.js";
 import {
     displayProgress,
     ensureMachineInventoryLayout,
@@ -19,7 +22,8 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:catalyst_weaver";
-const INVENTORY_SIZE = 29;
+const INVENTORY_SIZE = 30;
+const IDENTITY_SLOT_LAYOUT = Array.from({ length: INVENTORY_SIZE }, (_, slot) => slot);
 const CURRENT_SLOT_LAYOUT = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
     -1,
@@ -38,15 +42,22 @@ const PREVIOUS_SLOT_LAYOUT = [
     14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
 ];
 const LAYOUT_KEY = "ascendant:catalyst_weaver_layout";
-const LAYOUT_VERSION = "contiguous_upgrades_v1";
+const PREVIOUS_LAYOUT_VERSION = "contiguous_upgrades_v1";
+const LAYOUT_VERSION = "fluid_ejection_v2";
 const INPUT_SLOT = 3;
 const CATALYST_SLOTS = [4, 5, 6, 7, 8, 9];
 const FLUID_DISPLAY_SLOT = 10;
+const EJECT_BUTTON_SLOT = 29;
 const BYPRODUCT_SLOT = 15;
 const OUTPUT_SLOT = 16;
 const RECIPE_KEY = "ascendant:catalyst_weaver_recipe";
 const FLUID_IO_RATE = 128000;
 const itemMaximums = new Map();
+
+registerFluidEjection(
+    ID, EJECT_BUTTON_SLOT, FLUID_DISPLAY_SLOT,
+    "chat.ascendant:catalyst_weaver.fluid_lost",
+);
 
 registerIOInterface(ID, {
     // Automatic defaults synthesize an all-inputs mode; this machine exposes
@@ -107,28 +118,35 @@ registerATMachine(ID, {
         const legacySlot13 = machine.container.size === 27
             ? machine.container.getItem(13)
             : undefined;
-        const migrationLayout = machine.container.size === 28
-            ? CURRENT_SLOT_LAYOUT
-            : isMachineUpgrade(legacySlot13)
-                ? LEGACY_UPGRADE_SLOT_LAYOUT
-                : LEGACY_SLOT_LAYOUT;
+        const storedLayout = machine.entity.getDynamicProperty(LAYOUT_KEY);
+        const wasContiguous = storedLayout === PREVIOUS_LAYOUT_VERSION
+            || storedLayout === `resizing:${PREVIOUS_LAYOUT_VERSION}`;
+        const migrationLayout = machine.container.size === 29
+            ? (wasContiguous ? IDENTITY_SLOT_LAYOUT.slice(0, 29) : PREVIOUS_SLOT_LAYOUT)
+            : machine.container.size === 28
+                ? CURRENT_SLOT_LAYOUT
+                : isMachineUpgrade(legacySlot13)
+                    ? LEGACY_UPGRADE_SLOT_LAYOUT
+                    : LEGACY_SLOT_LAYOUT;
         if (!ensureMachineInventoryLayout(
-            machine, INVENTORY_SIZE, migrationLayout,
-            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+            machine, INVENTORY_SIZE, [...migrationLayout, -1],
+            LAYOUT_KEY, LAYOUT_VERSION, IDENTITY_SLOT_LAYOUT,
         )) return;
 
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
         const tank = new FluidStorage(machine.entity, 0);
         const input = machine.container.getItem(INPUT_SLOT);
+        const resolved = resolveCatalystWeaver(machine.entity.id, machine.container, input, tank.getType());
         if (!input) {
             resetProcess(machine, tank, settings.machine.energy_cost, "Insert Base Item", "");
             return;
         }
 
-        const catalystTotals = readCatalystTotals(machine.container);
-        const recipe = getCatalystWeaverRecipe(input.typeId, input.amount, catalystTotals);
+        const catalystTotals = resolved.totals;
+        const recipe = resolved.recipe;
         if (!recipe) {
-            resetProcess(machine, tank, settings.machine.energy_cost, "Invalid Catalysts", "");
+            const message = getCatalystWeaverCandidates(input.typeId).length ? "Missing Materials" : "No Recipes Available";
+            resetProcess(machine, tank, settings.machine.energy_cost, message, "");
             return;
         }
 
@@ -214,7 +232,7 @@ registerATMachine(ID, {
         if (machine.shouldUpdateUI) tank.display(FLUID_DISPLAY_SLOT);
 
         const active = result.energyUsed > 0 || result.processCount > 0;
-        renderStatus(
+        renderWeaverStatus(
             machine,
             active,
             active ? "Weaving" : "No Energy",
@@ -235,16 +253,6 @@ function isMachineUpgrade(item) {
     }
 }
 
-function readCatalystTotals(container) {
-    const totals = new Map();
-    for (let index = 0; index < CATALYST_SLOTS.length; index++) {
-        const item = container.getItem(CATALYST_SLOTS[index]);
-        if (!item) continue;
-        totals.set(item.typeId, (totals.get(item.typeId) ?? 0) + item.amount);
-    }
-    return totals;
-}
-
 function getCatalystCraftCapacity(recipe, catalystTotals) {
     let capacity = Number.MAX_SAFE_INTEGER;
     for (let index = 0; index < recipe.catalysts.length; index++) {
@@ -254,7 +262,7 @@ function getCatalystCraftCapacity(recipe, catalystTotals) {
             Math.floor((catalystTotals.get(catalyst.id) ?? 0) / catalyst.amount),
         );
     }
-    return recipe.catalysts.length > 0 ? capacity : 0;
+    return capacity;
 }
 
 function getOutputCraftCapacity(item, typeId, amountPerCraft) {
@@ -349,7 +357,7 @@ function pauseProcess(machine, tank, cost, message) {
     setDynamicNumber(machine.entity, "dorios:energy_cost_0", cost);
     displayProgress(machine, cost);
     if (machine.shouldUpdateUI) tank.display(FLUID_DISPLAY_SLOT);
-    renderStatus(machine, false, message);
+    renderWeaverStatus(machine, false, message);
 }
 
 function recipeStatusLines(recipe, tank) {
@@ -364,4 +372,14 @@ function recipeStatusLines(recipe, tank) {
         );
     }
     return lines;
+}
+
+function renderWeaverStatus(machine, active, message, lines) {
+    if (!machine.shouldUpdateUI) {
+        renderStatus(machine, active, message);
+        return;
+    }
+    const hints = getCatalystWeaverHints(machine.entity.id);
+    const sections = lines?.length ? [{ title: "Machine State", lines }, ...hints] : hints;
+    renderStatus(machine, active, message, sections);
 }

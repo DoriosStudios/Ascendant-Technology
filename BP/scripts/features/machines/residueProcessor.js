@@ -4,7 +4,7 @@ import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
 
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { registerIOInterface } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import { residueProcessorRecipes } from "../../config/recipes/residueProcessor.js";
@@ -18,31 +18,37 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:residue_processor";
-const INVENTORY_SIZE = 16;
+const INVENTORY_SIZE = 18;
 const SLOT_LAYOUTS = {
     15: [0, 1, 2, 3, 4, 5, 6, -1, 7, 8, 9, 10, 11, 12, 13, 14],
     14: [0, 1, 2, 3, 6, 7, -1, -1, 4, 5, 8, 9, 10, 11, 12, 13],
 };
 const PREVIOUS_SLOT_LAYOUT = [0, 1, 2, 3, 4, 5, 6, 15, 7, 8, 9, 10, 11, 12, 13, 14];
+const CURRENT_16_LAYOUT = [...Array.from({ length: 16 }, (_, i) => i), -1, -1];
+const LEGACY_16_LAYOUT = [...PREVIOUS_SLOT_LAYOUT, -1, -1];
+const CURRENT_LAYOUT = Array.from({ length: INVENTORY_SIZE }, (_, i) => i);
+for (const slots of Object.values(SLOT_LAYOUTS)) slots.push(-1, -1);
+const EMPTY_LAYOUT = [];
 const LAYOUT_KEY = "ascendant:residue_processor_layout";
-const LAYOUT_VERSION = "contiguous_upgrades_v1";
+const LAYOUT_VERSION = "four_outputs_v2";
 const INPUT_SLOT = 3;
 const OUTPUT_SLOT = 8;
-const BYPRODUCT_SLOT = 9;
-const DEFAULT_STACK_SIZE = 64;
+const SECONDARY_SLOTS = [9, 16, 17];
+const OUTPUT_SLOTS = [OUTPUT_SLOT, ...SECONDARY_SLOTS];
+const stackLimits = new Map();
 
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
         buttonSlots: [10, 11, 12, 13, 14, 15],
         anyInputSlots: [INPUT_SLOT],
-        anyOutputSlots: [OUTPUT_SLOT, BYPRODUCT_SLOT],
+        anyOutputSlots: OUTPUT_SLOTS,
         modes: [
             { id: "disabled" },
             { id: "input_1", inputSlots: [INPUT_SLOT] },
             { id: "output_1", outputSlots: [OUTPUT_SLOT] },
-            { id: "output_2", outputSlots: [BYPRODUCT_SLOT] },
-            { id: "output_3", outputSlots: [OUTPUT_SLOT, BYPRODUCT_SLOT] },
+            { id: "output_2", outputSlots: SECONDARY_SLOTS },
+            { id: "output_3", outputSlots: OUTPUT_SLOTS },
         ],
     },
 });
@@ -63,8 +69,11 @@ registerATMachine(ID, {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
         if (!ensureMachineInventoryLayout(
-            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
-            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+            machine, INVENTORY_SIZE,
+            machine.container.size === 16
+                ? (machine.entity.getDynamicProperty(LAYOUT_KEY) === "contiguous_upgrades_v1" ? CURRENT_16_LAYOUT : LEGACY_16_LAYOUT)
+                : SLOT_LAYOUTS[machine.container.size] ?? EMPTY_LAYOUT,
+            LAYOUT_KEY, LAYOUT_VERSION, CURRENT_LAYOUT,
         )) return;
 
         machine.processIO();
@@ -88,28 +97,18 @@ registerATMachine(ID, {
             return;
         }
 
-        const output = machine.container.getItem(OUTPUT_SLOT);
-        const outputCrafts = getCraftCapacity(output, recipe.output, recipe.amount);
-        if (outputCrafts <= 0) {
-            pauseProcess(machine, cost, output?.typeId === recipe.output ? "Output Full" : "Output Conflict");
-            return;
+        const outputs = recipe.outputs;
+        const existing = outputs.map((_, index) => machine.container.getItem(OUTPUT_SLOTS[index]));
+        let maxCrafts = inputCrafts;
+        for (let index = 0; index < outputs.length; index++) {
+            const target = outputs[index];
+            const capacity = getCraftCapacity(existing[index], target.item, target.amount);
+            if (capacity <= 0) {
+                pauseProcess(machine, cost, `Output ${index + 1} ${existing[index]?.typeId === target.item ? "Full" : "Conflict"}`);
+                return;
+            }
+            maxCrafts = Math.min(maxCrafts, capacity);
         }
-
-        const byproduct = recipe.byproduct;
-        const byproductItem = machine.container.getItem(BYPRODUCT_SLOT);
-        const byproductCrafts = byproduct
-            ? getCraftCapacity(byproductItem, byproduct.item, byproduct.amount)
-            : Number.MAX_SAFE_INTEGER;
-        if (byproductCrafts <= 0) {
-            pauseProcess(
-                machine,
-                cost,
-                byproductItem?.typeId === byproduct?.item ? "Residue Full" : "Residue Conflict",
-            );
-            return;
-        }
-
-        const maxCrafts = Math.min(inputCrafts, outputCrafts, byproductCrafts);
         const result = advanceProcess(machine, {
             progress: machine.getProgress(),
             cost,
@@ -118,25 +117,10 @@ registerATMachine(ID, {
 
         if (result.processCount > 0) {
             consumeInput(machine.container, input, resourceCost(machine, result.processCount * recipe.required, recipe.required));
-            insertOutput(
-                machine.container,
-                OUTPUT_SLOT,
-                output,
-                recipe.output,
-                result.processCount * recipe.amount,
-            );
-
-            if (byproduct) {
-                const rolled = rollByproduct(byproduct.chance, result.processCount);
-                if (rolled > 0) {
-                    insertOutput(
-                        machine.container,
-                        BYPRODUCT_SLOT,
-                        byproductItem,
-                        byproduct.item,
-                        rolled * byproduct.amount,
-                    );
-                }
+            for (let index = 0; index < outputs.length; index++) {
+                const target = outputs[index];
+                const rolled = rollByproduct(target.chance, result.processCount);
+                if (rolled > 0) insertOutput(machine.container, OUTPUT_SLOTS[index], existing[index], target.item, rolled * target.amount);
             }
         }
 
@@ -170,7 +154,10 @@ function pauseProcess(machine, cost, message) {
 }
 
 function getCraftCapacity(item, typeId, amountPerCraft) {
-    if (!item) return Math.floor(DEFAULT_STACK_SIZE / amountPerCraft);
+    if (!item) {
+        if (!stackLimits.has(typeId)) stackLimits.set(typeId, new ItemStack(typeId).maxAmount);
+        return Math.floor(stackLimits.get(typeId) / amountPerCraft);
+    }
     if (item.typeId !== typeId) return 0;
     return Math.floor(Math.max(0, item.maxAmount - item.amount) / amountPerCraft);
 }
@@ -213,10 +200,9 @@ function recipeStatusLines(inputTypeId, recipe) {
         `\u00A7r\u00A77Output: \u00A7f${recipe.amount} x ${DoriosLib.text.formatIdentifier(recipe.output)}`,
     ];
 
-    if (recipe.byproduct) {
-        lines.push(
-            `\u00A7r\u00A77Residue: \u00A7f${recipe.byproduct.amount} x ${DoriosLib.text.formatIdentifier(recipe.byproduct.item)} (${Math.round(recipe.byproduct.chance * 100)}%)`,
-        );
+    for (let index = 1; index < recipe.outputs.length; index++) {
+        const output = recipe.outputs[index];
+        lines.push(`\u00A7r\u00A77Output ${index + 1}: \u00A7f${output.amount} x ${DoriosLib.text.formatIdentifier(output.item)} (${Math.round(output.chance * 100)}%)`);
     }
     return lines;
 }

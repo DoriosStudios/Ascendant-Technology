@@ -2,39 +2,35 @@
 
 [![](../pics/residue_processor.png)](../pics/residue_processor.png)
 
-Residue processor that converts debris into reclaimed materials, with a chance of byproduct.
-> [!NOTE]
-> The functionality is confusing even to me, its creator. This machine may or may not change in the future.
-
-## What it does
-- Consumes residue and produces a main item.
-- Can produce a byproduct with a recipe-defined chance.
-- Reclaims valuable materials from waste products.
+Recovers useful materials from discarded items, dead coral and organic blocks.
 
 ## How to use
-1. Insert residue in the input slot.
-2. Wait for processing.
-3. Take the main output and byproduct (if any).
+1. Open **Recipes** to select an input and preview every result, quantity and chance.
+2. Insert the required material and supply energy.
+3. Extract products from the four output slots. Processing waits if any required output is blocked, including chance-based outputs.
 
-## Inputs and outputs
-- **Input**: Residues defined by recipe.
-- **Output**: Main item + optional byproduct.
-
-## Machine Capabilities
-- **Energy Capacity**: 12,800,000 DE (12.8 MDE)
-- **Energy Consumption**: Varies per recipe (2,600 - 7,800 DE per craft)
-- **Processing Rate**: 16,000 DE/tick
-- **Upgrade Slots**: 4 slots (Speed, Energy, Hyper Processing, and Stack)
+The upper-left output is the main product. The remaining three slots hold independent secondary products. A 5% chance is rolled once per craft, including batch processing.
 
 ## Recipes
+| Input | Guaranteed outputs | Chance-based outputs | Energy (DE) |
+| --- | --- | --- | --- |
+| Void Essence x1 | Aetherium Shard x2 | Iron Nugget x2 (35%) | 6400 |
+| Podzol x1 | Bone Meal x2 | Rotten Flesh x1 (65%) | 2200 |
+| Bone Block x1 | Bone Meal x9 | None | 2600 |
+| Rotten Flesh x4 | Leather x1 | Bone Meal x1 (35%) | 3400 |
+| Ender Pearl Dust x2 | Ender Pearl x1 | Gravel x1 (50%) | 4200 |
+| String x9 | Cobweb x1 | None | 6400 |
+| Terracotta x4 | Clay Ball x8 | Brick x1 (50%), Miner Pottery Sherd x1 (4%), Explorer Pottery Sherd x1 (4%) | 4800 |
+| Dead coral blocks x4 (each of the five types) | Calcite Pebble x4, Sand x1 | Sponge x1 (5%) | 4800 |
+| Rooted Dirt x1 | Dirt x1 | Hanging Roots x1 (50%), Bone Meal x1 (25%) | 2400 |
+| Muddy Mangrove Roots x1 | Mud x1, Mangrove Roots x1 | None | 2400 |
 
-### Native Recipes
-| Input | Output | Byproduct | Energy (DE) | Time (s) | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Void Essence ×1 | Aetherium Shard ×2 | Iron Nugget ×2 (35%) | 5200 | 5 | Breaks down condensed void essence into usable shards with a chance to sift iron grit. |
-| Void Essence ×3 | Aetherium ×1 | Aetherium Shard ×1 (50%) | 7800 | 7 | Compresses excess residue into aetherium with shard feedback for automation loops. |
-| Rotten Flesh ×3 | Void Essence ×1 | — | 2600 | 4 | Reclaims trace void essence from organic scraps instead of trashing them. |
-| Bone Block ×1 | Bone Meal ×9 | Void Essence ×1 (20%) | 2600 | 4 | Pulverizes bone blocks back into meal with a slim chance of void residue. |
-| Ender Pearl Dust ×2 | Ender Pearl ×1 | Gravel ×1 (50%) | 4200 | 6 | Refines loose ender dust back into a stable pearl. |
+## Inventory and automation
+- Input: slot 3.
+- Upgrades: slots 4-7.
+- Outputs, in reading order: 8, 9, 16, 17.
+- Item I/O controls: slots 10-15.
+- Primary Output extracts from slot 8; Residue Output extracts from 9, 16 and 17; Output All extracts from all four.
+- Existing inventories are migrated while retaining items and I/O settings.
 
-**Note**: Byproduct percentages indicate the chance of receiving the secondary item per craft.
+The recipe book is generated from the runtime catalog with `node tools/generate-residue-recipe-book.mjs` and adds no per-tick scripting.

@@ -18,6 +18,13 @@ const fluidFamilies = {
 const fluidItems = {};
 const fluidOutputs = {};
 
+/** Returns the finite capsule for a whole-bucket volume (1–8 B), if supported. */
+export function getFluidCapsuleId(fluid, buckets) {
+    if (!Number.isInteger(buckets) || buckets < 1 || buckets > 8) return undefined;
+    const family = Object.keys(fluidFamilies).find((key) => fluidFamilies[key] === fluid);
+    return family ? `utilitycraft:${family}_${buckets}` : undefined;
+}
+
 for (const [capsule, fluid] of Object.entries(fluidFamilies)) {
     for (let tier = 1; tier <= 8; tier++) {
         fluidItems[`utilitycraft:${capsule}_${tier}`] = {

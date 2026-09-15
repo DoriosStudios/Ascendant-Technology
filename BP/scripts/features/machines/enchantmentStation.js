@@ -4,7 +4,8 @@ import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
 
 import { system, world } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage, FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { EnergyStorage, FluidStorage } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import {
     applyStationEnchantPlan,
@@ -32,8 +33,12 @@ const CATALYST_SLOT = 16;
 const BOOK_SLOT = 17;
 const DISENCHANT_PROGRESS_SLOT = 18;
 const DISENCHANT_STATUS_SLOT = 31;
-const INVENTORY_SIZE = 44;
+const XP_DISPLAY_SLOT = 44;
+const RESERVED_UI_SLOT = 45;
+// Size 45 belongs to an older layout; keep its migration unambiguous.
+const INVENTORY_SIZE = 46;
 const SLOT_LAYOUTS = {
+    44: Array.from({ length: 44 }, (_, index) => index),
     43: [
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
         -1, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
@@ -104,7 +109,7 @@ registerATMachine(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([0, 1, 2, DISENCHANT_PROGRESS_SLOT, DISENCHANT_STATUS_SLOT]);
+            machine.blockSlots([0, 1, 2, DISENCHANT_PROGRESS_SLOT, DISENCHANT_STATUS_SLOT, XP_DISPLAY_SLOT, RESERVED_UI_SLOT]);
             setUiItem(machine.container, 1, "utilitycraft:ui_filler");
             setUiItem(machine.container, 2, "utilitycraft:arcane_00");
             setUiItem(machine.container, DISENCHANT_PROGRESS_SLOT, "utilitycraft:progress_right_bar_00");
@@ -122,6 +127,8 @@ registerATMachine(ID, {
         if (!machine.valid) return;
 
         if (!machine.ensureInventoryLayout(INVENTORY_SIZE, SLOT_LAYOUTS)) return;
+        if (!machine.container.getItem(XP_DISPLAY_SLOT)) machine.blockSlots([XP_DISPLAY_SLOT]);
+        if (!machine.container.getItem(RESERVED_UI_SLOT)) machine.blockSlots([RESERVED_UI_SLOT]);
 
         machine.processIO();
 
@@ -236,13 +243,13 @@ function prepareMainLane(machine, slot, modules, moduleSignature, xpTank, reserv
         ? XP_PER_CHANGE * Math.max(1, plan.changeCount)
         : 0;
     if (xpCost > 0 && (xpTank.getType() !== XP_TYPE || xpTank.get() - reservedXp < xpCost)) {
-        return { state: mainState(slot, "Need XP", false, getLaneProgress(machine, slot)) };
+        return { state: { ...mainState(slot, "Need XP", false, getLaneProgress(machine, slot), getMainCost(plan, modules, reinforcementNeeded)), xpCost, changes: plan.changeCount, repairNeeded, reinforcementNeeded } };
     }
 
     const cost = getMainCost(plan, modules, reinforcementNeeded);
     const seconds = getMainSeconds(plan.changeCount, reinforcementNeeded, repairNeeded);
     const progress = Math.min(cost, getLaneProgress(machine, slot));
-    const state = mainState(slot, machine.energy.get() > 0 ? "Processing" : "No Energy", machine.energy.get() > 0, progress, cost);
+    const state = { ...mainState(slot, machine.energy.get() > 0 ? "Processing" : "No Energy", machine.energy.get() > 0, progress, cost), xpCost, changes: plan.changeCount, repairNeeded, reinforcementNeeded };
 
     return {
         state,
@@ -275,6 +282,7 @@ function prepareDisenchant(machine, xpTank) {
 
     const enchantments = readDisenchantments(source);
     state.enchantments = enchantments.length;
+    state.entries = enchantments;
     if (enchantments.length === 0) {
         resetLane(machine, SOURCE_SLOT);
         resetAbsorption(machine.entity);
@@ -295,7 +303,7 @@ function prepareDisenchant(machine, xpTank) {
         state.mode = "Absorption";
         state.xpGain = xpGain;
 
-        if (xpTank.getType() !== XP_TYPE || xpTank.getFreeSpace() < xpGain) {
+        if (xpTank.getType() !== XP_TYPE || (source.typeId !== "minecraft:enchanted_book" && xpTank.getFreeSpace() < xpGain)) {
             resetAbsorption(machine.entity);
             state.message = "XP Tank Full";
             return { state, absorbReady: false };
@@ -323,6 +331,7 @@ function prepareDisenchant(machine, xpTank) {
     const outputSlots = getEmptyOutputSlots(machine);
     const count = Math.min(enchantments.length, catalyst.amount, books.amount, outputSlots.length);
     state.mode = "Extraction";
+    state.outputCount = count;
     if (count <= 0) {
         resetLane(machine, SOURCE_SLOT);
         state.message = "No Output Space";
@@ -474,18 +483,25 @@ function commitExtraction(machine, source, enchantments, outputSlots, count) {
 
 function commitAbsorption(machine, xpTank, prepared) {
     const current = machine.container.getItem(SOURCE_SLOT);
-    if (!current || prepared.xpGain <= 0 || xpTank.getFreeSpace() < prepared.xpGain) return false;
+    if (!current || prepared.xpGain <= 0 || xpTank.getType() !== XP_TYPE) return false;
+    const storedXp = current.typeId === "minecraft:enchanted_book"
+        ? Math.min(prepared.xpGain, Math.max(0, xpTank.getFreeSpace()))
+        : prepared.xpGain;
+    if (xpTank.getFreeSpace() < storedXp) return false;
     if (`${current.typeId}|${createDisenchantSignatureFast(readDisenchantments(current))}` !== prepared.signature) return false;
 
     const result = removeAllDisenchantments(current);
     if (!result) return false;
 
+    let addedXp = 0;
     try {
         machine.container.setItem(SOURCE_SLOT, result);
-        if (xpTank.add(prepared.xpGain) !== prepared.xpGain) throw new Error("XP commit failed");
+        if (storedXp > 0) addedXp = xpTank.add(storedXp);
+        if (addedXp !== storedXp) throw new Error("XP commit failed");
         return true;
     } catch {
         try {
+            if (addedXp > 0) xpTank.consume(addedXp);
             machine.container.setItem(SOURCE_SLOT, current);
         } catch {}
         return false;
@@ -494,6 +510,7 @@ function commitAbsorption(machine, xpTank, prepared) {
 
 function renderStation(machine, xpTank, modules, states, disenchant) {
     machine.energy.display(0);
+    xpTank.display(XP_DISPLAY_SLOT);
 
     const active = states.filter((state) => state.running);
     const waiting = states.filter((state) => state.message !== "Empty" && !state.running && state.message !== "Ready");
@@ -514,23 +531,72 @@ function renderStation(machine, xpTank, modules, states, disenchant) {
         index: 1,
         slot: DISENCHANT_PROGRESS_SLOT,
         type: "progress_right_bar",
+        scale: 16,
     });
 
-    machine.setLabel([
-        `\u00A7r${active.length > 0 ? "\u00A7aProcessing" : waiting.length > 0 ? "\u00A7eWaiting" : "\u00A7bReady"}`,
-        `\u00A7r\u00A77Active lanes: \u00A7f${active.length}/9`,
-        `\u00A7r\u00A77Waiting lanes: \u00A7f${waiting.length}`,
-        `\u00A7r\u00A77Modules: \u00A7fE${modules.enchantability} R${modules.reinforcement} C${modules.curseProtection}`,
-        `\u00A7r\u00A77XP: \u00A7f${Math.floor(xpTank.get())}/${Math.floor(xpTank.getCap())}`,
-        `\u00A7r\u00A77Energy: \u00A7f${EnergyStorage.formatEnergyToText(machine.energy.get())}`,
-    ], 1);
+    const percent = (progress, cost) => `${Math.min(100, Math.floor(100 * progress / Math.max(1, cost)))}%`;
+    const energyText = (value) => EnergyStorage.formatEnergyToText(value);
+    const section = (title) => `\u00A7r\u00A7e${title}`;
+    const line = (title, value) => `\u00A7r\u00A77${title}: \u00A7f${value}`;
+    const occupied = states.filter(state => state.message !== "Empty");
+    const ready = occupied.filter(state => state.message === "Ready").length;
+    const xpDemand = occupied.reduce((sum, state) => sum + (state.xpCost || 0), 0);
+    const labels = [
+        section("Enchanting & Repair"),
+        line("Status", active.length ? "Processing" : waiting.length ? "Waiting" : occupied.length ? "Ready" : "Insert equipment"),
+        line("Items / active / ready", `${occupied.length} / ${active.length} / ${ready}`),
+        "", section("Modules"),
+        line("Enchantability", modules.enchantability),
+        line("Reinforcement", modules.reinforcement),
+        line("Curse protection", modules.curseProtection),
+        "", section("Resources"),
+        line("XP", `${Math.floor(xpTank.get())} mB`),
+        line("XP required", `${xpDemand} mB`),
+        line("Energy", energyText(machine.energy.get())),
+        line("Speed", `x${Number(machine.boosts.speed || 1).toFixed(2)}`),
+        "", section("Equipment Slots"),
+    ];
+    if (!occupied.length) labels.push("§r§7One item per slot.", "§r§7Modules improve enchantments", "§r§7and reinforcement.", "§r§7Damaged items are repaired.");
+    for (const state of occupied) {
+        const progress = state.message === "Processing" ? ` ${percent(state.progress, state.cost)}` : "";
+        labels.push(`§r§b${state.slot - GRID_SLOTS[0] + 1}. §f${state.message}${progress}`);
+    }
+    machine.setLabel(labels, 1);
 
-    machine.setLabel([
-        `\u00A7r${disenchant.running ? "\u00A7a" : "\u00A7e"}${disenchant.message}`,
-        `\u00A7r\u00A77Mode: \u00A7f${disenchant.mode}`,
-        `\u00A7r\u00A77Enchantments: \u00A7f${disenchant.enchantments}`,
-        `\u00A7r\u00A77XP Gain: \u00A7f${disenchant.xpGain}`,
-    ], DISENCHANT_STATUS_SLOT);
+    const source = machine.container.getItem(SOURCE_SLOT);
+    const crystals = machine.container.getItem(CATALYST_SLOT);
+    const books = machine.container.getItem(BOOK_SLOT);
+    const extraction = disenchant.mode === "Extraction";
+    const details = [
+        section("Disenchanting"),
+        line("Status", source ? disenchant.message : "Insert item"),
+        line("Mode", disenchant.mode),
+        line("Enchantments", disenchant.enchantments),
+        "", section(extraction ? "Book Extraction" : "XP Absorption"),
+    ];
+    if (extraction) details.push(
+        line("Books this cycle", disenchant.outputCount),
+        line("Crystals / books", `${crystals?.typeId === CATALYST_ID ? crystals.amount : 0} / ${books?.typeId === "minecraft:book" ? books.amount : 0}`),
+        line("Free outputs", `${getEmptyOutputSlots(machine).length}/9`),
+        line("Cycle energy", energyText(disenchant.outputCount * BASE_COST * 10 * (machine.boosts.consumption || 1))),
+        line("Progress", percent(disenchant.progress, disenchant.cost)),
+        "§r§7One crystal + one book", "§r§7per extracted enchantment.",
+    );
+    else details.push(
+        line("XP recovered", `${source?.typeId === "minecraft:enchanted_book" ? Math.min(disenchant.xpGain, Math.max(0, xpTank.getFreeSpace())) : disenchant.xpGain} mB`),
+        line("Tank space", `${Math.floor(xpTank.getFreeSpace())} mB`),
+        source?.typeId === "minecraft:enchanted_book" ? line("XP discarded", `${Math.max(0, disenchant.xpGain - xpTank.getFreeSpace())} mB`) : line("Time", "5 s"),
+        line("Progress", disenchant.mode === "Absorption" ? percent(disenchant.progress, ABSORB_DELAY_TICKS) : "0%"),
+        "§r§7Removes enchantments; keeps item.",
+        "§r§eFor book extraction:", "§r§7Add refined crystals and books", "§r§7before inserting the item.",
+    );
+    details.push("", section("Resources"), line("XP", `${Math.floor(xpTank.get())} mB`), line("Energy", energyText(machine.energy.get())));
+    if (disenchant.entries.length) {
+        details.push("", section("Source Enchantments"));
+        for (const entry of disenchant.entries.slice(0, 3)) details.push(`§r§7${entry.id.replace("minecraft:", "").replaceAll("_", " ")} §f${entry.level}`);
+        if (disenchant.entries.length > 3) details.push(`§r§7+${disenchant.entries.length - 3} more (see item)`);
+    }
+    machine.setLabel(details, DISENCHANT_STATUS_SLOT);
 }
 
 function getMainCost(plan, modules, reinforcementNeeded) {
@@ -652,5 +718,7 @@ function disenchantState(message) {
         cost: BASE_COST,
         enchantments: 0,
         xpGain: 0,
+        outputCount: 0,
+        entries: [],
     };
 }

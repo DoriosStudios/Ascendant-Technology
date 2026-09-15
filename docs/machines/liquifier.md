@@ -34,6 +34,10 @@ Thermal crucible that melts solids into fluid, with a chance of residue.
 
 ## Recipes
 
+Open the **Recipes** tab in the machine UI to browse the 11 native recipes, grouped by output fluid. Select an ingredient icon to show its required count over the input slot, the fluid name, icon and yield in mB, and any byproduct in its output slot with its chance. Recipes are grouped beneath fluid headers, with compact fluid details beside the tank.
+
+The book is static UI data and adds no per-tick scripting. After changing the native recipe catalog, run `node tools/generate-liquifier-recipe-book.mjs` to refresh it (with UtilityCraft available as a sibling project).
+
 ### Native Recipes
 | Input | Fluid (output) | Energy (DE) | Time (s) | Byproduct |
 | --- | --- | --- | --- | --- |

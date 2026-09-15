@@ -11,6 +11,10 @@ const SIGNATURE_SEPARATOR = "\u0001";
 const recipesByInput = new Map();
 /** @type {Map<string, any>} */
 const recipesById = new Map();
+const candidatesByInput = new Map();
+const EMPTY_RECIPES = Object.freeze([]);
+let recipeRevision = 0;
+let nextOrder = 0;
 
 export const catalystWeaverRecipeDefinitions = {
     "utilitycraft:multi_processing_upgrade": {
@@ -20,16 +24,12 @@ export const catalystWeaverRecipeDefinitions = {
         },
         catalysts: [
             {
-                id: "utilitycraft:steel_plate",
-                amount: 4,
-            },
-            {
                 id: "minecraft:red_dye",
                 amount: 1,
             },
             {
                 id: "minecraft:redstone_block",
-                amount: 2,
+                amount: 1,
             },
             {
                 id: "utilitycraft:aetherium_block",
@@ -50,16 +50,12 @@ export const catalystWeaverRecipeDefinitions = {
         },
         catalysts: [
             {
-                id: "utilitycraft:steel_plate",
-                amount: 4,
-            },
-            {
                 id: "minecraft:yellow_dye",
                 amount: 1,
             },
             {
                 id: "minecraft:redstone_block",
-                amount: 2,
+                amount: 1,
             },
             {
                 id: "minecraft:diamond_block",
@@ -80,16 +76,12 @@ export const catalystWeaverRecipeDefinitions = {
         },
         catalysts: [
             {
-                id: "utilitycraft:steel_plate",
-                amount: 4,
-            },
-            {
                 id: "minecraft:cyan_dye",
                 amount: 1,
             },
             {
                 id: "minecraft:redstone_block",
-                amount: 2,
+                amount: 1,
             },
             {
                 id: "utilitycraft:expert_fluid_tank",
@@ -110,16 +102,12 @@ export const catalystWeaverRecipeDefinitions = {
         },
         catalysts: [
             {
-                id: "utilitycraft:steel_plate",
-                amount: 4,
-            },
-            {
                 id: "minecraft:lime_dye",
                 amount: 1,
             },
             {
                 id: "minecraft:redstone_block",
-                amount: 2,
+                amount: 1,
             },
             {
                 id: "utilitycraft:expert_gas_tank",
@@ -140,16 +128,12 @@ export const catalystWeaverRecipeDefinitions = {
         },
         catalysts: [
             {
-                id: "utilitycraft:steel_plate",
-                amount: 4,
-            },
-            {
                 id: "minecraft:green_dye",
                 amount: 1,
             },
             {
                 id: "minecraft:redstone_block",
-                amount: 2,
+                amount: 1,
             },
             {
                 id: "utilitycraft:refined_aetherium_crystal",
@@ -216,7 +200,7 @@ export const catalystWeaverRecipeDefinitions = {
     "utilitycraft:hyper_processing_upgrade": {
         input: { id: "utilitycraft:speed_upgrade", amount: 1 },
         catalysts: [
-            { id: "utilitycraft:energized_iron_dust", amount: 2 },
+            { id: "utilitycraft:energized_iron_dust", amount: 1 },
             { id: "utilitycraft:aetherium_crystal_dust", amount: 1 },
             { id: "utilitycraft:titanium_dust", amount: 1 },
         ],
@@ -227,7 +211,7 @@ export const catalystWeaverRecipeDefinitions = {
     "utilitycraft:hyper_processing_upgrade_alternative": {
         input: { id: "utilitycraft:speed_upgrade", amount: 1 },
         catalysts: [
-            { id: "utilitycraft:energized_iron_dust", amount: 2 },
+            { id: "utilitycraft:energized_iron_dust", amount: 1 },
             { id: "utilitycraft:aetherium_dust", amount: 1 },
             { id: "utilitycraft:titanium_dust", amount: 1 },
         ],
@@ -236,9 +220,8 @@ export const catalystWeaverRecipeDefinitions = {
         speed: 0.25,
     },
     "utilitycraft:base_upgrade": {
-        input: { id: "utilitycraft:steel_plate", amount: 1 },
+        input: { id: "minecraft:redstone_block", amount: 1 },
         catalysts: [
-            { id: "minecraft:redstone_block", amount: 1 },
             { id: "utilitycraft:gold_dust", amount: 1 },
             { id: "utilitycraft:energized_iron_dust", amount: 1 },
         ],
@@ -248,9 +231,8 @@ export const catalystWeaverRecipeDefinitions = {
     "utilitycraft:stack_upgrade": {
         input: { id: "utilitycraft:base_upgrade", amount: 1 },
         catalysts: [
-            { id: "utilitycraft:steel_plate", amount: 4 },
             { id: "minecraft:orange_dye", amount: 1 },
-            { id: "minecraft:redstone_block", amount: 2 },
+            { id: "minecraft:redstone_block", amount: 1 },
             { id: "utilitycraft:aetherium_block", amount: 1 },
         ],
         output: { id: "utilitycraft:stack_upgrade", amount: 1 },
@@ -260,8 +242,8 @@ export const catalystWeaverRecipeDefinitions = {
     "utilitycraft:size_upgrade": {
         input: { id: "utilitycraft:base_upgrade", amount: 1 },
         catalysts: [
-            { id: "utilitycraft:basic_chip", amount: 4 },
-            { id: "utilitycraft:gold_dust", amount: 3 },
+            { id: "utilitycraft:basic_chip", amount: 1 },
+            { id: "utilitycraft:gold_dust", amount: 1 },
             { id: "minecraft:ender_pearl", amount: 1 },
         ],
         output: { id: "utilitycraft:size_upgrade", amount: 1 },
@@ -271,7 +253,6 @@ export const catalystWeaverRecipeDefinitions = {
         input: { id: "utilitycraft:base_upgrade", amount: 1 },
         catalysts: [
             { id: "utilitycraft:diamond_dust", amount: 1 },
-            { id: "minecraft:redstone_block", amount: 1 },
             { id: "minecraft:redstone_block", amount: 1 },
         ],
         output: { id: "utilitycraft:energy_upgrade", amount: 1 },
@@ -298,7 +279,7 @@ export const catalystWeaverRecipeDefinitions = {
         cost: 1600,
     },
     "utilitycraft:dimensional_range_upgrade": {
-        input: { id: "utilitycraft:range_upgrade", amount: 8 },
+        input: { id: "utilitycraft:range_upgrade", amount: 1 },
         catalysts: [{ id: "minecraft:nether_star", amount: 1 }],
         output: { id: "utilitycraft:dimensional_range_upgrade", amount: 1 },
         cost: 12800,
@@ -401,7 +382,8 @@ for (const [id, definition] of Object.entries(catalystWeaverRecipeDefinitions)) 
 }
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
-    if (id !== DoriosLib.registry.REGISTRATION_EVENT_IDS.INFUSER_RECIPE) return;
+    const isInfuser = id === DoriosLib.registry.REGISTRATION_EVENT_IDS.INFUSER_RECIPE;
+    if (!isInfuser && id !== "utilitycraft:register_catalyst_weaver_recipe") return;
 
     let payload;
     try {
@@ -412,24 +394,38 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
     if (!payload || typeof payload !== "object" || Array.isArray(payload)) return;
 
     for (const [key, definition] of Object.entries(payload)) {
-        const converted = convertInfuserRecipe(key, definition);
-        if (converted) upsertRecipe(`infuser:${key}`, converted);
+        const converted = isInfuser ? convertInfuserRecipe(key, definition) : definition;
+        if (converted) upsertRecipe(isInfuser ? `infuser:${key}` : key, converted, isInfuser);
     }
 });
 
-export function getCatalystWeaverRecipe(inputTypeId, inputAmount, catalystTotals) {
+/** Indexed candidates retain main's native-before-Infuser registration order. */
+export function getCatalystWeaverCandidates(inputTypeId) {
+    return candidatesByInput.get(inputTypeId) ?? EMPTY_RECIPES;
+}
+
+export function getCatalystWeaverRecipeRevision() {
+    return recipeRevision;
+}
+
+export function getCatalystWeaverRecipe(inputTypeId, inputAmount, catalystTotals, fluidType = "empty", signature) {
     const signatureIndex = recipesByInput.get(inputTypeId);
     if (!signatureIndex) return undefined;
-
-    const indexed = signatureIndex.get(createCatalystSignature(catalystTotals.keys()));
+    const indexed = signatureIndex.get(signature ?? createCatalystSignature(catalystTotals.keys()));
     if (!indexed) return undefined;
-    if (!Array.isArray(indexed)) return indexed;
-
+    if (!Array.isArray(indexed)) {
+        return matchesRecipe(indexed, inputAmount, catalystTotals, fluidType) ? indexed : undefined;
+    }
     for (let index = 0; index < indexed.length; index++) {
         const recipe = indexed[index];
-        if (hasRequiredAmounts(recipe, inputAmount, catalystTotals)) return recipe;
+        if (matchesRecipe(recipe, inputAmount, catalystTotals, fluidType)) return recipe;
     }
-    return indexed[0];
+    return undefined;
+}
+
+function matchesRecipe(recipe, inputAmount, catalystTotals, fluidType) {
+    return (!recipe.fluid || fluidType === "empty" || fluidType === recipe.fluid.type)
+        && hasRequiredAmounts(recipe, inputAmount, catalystTotals);
 }
 
 export function createCatalystSignature(typeIds) {
@@ -440,11 +436,13 @@ export function getCatalystWeaverRecipeCount() {
     return recipesById.size;
 }
 
-function upsertRecipe(id, definition) {
+function upsertRecipe(id, definition, imported = false) {
     const recipe = normalizeRecipe(id, definition);
     if (!recipe) return false;
 
     const previous = recipesById.get(id);
+    recipe.order = previous?.order ?? nextOrder++;
+    recipe.imported = imported;
     if (previous) removeIndexedRecipe(previous);
 
     let signatureIndex = recipesByInput.get(recipe.input.id);
@@ -455,14 +453,29 @@ function upsertRecipe(id, definition) {
 
     const indexed = signatureIndex.get(recipe.signature);
     if (!indexed) signatureIndex.set(recipe.signature, recipe);
-    else if (Array.isArray(indexed)) indexed.push(recipe);
-    else signatureIndex.set(recipe.signature, [indexed, recipe]);
+    else if (Array.isArray(indexed)) {
+        indexed.push(recipe);
+        indexed.sort(compareRecipeOrder);
+    } else signatureIndex.set(recipe.signature, [indexed, recipe].sort(compareRecipeOrder));
 
+    let candidates = candidatesByInput.get(recipe.input.id);
+    if (!candidates) candidatesByInput.set(recipe.input.id, candidates = []);
+    candidates.push(recipe);
+    candidates.sort(compareRecipeOrder);
     recipesById.set(id, recipe);
+    recipeRevision++;
     return true;
 }
 
+function compareRecipeOrder(a, b) {
+    return Number(a.imported) - Number(b.imported) || a.order - b.order;
+}
+
 function removeIndexedRecipe(recipe) {
+    const candidates = candidatesByInput.get(recipe.input.id);
+    const candidateIndex = candidates?.indexOf(recipe) ?? -1;
+    if (candidateIndex >= 0) candidates.splice(candidateIndex, 1);
+    if (candidates?.length === 0) candidatesByInput.delete(recipe.input.id);
     const signatureIndex = recipesByInput.get(recipe.input.id);
     if (!signatureIndex) return;
 
@@ -486,11 +499,14 @@ function normalizeRecipe(id, definition) {
     if (typeof inputId !== "string" || typeof outputId !== "string") return undefined;
 
     const catalystAmounts = new Map();
+    const catalystSteps = [];
     const sourceCatalysts = Array.isArray(definition.catalysts) ? definition.catalysts : [];
     for (let index = 0; index < sourceCatalysts.length && index < 6; index++) {
-        const catalyst = sourceCatalysts[index];
+        const entry = sourceCatalysts[index];
+        const catalyst = typeof entry === "string" ? { id: entry, amount: 1 } : entry;
         if (!catalyst || typeof catalyst.id !== "string") continue;
         const amount = positiveInteger(catalyst.amount, 1);
+        catalystSteps.push({ id: catalyst.id, amount });
         catalystAmounts.set(catalyst.id, (catalystAmounts.get(catalyst.id) ?? 0) + amount);
     }
 
@@ -504,12 +520,15 @@ function normalizeRecipe(id, definition) {
         id,
         input: { id: inputId, amount: positiveInteger(definition.input.amount, 1) },
         catalysts,
+        catalystAmounts,
+        catalystSteps,
         signature: createCatalystSignature(catalystAmounts.keys()),
         output: { id: outputId, amount: positiveInteger(definition.output.amount, 1) },
         cost: positiveNumber(definition.cost, DEFAULT_COST),
         speed: positiveNumber(definition.speed ?? definition.speedModifier, 1),
     };
 
+    if (typeof definition.output.name === "string") recipe.output.name = definition.output.name;
     if (definition.fluid?.type && positiveInteger(definition.fluid.amount, 0) > 0) {
         recipe.fluid = {
             type: String(definition.fluid.type),

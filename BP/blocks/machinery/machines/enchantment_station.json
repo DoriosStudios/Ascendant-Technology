@@ -21,7 +21,7 @@
             "utilitycraft:enchantment_station": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 44,
+                    "inventory_size": 46,
                     "fixed_fluid_types": true
                 },
                 "machine": {

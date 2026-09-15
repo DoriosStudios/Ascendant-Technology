@@ -4,9 +4,11 @@ import { resourceCost } from "../../ATCore/machinery/upgradeEffects.js";
 
 import { ItemStack } from "@minecraft/server";
 import * as DoriosLib from "DoriosLib/index.js";
-import { FluidStorage, registerIOInterface } from "DoriosCore/index.js";
+import { FluidStorage } from "DoriosCore/index.js";
+import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
+import { registerFluidEjection } from "./fluidEjection.js";
 import { liquifierRecipes } from "../../config/recipes/liquifier.js";
 import {
     displayProgress,
@@ -18,7 +20,8 @@ import {
 } from "./runtime.js";
 
 const ID = "utilitycraft:liquifier";
-const INVENTORY_SIZE = 22;
+const INVENTORY_SIZE = 23;
+const IDENTITY_SLOT_LAYOUT = Array.from({ length: INVENTORY_SIZE }, (_, slot) => slot);
 const SLOT_LAYOUTS = {
     21: [
         0, 1, 2, 3, 4, 5, 6, -1,
@@ -34,13 +37,20 @@ const PREVIOUS_SLOT_LAYOUT = [
     7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ];
 const LAYOUT_KEY = "ascendant:liquifier_layout";
-const LAYOUT_VERSION = "contiguous_upgrades_v1";
+const PREVIOUS_LAYOUT_VERSION = "contiguous_upgrades_v1";
+const LAYOUT_VERSION = "fluid_ejection_v2";
 const INPUT_SLOT = 3;
 const BYPRODUCT_SLOT = 8;
 const LIQUID_DISPLAY_SLOT = 9;
+const EJECT_BUTTON_SLOT = 22;
 const RECIPE_KEY = "ascendant:liquifier_recipe";
 const DEFAULT_STACK_SIZE = 64;
 const FLUID_IO_RATE = 128000;
+
+registerFluidEjection(
+    ID, EJECT_BUTTON_SLOT, LIQUID_DISPLAY_SLOT,
+    "chat.ascendant:liquifier.fluid_lost",
+);
 
 registerIOInterface(ID, {
     automaticDefaults: true,
@@ -85,9 +95,15 @@ registerATMachine(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
+        const storedLayout = machine.entity.getDynamicProperty(LAYOUT_KEY);
+        const wasContiguous = storedLayout === PREVIOUS_LAYOUT_VERSION
+            || storedLayout === `resizing:${PREVIOUS_LAYOUT_VERSION}`;
+        const migrationLayout = machine.container.size === 22
+            ? (wasContiguous ? IDENTITY_SLOT_LAYOUT.slice(0, 22) : PREVIOUS_SLOT_LAYOUT)
+            : SLOT_LAYOUTS[machine.container.size] ?? [];
         if (!ensureMachineInventoryLayout(
-            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
-            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
+            machine, INVENTORY_SIZE, [...migrationLayout, -1],
+            LAYOUT_KEY, LAYOUT_VERSION, IDENTITY_SLOT_LAYOUT,
         )) return;
 
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });

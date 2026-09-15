@@ -21,7 +21,7 @@
             "utilitycraft:catalyst_weaver": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 29
+                    "inventory_size": 30
                 },
                 "machine": {
                     "energy_cap": 2048000,

@@ -662,40 +662,40 @@
 			"textures": "textures/blocks/generators/absolute_magmator_on_down"
 		},
 		"utilitycraft_industrial_crucible_off_north": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_off_north"
+			"textures": "textures/blocks/machines/industrial_crucible_off_north"
 		},
 		"utilitycraft_industrial_crucible_off_south": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_off_south"
+			"textures": "textures/blocks/machines/industrial_crucible_off_south"
 		},
 		"utilitycraft_industrial_crucible_off_east": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_off_east"
+			"textures": "textures/blocks/machines/industrial_crucible_off_east"
 		},
 		"utilitycraft_industrial_crucible_off_west": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_off_west"
+			"textures": "textures/blocks/machines/industrial_crucible_off_west"
 		},
 		"utilitycraft_industrial_crucible_off_up": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_off_up"
+			"textures": "textures/blocks/machines/industrial_crucible_off_up"
 		},
 		"utilitycraft_industrial_crucible_off_down": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_off_down"
+			"textures": "textures/blocks/machines/industrial_crucible_off_down"
 		},
 		"utilitycraft_industrial_crucible_on_north": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_on_north"
+			"textures": "textures/blocks/machines/industrial_crucible_on_north"
 		},
 		"utilitycraft_industrial_crucible_on_south": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_on_south"
+			"textures": "textures/blocks/machines/industrial_crucible_on_south"
 		},
 		"utilitycraft_industrial_crucible_on_east": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_on_east"
+			"textures": "textures/blocks/machines/industrial_crucible_on_east"
 		},
 		"utilitycraft_industrial_crucible_on_west": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_on_west"
+			"textures": "textures/blocks/machines/industrial_crucible_on_west"
 		},
 		"utilitycraft_industrial_crucible_on_up": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_on_up"
+			"textures": "textures/blocks/machines/industrial_crucible_on_up"
 		},
 		"utilitycraft_industrial_crucible_on_down": {
-			"textures": "textures/blocks/machines/superior/industrial_crucible_on_down"
+			"textures": "textures/blocks/machines/industrial_crucible_on_down"
 		},
 		"utilitycraft_absolute_thermo_generator_off_north": {
 			"textures": "textures/blocks/generators/absolute_thermo_generator_off_north"
@@ -1094,10 +1094,10 @@
 			"textures": "textures/blocks/machines/faces/compactor/on/down"
 		},
 		"utilitycraft_decompactor_off_north": {
-			"textures": "textures/blocks/machines/faces/decompactor/off/north"
+			"textures": "textures/blocks/machines/decompactor_off_north"
 		},
 		"utilitycraft_decompactor_on_north": {
-			"textures": "textures/blocks/machines/faces/decompactor/on/north"
+			"textures": "textures/blocks/machines/decompactor_on_north"
 		},
 		"utilitycraft_genetic_seed_synthesizer_off_north": {
 			"textures": "textures/blocks/machines/superior/genetic_seed_synthesizer_off_north"
@@ -1653,6 +1653,36 @@
 		},
 		"utilitycraft_aetherium_crystal_crop1": {
 			"textures": "textures/blocks/crops/aetherium_crystal_1"
+		},
+		"utilitycraft_decompactor_off_west": {
+			"textures": "textures/blocks/machines/decompactor_off_west"
+		},
+		"utilitycraft_decompactor_off_east": {
+			"textures": "textures/blocks/machines/decompactor_off_east"
+		},
+		"utilitycraft_decompactor_off_south": {
+			"textures": "textures/blocks/machines/decompactor_off_south"
+		},
+		"utilitycraft_decompactor_off_up": {
+			"textures": "textures/blocks/machines/decompactor_off_up"
+		},
+		"utilitycraft_decompactor_off_down": {
+			"textures": "textures/blocks/machines/decompactor_off_down"
+		},
+		"utilitycraft_decompactor_on_west": {
+			"textures": "textures/blocks/machines/decompactor_on_west"
+		},
+		"utilitycraft_decompactor_on_east": {
+			"textures": "textures/blocks/machines/decompactor_on_east"
+		},
+		"utilitycraft_decompactor_on_south": {
+			"textures": "textures/blocks/machines/decompactor_on_south"
+		},
+		"utilitycraft_decompactor_on_up": {
+			"textures": "textures/blocks/machines/decompactor_on_up"
+		},
+		"utilitycraft_decompactor_on_down": {
+			"textures": "textures/blocks/machines/decompactor_on_down"
 		}
 	}
 }

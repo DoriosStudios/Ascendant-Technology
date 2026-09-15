@@ -11,6 +11,7 @@
     }
   },
   "scripts": {
+    "generate:faces": "node tools/split_faces.mjs",
     "audit:upgrades": "node tools/audit-machine-upgrades.mjs",
     "audit:compactor": "node tools/audit-compactor-recipes.mjs",
     "audit:dorioscore": "node tools/audit-dorioscore-api.mjs",

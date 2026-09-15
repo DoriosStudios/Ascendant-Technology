@@ -8,12 +8,17 @@
             },
             "traits": {
                 "minecraft:placement_direction": {
-                    "enabled_states": ["minecraft:cardinal_direction"],
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
                     "y_rotation_offset": 180
                 }
             },
             "states": {
-                "utilitycraft:on": [false, true]
+                "utilitycraft:on": [
+                    false,
+                    true
+                ]
             }
         },
         "components": {
@@ -26,7 +31,12 @@
                     "energy_cap": 512000,
                     "energy_cost": 800,
                     "rate_speed_base": 1800,
-                    "upgrades": [12, 13, 14, 15]
+                    "upgrades": [
+                        12,
+                        13,
+                        14,
+                        15
+                    ]
                 }
             },
             "utilitycraft:machine_upgrades": [
@@ -58,28 +68,31 @@
                     "render_method": "alpha_test"
                 },
                 "south": {
-                    "texture": "utilitycraft_compactor_off_south",
+                    "texture": "utilitycraft_decompactor_off_south",
                     "render_method": "alpha_test"
                 },
                 "east": {
-                    "texture": "utilitycraft_compactor_off_east",
+                    "texture": "utilitycraft_decompactor_off_east",
                     "render_method": "alpha_test"
                 },
                 "west": {
-                    "texture": "utilitycraft_compactor_off_west",
+                    "texture": "utilitycraft_decompactor_off_west",
                     "render_method": "alpha_test"
                 },
                 "up": {
-                    "texture": "utilitycraft_compactor_off_up",
+                    "texture": "utilitycraft_decompactor_off_up",
                     "render_method": "alpha_test"
                 },
                 "down": {
-                    "texture": "utilitycraft_compactor_off_down",
+                    "texture": "utilitycraft_decompactor_off_down",
                     "render_method": "alpha_test"
                 }
             },
             "minecraft:tick": {
-                "interval_range": [4, 4]
+                "interval_range": [
+                    4,
+                    4
+                ]
             },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
@@ -104,23 +117,23 @@
                             "render_method": "alpha_test"
                         },
                         "south": {
-                            "texture": "utilitycraft_compactor_on_south",
+                            "texture": "utilitycraft_decompactor_on_south",
                             "render_method": "alpha_test"
                         },
                         "east": {
-                            "texture": "utilitycraft_compactor_on_east",
+                            "texture": "utilitycraft_decompactor_on_east",
                             "render_method": "alpha_test"
                         },
                         "west": {
-                            "texture": "utilitycraft_compactor_on_west",
+                            "texture": "utilitycraft_decompactor_on_west",
                             "render_method": "alpha_test"
                         },
                         "up": {
-                            "texture": "utilitycraft_compactor_on_up",
+                            "texture": "utilitycraft_decompactor_on_up",
                             "render_method": "alpha_test"
                         },
                         "down": {
-                            "texture": "utilitycraft_compactor_on_down",
+                            "texture": "utilitycraft_decompactor_on_down",
                             "render_method": "alpha_test"
                         }
                     },
@@ -131,7 +144,11 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [0, 0, 0]
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
                     }
                 }
             },
@@ -139,7 +156,11 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [0, 180, 0]
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
                     }
                 }
             },
@@ -147,7 +168,11 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [0, -90, 0]
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
                     }
                 }
             },
@@ -155,7 +180,11 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [0, 90, 0]
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
                     }
                 }
             }

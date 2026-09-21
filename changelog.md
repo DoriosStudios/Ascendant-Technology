@@ -1,4 +1,4 @@
-# v0.9.2 (Draft)
+# Draft v0.9.2
 
 This update brings the Compactor and Decompactor, Universal transportation blocks, five new StatsCore elements, and a lot of recipe and UI changes. It also fixes several machine issues and centralizes shared recipes so they can be used by more than one machine.
 

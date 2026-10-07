@@ -4,6 +4,24 @@
 	"resource_pack_name": "UtilityCraft Expanded",
 	"texture_name": "atlas.terrain",
 	"texture_data": {
+		"utilitycraft_ctup": {
+			"textures": "textures/blocks/conveyor_table_top"
+		},
+		"utilitycraft_ctside": {
+			"textures": "textures/blocks/conveyor_table_side"
+		},
+		"utilitycraft_ctbottom": {
+			"textures": "textures/blocks/conveyor_table_bottom"
+		},
+		"utilitycraft_mob_slasher": {
+			"textures": "textures/blocks/mob_slasher_v2"
+		},
+		"utilitycraft_mob_slasher_blades": {
+			"textures": "textures/blocks/mob_slasher_blades"
+		},
+		"utilitycraft_mob_slasher_blades_still": {
+			"textures": "textures/blocks/mob_slasher_blades_still"
+		},
 		"utilitycraft_end_sand": {
 			"textures": "textures/blocks/nature/end_sand"
 		},
@@ -1683,6 +1701,27 @@
 		},
 		"utilitycraft_decompactor_on_down": {
 			"textures": "textures/blocks/machines/decompactor_on_down"
+		},
+		"utilitycraft_alchemical_station": {
+			"textures": "textures/blocks/alchemy_table"
+		},
+		"utilitycraft_alchemical_station_off_west": {
+			"textures": "textures/blocks/machines/alchemical_station_off_west"
+		},
+		"utilitycraft_alchemical_station_off_north": {
+			"textures": "textures/blocks/machines/alchemical_station_off_north"
+		},
+		"utilitycraft_alchemical_station_off_east": {
+			"textures": "textures/blocks/machines/alchemical_station_off_east"
+		},
+		"utilitycraft_alchemical_station_off_south": {
+			"textures": "textures/blocks/machines/alchemical_station_off_south"
+		},
+		"utilitycraft_alchemical_station_off_up": {
+			"textures": "textures/blocks/machines/alchemical_station_off_up"
+		},
+		"utilitycraft_alchemical_station_off_down": {
+			"textures": "textures/blocks/machines/alchemical_station_off_down"
 		}
 	}
 }

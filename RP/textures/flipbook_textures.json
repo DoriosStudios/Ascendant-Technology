@@ -1,0 +1,7 @@
+[
+    {
+        "flipbook_texture": "textures/blocks/mob_slasher_blades",
+        "atlas_tile": "utilitycraft_mob_slasher_blades",
+        "ticks_per_frame": 1
+    }
+]

@@ -1,0 +1,24 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:item": {
+        "description": {
+            "identifier": "utilitycraft:alchemical_oozing_1_normal_splash",
+            "menu_category": {
+                "category": "equipment",
+                "group": "at:itemGroup.name.alchemical_potions"
+            }
+        },
+        "components": {
+            "minecraft:icon": "utilitycraft_alchemical_oozing_splash",
+            "minecraft:display_name": {
+                "value": "item.utilitycraft:alchemical_oozing_1_normal_splash.name"
+            },
+            "minecraft:max_stack_size": 1,
+            "ascendant:alchemical_throwable_potion": {},
+            "minecraft:cooldown": {
+                "category": "alchemical_potion",
+                "duration": 0.5
+            }
+        }
+    }
+}

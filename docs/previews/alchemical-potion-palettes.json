@@ -1,0 +1,186 @@
+[
+    {
+        "family": "haste",
+        "source": "ui/haste_effect.png",
+        "palette": [
+            "#1c0d05",
+            "#2c1406",
+            "#3f220f",
+            "#752802",
+            "#6b3f23",
+            "#b26411",
+            "#dc9613",
+            "#e9b115",
+            "#eee050",
+            "#fdff76"
+        ]
+    },
+    {
+        "family": "resistance",
+        "source": "ui/resistance_effect.png",
+        "palette": [
+            "#1e2434",
+            "#3f485f",
+            "#3e4862",
+            "#4d566f",
+            "#5c6478",
+            "#6f7689",
+            "#828a9b",
+            "#969dab"
+        ]
+    },
+    {
+        "family": "absorption",
+        "source": "ui/absorption_effect.png",
+        "palette": [
+            "#2a5b6a",
+            "#265d68",
+            "#3f6778",
+            "#347e8c",
+            "#507a83",
+            "#658592",
+            "#7e95a5",
+            "#3aaac4",
+            "#96aaab",
+            "#66d0e9",
+            "#a4edfe"
+        ]
+    },
+    {
+        "family": "health_boost",
+        "source": "ui/health_boost_effect.png",
+        "palette": [
+            "#3b0402",
+            "#6c100c",
+            "#a10e0a",
+            "#ff0606",
+            "#c6223b",
+            "#ff8181"
+        ]
+    },
+    {
+        "family": "levitation",
+        "source": "ui/levitation_effect.png",
+        "palette": [
+            "#709eb7",
+            "#75b9de",
+            "#b1dff7",
+            "#d3ecf1"
+        ]
+    },
+    {
+        "family": "blindness",
+        "source": "ui/blindness_effect.png",
+        "palette": [
+            "#121c29",
+            "#182639",
+            "#901212",
+            "#c80404",
+            "#ff0606",
+            "#506b68",
+            "#557672",
+            "#ff5a29",
+            "#9abbb7"
+        ]
+    },
+    {
+        "family": "darkness",
+        "source": "ui/darkness_effect.png",
+        "palette": [
+            "#131315",
+            "#1a1a1a"
+        ]
+    },
+    {
+        "family": "saturation",
+        "source": "ui/hunger_effect.png",
+        "palette": [
+            "#3a110e",
+            "#4d1713",
+            "#662f12",
+            "#a52722",
+            "#824524",
+            "#d12e26",
+            "#dd3830",
+            "#5f624e",
+            "#af5220",
+            "#7b7e6b",
+            "#b3ae8c",
+            "#e7e1bb"
+        ]
+    },
+    {
+        "family": "marked",
+        "source": "UtilityCraft/RP/font/glyph_F5.png#mark",
+        "palette": [
+            "#240602",
+            "#471109"
+        ]
+    },
+    {
+        "family": "bleeding",
+        "source": "UtilityCraft/RP/font/glyph_F5.png#blood",
+        "palette": [
+            "#450000",
+            "#630000",
+            "#bc0000"
+        ]
+    },
+    {
+        "family": "blessed",
+        "source": "UtilityCraft/RP/font/glyph_F5.png#blessedHeart",
+        "palette": [
+            "#9c8e7b",
+            "#d0c0aa",
+            "#f5dbb7",
+            "#ffe6c3",
+            "#f2e9db"
+        ]
+    },
+    {
+        "family": "cursed",
+        "source": "UtilityCraft/RP/font/glyph_F5.png#curse",
+        "palette": [
+            "#25132f",
+            "#2f133d",
+            "#26192d",
+            "#2c1837",
+            "#351445",
+            "#362042",
+            "#452f52",
+            "#502c62"
+        ]
+    },
+    {
+        "family": "berserk",
+        "source": "UtilityCraft/RP/font/glyph_F5.png#rage",
+        "palette": [
+            "#240602",
+            "#4f211b",
+            "#5a261f",
+            "#5c3b36",
+            "#ff1e00",
+            "#76463f"
+        ]
+    },
+    {
+        "family": "adaptive_resilience",
+        "source": "UtilityCraft/RP/font/glyph_F5.png#fullArmor",
+        "palette": [
+            "#696a70",
+            "#b8b9c4",
+            "#e6e7f2"
+        ]
+    },
+    {
+        "family": "soul_collector",
+        "source": "UtilityCraft/RP/font/glyph_F5.png#soul",
+        "palette": [
+            "#011e32",
+            "#024363",
+            "#04a1c6",
+            "#05daf8",
+            "#34f0fb"
+        ]
+    }
+]

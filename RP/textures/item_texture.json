@@ -1123,6 +1123,480 @@
         },
         "utilitycraft_aetherium_crystal_seeds": {
             "textures": "textures/items/ores/aetherium_crystal_seeds"
+        },
+        "utilitycraft_alchemical_swiftness_drink": {
+            "textures": "textures/items/potion_bottle_moveSpeed"
+        },
+        "utilitycraft_alchemical_swiftness_splash": {
+            "textures": "textures/items/potion_bottle_splash_moveSpeed"
+        },
+        "utilitycraft_alchemical_swiftness_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_moveSpeed"
+        },
+        "utilitycraft_alchemical_slowness_drink": {
+            "textures": "textures/items/potion_bottle_moveSlowdown"
+        },
+        "utilitycraft_alchemical_slowness_splash": {
+            "textures": "textures/items/potion_bottle_splash_moveSlowdown"
+        },
+        "utilitycraft_alchemical_slowness_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_moveSlowdown"
+        },
+        "utilitycraft_alchemical_leaping_drink": {
+            "textures": "textures/items/potion_bottle_jump"
+        },
+        "utilitycraft_alchemical_leaping_splash": {
+            "textures": "textures/items/potion_bottle_splash_jump"
+        },
+        "utilitycraft_alchemical_leaping_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_jump"
+        },
+        "utilitycraft_alchemical_strength_drink": {
+            "textures": "textures/items/potion_bottle_damageBoost"
+        },
+        "utilitycraft_alchemical_strength_splash": {
+            "textures": "textures/items/potion_bottle_splash_damageBoost"
+        },
+        "utilitycraft_alchemical_strength_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_damageBoost"
+        },
+        "utilitycraft_alchemical_healing_drink": {
+            "textures": "textures/items/potion_bottle_heal"
+        },
+        "utilitycraft_alchemical_healing_splash": {
+            "textures": "textures/items/potion_bottle_splash_heal"
+        },
+        "utilitycraft_alchemical_healing_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_heal"
+        },
+        "utilitycraft_alchemical_harming_drink": {
+            "textures": "textures/items/potion_bottle_harm"
+        },
+        "utilitycraft_alchemical_harming_splash": {
+            "textures": "textures/items/potion_bottle_splash_harm"
+        },
+        "utilitycraft_alchemical_harming_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_harm"
+        },
+        "utilitycraft_alchemical_poison_drink": {
+            "textures": "textures/items/potion_bottle_poison"
+        },
+        "utilitycraft_alchemical_poison_splash": {
+            "textures": "textures/items/potion_bottle_splash_poison"
+        },
+        "utilitycraft_alchemical_poison_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_poison"
+        },
+        "utilitycraft_alchemical_regeneration_drink": {
+            "textures": "textures/items/potion_bottle_regeneration"
+        },
+        "utilitycraft_alchemical_regeneration_splash": {
+            "textures": "textures/items/potion_bottle_splash_regeneration"
+        },
+        "utilitycraft_alchemical_regeneration_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_regeneration"
+        },
+        "utilitycraft_alchemical_nightvision_drink": {
+            "textures": "textures/items/potion_bottle_nightVision"
+        },
+        "utilitycraft_alchemical_nightvision_splash": {
+            "textures": "textures/items/potion_bottle_splash_nightVision"
+        },
+        "utilitycraft_alchemical_nightvision_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_nightVision"
+        },
+        "utilitycraft_alchemical_invisibility_drink": {
+            "textures": "textures/items/potion_bottle_invisibility"
+        },
+        "utilitycraft_alchemical_invisibility_splash": {
+            "textures": "textures/items/potion_bottle_splash_invisibility"
+        },
+        "utilitycraft_alchemical_invisibility_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_invisibility"
+        },
+        "utilitycraft_alchemical_fire_resistance_drink": {
+            "textures": "textures/items/potion_bottle_fireResistance"
+        },
+        "utilitycraft_alchemical_fire_resistance_splash": {
+            "textures": "textures/items/potion_bottle_splash_fireResistance"
+        },
+        "utilitycraft_alchemical_fire_resistance_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_fireResistance"
+        },
+        "utilitycraft_alchemical_water_breathing_drink": {
+            "textures": "textures/items/potion_bottle_waterBreathing"
+        },
+        "utilitycraft_alchemical_water_breathing_splash": {
+            "textures": "textures/items/potion_bottle_splash_waterBreathing"
+        },
+        "utilitycraft_alchemical_water_breathing_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_waterBreathing"
+        },
+        "utilitycraft_alchemical_weakness_drink": {
+            "textures": "textures/items/potion_bottle_weakness"
+        },
+        "utilitycraft_alchemical_weakness_splash": {
+            "textures": "textures/items/potion_bottle_splash_weakness"
+        },
+        "utilitycraft_alchemical_weakness_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_weakness"
+        },
+        "utilitycraft_alchemical_slow_falling_drink": {
+            "textures": "textures/items/potion_bottle_slowFall"
+        },
+        "utilitycraft_alchemical_slow_falling_splash": {
+            "textures": "textures/items/potion_bottle_splash_slowFall"
+        },
+        "utilitycraft_alchemical_slow_falling_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_slowFall"
+        },
+        "utilitycraft_alchemical_turtle_master_drink": {
+            "textures": "textures/items/potion_bottle_turtleMaster"
+        },
+        "utilitycraft_alchemical_turtle_master_splash": {
+            "textures": "textures/items/potion_bottle_splash_turtleMaster"
+        },
+        "utilitycraft_alchemical_turtle_master_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_turtleMaster"
+        },
+        "utilitycraft_alchemical_wind_charged_drink": {
+            "textures": "textures/items/potion_bottle_windCharged"
+        },
+        "utilitycraft_alchemical_wind_charged_splash": {
+            "textures": "textures/items/potion_bottle_splash_windCharged"
+        },
+        "utilitycraft_alchemical_wind_charged_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_windCharged"
+        },
+        "utilitycraft_alchemical_weaving_drink": {
+            "textures": "textures/items/potion_bottle_weaving"
+        },
+        "utilitycraft_alchemical_weaving_splash": {
+            "textures": "textures/items/potion_bottle_splash_weaving"
+        },
+        "utilitycraft_alchemical_weaving_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_weaving"
+        },
+        "utilitycraft_alchemical_oozing_drink": {
+            "textures": "textures/items/potion_bottle_oozing"
+        },
+        "utilitycraft_alchemical_oozing_splash": {
+            "textures": "textures/items/potion_bottle_splash_oozing"
+        },
+        "utilitycraft_alchemical_oozing_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_oozing"
+        },
+        "utilitycraft_alchemical_infested_drink": {
+            "textures": "textures/items/potion_bottle_infested"
+        },
+        "utilitycraft_alchemical_infested_splash": {
+            "textures": "textures/items/potion_bottle_splash_infested"
+        },
+        "utilitycraft_alchemical_infested_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_infested"
+        },
+        "utilitycraft_alchemical_haste_drink": {
+            "textures": "textures/items/alchemy/haste_drink"
+        },
+        "utilitycraft_alchemical_haste_splash": {
+            "textures": "textures/items/alchemy/haste_splash"
+        },
+        "utilitycraft_alchemical_haste_lingering": {
+            "textures": "textures/items/alchemy/haste_lingering"
+        },
+        "utilitycraft_alchemical_resistance_drink": {
+            "textures": "textures/items/alchemy/resistance_drink"
+        },
+        "utilitycraft_alchemical_resistance_splash": {
+            "textures": "textures/items/alchemy/resistance_splash"
+        },
+        "utilitycraft_alchemical_resistance_lingering": {
+            "textures": "textures/items/alchemy/resistance_lingering"
+        },
+        "utilitycraft_alchemical_absorption_drink": {
+            "textures": "textures/items/alchemy/absorption_drink"
+        },
+        "utilitycraft_alchemical_absorption_splash": {
+            "textures": "textures/items/alchemy/absorption_splash"
+        },
+        "utilitycraft_alchemical_absorption_lingering": {
+            "textures": "textures/items/alchemy/absorption_lingering"
+        },
+        "utilitycraft_alchemical_health_boost_drink": {
+            "textures": "textures/items/alchemy/health_boost_drink"
+        },
+        "utilitycraft_alchemical_health_boost_splash": {
+            "textures": "textures/items/alchemy/health_boost_splash"
+        },
+        "utilitycraft_alchemical_health_boost_lingering": {
+            "textures": "textures/items/alchemy/health_boost_lingering"
+        },
+        "utilitycraft_alchemical_wither_drink": {
+            "textures": "textures/items/potion_bottle_wither"
+        },
+        "utilitycraft_alchemical_wither_splash": {
+            "textures": "textures/items/potion_bottle_splash_wither"
+        },
+        "utilitycraft_alchemical_wither_lingering": {
+            "textures": "textures/items/potion_bottle_lingering_wither"
+        },
+        "utilitycraft_alchemical_levitation_drink": {
+            "textures": "textures/items/alchemy/levitation_drink"
+        },
+        "utilitycraft_alchemical_levitation_splash": {
+            "textures": "textures/items/alchemy/levitation_splash"
+        },
+        "utilitycraft_alchemical_levitation_lingering": {
+            "textures": "textures/items/alchemy/levitation_lingering"
+        },
+        "utilitycraft_alchemical_blindness_drink": {
+            "textures": "textures/items/alchemy/blindness_drink"
+        },
+        "utilitycraft_alchemical_blindness_splash": {
+            "textures": "textures/items/alchemy/blindness_splash"
+        },
+        "utilitycraft_alchemical_blindness_lingering": {
+            "textures": "textures/items/alchemy/blindness_lingering"
+        },
+        "utilitycraft_alchemical_darkness_drink": {
+            "textures": "textures/items/alchemy/darkness_drink"
+        },
+        "utilitycraft_alchemical_darkness_splash": {
+            "textures": "textures/items/alchemy/darkness_splash"
+        },
+        "utilitycraft_alchemical_darkness_lingering": {
+            "textures": "textures/items/alchemy/darkness_lingering"
+        },
+        "utilitycraft_alchemical_saturation_drink": {
+            "textures": "textures/items/alchemy/saturation_drink"
+        },
+        "utilitycraft_alchemical_saturation_splash": {
+            "textures": "textures/items/alchemy/saturation_splash"
+        },
+        "utilitycraft_alchemical_saturation_lingering": {
+            "textures": "textures/items/alchemy/saturation_lingering"
+        },
+        "utilitycraft_alchemical_blaze_00": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_00"
+        },
+        "utilitycraft_alchemical_blaze_01": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_01"
+        },
+        "utilitycraft_alchemical_blaze_02": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_02"
+        },
+        "utilitycraft_alchemical_blaze_03": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_03"
+        },
+        "utilitycraft_alchemical_blaze_04": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_04"
+        },
+        "utilitycraft_alchemical_blaze_05": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_05"
+        },
+        "utilitycraft_alchemical_blaze_06": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_06"
+        },
+        "utilitycraft_alchemical_blaze_07": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_07"
+        },
+        "utilitycraft_alchemical_blaze_08": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_08"
+        },
+        "utilitycraft_alchemical_blaze_09": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_09"
+        },
+        "utilitycraft_alchemical_blaze_10": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_10"
+        },
+        "utilitycraft_alchemical_blaze_11": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_11"
+        },
+        "utilitycraft_alchemical_blaze_12": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_12"
+        },
+        "utilitycraft_alchemical_blaze_13": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_13"
+        },
+        "utilitycraft_alchemical_blaze_14": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_14"
+        },
+        "utilitycraft_alchemical_blaze_15": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_15"
+        },
+        "utilitycraft_alchemical_blaze_16": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_16"
+        },
+        "utilitycraft_alchemical_blaze_17": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_17"
+        },
+        "utilitycraft_alchemical_blaze_18": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_18"
+        },
+        "utilitycraft_alchemical_blaze_19": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_19"
+        },
+        "utilitycraft_alchemical_blaze_20": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_20"
+        },
+        "utilitycraft_alchemical_blaze_21": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_21"
+        },
+        "utilitycraft_alchemical_blaze_22": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_22"
+        },
+        "utilitycraft_alchemical_blaze_23": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_23"
+        },
+        "utilitycraft_alchemical_blaze_24": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_24"
+        },
+        "utilitycraft_alchemical_blaze_25": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_25"
+        },
+        "utilitycraft_alchemical_blaze_26": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_26"
+        },
+        "utilitycraft_alchemical_blaze_27": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_27"
+        },
+        "utilitycraft_alchemical_blaze_28": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_28"
+        },
+        "utilitycraft_alchemical_blaze_29": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_29"
+        },
+        "utilitycraft_alchemical_blaze_30": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_30"
+        },
+        "utilitycraft_alchemical_blaze_31": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_31"
+        },
+        "utilitycraft_alchemical_blaze_32": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_32"
+        },
+        "utilitycraft_alchemical_blaze_33": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_33"
+        },
+        "utilitycraft_alchemical_blaze_34": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_34"
+        },
+        "utilitycraft_alchemical_blaze_35": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_35"
+        },
+        "utilitycraft_alchemical_blaze_36": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_36"
+        },
+        "utilitycraft_alchemical_blaze_37": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_37"
+        },
+        "utilitycraft_alchemical_blaze_38": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_38"
+        },
+        "utilitycraft_alchemical_blaze_39": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_39"
+        },
+        "utilitycraft_alchemical_blaze_40": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_40"
+        },
+        "utilitycraft_alchemical_blaze_41": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_41"
+        },
+        "utilitycraft_alchemical_blaze_42": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_42"
+        },
+        "utilitycraft_alchemical_blaze_43": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_43"
+        },
+        "utilitycraft_alchemical_blaze_44": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_44"
+        },
+        "utilitycraft_alchemical_blaze_45": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_45"
+        },
+        "utilitycraft_alchemical_blaze_46": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_46"
+        },
+        "utilitycraft_alchemical_blaze_47": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_47"
+        },
+        "utilitycraft_alchemical_blaze_48": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_48"
+        },
+        "utilitycraft_alchemical_blaze_49": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_49"
+        },
+        "utilitycraft_alchemical_blaze_50": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_50"
+        },
+        "utilitycraft_alchemical_blaze_51": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_51"
+        },
+        "utilitycraft_alchemical_blaze_52": {
+            "textures": "textures/items/ui/blaze/alchemical_blaze_52"
+        },
+        "utilitycraft_alchemical_marked_drink": {
+            "textures": "textures/items/alchemy/marked_drink"
+        },
+        "utilitycraft_alchemical_marked_splash": {
+            "textures": "textures/items/alchemy/marked_splash"
+        },
+        "utilitycraft_alchemical_marked_lingering": {
+            "textures": "textures/items/alchemy/marked_lingering"
+        },
+        "utilitycraft_alchemical_bleeding_drink": {
+            "textures": "textures/items/alchemy/bleeding_drink"
+        },
+        "utilitycraft_alchemical_bleeding_splash": {
+            "textures": "textures/items/alchemy/bleeding_splash"
+        },
+        "utilitycraft_alchemical_bleeding_lingering": {
+            "textures": "textures/items/alchemy/bleeding_lingering"
+        },
+        "utilitycraft_alchemical_blessed_drink": {
+            "textures": "textures/items/alchemy/blessed_drink"
+        },
+        "utilitycraft_alchemical_blessed_splash": {
+            "textures": "textures/items/alchemy/blessed_splash"
+        },
+        "utilitycraft_alchemical_blessed_lingering": {
+            "textures": "textures/items/alchemy/blessed_lingering"
+        },
+        "utilitycraft_alchemical_cursed_drink": {
+            "textures": "textures/items/alchemy/cursed_drink"
+        },
+        "utilitycraft_alchemical_cursed_splash": {
+            "textures": "textures/items/alchemy/cursed_splash"
+        },
+        "utilitycraft_alchemical_cursed_lingering": {
+            "textures": "textures/items/alchemy/cursed_lingering"
+        },
+        "utilitycraft_alchemical_berserk_drink": {
+            "textures": "textures/items/alchemy/berserk_drink"
+        },
+        "utilitycraft_alchemical_berserk_splash": {
+            "textures": "textures/items/alchemy/berserk_splash"
+        },
+        "utilitycraft_alchemical_berserk_lingering": {
+            "textures": "textures/items/alchemy/berserk_lingering"
+        },
+        "utilitycraft_alchemical_adaptive_resilience_drink": {
+            "textures": "textures/items/alchemy/adaptive_resilience_drink"
+        },
+        "utilitycraft_alchemical_adaptive_resilience_splash": {
+            "textures": "textures/items/alchemy/adaptive_resilience_splash"
+        },
+        "utilitycraft_alchemical_adaptive_resilience_lingering": {
+            "textures": "textures/items/alchemy/adaptive_resilience_lingering"
+        },
+        "utilitycraft_alchemical_soul_collector_drink": {
+            "textures": "textures/items/alchemy/soul_collector_drink"
+        },
+        "utilitycraft_alchemical_soul_collector_splash": {
+            "textures": "textures/items/alchemy/soul_collector_splash"
+        },
+        "utilitycraft_alchemical_soul_collector_lingering": {
+            "textures": "textures/items/alchemy/soul_collector_lingering"
         }
     }
 }

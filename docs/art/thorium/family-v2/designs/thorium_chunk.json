@@ -1,0 +1,250 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Fragmento de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "three angular fracture faces around a dark root"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m9": [
+      235,
+      176,
+      206
+    ],
+    "m11": [
+      235,
+      212,
+      224
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          4,
+          6
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          13,
+          7
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          9,
+          13
+        ],
+        [
+          4,
+          12
+        ],
+        [
+          2,
+          10
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "broken-metal",
+      "purpose": "three angular fracture faces around a dark root",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              9,
+              4
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              5,
+              9
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              8,
+              7
+            ],
+            [
+              12,
+              7
+            ],
+            [
+              11,
+              10
+            ],
+            [
+              8,
+              12
+            ],
+            [
+              6,
+              11
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              3,
+              10
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              5,
+              11
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              8,
+              3
+            ],
+            [
+              8,
+              6
+            ]
+          ],
+          "color": "m11",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              9,
+              8
+            ],
+            [
+              11,
+              8
+            ]
+          ],
+          "color": "m9",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              8,
+              11
+            ],
+            [
+              10,
+              10
+            ]
+          ],
+          "color": "m3",
+          "width": 1
+        }
+      ]
+    }
+  ]
+}

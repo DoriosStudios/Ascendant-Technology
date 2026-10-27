@@ -1,20 +1,20 @@
 # Catalyst Weaver resolver and scrolling information
 
-`ascendant_common.scrollable_info_panel` reuses the existing information-panel
+`at_common.scrollable_info_panel` composes the Ascendant information-panel
 background and puts its content inside a clipped viewport with a vertical scrollbar.
 The Catalyst Weaver keeps its 104 × 166 frame at the existing position.
 Scrolling uses `common.scrolling_panel`, as UtilityCraft's info tab does. Content
 uses a vertical stack containing a `container_items` collection panel. Its direct
-child `machine_label@uc.text_label` selects `$label_index`; the nested labels do
-not declare `collection_index`. Both `_text_label_v1` and `_text_label_v2` retain
-UtilityCraft's original bindings. Each wrapper grows with its text content.
+child `label@at_core.collection_text` selects `$label_index`; the nested labels do
+not declare `collection_index`. The direct and cached labels inherit UtilityCraft's
+compatibility paths and retain their binding timing. Each wrapper grows with its text content.
 Text wraps to the 88-pixel viewport width and grows vertically with the label content.
 Desktop and touch use the same viewport dimensions. The outer background remains
 at layer 1, the inner surface at 2, and the native scroll control at 6.
 
 The component accepts `$bg_size`, `$label_index` (default 1), `$text_scale`
-(default 0.55), and `$info_content`. The default content displays the selected
-container item's hover text, including lore. A different `$info_content` can
+(default 0.55), and `$content_ref`. The default content displays the selected
+container item's hover text, including lore. A different `$content_ref` can
 provide a stack of controls instead; that content must report its full height.
 Use it in a container-items collection scope, as with the existing `info_panel`.
 

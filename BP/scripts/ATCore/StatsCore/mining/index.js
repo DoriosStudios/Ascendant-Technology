@@ -14,7 +14,7 @@ import { ItemStack, system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
 import { getEquipment, persistEquipmentItem } from "../core/equipment.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
-import { showLevelUp, showMiningFeedback } from "../feedback/index.js";
+import { playActivationSound, showLevelUp, showMiningFeedback } from "../feedback/index.js";
 import { normalizeId as normalizeBlockId, rollChance } from "../utils.js";
 import { getEquipmentStatsContext } from "../shared/context.js";
 import { rollToolPreserving } from "../shared/durability.js";
@@ -630,9 +630,9 @@ function executeDoubleTrouble(snapshot) {
         tripleTriggered = true;
     }
 
-    snapshot.dimension.playSound("random.levelup", snapshot.location, { pitch: 1, volume: 0.7 });
+    playActivationSound(snapshot.player, "random.levelup", { pitch: 1, volume: 0.7 });
     if (tripleTriggered) {
-        snapshot.dimension.playSound("random.levelup", snapshot.location, { pitch: 0.55, volume: 0.7 });
+        playActivationSound(snapshot.player, "random.levelup", { pitch: 0.55, volume: 0.7 });
     }
     snapshot.dimension.spawnParticle("minecraft:village_hero_effect", {
         x: snapshot.location.x + 0.5,

@@ -1,0 +1,232 @@
+{
+  "variables": {
+    "$desktop_screen": true,
+    "$pocket_screen": false,
+    "$is_pregame": false,
+    "$is_gamepad": false,
+    "$touch": false,
+    "$container_title": "Liquifier",
+    "$localize_title": false
+  },
+  "bindings": {
+    "#title_text": "Liquifier",
+    "#container_title": "Liquifier",
+    "#item_id_aux": 0,
+    "#hover_text": "",
+    "#item_count": "",
+    "#item_visible": true,
+    "#visible": true,
+    "#enabled": true,
+    "#show_gamepad_helpers": false,
+    "#gamepad_cursor_visible": false,
+    "#mouse_mode": true,
+    "#is_using_gamepad": false,
+    "#close_button_visible": true,
+    "#container_cell_background_texture": "textures/ui/slot",
+    "#container_cell_background_texture_file_system": "InUserPackage",
+    "#hotbar_grid_dimensions": [
+      9,
+      1
+    ],
+    "#inventory_grid_dimensions": [
+      9,
+      3
+    ],
+    "#inventory_stack_count": "",
+    "#toggle_state": false,
+    "#toggle_enabled": true
+  },
+  "collections": {
+    "container_items": {
+      "0": {
+        "#hover_text": "Energy\nStored: 8.2 MDE / 10 MDE",
+        "#item_id_aux": 1,
+        "texture": "textures/ui/energy/f_39"
+      },
+      "1": {
+        "#hover_text": "§r§7Status: §fProcessing\n\n§r§eMachine Information\n\n§r§aEssence Slots §f8\n§r§aParallel §f4\n§r§aInterval §f10.00 s\n§r§aEfficiency cost §f100.0%\n§r§aOperation §f128 kDE\n\n§r§eEnergy Information\n\n§r§bStored §f8.2 MDE\n§r§bCapacity §f10 MDE\n\n§r§eXP Tank\n\n§r§bStored §f360 mB\n§r§bCapacity §f1 B"
+      },
+      "2": {
+        "#hover_text": "at:mob_chamber:meters:v1|t11|e18|x8|sprocessing|"
+      },
+      "3": {
+        "#hover_text": "at:mob_chamber:v1|e8|p04"
+      },
+      "4": {
+        "#item_id_aux": 1,
+        "#item_count": "8",
+        "texture": "textures/items/essences/zombie_essence",
+        "#inventory_stack_count": "8"
+      },
+      "5": {
+        "#item_id_aux": 1,
+        "#item_count": "8",
+        "texture": "textures/items/essences/skeleton_essence",
+        "#inventory_stack_count": "8"
+      },
+      "6": {
+        "#item_id_aux": 1,
+        "#item_count": "8",
+        "texture": "textures/items/essences/creeper_essence",
+        "#inventory_stack_count": "8"
+      },
+      "7": {
+        "#item_id_aux": 1,
+        "#item_count": "8",
+        "texture": "textures/items/essences/spider_essence",
+        "#inventory_stack_count": "8"
+      },
+      "8": {
+        "#hover_text": "XP\nStored: 360 / 1000",
+        "#item_id_aux": 1,
+        "texture": "textures/ui/xp/f_17"
+      },
+      "9": {
+        "#item_id_aux": 1,
+        "#item_count": "32",
+        "texture": "textures/items/rotten_flesh",
+        "#inventory_stack_count": "32"
+      },
+      "10": {
+        "#item_id_aux": 1,
+        "#item_count": "2",
+        "texture": "textures/items/iron_ingot",
+        "#inventory_stack_count": "2"
+      },
+      "11": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "12": {
+        "#item_id_aux": 1,
+        "#item_count": "23",
+        "texture": "textures/items/string",
+        "#inventory_stack_count": "23"
+      },
+      "13": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "14": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "15": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "16": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "17": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "18": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "19": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "20": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "21": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "22": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "23": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "24": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "25": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "26": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "27": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "28": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "29": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "30": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "31": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "32": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "33": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "34": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "35": {
+        "#item_id_aux": 0,
+        "#hover_text": ""
+      },
+      "36": {
+        "#item_id_aux": 1,
+        "#item_count": "8",
+        "texture": "textures/items/essences/blaze_essence",
+        "#inventory_stack_count": "8"
+      },
+      "37": {
+        "#item_id_aux": 1,
+        "#item_count": "8",
+        "texture": "textures/items/essences/guardian_essence",
+        "#inventory_stack_count": "8"
+      },
+      "38": {
+        "#item_id_aux": 1,
+        "#item_count": "8",
+        "texture": "textures/items/essences/slime_essence",
+        "#inventory_stack_count": "8"
+      },
+      "39": {
+        "#item_id_aux": 1,
+        "#item_count": "8",
+        "texture": "textures/items/essences/magma_cube_essence",
+        "#inventory_stack_count": "8"
+      }
+    },
+    "inventory_items": {},
+    "hotbar_items": {}
+  },
+  "controls": {},
+  "_preview": {
+    "name": "Mob Chamber console - illustrative state",
+    "root": "mob_chamber.utility_panel",
+    "notes": "Simulated values; not a Bedrock runtime capture."
+  }
+}

@@ -1,0 +1,943 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\draft\\thorium_block.png",
+  "pixel_sha256": "767ce755625a9d7f6134d968af8b0b1d6189e68c663895c942586b164f66d157",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "opaque",
+    "require_transparent": false,
+    "palette": {
+      "max_colors": 8,
+      "allowed": [
+        [
+          135,
+          55,
+          93
+        ],
+        [
+          167,
+          67,
+          114
+        ],
+        [
+          197,
+          80,
+          136
+        ],
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          231,
+          113,
+          172
+        ],
+        [
+          235,
+          154,
+          195
+        ],
+        [
+          235,
+          176,
+          206
+        ],
+        [
+          235,
+          196,
+          217
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": false,
+      "singleton_limit": 8,
+      "max_components": null
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 0,
+    "INFO": 2
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 0,
+      "partial": 0,
+      "opaque": 256
+    },
+    "palette": {
+      "unique_visible_rgb": 8,
+      "unique_rgba": 8,
+      "frequencies": [
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "hex": "#E771AC",
+          "count": 68
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 66
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "hex": "#EB9AC3",
+          "count": 48
+        },
+        {
+          "rgb": [
+            135,
+            55,
+            93
+          ],
+          "hex": "#87375D",
+          "count": 29
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "hex": "#EBB0CE",
+          "count": 16
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "hex": "#C55088",
+          "count": 11
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "hex": "#A74372",
+          "count": 10
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "hex": "#EBC4D9",
+          "count": 8
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 256,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "components_4_connected": 0,
+      "component_sizes": []
+    },
+    "clusters": {
+      "enabled": false
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            135,
+            55,
+            93
+          ],
+          "pixels": 29,
+          "oklab": [
+            0.4580736579510529,
+            0.11682090401904174,
+            -0.014137422668949795
+          ]
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "pixels": 10,
+          "oklab": [
+            0.5307585390052371,
+            0.1400036965451507,
+            -0.01550403452013649
+          ]
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "pixels": 11,
+          "oklab": [
+            0.5997660713505149,
+            0.15911940459083473,
+            -0.018965013732911817
+          ]
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 66,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "pixels": 68,
+          "oklab": [
+            0.703253560755495,
+            0.1575084120131156,
+            -0.025730453813424092
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "pixels": 48,
+          "oklab": [
+            0.778763878657962,
+            0.10673590363744428,
+            -0.022298036426314338
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "pixels": 16,
+          "oklab": [
+            0.8202004222885522,
+            0.0765292348381662,
+            -0.017616730036504324
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "pixels": 8,
+          "oklab": [
+            0.8599941784213212,
+            0.05006552115085833,
+            -0.013761702133999187
+          ]
+        }
+      ],
+      "lightness_range": 0.40192052047026827,
+      "tonal_coverage": {
+        "shadow": 0.15234375,
+        "mid": 0.75390625,
+        "highlight": 0.09375
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    },
+    {
+      "severity": "INFO",
+      "code": "intentional_edge_contact",
+      "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+      "policy": "inherit",
+      "coordinates": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          10
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          0,
+          12
+        ],
+        [
+          0,
+          13
+        ],
+        [
+          0,
+          14
+        ],
+        [
+          0,
+          15
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          15,
+          6
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          15,
+          8
+        ],
+        [
+          15,
+          9
+        ],
+        [
+          15,
+          10
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          15,
+          12
+        ],
+        [
+          15,
+          13
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          11,
+          0
+        ],
+        [
+          12,
+          0
+        ],
+        [
+          13,
+          0
+        ],
+        [
+          14,
+          0
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          0,
+          15
+        ],
+        [
+          1,
+          15
+        ],
+        [
+          2,
+          15
+        ],
+        [
+          3,
+          15
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          5,
+          15
+        ],
+        [
+          6,
+          15
+        ],
+        [
+          7,
+          15
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          9,
+          15
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          11,
+          15
+        ],
+        [
+          12,
+          15
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          15,
+          15
+        ]
+      ]
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ],
+    "requested_identity": "Bloco de Tório"
+  },
+  "file_sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+  "design": {
+    "intent": {
+      "identity": "Bloco de Tório",
+      "usage": "AT inventory texture or block texture; selective correction of requested assets",
+      "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+      "orientation": "exact native reference pose and footprint",
+      "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+      "structure": [
+        "Keep this unlisted image byte-identical, including the creator-approved metal block."
+      ],
+      "style": [
+        "small reference-guided edits",
+        "no tool redesign",
+        "no resizing or antialiasing"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/unchanged_thorium_block.png",
+        "sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+        "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+        "approval": "creator-requested source family; derivative still pending visual approval"
+      },
+      {
+        "path": "../references/unchanged_thorium_block.png",
+        "sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+        "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+        "approval": "not independently verified"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": null,
+      "primitives": [],
+      "outside_primitives": [],
+      "reference_bounds": [
+        0,
+        0,
+        16,
+        16
+      ]
+    },
+    "composition": {
+      "raster_bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "minimum_margin": 0,
+      "edge_counts": {
+        "left": 16,
+        "right": 16,
+        "top": 16,
+        "bottom": 16
+      },
+      "findings": [
+        {
+          "severity": "INFO",
+          "code": "intentional_edge_contact",
+          "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+          "policy": "inherit",
+          "coordinates": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              0,
+              8
+            ],
+            [
+              0,
+              9
+            ],
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              11
+            ],
+            [
+              0,
+              12
+            ],
+            [
+              0,
+              13
+            ],
+            [
+              0,
+              14
+            ],
+            [
+              0,
+              15
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              15,
+              1
+            ],
+            [
+              15,
+              2
+            ],
+            [
+              15,
+              3
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              15,
+              5
+            ],
+            [
+              15,
+              6
+            ],
+            [
+              15,
+              7
+            ],
+            [
+              15,
+              8
+            ],
+            [
+              15,
+              9
+            ],
+            [
+              15,
+              10
+            ],
+            [
+              15,
+              11
+            ],
+            [
+              15,
+              12
+            ],
+            [
+              15,
+              13
+            ],
+            [
+              15,
+              14
+            ],
+            [
+              15,
+              15
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              8,
+              0
+            ],
+            [
+              9,
+              0
+            ],
+            [
+              10,
+              0
+            ],
+            [
+              11,
+              0
+            ],
+            [
+              12,
+              0
+            ],
+            [
+              13,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              0,
+              15
+            ],
+            [
+              1,
+              15
+            ],
+            [
+              2,
+              15
+            ],
+            [
+              3,
+              15
+            ],
+            [
+              4,
+              15
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              6,
+              15
+            ],
+            [
+              7,
+              15
+            ],
+            [
+              8,
+              15
+            ],
+            [
+              9,
+              15
+            ],
+            [
+              10,
+              15
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              12,
+              15
+            ],
+            [
+              13,
+              15
+            ],
+            [
+              14,
+              15
+            ],
+            [
+              15,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "region_bounds": {}
+  }
+}

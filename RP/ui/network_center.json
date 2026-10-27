@@ -140,9 +140,10 @@
           "layer": 3,
           "anchor_from": "top_middle",
           "anchor_to": "top_middle",
-          "$text_scale": 0.8,
+          "$text_scale": 0.65,
+          "size": [92, 20],
           "offset": [
-            0,
+            10,
             8
           ]
         }
@@ -179,7 +180,17 @@
                 "offset": [
                   8,
                   0
-                ]
+                ],
+                  "color": [
+                      0.95,
+                      0.95,
+                      0.95
+                  ],
+                  "shadow": true,
+                  "size": [
+                      172,
+                      12
+                  ]
               }
             }
           ]

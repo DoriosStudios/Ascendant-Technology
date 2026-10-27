@@ -68,6 +68,46 @@ export const residueProcessorRecipes = {
             chance: 0.5,
         },
     },
+    "minecraft:seagrass": {
+        required: 8,
+        output: "minecraft:bone_meal",
+        amount: 1,
+        cost: 2400,
+    },
+    "minecraft:bamboo": {
+        required: 8,
+        output: "utilitycraft:charcoal_dust",
+        amount: 1,
+        cost: 3200,
+    },
+    "minecraft:gunpowder": {
+        required: 1,
+        output: "minecraft:bone_meal",
+        amount: 2,
+        cost: 3600,
+        byproduct: {
+            item: "utilitycraft:charcoal_dust",
+            amount: 1,
+            chance: 1,
+        },
+        extraOutputs: [
+            { item: "minecraft:sulfur_spike", amount: 1, chance: 1 },
+        ],
+    },
+    "minecraft:arrow": {
+        required: 4,
+        output: "minecraft:flint",
+        amount: 1,
+        cost: 2800,
+        byproduct: {
+            item: "minecraft:stick",
+            amount: 1,
+            chance: 1,
+        },
+        extraOutputs: [
+            { item: "minecraft:feather", amount: 1, chance: 1 },
+        ],
+    },
 };
 
 // Recovery recipes use one guaranteed product and up to three secondary products.

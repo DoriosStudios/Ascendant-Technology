@@ -1,0 +1,16 @@
+[
+  {
+    "name": "stone",
+    "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/blocks/stone.png",
+    "commit": "46ba6ea985fb5a92d79a9419198f10dda14c199d",
+    "sha256": "12f1c99206df13e951a68b9e5e294c5e0e15c252c3bb141632c8c969a909d1a8",
+    "snapshot": "stone.png"
+  },
+  {
+    "name": "deepslate",
+    "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/blocks/deepslate/deepslate.png",
+    "commit": "46ba6ea985fb5a92d79a9419198f10dda14c199d",
+    "sha256": "fcba18a824b979157ccce4075b5bc26fd5c4dda6bc0003fc691ae7012856ba22",
+    "snapshot": "deepslate.png"
+  }
+]

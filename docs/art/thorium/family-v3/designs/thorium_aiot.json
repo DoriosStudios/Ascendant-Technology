@@ -1,0 +1,849 @@
+{
+  "size": [
+    18,
+    18
+  ],
+  "intent": {
+    "identity": "AIOT de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/iron_aiot.png",
+      "sha256": "9e4defd956e1f97b093659b31df5df7077eaaf44bfe3a8610d5b6b92b1aaf820",
+      "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "inherit",
+    "allow_clip": false
+  },
+  "palette": {
+    "c_17_16_22": [
+      17,
+      16,
+      22
+    ],
+    "c_24_24_24": [
+      24,
+      24,
+      24
+    ],
+    "c_26_24_39": [
+      26,
+      24,
+      39
+    ],
+    "c_33_32_53": [
+      33,
+      32,
+      53
+    ],
+    "c_40_30_11": [
+      40,
+      30,
+      11
+    ],
+    "c_42_41_68": [
+      42,
+      41,
+      68
+    ],
+    "c_68_68_68": [
+      68,
+      68,
+      68
+    ],
+    "c_73_54_21": [
+      73,
+      54,
+      21
+    ],
+    "c_80_39_64": [
+      80,
+      39,
+      64
+    ],
+    "c_104_78_30": [
+      104,
+      78,
+      30
+    ],
+    "c_107_107_107": [
+      107,
+      107,
+      107
+    ],
+    "c_135_55_93": [
+      135,
+      55,
+      93
+    ],
+    "c_137_103_39": [
+      137,
+      103,
+      39
+    ],
+    "c_150_150_150": [
+      150,
+      150,
+      150
+    ],
+    "c_190_190_190": [
+      190,
+      190,
+      190
+    ],
+    "c_197_80_136": [
+      197,
+      80,
+      136
+    ],
+    "c_216_216_216": [
+      216,
+      216,
+      216
+    ],
+    "c_231_113_172": [
+      231,
+      113,
+      172
+    ],
+    "c_235_176_206": [
+      235,
+      176,
+      206
+    ],
+    "c_235_212_224": [
+      235,
+      212,
+      224
+    ],
+    "c_235_231_233": [
+      235,
+      231,
+      233
+    ],
+    "c_255_255_255": [
+      255,
+      255,
+      255
+    ]
+  },
+  "source": {
+    "path": "../references/iron_aiot.png",
+    "sha256": "9e4defd956e1f97b093659b31df5df7077eaaf44bfe3a8610d5b6b92b1aaf820",
+    "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged."
+  },
+  "layers": [
+    {
+      "name": "palette-transfer-only",
+      "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged.",
+      "commands": [
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              7
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              4
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              1
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              17,
+              0
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              1,
+              16
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              2
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              10
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              5
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              3
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              0
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              6
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              13
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              3
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              2
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              2
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              16,
+              1
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              8
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              4
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              11
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              1
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              1,
+              15
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              5
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              14
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              0
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              9
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              3
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              9
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              6
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              12
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              2
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              1
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              5
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              2
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              4
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              1
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              7
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              5
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              16,
+              0
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              7
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              0,
+              16
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              1
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              4
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              13
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              3
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              10
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              2
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              8
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              11
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              0
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              5
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              4
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              8
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              3
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              0
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              1
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              4
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              6
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              12
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              1
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              7
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              6
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              16,
+              2
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              0
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              3
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              9
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              2
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              15,
+              3
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              5
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              3
+            ]
+          ],
+          "color": "c_235_231_233"
+        }
+      ]
+    }
+  ]
+}

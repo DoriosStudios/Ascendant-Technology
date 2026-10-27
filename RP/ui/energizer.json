@@ -22,24 +22,56 @@
                 }
             },
             {
-                "side_panel@ascendant_common.info_panel": {
+                "side_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$has_text": false, "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
                     "$info_size": [96, 158],
-                    "offset": [-100, -7]
+                    "offset": [
+                        -101,
+                        -7
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "recipes_toggle_button",
+                            "source_property_name": "(not #toggle_state)",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": false
+                        }
+                    ]
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [88, 148],
+                    "size": [
+                        88,
+                        148
+                    ],
                     "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-88, 2]
+                    "offset": [
+                        -93,
+                        1
+                    ],
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "recipes_toggle_button",
+                            "source_property_name": "(not #toggle_state)",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": false
+                        }
+                    ]
                 }
             },
             {
@@ -91,7 +123,7 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
                     "$io_items_modes_description": "ui.utilitycraft:io.energizer.items",
                     "$has_item_io": true,
                     "$has_fluid_io": false,
@@ -112,8 +144,49 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "$info_description": "ui.utilitycraft:info.energizer"
+                "info_tab@at_common.machine_info_tab": {
+                    "$info_description": "ui.utilitycraft:info.energizer",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        10.0,
+                        7
+                    ]
+                }
+            },
+            {
+                "recipe_book@at_machine_recipes.book": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        -101,
+                        -7
+                    ],
+                    "$recipe_rows": "at_machine_recipes.energizer_rows",
+                    "$recipe_selection": "at_machine_recipes.energizer_selection"
+                }
+            },
+            {
+                "recipe_card_anchor": {
+                    "type": "panel",
+                    "size": [
+                        176,
+                        166
+                    ],
+                    "offset": [
+                        10,
+                        40
+                    ],
+                    "controls": [
+                        {
+                            "recipe_card@at_common.button_card": {
+                                "$card_offset": [0, 4],
+                                "$card_buttons_ref": "energizer.recipe_card_buttons"
+                            }
+                        }
+                    ]
                 }
             }
         ]
@@ -140,7 +213,9 @@
                     "layer": 1,
                     "controls": [
                         {
-                            "common_panel@common.common_panel": {}
+                            "common_panel@common.common_panel": {
+                                "$show_close_button": false
+                            }
                         },
                         {
                             "chest_panel": {
@@ -169,6 +244,31 @@
                             "gamepad_cursor@common.gamepad_cursor_button": {}
                         }
                     ]
+                }
+            }
+        ]
+    },
+    "recipe_card_buttons@at_core.button_card_row": {
+        "controls": [
+            {
+                "machine_view_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_recipe_views",
+                    "$card_tab_index": 0,
+                    "$card_icon": "textures/ui/inventory_icon",
+                    "$card_icon_size": [19, 13],
+                    "$card_tooltip": "ui.utilitycraft:machine_view.machine"
+                }
+            },
+            {
+                "recipes_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_recipe_views",
+                    "$card_tab_index": 1,
+                    "$card_icon": "textures/ui/at_icons/recipe_book",
+                    "$card_icon_size": [
+                        16,
+                        16
+                    ],
+                    "$card_tooltip": "ui.utilitycraft:recipes_panel.name"
                 }
             }
         ]

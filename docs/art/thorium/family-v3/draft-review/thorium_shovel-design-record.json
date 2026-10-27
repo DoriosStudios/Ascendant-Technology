@@ -1,0 +1,437 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Pá de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/iron_shovel.png",
+      "sha256": "21ba6d8c5cc3f255e5c85cacc5e9fb61f5f9bfd7e006f00171eb967a417f11ec",
+      "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    },
+    {
+      "path": "../references/iron_shovel.png",
+      "sha256": "21ba6d8c5cc3f255e5c85cacc5e9fb61f5f9bfd7e006f00171eb967a417f11ec",
+      "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged.",
+      "approval": "not independently verified"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": [
+      8,
+      2,
+      14,
+      8
+    ],
+    "primitives": [
+      {
+        "layer": "palette-transfer-only",
+        "command": 0,
+        "bounds": [
+          12,
+          4,
+          13,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 1,
+        "bounds": [
+          9,
+          5,
+          10,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 2,
+        "bounds": [
+          11,
+          2,
+          12,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 3,
+        "bounds": [
+          10,
+          6,
+          11,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 4,
+        "bounds": [
+          11,
+          5,
+          12,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 5,
+        "bounds": [
+          10,
+          3,
+          11,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 6,
+        "bounds": [
+          13,
+          5,
+          14,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 7,
+        "bounds": [
+          12,
+          3,
+          13,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 8,
+        "bounds": [
+          12,
+          6,
+          13,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 9,
+        "bounds": [
+          8,
+          5,
+          9,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 10,
+        "bounds": [
+          11,
+          4,
+          12,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 11,
+        "bounds": [
+          9,
+          4,
+          10,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 12,
+        "bounds": [
+          11,
+          7,
+          12,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 13,
+        "bounds": [
+          10,
+          5,
+          11,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 14,
+        "bounds": [
+          13,
+          4,
+          14,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 15,
+        "bounds": [
+          12,
+          2,
+          13,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 16,
+        "bounds": [
+          12,
+          5,
+          13,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 17,
+        "bounds": [
+          10,
+          4,
+          11,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 18,
+        "bounds": [
+          11,
+          3,
+          12,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 19,
+        "bounds": [
+          11,
+          6,
+          12,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 20,
+        "bounds": [
+          13,
+          3,
+          14,
+          4
+        ],
+        "outside_canvas": false
+      }
+    ],
+    "outside_primitives": [],
+    "reference_bounds": [
+      2,
+      2,
+      15,
+      15
+    ]
+  },
+  "composition": {
+    "raster_bounds": [
+      2,
+      2,
+      15,
+      15
+    ],
+    "minimum_margin": 1,
+    "edge_counts": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "findings": []
+  },
+  "region_bounds": {
+    "palette-transfer-only": [
+      8,
+      2,
+      14,
+      8
+    ]
+  },
+  "pixel_sha256": "cf98ee6eb78f4f0b17d7985aaf4e84e2993d749e38a7549d529f5b2d1dc97351",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          24,
+          24,
+          24
+        ],
+        "pixels": 7,
+        "oklab": [
+          0.2090360851544455,
+          1.692206097470006e-11,
+          7.791591732919656e-09
+        ]
+      },
+      {
+        "rgb": [
+          40,
+          30,
+          11
+        ],
+        "pixels": 9,
+        "oklab": [
+          0.2419650876447189,
+          0.004923750739280017,
+          0.03451447351988163
+        ]
+      },
+      {
+        "rgb": [
+          80,
+          39,
+          64
+        ],
+        "pixels": 5,
+        "oklab": [
+          0.33708693746535195,
+          0.06787866982194266,
+          -0.019306691957441446
+        ]
+      },
+      {
+        "rgb": [
+          73,
+          54,
+          21
+        ],
+        "pixels": 9,
+        "oklab": [
+          0.34665755207882043,
+          0.010539102276513682,
+          0.05406365591104309
+        ]
+      },
+      {
+        "rgb": [
+          104,
+          78,
+          30
+        ],
+        "pixels": 2,
+        "oklab": [
+          0.4414177073946956,
+          0.012627517772607899,
+          0.07205336585042188
+        ]
+      },
+      {
+        "rgb": [
+          137,
+          103,
+          39
+        ],
+        "pixels": 5,
+        "oklab": [
+          0.5357701984642402,
+          0.015565823264798023,
+          0.09004211788062061
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          176,
+          206
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.8202004222885522,
+          0.0765292348381662,
+          -0.017616730036504324
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          212,
+          224
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.892250348674154,
+          0.028905036804675155,
+          -0.00781983727596347
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          231,
+          233
+        ],
+        "pixels": 8,
+        "oklab": [
+          0.9316454398509141,
+          0.004889896981571551,
+          -0.0012841359508922734
+        ]
+      }
+    ],
+    "lightness_range": 0.7226093546964686,
+    "tonal_coverage": {
+      "shadow": 0.5660377358490566,
+      "mid": 0.1320754716981132,
+      "highlight": 0.3018867924528302
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

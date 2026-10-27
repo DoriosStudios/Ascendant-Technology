@@ -1,0 +1,425 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Calças de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "angled low belt and asymmetric clasp",
+      "separate slab thighs with dark articulated inner joints",
+      "angular articulated knee guards and lower greaves"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m2": [
+      135,
+      55,
+      93
+    ],
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m6": [
+      231,
+      113,
+      172
+    ],
+    "m7": [
+      235,
+      132,
+      184
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m9": [
+      235,
+      176,
+      206
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          4,
+          2
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          11,
+          14
+        ],
+        [
+          8,
+          14
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          7,
+          14
+        ],
+        [
+          4,
+          14
+        ],
+        [
+          3,
+          12
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "waist",
+      "purpose": "angled low belt and asymmetric clasp",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              3
+            ],
+            [
+              10,
+              3
+            ],
+            [
+              11,
+              4
+            ],
+            [
+              11,
+              6
+            ],
+            [
+              4,
+              6
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              4,
+              3
+            ],
+            [
+              9,
+              3
+            ]
+          ],
+          "color": "m10",
+          "width": 1
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              7,
+              4
+            ],
+            [
+              8,
+              5
+            ]
+          ],
+          "color": "m2"
+        }
+      ]
+    },
+    {
+      "name": "thighs",
+      "purpose": "separate slab thighs with dark articulated inner joints",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              6
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              4,
+              10
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              9,
+              6
+            ],
+            [
+              11,
+              6
+            ],
+            [
+              11,
+              10
+            ],
+            [
+              9,
+              10
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              4,
+              6
+            ],
+            [
+              4,
+              9
+            ]
+          ],
+          "color": "m9",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              9,
+              6
+            ],
+            [
+              10,
+              6
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              5,
+              7
+            ],
+            [
+              6,
+              8
+            ]
+          ],
+          "color": "m5"
+        }
+      ]
+    },
+    {
+      "name": "knees",
+      "purpose": "angular articulated knee guards and lower greaves",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              9
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              6,
+              11
+            ],
+            [
+              5,
+              12
+            ],
+            [
+              3,
+              11
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              9,
+              9
+            ],
+            [
+              11,
+              9
+            ],
+            [
+              12,
+              11
+            ],
+            [
+              10,
+              12
+            ],
+            [
+              9,
+              11
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              4,
+              9
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              6,
+              10
+            ]
+          ],
+          "color": "m10",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              9,
+              9
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              11,
+              10
+            ]
+          ],
+          "color": "m7",
+          "width": 1
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              4,
+              12
+            ],
+            [
+              5,
+              13
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              9,
+              12
+            ],
+            [
+              10,
+              13
+            ]
+          ],
+          "color": "m3"
+        }
+      ]
+    }
+  ]
+}

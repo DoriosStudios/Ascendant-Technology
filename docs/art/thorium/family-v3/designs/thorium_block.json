@@ -1,0 +1,82 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Bloco de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Keep this unlisted image byte-identical, including the creator-approved metal block."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/unchanged_thorium_block.png",
+      "sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+      "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "inherit",
+    "allow_clip": false
+  },
+  "palette": {
+    "c_135_55_93": [
+      135,
+      55,
+      93
+    ],
+    "c_167_67_114": [
+      167,
+      67,
+      114
+    ],
+    "c_197_80_136": [
+      197,
+      80,
+      136
+    ],
+    "c_220_96_156": [
+      220,
+      96,
+      156
+    ],
+    "c_231_113_172": [
+      231,
+      113,
+      172
+    ],
+    "c_235_154_195": [
+      235,
+      154,
+      195
+    ],
+    "c_235_176_206": [
+      235,
+      176,
+      206
+    ],
+    "c_235_196_217": [
+      235,
+      196,
+      217
+    ]
+  },
+  "source": {
+    "path": "../references/unchanged_thorium_block.png",
+    "sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+    "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block."
+  },
+  "layers": []
+}

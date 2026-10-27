@@ -1,0 +1,66 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "utilitycraft:alchemical_potion_projectile",
+            "is_spawnable": false,
+            "is_summonable": true
+        },
+        "components": {
+            "minecraft:collision_box": {
+                "width": 0.25,
+                "height": 0.25
+            },
+            "minecraft:physics": {},
+            "minecraft:pushable": {
+                "is_pushable": false
+            },
+            "minecraft:projectile": {
+                "gravity": 0.05,
+                "power": 0.6,
+                "anchor": 1,
+                "offset": [
+                    0,
+                    0,
+                    0
+                ],
+                "on_hit": {
+                    "definition_event": {
+                        "affect_projectile": true,
+                        "event_trigger": {
+                            "event": "ascendant:impact",
+                            "target": "self"
+                        }
+                    }
+                }
+            },
+            "minecraft:timer": {
+                "time": 30,
+                "looping": false,
+                "time_down_event": {
+                    "event": "ascendant:expire",
+                    "target": "self"
+                }
+            }
+        },
+        "component_groups": {
+            "ascendant:expired": {
+                "minecraft:instant_despawn": {}
+            }
+        },
+        "events": {
+            "ascendant:impact": {
+                "queue_command": {
+                    "command": "scriptevent ascendant:alchemical_impact"
+                }
+            },
+            "ascendant:expire": {
+                "add": {
+                    "component_groups": [
+                        "ascendant:expired"
+                    ]
+                }
+            }
+        }
+    }
+}

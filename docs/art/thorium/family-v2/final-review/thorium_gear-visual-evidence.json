@@ -1,0 +1,18 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "4495e885b1f0f86d718c93c49454502b5440798f8600fd4da1aa91024e69d0cc",
+  "human_approval": "required",
+  "inspected_files": [
+    "thorium_family_preview.png"
+  ],
+  "observations": [
+    "Eight chamfered teeth surround an angular open bore. The accepted earlier gear informed the shape rhythm; its Thorium variant has its own muted planes.",
+    "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+  ],
+  "limitations": [
+    "No creator approval of this revision has been supplied.",
+    "Textures only; no gameplay or in-game acceptance claim."
+  ]
+}

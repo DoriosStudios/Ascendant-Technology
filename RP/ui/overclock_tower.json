@@ -15,25 +15,36 @@
                 }
             },
             {
-                "side_panel@ascendant_common.info_panel": {
+                "side_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$has_text": false,
                     "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
                     "$info_size": [96, 158],
-                    "offset": [-100, -7]
+                    "offset": [-101, -7]
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [88, 148],
+                    "size": [
+                        88,
+                        148
+                    ],
                     "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-88, 2]
+                    "offset": [
+                        -93,
+                        1
+                    ],
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ]
                 }
             },
             {

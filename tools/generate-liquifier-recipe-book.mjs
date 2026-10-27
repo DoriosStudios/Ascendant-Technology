@@ -1,3 +1,4 @@
+import formatFluidVolume from './format-fluid-volume.cjs';
 import { readFile, writeFile, readdir } from "node:fs/promises";
 import vm from "node:vm";
 
@@ -29,7 +30,7 @@ for (const fluid of ["liquified_aetherium", "dark_matter"]) {
     rows.push({ [fluid + "_heading"]: {
         type: "panel", size: [88, 18], controls: [
             { background: { type: "image", texture: "textures/ui/gray_bg_border", size: [88, 18], layer: 0 } },
-            { icon: { type: "image", texture: `textures/ui/at_icons/${fluid}`, size: [12, 12], offset: [-36, 0], layer: 2 } },
+            { icon: { type: "image", texture: `textures/static/images/${fluid}`, size: [12, 12], offset: [-36, 0], layer: 2 } },
             { title: label(`ui.ascendant:liquifier.recipes.${fluid}`, [70, 16], [17, 2], { color: [0.3, 0.3, 0.3], font_scale_factor: 0.6 }) },
         ],
     } });
@@ -58,9 +59,9 @@ for (const fluid of ["liquified_aetherium", "dark_matter"]) {
                 { fluid_output: {
                     type: "panel", size: [70, 18], offset: [17, 20], layer: 20,
                     controls: [
-                        { icon: { type: "image", texture: `textures/ui/at_icons/${fluid}`, size: [12, 12], offset: [28, 0], layer: 2 } },
+                        { icon: { type: "image", texture: `textures/static/images/${fluid}`, size: [12, 12], offset: [28, 0], layer: 2 } },
                         { name: label(`ui.ascendant:liquifier.recipes.${fluid}`, [54, 10], [0, 0], { font_scale_factor: 0.55, text_alignment: "right", color: [0.3, 0.3, 0.3] }) },
-                        { amount: label(`${recipe.amount.toLocaleString("en-US")} mB`, [54, 8], [0, 10], { text_alignment: "right", color: [0.3, 0.3, 0.3] }) },
+                        { amount: label(formatFluidVolume(recipe.amount), [54, 8], [0, 10], { text_alignment: "right", color: [0.3, 0.3, 0.3] }) },
                     ],
                 } },
             ];
@@ -80,16 +81,16 @@ const book = {
     namespace: "liquifier",
     recipe_book: {
         type: "collection_panel", collection_name: "container_items", "$item_collection_name": "container_items",
-        size: [104, 166], anchor_from: "top_left", anchor_to: "top_left", offset: [-100, -7], layer: 6,
+        size: [104, 166], anchor_from: "top_left", anchor_to: "top_left", offset: [-101, -7], layer: 6,
         bindings: recipeBinding,
         controls: [
             { background: { type: "image", texture: "textures/ui/background/background_panel", size: [104, 166], layer: 0 } },
             { title_background: { type: "image", texture: "textures/ui/background/dark_top_tab", size: [104, 22], anchor_from: "top_left", anchor_to: "top_left", layer: 1 } },
             { list_background: { type: "image", texture: "textures/ui/recipe_grid_bg", size: [92, 138], anchor_from: "top_left", anchor_to: "top_left", offset: [6, 24], layer: 1 } },
             { title: label("ui.utilitycraft:recipes_panel.name", [88, 12], [8, 6], { font_scale_factor: 0.85, text_alignment: "center" }) },
-            { "recipes_scroll@ascendant_common.info_scroll_view": {
+            { "recipes_scroll@at_common.scroll_panel": {
                 anchor_from: "top_left", anchor_to: "top_left", size: [104, 134], offset: [8, 26],
-                "$info_content": "liquifier.recipe_rows", layer: 6,
+                "$content_ref": "liquifier.recipe_rows", layer: 6,
                 "$scroll_view_port_size": [88, "100%"], "$scroll_view_port_max_size": [88, "100%"],
                 "$scroll_view_port_size_touch": [88, "100%"], "$scroll_view_port_max_size_touch": [88, "100%"],
             } },

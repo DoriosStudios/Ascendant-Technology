@@ -57,13 +57,15 @@ export class ActivationManager {
    *   bounds?: { min: import("@minecraft/server").Vector3, max: import("@minecraft/server").Vector3 },
    *   ventBlocks?: import("@minecraft/server").Vector3[],
    *   components?: Record<string, number>,
+   *   componentsById?: Record<string, number>,
+   *   energyCapacityById?: Record<string, number>,
    * }} structure Structure data returned by detection helpers.
    * @param {{ blockId?: string }} [fillBlocksConfig]
    * Optional fill configuration used for reactor-like structures.
    * @returns {number} Final calculated energy capacity for the structure.
    */
   static activateMultiblock(entity, structure, fillBlocksConfig) {
-    const { inputBlocks, bounds, ventBlocks, components } = structure;
+    const { inputBlocks, bounds, ventBlocks, components, componentsById, energyCapacityById } = structure;
 
     entity.triggerEvent(Constants.SHOW_EVENT_ID);
 
@@ -96,7 +98,7 @@ export class ActivationManager {
       ActivationManager.fillBlocks(bounds, entity.dimension, fillBlocksConfig.blockId);
     }
 
-    const energyCap = ActivationManager.calculateEnergyCapacity(components ?? {});
+    const energyCap = ActivationManager.calculateEnergyCapacity(components ?? {}, componentsById, energyCapacityById);
     if (energyCap > 0) {
       EnergyStorage.setCap(entity, energyCap);
       entity.setDynamicProperty(Constants.ENERGY_CAP_PROPERTY_ID, energyCap);
@@ -109,13 +111,29 @@ export class ActivationManager {
   /**
    * Calculates the total energy capacity provided by multiblock components.
    *
-   * Only components listed in {@link ENERGY_PER_UNIT} contribute to the total.
+   * Full block IDs take priority when available. A machine may explicitly
+   * authorize external blocks with energyCapacityById; legacy local-name
+   * counts remain a fallback for callers without componentsById.
    *
    * @param {Record<string, number>} components Component counts keyed by component id.
+   * @param {Record<string, number>} [componentsById] Counts keyed by full block ID.
+   * @param {Record<string, number>} [energyCapacityById] Machine-owned capacity adapters.
    * @returns {number} Total energy capacity represented by the structure.
    */
-  static calculateEnergyCapacity(components) {
+  static calculateEnergyCapacity(components, componentsById, energyCapacityById) {
     let total = 0;
+
+    if (componentsById) {
+      for (const [id, count] of Object.entries(componentsById)) {
+        const defaultAmount = id.startsWith("utilitycraft:")
+          ? Constants.ENERGY_PER_UNIT[id.slice("utilitycraft:".length)]
+          : undefined;
+        const amount = energyCapacityById?.[id] ?? defaultAmount;
+        if (!Number.isFinite(amount) || amount <= 0 || !Number.isSafeInteger(count) || count <= 0) continue;
+        total += count * amount;
+      }
+      return total;
+    }
 
     for (const [id, count] of Object.entries(components)) {
       const amount = Constants.ENERGY_PER_UNIT[id];

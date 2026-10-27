@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="864" height="1080" viewBox="0 0 216 270" shape-rendering="crispEdges">
+  <title>Mob Chamber: conceito visual da interface</title>
+  <desc>Console de titânio lilás. Essências e progresso no centro, energia e XP nas laterais, loot em três fileiras abaixo e inventário do jogador ao final.</desc>
+  <defs>
+    <pattern id="loot-slot" x="27" y="108" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect x="0.5" y="0.5" width="17" height="17" fill="#6E6780"/>
+      <rect x="2" y="2" width="14" height="14" fill="#151821"/>
+      <path d="M2 15V2h13" fill="none" stroke="#342F40" stroke-width="1"/>
+    </pattern>
+    <pattern id="inventory-slot" x="27" y="190" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect x="0.5" y="0.5" width="17" height="17" fill="#686476"/>
+      <rect x="2" y="2" width="14" height="14" fill="#21232D"/>
+    </pattern>
+    <pattern id="hotbar-slot" x="27" y="247" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect x="0.5" y="0.5" width="17" height="17" fill="#686476"/>
+      <rect x="2" y="2" width="14" height="14" fill="#21232D"/>
+    </pattern>
+    <style>
+      text { font-family: 'Segoe UI', sans-serif; fill: #E3DFEA; }
+      .small { font-size: 5px; font-weight: 700; letter-spacing: .5px; }
+      .tiny { font-size: 4px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect width="216" height="270" fill="#12141B"/>
+  <rect x="2" y="2" width="212" height="164" fill="#53505F" stroke="#A89BC3" stroke-width="2"/>
+  <rect x="5" y="5" width="206" height="158" fill="#252733"/>
+  <path d="M5 18H211M5 101H211" stroke="#776E8D" stroke-width="1"/>
+  <path d="M7 6h7m187 0h7M7 162h7m187 0h7" stroke="#C1B2DD" stroke-width="2"/>
+
+  <text x="11" y="14" font-size="8" font-weight="800" letter-spacing=".35">MOB CHAMBER</text>
+  <rect x="159" y="7" width="38" height="8" fill="#433955" stroke="#9485AF" stroke-width=".5"/>
+  <rect x="162" y="9" width="3" height="3" fill="#B9A5E9"/>
+  <text x="168" y="12.8" class="tiny">ATIVA</text>
+  <rect x="200" y="7" width="8" height="8" fill="#433955" stroke="#9485AF" stroke-width=".5"/>
+  <text x="204" y="13" font-size="6" font-weight="800" text-anchor="middle">i</text>
+
+  <rect x="30" y="22" width="156" height="75" fill="#666073" stroke="#A89BC3" stroke-width="1"/>
+  <rect x="33" y="25" width="150" height="69" fill="#1D2029"/>
+  <path d="M35 28h17m112 0h17M35 91h17m112 0h17" stroke="#706788" stroke-width="1"/>
+
+  <text x="108" y="32" class="small" text-anchor="middle" fill="#B9A5E9">ESSÊNCIAS</text>
+  <g stroke="#A89BC3" stroke-width="1">
+    <rect x="69" y="38" width="18" height="18" fill="#343044"/>
+    <rect x="89" y="38" width="18" height="18" fill="#343044"/>
+    <rect x="109" y="38" width="18" height="18" fill="#343044"/>
+    <rect x="129" y="38" width="18" height="18" fill="#343044"/>
+  </g>
+  <g fill="#171924">
+    <rect x="71" y="40" width="14" height="14"/><rect x="91" y="40" width="14" height="14"/>
+    <rect x="111" y="40" width="14" height="14"/><rect x="131" y="40" width="14" height="14"/>
+  </g>
+  <g fill="#B69CE1">
+    <rect x="76" y="43" width="4" height="4"/><rect x="73" y="47" width="10" height="4"/>
+    <rect x="96" y="43" width="4" height="4"/><rect x="93" y="47" width="10" height="4"/>
+    <rect x="116" y="43" width="4" height="4"/><rect x="113" y="47" width="10" height="4"/>
+    <rect x="136" y="43" width="4" height="4"/><rect x="133" y="47" width="10" height="4"/>
+  </g>
+
+  <rect x="56" y="63" width="104" height="8" fill="#101219" stroke="#706788" stroke-width="1"/>
+  <rect x="58" y="65" width="62" height="4" fill="#B9A5E9"/>
+  <rect x="122" y="65" width="2" height="4" fill="#DBCEF4"/>
+  <text x="108" y="83" font-size="6" text-anchor="middle" font-weight="700">PROCESSANDO · 2 MOBS</text>
+  <text x="108" y="90" font-size="4.5" text-anchor="middle" fill="#B4ACBF">Próxima operação em 4,0 s</text>
+
+  <text x="17" y="27" class="tiny" text-anchor="middle" fill="#E7B45B">DE</text>
+  <rect x="10" y="31" width="14" height="49" fill="#4D4352" stroke="#A89BC3" stroke-width="1"/>
+  <rect x="12" y="33" width="10" height="45" fill="#151821"/>
+  <rect x="13" y="53" width="8" height="24" fill="#E7B45B"/>
+  <path d="M16 57l-2 6h2l-1 5 5-8h-2l2-3z" fill="#FFF0B7"/>
+  <text x="17" y="88" class="tiny" text-anchor="middle" fill="#E7B45B">50%</text>
+
+  <text x="199" y="27" class="tiny" text-anchor="middle" fill="#58CFC7">XP</text>
+  <rect x="192" y="31" width="14" height="49" fill="#4D4352" stroke="#A89BC3" stroke-width="1"/>
+  <rect x="194" y="33" width="10" height="45" fill="#151821"/>
+  <rect x="195" y="46" width="8" height="31" fill="#58CFC7"/>
+  <rect x="197" y="50" width="2" height="2" fill="#C9FFFA"/>
+  <rect x="200" y="59" width="2" height="2" fill="#C9FFFA"/>
+  <text x="199" y="88" class="tiny" text-anchor="middle" fill="#58CFC7">68%</text>
+
+  <text x="27" y="106" class="small">LOOT</text>
+  <path d="M49 104h139" stroke="#706788" stroke-width="1"/>
+  <rect x="27" y="108" width="162" height="54" fill="url(#loot-slot)"/>
+  <g fill="#9FAABA">
+    <rect x="32" y="114" width="8" height="8"/><rect x="50" y="114" width="8" height="8"/>
+    <rect x="68" y="114" width="8" height="8"/><rect x="86" y="114" width="8" height="8"/>
+  </g>
+  <g fill="#E7B45B"><rect x="104" y="115" width="7" height="7"/><rect x="122" y="115" width="7" height="7"/></g>
+  <g fill="#A89BC3"><rect x="32" y="132" width="8" height="8"/><rect x="50" y="132" width="8" height="8"/></g>
+
+  <rect x="2" y="173" width="212" height="95" fill="#53505F" stroke="#A89BC3" stroke-width="2"/>
+  <rect x="5" y="176" width="206" height="89" fill="#252733"/>
+  <text x="27" y="186" class="small">INVENTÁRIO</text>
+  <rect x="27" y="190" width="162" height="54" fill="url(#inventory-slot)"/>
+  <rect x="27" y="247" width="162" height="18" fill="url(#hotbar-slot)"/>
+</svg>

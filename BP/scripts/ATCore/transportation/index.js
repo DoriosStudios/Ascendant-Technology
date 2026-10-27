@@ -5,6 +5,5 @@ export {
     conveyorUpdaterComponent,
     installTransportation,
     positionKey,
-    scheduleTopology,
 } from "./conveyors.js";
 

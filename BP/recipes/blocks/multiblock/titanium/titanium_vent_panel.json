@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:titanium_vent_panel"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "key": {
+            "T": {
+                "item": "utilitycraft:tungsten"
+            },
+            "P": {
+                "item": "utilitycraft:titanium_plate"
+            }
+        },
+        "pattern": [
+            "PTP",
+            "T T",
+            "PTP"
+        ],
+        "result": {
+            "item": "utilitycraft:titanium_vent_panel"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:titanium_plate"
+            }
+        ]
+    }
+}

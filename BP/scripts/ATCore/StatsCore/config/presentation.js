@@ -75,6 +75,7 @@ export const MINING_ABILITY_TOKENS = Object.freeze([
  * accepted on read so players do not lose their saved preference after updating.
  */
 export const STATSCORE_FEEDBACK_STYLES = Object.freeze([
+    "minimal",
     "only_text",
     "only_icons",
     "text_and_icons",

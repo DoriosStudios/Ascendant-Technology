@@ -1,0 +1,18 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "4cd3e3380f80f5cd261b7adc056bed06641a4cf01f6002ac4fc8b4c1ed704dbf",
+  "human_approval": "required",
+  "inspected_files": [
+    "thorium_family_preview.png"
+  ],
+  "observations": [
+    "Three fracture faces around a dark root produce a smaller broken fragment, including one upright shard and a lateral cut face.",
+    "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+  ],
+  "limitations": [
+    "No creator approval of this revision has been supplied.",
+    "Textures only; no gameplay or in-game acceptance claim."
+  ]
+}

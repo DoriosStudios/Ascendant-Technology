@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:mob_chamber_core"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "TET",
+            "DRD",
+            "TST"
+        ],
+        "key": {
+            "T": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "E": {
+                "item": "utilitycraft:essence_vessel"
+            },
+            "D": {
+                "item": "utilitycraft:refined_aetherium_crystal"
+            },
+            "R": {
+                "item": "utilitycraft:advanced_runic_core"
+            },
+            "S": {
+                "item": "utilitycraft:processing_module"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:mob_chamber_core",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:titanium_case"
+            }
+        ]
+    }
+}

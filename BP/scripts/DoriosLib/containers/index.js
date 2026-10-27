@@ -371,7 +371,8 @@ export function getStatus(entity) {
  * @returns {ReadonlyArray<number>}
  */
 export function getInputSlots(target, options = {}) {
-  return resolveTargetSlots(target, "input", options.face, options.automatic === true);
+  const slots = resolveTargetSlots(target, "input", options.face, options.automatic === true);
+  return constrainInputSlots(target, slots);
 }
 
 /**
@@ -409,6 +410,7 @@ export function insert(target, options) {
   const resolved = resolve(target);
   if (!resolved) return 0;
 
+  if (!acceptsInputItem(resolved, options.item)) return 0;
   const allowedSlots = getInputSlots(resolved, { face: options.face });
   const slots = selectAllowedSlots(allowedSlots, options.slots);
   if (slots.length === 0) return 0;
@@ -457,6 +459,7 @@ export function transfer(source, options) {
     return 0;
   }
   if (!sourceItem) return 0;
+  if (!acceptsInputItem(resolvedTarget, sourceItem)) return 0;
 
   const amount = normalizeTransferAmount(options.maxAmount, sourceItem.amount);
   if (amount <= 0) return 0;
@@ -472,6 +475,7 @@ export function transfer(source, options) {
   if (isSameResolvedContainer(resolvedSource, resolvedTarget)) {
     targetSlots = targetSlots.filter((slot) => slot !== sourceSlot);
   }
+  targetSlots = constrainInputSlots(resolvedTarget, targetSlots);
   if (targetSlots.length === 0) return 0;
 
   const insertion = insertIntoSlots(resolvedTarget.container, sourceItem, targetSlots, amount);
@@ -568,6 +572,23 @@ function applyConfig(entity, value) {
  * @param {boolean} automatic
  * @returns {ReadonlyArray<number>}
  */
+function inputFilterFor(target) {
+  const resolved = isEntityReference(target) ? { entity: target } : resolve(target);
+  if (!resolved?.entity) return undefined;
+  const entry = resolveCacheEntry(resolved.entity);
+  return entry.status === "configured" ? entry.config.inputFilter : undefined;
+}
+
+function acceptsInputItem(target, item) {
+  const filter = inputFilterFor(target);
+  return !filter || filter.itemIds.includes(item.typeId);
+}
+
+function constrainInputSlots(target, slots) {
+  const filter = inputFilterFor(target);
+  return filter ? slots.filter(slot => filter.slots.includes(slot)) : slots;
+}
+
 function resolveTargetSlots(target, operation, face, automatic) {
   if (isEntityReference(target)) return resolveSlots(target, operation, face, automatic);
 

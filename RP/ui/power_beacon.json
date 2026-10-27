@@ -40,9 +40,17 @@
         }
       },
       {
-        "info_tab@uc.info_tab": {
-          "$info_description": "ui.utilitycraft:info.power_beacon"
-        }
+          "info_tab@at_common.machine_info_tab": {
+              "$info_description": "ui.utilitycraft:info.power_beacon",
+              "$info_panel_size": [
+                  120,
+                  134
+              ],
+              "$info_panel_offset": [
+                  10.0,
+                  7
+              ]
+          }
       }
     ]
   },

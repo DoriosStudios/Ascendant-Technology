@@ -1,0 +1,18 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "b0231f19b43e43fae90a19a9341ce6f8a3831147d28fa270da87a2c865eba1de",
+  "human_approval": "required",
+  "inspected_files": [
+    "thorium_family_preview.png"
+  ],
+  "observations": [
+    "A clipped-corner rigid metal frame contains an orthogonal wire grid with actual transparent cells. The top bevel is restrained.",
+    "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+  ],
+  "limitations": [
+    "No creator approval of this revision has been supplied.",
+    "Textures only; no gameplay or in-game acceptance claim."
+  ]
+}

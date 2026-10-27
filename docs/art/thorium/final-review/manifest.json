@@ -1,0 +1,646 @@
+{
+  "assets": [
+    {
+      "identity": "Thorium helmet inventory icon",
+      "source": "RP/textures/items/armor/titanium_helmet.png",
+      "source_sha256": "e061608a088648a0e93d71915e6eadd7adda36ebe808deaeb2bbed4dd029451f",
+      "pixel_sha256": "454fe3bc58de4f50df06870344352966620dc68e967152df4386fcebd7336f87",
+      "native_size": [
+        16,
+        16
+      ],
+      "intent": "Thorium armor inventory icons: bubblegum-pink metal, discrete angular plate bevels, recognizable helmet/chestplate/leggings/boots, no grotesque silhouette additions.",
+      "purpose": "small angular brow ridge and temple bevels; facial opening remains intact",
+      "alpha_identical_to_template": true,
+      "changes_outside_material_mask": 0,
+      "detail_changes": [
+        {
+          "xy": [
+            5,
+            3
+          ],
+          "before": [
+            131,
+            34,
+            80,
+            255
+          ],
+          "after": [
+            251,
+            91,
+            170,
+            255
+          ]
+        },
+        {
+          "xy": [
+            6,
+            3
+          ],
+          "before": [
+            131,
+            34,
+            80,
+            255
+          ],
+          "after": [
+            255,
+            116,
+            186,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            3
+          ],
+          "before": [
+            131,
+            34,
+            80,
+            255
+          ],
+          "after": [
+            255,
+            116,
+            186,
+            255
+          ]
+        },
+        {
+          "xy": [
+            8,
+            3
+          ],
+          "before": [
+            131,
+            34,
+            80,
+            255
+          ],
+          "after": [
+            251,
+            91,
+            170,
+            255
+          ]
+        },
+        {
+          "xy": [
+            5,
+            4
+          ],
+          "before": [
+            255,
+            224,
+            241,
+            255
+          ],
+          "after": [
+            255,
+            202,
+            231,
+            255
+          ]
+        },
+        {
+          "xy": [
+            9,
+            4
+          ],
+          "before": [
+            255,
+            145,
+            201,
+            255
+          ],
+          "after": [
+            255,
+            116,
+            186,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            5
+          ],
+          "before": [
+            131,
+            34,
+            80,
+            255
+          ],
+          "after": [
+            237,
+            70,
+            151,
+            255
+          ]
+        },
+        {
+          "xy": [
+            8,
+            5
+          ],
+          "before": [
+            131,
+            34,
+            80,
+            255
+          ],
+          "after": [
+            255,
+            116,
+            186,
+            255
+          ]
+        },
+        {
+          "xy": [
+            3,
+            5
+          ],
+          "before": [
+            131,
+            34,
+            80,
+            255
+          ],
+          "after": [
+            255,
+            116,
+            186,
+            255
+          ]
+        },
+        {
+          "xy": [
+            12,
+            5
+          ],
+          "before": [
+            94,
+            28,
+            62,
+            255
+          ],
+          "after": [
+            170,
+            43,
+            103,
+            255
+          ]
+        }
+      ],
+      "palette_visible_colors": 14,
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "human_approval": "required"
+    },
+    {
+      "identity": "Thorium chestplate inventory icon",
+      "source": "RP/textures/items/armor/titanium_chestplate.png",
+      "source_sha256": "5c0102df14ca3340994365912d386d537824e647546335d9ab74de8b29dc2c03",
+      "pixel_sha256": "ed177ef8845567aa65e8b7228fde45d978305fb89f3f7d27f222fff3b46d721c",
+      "native_size": [
+        16,
+        16
+      ],
+      "intent": "Thorium armor inventory icons: bubblegum-pink metal, discrete angular plate bevels, recognizable helmet/chestplate/leggings/boots, no grotesque silhouette additions.",
+      "purpose": "restrained shoulder bevels, plate join and belt break; no oversized center gem",
+      "alpha_identical_to_template": true,
+      "changes_outside_material_mask": 0,
+      "detail_changes": [
+        {
+          "xy": [
+            2,
+            3
+          ],
+          "before": [
+            255,
+            224,
+            241,
+            255
+          ],
+          "after": [
+            255,
+            241,
+            248,
+            255
+          ]
+        },
+        {
+          "xy": [
+            12,
+            3
+          ],
+          "before": [
+            255,
+            224,
+            241,
+            255
+          ],
+          "after": [
+            255,
+            202,
+            231,
+            255
+          ]
+        },
+        {
+          "xy": [
+            2,
+            6
+          ],
+          "before": [
+            255,
+            145,
+            201,
+            255
+          ],
+          "after": [
+            255,
+            175,
+            216,
+            255
+          ]
+        },
+        {
+          "xy": [
+            13,
+            6
+          ],
+          "before": [
+            131,
+            34,
+            80,
+            255
+          ],
+          "after": [
+            237,
+            70,
+            151,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            6
+          ],
+          "before": [
+            208,
+            54,
+            128,
+            255
+          ],
+          "after": [
+            131,
+            34,
+            80,
+            255
+          ]
+        },
+        {
+          "xy": [
+            8,
+            6
+          ],
+          "before": [
+            208,
+            54,
+            128,
+            255
+          ],
+          "after": [
+            170,
+            43,
+            103,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            7
+          ],
+          "before": [
+            255,
+            250,
+            253,
+            255
+          ],
+          "after": [
+            255,
+            202,
+            231,
+            255
+          ]
+        },
+        {
+          "xy": [
+            8,
+            7
+          ],
+          "before": [
+            255,
+            250,
+            253,
+            255
+          ],
+          "after": [
+            255,
+            116,
+            186,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            11
+          ],
+          "before": [
+            208,
+            54,
+            128,
+            255
+          ],
+          "after": [
+            170,
+            43,
+            103,
+            255
+          ]
+        }
+      ],
+      "palette_visible_colors": 15,
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "human_approval": "required"
+    },
+    {
+      "identity": "Thorium leggings inventory icon",
+      "source": "RP/textures/items/armor/titanium_leggings.png",
+      "source_sha256": "009c1972eb673f86c28171eb042d27e50281cfb737ebbb3e6d76bef5e10b4eec",
+      "pixel_sha256": "7f76e086e405fdcafa689f040c6377b4cc62c23772168eb5c9529cfe656c606e",
+      "native_size": [
+        16,
+        16
+      ],
+      "intent": "Thorium armor inventory icons: bubblegum-pink metal, discrete angular plate bevels, recognizable helmet/chestplate/leggings/boots, no grotesque silhouette additions.",
+      "purpose": "waist clasp and small knee-plate edges; leg gap unchanged",
+      "alpha_identical_to_template": true,
+      "changes_outside_material_mask": 0,
+      "detail_changes": [
+        {
+          "xy": [
+            7,
+            4
+          ],
+          "before": [
+            255,
+            116,
+            186,
+            255
+          ],
+          "after": [
+            208,
+            54,
+            128,
+            255
+          ]
+        },
+        {
+          "xy": [
+            3,
+            8
+          ],
+          "before": [
+            255,
+            224,
+            241,
+            255
+          ],
+          "after": [
+            255,
+            175,
+            216,
+            255
+          ]
+        },
+        {
+          "xy": [
+            4,
+            8
+          ],
+          "before": [
+            255,
+            116,
+            186,
+            255
+          ],
+          "after": [
+            237,
+            70,
+            151,
+            255
+          ]
+        },
+        {
+          "xy": [
+            11,
+            8
+          ],
+          "before": [
+            208,
+            54,
+            128,
+            255
+          ],
+          "after": [
+            255,
+            145,
+            201,
+            255
+          ]
+        },
+        {
+          "xy": [
+            11,
+            9
+          ],
+          "before": [
+            208,
+            54,
+            128,
+            255
+          ],
+          "after": [
+            251,
+            91,
+            170,
+            255
+          ]
+        }
+      ],
+      "palette_visible_colors": 12,
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "human_approval": "required"
+    },
+    {
+      "identity": "Thorium boots inventory icon",
+      "source": "RP/textures/items/armor/titanium_boots.png",
+      "source_sha256": "a9511d8e997406185023df1b4c6b2630c27f62b3ed9291128a69fecae26688e1",
+      "pixel_sha256": "c6a325989efa9c0e99a6e9d6c08c4a4224214b921fda4065e828a22784451634",
+      "native_size": [
+        16,
+        16
+      ],
+      "intent": "Thorium armor inventory icons: bubblegum-pink metal, discrete angular plate bevels, recognizable helmet/chestplate/leggings/boots, no grotesque silhouette additions.",
+      "purpose": "cuff notches and toe-cap bevels; soles and gap unchanged",
+      "alpha_identical_to_template": true,
+      "changes_outside_material_mask": 0,
+      "detail_changes": [
+        {
+          "xy": [
+            4,
+            4
+          ],
+          "before": [
+            255,
+            250,
+            253,
+            255
+          ],
+          "after": [
+            255,
+            202,
+            231,
+            255
+          ]
+        },
+        {
+          "xy": [
+            5,
+            4
+          ],
+          "before": [
+            255,
+            224,
+            241,
+            255
+          ],
+          "after": [
+            251,
+            91,
+            170,
+            255
+          ]
+        },
+        {
+          "xy": [
+            10,
+            4
+          ],
+          "before": [
+            255,
+            250,
+            253,
+            255
+          ],
+          "after": [
+            255,
+            175,
+            216,
+            255
+          ]
+        },
+        {
+          "xy": [
+            11,
+            4
+          ],
+          "before": [
+            255,
+            224,
+            241,
+            255
+          ],
+          "after": [
+            237,
+            70,
+            151,
+            255
+          ]
+        },
+        {
+          "xy": [
+            2,
+            10
+          ],
+          "before": [
+            255,
+            145,
+            201,
+            255
+          ],
+          "after": [
+            255,
+            224,
+            241,
+            255
+          ]
+        },
+        {
+          "xy": [
+            13,
+            10
+          ],
+          "before": [
+            131,
+            34,
+            80,
+            255
+          ],
+          "after": [
+            237,
+            70,
+            151,
+            255
+          ]
+        }
+      ],
+      "palette_visible_colors": 9,
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "human_approval": "required"
+    }
+  ],
+  "color_direction": "Creator: Metal rosa chiclete com cantos adiados; working interpretation: sharp/angular corners, pending visual approval.",
+  "method": "Explicit semantic material ownership + one shared lightness-role mapping + bounded native details.",
+  "runtime_integration": "inventory images only; no item, atlas, recipe or equipped-armor changes",
+  "files": {
+    "thorium_boots.png": "05bb0be94ce01e4fbe86670b06b7db56e74a0f861c340bff545e132f3a176090",
+    "thorium_chestplate.png": "9d8ed7bd5c61df6f8c0bdb49f33c9790e4e389cced936c77309da437843a4ca3",
+    "thorium_helmet.png": "a4fac4fb46092dac9e8ff8276e5b7e17e033cf460c0fab612118d667bc4acfa6",
+    "thorium_leggings.png": "d4956c79cbeffd7a2999ed2300aad6ccfc7c8dd170261e44ddd4b6bdd10c2b67",
+    "thorium_set_preview.png": "1122c8ee31a88439692533d4a59596add70ef6bfc8b29f4c7c85bdafd5c009a6"
+  }
+}

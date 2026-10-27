@@ -92,6 +92,8 @@ export const PRESERVATION_VALUES = Object.freeze({
 export const EFFECT_STATE_VALUES = Object.freeze({
     cleanupIntervalTicks: 20,
     insightResyncIntervalTicks: 40,
+    insightDiscoveryRetryTicks: 40,
+    insightStartupGraceTicks: 100,
     maxEffectLevel: 20,
 });
 

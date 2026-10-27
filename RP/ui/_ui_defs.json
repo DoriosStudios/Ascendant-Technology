@@ -1,6 +1,9 @@
-﻿{
+{
     "ui_defs":  [
-                    "ui/ascendant_common.json",
+                    "ui/at_core.json",
+                    "ui/mob_chamber.json",
+                    "ui/at_common.json",
+                    "ui/at_button_card.json",
                     "ui/at_test.json",
                     "ui/absolute_container.json",
                     "ui/catalyst_weaver.json",
@@ -46,6 +49,9 @@
                     "ui/recipes/infuser.json",
                     "ui/recipes/crusher.json",
                     "ui/recipes/electro_press.json",
-                    "ui/recipes/seed_synthesizer.json"
+                    "ui/recipes/seed_synthesizer.json",
+                    "ui/alchemical_station.json",
+                    "ui/recipes/alchemical_station.json",
+                    "ui/recipes/machine_books.json"
                 ]
 }

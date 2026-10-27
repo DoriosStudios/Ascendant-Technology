@@ -1,0 +1,479 @@
+{
+  "counts": {
+    "en_US": 230,
+    "pt_BR": 230
+  },
+  "machines": 39,
+  "geometry": {
+    "absolute_container": {
+      "before": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      },
+      "after": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      }
+    },
+    "abyssal_fisher": {
+      "before": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "alchemical_station": {
+      "before": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "arc_press_forge": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "arcane_enchanter": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "at_testing": {
+      "before": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      },
+      "after": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      }
+    },
+    "catalyst_weaver": {
+      "before": {
+        "gap": 0,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "centrifugal_siever": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "compactor": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "cryo_chamber": {
+      "before": {
+        "gap": 1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "cryo_freezer": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "cryo_stabilizer": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "cryofluid_synthesizer": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "decompactor": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "disenchanter": {
+      "before": {
+        "gap": 0,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "dual_siever": {
+      "before": {
+        "gap": 0,
+        "top_delta": -3,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "duplicator": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "enchantment_station": {
+      "before": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "energizer": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "genetic_seed_synthesizer": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "impact_crusher": {
+      "before": {
+        "gap": -2,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "industrial_burner": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "industrial_crucible": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "laser_barrier": {
+      "before": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      },
+      "after": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      }
+    },
+    "liquifier": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "manual": {
+      "before": {
+        "gap": 1,
+        "top_delta": 1,
+        "closes": 1
+      },
+      "after": {
+        "gap": 1,
+        "top_delta": 1,
+        "closes": 1
+      }
+    },
+    "network_center": {
+      "before": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      },
+      "after": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      }
+    },
+    "overclock_relay": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "overclock_tower": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "pattern_placer": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "power_beacon": {
+      "before": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      },
+      "after": {
+        "gap": null,
+        "top_delta": null,
+        "closes": 1
+      }
+    },
+    "pulverizer": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "refining_table": {
+      "before": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "reinforcement_anvil": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "residue_processor": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "seismic_breaker": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "singularity_fabricator": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "vaporworks_processor": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 2
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    },
+    "verdant_cultivator": {
+      "before": {
+        "gap": -1,
+        "top_delta": 0,
+        "closes": 1
+      },
+      "after": {
+        "gap": 2,
+        "top_delta": 0,
+        "closes": 1
+      }
+    }
+  },
+  "missing_textures": {},
+  "uc_core_sha256": "32bd978822bce066f05f1b88ac08baeb0a18ad8f63d4b4de7a222e1da1fcfd49"
+}

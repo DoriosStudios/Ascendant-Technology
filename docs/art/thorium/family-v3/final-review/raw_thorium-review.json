@@ -1,0 +1,2575 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\final\\raw_thorium.png",
+  "pixel_sha256": "cd839dbac4412328a665dc6fcf384b377786da4bb768321fd250b6ea33e11b76",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 16,
+      "allowed": [
+        [
+          57,
+          51,
+          57
+        ],
+        [
+          59,
+          52,
+          41
+        ],
+        [
+          86,
+          75,
+          83
+        ],
+        [
+          87,
+          77,
+          57
+        ],
+        [
+          106,
+          46,
+          77
+        ],
+        [
+          125,
+          106,
+          119
+        ],
+        [
+          136,
+          116,
+          85
+        ],
+        [
+          175,
+          142,
+          119
+        ],
+        [
+          216,
+          175,
+          147
+        ],
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          233,
+          200,
+          177
+        ],
+        [
+          235,
+          176,
+          206
+        ],
+        [
+          235,
+          224,
+          229
+        ],
+        [
+          250,
+          235,
+          244
+        ],
+        [
+          254,
+          222,
+          200
+        ],
+        [
+          254,
+          244,
+          237
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 2
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 88,
+      "partial": 0,
+      "opaque": 168
+    },
+    "palette": {
+      "unique_visible_rgb": 8,
+      "unique_rgba": 9,
+      "frequencies": [
+        {
+          "rgb": [
+            86,
+            75,
+            83
+          ],
+          "hex": "#564B53",
+          "count": 39
+        },
+        {
+          "rgb": [
+            106,
+            46,
+            77
+          ],
+          "hex": "#6A2E4D",
+          "count": 27
+        },
+        {
+          "rgb": [
+            57,
+            51,
+            57
+          ],
+          "hex": "#393339",
+          "count": 24
+        },
+        {
+          "rgb": [
+            125,
+            106,
+            119
+          ],
+          "hex": "#7D6A77",
+          "count": 20
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "hex": "#EBB0CE",
+          "count": 17
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 16
+        },
+        {
+          "rgb": [
+            235,
+            224,
+            229
+          ],
+          "hex": "#EBE0E5",
+          "count": 15
+        },
+        {
+          "rgb": [
+            250,
+            235,
+            244
+          ],
+          "hex": "#FAEBF4",
+          "count": 10
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 168,
+      "bbox": [
+        0,
+        1,
+        16,
+        15
+      ],
+      "components_4_connected": 1,
+      "component_sizes": [
+        168
+      ]
+    },
+    "clusters": {
+      "color_components": 71,
+      "singletons": 38
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            57,
+            51,
+            57
+          ],
+          "pixels": 24,
+          "oklab": [
+            0.3296464131480174,
+            0.011003498714718563,
+            -0.007457176100389651
+          ]
+        },
+        {
+          "rgb": [
+            106,
+            46,
+            77
+          ],
+          "pixels": 27,
+          "oklab": [
+            0.3938383384081147,
+            0.09264419484360847,
+            -0.016231951642548814
+          ]
+        },
+        {
+          "rgb": [
+            86,
+            75,
+            83
+          ],
+          "pixels": 39,
+          "oklab": [
+            0.4266047941359619,
+            0.01764654928642284,
+            -0.0080224641905135
+          ]
+        },
+        {
+          "rgb": [
+            125,
+            106,
+            119
+          ],
+          "pixels": 20,
+          "oklab": [
+            0.546684743951009,
+            0.02837981577256482,
+            -0.011709383736216217
+          ]
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 16,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "pixels": 17,
+          "oklab": [
+            0.8202004222885522,
+            0.0765292348381662,
+            -0.017616730036504324
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            224,
+            229
+          ],
+          "pixels": 15,
+          "oklab": [
+            0.9168371933742814,
+            0.01336837725523643,
+            -0.0028495645894873745
+          ]
+        },
+        {
+          "rgb": [
+            250,
+            235,
+            244
+          ],
+          "pixels": 10,
+          "oklab": [
+            0.9544659162270831,
+            0.018882481232556425,
+            -0.006611238289790711
+          ]
+        }
+      ],
+      "lightness_range": 0.6248195030790658,
+      "tonal_coverage": {
+        "shadow": 0.5357142857142857,
+        "mid": 0.31547619047619047,
+        "highlight": 0.1488095238095238
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 38,
+      "coordinates": [
+        [
+          2,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          14,
+          10
+        ],
+        [
+          1,
+          11
+        ],
+        [
+          8,
+          11
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          13
+        ],
+        [
+          14,
+          13
+        ]
+      ]
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    },
+    {
+      "severity": "INFO",
+      "code": "intentional_edge_contact",
+      "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+      "policy": "inherit",
+      "coordinates": [
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          10
+        ],
+        [
+          15,
+          10
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          15,
+          12
+        ]
+      ]
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ],
+    "requested_identity": "Tório bruto"
+  },
+  "file_sha256": "a705bd3c019d79c62bd85f132a3784f81ea15400be128dda30798a0712a1831c",
+  "design": {
+    "intent": {
+      "identity": "Tório bruto",
+      "usage": "AT inventory texture or block texture; selective correction of requested assets",
+      "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+      "orientation": "exact native reference pose and footprint",
+      "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+      "structure": [
+        "Preserve raw iron geometry; distinguish gray/wine host crust from pink metal and clear high-light fracture planes."
+      ],
+      "style": [
+        "small reference-guided edits",
+        "no tool redesign",
+        "no resizing or antialiasing"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/raw_iron.png",
+        "sha256": "2c6aaff8ee9387417c52cdd9d81d6fc1c7c65fecf7cc5a9835ab6a395336f129",
+        "purpose": "Preserve raw iron geometry; distinguish gray/wine host crust from pink metal and clear high-light fracture planes.",
+        "approval": "creator-requested source family; derivative still pending visual approval"
+      },
+      {
+        "path": "../references/raw_iron.png",
+        "sha256": "2c6aaff8ee9387417c52cdd9d81d6fc1c7c65fecf7cc5a9835ab6a395336f129",
+        "purpose": "Preserve raw iron geometry; distinguish gray/wine host crust from pink metal and clear high-light fracture planes.",
+        "approval": "not independently verified"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": [
+        0,
+        1,
+        16,
+        15
+      ],
+      "primitives": [
+        {
+          "layer": "palette-transfer-only",
+          "command": 0,
+          "bounds": [
+            12,
+            4,
+            13,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 1,
+          "bounds": [
+            4,
+            9,
+            5,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 2,
+          "bounds": [
+            5,
+            1,
+            6,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 3,
+          "bounds": [
+            14,
+            13,
+            15,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 4,
+          "bounds": [
+            5,
+            10,
+            6,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 5,
+          "bounds": [
+            8,
+            9,
+            9,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 6,
+          "bounds": [
+            10,
+            6,
+            11,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 7,
+          "bounds": [
+            9,
+            8,
+            10,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 8,
+          "bounds": [
+            0,
+            5,
+            1,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 9,
+          "bounds": [
+            2,
+            2,
+            3,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 10,
+          "bounds": [
+            11,
+            5,
+            12,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 11,
+          "bounds": [
+            11,
+            14,
+            12,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 12,
+          "bounds": [
+            2,
+            11,
+            3,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 13,
+          "bounds": [
+            13,
+            8,
+            14,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 14,
+          "bounds": [
+            6,
+            2,
+            7,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 15,
+          "bounds": [
+            6,
+            11,
+            7,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 16,
+          "bounds": [
+            7,
+            10,
+            8,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 17,
+          "bounds": [
+            4,
+            2,
+            5,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 18,
+          "bounds": [
+            3,
+            6,
+            4,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 19,
+          "bounds": [
+            5,
+            3,
+            6,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 20,
+          "bounds": [
+            8,
+            2,
+            9,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 21,
+          "bounds": [
+            5,
+            12,
+            6,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 22,
+          "bounds": [
+            8,
+            11,
+            9,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 23,
+          "bounds": [
+            9,
+            10,
+            10,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 24,
+          "bounds": [
+            0,
+            7,
+            1,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 25,
+          "bounds": [
+            2,
+            4,
+            3,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 26,
+          "bounds": [
+            11,
+            7,
+            12,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 27,
+          "bounds": [
+            1,
+            8,
+            2,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 28,
+          "bounds": [
+            13,
+            10,
+            14,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 29,
+          "bounds": [
+            6,
+            4,
+            7,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 30,
+          "bounds": [
+            7,
+            3,
+            8,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 31,
+          "bounds": [
+            3,
+            8,
+            4,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 32,
+          "bounds": [
+            5,
+            5,
+            6,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 33,
+          "bounds": [
+            8,
+            4,
+            9,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 34,
+          "bounds": [
+            14,
+            8,
+            15,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 35,
+          "bounds": [
+            9,
+            3,
+            10,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 36,
+          "bounds": [
+            9,
+            12,
+            10,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 37,
+          "bounds": [
+            0,
+            9,
+            1,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 38,
+          "bounds": [
+            11,
+            9,
+            12,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 39,
+          "bounds": [
+            1,
+            10,
+            2,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 40,
+          "bounds": [
+            13,
+            12,
+            14,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 41,
+          "bounds": [
+            6,
+            6,
+            7,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 42,
+          "bounds": [
+            7,
+            5,
+            8,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 43,
+          "bounds": [
+            3,
+            1,
+            4,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 44,
+          "bounds": [
+            12,
+            13,
+            13,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 45,
+          "bounds": [
+            3,
+            10,
+            4,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 46,
+          "bounds": [
+            5,
+            7,
+            6,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 47,
+          "bounds": [
+            14,
+            10,
+            15,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 48,
+          "bounds": [
+            9,
+            5,
+            10,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 49,
+          "bounds": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 50,
+          "bounds": [
+            13,
+            5,
+            14,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 51,
+          "bounds": [
+            13,
+            14,
+            14,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 52,
+          "bounds": [
+            15,
+            11,
+            16,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 53,
+          "bounds": [
+            7,
+            7,
+            8,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 54,
+          "bounds": [
+            12,
+            6,
+            13,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 55,
+          "bounds": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 56,
+          "bounds": [
+            3,
+            12,
+            4,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 57,
+          "bounds": [
+            5,
+            9,
+            6,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 58,
+          "bounds": [
+            4,
+            11,
+            5,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 59,
+          "bounds": [
+            14,
+            12,
+            15,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 60,
+          "bounds": [
+            9,
+            7,
+            10,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 61,
+          "bounds": [
+            11,
+            4,
+            12,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 62,
+          "bounds": [
+            10,
+            8,
+            11,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 63,
+          "bounds": [
+            1,
+            5,
+            2,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 64,
+          "bounds": [
+            13,
+            7,
+            14,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 65,
+          "bounds": [
+            6,
+            1,
+            7,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 66,
+          "bounds": [
+            7,
+            9,
+            8,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 67,
+          "bounds": [
+            12,
+            8,
+            13,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 68,
+          "bounds": [
+            3,
+            5,
+            4,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 69,
+          "bounds": [
+            5,
+            2,
+            6,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 70,
+          "bounds": [
+            4,
+            4,
+            5,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 71,
+          "bounds": [
+            14,
+            5,
+            15,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 72,
+          "bounds": [
+            5,
+            11,
+            6,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 73,
+          "bounds": [
+            9,
+            9,
+            10,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 74,
+          "bounds": [
+            10,
+            10,
+            11,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 75,
+          "bounds": [
+            1,
+            7,
+            2,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 76,
+          "bounds": [
+            13,
+            9,
+            14,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 77,
+          "bounds": [
+            2,
+            6,
+            3,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 78,
+          "bounds": [
+            7,
+            2,
+            8,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 79,
+          "bounds": [
+            7,
+            11,
+            8,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 80,
+          "bounds": [
+            12,
+            10,
+            13,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 81,
+          "bounds": [
+            3,
+            7,
+            4,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 82,
+          "bounds": [
+            5,
+            4,
+            6,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 83,
+          "bounds": [
+            4,
+            6,
+            5,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 84,
+          "bounds": [
+            14,
+            7,
+            15,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 85,
+          "bounds": [
+            9,
+            2,
+            10,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 86,
+          "bounds": [
+            8,
+            6,
+            9,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 87,
+          "bounds": [
+            10,
+            3,
+            11,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 88,
+          "bounds": [
+            10,
+            12,
+            11,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 89,
+          "bounds": [
+            1,
+            9,
+            2,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 90,
+          "bounds": [
+            11,
+            11,
+            12,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 91,
+          "bounds": [
+            2,
+            8,
+            3,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 92,
+          "bounds": [
+            13,
+            11,
+            14,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 93,
+          "bounds": [
+            7,
+            4,
+            8,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 94,
+          "bounds": [
+            6,
+            8,
+            7,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 95,
+          "bounds": [
+            12,
+            3,
+            13,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 96,
+          "bounds": [
+            12,
+            12,
+            13,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 97,
+          "bounds": [
+            3,
+            9,
+            4,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 98,
+          "bounds": [
+            5,
+            6,
+            6,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 99,
+          "bounds": [
+            4,
+            8,
+            5,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 100,
+          "bounds": [
+            14,
+            9,
+            15,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 101,
+          "bounds": [
+            8,
+            8,
+            9,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 102,
+          "bounds": [
+            10,
+            5,
+            11,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 103,
+          "bounds": [
+            1,
+            2,
+            2,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 104,
+          "bounds": [
+            0,
+            4,
+            1,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 105,
+          "bounds": [
+            2,
+            1,
+            3,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 106,
+          "bounds": [
+            13,
+            4,
+            14,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 107,
+          "bounds": [
+            10,
+            14,
+            11,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 108,
+          "bounds": [
+            1,
+            11,
+            2,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 109,
+          "bounds": [
+            11,
+            13,
+            12,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 110,
+          "bounds": [
+            2,
+            10,
+            3,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 111,
+          "bounds": [
+            6,
+            10,
+            7,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 112,
+          "bounds": [
+            12,
+            5,
+            13,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 113,
+          "bounds": [
+            3,
+            2,
+            4,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 114,
+          "bounds": [
+            4,
+            1,
+            5,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 115,
+          "bounds": [
+            12,
+            14,
+            13,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 116,
+          "bounds": [
+            3,
+            11,
+            4,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 117,
+          "bounds": [
+            14,
+            11,
+            15,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 118,
+          "bounds": [
+            4,
+            10,
+            5,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 119,
+          "bounds": [
+            8,
+            10,
+            9,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 120,
+          "bounds": [
+            10,
+            7,
+            11,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 121,
+          "bounds": [
+            1,
+            4,
+            2,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 122,
+          "bounds": [
+            0,
+            6,
+            1,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 123,
+          "bounds": [
+            2,
+            3,
+            3,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 124,
+          "bounds": [
+            11,
+            6,
+            12,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 125,
+          "bounds": [
+            2,
+            12,
+            3,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 126,
+          "bounds": [
+            6,
+            3,
+            7,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 127,
+          "bounds": [
+            12,
+            7,
+            13,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 128,
+          "bounds": [
+            3,
+            4,
+            4,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 129,
+          "bounds": [
+            4,
+            3,
+            5,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 130,
+          "bounds": [
+            4,
+            12,
+            5,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 131,
+          "bounds": [
+            8,
+            3,
+            9,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 132,
+          "bounds": [
+            8,
+            12,
+            9,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 133,
+          "bounds": [
+            10,
+            9,
+            11,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 134,
+          "bounds": [
+            1,
+            6,
+            2,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 135,
+          "bounds": [
+            0,
+            8,
+            1,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 136,
+          "bounds": [
+            2,
+            5,
+            3,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 137,
+          "bounds": [
+            11,
+            8,
+            12,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 138,
+          "bounds": [
+            9,
+            11,
+            10,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 139,
+          "bounds": [
+            6,
+            5,
+            7,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 140,
+          "bounds": [
+            12,
+            9,
+            13,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 141,
+          "bounds": [
+            14,
+            6,
+            15,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 142,
+          "bounds": [
+            4,
+            5,
+            5,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 143,
+          "bounds": [
+            8,
+            5,
+            9,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 144,
+          "bounds": [
+            9,
+            4,
+            10,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 145,
+          "bounds": [
+            10,
+            11,
+            11,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 146,
+          "bounds": [
+            9,
+            13,
+            10,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 147,
+          "bounds": [
+            0,
+            10,
+            1,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 148,
+          "bounds": [
+            2,
+            7,
+            3,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 149,
+          "bounds": [
+            11,
+            10,
+            12,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 150,
+          "bounds": [
+            13,
+            13,
+            14,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 151,
+          "bounds": [
+            15,
+            10,
+            16,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 152,
+          "bounds": [
+            6,
+            7,
+            7,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 153,
+          "bounds": [
+            7,
+            6,
+            8,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 154,
+          "bounds": [
+            12,
+            11,
+            13,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 155,
+          "bounds": [
+            4,
+            7,
+            5,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 156,
+          "bounds": [
+            5,
+            8,
+            6,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 157,
+          "bounds": [
+            8,
+            7,
+            9,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 158,
+          "bounds": [
+            10,
+            4,
+            11,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 159,
+          "bounds": [
+            9,
+            6,
+            10,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 160,
+          "bounds": [
+            11,
+            3,
+            12,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 161,
+          "bounds": [
+            10,
+            13,
+            11,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 162,
+          "bounds": [
+            11,
+            12,
+            12,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 163,
+          "bounds": [
+            2,
+            9,
+            3,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 164,
+          "bounds": [
+            13,
+            6,
+            14,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 165,
+          "bounds": [
+            15,
+            12,
+            16,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 166,
+          "bounds": [
+            6,
+            9,
+            7,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 167,
+          "bounds": [
+            7,
+            8,
+            8,
+            9
+          ],
+          "outside_canvas": false
+        }
+      ],
+      "outside_primitives": [],
+      "reference_bounds": [
+        0,
+        1,
+        16,
+        15
+      ]
+    },
+    "composition": {
+      "raster_bounds": [
+        0,
+        1,
+        16,
+        15
+      ],
+      "minimum_margin": 0,
+      "edge_counts": {
+        "left": 7,
+        "right": 3,
+        "top": 0,
+        "bottom": 0
+      },
+      "findings": [
+        {
+          "severity": "INFO",
+          "code": "intentional_edge_contact",
+          "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+          "policy": "inherit",
+          "coordinates": [
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              0,
+              8
+            ],
+            [
+              0,
+              9
+            ],
+            [
+              0,
+              10
+            ],
+            [
+              15,
+              10
+            ],
+            [
+              15,
+              11
+            ],
+            [
+              15,
+              12
+            ]
+          ]
+        }
+      ]
+    },
+    "region_bounds": {
+      "palette-transfer-only": [
+        0,
+        1,
+        16,
+        15
+      ]
+    }
+  }
+}

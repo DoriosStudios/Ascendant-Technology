@@ -175,29 +175,49 @@
             },
             {
                 "machine_name@uc.machine_name": {
-                    "offset": [0, -2]
+                    "offset": [0, -2],
+                    "controls": [
+                        {
+                            "chest_label@chest.chest_label": {
+                                "offset": "$offset",
+                                "size": [180, 10],
+                                "font_scale_factor": 0.85
+                            }
+                        }
+                    ]
                 }
             },
             {
-                "side_panel@ascendant_common.info_panel": {
+                "side_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$has_text": false,
                     "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
                     "$info_size": [96, 158],
-                    "offset": [-102, -7]
+                    "offset": [-103, -7]
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [88, 148],
+                    "size": [
+                        88,
+                        148
+                    ],
                     "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-90, 2]
+                    "offset": [
+                        -95,
+                        1
+                    ],
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ]
                 }
             },
             {
@@ -272,7 +292,7 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
                     "offset": [22, 0],
                     "$io_items_modes_description": "ui.utilitycraft:io.genetic_seed_synthesizer.items",
                     "$io_fluids_modes_description": "ui.utilitycraft:io.genetic_seed_synthesizer.liquids",
@@ -302,9 +322,20 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "offset": [22, 0],
-                    "$info_description": "ui.utilitycraft:info.genetic_seed_synthesizer"
+                "info_tab@at_common.machine_info_tab": {
+                    "offset": [
+                        22,
+                        0
+                    ],
+                    "$info_description": "ui.utilitycraft:info.genetic_seed_synthesizer",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        -2.0,
+                        7
+                    ]
                 }
             }
         ]

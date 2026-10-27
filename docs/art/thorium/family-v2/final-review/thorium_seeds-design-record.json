@@ -1,0 +1,230 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Sementes de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "four small angular seed pellets with a restrained metal coating"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": [
+      3,
+      2,
+      14,
+      14
+    ],
+    "primitives": [
+      {
+        "layer": "silhouette",
+        "command": 0,
+        "bounds": [
+          3,
+          2,
+          7,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "silhouette",
+        "command": 1,
+        "bounds": [
+          10,
+          3,
+          14,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "silhouette",
+        "command": 2,
+        "bounds": [
+          3,
+          8,
+          7,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "silhouette",
+        "command": 3,
+        "bounds": [
+          10,
+          9,
+          14,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "seed-coating",
+        "command": 0,
+        "bounds": [
+          4,
+          3,
+          6,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "seed-coating",
+        "command": 1,
+        "bounds": [
+          11,
+          4,
+          13,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "seed-coating",
+        "command": 2,
+        "bounds": [
+          4,
+          9,
+          6,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "seed-coating",
+        "command": 3,
+        "bounds": [
+          11,
+          10,
+          13,
+          13
+        ],
+        "outside_canvas": false
+      }
+    ],
+    "outside_primitives": []
+  },
+  "composition": {
+    "raster_bounds": [
+      3,
+      2,
+      14,
+      14
+    ],
+    "minimum_margin": 2,
+    "edge_counts": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "findings": []
+  },
+  "region_bounds": {
+    "seed-coating": [
+      4,
+      3,
+      13,
+      13
+    ]
+  },
+  "pixel_sha256": "f3d06671e36aacb989cb1ba1f29f7b563ddb321ca33859b1da72b79f052a806e",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          58,
+          44,
+          55
+        ],
+        "pixels": 27,
+        "oklab": [
+          0.3132951637855895,
+          0.02475298566202988,
+          -0.012167274078498158
+        ]
+      },
+      {
+        "rgb": [
+          231,
+          113,
+          172
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.703253560755495,
+          0.1575084120131156,
+          -0.025730453813424092
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          132,
+          184
+        ],
+        "pixels": 3,
+        "oklab": [
+          0.74004976736045,
+          0.13701513369502488,
+          -0.025542847007643754
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          154,
+          195
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.778763878657962,
+          0.10673590363744428,
+          -0.022298036426314338
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          196,
+          217
+        ],
+        "pixels": 3,
+        "oklab": [
+          0.8599941784213212,
+          0.05006552115085833,
+          -0.013761702133999187
+        ]
+      }
+    ],
+    "lightness_range": 0.5466990146357317,
+    "tonal_coverage": {
+      "shadow": 0.6585365853658537,
+      "mid": 0.17073170731707316,
+      "highlight": 0.17073170731707316
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of the complete armor reference sheet, native icons, integer-nearest set preview and template/mapped/final comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "c6a325989efa9c0e99a6e9d6c08c4a4224214b921fda4065e828a22784451634",
+  "human_approval": "required",
+  "inspected_files": [
+    "../draft-icons/thorium_set_preview.png",
+    "../draft-review/template-mapped-final.png"
+  ],
+  "observations": [
+    "Cuff and toe-cap bevels use the same pink ramp as the other pieces. Soles and the gap between boots are preserved.",
+    "Near-white edge highlights give the pink a metallic character. The amount of gloss and exact pink saturation still require creator judgment."
+  ],
+  "limitations": [
+    "Only inventory artwork was requested.",
+    "No human approval of the finished icons has been supplied."
+  ]
+}

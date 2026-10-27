@@ -1,0 +1,36 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:reinforced_titanium_glass"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "key": {
+            "S": {
+                "item": "utilitycraft:titanium"
+            },
+            "T": {
+                "item": "utilitycraft:tungsten"
+            },
+            "G": {
+                "item": "minecraft:glass"
+            }
+        },
+        "pattern": [
+            "STS",
+            "TGT",
+            "STS"
+        ],
+        "result": {
+            "item": "utilitycraft:reinforced_titanium_glass",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:titanium"
+            }
+        ]
+    }
+}

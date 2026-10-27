@@ -1,0 +1,65 @@
+# Alchemical Station
+
+The shared upgrade, I/O, and information buttons use UtilityCraft's 26-pixel cadence: 24-pixel backgrounds with a 2-pixel gap. The information popup keeps the shared scrolling controls and a compact 80×134 content area within the container.
+
+Custom potions are grouped under **Equipment → Alchemical Potions**. Their localized descriptions show each effect, its actual effect level in Roman numerals, and its estimated duration, one effect per line. Positive effects use blue (`§9`) and negative effects use red (`§c`), including separate colors for mixed-effect potions. Extended/Maximum appears in gray (`§7`) on its own line after all effects, rather than in the item title. Lingering estimates use the cloud's quarter-duration effect. Exact shorter or registry-specific durations are preserved in item dynamic properties for gameplay; no additional effect or duration lore is added. Run `node tools/generate-alchemical-potions.mjs` to refresh this catalog, item grouping and descriptions without regenerating the station layout; add `--translations-only` to update just the descriptions in the language files.
+
+Implementation in development. The block is `utilitycraft:alchemical_station`, uses `minecraft:geometry.full_block`, and shares UtilityCraft's machine entity, energy, fluids, upgrades, and container UI. The projectile's bottle bone continuously faces each viewer's camera, compensating for entity yaw through a client animation.
+
+The source Box-UV atlas remains `RP/textures/blocks/alchemy_table.png`. Its six exact 16 × 16 face crops are registered under `utilitycraft_alchemical_station_off_*` and used by both the block materials and I/O icons. Regenerate them with `node tools/split_faces.mjs --only alchemical_station`; full station generation also applies that split. `tools/split_faces.config.json` provides the matching configuration for the Dorios Texture Atlas skill.
+
+The main tab brews up to six occupied, compatible bottle slots with one reagent. Incompatible or empty slots are skipped. One batch takes 400 ticks, costs 12,000 DE and 50 mB blaze essence. One blaze powder fills 1,000 mB (20 batches); the separate blaze reservoir holds 64,000 mB. Dragon's Breath returns one glass bottle into its return slot, regardless of batch size.
+
+The second tab has independent sections with one potion slot each. Their buttons queue one upgrade each, preventing repeated automatic upgrades. Amplification costs exactly 1,000 mB liquified Aetherium; extension costs exactly 750 mB. Each takes 200 ticks and 16,000 DE. The Aetherium tank holds 128,000 mB. Speed and energy upgrades follow the shared machine rules; fluid costs are fixed. The visible tab is local UI state and does not stop other sections from processing.
+
+Energy and ingredients/fluids are consumed once, at completion. Every tick rechecks the input identities and required resources; changing a bottle or reagent resets that section's progress. Removing or replacing a queued upgrade potion cancels the request. All result items are created before resources are charged.
+
+Extension progresses from normal to long and then maximum (four times the normal long duration). Amplification preserves the input duration and delivery form. Level II with long duration and level III are custom potion items. Effects whose level has no useful meaning (night vision, invisibility, fire resistance, water breathing, slow falling, the four trial effects, blindness, darkness) can only be extended. Healing, harming, and saturation can only be amplified. Turtle Master preserves both effects and stops at Resistance IV/Slowness VI; Slowness retains its native level IV and supports one further amplification to V.
+
+Nine new brewable families use an Awkward potion:
+
+| Effect | Reagent | Normal / long |
+| --- | --- | --- |
+| Haste | Titanium Dust | 3:00 / 8:00 |
+| Resistance | Aetherium Dust | 3:00 / 8:00 |
+| Absorption | Golden Apple | 2:00 / 5:00 |
+| Health Boost | Refined Aetherium Crystal | 3:00 / 8:00 |
+| Wither | Wither Rose | 0:30 / 1:30 |
+| Levitation | Shulker Shell | 0:15 / 0:45 |
+| Blindness | Ink Sac | 0:30 / 1:30 |
+| Darkness | Echo Shard | 0:30 / 1:30 |
+| Saturation | Enchanted Golden Apple | Instant |
+
+Seven StatsCore families also brew from Awkward potions. Each has levels I–III, normal/long/maximum durations, and drink/splash/lingering forms: 189 additional variants, bringing the catalog to 35 families and 702 custom items.
+
+| StatsCore effect | Reagent | Normal / long |
+| --- | --- | --- |
+| Marked | Eye of Ender | 0:30 / 1:30 |
+| Bleeding | Sweet Berries | 0:15 / 0:45 |
+| Blessing | Glow Berries | 2:00 / 5:00 |
+| Curse | Void Essence | 0:30 / 1:30 |
+| Berserk | Fire Charge | 1:00 / 3:00 |
+| Adaptive Resilience | Titanium Plate | 1:00 / 3:00 |
+| Soul Collector | Enderling Tear | 1:00 / 3:00 |
+
+`StatsCore/effects/potions.js` applies these statuses through the real StatsCore processors and publishes their levels, timers and charges to Insight. Potion states use the independent `alchemy` source, preserving equipment effects and charges. Marked increases incoming eligible attack damage by 10% per level; Bleeding deals 1 damage per second per level. Blessing heals living targets once and applies regeneration, health boost and resistance, while harming undead through the existing blessing processor. Curse applies slowness, weakness and hunger. Berserk applies Strength and adds 1 attack damage per level. Adaptive Resilience reduces damage by 3% per level per successive hit of the same damage type, up to five stacks and 45%; a different damage type resets the stacks. Soul Collector gains a charge per kill, spends five charges on the next eligible hit for 25% bonus damage per level, and heals `(0.35 + 0.2 × level) × 5`. Status expiry disables these bonuses; weaker bottles cannot replace stronger active doses.
+
+Fifteen families have dedicated 16 × 16 bottle palettes for all three delivery forms: Haste, Resistance, Absorption, Health Boost, Levitation, Blindness, Darkness, Saturation, and the seven StatsCore families. The 45 PNGs live in `RP/textures/items/alchemy/`. Native effect UI icons and the canonical UtilityCraft StatsCore font glyphs provide the palettes; vanilla bottle pixels provide the silhouettes, cork, glass and alpha. Only dyed pixels change. [The palette contact sheet](../previews/alchemical-potions.png) shows the source icon and the three bottles for each family, and `docs/previews/alchemical-potion-palettes.json` records provenance and color values. Rebuild these assets with `node tools/generate-alchemical-icons.mjs --vanilla-textures=PATH_TO_RESOURCE_PACK_TEXTURES`, then run the potion generator to refresh atlas entries and recipes without changing station spacing.
+
+Native potions are identified with `minecraft:potion` and created with `Potions.resolve`, rather than relying on numeric potion data values or localized names. The live native duration and long-duration registry take priority over catalog defaults. Generated custom items have stable family/level/duration/form IDs; exact durations from shorter native strong potions are retained in item dynamic properties. Drinking returns a glass bottle. Splash effects use distance falloff within four blocks; lingering clouds last up to 30 seconds, shrink, apply quarter-duration effects and have a per-target reapplication cooldown. Healing and harming invert on undead entities.
+
+The 176 × 166 container has two icon tabs, Brewing and Aplifying. Brewing opens by default. Each page uses only the area next to its tab; the main container has no labels besides its title. Brewing arranges its six 18 × 18 bottle slots as three vertical pairs, forming a 58 × 38 grid with 2 px gaps and brown slot backgrounds. The ingredient sits above the middle pair. Slot backgrounds are explicit local panels containing the native normal and selected cell images. They contain no `modifications` property; slot interaction, item rendering and selection bindings remain native. The blaze gauge is an item-rendered 6 × 54 sprite, including its border, with 53 fill frames and its existing separate reservoir. The main container and side panel share the brown background; the title uses light text for contrast.
+
+One 110 × 166 side panel opens on the information display. Three mutually exclusive icon toggles select Display, Recipes or Progression, on either machine page. A separate toggle at the right hides the whole panel. The header reserves space for all four controls. Recipes use one 90 × 38 brown card per recipe, with a 4-pixel gap. Icons begin at y=18, below a 14-pixel heading area, reducing the former title-to-item gap. The localized effect/result name is visible in a two-line heading above the input + reagent → output sequence. The 16 × 16 icons share the card background instead of separate item frames. Input and reagent names retain localized tooltips; the output name is on the card. Progression has seven general water-bottle examples: regular, splash, lingering, amplified +1, amplified +2, extended +1 and maximum. Roman numerals indicate level and numeric ranges indicate duration. Normal timed potions span 0:15–3:00, long potions 0:40–8:00, and maximum durations 2:40–32:00. Lingering effects use one quarter of the drinkable duration. Maximum level depends on the family (I–V); instant effects cannot be extended. Upgrade tooltips distinguish Aetherium-powered Amplify/Extend operations from brewing with Gunpowder, Dragon's Breath or Redstone. New panel and guide text is generated in all ten supported locales.
+
+The gauges use hover-only buttons without inventory action mappings, preserving their item rendering and tooltips while preventing removal. The live display groups specific next steps and progress under Brewing, Amplify, Extend and Storage. A separate machine information button below the right-side I/O control opens localized instructions for both tabs, potion limits and tank capacities.
+
+Item automation inserts bottles, reagent, and blaze powder into separate face modes and extracts returned empty bottles. Finished potions are removed manually from their in-place slots; these slots are deliberately excluded from automatic extraction to avoid removing unprocessed inputs. Fluid input accepts Aetherium into tank 0; tank 1 is reserved for blaze powder. Resource lore preserves both tanks when moving the station.
+
+Regenerate items, recipe book, UI, model and localization with `node tools/generate-alchemical-station.mjs`. To regenerate only the UI and blaze gauge items, run `node tools/generate-alchemical-ui.mjs`. Existing table artwork and verified vanilla bottle/UI textures are reused. Portuguese names are included; other supported languages currently use English fallback for this new content.
+
+Node tests cover recipe resolution, duration/form preservation, display instructions and transaction boundaries. `node tools/preview-alchemical-station.cjs` renders the real registered pack stack with Dorios Bedrock UI Preview and saves screenshots and a report in the temporary `ascendant-alchemy-ui` directory. It also writes the source-derived initial fixture to `RP/ui/alchemical_station.preview.json`. Preview cases cover both pages, display/recipes/progression/hidden states, the bottom of the guide, localized potion/ingredient/action hovers, information, upgrades, item/fluid I/O, and 480 × 270 / 360 × 240 viewports. Target selected states with repeated --case=NAME arguments. Use --locale=pt_BR for Portuguese; the recipe-bottom cases show the final cards, including longer headings. Side tabs are checked for spacing and clearance from the hide button. Shared buttons are checked for a 26-pixel cadence and matching horizontal alignment. Gauge buttons are checked for absent inventory action mappings. The installed preview omits two native locked-hover paint variants and the tooltip's `allow_clipping=false` behavior; the review harness applies those source behaviors in memory. Native detail factories and the font adapter remain preview limitations. Bedrock pack loading, camera animation and mouse/controller/touch interaction still require an in-game smoke test. Regenerate only UI and guide translations with `node tools/generate-alchemical-ui.mjs --ui-only`, without rebuilding item sprites or behavior-pack items.
+
+Run `node --experimental-vm-modules tools/test-statscore-potions.mjs` for the seven real status processors, source isolation, charge consumption, lethal charged hits, expiration and cloud refresh. Run `node --experimental-vm-modules tools/test-alchemical-station.mjs` for recipes, potion delivery and machine transactions.
+
+References: [native potion API](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/potions?view=minecraft-bedrock-stable), [custom potion components](https://learn.microsoft.com/en-us/minecraft/creator/documents/create-custom-potions?view=minecraft-bedrock-stable), [vanilla resource/UI reference](https://github.com/Mojang/bedrock-samples).

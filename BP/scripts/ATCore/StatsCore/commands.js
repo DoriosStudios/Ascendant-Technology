@@ -623,7 +623,7 @@ DoriosLib.registry.customCommand({
         if (!setStatsCoreFeedbackStyle(source, style)) {
             sendCommandMessage(
                 source,
-                "\u00A7cUse only_text, only_icons, text_and_icons, or both_partial.",
+                "\u00A7cUse minimal (default), only_text, only_icons, text_and_icons, or both_partial.",
             );
             return;
         }

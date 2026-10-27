@@ -14,140 +14,98 @@
 					"size": [176, 20],
 					"controls": [
 						{
-							"tab_button_0@common.toggle": {
-								"layer": 2,
-								"size": [36, 20],
-								"offset": [0, 0],
-								"$radio_toggle_group": false,
-								"$toggle_name": "at_testing_tab_0",
-								"$toggle_property_bag": {
-									"#toggle_state": true
-								},
-								"$tab_button_text": "0-8",
-								"$tab_button_size": [36, 20],
-								"$tab_button_text_scale": 0.6,
-								"$unchecked_control": "ascendant_common.tab_button_state_base",
-								"$checked_control": "ascendant_common.tab_button_state_checked",
-								"$unchecked_hover_control": "ascendant_common.tab_button_state_unchecked_hover",
-								"$checked_hover_control": "ascendant_common.tab_button_state_checked_hover",
-								"$unchecked_locked_control": "ascendant_common.tab_button_state_base",
-								"$checked_locked_control": "ascendant_common.tab_button_state_checked",
-								"$unchecked_locked_hover_control": "ascendant_common.tab_button_state_unchecked_hover",
-								"$checked_locked_hover_control": "ascendant_common.tab_button_state_checked_hover"
+							"tab_button_0@at_common.tab_button": {
+							    "layer": 2,
+							    "size": [36, 20],
+							    "offset": [0, 0],
+							    "$radio_toggle_group": false,
+							    "$toggle_name": "at_testing_tab_0",
+							    "$toggle_property_bag": {
+							        "#toggle_state": true
+							    },
+							    "$label": "0-8",
+							    "$button_size": [36, 20],
+							    "$text_scale": 0.6
 							}
 						},
 						{
-							"tab_button_1@common.toggle": {
-								"layer": 2,
-								"size": [36, 20],
-								"offset": [40, 0],
-								"$radio_toggle_group": false,
-								"$toggle_name": "at_testing_tab_1",
-								"$toggle_property_bag": {
-									"#toggle_state": false
-								},
-								"$tab_button_text": "10-18",
-								"$tab_button_size": [36, 20],
-								"$tab_button_text_scale": 0.6,
-								"$unchecked_control": "ascendant_common.tab_button_state_base",
-								"$checked_control": "ascendant_common.tab_button_state_checked",
-								"$unchecked_hover_control": "ascendant_common.tab_button_state_unchecked_hover",
-								"$checked_hover_control": "ascendant_common.tab_button_state_checked_hover",
-								"$unchecked_locked_control": "ascendant_common.tab_button_state_base",
-								"$checked_locked_control": "ascendant_common.tab_button_state_checked",
-								"$unchecked_locked_hover_control": "ascendant_common.tab_button_state_unchecked_hover",
-								"$checked_locked_hover_control": "ascendant_common.tab_button_state_checked_hover"
+							"tab_button_1@at_common.tab_button": {
+							    "layer": 2,
+							    "size": [36, 20],
+							    "offset": [40, 0],
+							    "$radio_toggle_group": false,
+							    "$toggle_name": "at_testing_tab_1",
+							    "$toggle_property_bag": {
+							        "#toggle_state": false
+							    },
+							    "$label": "10-18",
+							    "$button_size": [36, 20],
+							    "$text_scale": 0.6
 							}
 						},
 						{
-							"tab_button_2@common.toggle": {
-								"layer": 2,
-								"size": [36, 20],
-								"offset": [80, 0],
-								"$radio_toggle_group": false,
-								"$toggle_name": "at_testing_tab_2",
-								"$toggle_property_bag": {
-									"#toggle_state": false
-								},
-								"$tab_button_text": "19-27",
-								"$tab_button_size": [36, 20],
-								"$tab_button_text_scale": 0.6,
-								"$unchecked_control": "ascendant_common.tab_button_state_base",
-								"$checked_control": "ascendant_common.tab_button_state_checked",
-								"$unchecked_hover_control": "ascendant_common.tab_button_state_unchecked_hover",
-								"$checked_hover_control": "ascendant_common.tab_button_state_checked_hover",
-								"$unchecked_locked_control": "ascendant_common.tab_button_state_base",
-								"$checked_locked_control": "ascendant_common.tab_button_state_checked",
-								"$unchecked_locked_hover_control": "ascendant_common.tab_button_state_unchecked_hover",
-								"$checked_locked_hover_control": "ascendant_common.tab_button_state_checked_hover"
+							"tab_button_2@at_common.tab_button": {
+							    "layer": 2,
+							    "size": [36, 20],
+							    "offset": [80, 0],
+							    "$radio_toggle_group": false,
+							    "$toggle_name": "at_testing_tab_2",
+							    "$toggle_property_bag": {
+							        "#toggle_state": false
+							    },
+							    "$label": "19-27",
+							    "$button_size": [36, 20],
+							    "$text_scale": 0.6
 							}
 						}
 					]
 				}
 			},
 			{
-				"tab_panel_0": {
-					"type": "panel",
-					"offset": [0, 22],
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "tab_button_0",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					],
-					"controls": [
-						{
-							"content@at_testing.grid1": {}
-						}
-					]
+				"tab_panel_0@at_common.tab_content": {
+				    "offset": [
+				        0,
+				        22
+				    ],
+				    "controls": [
+				        {
+				            "content@at_testing.grid1": {}
+				        }
+				    ],
+				    "$tab_control": "tab_button_0"
 				}
 			},
 			{
-				"tab_panel_1": {
-					"type": "panel",
-					"offset": [0, 22],
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "tab_button_1",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					],
-					"controls": [
-						{
-							"content@at_testing.grid2": {}
-						}
-					]
+				"tab_panel_1@at_common.tab_content": {
+				    "offset": [
+				        0,
+				        22
+				    ],
+				    "controls": [
+				        {
+				            "content@at_testing.grid2": {}
+				        }
+				    ],
+				    "$tab_control": "tab_button_1"
 				}
 			},
 			{
-				"tab_panel_2": {
-					"type": "collection_panel",
-					"offset": [0, 22],
-					"bindings": [
-						{
-							"binding_type": "view",
-							"source_control_name": "tab_button_2",
-							"source_property_name": "#toggle_state",
-							"target_property_name": "#visible",
-							"resolve_sibling_scope": true
-						}
-					],
-					"controls": [
-						{
-							"content@at_testing.grid3": {}
-						}
-					]
+				"tab_panel_2@at_common.tab_content": {
+				    "offset": [
+				        0,
+				        22
+				    ],
+				    "controls": [
+				        {
+				            "content@at_testing.grid3": {}
+				        }
+				    ],
+				    "$tab_control": "tab_button_2"
 				}
 			}
 		]
 	},
-	"grid1@ascendant_common.grid_3x3": {
+	"grid1@at_common.grid_3x3": {
         "$slot_index_0": 0,
         "$slot_index_1": 1,
         "$slot_index_2": 2,
@@ -158,7 +116,7 @@
         "$slot_index_7": 7,
         "$slot_index_8": 8
     },
-	"grid2@ascendant_common.grid_3x3": {
+	"grid2@at_common.grid_3x3": {
 		"$slot_index_0": 9,
 		"$slot_index_1": 10,
 		"$slot_index_2": 11,
@@ -170,7 +128,7 @@
 		"$slot_index_8": 17
 	},
 
-	"grid3@ascendant_common.grid_3x3": {
+	"grid3@at_common.grid_3x3": {
 		"$slot_index_0": 18,
 		"$slot_index_1": 19,
 		"$slot_index_2": 20,

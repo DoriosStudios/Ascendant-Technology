@@ -1,0 +1,1122 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Bloco de TÃ³rio bruto",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "coarse opaque raw-rock host with angled metal masses",
+      "connected broken mineral planes instead of unbounded noise"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "allow",
+    "allow_clip": false
+  },
+  "palette": {
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m6": [
+      231,
+      113,
+      172
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m9": [
+      235,
+      176,
+      206
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ],
+    "stone_dark": [
+      63,
+      62,
+      67
+    ],
+    "stone": [
+      87,
+      84,
+      91
+    ],
+    "stone_light": [
+      115,
+      110,
+      119
+    ],
+    "m7": [
+      235,
+      132,
+      184
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "rectangle",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          15,
+          15
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "stone-host",
+      "purpose": "coarse opaque raw-rock host with angled metal masses",
+      "commands": [
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              15,
+              15
+            ]
+          ],
+          "color": "stone_dark"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              0,
+              5
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              8,
+              10
+            ],
+            [
+              3,
+              13
+            ],
+            [
+              0,
+              11
+            ]
+          ],
+          "color": "stone"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              10,
+              2
+            ],
+            [
+              15,
+              3
+            ],
+            [
+              15,
+              11
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              8,
+              6
+            ]
+          ],
+          "color": "stone_light"
+        }
+      ]
+    },
+    {
+      "name": "raw-masses",
+      "purpose": "connected broken mineral planes instead of unbounded noise",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              0,
+              1
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              7,
+              3
+            ],
+            [
+              4,
+              6
+            ],
+            [
+              1,
+              5
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              9,
+              0
+            ],
+            [
+              14,
+              1
+            ],
+            [
+              15,
+              5
+            ],
+            [
+              11,
+              6
+            ],
+            [
+              8,
+              3
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              7
+            ],
+            [
+              8,
+              5
+            ],
+            [
+              11,
+              8
+            ],
+            [
+              8,
+              12
+            ],
+            [
+              3,
+              11
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              0,
+              10
+            ],
+            [
+              2,
+              9
+            ],
+            [
+              4,
+              13
+            ],
+            [
+              2,
+              15
+            ],
+            [
+              0,
+              14
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              10,
+              12
+            ],
+            [
+              14,
+              9
+            ],
+            [
+              15,
+              13
+            ],
+            [
+              13,
+              15
+            ],
+            [
+              9,
+              15
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              1,
+              2
+            ],
+            [
+              4,
+              1
+            ],
+            [
+              5,
+              2
+            ]
+          ],
+          "color": "m9",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              5,
+              8
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              9,
+              8
+            ]
+          ],
+          "color": "m10",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              11,
+              12
+            ],
+            [
+              13,
+              11
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "name": "fracture-facets",
+      "purpose": "angular light and shadow planes inside the inspected flat raw-metal patches",
+      "commands": [
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              1
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              1,
+              2
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              2
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              2
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              2
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              3
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              3
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              3
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              3
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              4
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              3
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              4
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              4
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              4
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              5
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              5
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              6
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              1
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              2
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              2
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              2
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              2
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              3
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              3
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              3
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              4
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              6
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              7
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              7
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              7
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              7
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              8
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              8
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              8
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              8
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              8
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              9
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              9
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              9
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              10
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              8
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              9
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              9
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              9
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              9
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              10
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              10
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              10
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              10
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              11
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              11
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              11
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              1,
+              11
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              11
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              1,
+              12
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              12
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              13
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              13
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              14
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              11
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              12
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              12
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              12
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              13
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              13
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              13
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              14
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              13
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              14
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              14
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              14
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              15
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              15
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              15
+            ]
+          ],
+          "color": "m3"
+        }
+      ]
+    }
+  ]
+}

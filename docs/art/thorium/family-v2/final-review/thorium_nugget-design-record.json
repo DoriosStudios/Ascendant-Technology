@@ -1,0 +1,197 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Pepita de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "small irregular metal volume with three sharp planes"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": [
+      4,
+      3,
+      13,
+      13
+    ],
+    "primitives": [
+      {
+        "layer": "silhouette",
+        "command": 0,
+        "bounds": [
+          4,
+          3,
+          13,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "cut-nugget",
+        "command": 0,
+        "bounds": [
+          5,
+          4,
+          11,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "cut-nugget",
+        "command": 1,
+        "bounds": [
+          7,
+          5,
+          12,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "cut-nugget",
+        "command": 2,
+        "bounds": [
+          5,
+          4,
+          10,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "cut-nugget",
+        "command": 3,
+        "bounds": [
+          5,
+          10,
+          8,
+          12
+        ],
+        "outside_canvas": false
+      }
+    ],
+    "outside_primitives": []
+  },
+  "composition": {
+    "raster_bounds": [
+      4,
+      3,
+      13,
+      13
+    ],
+    "minimum_margin": 3,
+    "edge_counts": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "findings": []
+  },
+  "region_bounds": {
+    "cut-nugget": [
+      5,
+      4,
+      12,
+      12
+    ]
+  },
+  "pixel_sha256": "d545c65793d8a97e7144d4a9060b0687f44ccf7d636f8afbb6cf4994cdef4bf9",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          58,
+          44,
+          55
+        ],
+        "pixels": 21,
+        "oklab": [
+          0.3132951637855895,
+          0.02475298566202988,
+          -0.012167274078498158
+        ]
+      },
+      {
+        "rgb": [
+          167,
+          67,
+          114
+        ],
+        "pixels": 3,
+        "oklab": [
+          0.5307585390052371,
+          0.1400036965451507,
+          -0.01550403452013649
+        ]
+      },
+      {
+        "rgb": [
+          220,
+          96,
+          156
+        ],
+        "pixels": 17,
+        "oklab": [
+          0.6600247922731386,
+          0.16590646322641156,
+          -0.021978423369214406
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          176,
+          206
+        ],
+        "pixels": 13,
+        "oklab": [
+          0.8202004222885522,
+          0.0765292348381662,
+          -0.017616730036504324
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          212,
+          224
+        ],
+        "pixels": 5,
+        "oklab": [
+          0.892250348674154,
+          0.028905036804675155,
+          -0.00781983727596347
+        ]
+      }
+    ],
+    "lightness_range": 0.5789551848885645,
+    "tonal_coverage": {
+      "shadow": 0.3559322033898305,
+      "mid": 0.3389830508474576,
+      "highlight": 0.30508474576271183
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

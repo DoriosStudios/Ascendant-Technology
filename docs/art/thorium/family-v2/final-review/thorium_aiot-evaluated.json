@@ -1,0 +1,1533 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v2\\final\\thorium_aiot.png",
+  "pixel_sha256": "3271f5648a54ea94e1fdd349e8f5696b88837909a0f783c0280b3f2fd225637b",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      18,
+      18
+    ]
+  },
+  "profile": {
+    "size": [
+      18,
+      18
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 10,
+      "allowed": [
+        [
+          167,
+          67,
+          114
+        ],
+        [
+          197,
+          80,
+          136
+        ],
+        [
+          231,
+          113,
+          172
+        ],
+        [
+          235,
+          132,
+          184
+        ],
+        [
+          235,
+          154,
+          195
+        ],
+        [
+          235,
+          176,
+          206
+        ],
+        [
+          235,
+          212,
+          224
+        ],
+        [
+          58,
+          44,
+          55
+        ],
+        [
+          73,
+          61,
+          72
+        ],
+        [
+          86,
+          61,
+          77
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 227,
+      "partial": 0,
+      "opaque": 97
+    },
+    "palette": {
+      "unique_visible_rgb": 9,
+      "unique_rgba": 10,
+      "frequencies": [
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "hex": "#A74372",
+          "count": 23
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "hex": "#E771AC",
+          "count": 22
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "hex": "#EBB0CE",
+          "count": 18
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "hex": "#EBD4E0",
+          "count": 14
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "hex": "#C55088",
+          "count": 8
+        },
+        {
+          "rgb": [
+            235,
+            132,
+            184
+          ],
+          "hex": "#EB84B8",
+          "count": 5
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "hex": "#EB9AC3",
+          "count": 3
+        },
+        {
+          "rgb": [
+            73,
+            61,
+            72
+          ],
+          "hex": "#493D48",
+          "count": 2
+        },
+        {
+          "rgb": [
+            86,
+            61,
+            77
+          ],
+          "hex": "#563D4D",
+          "count": 2
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 97,
+      "bbox": [
+        1,
+        1,
+        17,
+        16
+      ],
+      "components_4_connected": 1,
+      "component_sizes": [
+        97
+      ]
+    },
+    "clusters": {
+      "color_components": 32,
+      "singletons": 19
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            73,
+            61,
+            72
+          ],
+          "pixels": 2,
+          "oklab": [
+            0.3766513904263839,
+            0.020885264019629035,
+            -0.012688651958945252
+          ]
+        },
+        {
+          "rgb": [
+            86,
+            61,
+            77
+          ],
+          "pixels": 2,
+          "oklab": [
+            0.3936487143819071,
+            0.040348858008418226,
+            -0.01421680152451571
+          ]
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "pixels": 23,
+          "oklab": [
+            0.5307585390052371,
+            0.1400036965451507,
+            -0.01550403452013649
+          ]
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "pixels": 8,
+          "oklab": [
+            0.5997660713505149,
+            0.15911940459083473,
+            -0.018965013732911817
+          ]
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "pixels": 22,
+          "oklab": [
+            0.703253560755495,
+            0.1575084120131156,
+            -0.025730453813424092
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            132,
+            184
+          ],
+          "pixels": 5,
+          "oklab": [
+            0.74004976736045,
+            0.13701513369502488,
+            -0.025542847007643754
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "pixels": 3,
+          "oklab": [
+            0.778763878657962,
+            0.10673590363744428,
+            -0.022298036426314338
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "pixels": 18,
+          "oklab": [
+            0.8202004222885522,
+            0.0765292348381662,
+            -0.017616730036504324
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "pixels": 14,
+          "oklab": [
+            0.892250348674154,
+            0.028905036804675155,
+            -0.00781983727596347
+          ]
+        }
+      ],
+      "lightness_range": 0.51559895824777,
+      "tonal_coverage": {
+        "shadow": 0.041237113402061855,
+        "mid": 0.6288659793814433,
+        "highlight": 0.32989690721649484
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 19,
+      "coordinates": [
+        [
+          10,
+          1
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          14,
+          3
+        ],
+        [
+          14,
+          4
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          16,
+          5
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          6,
+          12
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          4,
+          14
+        ],
+        [
+          5,
+          14
+        ],
+        [
+          6,
+          14
+        ],
+        [
+          5,
+          15
+        ]
+      ]
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "model_reviewed",
+    "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+    "evaluator_type": "model",
+    "pixel_sha256": "3271f5648a54ea94e1fdd349e8f5696b88837909a0f783c0280b3f2fd225637b",
+    "human_approval": "required",
+    "inspected_files": [
+      "thorium_family_preview.png"
+    ],
+    "observations": [
+      "The largest combined head has separate projecting faces and uses a native 18x18 canvas rather than downscaling a larger image. Some visual similarity to the Paxel remains intentional.",
+      "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+    ],
+    "limitations": [
+      "No creator approval of this revision has been supplied.",
+      "Textures only; no gameplay or in-game acceptance claim."
+    ],
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ]
+  },
+  "file_sha256": "b974cf1c6475c83dd91cac36ddb078187c0c84e269bb84f4bf4db4ff02624d4f",
+  "design": {
+    "intent": {
+      "identity": "AIOT de TÃ³rio",
+      "usage": "native AT texture-family candidate",
+      "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+      "orientation": "explicit native inventory or block face construction",
+      "lighting": "upper-left, reduced value range; highlights describe connected planes",
+      "structure": [
+        "narrow Thorium shaft with dark grip bands and clipped metal cap",
+        "individual angular working face and shallow chamfers"
+      ],
+      "style": [
+        "new Thorium construction rather than titanium recolor",
+        "sharp chamfers and restrained plate seams",
+        "20 percent lower HSV saturation in the metal ramp"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/titanium_ingot.png",
+        "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+        "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+        "approval": "project reference, not approval of Thorium variants"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": [
+        1,
+        1,
+        17,
+        16
+      ],
+      "primitives": [
+        {
+          "layer": "silhouette",
+          "command": 0,
+          "bounds": [
+            1,
+            1,
+            17,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "silhouette",
+          "command": 1,
+          "bounds": [
+            4,
+            7,
+            13,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "shaft",
+          "command": 0,
+          "bounds": [
+            4,
+            7,
+            13,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "shaft",
+          "command": 1,
+          "bounds": [
+            4,
+            8,
+            11,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "shaft",
+          "command": 2,
+          "bounds": [
+            5,
+            13,
+            7,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "shaft",
+          "command": 3,
+          "bounds": [
+            4,
+            14,
+            6,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 0,
+          "bounds": [
+            10,
+            1,
+            11,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 1,
+          "bounds": [
+            6,
+            2,
+            7,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 2,
+          "bounds": [
+            7,
+            2,
+            8,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 3,
+          "bounds": [
+            8,
+            2,
+            9,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 4,
+          "bounds": [
+            9,
+            2,
+            10,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 5,
+          "bounds": [
+            10,
+            2,
+            11,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 6,
+          "bounds": [
+            11,
+            2,
+            12,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 7,
+          "bounds": [
+            12,
+            2,
+            13,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 8,
+          "bounds": [
+            13,
+            2,
+            14,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 9,
+          "bounds": [
+            4,
+            3,
+            5,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 10,
+          "bounds": [
+            5,
+            3,
+            6,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 11,
+          "bounds": [
+            6,
+            3,
+            7,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 12,
+          "bounds": [
+            7,
+            3,
+            8,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 13,
+          "bounds": [
+            8,
+            3,
+            9,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 14,
+          "bounds": [
+            9,
+            3,
+            10,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 15,
+          "bounds": [
+            10,
+            3,
+            11,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 16,
+          "bounds": [
+            11,
+            3,
+            12,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 17,
+          "bounds": [
+            12,
+            3,
+            13,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 18,
+          "bounds": [
+            13,
+            3,
+            14,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 19,
+          "bounds": [
+            14,
+            3,
+            15,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 20,
+          "bounds": [
+            3,
+            4,
+            4,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 21,
+          "bounds": [
+            4,
+            4,
+            5,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 22,
+          "bounds": [
+            5,
+            4,
+            6,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 23,
+          "bounds": [
+            6,
+            4,
+            7,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 24,
+          "bounds": [
+            7,
+            4,
+            8,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 25,
+          "bounds": [
+            8,
+            4,
+            9,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 26,
+          "bounds": [
+            9,
+            4,
+            10,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 27,
+          "bounds": [
+            10,
+            4,
+            11,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 28,
+          "bounds": [
+            11,
+            4,
+            12,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 29,
+          "bounds": [
+            12,
+            4,
+            13,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 30,
+          "bounds": [
+            13,
+            4,
+            14,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 31,
+          "bounds": [
+            14,
+            4,
+            15,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 32,
+          "bounds": [
+            15,
+            4,
+            16,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 33,
+          "bounds": [
+            1,
+            5,
+            2,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 34,
+          "bounds": [
+            2,
+            5,
+            3,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 35,
+          "bounds": [
+            3,
+            5,
+            4,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 36,
+          "bounds": [
+            4,
+            5,
+            5,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 37,
+          "bounds": [
+            5,
+            5,
+            6,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 38,
+          "bounds": [
+            6,
+            5,
+            7,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 39,
+          "bounds": [
+            7,
+            5,
+            8,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 40,
+          "bounds": [
+            8,
+            5,
+            9,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 41,
+          "bounds": [
+            9,
+            5,
+            10,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 42,
+          "bounds": [
+            10,
+            5,
+            11,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 43,
+          "bounds": [
+            11,
+            5,
+            12,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 44,
+          "bounds": [
+            12,
+            5,
+            13,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 45,
+          "bounds": [
+            13,
+            5,
+            14,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 46,
+          "bounds": [
+            14,
+            5,
+            15,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 47,
+          "bounds": [
+            15,
+            5,
+            16,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 48,
+          "bounds": [
+            16,
+            5,
+            17,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 49,
+          "bounds": [
+            2,
+            6,
+            3,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 50,
+          "bounds": [
+            3,
+            6,
+            4,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 51,
+          "bounds": [
+            4,
+            6,
+            5,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 52,
+          "bounds": [
+            5,
+            6,
+            6,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 53,
+          "bounds": [
+            6,
+            6,
+            7,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 54,
+          "bounds": [
+            7,
+            6,
+            8,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 55,
+          "bounds": [
+            8,
+            6,
+            9,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 56,
+          "bounds": [
+            9,
+            6,
+            10,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 57,
+          "bounds": [
+            10,
+            6,
+            11,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 58,
+          "bounds": [
+            11,
+            6,
+            12,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 59,
+          "bounds": [
+            12,
+            6,
+            13,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 60,
+          "bounds": [
+            13,
+            6,
+            14,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 61,
+          "bounds": [
+            14,
+            6,
+            15,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 62,
+          "bounds": [
+            15,
+            6,
+            16,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 63,
+          "bounds": [
+            2,
+            7,
+            3,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 64,
+          "bounds": [
+            8,
+            7,
+            9,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 65,
+          "bounds": [
+            9,
+            7,
+            10,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 66,
+          "bounds": [
+            10,
+            7,
+            11,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 67,
+          "bounds": [
+            11,
+            7,
+            12,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 68,
+          "bounds": [
+            12,
+            7,
+            13,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 69,
+          "bounds": [
+            13,
+            7,
+            14,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 70,
+          "bounds": [
+            14,
+            7,
+            15,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 71,
+          "bounds": [
+            15,
+            7,
+            16,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 72,
+          "bounds": [
+            8,
+            8,
+            9,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 73,
+          "bounds": [
+            9,
+            8,
+            10,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 74,
+          "bounds": [
+            10,
+            8,
+            11,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 75,
+          "bounds": [
+            11,
+            8,
+            12,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 76,
+          "bounds": [
+            12,
+            8,
+            13,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 77,
+          "bounds": [
+            9,
+            9,
+            10,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 78,
+          "bounds": [
+            10,
+            9,
+            11,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 79,
+          "bounds": [
+            11,
+            9,
+            12,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 80,
+          "bounds": [
+            12,
+            9,
+            13,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 81,
+          "bounds": [
+            10,
+            10,
+            11,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "forged-head",
+          "command": 82,
+          "bounds": [
+            2,
+            2,
+            16,
+            6
+          ],
+          "outside_canvas": false
+        }
+      ],
+      "outside_primitives": []
+    },
+    "composition": {
+      "raster_bounds": [
+        1,
+        1,
+        17,
+        16
+      ],
+      "minimum_margin": 1,
+      "edge_counts": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      },
+      "findings": []
+    },
+    "region_bounds": {
+      "shaft": [
+        4,
+        7,
+        13,
+        16
+      ],
+      "forged-head": [
+        1,
+        1,
+        17,
+        11
+      ]
+    }
+  }
+}

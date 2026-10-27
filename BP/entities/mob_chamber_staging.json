@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "utilitycraft:mob_chamber_staging",
+            "is_spawnable": false,
+            "is_summonable": true
+        },
+        "components": {
+            "minecraft:type_family": { "family": ["inanimate", "at:mob_chamber_staging"] },
+            "minecraft:inventory": { "inventory_size": 54, "container_type": "container", "private": true, "can_be_siphoned_from": false },
+            "minecraft:collision_box": { "width": 0, "height": 0 },
+            "minecraft:scale": { "value": 0.001 },
+            "minecraft:physics": { "has_gravity": false, "has_collision": false },
+            "minecraft:pushable": { "is_pushable": false, "is_pushable_by_piston": false },
+            "minecraft:damage_sensor": { "triggers": [{ "cause": "all", "deals_damage": "no" }] },
+            "minecraft:persistent": {},
+            "minecraft:fire_immune": {}
+        }
+    }
+}

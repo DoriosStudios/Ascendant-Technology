@@ -1,0 +1,77 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Pó de Tório bruto",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Keep this unlisted image byte-identical, including the creator-approved metal block."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/unchanged_raw_thorium_dust.png",
+      "sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+      "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "inherit",
+    "allow_clip": false
+  },
+  "palette": {
+    "c_58_44_55": [
+      58,
+      44,
+      55
+    ],
+    "c_87_84_91": [
+      87,
+      84,
+      91
+    ],
+    "c_167_67_114": [
+      167,
+      67,
+      114
+    ],
+    "c_220_96_156": [
+      220,
+      96,
+      156
+    ],
+    "c_235_132_184": [
+      235,
+      132,
+      184
+    ],
+    "c_235_154_195": [
+      235,
+      154,
+      195
+    ],
+    "c_235_212_224": [
+      235,
+      212,
+      224
+    ]
+  },
+  "source": {
+    "path": "../references/unchanged_raw_thorium_dust.png",
+    "sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+    "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block."
+  },
+  "layers": []
+}

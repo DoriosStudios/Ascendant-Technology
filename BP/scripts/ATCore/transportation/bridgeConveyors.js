@@ -71,7 +71,9 @@ export function createBridgeConveyors(ctx) {
                 y: block.location.y,
                 z: block.location.z + offset.z * step,
             });
-            if (!candidate) continue;
+            // An unavailable corridor is not empty. Leave the existing path
+            // alone and retry from the transmitter's next loaded-block tick.
+            if (!candidate) return { receiver: null, obstructed: false, steps: 0, pending: true };
             if (candidate.hasTag?.(ctx.bridgeTag)) {
                 const candidateMeta = ctx.getType(candidate.typeId);
                 if (candidateMeta?.shape === "bridge_receiver" && candidateMeta.tier === meta.tier) {
@@ -155,17 +157,16 @@ export function createBridgeConveyors(ctx) {
         const facing = ctx.getState(block, "minecraft:cardinal_direction");
         if (typeof facing !== "string") return null;
         const transmitterKey = ctx.positionKey(block.location);
+        const link = evaluate(block, meta, facing);
+        if (link.pending) return null;
         clearOwnedPath(block.dimension, transmitterKey, {
             location: block.location,
             facing,
             range: meta.bridgeRange,
         });
 
-        const link = evaluate(block, meta, facing);
         if (!link.receiver || link.obstructed) {
             if (link.receiver && link.obstructed) notifyObstructed(player);
-            ctx.scheduleTopology(block.dimension);
-            ctx.emitEnergyUpdate(block, player);
             return null;
         }
 
@@ -174,8 +175,6 @@ export function createBridgeConveyors(ctx) {
             receiver: { ...link.receiver.location },
             receiverKey: ctx.positionKey(link.receiver.location),
         });
-        ctx.scheduleTopology(block.dimension);
-        ctx.emitEnergyUpdate(block, player);
         return link.receiver;
     }
 
@@ -201,18 +200,27 @@ export function createBridgeConveyors(ctx) {
     function removeTransmitter(dimension, location, meta, facing) {
         const key = ctx.positionKey(location);
         clearOwnedPath(dimension, key, { location, facing, range: meta?.bridgeRange ?? 0 });
-        ctx.scheduleTopology(dimension);
     }
 
     function getLinkedReceiver(block) {
         const link = dimensionMap(linksByDimension, block.dimension.id).get(ctx.positionKey(block.location));
         if (!link) return null;
         const receiver = ctx.safeGetBlock(block.dimension, link.receiver);
+        if (!receiver) return null;
         const meta = ctx.getType(receiver?.typeId);
-        if (meta?.shape === "bridge_receiver") return receiver;
+        if (meta?.shape === "bridge_receiver" && meta.tier === ctx.getType(block.typeId)?.tier) return receiver;
         dimensionMap(linksByDimension, block.dimension.id).delete(ctx.positionKey(block.location));
-        ctx.scheduleTopology(block.dimension);
         return null;
+    }
+
+    function ensureLink(block, meta = ctx.getType(block?.typeId), player = null) {
+        if (!block?.dimension || meta?.shape !== "bridge_transmitter") return null;
+        const receiver = getLinkedReceiver(block);
+        if (receiver) return receiver;
+        const facing = ctx.getState(block, "minecraft:cardinal_direction");
+        const candidate = evaluate(block, meta, facing);
+        if (!candidate.receiver || candidate.obstructed || candidate.pending) return null;
+        return refreshTransmitter(block, meta, player);
     }
 
     function getVirtualEdge(dimensionId, transmitterKey) {
@@ -230,8 +238,12 @@ export function createBridgeConveyors(ctx) {
     }
 
     function process(block, meta, bucket) {
-        const receiver = getLinkedReceiver(block);
+        const receiver = ensureLink(block, meta);
         if (!receiver) {
+            // Keep payloads on the transmitter while its receiver/corridor is
+            // unloaded; do not advance them into a non-moving bridge path.
+            const facing = ctx.getState(block, "minecraft:cardinal_direction");
+            if (evaluate(block, meta, facing).pending) return;
             ctx.processPlain(block, meta, bucket, "horizontal");
             return;
         }
@@ -261,6 +273,7 @@ export function createBridgeConveyors(ctx) {
         refreshReceiver,
         removeTransmitter,
         getLinkedReceiver,
+        ensureLink,
         getVirtualEdge,
         refreshPathOwner,
         process,

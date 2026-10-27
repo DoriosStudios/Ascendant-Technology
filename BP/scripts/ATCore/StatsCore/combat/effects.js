@@ -1,3 +1,5 @@
+import { playActivationSound } from "../feedback/index.js";
+import { applyAggressorDamage } from "../shared/aggressors.js";
 import { HOT_ENTITY_TOKENS, COLD_ENTITY_TOKENS, DARK_RESISTANT_TOKENS, UNDEAD_ENTITY_TOKENS, SWEEP_ENTITY_CATEGORIES, SWEEP_EXCLUDED_ENTITY_TYPES } from "../config/entities.js";
 import { EntityDamageCause, system } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
@@ -215,13 +217,8 @@ function tryApplyDamage(target, amount, attacker, cause = EntityDamageCause.enti
 
     try {
         markProcDamageTarget(target, 4);
-        return target.applyDamage?.(amount, {
-            // `entity_attack` is valid in the `/damage` command but not in
-            // Script API's EntityDamageCause enum. Keep compatibility with
-            // existing callers while using the API's camel-case value.
-            cause: cause === "entity_attack" ? EntityDamageCause.entityAttack : cause,
-            damagingEntity: attacker,
-        }) === true;
+        return applyAggressorDamage(target, amount, attacker,
+            cause === "entity_attack" ? EntityDamageCause.entityAttack : cause) === true;
     } catch {
         return false;
     }
@@ -309,7 +306,7 @@ function ensureBleedProcessor() {
             if (!state?.target || !hasHealthComponent(state.target) || Number(state.expiresAt ?? 0) <= now) {
                 const target = state?.target;
                 bleedStates.delete(key);
-                if (target) publishBleedingState(target);
+                if (target) publishBleedingState(target, state.source);
                 continue;
             }
 
@@ -323,17 +320,14 @@ function ensureBleedProcessor() {
 
             try {
                 markProcDamageTarget(state.target, 3);
-                const damaged = state.target.applyDamage?.(amount, {
-                    cause: "magic",
-                    damagingEntity: state.attacker,
-                });
+                const damaged = applyAggressorDamage(state.target, amount, state.attacker, "magic");
                 if (damaged === true) {
                     spawnParticleSafe(state.target, "ascendant_technology:blood_particle");
                 }
             } catch {
                 const target = state?.target;
                 bleedStates.delete(key);
-                if (target) publishBleedingState(target);
+                if (target) publishBleedingState(target, state.source);
                 continue;
             }
 
@@ -356,11 +350,15 @@ function applyBleed(target, attacker, effect, finalDamage) {
     const damage = Math.max(1, Number(finalDamage ?? 0) * damageRatio);
     const existing = bleedStates.get(key);
 
+    if (effect.source === "alchemy" && existing?.level > effect.level) return true;
+
     if (existing) {
         existing.attacker = attacker ?? existing.attacker;
         existing.damage = Math.max(Number(existing.damage ?? 0), damage);
         existing.stacks = Math.min(maxStacks, Math.max(1, Number(existing.stacks ?? 1)) + 1);
-        existing.expiresAt = now + durationTicks;
+        existing.expiresAt = effect.source === "alchemy" && existing.level === effect.level
+            ? Math.max(existing.expiresAt, now + durationTicks) : now + durationTicks;
+        existing.level = effect.level ?? existing.level;
         if (effect?.refresh !== false) {
             existing.nextTickAt = Math.min(Number(existing.nextTickAt ?? now + tickInterval), now + tickInterval);
         }
@@ -373,10 +371,12 @@ function applyBleed(target, attacker, effect, finalDamage) {
             tickInterval,
             expiresAt: now + durationTicks,
             nextTickAt: now + tickInterval,
+            source: effect.source,
+            level: effect.level,
         });
     }
 
-    publishBleedingState(target);
+    publishBleedingState(target, effect.source);
     setEffectCooldown(attacker, effect);
     return true;
 }
@@ -395,26 +395,35 @@ export function applyCommandBleeding(target, durationTicks) {
     }, 4);
 }
 
-function publishBleedingState(target) {
+/** Potion applications share combat's tick damage, while remaining a separate bleed source. */
+export function applyPotionBleeding(target, durationTicks, level) {
+    return applyBleed(target, undefined, {
+        key: "alchemical_bleeding", kind: "bleed", cooldownTicks: 0,
+        durationTicks, tickInterval: 20, maxStacks: 1, damageRatio: 0.25, source: "alchemy", level,
+    }, 4 * Math.max(1, level));
+}
+
+function publishBleedingState(target, source = "gameplay") {
     const now = getCurrentTick();
     const targetId = entityKey(target);
     let expiresAt = 0;
     let stacks = 1;
 
     for (const state of bleedStates.values()) {
-        if (entityKey(state?.target) !== targetId || Number(state?.expiresAt ?? 0) <= now) continue;
+        if (entityKey(state?.target) !== targetId || (state.source ?? "gameplay") !== source || Number(state?.expiresAt ?? 0) <= now) continue;
         expiresAt = Math.max(expiresAt, Number(state.expiresAt));
-        stacks = Math.max(stacks, Math.max(1, Number(state.stacks ?? 1)));
+        stacks = Math.max(stacks, Math.max(1, Number(state.level ?? state.stacks ?? 1)));
     }
 
     if (expiresAt <= now) {
-        removeStatsCoreEffect(target, "bleeding");
+        removeStatsCoreEffect(target, "bleeding", source);
         return;
     }
     upsertStatsCoreEffect(target, {
         id: "bleeding",
         expiresAtTick: expiresAt,
         level: stacks,
+        source,
     });
 }
 
@@ -436,7 +445,7 @@ function ensureBlessingProcessor() {
             if (!state?.target || !hasHealthComponent(state.target) || Number(state.expiresAt ?? 0) <= now) {
                 const target = state?.target;
                 blessingStates.delete(key);
-                if (target) removeStatsCoreEffect(target, "blessed");
+                if (target) removeStatsCoreEffect(target, "blessed", state.source);
                 continue;
             }
             if (Number(state.nextTickAt ?? 0) > now) continue;
@@ -445,7 +454,7 @@ function ensureBlessingProcessor() {
             if (!tryApplyDamage(state.target, Math.max(1, Number(state.damage ?? 8) || 8), state.attacker, "magic")) {
                 const target = state?.target;
                 blessingStates.delete(key);
-                if (target) removeStatsCoreEffect(target, "blessed");
+                if (target) removeStatsCoreEffect(target, "blessed", state.source);
                 continue;
             }
             state.nextTickAt = now + tickInterval;
@@ -453,22 +462,16 @@ function ensureBlessingProcessor() {
     }, 5);
 }
 
-function publishBlessingState(target, durationTicks, undead) {
+function publishBlessingState(target, durationTicks, undead, source, level = 1) {
     upsertStatsCoreEffect(target, {
         id: "blessed",
         polarity: undead ? "debuff" : "buff",
         durationTicks,
+        source,
+        level,
     });
 }
 
-function playStatsCoreSound(entity, soundId, options = {}) {
-    try {
-        entity?.dimension?.playSound?.(soundId, entity.location, options);
-        return true;
-    } catch {
-        return false;
-    }
-}
 
 /** Applies the intentional cost for breaking Blessing's friendly-hit protection. */
 export function applyBlessingCurse(attacker) {
@@ -482,7 +485,7 @@ export function applyBlessingCurse(attacker) {
         id: "cursed",
         durationTicks,
     });
-    playStatsCoreSound(attacker, "ascendant.statscore.blessing_curse", {
+    playActivationSound(attacker, "ascendant.statscore.blessing_curse", {
         volume: 1,
         pitch: 1,
     });
@@ -520,30 +523,32 @@ export function applyPreparedBlessing({ attacker, target, prepared }) {
     if (prepared.undead === true) {
         const tickInterval = Math.max(5, Math.floor(Number(aspect.tickInterval ?? 10) || 10));
         const damage = Math.max(1, Number(aspect.blessingDamage ?? 8) || 8);
-        blessingStates.set(`${entityKey(target)}:blessing`, {
+        const source = prepared.source;
+        blessingStates.set(`${entityKey(target)}:${source ?? "gameplay"}:blessing`, {
             attacker,
             target,
             damage,
             tickInterval,
             expiresAt: getCurrentTick() + durationTicks,
             nextTickAt: getCurrentTick() + tickInterval,
+            source,
         });
         ensureBlessingProcessor();
         applied = true;
     } else {
         // Effect amplifiers are zero-based: amplifier 5 is Health Boost VI.
-        const healthBoost = applyEffectById(target, "health_boost", durationTicks, 5, false);
-        const resistance = applyEffectById(target, "resistance", durationTicks, 0, false);
-        const healed = healTarget(target, Math.max(1, Number(aspect.healAmount ?? 8) || 8));
+        const healthBoost = applyEffectById(target, "health_boost", durationTicks, aspect.healthBoostAmplifier ?? 5, false);
+        const resistance = applyEffectById(target, "resistance", durationTicks, aspect.resistanceAmplifier ?? 0, false);
+        const healed = healTarget(target, Math.max(0, Number(aspect.healAmount ?? 8)));
         applied = applied || healthBoost || resistance || healed;
     }
 
     spawnParticleSafe(target, "dorios:light_blessing_burst");
-    playStatsCoreSound(target, "ascendant.statscore.blessing", {
+    playActivationSound(attacker, "ascendant.statscore.blessing", {
         volume: 0.9,
         pitch: prepared.undead === true ? 0.9 : 1.05,
     });
-    publishBlessingState(target, durationTicks, prepared.undead === true);
+    publishBlessingState(target, durationTicks, prepared.undead === true, prepared.source, prepared.level ?? 1);
     return applied;
 }
 
@@ -693,7 +698,7 @@ function pullMatchingEntitiesToCenter(dimension, typeId, center, excludedId, rad
     return pulled;
 }
 
-function triggerVoidSingularity(target) {
+function triggerVoidSingularity(target, attacker) {
     const dimension = target?.dimension;
     const typeId = target?.typeId;
     const center = target?.location
@@ -707,7 +712,7 @@ function triggerVoidSingularity(target) {
             y: center.y + 0.08,
             z: center.z,
         });
-        dimension.playSound?.("ascendant.statscore.void_singularity", center, {
+        playActivationSound(attacker, "ascendant.statscore.void_singularity", {
             volume: 1,
             pitch: 0.9,
         });
@@ -805,7 +810,7 @@ function applyElementalAspect(attacker, target, aspect, finalDamage) {
     }
 
     if (id === "void") {
-        triggerVoidSingularity(target);
+        triggerVoidSingularity(target, attacker);
         applyEffectById(target, "weakness", Math.max(80, duration), 1, false);
         markStatsCoreOverrideDamage(target, 4);
         return tryApplyDamage(target, amount, attacker, EntityDamageCause.override);

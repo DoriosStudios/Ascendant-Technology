@@ -90,7 +90,7 @@ export function createPlainConveyors(ctx) {
         const value = entity.location[axis] ?? 0;
 
         for (const other of payloads) {
-            if (!other || other.id === entity.id) continue;
+            if (!ctx.isValid(other) || other.id === entity.id) continue;
             const delta = ((other.location[axis] ?? 0) - value) * sign;
             if (delta > 0 && delta < ctx.itemSpacing) return false;
         }

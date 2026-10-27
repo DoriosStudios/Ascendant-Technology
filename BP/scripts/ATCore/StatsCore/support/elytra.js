@@ -1,7 +1,7 @@
 import { EQUIPMENT_SLOTS } from "../config/equipmentTypes.js";
 import { MOBILITY_VALUES } from "../config/values.js";
 import { ButtonState, EntitySwingSource, InputButton, system, world } from "@minecraft/server";
-import { showAbilityFeedback } from "../feedback/index.js";
+import { playActivationSound, showAbilityFeedback } from "../feedback/index.js";
 import { STATSCORE_ICONS } from "../icons.js";
 import { getEquipmentStatsContext } from "../shared/context.js";
 import { findEffectByKind } from "../shared/effectSelectors.js";
@@ -139,7 +139,7 @@ function performWindLaunch(player, effect) {
         const impulse = getDirectionalImpulse(player, effect, direction);
         spawnWindParticles(player, direction);
         try {
-            player.dimension?.playSound?.("ascendant.statscore.wind_launch", player.location, { volume: 0.75, pitch: 1.08 });
+            playActivationSound(player, "ascendant.statscore.wind_launch", { volume: 0.75, pitch: 1.08 });
         } catch { }
         player.applyImpulse(impulse);
         launchCooldowns.set(playerKey(player), getCurrentTick() + Math.max(10, Number(effect?.cooldownTicks ?? 45) || 45));

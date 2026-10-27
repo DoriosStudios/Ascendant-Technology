@@ -1,12 +1,12 @@
 # Aetherium Storage Cell
 
 Digital Storage's local `cell_store.js` declares Ultimate capacity as **409,600**
-(400 KB). AT's Aetherium cell provides exactly eight times that: **3,276,800**
-(3,200 KB), through these item tags:
+(400 KB). AT's current Aetherium cell provides sixteen times that: **6,553,600**
+(6,400 KB), through these item tags:
 
 ```text
 utilitycraft:ds.is_storage_cell
-utilitycraft:ds.capacity.3276800
+utilitycraft:ds.capacity.6553600
 ```
 
 This is storage capacity, not a flat item count. Actual item capacity depends on

@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\final-icons\\thorium_boots.png",
+  "pixel_sha256": "c6a325989efa9c0e99a6e9d6c08c4a4224214b921fda4065e828a22784451634",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 19,
+      "allowed": [
+        [
+          16,
+          14,
+          34
+        ],
+        [
+          18,
+          15,
+          37
+        ],
+        [
+          28,
+          23,
+          53
+        ],
+        [
+          35,
+          35,
+          66
+        ],
+        [
+          39,
+          28,
+          29
+        ],
+        [
+          62,
+          22,
+          46
+        ],
+        [
+          94,
+          28,
+          62
+        ],
+        [
+          131,
+          34,
+          80
+        ],
+        [
+          170,
+          43,
+          103
+        ],
+        [
+          208,
+          54,
+          128
+        ],
+        [
+          237,
+          70,
+          151
+        ],
+        [
+          251,
+          91,
+          170
+        ],
+        [
+          255,
+          116,
+          186
+        ],
+        [
+          255,
+          145,
+          201
+        ],
+        [
+          255,
+          175,
+          216
+        ],
+        [
+          255,
+          202,
+          231
+        ],
+        [
+          255,
+          224,
+          241
+        ],
+        [
+          255,
+          241,
+          248
+        ],
+        [
+          255,
+          250,
+          253
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 168,
+      "partial": 0,
+      "opaque": 88
+    },
+    "palette": {
+      "unique_visible_rgb": 9,
+      "unique_rgba": 10,
+      "frequencies": [
+        {
+          "rgb": [
+            35,
+            35,
+            66
+          ],
+          "hex": "#232342",
+          "count": 26
+        },
+        {
+          "rgb": [
+            131,
+            34,
+            80
+          ],
+          "hex": "#832250",
+          "count": 25
+        },
+        {
+          "rgb": [
+            255,
+            224,
+            241
+          ],
+          "hex": "#FFE0F1",
+          "count": 13
+        },
+        {
+          "rgb": [
+            255,
+            145,
+            201
+          ],
+          "hex": "#FF91C9",
+          "count": 12
+        },
+        {
+          "rgb": [
+            237,
+            70,
+            151
+          ],
+          "hex": "#ED4697",
+          "count": 5
+        },
+        {
+          "rgb": [
+            255,
+            250,
+            253
+          ],
+          "hex": "#FFFAFD",
+          "count": 4
+        },
+        {
+          "rgb": [
+            251,
+            91,
+            170
+          ],
+          "hex": "#FB5BAA",
+          "count": 1
+        },
+        {
+          "rgb": [
+            255,
+            175,
+            216
+          ],
+          "hex": "#FFAFD8",
+          "count": 1
+        },
+        {
+          "rgb": [
+            255,
+            202,
+            231
+          ],
+          "hex": "#FFCAE7",
+          "count": 1
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 88,
+      "bbox": [
+        1,
+        3,
+        15,
+        13
+      ],
+      "components_4_connected": 2,
+      "component_sizes": [
+        44,
+        44
+      ]
+    },
+    "clusters": {
+      "color_components": 39,
+      "singletons": 24
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 24,
+      "coordinates": [
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          10,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          4,
+          11
+        ],
+        [
+          11,
+          11
+        ]
+      ]
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ]
+  },
+  "file_sha256": "05bb0be94ce01e4fbe86670b06b7db56e74a0f861c340bff545e132f3a176090"
+}

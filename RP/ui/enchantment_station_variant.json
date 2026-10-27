@@ -1,6 +1,5 @@
 {
     "namespace": "enchantment_station_variant",
-
     "section_label": {
         "type": "label",
         "anchor_from": "top_left",
@@ -13,7 +12,6 @@
         "text_alignment": "center",
         "layer": 6
     },
-
     "mode_surface": {
         "type": "image",
         "anchor_from": "top_left",
@@ -23,7 +21,6 @@
         "$surface_texture|default": "textures/ui/realms_button_borderless_no_hover_pressed",
         "layer": 1
     },
-
     "required_item_preview": {
         "type": "image",
         "anchor_from": "top_left",
@@ -52,27 +49,21 @@
             }
         ]
     },
-
-    "station_tab_left_idle@ascendant_common.tab_button_state_base": {
-        "$tab_button_panel_texture": "textures/ui/TabTopBackLeftMost"
+    "station_tab_left_idle@at_common._tab_face": {
+        "$texture": "textures/ui/TabTopBackLeftMost"
     },
-
-    "station_tab_left_active@ascendant_common.tab_button_state_base": {
-        "$tab_button_panel_texture": "textures/ui/TabTopBackLeftMost"
+    "station_tab_left_active@at_common._tab_face": {
+        "$texture": "textures/ui/TabTopBackLeftMost"
     },
-
-    "station_tab_right_idle@ascendant_common.tab_button_state_base": {
-        "$tab_button_panel_texture": "textures/ui/TabTopBackRightMost"
+    "station_tab_right_idle@at_common._tab_face": {
+        "$texture": "textures/ui/TabTopBackRightMost"
     },
-
-    "station_tab_right_active@ascendant_common.tab_button_state_base": {
-        "$tab_button_panel_texture": "textures/ui/TabTopBackRightMostDark"
+    "station_tab_right_active@at_common._tab_face": {
+        "$texture": "textures/ui/TabTopBackRightMostDark"
     },
-
-    "station_tab_right_hover@ascendant_common.tab_button_state_base": {
-        "$tab_button_panel_texture": "textures/ui/TabTopBackRightMostHover"
+    "station_tab_right_hover@at_common._tab_face": {
+        "$texture": "textures/ui/TabTopBackRightMostHover"
     },
-
     "enchant_mode": {
         "type": "collection_panel",
         "anchor_from": "top_left",
@@ -119,7 +110,7 @@
                 }
             },
             {
-                "module_slot_1@ascendant_common.slot_orange": {
+                "module_slot_1@at_common.upgrade_slot": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [144, 15],
@@ -128,7 +119,7 @@
                 }
             },
             {
-                "module_slot_2@ascendant_common.slot_orange": {
+                "module_slot_2@at_common.upgrade_slot": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [144, 33],
@@ -137,7 +128,7 @@
                 }
             },
             {
-                "module_slot_3@ascendant_common.slot_orange": {
+                "module_slot_3@at_common.upgrade_slot": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [144, 51],
@@ -168,7 +159,6 @@
             }
         ]
     },
-
     "disenchant_mode": {
         "type": "collection_panel",
         "anchor_from": "top_left",
@@ -204,30 +194,36 @@
                 }
             },
             {
-                "source_slot@ascendant_common.slot_magenta": {
+                "source_slot@at_core.slot": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [16, 23],
                     "size": [24, 24],
-                    "$slot_index": 15
+                    "$slot_index": 15,
+                    "$background_ref": "at_common._slot_surface",
+                    "$slot_texture": "textures/ui/cells/magenta_cell_image"
                 }
             },
             {
-                "catalyst_slot@ascendant_common.slot_purple": {
+                "catalyst_slot@at_core.slot": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [59, 16],
                     "size": [18, 18],
-                    "$slot_index": 16
+                    "$slot_index": 16,
+                    "$background_ref": "at_common._slot_surface",
+                    "$slot_texture": "textures/ui/cells/purple_cell_image"
                 }
             },
             {
-                "book_slot@ascendant_common.slot_brown": {
+                "book_slot@at_core.slot": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [83, 16],
                     "size": [18, 18],
-                    "$slot_index": 17
+                    "$slot_index": 17,
+                    "$background_ref": "at_common._slot_surface",
+                    "$slot_texture": "textures/ui/cells/brown_cell_image"
                 }
             },
             {
@@ -275,7 +271,6 @@
             }
         ]
     },
-
     "station_top": {
         "type": "collection_panel",
         "anchor_from": "center",
@@ -323,14 +318,14 @@
                 }
             },
             {
-                "status_panel@ascendant_common.info_panel": {
+                "status_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$has_text": false,
                     "$text_borders": [88, 190],
                     "$bg_size": [104, 206],
                     "$info_size": [96, 198],
-                    "offset": [-24, 57],
+                    "offset": [-22, 57],
                     "layer": 0
                 }
             },
@@ -397,16 +392,16 @@
                 }
             },
             {
-                "enchant_mode_tab@ascendant_common.tab_button_toggle": {
+                "enchant_mode_tab@at_common.tab_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [-30, 41],
-                    "$tab_group_name": "enchantment_station_variant_modes",
+                    "$tab_group": "enchantment_station_variant_modes",
                     "$tab_index": 0,
-                    "$active_tab_index": 0,
-                    "$tab_button_text": "ui.utilitycraft:enchantment_station.variant.tab.enchant",
-                    "$tab_button_size": [98, 20],
-                    "$tab_button_text_scale": 0.75,
+                    "$selected_tab": 0,
+                    "$label": "ui.utilitycraft:enchantment_station.variant.tab.enchant",
+                    "$button_size": [98, 20],
+                    "$text_scale": 0.75,
                     "$unchecked_control": "enchantment_station_variant.station_tab_left_idle",
                     "$checked_control": "enchantment_station_variant.station_tab_left_active",
                     "$unchecked_hover_control": "enchantment_station_variant.station_tab_left_active",
@@ -422,16 +417,16 @@
                 }
             },
             {
-                "disenchant_mode_tab@ascendant_common.tab_button_toggle": {
+                "disenchant_mode_tab@at_common.tab_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [70, 41],
-                    "$tab_group_name": "enchantment_station_variant_modes",
+                    "$tab_group": "enchantment_station_variant_modes",
                     "$tab_index": 1,
-                    "$active_tab_index": 0,
-                    "$tab_button_text": "ui.utilitycraft:enchantment_station.variant.tab.disenchant",
-                    "$tab_button_size": [98, 20],
-                    "$tab_button_text_scale": 0.75,
+                    "$selected_tab": 0,
+                    "$label": "ui.utilitycraft:enchantment_station.variant.tab.disenchant",
+                    "$button_size": [98, 20],
+                    "$text_scale": 0.75,
                     "$unchecked_control": "enchantment_station_variant.station_tab_right_idle",
                     "$checked_control": "enchantment_station_variant.station_tab_right_active",
                     "$unchecked_hover_control": "enchantment_station_variant.station_tab_right_active",
@@ -509,7 +504,7 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
                     "offset": [21, 0],
                     "$io_items_modes_description": "ui.utilitycraft:io.enchantment_station.items",
                     "$io_fluids_modes_description": "ui.utilitycraft:io.enchantment_station.liquids",
@@ -545,7 +540,6 @@
             }
         ]
     },
-
     "utility_panel": {
         "type": "panel",
         "controls": [

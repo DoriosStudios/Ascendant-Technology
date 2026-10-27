@@ -1,0 +1,1649 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\final\\thorium_net.png",
+  "pixel_sha256": "d3ba43f440cda448bad941930905cc0afbed7c904e68ccf1662855d2a3edbb4b",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 15,
+      "allowed": [
+        [
+          26,
+          24,
+          39
+        ],
+        [
+          33,
+          32,
+          53
+        ],
+        [
+          80,
+          39,
+          64
+        ],
+        [
+          127,
+          132,
+          211
+        ],
+        [
+          164,
+          171,
+          255
+        ],
+        [
+          167,
+          67,
+          114
+        ],
+        [
+          191,
+          191,
+          191
+        ],
+        [
+          219,
+          219,
+          219
+        ],
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          225,
+          236,
+          255
+        ],
+        [
+          235,
+          154,
+          195
+        ],
+        [
+          235,
+          196,
+          217
+        ],
+        [
+          235,
+          231,
+          233
+        ],
+        [
+          247,
+          247,
+          247
+        ],
+        [
+          247,
+          255,
+          255
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 2,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 152,
+      "partial": 0,
+      "opaque": 104
+    },
+    "palette": {
+      "unique_visible_rgb": 9,
+      "unique_rgba": 10,
+      "frequencies": [
+        {
+          "rgb": [
+            219,
+            219,
+            219
+          ],
+          "hex": "#DBDBDB",
+          "count": 16
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "hex": "#EB9AC3",
+          "count": 15
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "hex": "#EBC4D9",
+          "count": 14
+        },
+        {
+          "rgb": [
+            247,
+            247,
+            247
+          ],
+          "hex": "#F7F7F7",
+          "count": 13
+        },
+        {
+          "rgb": [
+            80,
+            39,
+            64
+          ],
+          "hex": "#502740",
+          "count": 11
+        },
+        {
+          "rgb": [
+            191,
+            191,
+            191
+          ],
+          "hex": "#BFBFBF",
+          "count": 11
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 11
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "hex": "#A74372",
+          "count": 9
+        },
+        {
+          "rgb": [
+            235,
+            231,
+            233
+          ],
+          "hex": "#EBE7E9",
+          "count": 4
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 104,
+      "bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "components_4_connected": 36,
+      "component_sizes": [
+        11,
+        11,
+        11,
+        11,
+        9,
+        9,
+        4,
+        4,
+        4,
+        4,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "clusters": {
+      "color_components": 103,
+      "singletons": 102
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            80,
+            39,
+            64
+          ],
+          "pixels": 11,
+          "oklab": [
+            0.33708693746535195,
+            0.06787866982194266,
+            -0.019306691957441446
+          ]
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "pixels": 9,
+          "oklab": [
+            0.5307585390052371,
+            0.1400036965451507,
+            -0.01550403452013649
+          ]
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 11,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "pixels": 15,
+          "oklab": [
+            0.778763878657962,
+            0.10673590363744428,
+            -0.022298036426314338
+          ]
+        },
+        {
+          "rgb": [
+            191,
+            191,
+            191
+          ],
+          "pixels": 11,
+          "oklab": [
+            0.804658015045913,
+            6.513967143462196e-11,
+            2.9992748618035137e-08
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "pixels": 14,
+          "oklab": [
+            0.8599941784213212,
+            0.05006552115085833,
+            -0.013761702133999187
+          ]
+        },
+        {
+          "rgb": [
+            219,
+            219,
+            219
+          ],
+          "pixels": 16,
+          "oklab": [
+            0.8914313398856534,
+            7.216410802257656e-11,
+            3.32271296032971e-08
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            231,
+            233
+          ],
+          "pixels": 4,
+          "oklab": [
+            0.9316454398509141,
+            0.004889896981571551,
+            -0.0012841359508922734
+          ]
+        },
+        {
+          "rgb": [
+            247,
+            247,
+            247
+          ],
+          "pixels": 13,
+          "oklab": [
+            0.9761387842948419,
+            7.902106746726645e-11,
+            3.63845070738833e-08
+          ]
+        }
+      ],
+      "lightness_range": 0.6390518468294899,
+      "tonal_coverage": {
+        "shadow": 0.10576923076923077,
+        "mid": 0.44230769230769235,
+        "highlight": 0.4519230769230769
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 102,
+      "coordinates": [
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          10,
+          1
+        ],
+        [
+          13,
+          1
+        ],
+        [
+          14,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          5,
+          2
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          13,
+          2
+        ],
+        [
+          14,
+          2
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          11,
+          3
+        ],
+        [
+          12,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          10,
+          4
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          14,
+          5
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          12,
+          7
+        ],
+        [
+          13,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          2,
+          10
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          14,
+          10
+        ],
+        [
+          2,
+          11
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          5,
+          11
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          3,
+          12
+        ],
+        [
+          4,
+          12
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          12
+        ],
+        [
+          1,
+          13
+        ],
+        [
+          2,
+          13
+        ],
+        [
+          4,
+          13
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          13,
+          13
+        ],
+        [
+          14,
+          13
+        ],
+        [
+          1,
+          14
+        ],
+        [
+          2,
+          14
+        ],
+        [
+          5,
+          14
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          14,
+          14
+        ]
+      ]
+    },
+    {
+      "severity": "WARNING",
+      "code": "silhouette_components",
+      "message": "Disconnected silhouette regions exceed the heuristic limit.",
+      "actual": 36,
+      "maximum": 4
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ],
+    "requested_identity": "Rede de Tório"
+  },
+  "file_sha256": "af7d19c22543d9d9785ac339e20c35c400d5b87c0be5a07b4fece614f27499fc",
+  "design": {
+    "intent": {
+      "identity": "Rede de Tório",
+      "usage": "AT inventory texture or block texture; selective correction of requested assets",
+      "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+      "orientation": "exact native reference pose and footprint",
+      "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+      "structure": [
+        "Titanium layout, wooden mesh frame and neutral net weave preserved; replace only the blue material family."
+      ],
+      "style": [
+        "small reference-guided edits",
+        "no tool redesign",
+        "no resizing or antialiasing"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/titanium_net.png",
+        "sha256": "6d0052b532bbe5100180082259a323ebcae12b1c1884dd7fc75585ba95f8cc04",
+        "purpose": "Titanium layout, wooden mesh frame and neutral net weave preserved; replace only the blue material family.",
+        "approval": "creator-requested source family; derivative still pending visual approval"
+      },
+      {
+        "path": "../references/titanium_net.png",
+        "sha256": "6d0052b532bbe5100180082259a323ebcae12b1c1884dd7fc75585ba95f8cc04",
+        "purpose": "Titanium layout, wooden mesh frame and neutral net weave preserved; replace only the blue material family.",
+        "approval": "not independently verified"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "primitives": [
+        {
+          "layer": "palette-transfer-only",
+          "command": 0,
+          "bounds": [
+            6,
+            12,
+            7,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 1,
+          "bounds": [
+            12,
+            7,
+            13,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 2,
+          "bounds": [
+            14,
+            1,
+            15,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 3,
+          "bounds": [
+            3,
+            7,
+            4,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 4,
+          "bounds": [
+            14,
+            10,
+            15,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 5,
+          "bounds": [
+            5,
+            13,
+            6,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 6,
+          "bounds": [
+            14,
+            13,
+            15,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 7,
+          "bounds": [
+            11,
+            2,
+            12,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 8,
+          "bounds": [
+            8,
+            3,
+            9,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 9,
+          "bounds": [
+            2,
+            2,
+            3,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 10,
+          "bounds": [
+            13,
+            2,
+            14,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 11,
+          "bounds": [
+            8,
+            12,
+            9,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 12,
+          "bounds": [
+            2,
+            5,
+            3,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 13,
+          "bounds": [
+            13,
+            5,
+            14,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 14,
+          "bounds": [
+            2,
+            11,
+            3,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 15,
+          "bounds": [
+            13,
+            11,
+            14,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 16,
+          "bounds": [
+            2,
+            8,
+            3,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 17,
+          "bounds": [
+            2,
+            14,
+            3,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 18,
+          "bounds": [
+            13,
+            14,
+            14,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 19,
+          "bounds": [
+            4,
+            2,
+            5,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 20,
+          "bounds": [
+            12,
+            3,
+            13,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 21,
+          "bounds": [
+            12,
+            9,
+            13,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 22,
+          "bounds": [
+            12,
+            6,
+            13,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 23,
+          "bounds": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 24,
+          "bounds": [
+            3,
+            9,
+            4,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 25,
+          "bounds": [
+            12,
+            12,
+            13,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 26,
+          "bounds": [
+            3,
+            6,
+            4,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 27,
+          "bounds": [
+            3,
+            12,
+            4,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 28,
+          "bounds": [
+            10,
+            2,
+            11,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 29,
+          "bounds": [
+            2,
+            4,
+            3,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 30,
+          "bounds": [
+            1,
+            2,
+            2,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 31,
+          "bounds": [
+            13,
+            4,
+            14,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 32,
+          "bounds": [
+            2,
+            1,
+            3,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 33,
+          "bounds": [
+            13,
+            1,
+            14,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 34,
+          "bounds": [
+            1,
+            5,
+            2,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 35,
+          "bounds": [
+            13,
+            7,
+            14,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 36,
+          "bounds": [
+            11,
+            13,
+            12,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 37,
+          "bounds": [
+            2,
+            10,
+            3,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 38,
+          "bounds": [
+            13,
+            10,
+            14,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 39,
+          "bounds": [
+            1,
+            14,
+            2,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 40,
+          "bounds": [
+            10,
+            14,
+            11,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 41,
+          "bounds": [
+            2,
+            13,
+            3,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 42,
+          "bounds": [
+            7,
+            3,
+            8,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 43,
+          "bounds": [
+            13,
+            13,
+            14,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 44,
+          "bounds": [
+            7,
+            12,
+            8,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 45,
+          "bounds": [
+            14,
+            2,
+            15,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 46,
+          "bounds": [
+            4,
+            1,
+            5,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 47,
+          "bounds": [
+            12,
+            8,
+            13,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 48,
+          "bounds": [
+            14,
+            5,
+            15,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 49,
+          "bounds": [
+            5,
+            2,
+            6,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 50,
+          "bounds": [
+            3,
+            8,
+            4,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 51,
+          "bounds": [
+            14,
+            14,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 52,
+          "bounds": [
+            4,
+            13,
+            5,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 53,
+          "bounds": [
+            9,
+            3,
+            10,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 54,
+          "bounds": [
+            5,
+            14,
+            6,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 55,
+          "bounds": [
+            1,
+            1,
+            2,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 56,
+          "bounds": [
+            9,
+            12,
+            10,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 57,
+          "bounds": [
+            10,
+            1,
+            11,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 58,
+          "bounds": [
+            10,
+            13,
+            11,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 59,
+          "bounds": [
+            8,
+            13,
+            9,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 60,
+          "bounds": [
+            1,
+            13,
+            2,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 61,
+          "bounds": [
+            7,
+            2,
+            8,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 62,
+          "bounds": [
+            1,
+            10,
+            2,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "palette-transfer-only",
+          "command": 63,
+          "bounds": [
+            6,
+            3,
+            7,
+            4
+          ],
+          "outside_canvas": false
+        }
+      ],
+      "outside_primitives": [],
+      "reference_bounds": [
+        1,
+        1,
+        15,
+        15
+      ]
+    },
+    "composition": {
+      "raster_bounds": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "minimum_margin": 1,
+      "edge_counts": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      },
+      "findings": []
+    },
+    "region_bounds": {
+      "palette-transfer-only": [
+        1,
+        1,
+        15,
+        15
+      ]
+    }
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Engrenagem de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Keep this unlisted image byte-identical, including the creator-approved metal block."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/unchanged_thorium_gear.png",
+      "sha256": "6fa08e9cb1eea1c0d11fc4573f6c6b9d505dcd381d0272b22cca9468ddeda01a",
+      "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    },
+    {
+      "path": "../references/unchanged_thorium_gear.png",
+      "sha256": "6fa08e9cb1eea1c0d11fc4573f6c6b9d505dcd381d0272b22cca9468ddeda01a",
+      "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+      "approval": "not independently verified"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": null,
+    "primitives": [],
+    "outside_primitives": [],
+    "reference_bounds": [
+      1,
+      1,
+      15,
+      15
+    ]
+  },
+  "composition": {
+    "raster_bounds": [
+      1,
+      1,
+      15,
+      15
+    ],
+    "minimum_margin": 1,
+    "edge_counts": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "findings": []
+  },
+  "region_bounds": {},
+  "pixel_sha256": "4495e885b1f0f86d718c93c49454502b5440798f8600fd4da1aa91024e69d0cc",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          167,
+          67,
+          114
+        ],
+        "pixels": 44,
+        "oklab": [
+          0.5307585390052371,
+          0.1400036965451507,
+          -0.01550403452013649
+        ]
+      },
+      {
+        "rgb": [
+          197,
+          80,
+          136
+        ],
+        "pixels": 9,
+        "oklab": [
+          0.5997660713505149,
+          0.15911940459083473,
+          -0.018965013732911817
+        ]
+      },
+      {
+        "rgb": [
+          220,
+          96,
+          156
+        ],
+        "pixels": 20,
+        "oklab": [
+          0.6600247922731386,
+          0.16590646322641156,
+          -0.021978423369214406
+        ]
+      },
+      {
+        "rgb": [
+          231,
+          113,
+          172
+        ],
+        "pixels": 37,
+        "oklab": [
+          0.703253560755495,
+          0.1575084120131156,
+          -0.025730453813424092
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          176,
+          206
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.8202004222885522,
+          0.0765292348381662,
+          -0.017616730036504324
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          196,
+          217
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.8599941784213212,
+          0.05006552115085833,
+          -0.013761702133999187
+        ]
+      }
+    ],
+    "lightness_range": 0.32923563941608414,
+    "tonal_coverage": {
+      "shadow": 0.4076923076923077,
+      "mid": 0.43846153846153846,
+      "highlight": 0.15384615384615385
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

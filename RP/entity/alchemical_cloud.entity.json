@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "utilitycraft:alchemical_potion_cloud",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/items/potion_bottle_splash"
+            },
+            "geometry": {
+                "default": "geometry.alchemical_cloud"
+            },
+            "render_controllers": [
+                "controller.render.alchemical_potion"
+            ]
+        }
+    }
+}

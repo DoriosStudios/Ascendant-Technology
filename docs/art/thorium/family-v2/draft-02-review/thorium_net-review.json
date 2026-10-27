@@ -1,0 +1,852 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v2\\draft-02\\thorium_net.png",
+  "pixel_sha256": "ba2ecac5c8427999a8f257a8b07b3db471513b38e8b43cc8c3d6c44cfc7d1662",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 4,
+      "allowed": [
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          235,
+          132,
+          184
+        ],
+        [
+          235,
+          176,
+          206
+        ],
+        [
+          58,
+          44,
+          55
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 2,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 154,
+      "partial": 0,
+      "opaque": 102
+    },
+    "palette": {
+      "unique_visible_rgb": 3,
+      "unique_rgba": 5,
+      "frequencies": [
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 42
+        },
+        {
+          "rgb": [
+            235,
+            132,
+            184
+          ],
+          "hex": "#EB84B8",
+          "count": 40
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "hex": "#EBB0CE",
+          "count": 20
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 102,
+      "bbox": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "components_4_connected": 28,
+      "component_sizes": [
+        10,
+        10,
+        10,
+        10,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "clusters": {
+      "color_components": 86,
+      "singletons": 82
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 42,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            132,
+            184
+          ],
+          "pixels": 40,
+          "oklab": [
+            0.74004976736045,
+            0.13701513369502488,
+            -0.025542847007643754
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "pixels": 20,
+          "oklab": [
+            0.8202004222885522,
+            0.0765292348381662,
+            -0.017616730036504324
+          ]
+        }
+      ],
+      "lightness_range": 0.16017563001541357,
+      "tonal_coverage": {
+        "shadow": 0.4117647058823529,
+        "mid": 0.39215686274509803,
+        "highlight": 0.19607843137254902
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 82,
+      "coordinates": [
+        [
+          1,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          5,
+          1
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          12,
+          1
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          2
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          11,
+          3
+        ],
+        [
+          14,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          8,
+          4
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          11,
+          6
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          14,
+          7
+        ],
+        [
+          1,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          1,
+          9
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          13,
+          9
+        ],
+        [
+          2,
+          10
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          11,
+          10
+        ],
+        [
+          14,
+          10
+        ],
+        [
+          2,
+          11
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          11,
+          11
+        ],
+        [
+          14,
+          11
+        ],
+        [
+          1,
+          12
+        ],
+        [
+          8,
+          12
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          9,
+          13
+        ],
+        [
+          13,
+          13
+        ],
+        [
+          3,
+          14
+        ],
+        [
+          6,
+          14
+        ],
+        [
+          7,
+          14
+        ],
+        [
+          10,
+          14
+        ],
+        [
+          11,
+          14
+        ],
+        [
+          14,
+          14
+        ]
+      ]
+    },
+    {
+      "severity": "WARNING",
+      "code": "silhouette_components",
+      "message": "Disconnected silhouette regions exceed the heuristic limit.",
+      "actual": 28,
+      "maximum": 4
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ],
+    "requested_identity": "Rede de Tório"
+  },
+  "file_sha256": "4e1be9afd8a4830d2174f4cdf96d92b33058ce5e667cb332d890114002543f3d",
+  "design": {
+    "intent": {
+      "identity": "Rede de Tório",
+      "usage": "native AT texture-family candidate",
+      "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+      "orientation": "explicit native inventory or block face construction",
+      "lighting": "upper-left, reduced value range; highlights describe connected planes",
+      "structure": [
+        "open weave, not a solid square",
+        "consistent diagonal metal strands and reinforced edge knots"
+      ],
+      "style": [
+        "new Thorium construction rather than titanium recolor",
+        "sharp chamfers and restrained plate seams",
+        "20 percent lower HSV saturation in the metal ramp"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/titanium_ingot.png",
+        "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+        "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+        "approval": "project reference, not approval of Thorium variants"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "primitives": [
+        {
+          "layer": "silhouette",
+          "command": 0,
+          "bounds": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "empty",
+          "command": 0,
+          "bounds": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 0,
+          "bounds": [
+            1,
+            1,
+            5,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 1,
+          "bounds": [
+            1,
+            1,
+            9,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 2,
+          "bounds": [
+            1,
+            1,
+            13,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 3,
+          "bounds": [
+            3,
+            3,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 4,
+          "bounds": [
+            7,
+            7,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 5,
+          "bounds": [
+            11,
+            11,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 6,
+          "bounds": [
+            1,
+            9,
+            7,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 7,
+          "bounds": [
+            1,
+            5,
+            11,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 8,
+          "bounds": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 9,
+          "bounds": [
+            5,
+            1,
+            15,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 10,
+          "bounds": [
+            9,
+            1,
+            15,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 11,
+          "bounds": [
+            2,
+            2,
+            5,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 12,
+          "bounds": [
+            11,
+            3,
+            14,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 13,
+          "bounds": [
+            3,
+            11,
+            6,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "strands",
+          "command": 14,
+          "bounds": [
+            11,
+            11,
+            14,
+            14
+          ],
+          "outside_canvas": false
+        }
+      ],
+      "outside_primitives": []
+    },
+    "composition": {
+      "raster_bounds": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "minimum_margin": 1,
+      "edge_counts": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      },
+      "findings": []
+    },
+    "region_bounds": {
+      "empty": [
+        1,
+        1,
+        15,
+        15
+      ],
+      "strands": [
+        1,
+        1,
+        15,
+        15
+      ]
+    }
+  }
+}

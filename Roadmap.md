@@ -18,7 +18,7 @@ Machine status legend:
 | New Machines | Superior Machines |
 |---|---|
 | 🟢 **Absolute Container** | 🟢 **Abyssal Fisher** |
-| 🟡 **Alchemical Station** | — |
+| 🔵 **Alchemical Station** | — |
 | 🟠 **Atmospheric Synchronizer** | 🟢 **Arcane Enchanter** |
 | 🟡 **Aurora's Lance** | 🟢 **Arc-Press Forge** |
 | 🟢 **Catalyst Weaver** | 🟢 **Centrifugal Siever** |
@@ -36,7 +36,7 @@ Machine status legend:
 | 🟢 **Laser Barrier** | 🟢 **Pattern Placer** |
 | 🟡 **Laser Bridge** | 🟢 **Pulverizer** |
 | 🟢 **Liquifier** | 🟢 **Reinforcement Anvil** |
-| 🟡 **Mob Temporal Chamber** | 🟢 **Seismic Breaker** |
+| 🟡 **Mob Chamber** | 🟢 **Seismic Breaker** |
 | 🟠 **Orbital Command Terminal** | 🟢 **Verdant Cultivator** |
 | 🟢 **Residue Processor** | — |
 | 🟢 **Singularity Fabricator** | — |
@@ -68,7 +68,7 @@ Machine status legend:
   - **Notes:** Storage-only, no upgrade clutter.
     - To be updated. Will receive a storage size buff, as long as upgrades for capacity.
 
-- 🟡 **Alchemical Station** *(formerly the `Enchanted Brewing Stand` concept)*
+- 🔵 **Alchemical Station** *(formerly the `Enchanted Brewing Stand` concept)*
   - **Purpose:** Late-game brewing machine that combines alchemy and science to produce stronger, longer-lasting, and otherwise unobtainable potions.
   - **Operating Mode:** Uses a brewing input, effect reagents, catalysts, and optional conversion components to process upgraded potion recipes in a dedicated station interface.
   - **Core Progression:** For each supported effect, the initial scope includes at least three new potion variants:
@@ -77,6 +77,7 @@ Machine status legend:
     3. **Level III:** a stronger third-level version of the effect.
   - **Missing Effects:** Adds new potion families for effects that are absent from the current brewing progression, subject to recipe, balance, and effect-availability review.
   - **Potion Conversion:** Supports deliberate conversion paths between compatible potion forms and states, such as normal, splash, and lingering variants where the effect and recipe rules allow it. Conversion must preserve the intended effect tier and duration instead of silently resetting progression.
+  - **Implementation:** Six-bottle brewing batches, independent Aetherium amplification/extension sections (1,000/750 mB), a 64,000 mB blaze reservoir, a 128,000 mB Aetherium tank, and a collapsible brewing-only recipe book. Custom drinkable, splash, and lingering effect families are wired; in-game validation is pending.
 
 - 🟡 **Aurora's Lance**
   - **Purpose:** Multiblock defensive turret designed to eliminate hostile targets with high-energy beams.
@@ -433,10 +434,13 @@ Unless explicitly stated otherwise, Superior Machines use a **single operating p
 - 🟡 **Item Energizer Pad**
   - Temporary item enhancement while draining DE continuously.
 
-- 🟡 **Mob Temporal Chamber**
-  - Multiblock.
-  - Simulates mob kill/drop loops from essence and energy.
-  - Includes XP fluid tank for enchant-oriented progression.
+- 🟡 **Mob Chamber**
+  - Closed rectangular titanium multiblock with variable dimensions; UtilityCraft supplies shared modules/cells, while Dorios Core supplies the detection and lifecycle infrastructure.
+  - Reusable essences simulate independent mob deaths in discrete parallel batches.
+  - Essence Modules unlock slots; Processing Modules provide simultaneous capacity.
+  - Consumes energy once per operation and outputs loot to 27 slots plus vanilla XP directly to a fluid tank.
+  - Implementation stages: [Mob Chamber plan](docs/machines/mob-chamber-implementation.md).
+  - Runtime and placeholder-driven UI implemented: Controller anywhere on the shell, independent batch deaths, single energy payment, persistent clog and 27 loot outputs. Native acceptance and exclusive front textures remain pending.
 
 - 🟡 **Portable Power Cell**
   - Carryable DE storage tiers.

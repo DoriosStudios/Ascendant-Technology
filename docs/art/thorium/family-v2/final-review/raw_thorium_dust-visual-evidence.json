@@ -1,0 +1,18 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "655ef039fc2e1402120ccda619581d713f0dd8f5dbd74fbd4b9f09a984295940",
+  "human_approval": "required",
+  "inspected_files": [
+    "thorium_family_preview.png"
+  ],
+  "observations": [
+    "The raw powder retains the same pile family but mixes gray host material and darker metal, distinguishing it from the refined powder.",
+    "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+  ],
+  "limitations": [
+    "No creator approval of this revision has been supplied.",
+    "Textures only; no gameplay or in-game acceptance claim."
+  ]
+}

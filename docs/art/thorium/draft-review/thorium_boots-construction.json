@@ -1,0 +1,131 @@
+{
+  "identity": "Thorium boots inventory icon",
+  "source": "RP/textures/items/armor/titanium_boots.png",
+  "source_sha256": "a9511d8e997406185023df1b4c6b2630c27f62b3ed9291128a69fecae26688e1",
+  "pixel_sha256": "c6a325989efa9c0e99a6e9d6c08c4a4224214b921fda4065e828a22784451634",
+  "native_size": [
+    16,
+    16
+  ],
+  "intent": "Thorium armor inventory icons: bubblegum-pink metal, discrete angular plate bevels, recognizable helmet/chestplate/leggings/boots, no grotesque silhouette additions.",
+  "purpose": "cuff notches and toe-cap bevels; soles and gap unchanged",
+  "alpha_identical_to_template": true,
+  "changes_outside_material_mask": 0,
+  "detail_changes": [
+    {
+      "xy": [
+        4,
+        4
+      ],
+      "before": [
+        255,
+        250,
+        253,
+        255
+      ],
+      "after": [
+        255,
+        202,
+        231,
+        255
+      ]
+    },
+    {
+      "xy": [
+        5,
+        4
+      ],
+      "before": [
+        255,
+        224,
+        241,
+        255
+      ],
+      "after": [
+        251,
+        91,
+        170,
+        255
+      ]
+    },
+    {
+      "xy": [
+        10,
+        4
+      ],
+      "before": [
+        255,
+        250,
+        253,
+        255
+      ],
+      "after": [
+        255,
+        175,
+        216,
+        255
+      ]
+    },
+    {
+      "xy": [
+        11,
+        4
+      ],
+      "before": [
+        255,
+        224,
+        241,
+        255
+      ],
+      "after": [
+        237,
+        70,
+        151,
+        255
+      ]
+    },
+    {
+      "xy": [
+        2,
+        10
+      ],
+      "before": [
+        255,
+        145,
+        201,
+        255
+      ],
+      "after": [
+        255,
+        224,
+        241,
+        255
+      ]
+    },
+    {
+      "xy": [
+        13,
+        10
+      ],
+      "before": [
+        131,
+        34,
+        80,
+        255
+      ],
+      "after": [
+        237,
+        70,
+        151,
+        255
+      ]
+    }
+  ],
+  "palette_visible_colors": 9,
+  "technical": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 1
+  },
+  "human_approval": "required"
+}

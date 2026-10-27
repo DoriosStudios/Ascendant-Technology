@@ -4,6 +4,19 @@
 	"resource_pack_name": "UtilityCraft Expanded",
 	"texture_name": "atlas.terrain",
 	"texture_data": {
+		"utilitycraft_mob_chamber_controller_preview": {"textures":"textures/blocks/multiblock/titanium_case"},
+		"utilitycraft_mob_chamber_core_preview": {"textures":"textures/blocks/multiblock/processing_module_north"},
+		"utilitycraft_essence_module_preview": {"textures":"textures/blocks/multiblock/efficiency_module_north"},
+		"utilitycraft_titanium_case": {"textures":"textures/blocks/multiblock/titanium_case"},
+		"utilitycraft_titanium_bricks": {"textures":"textures/blocks/multiblock/titanium_bricks"},
+		"utilitycraft_tempered_titanium_glass": {"textures":"textures/blocks/multiblock/titanium_glass"},
+		"utilitycraft_reinforced_titanium_glass": {"textures":"textures/blocks/multiblock/reinforced_titanium_glass"},
+		"utilitycraft_titanium_plated_block": {"textures":"textures/blocks/multiblock/titanium_plate_block"},
+		"utilitycraft_titanium_hazard_block": {"textures":"textures/blocks/multiblock/titanium_hazard_block"},
+		"utilitycraft_titanium_vent_panel": {"textures":"textures/blocks/multiblock/titanium_vent"},
+		"utilitycraft_titanium_energy_port": {"textures":"textures/blocks/multiblock/titanium_energy_port"},
+		"utilitycraft_titanium_fluid_port": {"textures":"textures/blocks/multiblock/titanium_fluid_port"},
+		"utilitycraft_titanium_item_port": {"textures":"textures/blocks/multiblock/titanium_item_port"},
 		"utilitycraft_ctup": {
 			"textures": "textures/blocks/conveyor_table_top"
 		},

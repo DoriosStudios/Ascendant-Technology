@@ -1,0 +1,1609 @@
+{
+	"namespace": "alchemical_station",
+	"button_card_buttons@at_core.button_card_row": {
+		"controls": [
+			{
+				"alchemy_brewing_tab@at_common.card_tab": {
+					"$toggle_name": "alchemy_pages",
+					"$card_tab_index": 0,
+					"$card_icon": "textures/ui/at_icons/brew",
+					"$card_icon_size": [16, 16],
+					"$card_tooltip": "ui.ascendant:alchemy.tab.brewing",
+					"$toggle_tts_name": "ui.ascendant:alchemy.tab.brewing",
+					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
+					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+				}
+			},
+			{
+				"alchemy_aplifying_tab@at_common.card_tab": {
+					"$toggle_name": "alchemy_pages",
+					"$card_tab_index": 1,
+					"$card_icon": "textures/ui/at_icons/modify_potion",
+					"$card_icon_size": [16, 16],
+					"$card_tooltip": "ui.ascendant:alchemy.tab.upgrades",
+					"$toggle_tts_name": "ui.ascendant:alchemy.tab.upgrades",
+					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
+					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+				}
+			}
+		]
+	},
+	"view_top_bar@at_common.button_card": {
+		"$card_offset": [0, 4],
+		"$card_buttons_ref": "alchemical_station.button_card_buttons",
+		"$card_background_texture": "textures/ui/button_card/tab_top_brown"
+	},
+	"side_button_card_buttons@at_core.button_card_row": {
+		"controls": [
+			{
+				"alchemy_display_tab@at_common.card_tab": {
+					"$toggle_name": "alchemy_side_pages",
+					"$card_tab_index": 0,
+					"$card_icon": "textures/ui/at_icons/info",
+					"$card_icon_size": [16, 16],
+					"$card_tooltip": "ui.ascendant:alchemy.tab.display",
+					"$toggle_tts_name": "ui.ascendant:alchemy.tab.display",
+					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
+					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+				}
+			},
+			{
+				"alchemy_recipes_tab@at_common.card_tab": {
+					"$toggle_name": "alchemy_side_pages",
+					"$card_tab_index": 1,
+					"$card_icon": "textures/ui/at_icons/recipe_book",
+					"$card_icon_size": [16, 16],
+					"$card_tooltip": "ui.ascendant:alchemy.tab.recipes",
+					"$toggle_tts_name": "ui.ascendant:alchemy.tab.recipes",
+					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
+					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+				}
+			},
+			{
+				"alchemy_progression_tab@at_common.card_tab": {
+					"$toggle_name": "alchemy_side_pages",
+					"$card_tab_index": 2,
+					"$card_icon": "textures/ui/at_icons/progression",
+					"$card_icon_size": [16, 16],
+					"$card_tooltip": "ui.ascendant:alchemy.tab.progression",
+					"$toggle_tts_name": "ui.ascendant:alchemy.tab.progression",
+					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
+					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+				}
+			}
+		]
+	},
+	"side_view_top_bar@at_common.button_card": {
+		"$card_buttons_ref": "alchemical_station.side_button_card_buttons",
+		"$card_background_texture": "textures/ui/button_card/tab_top_brown",
+		"anchor_from": "top_right",
+		"anchor_to": "top_right",
+		"$card_offset": [-22, 0],
+		"$card_show_close": false,
+		"$card_show_background": false
+	},
+	"brown_background": {
+		"type": "image",
+		"texture": "textures/ui/panels/background_panel_brown",
+		"size": ["100%", "100%"],
+		"layer": 1
+	},
+	"potion_slot_background": {
+		"type": "panel",
+		"size": ["100%", "100%"],
+		"controls": [
+			{
+				"cell_image@common.cell_image": {
+					"texture": "textures/ui/cells/brown_cell_image",
+					"$cell_selected_binding_name|default": "#is_selected_slot",
+					"visible": true,
+					"bindings": [
+						{
+							"binding_name": "(not $cell_selected_binding_name)",
+							"binding_name_override": "#visible",
+							"binding_type": "collection",
+							"binding_collection_name": "$item_collection_name"
+						}
+					]
+				}
+			},
+			{
+				"cell_image_selected@common.cell_image_selected": {
+					"$cell_selected_binding_name|default": "#is_selected_slot",
+					"visible": false,
+					"bindings": [
+						{
+							"binding_name": "$cell_selected_binding_name",
+							"binding_name_override": "#visible",
+							"binding_type": "collection",
+							"binding_collection_name": "$item_collection_name"
+						}
+					]
+				}
+			}
+		]
+	},
+	"bottle_empty": {
+		"type": "image",
+		"texture": "textures/ui/bottle_empty",
+		"size": [16, 16],
+		"layer": 2,
+		"bindings": [
+			{
+				"binding_name": "#item_id_aux",
+				"binding_type": "collection",
+				"binding_collection_name": "container_items"
+			},
+			{
+				"binding_type": "view",
+				"source_property_name": "(not (#item_id_aux > 0))",
+				"target_property_name": "#visible"
+			}
+		]
+	},
+	"brewing_progress": {
+		"type": "panel",
+		"$item_collection_name": "container_items",
+		"collection_index": 2,
+		"size": [9, 28],
+		"controls": [
+			{
+				"empty": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_empty",
+					"size": [9, 28]
+				}
+			},
+			{
+				"fill_0": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§0§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_1": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.03571428571428571,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§1§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_2": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.07142857142857142,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§2§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_3": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.10714285714285714,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§3§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_4": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.14285714285714285,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§4§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_5": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.17857142857142858,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§5§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_6": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.21428571428571427,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§6§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_7": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.25,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§7§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_8": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.2857142857142857,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§8§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_9": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.32142857142857145,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§0§9§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_10": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.35714285714285715,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§0§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_11": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.39285714285714285,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§1§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_12": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.42857142857142855,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§2§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_13": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.4642857142857143,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§3§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_14": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.5,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§4§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_15": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.5357142857142857,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§5§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_16": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.5714285714285714,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§6§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_17": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.6071428571428571,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§7§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_18": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.6428571428571429,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§8§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_19": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.6785714285714286,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§1§9§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_20": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.7142857142857143,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§2§0§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_21": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.75,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§2§1§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_22": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.7857142857142857,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§2§2§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_23": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.8214285714285714,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§2§3§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_24": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.8571428571428571,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§2§4§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_25": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.8928571428571429,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§2§5§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_26": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.9285714285714286,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§2§6§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_27": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 0.9642857142857143,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§2§7§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"fill_28": {
+					"type": "image",
+					"texture": "textures/ui/brewing_arrow_full",
+					"size": [9, 28],
+					"clip_direction": "down",
+					"clip_ratio": 1,
+					"layer": 2,
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§a§2§8§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			}
+		]
+	},
+	"brewing_page": {
+		"type": "collection_panel",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"size": [176, 86],
+		"visible": true,
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "alchemy_aplifying_tab",
+				"source_property_name": "(not #toggle_state)",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": false
+			}
+		],
+		"controls": [
+			{
+				"blaze": {
+					"type": "collection_panel",
+					"collection_name": "container_items",
+					"$item_collection_name": "container_items",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [16, 22],
+					"size": [6, 54],
+					"controls": [
+						{
+							"item@common.container_item": {
+								"collection_index": 11,
+								"size": [6, 54],
+								"$cell_image_size": [6, 54],
+								"$cell_overlay_ref": "common.empty_panel",
+								"$background_images": "common.empty_panel",
+								"$button_ref": "uc.slot_button",
+								"$highlight_control": "uc.slot_highlight",
+								"$item_renderer_panel_size": [64, 64],
+								"$item_renderer_size": [64, 64],
+								"$stack_count_required": false,
+								"$durability_bar_required": false,
+								"$storage_bar_required": false
+							}
+						}
+					]
+				}
+			},
+			{
+				"fuel@common.container_item": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [24, 42],
+					"size": [18, 18],
+					"collection_index": 10,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "common.empty_panel",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"ingredient@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, 8],
+					"size": [18, 18],
+					"collection_index": 3,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "common.empty_panel",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"progress@alchemical_station.brewing_progress": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [0, 8],
+					"size": [9, 28]
+				}
+			},
+			{
+				"bottle_0@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [24, -10],
+					"size": [18, 18],
+					"collection_index": 4,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "alchemical_station.bottle_empty",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"bottle_1@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [24, 8],
+					"size": [18, 18],
+					"collection_index": 5,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "alchemical_station.bottle_empty",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"bottle_2@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [24, 26],
+					"size": [18, 18],
+					"collection_index": 6,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "alchemical_station.bottle_empty",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"bottle_3@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-24, -10],
+					"size": [18, 18],
+					"collection_index": 7,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "alchemical_station.bottle_empty",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"bottle_4@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-24, 8],
+					"size": [18, 18],
+					"collection_index": 8,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "alchemical_station.bottle_empty",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"bottle_5@common.container_item": {
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [-24, 26],
+					"size": [18, 18],
+					"collection_index": 9,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "alchemical_station.bottle_empty",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"bottle_return@common.container_item": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [70, 22],
+					"size": [18, 18],
+					"collection_index": 33,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "common.empty_panel",
+					"$background_images": "alchemical_station.potion_slot_background",
+					"visible": false,
+					"bindings": [
+						{
+							"binding_name": "#item_id_aux",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(#item_id_aux > 0)",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			}
+		]
+	},
+	"aplifying_page": {
+		"type": "collection_panel",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"size": [176, 86],
+		"visible": false,
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "alchemy_aplifying_tab",
+				"source_property_name": "#toggle_state",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": false
+			}
+		],
+		"controls": [
+			{
+				"aetherium": {
+					"type": "collection_panel",
+					"collection_name": "container_items",
+					"$item_collection_name": "container_items",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [154, 29],
+					"size": [16, 48],
+					"controls": [
+						{
+							"item@common.container_item": {
+								"collection_index": 12,
+								"size": [16, 48],
+								"$cell_image_size": [16, 48],
+								"$cell_overlay_ref": "common.empty_panel",
+								"$background_images": "common.empty_panel",
+								"$button_ref": "uc.slot_button",
+								"$highlight_control": "uc.slot_highlight",
+								"$item_renderer_panel_size": [48, 48],
+								"$item_renderer_size": [48, 48],
+								"$stack_count_required": false,
+								"$durability_bar_required": false,
+								"$storage_bar_required": false
+							}
+						},
+						{
+							"border": {
+								"type": "image",
+								"texture": "textures/ui/liquid_border",
+								"size": [16, 48],
+								"layer": 9
+							}
+						}
+					]
+				}
+			},
+			{
+				"amplify_slot@common.container_item": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [96, 26],
+					"size": [18, 18],
+					"collection_index": 13,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "alchemical_station.bottle_empty",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"amplify_progress@uc.progress_display": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [96, 46],
+					"size": [18, 16],
+					"collection_index": 17,
+					"$cell_image_size": [18, 16],
+					"$item_renderer_panel_size": [18, 16],
+					"$item_renderer_size": [16, 16],
+					"$cell_overlay_ref": "common.empty_panel",
+					"$stack_count_required": false,
+					"$durability_bar_required": false,
+					"$storage_bar_required": false
+				}
+			},
+			{
+				"amplify_button@uc.machine_button": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [96, 64],
+					"size": [18, 18],
+					"$index": 15,
+					"$button_size": [18, 18],
+					"$button_text": "",
+					"$default_texture": "textures/ui/toggle_button/recipe_base_unchecked",
+					"$hover_texture": "textures/ui/toggle_button/recipe_base_unchecked_hover",
+					"$pressed_texture": "textures/ui/toggle_button/recipe_base_checked",
+					"layer": 15,
+					"controls": [
+						{
+							"button": {
+								"type": "button",
+								"collection_index": "$index",
+								"size": "$button_size",
+								"default_control": "default",
+								"hover_control": "hover",
+								"pressed_control": "pressed",
+								"sound_name": "random.click",
+								"bindings": [
+									{
+										"binding_type": "collection_details",
+										"binding_collection_name": "$item_collection_name"
+									}
+								],
+								"$tag": "",
+								"button_mappings": [
+									{
+										"from_button_id": "button.menu_select",
+										"to_button_id": "button.drop_all",
+										"mapping_type": "pressed"
+									},
+									{
+										"from_button_id": "button.menu_ok",
+										"to_button_id": "button.drop_all",
+										"mapping_type": "pressed"
+									}
+								],
+								"controls": [
+									{
+										"default": {
+											"type": "image",
+											"texture": "$default_texture"
+										}
+									},
+									{
+										"hover": {
+											"type": "image",
+											"texture": "$hover_texture",
+											"controls": [
+												{
+													"hover_text@uc.fake_hover_text": {
+														"$hover_text": "ui.ascendant:alchemy.amplify"
+													}
+												}
+											]
+										}
+									},
+									{
+										"pressed": {
+											"type": "image",
+											"texture": "$pressed_texture"
+										}
+									},
+									{
+										"button_text": {
+											"type": "label",
+											"layer": 1,
+											"text": "$button_text",
+											"shadow": true,
+											"font_scale_factor": "$text_scale"
+										}
+									},
+									{
+										"action_icon": {
+											"type": "image",
+											"texture": "textures/items/glowstone_dust",
+											"size": [12, 12],
+											"layer": 18
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"extend_slot@common.container_item": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [132, 26],
+					"size": [18, 18],
+					"collection_index": 14,
+					"$item_collection_name": "container_items",
+					"$cell_overlay_ref": "alchemical_station.bottle_empty",
+					"$background_images": "alchemical_station.potion_slot_background"
+				}
+			},
+			{
+				"extend_progress@uc.progress_display": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [132, 46],
+					"size": [18, 16],
+					"collection_index": 20,
+					"$cell_image_size": [18, 16],
+					"$item_renderer_panel_size": [18, 16],
+					"$item_renderer_size": [16, 16],
+					"$cell_overlay_ref": "common.empty_panel",
+					"$stack_count_required": false,
+					"$durability_bar_required": false,
+					"$storage_bar_required": false
+				}
+			},
+			{
+				"extend_button@uc.machine_button": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [132, 64],
+					"size": [18, 18],
+					"$index": 16,
+					"$button_size": [18, 18],
+					"$button_text": "",
+					"$default_texture": "textures/ui/toggle_button/recipe_base_unchecked",
+					"$hover_texture": "textures/ui/toggle_button/recipe_base_unchecked_hover",
+					"$pressed_texture": "textures/ui/toggle_button/recipe_base_checked",
+					"layer": 15,
+					"controls": [
+						{
+							"button": {
+								"type": "button",
+								"collection_index": "$index",
+								"size": "$button_size",
+								"default_control": "default",
+								"hover_control": "hover",
+								"pressed_control": "pressed",
+								"sound_name": "random.click",
+								"bindings": [
+									{
+										"binding_type": "collection_details",
+										"binding_collection_name": "$item_collection_name"
+									}
+								],
+								"$tag": "",
+								"button_mappings": [
+									{
+										"from_button_id": "button.menu_select",
+										"to_button_id": "button.drop_all",
+										"mapping_type": "pressed"
+									},
+									{
+										"from_button_id": "button.menu_ok",
+										"to_button_id": "button.drop_all",
+										"mapping_type": "pressed"
+									}
+								],
+								"controls": [
+									{
+										"default": {
+											"type": "image",
+											"texture": "$default_texture"
+										}
+									},
+									{
+										"hover": {
+											"type": "image",
+											"texture": "$hover_texture",
+											"controls": [
+												{
+													"hover_text@uc.fake_hover_text": {
+														"$hover_text": "ui.ascendant:alchemy.extend"
+													}
+												}
+											]
+										}
+									},
+									{
+										"pressed": {
+											"type": "image",
+											"texture": "$pressed_texture"
+										}
+									},
+									{
+										"button_text": {
+											"type": "label",
+											"layer": 1,
+											"text": "$button_text",
+											"shadow": true,
+											"font_scale_factor": "$text_scale"
+										}
+									},
+									{
+										"action_icon": {
+											"type": "image",
+											"texture": "textures/items/redstone_dust",
+											"size": [12, 12],
+											"layer": 18
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+	"station_top": {
+		"type": "collection_panel",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [0, 0],
+		"size": [176, 86],
+		"controls": [
+			{
+				"title": {
+					"type": "label",
+					"text": "entity.utilitycraft:alchemical_station.name",
+					"localize": true,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [8, 4],
+					"size": [148, 12],
+					"font_scale_factor": 1,
+					"color": [1, 0.94, 0.8],
+					"shadow": true,
+					"text_alignment": "left",
+					"layer": 8
+				}
+			},
+			{
+				"energy": {
+					"type": "collection_panel",
+					"collection_name": "container_items",
+					"$item_collection_name": "container_items",
+					"anchor_from": "center",
+					"anchor_to": "center",
+					"offset": [64, 8],
+					"size": [16, 48],
+					"controls": [
+						{
+							"item@common.container_item": {
+								"collection_index": 0,
+								"size": [16, 48],
+								"$cell_image_size": [16, 48],
+								"$cell_overlay_ref": "common.empty_panel",
+								"$background_images": "common.empty_panel",
+								"$button_ref": "uc.slot_button",
+								"$highlight_control": "uc.slot_highlight",
+								"$item_renderer_panel_size": [48, 48],
+								"$item_renderer_size": [48, 48],
+								"$stack_count_required": false,
+								"$durability_bar_required": false,
+								"$storage_bar_required": false
+							}
+						},
+						{
+							"border": {
+								"type": "image",
+								"texture": "textures/ui/energy_border",
+								"size": [16, 48],
+								"layer": 9
+							}
+						}
+					]
+				}
+			},
+			{
+				"view_top_bar@alchemical_station.view_top_bar": {}
+			},
+			{
+				"brewing@alchemical_station.brewing_page": {}
+			},
+			{
+				"aplifying@alchemical_station.aplifying_page": {}
+			},
+			{
+				"side_panels@alchemical_station.side_panels": {}
+			},
+			{
+				"alchemy_panels_hidden_wrapper@uc.toggle_button": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [-26, 2],
+					"size": [18, 18],
+					"$toggle_control_name": "alchemy_panels_hidden",
+					"$toggle_name": "alchemy_panels_hidden",
+					"$toggle_size": [18, 18],
+					"$toggle_layer": 40,
+					"$toggle_lost_reset": false,
+					"$toggle_default_state": false,
+					"$toggle_binding_condition": "always",
+					"$toggle_unchecked": "textures/ui/toggle_button/recipe_base_unchecked",
+					"$toggle_checked": "textures/ui/toggle_button/recipe_base_checked",
+					"$toggle_unchecked_hover": "textures/ui/toggle_button/recipe_base_unchecked_hover",
+					"$toggle_checked_hover": "textures/ui/toggle_button/recipe_base_checked_hover",
+					"$has_toggle_icon": true,
+					"$toggle_icon_size": [14, 14],
+					"$toggle_icon_unchecked": "textures/ui/arrow_dark_left_stretch",
+					"$toggle_icon_checked": "textures/ui/arrow_dark_right_stretch",
+					"$toggle_icon_unchecked_hover": "textures/ui/arrow_dark_left_stretch",
+					"$toggle_icon_checked_hover": "textures/ui/arrow_dark_right_stretch",
+					"$toggle_hover_text": "ui.ascendant:alchemy.panel.hide",
+					"$toggle_checked_hover_text": "ui.ascendant:alchemy.panel.show"
+				}
+			},
+			{
+				"upgrades@uc.upgrades_tab": {
+					"$upgrade_toggle_offset": [109, -27],
+					"$upgrade_index_1": 18,
+					"$upgrade_index_2": 19,
+					"$has_first_upgrade": true,
+					"$has_second_upgrade": true,
+					"$has_third_upgrade": false,
+					"$has_fourth_upgrade": false,
+					"$upgrade_overlay_1": "textures/items/machinery/speed_upgrade",
+					"$upgrade_overlay_2": "textures/items/machinery/energy_upgrade",
+					"offset": [-10, 2]
+				}
+			},
+			{
+				"io@at_common.machine_io_tab": {
+					"$io_toggle_offset": [109, -1],
+					"$has_item_io": true,
+					"$has_fluid_io": true,
+					"offset": [-10, 2],
+					"$io_items_modes_description": "ui.ascendant:alchemy.io.items",
+					"$io_fluids_modes_description": "ui.ascendant:alchemy.io.fluids",
+					"$io_item_top_index": 21,
+					"$io_fluid_top_index": 27,
+					"$io_top_texture": "textures/blocks/machines/alchemical_station_off_up",
+					"$io_item_left_index": 22,
+					"$io_fluid_left_index": 28,
+					"$io_left_texture": "textures/blocks/machines/alchemical_station_off_west",
+					"$io_item_front_index": 23,
+					"$io_fluid_front_index": 29,
+					"$io_front_texture": "textures/blocks/machines/alchemical_station_off_north",
+					"$io_item_right_index": 24,
+					"$io_fluid_right_index": 30,
+					"$io_right_texture": "textures/blocks/machines/alchemical_station_off_east",
+					"$io_item_bottom_index": 25,
+					"$io_fluid_bottom_index": 31,
+					"$io_bottom_texture": "textures/blocks/machines/alchemical_station_off_down",
+					"$io_item_back_index": 26,
+					"$io_fluid_back_index": 32,
+					"$io_back_texture": "textures/blocks/machines/alchemical_station_off_south"
+				}
+			},
+			{
+				"information@at_common.machine_info_tab": {
+					"$info_toggle_offset": [109, 25],
+					"$info_description": "ui.ascendant:alchemy.help",
+					"offset": [-10, 2],
+					"$info_panel_size": [120, 134],
+					"$info_panel_offset": [10.0, 5]
+				}
+			}
+		]
+	},
+	"side_panels": {
+		"type": "collection_panel",
+		"collection_name": "container_items",
+		"$item_collection_name": "container_items",
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"offset": [-110, 0],
+		"size": [110, 166],
+		"visible": true,
+		"bindings": [
+			{
+				"binding_type": "view",
+				"source_control_name": "alchemy_panels_hidden",
+				"source_property_name": "(not #toggle_state)",
+				"target_property_name": "#visible",
+				"resolve_sibling_scope": false
+			}
+		],
+		"layer": 12,
+		"controls": [
+			{
+				"background": {
+					"type": "image",
+					"texture": "textures/ui/panels/background_panel_brown",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [0, 0],
+					"size": [110, 166],
+					"layer": 0
+				}
+			},
+			{
+				"side_view_top_bar@alchemical_station.side_view_top_bar": {}
+			},
+			{
+				"display": {
+					"type": "panel",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [6, 27],
+					"size": [98, 133],
+					"visible": true,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "alchemy_display_tab",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": false
+						}
+					],
+					"controls": [
+						{
+							"background": {
+								"type": "image",
+								"texture": "textures/ui/cells/brown_cell_image",
+								"anchor_from": "top_left",
+								"anchor_to": "top_left",
+								"offset": [0, 0],
+								"size": [90, 133],
+								"layer": 1
+							}
+						},
+						{
+							"text@at_common.scroll_panel": {
+								"size": [98, 133],
+								"$content_ref": "at_common.info_text",
+								"$scrolling_content": "at_common.info_text",
+								"$scroll_view_port_size": [90, "100%"],
+								"$scroll_view_port_max_size": [90, "100%"],
+								"$scroll_view_port_size_touch": [90, "100%"],
+								"$scroll_view_port_max_size_touch": [90, "100%"],
+								"$label_index": 1,
+								"$text_scale": 0.6,
+								"$text_color": [1, 0.94, 0.8],
+								"layer": 3
+							}
+						}
+					]
+				}
+			},
+			{
+				"recipes@alchemical_recipes.recipe_book": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [6, 27],
+					"size": [98, 133],
+					"visible": false,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "alchemy_recipes_tab",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": false
+						}
+					]
+				}
+			},
+			{
+				"progression@alchemical_recipes.progression_book": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [6, 27],
+					"size": [98, 133],
+					"visible": false,
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_control_name": "alchemy_progression_tab",
+							"source_property_name": "#toggle_state",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": false
+						}
+					]
+				}
+			}
+		]
+	},
+	"utility_panel": {
+		"type": "panel",
+		"controls": [
+			{
+				"container_gamepad_helpers@common.container_gamepad_helpers": {}
+			},
+			{
+				"flying_item_renderer@common.flying_item_renderer": {
+					"layer": 40
+				}
+			},
+			{
+				"selected_item_details_factory@common.selected_item_details_factory": {}
+			},
+			{
+				"item_lock_notification_factory@common.item_lock_notification_factory": {}
+			},
+			{
+				"root_panel@common.root_panel": {
+					"layer": 1,
+					"controls": [
+						{
+							"common_panel@common.common_panel": {
+								"$dialog_background": "alchemical_station.brown_background",
+								"$show_close_button": false
+							}
+						},
+						{
+							"chest_panel": {
+								"type": "panel",
+								"layer": 5,
+								"controls": [
+									{
+										"station_top@alchemical_station.station_top": {}
+									},
+									{
+										"inventory_panel@common.inventory_panel": {}
+									},
+									{
+										"hotbar_grid@common.hotbar_grid_template": {}
+									},
+									{
+										"inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+									}
+								]
+							}
+						},
+						{
+							"inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+						},
+						{
+							"gamepad_cursor@common.gamepad_cursor_button": {}
+						}
+					],
+					"size": [176, 166],
+					"offset": [46, 10]
+				}
+			}
+		]
+	}
+}

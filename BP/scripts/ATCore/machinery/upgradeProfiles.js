@@ -1,5 +1,9 @@
 // AT machine capabilities. Keep slots and base capacities aligned with the block JSON.
 export const UPGRADE_PROFILES = {
+    "utilitycraft:alchemical_station": {
+        slots: [18, 19],
+        energy_cap: 2048000,
+    },
     "utilitycraft:abyssal_fisher": {
         slots: [3, 4, 5, 6],
         energy_cap: 64000000,
@@ -50,7 +54,7 @@ export const UPGRADE_PROFILES = {
         resource_efficiency: true,
     },
     "utilitycraft:cryo_chamber": {
-        slots: [19, 20, 21, 22],
+        slots: [17, 18, 19, 20],
         energy_cap: 1536000,
         fluid_cap: 64000,
         fluid_types: 2,

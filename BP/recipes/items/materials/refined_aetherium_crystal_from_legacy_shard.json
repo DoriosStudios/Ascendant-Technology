@@ -1,0 +1,15 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "utilitycraft:refined_aetherium_crystal_from_legacy_shard"
+        },
+        "tags": ["crafting_table", "utilitycraft_workbench"],
+        "ingredients": [{ "item": "utilitycraft:refined_aetherium_shard" }],
+        "result": {
+            "item": "utilitycraft:refined_aetherium_crystal",
+            "count": 1
+        },
+        "unlock": [{ "item": "utilitycraft:refined_aetherium_shard" }]
+    }
+}

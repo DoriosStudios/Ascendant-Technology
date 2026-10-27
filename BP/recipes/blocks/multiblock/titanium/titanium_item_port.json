@@ -1,0 +1,36 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:titanium_item_port"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "key": {
+            "P": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "C": {
+                "item": "utilitycraft:item_conduit"
+            },
+            "S": {
+                "item": "utilitycraft:titanium_case"
+            }
+        },
+        "pattern": [
+            "PCP",
+            "CSC",
+            "PCP"
+        ],
+        "result": {
+            "item": "utilitycraft:titanium_item_port",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:item_conduit"
+            }
+        ]
+    }
+}

@@ -3,6 +3,8 @@ import { INSIGHT_ACTIVITY_EVENT } from "../config/definitions.js";
 import { MINING_ABILITY_TOKENS, STATSCORE_FEEDBACK_STYLES, FEEDBACK_STYLE_ALIASES } from "../config/presentation.js";
 export { STATSCORE_FEEDBACK_STYLES } from "../config/presentation.js";
 import { system } from "@minecraft/server";
+import { getEquipmentStatsContext } from "../shared/context.js";
+import { collectStatsAbilityEntries } from "../core/abilities.js";
 import { STATSCORE } from "../constants.js";
 import { getCurrentTick, titleCaseIdentifier } from "../utils.js";
 import {
@@ -25,7 +27,7 @@ const pendingLevelUps = new Map();
 function normalizeFeedbackStyle(style) {
     const normalized = String(style ?? "").trim().toLowerCase();
     const canonical = FEEDBACK_STYLE_ALIASES[normalized] ?? normalized;
-    return STATSCORE_FEEDBACK_STYLES.includes(canonical) ? canonical : "both_partial";
+    return STATSCORE_FEEDBACK_STYLES.includes(canonical) ? canonical : "minimal";
 }
 
 function getPlayerKey(player) {
@@ -72,7 +74,7 @@ export function getStatsCoreFeedbackStyle(player) {
     try {
         cached.style = normalizeFeedbackStyle(player?.getDynamicProperty?.(STATSCORE.playerProperties.feedbackStyle));
     } catch {
-        cached.style = "both_partial";
+        cached.style = "minimal";
     }
     return cached.style;
 }
@@ -119,7 +121,7 @@ export function setStatsCoreInsightBridgeEnabled(player, enabled) {
 function formatFeedback(entry, style) {
     const text = String(entry?.text ?? "").trim();
     const icons = String(entry?.emoji ?? "").trim() || STATSCORE_ICONS.unknown;
-    if (style === "only_icons") return icons;
+    if (style === "only_icons" || style === "minimal") return icons;
     if (style === "only_text") return text;
     return text ? `${icons} ${text}` : icons;
 }
@@ -152,7 +154,12 @@ function queueActionBar(player, entry) {
         if (!queued?.player || !queued.entries?.length) return;
 
         const style = getStatsCoreFeedbackStyle(queued.player);
-        const messages = style === "both_partial"
+        const minimalEntries = style === "minimal" ? queued.entries.filter(entry =>
+            entry.key === "level:batch"
+            || (entry.key.startsWith("ability:") && isMinimalAbility(queued.player, entry.text))) : [];
+        const messages = style === "minimal"
+            ? [uniqueIcons(minimalEntries.flatMap(entry => String(entry.emoji ?? "").split(/\s+/g)))].filter(Boolean)
+            : style === "both_partial"
             ? [formatPartialFeedback(queued.entries)]
             : queued.entries.map(value => formatFeedback(value, style)).filter(Boolean);
         if (messages.length > 0) setActionBarSafe(queued.player, messages.join(" \u00A78| "));
@@ -204,12 +211,47 @@ function getMiningAbilityLabel(label) {
     return MINING_ABILITY_TOKENS.some(token => plain.includes(token)) ? text : "";
 }
 
-function playSound(entity, soundId, options) {
+function normalizeAbilityLabel(label) {
+    return String(label ?? "").replace(/§./g, "").trim().toLowerCase()
+        .replace(/^[ivx]+\s+/, "")
+        .replace(/^(boot dash|bunny jump)/, "boot mobility");
+}
+
+// Match the first native ability shown by the Refining Table, not passive stats
+// or inherited/advanced extras. Equipment contexts are already cached per tick.
+function isMinimalAbility(player, label) {
+    const normalized = normalizeAbilityLabel(label);
+    if (/\b(?:double|triple) trouble\b/.test(normalized)) return true;
+    const cached = getPreferenceCache(player);
+    if (!cached.primaryAbilities) {
+        cached.primaryAbilities = [];
+        for (const slot of [STATSCORE.slots.mainhand, STATSCORE.slots.offhand, ...STATSCORE.slots.armor]) {
+            const context = getEquipmentStatsContext(player, slot);
+            if (!context) continue;
+            const definition = context.definition;
+            const primary = collectStatsAbilityEntries({
+                effects: definition?.attributes?.effects,
+                mining: definition?.mining,
+                support: definition?.support,
+            }, { state: context.state }).find(entry => !entry.advanced);
+            if (primary) cached.primaryAbilities.push(normalizeAbilityLabel(primary.name));
+        }
+    }
+    return cached.primaryAbilities.some(name => normalized === name || normalized.startsWith(`${name} `));
+}
+
+export function playActivationSound(player, soundId, options = {}) {
+    return playSound(player, soundId, options);
+}
+
+function playSound(entity, soundId, options, levelUp = false) {
+    if (!levelUp && getStatsCoreFeedbackStyle(entity) === "minimal") return false;
     try {
-        const location = entity?.location;
-        if (!location || !soundId) return;
-        entity.dimension?.playSound?.(soundId, location, options);
-    } catch { }
+        // Personal feedback must not bypass nearby players' sound preferences.
+        if (entity?.typeId !== "minecraft:player" || !soundId) return false;
+        entity.playSound?.(soundId, options);
+        return true;
+    } catch { return false; }
 }
 
 function spawnParticle(entity, particleId, offset = { x: 0, y: 1, z: 0 }) {
@@ -226,6 +268,10 @@ function spawnParticle(entity, particleId, offset = { x: 0, y: 1, z: 0 }) {
 
 export function showCombatFeedback(attacker, target, result) {
     if (!attacker) return;
+    if (getStatsCoreFeedbackStyle(attacker) === "minimal") {
+        for (const ability of result?.abilities ?? []) showAbilityFeedback(attacker, ability);
+        return;
+    }
 
     const damage = Math.max(0, Number(result?.damage ?? 0) || 0);
     const elemental = Array.isArray(result?.elemental) ? result.elemental.filter(Boolean) : [];
@@ -322,6 +368,10 @@ export function showCombatFeedback(attacker, target, result) {
 
 export function showMiningFeedback(player, blockId, result) {
     if (!player || (!result?.bonusDrop && !result?.bonusXp && !result?.preserved)) return;
+    if (getStatsCoreFeedbackStyle(player) === "minimal") {
+        if (result?.bonusDrop && result?.bonusDropLabel) showAbilityFeedback(player, result.bonusDropLabel);
+        return;
+    }
 
     const segments = [];
     const hudAttributes = [];
@@ -432,7 +482,7 @@ function flushLevelUps(playerKey) {
         uniqueIcons(allIcons),
         100
     );
-    playSound(pending.player, "random.levelup", { volume: 0.45, pitch: 1.1 });
+    playSound(pending.player, "random.levelup", { volume: 0.45, pitch: 1.1 }, true);
     spawnParticle(pending.player, "minecraft:totem_particle", { x: 0, y: 1.2, z: 0 });
 }
 
@@ -452,6 +502,7 @@ export function showLevelUp(player, stack, result) {
 
 export function showAbilityFeedback(player, label, emoji = "") {
     if (!player || !label) return;
+    if (getStatsCoreFeedbackStyle(player) === "minimal" && !isMinimalAbility(player, label)) return;
     publishInsightActivity(
         player,
         { primary: formatInsightIcon(emoji || getAbilityIcon(label)) },
@@ -466,8 +517,9 @@ export function showAbilityFeedback(player, label, emoji = "") {
     );
 }
 
-/** Shows a real health gain in every feedback style, including both_partial. */
+/** Shows a real health gain in detailed feedback styles, including both_partial. */
 export function showHealingFeedback(player, amount) {
+    if (getStatsCoreFeedbackStyle(player) === "minimal") return;
     const healed = Math.max(0, Number(amount) || 0);
     // One heart is two health points. Tiny fractional regeneration ticks are
     // intentionally silent so they do not hide progression feedback.

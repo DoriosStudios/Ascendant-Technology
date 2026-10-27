@@ -1,0 +1,587 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v2\\final\\thorium_plate.png",
+  "pixel_sha256": "4ce1a501f1e21f01d237f77c9649a67b9187635efbc91eafbe2dbe280b2bb8ee",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 7,
+      "allowed": [
+        [
+          167,
+          67,
+          114
+        ],
+        [
+          197,
+          80,
+          136
+        ],
+        [
+          231,
+          113,
+          172
+        ],
+        [
+          235,
+          154,
+          195
+        ],
+        [
+          235,
+          176,
+          206
+        ],
+        [
+          235,
+          212,
+          224
+        ],
+        [
+          58,
+          44,
+          55
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 182,
+      "partial": 0,
+      "opaque": 74
+    },
+    "palette": {
+      "unique_visible_rgb": 7,
+      "unique_rgba": 8,
+      "frequencies": [
+        {
+          "rgb": [
+            58,
+            44,
+            55
+          ],
+          "hex": "#3A2C37",
+          "count": 24
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "hex": "#EBB0CE",
+          "count": 13
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "hex": "#C55088",
+          "count": 11
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "hex": "#EB9AC3",
+          "count": 10
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "hex": "#EBD4E0",
+          "count": 9
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "hex": "#E771AC",
+          "count": 6
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "hex": "#A74372",
+          "count": 1
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 74,
+      "bbox": [
+        2,
+        3,
+        15,
+        13
+      ],
+      "components_4_connected": 1,
+      "component_sizes": [
+        74
+      ]
+    },
+    "clusters": {
+      "color_components": 41,
+      "singletons": 20
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            58,
+            44,
+            55
+          ],
+          "pixels": 24,
+          "oklab": [
+            0.3132951637855895,
+            0.02475298566202988,
+            -0.012167274078498158
+          ]
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "pixels": 1,
+          "oklab": [
+            0.5307585390052371,
+            0.1400036965451507,
+            -0.01550403452013649
+          ]
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "pixels": 11,
+          "oklab": [
+            0.5997660713505149,
+            0.15911940459083473,
+            -0.018965013732911817
+          ]
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "pixels": 6,
+          "oklab": [
+            0.703253560755495,
+            0.1575084120131156,
+            -0.025730453813424092
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "pixels": 10,
+          "oklab": [
+            0.778763878657962,
+            0.10673590363744428,
+            -0.022298036426314338
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "pixels": 13,
+          "oklab": [
+            0.8202004222885522,
+            0.0765292348381662,
+            -0.017616730036504324
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "pixels": 9,
+          "oklab": [
+            0.892250348674154,
+            0.028905036804675155,
+            -0.00781983727596347
+          ]
+        }
+      ],
+      "lightness_range": 0.5789551848885645,
+      "tonal_coverage": {
+        "shadow": 0.32432432432432434,
+        "mid": 0.24324324324324326,
+        "highlight": 0.43243243243243246
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 20,
+      "coordinates": [
+        [
+          12,
+          4
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          12,
+          7
+        ],
+        [
+          13,
+          7
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          5,
+          12
+        ]
+      ]
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "model_reviewed",
+    "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+    "evaluator_type": "model",
+    "pixel_sha256": "4ce1a501f1e21f01d237f77c9649a67b9187635efbc91eafbe2dbe280b2bb8ee",
+    "human_approval": "required",
+    "inspected_files": [
+      "thorium_family_preview.png"
+    ],
+    "observations": [
+      "The thin diagonal sheet has clipped corners, one long scored crease and restrained edge dimples. It reads thinner than the ingot.",
+      "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+    ],
+    "limitations": [
+      "No creator approval of this revision has been supplied.",
+      "Textures only; no gameplay or in-game acceptance claim."
+    ],
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ]
+  },
+  "file_sha256": "a4235ad949d1c9a4b15289065d237458f0c9cb7d429521090bd78084c9e7cd1c",
+  "design": {
+    "intent": {
+      "identity": "Placa de TÃ³rio",
+      "usage": "native AT texture-family candidate",
+      "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+      "orientation": "explicit native inventory or block face construction",
+      "lighting": "upper-left, reduced value range; highlights describe connected planes",
+      "structure": [
+        "thin pentagonal sheet with clipped diagonal corners",
+        "single long scored crease and small edge dimples"
+      ],
+      "style": [
+        "new Thorium construction rather than titanium recolor",
+        "sharp chamfers and restrained plate seams",
+        "20 percent lower HSV saturation in the metal ramp"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/titanium_ingot.png",
+        "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+        "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+        "approval": "project reference, not approval of Thorium variants"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": [
+        2,
+        3,
+        15,
+        13
+      ],
+      "primitives": [
+        {
+          "layer": "silhouette",
+          "command": 0,
+          "bounds": [
+            2,
+            3,
+            15,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "sheet",
+          "command": 0,
+          "bounds": [
+            3,
+            4,
+            14,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "sheet",
+          "command": 1,
+          "bounds": [
+            4,
+            4,
+            13,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "sheet",
+          "command": 2,
+          "bounds": [
+            3,
+            4,
+            12,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "sheet",
+          "command": 3,
+          "bounds": [
+            3,
+            7,
+            13,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "crease",
+          "command": 0,
+          "bounds": [
+            5,
+            5,
+            11,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "crease",
+          "command": 1,
+          "bounds": [
+            4,
+            8,
+            5,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "crease",
+          "command": 2,
+          "bounds": [
+            11,
+            5,
+            12,
+            6
+          ],
+          "outside_canvas": false
+        }
+      ],
+      "outside_primitives": []
+    },
+    "composition": {
+      "raster_bounds": [
+        2,
+        3,
+        15,
+        13
+      ],
+      "minimum_margin": 1,
+      "edge_counts": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      },
+      "findings": []
+    },
+    "region_bounds": {
+      "sheet": [
+        3,
+        4,
+        14,
+        12
+      ],
+      "crease": [
+        4,
+        5,
+        12,
+        9
+      ]
+    }
+  }
+}

@@ -1,0 +1,697 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\final-icons\\thorium_chestplate.png",
+  "pixel_sha256": "ed177ef8845567aa65e8b7228fde45d978305fb89f3f7d27f222fff3b46d721c",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 19,
+      "allowed": [
+        [
+          16,
+          14,
+          34
+        ],
+        [
+          18,
+          15,
+          37
+        ],
+        [
+          28,
+          23,
+          53
+        ],
+        [
+          35,
+          35,
+          66
+        ],
+        [
+          39,
+          28,
+          29
+        ],
+        [
+          62,
+          22,
+          46
+        ],
+        [
+          94,
+          28,
+          62
+        ],
+        [
+          131,
+          34,
+          80
+        ],
+        [
+          170,
+          43,
+          103
+        ],
+        [
+          208,
+          54,
+          128
+        ],
+        [
+          237,
+          70,
+          151
+        ],
+        [
+          251,
+          91,
+          170
+        ],
+        [
+          255,
+          116,
+          186
+        ],
+        [
+          255,
+          145,
+          201
+        ],
+        [
+          255,
+          175,
+          216
+        ],
+        [
+          255,
+          202,
+          231
+        ],
+        [
+          255,
+          224,
+          241
+        ],
+        [
+          255,
+          241,
+          248
+        ],
+        [
+          255,
+          250,
+          253
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 116,
+      "partial": 0,
+      "opaque": 140
+    },
+    "palette": {
+      "unique_visible_rgb": 15,
+      "unique_rgba": 16,
+      "frequencies": [
+        {
+          "rgb": [
+            255,
+            224,
+            241
+          ],
+          "hex": "#FFE0F1",
+          "count": 23
+        },
+        {
+          "rgb": [
+            28,
+            23,
+            53
+          ],
+          "hex": "#1C1735",
+          "count": 22
+        },
+        {
+          "rgb": [
+            208,
+            54,
+            128
+          ],
+          "hex": "#D03680",
+          "count": 22
+        },
+        {
+          "rgb": [
+            255,
+            116,
+            186
+          ],
+          "hex": "#FF74BA",
+          "count": 22
+        },
+        {
+          "rgb": [
+            255,
+            145,
+            201
+          ],
+          "hex": "#FF91C9",
+          "count": 11
+        },
+        {
+          "rgb": [
+            131,
+            34,
+            80
+          ],
+          "hex": "#832250",
+          "count": 9
+        },
+        {
+          "rgb": [
+            255,
+            250,
+            253
+          ],
+          "hex": "#FFFAFD",
+          "count": 8
+        },
+        {
+          "rgb": [
+            62,
+            22,
+            46
+          ],
+          "hex": "#3E162E",
+          "count": 6
+        },
+        {
+          "rgb": [
+            94,
+            28,
+            62
+          ],
+          "hex": "#5E1C3E",
+          "count": 6
+        },
+        {
+          "rgb": [
+            39,
+            28,
+            29
+          ],
+          "hex": "#271C1D",
+          "count": 4
+        },
+        {
+          "rgb": [
+            170,
+            43,
+            103
+          ],
+          "hex": "#AA2B67",
+          "count": 2
+        },
+        {
+          "rgb": [
+            255,
+            202,
+            231
+          ],
+          "hex": "#FFCAE7",
+          "count": 2
+        },
+        {
+          "rgb": [
+            237,
+            70,
+            151
+          ],
+          "hex": "#ED4697",
+          "count": 1
+        },
+        {
+          "rgb": [
+            255,
+            175,
+            216
+          ],
+          "hex": "#FFAFD8",
+          "count": 1
+        },
+        {
+          "rgb": [
+            255,
+            241,
+            248
+          ],
+          "hex": "#FFF1F8",
+          "count": 1
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 140,
+      "bbox": [
+        1,
+        2,
+        15,
+        15
+      ],
+      "components_4_connected": 1,
+      "component_sizes": [
+        140
+      ]
+    },
+    "clusters": {
+      "color_components": 60,
+      "singletons": 27
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            28,
+            23,
+            53
+          ],
+          "pixels": 22,
+          "oklab": [
+            0.2281805514870491,
+            0.018192550915280464,
+            -0.05357549791428637
+          ]
+        },
+        {
+          "rgb": [
+            39,
+            28,
+            29
+          ],
+          "pixels": 4,
+          "oklab": [
+            0.24028301223876586,
+            0.01703585346023473,
+            0.00373059898759312
+          ]
+        },
+        {
+          "rgb": [
+            62,
+            22,
+            46
+          ],
+          "pixels": 6,
+          "oklab": [
+            0.2711131828443,
+            0.06867522866726591,
+            -0.017327604519880968
+          ]
+        },
+        {
+          "rgb": [
+            94,
+            28,
+            62
+          ],
+          "pixels": 6,
+          "oklab": [
+            0.3424945658769905,
+            0.10222291109165271,
+            -0.01421001123225546
+          ]
+        },
+        {
+          "rgb": [
+            131,
+            34,
+            80
+          ],
+          "pixels": 9,
+          "oklab": [
+            0.42125483561430555,
+            0.1376758231837444,
+            -0.010019712637328149
+          ]
+        },
+        {
+          "rgb": [
+            170,
+            43,
+            103
+          ],
+          "pixels": 2,
+          "oklab": [
+            0.5052639813949912,
+            0.1702228350929611,
+            -0.010534320398451091
+          ]
+        },
+        {
+          "rgb": [
+            208,
+            54,
+            128
+          ],
+          "pixels": 22,
+          "oklab": [
+            0.5867651493870941,
+            0.19885465789327028,
+            -0.013821684959638425
+          ]
+        },
+        {
+          "rgb": [
+            237,
+            70,
+            151
+          ],
+          "pixels": 1,
+          "oklab": [
+            0.6549538419264562,
+            0.21322365106331415,
+            -0.0183833952076623
+          ]
+        },
+        {
+          "rgb": [
+            255,
+            116,
+            186
+          ],
+          "pixels": 22,
+          "oklab": [
+            0.7439231441230709,
+            0.1818888791780579,
+            -0.028542743655361913
+          ]
+        },
+        {
+          "rgb": [
+            255,
+            145,
+            201
+          ],
+          "pixels": 11,
+          "oklab": [
+            0.7894991900652285,
+            0.14418151191850875,
+            -0.027663007438187615
+          ]
+        },
+        {
+          "rgb": [
+            255,
+            175,
+            216
+          ],
+          "pixels": 1,
+          "oklab": [
+            0.8421985678011117,
+            0.10349440990202186,
+            -0.02290787164399266
+          ]
+        },
+        {
+          "rgb": [
+            255,
+            202,
+            231
+          ],
+          "pixels": 2,
+          "oklab": [
+            0.8937659438284346,
+            0.06779684659146418,
+            -0.018678968112118555
+          ]
+        },
+        {
+          "rgb": [
+            255,
+            224,
+            241
+          ],
+          "pixels": 23,
+          "oklab": [
+            0.9369935399501783,
+            0.038889360780428206,
+            -0.011351469607544518
+          ]
+        },
+        {
+          "rgb": [
+            255,
+            241,
+            248
+          ],
+          "pixels": 1,
+          "oklab": [
+            0.9710932816447,
+            0.017024479505889478,
+            -0.004367749697475443
+          ]
+        },
+        {
+          "rgb": [
+            255,
+            250,
+            253
+          ],
+          "pixels": 8,
+          "oklab": [
+            0.9897740186179907,
+            0.006207551639805187,
+            -0.0022122894606191323
+          ]
+        }
+      ],
+      "lightness_range": 0.7615934671309417,
+      "tonal_coverage": {
+        "shadow": 0.2714285714285714,
+        "mid": 0.47857142857142854,
+        "highlight": 0.25
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 27,
+      "coordinates": [
+        [
+          2,
+          3
+        ],
+        [
+          12,
+          3
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          11,
+          5
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          10,
+          6
+        ],
+        [
+          13,
+          6
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          14,
+          7
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          8,
+          11
+        ]
+      ]
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "model_reviewed",
+    "evaluator": "Codex inspection of the complete armor reference sheet, native icons, integer-nearest set preview and template/mapped/final comparison",
+    "evaluator_type": "model",
+    "pixel_sha256": "ed177ef8845567aa65e8b7228fde45d978305fb89f3f7d27f222fff3b46d721c",
+    "human_approval": "required",
+    "inspected_files": [
+      "../draft-icons/thorium_set_preview.png",
+      "../draft-review/template-mapped-final.png"
+    ],
+    "observations": [
+      "The existing chestplate shape remains recognizable, including its shoulders and lower waist. Small plate joins, shoulder bevels and a belt break provide detail without a large added centerpiece.",
+      "Bright pink metal has distinct dark, mid and white-facing planes. Whether the existing broad neckline is the preferred Thorium shape remains a creator judgment."
+    ],
+    "limitations": [
+      "Only inventory artwork was requested.",
+      "No human approval of the finished icons has been supplied."
+    ],
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ]
+  },
+  "file_sha256": "9d8ed7bd5c61df6f8c0bdb49f33c9790e4e389cced936c77309da437843a4ca3"
+}

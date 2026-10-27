@@ -1,0 +1,18 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "6c671c155f5b5f4dbbda5737a78f8bac6b3c5a6dabf99ded87b0358a9a4f95e2",
+  "human_approval": "required",
+  "inspected_files": [
+    "thorium_family_preview.png"
+  ],
+  "observations": [
+    "Four angled mineral pockets sit in a neutral deepslate host reconstructed from the local ore reference. The mineral site layout is newly authored.",
+    "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+  ],
+  "limitations": [
+    "No creator approval of this revision has been supplied.",
+    "Textures only; no gameplay or in-game acceptance claim."
+  ]
+}

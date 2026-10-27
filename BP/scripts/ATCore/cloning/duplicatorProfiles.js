@@ -69,6 +69,7 @@ const CLONER_RARITY_DATA = {
             "utilitycraft:aetherium_shard": "legendary",
             "utilitycraft:aetherium_crystal": "legendary",
             "utilitycraft:refined_aetherium_crystal": "mythic",
+            "utilitycraft:refined_aetherium_shard": "mythic",
             "utilitycraft:aetherium_ingot": "mythic",
             "utilitycraft:aetherium_boots": "mythic",
             "utilitycraft:aetherium_leggings": "mythic",

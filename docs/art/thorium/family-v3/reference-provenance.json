@@ -1,0 +1,146 @@
+[
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Forging Package\\references\\equipment\\iron_sword.png",
+    "snapshot": "iron_sword.png",
+    "sha256": "1d1faeae22cbb8db31db1380c25dfeb4b68ca649f6cc72bd974720823152bec3",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Forging Package\\references\\equipment\\iron_pickaxe.png",
+    "snapshot": "iron_pickaxe.png",
+    "sha256": "16e18511e790105f7b4838b383a341084a06be0e99b70e1e4511775a33bb3f44",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Forging Package\\references\\equipment\\iron_axe.png",
+    "snapshot": "iron_axe.png",
+    "sha256": "b3216fa9ecf53eb4e158ee9a288acd7eb885b4b9184b9c66b18201ea6509c4ab",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Forging Package\\references\\equipment\\iron_shovel.png",
+    "snapshot": "iron_shovel.png",
+    "sha256": "21ba6d8c5cc3f255e5c85cacc5e9fb61f5f9bfd7e006f00171eb967a417f11ec",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Forging Package\\references\\equipment\\iron_hoe.png",
+    "snapshot": "iron_hoe.png",
+    "sha256": "8ef2960c23049db850b95c12c7640a9e9da9974580ec2d3e64bedba5fb054ff2",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\UtilityCraft\\RP\\textures\\items\\tools\\iron_hammer.png",
+    "snapshot": "iron_hammer.png",
+    "sha256": "d807d3f1cf65b807274129d94c68adf8c2aeb4bb6b349d43e7f17e16e0bcbb23",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\UtilityCraft\\RP\\textures\\items\\tools\\iron_paxel.png",
+    "snapshot": "iron_paxel.png",
+    "sha256": "89d77d9ceb9bf1b71851074571d5274b3685c0c92c1720a91f6d738fb52a7bea",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\UtilityCraft\\RP\\textures\\items\\tools\\iron_aiot.png",
+    "snapshot": "iron_aiot.png",
+    "sha256": "9e4defd956e1f97b093659b31df5df7077eaaf44bfe3a8610d5b6b92b1aaf820",
+    "size": [
+      18,
+      18
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-material-texturing\\references\\bedrock-samples\\resource_pack\\textures\\items\\iron_ingot.png",
+    "snapshot": "iron_ingot.png",
+    "sha256": "247f59e08365383582ca519c378cf2d7d966a021bd929a686f62f7cc622cd6d0",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-material-texturing\\references\\bedrock-samples\\resource_pack\\textures\\items\\iron_nugget.png",
+    "snapshot": "iron_nugget.png",
+    "sha256": "1442104640b7233814831f7d8070d0296b89acad278398ba63072299a9052f4f",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-material-texturing\\references\\bedrock-samples\\resource_pack\\textures\\items\\raw_iron.png",
+    "snapshot": "raw_iron.png",
+    "sha256": "2c6aaff8ee9387417c52cdd9d81d6fc1c7c65fecf7cc5a9835ab6a395336f129",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\RP\\textures\\items\\meshes\\titanium_mesh.png",
+    "snapshot": "titanium_mesh.png",
+    "sha256": "a1c93b7fd53d917b43757e0e632760b25a9f54073d20dba3aea8efe28f2e4326",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\RP\\textures\\items\\nets\\titanium_net.png",
+    "snapshot": "titanium_net.png",
+    "sha256": "6d0052b532bbe5100180082259a323ebcae12b1c1884dd7fc75585ba95f8cc04",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\RP\\textures\\items\\ores\\titanium_dust.png",
+    "snapshot": "titanium_dust.png",
+    "sha256": "03d32e711c00560b70a6f430dfa9a99a60113c4786cd849477db27f15e0eea7f",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\RP\\textures\\items\\ores\\titanium_plate.png",
+    "snapshot": "titanium_plate.png",
+    "sha256": "06a9996b9beebf8f4b5bdf271a5979f812d70512a2e8006c808ee10f4bc4e909",
+    "size": [
+      16,
+      16
+    ]
+  },
+  {
+    "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\RP\\textures\\items\\ores\\titanium_seeds.png",
+    "snapshot": "titanium_seeds.png",
+    "sha256": "e23fd2c879b031800815a8a17ec443f28d97ee13be48e5dd9a0f2460560c613e",
+    "size": [
+      16,
+      16
+    ]
+  }
+]

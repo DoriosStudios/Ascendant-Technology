@@ -1,0 +1,19 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "68c2e321abaf66f9f6af5fcfec6bb5fa234913ac74fecb27d90e6b692008bdef",
+  "human_approval": "required",
+  "inspected_files": [
+    "thorium_family_preview.png",
+    "../thorium_armor_comparison.png"
+  ],
+  "observations": [
+    "The new breastplate has a shallow collar, chamfered shoulder slabs, two front planes with an offset seam and articulated waist lames. The old tall split neckline is absent.",
+    "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+  ],
+  "limitations": [
+    "No creator approval of this revision has been supplied.",
+    "Textures only; no gameplay or in-game acceptance claim."
+  ]
+}

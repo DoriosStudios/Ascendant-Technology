@@ -1,7 +1,5 @@
 {
     "namespace": "absolute_container",
-    "toggle_unchecked@ascendant_common.toggle_state_unchecked": { },
-    "toggle_checked@ascendant_common.toggle_state_checked": { },
     "absolute_container_top": {
         "type": "collection_panel",
         "anchor_from": "center",
@@ -62,21 +60,16 @@
                             }
                         },
                         {
-                            "show_status_panel@common.toggle": {
-                                "size": [18, 94 ],
+                            "show_status_panel@at_common.toggle_button": {
+                                "size": [
+                                    18,
+                                    94
+                                ],
                                 "anchor_from": "center",
                                 "anchor_to": "center",
                                 "layer": 2,
                                 "$toggle_name": "status_toggle",
                                 "$toggle_texture": "#plus_button_visible",
-                                "$unchecked_control": "absolute_container.toggle_unchecked",
-                                "$checked_control": "absolute_container.toggle_checked",
-                                "$unchecked_hover_control": "absolute_container.toggle_unchecked",
-                                "$checked_hover_control": "absolute_container.toggle_checked",
-                                "$unchecked_locked_control": "absolute_container.toggle_unchecked",
-                                "$checked_locked_control": "absolute_container.toggle_checked",
-                                "$unchecked_locked_hover_control": "absolute_container.toggle_unchecked",
-                                "$checked_locked_hover_control": "absolute_container.toggle_checked",
                                 "button_mappings": [
                                     {
                                         "from_button_id": "button.menu_select",
@@ -88,7 +81,10 @@
                                         "to_button_id": "button.menu_select",
                                         "mapping_type": "pressed"
                                     }
-                                ]
+                                ],
+                                "$toggle_property_bag": {
+                                    "#toggle_state": true
+                                }
                             }
                         }
                     ]

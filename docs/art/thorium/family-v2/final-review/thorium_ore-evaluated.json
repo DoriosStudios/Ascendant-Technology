@@ -1,0 +1,3938 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v2\\final\\thorium_ore.png",
+  "pixel_sha256": "640f5d0f9d9643b3eb6d5252b11310de7a3e0ea24e599052064eecd176dd47df",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "opaque",
+    "require_transparent": false,
+    "palette": {
+      "max_colors": 11,
+      "allowed": [
+        [
+          197,
+          80,
+          136
+        ],
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          231,
+          113,
+          172
+        ],
+        [
+          235,
+          154,
+          195
+        ],
+        [
+          235,
+          196,
+          217
+        ],
+        [
+          58,
+          44,
+          55
+        ],
+        [
+          157,
+          157,
+          157
+        ],
+        [
+          141,
+          141,
+          141
+        ],
+        [
+          124,
+          124,
+          124
+        ],
+        [
+          108,
+          108,
+          108
+        ],
+        [
+          92,
+          92,
+          92
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": false,
+      "singleton_limit": 8,
+      "max_components": null
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 0,
+    "INFO": 2
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 0,
+      "partial": 0,
+      "opaque": 256
+    },
+    "palette": {
+      "unique_visible_rgb": 10,
+      "unique_rgba": 10,
+      "frequencies": [
+        {
+          "rgb": [
+            108,
+            108,
+            108
+          ],
+          "hex": "#6C6C6C",
+          "count": 63
+        },
+        {
+          "rgb": [
+            124,
+            124,
+            124
+          ],
+          "hex": "#7C7C7C",
+          "count": 61
+        },
+        {
+          "rgb": [
+            141,
+            141,
+            141
+          ],
+          "hex": "#8D8D8D",
+          "count": 30
+        },
+        {
+          "rgb": [
+            92,
+            92,
+            92
+          ],
+          "hex": "#5C5C5C",
+          "count": 27
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "hex": "#C55088",
+          "count": 24
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "hex": "#E771AC",
+          "count": 18
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 12
+        },
+        {
+          "rgb": [
+            157,
+            157,
+            157
+          ],
+          "hex": "#9D9D9D",
+          "count": 11
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "hex": "#EBC4D9",
+          "count": 6
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "hex": "#EB9AC3",
+          "count": 4
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 256,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "components_4_connected": 0,
+      "component_sizes": []
+    },
+    "clusters": {
+      "enabled": false
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            92,
+            92,
+            92
+          ],
+          "pixels": 27,
+          "oklab": [
+            0.47478010265973675,
+            3.8434866400649526e-11,
+            1.769690971542559e-08
+          ]
+        },
+        {
+          "rgb": [
+            108,
+            108,
+            108
+          ],
+          "pixels": 63,
+          "oklab": [
+            0.5312817994338657,
+            4.300879097307586e-11,
+            1.9802948780789364e-08
+          ]
+        },
+        {
+          "rgb": [
+            124,
+            124,
+            124
+          ],
+          "pixels": 61,
+          "oklab": [
+            0.5863164643281022,
+            4.746403270416977e-11,
+            2.1854305864987822e-08
+          ]
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "pixels": 24,
+          "oklab": [
+            0.5997660713505149,
+            0.15911940459083473,
+            -0.018965013732911817
+          ]
+        },
+        {
+          "rgb": [
+            141,
+            141,
+            141
+          ],
+          "pixels": 30,
+          "oklab": [
+            0.6434092157224806,
+            5.2085891155684294e-11,
+            2.3982375751963048e-08
+          ]
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 12,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            157,
+            157,
+            157
+          ],
+          "pixels": 11,
+          "oklab": [
+            0.6960069309206544,
+            5.634359645512177e-11,
+            2.594289816304496e-08
+          ]
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "pixels": 18,
+          "oklab": [
+            0.703253560755495,
+            0.1575084120131156,
+            -0.025730453813424092
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "pixels": 4,
+          "oklab": [
+            0.778763878657962,
+            0.10673590363744428,
+            -0.022298036426314338
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "pixels": 6,
+          "oklab": [
+            0.8599941784213212,
+            0.05006552115085833,
+            -0.013761702133999187
+          ]
+        }
+      ],
+      "lightness_range": 0.38521407576158445,
+      "tonal_coverage": {
+        "shadow": 0.3515625,
+        "mid": 0.625,
+        "highlight": 0.0234375
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    },
+    {
+      "severity": "INFO",
+      "code": "intentional_edge_contact",
+      "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+      "policy": "allow",
+      "coordinates": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          10
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          0,
+          12
+        ],
+        [
+          0,
+          13
+        ],
+        [
+          0,
+          14
+        ],
+        [
+          0,
+          15
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          15,
+          6
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          15,
+          8
+        ],
+        [
+          15,
+          9
+        ],
+        [
+          15,
+          10
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          15,
+          12
+        ],
+        [
+          15,
+          13
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          11,
+          0
+        ],
+        [
+          12,
+          0
+        ],
+        [
+          13,
+          0
+        ],
+        [
+          14,
+          0
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          0,
+          15
+        ],
+        [
+          1,
+          15
+        ],
+        [
+          2,
+          15
+        ],
+        [
+          3,
+          15
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          5,
+          15
+        ],
+        [
+          6,
+          15
+        ],
+        [
+          7,
+          15
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          9,
+          15
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          11,
+          15
+        ],
+        [
+          12,
+          15
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          15,
+          15
+        ]
+      ]
+    }
+  ],
+  "visual_review": {
+    "status": "model_reviewed",
+    "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+    "evaluator_type": "model",
+    "pixel_sha256": "640f5d0f9d9643b3eb6d5252b11310de7a3e0ea24e599052064eecd176dd47df",
+    "human_approval": "required",
+    "inspected_files": [
+      "thorium_family_preview.png"
+    ],
+    "observations": [
+      "The stone-host variant uses an authored lighter neutral ramp and the same four-site mineral language. It is not claimed to reproduce an exact vanilla stone texture.",
+      "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+    ],
+    "limitations": [
+      "No creator approval of this revision has been supplied.",
+      "Textures only; no gameplay or in-game acceptance claim."
+    ],
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ]
+  },
+  "file_sha256": "a8285b806235f9e2cf60375ec4eab80dda14a75ebf3368c34b7e192b56ca8d4d",
+  "design": {
+    "intent": {
+      "identity": "MinÃ©rio de TÃ³rio",
+      "usage": "native AT texture-family candidate",
+      "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+      "orientation": "explicit native inventory or block face construction",
+      "lighting": "upper-left, reduced value range; highlights describe connected planes",
+      "structure": [
+        "neutral host reconstructed from AT deepslate; stone version uses an authored lighter neutral ramp",
+        "four angled mineral pockets with cut crystal-like shard faces"
+      ],
+      "style": [
+        "new Thorium construction rather than titanium recolor",
+        "sharp chamfers and restrained plate seams",
+        "20 percent lower HSV saturation in the metal ramp"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/titanium_ingot.png",
+        "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+        "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+        "approval": "project reference, not approval of Thorium variants"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "primitives": [
+        {
+          "layer": "silhouette",
+          "command": 0,
+          "bounds": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 0,
+          "bounds": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 1,
+          "bounds": [
+            1,
+            0,
+            2,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 2,
+          "bounds": [
+            2,
+            0,
+            3,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 3,
+          "bounds": [
+            3,
+            0,
+            4,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 4,
+          "bounds": [
+            4,
+            0,
+            5,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 5,
+          "bounds": [
+            5,
+            0,
+            6,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 6,
+          "bounds": [
+            6,
+            0,
+            7,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 7,
+          "bounds": [
+            7,
+            0,
+            8,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 8,
+          "bounds": [
+            8,
+            0,
+            9,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 9,
+          "bounds": [
+            9,
+            0,
+            10,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 10,
+          "bounds": [
+            10,
+            0,
+            11,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 11,
+          "bounds": [
+            11,
+            0,
+            12,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 12,
+          "bounds": [
+            12,
+            0,
+            13,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 13,
+          "bounds": [
+            13,
+            0,
+            14,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 14,
+          "bounds": [
+            14,
+            0,
+            15,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 15,
+          "bounds": [
+            15,
+            0,
+            16,
+            1
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 16,
+          "bounds": [
+            0,
+            1,
+            1,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 17,
+          "bounds": [
+            1,
+            1,
+            2,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 18,
+          "bounds": [
+            2,
+            1,
+            3,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 19,
+          "bounds": [
+            3,
+            1,
+            4,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 20,
+          "bounds": [
+            4,
+            1,
+            5,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 21,
+          "bounds": [
+            5,
+            1,
+            6,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 22,
+          "bounds": [
+            6,
+            1,
+            7,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 23,
+          "bounds": [
+            7,
+            1,
+            8,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 24,
+          "bounds": [
+            8,
+            1,
+            9,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 25,
+          "bounds": [
+            9,
+            1,
+            10,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 26,
+          "bounds": [
+            10,
+            1,
+            11,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 27,
+          "bounds": [
+            11,
+            1,
+            12,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 28,
+          "bounds": [
+            12,
+            1,
+            13,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 29,
+          "bounds": [
+            13,
+            1,
+            14,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 30,
+          "bounds": [
+            14,
+            1,
+            15,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 31,
+          "bounds": [
+            15,
+            1,
+            16,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 32,
+          "bounds": [
+            0,
+            2,
+            1,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 33,
+          "bounds": [
+            1,
+            2,
+            2,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 34,
+          "bounds": [
+            2,
+            2,
+            3,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 35,
+          "bounds": [
+            3,
+            2,
+            4,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 36,
+          "bounds": [
+            4,
+            2,
+            5,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 37,
+          "bounds": [
+            5,
+            2,
+            6,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 38,
+          "bounds": [
+            6,
+            2,
+            7,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 39,
+          "bounds": [
+            7,
+            2,
+            8,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 40,
+          "bounds": [
+            8,
+            2,
+            9,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 41,
+          "bounds": [
+            9,
+            2,
+            10,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 42,
+          "bounds": [
+            10,
+            2,
+            11,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 43,
+          "bounds": [
+            11,
+            2,
+            12,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 44,
+          "bounds": [
+            12,
+            2,
+            13,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 45,
+          "bounds": [
+            13,
+            2,
+            14,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 46,
+          "bounds": [
+            14,
+            2,
+            15,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 47,
+          "bounds": [
+            15,
+            2,
+            16,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 48,
+          "bounds": [
+            0,
+            3,
+            1,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 49,
+          "bounds": [
+            1,
+            3,
+            2,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 50,
+          "bounds": [
+            2,
+            3,
+            3,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 51,
+          "bounds": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 52,
+          "bounds": [
+            4,
+            3,
+            5,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 53,
+          "bounds": [
+            5,
+            3,
+            6,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 54,
+          "bounds": [
+            6,
+            3,
+            7,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 55,
+          "bounds": [
+            7,
+            3,
+            8,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 56,
+          "bounds": [
+            8,
+            3,
+            9,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 57,
+          "bounds": [
+            9,
+            3,
+            10,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 58,
+          "bounds": [
+            10,
+            3,
+            11,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 59,
+          "bounds": [
+            11,
+            3,
+            12,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 60,
+          "bounds": [
+            12,
+            3,
+            13,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 61,
+          "bounds": [
+            13,
+            3,
+            14,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 62,
+          "bounds": [
+            14,
+            3,
+            15,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 63,
+          "bounds": [
+            15,
+            3,
+            16,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 64,
+          "bounds": [
+            0,
+            4,
+            1,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 65,
+          "bounds": [
+            1,
+            4,
+            2,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 66,
+          "bounds": [
+            2,
+            4,
+            3,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 67,
+          "bounds": [
+            3,
+            4,
+            4,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 68,
+          "bounds": [
+            4,
+            4,
+            5,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 69,
+          "bounds": [
+            5,
+            4,
+            6,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 70,
+          "bounds": [
+            6,
+            4,
+            7,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 71,
+          "bounds": [
+            7,
+            4,
+            8,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 72,
+          "bounds": [
+            8,
+            4,
+            9,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 73,
+          "bounds": [
+            9,
+            4,
+            10,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 74,
+          "bounds": [
+            10,
+            4,
+            11,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 75,
+          "bounds": [
+            11,
+            4,
+            12,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 76,
+          "bounds": [
+            12,
+            4,
+            13,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 77,
+          "bounds": [
+            13,
+            4,
+            14,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 78,
+          "bounds": [
+            14,
+            4,
+            15,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 79,
+          "bounds": [
+            15,
+            4,
+            16,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 80,
+          "bounds": [
+            0,
+            5,
+            1,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 81,
+          "bounds": [
+            1,
+            5,
+            2,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 82,
+          "bounds": [
+            2,
+            5,
+            3,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 83,
+          "bounds": [
+            3,
+            5,
+            4,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 84,
+          "bounds": [
+            4,
+            5,
+            5,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 85,
+          "bounds": [
+            5,
+            5,
+            6,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 86,
+          "bounds": [
+            6,
+            5,
+            7,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 87,
+          "bounds": [
+            7,
+            5,
+            8,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 88,
+          "bounds": [
+            8,
+            5,
+            9,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 89,
+          "bounds": [
+            9,
+            5,
+            10,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 90,
+          "bounds": [
+            10,
+            5,
+            11,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 91,
+          "bounds": [
+            11,
+            5,
+            12,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 92,
+          "bounds": [
+            12,
+            5,
+            13,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 93,
+          "bounds": [
+            13,
+            5,
+            14,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 94,
+          "bounds": [
+            14,
+            5,
+            15,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 95,
+          "bounds": [
+            15,
+            5,
+            16,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 96,
+          "bounds": [
+            0,
+            6,
+            1,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 97,
+          "bounds": [
+            1,
+            6,
+            2,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 98,
+          "bounds": [
+            2,
+            6,
+            3,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 99,
+          "bounds": [
+            3,
+            6,
+            4,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 100,
+          "bounds": [
+            4,
+            6,
+            5,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 101,
+          "bounds": [
+            5,
+            6,
+            6,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 102,
+          "bounds": [
+            6,
+            6,
+            7,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 103,
+          "bounds": [
+            7,
+            6,
+            8,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 104,
+          "bounds": [
+            8,
+            6,
+            9,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 105,
+          "bounds": [
+            9,
+            6,
+            10,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 106,
+          "bounds": [
+            10,
+            6,
+            11,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 107,
+          "bounds": [
+            11,
+            6,
+            12,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 108,
+          "bounds": [
+            12,
+            6,
+            13,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 109,
+          "bounds": [
+            13,
+            6,
+            14,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 110,
+          "bounds": [
+            14,
+            6,
+            15,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 111,
+          "bounds": [
+            15,
+            6,
+            16,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 112,
+          "bounds": [
+            0,
+            7,
+            1,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 113,
+          "bounds": [
+            1,
+            7,
+            2,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 114,
+          "bounds": [
+            2,
+            7,
+            3,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 115,
+          "bounds": [
+            3,
+            7,
+            4,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 116,
+          "bounds": [
+            4,
+            7,
+            5,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 117,
+          "bounds": [
+            5,
+            7,
+            6,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 118,
+          "bounds": [
+            6,
+            7,
+            7,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 119,
+          "bounds": [
+            7,
+            7,
+            8,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 120,
+          "bounds": [
+            8,
+            7,
+            9,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 121,
+          "bounds": [
+            9,
+            7,
+            10,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 122,
+          "bounds": [
+            10,
+            7,
+            11,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 123,
+          "bounds": [
+            11,
+            7,
+            12,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 124,
+          "bounds": [
+            12,
+            7,
+            13,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 125,
+          "bounds": [
+            13,
+            7,
+            14,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 126,
+          "bounds": [
+            14,
+            7,
+            15,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 127,
+          "bounds": [
+            15,
+            7,
+            16,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 128,
+          "bounds": [
+            0,
+            8,
+            1,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 129,
+          "bounds": [
+            1,
+            8,
+            2,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 130,
+          "bounds": [
+            2,
+            8,
+            3,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 131,
+          "bounds": [
+            3,
+            8,
+            4,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 132,
+          "bounds": [
+            4,
+            8,
+            5,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 133,
+          "bounds": [
+            5,
+            8,
+            6,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 134,
+          "bounds": [
+            6,
+            8,
+            7,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 135,
+          "bounds": [
+            7,
+            8,
+            8,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 136,
+          "bounds": [
+            8,
+            8,
+            9,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 137,
+          "bounds": [
+            9,
+            8,
+            10,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 138,
+          "bounds": [
+            10,
+            8,
+            11,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 139,
+          "bounds": [
+            11,
+            8,
+            12,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 140,
+          "bounds": [
+            12,
+            8,
+            13,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 141,
+          "bounds": [
+            13,
+            8,
+            14,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 142,
+          "bounds": [
+            14,
+            8,
+            15,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 143,
+          "bounds": [
+            15,
+            8,
+            16,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 144,
+          "bounds": [
+            0,
+            9,
+            1,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 145,
+          "bounds": [
+            1,
+            9,
+            2,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 146,
+          "bounds": [
+            2,
+            9,
+            3,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 147,
+          "bounds": [
+            3,
+            9,
+            4,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 148,
+          "bounds": [
+            4,
+            9,
+            5,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 149,
+          "bounds": [
+            5,
+            9,
+            6,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 150,
+          "bounds": [
+            6,
+            9,
+            7,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 151,
+          "bounds": [
+            7,
+            9,
+            8,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 152,
+          "bounds": [
+            8,
+            9,
+            9,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 153,
+          "bounds": [
+            9,
+            9,
+            10,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 154,
+          "bounds": [
+            10,
+            9,
+            11,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 155,
+          "bounds": [
+            11,
+            9,
+            12,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 156,
+          "bounds": [
+            12,
+            9,
+            13,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 157,
+          "bounds": [
+            13,
+            9,
+            14,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 158,
+          "bounds": [
+            14,
+            9,
+            15,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 159,
+          "bounds": [
+            15,
+            9,
+            16,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 160,
+          "bounds": [
+            0,
+            10,
+            1,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 161,
+          "bounds": [
+            1,
+            10,
+            2,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 162,
+          "bounds": [
+            2,
+            10,
+            3,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 163,
+          "bounds": [
+            3,
+            10,
+            4,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 164,
+          "bounds": [
+            4,
+            10,
+            5,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 165,
+          "bounds": [
+            5,
+            10,
+            6,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 166,
+          "bounds": [
+            6,
+            10,
+            7,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 167,
+          "bounds": [
+            7,
+            10,
+            8,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 168,
+          "bounds": [
+            8,
+            10,
+            9,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 169,
+          "bounds": [
+            9,
+            10,
+            10,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 170,
+          "bounds": [
+            10,
+            10,
+            11,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 171,
+          "bounds": [
+            11,
+            10,
+            12,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 172,
+          "bounds": [
+            12,
+            10,
+            13,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 173,
+          "bounds": [
+            13,
+            10,
+            14,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 174,
+          "bounds": [
+            14,
+            10,
+            15,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 175,
+          "bounds": [
+            15,
+            10,
+            16,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 176,
+          "bounds": [
+            0,
+            11,
+            1,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 177,
+          "bounds": [
+            1,
+            11,
+            2,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 178,
+          "bounds": [
+            2,
+            11,
+            3,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 179,
+          "bounds": [
+            3,
+            11,
+            4,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 180,
+          "bounds": [
+            4,
+            11,
+            5,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 181,
+          "bounds": [
+            5,
+            11,
+            6,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 182,
+          "bounds": [
+            6,
+            11,
+            7,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 183,
+          "bounds": [
+            7,
+            11,
+            8,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 184,
+          "bounds": [
+            8,
+            11,
+            9,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 185,
+          "bounds": [
+            9,
+            11,
+            10,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 186,
+          "bounds": [
+            10,
+            11,
+            11,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 187,
+          "bounds": [
+            11,
+            11,
+            12,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 188,
+          "bounds": [
+            12,
+            11,
+            13,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 189,
+          "bounds": [
+            13,
+            11,
+            14,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 190,
+          "bounds": [
+            14,
+            11,
+            15,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 191,
+          "bounds": [
+            15,
+            11,
+            16,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 192,
+          "bounds": [
+            0,
+            12,
+            1,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 193,
+          "bounds": [
+            1,
+            12,
+            2,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 194,
+          "bounds": [
+            2,
+            12,
+            3,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 195,
+          "bounds": [
+            3,
+            12,
+            4,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 196,
+          "bounds": [
+            4,
+            12,
+            5,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 197,
+          "bounds": [
+            5,
+            12,
+            6,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 198,
+          "bounds": [
+            6,
+            12,
+            7,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 199,
+          "bounds": [
+            7,
+            12,
+            8,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 200,
+          "bounds": [
+            8,
+            12,
+            9,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 201,
+          "bounds": [
+            9,
+            12,
+            10,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 202,
+          "bounds": [
+            10,
+            12,
+            11,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 203,
+          "bounds": [
+            11,
+            12,
+            12,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 204,
+          "bounds": [
+            12,
+            12,
+            13,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 205,
+          "bounds": [
+            13,
+            12,
+            14,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 206,
+          "bounds": [
+            14,
+            12,
+            15,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 207,
+          "bounds": [
+            15,
+            12,
+            16,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 208,
+          "bounds": [
+            0,
+            13,
+            1,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 209,
+          "bounds": [
+            1,
+            13,
+            2,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 210,
+          "bounds": [
+            2,
+            13,
+            3,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 211,
+          "bounds": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 212,
+          "bounds": [
+            4,
+            13,
+            5,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 213,
+          "bounds": [
+            5,
+            13,
+            6,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 214,
+          "bounds": [
+            6,
+            13,
+            7,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 215,
+          "bounds": [
+            7,
+            13,
+            8,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 216,
+          "bounds": [
+            8,
+            13,
+            9,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 217,
+          "bounds": [
+            9,
+            13,
+            10,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 218,
+          "bounds": [
+            10,
+            13,
+            11,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 219,
+          "bounds": [
+            11,
+            13,
+            12,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 220,
+          "bounds": [
+            12,
+            13,
+            13,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 221,
+          "bounds": [
+            13,
+            13,
+            14,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 222,
+          "bounds": [
+            14,
+            13,
+            15,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 223,
+          "bounds": [
+            15,
+            13,
+            16,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 224,
+          "bounds": [
+            0,
+            14,
+            1,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 225,
+          "bounds": [
+            1,
+            14,
+            2,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 226,
+          "bounds": [
+            2,
+            14,
+            3,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 227,
+          "bounds": [
+            3,
+            14,
+            4,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 228,
+          "bounds": [
+            4,
+            14,
+            5,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 229,
+          "bounds": [
+            5,
+            14,
+            6,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 230,
+          "bounds": [
+            6,
+            14,
+            7,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 231,
+          "bounds": [
+            7,
+            14,
+            8,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 232,
+          "bounds": [
+            8,
+            14,
+            9,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 233,
+          "bounds": [
+            9,
+            14,
+            10,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 234,
+          "bounds": [
+            10,
+            14,
+            11,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 235,
+          "bounds": [
+            11,
+            14,
+            12,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 236,
+          "bounds": [
+            12,
+            14,
+            13,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 237,
+          "bounds": [
+            13,
+            14,
+            14,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 238,
+          "bounds": [
+            14,
+            14,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 239,
+          "bounds": [
+            15,
+            14,
+            16,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 240,
+          "bounds": [
+            0,
+            15,
+            1,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 241,
+          "bounds": [
+            1,
+            15,
+            2,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 242,
+          "bounds": [
+            2,
+            15,
+            3,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 243,
+          "bounds": [
+            3,
+            15,
+            4,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 244,
+          "bounds": [
+            4,
+            15,
+            5,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 245,
+          "bounds": [
+            5,
+            15,
+            6,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 246,
+          "bounds": [
+            6,
+            15,
+            7,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 247,
+          "bounds": [
+            7,
+            15,
+            8,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 248,
+          "bounds": [
+            8,
+            15,
+            9,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 249,
+          "bounds": [
+            9,
+            15,
+            10,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 250,
+          "bounds": [
+            10,
+            15,
+            11,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 251,
+          "bounds": [
+            11,
+            15,
+            12,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 252,
+          "bounds": [
+            12,
+            15,
+            13,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 253,
+          "bounds": [
+            13,
+            15,
+            14,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 254,
+          "bounds": [
+            14,
+            15,
+            15,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 255,
+          "bounds": [
+            15,
+            15,
+            16,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "mineral-sites",
+          "command": 0,
+          "bounds": [
+            2,
+            1,
+            7,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "mineral-sites",
+          "command": 1,
+          "bounds": [
+            10,
+            2,
+            15,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "mineral-sites",
+          "command": 2,
+          "bounds": [
+            3,
+            7,
+            10,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "mineral-sites",
+          "command": 3,
+          "bounds": [
+            11,
+            10,
+            16,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "mineral-sites",
+          "command": 4,
+          "bounds": [
+            3,
+            2,
+            5,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "mineral-sites",
+          "command": 5,
+          "bounds": [
+            11,
+            3,
+            13,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "mineral-sites",
+          "command": 6,
+          "bounds": [
+            5,
+            8,
+            8,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "mineral-sites",
+          "command": 7,
+          "bounds": [
+            12,
+            11,
+            14,
+            13
+          ],
+          "outside_canvas": false
+        }
+      ],
+      "outside_primitives": []
+    },
+    "composition": {
+      "raster_bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "minimum_margin": 0,
+      "edge_counts": {
+        "left": 16,
+        "right": 16,
+        "top": 16,
+        "bottom": 16
+      },
+      "findings": [
+        {
+          "severity": "INFO",
+          "code": "intentional_edge_contact",
+          "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+          "policy": "allow",
+          "coordinates": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              0,
+              8
+            ],
+            [
+              0,
+              9
+            ],
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              11
+            ],
+            [
+              0,
+              12
+            ],
+            [
+              0,
+              13
+            ],
+            [
+              0,
+              14
+            ],
+            [
+              0,
+              15
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              15,
+              1
+            ],
+            [
+              15,
+              2
+            ],
+            [
+              15,
+              3
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              15,
+              5
+            ],
+            [
+              15,
+              6
+            ],
+            [
+              15,
+              7
+            ],
+            [
+              15,
+              8
+            ],
+            [
+              15,
+              9
+            ],
+            [
+              15,
+              10
+            ],
+            [
+              15,
+              11
+            ],
+            [
+              15,
+              12
+            ],
+            [
+              15,
+              13
+            ],
+            [
+              15,
+              14
+            ],
+            [
+              15,
+              15
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              8,
+              0
+            ],
+            [
+              9,
+              0
+            ],
+            [
+              10,
+              0
+            ],
+            [
+              11,
+              0
+            ],
+            [
+              12,
+              0
+            ],
+            [
+              13,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              0,
+              15
+            ],
+            [
+              1,
+              15
+            ],
+            [
+              2,
+              15
+            ],
+            [
+              3,
+              15
+            ],
+            [
+              4,
+              15
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              6,
+              15
+            ],
+            [
+              7,
+              15
+            ],
+            [
+              8,
+              15
+            ],
+            [
+              9,
+              15
+            ],
+            [
+              10,
+              15
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              12,
+              15
+            ],
+            [
+              13,
+              15
+            ],
+            [
+              14,
+              15
+            ],
+            [
+              15,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "region_bounds": {
+      "host": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "mineral-sites": [
+        2,
+        1,
+        16,
+        15
+      ]
+    }
+  }
+}

@@ -25,9 +25,7 @@
 				"size": [16, 2, 16]
 			},
 			"minecraft:light_dampening": 0,
-			"tag:dorios:conveyor_bridge_path_aetherium": {},
-			"tag:dorios:energy": {},
-			"tag:dorios:isTube": {}
+			"tag:dorios:conveyor_bridge_path_aetherium": {}
 		},
 		"permutations": [
 			{

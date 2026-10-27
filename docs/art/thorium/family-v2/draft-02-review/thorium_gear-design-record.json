@@ -1,0 +1,1746 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Engrenagem de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "eight chamfered teeth with consistent material planes",
+      "angular bushing surrounding a real hexagonal bore"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": [
+      1,
+      1,
+      15,
+      15
+    ],
+    "primitives": [
+      {
+        "layer": "silhouette",
+        "command": 0,
+        "bounds": [
+          1,
+          1,
+          15,
+          15
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 0,
+        "bounds": [
+          6,
+          1,
+          7,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 1,
+        "bounds": [
+          7,
+          1,
+          8,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 2,
+        "bounds": [
+          8,
+          1,
+          9,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 3,
+        "bounds": [
+          9,
+          1,
+          10,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 4,
+        "bounds": [
+          4,
+          2,
+          5,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 5,
+        "bounds": [
+          6,
+          2,
+          7,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 6,
+        "bounds": [
+          7,
+          2,
+          8,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 7,
+        "bounds": [
+          8,
+          2,
+          9,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 8,
+        "bounds": [
+          9,
+          2,
+          10,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 9,
+        "bounds": [
+          11,
+          2,
+          12,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 10,
+        "bounds": [
+          3,
+          3,
+          4,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 11,
+        "bounds": [
+          4,
+          3,
+          5,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 12,
+        "bounds": [
+          5,
+          3,
+          6,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 13,
+        "bounds": [
+          6,
+          3,
+          7,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 14,
+        "bounds": [
+          7,
+          3,
+          8,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 15,
+        "bounds": [
+          8,
+          3,
+          9,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 16,
+        "bounds": [
+          9,
+          3,
+          10,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 17,
+        "bounds": [
+          10,
+          3,
+          11,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 18,
+        "bounds": [
+          11,
+          3,
+          12,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 19,
+        "bounds": [
+          12,
+          3,
+          13,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 20,
+        "bounds": [
+          2,
+          4,
+          3,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 21,
+        "bounds": [
+          3,
+          4,
+          4,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 22,
+        "bounds": [
+          4,
+          4,
+          5,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 23,
+        "bounds": [
+          5,
+          4,
+          6,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 24,
+        "bounds": [
+          6,
+          4,
+          7,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 25,
+        "bounds": [
+          7,
+          4,
+          8,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 26,
+        "bounds": [
+          8,
+          4,
+          9,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 27,
+        "bounds": [
+          9,
+          4,
+          10,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 28,
+        "bounds": [
+          10,
+          4,
+          11,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 29,
+        "bounds": [
+          11,
+          4,
+          12,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 30,
+        "bounds": [
+          12,
+          4,
+          13,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 31,
+        "bounds": [
+          13,
+          4,
+          14,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 32,
+        "bounds": [
+          3,
+          5,
+          4,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 33,
+        "bounds": [
+          4,
+          5,
+          5,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 34,
+        "bounds": [
+          5,
+          5,
+          6,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 35,
+        "bounds": [
+          6,
+          5,
+          7,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 36,
+        "bounds": [
+          7,
+          5,
+          8,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 37,
+        "bounds": [
+          8,
+          5,
+          9,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 38,
+        "bounds": [
+          9,
+          5,
+          10,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 39,
+        "bounds": [
+          10,
+          5,
+          11,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 40,
+        "bounds": [
+          11,
+          5,
+          12,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 41,
+        "bounds": [
+          12,
+          5,
+          13,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 42,
+        "bounds": [
+          1,
+          6,
+          2,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 43,
+        "bounds": [
+          2,
+          6,
+          3,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 44,
+        "bounds": [
+          3,
+          6,
+          4,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 45,
+        "bounds": [
+          4,
+          6,
+          5,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 46,
+        "bounds": [
+          5,
+          6,
+          6,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 47,
+        "bounds": [
+          6,
+          6,
+          7,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 48,
+        "bounds": [
+          7,
+          6,
+          8,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 49,
+        "bounds": [
+          8,
+          6,
+          9,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 50,
+        "bounds": [
+          9,
+          6,
+          10,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 51,
+        "bounds": [
+          10,
+          6,
+          11,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 52,
+        "bounds": [
+          11,
+          6,
+          12,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 53,
+        "bounds": [
+          12,
+          6,
+          13,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 54,
+        "bounds": [
+          13,
+          6,
+          14,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 55,
+        "bounds": [
+          14,
+          6,
+          15,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 56,
+        "bounds": [
+          1,
+          7,
+          2,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 57,
+        "bounds": [
+          2,
+          7,
+          3,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 58,
+        "bounds": [
+          3,
+          7,
+          4,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 59,
+        "bounds": [
+          4,
+          7,
+          5,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 60,
+        "bounds": [
+          5,
+          7,
+          6,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 61,
+        "bounds": [
+          6,
+          7,
+          7,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 62,
+        "bounds": [
+          7,
+          7,
+          8,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 63,
+        "bounds": [
+          8,
+          7,
+          9,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 64,
+        "bounds": [
+          9,
+          7,
+          10,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 65,
+        "bounds": [
+          10,
+          7,
+          11,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 66,
+        "bounds": [
+          11,
+          7,
+          12,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 67,
+        "bounds": [
+          12,
+          7,
+          13,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 68,
+        "bounds": [
+          13,
+          7,
+          14,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 69,
+        "bounds": [
+          14,
+          7,
+          15,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 70,
+        "bounds": [
+          1,
+          8,
+          2,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 71,
+        "bounds": [
+          2,
+          8,
+          3,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 72,
+        "bounds": [
+          3,
+          8,
+          4,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 73,
+        "bounds": [
+          4,
+          8,
+          5,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 74,
+        "bounds": [
+          5,
+          8,
+          6,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 75,
+        "bounds": [
+          6,
+          8,
+          7,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 76,
+        "bounds": [
+          7,
+          8,
+          8,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 77,
+        "bounds": [
+          8,
+          8,
+          9,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 78,
+        "bounds": [
+          9,
+          8,
+          10,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 79,
+        "bounds": [
+          10,
+          8,
+          11,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 80,
+        "bounds": [
+          11,
+          8,
+          12,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 81,
+        "bounds": [
+          12,
+          8,
+          13,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 82,
+        "bounds": [
+          13,
+          8,
+          14,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 83,
+        "bounds": [
+          14,
+          8,
+          15,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 84,
+        "bounds": [
+          1,
+          9,
+          2,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 85,
+        "bounds": [
+          2,
+          9,
+          3,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 86,
+        "bounds": [
+          3,
+          9,
+          4,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 87,
+        "bounds": [
+          4,
+          9,
+          5,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 88,
+        "bounds": [
+          5,
+          9,
+          6,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 89,
+        "bounds": [
+          6,
+          9,
+          7,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 90,
+        "bounds": [
+          7,
+          9,
+          8,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 91,
+        "bounds": [
+          8,
+          9,
+          9,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 92,
+        "bounds": [
+          9,
+          9,
+          10,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 93,
+        "bounds": [
+          10,
+          9,
+          11,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 94,
+        "bounds": [
+          11,
+          9,
+          12,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 95,
+        "bounds": [
+          12,
+          9,
+          13,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 96,
+        "bounds": [
+          13,
+          9,
+          14,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 97,
+        "bounds": [
+          14,
+          9,
+          15,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 98,
+        "bounds": [
+          3,
+          10,
+          4,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 99,
+        "bounds": [
+          4,
+          10,
+          5,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 100,
+        "bounds": [
+          5,
+          10,
+          6,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 101,
+        "bounds": [
+          6,
+          10,
+          7,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 102,
+        "bounds": [
+          7,
+          10,
+          8,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 103,
+        "bounds": [
+          8,
+          10,
+          9,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 104,
+        "bounds": [
+          9,
+          10,
+          10,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 105,
+        "bounds": [
+          10,
+          10,
+          11,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 106,
+        "bounds": [
+          11,
+          10,
+          12,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 107,
+        "bounds": [
+          12,
+          10,
+          13,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 108,
+        "bounds": [
+          2,
+          11,
+          3,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 109,
+        "bounds": [
+          3,
+          11,
+          4,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 110,
+        "bounds": [
+          4,
+          11,
+          5,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 111,
+        "bounds": [
+          5,
+          11,
+          6,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 112,
+        "bounds": [
+          6,
+          11,
+          7,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 113,
+        "bounds": [
+          7,
+          11,
+          8,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 114,
+        "bounds": [
+          8,
+          11,
+          9,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 115,
+        "bounds": [
+          9,
+          11,
+          10,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 116,
+        "bounds": [
+          10,
+          11,
+          11,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 117,
+        "bounds": [
+          11,
+          11,
+          12,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 118,
+        "bounds": [
+          12,
+          11,
+          13,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 119,
+        "bounds": [
+          13,
+          11,
+          14,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 120,
+        "bounds": [
+          3,
+          12,
+          4,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 121,
+        "bounds": [
+          4,
+          12,
+          5,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 122,
+        "bounds": [
+          5,
+          12,
+          6,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 123,
+        "bounds": [
+          6,
+          12,
+          7,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 124,
+        "bounds": [
+          7,
+          12,
+          8,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 125,
+        "bounds": [
+          8,
+          12,
+          9,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 126,
+        "bounds": [
+          9,
+          12,
+          10,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 127,
+        "bounds": [
+          10,
+          12,
+          11,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 128,
+        "bounds": [
+          11,
+          12,
+          12,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 129,
+        "bounds": [
+          12,
+          12,
+          13,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 130,
+        "bounds": [
+          4,
+          13,
+          5,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 131,
+        "bounds": [
+          6,
+          13,
+          7,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 132,
+        "bounds": [
+          7,
+          13,
+          8,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 133,
+        "bounds": [
+          8,
+          13,
+          9,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 134,
+        "bounds": [
+          9,
+          13,
+          10,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 135,
+        "bounds": [
+          11,
+          13,
+          12,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 136,
+        "bounds": [
+          6,
+          14,
+          7,
+          15
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 137,
+        "bounds": [
+          7,
+          14,
+          8,
+          15
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 138,
+        "bounds": [
+          8,
+          14,
+          9,
+          15
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "tooth-faces",
+        "command": 139,
+        "bounds": [
+          9,
+          14,
+          10,
+          15
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "hub",
+        "command": 0,
+        "bounds": [
+          4,
+          5,
+          12,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "hub",
+        "command": 1,
+        "bounds": [
+          6,
+          5,
+          10,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "hub",
+        "command": 2,
+        "bounds": [
+          6,
+          6,
+          10,
+          10
+        ],
+        "outside_canvas": false
+      }
+    ],
+    "outside_primitives": []
+  },
+  "composition": {
+    "raster_bounds": [
+      1,
+      1,
+      15,
+      15
+    ],
+    "minimum_margin": 1,
+    "edge_counts": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "findings": []
+  },
+  "region_bounds": {
+    "tooth-faces": [
+      1,
+      1,
+      15,
+      15
+    ],
+    "hub": [
+      4,
+      5,
+      12,
+      11
+    ]
+  },
+  "pixel_sha256": "4495e885b1f0f86d718c93c49454502b5440798f8600fd4da1aa91024e69d0cc",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          167,
+          67,
+          114
+        ],
+        "pixels": 44,
+        "oklab": [
+          0.5307585390052371,
+          0.1400036965451507,
+          -0.01550403452013649
+        ]
+      },
+      {
+        "rgb": [
+          197,
+          80,
+          136
+        ],
+        "pixels": 9,
+        "oklab": [
+          0.5997660713505149,
+          0.15911940459083473,
+          -0.018965013732911817
+        ]
+      },
+      {
+        "rgb": [
+          220,
+          96,
+          156
+        ],
+        "pixels": 20,
+        "oklab": [
+          0.6600247922731386,
+          0.16590646322641156,
+          -0.021978423369214406
+        ]
+      },
+      {
+        "rgb": [
+          231,
+          113,
+          172
+        ],
+        "pixels": 37,
+        "oklab": [
+          0.703253560755495,
+          0.1575084120131156,
+          -0.025730453813424092
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          176,
+          206
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.8202004222885522,
+          0.0765292348381662,
+          -0.017616730036504324
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          196,
+          217
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.8599941784213212,
+          0.05006552115085833,
+          -0.013761702133999187
+        ]
+      }
+    ],
+    "lightness_range": 0.32923563941608414,
+    "tonal_coverage": {
+      "shadow": 0.4076923076923077,
+      "mid": 0.43846153846153846,
+      "highlight": 0.15384615384615385
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

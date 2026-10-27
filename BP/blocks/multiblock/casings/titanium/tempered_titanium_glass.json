@@ -1,0 +1,32 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "utilitycraft:tempered_titanium_glass",
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.utilitycraft_glass",
+                "culling": "utilitycraft:glass"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "utilitycraft_tempered_titanium_glass",
+                    "render_method": "blend"
+                }
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 4
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 12
+            },
+            "tag:minecraft:is_pickaxe_item_destructible": {},
+            "tag:minecraft:iron_tier_destructible": {},
+            "tag:dorios:multiblock.case.titanium": {}
+        }
+    }
+}

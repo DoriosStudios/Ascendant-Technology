@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\final-icons\\thorium_leggings.png",
+  "pixel_sha256": "7f76e086e405fdcafa689f040c6377b4cc62c23772168eb5c9529cfe656c606e",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 19,
+      "allowed": [
+        [
+          16,
+          14,
+          34
+        ],
+        [
+          18,
+          15,
+          37
+        ],
+        [
+          28,
+          23,
+          53
+        ],
+        [
+          35,
+          35,
+          66
+        ],
+        [
+          39,
+          28,
+          29
+        ],
+        [
+          62,
+          22,
+          46
+        ],
+        [
+          94,
+          28,
+          62
+        ],
+        [
+          131,
+          34,
+          80
+        ],
+        [
+          170,
+          43,
+          103
+        ],
+        [
+          208,
+          54,
+          128
+        ],
+        [
+          237,
+          70,
+          151
+        ],
+        [
+          251,
+          91,
+          170
+        ],
+        [
+          255,
+          116,
+          186
+        ],
+        [
+          255,
+          145,
+          201
+        ],
+        [
+          255,
+          175,
+          216
+        ],
+        [
+          255,
+          202,
+          231
+        ],
+        [
+          255,
+          224,
+          241
+        ],
+        [
+          255,
+          241,
+          248
+        ],
+        [
+          255,
+          250,
+          253
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 0,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 140,
+      "partial": 0,
+      "opaque": 116
+    },
+    "palette": {
+      "unique_visible_rgb": 12,
+      "unique_rgba": 13,
+      "frequencies": [
+        {
+          "rgb": [
+            35,
+            35,
+            66
+          ],
+          "hex": "#232342",
+          "count": 27
+        },
+        {
+          "rgb": [
+            94,
+            28,
+            62
+          ],
+          "hex": "#5E1C3E",
+          "count": 22
+        },
+        {
+          "rgb": [
+            255,
+            116,
+            186
+          ],
+          "hex": "#FF74BA",
+          "count": 17
+        },
+        {
+          "rgb": [
+            208,
+            54,
+            128
+          ],
+          "hex": "#D03680",
+          "count": 16
+        },
+        {
+          "rgb": [
+            28,
+            23,
+            53
+          ],
+          "hex": "#1C1735",
+          "count": 11
+        },
+        {
+          "rgb": [
+            255,
+            224,
+            241
+          ],
+          "hex": "#FFE0F1",
+          "count": 9
+        },
+        {
+          "rgb": [
+            131,
+            34,
+            80
+          ],
+          "hex": "#832250",
+          "count": 8
+        },
+        {
+          "rgb": [
+            255,
+            250,
+            253
+          ],
+          "hex": "#FFFAFD",
+          "count": 2
+        },
+        {
+          "rgb": [
+            237,
+            70,
+            151
+          ],
+          "hex": "#ED4697",
+          "count": 1
+        },
+        {
+          "rgb": [
+            251,
+            91,
+            170
+          ],
+          "hex": "#FB5BAA",
+          "count": 1
+        },
+        {
+          "rgb": [
+            255,
+            145,
+            201
+          ],
+          "hex": "#FF91C9",
+          "count": 1
+        },
+        {
+          "rgb": [
+            255,
+            175,
+            216
+          ],
+          "hex": "#FFAFD8",
+          "count": 1
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 116,
+      "bbox": [
+        2,
+        2,
+        14,
+        14
+      ],
+      "components_4_connected": 1,
+      "component_sizes": [
+        116
+      ]
+    },
+    "clusters": {
+      "color_components": 38,
+      "singletons": 12
+    }
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ]
+  },
+  "file_sha256": "d4956c79cbeffd7a2999ed2300aad6ccfc7c8dd170261e44ddd4b6bdd10c2b67"
+}

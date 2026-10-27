@@ -1,0 +1,141 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Haste de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Keep this unlisted image byte-identical, including the creator-approved metal block."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/unchanged_thorium_rod.png",
+      "sha256": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+      "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    },
+    {
+      "path": "../references/unchanged_thorium_rod.png",
+      "sha256": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+      "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+      "approval": "not independently verified"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": null,
+    "primitives": [],
+    "outside_primitives": [],
+    "reference_bounds": [
+      2,
+      2,
+      14,
+      14
+    ]
+  },
+  "composition": {
+    "raster_bounds": [
+      2,
+      2,
+      14,
+      14
+    ],
+    "minimum_margin": 2,
+    "edge_counts": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "findings": []
+  },
+  "region_bounds": {},
+  "pixel_sha256": "d4785eb6b35eac9f863ddef20bae23c6826c92117be6b1f80f0c929852b3a5a3",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          58,
+          44,
+          55
+        ],
+        "pixels": 23,
+        "oklab": [
+          0.3132951637855895,
+          0.02475298566202988,
+          -0.012167274078498158
+        ]
+      },
+      {
+        "rgb": [
+          167,
+          67,
+          114
+        ],
+        "pixels": 3,
+        "oklab": [
+          0.5307585390052371,
+          0.1400036965451507,
+          -0.01550403452013649
+        ]
+      },
+      {
+        "rgb": [
+          220,
+          96,
+          156
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.6600247922731386,
+          0.16590646322641156,
+          -0.021978423369214406
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          154,
+          195
+        ],
+        "pixels": 11,
+        "oklab": [
+          0.778763878657962,
+          0.10673590363744428,
+          -0.022298036426314338
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          196,
+          217
+        ],
+        "pixels": 6,
+        "oklab": [
+          0.8599941784213212,
+          0.05006552115085833,
+          -0.013761702133999187
+        ]
+      }
+    ],
+    "lightness_range": 0.5466990146357317,
+    "tonal_coverage": {
+      "shadow": 0.3898305084745763,
+      "mid": 0.3220338983050848,
+      "highlight": 0.288135593220339
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

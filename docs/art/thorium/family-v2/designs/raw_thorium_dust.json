@@ -1,0 +1,245 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Pó de Tório bruto",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "angular granules grouped into a coherent small pile"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m7": [
+      235,
+      132,
+      184
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m11": [
+      235,
+      212,
+      224
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ],
+    "stone": [
+      87,
+      84,
+      91
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          2,
+          11
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          14,
+          12
+        ],
+        [
+          12,
+          14
+        ],
+        [
+          3,
+          14
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "pile",
+      "purpose": "angular granules grouped into a coherent small pile",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              3,
+              11
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              8,
+              4
+            ],
+            [
+              9,
+              8
+            ],
+            [
+              12,
+              9
+            ],
+            [
+              13,
+              12
+            ],
+            [
+              11,
+              13
+            ],
+            [
+              4,
+              13
+            ]
+          ],
+          "color": "stone"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              5,
+              10
+            ],
+            [
+              8,
+              5
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              7,
+              11
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              9,
+              10
+            ],
+            [
+              11,
+              9
+            ],
+            [
+              12,
+              12
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              4,
+              12
+            ],
+            [
+              6,
+              11
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              9,
+              12
+            ],
+            [
+              11,
+              12
+            ]
+          ],
+          "color": "m3",
+          "width": 1
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              9
+            ]
+          ],
+          "color": "m11"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "icons": [
+    {
+      "file": "thorium_helmet.png",
+      "png_rgba_16x16": true,
+      "alpha_identical_to_template": true,
+      "protected_source_pixels_preserved": true,
+      "deterministic_png_bytes": true,
+      "visible_colors": 14,
+      "detail_pixels_changed": 10,
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      }
+    },
+    {
+      "file": "thorium_chestplate.png",
+      "png_rgba_16x16": true,
+      "alpha_identical_to_template": true,
+      "protected_source_pixels_preserved": true,
+      "deterministic_png_bytes": true,
+      "visible_colors": 15,
+      "detail_pixels_changed": 9,
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      }
+    },
+    {
+      "file": "thorium_leggings.png",
+      "png_rgba_16x16": true,
+      "alpha_identical_to_template": true,
+      "protected_source_pixels_preserved": true,
+      "deterministic_png_bytes": true,
+      "visible_colors": 12,
+      "detail_pixels_changed": 5,
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      }
+    },
+    {
+      "file": "thorium_boots.png",
+      "png_rgba_16x16": true,
+      "alpha_identical_to_template": true,
+      "protected_source_pixels_preserved": true,
+      "deterministic_png_bytes": true,
+      "visible_colors": 9,
+      "detail_pixels_changed": 6,
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      }
+    }
+  ],
+  "collection": {
+    "png_only": true,
+    "files": 59,
+    "previous_distinct_native_images": 54,
+    "new_icons": 4,
+    "set_preview": 1
+  },
+  "reference_hashes_unchanged": true,
+  "overwrite_rejected_without_changes": true,
+  "finished_art_human_approval": "pending"
+}

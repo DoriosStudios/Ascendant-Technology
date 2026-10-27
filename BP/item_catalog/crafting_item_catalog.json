@@ -7,6 +7,27 @@
                 "groups": [
                     {
                         "group_identifier": {
+                            "icon": "utilitycraft:titanium_case",
+                            "name": "at:itemGroup.name.titanium_multiblock"
+                        },
+                        "items": [
+                            "utilitycraft:mob_chamber_controller",
+                            "utilitycraft:mob_chamber_core",
+                            "utilitycraft:essence_module",
+                            "utilitycraft:titanium_case",
+                            "utilitycraft:titanium_bricks",
+                            "utilitycraft:tempered_titanium_glass",
+                            "utilitycraft:reinforced_titanium_glass",
+                            "utilitycraft:titanium_plated_block",
+                            "utilitycraft:titanium_hazard_block",
+                            "utilitycraft:titanium_vent_panel",
+                            "utilitycraft:titanium_energy_port",
+                            "utilitycraft:titanium_fluid_port",
+                            "utilitycraft:titanium_item_port"
+                        ]
+                    },
+                    {
+                        "group_identifier": {
                             "icon": "utilitycraft:arc_press_forge",
                             "name": "at:itemGroup.name.superior_machines"
                         },
@@ -16,14 +37,15 @@
                             "utilitycraft:arcane_enchanter",
                             "utilitycraft:centrifugal_siever",
                             "utilitycraft:cryo_freezer",
-                            "utilitycraft:cryofluid_synthesizer",
                             "utilitycraft:cryo_stabilizer",
+                            "utilitycraft:cryofluid_synthesizer",
                             "utilitycraft:disenchanter",
                             "utilitycraft:dual_siever",
                             "utilitycraft:genetic_seed_synthesizer",
                             "utilitycraft:impact_crusher",
                             "utilitycraft:industrial_burner",
                             "utilitycraft:industrial_crucible",
+                            "utilitycraft:mob_slasher",
                             "utilitycraft:pattern_placer",
                             "utilitycraft:pulverizer",
                             "utilitycraft:reinforcement_anvil",
@@ -37,8 +59,11 @@
                             "name": "at:itemGroup.name.machines"
                         },
                         "items": [
+                            "utilitycraft:alchemical_station",
                             "utilitycraft:catalyst_weaver",
+                            "utilitycraft:compactor",
                             "utilitycraft:cryo_chamber",
+                            "utilitycraft:decompactor",
                             "utilitycraft:duplicator",
                             "utilitycraft:enchantment_station",
                             "utilitycraft:energizer",
@@ -46,8 +71,8 @@
                             "utilitycraft:liquifier",
                             "utilitycraft:mob_magnet",
                             "utilitycraft:network_center",
-                            "utilitycraft:overclock_tower",
                             "utilitycraft:overclock_relay",
+                            "utilitycraft:overclock_tower",
                             "utilitycraft:residue_processor",
                             "utilitycraft:singularity_fabricator",
                             "utilitycraft:vaporworks_processor"

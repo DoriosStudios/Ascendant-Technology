@@ -1,0 +1,574 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Bloco de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "opaque forged metal mass with a narrow edge chamfer",
+      "three connected angled plate planes with deliberate joins"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "primitives": [
+      {
+        "layer": "silhouette",
+        "command": 0,
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "metal-base",
+        "command": 0,
+        "bounds": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "metal-base",
+        "command": 1,
+        "bounds": [
+          1,
+          1,
+          15,
+          15
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "metal-base",
+        "command": 2,
+        "bounds": [
+          0,
+          0,
+          16,
+          1
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "metal-base",
+        "command": 3,
+        "bounds": [
+          0,
+          1,
+          1,
+          15
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "metal-base",
+        "command": 4,
+        "bounds": [
+          1,
+          1,
+          16,
+          16
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "forged-panels",
+        "command": 0,
+        "bounds": [
+          2,
+          2,
+          13,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "forged-panels",
+        "command": 1,
+        "bounds": [
+          3,
+          3,
+          14,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "forged-panels",
+        "command": 2,
+        "bounds": [
+          3,
+          3,
+          13,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "forged-panels",
+        "command": 3,
+        "bounds": [
+          3,
+          9,
+          13,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "forged-panels",
+        "command": 4,
+        "bounds": [
+          3,
+          3,
+          11,
+          4
+        ],
+        "outside_canvas": false
+      }
+    ],
+    "outside_primitives": []
+  },
+  "composition": {
+    "raster_bounds": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "minimum_margin": 0,
+    "edge_counts": {
+      "left": 16,
+      "right": 16,
+      "top": 16,
+      "bottom": 16
+    },
+    "findings": [
+      {
+        "severity": "INFO",
+        "code": "intentional_edge_contact",
+        "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+        "policy": "allow",
+        "coordinates": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            0,
+            9
+          ],
+          [
+            0,
+            10
+          ],
+          [
+            0,
+            11
+          ],
+          [
+            0,
+            12
+          ],
+          [
+            0,
+            13
+          ],
+          [
+            0,
+            14
+          ],
+          [
+            0,
+            15
+          ],
+          [
+            15,
+            0
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            15,
+            2
+          ],
+          [
+            15,
+            3
+          ],
+          [
+            15,
+            4
+          ],
+          [
+            15,
+            5
+          ],
+          [
+            15,
+            6
+          ],
+          [
+            15,
+            7
+          ],
+          [
+            15,
+            8
+          ],
+          [
+            15,
+            9
+          ],
+          [
+            15,
+            10
+          ],
+          [
+            15,
+            11
+          ],
+          [
+            15,
+            12
+          ],
+          [
+            15,
+            13
+          ],
+          [
+            15,
+            14
+          ],
+          [
+            15,
+            15
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            10,
+            0
+          ],
+          [
+            11,
+            0
+          ],
+          [
+            12,
+            0
+          ],
+          [
+            13,
+            0
+          ],
+          [
+            14,
+            0
+          ],
+          [
+            15,
+            0
+          ],
+          [
+            0,
+            15
+          ],
+          [
+            1,
+            15
+          ],
+          [
+            2,
+            15
+          ],
+          [
+            3,
+            15
+          ],
+          [
+            4,
+            15
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            6,
+            15
+          ],
+          [
+            7,
+            15
+          ],
+          [
+            8,
+            15
+          ],
+          [
+            9,
+            15
+          ],
+          [
+            10,
+            15
+          ],
+          [
+            11,
+            15
+          ],
+          [
+            12,
+            15
+          ],
+          [
+            13,
+            15
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            15,
+            15
+          ]
+        ]
+      }
+    ]
+  },
+  "region_bounds": {
+    "metal-base": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "forged-panels": [
+      2,
+      2,
+      14,
+      14
+    ]
+  },
+  "pixel_sha256": "767ce755625a9d7f6134d968af8b0b1d6189e68c663895c942586b164f66d157",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          135,
+          55,
+          93
+        ],
+        "pixels": 29,
+        "oklab": [
+          0.4580736579510529,
+          0.11682090401904174,
+          -0.014137422668949795
+        ]
+      },
+      {
+        "rgb": [
+          167,
+          67,
+          114
+        ],
+        "pixels": 10,
+        "oklab": [
+          0.5307585390052371,
+          0.1400036965451507,
+          -0.01550403452013649
+        ]
+      },
+      {
+        "rgb": [
+          197,
+          80,
+          136
+        ],
+        "pixels": 11,
+        "oklab": [
+          0.5997660713505149,
+          0.15911940459083473,
+          -0.018965013732911817
+        ]
+      },
+      {
+        "rgb": [
+          220,
+          96,
+          156
+        ],
+        "pixels": 66,
+        "oklab": [
+          0.6600247922731386,
+          0.16590646322641156,
+          -0.021978423369214406
+        ]
+      },
+      {
+        "rgb": [
+          231,
+          113,
+          172
+        ],
+        "pixels": 68,
+        "oklab": [
+          0.703253560755495,
+          0.1575084120131156,
+          -0.025730453813424092
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          154,
+          195
+        ],
+        "pixels": 48,
+        "oklab": [
+          0.778763878657962,
+          0.10673590363744428,
+          -0.022298036426314338
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          176,
+          206
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.8202004222885522,
+          0.0765292348381662,
+          -0.017616730036504324
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          196,
+          217
+        ],
+        "pixels": 8,
+        "oklab": [
+          0.8599941784213212,
+          0.05006552115085833,
+          -0.013761702133999187
+        ]
+      }
+    ],
+    "lightness_range": 0.40192052047026827,
+    "tonal_coverage": {
+      "shadow": 0.15234375,
+      "mid": 0.75390625,
+      "highlight": 0.09375
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

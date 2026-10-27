@@ -1,0 +1,113 @@
+{
+  "identity": "Thorium leggings inventory icon",
+  "source": "RP/textures/items/armor/titanium_leggings.png",
+  "source_sha256": "009c1972eb673f86c28171eb042d27e50281cfb737ebbb3e6d76bef5e10b4eec",
+  "pixel_sha256": "7f76e086e405fdcafa689f040c6377b4cc62c23772168eb5c9529cfe656c606e",
+  "native_size": [
+    16,
+    16
+  ],
+  "intent": "Thorium armor inventory icons: bubblegum-pink metal, discrete angular plate bevels, recognizable helmet/chestplate/leggings/boots, no grotesque silhouette additions.",
+  "purpose": "waist clasp and small knee-plate edges; leg gap unchanged",
+  "alpha_identical_to_template": true,
+  "changes_outside_material_mask": 0,
+  "detail_changes": [
+    {
+      "xy": [
+        7,
+        4
+      ],
+      "before": [
+        255,
+        116,
+        186,
+        255
+      ],
+      "after": [
+        208,
+        54,
+        128,
+        255
+      ]
+    },
+    {
+      "xy": [
+        3,
+        8
+      ],
+      "before": [
+        255,
+        224,
+        241,
+        255
+      ],
+      "after": [
+        255,
+        175,
+        216,
+        255
+      ]
+    },
+    {
+      "xy": [
+        4,
+        8
+      ],
+      "before": [
+        255,
+        116,
+        186,
+        255
+      ],
+      "after": [
+        237,
+        70,
+        151,
+        255
+      ]
+    },
+    {
+      "xy": [
+        11,
+        8
+      ],
+      "before": [
+        208,
+        54,
+        128,
+        255
+      ],
+      "after": [
+        255,
+        145,
+        201,
+        255
+      ]
+    },
+    {
+      "xy": [
+        11,
+        9
+      ],
+      "before": [
+        208,
+        54,
+        128,
+        255
+      ],
+      "after": [
+        251,
+        91,
+        170,
+        255
+      ]
+    }
+  ],
+  "palette_visible_colors": 12,
+  "technical": {
+    "ERROR": 0,
+    "WARNING": 0,
+    "INFO": 1
+  },
+  "human_approval": "required"
+}

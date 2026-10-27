@@ -1,0 +1,185 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Haste de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "long narrow bevel and deliberately clipped end faces"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          11,
+          2
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          3,
+          13
+        ],
+        [
+          2,
+          11
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "rod",
+      "purpose": "long narrow bevel and deliberately clipped end faces",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              11,
+              3
+            ],
+            [
+              12,
+              3
+            ],
+            [
+              4,
+              12
+            ],
+            [
+              3,
+              11
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              12,
+              4
+            ],
+            [
+              12,
+              5
+            ],
+            [
+              5,
+              12
+            ],
+            [
+              4,
+              12
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              10,
+              4
+            ],
+            [
+              4,
+              10
+            ]
+          ],
+          "color": "m10",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              8,
+              6
+            ],
+            [
+              9,
+              7
+            ]
+          ],
+          "color": "m3",
+          "width": 1
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              12
+            ]
+          ],
+          "color": "m3"
+        }
+      ]
+    }
+  ]
+}

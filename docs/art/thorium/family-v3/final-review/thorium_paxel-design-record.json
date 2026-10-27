@@ -1,0 +1,706 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Paxel de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/iron_paxel.png",
+      "sha256": "89d77d9ceb9bf1b71851074571d5274b3685c0c92c1720a91f6d738fb52a7bea",
+      "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    },
+    {
+      "path": "../references/iron_paxel.png",
+      "sha256": "89d77d9ceb9bf1b71851074571d5274b3685c0c92c1720a91f6d738fb52a7bea",
+      "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged.",
+      "approval": "not independently verified"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": [
+      5,
+      0,
+      15,
+      12
+    ],
+    "primitives": [
+      {
+        "layer": "palette-transfer-only",
+        "command": 0,
+        "bounds": [
+          12,
+          7,
+          13,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 1,
+        "bounds": [
+          14,
+          7,
+          15,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 2,
+        "bounds": [
+          5,
+          4,
+          6,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 3,
+        "bounds": [
+          9,
+          2,
+          10,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 4,
+        "bounds": [
+          8,
+          0,
+          9,
+          1
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 5,
+        "bounds": [
+          9,
+          5,
+          10,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 6,
+        "bounds": [
+          8,
+          3,
+          9,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 7,
+        "bounds": [
+          10,
+          6,
+          11,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 8,
+        "bounds": [
+          11,
+          5,
+          12,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 9,
+        "bounds": [
+          10,
+          3,
+          11,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 10,
+        "bounds": [
+          13,
+          2,
+          14,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 11,
+        "bounds": [
+          13,
+          11,
+          14,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 12,
+        "bounds": [
+          13,
+          8,
+          14,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 13,
+        "bounds": [
+          7,
+          4,
+          8,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 14,
+        "bounds": [
+          6,
+          2,
+          7,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 15,
+        "bounds": [
+          7,
+          1,
+          8,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 16,
+        "bounds": [
+          6,
+          5,
+          7,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 17,
+        "bounds": [
+          12,
+          6,
+          13,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 18,
+        "bounds": [
+          14,
+          9,
+          15,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 19,
+        "bounds": [
+          8,
+          2,
+          9,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 20,
+        "bounds": [
+          9,
+          1,
+          10,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 21,
+        "bounds": [
+          10,
+          2,
+          11,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 22,
+        "bounds": [
+          9,
+          4,
+          10,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 23,
+        "bounds": [
+          10,
+          5,
+          11,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 24,
+        "bounds": [
+          13,
+          7,
+          14,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 25,
+        "bounds": [
+          13,
+          10,
+          14,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 26,
+        "bounds": [
+          6,
+          4,
+          7,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 27,
+        "bounds": [
+          7,
+          3,
+          8,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 28,
+        "bounds": [
+          14,
+          2,
+          15,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 29,
+        "bounds": [
+          9,
+          0,
+          10,
+          1
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 30,
+        "bounds": [
+          5,
+          5,
+          6,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 31,
+        "bounds": [
+          8,
+          4,
+          9,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 32,
+        "bounds": [
+          14,
+          8,
+          15,
+          9
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 33,
+        "bounds": [
+          9,
+          3,
+          10,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 34,
+        "bounds": [
+          8,
+          1,
+          9,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 35,
+        "bounds": [
+          10,
+          4,
+          11,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 36,
+        "bounds": [
+          10,
+          1,
+          11,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 37,
+        "bounds": [
+          11,
+          6,
+          12,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 38,
+        "bounds": [
+          13,
+          9,
+          14,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 39,
+        "bounds": [
+          13,
+          6,
+          14,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 40,
+        "bounds": [
+          7,
+          2,
+          8,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "palette-transfer-only",
+        "command": 41,
+        "bounds": [
+          6,
+          3,
+          7,
+          4
+        ],
+        "outside_canvas": false
+      }
+    ],
+    "outside_primitives": [],
+    "reference_bounds": [
+      1,
+      0,
+      15,
+      16
+    ]
+  },
+  "composition": {
+    "raster_bounds": [
+      1,
+      0,
+      15,
+      16
+    ],
+    "minimum_margin": 0,
+    "edge_counts": {
+      "left": 0,
+      "right": 0,
+      "top": 2,
+      "bottom": 2
+    },
+    "findings": [
+      {
+        "severity": "INFO",
+        "code": "intentional_edge_contact",
+        "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+        "policy": "inherit",
+        "coordinates": [
+          [
+            8,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            2,
+            15
+          ],
+          [
+            3,
+            15
+          ]
+        ]
+      }
+    ]
+  },
+  "region_bounds": {
+    "palette-transfer-only": [
+      5,
+      0,
+      15,
+      12
+    ]
+  },
+  "pixel_sha256": "619388e8a724d1bca9d9fb641c153c8fda9bd0a5d86cbd6a5514cd63e3e42df3",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          24,
+          24,
+          24
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.2090360851544455,
+          1.692206097470006e-11,
+          7.791591732919656e-09
+        ]
+      },
+      {
+        "rgb": [
+          40,
+          30,
+          11
+        ],
+        "pixels": 12,
+        "oklab": [
+          0.2419650876447189,
+          0.004923750739280017,
+          0.03451447351988163
+        ]
+      },
+      {
+        "rgb": [
+          80,
+          39,
+          64
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.33708693746535195,
+          0.06787866982194266,
+          -0.019306691957441446
+        ]
+      },
+      {
+        "rgb": [
+          73,
+          54,
+          21
+        ],
+        "pixels": 13,
+        "oklab": [
+          0.34665755207882043,
+          0.010539102276513682,
+          0.05406365591104309
+        ]
+      },
+      {
+        "rgb": [
+          104,
+          78,
+          30
+        ],
+        "pixels": 5,
+        "oklab": [
+          0.4414177073946956,
+          0.012627517772607899,
+          0.07205336585042188
+        ]
+      },
+      {
+        "rgb": [
+          135,
+          55,
+          93
+        ],
+        "pixels": 11,
+        "oklab": [
+          0.4580736579510529,
+          0.11682090401904174,
+          -0.014137422668949795
+        ]
+      },
+      {
+        "rgb": [
+          137,
+          103,
+          39
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.5357701984642402,
+          0.015565823264798023,
+          0.09004211788062061
+        ]
+      },
+      {
+        "rgb": [
+          197,
+          80,
+          136
+        ],
+        "pixels": 7,
+        "oklab": [
+          0.5997660713505149,
+          0.15911940459083473,
+          -0.018965013732911817
+        ]
+      },
+      {
+        "rgb": [
+          231,
+          113,
+          172
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.703253560755495,
+          0.1575084120131156,
+          -0.025730453813424092
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          212,
+          224
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.892250348674154,
+          0.028905036804675155,
+          -0.00781983727596347
+        ]
+      }
+    ],
+    "lightness_range": 0.6832142635197085,
+    "tonal_coverage": {
+      "shadow": 0.6195652173913043,
+      "mid": 0.3369565217391305,
+      "highlight": 0.043478260869565216
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

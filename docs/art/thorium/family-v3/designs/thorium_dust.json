@@ -1,0 +1,1019 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Pó de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Complete native Titanium dust clusters with the full extended pink shadow/highlight range."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_dust.png",
+      "sha256": "03d32e711c00560b70a6f430dfa9a99a60113c4786cd849477db27f15e0eea7f",
+      "purpose": "Complete native Titanium dust clusters with the full extended pink shadow/highlight range.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "inherit",
+    "allow_clip": false
+  },
+  "palette": {
+    "c_55_55_104": [
+      55,
+      55,
+      104
+    ],
+    "c_56_55_94": [
+      56,
+      55,
+      94
+    ],
+    "c_61_32_50": [
+      61,
+      32,
+      50
+    ],
+    "c_73_73_129": [
+      73,
+      73,
+      129
+    ],
+    "c_80_39_64": [
+      80,
+      39,
+      64
+    ],
+    "c_88_88_154": [
+      88,
+      88,
+      154
+    ],
+    "c_106_46_77": [
+      106,
+      46,
+      77
+    ],
+    "c_109_109_191": [
+      109,
+      109,
+      191
+    ],
+    "c_127_132_211": [
+      127,
+      132,
+      211
+    ],
+    "c_127_147_222": [
+      127,
+      147,
+      222
+    ],
+    "c_135_55_93": [
+      135,
+      55,
+      93
+    ],
+    "c_144_159_230": [
+      144,
+      159,
+      230
+    ],
+    "c_156_165_231": [
+      156,
+      165,
+      231
+    ],
+    "c_164_171_255": [
+      164,
+      171,
+      255
+    ],
+    "c_173_179_255": [
+      173,
+      179,
+      255
+    ],
+    "c_181_194_255": [
+      181,
+      194,
+      255
+    ],
+    "c_197_80_136": [
+      197,
+      80,
+      136
+    ],
+    "c_220_96_156": [
+      220,
+      96,
+      156
+    ],
+    "c_220_246_255": [
+      220,
+      246,
+      255
+    ],
+    "c_225_236_255": [
+      225,
+      236,
+      255
+    ],
+    "c_231_113_172": [
+      231,
+      113,
+      172
+    ],
+    "c_235_132_184": [
+      235,
+      132,
+      184
+    ],
+    "c_235_154_195": [
+      235,
+      154,
+      195
+    ],
+    "c_235_176_206": [
+      235,
+      176,
+      206
+    ],
+    "c_235_212_224": [
+      235,
+      212,
+      224
+    ],
+    "c_235_224_229": [
+      235,
+      224,
+      229
+    ],
+    "c_235_231_233": [
+      235,
+      231,
+      233
+    ],
+    "c_250_235_244": [
+      250,
+      235,
+      244
+    ]
+  },
+  "source": {
+    "path": "../references/titanium_dust.png",
+    "sha256": "03d32e711c00560b70a6f430dfa9a99a60113c4786cd849477db27f15e0eea7f",
+    "purpose": "Complete native Titanium dust clusters with the full extended pink shadow/highlight range."
+  },
+  "layers": [
+    {
+      "name": "palette-transfer-only",
+      "purpose": "Complete native Titanium dust clusters with the full extended pink shadow/highlight range.",
+      "commands": [
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              9
+            ]
+          ],
+          "color": "c_250_235_244"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              10
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              9
+            ]
+          ],
+          "color": "c_250_235_244"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              6
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              8
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              11
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              11
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              10
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              12
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              11
+            ]
+          ],
+          "color": "c_250_235_244"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              10
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              4
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              3
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              13
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              12
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              8
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              5
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              4
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              12
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              9
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              6
+            ]
+          ],
+          "color": "c_235_224_229"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              5
+            ]
+          ],
+          "color": "c_235_224_229"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              10
+            ]
+          ],
+          "color": "c_235_132_184"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              7
+            ]
+          ],
+          "color": "c_235_154_195"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              5
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              7
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              12
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              9
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              11
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              7
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              8
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              9
+            ]
+          ],
+          "color": "c_220_96_156"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              11
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              13
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              9
+            ]
+          ],
+          "color": "c_235_132_184"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              13
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              10
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              11
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              10
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              7
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              6
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              13
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              6
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              12
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              11
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              4
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              8
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              12
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              9
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              6
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              8
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              8
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              13
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              10
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              10
+            ]
+          ],
+          "color": "c_235_132_184"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              11
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              10
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              10
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              7
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              12
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              12
+            ]
+          ],
+          "color": "c_235_132_184"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              12
+            ]
+          ],
+          "color": "c_235_132_184"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              9
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              11
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              8
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              5
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              13
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              5
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              11
+            ]
+          ],
+          "color": "c_235_132_184"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              13
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              10
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              7
+            ]
+          ],
+          "color": "c_250_235_244"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              6
+            ]
+          ],
+          "color": "c_220_96_156"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              11
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              7
+            ]
+          ],
+          "color": "c_235_224_229"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              8
+            ]
+          ],
+          "color": "c_250_235_244"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              7
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              6
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              13
+            ]
+          ],
+          "color": "c_61_32_50"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              12
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              9
+            ]
+          ],
+          "color": "c_106_46_77"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              9
+            ]
+          ],
+          "color": "c_220_96_156"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              8
+            ]
+          ],
+          "color": "c_235_212_224"
+        }
+      ]
+    }
+  ]
+}

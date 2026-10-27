@@ -1,0 +1,19 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "5d0198cfb0d3a3f12630fdf7c0f6917d41ab1dfd4cbbbc555ba9c1ecd93e9ebc",
+  "human_approval": "required",
+  "inspected_files": [
+    "thorium_family_preview.png",
+    "../thorium_armor_comparison.png"
+  ],
+  "observations": [
+    "A narrow horizontal visor, low central brow ridge and separate angular cheek plates replace the titanium face construction. The recognizable compact helmet remains; the chin plating is a new design.",
+    "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+  ],
+  "limitations": [
+    "No creator approval of this revision has been supplied.",
+    "Textures only; no gameplay or in-game acceptance claim."
+  ]
+}

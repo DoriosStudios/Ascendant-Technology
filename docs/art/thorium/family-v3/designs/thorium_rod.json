@@ -1,0 +1,67 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Haste de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Keep this unlisted image byte-identical, including the creator-approved metal block."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/unchanged_thorium_rod.png",
+      "sha256": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+      "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "inherit",
+    "allow_clip": false
+  },
+  "palette": {
+    "c_58_44_55": [
+      58,
+      44,
+      55
+    ],
+    "c_167_67_114": [
+      167,
+      67,
+      114
+    ],
+    "c_220_96_156": [
+      220,
+      96,
+      156
+    ],
+    "c_235_154_195": [
+      235,
+      154,
+      195
+    ],
+    "c_235_196_217": [
+      235,
+      196,
+      217
+    ]
+  },
+  "source": {
+    "path": "../references/unchanged_thorium_rod.png",
+    "sha256": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+    "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block."
+  },
+  "layers": []
+}

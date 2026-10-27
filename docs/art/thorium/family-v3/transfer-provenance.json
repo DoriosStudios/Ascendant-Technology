@@ -1,0 +1,164 @@
+[
+  {
+    "asset": "thorium_helmet",
+    "reference": "unchanged_thorium_helmet.png",
+    "method": "preserve_exact",
+    "sha256": "29c9885cb07f5803403871efffcec3ebcd9dda9e103c4874ac25075845295360"
+  },
+  {
+    "asset": "thorium_chestplate",
+    "reference": "unchanged_thorium_chestplate.png",
+    "method": "preserve_exact",
+    "sha256": "291ba16cc61824e4296bf07af4a32bbbe22c194474b5ff1ea3fa3ccd62affb94"
+  },
+  {
+    "asset": "thorium_leggings",
+    "reference": "unchanged_thorium_leggings.png",
+    "method": "preserve_exact",
+    "sha256": "9dd67664bf60214674ba43e45f165dfa04059337a8afcacfc96f253352eb63ae"
+  },
+  {
+    "asset": "thorium_boots",
+    "reference": "unchanged_thorium_boots.png",
+    "method": "preserve_exact",
+    "sha256": "43720dc601b4fe63572f1d61326399e95ea2e4e164307d729a62d469b1b5fca7"
+  },
+  {
+    "asset": "thorium_ingot",
+    "reference": "iron_ingot.png",
+    "method": "native_material_transfer",
+    "sha256": "247f59e08365383582ca519c378cf2d7d966a021bd929a686f62f7cc622cd6d0"
+  },
+  {
+    "asset": "thorium_nugget",
+    "reference": "iron_nugget.png",
+    "method": "native_material_transfer",
+    "sha256": "1442104640b7233814831f7d8070d0296b89acad278398ba63072299a9052f4f"
+  },
+  {
+    "asset": "raw_thorium",
+    "reference": "raw_iron.png",
+    "method": "native_raw_iron_roles",
+    "sha256": "2c6aaff8ee9387417c52cdd9d81d6fc1c7c65fecf7cc5a9835ab6a395336f129"
+  },
+  {
+    "asset": "thorium_chunk",
+    "reference": "unchanged_thorium_chunk.png",
+    "method": "preserve_exact",
+    "sha256": "6eacd3d5b3977ab8162a029ab06d18de6c7267210178718a585eea35872d5473"
+  },
+  {
+    "asset": "thorium_dust",
+    "reference": "titanium_dust.png",
+    "method": "native_material_transfer",
+    "sha256": "03d32e711c00560b70a6f430dfa9a99a60113c4786cd849477db27f15e0eea7f"
+  },
+  {
+    "asset": "raw_thorium_dust",
+    "reference": "unchanged_raw_thorium_dust.png",
+    "method": "preserve_exact",
+    "sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b"
+  },
+  {
+    "asset": "thorium_rod",
+    "reference": "unchanged_thorium_rod.png",
+    "method": "preserve_exact",
+    "sha256": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d"
+  },
+  {
+    "asset": "thorium_gear",
+    "reference": "unchanged_thorium_gear.png",
+    "method": "preserve_exact",
+    "sha256": "6fa08e9cb1eea1c0d11fc4573f6c6b9d505dcd381d0272b22cca9468ddeda01a"
+  },
+  {
+    "asset": "thorium_mesh",
+    "reference": "titanium_mesh.png",
+    "method": "titanium_main_color_only",
+    "sha256": "a1c93b7fd53d917b43757e0e632760b25a9f54073d20dba3aea8efe28f2e4326"
+  },
+  {
+    "asset": "thorium_net",
+    "reference": "titanium_net.png",
+    "method": "titanium_main_color_only",
+    "sha256": "6d0052b532bbe5100180082259a323ebcae12b1c1884dd7fc75585ba95f8cc04"
+  },
+  {
+    "asset": "thorium_seeds",
+    "reference": "titanium_seeds.png",
+    "method": "native_material_transfer",
+    "sha256": "e23fd2c879b031800815a8a17ec443f28d97ee13be48e5dd9a0f2460560c613e"
+  },
+  {
+    "asset": "thorium_sword",
+    "reference": "iron_sword.png",
+    "method": "iron_palette_only",
+    "sha256": "1d1faeae22cbb8db31db1380c25dfeb4b68ca649f6cc72bd974720823152bec3"
+  },
+  {
+    "asset": "thorium_pickaxe",
+    "reference": "iron_pickaxe.png",
+    "method": "iron_palette_only",
+    "sha256": "16e18511e790105f7b4838b383a341084a06be0e99b70e1e4511775a33bb3f44"
+  },
+  {
+    "asset": "thorium_axe",
+    "reference": "iron_axe.png",
+    "method": "iron_palette_only",
+    "sha256": "b3216fa9ecf53eb4e158ee9a288acd7eb885b4b9184b9c66b18201ea6509c4ab"
+  },
+  {
+    "asset": "thorium_shovel",
+    "reference": "iron_shovel.png",
+    "method": "iron_palette_only",
+    "sha256": "21ba6d8c5cc3f255e5c85cacc5e9fb61f5f9bfd7e006f00171eb967a417f11ec"
+  },
+  {
+    "asset": "thorium_hoe",
+    "reference": "iron_hoe.png",
+    "method": "iron_palette_only",
+    "sha256": "8ef2960c23049db850b95c12c7640a9e9da9974580ec2d3e64bedba5fb054ff2"
+  },
+  {
+    "asset": "thorium_hammer",
+    "reference": "iron_hammer.png",
+    "method": "iron_palette_only",
+    "sha256": "d807d3f1cf65b807274129d94c68adf8c2aeb4bb6b349d43e7f17e16e0bcbb23"
+  },
+  {
+    "asset": "thorium_paxel",
+    "reference": "iron_paxel.png",
+    "method": "iron_palette_only",
+    "sha256": "89d77d9ceb9bf1b71851074571d5274b3685c0c92c1720a91f6d738fb52a7bea"
+  },
+  {
+    "asset": "thorium_aiot",
+    "reference": "iron_aiot.png",
+    "method": "iron_palette_only",
+    "sha256": "9e4defd956e1f97b093659b31df5df7077eaaf44bfe3a8610d5b6b92b1aaf820"
+  },
+  {
+    "asset": "thorium_block",
+    "reference": "unchanged_thorium_block.png",
+    "method": "preserve_exact",
+    "sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb"
+  },
+  {
+    "asset": "raw_thorium_block",
+    "reference": "raw_titanium_block.png",
+    "method": "native_material_transfer",
+    "sha256": "4ac960effbcff33ac9a33c6c9c49ece122ce4009ea90867cffdd60d490e07b81"
+  },
+  {
+    "asset": "thorium_0",
+    "reference": "unchanged_thorium_0.png",
+    "method": "preserve_exact",
+    "sha256": "08b6b41cca9d8fb552795a5a9b1f13c11724bb928fd684806c1e56c71a5d1f57"
+  },
+  {
+    "asset": "thorium_1",
+    "reference": "unchanged_thorium_1.png",
+    "method": "preserve_exact",
+    "sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce"
+  }
+]

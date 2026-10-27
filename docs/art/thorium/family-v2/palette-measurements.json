@@ -1,0 +1,13 @@
+{
+  "requested_saturation_multiplier": 0.8,
+  "quantized_hsv_saturation_ratio_mean": 0.8095286272994743,
+  "ratio_extremes_due_to_8bit_rounding": [
+    0.7943749999999999,
+    0.8680851063829739
+  ],
+  "value_transform": "new V = 0.12 + 0.8 * old V",
+  "oklab_lightness_span_old": 0.7186608357736908,
+  "oklab_lightness_span_new": 0.5945585023855622,
+  "lightness_span_ratio": 0.8273144615505262,
+  "scope": "metal ramp, not neutral hosts/lining"
+}

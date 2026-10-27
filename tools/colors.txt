@@ -1,0 +1,744 @@
+ASCENDANT TECHNOLOGY - CORES DE DESTAQUE DA UI
+Fonte: RP/textures/ui (valores extraidos diretamente dos pixels dos PNGs).
+RGB: canais inteiros de 0 a 255. HEX: #RRGGBB. Pixels transparentes ignorados.
+As posicoes das bordas indicam superior/esquerda ou inferior/direita.
+Para paineis especiais, os tons principais sao ordenados por quantidade de pixels.
+Os nomes dos estados seguem os arquivos; inverted nao e renomeado para checked.
+
+=== PAINEIS ===
+
+[background_panel]
+  panels/background_panel.png
+    Preenchimento: rgb(198, 198, 198) | #C6C6C6
+    Contorno externo: rgb(0, 0, 0) | #000000
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(88, 86, 88) | #585658
+
+[background_panel_aqua]
+  panels/background_panel_aqua.png
+    Preenchimento: rgb(173, 222, 241) | #ADDEF1
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(88, 122, 158) | #587A9E
+
+[background_panel_black]
+  panels/background_panel_black.png
+    Preenchimento: rgb(0, 0, 0) | #000000
+    Contorno externo: rgb(0, 0, 0) | #000000
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(0, 0, 0) | #000000
+
+[background_panel_blue]
+  panels/background_panel_blue.png
+    Preenchimento: rgb(56, 119, 176) | #3877B0
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(5, 60, 109) | #053C6D
+
+[background_panel_brown]
+  panels/background_panel_brown.png
+    Preenchimento: rgb(122, 93, 51) | #7A5D33
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(68, 40, 1) | #442801
+
+[background_panel_dark]
+  panels/background_panel_dark.png
+    Preenchimento: rgb(59, 59, 59) | #3B3B3B
+    Contorno externo: rgb(0, 0, 0) | #000000
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(20, 20, 20) | #141414
+
+[background_panel_gray]
+  panels/background_panel_gray.png
+    Preenchimento: rgb(109, 109, 109) | #6D6D6D
+    Contorno externo: rgb(0, 0, 0) | #000000
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(69, 69, 69) | #454545
+
+[background_panel_green]
+  panels/background_panel_green.png
+    Preenchimento: rgb(16, 152, 4) | #109804
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(12, 110, 3) | #0C6E03
+
+[background_panel_light_blue]
+  panels/background_panel_light_blue.png
+    Preenchimento: rgb(136, 146, 201) | #8892C9
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(68, 73, 100) | #444964
+
+[background_panel_light_gray]
+  panels/background_panel_light_gray.png
+    Preenchimento: rgb(217, 217, 217) | #D9D9D9
+    Contorno externo: rgb(0, 0, 0) | #000000
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(155, 155, 155) | #9B9B9B
+
+[background_panel_lime]
+  panels/background_panel_lime.png
+    Preenchimento: rgb(183, 249, 181) | #B7F9B5
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(10, 208, 3) | #0AD003
+
+[background_panel_magenta]
+  panels/background_panel_magenta.png
+    Preenchimento: rgb(255, 0, 226) | #FF00E2
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(105, 20, 95) | #69145F
+
+[background_panel_orange]
+  panels/background_panel_orange.png
+    Preenchimento: rgb(255, 199, 120) | #FFC778
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(178, 104, 0) | #B26800
+
+[background_panel_pink]
+  panels/background_panel_pink.png
+    Preenchimento: rgb(241, 206, 248) | #F1CEF8
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(193, 152, 201) | #C198C9
+
+[background_panel_purple]
+  panels/background_panel_purple.png
+    Preenchimento: rgb(80, 28, 154) | #501C9A
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(42, 42, 76) | #2A2A4C
+
+[background_panel_red]
+  panels/background_panel_red.png
+    Preenchimento: rgb(211, 111, 111) | #D36F6F
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(125, 14, 14) | #7D0E0E
+
+[background_panel_white]
+  panels/background_panel_white.png
+    Preenchimento: rgb(245, 245, 245) | #F5F5F5
+    Contorno externo: rgb(40, 40, 40) | #282828
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(191, 191, 191) | #BFBFBF
+
+[background_panel_yellow]
+  panels/background_panel_yellow.png
+    Preenchimento: rgb(254, 231, 59) | #FEE73B
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(172, 154, 13) | #AC9A0D
+
+[background_panel_amber]
+  panels/background_panel_amber.png
+    Preenchimento: rgb(199, 154, 66) | #C79A42
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(118, 87, 31) | #76571F
+
+[background_panel_burgundy]
+  panels/background_panel_burgundy.png
+    Preenchimento: rgb(113, 58, 80) | #713A50
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(64, 35, 51) | #402333
+
+[background_panel_copper]
+  panels/background_panel_copper.png
+    Preenchimento: rgb(173, 118, 85) | #AD7655
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(98, 64, 42) | #62402A
+
+[background_panel_cyan]
+  panels/background_panel_cyan.png
+    Preenchimento: rgb(73, 187, 199) | #49BBC7
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(31, 110, 120) | #1F6E78
+
+[background_panel_dusty_purple]
+  panels/background_panel_dusty_purple.png
+    Preenchimento: rgb(128, 96, 121) | #806079
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(72, 55, 72) | #483748
+
+[background_panel_forest]
+  panels/background_panel_forest.png
+    Preenchimento: rgb(62, 106, 80) | #3E6A50
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(35, 65, 46) | #23412E
+
+[background_panel_indigo]
+  panels/background_panel_indigo.png
+    Preenchimento: rgb(76, 83, 137) | #4C5389
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(41, 46, 80) | #292E50
+
+[background_panel_lavender]
+  panels/background_panel_lavender.png
+    Preenchimento: rgb(184, 167, 209) | #B8A7D1
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(106, 93, 131) | #6A5D83
+
+[background_panel_mint]
+  panels/background_panel_mint.png
+    Preenchimento: rgb(159, 211, 185) | #9FD3B9
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(94, 143, 117) | #5E8F75
+
+[background_panel_navy]
+  panels/background_panel_navy.png
+    Preenchimento: rgb(45, 66, 101) | #2D4265
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(25, 42, 67) | #192A43
+
+[background_panel_olive]
+  panels/background_panel_olive.png
+    Preenchimento: rgb(122, 128, 82) | #7A8052
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(73, 77, 44) | #494D2C
+
+[background_panel_sand]
+  panels/background_panel_sand.png
+    Preenchimento: rgb(203, 184, 154) | #CBB89A
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(128, 113, 90) | #80715A
+
+[background_panel_slate]
+  panels/background_panel_slate.png
+    Preenchimento: rgb(104, 122, 138) | #687A8A
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(55, 74, 89) | #374A59
+
+[background_panel_teal]
+  panels/background_panel_teal.png
+    Preenchimento: rgb(59, 131, 129) | #3B8381
+    Contorno externo: rgb(0, 3, 30) | #00031E
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(29, 82, 82) | #1D5252
+
+[background_image]
+  panels/background_image.png
+    Tom principal 1: rgb(198, 198, 198) | #C6C6C6
+    Tom principal 2: rgb(255, 255, 255) | #FFFFFF
+    Tom principal 3: rgb(88, 86, 88) | #585658
+
+[background_with_border]
+  panels/background_with_border.png
+    Tom principal 1: rgb(0, 0, 0) | #000000
+    Tom principal 2: rgb(67, 67, 67) | #434343
+
+[classic]
+  panels/panel_classic_borderless.png
+    Tom principal 1: rgb(55, 55, 55) | #373737
+    Tom principal 2: rgb(0, 0, 0) | #000000
+
+  panels/half_long_panel_classic.png
+    Tom principal 1: rgb(55, 55, 55) | #373737
+    Tom principal 2: rgb(198, 198, 198) | #C6C6C6
+    Tom principal 3: rgb(0, 0, 0) | #000000
+    Tom principal 4: rgb(255, 255, 255) | #FFFFFF
+    Tom principal 5: rgb(85, 85, 85) | #555555
+    Tom principal 6: rgb(44, 44, 44) | #2C2C2C
+
+  panels/long_panel_classic.png
+    Tom principal 1: rgb(55, 55, 55) | #373737
+    Tom principal 2: rgb(198, 198, 198) | #C6C6C6
+    Tom principal 3: rgb(0, 0, 0) | #000000
+    Tom principal 4: rgb(255, 255, 255) | #FFFFFF
+    Tom principal 5: rgb(85, 85, 85) | #555555
+
+[frozen]
+  frozen_panel.png
+    Tom principal 1: rgb(25, 155, 215) | #199BD7
+    Tom principal 2: rgb(12, 91, 158) | #0C5B9E
+    Tom principal 3: rgb(0, 0, 0) | #000000
+    Tom principal 4: rgb(204, 239, 243) | #CCEFF3
+    Tom principal 5: rgb(10, 108, 183) | #0A6CB7
+    Tom principal 6: rgb(16, 120, 205) | #1078CD
+    Textura com variacoes adicionais; listados os 6 tons mais frequentes.
+
+  frozen_panel_ls.png
+    Tom principal 1: rgb(25, 155, 215) | #199BD7
+    Tom principal 2: rgb(16, 120, 205) | #1078CD
+    Tom principal 3: rgb(12, 91, 158) | #0C5B9E
+    Tom principal 4: rgb(10, 108, 183) | #0A6CB7
+    Tom principal 5: rgb(119, 214, 234) | #77D6EA
+    Tom principal 6: rgb(176, 224, 238) | #B0E0EE
+    Textura com variacoes adicionais; listados os 6 tons mais frequentes.
+
+[screen_bg]
+  panels/screen_thermo_bg.png
+    Tom principal 1: rgb(23, 23, 26) | #17171A
+    Tom principal 2: rgb(18, 18, 20) | #121214
+    Tom principal 3: rgb(28, 28, 31) | #1C1C1F
+    Tom principal 4: rgb(32, 32, 36) | #202024
+    Tom principal 5: rgb(9, 9, 10) | #09090A
+    Tom principal 6: rgb(82, 83, 84) | #525354
+    Textura com variacoes adicionais; listados os 6 tons mais frequentes.
+
+  panels/screen_vertical_bg.png
+    Tom principal 1: rgb(23, 23, 26) | #17171A
+    Tom principal 2: rgb(32, 32, 36) | #202024
+    Tom principal 3: rgb(28, 28, 31) | #1C1C1F
+    Tom principal 4: rgb(18, 18, 20) | #121214
+    Tom principal 5: rgb(9, 9, 10) | #09090A
+    Tom principal 6: rgb(27, 27, 30) | #1B1B1E
+    Textura com variacoes adicionais; listados os 6 tons mais frequentes.
+
+[simple_bg_gray]
+  panels/simple_bg_gray.png
+    Tom principal 1: rgb(111, 111, 111) | #6F6F6F
+    Tom principal 2: rgb(0, 0, 0) | #000000
+    Tom principal 3: rgb(109, 109, 109) | #6D6D6D
+    Tom principal 4: rgb(112, 112, 112) | #707070
+    Tom principal 5: rgb(110, 110, 110) | #6E6E6E
+    Tom principal 6: rgb(113, 113, 113) | #717171
+    Textura com variacoes adicionais; listados os 6 tons mais frequentes.
+
+[toggle_bg_dark]
+  toggle_button/right_bg_dark.png
+    Tom principal 1: rgb(59, 59, 59) | #3B3B3B
+    Tom principal 2: rgb(0, 0, 0) | #000000
+    Tom principal 3: rgb(20, 20, 20) | #141414
+    Tom principal 4: rgb(255, 255, 255) | #FFFFFF
+    Tom principal 5: rgb(126, 126, 127) | #7E7E7F
+
+=== CELULAS ===
+
+[black_cell_image]
+  cells/black_cell_image.png
+    Preenchimento: rgb(18, 18, 18) | #121212
+    Borda superior/esquerda: rgb(0, 0, 0) | #000000
+    Borda inferior/direita: rgb(32, 32, 32) | #202020
+
+  cells/inverted_black_cell_image.png
+    Preenchimento: rgb(18, 18, 18) | #121212
+    Borda superior/esquerda: rgb(32, 32, 32) | #202020
+    Borda inferior/direita: rgb(0, 0, 0) | #000000
+
+  cells/hover_inverted_black_cell_image.png
+    Preenchimento: rgb(38, 38, 38) | #262626
+    Borda superior/esquerda: rgb(52, 52, 52) | #343434
+    Borda inferior/direita: rgb(20, 20, 20) | #141414
+
+[blue_cell_image]
+  cells/blue_cell_image.png
+    Preenchimento: rgb(32, 31, 176) | #201FB0
+    Borda superior/esquerda: rgb(0, 0, 54) | #000036
+    Borda inferior/direita: rgb(163, 162, 255) | #A3A2FF
+
+  cells/inverted_blue_cell_image.png
+    Preenchimento: rgb(32, 31, 176) | #201FB0
+    Borda superior/esquerda: rgb(163, 162, 255) | #A3A2FF
+    Borda inferior/direita: rgb(0, 0, 54) | #000036
+
+  cells/hover_inverted_blue_cell_image.png
+    Preenchimento: rgb(107, 105, 255) | #6B69FF
+    Borda superior/esquerda: rgb(238, 236, 255) | #EEECFF
+    Borda inferior/direita: rgb(75, 74, 218) | #4B4ADA
+
+[brown_cell_image]
+  cells/brown_cell_image.png
+    Preenchimento: rgb(102, 54, 0) | #663600
+    Borda superior/esquerda: rgb(38, 23, 5) | #261705
+    Borda inferior/direita: rgb(149, 111, 68) | #956F44
+
+  cells/inverted_brown_cell_image.png
+    Preenchimento: rgb(102, 54, 0) | #663600
+    Borda superior/esquerda: rgb(149, 111, 68) | #956F44
+    Borda inferior/direita: rgb(38, 23, 5) | #261705
+
+  cells/hover_inverted_brown_cell_image.png
+    Preenchimento: rgb(127, 65, 1) | #7F4101
+    Borda superior/esquerda: rgb(174, 122, 69) | #AE7A45
+    Borda inferior/direita: rgb(63, 34, 6) | #3F2206
+
+[cyan_cell_image]
+  cells/cyan_cell_image.png
+    Preenchimento: rgb(62, 139, 147) | #3E8B93
+    Borda superior/esquerda: rgb(12, 69, 76) | #0C454C
+    Borda inferior/direita: rgb(213, 251, 255) | #D5FBFF
+
+  cells/inverted_cyan_cell_image.png
+    Preenchimento: rgb(62, 139, 147) | #3E8B93
+    Borda superior/esquerda: rgb(213, 251, 255) | #D5FBFF
+    Borda inferior/direita: rgb(12, 69, 76) | #0C454C
+
+  cells/hover_inverted_cyan_cell_image.png
+    Preenchimento: rgb(80, 189, 197) | #50BDC5
+    Borda superior/esquerda: rgb(231, 255, 255) | #E7FFFF
+    Borda inferior/direita: rgb(30, 119, 126) | #1E777E
+
+[dark_cell_image]
+  cells/dark_cell_image.png
+    Preenchimento: rgb(39, 39, 39) | #272727
+    Borda superior/esquerda: rgb(49, 49, 54) | #313136
+    Borda inferior/direita: rgb(112, 114, 115) | #707273
+
+  cells/inverted_dark_cell_image.png
+    Preenchimento: rgb(39, 39, 39) | #272727
+    Borda superior/esquerda: rgb(112, 114, 115) | #707273
+    Borda inferior/direita: rgb(49, 49, 54) | #313136
+
+  cells/hover_inverted_dark_cell_image.png
+    Preenchimento: rgb(59, 59, 59) | #3B3B3B
+    Borda superior/esquerda: rgb(132, 134, 135) | #848687
+    Borda inferior/direita: rgb(69, 69, 74) | #45454A
+
+[gray_cell_image]
+  cells/gray_cell_image.png
+    Preenchimento: rgb(76, 76, 76) | #4C4C4C
+    Borda superior/esquerda: rgb(58, 58, 58) | #3A3A3A
+    Borda inferior/direita: rgb(221, 221, 221) | #DDDDDD
+
+  cells/inverted_gray_cell_image.png
+    Preenchimento: rgb(76, 76, 76) | #4C4C4C
+    Borda superior/esquerda: rgb(221, 221, 221) | #DDDDDD
+    Borda inferior/direita: rgb(58, 58, 58) | #3A3A3A
+
+  cells/hover_inverted_gray_cell_image.png
+    Preenchimento: rgb(96, 96, 96) | #606060
+    Borda superior/esquerda: rgb(241, 241, 241) | #F1F1F1
+    Borda inferior/direita: rgb(78, 78, 78) | #4E4E4E
+
+[green_cell_image]
+  cells/green_cell_image.png
+    Preenchimento: rgb(66, 134, 42) | #42862A
+    Borda superior/esquerda: rgb(22, 48, 13) | #16300D
+    Borda inferior/direita: rgb(194, 221, 184) | #C2DDB8
+
+  cells/inverted_green_cell_image.png
+    Preenchimento: rgb(66, 134, 42) | #42862A
+    Borda superior/esquerda: rgb(194, 221, 184) | #C2DDB8
+    Borda inferior/direita: rgb(22, 48, 13) | #16300D
+
+  cells/hover_inverted_green_cell_image.png
+    Preenchimento: rgb(81, 180, 48) | #51B430
+    Borda superior/esquerda: rgb(209, 255, 190) | #D1FFBE
+    Borda inferior/direita: rgb(37, 94, 19) | #255E13
+
+[light_blue_cell_image]
+  cells/light_blue_cell_image.png
+    Preenchimento: rgb(134, 155, 217) | #869BD9
+    Borda superior/esquerda: rgb(79, 94, 136) | #4F5E88
+    Borda inferior/direita: rgb(223, 231, 255) | #DFE7FF
+
+  cells/inverted_light_blue_cell_image.png
+    Preenchimento: rgb(134, 155, 217) | #869BD9
+    Borda superior/esquerda: rgb(223, 231, 255) | #DFE7FF
+    Borda inferior/direita: rgb(79, 94, 136) | #4F5E88
+
+  cells/hover_inverted_light_blue_cell_image.png
+    Preenchimento: rgb(134, 155, 217) | #869BD9
+    Borda superior/esquerda: rgb(223, 231, 255) | #DFE7FF
+    Borda inferior/direita: rgb(79, 94, 136) | #4F5E88
+
+[light_gray_cell_image]
+  cells/light_gray_cell_image.png
+    Preenchimento: rgb(165, 165, 165) | #A5A5A5
+    Borda superior/esquerda: rgb(99, 99, 99) | #636363
+    Borda inferior/direita: rgb(236, 236, 236) | #ECECEC
+
+  cells/inverted_light_gray_cell_image.png
+    Preenchimento: rgb(165, 165, 165) | #A5A5A5
+    Borda superior/esquerda: rgb(236, 236, 236) | #ECECEC
+    Borda inferior/direita: rgb(99, 99, 99) | #636363
+
+  cells/hover_inverted_light_gray_cell_image.png
+    Preenchimento: rgb(185, 185, 185) | #B9B9B9
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(119, 119, 119) | #777777
+
+[lime_cell_image]
+  cells/lime_cell_image.png
+    Preenchimento: rgb(96, 220, 65) | #60DC41
+    Borda superior/esquerda: rgb(0, 73, 22) | #004916
+    Borda inferior/direita: rgb(189, 255, 210) | #BDFFD2
+
+  cells/inverted_lime_cell_image.png
+    Preenchimento: rgb(96, 220, 65) | #60DC41
+    Borda superior/esquerda: rgb(189, 255, 210) | #BDFFD2
+    Borda inferior/direita: rgb(0, 73, 22) | #004916
+
+  cells/hover_inverted_lime_cell_image.png
+    Preenchimento: rgb(153, 255, 106) | #99FF6A
+    Borda superior/esquerda: rgb(246, 255, 251) | #F6FFFB
+    Borda inferior/direita: rgb(57, 160, 63) | #39A03F
+
+[magenta_cell_image]
+  cells/magenta_cell_image.png
+    Preenchimento: rgb(255, 0, 219) | #FF00DB
+    Borda superior/esquerda: rgb(112, 0, 96) | #700060
+    Borda inferior/direita: rgb(255, 179, 244) | #FFB3F4
+
+  cells/inverted_magenta_cell_image.png
+    Preenchimento: rgb(255, 0, 219) | #FF00DB
+    Borda superior/esquerda: rgb(255, 179, 244) | #FFB3F4
+    Borda inferior/direita: rgb(112, 0, 96) | #700060
+
+  cells/hover_inverted_magenta_cell_image.png
+    Preenchimento: rgb(255, 0, 255) | #FF00FF
+    Borda superior/esquerda: rgb(255, 179, 255) | #FFB3FF
+    Borda inferior/direita: rgb(181, 0, 155) | #B5009B
+
+[orange_cell_image]
+  cells/orange_cell_image.png
+    Preenchimento: rgb(220, 124, 24) | #DC7C18
+    Borda superior/esquerda: rgb(142, 73, 0) | #8E4900
+    Borda inferior/direita: rgb(255, 227, 177) | #FFE3B1
+
+  cells/inverted_orange_cell_image.png
+    Preenchimento: rgb(220, 124, 24) | #DC7C18
+    Borda superior/esquerda: rgb(255, 227, 177) | #FFE3B1
+    Borda inferior/direita: rgb(142, 73, 0) | #8E4900
+
+  cells/hover_inverted_orange_cell_image.png
+    Preenchimento: rgb(255, 195, 89) | #FFC359
+    Borda superior/esquerda: rgb(255, 227, 177) | #FFE3B1
+    Borda inferior/direita: rgb(199, 102, 0) | #C76600
+
+[pink_cell_image]
+  cells/pink_cell_image.png
+    Preenchimento: rgb(255, 169, 249) | #FFA9F9
+    Borda superior/esquerda: rgb(127, 72, 123) | #7F487B
+    Borda inferior/direita: rgb(255, 229, 253) | #FFE5FD
+
+  cells/inverted_pink_cell_image.png
+    Preenchimento: rgb(255, 169, 249) | #FFA9F9
+    Borda superior/esquerda: rgb(255, 229, 253) | #FFE5FD
+    Borda inferior/direita: rgb(127, 72, 123) | #7F487B
+
+  cells/hover_inverted_pink_cell_image.png
+    Preenchimento: rgb(255, 225, 255) | #FFE1FF
+    Borda superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Borda inferior/direita: rgb(200, 128, 200) | #C880C8
+
+[purple_cell_image]
+  cells/purple_cell_image.png
+    Preenchimento: rgb(106, 0, 205) | #6A00CD
+    Borda superior/esquerda: rgb(31, 0, 60) | #1F003C
+    Borda inferior/direita: rgb(185, 109, 255) | #B96DFF
+
+  cells/inverted_purple_cell_image.png
+    Preenchimento: rgb(106, 0, 205) | #6A00CD
+    Borda superior/esquerda: rgb(185, 109, 255) | #B96DFF
+    Borda inferior/direita: rgb(31, 0, 60) | #1F003C
+
+  cells/hover_inverted_purple_cell_image.png
+    Preenchimento: rgb(145, 0, 255) | #9100FF
+    Borda superior/esquerda: rgb(224, 109, 255) | #E06DFF
+    Borda inferior/direita: rgb(70, 0, 136) | #460088
+
+[red_cell_image]
+  cells/red_cell_image.png
+    Preenchimento: rgb(223, 55, 55) | #DF3737
+    Borda superior/esquerda: rgb(97, 0, 0) | #610000
+    Borda inferior/direita: rgb(255, 147, 147) | #FF9393
+
+  cells/inverted_red_cell_image.png
+    Preenchimento: rgb(223, 55, 55) | #DF3737
+    Borda superior/esquerda: rgb(255, 147, 147) | #FF9393
+    Borda inferior/direita: rgb(97, 0, 0) | #610000
+
+  cells/hover_inverted_red_cell_image.png
+    Preenchimento: rgb(255, 73, 73) | #FF4949
+    Borda superior/esquerda: rgb(255, 165, 165) | #FFA5A5
+    Borda inferior/direita: rgb(149, 18, 18) | #951212
+
+[yellow_cell_image]
+  cells/yellow_cell_image.png
+    Preenchimento: rgb(255, 225, 20) | #FFE114
+    Borda superior/esquerda: rgb(141, 115, 0) | #8D7300
+    Borda inferior/direita: rgb(255, 245, 177) | #FFF5B1
+
+=== OUTLINES ===
+
+[black_outline]
+  outlines/black_outline.png
+    Contorno externo superior/esquerda: rgb(28, 28, 28) | #1C1C1C
+    Contorno interno superior/esquerda: rgb(12, 12, 12) | #0C0C0C
+    Contorno externo inferior/direita: rgb(12, 12, 12) | #0C0C0C
+    Contorno interno inferior/direita: rgb(28, 28, 28) | #1C1C1C
+
+[blue_outline]
+  outlines/blue_outline.png
+    Contorno externo superior/esquerda: rgb(17, 90, 149) | #115A95
+    Contorno interno superior/esquerda: rgb(16, 106, 161) | #106AA1
+    Contorno externo inferior/direita: rgb(10, 82, 153) | #0A5299
+    Contorno interno inferior/direita: rgb(39, 49, 93) | #27315D
+
+[brown_outline]
+  outlines/brown_outline.png
+    Contorno externo superior/esquerda: rgb(88, 49, 31) | #58311F
+    Contorno interno superior/esquerda: rgb(122, 70, 48) | #7A4630
+    Contorno externo inferior/direita: rgb(68, 40, 19) | #442813
+    Contorno interno inferior/direita: rgb(45, 24, 9) | #2D1809
+
+[dark_outline]
+  outlines/dark_outline.png
+    Contorno externo superior/esquerda: rgb(68, 68, 68) | #444444
+    Contorno interno superior/esquerda: rgb(51, 51, 51) | #333333
+    Contorno externo inferior/direita: rgb(51, 51, 51) | #333333
+    Contorno interno inferior/direita: rgb(68, 68, 68) | #444444
+
+[frozen_outline]
+  frozen_outline.png
+    Contorno externo superior/esquerda: rgb(135, 206, 235) | #87CEEB
+    Contorno interno superior/esquerda: rgb(128, 186, 222) | #80BADE
+    Contorno externo inferior/direita: rgb(88, 122, 158) | #587A9E
+    Contorno interno inferior/direita: rgb(117, 160, 205) | #75A0CD
+
+  resizable_frozen_outline.png
+    Contorno externo superior/esquerda: rgb(135, 206, 235) | #87CEEB
+    Contorno interno superior/esquerda: rgb(128, 186, 222) | #80BADE
+    Contorno externo inferior/direita: rgb(88, 122, 158) | #587A9E
+    Contorno interno inferior/direita: rgb(117, 160, 205) | #75A0CD
+
+[gray_outline]
+  outlines/gray_outline.png
+    Contorno externo superior/esquerda: rgb(112, 112, 112) | #707070
+    Contorno interno superior/esquerda: rgb(92, 92, 92) | #5C5C5C
+    Contorno externo inferior/direita: rgb(92, 92, 92) | #5C5C5C
+    Contorno interno inferior/direita: rgb(112, 112, 112) | #707070
+
+[green_outline]
+  outlines/green_outline.png
+    Contorno externo superior/esquerda: rgb(29, 194, 11) | #1DC20B
+    Contorno interno superior/esquerda: rgb(52, 209, 28) | #34D11C
+    Contorno externo inferior/direita: rgb(16, 152, 4) | #109804
+    Contorno interno inferior/direita: rgb(12, 110, 3) | #0C6E03
+
+[light_blue_outline]
+  outlines/light_blue_outline.png
+    Contorno externo superior/esquerda: rgb(189, 219, 255) | #BDDBFF
+    Contorno interno superior/esquerda: rgb(211, 225, 242) | #D3E1F2
+    Contorno externo inferior/direita: rgb(141, 192, 251) | #8DC0FB
+    Contorno interno inferior/direita: rgb(105, 155, 215) | #699BD7
+
+[light_gray_outline]
+  outlines/light_gray_outline.png
+    Contorno externo superior/esquerda: rgb(145, 145, 145) | #919191
+    Contorno interno superior/esquerda: rgb(168, 168, 168) | #A8A8A8
+    Contorno externo inferior/direita: rgb(168, 168, 168) | #A8A8A8
+    Contorno interno inferior/direita: rgb(145, 145, 145) | #919191
+
+[lime_outline]
+  outlines/lime_outline.png
+    Contorno externo superior/esquerda: rgb(148, 231, 129) | #94E781
+    Contorno interno superior/esquerda: rgb(175, 255, 162) | #AFFFA2
+    Contorno externo inferior/direita: rgb(115, 251, 84) | #73FB54
+    Contorno interno inferior/direita: rgb(79, 214, 48) | #4FD630
+
+[magenta_outline]
+  outlines/magenta_outline.png
+    Contorno externo superior/esquerda: rgb(219, 68, 229) | #DB44E5
+    Contorno interno superior/esquerda: rgb(227, 131, 234) | #E383EA
+    Contorno externo inferior/direita: rgb(239, 2, 255) | #EF02FF
+    Contorno interno inferior/direita: rgb(161, 4, 172) | #A104AC
+
+[orange_outline]
+  orange_outline.png
+    Contorno externo superior/esquerda: rgb(255, 171, 53) | #FFAB35
+    Contorno interno superior/esquerda: rgb(255, 199, 120) | #FFC778
+    Contorno externo inferior/direita: rgb(178, 104, 0) | #B26800
+    Contorno interno inferior/direita: rgb(255, 156, 18) | #FF9C12
+
+  resizable_orange_outline.png
+    Contorno externo superior/esquerda: rgb(255, 171, 53) | #FFAB35
+    Contorno interno superior/esquerda: rgb(210, 175, 127) | #D2AF7F
+    Contorno externo inferior/direita: rgb(178, 104, 0) | #B26800
+    Contorno interno inferior/direita: rgb(255, 156, 18) | #FF9C12
+
+[pink_outline]
+  outlines/pink_outline.png
+    Contorno externo superior/esquerda: rgb(249, 178, 255) | #F9B2FF
+    Contorno interno superior/esquerda: rgb(245, 221, 247) | #F5DDF7
+    Contorno externo inferior/direita: rgb(234, 180, 239) | #EAB4EF
+    Contorno interno inferior/direita: rgb(201, 118, 208) | #C976D0
+
+[purple_outline]
+  outlines/purple_outline.png
+    Contorno externo superior/esquerda: rgb(138, 68, 211) | #8A44D3
+    Contorno interno superior/esquerda: rgb(156, 107, 208) | #9C6BD0
+    Contorno externo inferior/direita: rgb(71, 22, 122) | #47167A
+    Contorno interno inferior/direita: rgb(48, 10, 88) | #300A58
+
+[red_outline]
+  outlines/red_outline.png
+    Contorno externo superior/esquerda: rgb(211, 111, 111) | #D36F6F
+    Contorno interno superior/esquerda: rgb(255, 255, 231) | #FFFFE7
+    Contorno externo inferior/direita: rgb(255, 0, 0) | #FF0000
+    Contorno interno inferior/direita: rgb(125, 14, 14) | #7D0E0E
+
+[white_outline]
+  outlines/white_outline.png
+    Contorno externo superior/esquerda: rgb(247, 247, 247) | #F7F7F7
+    Contorno interno superior/esquerda: rgb(255, 255, 255) | #FFFFFF
+    Contorno externo inferior/direita: rgb(222, 222, 222) | #DEDEDE
+    Contorno interno inferior/direita: rgb(174, 174, 174) | #AEAEAE
+
+[yellow_outline]
+  outlines/yellow_outline.png
+    Contorno externo superior/esquerda: rgb(255, 248, 138) | #FFF88A
+    Contorno interno superior/esquerda: rgb(255, 253, 219) | #FFFDDB
+    Contorno externo inferior/direita: rgb(227, 218, 7) | #E3DA07
+    Contorno interno inferior/direita: rgb(172, 166, 15) | #ACA60F
+
+=== BOTOES / ESTADOS CHECKED E UNCHECKED ===
+
+[eject_fluid]
+  buttons/eject_fluid_button.png
+    Tom principal 1: rgb(181, 181, 181) | #B5B5B5
+    Tom principal 2: rgb(11, 11, 11) | #0B0B0B
+    Tom principal 3: rgb(235, 235, 235) | #EBEBEB
+    Tom principal 4: rgb(87, 87, 90) | #57575A
+    Tom principal 5: rgb(165, 165, 165) | #A5A5A5
+    Tom principal 6: rgb(109, 109, 109) | #6D6D6D
+    Textura com variacoes adicionais; listados os 6 tons mais frequentes.
+
+  buttons/eject_fluid_unchecked.png
+    Preenchimento: rgb(128, 128, 128) | #808080
+    Contorno externo: rgb(0, 0, 0) | #000000
+    Borda superior/esquerda: rgb(168, 168, 168) | #A8A8A8
+    Borda inferior/direita: rgb(57, 57, 60) | #39393C
+
+  buttons/eject_fluid_unchecked_hover.png
+    Preenchimento: rgb(181, 181, 181) | #B5B5B5
+    Contorno externo: rgb(11, 11, 11) | #0B0B0B
+    Borda superior/esquerda: rgb(235, 235, 235) | #EBEBEB
+    Borda inferior/direita: rgb(87, 87, 90) | #57575A
+
+  buttons/eject_fluid_checked.png
+    Preenchimento: rgb(36, 36, 38) | #242426
+    Contorno externo: rgb(0, 0, 0) | #000000
+    Borda superior/esquerda: rgb(48, 48, 51) | #303033
+    Borda inferior/direita: rgb(61, 61, 63) | #3D3D3F
+
+  buttons/eject_fluid_checked_hover.png
+    Preenchimento: rgb(59, 59, 61) | #3B3B3D
+    Contorno externo: rgb(11, 11, 11) | #0B0B0B
+    Borda superior/esquerda: rgb(75, 75, 78) | #4B4B4E
+    Borda inferior/direita: rgb(92, 92, 94) | #5C5C5E
+
+[switch_button]
+  buttons/switch_button.png
+    Tom principal 1: rgb(198, 198, 198) | #C6C6C6
+    Tom principal 2: rgb(0, 0, 0) | #000000
+    Tom principal 3: rgb(91, 91, 91) | #5B5B5B
+    Tom principal 4: rgb(255, 255, 255) | #FFFFFF
+    Tom principal 5: rgb(88, 86, 88) | #585658

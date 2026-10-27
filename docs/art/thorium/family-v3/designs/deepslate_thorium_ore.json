@@ -1,0 +1,445 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Minério profundo de Tório",
+    "usage": "AT opaque ore block texture",
+    "material": "pink Thorium inclusions in unchanged vanilla stone or deepslate",
+    "orientation": "native full block face",
+    "lighting": "tiny upper-left glints with dark lower mineral edges; original host lighting preserved",
+    "structure": [
+      "seven irregular clusters of 3 to 6 pixels",
+      "varied small deposits",
+      "rare highlights and dark lower mineral faces"
+    ],
+    "style": [
+      "visual study of creator-supplied 12-column ore atlas",
+      "no four large repeated diamonds",
+      "native pixels, no blur"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/deepslate.png",
+      "sha256": "fcba18a824b979157ccce4075b5bc26fd5c4dda6bc0003fc691ae7012856ba22",
+      "purpose": "exact vanilla host; supplied atlas studied visually in conversation"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "allow",
+    "allow_clip": false
+  },
+  "palette": {
+    "c_121_121_121": [
+      121,
+      121,
+      121
+    ],
+    "c_100_100_100": [
+      100,
+      100,
+      100
+    ],
+    "c_81_81_81": [
+      81,
+      81,
+      81
+    ],
+    "c_61_61_67": [
+      61,
+      61,
+      67
+    ],
+    "c_47_47_55": [
+      47,
+      47,
+      55
+    ],
+    "m0": [
+      80,
+      39,
+      64
+    ],
+    "m1": [
+      106,
+      46,
+      77
+    ],
+    "m2": [
+      135,
+      55,
+      93
+    ],
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m6": [
+      231,
+      113,
+      172
+    ],
+    "m7": [
+      235,
+      132,
+      184
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m9": [
+      235,
+      176,
+      206
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "m11": [
+      235,
+      212,
+      224
+    ],
+    "m12": [
+      235,
+      224,
+      229
+    ],
+    "m13": [
+      235,
+      231,
+      233
+    ]
+  },
+  "source": {
+    "path": "../references/deepslate.png",
+    "sha256": "fcba18a824b979157ccce4075b5bc26fd5c4dda6bc0003fc691ae7012856ba22",
+    "purpose": "exact host outside mineral inclusions"
+  },
+  "layers": [
+    {
+      "name": "ore-clusters",
+      "purpose": "seven small irregular mineral groups with ordered highlights and shadows",
+      "commands": [
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              2
+            ]
+          ],
+          "color": "m11"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              2
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              3
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              1
+            ]
+          ],
+          "color": "m10"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              1
+            ]
+          ],
+          "color": "m12"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              2
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              2
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              2
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              3
+            ]
+          ],
+          "color": "m1"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              5
+            ]
+          ],
+          "color": "m12"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              5
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              6
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              6
+            ]
+          ],
+          "color": "m9"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              7
+            ]
+          ],
+          "color": "m2"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              6
+            ]
+          ],
+          "color": "m11"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              14,
+              6
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              13,
+              7
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              1,
+              10
+            ]
+          ],
+          "color": "m10"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              10
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              2,
+              11
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              3,
+              11
+            ]
+          ],
+          "color": "m2"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              10
+            ]
+          ],
+          "color": "m12"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              10
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              11
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              11
+            ]
+          ],
+          "color": "m9"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              11
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              12
+            ]
+          ],
+          "color": "m2"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              13
+            ]
+          ],
+          "color": "m10"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              13
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              14
+            ]
+          ],
+          "color": "m2"
+        }
+      ]
+    }
+  ]
+}

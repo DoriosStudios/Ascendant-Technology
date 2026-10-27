@@ -1,0 +1,181 @@
+{
+    "variables": {
+        "$desktop_screen": true,
+        "$pocket_screen": false,
+        "$is_pregame": false,
+        "$is_gamepad": false,
+        "$touch": false,
+        "$container_title": "Alchemical Station",
+        "$localize_title": false
+    },
+    "bindings": {
+        "#container_title": "Alchemical Station",
+        "#title_text": "Alchemical Station",
+        "#hover_text": "",
+        "#item_name": "",
+        "#item_id_aux": 0,
+        "#item_count": "",
+        "#inventory_stack_count": "",
+        "#item_visible": true,
+        "#visible": true,
+        "#enabled": true,
+        "#toggle_state": false,
+        "#toggle_enabled": true,
+        "#show_gamepad_helpers": false,
+        "#gamepad_cursor_visible": false,
+        "#mouse_mode": true,
+        "#is_using_gamepad": false,
+        "#close_button_visible": true,
+        "#container_cell_background_texture": "textures/ui/slot",
+        "#container_cell_background_texture_file_system": "InUserPackage",
+        "#hotbar_grid_dimensions": [
+            9,
+            1
+        ],
+        "#inventory_grid_dimensions": [
+            9,
+            3
+        ],
+        "#gamepad_helper_visible": false,
+        "#is_selected_slot": false,
+        "#touch_progress_bar_visible": false,
+        "#item_lock_in_inventory": false,
+        "#item_lock_in_slot": false,
+        "#item_lock": false,
+        "#bundle_selected_item_visible": false,
+        "#bundle_open_back": false,
+        "#bundle_open_front": false,
+        "#show_persistent_bundle_hover_text": false,
+        "#using_touch": false,
+        "#progress_bar_visible": false,
+        "#item_durability_visible": false,
+        "#item_storage_visible": false,
+        "#selected_item_durability_visible": false,
+        "#selected_item_storage_visible": false,
+        "#inventory_selected_item_lock_in_inventory": false,
+        "#inventory_selected_item_lock_in_slot": false,
+        "#inventory_selected_item": 0,
+        "#inventory_selected_item_stack_count": ""
+    },
+    "collections": {
+        "container_items": {
+            "0": {
+                "#item_id_aux": 1,
+                "texture": "textures/ui/energy_bar/energy_frame_36"
+            },
+            "1": {
+                "#item_id_aux": 1,
+                "#hover_text": "§r§eBrewing\n§r§fProcessing: 50%\n§r§7Reagent: middle slot\n§r§7Fuel: blaze powder\n§r§7Up to 6 bottles per batch\n\n§r§eAmplify\n§r§fPress the left button to start.\n§r§7Left slot + left button\n§r§7Cost: 1000 mB Aetherium\n\n§r§eExtend\n§r§fPress the right button to start.\n§r§7Right slot + right button\n§r§7Cost: 750 mB Aetherium\n\n§r§eStorage\n§r§fBlaze: 48000 / 64000 mB\n§r§fAetherium: 64000 / 128000 mB\n§r§fEnergy: 1500000 / 2048000 DE"
+            },
+            "2": {
+                "#item_id_aux": 1,
+                "#hover_text": "Brewing: 50%§0§a§1§4§r"
+            },
+            "3": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/nether_wart"
+            },
+            "4": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/potion_bottle_moveSpeed"
+            },
+            "5": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/potion_bottle_moveSpeed"
+            },
+            "6": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/potion_bottle_moveSpeed"
+            },
+            "7": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/potion_bottle_moveSpeed"
+            },
+            "8": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/potion_bottle_moveSpeed"
+            },
+            "9": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/potion_bottle_moveSpeed"
+            },
+            "10": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/blaze_powder"
+            },
+            "11": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/ui/blaze/alchemical_blaze_39"
+            },
+            "12": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/ui/liquified_aetherium_bar/liquified_aetherium_bar_24"
+            },
+            "13": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/potion_bottle_moveSpeed"
+            },
+            "14": {
+                "#item_id_aux": 1,
+                "texture": "textures/items/potion_bottle_moveSpeed"
+            },
+            "17": {
+                "#item_id_aux": 1,
+                "texture": "textures/ui/progress_bar/arrow_right_12"
+            },
+            "20": {
+                "#item_id_aux": 1,
+                "texture": "textures/ui/progress_bar/arrow_right_12"
+            }
+        },
+        "inventory_items": {},
+        "hotbar_items": {}
+    },
+    "controls": {
+        "alchemy_brewing_tab": {
+            "#toggle_state": true
+        },
+        "alchemy_aplifying_tab": {
+            "#toggle_state": false
+        },
+        "alchemy_display_tab": {
+            "#toggle_state": true
+        },
+        "alchemy_recipes_tab": {
+            "#toggle_state": false
+        },
+        "alchemy_progression_tab": {
+            "#toggle_state": false
+        },
+        "alchemy_panels_hidden": {
+            "#toggle_state": false
+        },
+        "upgrade_toggle_button": {
+            "#toggle_state": false
+        },
+        "io_toggle_button": {
+            "#toggle_state": false
+        },
+        "io_items_toggle_button": {
+            "#toggle_state": true
+        },
+        "io_fluids_toggle_button": {
+            "#toggle_state": false
+        },
+        "io_gases_toggle_button": {
+            "#toggle_state": false
+        },
+        "info_toggle_button": {
+            "#toggle_state": false
+        }
+    },
+    "_preview": {
+        "name": "Alchemical Station - Brewing / display",
+        "root": "alchemical_station.utility_panel",
+        "viewport": {
+            "width": 480,
+            "height": 270
+        },
+        "notes": "Estado inicial derivado dos toggles da UI. Dados ilustrativos; não executa a máquina."
+    }
+}

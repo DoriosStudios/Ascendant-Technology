@@ -1,0 +1,680 @@
+{
+  "assets": [
+    {
+      "name": "thorium_helmet",
+      "label": "Capacete de TÃ³rio",
+      "destination": "RP/textures/items/armor/thorium_helmet.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "armor",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 10,
+      "pixel_sha256": "5d0198cfb0d3a3f12630fdf7c0f6917d41ab1dfd4cbbbc555ba9c1ecd93e9ebc",
+      "file_sha256": "29c9885cb07f5803403871efffcec3ebcd9dda9e103c4874ac25075845295360",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required",
+      "alpha_differences_vs_titanium": 8,
+      "old_thorium_alpha_differences": 8
+    },
+    {
+      "name": "thorium_chestplate",
+      "label": "Peitoral de TÃ³rio",
+      "destination": "RP/textures/items/armor/thorium_chestplate.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "armor",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 11,
+      "pixel_sha256": "68c2e321abaf66f9f6af5fcfec6bb5fa234913ac74fecb27d90e6b692008bdef",
+      "file_sha256": "291ba16cc61824e4296bf07af4a32bbbe22c194474b5ff1ea3fa3ccd62affb94",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required",
+      "alpha_differences_vs_titanium": 14,
+      "old_thorium_alpha_differences": 14
+    },
+    {
+      "name": "thorium_leggings",
+      "label": "CalÃ§as de TÃ³rio",
+      "destination": "RP/textures/items/armor/thorium_leggings.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "armor",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 10,
+      "pixel_sha256": "55edae2e7caadac223f4238bc3ea7eb2564a4f053e69283c8e0c0e7ca8252da1",
+      "file_sha256": "9dd67664bf60214674ba43e45f165dfa04059337a8afcacfc96f253352eb63ae",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required",
+      "alpha_differences_vs_titanium": 38,
+      "old_thorium_alpha_differences": 38
+    },
+    {
+      "name": "thorium_boots",
+      "label": "Botas de TÃ³rio",
+      "destination": "RP/textures/items/armor/thorium_boots.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "armor",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 8,
+      "pixel_sha256": "4739615f260b21aa678019b9bbd3baddd45c7e088f1e2e22094d0bb53cab1a1b",
+      "file_sha256": "43720dc601b4fe63572f1d61326399e95ea2e4e164307d729a62d469b1b5fca7",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required",
+      "alpha_differences_vs_titanium": 23,
+      "old_thorium_alpha_differences": 23
+    },
+    {
+      "name": "thorium_ingot",
+      "label": "Lingote de TÃ³rio",
+      "destination": "RP/textures/items/ores/thorium_ingot.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 8,
+      "pixel_sha256": "12a852689411fd156acec409b9bd1ac637d443c1429528dba7a76d85368bd4fd",
+      "file_sha256": "68b6c83664a60ab2a15662a2592ace3765bc591bde07566dd9501ae06ed4f1a1",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_plate",
+      "label": "Placa de TÃ³rio",
+      "destination": "RP/textures/items/ores/thorium_plate.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 7,
+      "pixel_sha256": "4ce1a501f1e21f01d237f77c9649a67b9187635efbc91eafbe2dbe280b2bb8ee",
+      "file_sha256": "a4235ad949d1c9a4b15289065d237458f0c9cb7d429521090bd78084c9e7cd1c",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_nugget",
+      "label": "Pepita de TÃ³rio",
+      "destination": "RP/textures/items/ores/thorium_nugget.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 5,
+      "pixel_sha256": "d545c65793d8a97e7144d4a9060b0687f44ccf7d636f8afbb6cf4994cdef4bf9",
+      "file_sha256": "11efe59f3314ff171f4babb35232fda26af6b8d17b1234faf3d89aa0cdc582e4",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "raw_thorium",
+      "label": "TÃ³rio bruto",
+      "destination": "RP/textures/items/ores/raw_thorium.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "00bab111f5e32015e21dd4732c5c32d1b4d2a7b4f4092e5be2dfd4c0aee08c5b",
+      "file_sha256": "3e3e4caadaffe88a706fad5643d00f098ce3c8a9cca1e58b4d0353609a6f656d",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_chunk",
+      "label": "Fragmento de TÃ³rio",
+      "destination": "RP/textures/items/ores/thorium_chunk.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 7,
+      "pixel_sha256": "4cd3e3380f80f5cd261b7adc056bed06641a4cf01f6002ac4fc8b4c1ed704dbf",
+      "file_sha256": "6eacd3d5b3977ab8162a029ab06d18de6c7267210178718a585eea35872d5473",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_dust",
+      "label": "PÃ³ de TÃ³rio",
+      "destination": "RP/textures/items/ores/thorium_dust.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 7,
+      "pixel_sha256": "e895926751d8fabf72a6a64156ed0835e0f8759724e5447e02ffd9af40cf55ba",
+      "file_sha256": "ce11c6902fa743b78102317d670417f40f712564e83a0cec8f9d38d12c23dad3",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "raw_thorium_dust",
+      "label": "PÃ³ de TÃ³rio bruto",
+      "destination": "RP/textures/items/ores/raw_thorium_dust.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 7,
+      "pixel_sha256": "655ef039fc2e1402120ccda619581d713f0dd8f5dbd74fbd4b9f09a984295940",
+      "file_sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_rod",
+      "label": "Haste de TÃ³rio",
+      "destination": "RP/textures/items/ores/thorium_rod.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 5,
+      "pixel_sha256": "d4785eb6b35eac9f863ddef20bae23c6826c92117be6b1f80f0c929852b3a5a3",
+      "file_sha256": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_gear",
+      "label": "Engrenagem de TÃ³rio",
+      "destination": "RP/textures/items/machinery/thorium_gear.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "component",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 6,
+      "pixel_sha256": "4495e885b1f0f86d718c93c49454502b5440798f8600fd4da1aa91024e69d0cc",
+      "file_sha256": "6fa08e9cb1eea1c0d11fc4573f6c6b9d505dcd381d0272b22cca9468ddeda01a",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_mesh",
+      "label": "Malha de TÃ³rio",
+      "destination": "RP/textures/items/meshes/thorium_mesh.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "component",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 5,
+      "pixel_sha256": "b0231f19b43e43fae90a19a9341ce6f8a3831147d28fa270da87a2c865eba1de",
+      "file_sha256": "a67673c4883137a9c886ecc0a64b872bb0d4d434063d8a6bfd9a7f559a54be7f",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_net",
+      "label": "Rede de TÃ³rio",
+      "destination": "RP/textures/items/nets/thorium_net.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "component",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 2,
+        "INFO": 1
+      },
+      "colors": 3,
+      "pixel_sha256": "ba2ecac5c8427999a8f257a8b07b3db471513b38e8b43cc8c3d6c44cfc7d1662",
+      "file_sha256": "4e1be9afd8a4830d2174f4cdf96d92b33058ce5e667cb332d890114002543f3d",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_seeds",
+      "label": "Sementes de TÃ³rio",
+      "destination": "RP/textures/items/ores/thorium_seeds.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 5,
+      "pixel_sha256": "f3d06671e36aacb989cb1ba1f29f7b563ddb321ca33859b1da72b79f052a806e",
+      "file_sha256": "f2ae15e88b9bcfd795fe5b3f1ca4e3c0b875b6f7b0e23104a536ef83da83e2a1",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_sword",
+      "label": "Espada de TÃ³rio",
+      "destination": "RP/textures/items/tools/thorium_sword.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 8,
+      "pixel_sha256": "f5d4f28d2231ee7bff504f3cea3a4251aef8bbbdd23d99abef0f3810a8f175f2",
+      "file_sha256": "d30e27fb4df604b48049b2b376bd268db888790989c3a7a620fb55b379d95e1e",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_pickaxe",
+      "label": "Picareta de TÃ³rio",
+      "destination": "RP/textures/items/tools/thorium_pickaxe.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 8,
+      "pixel_sha256": "b6a5de7fe1d9e82f625c8f1db5c8e4b0bc55238abf3f6eb6cf531907593d8bdb",
+      "file_sha256": "462f0b288320557c76286f7c44d8804b7f8c1c059f251ec29c2b71c59dd1c4ef",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_axe",
+      "label": "Machado de TÃ³rio",
+      "destination": "RP/textures/items/tools/thorium_axe.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "a7418dae7ce3ee58abe17ccf9f4ecc0d4b87324e30b918b4a316577710a6adf5",
+      "file_sha256": "03ae67e7275d919c5cd64c2a1069214aa4f28e11f916aefac48a7ab9485bba3e",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_shovel",
+      "label": "PÃ¡ de TÃ³rio",
+      "destination": "RP/textures/items/tools/thorium_shovel.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "aed5e7efcfc7a1b8bd90e588723550dbe5331c40c981cc3521a75cc404a8c80e",
+      "file_sha256": "b8f76b07cb251ba612da1068a08890b5e09e3b82e99b009cb2872647151fd246",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_hoe",
+      "label": "Enxada de TÃ³rio",
+      "destination": "RP/textures/items/tools/thorium_hoe.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "7c4c68d4280d0bc0054b8463f52d562adc956762189071c472a49d7549b57189",
+      "file_sha256": "3105cbb78ca153f8989854c6ea991abea9593e04d7d46ce6b2f5e923a7b06d25",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_hammer",
+      "label": "Martelo de TÃ³rio",
+      "destination": "RP/textures/items/tools/thorium_hammer.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "f678444dad354103f81f312d0b6bea07a62dab43ebb2f90b12bd933d827b2943",
+      "file_sha256": "fad6f7cbf0f098f31f3638266dc9de3a5e9033b805f6e02fa1fc3c27f0e74209",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_paxel",
+      "label": "Paxel de TÃ³rio",
+      "destination": "RP/textures/items/tools/thorium_paxel.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "acfbc4b0b0e99b77c8bd47e643308016c804ba0c91e7d1ba6e81db472703cb91",
+      "file_sha256": "4eeac95f1e77d1a9bb855f7f672f6bd518b45237923bc6ef1bd4d15a71e29ce5",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_aiot",
+      "label": "AIOT de TÃ³rio",
+      "destination": "RP/textures/items/tools/thorium_aiot.png",
+      "size": [
+        18,
+        18
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "3271f5648a54ea94e1fdd349e8f5696b88837909a0f783c0280b3f2fd225637b",
+      "file_sha256": "b974cf1c6475c83dd91cac36ddb078187c0c84e269bb84f4bf4db4ff02624d4f",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_block",
+      "label": "Bloco de TÃ³rio",
+      "destination": "RP/textures/blocks/ores/thorium_block.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "block",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 2
+      },
+      "colors": 8,
+      "pixel_sha256": "767ce755625a9d7f6134d968af8b0b1d6189e68c663895c942586b164f66d157",
+      "file_sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "raw_thorium_block",
+      "label": "Bloco de TÃ³rio bruto",
+      "destination": "RP/textures/blocks/ores/raw_thorium_block.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "block",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 2
+      },
+      "colors": 10,
+      "pixel_sha256": "6b3f3f6809ea675fb9ac13908711cca196f1d53c8563b99c0922133420181cd8",
+      "file_sha256": "2724ecd39ab2367e474c15ca4a911e9aeb333a4c706d0daa92ee31f4a97b2ac7",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "deepslate_thorium_ore",
+      "label": "MinÃ©rio profundo de TÃ³rio",
+      "destination": "RP/textures/blocks/ores/deepslate_thorium_ore.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "block",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 2
+      },
+      "colors": 10,
+      "pixel_sha256": "6c671c155f5b5f4dbbda5737a78f8bac6b3c5a6dabf99ded87b0358a9a4f95e2",
+      "file_sha256": "f5dd97152b0e142e52fa09b8ff1606de4a33e6fa3fd5f10a3c478b6681907a8d",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_ore",
+      "label": "MinÃ©rio de TÃ³rio",
+      "destination": "RP/textures/blocks/ores/thorium_ore.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "block",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 2
+      },
+      "colors": 10,
+      "pixel_sha256": "640f5d0f9d9643b3eb6d5252b11310de7a3e0ea24e599052064eecd176dd47df",
+      "file_sha256": "a8285b806235f9e2cf60375ec4eab80dda14a75ebf3368c34b7e192b56ca8d4d",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_0",
+      "label": "Cultivo de TÃ³rio estÃ¡gio 0",
+      "destination": "RP/textures/blocks/crops/thorium_0.png",
+      "size": [
+        32,
+        16
+      ],
+      "kind": "crop",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 7,
+      "pixel_sha256": "c00fbca05978e1125cf4ccd5a39fdb598aba5a5bfde259a35d5a97490a0d1c69",
+      "file_sha256": "08b6b41cca9d8fb552795a5a9b1f13c11724bb928fd684806c1e56c71a5d1f57",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    },
+    {
+      "name": "thorium_1",
+      "label": "Cultivo de TÃ³rio estÃ¡gio 1",
+      "destination": "RP/textures/blocks/crops/thorium_1.png",
+      "size": [
+        32,
+        16
+      ],
+      "kind": "crop",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 10,
+      "pixel_sha256": "4e636053c0e7d32d54afef11090642078cba6f826212c96e5b6138c668f25a0e",
+      "file_sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+      "deterministic": true,
+      "artistic_status": "model_reviewed",
+      "human_approval": "required"
+    }
+  ],
+  "catalog": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v2\\catalog.json",
+  "selection": "all",
+  "artistic_status": "model_reviewed",
+  "human_approval": "required",
+  "generated_images": {
+    "deepslate_thorium_ore.png": "f5dd97152b0e142e52fa09b8ff1606de4a33e6fa3fd5f10a3c478b6681907a8d",
+    "raw_thorium.png": "3e3e4caadaffe88a706fad5643d00f098ce3c8a9cca1e58b4d0353609a6f656d",
+    "raw_thorium_block.png": "2724ecd39ab2367e474c15ca4a911e9aeb333a4c706d0daa92ee31f4a97b2ac7",
+    "raw_thorium_dust.png": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+    "thorium_0.png": "08b6b41cca9d8fb552795a5a9b1f13c11724bb928fd684806c1e56c71a5d1f57",
+    "thorium_1.png": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+    "thorium_aiot.png": "b974cf1c6475c83dd91cac36ddb078187c0c84e269bb84f4bf4db4ff02624d4f",
+    "thorium_axe.png": "03ae67e7275d919c5cd64c2a1069214aa4f28e11f916aefac48a7ab9485bba3e",
+    "thorium_block.png": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+    "thorium_boots.png": "43720dc601b4fe63572f1d61326399e95ea2e4e164307d729a62d469b1b5fca7",
+    "thorium_chestplate.png": "291ba16cc61824e4296bf07af4a32bbbe22c194474b5ff1ea3fa3ccd62affb94",
+    "thorium_chunk.png": "6eacd3d5b3977ab8162a029ab06d18de6c7267210178718a585eea35872d5473",
+    "thorium_dust.png": "ce11c6902fa743b78102317d670417f40f712564e83a0cec8f9d38d12c23dad3",
+    "thorium_family_preview.png": "011a93f4c40730d0d561dce6a2ee988872cb8b4b585a7f3700d51a30ab1e4ef8",
+    "thorium_gear.png": "6fa08e9cb1eea1c0d11fc4573f6c6b9d505dcd381d0272b22cca9468ddeda01a",
+    "thorium_hammer.png": "fad6f7cbf0f098f31f3638266dc9de3a5e9033b805f6e02fa1fc3c27f0e74209",
+    "thorium_helmet.png": "29c9885cb07f5803403871efffcec3ebcd9dda9e103c4874ac25075845295360",
+    "thorium_hoe.png": "3105cbb78ca153f8989854c6ea991abea9593e04d7d46ce6b2f5e923a7b06d25",
+    "thorium_ingot.png": "68b6c83664a60ab2a15662a2592ace3765bc591bde07566dd9501ae06ed4f1a1",
+    "thorium_leggings.png": "9dd67664bf60214674ba43e45f165dfa04059337a8afcacfc96f253352eb63ae",
+    "thorium_mesh.png": "a67673c4883137a9c886ecc0a64b872bb0d4d434063d8a6bfd9a7f559a54be7f",
+    "thorium_net.png": "4e1be9afd8a4830d2174f4cdf96d92b33058ce5e667cb332d890114002543f3d",
+    "thorium_nugget.png": "11efe59f3314ff171f4babb35232fda26af6b8d17b1234faf3d89aa0cdc582e4",
+    "thorium_ore.png": "a8285b806235f9e2cf60375ec4eab80dda14a75ebf3368c34b7e192b56ca8d4d",
+    "thorium_paxel.png": "4eeac95f1e77d1a9bb855f7f672f6bd518b45237923bc6ef1bd4d15a71e29ce5",
+    "thorium_pickaxe.png": "462f0b288320557c76286f7c44d8804b7f8c1c059f251ec29c2b71c59dd1c4ef",
+    "thorium_plate.png": "a4235ad949d1c9a4b15289065d237458f0c9cb7d429521090bd78084c9e7cd1c",
+    "thorium_rod.png": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+    "thorium_seeds.png": "f2ae15e88b9bcfd795fe5b3f1ca4e3c0b875b6f7b0e23104a536ef83da83e2a1",
+    "thorium_set_preview.png": "dca8b3d169e61e661661f986b12737a05110279035ba9ba2697e3c641044f87a",
+    "thorium_shovel.png": "b8f76b07cb251ba612da1068a08890b5e09e3b82e99b009cb2872647151fd246",
+    "thorium_sword.png": "d30e27fb4df604b48049b2b376bd268db888790989c3a7a620fb55b379d95e1e"
+  }
+}

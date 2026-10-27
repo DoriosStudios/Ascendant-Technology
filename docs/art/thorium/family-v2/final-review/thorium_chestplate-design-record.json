@@ -1,0 +1,406 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Peitoral de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "new compact body with a shallow collar and broad closed chest",
+      "paired chamfered pauldrons rather than titanium split towers",
+      "two angled front plates and offset diagonal seam",
+      "layered waist lames with one small clasp"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": [
+      1,
+      2,
+      15,
+      15
+    ],
+    "primitives": [
+      {
+        "layer": "silhouette",
+        "command": 0,
+        "bounds": [
+          1,
+          2,
+          15,
+          15
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "underlayer",
+        "command": 0,
+        "bounds": [
+          4,
+          3,
+          13,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "shoulder-slabs",
+        "command": 0,
+        "bounds": [
+          2,
+          3,
+          7,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "shoulder-slabs",
+        "command": 1,
+        "bounds": [
+          10,
+          3,
+          14,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "shoulder-slabs",
+        "command": 2,
+        "bounds": [
+          2,
+          3,
+          6,
+          5
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "shoulder-slabs",
+        "command": 3,
+        "bounds": [
+          11,
+          3,
+          13,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "breastplate",
+        "command": 0,
+        "bounds": [
+          4,
+          5,
+          12,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "breastplate",
+        "command": 1,
+        "bounds": [
+          4,
+          5,
+          9,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "breastplate",
+        "command": 2,
+        "bounds": [
+          7,
+          6,
+          11,
+          10
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "breastplate",
+        "command": 3,
+        "bounds": [
+          7,
+          5,
+          10,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "breastplate",
+        "command": 4,
+        "bounds": [
+          5,
+          5,
+          8,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "waist",
+        "command": 0,
+        "bounds": [
+          4,
+          10,
+          12,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "waist",
+        "command": 1,
+        "bounds": [
+          5,
+          11,
+          11,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "waist",
+        "command": 2,
+        "bounds": [
+          6,
+          13,
+          10,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "waist",
+        "command": 3,
+        "bounds": [
+          7,
+          11,
+          9,
+          13
+        ],
+        "outside_canvas": false
+      }
+    ],
+    "outside_primitives": []
+  },
+  "composition": {
+    "raster_bounds": [
+      1,
+      2,
+      15,
+      15
+    ],
+    "minimum_margin": 1,
+    "edge_counts": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "findings": []
+  },
+  "region_bounds": {
+    "underlayer": [
+      4,
+      3,
+      13,
+      14
+    ],
+    "shoulder-slabs": [
+      2,
+      3,
+      14,
+      8
+    ],
+    "breastplate": [
+      4,
+      5,
+      12,
+      11
+    ],
+    "waist": [
+      4,
+      10,
+      12,
+      14
+    ]
+  },
+  "pixel_sha256": "68c2e321abaf66f9f6af5fcfec6bb5fa234913ac74fecb27d90e6b692008bdef",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          58,
+          44,
+          55
+        ],
+        "pixels": 37,
+        "oklab": [
+          0.3132951637855895,
+          0.02475298566202988,
+          -0.012167274078498158
+        ]
+      },
+      {
+        "rgb": [
+          73,
+          61,
+          72
+        ],
+        "pixels": 9,
+        "oklab": [
+          0.3766513904263839,
+          0.020885264019629035,
+          -0.012688651958945252
+        ]
+      },
+      {
+        "rgb": [
+          86,
+          61,
+          77
+        ],
+        "pixels": 5,
+        "oklab": [
+          0.3936487143819071,
+          0.040348858008418226,
+          -0.01421680152451571
+        ]
+      },
+      {
+        "rgb": [
+          135,
+          55,
+          93
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.4580736579510529,
+          0.11682090401904174,
+          -0.014137422668949795
+        ]
+      },
+      {
+        "rgb": [
+          167,
+          67,
+          114
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.5307585390052371,
+          0.1400036965451507,
+          -0.01550403452013649
+        ]
+      },
+      {
+        "rgb": [
+          197,
+          80,
+          136
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.5997660713505149,
+          0.15911940459083473,
+          -0.018965013732911817
+        ]
+      },
+      {
+        "rgb": [
+          220,
+          96,
+          156
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.6600247922731386,
+          0.16590646322641156,
+          -0.021978423369214406
+        ]
+      },
+      {
+        "rgb": [
+          231,
+          113,
+          172
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.703253560755495,
+          0.1575084120131156,
+          -0.025730453813424092
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          154,
+          195
+        ],
+        "pixels": 16,
+        "oklab": [
+          0.778763878657962,
+          0.10673590363744428,
+          -0.022298036426314338
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          196,
+          217
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.8599941784213212,
+          0.05006552115085833,
+          -0.013761702133999187
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          212,
+          224
+        ],
+        "pixels": 3,
+        "oklab": [
+          0.892250348674154,
+          0.028905036804675155,
+          -0.00781983727596347
+        ]
+      }
+    ],
+    "lightness_range": 0.5789551848885645,
+    "tonal_coverage": {
+      "shadow": 0.39230769230769225,
+      "mid": 0.4307692307692308,
+      "highlight": 0.17692307692307693
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

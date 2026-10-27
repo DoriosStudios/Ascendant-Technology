@@ -18,7 +18,7 @@
                 }
             },
             "minecraft:tags": {
-                "tags": ["utilitycraft:ds.is_storage_cell", "utilitycraft:ds.capacity.3276800"]
+                "tags": ["utilitycraft:ds.is_storage_cell", "utilitycraft:ds.capacity.6553600"]
             }
         }
     }

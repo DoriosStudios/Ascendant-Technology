@@ -1,0 +1,644 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v2\\final\\raw_thorium.png",
+  "pixel_sha256": "00bab111f5e32015e21dd4732c5c32d1b4d2a7b4f4092e5be2dfd4c0aee08c5b",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 9,
+      "allowed": [
+        [
+          197,
+          80,
+          136
+        ],
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          231,
+          113,
+          172
+        ],
+        [
+          235,
+          154,
+          195
+        ],
+        [
+          235,
+          196,
+          217
+        ],
+        [
+          58,
+          44,
+          55
+        ],
+        [
+          63,
+          62,
+          67
+        ],
+        [
+          87,
+          84,
+          91
+        ],
+        [
+          115,
+          110,
+          119
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 141,
+      "partial": 0,
+      "opaque": 115
+    },
+    "palette": {
+      "unique_visible_rgb": 9,
+      "unique_rgba": 10,
+      "frequencies": [
+        {
+          "rgb": [
+            58,
+            44,
+            55
+          ],
+          "hex": "#3A2C37",
+          "count": 30
+        },
+        {
+          "rgb": [
+            87,
+            84,
+            91
+          ],
+          "hex": "#57545B",
+          "count": 25
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "hex": "#C55088",
+          "count": 14
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "hex": "#E771AC",
+          "count": 14
+        },
+        {
+          "rgb": [
+            115,
+            110,
+            119
+          ],
+          "hex": "#736E77",
+          "count": 10
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "hex": "#EBC4D9",
+          "count": 9
+        },
+        {
+          "rgb": [
+            63,
+            62,
+            67
+          ],
+          "hex": "#3F3E43",
+          "count": 8
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "hex": "#EB9AC3",
+          "count": 4
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 1
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 115,
+      "bbox": [
+        1,
+        2,
+        15,
+        15
+      ],
+      "components_4_connected": 1,
+      "component_sizes": [
+        115
+      ]
+    },
+    "clusters": {
+      "color_components": 38,
+      "singletons": 18
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            58,
+            44,
+            55
+          ],
+          "pixels": 30,
+          "oklab": [
+            0.3132951637855895,
+            0.02475298566202988,
+            -0.012167274078498158
+          ]
+        },
+        {
+          "rgb": [
+            63,
+            62,
+            67
+          ],
+          "pixels": 8,
+          "oklab": [
+            0.36669274379417555,
+            0.003640633454183556,
+            -0.007755227263756048
+          ]
+        },
+        {
+          "rgb": [
+            87,
+            84,
+            91
+          ],
+          "pixels": 25,
+          "oklab": [
+            0.4511768872768887,
+            0.006826999455733257,
+            -0.009682013209868057
+          ]
+        },
+        {
+          "rgb": [
+            115,
+            110,
+            119
+          ],
+          "pixels": 10,
+          "oklab": [
+            0.5457474438041134,
+            0.009732928371759542,
+            -0.011434584091469469
+          ]
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "pixels": 14,
+          "oklab": [
+            0.5997660713505149,
+            0.15911940459083473,
+            -0.018965013732911817
+          ]
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 1,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "pixels": 14,
+          "oklab": [
+            0.703253560755495,
+            0.1575084120131156,
+            -0.025730453813424092
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "pixels": 4,
+          "oklab": [
+            0.778763878657962,
+            0.10673590363744428,
+            -0.022298036426314338
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "pixels": 9,
+          "oklab": [
+            0.8599941784213212,
+            0.05006552115085833,
+            -0.013761702133999187
+          ]
+        }
+      ],
+      "lightness_range": 0.5466990146357317,
+      "tonal_coverage": {
+        "shadow": 0.33043478260869563,
+        "mid": 0.5565217391304347,
+        "highlight": 0.11304347826086958
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 18,
+      "coordinates": [
+        [
+          8,
+          2
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          10,
+          4
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          13,
+          8
+        ],
+        [
+          14,
+          9
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          2,
+          11
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          6,
+          14
+        ]
+      ]
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "model_reviewed",
+    "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+    "evaluator_type": "model",
+    "pixel_sha256": "00bab111f5e32015e21dd4732c5c32d1b4d2a7b4f4092e5be2dfd4c0aee08c5b",
+    "human_approval": "required",
+    "inspected_files": [
+      "thorium_family_preview.png"
+    ],
+    "observations": [
+      "Gray crust and two connected exposed pink seams distinguish host rock from metal. The angular rock silhouette remains coarse and irregular.",
+      "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+    ],
+    "limitations": [
+      "No creator approval of this revision has been supplied.",
+      "Textures only; no gameplay or in-game acceptance claim."
+    ],
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ]
+  },
+  "file_sha256": "3e3e4caadaffe88a706fad5643d00f098ce3c8a9cca1e58b4d0353609a6f656d",
+  "design": {
+    "intent": {
+      "identity": "TÃ³rio bruto",
+      "usage": "native AT texture-family candidate",
+      "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+      "orientation": "explicit native inventory or block face construction",
+      "lighting": "upper-left, reduced value range; highlights describe connected planes",
+      "structure": [
+        "rough angular gray crust",
+        "coherent exposed sharp Thorium seams through the host"
+      ],
+      "style": [
+        "new Thorium construction rather than titanium recolor",
+        "sharp chamfers and restrained plate seams",
+        "20 percent lower HSV saturation in the metal ramp"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/titanium_ingot.png",
+        "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+        "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+        "approval": "project reference, not approval of Thorium variants"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": [
+        1,
+        2,
+        15,
+        15
+      ],
+      "primitives": [
+        {
+          "layer": "silhouette",
+          "command": 0,
+          "bounds": [
+            1,
+            2,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 0,
+          "bounds": [
+            2,
+            3,
+            14,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 1,
+          "bounds": [
+            2,
+            5,
+            6,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "host",
+          "command": 2,
+          "bounds": [
+            7,
+            8,
+            14,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "metal-seams",
+          "command": 0,
+          "bounds": [
+            4,
+            3,
+            11,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "metal-seams",
+          "command": 1,
+          "bounds": [
+            5,
+            4,
+            9,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "metal-seams",
+          "command": 2,
+          "bounds": [
+            6,
+            7,
+            12,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "metal-seams",
+          "command": 3,
+          "bounds": [
+            7,
+            8,
+            11,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "metal-seams",
+          "command": 4,
+          "bounds": [
+            4,
+            10,
+            5,
+            11
+          ],
+          "outside_canvas": false
+        }
+      ],
+      "outside_primitives": []
+    },
+    "composition": {
+      "raster_bounds": [
+        1,
+        2,
+        15,
+        15
+      ],
+      "minimum_margin": 1,
+      "edge_counts": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      },
+      "findings": []
+    },
+    "region_bounds": {
+      "host": [
+        2,
+        3,
+        14,
+        14
+      ],
+      "metal-seams": [
+        4,
+        3,
+        12,
+        13
+      ]
+    }
+  }
+}

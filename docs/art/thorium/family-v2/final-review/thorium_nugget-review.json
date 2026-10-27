@@ -1,0 +1,392 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v2\\final\\thorium_nugget.png",
+  "pixel_sha256": "d545c65793d8a97e7144d4a9060b0687f44ccf7d636f8afbb6cf4994cdef4bf9",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 5,
+      "allowed": [
+        [
+          167,
+          67,
+          114
+        ],
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          235,
+          176,
+          206
+        ],
+        [
+          235,
+          212,
+          224
+        ],
+        [
+          58,
+          44,
+          55
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 0,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 197,
+      "partial": 0,
+      "opaque": 59
+    },
+    "palette": {
+      "unique_visible_rgb": 5,
+      "unique_rgba": 6,
+      "frequencies": [
+        {
+          "rgb": [
+            58,
+            44,
+            55
+          ],
+          "hex": "#3A2C37",
+          "count": 21
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 17
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "hex": "#EBB0CE",
+          "count": 13
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "hex": "#EBD4E0",
+          "count": 5
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "hex": "#A74372",
+          "count": 3
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 59,
+      "bbox": [
+        4,
+        3,
+        13,
+        13
+      ],
+      "components_4_connected": 1,
+      "component_sizes": [
+        59
+      ]
+    },
+    "clusters": {
+      "color_components": 17,
+      "singletons": 6
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            58,
+            44,
+            55
+          ],
+          "pixels": 21,
+          "oklab": [
+            0.3132951637855895,
+            0.02475298566202988,
+            -0.012167274078498158
+          ]
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "pixels": 3,
+          "oklab": [
+            0.5307585390052371,
+            0.1400036965451507,
+            -0.01550403452013649
+          ]
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 17,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "pixels": 13,
+          "oklab": [
+            0.8202004222885522,
+            0.0765292348381662,
+            -0.017616730036504324
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "pixels": 5,
+          "oklab": [
+            0.892250348674154,
+            0.028905036804675155,
+            -0.00781983727596347
+          ]
+        }
+      ],
+      "lightness_range": 0.5789551848885645,
+      "tonal_coverage": {
+        "shadow": 0.3559322033898305,
+        "mid": 0.3389830508474576,
+        "highlight": 0.30508474576271183
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ],
+    "requested_identity": "Pepita de Tório"
+  },
+  "file_sha256": "11efe59f3314ff171f4babb35232fda26af6b8d17b1234faf3d89aa0cdc582e4",
+  "design": {
+    "intent": {
+      "identity": "Pepita de Tório",
+      "usage": "native AT texture-family candidate",
+      "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+      "orientation": "explicit native inventory or block face construction",
+      "lighting": "upper-left, reduced value range; highlights describe connected planes",
+      "structure": [
+        "small irregular metal volume with three sharp planes"
+      ],
+      "style": [
+        "new Thorium construction rather than titanium recolor",
+        "sharp chamfers and restrained plate seams",
+        "20 percent lower HSV saturation in the metal ramp"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/titanium_ingot.png",
+        "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+        "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+        "approval": "project reference, not approval of Thorium variants"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": [
+        4,
+        3,
+        13,
+        13
+      ],
+      "primitives": [
+        {
+          "layer": "silhouette",
+          "command": 0,
+          "bounds": [
+            4,
+            3,
+            13,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "cut-nugget",
+          "command": 0,
+          "bounds": [
+            5,
+            4,
+            11,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "cut-nugget",
+          "command": 1,
+          "bounds": [
+            7,
+            5,
+            12,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "cut-nugget",
+          "command": 2,
+          "bounds": [
+            5,
+            4,
+            10,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "cut-nugget",
+          "command": 3,
+          "bounds": [
+            5,
+            10,
+            8,
+            12
+          ],
+          "outside_canvas": false
+        }
+      ],
+      "outside_primitives": []
+    },
+    "composition": {
+      "raster_bounds": [
+        4,
+        3,
+        13,
+        13
+      ],
+      "minimum_margin": 3,
+      "edge_counts": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      },
+      "findings": []
+    },
+    "region_bounds": {
+      "cut-nugget": [
+        5,
+        4,
+        12,
+        12
+      ]
+    }
+  }
+}

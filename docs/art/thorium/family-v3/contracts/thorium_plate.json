@@ -1,0 +1,13 @@
+{
+  "mode": "new_rectangular_sheet",
+  "size": [
+    16,
+    16
+  ],
+  "expected_bounds": [
+    2,
+    4,
+    14,
+    12
+  ]
+}

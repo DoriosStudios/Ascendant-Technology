@@ -3,7 +3,6 @@
 import { system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import * as DoriosLib from "DoriosLib/index.js";
-import { EnergyStorage } from "DoriosCore/index.js";
 import { createPlainConveyors } from "./plainConveyors.js";
 import { createBridgeConveyors } from "./bridgeConveyors.js";
 import { createSpecialConveyors } from "./specialConveyors.js";
@@ -14,11 +13,10 @@ export const CONVEYOR_UPDATER_COMPONENT_ID = "utilitycraft:conveyor_network_upda
 const CONVEYOR_TAG = "dorios:conveyor";
 const BRIDGE_TAG = "dorios:conveyor_bridge";
 const MOVEMENT_INTERVAL = 2;
-const TOPOLOGY_DEBOUNCE_TICKS = 20;
-const TOPOLOGY_BATCH_SIZE = 25;
+const DISCOVERY_BATCH_SIZE = 25;
+const PAYLOAD_DISCOVERY_INTERVAL = 100;
 const PERSIST_PAGE_SIZE = 200;
 const ITEM_SPACING = 0.35;
-const SPECIAL_ENERGY_COST = 10;
 const SPECIAL_BLOCKS_PER_SECOND = 5;
 const ROUTER_CYCLE_TICKS = 10;
 const VERTICAL_DIRECTION_STATE = "utilitycraft:vertical_direction";
@@ -101,13 +99,11 @@ const BLOCKED_PAYLOAD_FAMILIES = [
 
 const metaByType = new Map();
 const registryByDimension = new Map();
-const topologyByDimension = new Map();
-const topologyRequests = new Map();
 const itemPayloads = new Map();
 const creaturePayloads = new Map();
 const lastMoveByEntity = new Map();
-let topologyWorkerRunning = false;
-let restoreStarted = false;
+let restoreInProgress = false;
+let payloadDiscoveryRunning = false;
 let installed = false;
 
 function defineType(typeId, meta) {
@@ -301,8 +297,6 @@ const bridge = createBridgeConveyors({
     bridgeDirectionState: BRIDGE_DIRECTION_STATE,
     positionKey,
     parsePositionKey,
-    scheduleTopology,
-    emitEnergyUpdate,
     translate,
     processPlain: plain.process,
     isValid,
@@ -315,7 +309,6 @@ const special = createSpecialConveyors({
     world,
     specialShapes: SPECIAL_SHAPES,
     specialBlocksPerSecond: SPECIAL_BLOCKS_PER_SECOND,
-    specialEnergyCost: SPECIAL_ENERGY_COST,
     routerCycleTicks: ROUTER_CYCLE_TICKS,
     conveyorTag: CONVEYOR_TAG,
     defineType,
@@ -335,8 +328,6 @@ const special = createSpecialConveyors({
     getLastMove,
     rememberMove,
     canMoveWithSpacing: plain.canMoveWithSpacing,
-    canConsumeEnergy,
-    consumeEnergy,
     tryInsert,
     teleport,
     translate,
@@ -362,14 +353,17 @@ function registerConveyor(block, persist = true) {
     const registry = dimensionRegistry(block.dimension.id);
     const key = positionKey(block.location);
     const previous = registry.get(key);
+    const facing = getState(block, "minecraft:cardinal_direction");
+    // Loaded blocks announce themselves repeatedly; persistence and bridge
+    // rebuilding are needed only when this session first sees a block/change.
+    if (previous?.typeId === block.typeId && previous.facing === facing) return false;
     registry.set(key, {
         pos: { ...block.location },
         typeId: block.typeId,
         meta,
-        facing: getState(block, "minecraft:cardinal_direction"),
+        facing,
     });
     if (persist) persistConveyor(block);
-    if (!previous || previous.typeId !== block.typeId) scheduleTopology(block.dimension);
     return true;
 }
 
@@ -385,7 +379,6 @@ function unregisterConveyor(dimension, position, unpersist = true, clearConfigur
     registry.delete(key);
     if (unpersist) unpersistConveyor(dimension.id, position);
     if (clearConfiguration) special.clearConfiguration({ dimension, location: position }, entry.meta);
-    scheduleTopology(dimension);
     return true;
 }
 
@@ -502,180 +495,33 @@ async function yieldTick() {
 }
 
 async function restorePersistedConveyors() {
-    if (restoreStarted) return;
-    restoreStarted = true;
-    let processed = 0;
-    for (const dimensionId of DIMENSION_IDS) {
-        const dimension = world.getDimension(dimensionId);
-        const meta = readIndexMeta(dimensionId);
-        for (let page = 0; page < meta.pages; page++) {
-            for (const key of readIndexPage(dimensionId, page)) {
-                for (const encoded of readChunk(dimensionId, key)) {
-                    const position = decodePersistedPosition(encoded);
-                    if (!position) continue;
-                    const block = safeGetBlock(dimension, position);
-                    if (!block) continue;
-                    if (block.hasTag?.(CONVEYOR_TAG) && getType(block.typeId)) registerConveyor(block, false);
-                    else unpersistConveyor(dimensionId, position);
-                    processed++;
-                    if (processed % TOPOLOGY_BATCH_SIZE === 0) await yieldTick();
-                }
-            }
-        }
-        await refreshAllBridges(dimension);
-        scheduleTopology(dimension, 0);
-    }
-}
-
-export function scheduleTopology(dimension, delay = TOPOLOGY_DEBOUNCE_TICKS) {
-    if (!dimension?.id) return;
-    const readyTick = system.currentTick + Math.max(0, delay);
-    const previous = topologyRequests.get(dimension.id);
-    topologyRequests.set(dimension.id, {
-        dimension,
-        readyTick: previous ? Math.min(previous.readyTick, readyTick) : readyTick,
-    });
-    if (!topologyWorkerRunning) {
-        topologyWorkerRunning = true;
-        system.run(processTopologyRequests);
-    }
-}
-
-async function processTopologyRequests() {
+    if (restoreInProgress) return;
+    restoreInProgress = true;
     try {
-        while (topologyRequests.size > 0) {
-            let selectedId = null;
-            let selected = null;
-            for (const [dimensionId, request] of topologyRequests) {
-                if (!selected || request.readyTick < selected.readyTick) {
-                    selectedId = dimensionId;
-                    selected = request;
+        let processed = 0;
+        for (const dimensionId of DIMENSION_IDS) {
+            const dimension = world.getDimension(dimensionId);
+            const meta = readIndexMeta(dimensionId);
+            for (let page = 0; page < meta.pages; page++) {
+                for (const key of readIndexPage(dimensionId, page)) {
+                    for (const encoded of readChunk(dimensionId, key)) {
+                        if (++processed % DISCOVERY_BATCH_SIZE === 0) await yieldTick();
+                        const position = decodePersistedPosition(encoded);
+                        if (!position) continue;
+                        const block = safeGetBlock(dimension, position);
+                        // Keep unavailable positions. Their own onTick restores
+                        // them when the chunk becomes active, without an updater.
+                        if (!block) continue;
+                        if (block.hasTag?.(CONVEYOR_TAG) && getType(block.typeId)) registerConveyor(block, false);
+                        else unpersistConveyor(dimensionId, position);
+                    }
                 }
             }
-            if (!selected || !selectedId) break;
-            while (system.currentTick < selected.readyTick) await yieldTick();
-            topologyRequests.delete(selectedId);
-            await rebuildTopology(selected.dimension);
+            await refreshAllBridges(dimension);
         }
     } finally {
-        topologyWorkerRunning = false;
-        if (topologyRequests.size > 0) scheduleTopology(topologyRequests.values().next().value.dimension, 0);
+        restoreInProgress = false;
     }
-}
-
-async function rebuildTopology(dimension) {
-    const registry = registryByDimension.get(dimension.id);
-    const byPos = new Map();
-    const networks = new Map();
-    if (!registry || registry.size === 0) {
-        topologyByDimension.set(dimension.id, { byPos, networks });
-        return;
-    }
-
-    const reverseBridgeEdges = new Map();
-    for (const [key, entry] of registry) {
-        if (entry.meta.shape !== "bridge_transmitter") continue;
-        const target = bridge.getVirtualEdge(dimension.id, key);
-        if (!target) continue;
-        let sources = reverseBridgeEdges.get(target);
-        if (!sources) {
-            sources = [];
-            reverseBridgeEdges.set(target, sources);
-        }
-        sources.push(key);
-    }
-
-    const visited = new Set();
-    let processed = 0;
-    let networkIndex = 0;
-    for (const rootKey of registry.keys()) {
-        if (visited.has(rootKey)) continue;
-        const queue = [rootKey];
-        let queueIndex = 0;
-        const nodeKeys = [];
-        const nodes = [];
-        while (queueIndex < queue.length) {
-            const key = queue[queueIndex++];
-            if (visited.has(key)) continue;
-            const entry = registry.get(key);
-            if (!entry) continue;
-            const block = safeGetBlock(dimension, entry.pos);
-            if (!block) continue;
-            if (!block.hasTag?.(CONVEYOR_TAG) || !getType(block.typeId)) {
-                registry.delete(key);
-                unpersistConveyor(dimension.id, entry.pos);
-                continue;
-            }
-            visited.add(key);
-            nodeKeys.push(key);
-            nodes.push({ ...entry.pos });
-            for (const offset of OFFSETS) {
-                const neighborKey = positionKey(addPosition(entry.pos, offset));
-                if (registry.has(neighborKey) && !visited.has(neighborKey)) queue.push(neighborKey);
-            }
-            const bridgeTarget = bridge.getVirtualEdge(dimension.id, key);
-            if (bridgeTarget && registry.has(bridgeTarget)) queue.push(bridgeTarget);
-            for (const source of reverseBridgeEdges.get(key) ?? []) queue.push(source);
-            processed++;
-            if (processed % TOPOLOGY_BATCH_SIZE === 0) await yieldTick();
-        }
-        if (nodes.length === 0) continue;
-        const id = `${dimension.id}:${networkIndex++}`;
-        const energySources = await collectEnergySources(dimension, nodes[0]);
-        const network = { id, nodes, energySources };
-        networks.set(id, network);
-        for (const key of nodeKeys) byPos.set(key, id);
-    }
-    topologyByDimension.set(dimension.id, { byPos, networks });
-}
-
-async function collectEnergySources(dimension, start) {
-    const sources = [];
-    const sourceIds = new Set();
-    const visited = new Set();
-    const queue = [{ x: Math.floor(start.x), y: Math.floor(start.y), z: Math.floor(start.z) }];
-    let queueIndex = 0;
-    let processed = 0;
-    while (queueIndex < queue.length) {
-        const position = queue[queueIndex++];
-        const key = positionKey(position);
-        if (visited.has(key)) continue;
-        visited.add(key);
-        const block = safeGetBlock(dimension, position);
-        if (!block?.hasTag?.("dorios:energy")) continue;
-        const entity = getEnergySourceEntityAt(dimension, position, block);
-        if (entity && !sourceIds.has(entity.id)) {
-            sourceIds.add(entity.id);
-            sources.push({ ...position });
-        }
-        if (block.hasTag?.("dorios:isTube")) {
-            for (const offset of OFFSETS) queue.push(addPosition(position, offset));
-        }
-        processed++;
-        if (processed % TOPOLOGY_BATCH_SIZE === 0) await yieldTick();
-    }
-    return sources;
-}
-
-function resolveEnergyPortEntity(dimension, position) {
-    try {
-        return dimension.getEntities({ tags: [`input:[${position.x},${position.y},${position.z}]`] })[0] ?? null;
-    } catch {
-        return null;
-    }
-}
-
-function getEnergySourceEntityAt(dimension, position, block = safeGetBlock(dimension, position)) {
-    if (!block?.hasTag?.("dorios:energy")) return null;
-    let entities = [];
-    try {
-        entities = dimension.getEntitiesAtBlockLocation(position);
-    } catch {
-        return null;
-    }
-    let entity = entities.find((candidate) => hasFamily(candidate, "dorios:energy_source")) ?? null;
-    if (!entity && block.hasTag?.("dorios:multiblock.port")) entity = resolveEnergyPortEntity(dimension, position);
-    return entity && hasFamily(entity, "dorios:energy_source") ? entity : null;
 }
 
 function hasFamily(entity, family) {
@@ -684,38 +530,6 @@ function hasFamily(entity, family) {
     } catch {
         return false;
     }
-}
-
-function getEnergyEntities(block, network) {
-    if (!block?.dimension || !network) return [];
-    const entities = [];
-    for (const position of network.energySources ?? []) {
-        const entity = getEnergySourceEntityAt(block.dimension, position);
-        if (entity) entities.push(entity);
-    }
-    return entities;
-}
-
-function canConsumeEnergy(block, network, amount) {
-    if (amount <= 0) return true;
-    let total = 0;
-    for (const entity of getEnergyEntities(block, network)) {
-        total += Math.max(0, new EnergyStorage(entity).get());
-        if (total >= amount) return true;
-    }
-    return false;
-}
-
-function consumeEnergy(block, network, amount) {
-    if (amount <= 0) return true;
-    if (!canConsumeEnergy(block, network, amount)) return false;
-    let remaining = amount;
-    for (const entity of getEnergyEntities(block, network)) {
-        if (remaining <= 0) break;
-        const storage = new EnergyStorage(entity);
-        remaining -= storage.consume(Math.min(remaining, Math.max(0, storage.get())));
-    }
-    return remaining <= 0;
 }
 
 function isCreaturePayload(entity) {
@@ -733,6 +547,28 @@ function trackPayload(entity) {
     else if (isCreaturePayload(entity)) creaturePayloads.set(entity.id, entity);
 }
 
+async function discoverLoadedPayloads() {
+    if (!globalThis.worldLoaded || payloadDiscoveryRunning) return;
+    payloadDiscoveryRunning = true;
+    try {
+        let processed = 0;
+        for (const dimensionId of DIMENSION_IDS) {
+            let entities;
+            try {
+                entities = world.getDimension(dimensionId).getEntities();
+            } catch {
+                continue;
+            }
+            for (const entity of entities) {
+                trackPayload(entity);
+                if (++processed % DISCOVERY_BATCH_SIZE === 0) await yieldTick();
+            }
+        }
+    } finally {
+        payloadDiscoveryRunning = false;
+    }
+}
+
 function forgetPayload(entityId) {
     itemPayloads.delete(entityId);
     creaturePayloads.delete(entityId);
@@ -741,11 +577,19 @@ function forgetPayload(entityId) {
 
 function findConveyorUnder(entity) {
     const registry = registryByDimension.get(entity.dimension.id);
-    if (!registry) return null;
     const x = Math.floor(entity.location.x);
     const y = Math.floor(entity.location.y);
     const z = Math.floor(entity.location.z);
-    return registry.get(`${x}|${y}|${z}`) ?? registry.get(`${x}|${y - 1}|${z}`) ?? null;
+    for (const blockY of [y, y - 1]) {
+        const key = `${x}|${blockY}|${z}`;
+        const entry = registry?.get(key);
+        if (entry) return entry;
+        const block = safeGetBlock(entity.dimension, { x, y: blockY, z });
+        if (!block?.hasTag?.(CONVEYOR_TAG) || !getType(block.typeId)) continue;
+        refreshPlacedConveyor(block);
+        return registryByDimension.get(entity.dimension.id)?.get(key) ?? null;
+    }
+    return null;
 }
 
 function bucketPayloads() {
@@ -762,14 +606,11 @@ function bucketPayloads() {
         const bucketKey = `${dimensionId}:${key}`;
         let bucket = buckets.get(bucketKey);
         if (!bucket) {
-            const topology = topologyByDimension.get(dimensionId);
-            const networkId = topology?.byPos.get(key);
             bucket = {
                 entry,
                 dimension: entity.dimension,
                 items: [],
                 creatures: [],
-                network: networkId ? topology?.networks.get(networkId) ?? null : null,
             };
             buckets.set(bucketKey, bucket);
         }
@@ -791,7 +632,7 @@ function processPayloads() {
             continue;
         }
         if (meta.shape === "bridge_transmitter") bridge.process(block, meta, bucket);
-        else if (SPECIAL_SHAPE_SET.has(meta.shape)) special.process(block, meta, bucket, bucket.network);
+        else if (SPECIAL_SHAPE_SET.has(meta.shape)) special.process(block, meta, bucket);
         else plain.process(block, meta, bucket);
     }
 }
@@ -803,9 +644,9 @@ async function refreshAllBridges(dimension, player = null) {
     for (const entry of registry.values()) {
         if (entry.meta.shape !== "bridge_transmitter") continue;
         const block = safeGetBlock(dimension, entry.pos);
-        if (block) bridge.refreshTransmitter(block, entry.meta, player);
+        if (block) bridge.ensureLink(block, entry.meta, player);
         processed++;
-        if (processed % TOPOLOGY_BATCH_SIZE === 0) await yieldTick();
+        if (processed % DISCOVERY_BATCH_SIZE === 0) await yieldTick();
     }
 }
 
@@ -830,27 +671,12 @@ async function scanFromUpdater(block) {
             const link = typeof facing === "string"
                 ? bridge.evaluate(candidate, candidateMeta, facing)
                 : null;
-            if (link?.receiver && !link.obstructed) queue.push({ ...link.receiver.location });
+            if (link?.receiver && !link.obstructed && !link.pending) queue.push({ ...link.receiver.location });
         }
         processed++;
-        if (processed % TOPOLOGY_BATCH_SIZE === 0) await yieldTick();
+        if (processed % DISCOVERY_BATCH_SIZE === 0) await yieldTick();
     }
     await refreshAllBridges(block.dimension);
-    scheduleTopology(block.dimension, 0);
-}
-
-function emitEnergyUpdate(block, player = null) {
-    if (!block?.dimension) return;
-    const { x, y, z } = block.location;
-    const command = `scriptevent dorios:updatePipes energy|[${x},${y},${z}]`;
-    system.runTimeout(() => {
-        try {
-            if (player?.isValid) player.runCommand(command);
-            else block.dimension.runCommand(`execute as @n run ${command}`);
-        } catch {
-            // No nearby source entity means there is no loaded energy network to notify.
-        }
-    }, 2);
 }
 
 function refreshPlacedConveyor(block, player = null) {
@@ -859,7 +685,6 @@ function refreshPlacedConveyor(block, player = null) {
     if (meta?.shape === "bridge_transmitter") bridge.refreshTransmitter(block, meta, player);
     else if (meta?.shape === "bridge_receiver") bridge.refreshReceiver(block, meta, player);
     bridge.refreshPathOwner(block.dimension, block.location, player);
-    emitEnergyUpdate(block, player);
 }
 
 function onConveyorBroken(block, permutation, player = null) {
@@ -878,7 +703,6 @@ function onConveyorBroken(block, permutation, player = null) {
             const receiverLike = { dimension: block.dimension, location: block.location, typeId };
             bridge.refreshReceiver(receiverLike, meta, player);
         }
-        emitEnergyUpdate(block, player);
     });
 }
 
@@ -887,6 +711,14 @@ function isWrench(player) {
 }
 
 export const conveyorComponent = {
+    onPlace({ block }) {
+        refreshPlacedConveyor(block);
+    },
+    onTick({ block }) {
+        refreshPlacedConveyor(block);
+        const meta = getType(block?.typeId);
+        if (meta?.shape === "bridge_transmitter") bridge.ensureLink(block, meta);
+    },
     beforeOnPlayerPlace({ block, player }) {
         system.run(() => refreshPlacedConveyor(block, player));
     },
@@ -929,7 +761,6 @@ function pistonDirection(value) {
 function reconcilePiston(piston, isExpanding, dimension) {
     const locations = piston.getAttachedBlocksLocations?.() ?? [];
     if (locations.length === 0) return;
-    scheduleTopology(dimension);
     const direction = pistonDirection(Number(getState(piston.block, "facing_direction")));
     const sourceStep = isExpanding ? -1 : 1;
     system.runTimeout(async () => {
@@ -960,7 +791,6 @@ function reconcilePiston(piston, isExpanding, dimension) {
         }
         if (touched) {
             await refreshAllBridges(dimension);
-            scheduleTopology(dimension, 0);
         }
     }, 2);
 }
@@ -977,7 +807,6 @@ export function installTransportation() {
         system.run(() => {
             if (block.hasTag?.(CONVEYOR_TAG)) return;
             bridge.refreshPathOwner(block.dimension, block.location, player);
-            if (block.hasTag?.("dorios:energy")) scheduleTopology(block.dimension);
         });
     });
 
@@ -985,22 +814,21 @@ export function installTransportation() {
         const wasConveyor = brokenBlockPermutation?.hasTag?.(CONVEYOR_TAG) ?? false;
         if (wasConveyor) return;
         system.run(() => bridge.refreshPathOwner(block.dimension, block.location, player));
-        if (brokenBlockPermutation?.hasTag?.("dorios:energy")) scheduleTopology(block.dimension);
     });
 
     world.afterEvents.pistonActivate.subscribe(({ piston, isExpanding, dimension }) => {
         reconcilePiston(piston, isExpanding, dimension);
     });
 
-    system.afterEvents.scriptEventReceive.subscribe((event) => {
-        if (event.id === "dorios:updatePipes" && event.message.startsWith("energy|") && event.sourceEntity?.isValid) {
-            scheduleTopology(event.sourceEntity.dimension);
-        }
-    }, { namespaces: ["dorios"] });
-
-    world.afterEvents.worldLoad.subscribe(() => system.run(restorePersistedConveyors));
-    world.afterEvents.playerSpawn.subscribe(({ initialSpawn }) => {
-        if (initialSpawn) system.run(restorePersistedConveyors);
+    world.afterEvents.worldLoad.subscribe(() => {
+        system.run(restorePersistedConveyors);
+        system.run(discoverLoadedPayloads);
     });
+    world.afterEvents.playerSpawn.subscribe(({ initialSpawn }) => {
+        if (!initialSpawn) return;
+        system.run(restorePersistedConveyors);
+        system.runTimeout(discoverLoadedPayloads, 50);
+    });
+    system.runInterval(discoverLoadedPayloads, PAYLOAD_DISCOVERY_INTERVAL);
     system.runInterval(processPayloads, MOVEMENT_INTERVAL);
 }

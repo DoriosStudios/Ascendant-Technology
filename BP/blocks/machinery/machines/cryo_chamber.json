@@ -21,7 +21,7 @@
             "utilitycraft:cryo_chamber": {
                 "entity": {
                     "type": "fluid_machine",
-                    "inventory_size": 38,
+                    "inventory_size": 36,
                     "fixed_fluid_types": true
                 },
                 "machine": {
@@ -30,25 +30,25 @@
                     "rate_speed_base": 480,
                     "fluid_cap": 64000,
                     "fluid_types": 2,
-                    "upgrades": [19, 20, 21, 22]
+                    "upgrades": [17, 18, 19, 20]
                 }
             },
             "utilitycraft:machine_upgrades": [
                 {
                     "type": "speed",
-                    "slot": 19
+                    "slot": 17
                 },
                 {
                     "type": "energy",
-                    "slot": 20
+                    "slot": 18
                 },
                 {
                     "type": "hyper",
-                    "slot": 21
+                    "slot": 19
                 },
                 {
                     "type": "stack",
-                    "slot": 22
+                    "slot": 20
                 }
             ],
             "utilitycraft:machine_recipes": {

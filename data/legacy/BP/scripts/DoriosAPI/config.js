@@ -49,18 +49,18 @@ export const addonData = {
     name: "UtilityCraft: Ascendant Technology",
     author: "Dorios Studios",
     identifier: "uc_ascendant_technology",
-    version: "0.8.1",
+    version: "0.9.2",
     dependencies: {
         "utilitycraft": {
             name: "UtilityCraft",
-            version: "3.4.2",
+            version: "3.6.0",
             warning: "UtilityCraft: Ascendant Technology is an expansion for UtilityCraft, so it requires UtilityCraft to be installed. Machines and features from UtilityCraft won't work without it."
         }
     },
     optionalDependencies: {
         "uc_heavy_machinery": {
             name: "UtilityCraft: Heavy Machinery",
-            version: "0.4.0",
+            version: "0.6.0",
             warning: "Update Heavy Machinery to keep Ascendant Technology compatibility features aligned with the latest behavior.",
             detectedMessage: "§bLooks like you're playing Ascendant Technology and Heavy Machinery together. You can use Ascendant's Cryofluid as a better coolant in Heavy Machinery!§r"
         },

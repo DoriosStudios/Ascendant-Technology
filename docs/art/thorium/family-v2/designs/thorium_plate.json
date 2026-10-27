@@ -1,0 +1,251 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Placa de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "thin pentagonal sheet with clipped diagonal corners",
+      "single long scored crease and small edge dimples"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m6": [
+      231,
+      113,
+      172
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m9": [
+      235,
+      176,
+      206
+    ],
+    "m11": [
+      235,
+      212,
+      224
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          2,
+          7
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          12,
+          3
+        ],
+        [
+          14,
+          6
+        ],
+        [
+          12,
+          8
+        ],
+        [
+          5,
+          12
+        ],
+        [
+          2,
+          10
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "sheet",
+      "purpose": "thin pentagonal sheet with clipped diagonal corners",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              3,
+              7
+            ],
+            [
+              10,
+              4
+            ],
+            [
+              12,
+              4
+            ],
+            [
+              13,
+              6
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              3,
+              9
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              6,
+              7
+            ],
+            [
+              11,
+              4
+            ],
+            [
+              12,
+              5
+            ],
+            [
+              7,
+              9
+            ],
+            [
+              4,
+              9
+            ]
+          ],
+          "color": "m9"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              7
+            ],
+            [
+              10,
+              4
+            ],
+            [
+              11,
+              4
+            ]
+          ],
+          "color": "m11",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              10
+            ],
+            [
+              5,
+              11
+            ],
+            [
+              12,
+              7
+            ]
+          ],
+          "color": "m4",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "name": "crease",
+      "purpose": "single long scored crease and small edge dimples",
+      "commands": [
+        {
+          "op": "line",
+          "points": [
+            [
+              5,
+              8
+            ],
+            [
+              10,
+              5
+            ]
+          ],
+          "color": "m6",
+          "width": 1
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              8
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              5
+            ]
+          ],
+          "color": "m4"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "utilitycraft:titanium_item_port",
+            "menu_category": {
+                "category": "construction"
+            },
+            "states": {
+                "utilitycraft:active": [
+                    0,
+                    1
+                ]
+            }
+        },
+        "components": {
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "utilitycraft_titanium_item_port",
+                    "render_method": "opaque"
+                }
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 4
+            },
+            "minecraft:destructible_by_explosion": {
+                "explosion_resistance": 12
+            },
+            "tag:minecraft:is_pickaxe_item_destructible": {},
+            "tag:minecraft:iron_tier_destructible": {},
+            "tag:dorios:multiblock.case.titanium": {},
+            "tag:dorios:link_node": {},
+            "utilitycraft:link_node_io": {}
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('utilitycraft:active') == 1",
+                "components": {
+                    "tag:dorios:item": {}
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,393 @@
+{
+  "native_size": [
+    16,
+    16
+  ],
+  "palette_direction": "Creator: Metal rosa chiclete com cantos adiados; working interpretation: sharp/angular corners, pending visual approval.",
+  "metal_ramp": [
+    [
+      62,
+      22,
+      46
+    ],
+    [
+      94,
+      28,
+      62
+    ],
+    [
+      131,
+      34,
+      80
+    ],
+    [
+      170,
+      43,
+      103
+    ],
+    [
+      208,
+      54,
+      128
+    ],
+    [
+      237,
+      70,
+      151
+    ],
+    [
+      251,
+      91,
+      170
+    ],
+    [
+      255,
+      116,
+      186
+    ],
+    [
+      255,
+      145,
+      201
+    ],
+    [
+      255,
+      175,
+      216
+    ],
+    [
+      255,
+      202,
+      231
+    ],
+    [
+      255,
+      224,
+      241
+    ],
+    [
+      255,
+      241,
+      248
+    ],
+    [
+      255,
+      250,
+      253
+    ]
+  ],
+  "preserve_source_rgb": [
+    [
+      16,
+      14,
+      34
+    ],
+    [
+      18,
+      15,
+      37
+    ],
+    [
+      28,
+      23,
+      53
+    ],
+    [
+      35,
+      35,
+      66
+    ],
+    [
+      39,
+      28,
+      29
+    ]
+  ],
+  "intent": "Thorium armor inventory icons: bubblegum-pink metal, discrete angular plate bevels, recognizable helmet/chestplate/leggings/boots, no grotesque silhouette additions.",
+  "pieces": [
+    {
+      "name": "helmet",
+      "source": "RP/textures/items/armor/titanium_helmet.png",
+      "sha256": "e061608a088648a0e93d71915e6eadd7adda36ebe808deaeb2bbed4dd029451f",
+      "details": [
+        {
+          "xy": [
+            5,
+            3
+          ],
+          "ramp_index": 6
+        },
+        {
+          "xy": [
+            6,
+            3
+          ],
+          "ramp_index": 7
+        },
+        {
+          "xy": [
+            7,
+            3
+          ],
+          "ramp_index": 7
+        },
+        {
+          "xy": [
+            8,
+            3
+          ],
+          "ramp_index": 6
+        },
+        {
+          "xy": [
+            5,
+            4
+          ],
+          "ramp_index": 10
+        },
+        {
+          "xy": [
+            9,
+            4
+          ],
+          "ramp_index": 7
+        },
+        {
+          "xy": [
+            7,
+            5
+          ],
+          "ramp_index": 5
+        },
+        {
+          "xy": [
+            8,
+            5
+          ],
+          "ramp_index": 7
+        },
+        {
+          "xy": [
+            3,
+            5
+          ],
+          "ramp_index": 7
+        },
+        {
+          "xy": [
+            12,
+            5
+          ],
+          "ramp_index": 3
+        }
+      ],
+      "purpose": "small angular brow ridge and temple bevels; facial opening remains intact"
+    },
+    {
+      "name": "chestplate",
+      "source": "RP/textures/items/armor/titanium_chestplate.png",
+      "sha256": "5c0102df14ca3340994365912d386d537824e647546335d9ab74de8b29dc2c03",
+      "details": [
+        {
+          "xy": [
+            2,
+            3
+          ],
+          "ramp_index": 12
+        },
+        {
+          "xy": [
+            12,
+            3
+          ],
+          "ramp_index": 10
+        },
+        {
+          "xy": [
+            2,
+            6
+          ],
+          "ramp_index": 9
+        },
+        {
+          "xy": [
+            13,
+            6
+          ],
+          "ramp_index": 5
+        },
+        {
+          "xy": [
+            7,
+            6
+          ],
+          "ramp_index": 2
+        },
+        {
+          "xy": [
+            8,
+            6
+          ],
+          "ramp_index": 3
+        },
+        {
+          "xy": [
+            7,
+            7
+          ],
+          "ramp_index": 10
+        },
+        {
+          "xy": [
+            8,
+            7
+          ],
+          "ramp_index": 7
+        },
+        {
+          "xy": [
+            7,
+            11
+          ],
+          "ramp_index": 3
+        },
+        {
+          "xy": [
+            8,
+            11
+          ],
+          "ramp_index": 4
+        }
+      ],
+      "purpose": "restrained shoulder bevels, plate join and belt break; no oversized center gem"
+    },
+    {
+      "name": "leggings",
+      "source": "RP/textures/items/armor/titanium_leggings.png",
+      "sha256": "009c1972eb673f86c28171eb042d27e50281cfb737ebbb3e6d76bef5e10b4eec",
+      "details": [
+        {
+          "xy": [
+            7,
+            4
+          ],
+          "ramp_index": 4
+        },
+        {
+          "xy": [
+            8,
+            4
+          ],
+          "ramp_index": 7
+        },
+        {
+          "xy": [
+            3,
+            8
+          ],
+          "ramp_index": 9
+        },
+        {
+          "xy": [
+            4,
+            8
+          ],
+          "ramp_index": 5
+        },
+        {
+          "xy": [
+            11,
+            8
+          ],
+          "ramp_index": 8
+        },
+        {
+          "xy": [
+            12,
+            8
+          ],
+          "ramp_index": 4
+        },
+        {
+          "xy": [
+            3,
+            9
+          ],
+          "ramp_index": 7
+        },
+        {
+          "xy": [
+            11,
+            9
+          ],
+          "ramp_index": 6
+        }
+      ],
+      "purpose": "waist clasp and small knee-plate edges; leg gap unchanged"
+    },
+    {
+      "name": "boots",
+      "source": "RP/textures/items/armor/titanium_boots.png",
+      "sha256": "a9511d8e997406185023df1b4c6b2630c27f62b3ed9291128a69fecae26688e1",
+      "details": [
+        {
+          "xy": [
+            4,
+            4
+          ],
+          "ramp_index": 10
+        },
+        {
+          "xy": [
+            5,
+            4
+          ],
+          "ramp_index": 6
+        },
+        {
+          "xy": [
+            10,
+            4
+          ],
+          "ramp_index": 9
+        },
+        {
+          "xy": [
+            11,
+            4
+          ],
+          "ramp_index": 5
+        },
+        {
+          "xy": [
+            2,
+            10
+          ],
+          "ramp_index": 11
+        },
+        {
+          "xy": [
+            3,
+            10
+          ],
+          "ramp_index": 8
+        },
+        {
+          "xy": [
+            12,
+            10
+          ],
+          "ramp_index": 8
+        },
+        {
+          "xy": [
+            13,
+            10
+          ],
+          "ramp_index": 5
+        }
+      ],
+      "purpose": "cuff notches and toe-cap bevels; soles and gap unchanged"
+    }
+  ]
+}

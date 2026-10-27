@@ -1,0 +1,992 @@
+{
+  "policy": "Original native art and distinct artistic drafts; excludes supplied reference assets, checkerboard previews, masks and artificial QA defects. Identical pixel images share one copy.",
+  "images": [
+    {
+      "file": "extras\\generated_textures\\batch02_01-precision-wrench.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\01-precision-wrench.png",
+      "sha256": "e9ed6deed758d8089d06001e594d1abba51f10e3481cfadd478d9177c3b988d7",
+      "pixel_sha256": "e5eaf2b3a9cd5990e7fb5d39e549be1d6a2fc30539e210ecb5ef970e44bcc5a0",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\01-precision-wrench.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_02-microcontroller.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\02-microcontroller.png",
+      "sha256": "ca494be5ff8dd412a38de04f4299741f43924017021ccb50e3d521db4adb76cd",
+      "pixel_sha256": "ee4e6f2ce75e1a370612794f3927d32215d61fd7eece1f1dc5a94da06d48f20e",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\02-microcontroller.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_03-focus-lens.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\03-focus-lens.png",
+      "sha256": "9f27fecf3996662f197e7c51e5b326b9ce5878143bb89827b2f9dc9390afb190",
+      "pixel_sha256": "edcc9e4f4c78fc4ec8e0556b16b7027ab3167e8df59aa140d7b56e9a996c5e12",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\03-focus-lens.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_04-industrial-energy-cell.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\04-industrial-energy-cell.png",
+      "sha256": "1fecff635831559867b162ed7875e4afbea210ce0303305f2d4c9267746d068b",
+      "pixel_sha256": "45c034731dcec7e66d2b8f2796b448405ca61f579ce13c7cc8ae6878683a7cda",
+      "size": [
+        24,
+        24
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_05-bimetal-gear.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\05-bimetal-gear.png",
+      "sha256": "2e27c83b00563592c5cac7d8d95be0c17a7c4a335e448578571a65af6c130be6",
+      "pixel_sha256": "42d5c619c20ae10568c61540e770cb24b66998794e6a8f8acf851a82854f253a",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\05-bimetal-gear.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_06-toroidal-inductor.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\06-toroidal-inductor.png",
+      "sha256": "97f1269cc60a4d2e5a4a9d18a45d333b76ca331081049e9fe8a20cb4da0cef7e",
+      "pixel_sha256": "c201eb1ec77deb6292477ec40132b1d1440b365fc311a60a096e984e72f489e9",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\06-toroidal-inductor.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_07-power-plug.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\07-power-plug.png",
+      "sha256": "784b5a7965c8e36f7bb11a845ccc3c7a05b523a92821c18915e0b05af4190c9a",
+      "pixel_sha256": "c1c9f981b7e386da240fbcf45cb122ca02880f5b1015af686d99ff538001439d",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\07-power-plug.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_08-ceramic-cutter.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\08-ceramic-cutter.png",
+      "sha256": "9ed79419e1a8f4b36fd9e5b8729b87034a70e560a64d60aab6a4548af5786942",
+      "pixel_sha256": "385d810d600800c52c0fd44abf8a2838331ee80abb3748e3fefd5f49362d7b60",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\08-ceramic-cutter.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_09-relay.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\09-relay.png",
+      "sha256": "4693b43f7fe6a27d94eda83e5734476c00e9eb02697ae00ec628d3746842f7ec",
+      "pixel_sha256": "fd0993a042f52f91f3af31ff6fed1d662ce1d9b0cfd953d283a91142de1743f6",
+      "size": [
+        24,
+        24
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\09-relay.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_10-pressure-gauge.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\10-pressure-gauge.png",
+      "sha256": "7024c6ee87c97cf71067139c4b99efbac4866188af674ce31d113cb28914646a",
+      "pixel_sha256": "441d30af8865a426d4451b1c9f09bd0b8639c0d12613d9b9fb1fea3e875f3936",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\10-pressure-gauge.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_11-cryovial.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\11-cryovial.png",
+      "sha256": "332d6ca06c693f4fd18c47aca114f1e04d05312dd19f1cef388e48829fbc893c",
+      "pixel_sha256": "cf5a22319e74a0e7cfdf4b61ec31250e77d479ca9bb6a7816ac2c304183f501c",
+      "size": [
+        24,
+        24
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\11-cryovial.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_12-silicon-wafer.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\final\\12-silicon-wafer.png",
+      "sha256": "0b7d9906831f73f54e5630bbf8339d01d4966c0d9d4db3948dd1bafd90d4add4",
+      "pixel_sha256": "47a0ae4c79454422050add6674f429c0b7615a1a7d3f4f9bb6d9048c6b5108ed",
+      "size": [
+        24,
+        24
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\12-silicon-wafer.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch01_01-wrench.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\final\\01-wrench.png",
+      "sha256": "424bd420c06c31a0567d1b97bcd02fc68aa99accc8da6d31893df49a2cf2e98c",
+      "pixel_sha256": "3f58fbe3d0a65bd567acf632ea87ed726234e610b0dadf78d8a8644d400adfa6",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\draft\\01-wrench.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch01_02-copper-gear.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\final\\02-copper-gear.png",
+      "sha256": "e07ae1c5ec4797f2b0b1974bca60020d103549300d5dcab35b713d8d95230f73",
+      "pixel_sha256": "f6e0452461cb4db79384dfcc3e85625d51a1c23af6d6bd532d8aa312c266c691",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\batch01_03-microchip.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\final\\03-microchip.png",
+      "sha256": "0d27d9f4b31f0a4951215877fec8c5aee13f88da0ac6def64057b5c2fea75bdc",
+      "pixel_sha256": "32f3a9e94dea59481963bc70f098ebc645f8061eaf9f4f5649e3d3006ce75b2f",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\draft\\03-microchip.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch01_04-solenoid.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\final\\04-solenoid.png",
+      "sha256": "218fb72195d49da5b06425d4028fadafc8e9c93e684b80e37773b0b3d3cf64e6",
+      "pixel_sha256": "5925726ea3d2dd9111b3fa31f59861d6ac6d3af4fb312c79dcbe6892e9062f2b",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\batch01_05-optical-lens.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\final\\05-optical-lens.png",
+      "sha256": "52e4acce0a8b7c5268cf4de194d7f908cb6079b2411df301fa25e4d2e309b06b",
+      "pixel_sha256": "70de57e5768507dd3e64b2bfbc47d81565ee6823d0f44b29eb5df669e4527569",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\draft\\05-optical-lens.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\batch01_06-energy-cell.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\final\\06-energy-cell.png",
+      "sha256": "1bccd8ef930df151f1e41e28831c12fbf82e80b7dc5d002877f1301120c3cca7",
+      "pixel_sha256": "ba6486852d2d6a61c5b5b10731891f80f83793aece1a079601947da537c40ee7",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\draft\\06-energy-cell.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\correction_capacitor.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\capacitor.png",
+      "sha256": "d30e387db4f9096325525109cf2af7f5a908f1fdf325fb0f813aa35fdf3bfa94",
+      "pixel_sha256": "9e26b52b144bd4a9c6843e11e16ad7eec414c576cac6437feab70d153ac01074",
+      "size": [
+        24,
+        24
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\capacitor-refined.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\correction_crystal.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\crystal.png",
+      "sha256": "3827527c187d560439969955fb1e114b9433971d8c7d3d53d5de7a042eb08fb4",
+      "pixel_sha256": "7e44003e31b2fd2a803e913ed3af74db1d6f12b23a6fe1185bdef848b6d1975d",
+      "size": [
+        64,
+        64
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\crystal.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-00.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-00.png",
+      "sha256": "f58698b29f9d1edec34f43a8d783664786cbb2518f0750ebf1d91884b62d6a13",
+      "pixel_sha256": "c9268c49547301522754e0d8ecb933c1a73c35c0a2f58e15e45fcda50c825a60",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-01.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-01.png",
+      "sha256": "5b4c2fde8f500648971c5d1a5597ec89b2b86d7fef51f7b915b9fb8cb885562e",
+      "pixel_sha256": "dec596ae4459a4d2d4275c85767ab2284c455f1afb904c56df994cad76d2b5ee",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-02.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-02.png",
+      "sha256": "a7ccd7336fb483510d5c619928cb20ef045c91c7534bd8a98c8d77b4c13f2b0c",
+      "pixel_sha256": "217d33b005ec19664aa6c7d382bf05e5c79e7cdd733e2bfe7cd4ea98940d1f7f",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-03.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-03.png",
+      "sha256": "7eb083e8c2f5b5054fa1c19c277a4fec6978a89b9b09d5bafa8614d1e071942e",
+      "pixel_sha256": "b8431d6d19a02941db4ef0a6687519443c3087f776eacbe8e4ff9eec198bf8c5",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-04.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-04.png",
+      "sha256": "c009194e1ebc43e9e5a90d58d3fb2c2f2cd737d620bd1496157a841b068f430d",
+      "pixel_sha256": "0bc01368c7dda125e88e3683ae55eee084bef3b6a5ae8e6850107ab3e4281110",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-05.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-05.png",
+      "sha256": "c2556f1b8caca85d80ad261d382e8c2e638f102f55fb29c865e72f35b070c353",
+      "pixel_sha256": "6bc8720a4c567667b127015da0d97271995db0b85fcbc7bfc6197e3546df19e6",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-06.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-06.png",
+      "sha256": "413c85614f597d38dd5c2a5a64b6e217d4ebea474699bb2b7b01bc4d62367702",
+      "pixel_sha256": "b9247ce75c58154148269e57a281a426ca4e15a4b5c437b71f2a777a4eb16c75",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-07.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-07.png",
+      "sha256": "3451e5faea5b9e2d64bf320b10900ccef196f27725967168d57a195f6a8728be",
+      "pixel_sha256": "058b923c271d09c9e5446bc160e097d63b595c868f893275a9ecc5aa915bdb67",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-08.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-08.png",
+      "sha256": "fd6d870740077a439384f27e6608ca4286110694b2a47fde60934dc0f4850897",
+      "pixel_sha256": "200798195c6a9d68864691a9649e7b8cb82394ed654bb650f2bca55d3bb3c61f",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy-frame-09.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy-frame-09.png",
+      "sha256": "9f09c406d806a2c0fc3451b993824919ee652aaa3bf742a92041129b0ff48f51",
+      "pixel_sha256": "4e30c4aa53e63bd04701af1b14c2f51529c37206c17a7d91bb6a5e7ad3ee27b2",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_energy.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\energy.png",
+      "sha256": "0c3fee20b53018be8ba4702dd9c5e5a21d4e6eddeced59227f0f3eb4d4fff346",
+      "pixel_sha256": "bd1dba0e45e30a8655df160a5e5b0fa9825e4f02bbc24cbbdbbe12a6f8049632",
+      "size": [
+        16,
+        160
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_ingot.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\ingot.png",
+      "sha256": "4dbdf3ac79b6ae394ff941c54eda59f17dceed408bb9fb1cf13aba8833c3106c",
+      "pixel_sha256": "f3f5cf24a5cdd47ce9a4331c683796a2cc4d0802de468f4c1a31acea673516bd",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_machine.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\machine.png",
+      "sha256": "69fb1c5cceca2ae0e05539d911cace9119eb1dabc0da1db9a3e6d801c4d8d613",
+      "pixel_sha256": "264fe59152f4144d91478a28adcb85de82dd6733cf364ef0ca4f3473261d8235",
+      "size": [
+        32,
+        32
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\machine.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\correction_unseen-fuse.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\unseen-fuse.png",
+      "sha256": "39f4540016210f686ffa7a027a7fb5980b5d6c1529350bd5304ff6cdf36bbeb1",
+      "pixel_sha256": "7c7816ebd0cbf5f893bd3432294c2887aabff28cd0c9efd693686ea0321a0a71",
+      "size": [
+        20,
+        28
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_variation.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\final\\variation.png",
+      "sha256": "ef03caf069e9b45c8da3da5cdc303a85f578a30471d06ba87fb8926684a1d2a0",
+      "pixel_sha256": "cfe816bb369e8d2e5e738497f96205400cab4ecc168d66881755c3d5f824a6ce",
+      "size": [
+        20,
+        20
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\variation.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\initial_01-generated.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\demo\\01-generated.png",
+      "sha256": "ca53a530ce70737e59e6af967084ecf880af83de3d4a3549d92c584e1c7ef4d9",
+      "pixel_sha256": "d67cc12cc95f835b4b2853b39d79d094bd6aa417f1db2e567ad75e3983890199",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\initial_04-final.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\demo\\04-final.png",
+      "sha256": "85f9dfc8c0ff1eb1105324e416d75d0b236531b5adf1173d810c64020db44e82",
+      "pixel_sha256": "b1a8ace82f197be9d4945c5276481b671658ae8b3e5be95a31d614753ba63bb9",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\initial_block-32.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\demo\\block-32.png",
+      "sha256": "d9e5dd8cb01fd8f3f42fa2e09c6ccf2a70a7afa67c76c8abc80127af5acf95a0",
+      "pixel_sha256": "9d7e804abf93cd7068eef60406f06624f30a887e95d9ff84865a2d7274b9d1f6",
+      "size": [
+        32,
+        32
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\initial_crystal-64.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\demo\\crystal-64.png",
+      "sha256": "105fe57df90a8c5d072535df38b1e8cb53a4360f19a01b0e36df895723f039d6",
+      "pixel_sha256": "9f2aa2a6ce7937085ccb8dfa3e0640cb1856618aee6472edd88b7a363588e8ce",
+      "size": [
+        64,
+        64
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\initial_energy-sheet.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\demo\\energy-sheet.png",
+      "sha256": "e6ee6854c519a2a15a611efe6c2267cb2c2073ce5142558eb98d8550da5343ee",
+      "pixel_sha256": "b227e95e0d1bc4b25c758a685cbc34a5ba52f9ed96a83b3507a9f72894f0fb8c",
+      "size": [
+        16,
+        128
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\demo\\reassembled-sheet.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\initial_reference-nearest-example.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\demo\\reference-nearest-example.png",
+      "sha256": "837ee09fd0aedec5f49d89c795bf26fd2615d0a60d3bc21574b8f1f3f82ed845",
+      "pixel_sha256": "5f13da28f3f1a2c240767e30cbac07e3ac4d956142f7b44c21fc36cc50b851e2",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\initial_reference-variation.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\demo\\reference-variation.png",
+      "sha256": "64a76be07e358fbb59109796cc1ca9c31f262fca1e84a3691ae862ebbd56a40e",
+      "pixel_sha256": "fc27c0f2ecc7560d32b618f2361a689e1214e36d47cfbaea3ad14e3bfa0ce53e",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\initial_unseen-capacitor-24.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\demo\\unseen-capacitor-24.png",
+      "sha256": "1482ef6a0c16f3cfc3a5e070d3a6887b734af7b0f141d0a659802017e5757a71",
+      "pixel_sha256": "1e88ffae894995e8d34d3dbf1ffce5029c49923b863589a2642a7ede9b2ea62c",
+      "size": [
+        24,
+        24
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\batch02_draft_04-industrial-energy-cell.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-02\\draft\\04-industrial-energy-cell.png",
+      "sha256": "877e7adf95fddab755c9a05abfb45aa5f79aee448f18c9ac4fbdd5dc09a5e72f",
+      "pixel_sha256": "346b72b996ddbc1c17edc4da68cd63c28fefcdd6ce4e167008c47ea61b3abca9",
+      "size": [
+        24,
+        24
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\batch01_draft_02-copper-gear.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\draft\\02-copper-gear.png",
+      "sha256": "49be39b4645d3ef89f5fcd4f81ebb67147708d31e301ed9ee1b147900053d651",
+      "pixel_sha256": "2b76f3ca437da11ae8da20fcc943e241464876b398d8fc5805d4295f6ff543db",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\batch01_draft_04-solenoid.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\new-items-01\\draft\\04-solenoid.png",
+      "sha256": "690e77f81e58aeb441c38163a28f92fcda4ab041e3fc75d51a3d8523d3d4994c",
+      "pixel_sha256": "ec3776c73a15efb4db31abc4e5e002f8d8ce287284010cbcf502d2ce8c79e27b",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_draft_capacitor.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\capacitor.png",
+      "sha256": "ae4ff194c90fff2db339a5d425108d25ef3b7cbc9f6f9686bed870eab4794cb2",
+      "pixel_sha256": "a6923563bc5665c6677f8d340aec5a3d56df8511adbf408cd6f5dfd34a35c84f",
+      "size": [
+        24,
+        24
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_draft_energy-frame-00.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-00.png",
+      "sha256": "98056443fe8117f0f73d6c49bf242969ec3556af93ae63ead1e7db68256de0e9",
+      "pixel_sha256": "892a99b25c7bcae9d5af39e41196b8d21d61ca5f48efd4efc033480953142ed6",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-05.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\correction_draft_energy-frame-01.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-01.png",
+      "sha256": "46f66b3a1f3ec543c022d8c872152f7c3ac44acbf7c95b20a4d5f261c79eb833",
+      "pixel_sha256": "68113a2e4a2edd88dbacc7cfd8987b5be8a3891a667088da6864891bfeb5d242",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-06.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\correction_draft_energy-frame-02.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-02.png",
+      "sha256": "1b61e344044c3a740233126d1343e9e993c9b69349d9c7773cea042286783404",
+      "pixel_sha256": "7db03c5672f770084648cbc73a7d384f133eeaefca2755dabb3802c3f889c549",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-07.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\correction_draft_energy-frame-03.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-03.png",
+      "sha256": "c27dc79fce7c05b7603493343e9205bb3239b3220c25591254ea769aa2135f68",
+      "pixel_sha256": "f80885f09eeaed4c736cd76cb64d112b660f02a7f4d67bf8cf2a6612d9e9d9bc",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-08.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\correction_draft_energy-frame-04.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-04.png",
+      "sha256": "08b093b50f9c7cf938735c3550d1bf77fb407a564c3934939c2a1a67f0b7b287",
+      "pixel_sha256": "83c8b4543c9af1f3005fe91e8640c96f80ba50bf4404633487f6a1abd4a0fb2d",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": [
+        "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy-frame-09.png"
+      ]
+    },
+    {
+      "file": "extras\\generated_textures\\correction_draft_energy.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\energy.png",
+      "sha256": "eb829962010766ed40d89569c756dc8727d1072ae1939a67e01dabe0528ac2b6",
+      "pixel_sha256": "65e0700e369bf453c37c0e356c443fdd786347b0593466e64a7acf6e35464aeb",
+      "size": [
+        16,
+        160
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras\\generated_textures\\correction_draft_ingot.png",
+      "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Dorios-Skills\\skills\\dorios-pixel-art-skill\\examples\\correction-v2\\draft\\ingot.png",
+      "sha256": "b139e520b75d3ead59dfc8276dd0d3a7b43074bdf829d3a0b6ad4e7e273b9ef2",
+      "pixel_sha256": "0e6bf4ada6c1da28c687144cab785d8bf0ca045720c7c875fda5706e75d08df7",
+      "size": [
+        16,
+        16
+      ],
+      "same_pixels_also_from": []
+    },
+    {
+      "file": "extras/generated_textures/thorium_helmet.png",
+      "sha256": "29c9885cb07f5803403871efffcec3ebcd9dda9e103c4874ac25075845295360",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_chestplate.png",
+      "sha256": "291ba16cc61824e4296bf07af4a32bbbe22c194474b5ff1ea3fa3ccd62affb94",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_leggings.png",
+      "sha256": "9dd67664bf60214674ba43e45f165dfa04059337a8afcacfc96f253352eb63ae",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_boots.png",
+      "sha256": "43720dc601b4fe63572f1d61326399e95ea2e4e164307d729a62d469b1b5fca7",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_set_preview.png",
+      "sha256": "dca8b3d169e61e661661f986b12737a05110279035ba9ba2697e3c641044f87a",
+      "size": [
+        960,
+        326
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/deepslate_thorium_ore.png",
+      "sha256": "f5dd97152b0e142e52fa09b8ff1606de4a33e6fa3fd5f10a3c478b6681907a8d",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/raw_thorium.png",
+      "sha256": "3e3e4caadaffe88a706fad5643d00f098ce3c8a9cca1e58b4d0353609a6f656d",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/raw_thorium_block.png",
+      "sha256": "2724ecd39ab2367e474c15ca4a911e9aeb333a4c706d0daa92ee31f4a97b2ac7",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/raw_thorium_dust.png",
+      "sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_0.png",
+      "sha256": "08b6b41cca9d8fb552795a5a9b1f13c11724bb928fd684806c1e56c71a5d1f57",
+      "size": [
+        32,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_1.png",
+      "sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+      "size": [
+        32,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_aiot.png",
+      "sha256": "b974cf1c6475c83dd91cac36ddb078187c0c84e269bb84f4bf4db4ff02624d4f",
+      "size": [
+        18,
+        18
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_armor_comparison.png",
+      "sha256": "3757c6190daded9f971db2ca5f9621ac608c59e9b649ebeaf82c5856f67f0f82",
+      "size": [
+        1160,
+        860
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_axe.png",
+      "sha256": "03ae67e7275d919c5cd64c2a1069214aa4f28e11f916aefac48a7ab9485bba3e",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_block.png",
+      "sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_chunk.png",
+      "sha256": "6eacd3d5b3977ab8162a029ab06d18de6c7267210178718a585eea35872d5473",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_dust.png",
+      "sha256": "ce11c6902fa743b78102317d670417f40f712564e83a0cec8f9d38d12c23dad3",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_family_preview.png",
+      "sha256": "011a93f4c40730d0d561dce6a2ee988872cb8b4b585a7f3700d51a30ab1e4ef8",
+      "size": [
+        1440,
+        1310
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_gear.png",
+      "sha256": "6fa08e9cb1eea1c0d11fc4573f6c6b9d505dcd381d0272b22cca9468ddeda01a",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_hammer.png",
+      "sha256": "fad6f7cbf0f098f31f3638266dc9de3a5e9033b805f6e02fa1fc3c27f0e74209",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_hoe.png",
+      "sha256": "3105cbb78ca153f8989854c6ea991abea9593e04d7d46ce6b2f5e923a7b06d25",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_ingot.png",
+      "sha256": "68b6c83664a60ab2a15662a2592ace3765bc591bde07566dd9501ae06ed4f1a1",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_mesh.png",
+      "sha256": "a67673c4883137a9c886ecc0a64b872bb0d4d434063d8a6bfd9a7f559a54be7f",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_net.png",
+      "sha256": "4e1be9afd8a4830d2174f4cdf96d92b33058ce5e667cb332d890114002543f3d",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_nugget.png",
+      "sha256": "11efe59f3314ff171f4babb35232fda26af6b8d17b1234faf3d89aa0cdc582e4",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_ore.png",
+      "sha256": "a8285b806235f9e2cf60375ec4eab80dda14a75ebf3368c34b7e192b56ca8d4d",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_paxel.png",
+      "sha256": "4eeac95f1e77d1a9bb855f7f672f6bd518b45237923bc6ef1bd4d15a71e29ce5",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_pickaxe.png",
+      "sha256": "462f0b288320557c76286f7c44d8804b7f8c1c059f251ec29c2b71c59dd1c4ef",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_plate.png",
+      "sha256": "a4235ad949d1c9a4b15289065d237458f0c9cb7d429521090bd78084c9e7cd1c",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_rod.png",
+      "sha256": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_seeds.png",
+      "sha256": "f2ae15e88b9bcfd795fe5b3f1ca4e3c0b875b6f7b0e23104a536ef83da83e2a1",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_shovel.png",
+      "sha256": "b8f76b07cb251ba612da1068a08890b5e09e3b82e99b009cb2872647151fd246",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_sword.png",
+      "sha256": "d30e27fb4df604b48049b2b376bd268db888790989c3a7a620fb55b379d95e1e",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "Thorium family revision 2"
+    },
+    {
+      "file": "extras/generated_textures/thorium_v1_boots.png",
+      "sha256": "05bb0be94ce01e4fbe86670b06b7db56e74a0f861c340bff545e132f3a176090",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "preserved first Thorium version"
+    },
+    {
+      "file": "extras/generated_textures/thorium_v1_chestplate.png",
+      "sha256": "9d8ed7bd5c61df6f8c0bdb49f33c9790e4e389cced936c77309da437843a4ca3",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "preserved first Thorium version"
+    },
+    {
+      "file": "extras/generated_textures/thorium_v1_helmet.png",
+      "sha256": "a4fac4fb46092dac9e8ff8276e5b7e17e033cf460c0fab612118d667bc4acfa6",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "preserved first Thorium version"
+    },
+    {
+      "file": "extras/generated_textures/thorium_v1_leggings.png",
+      "sha256": "d4956c79cbeffd7a2999ed2300aad6ccfc7c8dd170261e44ddd4b6bdd10c2b67",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "preserved first Thorium version"
+    },
+    {
+      "file": "extras/generated_textures/thorium_v1_set_preview.png",
+      "sha256": "1122c8ee31a88439692533d4a59596add70ef6bfc8b29f4c7c85bdafd5c009a6",
+      "size": [
+        1000,
+        360
+      ],
+      "kind": "preserved first Thorium version"
+    }
+  ],
+  "collection_files": 92
+}

@@ -1,0 +1,203 @@
+{
+  "identity": "Thorium helmet inventory icon",
+  "source": "RP/textures/items/armor/titanium_helmet.png",
+  "source_sha256": "e061608a088648a0e93d71915e6eadd7adda36ebe808deaeb2bbed4dd029451f",
+  "pixel_sha256": "454fe3bc58de4f50df06870344352966620dc68e967152df4386fcebd7336f87",
+  "native_size": [
+    16,
+    16
+  ],
+  "intent": "Thorium armor inventory icons: bubblegum-pink metal, discrete angular plate bevels, recognizable helmet/chestplate/leggings/boots, no grotesque silhouette additions.",
+  "purpose": "small angular brow ridge and temple bevels; facial opening remains intact",
+  "alpha_identical_to_template": true,
+  "changes_outside_material_mask": 0,
+  "detail_changes": [
+    {
+      "xy": [
+        5,
+        3
+      ],
+      "before": [
+        131,
+        34,
+        80,
+        255
+      ],
+      "after": [
+        251,
+        91,
+        170,
+        255
+      ]
+    },
+    {
+      "xy": [
+        6,
+        3
+      ],
+      "before": [
+        131,
+        34,
+        80,
+        255
+      ],
+      "after": [
+        255,
+        116,
+        186,
+        255
+      ]
+    },
+    {
+      "xy": [
+        7,
+        3
+      ],
+      "before": [
+        131,
+        34,
+        80,
+        255
+      ],
+      "after": [
+        255,
+        116,
+        186,
+        255
+      ]
+    },
+    {
+      "xy": [
+        8,
+        3
+      ],
+      "before": [
+        131,
+        34,
+        80,
+        255
+      ],
+      "after": [
+        251,
+        91,
+        170,
+        255
+      ]
+    },
+    {
+      "xy": [
+        5,
+        4
+      ],
+      "before": [
+        255,
+        224,
+        241,
+        255
+      ],
+      "after": [
+        255,
+        202,
+        231,
+        255
+      ]
+    },
+    {
+      "xy": [
+        9,
+        4
+      ],
+      "before": [
+        255,
+        145,
+        201,
+        255
+      ],
+      "after": [
+        255,
+        116,
+        186,
+        255
+      ]
+    },
+    {
+      "xy": [
+        7,
+        5
+      ],
+      "before": [
+        131,
+        34,
+        80,
+        255
+      ],
+      "after": [
+        237,
+        70,
+        151,
+        255
+      ]
+    },
+    {
+      "xy": [
+        8,
+        5
+      ],
+      "before": [
+        131,
+        34,
+        80,
+        255
+      ],
+      "after": [
+        255,
+        116,
+        186,
+        255
+      ]
+    },
+    {
+      "xy": [
+        3,
+        5
+      ],
+      "before": [
+        131,
+        34,
+        80,
+        255
+      ],
+      "after": [
+        255,
+        116,
+        186,
+        255
+      ]
+    },
+    {
+      "xy": [
+        12,
+        5
+      ],
+      "before": [
+        94,
+        28,
+        62,
+        255
+      ],
+      "after": [
+        170,
+        43,
+        103,
+        255
+      ]
+    }
+  ],
+  "palette_visible_colors": 14,
+  "technical": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 1
+  },
+  "human_approval": "required"
+}

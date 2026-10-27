@@ -1,140 +1,205 @@
 {
     "namespace": "cryo_freezer",
+    "dark_cyan_cell": {
+        "type": "image",
+        "texture": "textures/ui/cells/cyan_cell_image",
+        "size": [
+            "100%",
+            "100%"
+        ],
+        "color": [
+            0.84,
+            0.86,
+            0.86
+        ]
+    },
     "freezer_grid_5x3": {
         "type": "collection_panel",
-        "size": [90, 54],
+        "size": [
+            90,
+            54
+        ],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
                 "slot_1@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [0, 0],
+                    "offset": [
+                        0,
+                        0
+                    ],
                     "collection_index": 3
                 }
             },
             {
                 "slot_2@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [18, 0],
+                    "offset": [
+                        18,
+                        0
+                    ],
                     "collection_index": 4
                 }
             },
             {
                 "slot_3@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [36, 0],
+                    "offset": [
+                        36,
+                        0
+                    ],
                     "collection_index": 5
                 }
             },
             {
                 "slot_4@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [54, 0],
+                    "offset": [
+                        54,
+                        0
+                    ],
                     "collection_index": 6
                 }
             },
             {
                 "slot_5@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [72, 0],
+                    "offset": [
+                        72,
+                        0
+                    ],
                     "collection_index": 7
                 }
             },
             {
                 "slot_6@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [0, 18],
+                    "offset": [
+                        0,
+                        18
+                    ],
                     "collection_index": 8
                 }
             },
             {
                 "slot_7@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [18, 18],
+                    "offset": [
+                        18,
+                        18
+                    ],
                     "collection_index": 9
                 }
             },
             {
                 "slot_8@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [36, 18],
+                    "offset": [
+                        36,
+                        18
+                    ],
                     "collection_index": 10
                 }
             },
             {
                 "slot_9@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [54, 18],
+                    "offset": [
+                        54,
+                        18
+                    ],
                     "collection_index": 11
                 }
             },
             {
                 "slot_10@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [72, 18],
+                    "offset": [
+                        72,
+                        18
+                    ],
                     "collection_index": 12
                 }
             },
             {
                 "slot_11@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [0, 36],
+                    "offset": [
+                        0,
+                        36
+                    ],
                     "collection_index": 13
                 }
             },
             {
                 "slot_12@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [18, 36],
+                    "offset": [
+                        18,
+                        36
+                    ],
                     "collection_index": 14
                 }
             },
             {
                 "slot_13@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [36, 36],
+                    "offset": [
+                        36,
+                        36
+                    ],
                     "collection_index": 15
                 }
             },
             {
                 "slot_14@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [54, 36],
+                    "offset": [
+                        54,
+                        36
+                    ],
                     "collection_index": 16
                 }
             },
             {
                 "slot_15@common.container_item": {
+                    "$background_images": "cryo_freezer.dark_cyan_cell",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [72, 36],
+                    "offset": [
+                        72,
+                        36
+                    ],
                     "collection_index": 17
-                }
-            },
-            {
-                "grid_outline": {
-                    "type": "image",
-                    "texture": "textures/ui/slots/input_slot",
-                    "size": [92, 56],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [-1, -1],
-                    "layer": 4
                 }
             }
         ]
@@ -143,20 +208,35 @@
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [162, 72],
-        "offset": [-10, -40],
+        "size": [
+            162,
+            72
+        ],
+        "offset": [
+            -10,
+            -40
+        ],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
                 "screen": {
                     "type": "image",
-                    "texture": "textures/ui/dialog_background_opaque_opaque",
+                    "texture": "textures/ui/frozen_panel_ls",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "$cell_image_size": [200, 166],
-                    "size": [200, 166],
-                    "offset": [20, 40],
+                    "$cell_image_size": [
+                        200,
+                        166
+                    ],
+                    "size": [
+                        200,
+                        166
+                    ],
+                    "offset": [
+                        20,
+                        40
+                    ],
                     "layer": -1
                 }
             },
@@ -165,65 +245,131 @@
                     "type": "panel",
                     "anchor_from": "top_right",
                     "anchor_to": "top_right",
-                    "offset": [40, 2],
+                    "offset": [
+                        38,
+                        -8
+                    ],
                     "controls": [
                         {
                             "close_button@common.close_button": {}
+                        }
+                    ],
+                    "ignored": true
+                }
+            },
+            {
+                "machine_name@at_core.machine_name": {
+                    "$offset": [
+                        10,
+                        -2
+                    ],
+                    "shadow": true,
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            },
+            {
+                "side_panel@at_common.info_panel": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "$has_text": false,
+                    "$text_borders": [
+                        88,
+                        150
+                    ],
+                    "$bg_size": [
+                        104,
+                        166
+                    ],
+                    "$info_size": [
+                        96,
+                        158
+                    ],
+                    "offset": [
+                        -103,
+                        -7
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "recipes_toggle_button",
+                            "source_property_name": "(not #toggle_state)",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": false
                         }
                     ]
                 }
             },
             {
-                "machine_name@uc.machine_name": {
-                    "offset": [0, -2]
-                }
-            },
-            {
-                "side_panel@ascendant_common.info_panel": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "$has_text": false,
-                    "$text_borders": [88, 150],
-                    "$bg_size": [104, 166],
-                    "$info_size": [96, 158],
-                    "offset": [-102, -7]
-                }
-            },
-            {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [88, 148],
+                    "size": [
+                        88,
+                        148
+                    ],
                     "$text_scale": 0.55,
-                    "offset": [-90, 2],
-                    "layer": 3
+                    "offset": [
+                        -95,
+                        1
+                    ],
+                    "layer": 3,
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "recipes_toggle_button",
+                            "source_property_name": "(not #toggle_state)",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": false
+                        }
+                    ]
                 }
             },
             {
                 "coolant_display@uc.liquid_input_1_bar": {
                     "$collection_index": 2,
                     "$has_bg": false,
-                    "offset": [-50, -1]
+                    "offset": [
+                        -50,
+                        -1
+                    ]
                 }
             },
             {
                 "freezer_grid@cryo_freezer.freezer_grid_5x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
-                    "offset": [28, 11]
+                    "offset": [
+                        28,
+                        11
+                    ]
                 }
             },
             {
                 "energy_bar@uc.energy_bar": {
                     "$collection_index": 0,
-                    "offset": [119, 64],
+                    "offset": [
+                        119,
+                        64
+                    ],
                     "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
-                    "offset": [22, 0],
+                    "offset": [
+                        22,
+                        0
+                    ],
                     "$upgrade_index_1": 18,
                     "$upgrade_index_2": 19,
                     "$upgrade_index_3": 20,
@@ -239,8 +385,11 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
-                    "offset": [22, 0],
+                "io_tab@at_common.machine_io_tab": {
+                    "offset": [
+                        22,
+                        0
+                    ],
                     "$io_items_modes_description": "ui.utilitycraft:io.cryo_freezer.items",
                     "$io_fluids_modes_description": "ui.utilitycraft:io.cryo_freezer.liquids",
                     "$has_item_io": true,
@@ -269,9 +418,54 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "offset": [22, 0],
-                    "$info_description": "ui.utilitycraft:info.cryo_freezer"
+                "info_tab@at_common.machine_info_tab": {
+                    "offset": [
+                        22,
+                        0
+                    ],
+                    "$info_description": "ui.utilitycraft:info.cryo_freezer",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        -2.0,
+                        7
+                    ]
+                }
+            },
+            {
+                "recipe_book@at_machine_recipes.book": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        -103,
+                        -7
+                    ],
+                    "$recipe_rows": "at_machine_recipes.cryo_freezer_rows",
+                    "$recipe_selection": "at_machine_recipes.cryo_freezer_selection"
+                }
+            },
+            {
+                "recipe_card_anchor": {
+                    "type": "panel",
+                    "size": [
+                        200,
+                        166
+                    ],
+                    "offset": [
+                        20,
+                        40
+                    ],
+                    "controls": [
+                        {
+                            "recipe_card@at_common.button_card": {
+                                "$card_offset": [0, 4],
+                                "$card_background_texture": "textures/ui/button_card/tab_top_aqua",
+                                "$card_buttons_ref": "cryo_freezer.recipe_card_buttons"
+                            }
+                        }
+                    ]
                 }
             }
         ]
@@ -311,10 +505,12 @@
                                         "cryo_freezer_top@cryo_freezer.cryo_freezer_top": {}
                                     },
                                     {
-                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+                                        "inventory_panel_bottom_half_with_label@cryo_freezer.dark_inventory_panel": {}
                                     },
                                     {
-                                        "hotbar_grid@common.hotbar_grid_template": {}
+                                        "hotbar_grid@common.hotbar_grid_template": {
+                                            "grid_item_template": "cryo_freezer.dark_hotbar_slot"
+                                        }
                                     },
                                     {
                                         "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
@@ -329,6 +525,113 @@
                             "gamepad_cursor@common.gamepad_cursor_button": {}
                         }
                     ]
+                }
+            }
+        ]
+    },
+    "recipe_card_buttons@at_core.button_card_row": {
+        "controls": [
+            {
+                "machine_view_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_recipe_views",
+                    "$card_tab_index": 0,
+                    "$card_unchecked_texture": "textures/ui/button_card/button_aqua",
+                    "$card_checked_texture": "textures/ui/button_card/button_aqua_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_aqua_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_aqua_pressed_hover",
+
+                    "$card_icon": "textures/ui/at_icons/freeze",
+                    "$card_icon_size": [
+                        16,
+                        16
+                    ],
+                    "$card_tooltip": "ui.utilitycraft:machine_view.machine"
+                }
+            },
+            {
+                "recipes_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_recipe_views",
+                    "$card_tab_index": 1,
+                    "$card_unchecked_texture": "textures/ui/button_card/button_aqua",
+                    "$card_checked_texture": "textures/ui/button_card/button_aqua_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_aqua_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_aqua_pressed_hover",
+
+                    "$card_icon": "textures/ui/at_icons/recipe_book",
+                    "$card_icon_size": [
+                        16,
+                        16
+                    ],
+                    "$card_tooltip": "ui.utilitycraft:recipes_panel.name"
+                }
+            }
+        ]
+    },
+    "dark_inventory_slot@common.grid_item_for_inventory": {
+        "$background_images": "cryo_freezer.dark_cyan_cell"
+    },
+    "dark_hotbar_slot@common.grid_item_for_hotbar": {
+        "$background_images": "cryo_freezer.dark_cyan_cell"
+    },
+    "dark_inventory_panel": {
+        "type": "panel",
+        "size": [
+            "100%",
+            93
+        ],
+        "anchor_from": "bottom_left",
+        "anchor_to": "bottom_left",
+        "controls": [
+            {
+                "inventory_panel": {
+                    "type": "panel",
+                    "size": [
+                        88,
+                        83
+                    ],
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "controls": [
+                        {
+                            "inventory_grid": {
+                                "type": "grid",
+                                "size": [
+                                    162,
+                                    54
+                                ],
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "offset": [
+                                    0,
+                                    -26
+                                ],
+                                "grid_dimensions": [
+                                    9,
+                                    3
+                                ],
+                                "grid_item_template": "cryo_freezer.dark_inventory_slot",
+                                "collection_name": "inventory_items"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "inventory_label@common.section_heading_label": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        3
+                    ],
+                    "layer": 2,
+                    "text": "container.inventory",
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shadow": true
                 }
             }
         ]

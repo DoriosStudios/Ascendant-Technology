@@ -1,0 +1,1068 @@
+{
+    "namespace": "at_common",
+    "_panel_surface@at_core.surface": {
+        "texture": "$panel_texture"
+    },
+    "_slot_surface@at_core.surface": {
+        "texture": "$slot_texture"
+    },
+    "panel": {
+        "type": "panel",
+        "$panel_size|default": [
+            176,
+            166
+        ],
+        "size": "$panel_size",
+        "$background_ref|default": "at_common._panel_surface",
+        "$content_ref|default": "common.empty_panel",
+        "$show_close|default": false,
+        "$close_button_ref|default": "common.close_button",
+        "controls": [
+            {
+                "background@$background_ref": {
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 0
+                }
+            },
+            {
+                "content@$content_ref": {
+                    "layer": 1
+                }
+            },
+            {
+                "close@$close_button_ref": {
+                    "visible": "$show_close",
+                    "ignored": "(not $show_close)",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [
+                        -4,
+                        4
+                    ],
+                    "layer": 2
+                }
+            }
+        ],
+        "$panel_texture|default": "textures/ui/panels/background_panel"
+    },
+    "dark_panel@at_core.surface": {
+        "$texture": "textures/ui/panels/background_panel_dark"
+    },
+    "blue_panel@at_core.surface": {
+        "$texture": "textures/ui/panels/background_panel_blue"
+    },
+    "info_panel": {
+        "type": "collection_panel",
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "$bg_size|default": [
+            90,
+            166
+        ],
+        "$info_size|default": [
+            "100% - 8px",
+            "100% - 8px"
+        ],
+        "$text_borders|default": [
+            "100% - 16px",
+            "100% - 16px"
+        ],
+        "$has_bg|default": true,
+        "$has_text|default": false,
+        "$has_scroll|default": false,
+        "$content_ref|default": "at_common.info_text",
+        "$label_index|default": 1,
+        "$text_scale|default": 0.55,
+        "$text_color|default": [
+            0,
+            1,
+            0
+        ],
+        "$background_ref|default": "at_common._panel_surface",
+        "$show_close|default": false,
+        "$close_button_ref|default": "common.close_button",
+        "size": "$bg_size",
+        "controls": [
+            {
+                "background@$background_ref": {
+                    "size": "$bg_size",
+                    "visible": "$has_bg",
+                    "layer": 1
+                }
+            },
+            {
+                "screen": {
+                    "type": "image",
+                    "texture": "textures/ui/panels/panel_classic_borderless",
+                    "size": "$info_size",
+                    "layer": 2
+                }
+            },
+            {
+                "info@at_core.collection_text": {
+                    "collection_index": "$label_index",
+                    "size": "$text_borders",
+                    "visible": "$has_text",
+                    "layer": 5,
+                    "$text_scale": "$text_scale",
+                    "$text_color": "$text_color"
+                }
+            },
+            {
+                "info_scroll@common.scrolling_panel": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "size": ["100%", "100% - 14px"],
+                    "offset": [4, 0],
+                    "layer": 6,
+                    "ignored": "(not $has_scroll)",
+                    "$scrolling_content": "$content_ref",
+                    "$show_background": false,
+                    "$scroll_size": [4, "100% - 4px"],
+                    "$scrolling_pane_size": ["100%", "100%"],
+                    "$scrolling_pane_offset": [0, 0],
+                    "$scroll_view_port_size": ["100% - 16px", "100%"],
+                    "$scroll_view_port_max_size": ["100% - 16px", "100%"],
+                    "$scroll_view_port_offset": [0, 0],
+                    "$scroll_size_touch": [4, "100% - 4px"],
+                    "$scrolling_pane_size_touch": ["100%", "100%"],
+                    "$scroll_view_port_size_touch": ["100% - 16px", "100%"],
+                    "$scroll_view_port_max_size_touch": ["100% - 16px", "100%"],
+                    "$scroll_view_port_offset_touch": [0, 0],
+                    "$scroll_box_visible_touch": true,
+                    "$scroll_track_image_control": "common.empty_image"
+                }
+            },
+            {
+                "close@$close_button_ref": {
+                    "visible": "$show_close",
+                    "ignored": "(not $show_close)",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [
+                        -4,
+                        4
+                    ],
+                    "layer": 7
+                }
+            }
+        ],
+        "$panel_texture|default": "textures/ui/panels/background_panel"
+    },
+    "scroll_panel@common.scrolling_panel": {
+        "$content_ref|default": "common.empty_panel",
+        "$scrolling_content": "$content_ref",
+        "$show_background": false,
+        "$scroll_size": [
+            4,
+            "100% - 4px"
+        ],
+        "$scroll_size_touch": [
+            4,
+            "100% - 4px"
+        ],
+        "$scroll_view_port_size|default": [
+            "100% - 16px",
+            "100%"
+        ],
+        "$scroll_view_port_max_size|default": [
+            "100% - 16px",
+            "100%"
+        ],
+        "$scroll_view_port_size_touch|default": [
+            "100% - 16px",
+            "100%"
+        ],
+        "$scroll_view_port_max_size_touch|default": [
+            "100% - 16px",
+            "100%"
+        ],
+        "$scroll_box_visible_touch": true,
+        "$scroll_track_image_control": "common.empty_image"
+    },
+    "scrollable_info_panel@at_common.info_panel": {
+        "$has_scroll": true
+    },
+    "info_text": {
+        "type": "stack_panel",
+        "orientation": "vertical",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [
+            "100%",
+            "default"
+        ],
+        "$label_index|default": 1,
+        "$text_scale|default": 0.55,
+        "$text_color|default": [
+            0,
+            1,
+            0
+        ],
+        "controls": [
+            {
+                "top_padding": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        4
+                    ]
+                }
+            },
+            {
+                "label_collection": {
+                    "type": "collection_panel",
+                    "collection_name": "container_items",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [
+                        "100%",
+                        "100%c"
+                    ],
+                    "controls": [
+                        {
+                            "label@uc.text_label": {
+                                "collection_index": "$label_index",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "size": [
+                                    "100% - 8px",
+                                    "100%c"
+                                ],
+                                "offset": [
+                                    4,
+                                    0
+                                ],
+                                "$text_scale": "$text_scale",
+                                "layer": 1,
+                                "controls": [
+                                    {
+                                        "label_v1@uc._text_label_v1": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "size": ["100%", "default"],
+                                            "text_alignment": "left",
+                                            "color": "$text_color"
+                                        }
+                                    },
+                                    {
+                                        "label_v2@uc._text_label_v2": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "size": ["100%", "default"],
+                                            "text_alignment": "left",
+                                            "color": "$text_color"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "bottom_padding": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        4
+                    ]
+                }
+            }
+        ]
+    },
+    "energy_display@at_core.resource_display": {
+        "$hover_size|default": [
+            16,
+            50
+        ],
+        "$renderer_size|default": [
+            48,
+            48
+        ],
+        "$renderer_offset|default": [
+            12.1,
+            5
+        ],
+        "$border_texture|default": "textures/ui/energy_border",
+        "$border_size|default": [
+            16,
+            48
+        ],
+        "$border_offset|default": [
+            12.1,
+            5
+        ],
+        "$background_size|default": [
+            24,
+            56
+        ],
+        "$background_offset|default": [
+            12.1,
+            5
+        ]
+    },
+    "liquid_display@at_core.resource_display": {
+        "$hover_size|default": [
+            16,
+            50
+        ],
+        "$renderer_size|default": [
+            48,
+            48
+        ],
+        "$renderer_offset|default": [
+            12.1,
+            5
+        ],
+        "$border_texture|default": "textures/ui/liquid_border",
+        "$border_size|default": [
+            16,
+            48
+        ],
+        "$border_offset|default": [
+            12.1,
+            5
+        ],
+        "$background_size|default": [
+            24,
+            56
+        ],
+        "$background_offset|default": [
+            12.1,
+            5
+        ]
+    },
+    "gas_display@at_core.resource_display": {
+        "$hover_size|default": [
+            16,
+            50
+        ],
+        "$renderer_size|default": [
+            48,
+            48
+        ],
+        "$renderer_offset|default": [
+            12.1,
+            5
+        ],
+        "$border_texture|default": "textures/ui/liquid_border",
+        "$border_size|default": [
+            16,
+            48
+        ],
+        "$border_offset|default": [
+            12.1,
+            5
+        ],
+        "$background_size|default": [
+            24,
+            56
+        ],
+        "$background_offset|default": [
+            12.1,
+            5
+        ]
+    },
+    "_slot_highlight": {
+        "type": "panel",
+        "size": ["100%", "100%"],
+        "controls": [
+            { "surface@at_core.surface": { "$texture": "$slot_hover_texture", "layer": 0 } },
+            { "native@common.highlight_slot_panel": {} }
+        ]
+    },
+    "slot@at_core.slot": {
+        "$slot_texture|default": "",
+        "$slot_hover_texture|default": "",
+        "variables": [
+            {
+                "requires": "(not ($slot_texture = ''))",
+                "$background_ref": "at_common._slot_surface"
+            },
+            {
+                "requires": "(not ($slot_hover_texture = ''))",
+                "$highlight_control": "at_common._slot_highlight"
+            }
+        ]
+    },
+    "input_slot@at_common.slot": {
+        "$outline_texture|default": "textures/ui/slots/input_1_slot"
+    },
+    "output_slot@at_common.slot": {
+        "size": [
+            26,
+            26
+        ],
+        "$outline_texture|default": "textures/ui/slots/output_1_slot"
+    },
+    "upgrade_slot@at_common.slot": {
+        "$slot_texture|default": "textures/ui/cells/orange_cell_image"
+    },
+    "progress_arrow@at_core.item": {
+        "$panel_size|default": [
+            34,
+            34
+        ],
+        "$renderer_size|default": [
+            32,
+            32
+        ]
+    },
+    "grid_2x2": {
+        "type": "panel",
+        "size": [
+            36,
+            36
+        ],
+        "$cell_size|default": [
+            18,
+            18
+        ],
+        "$slot_control|default": "at_common.slot",
+        "controls": [
+            {
+                "slot_0@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        0
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_0",
+                    "$slot_index": "$slot_index_0"
+                }
+            },
+            {
+                "slot_1@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        18,
+                        0
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_1",
+                    "$slot_index": "$slot_index_1"
+                }
+            },
+            {
+                "slot_2@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        18
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_2",
+                    "$slot_index": "$slot_index_2"
+                }
+            },
+            {
+                "slot_3@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        18,
+                        18
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_3",
+                    "$slot_index": "$slot_index_3"
+                }
+            }
+        ],
+        "$slot_index_0|default": 0,
+        "$slot_index_1|default": 1,
+        "$slot_index_2|default": 2,
+        "$slot_index_3|default": 3
+    },
+    "grid_3x3": {
+        "type": "panel",
+        "size": [
+            54,
+            54
+        ],
+        "$cell_size|default": [
+            18,
+            18
+        ],
+        "$slot_control|default": "at_common.slot",
+        "controls": [
+            {
+                "slot_0@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        0
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_0",
+                    "$slot_index": "$slot_index_0"
+                }
+            },
+            {
+                "slot_1@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        18,
+                        0
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_1",
+                    "$slot_index": "$slot_index_1"
+                }
+            },
+            {
+                "slot_2@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        36,
+                        0
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_2",
+                    "$slot_index": "$slot_index_2"
+                }
+            },
+            {
+                "slot_3@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        18
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_3",
+                    "$slot_index": "$slot_index_3"
+                }
+            },
+            {
+                "slot_4@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        18,
+                        18
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_4",
+                    "$slot_index": "$slot_index_4"
+                }
+            },
+            {
+                "slot_5@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        36,
+                        18
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_5",
+                    "$slot_index": "$slot_index_5"
+                }
+            },
+            {
+                "slot_6@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        36
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_6",
+                    "$slot_index": "$slot_index_6"
+                }
+            },
+            {
+                "slot_7@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        18,
+                        36
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_7",
+                    "$slot_index": "$slot_index_7"
+                }
+            },
+            {
+                "slot_8@$slot_control": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        36,
+                        36
+                    ],
+                    "size": "$cell_size",
+                    "collection_index": "$slot_index_8",
+                    "$slot_index": "$slot_index_8"
+                }
+            }
+        ],
+        "$slot_index_0|default": 0,
+        "$slot_index_1|default": 1,
+        "$slot_index_2|default": 2,
+        "$slot_index_3|default": 3,
+        "$slot_index_4|default": 4,
+        "$slot_index_5|default": 5,
+        "$slot_index_6|default": 6,
+        "$slot_index_7|default": 7,
+        "$slot_index_8|default": 8
+    },
+    "_tab_face": {
+        "type": "panel",
+        "size": [
+            "100%",
+            "100%"
+        ],
+        "$texture|default": "textures/ui/panels/background_panel_dark",
+        "$alpha|default": 1,
+        "controls": [
+            {
+                "background@at_core.surface": {
+                    "alpha": "$alpha",
+                    "layer": 0,
+                    "$texture": "$texture"
+                }
+            },
+            {
+                "label": {
+                    "type": "label",
+                    "text": "$label",
+                    "font_scale_factor": "$text_scale",
+                    "color": "$text_color",
+                    "text_alignment": "center",
+                    "localize": true,
+                    "layer": 1
+                }
+            },
+            {
+                "icon": {
+                    "type": "image",
+                    "texture": "$icon",
+                    "size": "$icon_size",
+                    "offset": "$icon_offset",
+                    "color": "$icon_color",
+                    "ignored": "($icon = '')",
+                    "layer": 2
+                }
+            }
+        ]
+    },
+    "_tab_checked@at_common._tab_face": {
+        "$texture": "textures/ui/panels/background_panel_black",
+        "$alpha": 0.95
+    },
+    "_tab_hover@at_common._tab_face": {
+        "$texture": "textures/ui/panels/background_panel",
+        "$alpha": 1
+    },
+    "_tab_checked_hover@at_common._tab_checked": {
+        "$alpha": 1
+    },
+    "tab_button@at_core.toggle": {
+        "$button_size|default": [
+            36,
+            20
+        ],
+        "size": "$button_size",
+        "$tab_group|default": "tabs_group",
+        "$tab_index|default": 0,
+        "$selected_tab|default": 0,
+        "$radio_toggle_group|default": true,
+        "$toggle_name|default": "$tab_group",
+        "$toggle_group_default_selected": "$selected_tab",
+        "$toggle_group_forced_index": "$tab_index",
+        "$unchecked_control|default": "at_common._tab_face",
+        "$checked_control|default": "at_common._tab_checked",
+        "$unchecked_hover_control|default": "at_common._tab_hover",
+        "$checked_hover_control|default": "at_common._tab_checked_hover",
+        "$unchecked_locked_control|default": "at_common._tab_face",
+        "$checked_locked_control|default": "at_common._tab_checked",
+        "$unchecked_locked_hover_control|default": "at_common._tab_hover",
+        "$checked_locked_hover_control|default": "at_common._tab_checked_hover",
+        "$label|default": "",
+        "$text_scale|default": 0.6,
+        "$text_color|default": [
+            1,
+            1,
+            1
+        ],
+        "$icon|default": "",
+        "$icon_size|default": [
+            12,
+            12
+        ],
+        "$icon_offset|default": [
+            0,
+            0
+        ],
+        "$icon_color|default": [
+            1,
+            1,
+            1
+        ]
+    },
+    "tab_content": {
+        "type": "panel",
+        "$tab_control|default": "",
+        "bindings": [
+            {
+                "binding_type": "view",
+                "source_control_name": "$tab_control",
+                "source_property_name": "#toggle_state",
+                "target_property_name": "#visible",
+                "resolve_sibling_scope": true
+            }
+        ]
+    },
+    "toggle_unchecked": {
+        "type": "panel",
+        "$toggle_background_alpha|default": 1,
+        "$toggle_icon_color|default": [1, 1, 1],
+        "$toggle_show_focus|default": false,
+        "controls": [
+            {
+                "background@at_core.surface": {
+                    "$texture": "textures/ui/panels/background_panel_dark",
+                    "alpha": "$toggle_background_alpha",
+                    "layer": 0
+                }
+            },
+            {
+                "icon": {
+                    "type": "image",
+                    "texture": "textures/ui/plus",
+                    "color": "$toggle_icon_color",
+                    "size": [
+                        8,
+                        8
+                    ],
+                    "layer": 1
+                }
+            },
+            {
+                "focus@common.white_border_slot": { "layer": 2, "ignored": "(not $toggle_show_focus)" }
+            }
+        ]
+    },
+    "toggle_checked": {
+        "type": "panel",
+        "$toggle_background_alpha|default": 0.95,
+        "$toggle_icon_color|default": [1, 1, 1],
+        "$toggle_show_focus|default": false,
+        "controls": [
+            {
+                "background@at_core.surface": {
+                    "$texture": "textures/ui/panels/background_panel_black",
+                    "alpha": "$toggle_background_alpha",
+                    "layer": 0
+                }
+            },
+            {
+                "icon": {
+                    "type": "image",
+                    "texture": "textures/ui/minus",
+                    "color": "$toggle_icon_color",
+                    "size": [
+                        8,
+                        8
+                    ],
+                    "layer": 1
+                }
+            },
+            {
+                "focus@common.white_border_slot": { "layer": 2, "ignored": "(not $toggle_show_focus)" }
+            }
+        ]
+    },
+    "_toggle_unchecked_hover@at_common.toggle_unchecked": {
+        "$toggle_show_focus": true
+    },
+    "_toggle_checked_hover@at_common.toggle_checked": {
+        "$toggle_show_focus": true
+    },
+    "_toggle_unchecked_locked@at_common.toggle_unchecked": {
+        "$toggle_background_alpha": 0.5,
+        "$toggle_icon_color": [0.5, 0.5, 0.5]
+    },
+    "_toggle_checked_locked@at_common.toggle_checked": {
+        "$toggle_background_alpha": 0.5,
+        "$toggle_icon_color": [0.5, 0.5, 0.5]
+    },
+    "toggle_button@at_core.toggle": {
+        "$unchecked_control|default": "at_common.toggle_unchecked",
+        "$checked_control|default": "at_common.toggle_checked",
+        "$unchecked_hover_control|default": "at_common._toggle_unchecked_hover",
+        "$checked_hover_control|default": "at_common._toggle_checked_hover",
+        "$unchecked_locked_control|default": "at_common._toggle_unchecked_locked",
+        "$checked_locked_control|default": "at_common._toggle_checked_locked",
+        "$unchecked_locked_hover_control|default": "at_common._toggle_unchecked_locked",
+        "$checked_locked_hover_control|default": "at_common._toggle_checked_locked"
+    },
+    "section_label": {
+        "type": "label",
+        "$label_text|default": "",
+        "$label_color|default": [
+            1,
+            1,
+            1
+        ],
+        "text": "$label_text",
+        "color": "$label_color",
+        "font_scale_factor": 0.7,
+        "localize": true
+    },
+    "machine_help_content": {
+        "type": "stack_panel",
+        "orientation": "vertical",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [
+            "100%",
+            "default"
+        ],
+        "controls": [
+            {
+                "description_label": {
+                    "type": "label",
+                    "text": "$info_description",
+                    "localize": true,
+                    "size": [
+                        "100%",
+                        "default"
+                    ],
+                    "font_scale_factor": 0.65,
+                    "color": [0.9, 0.9, 0.9],
+                    "text_alignment": "left"
+                }
+            },
+            {
+                "bottom_padding": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        4
+                    ]
+                }
+            }
+        ],
+        "$info_description|default": ""
+    },
+    "machine_info_tab": {
+        "$info_content|default": "uc.info_description_scroll_content",
+        "type": "collection_panel",
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "size": [
+            162,
+            72
+        ],
+        "collection_name": "container_items",
+        "$item_collection_name": "container_items",
+        "$right_machine_tabs_name|default": "right_machine_tabs",
+        "$info_toggle_control_name|default": "info_toggle_button",
+        "$info_toggle_offset|default": [
+            109,
+            27
+        ],
+        "$info_panel_size|default": [
+            120,
+            134
+        ],
+        "controls": [
+            {
+                "info_toggle@uc.toggle_button": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": "$info_toggle_offset",
+                    "$toggle_name": "$right_machine_tabs_name",
+                    "$toggle_layer": -3,
+                    "$toggle_index": 3,
+                    "$toggle_group": true,
+                    "$toggle_default_state": false,
+                    "$toggle_hover_text": "ui.utilitycraft:info_panel.name",
+                    "$toggle_checked_hover_text": "ui.utilitycraft:machine_view.close_information",
+                    "$toggle_hover_text_localize": true,
+                    "$toggle_checked_hover_text_localize": true,
+                    "$toggle_control_name": "$info_toggle_control_name",
+                    "$toggle_size": [
+                        16,
+                        16
+                    ],
+                    "$toggle_unchecked": "textures/ui/toggle_button/info_unchecked",
+                    "$toggle_checked": "textures/ui/toggle_button/info_checked",
+                    "$toggle_unchecked_hover": "textures/ui/toggle_button/info_unchecked_hover",
+                    "$toggle_checked_hover": "textures/ui/toggle_button/info_checked_hover",
+                    "$has_toggle_bg": true,
+                    "$toggle_bg_size": [
+                        24,
+                        24
+                    ],
+                    "$toggle_bg_texture": "textures/ui/toggle_button/right_bg",
+                    "$toggle_bg_offset": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "info_toggle_close@uc.toggle_button": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": "$info_toggle_offset",
+                    "$toggle_name": "$right_machine_tabs_name",
+                    "$toggle_layer": 31,
+                    "$toggle_index": 0,
+                    "$toggle_group": true,
+                    "$toggle_default_state": false,
+                    "$toggle_hover_text": "ui.utilitycraft:machine_view.close_information",
+                    "$toggle_checked_hover_text": "ui.utilitycraft:machine_view.close_information",
+                    "$toggle_hover_text_localize": true,
+                    "$toggle_checked_hover_text_localize": true,
+                    "$toggle_control_name": "$info_toggle_control_name",
+                    "$toggle_size": [
+                        16,
+                        16
+                    ],
+                    "$toggle_unchecked": "textures/ui/toggle_button/info_checked",
+                    "$toggle_checked": "textures/ui/toggle_button/info_checked",
+                    "$toggle_unchecked_hover": "textures/ui/toggle_button/info_checked_hover",
+                    "$toggle_checked_hover": "textures/ui/toggle_button/info_checked_hover",
+                    "$has_toggle_bg": true,
+                    "$toggle_bg_size": [
+                        24,
+                        24
+                    ],
+                    "$toggle_bg_texture": "textures/ui/toggle_button/right_bg",
+                    "$toggle_bg_offset": [
+                        0,
+                        0
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "$info_toggle_control_name",
+                            "source_property_name": "#toggle_state",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": false
+                        }
+                    ]
+                }
+            },
+            {
+                "info_panel": {
+                    "type": "collection_panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "size": "$info_panel_size",
+                    "offset": "$info_panel_offset",
+                    "layer": 30,
+                    "collection_name": "container_items",
+                    "$item_collection_name": "container_items",
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "$info_toggle_control_name",
+                            "source_property_name": "#toggle_state",
+                            "target_property_name": "#visible",
+                            "resolve_sibling_scope": false
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "description_scroll@at_common.scroll_panel": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    8,
+                                    24
+                                ],
+                                "size": [
+                                    108,
+                                    102
+                                ],
+                                "$content_ref": "at_common.machine_help_content",
+                                "$scroll_view_port_size": [
+                                    100,
+                                    "100%"
+                                ],
+                                "$scroll_view_port_max_size": [
+                                    100,
+                                    "100%"
+                                ],
+                                "$scroll_view_port_size_touch": [
+                                    100,
+                                    "100%"
+                                ],
+                                "$scroll_view_port_max_size_touch": [
+                                    100,
+                                    "100%"
+                                ],
+                                "layer": 2
+                            }
+                        },
+                        {
+                            "info_background": {
+                                "type": "image",
+                                "texture": "textures/ui/panels/background_panel_dark",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 0,
+                                "offset": [
+                                    0,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "text_label": {
+                                "type": "label",
+                                "text": "ui.utilitycraft:info_panel.name",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    8,
+                                    6
+                                ],
+                                "size": [
+                                    104,
+                                    12
+                                ],
+                                "color": [
+                                    0.95,
+                                    0.95,
+                                    0.95
+                                ],
+                                "font_scale_factor": 0.85,
+                                "layer": 2
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "$info_panel_offset|default": [
+            10,
+            10
+        ]
+    }
+,
+    "machine_io_tab@uc.io_tab": {}
+}

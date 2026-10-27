@@ -7,11 +7,17 @@ import {
     LEGACY_READY_EVENT,
     LEGACY_SEND_EVENT,
 } from "../config/definitions.js";
-import { system } from "@minecraft/server";
+import { EFFECT_STATE_VALUES } from "../config/values.js";
+import { system, world } from "@minecraft/server";
 
 let initialized = false;
 let outboundEventId = EFFECTS_SEND_EVENT;
 let modernBridgeReady = false;
+let remoteBridgeReady = false;
+let startupCheckStarted = false;
+let startupCheckCompleted = false;
+const warnedPlayers = new Set();
+const MISSING_INSIGHT_WARNING = "at.integration.insight.missing";
 
 function isEntity(target) {
     return Boolean(target?.id);
@@ -19,6 +25,50 @@ function isEntity(target) {
 
 function getInsightEffectsApi() {
     return globalThis.DoriosAPI?.insight?.effects ?? globalThis.DoriosAPI?.insight?.customEffects;
+}
+
+/** Optional runtime dependency: require the effects bridge, not an unrelated Insight API. */
+export function isInsightEffectsAvailable() {
+    return remoteBridgeReady || typeof getInsightEffectsApi()?.replace === "function";
+}
+
+function discoverInsightEffects() {
+    for (const eventId of [EFFECTS_DISCOVER_EVENT, LEGACY_DISCOVER_EVENT]) {
+        try {
+            system.sendScriptEvent(eventId, JSON.stringify({ namespace: EFFECTS_NAMESPACE, version: 2 }));
+        } catch {
+            // Dorios' Insight is optional; discovery must not interrupt startup.
+        }
+    }
+}
+
+function warnPlayerIfMissing(player) {
+    if (!startupCheckCompleted || isInsightEffectsAvailable() || !player?.id || warnedPlayers.has(player.id)) return;
+    try {
+        player.sendMessage({ translate: MISSING_INSIGHT_WARNING });
+        warnedPlayers.add(player.id);
+    } catch {
+        // A player may leave before the deferred startup notification.
+    }
+}
+
+function checkOptionalInsightDependency() {
+    if (startupCheckStarted) return;
+    startupCheckStarted = true;
+    discoverInsightEffects();
+    for (let delay = EFFECT_STATE_VALUES.insightDiscoveryRetryTicks;
+        delay < EFFECT_STATE_VALUES.insightStartupGraceTicks;
+        delay += EFFECT_STATE_VALUES.insightDiscoveryRetryTicks) {
+        system.runTimeout(() => {
+            if (!isInsightEffectsAvailable()) discoverInsightEffects();
+        }, delay);
+    }
+    system.runTimeout(() => {
+        startupCheckCompleted = true;
+        if (isInsightEffectsAvailable()) return;
+        console.warn("[Ascendant Technology] Optional dependency Dorios' Insight was not detected. Custom StatsCore effects remain active, but their HUD icons, levels, timers and charges require Dorios' Insight.");
+        for (const player of world.getAllPlayers()) warnPlayerIfMissing(player);
+    }, EFFECT_STATE_VALUES.insightStartupGraceTicks);
 }
 
 /**
@@ -63,26 +113,22 @@ export function initializeStatsCoreEffectsBridge() {
 
     system.afterEvents?.scriptEventReceive?.subscribe?.((event) => {
         if (event.id === EFFECTS_READY_EVENT) {
+            remoteBridgeReady = true;
             modernBridgeReady = true;
             outboundEventId = EFFECTS_SEND_EVENT;
         } else if (event.id === LEGACY_READY_EVENT && !modernBridgeReady) {
+            remoteBridgeReady = true;
             outboundEventId = LEGACY_SEND_EVENT;
         }
     });
 
-    system.run(() => {
-        for (const eventId of [EFFECTS_DISCOVER_EVENT, LEGACY_DISCOVER_EVENT]) {
-            try {
-                system.sendScriptEvent(
-                    eventId,
-                    JSON.stringify({
-                        namespace: EFFECTS_NAMESPACE,
-                        version: 2,
-                    }),
-                );
-            } catch {
-                // Dorios' Insight is optional.
-            }
-        }
+    // Subscribe during early execution; perform the dependency check only after world load.
+    world.afterEvents.worldLoad.subscribe(() => {
+        system.run(checkOptionalInsightDependency);
     });
+    world.afterEvents.playerSpawn.subscribe(({ initialSpawn, player }) => {
+        if (!initialSpawn) return;
+        system.runTimeout(() => warnPlayerIfMissing(player), EFFECT_STATE_VALUES.insightStartupGraceTicks);
+    });
+    system.run(discoverInsightEffects);
 }

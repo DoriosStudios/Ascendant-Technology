@@ -209,14 +209,14 @@
                 }
             },
             {
-                "extended_side_panel@ascendant_common.info_panel": {
+                "extended_side_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$has_text": false,
                     "$text_borders": [88, 164],
                     "$bg_size": [104, 182],
                     "$info_size": [96, 174],
-                    "offset": [-103, -4],
+                    "offset": [-105, -7],
                     "layer": 0
                 }
             },
@@ -239,14 +239,25 @@
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [88, 164],
+                    "size": [
+                        88,
+                        164
+                    ],
                     "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-91, 8]
+                    "offset": [
+                        -91,
+                        5
+                    ],
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ]
                 }
             },
             {
@@ -399,7 +410,7 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
                     "offset": [22, -8],
                     "$io_items_modes_description": "ui.utilitycraft:io.dual_siever.items",
                     "$io_gases_modes_description": "ui.utilitycraft:io.dual_siever.gases",
@@ -429,9 +440,20 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "offset": [22, -8],
-                    "$info_description": "ui.utilitycraft:info.dual_siever"
+                "info_tab@at_common.machine_info_tab": {
+                    "offset": [
+                        22,
+                        -8
+                    ],
+                    "$info_description": "ui.utilitycraft:info.dual_siever",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        -2.0,
+                        7
+                    ]
                 }
             }
         ]

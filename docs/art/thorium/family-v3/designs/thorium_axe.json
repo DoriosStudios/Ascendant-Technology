@@ -1,0 +1,394 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Machado de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/iron_axe.png",
+      "sha256": "b3216fa9ecf53eb4e158ee9a288acd7eb885b4b9184b9c66b18201ea6509c4ab",
+      "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "inherit",
+    "allow_clip": false
+  },
+  "palette": {
+    "c_24_24_24": [
+      24,
+      24,
+      24
+    ],
+    "c_40_30_11": [
+      40,
+      30,
+      11
+    ],
+    "c_68_68_68": [
+      68,
+      68,
+      68
+    ],
+    "c_73_54_21": [
+      73,
+      54,
+      21
+    ],
+    "c_80_39_64": [
+      80,
+      39,
+      64
+    ],
+    "c_104_78_30": [
+      104,
+      78,
+      30
+    ],
+    "c_135_55_93": [
+      135,
+      55,
+      93
+    ],
+    "c_137_103_39": [
+      137,
+      103,
+      39
+    ],
+    "c_150_150_150": [
+      150,
+      150,
+      150
+    ],
+    "c_193_193_193": [
+      193,
+      193,
+      193
+    ],
+    "c_197_80_136": [
+      197,
+      80,
+      136
+    ],
+    "c_216_216_216": [
+      216,
+      216,
+      216
+    ],
+    "c_231_113_172": [
+      231,
+      113,
+      172
+    ],
+    "c_235_176_206": [
+      235,
+      176,
+      206
+    ],
+    "c_235_212_224": [
+      235,
+      212,
+      224
+    ],
+    "c_235_231_233": [
+      235,
+      231,
+      233
+    ],
+    "c_255_255_255": [
+      255,
+      255,
+      255
+    ]
+  },
+  "source": {
+    "path": "../references/iron_axe.png",
+    "sha256": "b3216fa9ecf53eb4e158ee9a288acd7eb885b4b9184b9c66b18201ea6509c4ab",
+    "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged."
+  },
+  "layers": [
+    {
+      "name": "palette-transfer-only",
+      "purpose": "Exact iron geometry, metal tone replacement only; wooden handles, black contours and transparency unchanged.",
+      "commands": [
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              7
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              2
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              5
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              2
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              3
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              6
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              5
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              3
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              4
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              12,
+              6
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              2
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              1
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              5
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              2
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              4
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              7
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              5
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              4
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              3
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              4
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              3
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              4
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              3
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              1
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              6
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              5
+            ]
+          ],
+          "color": "c_235_231_233"
+        }
+      ]
+    }
+  ]
+}

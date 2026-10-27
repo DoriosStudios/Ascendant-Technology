@@ -1,3 +1,4 @@
+import { isEligibleAggressor } from "../shared/aggressors.js";
 import { ATTRIBUTE_DEFAULTS } from "../config/values.js";
 import { system, world } from "@minecraft/server";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
@@ -243,7 +244,7 @@ function handleBlessingGate(event) {
             }
         }
 
-        if (isProcDamageTarget(target)) return;
+        if (!isEligibleAggressor(attacker) || isProcDamageTarget(target)) return;
 
         const context = getEquipmentStatsContext(attacker, STATSCORE.slots.mainhand);
         if (!context) return;
@@ -288,7 +289,7 @@ function handleCombatHurt(event) {
         if (!target || isProcDamageTarget(target)) return;
 
         const attacker = getEntityHurtAttacker(event);
-        if (!attacker || target.id === attacker.id) return;
+        if (!isEligibleAggressor(attacker) || target.id === attacker.id) return;
 
         const context = getEquipmentStatsContext(attacker, STATSCORE.slots.mainhand);
         if (!context) return;
@@ -363,8 +364,8 @@ function handleCombatHurt(event) {
 
 function handleEntityDie(event) {
     try {
-        const attacker = event?.damageSource?.damagingEntity ?? event?.damagingEntity;
-        if (!attacker) return;
+        const attacker = getEntityHurtAttacker(event);
+        if (!isEligibleAggressor(attacker)) return;
 
         const context = getEquipmentStatsContext(attacker, STATSCORE.slots.mainhand);
         if (!context) return;

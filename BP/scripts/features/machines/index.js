@@ -29,3 +29,4 @@ import "./seismicBreaker.js";
 import "./abyssalFisher.js";
 import "./laserBarrier.js";
 import "./refiningTable.js";
+import "./alchemicalStation.js";

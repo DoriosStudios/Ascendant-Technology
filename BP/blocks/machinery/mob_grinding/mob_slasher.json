@@ -1,0 +1,73 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "utilitycraft:mob_slasher",
+            "menu_category": {
+                "category": "construction",
+                "group": "at:itemGroup.name.superior_machines"
+            },
+            "states": {
+                "utilitycraft:isOn": [
+                    false,
+                    true
+                ]
+            }
+        },
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.utilitycraft_mob_slasher"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "utilitycraft_mob_slasher",
+                    "render_method": "alpha_test"
+                }
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1.5
+            },
+            "tag:minecraft:is_pickaxe_item_destructible": {},
+            "minecraft:collision_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    4,
+                    16
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    4,
+                    16
+                ]
+            },
+            "minecraft:tick": {
+                "interval_range": [
+                    5,
+                    5
+                ]
+            },
+            "tag:dorios:upgradeable": {},
+            "minecraft:transformation": {
+                "scale": [
+                    1.5,
+                    1.5,
+                    1.5
+                ],
+                "translation": [0, 0.25, 0]
+            },
+            "utilitycraft:mob_slasher": {}
+        }
+    }
+}

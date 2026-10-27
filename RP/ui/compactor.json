@@ -10,58 +10,63 @@
         "$item_collection_name": "container_items",
         "controls": [
             {
-                "machine_name@uc.machine_name": {
-                    "offset": [0, -2]
+                "machine_name@at_core.machine_name": {
+                    "offset": [10, -2]
                 }
             },
             {
-                "energy_bar@uc.energy_bar": {
+                "energy_bar@at_common.energy_display": {
                     "$collection_index": 0,
                     "offset": [97, 64],
-                    "$bar_bg_texture": "textures/ui/toggle_button/right_bg"
+                    "$background_texture": "textures/ui/toggle_button/right_bg"
                 }
             },
             {
-                "side_panel@ascendant_common.info_panel": {
+                "side_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$has_text": false,
                     "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
                     "$info_size": [96, 158],
-                    "offset": [-100, -7]
+                    "offset": [-101, -7]
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "layer": 3,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "size": [88, 148],
                     "$text_scale": 0.55,
-                    "offset": [-88, 2]
+                    "offset": [
+                        -93,
+                        1
+                    ],
+                    "$text_color": [0, 1, 0]
                 }
             },
             {
-                "input_grid@uc.slot_grid_3x3": {
+                "input_grid@at_common.grid_3x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [-35, 11],
-                    "$slot_outline_texture": "textures/ui/slots/input_1_slot",
-                    "$collection_index_1": 3,
-                    "$collection_index_2": 4,
-                    "$collection_index_3": 5,
-                    "$collection_index_4": 6,
-                    "$collection_index_5": 7,
-                    "$collection_index_6": 8,
-                    "$collection_index_7": 9,
-                    "$collection_index_8": 10,
-                    "$collection_index_9": 11
+                    "$slot_control": "at_common.input_slot",
+                    "$outline_texture": "textures/ui/slots/input_1_slot",
+                    "$slot_index_0": 3,
+                    "$slot_index_1": 4,
+                    "$slot_index_2": 5,
+                    "$slot_index_3": 6,
+                    "$slot_index_4": 7,
+                    "$slot_index_5": 8,
+                    "$slot_index_6": 9,
+                    "$slot_index_7": 10,
+                    "$slot_index_8": 11
                 }
             },
             {
-                "process_progress@uc.progress_display": {
+                "process_progress@at_common.progress_arrow": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [9, 22],
@@ -69,20 +74,21 @@
                 }
             },
             {
-                "output_grid@uc.slot_grid_3x3": {
+                "output_grid@at_common.grid_3x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [53, 11],
-                    "$slot_outline_texture": "textures/ui/slots/output_1_slot",
-                    "$collection_index_1": 16,
-                    "$collection_index_2": 17,
-                    "$collection_index_3": 18,
-                    "$collection_index_4": 19,
-                    "$collection_index_5": 20,
-                    "$collection_index_6": 21,
-                    "$collection_index_7": 22,
-                    "$collection_index_8": 23,
-                    "$collection_index_9": 24
+                    "$slot_control": "at_common.output_slot",
+                    "$outline_texture": "textures/ui/slots/output_1_slot",
+                    "$slot_index_0": 16,
+                    "$slot_index_1": 17,
+                    "$slot_index_2": 18,
+                    "$slot_index_3": 19,
+                    "$slot_index_4": 20,
+                    "$slot_index_5": 21,
+                    "$slot_index_6": 22,
+                    "$slot_index_7": 23,
+                    "$slot_index_8": 24
                 }
             },
             {
@@ -102,7 +108,7 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
                     "$io_items_modes_description": "ui.utilitycraft:io.compactor.items",
                     "$has_item_io": true,
                     "$has_fluid_io": false,
@@ -123,8 +129,16 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "$info_description": "ui.utilitycraft:info.compactor"
+                "info_tab@at_common.machine_info_tab": {
+                    "$info_description": "ui.utilitycraft:info.compactor",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        10.0,
+                        7
+                    ]
                 }
             }
         ]

@@ -1,0 +1,22 @@
+{
+    "root": "..",
+    "namespace": "utilitycraft",
+    "terrainFile": "RP/textures/terrain_texture.json",
+    "faceSize": 16,
+    "atlasSize": [64, 64],
+    "fallbackFace": "north",
+    "faceOrigins": {
+        "west": [0, 16], "north": [16, 16], "east": [32, 16],
+        "south": [48, 16], "up": [16, 0], "down": [32, 0]
+    },
+    "blocks": [{
+        "name": "alchemical_station",
+        "blockFile": "BP/blocks/machinery/machines/alchemical_station.json",
+        "identifier": "utilitycraft:alchemical_station",
+        "geometry": "minecraft:geometry.full_block",
+        "outputDir": "machines",
+        "states": {
+            "off": {"atlas": "RP/textures/blocks/alchemy_table.png", "target": "base"}
+        }
+    }]
+}

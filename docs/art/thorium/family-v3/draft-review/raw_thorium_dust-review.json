@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\draft\\raw_thorium_dust.png",
+  "pixel_sha256": "655ef039fc2e1402120ccda619581d713f0dd8f5dbd74fbd4b9f09a984295940",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 7,
+      "allowed": [
+        [
+          58,
+          44,
+          55
+        ],
+        [
+          87,
+          84,
+          91
+        ],
+        [
+          167,
+          67,
+          114
+        ],
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          235,
+          132,
+          184
+        ],
+        [
+          235,
+          154,
+          195
+        ],
+        [
+          235,
+          212,
+          224
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 0,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 167,
+      "partial": 0,
+      "opaque": 89
+    },
+    "palette": {
+      "unique_visible_rgb": 7,
+      "unique_rgba": 8,
+      "frequencies": [
+        {
+          "rgb": [
+            58,
+            44,
+            55
+          ],
+          "hex": "#3A2C37",
+          "count": 34
+        },
+        {
+          "rgb": [
+            87,
+            84,
+            91
+          ],
+          "hex": "#57545B",
+          "count": 22
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 17
+        },
+        {
+          "rgb": [
+            235,
+            132,
+            184
+          ],
+          "hex": "#EB84B8",
+          "count": 9
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "hex": "#A74372",
+          "count": 3
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "hex": "#EB9AC3",
+          "count": 3
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "hex": "#EBD4E0",
+          "count": 1
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 89,
+      "bbox": [
+        2,
+        3,
+        15,
+        15
+      ],
+      "components_4_connected": 1,
+      "component_sizes": [
+        89
+      ]
+    },
+    "clusters": {
+      "color_components": 22,
+      "singletons": 10
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            58,
+            44,
+            55
+          ],
+          "pixels": 34,
+          "oklab": [
+            0.3132951637855895,
+            0.02475298566202988,
+            -0.012167274078498158
+          ]
+        },
+        {
+          "rgb": [
+            87,
+            84,
+            91
+          ],
+          "pixels": 22,
+          "oklab": [
+            0.4511768872768887,
+            0.006826999455733257,
+            -0.009682013209868057
+          ]
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "pixels": 3,
+          "oklab": [
+            0.5307585390052371,
+            0.1400036965451507,
+            -0.01550403452013649
+          ]
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 17,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            132,
+            184
+          ],
+          "pixels": 9,
+          "oklab": [
+            0.74004976736045,
+            0.13701513369502488,
+            -0.025542847007643754
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "pixels": 3,
+          "oklab": [
+            0.778763878657962,
+            0.10673590363744428,
+            -0.022298036426314338
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "pixels": 1,
+          "oklab": [
+            0.892250348674154,
+            0.028905036804675155,
+            -0.00781983727596347
+          ]
+        }
+      ],
+      "lightness_range": 0.5789551848885645,
+      "tonal_coverage": {
+        "shadow": 0.6292134831460674,
+        "mid": 0.3258426966292135,
+        "highlight": 0.0449438202247191
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ],
+    "requested_identity": "Pó de Tório bruto"
+  },
+  "file_sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+  "design": {
+    "intent": {
+      "identity": "Pó de Tório bruto",
+      "usage": "AT inventory texture or block texture; selective correction of requested assets",
+      "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+      "orientation": "exact native reference pose and footprint",
+      "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+      "structure": [
+        "Keep this unlisted image byte-identical, including the creator-approved metal block."
+      ],
+      "style": [
+        "small reference-guided edits",
+        "no tool redesign",
+        "no resizing or antialiasing"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/unchanged_raw_thorium_dust.png",
+        "sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+        "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+        "approval": "creator-requested source family; derivative still pending visual approval"
+      },
+      {
+        "path": "../references/unchanged_raw_thorium_dust.png",
+        "sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+        "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+        "approval": "not independently verified"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": null,
+      "primitives": [],
+      "outside_primitives": [],
+      "reference_bounds": [
+        2,
+        3,
+        15,
+        15
+      ]
+    },
+    "composition": {
+      "raster_bounds": [
+        2,
+        3,
+        15,
+        15
+      ],
+      "minimum_margin": 1,
+      "edge_counts": {
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "bottom": 0
+      },
+      "findings": []
+    },
+    "region_bounds": {}
+  }
+}

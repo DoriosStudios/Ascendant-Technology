@@ -8,6 +8,18 @@ import * as DoriosLib from "DoriosLib/index.js";
  * crafting-table recipes intended for automation.
  */
 export const crafterRecipeAdditions = {
+    "refined_aetherium_shard,air,air,air,air,air,air,air,air": {
+        output: "utilitycraft:refined_aetherium_crystal",
+        amount: 1,
+    },
+    "copper_ingot,copper_ingot,copper_ingot,redstone,crafting_table,redstone,air,air,air": {
+        output: "utilitycraft:conveyor_table",
+        amount: 1,
+    },
+    "air,titanium,air,diamond_sword,mob_grinder,diamond_sword,reinforced_machine_case,reinforced_machine_case,reinforced_machine_case": {
+        output: "utilitycraft:mob_slasher",
+        amount: 1,
+    },
     "titanium_dust,tungsten_dust,air,air,air,air,air,air,air": {
         output: "utilitycraft:tingstanium_dust",
         amount: 2,
@@ -161,7 +173,7 @@ export const crafterRecipeAdditions = {
             amount: 1,
         },
     // BP/recipes/blocks/machinery/machines/cryo_chamber.json
-    "titanium_plate,expert_fluid_tank,titanium_plate,absolute_chip,packed_ice,absolute_chip,titanium_block,superior_machine_case,titanium_block":
+    "titanium_plate,expert_fluid_tank,titanium_plate,ultimate_chip,packed_ice,ultimate_chip,titanium_block,superior_machine_case,titanium_block":
         {
             output: "utilitycraft:cryo_chamber",
             amount: 1,

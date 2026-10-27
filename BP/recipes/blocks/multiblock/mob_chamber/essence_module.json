@@ -1,0 +1,39 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:essence_module"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "TET",
+            "ECE",
+            "TDT"
+        ],
+        "key": {
+            "T": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "E": {
+                "item": "utilitycraft:essence_vessel"
+            },
+            "C": {
+                "item": "utilitycraft:titanium_case"
+            },
+            "D": {
+                "item": "utilitycraft:refined_aetherium_crystal"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:essence_module",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:titanium_case"
+            }
+        ]
+    }
+}

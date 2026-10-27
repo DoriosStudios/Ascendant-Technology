@@ -38,7 +38,7 @@
                     "anchor_to": "top_left",
                     "size": [92, 46],
                     "$text_scale": 0.55,
-                    "offset": [14, 12]
+                    "offset": [14, 16]
                 }
             },
             {
@@ -57,8 +57,16 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "$info_description": "ui.utilitycraft:info.laser_barrier"
+                "info_tab@at_common.machine_info_tab": {
+                    "$info_description": "ui.utilitycraft:info.laser_barrier",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        10.0,
+                        7
+                    ]
                 }
             }
         ]

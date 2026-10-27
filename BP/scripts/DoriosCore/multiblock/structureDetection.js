@@ -20,6 +20,7 @@ export class StructureDetector {
    * @returns {Promise<false | {
    *   bounds: { min: Vector3, max: Vector3 },
    *   components: Record<string, number>,
+   *   componentsById: Record<string, number>,
    *   inputBlocks: string[],
    *   caseBlocks?: Vector3[],
    *   ventBlocks: Vector3[],
@@ -46,12 +47,13 @@ export class StructureDetector {
       return false;
     }
 
-    const { components, inputBlocks, caseBlocks, ventBlocks } = data;
+    const { components, componentsById, inputBlocks, caseBlocks, ventBlocks } = data;
     await StructureDetector.showFormationEffect(bounds, dim);
 
     return {
       bounds,
       components,
+      componentsById,
       inputBlocks,
       caseBlocks,
       ventBlocks,
@@ -204,6 +206,7 @@ export class StructureDetector {
    * @param {string} caseTag Block tag that identifies valid casing blocks.
    * @returns {Promise<{
    *   components: Record<string, number>,
+   *   componentsById: Record<string, number>,
    *   inputBlocks: string[],
    *   ventBlocks: Vector3[],
    * } | string>}
@@ -211,6 +214,7 @@ export class StructureDetector {
    */
   static async scanStructure(min, max, dim, controller, caseTag) {
     const components = {};
+    const componentsById = {};
     const inputBlocks = [];
     const ventBlocks = [];
 
@@ -249,8 +253,14 @@ export class StructureDetector {
           }
 
           if (block?.hasTag(Constants.MULTIBLOCK_COMPONENT_TAG)) {
-            const id = block.typeId.split(":")[1];
-            components[id] = (components[id] ?? 0) + 1;
+            const id = block.typeId;
+            componentsById[id] = (componentsById[id] ?? 0) + 1;
+            // Legacy machine formulas only know UtilityCraft's local component names.
+            // Other namespaces must be mapped explicitly by the owning machine.
+            if (id.startsWith("utilitycraft:")) {
+              const localId = id.slice("utilitycraft:".length);
+              components[localId] = (components[localId] ?? 0) + 1;
+            }
             continue;
           }
 
@@ -260,6 +270,6 @@ export class StructureDetector {
       }
     }
 
-    return { components, inputBlocks, ventBlocks };
+    return { components, componentsById, inputBlocks, ventBlocks };
   }
 }

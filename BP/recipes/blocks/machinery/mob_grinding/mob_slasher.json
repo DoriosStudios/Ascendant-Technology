@@ -1,0 +1,38 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:mob_slasher"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            " I ",
+            "SGS",
+            "CCC"
+        ],
+        "key": {
+            "I": {
+                "item": "utilitycraft:titanium"
+            },
+            "S": {
+                "item": "minecraft:diamond_sword"
+            },
+            "G": {
+                "item": "utilitycraft:mob_grinder"
+            },
+            "C": {
+                "item": "utilitycraft:reinforced_machine_case"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:mob_slasher"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:mob_grinder"
+            }
+        ]
+    }
+}

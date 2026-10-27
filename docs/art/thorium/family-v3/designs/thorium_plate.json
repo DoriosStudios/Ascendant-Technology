@@ -1,0 +1,274 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "rectangular Thorium metal sheet",
+    "usage": "AT inventory plate icon",
+    "material": "muted pink Thorium sheet",
+    "orientation": "front-facing rectangular sheet with one-pixel thickness",
+    "lighting": "upper-left, clear edge plane and restrained surface light",
+    "structure": [
+      "rectangular face",
+      "small clipped corners",
+      "thin lower thickness"
+    ],
+    "style": [
+      "recognizable flat rectangle",
+      "native pixels",
+      "no blade-like silhouette"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/iron_ingot.png",
+      "purpose": "rectangular metal stock, plate deliberately flatter"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m0": [
+      80,
+      39,
+      64
+    ],
+    "m1": [
+      106,
+      46,
+      77
+    ],
+    "m2": [
+      135,
+      55,
+      93
+    ],
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m6": [
+      231,
+      113,
+      172
+    ],
+    "m7": [
+      235,
+      132,
+      184
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m9": [
+      235,
+      176,
+      206
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "m11": [
+      235,
+      212,
+      224
+    ],
+    "m12": [
+      235,
+      224,
+      229
+    ],
+    "m13": [
+      235,
+      231,
+      233
+    ]
+  },
+  "base_color": "m1",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          3,
+          4
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          13,
+          5
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          2,
+          10
+        ],
+        [
+          2,
+          5
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "sheet-face",
+      "purpose": "broad rectangular sheet with a one-pixel lower edge",
+      "commands": [
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              3,
+              5
+            ],
+            [
+              12,
+              9
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              3,
+              5
+            ],
+            [
+              11,
+              5
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              3,
+              8
+            ]
+          ],
+          "color": "m9"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              4
+            ],
+            [
+              11,
+              4
+            ]
+          ],
+          "color": "m11"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              2,
+              5
+            ],
+            [
+              2,
+              9
+            ]
+          ],
+          "color": "m10"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              10
+            ],
+            [
+              12,
+              10
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              13,
+              5
+            ],
+            [
+              13,
+              9
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              5,
+              7
+            ],
+            [
+              8,
+              7
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              9,
+              8
+            ],
+            [
+              11,
+              8
+            ]
+          ],
+          "color": "m6"
+        }
+      ]
+    }
+  ]
+}

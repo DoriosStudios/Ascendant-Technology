@@ -1,0 +1,20 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:conveyor_table"
+        },
+        "tags": ["crafting_table"],
+        "pattern": ["CCC", "RTR"],
+        "key": {
+            "C": { "item": "minecraft:copper_ingot" },
+            "R": { "item": "minecraft:redstone" },
+            "T": { "item": "minecraft:crafting_table" }
+        },
+        "result": {
+            "item": "utilitycraft:conveyor_table",
+            "count": 1
+        },
+        "unlock": [{ "item": "minecraft:copper_ingot" }]
+    }
+}

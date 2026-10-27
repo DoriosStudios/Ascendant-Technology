@@ -16,31 +16,31 @@
     "$item_collection_name": "container_items",
     "controls": [
       {
-        "bg@ascendant_common.panel": {
-          "$panel_color": "dark",
-          "$panel_size": [
-            260,
-            180
-          ],
-          "offset": [
-            0,
-            30
-          ],
-          "alpha": 0.96
+        "bg@at_common.panel": {
+            "$panel_size": [
+                260,
+                180
+            ],
+            "offset": [
+                0,
+                30
+            ],
+            "alpha": 0.96,
+            "$panel_texture": "textures/ui/panels/background_panel_dark"
         }
       },
       {
-        "header_bg@ascendant_common.panel": {
-          "$panel_color": "light_blue",
-          "$panel_size": [
-            240,
-            22
-          ],
-          "offset": [
-            0,
-            -54
-          ],
-          "alpha": 0.95
+        "header_bg@at_common.panel": {
+            "$panel_size": [
+                240,
+                22
+            ],
+            "offset": [
+                0,
+                -54
+            ],
+            "alpha": 0.95,
+            "$panel_texture": "textures/ui/panels/background_panel_light_blue"
         }
       },
       {
@@ -77,25 +77,25 @@
         }
       },
       {
-        "energy@ascendant_common.energy_display": {
-          "$energy_slot_index": 0,
-          "anchor_from": "center",
-          "anchor_to": "center",
-          "offset": [
-            -96,
-            10
-          ]
+        "energy@at_common.energy_display": {
+            "anchor_from": "center",
+            "anchor_to": "center",
+            "offset": [
+                -197,
+                -3
+            ],
+            "$collection_index": 0
         }
       },
       {
-        "fluid@ascendant_common.liquid_display": {
-          "$fluid_slot_index": 4,
-          "anchor_from": "center",
-          "anchor_to": "center",
-          "offset": [
-            96,
-            10
-          ]
+        "fluid@at_common.liquid_display": {
+            "anchor_from": "center",
+            "anchor_to": "center",
+            "offset": [
+                96,
+                10
+            ],
+            "$collection_index": 4
         }
       },
       {
@@ -113,7 +113,7 @@
         }
       },
       {
-        "modifier_slot@ascendant_common.slot_base": {
+        "modifier_slot@at_core.slot": {
           "$slot_index": 5,
           "$slot_color": "light_blue",
           "anchor_from": "top_middle",

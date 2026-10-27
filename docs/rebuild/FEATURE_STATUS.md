@@ -1,5 +1,10 @@
 # Ascendant Technology feature inventory and status
 
+> **Historical rebuild snapshot, not the current release status.** Several rows and
+> the summary below predate restored machine registration and are no longer current.
+> See [the 0.9.2 readiness report](../release/0.9.2-readiness.md) for the verified
+> source state, remaining work, and validation boundaries as of 2026-10-01.
+
 Last updated: 2026-09-07
 
 This document is the AT rebuild tracker. The inventory was obtained from the active

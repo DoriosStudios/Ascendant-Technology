@@ -1,0 +1,37 @@
+{
+	"format_version": "1.26.30",
+	"minecraft:block": {
+		"description": {
+			"identifier": "utilitycraft:conveyor_table",
+			"menu_category": {
+				"category": "construction"
+			}
+		},
+		"components": {
+			"minecraft:crafting_table": {
+				"table_name": "tile.utilitycraft:conveyor_table.name",
+				"crafting_tags": [
+					"utilitycraft_conveyor_table"
+				]
+			},
+			"minecraft:geometry": "minecraft:geometry.full_block",
+			"minecraft:material_instances": {
+				"up": {
+					"texture": "utilitycraft_ctup",
+					"render_method": "opaque"
+				},
+                "north": {
+                    "texture": "utilitycraft_ctside",
+                    "render_method": "opaque"
+                },
+                "south": "north",
+                "east": "north",
+                "west": "north",
+                "down": {
+                    "texture": "utilitycraft_ctbottom",
+                    "render_method": "opaque"
+                }
+			}
+		}
+	}
+}

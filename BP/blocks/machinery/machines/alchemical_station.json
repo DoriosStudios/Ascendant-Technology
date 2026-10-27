@@ -1,0 +1,158 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:block": {
+        "description": {
+            "identifier": "utilitycraft:alchemical_station",
+            "menu_category": {
+                "category": "construction"
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180
+                }
+            },
+            "states": {
+                "utilitycraft:on": [
+                    false,
+                    true
+                ]
+            }
+        },
+        "components": {
+            "utilitycraft:fluid_container": {},
+            "utilitycraft:alchemical_station": {
+                "entity": {
+                    "type": "fluid_machine",
+                    "inventory_size": 34,
+                    "fixed_fluid_types": true
+                },
+                "machine": {
+                    "energy_cap": 2048000,
+                    "energy_cost": 12000,
+                    "rate_speed_base": 30,
+                    "fluid_cap": 128000,
+                    "fluid_types": 2,
+                    "upgrades": [
+                        18,
+                        19
+                    ]
+                }
+            },
+            "utilitycraft:machine_upgrades": [
+                {
+                    "type": "speed",
+                    "slot": 18
+                },
+                {
+                    "type": "energy",
+                    "slot": 19
+                }
+            ],
+            "minecraft:geometry": "minecraft:geometry.full_block",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "utilitycraft_alchemical_station_off_north",
+                    "render_method": "alpha_test"
+                },
+                "west": {
+                    "texture": "utilitycraft_alchemical_station_off_west",
+                    "render_method": "alpha_test"
+                },
+                "north": {
+                    "texture": "utilitycraft_alchemical_station_off_north",
+                    "render_method": "alpha_test"
+                },
+                "east": {
+                    "texture": "utilitycraft_alchemical_station_off_east",
+                    "render_method": "alpha_test"
+                },
+                "south": {
+                    "texture": "utilitycraft_alchemical_station_off_south",
+                    "render_method": "alpha_test"
+                },
+                "up": {
+                    "texture": "utilitycraft_alchemical_station_off_up",
+                    "render_method": "alpha_test"
+                },
+                "down": {
+                    "texture": "utilitycraft_alchemical_station_off_down",
+                    "render_method": "alpha_test"
+                }
+            },
+            "minecraft:tick": {
+                "interval_range": [
+                    4,
+                    4
+                ]
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1.5
+            },
+            "minecraft:destructible_by_explosion": false,
+            "tag:dorios:machine": {},
+            "tag:dorios:energy": {},
+            "tag:dorios:fluid": {},
+            "tag:dorios:item": {},
+            "tag:minecraft:is_pickaxe_item_destructible": {}
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('utilitycraft:on') == 1",
+                "components": {
+                    "minecraft:light_emission": 4
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

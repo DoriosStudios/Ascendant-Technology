@@ -1,10 +1,12 @@
+import { isEligibleAggressor } from "../shared/aggressors.js";
 import { ButtonState, EntityTypes, InputButton, system, world } from "@minecraft/server";
 import { STATSCORE } from "../constants.js";
 import { applyStatsProcDamage, isProcDamageTarget } from "../combat/effects.js";
-import { showAbilityFeedback, showHealingFeedback } from "../feedback/index.js";
+import { playActivationSound, showAbilityFeedback, showHealingFeedback } from "../feedback/index.js";
 import { STATSCORE_ICONS } from "../icons.js";
 import { getEquipmentStatsContext, getHeldStatsContext } from "../shared/context.js";
 import { getEntityHurtAttacker, getEntityHurtTarget, getEventDamageType, isStatsCoreOverrideDamage } from "../shared/damage.js";
+import { applyStatsCorePotionDefense, applyStatsCorePotionOffense, collectStatsCorePotionSoul } from "../effects/potions.js";
 import { findEffectByKind } from "../shared/effectSelectors.js";
 import { applyEffectById } from "../shared/effects.js";
 import { OFFENSIVE_ENTITY_CATEGORIES, effectAppliesToEntity } from "../shared/entityCategories.js";
@@ -382,7 +384,7 @@ function spawnSoulCollectorBurst(target, attacker) {
     }
 
     try {
-        entity.dimension.playSound?.("ascendant.statscore.soul_explosion", location, { volume: 0.85, pitch: 1 });
+        playActivationSound(attacker, "ascendant.statscore.soul_explosion", { volume: 0.85, pitch: 1 });
     } catch { }
 
     return spawned;
@@ -417,9 +419,13 @@ function handleEntityHurtBefore(event) {
         applyAdaptiveResilience(event, target, entries);
     }
 
+    applyStatsCorePotionDefense(event, target, getEventDamageType(event));
+
     if (isProcDamageTarget(target)) return;
     const attacker = getEntityHurtAttacker(event);
-    if (!attacker || attacker.id === target.id) return;
+    if (!isEligibleAggressor(attacker) || attacker.id === target.id) return;
+
+    applyStatsCorePotionOffense(event, attacker, target);
 
     applyProjectileAttributes(event, attacker, target);
     const context = getHeldStatsContext(attacker);
@@ -577,7 +583,7 @@ function handleItemStopUse(event) {
 
 function applyOverchargeBurst(event, centerTarget = null) {
     const attacker = event?.source;
-    if (!attacker || attacker.typeId !== "minecraft:player") return;
+    if (!isEligibleAggressor(attacker)) return;
 
     const projectile = event?.projectile ?? event?.damageSource?.damagingProjectile;
     const shot = projectile
@@ -627,10 +633,10 @@ function handleProjectileHitBlock(event) {
 
 function handleEntityDie(event) {
     const projectile = event?.damageSource?.damagingProjectile;
-    const attacker = event?.damageSource?.damagingEntity
-        ?? event?.damagingEntity
-        ?? getProjectileOwner(projectile);
-    if (!attacker || attacker.typeId !== "minecraft:player") return;
+    const attacker = getEntityHurtAttacker(event);
+    if (!isEligibleAggressor(attacker)) return;
+
+    collectStatsCorePotionSoul(attacker);
 
     const shot = projectile
         ? projectileProfiles.get(entityKey(projectile)) ?? getRecentShot(attacker)
@@ -717,7 +723,7 @@ function applyEntityTroubleLoot(event, attacker, context, attributes) {
     }
 
     try {
-        dimension.playSound?.("random.levelup", location, {
+        playActivationSound(attacker, "random.levelup", {
             pitch: tripleTriggered ? 0.55 : 1,
             volume: 0.7,
         });

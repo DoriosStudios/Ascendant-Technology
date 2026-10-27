@@ -1,0 +1,416 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Botas de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "tapered angular greaves with small cuff cuts",
+      "new flat clipped toe plates and separated dark soles"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m6": [
+      231,
+      113,
+      172
+    ],
+    "m7": [
+      235,
+      132,
+      184
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ],
+    "lining": [
+      73,
+      61,
+      72
+    ],
+    "slot": [
+      86,
+      61,
+      77
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          4,
+          3
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          6,
+          12
+        ],
+        [
+          5,
+          13
+        ],
+        [
+          1,
+          13
+        ],
+        [
+          1,
+          11
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          3,
+          5
+        ]
+      ]
+    },
+    {
+      "op": "polygon",
+      "points": [
+        [
+          9,
+          3
+        ],
+        [
+          11,
+          3
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          14,
+          11
+        ],
+        [
+          14,
+          13
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          9,
+          5
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "greaves",
+      "purpose": "tapered angular greaves with small cuff cuts",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              4
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              6,
+              7
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              3,
+              11
+            ],
+            [
+              4,
+              8
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              9,
+              4
+            ],
+            [
+              11,
+              4
+            ],
+            [
+              11,
+              8
+            ],
+            [
+              12,
+              10
+            ],
+            [
+              10,
+              11
+            ],
+            [
+              10,
+              7
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              4,
+              4
+            ],
+            [
+              5,
+              4
+            ],
+            [
+              5,
+              7
+            ]
+          ],
+          "color": "m10",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              10,
+              4
+            ],
+            [
+              10,
+              7
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              4,
+              8
+            ],
+            [
+              5,
+              9
+            ]
+          ],
+          "color": "slot",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              10,
+              8
+            ],
+            [
+              11,
+              9
+            ]
+          ],
+          "color": "slot",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "name": "sabatons",
+      "purpose": "new flat clipped toe plates and separated dark soles",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              3,
+              10
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              5,
+              12
+            ],
+            [
+              2,
+              12
+            ],
+            [
+              2,
+              11
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              10,
+              10
+            ],
+            [
+              12,
+              10
+            ],
+            [
+              13,
+              11
+            ],
+            [
+              13,
+              12
+            ],
+            [
+              10,
+              12
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              2,
+              11
+            ],
+            [
+              4,
+              10
+            ]
+          ],
+          "color": "m10",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              11,
+              10
+            ],
+            [
+              12,
+              11
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              2,
+              13
+            ],
+            [
+              5,
+              13
+            ]
+          ],
+          "color": "lining",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              10,
+              13
+            ],
+            [
+              13,
+              13
+            ]
+          ],
+          "color": "lining",
+          "width": 1
+        }
+      ]
+    }
+  ]
+}

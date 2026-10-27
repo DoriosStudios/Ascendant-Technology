@@ -10,6 +10,7 @@ import { DIRECTIONS, ITEM_CONFIG_VERSION } from "./constants.js";
  * @typedef {object} SimpleItemConfig
  * @property {1} version
  * @property {"simple"} type
+ * @property {{itemIds:string[],slots:number[]}} [inputFilter] Optional automation ceiling.
  * @property {number[]} inputConfig
  * @property {number[]} outputConfig
  */
@@ -18,6 +19,7 @@ import { DIRECTIONS, ITEM_CONFIG_VERSION } from "./constants.js";
  * @typedef {object} ComplexItemConfig
  * @property {1} version
  * @property {"complex"} type
+ * @property {{itemIds:string[],slots:number[]}} [inputFilter] Optional automation ceiling.
  * @property {"explicit"} [networkFaces] Absent preserves legacy network access.
  * @property {number[]} anyInputSlots Explicit fallback used when no input face is known.
  * @property {number[]} anyOutputSlots Explicit fallback used when no output face is known.
@@ -52,6 +54,7 @@ export function normalizeItemConfig(value, containerSize) {
     return {
       version: ITEM_CONFIG_VERSION,
       type: "simple",
+      ...(value.inputFilter === undefined ? {} : { inputFilter: normalizeInputFilter(value.inputFilter, containerSize) }),
       inputConfig: normalizeSlots(value.inputConfig, containerSize, "inputConfig"),
       outputConfig: normalizeSlots(value.outputConfig, containerSize, "outputConfig"),
     };
@@ -66,6 +69,7 @@ export function normalizeItemConfig(value, containerSize) {
     return {
       version: ITEM_CONFIG_VERSION,
       type: "complex",
+      ...(value.inputFilter === undefined ? {} : { inputFilter: normalizeInputFilter(value.inputFilter, containerSize) }),
       ...(value.networkFaces === "explicit" ? { networkFaces: "explicit" } : {}),
       anyInputSlots,
       anyOutputSlots,
@@ -89,6 +93,7 @@ export function cloneItemConfig(config) {
     return {
       version: ITEM_CONFIG_VERSION,
       type: "simple",
+      ...(config.inputFilter ? { inputFilter: cloneInputFilter(config.inputFilter) } : {}),
       inputConfig: [...config.inputConfig],
       outputConfig: [...config.outputConfig],
     };
@@ -97,6 +102,7 @@ export function cloneItemConfig(config) {
   return {
     version: ITEM_CONFIG_VERSION,
     type: "complex",
+    ...(config.inputFilter ? { inputFilter: cloneInputFilter(config.inputFilter) } : {}),
     ...(config.networkFaces === "explicit" ? { networkFaces: "explicit" } : {}),
     anyInputSlots: [...config.anyInputSlots],
     anyOutputSlots: [...config.anyOutputSlots],
@@ -166,4 +172,18 @@ function cloneFaceConfig(config) {
     if (slots) clone[/** @type {ContainerFace} */ (face)] = [...slots];
   }
   return clone;
+}
+
+/** Optional restrictions are applied even to per-port or explicit-slot overrides.
+ * Absent leaves every existing container policy unchanged.
+ */
+function normalizeInputFilter(value, containerSize) {
+  if (!isPlainObject(value) || !Array.isArray(value.itemIds)
+    || !value.itemIds.every(id => typeof id === "string" && /^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(id))) {
+    throw new TypeError("inputFilter.itemIds must contain item identifiers");
+  }
+  return { itemIds: [...new Set(value.itemIds)], slots: normalizeSlots(value.slots, containerSize, "inputFilter.slots") };
+}
+function cloneInputFilter(value) {
+  return { itemIds: [...value.itemIds], slots: [...value.slots] };
 }

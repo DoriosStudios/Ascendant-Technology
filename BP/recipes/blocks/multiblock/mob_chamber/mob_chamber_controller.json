@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:mob_chamber_controller"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "TCT",
+            "DBD",
+            "TRT"
+        ],
+        "key": {
+            "T": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "C": {
+                "item": "utilitycraft:expert_chip"
+            },
+            "D": {
+                "item": "utilitycraft:refined_aetherium_crystal"
+            },
+            "B": {
+                "item": "utilitycraft:titanium_case"
+            },
+            "R": {
+                "item": "utilitycraft:advanced_runic_core"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:mob_chamber_controller",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:titanium_case"
+            }
+        ]
+    }
+}

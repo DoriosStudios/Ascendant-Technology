@@ -1,0 +1,1022 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\final\\thorium_1.png",
+  "pixel_sha256": "4e636053c0e7d32d54afef11090642078cba6f826212c96e5b6138c668f25a0e",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      32,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      32,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 10,
+      "allowed": [
+        [
+          38,
+          99,
+          37
+        ],
+        [
+          43,
+          112,
+          42
+        ],
+        [
+          74,
+          143,
+          40
+        ],
+        [
+          85,
+          171,
+          45
+        ],
+        [
+          167,
+          67,
+          114
+        ],
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          231,
+          113,
+          172
+        ],
+        [
+          235,
+          176,
+          206
+        ],
+        [
+          235,
+          196,
+          217
+        ],
+        [
+          235,
+          212,
+          224
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 2
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 343,
+      "partial": 0,
+      "opaque": 169
+    },
+    "palette": {
+      "unique_visible_rgb": 10,
+      "unique_rgba": 11,
+      "frequencies": [
+        {
+          "rgb": [
+            74,
+            143,
+            40
+          ],
+          "hex": "#4A8F28",
+          "count": 32
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 32
+        },
+        {
+          "rgb": [
+            38,
+            99,
+            37
+          ],
+          "hex": "#266325",
+          "count": 30
+        },
+        {
+          "rgb": [
+            85,
+            171,
+            45
+          ],
+          "hex": "#55AB2D",
+          "count": 16
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "hex": "#A74372",
+          "count": 16
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "hex": "#EBB0CE",
+          "count": 12
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "hex": "#EBD4E0",
+          "count": 10
+        },
+        {
+          "rgb": [
+            43,
+            112,
+            42
+          ],
+          "hex": "#2B702A",
+          "count": 9
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "hex": "#E771AC",
+          "count": 8
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "hex": "#EBC4D9",
+          "count": 4
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 169,
+      "bbox": [
+        2,
+        0,
+        29,
+        16
+      ],
+      "components_4_connected": 3,
+      "component_sizes": [
+        86,
+        82,
+        1
+      ]
+    },
+    "clusters": {
+      "color_components": 119,
+      "singletons": 83
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            38,
+            99,
+            37
+          ],
+          "pixels": 30,
+          "oklab": [
+            0.44460392559960704,
+            -0.0907956981518398,
+            0.06814238810795514
+          ]
+        },
+        {
+          "rgb": [
+            43,
+            112,
+            42
+          ],
+          "pixels": 9,
+          "oklab": [
+            0.48457858540141946,
+            -0.10006016653125593,
+            0.07508090194519934
+          ]
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "pixels": 16,
+          "oklab": [
+            0.5307585390052371,
+            0.1400036965451507,
+            -0.01550403452013649
+          ]
+        },
+        {
+          "rgb": [
+            74,
+            143,
+            40
+          ],
+          "pixels": 32,
+          "oklab": [
+            0.5832156019173041,
+            -0.11238657966004398,
+            0.10385292786886219
+          ]
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 32,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            85,
+            171,
+            45
+          ],
+          "pixels": 16,
+          "oklab": [
+            0.6625763336336187,
+            -0.13297067828109865,
+            0.1208818493170567
+          ]
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "pixels": 8,
+          "oklab": [
+            0.703253560755495,
+            0.1575084120131156,
+            -0.025730453813424092
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "pixels": 12,
+          "oklab": [
+            0.8202004222885522,
+            0.0765292348381662,
+            -0.017616730036504324
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            196,
+            217
+          ],
+          "pixels": 4,
+          "oklab": [
+            0.8599941784213212,
+            0.05006552115085833,
+            -0.013761702133999187
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            212,
+            224
+          ],
+          "pixels": 10,
+          "oklab": [
+            0.892250348674154,
+            0.028905036804675155,
+            -0.00781983727596347
+          ]
+        }
+      ],
+      "lightness_range": 0.44764642307454694,
+      "tonal_coverage": {
+        "shadow": 0.3254437869822485,
+        "mid": 0.5207100591715976,
+        "highlight": 0.15384615384615385
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 83,
+      "coordinates": [
+        [
+          6,
+          1
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          22,
+          1
+        ],
+        [
+          25,
+          1
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          22,
+          2
+        ],
+        [
+          25,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          9,
+          3
+        ],
+        [
+          22,
+          3
+        ],
+        [
+          25,
+          3
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          22,
+          4
+        ],
+        [
+          25,
+          4
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          22,
+          5
+        ],
+        [
+          23,
+          5
+        ],
+        [
+          24,
+          5
+        ],
+        [
+          25,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          11,
+          7
+        ],
+        [
+          22,
+          7
+        ],
+        [
+          25,
+          7
+        ],
+        [
+          26,
+          7
+        ],
+        [
+          3,
+          8
+        ],
+        [
+          4,
+          8
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          8
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          11,
+          8
+        ],
+        [
+          23,
+          8
+        ],
+        [
+          24,
+          8
+        ],
+        [
+          25,
+          8
+        ],
+        [
+          26,
+          8
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          20,
+          9
+        ],
+        [
+          21,
+          9
+        ],
+        [
+          25,
+          9
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          20,
+          10
+        ],
+        [
+          21,
+          10
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          22,
+          11
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          23,
+          12
+        ],
+        [
+          24,
+          12
+        ],
+        [
+          26,
+          12
+        ],
+        [
+          4,
+          14
+        ],
+        [
+          7,
+          14
+        ],
+        [
+          9,
+          14
+        ],
+        [
+          11,
+          14
+        ],
+        [
+          20,
+          14
+        ],
+        [
+          23,
+          14
+        ],
+        [
+          25,
+          14
+        ],
+        [
+          27,
+          14
+        ],
+        [
+          3,
+          15
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          5,
+          15
+        ],
+        [
+          6,
+          15
+        ],
+        [
+          7,
+          15
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          9,
+          15
+        ],
+        [
+          12,
+          15
+        ],
+        [
+          19,
+          15
+        ],
+        [
+          20,
+          15
+        ],
+        [
+          21,
+          15
+        ],
+        [
+          22,
+          15
+        ],
+        [
+          23,
+          15
+        ],
+        [
+          24,
+          15
+        ],
+        [
+          25,
+          15
+        ],
+        [
+          28,
+          15
+        ]
+      ]
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    },
+    {
+      "severity": "INFO",
+      "code": "intentional_edge_contact",
+      "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+      "policy": "inherit",
+      "coordinates": [
+        [
+          7,
+          0
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          23,
+          0
+        ],
+        [
+          24,
+          0
+        ],
+        [
+          3,
+          15
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          5,
+          15
+        ],
+        [
+          6,
+          15
+        ],
+        [
+          7,
+          15
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          9,
+          15
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          11,
+          15
+        ],
+        [
+          12,
+          15
+        ],
+        [
+          19,
+          15
+        ],
+        [
+          20,
+          15
+        ],
+        [
+          21,
+          15
+        ],
+        [
+          22,
+          15
+        ],
+        [
+          23,
+          15
+        ],
+        [
+          24,
+          15
+        ],
+        [
+          25,
+          15
+        ],
+        [
+          26,
+          15
+        ],
+        [
+          27,
+          15
+        ],
+        [
+          28,
+          15
+        ]
+      ]
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ],
+    "requested_identity": "Cultivo de Tório estágio 1"
+  },
+  "file_sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+  "design": {
+    "intent": {
+      "identity": "Cultivo de Tório estágio 1",
+      "usage": "AT inventory texture or block texture; selective correction of requested assets",
+      "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+      "orientation": "exact native reference pose and footprint",
+      "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+      "structure": [
+        "Keep this unlisted image byte-identical, including the creator-approved metal block."
+      ],
+      "style": [
+        "small reference-guided edits",
+        "no tool redesign",
+        "no resizing or antialiasing"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/unchanged_thorium_1.png",
+        "sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+        "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+        "approval": "creator-requested source family; derivative still pending visual approval"
+      },
+      {
+        "path": "../references/unchanged_thorium_1.png",
+        "sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+        "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+        "approval": "not independently verified"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": null,
+      "primitives": [],
+      "outside_primitives": [],
+      "reference_bounds": [
+        2,
+        0,
+        29,
+        16
+      ]
+    },
+    "composition": {
+      "raster_bounds": [
+        2,
+        0,
+        29,
+        16
+      ],
+      "minimum_margin": 0,
+      "edge_counts": {
+        "left": 0,
+        "right": 0,
+        "top": 4,
+        "bottom": 20
+      },
+      "findings": [
+        {
+          "severity": "INFO",
+          "code": "intentional_edge_contact",
+          "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+          "policy": "inherit",
+          "coordinates": [
+            [
+              7,
+              0
+            ],
+            [
+              8,
+              0
+            ],
+            [
+              23,
+              0
+            ],
+            [
+              24,
+              0
+            ],
+            [
+              3,
+              15
+            ],
+            [
+              4,
+              15
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              6,
+              15
+            ],
+            [
+              7,
+              15
+            ],
+            [
+              8,
+              15
+            ],
+            [
+              9,
+              15
+            ],
+            [
+              10,
+              15
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              12,
+              15
+            ],
+            [
+              19,
+              15
+            ],
+            [
+              20,
+              15
+            ],
+            [
+              21,
+              15
+            ],
+            [
+              22,
+              15
+            ],
+            [
+              23,
+              15
+            ],
+            [
+              24,
+              15
+            ],
+            [
+              25,
+              15
+            ],
+            [
+              26,
+              15
+            ],
+            [
+              27,
+              15
+            ],
+            [
+              28,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "region_bounds": {}
+  }
+}

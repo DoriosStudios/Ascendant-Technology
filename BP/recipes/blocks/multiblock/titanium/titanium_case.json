@@ -1,0 +1,35 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:titanium_case"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "key": {
+            "P": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "D": {
+                "item": "utilitycraft:diamond_dust"
+            },
+            "T": {
+                "item": "utilitycraft:tungsten"
+            }
+        },
+        "pattern": [
+            "PDP",
+            "DTD",
+            "PDP"
+        ],
+        "result": {
+            "item": "utilitycraft:titanium_case"
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:titanium_plate"
+            }
+        ]
+    }
+}

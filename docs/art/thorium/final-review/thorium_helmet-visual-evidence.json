@@ -1,0 +1,19 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of the complete armor reference sheet, native icons, integer-nearest set preview and template/mapped/final comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "454fe3bc58de4f50df06870344352966620dc68e967152df4386fcebd7336f87",
+  "human_approval": "required",
+  "inspected_files": [
+    "../draft-icons/thorium_set_preview.png",
+    "../draft-review/template-mapped-final.png"
+  ],
+  "observations": [
+    "The brow and temple bevels use bubblegum-pink planes with sparse near-white metal highlights. The facial opening and original silhouette remain intact.",
+    "The original dark lining stays visible; the pink is clearly brighter and warmer than the existing Aetherium armor. Angularity comes from small plate highlights rather than horns or a new silhouette."
+  ],
+  "limitations": [
+    "Only inventory artwork was requested.",
+    "No human approval of the finished icons has been supplied."
+  ]
+}

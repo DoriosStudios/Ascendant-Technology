@@ -121,26 +121,37 @@
                 }
             },
             {
-                "info_panel@ascendant_common.info_panel": {
+                "info_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-72, 27],
-                    "$background_color": "dark",
+                    "offset": [-74, 27],
                     "$has_text": false,
                     "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
-                    "$info_size": [96, 158]
+                    "$info_size": [96, 158],
+                    "$panel_texture": "textures/ui/panels/background_panel_dark"
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "layer": 3,
-                    "offset": [-60, 35.5],
+                    "offset": [
+                        -64,
+                        35
+                    ],
                     "$text_scale": 0.55,
-                    "size": [88, 148]
+                    "size": [
+                        88,
+                        148
+                    ],
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ]
                 }
             },
             {
@@ -205,6 +216,7 @@
             },
             {
                 "upgrades_tab@uc.upgrades_tab": {
+                    "$upgrade_toggle_offset": [109, -38],
                     "$upgrade_index_1": 7,
                     "$upgrade_index_2": 8,
                     "$upgrade_index_3": 9,
@@ -219,7 +231,8 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
+                    "$io_toggle_offset": [109, -12],
                     "$io_items_modes_description": "ui.utilitycraft:io.disenchanter.items",
                     "$io_fluids_modes_description": "ui.utilitycraft:io.disenchanter.liquids",
                     "$has_item_io": true,
@@ -247,8 +260,17 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "$info_description": "ui.utilitycraft:info.disenchanter"
+                "info_tab@at_common.machine_info_tab": {
+                    "$info_toggle_offset": [109, 14],
+                    "$info_description": "ui.utilitycraft:info.disenchanter",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        10.0,
+                        -6
+                    ]
                 }
             }
         ]
@@ -276,12 +298,11 @@
                     "offset": [32, 0],
                     "controls": [
                         {
-                            "panel@ascendant_common.panel": {
-                                "$panel_color": "dark",
-                                "$has_container_label": true,
+                            "panel@at_common.panel": {
                                 "$label_color": "white",
-                                "$has_close_button": true,
-                                "$close_button": "light"
+                                "$panel_texture": "textures/ui/panels/background_panel_dark",
+                                "$show_close": true,
+                                "$close_button_ref": "common.light_close_button"
                             }
                         },
                         {
@@ -293,13 +314,57 @@
                                         "disenchanter_top@disenchanter.disenchanter_top": {}
                                     },
                                     {
-                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
+                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
+                                            "controls": [
+                                                {
+                                                    "inventory_panel@common.inventory_panel": {}
+                                                },
+                                                {
+                                                    "inventory_label@common.section_heading_label": {
+                                                        "anchor_from": "top_left",
+                                                        "anchor_to": "top_left",
+                                                        "offset": [
+                                                            7,
+                                                            3
+                                                        ],
+                                                        "layer": 2,
+                                                        "text": "container.inventory",
+                                                        "color": [
+                                                            0.95,
+                                                            0.95,
+                                                            0.95
+                                                        ],
+                                                        "shadow": true
+                                                    }
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "hotbar_grid@common.hotbar_grid_template": {}
                                     },
                                     {
                                         "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+                                    },
+                                    {
+                                        "title@at_core.machine_name": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                8,
+                                                4
+                                            ],
+                                            "size": [
+                                                148,
+                                                12
+                                            ],
+                                            "color": [
+                                                0.95,
+                                                0.95,
+                                                0.95
+                                            ],
+                                            "shadow": true
+                                        }
                                     }
                                 ]
                             }

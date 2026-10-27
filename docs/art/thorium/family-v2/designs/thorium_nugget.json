@@ -1,0 +1,191 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Pepita de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "small irregular metal volume with three sharp planes"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m9": [
+      235,
+      176,
+      206
+    ],
+    "m11": [
+      235,
+      212,
+      224
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          6,
+          4
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          7,
+          12
+        ],
+        [
+          4,
+          10
+        ],
+        [
+          4,
+          6
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "cut-nugget",
+      "purpose": "small irregular metal volume with three sharp planes",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              5,
+              6
+            ],
+            [
+              9,
+              4
+            ],
+            [
+              10,
+              5
+            ],
+            [
+              8,
+              9
+            ],
+            [
+              5,
+              9
+            ]
+          ],
+          "color": "m9"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              9,
+              5
+            ],
+            [
+              11,
+              5
+            ],
+            [
+              10,
+              9
+            ],
+            [
+              7,
+              11
+            ],
+            [
+              8,
+              8
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              5,
+              6
+            ],
+            [
+              7,
+              5
+            ],
+            [
+              9,
+              4
+            ]
+          ],
+          "color": "m11",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              5,
+              10
+            ],
+            [
+              7,
+              11
+            ]
+          ],
+          "color": "m3",
+          "width": 1
+        }
+      ]
+    }
+  ]
+}

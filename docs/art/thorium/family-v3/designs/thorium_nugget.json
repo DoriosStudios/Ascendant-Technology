@@ -1,0 +1,469 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Pepita de Tório",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Compact vanilla iron-nugget footprint and multi-tone surface, smaller than v2."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/iron_nugget.png",
+      "sha256": "1442104640b7233814831f7d8070d0296b89acad278398ba63072299a9052f4f",
+      "purpose": "Compact vanilla iron-nugget footprint and multi-tone surface, smaller than v2.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "inherit",
+    "allow_clip": false
+  },
+  "palette": {
+    "c_57_60_64": [
+      57,
+      60,
+      64
+    ],
+    "c_80_39_64": [
+      80,
+      39,
+      64
+    ],
+    "c_88_95_104": [
+      88,
+      95,
+      104
+    ],
+    "c_115_141_141": [
+      115,
+      141,
+      141
+    ],
+    "c_135_55_93": [
+      135,
+      55,
+      93
+    ],
+    "c_162_176_190": [
+      162,
+      176,
+      190
+    ],
+    "c_186_200_218": [
+      186,
+      200,
+      218
+    ],
+    "c_189_202_219": [
+      189,
+      202,
+      219
+    ],
+    "c_197_80_136": [
+      197,
+      80,
+      136
+    ],
+    "c_217_223_231": [
+      217,
+      223,
+      231
+    ],
+    "c_231_113_172": [
+      231,
+      113,
+      172
+    ],
+    "c_235_132_184": [
+      235,
+      132,
+      184
+    ],
+    "c_235_176_206": [
+      235,
+      176,
+      206
+    ],
+    "c_235_212_224": [
+      235,
+      212,
+      224
+    ],
+    "c_235_231_233": [
+      235,
+      231,
+      233
+    ],
+    "c_242_242_242": [
+      242,
+      242,
+      242
+    ]
+  },
+  "source": {
+    "path": "../references/iron_nugget.png",
+    "sha256": "1442104640b7233814831f7d8070d0296b89acad278398ba63072299a9052f4f",
+    "purpose": "Compact vanilla iron-nugget footprint and multi-tone surface, smaller than v2."
+  },
+  "layers": [
+    {
+      "name": "palette-transfer-only",
+      "purpose": "Compact vanilla iron-nugget footprint and multi-tone surface, smaller than v2.",
+      "commands": [
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              9
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              7
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              10
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              9
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              6
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              8
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              6
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              9
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              8
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              7
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              5
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              10
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              8
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              6
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              8
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              9
+            ]
+          ],
+          "color": "c_235_176_206"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              7
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              11,
+              7
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              8
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              8
+            ]
+          ],
+          "color": "c_197_80_136"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              9
+            ]
+          ],
+          "color": "c_235_132_184"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              7
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              6
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              10
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              7
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              5,
+              8
+            ]
+          ],
+          "color": "c_235_231_233"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              7
+            ]
+          ],
+          "color": "c_235_212_224"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              9
+            ]
+          ],
+          "color": "c_80_39_64"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              9,
+              6
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              10,
+              7
+            ]
+          ],
+          "color": "c_231_113_172"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              6
+            ]
+          ],
+          "color": "c_235_132_184"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              5
+            ]
+          ],
+          "color": "c_135_55_93"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              6,
+              9
+            ]
+          ],
+          "color": "c_235_132_184"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              8
+            ]
+          ],
+          "color": "c_235_212_224"
+        }
+      ]
+    }
+  ]
+}

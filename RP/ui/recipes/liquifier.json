@@ -11,7 +11,7 @@
         "anchor_from": "top_left",
         "anchor_to": "top_left",
         "offset": [
-            -100,
+            -101,
             -7
         ],
         "layer": 6,
@@ -91,7 +91,7 @@
                 }
             },
             {
-                "recipes_scroll@ascendant_common.info_scroll_view": {
+                "recipes_scroll@at_common.scroll_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "size": [
@@ -102,7 +102,7 @@
                         8,
                         26
                     ],
-                    "$info_content": "liquifier.recipe_rows",
+                    "$content_ref": "liquifier.recipe_rows",
                     "layer": 6,
                     "$scroll_view_port_size": [
                         88,
@@ -156,7 +156,7 @@
                         {
                             "icon": {
                                 "type": "image",
-                                "texture": "textures/ui/at_icons/liquified_aetherium",
+                                "texture": "textures/static/images/liquified_aetherium",
                                 "size": [
                                     12,
                                     12
@@ -379,7 +379,7 @@
                         {
                             "icon": {
                                 "type": "image",
-                                "texture": "textures/ui/at_icons/dark_matter",
+                                "texture": "textures/static/images/dark_matter",
                                 "size": [
                                     12,
                                     12
@@ -664,7 +664,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/liquified_aetherium",
+                                            "texture": "textures/static/images/liquified_aetherium",
                                             "size": [
                                                 12,
                                                 12
@@ -703,7 +703,7 @@
                                     {
                                         "amount": {
                                             "type": "label",
-                                            "text": "250 mB",
+                                            "text": "2.5 B",
                                             "size": [
                                                 54,
                                                 8
@@ -767,7 +767,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/liquified_aetherium",
+                                            "texture": "textures/static/images/liquified_aetherium",
                                             "size": [
                                                 12,
                                                 12
@@ -806,7 +806,7 @@
                                     {
                                         "amount": {
                                             "type": "label",
-                                            "text": "100 mB",
+                                            "text": "1 B",
                                             "size": [
                                                 54,
                                                 8
@@ -870,7 +870,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/liquified_aetherium",
+                                            "texture": "textures/static/images/liquified_aetherium",
                                             "size": [
                                                 12,
                                                 12
@@ -973,7 +973,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/liquified_aetherium",
+                                            "texture": "textures/static/images/liquified_aetherium",
                                             "size": [
                                                 12,
                                                 12
@@ -1076,7 +1076,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/liquified_aetherium",
+                                            "texture": "textures/static/images/liquified_aetherium",
                                             "size": [
                                                 12,
                                                 12
@@ -1115,7 +1115,7 @@
                                     {
                                         "amount": {
                                             "type": "label",
-                                            "text": "150 mB",
+                                            "text": "1.5 B",
                                             "size": [
                                                 54,
                                                 8
@@ -1179,7 +1179,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/dark_matter",
+                                            "texture": "textures/static/images/dark_matter",
                                             "size": [
                                                 12,
                                                 12
@@ -1218,7 +1218,7 @@
                                     {
                                         "amount": {
                                             "type": "label",
-                                            "text": "500 mB",
+                                            "text": "5 B",
                                             "size": [
                                                 54,
                                                 8
@@ -1319,7 +1319,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/dark_matter",
+                                            "texture": "textures/static/images/dark_matter",
                                             "size": [
                                                 12,
                                                 12
@@ -1358,7 +1358,7 @@
                                     {
                                         "amount": {
                                             "type": "label",
-                                            "text": "250 mB",
+                                            "text": "2.5 B",
                                             "size": [
                                                 54,
                                                 8
@@ -1422,7 +1422,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/dark_matter",
+                                            "texture": "textures/static/images/dark_matter",
                                             "size": [
                                                 12,
                                                 12
@@ -1461,7 +1461,7 @@
                                     {
                                         "amount": {
                                             "type": "label",
-                                            "text": "250 mB",
+                                            "text": "2.5 B",
                                             "size": [
                                                 54,
                                                 8
@@ -1525,7 +1525,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/dark_matter",
+                                            "texture": "textures/static/images/dark_matter",
                                             "size": [
                                                 12,
                                                 12
@@ -1564,7 +1564,7 @@
                                     {
                                         "amount": {
                                             "type": "label",
-                                            "text": "2,250 mB",
+                                            "text": "22.5 B",
                                             "size": [
                                                 54,
                                                 8
@@ -1628,7 +1628,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/dark_matter",
+                                            "texture": "textures/static/images/dark_matter",
                                             "size": [
                                                 12,
                                                 12
@@ -1667,7 +1667,7 @@
                                     {
                                         "amount": {
                                             "type": "label",
-                                            "text": "20,250 mB",
+                                            "text": "2.02 KB",
                                             "size": [
                                                 54,
                                                 8
@@ -1731,7 +1731,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/ui/at_icons/dark_matter",
+                                            "texture": "textures/static/images/dark_matter",
                                             "size": [
                                                 12,
                                                 12
@@ -1770,7 +1770,7 @@
                                     {
                                         "amount": {
                                             "type": "label",
-                                            "text": "182,250 mB",
+                                            "text": "18.23 KB",
                                             "size": [
                                                 54,
                                                 8

@@ -22,24 +22,35 @@
                 }
             },
             {
-                "side_panel@ascendant_common.info_panel": {
+                "side_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$has_text": false, "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
                     "$info_size": [96, 158],
-                    "offset": [-100, -7]
+                    "offset": [-101, -7]
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [88, 148],
+                    "size": [
+                        88,
+                        148
+                    ],
                     "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-88, 2]
+                    "offset": [
+                        -93,
+                        1
+                    ],
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ]
                 }
             },
             {
@@ -139,18 +150,18 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
                     "$io_items_modes_description": "ui.utilitycraft:io.seismic_breaker.items",
                     "$has_item_io": true,
                     "$has_fluid_io": false,
                     "$has_gas_io": false,
                     "$io_items_default": true,
-                    "$io_top_texture": "textures/blocks/machines/superior/seismic_breaker_off_up",
-                    "$io_left_texture": "textures/blocks/machines/superior/seismic_breaker_off_west",
-                    "$io_front_texture": "textures/blocks/machines/superior/seismic_breaker_off_north",
-                    "$io_right_texture": "textures/blocks/machines/superior/seismic_breaker_off_east",
-                    "$io_bottom_texture": "textures/blocks/machines/superior/seismic_breaker_off_down",
-                    "$io_back_texture": "textures/blocks/machines/superior/seismic_breaker_off_south",
+                    "$io_top_texture": "textures/blocks/machines/superior/faces/seismic_breaker/off/up",
+                    "$io_left_texture": "textures/blocks/machines/superior/faces/seismic_breaker/off/west",
+                    "$io_front_texture": "textures/blocks/machines/superior/faces/seismic_breaker/off/north",
+                    "$io_right_texture": "textures/blocks/machines/superior/faces/seismic_breaker/off/east",
+                    "$io_bottom_texture": "textures/blocks/machines/superior/faces/seismic_breaker/off/down",
+                    "$io_back_texture": "textures/blocks/machines/superior/faces/seismic_breaker/off/south",
                     "$io_item_top_index": 18,
                     "$io_item_left_index": 19,
                     "$io_item_front_index": 20,
@@ -160,8 +171,16 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "$info_description": "ui.utilitycraft:info.seismic_breaker"
+                "info_tab@at_common.machine_info_tab": {
+                    "$info_description": "ui.utilitycraft:info.seismic_breaker",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        10.0,
+                        7
+                    ]
                 }
             }
         ]

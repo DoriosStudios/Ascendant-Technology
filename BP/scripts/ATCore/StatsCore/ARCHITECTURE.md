@@ -158,3 +158,13 @@ não de `HEAD`, para preservar o trabalho que já estava em andamento.
 
 A validação em um mundo Bedrock permanece necessária para observar a integração
 real de eventos, animações e feedback; a auditoria não simula o motor do jogo.
+
+## Eligible aggressors and shared executors
+
+`config/aggressors.js` explicitly lists combat participants. Player interactions
+remain player-only. `shared/aggressors.js` binds a native executor's target to
+a logical machine context and routes delayed proc damage through that context.
+Equipment, progression, cooldowns and status identity belong to the logical
+context, never to the executor's currently equipped weapon. Native APIs receive
+only the physical entity. Forms invalidate the former context when equipment or
+configuration changes, preventing delayed writes into replacement equipment.

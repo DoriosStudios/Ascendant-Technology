@@ -1,0 +1,1980 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v2\\final\\raw_thorium_block.png",
+  "pixel_sha256": "6b3f3f6809ea675fb9ac13908711cca196f1d53c8563b99c0922133420181cd8",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "opaque",
+    "require_transparent": false,
+    "palette": {
+      "max_colors": 12,
+      "allowed": [
+        [
+          167,
+          67,
+          114
+        ],
+        [
+          197,
+          80,
+          136
+        ],
+        [
+          220,
+          96,
+          156
+        ],
+        [
+          231,
+          113,
+          172
+        ],
+        [
+          235,
+          154,
+          195
+        ],
+        [
+          235,
+          176,
+          206
+        ],
+        [
+          235,
+          196,
+          217
+        ],
+        [
+          58,
+          44,
+          55
+        ],
+        [
+          63,
+          62,
+          67
+        ],
+        [
+          87,
+          84,
+          91
+        ],
+        [
+          115,
+          110,
+          119
+        ],
+        [
+          235,
+          132,
+          184
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": false,
+      "singleton_limit": 8,
+      "max_components": null
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 0,
+    "INFO": 2
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 0,
+      "partial": 0,
+      "opaque": 256
+    },
+    "palette": {
+      "unique_visible_rgb": 10,
+      "unique_rgba": 10,
+      "frequencies": [
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "hex": "#A74372",
+          "count": 52
+        },
+        {
+          "rgb": [
+            63,
+            62,
+            67
+          ],
+          "hex": "#3F3E43",
+          "count": 50
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "hex": "#DC609C",
+          "count": 32
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "hex": "#E771AC",
+          "count": 26
+        },
+        {
+          "rgb": [
+            115,
+            110,
+            119
+          ],
+          "hex": "#736E77",
+          "count": 25
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "hex": "#EB9AC3",
+          "count": 21
+        },
+        {
+          "rgb": [
+            87,
+            84,
+            91
+          ],
+          "hex": "#57545B",
+          "count": 20
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "hex": "#C55088",
+          "count": 15
+        },
+        {
+          "rgb": [
+            235,
+            132,
+            184
+          ],
+          "hex": "#EB84B8",
+          "count": 13
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "hex": "#EBB0CE",
+          "count": 2
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 256,
+      "bbox": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "components_4_connected": 0,
+      "component_sizes": []
+    },
+    "clusters": {
+      "enabled": false
+    },
+    "material_tones": {
+      "colors": [
+        {
+          "rgb": [
+            63,
+            62,
+            67
+          ],
+          "pixels": 50,
+          "oklab": [
+            0.36669274379417555,
+            0.003640633454183556,
+            -0.007755227263756048
+          ]
+        },
+        {
+          "rgb": [
+            87,
+            84,
+            91
+          ],
+          "pixels": 20,
+          "oklab": [
+            0.4511768872768887,
+            0.006826999455733257,
+            -0.009682013209868057
+          ]
+        },
+        {
+          "rgb": [
+            167,
+            67,
+            114
+          ],
+          "pixels": 52,
+          "oklab": [
+            0.5307585390052371,
+            0.1400036965451507,
+            -0.01550403452013649
+          ]
+        },
+        {
+          "rgb": [
+            115,
+            110,
+            119
+          ],
+          "pixels": 25,
+          "oklab": [
+            0.5457474438041134,
+            0.009732928371759542,
+            -0.011434584091469469
+          ]
+        },
+        {
+          "rgb": [
+            197,
+            80,
+            136
+          ],
+          "pixels": 15,
+          "oklab": [
+            0.5997660713505149,
+            0.15911940459083473,
+            -0.018965013732911817
+          ]
+        },
+        {
+          "rgb": [
+            220,
+            96,
+            156
+          ],
+          "pixels": 32,
+          "oklab": [
+            0.6600247922731386,
+            0.16590646322641156,
+            -0.021978423369214406
+          ]
+        },
+        {
+          "rgb": [
+            231,
+            113,
+            172
+          ],
+          "pixels": 26,
+          "oklab": [
+            0.703253560755495,
+            0.1575084120131156,
+            -0.025730453813424092
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            132,
+            184
+          ],
+          "pixels": 13,
+          "oklab": [
+            0.74004976736045,
+            0.13701513369502488,
+            -0.025542847007643754
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            154,
+            195
+          ],
+          "pixels": 21,
+          "oklab": [
+            0.778763878657962,
+            0.10673590363744428,
+            -0.022298036426314338
+          ]
+        },
+        {
+          "rgb": [
+            235,
+            176,
+            206
+          ],
+          "pixels": 2,
+          "oklab": [
+            0.8202004222885522,
+            0.0765292348381662,
+            -0.017616730036504324
+          ]
+        }
+      ],
+      "lightness_range": 0.4535076784943766,
+      "tonal_coverage": {
+        "shadow": 0.2734375,
+        "mid": 0.5859375,
+        "highlight": 0.140625
+      }
+    }
+  },
+  "findings": [
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    },
+    {
+      "severity": "INFO",
+      "code": "intentional_edge_contact",
+      "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+      "policy": "allow",
+      "coordinates": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          10
+        ],
+        [
+          0,
+          11
+        ],
+        [
+          0,
+          12
+        ],
+        [
+          0,
+          13
+        ],
+        [
+          0,
+          14
+        ],
+        [
+          0,
+          15
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          15,
+          1
+        ],
+        [
+          15,
+          2
+        ],
+        [
+          15,
+          3
+        ],
+        [
+          15,
+          4
+        ],
+        [
+          15,
+          5
+        ],
+        [
+          15,
+          6
+        ],
+        [
+          15,
+          7
+        ],
+        [
+          15,
+          8
+        ],
+        [
+          15,
+          9
+        ],
+        [
+          15,
+          10
+        ],
+        [
+          15,
+          11
+        ],
+        [
+          15,
+          12
+        ],
+        [
+          15,
+          13
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          15,
+          15
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          5,
+          0
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          11,
+          0
+        ],
+        [
+          12,
+          0
+        ],
+        [
+          13,
+          0
+        ],
+        [
+          14,
+          0
+        ],
+        [
+          15,
+          0
+        ],
+        [
+          0,
+          15
+        ],
+        [
+          1,
+          15
+        ],
+        [
+          2,
+          15
+        ],
+        [
+          3,
+          15
+        ],
+        [
+          4,
+          15
+        ],
+        [
+          5,
+          15
+        ],
+        [
+          6,
+          15
+        ],
+        [
+          7,
+          15
+        ],
+        [
+          8,
+          15
+        ],
+        [
+          9,
+          15
+        ],
+        [
+          10,
+          15
+        ],
+        [
+          11,
+          15
+        ],
+        [
+          12,
+          15
+        ],
+        [
+          13,
+          15
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          15,
+          15
+        ]
+      ]
+    }
+  ],
+  "visual_review": {
+    "status": "model_reviewed",
+    "evaluator": "Codex inspection of full native/dark/light galleries and the titanium/old-Thorium/new-Thorium comparison",
+    "evaluator_type": "model",
+    "pixel_sha256": "6b3f3f6809ea675fb9ac13908711cca196f1d53c8563b99c0922133420181cd8",
+    "human_approval": "required",
+    "inspected_files": [
+      "thorium_family_preview.png"
+    ],
+    "observations": [
+      "The first draft read as flat camouflage patches. The inspected local correction adds light/shadow fracture planes only within existing metal regions; the neutral host is unchanged.",
+      "The metal ramp is less saturated and lower in contrast. Passing the technical checks does not establish artistic acceptance."
+    ],
+    "limitations": [
+      "No creator approval of this revision has been supplied.",
+      "Textures only; no gameplay or in-game acceptance claim."
+    ],
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ]
+  },
+  "file_sha256": "2724ecd39ab2367e474c15ca4a911e9aeb333a4c706d0daa92ee31f4a97b2ac7",
+  "design": {
+    "intent": {
+      "identity": "Bloco de TÃƒÂ³rio bruto",
+      "usage": "native AT texture-family candidate",
+      "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+      "orientation": "explicit native inventory or block face construction",
+      "lighting": "upper-left, reduced value range; highlights describe connected planes",
+      "structure": [
+        "coarse opaque raw-rock host with angled metal masses",
+        "connected broken mineral planes instead of unbounded noise"
+      ],
+      "style": [
+        "new Thorium construction rather than titanium recolor",
+        "sharp chamfers and restrained plate seams",
+        "20 percent lower HSV saturation in the metal ramp"
+      ]
+    },
+    "references": [
+      {
+        "path": "../references/titanium_ingot.png",
+        "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+        "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+        "approval": "project reference, not approval of Thorium variants"
+      }
+    ],
+    "geometry": {
+      "planned_bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "primitives": [
+        {
+          "layer": "silhouette",
+          "command": 0,
+          "bounds": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "stone-host",
+          "command": 0,
+          "bounds": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "stone-host",
+          "command": 1,
+          "bounds": [
+            0,
+            4,
+            9,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "stone-host",
+          "command": 2,
+          "bounds": [
+            8,
+            2,
+            16,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "raw-masses",
+          "command": 0,
+          "bounds": [
+            0,
+            0,
+            8,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "raw-masses",
+          "command": 1,
+          "bounds": [
+            8,
+            0,
+            16,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "raw-masses",
+          "command": 2,
+          "bounds": [
+            3,
+            5,
+            12,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "raw-masses",
+          "command": 3,
+          "bounds": [
+            0,
+            9,
+            5,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "raw-masses",
+          "command": 4,
+          "bounds": [
+            9,
+            9,
+            16,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "raw-masses",
+          "command": 5,
+          "bounds": [
+            1,
+            1,
+            6,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "raw-masses",
+          "command": 6,
+          "bounds": [
+            5,
+            7,
+            10,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "raw-masses",
+          "command": 7,
+          "bounds": [
+            11,
+            11,
+            14,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 0,
+          "bounds": [
+            4,
+            1,
+            5,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 1,
+          "bounds": [
+            1,
+            2,
+            2,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 2,
+          "bounds": [
+            2,
+            2,
+            3,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 3,
+          "bounds": [
+            3,
+            2,
+            4,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 4,
+          "bounds": [
+            4,
+            2,
+            5,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 5,
+          "bounds": [
+            2,
+            3,
+            3,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 6,
+          "bounds": [
+            3,
+            3,
+            4,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 7,
+          "bounds": [
+            4,
+            3,
+            5,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 8,
+          "bounds": [
+            5,
+            3,
+            6,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 9,
+          "bounds": [
+            3,
+            4,
+            4,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 10,
+          "bounds": [
+            5,
+            3,
+            6,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 11,
+          "bounds": [
+            3,
+            4,
+            4,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 12,
+          "bounds": [
+            4,
+            4,
+            5,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 13,
+          "bounds": [
+            5,
+            4,
+            6,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 14,
+          "bounds": [
+            4,
+            5,
+            5,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 15,
+          "bounds": [
+            5,
+            5,
+            6,
+            6
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 16,
+          "bounds": [
+            4,
+            6,
+            5,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 17,
+          "bounds": [
+            10,
+            1,
+            11,
+            2
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 18,
+          "bounds": [
+            10,
+            2,
+            11,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 19,
+          "bounds": [
+            11,
+            2,
+            12,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 20,
+          "bounds": [
+            12,
+            2,
+            13,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 21,
+          "bounds": [
+            13,
+            2,
+            14,
+            3
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 22,
+          "bounds": [
+            10,
+            3,
+            11,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 23,
+          "bounds": [
+            11,
+            3,
+            12,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 24,
+          "bounds": [
+            12,
+            3,
+            13,
+            4
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 25,
+          "bounds": [
+            12,
+            4,
+            13,
+            5
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 26,
+          "bounds": [
+            8,
+            6,
+            9,
+            7
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 27,
+          "bounds": [
+            5,
+            7,
+            6,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 28,
+          "bounds": [
+            6,
+            7,
+            7,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 29,
+          "bounds": [
+            7,
+            7,
+            8,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 30,
+          "bounds": [
+            8,
+            7,
+            9,
+            8
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 31,
+          "bounds": [
+            5,
+            8,
+            6,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 32,
+          "bounds": [
+            6,
+            8,
+            7,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 33,
+          "bounds": [
+            7,
+            8,
+            8,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 34,
+          "bounds": [
+            8,
+            8,
+            9,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 35,
+          "bounds": [
+            9,
+            8,
+            10,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 36,
+          "bounds": [
+            4,
+            9,
+            5,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 37,
+          "bounds": [
+            5,
+            9,
+            6,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 38,
+          "bounds": [
+            6,
+            9,
+            7,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 39,
+          "bounds": [
+            4,
+            10,
+            5,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 40,
+          "bounds": [
+            9,
+            8,
+            10,
+            9
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 41,
+          "bounds": [
+            6,
+            9,
+            7,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 42,
+          "bounds": [
+            7,
+            9,
+            8,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 43,
+          "bounds": [
+            8,
+            9,
+            9,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 44,
+          "bounds": [
+            9,
+            9,
+            10,
+            10
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 45,
+          "bounds": [
+            6,
+            10,
+            7,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 46,
+          "bounds": [
+            7,
+            10,
+            8,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 47,
+          "bounds": [
+            8,
+            10,
+            9,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 48,
+          "bounds": [
+            9,
+            10,
+            10,
+            11
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 49,
+          "bounds": [
+            5,
+            11,
+            6,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 50,
+          "bounds": [
+            6,
+            11,
+            7,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 51,
+          "bounds": [
+            7,
+            11,
+            8,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 52,
+          "bounds": [
+            1,
+            11,
+            2,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 53,
+          "bounds": [
+            2,
+            11,
+            3,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 54,
+          "bounds": [
+            1,
+            12,
+            2,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 55,
+          "bounds": [
+            2,
+            12,
+            3,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 56,
+          "bounds": [
+            2,
+            13,
+            3,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 57,
+          "bounds": [
+            3,
+            13,
+            4,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 58,
+          "bounds": [
+            2,
+            14,
+            3,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 59,
+          "bounds": [
+            13,
+            11,
+            14,
+            12
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 60,
+          "bounds": [
+            11,
+            12,
+            12,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 61,
+          "bounds": [
+            12,
+            12,
+            13,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 62,
+          "bounds": [
+            13,
+            12,
+            14,
+            13
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 63,
+          "bounds": [
+            12,
+            13,
+            13,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 64,
+          "bounds": [
+            13,
+            13,
+            14,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 65,
+          "bounds": [
+            14,
+            13,
+            15,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 66,
+          "bounds": [
+            12,
+            14,
+            13,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 67,
+          "bounds": [
+            14,
+            13,
+            15,
+            14
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 68,
+          "bounds": [
+            12,
+            14,
+            13,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 69,
+          "bounds": [
+            13,
+            14,
+            14,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 70,
+          "bounds": [
+            14,
+            14,
+            15,
+            15
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 71,
+          "bounds": [
+            11,
+            15,
+            12,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 72,
+          "bounds": [
+            12,
+            15,
+            13,
+            16
+          ],
+          "outside_canvas": false
+        },
+        {
+          "layer": "fracture-facets",
+          "command": 73,
+          "bounds": [
+            13,
+            15,
+            14,
+            16
+          ],
+          "outside_canvas": false
+        }
+      ],
+      "outside_primitives": []
+    },
+    "composition": {
+      "raster_bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "minimum_margin": 0,
+      "edge_counts": {
+        "left": 16,
+        "right": 16,
+        "top": 16,
+        "bottom": 16
+      },
+      "findings": [
+        {
+          "severity": "INFO",
+          "code": "intentional_edge_contact",
+          "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+          "policy": "allow",
+          "coordinates": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ],
+            [
+              0,
+              4
+            ],
+            [
+              0,
+              5
+            ],
+            [
+              0,
+              6
+            ],
+            [
+              0,
+              7
+            ],
+            [
+              0,
+              8
+            ],
+            [
+              0,
+              9
+            ],
+            [
+              0,
+              10
+            ],
+            [
+              0,
+              11
+            ],
+            [
+              0,
+              12
+            ],
+            [
+              0,
+              13
+            ],
+            [
+              0,
+              14
+            ],
+            [
+              0,
+              15
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              15,
+              1
+            ],
+            [
+              15,
+              2
+            ],
+            [
+              15,
+              3
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              15,
+              5
+            ],
+            [
+              15,
+              6
+            ],
+            [
+              15,
+              7
+            ],
+            [
+              15,
+              8
+            ],
+            [
+              15,
+              9
+            ],
+            [
+              15,
+              10
+            ],
+            [
+              15,
+              11
+            ],
+            [
+              15,
+              12
+            ],
+            [
+              15,
+              13
+            ],
+            [
+              15,
+              14
+            ],
+            [
+              15,
+              15
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              0
+            ],
+            [
+              4,
+              0
+            ],
+            [
+              5,
+              0
+            ],
+            [
+              6,
+              0
+            ],
+            [
+              7,
+              0
+            ],
+            [
+              8,
+              0
+            ],
+            [
+              9,
+              0
+            ],
+            [
+              10,
+              0
+            ],
+            [
+              11,
+              0
+            ],
+            [
+              12,
+              0
+            ],
+            [
+              13,
+              0
+            ],
+            [
+              14,
+              0
+            ],
+            [
+              15,
+              0
+            ],
+            [
+              0,
+              15
+            ],
+            [
+              1,
+              15
+            ],
+            [
+              2,
+              15
+            ],
+            [
+              3,
+              15
+            ],
+            [
+              4,
+              15
+            ],
+            [
+              5,
+              15
+            ],
+            [
+              6,
+              15
+            ],
+            [
+              7,
+              15
+            ],
+            [
+              8,
+              15
+            ],
+            [
+              9,
+              15
+            ],
+            [
+              10,
+              15
+            ],
+            [
+              11,
+              15
+            ],
+            [
+              12,
+              15
+            ],
+            [
+              13,
+              15
+            ],
+            [
+              14,
+              15
+            ],
+            [
+              15,
+              15
+            ]
+          ]
+        }
+      ]
+    },
+    "region_bounds": {
+      "stone-host": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "raw-masses": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "fracture-facets": [
+        1,
+        1,
+        15,
+        16
+      ]
+    }
+  }
+}

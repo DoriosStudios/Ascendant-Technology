@@ -9,6 +9,7 @@ const MATERIALS = 'minecraft:material_instances';
 
 // Only full-block Box-UV models belong here. Solar/Wind keep their own geometry.
 export const BLOCKS = [
+    { name: 'alchemical_station', block: 'machines/alchemical_station', output: 'machines', states: ['off'], atlases: { off: 'alchemy_table.png' } },
     { name: 'decompactor', block: 'machines/decompactor', atlas: 'machines/legacy_atlases', output: 'machines' },
     { name: 'industrial_crucible', block: 'machines/industrial_crucible', atlas: 'machines/legacy_atlases', output: 'machines' },
     { name: 'absolute_furnator', block: 'generators/furnator/absolute_furnator', atlas: 'generators', output: 'generators' },
@@ -94,8 +95,9 @@ export function prepareSplit(root = ROOT, names = BLOCKS.map(block => block.name
                 throw new Error(`Unsupported material permutation in ${blockFile}: ${permutation.condition}`);
             }
         }
-        for (const state of STATES) {
-            const atlasFile = path.join(root, `RP/textures/blocks/${entry.atlas}/${entry.name}_${state}.png`);
+        const states = entry.states ?? STATES;
+        for (const state of states) {
+            const atlasFile = path.join(root, 'RP/textures/blocks', entry.atlases?.[state] ?? `${entry.atlas}/${entry.name}_${state}.png`);
             const atlas = PNG.sync.read(fs.readFileSync(atlasFile));
             const faces = splitAtlas(atlas);
             for (const [face, image] of Object.entries(faces)) {
@@ -116,6 +118,9 @@ export function prepareSplit(root = ROOT, names = BLOCKS.map(block => block.name
         block.components[MATERIALS] = materialFaces(block.components[MATERIALS], entry.name, 'off');
         for (const permutation of permutations) {
             if (!onPattern.test(permutation.condition) && !offPattern.test(permutation.condition)) continue;
+            // A single-atlas block inherits its base faces while the on state
+            // changes gameplay or lighting; no nonexistent on textures are wired.
+            if (onPattern.test(permutation.condition) && !states.includes('on')) continue;
             permutation.components ??= {};
             permutation.components[MATERIALS] = materialFaces(
                 permutation.components[MATERIALS] ?? block.components[MATERIALS], entry.name,

@@ -1,0 +1,296 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Malha de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "clipped-corner metal frame rather than a square copper frame",
+      "ordered woven metal grid with open transparent cells"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m7": [
+      235,
+      132,
+      184
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          2,
+          1
+        ],
+        [
+          13,
+          1
+        ],
+        [
+          14,
+          2
+        ],
+        [
+          14,
+          13
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          2,
+          14
+        ],
+        [
+          1,
+          13
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "frame",
+      "purpose": "clipped-corner metal frame rather than a square copper frame",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              2,
+              2
+            ],
+            [
+              12,
+              2
+            ],
+            [
+              13,
+              3
+            ],
+            [
+              13,
+              12
+            ],
+            [
+              12,
+              13
+            ],
+            [
+              2,
+              13
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              3,
+              3
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "color": "o",
+          "alpha": 0
+        }
+      ]
+    },
+    {
+      "name": "wire-grid",
+      "purpose": "ordered woven metal grid with open transparent cells",
+      "commands": [
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              3
+            ],
+            [
+              3,
+              12
+            ]
+          ],
+          "color": "m7",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              6,
+              3
+            ],
+            [
+              6,
+              12
+            ]
+          ],
+          "color": "m7",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              9,
+              3
+            ],
+            [
+              9,
+              12
+            ]
+          ],
+          "color": "m7",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              12,
+              3
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "color": "m7",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              3
+            ],
+            [
+              12,
+              3
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              6
+            ],
+            [
+              12,
+              6
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              9
+            ],
+            [
+              12,
+              9
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              12
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              2,
+              2
+            ],
+            [
+              12,
+              2
+            ]
+          ],
+          "color": "m10",
+          "width": 1
+        }
+      ]
+    }
+  ]
+}

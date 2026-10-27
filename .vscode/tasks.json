@@ -7,8 +7,9 @@
             "command": "powershell.exe",
             "args": [
               "-NoProfile",
+              "-NonInteractive",
               "-Command",
-              "if (Get-Command regolith -ErrorAction SilentlyContinue) { regolith watch } else { dash_compiler watch }; exit $LASTEXITCODE"
+              "$ErrorActionPreference = 'Stop'; if (Get-Command regolith -ErrorAction SilentlyContinue) { regolith watch } elseif (Get-Command dash_compiler -ErrorAction SilentlyContinue) { dash_compiler watch } else { [Console]::Error.WriteLine('Compiler not found: install Regolith or dash_compiler and add it to PATH.'); exit 127 }; exit $LASTEXITCODE"
             ],
             "options": {
               "cwd": "${workspaceFolder}"

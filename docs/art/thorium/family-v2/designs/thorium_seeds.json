@@ -1,0 +1,228 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Sementes de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "four small angular seed pellets with a restrained metal coating"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m6": [
+      231,
+      113,
+      172
+    ],
+    "m7": [
+      235,
+      132,
+      184
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "op": "polygon",
+      "points": [
+        [
+          10,
+          3
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          12,
+          6
+        ],
+        [
+          10,
+          5
+        ]
+      ]
+    },
+    {
+      "op": "polygon",
+      "points": [
+        [
+          3,
+          9
+        ],
+        [
+          5,
+          8
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          4,
+          12
+        ]
+      ]
+    },
+    {
+      "op": "polygon",
+      "points": [
+        [
+          10,
+          10
+        ],
+        [
+          12,
+          9
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          11,
+          13
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "seed-coating",
+      "purpose": "four small angular seed pellets with a restrained metal coating",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              3
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              4,
+              4
+            ]
+          ],
+          "color": "m10"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              11,
+              4
+            ],
+            [
+              12,
+              4
+            ],
+            [
+              11,
+              5
+            ]
+          ],
+          "color": "m7"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              9
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              4,
+              11
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              11,
+              10
+            ],
+            [
+              12,
+              11
+            ],
+            [
+              11,
+              12
+            ]
+          ],
+          "color": "m6"
+        }
+      ]
+    }
+  ]
+}

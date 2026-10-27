@@ -1,0 +1,1009 @@
+{
+  "assets": [
+    {
+      "name": "thorium_helmet",
+      "label": "Capacete de Tório",
+      "destination": "RP/textures/items/armor/thorium_helmet.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "armor",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 10,
+      "pixel_sha256": "5d0198cfb0d3a3f12630fdf7c0f6917d41ab1dfd4cbbbc555ba9c1ecd93e9ebc",
+      "file_sha256": "29c9885cb07f5803403871efffcec3ebcd9dda9e103c4874ac25075845295360",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_helmet.png",
+        "reference_sha256": "29c9885cb07f5803403871efffcec3ebcd9dda9e103c4874ac25075845295360",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 256,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved",
+      "alpha_differences_vs_titanium": 8,
+      "old_thorium_alpha_differences": 0
+    },
+    {
+      "name": "thorium_chestplate",
+      "label": "Peitoral de Tório",
+      "destination": "RP/textures/items/armor/thorium_chestplate.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "armor",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 11,
+      "pixel_sha256": "68c2e321abaf66f9f6af5fcfec6bb5fa234913ac74fecb27d90e6b692008bdef",
+      "file_sha256": "291ba16cc61824e4296bf07af4a32bbbe22c194474b5ff1ea3fa3ccd62affb94",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_chestplate.png",
+        "reference_sha256": "291ba16cc61824e4296bf07af4a32bbbe22c194474b5ff1ea3fa3ccd62affb94",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 256,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved",
+      "alpha_differences_vs_titanium": 14,
+      "old_thorium_alpha_differences": 0
+    },
+    {
+      "name": "thorium_leggings",
+      "label": "Calças de Tório",
+      "destination": "RP/textures/items/armor/thorium_leggings.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "armor",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 10,
+      "pixel_sha256": "55edae2e7caadac223f4238bc3ea7eb2564a4f053e69283c8e0c0e7ca8252da1",
+      "file_sha256": "9dd67664bf60214674ba43e45f165dfa04059337a8afcacfc96f253352eb63ae",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_leggings.png",
+        "reference_sha256": "9dd67664bf60214674ba43e45f165dfa04059337a8afcacfc96f253352eb63ae",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 256,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved",
+      "alpha_differences_vs_titanium": 38,
+      "old_thorium_alpha_differences": 0
+    },
+    {
+      "name": "thorium_boots",
+      "label": "Botas de Tório",
+      "destination": "RP/textures/items/armor/thorium_boots.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "armor",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 8,
+      "pixel_sha256": "4739615f260b21aa678019b9bbd3baddd45c7e088f1e2e22094d0bb53cab1a1b",
+      "file_sha256": "43720dc601b4fe63572f1d61326399e95ea2e4e164307d729a62d469b1b5fca7",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_boots.png",
+        "reference_sha256": "43720dc601b4fe63572f1d61326399e95ea2e4e164307d729a62d469b1b5fca7",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 256,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved",
+      "alpha_differences_vs_titanium": 23,
+      "old_thorium_alpha_differences": 0
+    },
+    {
+      "name": "thorium_ingot",
+      "label": "Lingote de Tório",
+      "destination": "RP/textures/items/ores/thorium_ingot.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 8,
+      "pixel_sha256": "456e01dad70442ee4b3e9fcf5999a1e5a84980044aeb0251b83bf02504759c10",
+      "file_sha256": "416e5bb4cce6425ea7f68a553022dec76bbc68d395c09d5397ee211194a0ff81",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "native_material_transfer",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_ingot.png",
+        "reference_sha256": "247f59e08365383582ca519c378cf2d7d966a021bd929a686f62f7cc622cd6d0",
+        "alpha_exact": true,
+        "editable_pixels": 135,
+        "protected_pixels": 121,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 135
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_plate",
+      "label": "Placa de Tório",
+      "destination": "RP/textures/items/ores/thorium_plate.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "194663c3b443449b57a299965196145464cc0ab2cfe9cc48225221983b647ea3",
+      "file_sha256": "5e10c680ecd771718d68c3089d0cfe6c1e72d4f4827b5fe43f858182e7068535",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "new_rectangular_sheet",
+        "bounds": [
+          2,
+          4,
+          14,
+          12
+        ]
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_nugget",
+      "label": "Pepita de Tório",
+      "destination": "RP/textures/items/ores/thorium_nugget.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 8,
+      "pixel_sha256": "5bf8ec97700994e3dad369e5110f74153b0ecf22a8168b5ed6ca36c302e4f5a0",
+      "file_sha256": "924e0a696f7aceb6624ca431c899af83637d508575157b72e69ec8b15a56d31c",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "native_material_transfer",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_nugget.png",
+        "reference_sha256": "1442104640b7233814831f7d8070d0296b89acad278398ba63072299a9052f4f",
+        "alpha_exact": true,
+        "editable_pixels": 34,
+        "protected_pixels": 222,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 34
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "raw_thorium",
+      "label": "Tório bruto",
+      "destination": "RP/textures/items/ores/raw_thorium.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 8,
+      "pixel_sha256": "cd839dbac4412328a665dc6fcf384b377786da4bb768321fd250b6ea33e11b76",
+      "file_sha256": "a705bd3c019d79c62bd85f132a3784f81ea15400be128dda30798a0712a1831c",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "native_raw_iron_roles",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\raw_iron.png",
+        "reference_sha256": "2c6aaff8ee9387417c52cdd9d81d6fc1c7c65fecf7cc5a9835ab6a395336f129",
+        "alpha_exact": true,
+        "editable_pixels": 168,
+        "protected_pixels": 88,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 168
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_chunk",
+      "label": "Fragmento de Tório",
+      "destination": "RP/textures/items/ores/thorium_chunk.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 7,
+      "pixel_sha256": "4cd3e3380f80f5cd261b7adc056bed06641a4cf01f6002ac4fc8b4c1ed704dbf",
+      "file_sha256": "6eacd3d5b3977ab8162a029ab06d18de6c7267210178718a585eea35872d5473",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_chunk.png",
+        "reference_sha256": "6eacd3d5b3977ab8162a029ab06d18de6c7267210178718a585eea35872d5473",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 256,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_dust",
+      "label": "Pó de Tório",
+      "destination": "RP/textures/items/ores/thorium_dust.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 14,
+      "pixel_sha256": "df29eda8e543b7e8aa334750d682076e77eb01593f2b87bd0be51e4bb8c1dfa3",
+      "file_sha256": "4533f6cf6f0ad8404f21411a7643eaffacdc8f9dc543e1afdf5fc483ba21738d",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "native_material_transfer",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\titanium_dust.png",
+        "reference_sha256": "03d32e711c00560b70a6f430dfa9a99a60113c4786cd849477db27f15e0eea7f",
+        "alpha_exact": true,
+        "editable_pixels": 83,
+        "protected_pixels": 173,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 83
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "raw_thorium_dust",
+      "label": "Pó de Tório bruto",
+      "destination": "RP/textures/items/ores/raw_thorium_dust.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      },
+      "colors": 7,
+      "pixel_sha256": "655ef039fc2e1402120ccda619581d713f0dd8f5dbd74fbd4b9f09a984295940",
+      "file_sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_raw_thorium_dust.png",
+        "reference_sha256": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 256,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_rod",
+      "label": "Haste de Tório",
+      "destination": "RP/textures/items/ores/thorium_rod.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 5,
+      "pixel_sha256": "d4785eb6b35eac9f863ddef20bae23c6826c92117be6b1f80f0c929852b3a5a3",
+      "file_sha256": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_rod.png",
+        "reference_sha256": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 256,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_gear",
+      "label": "Engrenagem de Tório",
+      "destination": "RP/textures/items/machinery/thorium_gear.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "component",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 6,
+      "pixel_sha256": "4495e885b1f0f86d718c93c49454502b5440798f8600fd4da1aa91024e69d0cc",
+      "file_sha256": "6fa08e9cb1eea1c0d11fc4573f6c6b9d505dcd381d0272b22cca9468ddeda01a",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_gear.png",
+        "reference_sha256": "6fa08e9cb1eea1c0d11fc4573f6c6b9d505dcd381d0272b22cca9468ddeda01a",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 256,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_mesh",
+      "label": "Malha de Tório",
+      "destination": "RP/textures/items/meshes/thorium_mesh.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "component",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 7,
+      "pixel_sha256": "2c6fcae2eb329a075f08b23947fdb977436db1e5ad6f8c245f18b5f1c7cd1304",
+      "file_sha256": "7e411369e80a6b8f78c5f5f1abac953b54fe75b0e3f0909653c72568508653df",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "titanium_main_color_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\titanium_mesh.png",
+        "reference_sha256": "a1c93b7fd53d917b43757e0e632760b25a9f54073d20dba3aea8efe28f2e4326",
+        "alpha_exact": true,
+        "editable_pixels": 108,
+        "protected_pixels": 148,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 108
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_net",
+      "label": "Rede de Tório",
+      "destination": "RP/textures/items/nets/thorium_net.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "component",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 2,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "d3ba43f440cda448bad941930905cc0afbed7c904e68ccf1662855d2a3edbb4b",
+      "file_sha256": "af7d19c22543d9d9785ac339e20c35c400d5b87c0be5a07b4fece614f27499fc",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "titanium_main_color_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\titanium_net.png",
+        "reference_sha256": "6d0052b532bbe5100180082259a323ebcae12b1c1884dd7fc75585ba95f8cc04",
+        "alpha_exact": true,
+        "editable_pixels": 64,
+        "protected_pixels": 192,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 64
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_seeds",
+      "label": "Sementes de Tório",
+      "destination": "RP/textures/items/ores/thorium_seeds.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "material",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 2,
+        "INFO": 1
+      },
+      "colors": 6,
+      "pixel_sha256": "4b6c994766e90bd09efba1ca4c3a9874f38b5ca8086c1cb7bdaf5b56f1c4e42f",
+      "file_sha256": "c73977fa2fdb8525fb2cbc47aaa6c85cc70e1d35e1bfb64fe41be208e7f71b34",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "native_material_transfer",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\titanium_seeds.png",
+        "reference_sha256": "e23fd2c879b031800815a8a17ec443f28d97ee13be48e5dd9a0f2460560c613e",
+        "alpha_exact": true,
+        "editable_pixels": 53,
+        "protected_pixels": 203,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 53
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_sword",
+      "label": "Espada de Tório",
+      "destination": "RP/textures/items/tools/thorium_sword.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 11,
+      "pixel_sha256": "901b2b1cffeb576768f9f780a3c186d9f0453ea0525278a1e50d40b120949d5c",
+      "file_sha256": "12ccef4dd553df6d8fe3b5134c3912f76d3bda3def7f4ee5b2df4fc1ffeb3e6e",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "iron_palette_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_sword.png",
+        "reference_sha256": "1d1faeae22cbb8db31db1380c25dfeb4b68ca649f6cc72bd974720823152bec3",
+        "alpha_exact": true,
+        "editable_pixels": 55,
+        "protected_pixels": 201,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 55
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_pickaxe",
+      "label": "Picareta de Tório",
+      "destination": "RP/textures/items/tools/thorium_pickaxe.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "b4d826de4b7c62f400704b90f1d10f4e66aa697c26d287eb7e570e2a3d6706f5",
+      "file_sha256": "5da842d9ec35d4b4722f46b70793321f1466fcddfa47f326da759331e53eb9b2",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "iron_palette_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_pickaxe.png",
+        "reference_sha256": "16e18511e790105f7b4838b383a341084a06be0e99b70e1e4511775a33bb3f44",
+        "alpha_exact": true,
+        "editable_pixels": 23,
+        "protected_pixels": 233,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 23
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_axe",
+      "label": "Machado de Tório",
+      "destination": "RP/textures/items/tools/thorium_axe.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 10,
+      "pixel_sha256": "35931e3c429bfaeb2930c391054eff2e94be004953914fa2f0440811217cfb60",
+      "file_sha256": "2499cea112577617b0cffec3a06f25d84f1d81550423931dfca92464c279d6fa",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "iron_palette_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_axe.png",
+        "reference_sha256": "b3216fa9ecf53eb4e158ee9a288acd7eb885b4b9184b9c66b18201ea6509c4ab",
+        "alpha_exact": true,
+        "editable_pixels": 26,
+        "protected_pixels": 230,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 26
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_shovel",
+      "label": "Pá de Tório",
+      "destination": "RP/textures/items/tools/thorium_shovel.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 9,
+      "pixel_sha256": "cf98ee6eb78f4f0b17d7985aaf4e84e2993d749e38a7549d529f5b2d1dc97351",
+      "file_sha256": "7e885677c99cffede17765dac438414810f8f98a5ac3215f06a125929236f3f7",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "iron_palette_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_shovel.png",
+        "reference_sha256": "21ba6d8c5cc3f255e5c85cacc5e9fb61f5f9bfd7e006f00171eb967a417f11ec",
+        "alpha_exact": true,
+        "editable_pixels": 21,
+        "protected_pixels": 235,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 21
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_hoe",
+      "label": "Enxada de Tório",
+      "destination": "RP/textures/items/tools/thorium_hoe.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 1
+      },
+      "colors": 8,
+      "pixel_sha256": "95428673bbc97e4cc5306967fa6ad5fe57ca631a4198fc82c55f7e292b074513",
+      "file_sha256": "927aaa3b5fcd7cf95687c8c5a89414b7d1807c7af3d3d041460646fa8ad88874",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "iron_palette_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_hoe.png",
+        "reference_sha256": "8ef2960c23049db850b95c12c7640a9e9da9974580ec2d3e64bedba5fb054ff2",
+        "alpha_exact": true,
+        "editable_pixels": 15,
+        "protected_pixels": 241,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 15
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_hammer",
+      "label": "Martelo de Tório",
+      "destination": "RP/textures/items/tools/thorium_hammer.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 10,
+      "pixel_sha256": "0294f5ef892c6302e787871569c765467f750fcaece6ff60a6e7f4864472a173",
+      "file_sha256": "2c88517197ad1122acb320dd9e5a20a02d8bd432bbdb59e2d8ceffb487c1d270",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "iron_palette_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_hammer.png",
+        "reference_sha256": "d807d3f1cf65b807274129d94c68adf8c2aeb4bb6b349d43e7f17e16e0bcbb23",
+        "alpha_exact": true,
+        "editable_pixels": 50,
+        "protected_pixels": 206,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 50
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_paxel",
+      "label": "Paxel de Tório",
+      "destination": "RP/textures/items/tools/thorium_paxel.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 10,
+      "pixel_sha256": "619388e8a724d1bca9d9fb641c153c8fda9bd0a5d86cbd6a5514cd63e3e42df3",
+      "file_sha256": "c5d70b39e891a1c93e5e26b6a23483f9cdef66a716804b779a89b353cb84faf8",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "iron_palette_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_paxel.png",
+        "reference_sha256": "89d77d9ceb9bf1b71851074571d5274b3685c0c92c1720a91f6d738fb52a7bea",
+        "alpha_exact": true,
+        "editable_pixels": 42,
+        "protected_pixels": 214,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 42
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_aiot",
+      "label": "AIOT de Tório",
+      "destination": "RP/textures/items/tools/thorium_aiot.png",
+      "size": [
+        18,
+        18
+      ],
+      "kind": "tool",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 15,
+      "pixel_sha256": "5a5dae4120adc639ba7a951ad0dc148bf4813a468ceee82aede48424adf77779",
+      "file_sha256": "49871b87fd95d5e92c45c1cd5a010d1d5b7606ef423b30271e89d4a02d329d7d",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "iron_palette_only",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\iron_aiot.png",
+        "reference_sha256": "9e4defd956e1f97b093659b31df5df7077eaaf44bfe3a8610d5b6b92b1aaf820",
+        "alpha_exact": true,
+        "editable_pixels": 69,
+        "protected_pixels": 255,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 69
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_block",
+      "label": "Bloco de Tório",
+      "destination": "RP/textures/blocks/ores/thorium_block.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "block",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 2
+      },
+      "colors": 8,
+      "pixel_sha256": "767ce755625a9d7f6134d968af8b0b1d6189e68c663895c942586b164f66d157",
+      "file_sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_block.png",
+        "reference_sha256": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 256,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "raw_thorium_block",
+      "label": "Bloco de Tório bruto",
+      "destination": "RP/textures/blocks/ores/raw_thorium_block.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "block",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 2
+      },
+      "colors": 6,
+      "pixel_sha256": "dc1b2040ad6235d428b51d94026de0f051fe061af76b06356830a9275df012e6",
+      "file_sha256": "0cf7c93c264d1f44870237dd5cdc422851010eaf8f7f2b1a7852cdef0e3d76b1",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "native_material_transfer",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\raw_titanium_block.png",
+        "reference_sha256": "4ac960effbcff33ac9a33c6c9c49ece122ce4009ea90867cffdd60d490e07b81",
+        "alpha_exact": true,
+        "editable_pixels": 256,
+        "protected_pixels": 0,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 256
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "deepslate_thorium_ore",
+      "label": "Minério profundo de Tório",
+      "destination": "RP/textures/blocks/ores/deepslate_thorium_ore.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "block",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 2
+      },
+      "colors": 17,
+      "pixel_sha256": "9beba8131cdb48a63ff2d89102cf73e9de60ef48e654cd3fedd2e85f2f60c9a1",
+      "file_sha256": "78a8b9ca0dcd45aefd800acdff461163b33c15c0191468f3bcd2be47e28d59f1",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "ore_host_preservation",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\deepslate.png",
+        "reference_sha256": "fcba18a824b979157ccce4075b5bc26fd5c4dda6bc0003fc691ae7012856ba22",
+        "alpha_exact": true,
+        "editable_pixels": 30,
+        "protected_pixels": 226,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 30
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_ore",
+      "label": "Minério de Tório",
+      "destination": "RP/textures/blocks/ores/thorium_ore.png",
+      "size": [
+        16,
+        16
+      ],
+      "kind": "block",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 2
+      },
+      "colors": 16,
+      "pixel_sha256": "fd89e5e9ed0bb3470d1bc55787cee1beb49876583e805fa99d11caad05146787",
+      "file_sha256": "ca231cce949032cf470cb06cf06b554a1eb218b368c8f6ca2773908d04f3bf95",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "ore_host_preservation",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\stone.png",
+        "reference_sha256": "12f1c99206df13e951a68b9e5e294c5e0e15c252c3bb141632c8c969a909d1a8",
+        "alpha_exact": true,
+        "editable_pixels": 30,
+        "protected_pixels": 226,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 30
+      },
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_0",
+      "label": "Cultivo de Tório estágio 0",
+      "destination": "RP/textures/blocks/crops/thorium_0.png",
+      "size": [
+        32,
+        16
+      ],
+      "kind": "crop",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 7,
+      "pixel_sha256": "c00fbca05978e1125cf4ccd5a39fdb598aba5a5bfde259a35d5a97490a0d1c69",
+      "file_sha256": "08b6b41cca9d8fb552795a5a9b1f13c11724bb928fd684806c1e56c71a5d1f57",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_0.png",
+        "reference_sha256": "08b6b41cca9d8fb552795a5a9b1f13c11724bb928fd684806c1e56c71a5d1f57",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 512,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_1",
+      "label": "Cultivo de Tório estágio 1",
+      "destination": "RP/textures/blocks/crops/thorium_1.png",
+      "size": [
+        32,
+        16
+      ],
+      "kind": "crop",
+      "technical": {
+        "ERROR": 0,
+        "WARNING": 1,
+        "INFO": 2
+      },
+      "colors": 10,
+      "pixel_sha256": "4e636053c0e7d32d54afef11090642078cba6f826212c96e5b6138c668f25a0e",
+      "file_sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+      "deterministic": true,
+      "artistic_status": "pending_visual_review",
+      "human_approval": "required",
+      "contract": {
+        "mode": "preserve_exact",
+        "reference": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\references\\unchanged_thorium_1.png",
+        "reference_sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+        "alpha_exact": true,
+        "editable_pixels": 0,
+        "protected_pixels": 512,
+        "protected_pixel_changes": 0,
+        "changed_pixels": 0
+      },
+      "revision_scope": "preserved"
+    }
+  ],
+  "catalog": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\family-v3\\catalog.json",
+  "selection": "all",
+  "artistic_status": "pending_visual_review",
+  "human_approval": "required",
+  "generated_images": {
+    "deepslate_thorium_ore.png": "78a8b9ca0dcd45aefd800acdff461163b33c15c0191468f3bcd2be47e28d59f1",
+    "raw_thorium.png": "a705bd3c019d79c62bd85f132a3784f81ea15400be128dda30798a0712a1831c",
+    "raw_thorium_block.png": "0cf7c93c264d1f44870237dd5cdc422851010eaf8f7f2b1a7852cdef0e3d76b1",
+    "raw_thorium_dust.png": "2805e917aefb508c7dbd76bab0a249c0e1681569b35a2ae57ef66c5e4072eb0b",
+    "thorium_0.png": "08b6b41cca9d8fb552795a5a9b1f13c11724bb928fd684806c1e56c71a5d1f57",
+    "thorium_1.png": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+    "thorium_aiot.png": "49871b87fd95d5e92c45c1cd5a010d1d5b7606ef423b30271e89d4a02d329d7d",
+    "thorium_axe.png": "2499cea112577617b0cffec3a06f25d84f1d81550423931dfca92464c279d6fa",
+    "thorium_block.png": "7f00a19309260e60140cd41a32b9349da2b9b910fd1ca7bc34dcdd8846c752eb",
+    "thorium_boots.png": "43720dc601b4fe63572f1d61326399e95ea2e4e164307d729a62d469b1b5fca7",
+    "thorium_chestplate.png": "291ba16cc61824e4296bf07af4a32bbbe22c194474b5ff1ea3fa3ccd62affb94",
+    "thorium_chunk.png": "6eacd3d5b3977ab8162a029ab06d18de6c7267210178718a585eea35872d5473",
+    "thorium_dust.png": "4533f6cf6f0ad8404f21411a7643eaffacdc8f9dc543e1afdf5fc483ba21738d",
+    "thorium_family_preview.png": "c5c8533dd9d963b74ed0726f4f5cd204a3ba9e555e0756afccc99851e095f2ab",
+    "thorium_gear.png": "6fa08e9cb1eea1c0d11fc4573f6c6b9d505dcd381d0272b22cca9468ddeda01a",
+    "thorium_hammer.png": "2c88517197ad1122acb320dd9e5a20a02d8bd432bbdb59e2d8ceffb487c1d270",
+    "thorium_helmet.png": "29c9885cb07f5803403871efffcec3ebcd9dda9e103c4874ac25075845295360",
+    "thorium_hoe.png": "927aaa3b5fcd7cf95687c8c5a89414b7d1807c7af3d3d041460646fa8ad88874",
+    "thorium_ingot.png": "416e5bb4cce6425ea7f68a553022dec76bbc68d395c09d5397ee211194a0ff81",
+    "thorium_leggings.png": "9dd67664bf60214674ba43e45f165dfa04059337a8afcacfc96f253352eb63ae",
+    "thorium_mesh.png": "7e411369e80a6b8f78c5f5f1abac953b54fe75b0e3f0909653c72568508653df",
+    "thorium_net.png": "af7d19c22543d9d9785ac339e20c35c400d5b87c0be5a07b4fece614f27499fc",
+    "thorium_nugget.png": "924e0a696f7aceb6624ca431c899af83637d508575157b72e69ec8b15a56d31c",
+    "thorium_ore.png": "ca231cce949032cf470cb06cf06b554a1eb218b368c8f6ca2773908d04f3bf95",
+    "thorium_paxel.png": "c5d70b39e891a1c93e5e26b6a23483f9cdef66a716804b779a89b353cb84faf8",
+    "thorium_pickaxe.png": "5da842d9ec35d4b4722f46b70793321f1466fcddfa47f326da759331e53eb9b2",
+    "thorium_plate.png": "5e10c680ecd771718d68c3089d0cfe6c1e72d4f4827b5fe43f858182e7068535",
+    "thorium_rod.png": "e05d6b66279c92defd81ef2bc4a6771ed3bd8515f0457adcadee5d6a8ac0c49d",
+    "thorium_seeds.png": "c73977fa2fdb8525fb2cbc47aaa6c85cc70e1d35e1bfb64fe41be208e7f71b34",
+    "thorium_set_preview.png": "d3b23f329d9f80008188cbb855a7056e766f009158d4b31ee96b00affdd62a1d",
+    "thorium_shovel.png": "7e885677c99cffede17765dac438414810f8f98a5ac3215f06a125929236f3f7",
+    "thorium_sword.png": "12ccef4dd553df6d8fe3b5134c3912f76d3bda3def7f4ee5b2df4fc1ffeb3e6e"
+  }
+}

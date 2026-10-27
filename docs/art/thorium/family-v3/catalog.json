@@ -1,0 +1,431 @@
+{
+  "version": 3,
+  "assets": [
+    {
+      "name": "thorium_helmet",
+      "label": "Capacete de Tório",
+      "kind": "armor",
+      "design": "designs/thorium_helmet.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/armor/thorium_helmet.png",
+      "contract": "contracts/thorium_helmet.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_chestplate",
+      "label": "Peitoral de Tório",
+      "kind": "armor",
+      "design": "designs/thorium_chestplate.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/armor/thorium_chestplate.png",
+      "contract": "contracts/thorium_chestplate.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_leggings",
+      "label": "Calças de Tório",
+      "kind": "armor",
+      "design": "designs/thorium_leggings.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/armor/thorium_leggings.png",
+      "contract": "contracts/thorium_leggings.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_boots",
+      "label": "Botas de Tório",
+      "kind": "armor",
+      "design": "designs/thorium_boots.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/armor/thorium_boots.png",
+      "contract": "contracts/thorium_boots.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_ingot",
+      "label": "Lingote de Tório",
+      "kind": "material",
+      "design": "designs/thorium_ingot.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/ores/thorium_ingot.png",
+      "contract": "contracts/thorium_ingot.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_plate",
+      "label": "Placa de Tório",
+      "kind": "material",
+      "design": "designs/thorium_plate.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/ores/thorium_plate.png",
+      "contract": "contracts/thorium_plate.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_nugget",
+      "label": "Pepita de Tório",
+      "kind": "material",
+      "design": "designs/thorium_nugget.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/ores/thorium_nugget.png",
+      "contract": "contracts/thorium_nugget.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "raw_thorium",
+      "label": "Tório bruto",
+      "kind": "material",
+      "design": "designs/raw_thorium.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/ores/raw_thorium.png",
+      "contract": "contracts/raw_thorium.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_chunk",
+      "label": "Fragmento de Tório",
+      "kind": "material",
+      "design": "designs/thorium_chunk.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/ores/thorium_chunk.png",
+      "contract": "contracts/thorium_chunk.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_dust",
+      "label": "Pó de Tório",
+      "kind": "material",
+      "design": "designs/thorium_dust.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/ores/thorium_dust.png",
+      "contract": "contracts/thorium_dust.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "raw_thorium_dust",
+      "label": "Pó de Tório bruto",
+      "kind": "material",
+      "design": "designs/raw_thorium_dust.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/ores/raw_thorium_dust.png",
+      "contract": "contracts/raw_thorium_dust.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_rod",
+      "label": "Haste de Tório",
+      "kind": "material",
+      "design": "designs/thorium_rod.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/ores/thorium_rod.png",
+      "contract": "contracts/thorium_rod.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_gear",
+      "label": "Engrenagem de Tório",
+      "kind": "component",
+      "design": "designs/thorium_gear.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/machinery/thorium_gear.png",
+      "contract": "contracts/thorium_gear.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_mesh",
+      "label": "Malha de Tório",
+      "kind": "component",
+      "design": "designs/thorium_mesh.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/meshes/thorium_mesh.png",
+      "contract": "contracts/thorium_mesh.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_net",
+      "label": "Rede de Tório",
+      "kind": "component",
+      "design": "designs/thorium_net.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/nets/thorium_net.png",
+      "contract": "contracts/thorium_net.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_seeds",
+      "label": "Sementes de Tório",
+      "kind": "material",
+      "design": "designs/thorium_seeds.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/ores/thorium_seeds.png",
+      "contract": "contracts/thorium_seeds.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_sword",
+      "label": "Espada de Tório",
+      "kind": "tool",
+      "design": "designs/thorium_sword.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/tools/thorium_sword.png",
+      "contract": "contracts/thorium_sword.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_pickaxe",
+      "label": "Picareta de Tório",
+      "kind": "tool",
+      "design": "designs/thorium_pickaxe.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/tools/thorium_pickaxe.png",
+      "contract": "contracts/thorium_pickaxe.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_axe",
+      "label": "Machado de Tório",
+      "kind": "tool",
+      "design": "designs/thorium_axe.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/tools/thorium_axe.png",
+      "contract": "contracts/thorium_axe.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_shovel",
+      "label": "Pá de Tório",
+      "kind": "tool",
+      "design": "designs/thorium_shovel.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/tools/thorium_shovel.png",
+      "contract": "contracts/thorium_shovel.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_hoe",
+      "label": "Enxada de Tório",
+      "kind": "tool",
+      "design": "designs/thorium_hoe.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/tools/thorium_hoe.png",
+      "contract": "contracts/thorium_hoe.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_hammer",
+      "label": "Martelo de Tório",
+      "kind": "tool",
+      "design": "designs/thorium_hammer.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/tools/thorium_hammer.png",
+      "contract": "contracts/thorium_hammer.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_paxel",
+      "label": "Paxel de Tório",
+      "kind": "tool",
+      "design": "designs/thorium_paxel.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/items/tools/thorium_paxel.png",
+      "contract": "contracts/thorium_paxel.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_aiot",
+      "label": "AIOT de Tório",
+      "kind": "tool",
+      "design": "designs/thorium_aiot.json",
+      "size": [
+        18,
+        18
+      ],
+      "destination": "RP/textures/items/tools/thorium_aiot.png",
+      "contract": "contracts/thorium_aiot.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_block",
+      "label": "Bloco de Tório",
+      "kind": "block",
+      "design": "designs/thorium_block.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/blocks/ores/thorium_block.png",
+      "contract": "contracts/thorium_block.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "raw_thorium_block",
+      "label": "Bloco de Tório bruto",
+      "kind": "block",
+      "design": "designs/raw_thorium_block.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/blocks/ores/raw_thorium_block.png",
+      "contract": "contracts/raw_thorium_block.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "deepslate_thorium_ore",
+      "label": "Minério profundo de Tório",
+      "kind": "block",
+      "design": "designs/deepslate_thorium_ore.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/blocks/ores/deepslate_thorium_ore.png",
+      "contract": "contracts/deepslate_thorium_ore.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_ore",
+      "label": "Minério de Tório",
+      "kind": "block",
+      "design": "designs/thorium_ore.json",
+      "size": [
+        16,
+        16
+      ],
+      "destination": "RP/textures/blocks/ores/thorium_ore.png",
+      "contract": "contracts/thorium_ore.json",
+      "revision_scope": "regenerated"
+    },
+    {
+      "name": "thorium_0",
+      "label": "Cultivo de Tório estágio 0",
+      "kind": "crop",
+      "design": "designs/thorium_0.json",
+      "size": [
+        32,
+        16
+      ],
+      "destination": "RP/textures/blocks/crops/thorium_0.png",
+      "contract": "contracts/thorium_0.json",
+      "revision_scope": "preserved"
+    },
+    {
+      "name": "thorium_1",
+      "label": "Cultivo de Tório estágio 1",
+      "kind": "crop",
+      "design": "designs/thorium_1.json",
+      "size": [
+        32,
+        16
+      ],
+      "destination": "RP/textures/blocks/crops/thorium_1.png",
+      "contract": "contracts/thorium_1.json",
+      "revision_scope": "preserved"
+    }
+  ],
+  "requested_regeneration": [
+    "deepslate_thorium_ore",
+    "raw_thorium",
+    "raw_thorium_block",
+    "thorium_aiot",
+    "thorium_axe",
+    "thorium_dust",
+    "thorium_hammer",
+    "thorium_hoe",
+    "thorium_ingot",
+    "thorium_mesh",
+    "thorium_net",
+    "thorium_nugget",
+    "thorium_ore",
+    "thorium_paxel",
+    "thorium_pickaxe",
+    "thorium_plate",
+    "thorium_seeds",
+    "thorium_shovel",
+    "thorium_sword"
+  ],
+  "preserved_assets": [
+    "thorium_helmet",
+    "thorium_chestplate",
+    "thorium_leggings",
+    "thorium_boots",
+    "thorium_chunk",
+    "raw_thorium_dust",
+    "thorium_rod",
+    "thorium_gear",
+    "thorium_block",
+    "thorium_0",
+    "thorium_1"
+  ],
+  "palette": "../family-v2/palette.json",
+  "scope": "19 requested corrections; 11 other images preserved, including the approved metal block and current armor."
+}

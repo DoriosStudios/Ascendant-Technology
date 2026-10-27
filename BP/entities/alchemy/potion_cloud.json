@@ -1,0 +1,51 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "utilitycraft:alchemical_potion_cloud",
+            "is_spawnable": false,
+            "is_summonable": true
+        },
+        "components": {
+            "minecraft:collision_box": {
+                "width": 0,
+                "height": 0
+            },
+            "minecraft:physics": {
+                "has_gravity": false,
+                "has_collision": false
+            },
+            "minecraft:persistent": {},
+            "minecraft:damage_sensor": {
+                "triggers": [
+                    {
+                        "cause": "all",
+                        "deals_damage": "no"
+                    }
+                ]
+            },
+            "minecraft:timer": {
+                "time": 30,
+                "looping": false,
+                "time_down_event": {
+                    "event": "ascendant:expire",
+                    "target": "self"
+                }
+            }
+        },
+        "component_groups": {
+            "ascendant:expired": {
+                "minecraft:instant_despawn": {}
+            }
+        },
+        "events": {
+            "ascendant:expire": {
+                "add": {
+                    "component_groups": [
+                        "ascendant:expired"
+                    ]
+                }
+            }
+        }
+    }
+}

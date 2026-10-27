@@ -1,0 +1,33 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "alpha": "binary",
+  "require_transparent": true,
+  "palette": {
+    "allowed": [
+      [
+        220,
+        96,
+        156
+      ],
+      [
+        235,
+        132,
+        184
+      ],
+      [
+        235,
+        176,
+        206
+      ],
+      [
+        58,
+        44,
+        55
+      ]
+    ],
+    "max_colors": 4
+  }
+}

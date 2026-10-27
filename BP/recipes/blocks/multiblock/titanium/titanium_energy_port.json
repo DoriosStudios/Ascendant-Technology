@@ -1,0 +1,36 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:titanium_energy_port"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "key": {
+            "P": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "C": {
+                "item": "utilitycraft:energy_cable"
+            },
+            "S": {
+                "item": "utilitycraft:titanium_case"
+            }
+        },
+        "pattern": [
+            "PCP",
+            "CSC",
+            "PCP"
+        ],
+        "result": {
+            "item": "utilitycraft:titanium_energy_port",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:energy_cable"
+            }
+        ]
+    }
+}

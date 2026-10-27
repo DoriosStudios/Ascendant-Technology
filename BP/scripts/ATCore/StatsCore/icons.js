@@ -73,6 +73,9 @@ export function getAttributeIcon(label, context = "") {
 export function getAbilityIcon(label) {
     const normalized = normalizeLabel(label);
 
+    if (normalized.includes("triple trouble")) return STATSCORE_ICONS.tripleTrouble;
+    if (normalized.includes("double trouble")) return STATSCORE_ICONS.doubleTrouble;
+    if (normalized.includes("bunny jump")) return STATSCORE_ICONS.walkingSpeed;
     if (normalized.includes("ingniter") || normalized.includes("igniter") || normalized.includes("fire")) {
         return STATSCORE_ICONS.fire;
     }

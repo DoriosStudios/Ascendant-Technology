@@ -5,23 +5,25 @@ import { DeactivationManager } from "./deactivationManager.js";
 /**
  * Global multiblock listeners.
  *
- * Any time a casing block is broken or exploded, the owning multiblock is
+ * Any time a casing or internal component is broken or exploded, the owning multiblock is
  * resolved and deactivated to keep controller state consistent with the world.
  */
+function isStructurePart(permutation) {
+  const tags = permutation.getTags();
+  return tags.includes(Constants.MULTIBLOCK_COMPONENT_TAG)
+    || tags.some((tag) => tag.startsWith(Constants.MULTIBLOCK_CASE_TAG_PREFIX));
+}
+
 world.afterEvents.playerBreakBlock.subscribe((e) => {
   const { brokenBlockPermutation, block, player } = e;
-  const tags = brokenBlockPermutation.getTags();
-  const isCase = tags.some((tag) => tag.startsWith(Constants.MULTIBLOCK_CASE_TAG_PREFIX));
-  if (!isCase) return;
+  if (!isStructurePart(brokenBlockPermutation)) return;
 
   DeactivationManager.deactivateMultiblock(block, player, { blockId: "minecraft:water" });
 });
 
 world.afterEvents.blockExplode.subscribe((e) => {
   const { explodedBlockPermutation, block } = e;
-  const tags = explodedBlockPermutation.getTags();
-  const isCase = tags.some((tag) => tag.startsWith(Constants.MULTIBLOCK_CASE_TAG_PREFIX));
-  if (!isCase) return;
+  if (!isStructurePart(explodedBlockPermutation)) return;
 
   DeactivationManager.deactivateMultiblock(block, undefined, { blockId: "minecraft:water" });
 });

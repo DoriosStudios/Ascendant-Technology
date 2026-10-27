@@ -1,0 +1,17 @@
+{
+    "format_version": "1.8.0",
+    "animations": {
+        "animation.alchemical_potion.billboard": {
+            "loop": true,
+            "bones": {
+                "bottle": {
+                    "rotation": [
+                        "query.rotation_to_camera(0)",
+                        "query.rotation_to_camera(1) - query.body_y_rotation",
+                        0
+                    ]
+                }
+            }
+        }
+    }
+}

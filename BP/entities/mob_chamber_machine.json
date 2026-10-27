@@ -1,0 +1,47 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "at:mob_chamber_machine",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "properties": {
+                "utilitycraft:players": { "type": "int", "default": 0, "range": [0, 100] },
+                "utilitycraft:tick_group": { "type": "int", "default": 0, "range": [0, 5] }
+            }
+        },
+        "component_groups": {
+            "utilitycraft:inventory_36": {
+                "minecraft:inventory": { "inventory_size": 40, "container_type": "container" }
+            },
+            "utilitycraft:inventory_40": {
+                "minecraft:inventory": { "inventory_size": 40, "container_type": "container" }
+            },
+            "utilitycraft:complex_machine_fluid": {
+                "minecraft:type_family": {
+                    "family": ["utilitycraft:block_container", "inanimate", "dorios:machine", "dorios:multiblock", "dorios:energy_container", "dorios:container", "dorios:fluid_container"]
+                }
+            },
+            "utilitycraft:hide": { "minecraft:scale": { "value": 0.1 } }
+        },
+        "components": {
+            "minecraft:type_family": {
+                "family": ["utilitycraft:block_container", "inanimate", "dorios:machine", "dorios:multiblock", "dorios:energy_container", "dorios:container", "dorios:fluid_container"]
+            },
+            "minecraft:inventory": { "inventory_size": 4, "container_type": "container" },
+            "minecraft:collision_box": { "width": 1, "height": 1 },
+            "minecraft:physics": { "has_gravity": false, "has_collision": false },
+            "minecraft:pushable": { "is_pushable": false, "is_pushable_by_piston": false },
+            "minecraft:damage_sensor": { "triggers": [{ "cause": "all", "deals_damage": "no" }] },
+            "minecraft:persistent": {},
+            "minecraft:fire_immune": {}
+        },
+        "events": {
+            "utilitycraft:inventory_36": { "add": { "component_groups": ["utilitycraft:inventory_36"] } },
+            "utilitycraft:inventory_40": { "add": { "component_groups": ["utilitycraft:inventory_40"] } },
+            "utilitycraft:complex_machine_fluid": { "add": { "component_groups": ["utilitycraft:complex_machine_fluid"] } },
+            "utilitycraft:hide": { "add": { "component_groups": ["utilitycraft:hide"] } },
+            "utilitycraft:show": { "remove": { "component_groups": ["utilitycraft:hide"] } }
+        }
+    }
+}

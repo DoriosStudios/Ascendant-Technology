@@ -71,10 +71,6 @@ export function createSpecialConveyors(ctx) {
         return Number.isFinite(value) ? Math.max(0, Math.min(max, Math.floor(value))) : 0;
     }
 
-    function consumeForItem(block, network) {
-        return ctx.consumeEnergy(block, network, ctx.specialEnergyCost);
-    }
-
     function routerDirection(block, key, options) {
         const passable = options.filter((direction) => direction && isPassable(block, direction));
         if (passable.length === 0) {
@@ -280,20 +276,20 @@ export function createSpecialConveyors(ctx) {
         return false;
     }
 
-    function processRouter(block, meta, bucket, network) {
+    function processRouter(block, meta, bucket) {
         const facing = ctx.getState(block, "minecraft:cardinal_direction");
         const directions = relativeDirections(facing);
         const key = runtimeKey(block);
         const selected = routerDirection(block, key, [directions.front, directions.right, directions.left]);
         if (!selected) return;
         for (const item of bucket.items) {
-            if (!ctx.canMoveWithSpacing(item, bucket.items, selected) || !consumeForItem(block, network)) continue;
+            if (!ctx.canMoveWithSpacing(item, bucket.items, selected)) continue;
             send(item, block, selected);
             ctx.rememberMove(item, block.location);
         }
     }
 
-    function processSorter(block, meta, bucket, network) {
+    function processSorter(block, meta, bucket) {
         const directions = relativeDirections(ctx.getState(block, "minecraft:cardinal_direction"));
         const key = runtimeKey(block);
         let cycle = cycleValue(sorterCycles, key, 1);
@@ -309,7 +305,7 @@ export function createSpecialConveyors(ctx) {
                 ? [primary, secondary, directions.front]
                 : [directions.front, primary, secondary];
             const selected = candidates.find((direction) => direction && isPassable(block, direction));
-            if (!selected || !ctx.canMoveWithSpacing(item, bucket.items, selected) || !consumeForItem(block, network)) continue;
+            if (!selected || !ctx.canMoveWithSpacing(item, bucket.items, selected)) continue;
             send(item, block, selected);
             ctx.rememberMove(item, block.location);
             if (selected === primary || selected === secondary) cycle = 1 - cycle;
@@ -317,7 +313,7 @@ export function createSpecialConveyors(ctx) {
         sorterCycles.set(key, cycle);
     }
 
-    function processSmartRouter(block, meta, bucket, network) {
+    function processSmartRouter(block, meta, bucket) {
         const directions = relativeDirections(ctx.getState(block, "minecraft:cardinal_direction"));
         const config = readRouter(block);
         for (const item of bucket.items) {
@@ -331,13 +327,13 @@ export function createSpecialConveyors(ctx) {
                 if (direction && !candidates.includes(direction)) candidates.push(direction);
             }
             const selected = candidates.find((direction) => isPassable(block, direction));
-            if (!selected || !ctx.canMoveWithSpacing(item, bucket.items, selected) || !consumeForItem(block, network)) continue;
+            if (!selected || !ctx.canMoveWithSpacing(item, bucket.items, selected)) continue;
             send(item, block, selected);
             ctx.rememberMove(item, block.location);
         }
     }
 
-    function processOverflow(block, meta, bucket, network) {
+    function processOverflow(block, meta, bucket) {
         const directions = relativeDirections(ctx.getState(block, "minecraft:cardinal_direction"));
         const key = runtimeKey(block);
         let cycle = cycleValue(overflowCycles, key, 1);
@@ -349,14 +345,14 @@ export function createSpecialConveyors(ctx) {
                 selected = isPassable(block, primary) ? primary : isPassable(block, secondary) ? secondary : null;
                 if (selected) cycle = 1 - cycle;
             }
-            if (!selected || !ctx.canMoveWithSpacing(item, bucket.items, selected) || !consumeForItem(block, network)) continue;
+            if (!selected || !ctx.canMoveWithSpacing(item, bucket.items, selected)) continue;
             send(item, block, selected);
             ctx.rememberMove(item, block.location);
         }
         overflowCycles.set(key, cycle);
     }
 
-    function processUnderflow(block, meta, bucket, network) {
+    function processUnderflow(block, meta, bucket) {
         const directions = relativeDirections(ctx.getState(block, "minecraft:cardinal_direction"));
         const key = runtimeKey(block);
         let cycle = cycleValue(underflowCycles, key, 1);
@@ -366,9 +362,7 @@ export function createSpecialConveyors(ctx) {
             let moved = false;
             for (const direction of [primary, secondary]) {
                 if (!direction || !hasContainer(block, direction)) continue;
-                if (!ctx.canConsumeEnergy(block, network, ctx.specialEnergyCost)) continue;
                 if (!ctx.tryInsert(item, block, ctx.directionVectors[direction], ctx.oppositeDirections[direction])) continue;
-                ctx.consumeEnergy(block, network, ctx.specialEnergyCost);
                 ctx.rememberMove(item, block.location);
                 cycle = 1 - cycle;
                 moved = true;
@@ -376,15 +370,14 @@ export function createSpecialConveyors(ctx) {
             }
             if (moved) continue;
             if (!directions.front || !isPassable(block, directions.front)
-                || !ctx.canMoveWithSpacing(item, bucket.items, directions.front)
-                || !consumeForItem(block, network)) continue;
+                || !ctx.canMoveWithSpacing(item, bucket.items, directions.front)) continue;
             send(item, block, directions.front);
             ctx.rememberMove(item, block.location);
         }
         underflowCycles.set(key, cycle);
     }
 
-    function processJunction(block, meta, bucket, network) {
+    function processJunction(block, meta, bucket) {
         const facing = ctx.getState(block, "minecraft:cardinal_direction");
         for (const item of bucket.items) {
             const previous = ctx.getLastMove(item);
@@ -405,20 +398,19 @@ export function createSpecialConveyors(ctx) {
             }
             if (!isPassable(block, direction)) direction = ctx.oppositeDirections[direction];
             if (!direction || !isPassable(block, direction)
-                || !ctx.canMoveWithSpacing(item, bucket.items, direction)
-                || !consumeForItem(block, network)) continue;
+                || !ctx.canMoveWithSpacing(item, bucket.items, direction)) continue;
             send(item, block, direction);
             ctx.rememberMove(item, block.location);
         }
     }
 
-    function process(block, meta, bucket, network) {
-        if (meta.shape === "router") return processRouter(block, meta, bucket, network);
-        if (meta.shape === "sorter" || meta.shape === "inverted_sorter") return processSorter(block, meta, bucket, network);
-        if (meta.shape === "smart_router") return processSmartRouter(block, meta, bucket, network);
-        if (meta.shape === "overflow") return processOverflow(block, meta, bucket, network);
-        if (meta.shape === "underflow") return processUnderflow(block, meta, bucket, network);
-        if (meta.shape === "junction") return processJunction(block, meta, bucket, network);
+    function process(block, meta, bucket) {
+        if (meta.shape === "router") return processRouter(block, meta, bucket);
+        if (meta.shape === "sorter" || meta.shape === "inverted_sorter") return processSorter(block, meta, bucket);
+        if (meta.shape === "smart_router") return processSmartRouter(block, meta, bucket);
+        if (meta.shape === "overflow") return processOverflow(block, meta, bucket);
+        if (meta.shape === "underflow") return processUnderflow(block, meta, bucket);
+        if (meta.shape === "junction") return processJunction(block, meta, bucket);
     }
 
     return {

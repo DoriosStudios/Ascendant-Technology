@@ -1,0 +1,19 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of the complete armor reference sheet, native icons, integer-nearest set preview and template/mapped/final comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "7f76e086e405fdcafa689f040c6377b4cc62c23772168eb5c9529cfe656c606e",
+  "human_approval": "required",
+  "inspected_files": [
+    "../draft-icons/thorium_set_preview.png",
+    "../draft-review/template-mapped-final.png"
+  ],
+  "observations": [
+    "The waist clasp and knee edges are small additions inside the same trouser silhouette; the central leg opening remains unchanged.",
+    "The left-facing planes stay brighter than the right. The small amount of added detail remains legible without filling the leg gap."
+  ],
+  "limitations": [
+    "Only inventory artwork was requested.",
+    "No human approval of the finished icons has been supplied."
+  ]
+}

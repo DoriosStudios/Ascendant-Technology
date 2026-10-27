@@ -1,3 +1,4 @@
+import { resolveAggressor } from "./aggressors.js";
 import { DAMAGE_TYPE_ALIASES } from "../config/definitions.js";
 
 /**
@@ -53,7 +54,7 @@ export function getEntityHurtAttacker(event) {
             ?? null;
     } catch { }
 
-    return projectileOwner
+    const attacker = projectileOwner
         ?? event?.damageSource?.damagingEntity
         ?? projectile?.owner
         ?? projectile?.source
@@ -62,6 +63,7 @@ export function getEntityHurtAttacker(event) {
         ?? event?.source
         ?? event?.sourceEntity
         ?? null;
+    return resolveAggressor(attacker, event?.hurtEntity ?? event?.deadEntity ?? event?.entity);
 }
 
 /**

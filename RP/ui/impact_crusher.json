@@ -125,27 +125,38 @@
                 }
             },
             {
-                "side_panel@ascendant_common.info_panel": {
+                "side_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$has_text": false,
                     "$text_borders": [88, 150],
                     "$bg_size": [104, 166],
                     "$info_size": [96, 158],
-                    "offset": [-100, -7],
+                    "offset": [-102, -7],
                     "visible": "$show_side_content"
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "size": [88, 148],
+                    "size": [
+                        88,
+                        148
+                    ],
                     "layer": 3,
                     "$text_scale": 0.55,
-                    "offset": [-88, 2],
-                    "visible": "$show_side_content"
+                    "offset": [
+                        -94,
+                        1
+                    ],
+                    "visible": "$show_side_content",
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ]
                 }
             },
             {
@@ -230,7 +241,7 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
                     "offset": [24, 0],
                     "$right_machine_tabs_name": "$right_machine_tabs_name",
                     "$io_toggle_control_name": "$io_toggle_control_name",
@@ -272,11 +283,22 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "offset": [24, 0],
+                "info_tab@at_common.machine_info_tab": {
+                    "offset": [
+                        24,
+                        0
+                    ],
                     "$right_machine_tabs_name": "$right_machine_tabs_name",
                     "$info_toggle_control_name": "$info_toggle_control_name",
-                    "$info_description": "ui.utilitycraft:info.impact_crusher"
+                    "$info_description": "ui.utilitycraft:info.impact_crusher",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        -3.0,
+                        7
+                    ]
                 }
             },
             {
@@ -318,7 +340,7 @@
                                 "layer": 5,
                                 "controls": [
                                     {
-                                        "recipes_side_panel@uc.crusher_recipes_side_panel": {}
+                                        "recipes_side_panel@uc.crusher_recipes_side_panel": {"offset": [-89, 0]}
                                     },
                                     {
                                         "recipes_connector@uc.crusher_recipes_connector": {}
@@ -337,15 +359,7 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "view_top_bar@uc.machine_recipe_view_top_bar": {
-                                                        "offset": [60, -91],
-                                                        "$machine_toggle_unchecked": "textures/ui/toggle_button/tab_pressed",
-                                                        "$machine_toggle_checked": "textures/ui/toggle_button/tab_pressed",
-                                                        "$machine_toggle_unchecked_hover": "textures/ui/toggle_button/tab_hover_pressed",
-                                                        "$machine_toggle_checked_hover": "textures/ui/toggle_button/tab_hover_pressed",
-                                                        "$recipes_toggle_checked": "textures/ui/toggle_button/tab",
-                                                        "$recipes_toggle_checked_hover": "textures/ui/toggle_button/tab_hover"
-                                                    }
+                                                    "view_top_bar@at_common.machine_recipe_card": {"$card_offset": [111, -79]}
                                                 },
                                                 {
                                                     "impact_crusher_top@impact_crusher.impact_crusher_top": {}
@@ -377,17 +391,7 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "view_top_bar@uc.machine_recipe_view_top_bar": {
-                                                        "offset": [60, -91],
-                                                        "$machine_toggle_default_state": false,
-                                                        "$recipes_toggle_default_state": true,
-                                                        "$machine_toggle_checked": "textures/ui/toggle_button/tab",
-                                                        "$machine_toggle_checked_hover": "textures/ui/toggle_button/tab_hover",
-                                                        "$recipes_toggle_unchecked": "textures/ui/toggle_button/tab_pressed",
-                                                        "$recipes_toggle_checked": "textures/ui/toggle_button/tab_pressed",
-                                                        "$recipes_toggle_unchecked_hover": "textures/ui/toggle_button/tab_hover_pressed",
-                                                        "$recipes_toggle_checked_hover": "textures/ui/toggle_button/tab_hover_pressed"
-                                                    }
+                                                    "view_top_bar@at_common.machine_recipe_card": {"$machine_toggle_default_state": false, "$recipes_toggle_default_state": true, "$card_offset": [111, -79]}
                                                 },
                                                 {
                                                     "impact_crusher_top@impact_crusher.impact_crusher_top": {

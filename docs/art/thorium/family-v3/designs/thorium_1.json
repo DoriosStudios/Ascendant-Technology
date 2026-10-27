@@ -1,0 +1,92 @@
+{
+  "size": [
+    32,
+    16
+  ],
+  "intent": {
+    "identity": "Cultivo de Tório estágio 1",
+    "usage": "AT inventory texture or block texture; selective correction of requested assets",
+    "material": "Thorium pink metal with preserved native reference construction and protected nonmetal regions",
+    "orientation": "exact native reference pose and footprint",
+    "lighting": "reference lighting hierarchy retained, shared pink ramp; extended contrast only for powder/raw",
+    "structure": [
+      "Keep this unlisted image byte-identical, including the creator-approved metal block."
+    ],
+    "style": [
+      "small reference-guided edits",
+      "no tool redesign",
+      "no resizing or antialiasing"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/unchanged_thorium_1.png",
+      "sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+      "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block.",
+      "approval": "creator-requested source family; derivative still pending visual approval"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "inherit",
+    "allow_clip": false
+  },
+  "palette": {
+    "c_38_99_37": [
+      38,
+      99,
+      37
+    ],
+    "c_43_112_42": [
+      43,
+      112,
+      42
+    ],
+    "c_74_143_40": [
+      74,
+      143,
+      40
+    ],
+    "c_85_171_45": [
+      85,
+      171,
+      45
+    ],
+    "c_167_67_114": [
+      167,
+      67,
+      114
+    ],
+    "c_220_96_156": [
+      220,
+      96,
+      156
+    ],
+    "c_231_113_172": [
+      231,
+      113,
+      172
+    ],
+    "c_235_176_206": [
+      235,
+      176,
+      206
+    ],
+    "c_235_196_217": [
+      235,
+      196,
+      217
+    ],
+    "c_235_212_224": [
+      235,
+      212,
+      224
+    ]
+  },
+  "source": {
+    "path": "../references/unchanged_thorium_1.png",
+    "sha256": "03559ed086053c5a49650096850ba025e5d65051d33f31726672a6e8a3cce0ce",
+    "purpose": "Keep this unlisted image byte-identical, including the creator-approved metal block."
+  },
+  "layers": []
+}

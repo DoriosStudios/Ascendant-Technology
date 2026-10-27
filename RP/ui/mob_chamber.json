@@ -1,0 +1,2402 @@
+{
+    "namespace": "mob_chamber",
+    "rect": {
+        "type": "image",
+        "texture": "textures/ui/white",
+        "uv": [
+            4,
+            4
+        ],
+        "uv_size": [
+            1,
+            1
+        ],
+        "keep_ratio": false
+    },
+    "console_frame": {
+        "type": "image",
+        "texture": "textures/ui/panels/background_panel",
+        "size": [
+            "100%",
+            "100%"
+        ],
+        "keep_ratio": false
+    },
+    "chamber_top": {
+        "type": "collection_panel",
+        "collection_name": "container_items",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [
+            0,
+            0
+        ],
+        "size": [
+            216,
+            166
+        ],
+        "controls": [
+            {
+                "console@mob_chamber.console_frame": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        0
+                    ],
+                    "size": [
+                        216,
+                        166
+                    ]
+                }
+            },
+            {
+                "title@at_core.machine_name": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        8,
+                        7
+                    ],
+                    "size": [
+                        166,
+                        10
+                    ],
+                    "$offset": [
+                        8,
+                        7
+                    ],
+                    "$color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "$text_scale": 1,
+                    "shadow": false,
+                    "layer": 5
+                }
+            },
+            {
+                "state_reader": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "collection_index": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "collection",
+                            "binding_collection_name": "container_items",
+                            "binding_name": "#hover_text",
+                            "binding_name_override": "#chamber_state"
+                        }
+                    ]
+                }
+            },
+            {
+                "meter_reader": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "collection_index": 2,
+                    "bindings": [
+                        {
+                            "binding_type": "collection",
+                            "binding_collection_name": "container_items",
+                            "binding_name": "#hover_text",
+                            "binding_name_override": "#meter_state"
+                        }
+                    ]
+                }
+            },
+            {
+                "essence_heading": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        28
+                    ],
+                    "size": [
+                        146,
+                        9
+                    ],
+                    "text": "ui.at.mob_chamber.essences",
+                    "color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "font_scale_factor": 0.7,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true
+                }
+            },
+            {
+                "essences_1": {
+                    "type": "collection_panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0,
+                        40
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "state_reader",
+                            "source_property_name": "(not ((#chamber_state - '|e1|') = #chamber_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "essence_0@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 4,
+                                "collection_index": 4
+                            }
+                        }
+                    ],
+                    "collection_name": "container_items",
+                    "$item_collection_name": "container_items"
+                }
+            },
+            {
+                "essences_2": {
+                    "type": "collection_panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0,
+                        40
+                    ],
+                    "size": [
+                        38,
+                        18
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "state_reader",
+                            "source_property_name": "(not ((#chamber_state - '|e2|') = #chamber_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "essence_0@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 4,
+                                "collection_index": 4
+                            }
+                        },
+                        {
+                            "essence_1@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    20,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 5,
+                                "collection_index": 5
+                            }
+                        }
+                    ],
+                    "collection_name": "container_items",
+                    "$item_collection_name": "container_items"
+                }
+            },
+            {
+                "essences_3": {
+                    "type": "collection_panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0,
+                        40
+                    ],
+                    "size": [
+                        58,
+                        18
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "state_reader",
+                            "source_property_name": "(not ((#chamber_state - '|e3|') = #chamber_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "essence_0@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 4,
+                                "collection_index": 4
+                            }
+                        },
+                        {
+                            "essence_1@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    20,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 5,
+                                "collection_index": 5
+                            }
+                        },
+                        {
+                            "essence_2@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    40,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 6,
+                                "collection_index": 6
+                            }
+                        }
+                    ],
+                    "collection_name": "container_items",
+                    "$item_collection_name": "container_items"
+                }
+            },
+            {
+                "essences_4": {
+                    "type": "collection_panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0,
+                        40
+                    ],
+                    "size": [
+                        78,
+                        18
+                    ],
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "state_reader",
+                            "source_property_name": "(not ((#chamber_state - '|e4|') = #chamber_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "essence_0@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 4,
+                                "collection_index": 4
+                            }
+                        },
+                        {
+                            "essence_1@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    20,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 5,
+                                "collection_index": 5
+                            }
+                        },
+                        {
+                            "essence_2@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    40,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 6,
+                                "collection_index": 6
+                            }
+                        },
+                        {
+                            "essence_3@mob_chamber.slot": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    60,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$slot_index": 7,
+                                "collection_index": 7
+                            }
+                        }
+                    ],
+                    "collection_name": "container_items",
+                    "$item_collection_name": "container_items"
+                }
+            },
+            {
+                "essences_5": {
+                    "type": "collection_panel", "collection_name": "container_items", "$item_collection_name": "container_items",
+                    "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, 40], "size": [98, 18],
+                    "bindings": [{"binding_type": "view", "source_control_name": "state_reader", "source_property_name": "(not ((#chamber_state - '|e5|') = #chamber_state))", "target_property_name": "#visible"}],
+                    "controls": [
+                        {"essence_0@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "size": [18, 18], "$slot_index": 4, "collection_index": 4}},
+                        {"essence_1@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [20, 0], "size": [18, 18], "$slot_index": 5, "collection_index": 5}},
+                        {"essence_2@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [40, 0], "size": [18, 18], "$slot_index": 6, "collection_index": 6}},
+                        {"essence_3@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [60, 0], "size": [18, 18], "$slot_index": 7, "collection_index": 7}},
+                        {"essence_4@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [80, 0], "size": [18, 18], "$slot_index": 36, "collection_index": 36}}
+                    ]
+                }
+            },
+            {
+                "essences_6": {
+                    "type": "collection_panel", "collection_name": "container_items", "$item_collection_name": "container_items",
+                    "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, 40], "size": [118, 18],
+                    "bindings": [{"binding_type": "view", "source_control_name": "state_reader", "source_property_name": "(not ((#chamber_state - '|e6|') = #chamber_state))", "target_property_name": "#visible"}],
+                    "controls": [
+                        {"essence_0@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "size": [18, 18], "$slot_index": 4, "collection_index": 4}},
+                        {"essence_1@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [20, 0], "size": [18, 18], "$slot_index": 5, "collection_index": 5}},
+                        {"essence_2@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [40, 0], "size": [18, 18], "$slot_index": 6, "collection_index": 6}},
+                        {"essence_3@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [60, 0], "size": [18, 18], "$slot_index": 7, "collection_index": 7}},
+                        {"essence_4@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [80, 0], "size": [18, 18], "$slot_index": 36, "collection_index": 36}},
+                        {"essence_5@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [100, 0], "size": [18, 18], "$slot_index": 37, "collection_index": 37}}
+                    ]
+                }
+            },
+            {
+                "essences_7": {
+                    "type": "collection_panel", "collection_name": "container_items", "$item_collection_name": "container_items",
+                    "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, 40], "size": [138, 18],
+                    "bindings": [{"binding_type": "view", "source_control_name": "state_reader", "source_property_name": "(not ((#chamber_state - '|e7|') = #chamber_state))", "target_property_name": "#visible"}],
+                    "controls": [
+                        {"essence_0@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "size": [18, 18], "$slot_index": 4, "collection_index": 4}},
+                        {"essence_1@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [20, 0], "size": [18, 18], "$slot_index": 5, "collection_index": 5}},
+                        {"essence_2@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [40, 0], "size": [18, 18], "$slot_index": 6, "collection_index": 6}},
+                        {"essence_3@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [60, 0], "size": [18, 18], "$slot_index": 7, "collection_index": 7}},
+                        {"essence_4@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [80, 0], "size": [18, 18], "$slot_index": 36, "collection_index": 36}},
+                        {"essence_5@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [100, 0], "size": [18, 18], "$slot_index": 37, "collection_index": 37}},
+                        {"essence_6@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [120, 0], "size": [18, 18], "$slot_index": 38, "collection_index": 38}}
+                    ]
+                }
+            },
+            {
+                "essences_8": {
+                    "type": "collection_panel", "collection_name": "container_items", "$item_collection_name": "container_items",
+                    "anchor_from": "top_middle", "anchor_to": "top_middle", "offset": [0, 40], "size": [158, 18],
+                    "bindings": [{"binding_type": "view", "source_control_name": "state_reader", "source_property_name": "(not ((#chamber_state - '|e8|') = #chamber_state))", "target_property_name": "#visible"}],
+                    "controls": [
+                        {"essence_0@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [0, 0], "size": [18, 18], "$slot_index": 4, "collection_index": 4}},
+                        {"essence_1@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [20, 0], "size": [18, 18], "$slot_index": 5, "collection_index": 5}},
+                        {"essence_2@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [40, 0], "size": [18, 18], "$slot_index": 6, "collection_index": 6}},
+                        {"essence_3@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [60, 0], "size": [18, 18], "$slot_index": 7, "collection_index": 7}},
+                        {"essence_4@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [80, 0], "size": [18, 18], "$slot_index": 36, "collection_index": 36}},
+                        {"essence_5@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [100, 0], "size": [18, 18], "$slot_index": 37, "collection_index": 37}},
+                        {"essence_6@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [120, 0], "size": [18, 18], "$slot_index": 38, "collection_index": 38}},
+                        {"essence_7@mob_chamber.slot": {"anchor_from": "top_left", "anchor_to": "top_left", "offset": [140, 0], "size": [18, 18], "$slot_index": 39, "collection_index": 39}}
+                    ]
+                }
+            },
+            {
+                "progress_rim@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        56,
+                        64
+                    ],
+                    "size": [
+                        104,
+                        8
+                    ],
+                    "color": [
+                        0.35,
+                        0.35,
+                        0.35
+                    ],
+                    "layer": 1
+                }
+            },
+            {
+                "progress_well@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        57,
+                        65
+                    ],
+                    "size": [
+                        102,
+                        6
+                    ],
+                    "color": [
+                        0.55,
+                        0.55,
+                        0.55
+                    ],
+                    "layer": 2
+                }
+            },
+            {
+                "progress_frame_1@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        5,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t1|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_2@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        9,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t2|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_3@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        14,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t3|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_4@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        18,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t4|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_5@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        23,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t5|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_6@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        27,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t6|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_7@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        32,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t7|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_8@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        36,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t8|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_9@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        41,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t9|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_10@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        45,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t10|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_11@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        50,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t11|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_12@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        55,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t12|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_13@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        59,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t13|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_14@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        64,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t14|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_15@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        68,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t15|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_16@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        73,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t16|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_17@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        77,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t17|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_18@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        82,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t18|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_19@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        86,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t19|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_20@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        91,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t20|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_21@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        95,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t21|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "progress_frame_22@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        66
+                    ],
+                    "size": [
+                        100,
+                        4
+                    ],
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "layer": 3,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|t22|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "energy_heading": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        21
+                    ],
+                    "size": [
+                        20,
+                        8
+                    ],
+                    "text": "DE",
+                    "color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "font_scale_factor": 0.7,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true
+                }
+            },
+            {
+                "xp_heading": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        189,
+                        21
+                    ],
+                    "size": [
+                        20,
+                        8
+                    ],
+                    "text": "XP",
+                    "color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "font_scale_factor": 0.7,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true
+                }
+            },
+            {
+                "status_empty": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.empty",
+                    "color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sempty|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_processing": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.processing",
+                    "color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sprocessing|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_completed": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.completed",
+                    "color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|scompleted|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_energy_low": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.energy_low",
+                    "color": [
+                        0.65,
+                        0.12,
+                        0.1
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|senergy|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_loot": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.loot",
+                    "color": [
+                        0.65,
+                        0.12,
+                        0.1
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sloot|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_xp": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.xp",
+                    "color": [
+                        0.65,
+                        0.12,
+                        0.1
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sxp|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_fluid": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.fluid",
+                    "color": [
+                        0.65,
+                        0.12,
+                        0.1
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sfluid|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_restore": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.restore",
+                    "color": [
+                        0.65,
+                        0.12,
+                        0.1
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|srestore|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_storage": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.storage",
+                    "color": [
+                        0.65,
+                        0.12,
+                        0.1
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sstorage|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_resources": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.resources",
+                    "color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sresources|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "status_error": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        35,
+                        78
+                    ],
+                    "size": [
+                        146,
+                        11
+                    ],
+                    "text": "ui.at.mob_chamber.error",
+                    "color": [
+                        0.65,
+                        0.12,
+                        0.1
+                    ],
+                    "font_scale_factor": 0.75,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|serror|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "output_heading": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        97
+                    ],
+                    "size": [
+                        162,
+                        9
+                    ],
+                    "text": "ui.at.mob_chamber.output",
+                    "color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "font_scale_factor": 0.7,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true
+                }
+            },
+            {
+                "output_blocked": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        97
+                    ],
+                    "size": [
+                        162,
+                        9
+                    ],
+                    "text": "ui.at.mob_chamber.output",
+                    "color": [
+                        0.65,
+                        0.12,
+                        0.1
+                    ],
+                    "font_scale_factor": 0.7,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "center",
+                    "localize": true,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sloot|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "xp_alert_left@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        190,
+                        29
+                    ],
+                    "size": [
+                        1,
+                        51
+                    ],
+                    "color": [
+                        0.870588,
+                        0.470588,
+                        0.423529
+                    ],
+                    "layer": 5,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sxp|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "xp_alert_right@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        207,
+                        29
+                    ],
+                    "size": [
+                        1,
+                        51
+                    ],
+                    "color": [
+                        0.870588,
+                        0.470588,
+                        0.423529
+                    ],
+                    "layer": 5,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sxp|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "xp_alert_top@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        190,
+                        29
+                    ],
+                    "size": [
+                        18,
+                        1
+                    ],
+                    "color": [
+                        0.870588,
+                        0.470588,
+                        0.423529
+                    ],
+                    "layer": 5,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sxp|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "xp_alert_bottom@mob_chamber.rect": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        190,
+                        79
+                    ],
+                    "size": [
+                        18,
+                        1
+                    ],
+                    "color": [
+                        0.870588,
+                        0.470588,
+                        0.423529
+                    ],
+                    "layer": 5,
+                    "bindings": [
+                        {
+                            "binding_type": "view",
+                            "source_control_name": "meter_reader",
+                            "source_property_name": "(not ((#meter_state - '|sxp|') = #meter_state))",
+                            "target_property_name": "#visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "loot_9@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        108
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 9,
+                    "collection_index": 9
+                }
+            },
+            {
+                "loot_10@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        45,
+                        108
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 10,
+                    "collection_index": 10
+                }
+            },
+            {
+                "loot_11@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        63,
+                        108
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 11,
+                    "collection_index": 11
+                }
+            },
+            {
+                "loot_12@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        81,
+                        108
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 12,
+                    "collection_index": 12
+                }
+            },
+            {
+                "loot_13@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        99,
+                        108
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 13,
+                    "collection_index": 13
+                }
+            },
+            {
+                "loot_14@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        117,
+                        108
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 14,
+                    "collection_index": 14
+                }
+            },
+            {
+                "loot_15@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        135,
+                        108
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 15,
+                    "collection_index": 15
+                }
+            },
+            {
+                "loot_16@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        153,
+                        108
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 16,
+                    "collection_index": 16
+                }
+            },
+            {
+                "loot_17@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        171,
+                        108
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 17,
+                    "collection_index": 17
+                }
+            },
+            {
+                "loot_18@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        126
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 18,
+                    "collection_index": 18
+                }
+            },
+            {
+                "loot_19@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        45,
+                        126
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 19,
+                    "collection_index": 19
+                }
+            },
+            {
+                "loot_20@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        63,
+                        126
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 20,
+                    "collection_index": 20
+                }
+            },
+            {
+                "loot_21@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        81,
+                        126
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 21,
+                    "collection_index": 21
+                }
+            },
+            {
+                "loot_22@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        99,
+                        126
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 22,
+                    "collection_index": 22
+                }
+            },
+            {
+                "loot_23@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        117,
+                        126
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 23,
+                    "collection_index": 23
+                }
+            },
+            {
+                "loot_24@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        135,
+                        126
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 24,
+                    "collection_index": 24
+                }
+            },
+            {
+                "loot_25@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        153,
+                        126
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 25,
+                    "collection_index": 25
+                }
+            },
+            {
+                "loot_26@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        171,
+                        126
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 26,
+                    "collection_index": 26
+                }
+            },
+            {
+                "loot_27@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        144
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 27,
+                    "collection_index": 27
+                }
+            },
+            {
+                "loot_28@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        45,
+                        144
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 28,
+                    "collection_index": 28
+                }
+            },
+            {
+                "loot_29@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        63,
+                        144
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 29,
+                    "collection_index": 29
+                }
+            },
+            {
+                "loot_30@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        81,
+                        144
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 30,
+                    "collection_index": 30
+                }
+            },
+            {
+                "loot_31@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        99,
+                        144
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 31,
+                    "collection_index": 31
+                }
+            },
+            {
+                "loot_32@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        117,
+                        144
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 32,
+                    "collection_index": 32
+                }
+            },
+            {
+                "loot_33@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        135,
+                        144
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 33,
+                    "collection_index": 33
+                }
+            },
+            {
+                "loot_34@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        153,
+                        144
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 34,
+                    "collection_index": 34
+                }
+            },
+            {
+                "loot_35@mob_chamber.slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        171,
+                        144
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "$slot_index": 35,
+                    "collection_index": 35
+                }
+            },
+            {
+                "energy_bar@uc.bar": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        -76.1,
+                        13
+                    ],
+                    "$collection_index": 0,
+                    "$is_energy": true,
+                    "$is_liquid": false,
+                    "$has_bg": false
+                }
+            },
+            {
+                "xp_bar@uc.bar": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105.9,
+                        13
+                    ],
+                    "$collection_index": 8,
+                    "$is_energy": false,
+                    "$is_liquid": true,
+                    "$has_bg": false
+                }
+            },
+            {
+                "side_panel@at_common.scrollable_info_panel": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        -104,
+                        0
+                    ],
+                    "$bg_size": [
+                        104,
+                        166
+                    ],
+                    "$info_size": [
+                        96,
+                        158
+                    ],
+                    "$text_borders": [
+                        88,
+                        150
+                    ],
+                    "$label_index": 1,
+                    "$text_scale": 0.55,
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ]
+                }
+            }
+        ]
+    },
+    "player_inventory": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [
+            0,
+            170
+        ],
+        "size": [
+            216,
+            92
+        ],
+        "controls": [
+            {
+                "console@mob_chamber.console_frame": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        0
+                    ],
+                    "size": [
+                        216,
+                        92
+                    ]
+                }
+            },
+            {
+                "inventory_label": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        4
+                    ],
+                    "size": [
+                        162,
+                        10
+                    ],
+                    "text": "container.inventory",
+                    "color": [
+                        0.25,
+                        0.25,
+                        0.25
+                    ],
+                    "font_scale_factor": 1,
+                    "shadow": false,
+                    "layer": 5,
+                    "text_alignment": "left",
+                    "localize": true
+                }
+            },
+            {
+                "inventory_grid": {
+                    "type": "grid",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        15
+                    ],
+                    "size": [
+                        162,
+                        54
+                    ],
+                    "grid_dimensions": [
+                        9,
+                        3
+                    ],
+                    "grid_item_template": "common.grid_item_for_inventory",
+                    "collection_name": "inventory_items"
+                }
+            },
+            {
+                "hotbar_grid@common.hotbar_grid_template": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        71
+                    ],
+                    "size": [
+                        162,
+                        18
+                    ],
+                    "grid_item_template": "common.grid_item_for_hotbar"
+                }
+            }
+        ]
+    },
+    "utility_panel": {
+        "type": "panel",
+        "controls": [
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {}
+            },
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 40
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {}
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "layer": 1,
+                    "offset": [
+                        52,
+                        0
+                    ],
+                    "controls": [
+                        {
+                            "chest_panel": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 5,
+                                "controls": [
+                                    {
+                                        "top@mob_chamber.chamber_top": {}
+                                    },
+                                    {
+                                        "inventory@mob_chamber.player_inventory": {}
+                                    },
+                                    {
+                                        "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+                                    },
+                                    {
+                                        "close@common.light_close_button": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                198,
+                                                6
+                                            ],
+                                            "size": [
+                                                12,
+                                                12
+                                            ],
+                                            "layer": 20
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                        },
+                        {
+                            "gamepad_cursor@common.gamepad_cursor_button": {}
+                        }
+                    ],
+                    "size": [
+                        216,
+                        262
+                    ]
+                }
+            }
+        ]
+    },
+    "slot@common.container_item": {
+        "$item_collection_name": "container_items",
+        "$cell_image_size": [
+            18,
+            18
+        ],
+        "$item_renderer_panel_size": [
+            18,
+            18
+        ],
+        "$item_renderer_size": [
+            16,
+            16
+        ],
+        "$item_renderer_offset": [
+            0,
+            0
+        ]
+    }
+}

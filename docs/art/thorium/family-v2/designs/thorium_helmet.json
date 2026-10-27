@@ -1,0 +1,426 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Capacete de TÃ³rio",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "low centered forged ridge with angular crown and separate cheek guards",
+      "narrow horizontal visor with distinct angular lower face plate"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m7": [
+      235,
+      132,
+      184
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m9": [
+      235,
+      176,
+      206
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ],
+    "lining": [
+      73,
+      61,
+      72
+    ],
+    "slot": [
+      86,
+      61,
+      77
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          4,
+          2
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          7,
+          1
+        ],
+        [
+          8,
+          1
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          11,
+          2
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          6,
+          10
+        ],
+        [
+          6,
+          12
+        ],
+        [
+          4,
+          13
+        ],
+        [
+          2,
+          10
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "shell",
+      "purpose": "new low angular crown and cheek guards",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              3
+            ],
+            [
+              10,
+              3
+            ],
+            [
+              12,
+              5
+            ],
+            [
+              12,
+              10
+            ],
+            [
+              10,
+              11
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              5,
+              11
+            ],
+            [
+              3,
+              10
+            ],
+            [
+              3,
+              5
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              3
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              3,
+              7
+            ],
+            [
+              3,
+              5
+            ]
+          ],
+          "color": "m9"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              9,
+              3
+            ],
+            [
+              11,
+              4
+            ],
+            [
+              12,
+              6
+            ],
+            [
+              12,
+              10
+            ],
+            [
+              10,
+              11
+            ],
+            [
+              10,
+              7
+            ]
+          ],
+          "color": "m3"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              5,
+              3
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              10,
+              4
+            ]
+          ],
+          "color": "m10",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              9
+            ],
+            [
+              4,
+              11
+            ]
+          ],
+          "color": "m7",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              7,
+              1
+            ],
+            [
+              8,
+              1
+            ]
+          ],
+          "color": "m7",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "name": "visor",
+      "purpose": "narrow horizontal visor with distinct angular lower face plate",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              6
+            ],
+            [
+              11,
+              6
+            ],
+            [
+              10,
+              8
+            ],
+            [
+              5,
+              8
+            ]
+          ],
+          "color": "lining"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              5,
+              6
+            ],
+            [
+              10,
+              6
+            ]
+          ],
+          "color": "slot",
+          "width": 1
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              6,
+              8
+            ],
+            [
+              9,
+              8
+            ],
+            [
+              10,
+              10
+            ],
+            [
+              8,
+              12
+            ],
+            [
+              6,
+              10
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              6,
+              9
+            ],
+            [
+              8,
+              10
+            ],
+            [
+              9,
+              9
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              7,
+              10
+            ]
+          ],
+          "color": "slot"
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              8,
+              10
+            ]
+          ],
+          "color": "slot"
+        }
+      ]
+    }
+  ]
+}

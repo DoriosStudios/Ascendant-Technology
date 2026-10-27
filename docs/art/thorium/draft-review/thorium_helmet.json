@@ -1,0 +1,464 @@
+{
+  "schema_version": 1,
+  "source": "C:\\Users\\Kauziin\\Documents\\Projects\\projects\\Ascendant-Technology\\docs\\art\\thorium\\draft-icons\\thorium_helmet.png",
+  "pixel_sha256": "454fe3bc58de4f50df06870344352966620dc68e967152df4386fcebd7336f87",
+  "metadata": {
+    "format": "PNG",
+    "mode": "RGBA",
+    "size": [
+      16,
+      16
+    ]
+  },
+  "profile": {
+    "size": [
+      16,
+      16
+    ],
+    "alpha": "binary",
+    "require_transparent": true,
+    "palette": {
+      "max_colors": 19,
+      "allowed": [
+        [
+          16,
+          14,
+          34
+        ],
+        [
+          18,
+          15,
+          37
+        ],
+        [
+          28,
+          23,
+          53
+        ],
+        [
+          35,
+          35,
+          66
+        ],
+        [
+          39,
+          28,
+          29
+        ],
+        [
+          62,
+          22,
+          46
+        ],
+        [
+          94,
+          28,
+          62
+        ],
+        [
+          131,
+          34,
+          80
+        ],
+        [
+          170,
+          43,
+          103
+        ],
+        [
+          208,
+          54,
+          128
+        ],
+        [
+          237,
+          70,
+          151
+        ],
+        [
+          251,
+          91,
+          170
+        ],
+        [
+          255,
+          116,
+          186
+        ],
+        [
+          255,
+          145,
+          201
+        ],
+        [
+          255,
+          175,
+          216
+        ],
+        [
+          255,
+          202,
+          231
+        ],
+        [
+          255,
+          224,
+          241
+        ],
+        [
+          255,
+          241,
+          248
+        ],
+        [
+          255,
+          250,
+          253
+        ]
+      ],
+      "tolerance": 0.0
+    },
+    "structure": {
+      "enabled": true,
+      "singleton_limit": 12,
+      "max_components": 4
+    },
+    "tile": {
+      "enabled": false,
+      "tolerance": 0.08,
+      "ratio": 2.5
+    },
+    "animation": null,
+    "preview": {
+      "scale": 8,
+      "checker": true
+    }
+  },
+  "summary": {
+    "ERROR": 0,
+    "WARNING": 1,
+    "INFO": 1
+  },
+  "measurements": {
+    "alpha": {
+      "transparent": 138,
+      "partial": 0,
+      "opaque": 118
+    },
+    "palette": {
+      "unique_visible_rgb": 14,
+      "unique_rgba": 15,
+      "frequencies": [
+        {
+          "rgb": [
+            94,
+            28,
+            62
+          ],
+          "hex": "#5E1C3E",
+          "count": 23
+        },
+        {
+          "rgb": [
+            28,
+            23,
+            53
+          ],
+          "hex": "#1C1735",
+          "count": 18
+        },
+        {
+          "rgb": [
+            255,
+            116,
+            186
+          ],
+          "hex": "#FF74BA",
+          "count": 18
+        },
+        {
+          "rgb": [
+            18,
+            15,
+            37
+          ],
+          "hex": "#120F25",
+          "count": 16
+        },
+        {
+          "rgb": [
+            16,
+            14,
+            34
+          ],
+          "hex": "#100E22",
+          "count": 14
+        },
+        {
+          "rgb": [
+            131,
+            34,
+            80
+          ],
+          "hex": "#832250",
+          "count": 10
+        },
+        {
+          "rgb": [
+            208,
+            54,
+            128
+          ],
+          "hex": "#D03680",
+          "count": 7
+        },
+        {
+          "rgb": [
+            255,
+            145,
+            201
+          ],
+          "hex": "#FF91C9",
+          "count": 5
+        },
+        {
+          "rgb": [
+            251,
+            91,
+            170
+          ],
+          "hex": "#FB5BAA",
+          "count": 2
+        },
+        {
+          "rgb": [
+            170,
+            43,
+            103
+          ],
+          "hex": "#AA2B67",
+          "count": 1
+        },
+        {
+          "rgb": [
+            237,
+            70,
+            151
+          ],
+          "hex": "#ED4697",
+          "count": 1
+        },
+        {
+          "rgb": [
+            255,
+            202,
+            231
+          ],
+          "hex": "#FFCAE7",
+          "count": 1
+        },
+        {
+          "rgb": [
+            255,
+            224,
+            241
+          ],
+          "hex": "#FFE0F1",
+          "count": 1
+        },
+        {
+          "rgb": [
+            255,
+            250,
+            253
+          ],
+          "hex": "#FFFAFD",
+          "count": 1
+        }
+      ]
+    },
+    "silhouette": {
+      "visible_pixels": 118,
+      "bbox": [
+        2,
+        2,
+        14,
+        13
+      ],
+      "components_4_connected": 1,
+      "component_sizes": [
+        118
+      ]
+    },
+    "clusters": {
+      "color_components": 52,
+      "singletons": 26
+    }
+  },
+  "findings": [
+    {
+      "severity": "WARNING",
+      "code": "isolated_pixels",
+      "message": "Single-pixel color clusters may be highlights or noise; inspect.",
+      "count": 26,
+      "coordinates": [
+        [
+          3,
+          3
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          11,
+          3
+        ],
+        [
+          12,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          12,
+          4
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          5
+        ],
+        [
+          8,
+          5
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          12,
+          5
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          7,
+          7
+        ],
+        [
+          10,
+          7
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          12,
+          11
+        ]
+      ]
+    },
+    {
+      "severity": "INFO",
+      "code": "visual_pending",
+      "message": "Technical validation does not establish artistic quality."
+    }
+  ],
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "criteria": [
+      {
+        "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Silhouette and dominant shapes readable at native size",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Material recognition and coherent composition",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Shading direction and highlight placement consistent with chosen reference",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Color harmony, contrast and reference-supported hue shifting",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Recognizable style compared beside approved project references",
+        "status": "not_evaluated",
+        "notes": ""
+      },
+      {
+        "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+        "status": "not_evaluated",
+        "notes": ""
+      }
+    ]
+  },
+  "file_sha256": "a4fac4fb46092dac9e8ff8276e5b7e17e033cf460c0fab612118d667bc4acfa6"
+}

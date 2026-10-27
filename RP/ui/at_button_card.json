@@ -1,0 +1,152 @@
+{
+    "namespace": "at_common",
+    "_button_card_surface@at_core.surface": {
+        "texture": "$card_background_texture"
+    },
+    "button_card@at_core.button_card": {
+        "$card_background_ref": "at_common._button_card_surface",
+        "$card_background_texture|default": "textures/ui/button_card/tab_top_default"
+    },
+    "_card_face": {
+        "type": "panel",
+        "$card_button_size|default": [25, 18],
+        "size": "$card_button_size",
+        "$card_icon|default": "",
+        "$card_icon_size|default": [19, 13],
+        "$card_icon_offset|default": [0, 0],
+        "$card_icon_color|default": [1, 1, 1],
+        "$card_face_color|default": [1, 1, 1],
+        "$card_tooltip|default": "",
+        "$card_face_focus|default": false,
+        "$card_face_alpha|default": 1,
+        "alpha": "$card_face_alpha",
+        "controls": [
+            {
+                "surface@at_core.surface": {
+                    "$texture": "$card_face_texture",
+                    "color": "$card_face_color",
+                    "size": ["100%", "100%"],
+                    "layer": 0
+                }
+            },
+            {
+                "icon": {
+                    "type": "image",
+                    "texture": "$card_icon",
+                    "size": "$card_icon_size",
+                    "offset": "$card_icon_offset",
+                    "color": "$card_icon_color",
+                    "ignored": "($card_icon = '')",
+                    "layer": 1
+                }
+            },
+            {
+                "focus@common.white_border_slot": {
+                    "size": ["100%", "100%"],
+                    "ignored": "(not $card_face_focus)",
+                    "layer": 2
+                }
+            },
+            {
+                "tooltip@uc.fake_hover_text": {
+                    "$hover_text": "$card_tooltip",
+                    "ignored": "((not $card_face_focus) or ($card_tooltip = ''))",
+                    "offset": [0, 21]
+                }
+            }
+        ]
+    },
+    "_card_unchecked@at_common._card_face": {
+        "$card_face_texture": "$card_unchecked_texture"
+    },
+    "_card_checked@at_common._card_face": {
+        "$card_face_texture": "$card_checked_texture"
+    },
+    "_card_unchecked_hover@at_common._card_face": {
+        "$card_face_texture": "$card_unchecked_hover_texture",
+        "$card_face_focus": true
+    },
+    "_card_checked_hover@at_common._card_face": {
+        "$card_face_texture": "$card_checked_hover_texture",
+        "$card_face_focus": true
+    },
+    "_card_unchecked_locked@at_common._card_unchecked": {
+        "$card_face_alpha": 0.5
+    },
+    "_card_checked_locked@at_common._card_checked": {
+        "$card_face_alpha": 0.5
+    },
+    "card_tab@at_core.card_tab": {
+        "$card_unchecked_texture|default": "textures/ui/button_card/button_default",
+        "$card_checked_texture|default": "textures/ui/button_card/button_default_pressed",
+        "$card_unchecked_hover_texture|default": "textures/ui/button_card/button_default_hover",
+        "$card_checked_hover_texture|default": "textures/ui/button_card/button_default_pressed_hover",
+        "$unchecked_control": "at_common._card_unchecked",
+        "$checked_control": "at_common._card_checked",
+        "$unchecked_hover_control": "at_common._card_unchecked_hover",
+        "$checked_hover_control": "at_common._card_checked_hover",
+        "$unchecked_locked_control": "at_common._card_unchecked_locked",
+        "$checked_locked_control": "at_common._card_checked_locked",
+        "$unchecked_locked_hover_control": "at_common._card_unchecked_locked",
+        "$checked_locked_hover_control": "at_common._card_checked_locked"
+    },
+    "card_button@at_core.card_button": {
+        "$card_unchecked_texture|default": "textures/ui/button_card/button_default",
+        "$card_checked_texture|default": "textures/ui/button_card/button_default_pressed",
+        "$card_unchecked_hover_texture|default": "textures/ui/button_card/button_default_hover",
+        "$card_checked_hover_texture|default": "textures/ui/button_card/button_default_pressed_hover",
+        "default_control": "default",
+        "hover_control": "hover",
+        "pressed_control": "pressed",
+        "locked_control": "locked",
+        "controls": [
+            { "default@at_common._card_unchecked": {} },
+            { "hover@at_common._card_unchecked_hover": {} },
+            { "pressed@at_common._card_checked_hover": {} },
+            { "locked@at_common._card_unchecked_locked": {} }
+        ]
+    },
+    "machine_recipe_card@at_common.button_card": {
+        "anchor_from": "center",
+        "anchor_to": "bottom_right",
+        "$card_offset|default": [
+            88,
+            -79
+        ],
+        "$machine_toggle_default_state|default": true,
+        "$recipes_toggle_default_state|default": false,
+        "$card_buttons_ref": "at_common.machine_recipe_card_buttons",
+        "$card_selected_tab|default": 0,
+        "variables": [
+            {
+                "requires": "$recipes_toggle_default_state",
+                "$card_selected_tab": 1
+            }
+        ]
+    },
+    "machine_recipe_card_buttons@at_core.button_card_row": {
+        "controls": [
+            {
+                "machine_view_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_view_tabs",
+                    "$card_tab_index": 0,
+                    "$card_icon": "textures/ui/inventory_icon",
+                    "$card_icon_size": [19, 13],
+                    "$card_tooltip": "ui.utilitycraft:machine_view.machine"
+                }
+            },
+            {
+                "recipes_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_view_tabs",
+                    "$card_tab_index": 1,
+                    "$card_icon": "textures/ui/at_icons/recipe_book",
+                    "$card_icon_size": [
+                        16,
+                        16
+                    ],
+                    "$card_tooltip": "ui.utilitycraft:recipes_panel.name"
+                }
+            }
+        ]
+    }
+}

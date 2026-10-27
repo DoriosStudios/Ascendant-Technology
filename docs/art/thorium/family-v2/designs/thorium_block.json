@@ -1,0 +1,294 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Bloco de Tório",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "opaque forged metal mass with a narrow edge chamfer",
+      "three connected angled plate planes with deliberate joins"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 0,
+    "edge_contact": "allow",
+    "allow_clip": false
+  },
+  "palette": {
+    "m2": [
+      135,
+      55,
+      93
+    ],
+    "m3": [
+      167,
+      67,
+      114
+    ],
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m6": [
+      231,
+      113,
+      172
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m9": [
+      235,
+      176,
+      206
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "rectangle",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          15,
+          15
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "metal-base",
+      "purpose": "opaque forged metal mass with a narrow edge chamfer",
+      "commands": [
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              15,
+              15
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              1,
+              1
+            ],
+            [
+              14,
+              14
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              15,
+              0
+            ]
+          ],
+          "color": "m9",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              14
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              1,
+              15
+            ],
+            [
+              15,
+              15
+            ],
+            [
+              15,
+              1
+            ]
+          ],
+          "color": "m2",
+          "width": 1
+        }
+      ]
+    },
+    {
+      "name": "forged-panels",
+      "purpose": "three connected angled plate planes with deliberate joins",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              2,
+              2
+            ],
+            [
+              12,
+              2
+            ],
+            [
+              8,
+              6
+            ],
+            [
+              2,
+              7
+            ]
+          ],
+          "color": "m8"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              3,
+              8
+            ],
+            [
+              9,
+              6
+            ],
+            [
+              13,
+              3
+            ],
+            [
+              13,
+              11
+            ],
+            [
+              8,
+              13
+            ],
+            [
+              3,
+              13
+            ]
+          ],
+          "color": "m5"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              8
+            ],
+            [
+              8,
+              6
+            ],
+            [
+              12,
+              3
+            ]
+          ],
+          "color": "m3",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              10
+            ],
+            [
+              7,
+              9
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "color": "m4",
+          "width": 1
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              3
+            ],
+            [
+              10,
+              3
+            ]
+          ],
+          "color": "m10",
+          "width": 1
+        }
+      ]
+    }
+  ]
+}

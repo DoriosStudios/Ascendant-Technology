@@ -6,8 +6,12 @@ const recipes=vm.runInNewContext(source.replace('export const','const')+'\nresid
 const textures={
  'utilitycraft:void_essence':'textures/items/misc/void_essence','utilitycraft:aetherium_shard':'textures/items/ores/aetherium_shards',
  'utilitycraft:ender_pearl_dust':'textures/items/dusts/ender_pearl_dust','utilitycraft:calcite_pebble':'textures/items/pebbles/calcite_pebble',
+ 'utilitycraft:charcoal_dust':'textures/items/dusts/charcoal_dust',
  'minecraft:podzol':'textures/blocks/dirt_podzol_top','minecraft:bone_block':'textures/blocks/bone_block_side',
  'minecraft:bone_meal':'textures/items/dye_powder_white','minecraft:string':'textures/items/string','minecraft:web':'textures/blocks/web',
+ 'minecraft:seagrass':'textures/blocks/seagrass','minecraft:bamboo':'textures/items/bamboo',
+ 'minecraft:gunpowder':'textures/items/gunpowder','minecraft:sulfur_spike':'textures/blocks/sulfur_spike_up_tip',
+ 'minecraft:arrow':'textures/items/arrow','minecraft:flint':'textures/items/flint','minecraft:stick':'textures/items/stick','minecraft:feather':'textures/items/feather',
  'minecraft:hardened_clay':'textures/blocks/hardened_clay','minecraft:clay_ball':'textures/items/clay_ball',
  'minecraft:dirt_with_roots':'textures/blocks/dirt_with_roots','minecraft:dirt':'textures/blocks/dirt',
  'minecraft:hanging_roots':'textures/blocks/hanging_roots','minecraft:muddy_mangrove_roots':'textures/blocks/muddy_mangrove_roots_side',
@@ -31,12 +35,12 @@ for(let i=0;i<entries.length;i+=4){const controls=[];for(let j=i;j<Math.min(i+4,
  });
  panels.push({[control+'_panel@uc.recipe_panel']:{$recipe_control_name:control,size:[162,72],controls:details}});
 }rows.push({['row_'+i]:{type:'panel',size:[88,18],controls}});}
-const d={namespace:'residue_processor',recipe_book:{type:'panel',size:[104,166],anchor_from:'top_left',anchor_to:'top_left',offset:[-100,-7],layer:6,bindings:bind,controls:[
+const d={namespace:'residue_processor',recipe_book:{type:'panel',size:[104,166],anchor_from:'top_left',anchor_to:'top_left',offset:[-101,-7],layer:6,bindings:bind,controls:[
  {background:{type:'image',texture:'textures/ui/background/background_panel',size:[104,166]}},
  {title_bg:{type:'image',texture:'textures/ui/background/dark_top_tab',size:[104,22],anchor_from:'top_left',anchor_to:'top_left',layer:1}},
  {title:{type:'label',text:'ui.utilitycraft:recipes_panel.name',size:[88,14],offset:[0,-72],font_scale_factor:0.85,color:[0.9,0.9,0.9],layer:2}},
  {grid_bg:{type:'image',texture:'textures/ui/recipe_grid_bg',size:[92,138],offset:[0,10],layer:1}},
- {'scroll@ascendant_common.info_scroll_view':{size:[104,134],anchor_from:'top_left',anchor_to:'top_left',offset:[8,26],$info_content:'residue_processor.recipe_rows',$scroll_view_port_size:[88,'100%'],$scroll_view_port_max_size:[88,'100%'],$scroll_view_port_size_touch:[88,'100%'],$scroll_view_port_max_size_touch:[88,'100%'],layer:6}},
+ {'scroll@at_common.scroll_panel':{size:[104,134],anchor_from:'top_left',anchor_to:'top_left',offset:[8,26],$content_ref:'residue_processor.recipe_rows',$scroll_view_port_size:[88,'100%'],$scroll_view_port_max_size:[88,'100%'],$scroll_view_port_size_touch:[88,'100%'],$scroll_view_port_max_size_touch:[88,'100%'],layer:6}},
 ]},recipe_rows:{type:'stack_panel',orientation:'vertical',size:[88,'default'],controls:rows},recipe_overlays:{type:'panel',size:[162,72],bindings:bind,layer:20,controls:panels}};
 await writeFile(new URL('RP/ui/recipes/residue_processor.json',root),JSON.stringify(d,null,4)+'\n');
 console.log(`Generated ${entries.length} Residue Processor recipes, up to four outputs.`);

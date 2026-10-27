@@ -17,6 +17,9 @@
 		},
 		"components": {
 			"utilitycraft:conveyor": {},
+			"minecraft:tick": {
+				"interval_range": [20, 20]
+			},
 			"minecraft:geometry": "geometry.utilitycraft_conveyor_bridge_controller",
 			"minecraft:material_instances": {
 				"*": {
@@ -54,9 +57,6 @@
 			"minecraft:light_dampening": 0,
 			"tag:dorios:conveyor": {},
 			"tag:dorios:conveyor_bridge": {},
-			"tag:dorios:energy": {},
-			"tag:dorios:isTube": {},
-			"tag:dorios:color.default": {},
 			"tag:minecraft:is_pickaxe_item_destructible": {}
 		},
 		"permutations": [

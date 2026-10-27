@@ -1,0 +1,19 @@
+{
+  "status": "model_reviewed",
+  "evaluator": "Codex inspection of the complete armor reference sheet, native icons, integer-nearest set preview and template/mapped/final comparison",
+  "evaluator_type": "model",
+  "pixel_sha256": "ed177ef8845567aa65e8b7228fde45d978305fb89f3f7d27f222fff3b46d721c",
+  "human_approval": "required",
+  "inspected_files": [
+    "../draft-icons/thorium_set_preview.png",
+    "../draft-review/template-mapped-final.png"
+  ],
+  "observations": [
+    "The existing chestplate shape remains recognizable, including its shoulders and lower waist. Small plate joins, shoulder bevels and a belt break provide detail without a large added centerpiece.",
+    "Bright pink metal has distinct dark, mid and white-facing planes. Whether the existing broad neckline is the preferred Thorium shape remains a creator judgment."
+  ],
+  "limitations": [
+    "Only inventory artwork was requested.",
+    "No human approval of the finished icons has been supplied."
+  ]
+}

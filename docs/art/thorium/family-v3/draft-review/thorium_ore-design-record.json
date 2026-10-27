@@ -1,0 +1,894 @@
+{
+  "schema_version": 2,
+  "intent": {
+    "identity": "Minério de Tório",
+    "usage": "AT opaque ore block texture",
+    "material": "pink Thorium inclusions in unchanged vanilla stone or deepslate",
+    "orientation": "native full block face",
+    "lighting": "tiny upper-left glints with dark lower mineral edges; original host lighting preserved",
+    "structure": [
+      "seven irregular clusters of 3 to 6 pixels",
+      "varied small deposits",
+      "rare highlights and dark lower mineral faces"
+    ],
+    "style": [
+      "visual study of creator-supplied 12-column ore atlas",
+      "no four large repeated diamonds",
+      "native pixels, no blur"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/stone.png",
+      "sha256": "12f1c99206df13e951a68b9e5e294c5e0e15c252c3bb141632c8c969a909d1a8",
+      "purpose": "exact vanilla host; supplied atlas studied visually in conversation",
+      "approval": "not independently verified"
+    },
+    {
+      "path": "../references/stone.png",
+      "sha256": "12f1c99206df13e951a68b9e5e294c5e0e15c252c3bb141632c8c969a909d1a8",
+      "purpose": "exact host outside mineral inclusions",
+      "approval": "not independently verified"
+    }
+  ],
+  "geometry": {
+    "planned_bounds": [
+      1,
+      1,
+      15,
+      15
+    ],
+    "primitives": [
+      {
+        "layer": "ore-clusters",
+        "command": 0,
+        "bounds": [
+          2,
+          2,
+          3,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 1,
+        "bounds": [
+          3,
+          2,
+          4,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 2,
+        "bounds": [
+          3,
+          3,
+          4,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 3,
+        "bounds": [
+          10,
+          1,
+          11,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 4,
+        "bounds": [
+          11,
+          1,
+          12,
+          2
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 5,
+        "bounds": [
+          10,
+          2,
+          11,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 6,
+        "bounds": [
+          11,
+          2,
+          12,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 7,
+        "bounds": [
+          12,
+          2,
+          13,
+          3
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 8,
+        "bounds": [
+          11,
+          3,
+          12,
+          4
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 9,
+        "bounds": [
+          6,
+          5,
+          7,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 10,
+        "bounds": [
+          7,
+          5,
+          8,
+          6
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 11,
+        "bounds": [
+          5,
+          6,
+          6,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 12,
+        "bounds": [
+          6,
+          6,
+          7,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 13,
+        "bounds": [
+          6,
+          7,
+          7,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 14,
+        "bounds": [
+          13,
+          6,
+          14,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 15,
+        "bounds": [
+          14,
+          6,
+          15,
+          7
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 16,
+        "bounds": [
+          13,
+          7,
+          14,
+          8
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 17,
+        "bounds": [
+          1,
+          10,
+          2,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 18,
+        "bounds": [
+          2,
+          10,
+          3,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 19,
+        "bounds": [
+          2,
+          11,
+          3,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 20,
+        "bounds": [
+          3,
+          11,
+          4,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 21,
+        "bounds": [
+          9,
+          10,
+          10,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 22,
+        "bounds": [
+          10,
+          10,
+          11,
+          11
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 23,
+        "bounds": [
+          8,
+          11,
+          9,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 24,
+        "bounds": [
+          9,
+          11,
+          10,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 25,
+        "bounds": [
+          10,
+          11,
+          11,
+          12
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 26,
+        "bounds": [
+          9,
+          12,
+          10,
+          13
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 27,
+        "bounds": [
+          5,
+          13,
+          6,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 28,
+        "bounds": [
+          6,
+          13,
+          7,
+          14
+        ],
+        "outside_canvas": false
+      },
+      {
+        "layer": "ore-clusters",
+        "command": 29,
+        "bounds": [
+          6,
+          14,
+          7,
+          15
+        ],
+        "outside_canvas": false
+      }
+    ],
+    "outside_primitives": [],
+    "reference_bounds": [
+      0,
+      0,
+      16,
+      16
+    ]
+  },
+  "composition": {
+    "raster_bounds": [
+      0,
+      0,
+      16,
+      16
+    ],
+    "minimum_margin": 0,
+    "edge_counts": {
+      "left": 16,
+      "right": 16,
+      "top": 16,
+      "bottom": 16
+    },
+    "findings": [
+      {
+        "severity": "INFO",
+        "code": "intentional_edge_contact",
+        "message": "Visible pixels touch the canvas; this alone does not prove clipping.",
+        "policy": "allow",
+        "coordinates": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            0,
+            9
+          ],
+          [
+            0,
+            10
+          ],
+          [
+            0,
+            11
+          ],
+          [
+            0,
+            12
+          ],
+          [
+            0,
+            13
+          ],
+          [
+            0,
+            14
+          ],
+          [
+            0,
+            15
+          ],
+          [
+            15,
+            0
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            15,
+            2
+          ],
+          [
+            15,
+            3
+          ],
+          [
+            15,
+            4
+          ],
+          [
+            15,
+            5
+          ],
+          [
+            15,
+            6
+          ],
+          [
+            15,
+            7
+          ],
+          [
+            15,
+            8
+          ],
+          [
+            15,
+            9
+          ],
+          [
+            15,
+            10
+          ],
+          [
+            15,
+            11
+          ],
+          [
+            15,
+            12
+          ],
+          [
+            15,
+            13
+          ],
+          [
+            15,
+            14
+          ],
+          [
+            15,
+            15
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            5,
+            0
+          ],
+          [
+            6,
+            0
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            8,
+            0
+          ],
+          [
+            9,
+            0
+          ],
+          [
+            10,
+            0
+          ],
+          [
+            11,
+            0
+          ],
+          [
+            12,
+            0
+          ],
+          [
+            13,
+            0
+          ],
+          [
+            14,
+            0
+          ],
+          [
+            15,
+            0
+          ],
+          [
+            0,
+            15
+          ],
+          [
+            1,
+            15
+          ],
+          [
+            2,
+            15
+          ],
+          [
+            3,
+            15
+          ],
+          [
+            4,
+            15
+          ],
+          [
+            5,
+            15
+          ],
+          [
+            6,
+            15
+          ],
+          [
+            7,
+            15
+          ],
+          [
+            8,
+            15
+          ],
+          [
+            9,
+            15
+          ],
+          [
+            10,
+            15
+          ],
+          [
+            11,
+            15
+          ],
+          [
+            12,
+            15
+          ],
+          [
+            13,
+            15
+          ],
+          [
+            14,
+            15
+          ],
+          [
+            15,
+            15
+          ]
+        ]
+      }
+    ]
+  },
+  "region_bounds": {
+    "ore-clusters": [
+      1,
+      1,
+      15,
+      15
+    ]
+  },
+  "pixel_sha256": "fd89e5e9ed0bb3470d1bc55787cee1beb49876583e805fa99d11caad05146787",
+  "palette_analysis": {
+    "colors": [
+      {
+        "rgb": [
+          106,
+          46,
+          77
+        ],
+        "pixels": 1,
+        "oklab": [
+          0.3938383384081147,
+          0.09264419484360847,
+          -0.016231951642548814
+        ]
+      },
+      {
+        "rgb": [
+          135,
+          55,
+          93
+        ],
+        "pixels": 4,
+        "oklab": [
+          0.4580736579510529,
+          0.11682090401904174,
+          -0.014137422668949795
+        ]
+      },
+      {
+        "rgb": [
+          104,
+          104,
+          104
+        ],
+        "pixels": 14,
+        "oklab": [
+          0.5173031135982017,
+          4.187714064407544e-11,
+          1.92819085698126e-08
+        ]
+      },
+      {
+        "rgb": [
+          167,
+          67,
+          114
+        ],
+        "pixels": 2,
+        "oklab": [
+          0.5307585390052371,
+          0.1400036965451507,
+          -0.01550403452013649
+        ]
+      },
+      {
+        "rgb": [
+          116,
+          116,
+          116
+        ],
+        "pixels": 66,
+        "oklab": [
+          0.5589685523041397,
+          4.525008145961351e-11,
+          2.083494216043036e-08
+        ]
+      },
+      {
+        "rgb": [
+          127,
+          127,
+          127
+        ],
+        "pixels": 98,
+        "oklab": [
+          0.5964894569254799,
+          4.8287374099231783e-11,
+          2.2233493046641684e-08
+        ]
+      },
+      {
+        "rgb": [
+          197,
+          80,
+          136
+        ],
+        "pixels": 1,
+        "oklab": [
+          0.5997660713505149,
+          0.15911940459083473,
+          -0.018965013732911817
+        ]
+      },
+      {
+        "rgb": [
+          143,
+          143,
+          143
+        ],
+        "pixels": 48,
+        "oklab": [
+          0.650041264979764,
+          5.262285052154425e-11,
+          2.4229578121648387e-08
+        ]
+      },
+      {
+        "rgb": [
+          220,
+          96,
+          156
+        ],
+        "pixels": 1,
+        "oklab": [
+          0.6600247922731386,
+          0.16590646322641156,
+          -0.021978423369214406
+        ]
+      },
+      {
+        "rgb": [
+          231,
+          113,
+          172
+        ],
+        "pixels": 1,
+        "oklab": [
+          0.703253560755495,
+          0.1575084120131156,
+          -0.025730453813424092
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          132,
+          184
+        ],
+        "pixels": 5,
+        "oklab": [
+          0.74004976736045,
+          0.13701513369502488,
+          -0.025542847007643754
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          154,
+          195
+        ],
+        "pixels": 5,
+        "oklab": [
+          0.778763878657962,
+          0.10673590363744428,
+          -0.022298036426314338
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          176,
+          206
+        ],
+        "pixels": 2,
+        "oklab": [
+          0.8202004222885522,
+          0.0765292348381662,
+          -0.017616730036504324
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          196,
+          217
+        ],
+        "pixels": 3,
+        "oklab": [
+          0.8599941784213212,
+          0.05006552115085833,
+          -0.013761702133999187
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          212,
+          224
+        ],
+        "pixels": 2,
+        "oklab": [
+          0.892250348674154,
+          0.028905036804675155,
+          -0.00781983727596347
+        ]
+      },
+      {
+        "rgb": [
+          235,
+          224,
+          229
+        ],
+        "pixels": 3,
+        "oklab": [
+          0.9168371933742814,
+          0.01336837725523643,
+          -0.0028495645894873745
+        ]
+      }
+    ],
+    "lightness_range": 0.5229988549661666,
+    "tonal_coverage": {
+      "shadow": 0.07421875,
+      "mid": 0.88671875,
+      "highlight": 0.0390625
+    }
+  },
+  "visual_review": {
+    "status": "pending",
+    "human_approval": "required",
+    "reason": "Raster checks cannot establish semantic/artistic success."
+  }
+}

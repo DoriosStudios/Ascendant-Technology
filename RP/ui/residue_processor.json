@@ -34,7 +34,7 @@
                 }
             },
             {
-                "side_panel@ascendant_common.info_panel": {
+                "side_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$has_text": false,
@@ -51,7 +51,7 @@
                         158
                     ],
                     "offset": [
-                        -100,
+                        -101,
                         -7
                     ],
                     "bindings": [
@@ -66,7 +66,7 @@
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -77,8 +77,8 @@
                     "layer": 3,
                     "$text_scale": 0.55,
                     "offset": [
-                        -88,
-                        2
+                        -93,
+                        1
                     ],
                     "bindings": [
                         {
@@ -88,6 +88,11 @@
                             "target_property_name": "#visible",
                             "resolve_sibling_scope": false
                         }
+                    ],
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
                     ]
                 }
             },
@@ -130,7 +135,7 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
                     "$io_items_modes_description": "ui.utilitycraft:io.residue_processor.items",
                     "$has_item_io": true,
                     "$has_fluid_io": false,
@@ -150,8 +155,16 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "$info_description": "ui.utilitycraft:info.residue_processor"
+                "info_tab@at_common.machine_info_tab": {
+                    "$info_description": "ui.utilitycraft:info.residue_processor",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        10.0,
+                        7
+                    ]
                 }
             },
             {
@@ -232,7 +245,9 @@
                     "layer": 1,
                     "controls": [
                         {
-                            "common_panel@common.common_panel": {}
+                            "common_panel@common.common_panel": {
+                                "$show_close_button": false
+                            }
                         },
                         {
                             "chest_panel": {
@@ -240,7 +255,7 @@
                                 "layer": 5,
                                 "controls": [
                                     {
-                                        "view_top_bar@uc.machine_recipe_view_top_bar": {}
+                                        "view_top_bar@at_common.machine_recipe_card": {}
                                     },
                                     {
                                         "residue_processor_top@residue_processor.residue_processor_top": {}

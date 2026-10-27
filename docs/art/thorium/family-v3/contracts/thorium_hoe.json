@@ -1,0 +1,69 @@
+{
+  "mode": "iron_palette_only",
+  "reference": "../references/iron_hoe.png",
+  "sha256": "8ef2960c23049db850b95c12c7640a9e9da9974580ec2d3e64bedba5fb054ff2",
+  "edit_coordinates": [
+    [
+      7,
+      1
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      6,
+      2
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      9,
+      3
+    ],
+    [
+      10,
+      3
+    ],
+    [
+      11,
+      3
+    ],
+    [
+      10,
+      4
+    ],
+    [
+      11,
+      4
+    ],
+    [
+      11,
+      5
+    ],
+    [
+      12,
+      5
+    ]
+  ],
+  "alpha_identical": true,
+  "protected_rgba_identical": true
+}

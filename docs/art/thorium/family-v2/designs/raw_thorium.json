@@ -1,0 +1,325 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "Tório bruto",
+    "usage": "native AT texture-family candidate",
+    "material": "desaturated bubblegum-pink Thorium, angular forged faces; separate lining/host materials",
+    "orientation": "explicit native inventory or block face construction",
+    "lighting": "upper-left, reduced value range; highlights describe connected planes",
+    "structure": [
+      "rough angular gray crust",
+      "coherent exposed sharp Thorium seams through the host"
+    ],
+    "style": [
+      "new Thorium construction rather than titanium recolor",
+      "sharp chamfers and restrained plate seams",
+      "20 percent lower HSV saturation in the metal ramp"
+    ]
+  },
+  "references": [
+    {
+      "path": "../references/titanium_ingot.png",
+      "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41",
+      "purpose": "studio material construction comparison; new shapes and palette are independently authored",
+      "approval": "project reference, not approval of Thorium variants"
+    }
+  ],
+  "composition": {
+    "min_margin": 1,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "m4": [
+      197,
+      80,
+      136
+    ],
+    "m5": [
+      220,
+      96,
+      156
+    ],
+    "m6": [
+      231,
+      113,
+      172
+    ],
+    "m8": [
+      235,
+      154,
+      195
+    ],
+    "m10": [
+      235,
+      196,
+      217
+    ],
+    "o": [
+      58,
+      44,
+      55
+    ],
+    "stone_dark": [
+      63,
+      62,
+      67
+    ],
+    "stone": [
+      87,
+      84,
+      91
+    ],
+    "stone_light": [
+      115,
+      110,
+      119
+    ]
+  },
+  "base_color": "o",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          4,
+          3
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          11,
+          4
+        ],
+        [
+          12,
+          7
+        ],
+        [
+          14,
+          9
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          6,
+          14
+        ],
+        [
+          2,
+          11
+        ],
+        [
+          1,
+          7
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "host",
+      "purpose": "rough angular gray crust",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              3,
+              5
+            ],
+            [
+              7,
+              3
+            ],
+            [
+              10,
+              4
+            ],
+            [
+              11,
+              7
+            ],
+            [
+              13,
+              9
+            ],
+            [
+              10,
+              12
+            ],
+            [
+              6,
+              13
+            ],
+            [
+              2,
+              10
+            ],
+            [
+              2,
+              7
+            ]
+          ],
+          "color": "stone"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              2,
+              7
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              3,
+              10
+            ]
+          ],
+          "color": "stone_light"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              9,
+              8
+            ],
+            [
+              13,
+              9
+            ],
+            [
+              10,
+              12
+            ],
+            [
+              7,
+              12
+            ]
+          ],
+          "color": "stone_dark"
+        }
+      ]
+    },
+    {
+      "name": "metal-seams",
+      "purpose": "coherent exposed sharp Thorium seams through the host",
+      "commands": [
+        {
+          "op": "polygon",
+          "points": [
+            [
+              4,
+              5
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              10,
+              5
+            ],
+            [
+              8,
+              7
+            ],
+            [
+              5,
+              8
+            ]
+          ],
+          "color": "m6"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              5,
+              5
+            ],
+            [
+              8,
+              4
+            ],
+            [
+              8,
+              6
+            ],
+            [
+              6,
+              7
+            ]
+          ],
+          "color": "m10"
+        },
+        {
+          "op": "polygon",
+          "points": [
+            [
+              7,
+              9
+            ],
+            [
+              10,
+              7
+            ],
+            [
+              11,
+              9
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              6,
+              11
+            ]
+          ],
+          "color": "m4"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              7,
+              9
+            ],
+            [
+              10,
+              8
+            ]
+          ],
+          "color": "m8",
+          "width": 1
+        },
+        {
+          "op": "pixel",
+          "points": [
+            [
+              4,
+              10
+            ]
+          ],
+          "color": "m5"
+        }
+      ]
+    }
+  ]
+}

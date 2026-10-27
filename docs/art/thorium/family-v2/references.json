@@ -1,0 +1,52 @@
+[
+  {
+    "path": "RP/textures/items/ores/titanium_ingot.png",
+    "snapshot": "references/titanium_ingot.png",
+    "sha256": "795c0828543f2fef2e8937f88474974c5cd0578ba7af73ea32b32086adb58d41"
+  },
+  {
+    "path": "RP/textures/items/ores/titanium_plate.png",
+    "snapshot": "references/titanium_plate.png",
+    "sha256": "06a9996b9beebf8f4b5bdf271a5979f812d70512a2e8006c808ee10f4bc4e909"
+  },
+  {
+    "path": "RP/textures/items/armor/titanium_helmet.png",
+    "snapshot": "references/titanium_helmet.png",
+    "sha256": "e061608a088648a0e93d71915e6eadd7adda36ebe808deaeb2bbed4dd029451f"
+  },
+  {
+    "path": "RP/textures/items/armor/titanium_chestplate.png",
+    "snapshot": "references/titanium_chestplate.png",
+    "sha256": "5c0102df14ca3340994365912d386d537824e647546335d9ab74de8b29dc2c03"
+  },
+  {
+    "path": "RP/textures/items/armor/titanium_leggings.png",
+    "snapshot": "references/titanium_leggings.png",
+    "sha256": "009c1972eb673f86c28171eb042d27e50281cfb737ebbb3e6d76bef5e10b4eec"
+  },
+  {
+    "path": "RP/textures/items/armor/titanium_boots.png",
+    "snapshot": "references/titanium_boots.png",
+    "sha256": "a9511d8e997406185023df1b4c6b2630c27f62b3ed9291128a69fecae26688e1"
+  },
+  {
+    "path": "RP/textures/items/tools/titanium_aiot.png",
+    "snapshot": "references/titanium_aiot.png",
+    "sha256": "4567d1a4b0231e2daa7e3f126503cfa2c89d8c4a6e4cc21f94953afe6d6e23b2"
+  },
+  {
+    "path": "RP/textures/blocks/ores/deepslate_titanium_ore.png",
+    "snapshot": "references/deepslate_titanium_ore.png",
+    "sha256": "ebd8796ae85dcdb7d8b6e8c163af2ab786b90b3155dd66a14d44d884bc93e9f1"
+  },
+  {
+    "path": "RP/textures/blocks/crops/titanium_0.png",
+    "snapshot": "references/titanium_0.png",
+    "sha256": "5fffa071a205320ea18e17c531ea9a32e69c3d2d2cca328ebd8c3e3f43ada067"
+  },
+  {
+    "path": "RP/textures/blocks/crops/titanium_1.png",
+    "snapshot": "references/titanium_1.png",
+    "sha256": "f17483c3c5f9f2f2e3804345feff744cecd6db3a17550dc01b8544d15864c567"
+  }
+]

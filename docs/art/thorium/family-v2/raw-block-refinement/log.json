@@ -1,0 +1,1532 @@
+{
+  "schema_version": 1,
+  "stop_reason": "artistic_edit_applied_requires_review",
+  "iterations": [
+    {
+      "iteration": 1,
+      "changed_pixels": [
+        {
+          "xy": [
+            4,
+            1
+          ],
+          "before": [
+            235,
+            176,
+            206,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            10,
+            1
+          ],
+          "before": [
+            167,
+            67,
+            114,
+            255
+          ],
+          "after": [
+            231,
+            113,
+            172,
+            255
+          ]
+        },
+        {
+          "xy": [
+            1,
+            2
+          ],
+          "before": [
+            235,
+            176,
+            206,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            2,
+            2
+          ],
+          "before": [
+            235,
+            176,
+            206,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            3,
+            2
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            4,
+            2
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            10,
+            2
+          ],
+          "before": [
+            167,
+            67,
+            114,
+            255
+          ],
+          "after": [
+            231,
+            113,
+            172,
+            255
+          ]
+        },
+        {
+          "xy": [
+            11,
+            2
+          ],
+          "before": [
+            167,
+            67,
+            114,
+            255
+          ],
+          "after": [
+            231,
+            113,
+            172,
+            255
+          ]
+        },
+        {
+          "xy": [
+            12,
+            2
+          ],
+          "before": [
+            167,
+            67,
+            114,
+            255
+          ],
+          "after": [
+            231,
+            113,
+            172,
+            255
+          ]
+        },
+        {
+          "xy": [
+            13,
+            2
+          ],
+          "before": [
+            167,
+            67,
+            114,
+            255
+          ],
+          "after": [
+            231,
+            113,
+            172,
+            255
+          ]
+        },
+        {
+          "xy": [
+            2,
+            3
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            3,
+            3
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            4,
+            3
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            5,
+            3
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            10,
+            3
+          ],
+          "before": [
+            167,
+            67,
+            114,
+            255
+          ],
+          "after": [
+            231,
+            113,
+            172,
+            255
+          ]
+        },
+        {
+          "xy": [
+            11,
+            3
+          ],
+          "before": [
+            167,
+            67,
+            114,
+            255
+          ],
+          "after": [
+            231,
+            113,
+            172,
+            255
+          ]
+        },
+        {
+          "xy": [
+            12,
+            3
+          ],
+          "before": [
+            167,
+            67,
+            114,
+            255
+          ],
+          "after": [
+            231,
+            113,
+            172,
+            255
+          ]
+        },
+        {
+          "xy": [
+            3,
+            4
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            4,
+            4
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            5,
+            4
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            12,
+            4
+          ],
+          "before": [
+            167,
+            67,
+            114,
+            255
+          ],
+          "after": [
+            231,
+            113,
+            172,
+            255
+          ]
+        },
+        {
+          "xy": [
+            4,
+            5
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            5,
+            5
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            4,
+            6
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            8,
+            6
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            5,
+            7
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            6,
+            7
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            7
+          ],
+          "before": [
+            235,
+            196,
+            217,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            8,
+            7
+          ],
+          "before": [
+            235,
+            196,
+            217,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            5,
+            8
+          ],
+          "before": [
+            235,
+            196,
+            217,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            6,
+            8
+          ],
+          "before": [
+            235,
+            196,
+            217,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            8
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            9,
+            8
+          ],
+          "before": [
+            235,
+            196,
+            217,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            4,
+            9
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            5,
+            9
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            6,
+            9
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            9
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            8,
+            9
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            9,
+            9
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            4,
+            10
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            235,
+            154,
+            195,
+            255
+          ]
+        },
+        {
+          "xy": [
+            6,
+            10
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            10
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            8,
+            10
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            9,
+            10
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            1,
+            11
+          ],
+          "before": [
+            197,
+            80,
+            136,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            2,
+            11
+          ],
+          "before": [
+            197,
+            80,
+            136,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            5,
+            11
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            6,
+            11
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            7,
+            11
+          ],
+          "before": [
+            231,
+            113,
+            172,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            13,
+            11
+          ],
+          "before": [
+            235,
+            154,
+            195,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            1,
+            12
+          ],
+          "before": [
+            197,
+            80,
+            136,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            2,
+            12
+          ],
+          "before": [
+            197,
+            80,
+            136,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            11,
+            12
+          ],
+          "before": [
+            235,
+            154,
+            195,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            12,
+            12
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            13,
+            12
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            2,
+            13
+          ],
+          "before": [
+            197,
+            80,
+            136,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            3,
+            13
+          ],
+          "before": [
+            197,
+            80,
+            136,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            12,
+            13
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            13,
+            13
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            14,
+            13
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            2,
+            14
+          ],
+          "before": [
+            197,
+            80,
+            136,
+            255
+          ],
+          "after": [
+            235,
+            132,
+            184,
+            255
+          ]
+        },
+        {
+          "xy": [
+            12,
+            14
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            13,
+            14
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            14,
+            14
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            11,
+            15
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            12,
+            15
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        },
+        {
+          "xy": [
+            13,
+            15
+          ],
+          "before": [
+            220,
+            96,
+            156,
+            255
+          ],
+          "after": [
+            167,
+            67,
+            114,
+            255
+          ]
+        }
+      ],
+      "pixel_sha256": "6b3f3f6809ea675fb9ac13908711cca196f1d53c8563b99c0922133420181cd8",
+      "technical_summary": {
+        "ERROR": 0,
+        "WARNING": 0,
+        "INFO": 1
+      }
+    }
+  ],
+  "visual_status": "requires_inspection",
+  "final_review": {
+    "schema_version": 1,
+    "source": null,
+    "pixel_sha256": "6b3f3f6809ea675fb9ac13908711cca196f1d53c8563b99c0922133420181cd8",
+    "metadata": {
+      "format": "PNG",
+      "mode": "RGBA",
+      "size": [
+        16,
+        16
+      ]
+    },
+    "profile": {
+      "size": [
+        16,
+        16
+      ],
+      "alpha": "opaque",
+      "require_transparent": false,
+      "palette": {
+        "max_colors": 12,
+        "allowed": [
+          [
+            167,
+            67,
+            114
+          ],
+          [
+            197,
+            80,
+            136
+          ],
+          [
+            220,
+            96,
+            156
+          ],
+          [
+            231,
+            113,
+            172
+          ],
+          [
+            235,
+            154,
+            195
+          ],
+          [
+            235,
+            176,
+            206
+          ],
+          [
+            235,
+            196,
+            217
+          ],
+          [
+            58,
+            44,
+            55
+          ],
+          [
+            63,
+            62,
+            67
+          ],
+          [
+            87,
+            84,
+            91
+          ],
+          [
+            115,
+            110,
+            119
+          ],
+          [
+            235,
+            132,
+            184
+          ]
+        ],
+        "tolerance": 0.0
+      },
+      "structure": {
+        "enabled": false,
+        "singleton_limit": 8,
+        "max_components": null
+      },
+      "tile": {
+        "enabled": false,
+        "tolerance": 0.08,
+        "ratio": 2.5
+      },
+      "animation": null,
+      "preview": {
+        "scale": 8,
+        "checker": true
+      }
+    },
+    "summary": {
+      "ERROR": 0,
+      "WARNING": 0,
+      "INFO": 1
+    },
+    "measurements": {
+      "alpha": {
+        "transparent": 0,
+        "partial": 0,
+        "opaque": 256
+      },
+      "palette": {
+        "unique_visible_rgb": 10,
+        "unique_rgba": 10,
+        "frequencies": [
+          {
+            "rgb": [
+              167,
+              67,
+              114
+            ],
+            "hex": "#A74372",
+            "count": 52
+          },
+          {
+            "rgb": [
+              63,
+              62,
+              67
+            ],
+            "hex": "#3F3E43",
+            "count": 50
+          },
+          {
+            "rgb": [
+              220,
+              96,
+              156
+            ],
+            "hex": "#DC609C",
+            "count": 32
+          },
+          {
+            "rgb": [
+              231,
+              113,
+              172
+            ],
+            "hex": "#E771AC",
+            "count": 26
+          },
+          {
+            "rgb": [
+              115,
+              110,
+              119
+            ],
+            "hex": "#736E77",
+            "count": 25
+          },
+          {
+            "rgb": [
+              235,
+              154,
+              195
+            ],
+            "hex": "#EB9AC3",
+            "count": 21
+          },
+          {
+            "rgb": [
+              87,
+              84,
+              91
+            ],
+            "hex": "#57545B",
+            "count": 20
+          },
+          {
+            "rgb": [
+              197,
+              80,
+              136
+            ],
+            "hex": "#C55088",
+            "count": 15
+          },
+          {
+            "rgb": [
+              235,
+              132,
+              184
+            ],
+            "hex": "#EB84B8",
+            "count": 13
+          },
+          {
+            "rgb": [
+              235,
+              176,
+              206
+            ],
+            "hex": "#EBB0CE",
+            "count": 2
+          }
+        ]
+      },
+      "silhouette": {
+        "visible_pixels": 256,
+        "bbox": [
+          0,
+          0,
+          16,
+          16
+        ],
+        "components_4_connected": 0,
+        "component_sizes": []
+      },
+      "clusters": {
+        "enabled": false
+      },
+      "edits": {
+        "changed": 68,
+        "outside_mask": 0
+      }
+    },
+    "findings": [
+      {
+        "severity": "INFO",
+        "code": "visual_pending",
+        "message": "Technical validation does not establish artistic quality."
+      }
+    ],
+    "visual_review": {
+      "status": "pending",
+      "human_approval": "required",
+      "criteria": [
+        {
+          "criterion": "Requested object identity is recognizable rather than merely a valid PNG",
+          "status": "not_evaluated",
+          "notes": ""
+        },
+        {
+          "criterion": "Silhouette and dominant shapes readable at native size",
+          "status": "not_evaluated",
+          "notes": ""
+        },
+        {
+          "criterion": "Material recognition and coherent composition",
+          "status": "not_evaluated",
+          "notes": ""
+        },
+        {
+          "criterion": "Shading direction and highlight placement consistent with chosen reference",
+          "status": "not_evaluated",
+          "notes": ""
+        },
+        {
+          "criterion": "Color harmony, contrast and reference-supported hue shifting",
+          "status": "not_evaluated",
+          "notes": ""
+        },
+        {
+          "criterion": "Deliberate pixel clusters, edge treatment and suitable texture density",
+          "status": "not_evaluated",
+          "notes": ""
+        },
+        {
+          "criterion": "Recognizable style compared beside approved project references",
+          "status": "not_evaluated",
+          "notes": ""
+        },
+        {
+          "criterion": "Animation motion, flicker and first-to-last loop perceived in playback",
+          "status": "not_evaluated",
+          "notes": ""
+        }
+      ]
+    }
+  },
+  "artistic_changes": [
+    {
+      "defect": "flat_material",
+      "rationale": "The inspected raw-block masses read as flat camouflage patches. Keep every neutral host pixel and add connected fracture facets only in existing metal regions.",
+      "expected_effect": "Recognizable rough metal pieces with light and shadow facets, retaining angular clustered silhouettes.",
+      "revised_intent": null
+    }
+  ],
+  "human_approval": "required"
+}

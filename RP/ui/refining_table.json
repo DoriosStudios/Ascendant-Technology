@@ -1,41 +1,132 @@
 {
     "namespace": "refining_table",
+    "button_card_buttons@at_core.button_card_row": {
+        "controls": [
+            {
+                "refining_main_tab@at_common.card_tab": {
+                    "$toggle_name": "refining_table_pages",
+                    "$card_tab_index": 0,
+                    "$card_icon": "textures/ui/at_icons/refined_sword",
+                    "$card_icon_size": [16, 16],
+                    "$card_tooltip": "ui.utilitycraft:machine_view.machine",
+                    "$toggle_tts_name": "ui.utilitycraft:machine_view.machine",
+                    "$card_unchecked_texture": "textures/ui/button_card/button_purple",
+                    "$card_checked_texture": "textures/ui/button_card/button_purple_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_purple_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_purple_pressed_hover"
+                }
+            },
+            {
+                "stats_toggle@at_common.card_tab": {
+                    "$toggle_name": "refining_table_pages",
+                    "$card_tab_index": 1,
+                    "$card_icon": "textures/ui/at_icons/stats",
+                    "$card_icon_size": [16, 16],
+                    "$card_tooltip": "ui.utilitycraft:refining_table.stats_tab",
+                    "$toggle_tts_name": "ui.utilitycraft:refining_table.stats_tab",
+                    "$card_unchecked_texture": "textures/ui/button_card/button_purple",
+                    "$card_checked_texture": "textures/ui/button_card/button_purple_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_purple_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_purple_pressed_hover",
+                    "$toggle_property_bag": {
+                        "#toggle_state": false
+                    },
+                    "$toggle_state_binding_name": "#refining_table_stats",
+                    "$toggle_binding_condition": "always"
+                }
+            }
+        ]
+    },
+    "view_top_bar@at_common.button_card": {
+        "$card_offset": [0, 4],
+        "$card_buttons_ref": "refining_table.button_card_buttons",
+        "$card_background_texture": "textures/ui/button_card/tab_top_purple"
+    },
     "refining_table_top": {
         "type": "collection_panel",
         "anchor_from": "center",
         "anchor_to": "center",
-        "size": [220, 136],
-        "offset": [-10, -46],
+        "size": [
+            220,
+            136
+        ],
+        "offset": [
+            -10,
+            -46
+        ],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
         "controls": [
             {
                 "machine_name@uc.machine_name": {
-                    "offset": [26, 20]
+                    "offset": [
+                        30,
+                        36
+                    ],
+                    "controls": [
+                        {
+                            "chest_label@chest.chest_label": {
+                                "offset": "$offset",
+                                "size": [
+                                    148,
+                                    12
+                                ],
+                                "color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "shadow": true
+                            }
+                        }
+                    ]
                 }
             },
             {
-                "status_panel@ascendant_common.info_panel": {
+                "status_panel@at_common.info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [-74, 31],
-                    "$background_color": "blue",
+                    "offset": [
+                        -72,
+                        31
+                    ],
                     "$has_text": false,
-                    "$bg_size": [104, 166],
-                    "$info_size": [96, 158],
-                    "$text_borders": [88, 150],
-                    "layer": 0
+                    "$bg_size": [
+                        104,
+                        166
+                    ],
+                    "$info_size": [
+                        96,
+                        158
+                    ],
+                    "$text_borders": [
+                        88,
+                        150
+                    ],
+                    "layer": 0,
+                    "$background_ref": "at_common.blue_panel"
                 }
             },
             {
-                "item_label@uc.text_label": {
+                "item_label@at_core.collection_text": {
                     "collection_index": 1,
                     "layer": 3,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$text_scale": 0.55,
-                    "offset": [-62, 40],
-                    "size": [88, 148]
+                    "offset": [
+                        -64,
+                        39
+                    ],
+                    "size": [
+                        88,
+                        148
+                    ],
+                    "$text_color": [
+                        0.9,
+                        0.9,
+                        0.9
+                    ]
                 }
             },
             {
@@ -44,7 +135,10 @@
                     "$has_bg": false,
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [66, 4]
+                    "offset": [
+                        66,
+                        4
+                    ]
                 }
             },
             {
@@ -53,16 +147,31 @@
                     "$has_bg": false,
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [46, 4]
+                    "offset": [
+                        46,
+                        4
+                    ]
                 }
             },
             {
                 "input_item@common.container_item": {
                     "collection_index": 3,
-                    "offset": [9, -2],
-                    "size": [28, 28],
-                    "$cell_image_size": [28, 28],
-                    "$item_renderer_size": [26, 26],
+                    "offset": [
+                        9,
+                        -2
+                    ],
+                    "size": [
+                        28,
+                        28
+                    ],
+                    "$cell_image_size": [
+                        28,
+                        28
+                    ],
+                    "$item_renderer_size": [
+                        26,
+                        26
+                    ],
                     "anchor_from": "center",
                     "anchor_to": "center"
                 }
@@ -71,7 +180,10 @@
                 "progress@uc.progress_display": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [9, -2],
+                    "offset": [
+                        9,
+                        -2
+                    ],
                     "collection_index": 2
                 }
             },
@@ -79,7 +191,10 @@
                 "ingot_slot@uc.input_2_slot": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-48, -12],
+                    "offset": [
+                        -48,
+                        -12
+                    ],
                     "collection_index": 4
                 }
             },
@@ -87,7 +202,10 @@
                 "chip_slot@uc.input_3_slot": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-48, 6],
+                    "offset": [
+                        -48,
+                        6
+                    ],
                     "collection_index": 5
                 }
             },
@@ -95,7 +213,10 @@
                 "runic_core_slot@common.container_item": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-48, 24],
+                    "offset": [
+                        -48,
+                        24
+                    ],
                     "collection_index": 6
                 }
             },
@@ -105,8 +226,14 @@
                     "texture": "textures/ui/outlines/yellow_outline",
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [-48, 24],
-                    "size": [18, 18],
+                    "offset": [
+                        -48,
+                        24
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
                     "layer": 5
                 }
             },
@@ -114,37 +241,24 @@
                 "confirm_button@uc.machine_button": {
                     "anchor_from": "center",
                     "anchor_to": "center",
-                    "offset": [9, 24],
+                    "offset": [
+                        9,
+                        24
+                    ],
                     "$index": 12,
-                    "$button_size": [56, 18],
+                    "$button_size": [
+                        56,
+                        18
+                    ],
                     "$default_texture": "textures/ui/cells/inverted_purple_cell_image",
                     "$hover_texture": "textures/ui/cells/hover_inverted_purple_cell_image",
                     "$pressed_texture": "textures/ui/cells/purple_cell_image",
                     "$button_text": "Refine"
                 }
-            } /*
-            {
-                "details_screen@ascendant_common.screen": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": [58, 110],
-                    "offset": [67, -10],
-                    "layer": 0
-                }
             },
             {
-                "details_label@uc.text_label": {
-                    "collection_index": 13,
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": [52, 102],
-                    "$text_scale": 0.45,
-                    "offset": [67, -10],
-                    "layer": 2
-                }
-            },*/,
-            {
                 "upgrades_tab@uc.upgrades_tab": {
+                    "$upgrade_toggle_offset": [109, -19],
                     "$upgrade_index_1": 7,
                     "$upgrade_index_2": 8,
                     "$upgrade_index_3": 9,
@@ -159,7 +273,8 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
+                    "$io_toggle_offset": [109, 7],
                     "$io_items_modes_description": "ui.utilitycraft:io.refining_table.items",
                     "$io_fluids_modes_description": "ui.utilitycraft:io.refining_table.liquids",
                     "$has_item_io": true,
@@ -187,69 +302,141 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
-                    "$info_description": "ui.utilitycraft:info.refining_table"
-                }
-            }
-        ]
-    },
-    "stats_screen": {
-        "type": "collection_panel",
-        "collection_name": "container_items",
-        "$item_collection_name": "container_items",
-        "anchor_from": "center",
-        "anchor_to": "center",
-        "layer": 6,
-        "size": [176, "100%c"],
-        "controls": [
-            {
-                "all_stats_label@uc.text_label": {
-                    "collection_index": 11,
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": [168, 158],
-                    "$text_scale": 0.6,
-                    "offset": [0, 0],
-                    "layer": 6
-                }
-            },
-            {
-                "stats_screen@ascendant_common.screen": {
-                    "anchor_from": "center",
-                    "anchor_to": "center",
-                    "size": ["100%", "100% + 8px"],
-                    "offset": [0, 4],
-                    "layer": 1
+                "info_tab@at_common.machine_info_tab": {
+                    "$info_toggle_offset": [109, 33],
+                    "$info_description": "ui.utilitycraft:info.refining_table",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        10.0,
+                        13
+                    ]
                 }
             }
         ]
     },
     "stats_panel": {
         "type": "collection_panel",
-        "anchor_from": "center",
-        "anchor_to": "center",
-        "size": [220, 136],
-        "offset": [-10, -46],
         "collection_name": "container_items",
         "$item_collection_name": "container_items",
+        "anchor_from": "center",
+        "anchor_to": "center",
+        "size": [
+            176,
+            166
+        ],
+        "layer": 1,
         "controls": [
             {
-                "machine_name@uc.machine_name": {
-                    "offset": [48, -24]
+                "page_background@at_common.panel": {
+                    "$panel_size": [
+                        176,
+                        166
+                    ],
+                    "size": [
+                        176,
+                        166
+                    ],
+                    "layer": -1,
+                    "$panel_texture": "textures/ui/at_refining_table_bg"
                 }
             },
             {
                 "stats_title": {
                     "type": "label",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [-74, 4],
-                    "size": [72, 20],
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0,
+                        4
+                    ],
+                    "size": [
+                        156,
+                        12
+                    ],
                     "text": "ui.utilitycraft:refining_table.all_statistics",
-                    "color": [0.75, 0.55, 1.0],
+                    "text_alignment": "center",
+                    "font_scale_factor": 1,
+                    "color": [
+                        0.95,
+                        0.95,
+                        0.95
+                    ],
+                    "layer": 5,
+                    "shadow": true
+                }
+            },
+            {
+                "analyzed_item@common.container_item": {
+                    "collection_index": 3,
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        0,
+                        -43
+                    ],
+                    "size": [
+                        28,
+                        28
+                    ],
+                    "$cell_image_size": [
+                        28,
+                        28
+                    ],
+                    "$item_renderer_size": [
+                        26,
+                        26
+                    ],
+                    "layer": 4
+                }
+            },
+            {
+                "item_hint": {
+                    "type": "label",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        0,
+                        -18
+                    ],
+                    "size": [
+                        156,
+                        12
+                    ],
+                    "text": "ui.utilitycraft:refining_table.analyzed_item",
                     "text_alignment": "center",
                     "font_scale_factor": 0.6,
-                    "layer": 5
+                    "color": [
+                        0.95,
+                        0.95,
+                        0.95
+                    ],
+                    "layer": 5,
+                    "shadow": true
+                }
+            },
+            {
+                "statistics@at_common.scrollable_info_panel": {
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "offset": [
+                        -163,
+                        0
+                    ],
+                    "$label_index": 11,
+                    "$text_scale": 0.6,
+                    "$bg_size": [
+                        150,
+                        166
+                    ],
+                    "$info_size": [
+                        142,
+                        158
+                    ],
+                    "layer": 2,
+                    "$background_ref": "at_common.blue_panel"
                 }
             }
         ]
@@ -274,12 +461,18 @@
             {
                 "root_panel@common.root_panel": {
                     "layer": 1,
-                    "offset": [32, 0],
+                    "offset": [
+                        32,
+                        0
+                    ],
                     "controls": [
                         {
                             "panel": {
                                 "type": "panel",
-                                "size": [176, 166],
+                                "size": [
+                                    176,
+                                    166
+                                ],
                                 "anchor_from": "center",
                                 "anchor_to": "center",
                                 "controls": [
@@ -290,7 +483,8 @@
                                         }
                                     },
                                     {
-                                        "close_button@common.light_close_button": {}
+                                        "close_button@common.light_close_button": {
+                                            "ignored": true}
                                     }
                                 ]
                             }
@@ -301,20 +495,17 @@
                                 "layer": 5,
                                 "controls": [
                                     {
-                                        "stats_toggle@ascendant_common.tab_button_toggle": {
-                                            "anchor_from": "center",
-                                            "anchor_to": "center",
-                                            "offset": [99, 6],
-                                            "layer": -5,
-                                            "$tab_button_text": "",
-                                            "$tab_button_size": [24, 24],
-                                            "$tab_button_text_scale": 0.8,
-                                            "$radio_toggle_group": false,
-                                            "$toggle_property_bag": {
-                                                "#toggle_state": false
-                                            },
-                                            "$toggle_state_binding_name": "#refining_table_stats",
-                                            "$toggle_binding_condition": "always"
+                                        "view_top_bar_anchor": {
+                                            "type": "panel",
+                                            "size": [
+                                                176,
+                                                166
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "view_top_bar@refining_table.view_top_bar": {}
+                                                }
+                                            ]
                                         }
                                     },
                                     {
@@ -327,18 +518,12 @@
                                                     "source_control_name": "stats_toggle",
                                                     "source_property_name": "(not #toggle_state)",
                                                     "target_property_name": "#visible",
-                                                    "resolve_sibling_scope": true
+                                                    "resolve_sibling_scope": false
                                                 }
                                             ],
                                             "controls": [
                                                 {
                                                     "refining_table_top@refining_table.refining_table_top": {}
-                                                },
-                                                {
-                                                    "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {}
-                                                },
-                                                {
-                                                    "hotbar_grid@common.hotbar_grid_template": {}
                                                 }
                                             ]
                                         }
@@ -353,18 +538,48 @@
                                                     "source_control_name": "stats_toggle",
                                                     "source_property_name": "#toggle_state",
                                                     "target_property_name": "#visible",
-                                                    "resolve_sibling_scope": true
+                                                    "resolve_sibling_scope": false
                                                 }
                                             ],
                                             "controls": [
                                                 {
-                                                    "stats_panel@refining_table.stats_screen": {}
+                                                    "stats_panel@refining_table.stats_panel": {}
                                                 }
                                             ]
                                         }
                                     },
                                     {
                                         "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {}
+                                    },
+                                    {
+                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
+                                            "controls": [
+                                                {
+                                                    "inventory_panel@common.inventory_panel": {}
+                                                },
+                                                {
+                                                    "inventory_label@common.section_heading_label": {
+                                                        "anchor_from": "top_left",
+                                                        "anchor_to": "top_left",
+                                                        "offset": [
+                                                            7,
+                                                            3
+                                                        ],
+                                                        "layer": 2,
+                                                        "text": "container.inventory",
+                                                        "color": [
+                                                            0.95,
+                                                            0.95,
+                                                            0.95
+                                                        ],
+                                                        "shadow": true
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "hotbar_grid@common.hotbar_grid_template": {}
                                     }
                                 ]
                             }

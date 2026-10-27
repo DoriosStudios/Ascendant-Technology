@@ -1,5 +1,33 @@
 {
     "namespace": "catalyst_weaver",
+    "button_card_buttons@at_core.button_card_row": {
+        "controls": [
+            {
+                "machine_view_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_view_tabs",
+                    "$card_tab_index": 0,
+                    "$card_icon": "textures/ui/inventory_icon",
+                    "$card_icon_size": [19, 13],
+                    "$card_tooltip": "ui.utilitycraft:machine_view.machine",
+                    "$toggle_tts_name": "ui.utilitycraft:machine_view.machine"
+                }
+            },
+            {
+                "recipes_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_view_tabs",
+                    "$card_tab_index": 1,
+                    "$card_icon": "textures/ui/at_icons/recipe_book",
+                    "$card_icon_size": [16, 16],
+                    "$card_tooltip": "ui.utilitycraft:recipes_panel.name",
+                    "$toggle_tts_name": "ui.utilitycraft:recipes_panel.name"
+                }
+            }
+        ]
+    },
+    "view_top_bar@at_common.button_card": {
+        "$card_offset": [21, 4],
+        "$card_buttons_ref": "catalyst_weaver.button_card_buttons"
+    },
     "catalyst_overlay": {
         "type": "image",
         "texture": "textures/ui/catalyst_overlay",
@@ -39,7 +67,8 @@
                         {
                             "close_button@common.close_button": {}
                         }
-                    ]
+                    ],
+                    "ignored": true
                 }
             },
             {
@@ -123,7 +152,7 @@
                 }
             },
             {
-                "info_panel@ascendant_common.scrollable_info_panel": {
+                "info_panel@at_common.scrollable_info_panel": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "$label_index": 1,
@@ -235,7 +264,7 @@
                 }
             },
             {
-                "io_tab@uc.io_tab": {
+                "io_tab@at_common.machine_io_tab": {
                     "$right_machine_tabs_name": "$right_machine_tabs_name",
                     "$io_toggle_control_name": "$io_toggle_control_name",
                     "$io_config_tabs_name": "$io_config_tabs_name",
@@ -271,11 +300,22 @@
                 }
             },
             {
-                "info_tab@uc.info_tab": {
+                "info_tab@at_common.machine_info_tab": {
                     "$right_machine_tabs_name": "$right_machine_tabs_name",
                     "$info_toggle_control_name": "$info_toggle_control_name",
-                    "offset": [21, 20],
-                    "$info_description": "ui.utilitycraft:info.catalyst_weaver"
+                    "offset": [
+                        21,
+                        20
+                    ],
+                    "$info_description": "ui.utilitycraft:info.catalyst_weaver",
+                    "$info_panel_size": [
+                        120,
+                        134
+                    ],
+                    "$info_panel_offset": [
+                        -1.5,
+                        7
+                    ]
                 }
             },
             {
@@ -364,14 +404,8 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "view_top_bar@uc.machine_recipe_view_top_bar": {
-                                                        "offset": [58, -91],
-                                                        "$machine_toggle_unchecked": "textures/ui/toggle_button/tab_pressed",
-                                                        "$machine_toggle_checked": "textures/ui/toggle_button/tab_pressed",
-                                                        "$machine_toggle_unchecked_hover": "textures/ui/toggle_button/tab_hover_pressed",
-                                                        "$machine_toggle_checked_hover": "textures/ui/toggle_button/tab_hover_pressed",
-                                                        "$recipes_toggle_checked": "textures/ui/toggle_button/tab",
-                                                        "$recipes_toggle_checked_hover": "textures/ui/toggle_button/tab_hover"
+                                                    "view_top_bar@catalyst_weaver.view_top_bar": {
+                                                        "$card_selected_tab": 0
                                                     }
                                                 },
                                                 {
@@ -404,16 +438,8 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "view_top_bar@uc.machine_recipe_view_top_bar": {
-                                                        "offset": [58, -91],
-                                                        "$machine_toggle_default_state": false,
-                                                        "$recipes_toggle_default_state": true,
-                                                        "$machine_toggle_checked": "textures/ui/toggle_button/tab",
-                                                        "$machine_toggle_checked_hover": "textures/ui/toggle_button/tab_hover",
-                                                        "$recipes_toggle_unchecked": "textures/ui/toggle_button/tab_pressed",
-                                                        "$recipes_toggle_checked": "textures/ui/toggle_button/tab_pressed",
-                                                        "$recipes_toggle_unchecked_hover": "textures/ui/toggle_button/tab_hover_pressed",
-                                                        "$recipes_toggle_checked_hover": "textures/ui/toggle_button/tab_hover_pressed"
+                                                    "view_top_bar@catalyst_weaver.view_top_bar": {
+                                                        "$card_selected_tab": 0
                                                     }
                                                 },
                                                 {

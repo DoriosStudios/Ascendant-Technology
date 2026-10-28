@@ -415,7 +415,7 @@ item.utilitycraft:cryofluid_capsule_5=Cryofluid Capsule §7\n- (5 Buckets)\n§o�
 item.utilitycraft:cryofluid_capsule_6=Cryofluid Capsule §7\n- (6 Buckets)\n§o§9@UC: Ascendant Technology
 item.utilitycraft:cryofluid_capsule_7=Cryofluid Capsule §7\n- (7 Buckets)\n§o§9@UC: Ascendant Technology
 item.utilitycraft:cryofluid_capsule_8=Cryofluid Capsule §7\n- (8 Buckets)\n§o§9@UC: Ascendant Technology
-item.utilitycraft:switch_button=Switch Button\n§o§9@UC: Ascendant Technology
+item.utilitycraft:switch_button=Switch Button
 item.utilitycraft:runic_core=Runic Core\n§o§9@UC: Ascendant Technology
 item.utilitycraft:advanced_runic_core=Advanced Runic Core\n§o§9@UC: Ascendant Technology
 

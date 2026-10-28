@@ -367,7 +367,7 @@ function showState(machine, xpTank, energyCost, running, message, context = {}) 
             title: "XP Information",
             lines: [
                 `\u00A7r\u00A77Stored \u00A7f${Math.floor(xpTank.get())} / ${Math.floor(xpTank.getCap())} mB`,
-                `\u00A7r\u00A77Capacity \u00A7f${xpPercent.toFixed(2)}%%`,
+                `\u00A7r\u00A77Capacity \u00A7f${xpPercent.toFixed(2)}%`,
             ],
         },
     ], { energyCost, batch: 1 });

@@ -66,7 +66,7 @@ function checkOptionalInsightDependency() {
     system.runTimeout(() => {
         startupCheckCompleted = true;
         if (isInsightEffectsAvailable()) return;
-        console.warn("[Ascendant Technology] Optional dependency Dorios' Insight was not detected. Custom StatsCore effects remain active, but their HUD icons, levels, timers and charges require Dorios' Insight.");
+        // console.warn("[Ascendant Technology] Optional dependency Dorios' Insight was not detected. Custom StatsCore effects remain active, but their HUD icons, levels, timers and charges require Dorios' Insight.");
         for (const player of world.getAllPlayers()) warnPlayerIfMissing(player);
     }, EFFECT_STATE_VALUES.insightStartupGraceTicks);
 }

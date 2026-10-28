@@ -386,7 +386,7 @@ function renderMachineStatus(machine, coolantTank, running, message, profile, so
                 `\u00A7r\u00A77Efficiency \u00A7f${coolant ? coolant.efficiency.toFixed(2) : "-"}x`,
                 `\u00A7r\u00A77Cycle Cost \u00A7f${coolantCost} mB`,
                 `\u00A7r\u00A77Stored \u00A7f${FluidStorage.formatFluid(coolantTank.get())} / ${FluidStorage.formatFluid(coolantTank.getCap())}`,
-                `\u00A7r\u00A77Capacity \u00A7f${coolantPercent.toFixed(2)}%%`,
+                `\u00A7r\u00A77Capacity \u00A7f${coolantPercent.toFixed(2)}%`,
             ],
         },
     ];

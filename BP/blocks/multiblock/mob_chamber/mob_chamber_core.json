@@ -4,7 +4,7 @@
         "description": {
             "identifier": "utilitycraft:mob_chamber_core",
             "menu_category": {
-                "category": "construction"
+                "category": "none"
             }
         },
         "components": {
@@ -12,7 +12,7 @@
             "minecraft:material_instances": {
                 "*": {
                     "texture": "utilitycraft_titanium_plated_block",
-                    "render_method": "opaque"
+                    "render_method": "alpha_test"
                 },
                 "north": {
                     "texture": "utilitycraft_mob_chamber_core_preview",

@@ -435,20 +435,24 @@ test("concurrent wrench scans serialize; Controller break delegates to Heavy's s
     assert.equal(typeof env.registration.component.onTick, "function");
 });
 
-test("three blocks resolve existing preview assets, localization, recipes and Crafter entries", () => {
+test("paused Mob Chamber retains local assets, localization and archived recipes", () => {
     const atlas = JSON.parse(fs.readFileSync(path.join(root, "RP/textures/terrain_texture.json"), "utf8")).texture_data;
     const crafterSource = fs.readFileSync(path.join(root, "BP/scripts/config/recipes/mobChamber.js"), "utf8");
     let crafter;
     vm.runInNewContext(crafterSource.replace(/^import .*;\r?\n/m, ""), { DoriosLib: { registry: { registerCrafterRecipe(value) { crafter = value; } } } });
+    const recipeIndex = fs.readFileSync(path.join(root, "BP/scripts/config/recipes/index.js"), "utf8");
+    assert(!/^\s*(?:import|export)\s+.*["']\.\/mobChamber\.js["']/m.test(recipeIndex));
     for (const name of ["mob_chamber_controller", "mob_chamber_core", "essence_module"]) {
         const block = JSON.parse(fs.readFileSync(path.join(root, `BP/blocks/multiblock/mob_chamber/${name}.json`), "utf8"))["minecraft:block"];
         assert.equal(block.description.identifier, `utilitycraft:${name}`);
+        assert.equal(block.description.menu_category.category, "none");
         for (const material of Object.values(block.components["minecraft:material_instances"])) {
             const texture = atlas[material.texture]?.textures;
             assert(texture, material.texture);
-            assert([root, path.join(root, "../UtilityCraft")].some(pack => fs.existsSync(path.join(pack, `RP/${texture}.png`))), texture);
+            assert(fs.existsSync(path.join(root, `RP/${texture}.png`)), texture);
         }
-        const recipe = JSON.parse(fs.readFileSync(path.join(root, `BP/recipes/blocks/multiblock/mob_chamber/${name}.json`), "utf8"))["minecraft:recipe_shaped"];
+        assert(!fs.existsSync(path.join(root, `BP/recipes/blocks/multiblock/mob_chamber/${name}.json`)));
+        const recipe = JSON.parse(fs.readFileSync(path.join(root, `extras/paused_recipes/blocks/multiblock/mob_chamber/${name}.json`), "utf8"))["minecraft:recipe_shaped"];
         const grid = recipe.pattern.join("").split("").map(letter => recipe.key[letter].item.split(":")[1]).join(",");
         assert.equal(crafter[grid].output, `utilitycraft:${name}`);
         for (const language of ["en_US", "pt_BR", "pt_PT", "es_ES", "es_MX", "de_DE", "fr_FR", "ru_RU", "ja_JP", "zh_CN"]) {

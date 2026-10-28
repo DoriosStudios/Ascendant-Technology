@@ -414,7 +414,7 @@ export class EnergyStorage {
     const item = new ItemStack(`${Constants.ENERGY_BAR_ITEM_PREFIX}${frameName}`, 1);
     item.nameTag = `§rEnergy
 §r§7  Stored: ${EnergyStorage.formatEnergyToText(this.get())} / ${EnergyStorage.formatEnergyToText(this.cap)}
-§r§7  Percentage: ${this.getPercent().toFixed(2)}%%`;
+§r§7  Percentage: ${this.getPercent().toFixed(2)}%`;
 
     container.setItem(slot, item);
   }

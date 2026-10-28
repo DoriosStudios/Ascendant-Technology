@@ -4,8 +4,7 @@
 		"description": {
 			"identifier": "utilitycraft:universal_cable",
 			"menu_category": {
-				"category": "construction",
-				"group": "dorios:itemGroup.name.pipes"
+				"category": "none"
 			},
 			"states": {
 				"utilitycraft:up": [false, true],

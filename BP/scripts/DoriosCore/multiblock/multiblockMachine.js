@@ -527,7 +527,7 @@ export class MultiblockMachine extends BasicMachine {
 §r§aInput Capacity §fx${processingAmount}
 §r§aCost §f${cost}
 §r§aSpeed §fx${speedMultiplier.toFixed(2)}
-§r§aEfficiency §f${efficiency.toFixed(2)}%%
+§r§aEfficiency §f${efficiency.toFixed(2)}%
 `;
   }
 
@@ -546,7 +546,7 @@ export class MultiblockMachine extends BasicMachine {
 
     return `§r§eEnergy Information
 
-§r§bCapacity §f${Math.floor(energy.getPercent())}%%
+§r§bCapacity §f${Math.floor(energy.getPercent())}%
 §r§bStored §f${EnergyStorage.formatEnergyToText(energy.get())} / ${EnergyStorage.formatEnergyToText(energy.cap)}
 §r§bRate §f${EnergyStorage.formatEnergyToText(baseRate)}/t
 `;

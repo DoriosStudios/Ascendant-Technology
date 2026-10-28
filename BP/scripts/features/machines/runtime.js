@@ -82,7 +82,7 @@ export function renderMachineInfo(machine, running, title, sections = [], option
     machine.setLabel([
         `§r§7Status: ${running ? "§a" : "§e"}${title}\n\n§r§eMachine Information`,
         `\n§r§aSpeed §fx${speed.toFixed(2)}\n§r§aEfficiency §fx${efficiency.toFixed(2)}\n§r§aRecipe Batch §fx${batch}\n§r§aCycle Cost §f${EnergyStorage.formatEnergyToText(cycleCost)}`,
-        `\n§r§eEnergy Information\n\n§r§bCapacity §f${percent.toFixed(2)}%%\n§r§bStored §f${EnergyStorage.formatEnergyToText(stored)} / ${EnergyStorage.formatEnergyToText(capacity)}\n§r§bRate §f${EnergyStorage.formatEnergyToText(drawRate)}/t`,
+        `\n§r§eEnergy Information\n\n§r§bCapacity §f${percent.toFixed(2)}%\n§r§bStored §f${EnergyStorage.formatEnergyToText(stored)} / ${EnergyStorage.formatEnergyToText(capacity)}\n§r§bRate §f${EnergyStorage.formatEnergyToText(drawRate)}/t`,
         ...normalizedSections.map(
             ({ title: sectionTitle, lines }) => `\n§r§e${sectionTitle}\n\n${lines.join("\n")}`,
         ),

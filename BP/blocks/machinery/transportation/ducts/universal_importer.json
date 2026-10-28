@@ -4,8 +4,7 @@
         "description": {
             "identifier": "utilitycraft:universal_importer",
             "menu_category": {
-                "category": "construction",
-                "group": "dorios:itemGroup.name.pipes"
+                "category": "none"
             },
             "traits": {
                 "minecraft:placement_position": {
@@ -22,7 +21,7 @@
             }
         },
         "components": {
-            "utilitycraft:multi_importer": {},
+            //"utilitycraft:multi_importer": {},
             "utilitycraft:upgradeable": {
                 "type": "persistent",
                 "filter_max": 1

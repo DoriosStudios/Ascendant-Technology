@@ -4,7 +4,7 @@
         "description": {
             "identifier": "utilitycraft:mob_chamber_controller",
             "menu_category": {
-                "category": "construction"
+                "category": "none"
             },
             "traits": {
                 "minecraft:placement_direction": {
@@ -21,7 +21,7 @@
             "minecraft:material_instances": {
                 "*": {
                     "texture": "utilitycraft_titanium_case",
-                    "render_method": "opaque"
+                    "render_method": "alpha_test"
                 },
                 "north": {
                     "texture": "utilitycraft_mob_chamber_controller_preview",

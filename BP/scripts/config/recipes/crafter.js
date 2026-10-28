@@ -425,16 +425,7 @@ export const crafterRecipeAdditions = {
             output: "utilitycraft:titanium_conveyor_vertical",
             amount: 16,
         },
-    // BP/recipes/blocks/machinery/transportation/universal_exporter.json
-    "air,universal_cable,air,universal_cable,hopper,universal_cable,air,universal_cable,air": {
-        output: "utilitycraft:universal_exporter",
-        amount: 1,
-    },
-    // BP/recipes/blocks/machinery/transportation/universal_importer.json
-    "air,universal_cable,air,universal_cable,universal_cable,universal_cable,air,hopper,air": {
-        output: "utilitycraft:universal_importer",
-        amount: 1,
-    },
+    // Universal Tube recipes are paused in v0.9.2 (see extras/paused_recipes).
     // BP/recipes/items/machinery/ultimate_chip.json
     "redstone,aetherium,redstone,aetherium,ultimate_chip,aetherium,redstone,aetherium,redstone": {
         output: "utilitycraft:absolute_chip",

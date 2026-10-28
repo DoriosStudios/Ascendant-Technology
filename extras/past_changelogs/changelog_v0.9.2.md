@@ -2,7 +2,7 @@
 
 > **Status:** Draft — includes the current working tree. Final in-game release validation is pending.
 
-This update expands Aetherium processing, adds the Compactor and Decompactor, introduces Universal transportation, and improves machine upgrades, refining, recipes, and interfaces. The current draft also includes the Mob Slasher and Conveyor Table.
+This update expands Aetherium processing, adds the Compactor and Decompactor, and improves machine upgrades, refining, recipes, and interfaces. The current draft also includes the Mob Slasher and Conveyor Table.
 
 ## BLOCKS
 
@@ -74,11 +74,6 @@ This update expands Aetherium processing, adds the Compactor and Decompactor, in
 
 ### Transportation
 
-- Added **Universal Cable** for Energy, Fluids, Gases, Items, and Overclock networks.
-    - Displays connections independently on each face and uses one block variant.
-- Added **Universal Exporter** and **Universal Importer**.
-    - Transfer resources between compatible networks, containers, and machines.
-    - Use UtilityCraft's shared endpoint behavior and resource configuration.
 - Initialized automatic I/O defaults on supported machines.
 - Preserved legacy network access for machines without explicit face restrictions.
 
@@ -214,7 +209,6 @@ This update expands Aetherium processing, adds the Compactor and Decompactor, in
 ## BUG FIXES
 
 - Fixed the missing Conveyor Table crafting route after moving conveyor recipes to that table.
-- Restored the disabled Universal Importer and Exporter behaviors in the current working tree.
 - Fixed machine displays failing to appear in some inventory states.
 - Fixed blocked or conflicting outputs consuming inputs or overwriting output stacks in affected processing machines.
 - Fixed Genetic Seed Synthesizer dropping items when its output was full.

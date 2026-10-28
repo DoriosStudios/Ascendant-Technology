@@ -26,9 +26,9 @@
 			"type": "data",
 			"uuid": "c75ff6b0-0594-4525-b866-8930d5fb9415",
 			"version": [
-				1,
 				0,
-				0
+				9,
+				2
 			]
 		},
 		{
@@ -37,14 +37,21 @@
 			"entry": "scripts/main.js",
 			"uuid": "6584b5c2-0351-46c5-b2d4-4dea5d09321c",
 			"version": [
-				1,
 				0,
-				0
+				9,
+				2
 			]
 		}
 	],
 	"dependencies": [
-		{ "uuid": "9d61a8df-7d50-4624-8bff-d2c90c52a5a0", "version": [3, 6, 0] },
+		{
+			"uuid": "9d61a8df-7d50-4624-8bff-d2c90c52a5a0",
+			"version": [
+				3,
+				6,
+				0
+			]
+		},
 		{
 			"module_name": "@minecraft/server",
 			"version": "2.9.0"

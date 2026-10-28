@@ -61,7 +61,7 @@ const components = {
 };
 await json("BP/blocks/machinery/machines/alchemical_station.json", {
     format_version: "1.21.100", "minecraft:block": {
-        description: { identifier: "utilitycraft:alchemical_station", menu_category: { category: "construction" },
+        description: { identifier: "utilitycraft:alchemical_station", menu_category: { category: "none" },
             traits: { "minecraft:placement_direction": { enabled_states: ["minecraft:cardinal_direction"], y_rotation_offset: 180 } },
             states: { "utilitycraft:on": [false, true] } },
         components,
@@ -97,7 +97,8 @@ await json("RP/models/blocks/alchemical_station.geo.json", {
 });
 const recipeKey = { P: "utilitycraft:titanium_plate", A: "utilitycraft:aetherium", C: "utilitycraft:absolute_chip",
     B: "minecraft:brewing_stand", R: "utilitycraft:reinforced_machine_case" };
-await json("BP/recipes/blocks/machinery/machines/alchemical_station.json", {
+// Keep the recipe outside BP while this machine is paused in v0.9.2.
+await json("extras/paused_recipes/blocks/machinery/machines/alchemical_station.json", {
     format_version: "1.20.80", "minecraft:recipe_shaped": { description: { identifier: "utilitycraft:alchemical_station" },
         tags: ["utilitycraft_workbench"], pattern: ["PAP", "CBC", "PRP"],
         key: Object.fromEntries(Object.entries(recipeKey).map(([k, item]) => [k, { item }])),

@@ -39,7 +39,7 @@
             },
             "1": {
                 "#item_id_aux": 1,
-                "#hover_text": "§r§7Status: §aWeaving\n\n§r§eMachine Information\n\n§r§aSpeed §fx1.00\n§r§aEfficiency §fx1.00\n§r§aRecipe Batch §fx1\n§r§aCycle Cost §f12.8 kDE\n\n§r§eEnergy Information\n\n§r§bCapacity §f50.00%%\n§r§bStored §f12.8 MDE / 25.6 MDE\n§r§bRate §f3.2 kDE/t"
+                "#hover_text": "§r§7Status: §aWeaving\n\n§r§eMachine Information\n\n§r§aSpeed §fx1.00\n§r§aEfficiency §fx1.00\n§r§aRecipe Batch §fx1\n§r§aCycle Cost §f12.8 kDE\n\n§r§eEnergy Information\n\n§r§bCapacity §f50.00%\n§r§bStored §f12.8 MDE / 25.6 MDE\n§r§bRate §f3.2 kDE/t"
             },
             "2": {
                 "#item_id_aux": 1,

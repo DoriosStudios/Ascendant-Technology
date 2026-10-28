@@ -11,9 +11,6 @@
                             "name": "at:itemGroup.name.titanium_multiblock"
                         },
                         "items": [
-                            "utilitycraft:mob_chamber_controller",
-                            "utilitycraft:mob_chamber_core",
-                            "utilitycraft:essence_module",
                             "utilitycraft:titanium_case",
                             "utilitycraft:titanium_bricks",
                             "utilitycraft:tempered_titanium_glass",
@@ -59,7 +56,6 @@
                             "name": "at:itemGroup.name.machines"
                         },
                         "items": [
-                            "utilitycraft:alchemical_station",
                             "utilitycraft:catalyst_weaver",
                             "utilitycraft:compactor",
                             "utilitycraft:cryo_chamber",

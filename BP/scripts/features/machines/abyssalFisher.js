@@ -652,7 +652,7 @@ function renderStatus(
             lines: [
                 `\u00A7r\u00A77Type \u00A7f${formatTypeId(water.getType())}`,
                 `\u00A7r\u00A77Stored \u00A7f${FluidStorage.formatFluid(water.get())} / ${FluidStorage.formatFluid(water.getCap())}`,
-                `\u00A7r\u00A77Capacity \u00A7f${waterPercent.toFixed(2)}%%`,
+                `\u00A7r\u00A77Capacity \u00A7f${waterPercent.toFixed(2)}%`,
             ],
         },
     ];

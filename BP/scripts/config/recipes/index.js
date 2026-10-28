@@ -60,4 +60,4 @@ export {
 export * from "./compactor.js";
 export * from "./decompactor.js";
 import "./multiblock.js";
-import "./mobChamber.js";
+// Mob Chamber crafting is paused in v0.9.2; retain mobChamber.js for later use.

@@ -7,8 +7,8 @@
 	"authors": [
 		"Dorios Studios"
 	],
-	"targetVersion": "1.21.120",
-	"description": "Adds even more machines and features for your world with UtilityCraft!",
+	"targetVersion": "1.26.30",
+	"description": "Ascendant Technology v0.9.2 — Requires UtilityCraft 3.6.0+",
 	"experimentalGameplay": {
 		"upcomingCreatorFeatures": false,
 		"experimentalCreatorCameraFeatures": false,

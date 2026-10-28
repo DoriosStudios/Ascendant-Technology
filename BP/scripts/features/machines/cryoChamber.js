@@ -393,7 +393,7 @@ function setModuleStatus(machine, slot, title, message, lines = [], active = fal
         `\u00A7r\u00A7aEfficiency \u00A7fx${(1 / consumption).toFixed(2)}`,
         `\u00A7r\u00A7aRecipe Batch \u00A7fx${batch}`,
         "\n\u00A7r\u00A7eEnergy Information",
-        `\u00A7r\u00A7bCapacity \u00A7f${percent.toFixed(2)}%%`,
+        `\u00A7r\u00A7bCapacity \u00A7f${percent.toFixed(2)}%`,
         `\u00A7r\u00A7bStored \u00A7f${stored} / ${capacity}`,
         `\u00A7r\u00A7bRate \u00A7f${rate}/t`,
         `\n\u00A7r\u00A7e${title}`,

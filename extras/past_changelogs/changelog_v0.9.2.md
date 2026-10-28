@@ -187,6 +187,8 @@ This update expands Aetherium processing, adds the Compactor and Decompactor, in
 
 ## UI/UX
 
+- Removed addon signatures from internal UI items so machine information panels and interface placeholders no longer display them.
+
 - Added Liquifier and Residue Processor recipe books.
 - Reorganized Catalyst Weaver recipes by material and included the recovery and upgrade recipes.
 - Improved scrollable information panels, Refining Table displays, and Enchantment Station pages.

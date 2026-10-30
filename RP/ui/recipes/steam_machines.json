@@ -1,0 +1,699 @@
+{
+    "namespace": "at_steam_recipes",
+    "steam_boiler_rows": {
+        "type": "stack_panel",
+        "orientation": "vertical",
+        "size": [
+            84,
+            "default"
+        ],
+        "controls": [
+            {
+                "row_0": {
+                    "type": "panel",
+                    "size": [
+                        84,
+                        18
+                    ],
+                    "controls": [
+                        {
+                            "steam_boiler_recipe_0_button@uc.recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    6,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$toggle_name": "steam_boiler_recipes",
+                                "$toggle_index": 7100,
+                                "$toggle_control_name": "steam_boiler_recipe_0",
+                                "$toggle_default_state": true,
+                                "$toggle_hover_text": "ui.ascendant:recipe_book.steam_boiler.0.input",
+                                "$toggle_hover_text_localize": true,
+                                "$recipe_icon": "textures/entity/water_fluid",
+                                "$toggle_icon_uv_size": [
+                                    16,
+                                    16
+                                ],
+                                "$toggle_unchecked_hover": "textures/ui/recipe_book_item_bg",
+                                "$toggle_checked_hover": "textures/ui/recipe_book_touch_cell_selected"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "steam_boiler_selection": {
+        "type": "panel",
+        "size": [
+            88,
+            44
+        ],
+        "controls": [
+            {
+                "recipe_0@uc.recipe_panel": {
+                    "size": [
+                        88,
+                        44
+                    ],
+                    "$recipe_control_name": "steam_boiler_recipe_0",
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "$slot_offset": [
+                                    -27,
+                                    -12
+                                ],
+                                "bindings": [],
+                                "$slot_item_texture": "textures/entity/water_fluid",
+                                "$has_slot_count": false,
+                                "$slot_count_text": "1000",
+                                "$has_slot_hover": true,
+                                "$slot_hover_text": "ui.ascendant:recipe_book.steam_boiler.0.input"
+                            }
+                        },
+                        {
+                            "arrow": {
+                                "type": "image",
+                                "texture": "textures/ui/steam_recipe_arrow",
+                                "size": [
+                                    14,
+                                    10
+                                ],
+                                "offset": [
+                                    0,
+                                    -12
+                                ],
+                                "layer": 7
+                            }
+                        },
+                        {
+                            "output@uc.recipe_slot_overlay": {
+                                "$slot_offset": [
+                                    27,
+                                    -12
+                                ],
+                                "bindings": [],
+                                "$slot_item_texture": "textures/static/images/steam",
+                                "$has_slot_count": false,
+                                "$slot_count_text": "1000",
+                                "$has_slot_hover": true,
+                                "$slot_hover_text": "ui.ascendant:recipe_book.steam_boiler.0.output"
+                            }
+                        },
+                        {
+                            "input_amount": {
+                                "type": "label",
+                                "text": "1000 mB",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    18
+                                ],
+                                "size": [
+                                    34,
+                                    8
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "output_amount": {
+                                "type": "label",
+                                "text": "1000 mB",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    54,
+                                    18
+                                ],
+                                "size": [
+                                    34,
+                                    8
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "details": {
+                                "type": "label",
+                                "text": "2400 DE / 8 s",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    28
+                                ],
+                                "size": [
+                                    88,
+                                    16
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "vaporizer_rows": {
+        "type": "stack_panel",
+        "orientation": "vertical",
+        "size": [
+            84,
+            "default"
+        ],
+        "controls": [
+            {
+                "row_0": {
+                    "type": "panel",
+                    "size": [
+                        84,
+                        18
+                    ],
+                    "controls": [
+                        {
+                            "vaporizer_recipe_0_button@uc.recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    6,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$toggle_name": "vaporizer_recipes",
+                                "$toggle_index": 7200,
+                                "$toggle_control_name": "vaporizer_recipe_0",
+                                "$toggle_default_state": true,
+                                "$toggle_hover_text": "ui.ascendant:recipe_book.vaporizer.0.input",
+                                "$toggle_hover_text_localize": true,
+                                "$recipe_icon": "textures/entity/water_fluid",
+                                "$toggle_icon_uv_size": [
+                                    16,
+                                    16
+                                ],
+                                "$toggle_unchecked_hover": "textures/ui/recipe_book_item_bg",
+                                "$toggle_checked_hover": "textures/ui/recipe_book_touch_cell_selected"
+                            }
+                        },
+                        {
+                            "vaporizer_recipe_1_button@uc.recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    24,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$toggle_name": "vaporizer_recipes",
+                                "$toggle_index": 7201,
+                                "$toggle_control_name": "vaporizer_recipe_1",
+                                "$toggle_default_state": false,
+                                "$toggle_hover_text": "ui.ascendant:recipe_book.vaporizer.1.input",
+                                "$toggle_hover_text_localize": true,
+                                "$recipe_icon": "textures/entity/cryofluid",
+                                "$toggle_icon_uv_size": [
+                                    16,
+                                    16
+                                ],
+                                "$toggle_unchecked_hover": "textures/ui/recipe_book_item_bg",
+                                "$toggle_checked_hover": "textures/ui/recipe_book_touch_cell_selected"
+                            }
+                        },
+                        {
+                            "vaporizer_recipe_2_button@uc.recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    42,
+                                    0
+                                ],
+                                "size": [
+                                    18,
+                                    18
+                                ],
+                                "$toggle_name": "vaporizer_recipes",
+                                "$toggle_index": 7202,
+                                "$toggle_control_name": "vaporizer_recipe_2",
+                                "$toggle_default_state": false,
+                                "$toggle_hover_text": "ui.ascendant:recipe_book.vaporizer.2.input",
+                                "$toggle_hover_text_localize": true,
+                                "$recipe_icon": "textures/entity/saline_coolant_fluid",
+                                "$toggle_icon_uv_size": [
+                                    16,
+                                    16
+                                ],
+                                "$toggle_unchecked_hover": "textures/ui/recipe_book_item_bg",
+                                "$toggle_checked_hover": "textures/ui/recipe_book_touch_cell_selected"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "vaporizer_selection": {
+        "type": "panel",
+        "size": [
+            88,
+            44
+        ],
+        "controls": [
+            {
+                "recipe_0@uc.recipe_panel": {
+                    "size": [
+                        88,
+                        44
+                    ],
+                    "$recipe_control_name": "vaporizer_recipe_0",
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "$slot_offset": [
+                                    -27,
+                                    -12
+                                ],
+                                "bindings": [],
+                                "$slot_item_texture": "textures/entity/water_fluid",
+                                "$has_slot_count": false,
+                                "$slot_count_text": "1000",
+                                "$has_slot_hover": true,
+                                "$slot_hover_text": "ui.ascendant:recipe_book.vaporizer.0.input"
+                            }
+                        },
+                        {
+                            "arrow": {
+                                "type": "image",
+                                "texture": "textures/ui/steam_recipe_arrow",
+                                "size": [
+                                    14,
+                                    10
+                                ],
+                                "offset": [
+                                    0,
+                                    -12
+                                ],
+                                "layer": 7
+                            }
+                        },
+                        {
+                            "output@uc.recipe_slot_overlay": {
+                                "$slot_offset": [
+                                    27,
+                                    -12
+                                ],
+                                "bindings": [],
+                                "$slot_item_texture": "textures/static/images/steam",
+                                "$has_slot_count": false,
+                                "$slot_count_text": "1000",
+                                "$has_slot_hover": true,
+                                "$slot_hover_text": "ui.ascendant:recipe_book.vaporizer.0.output"
+                            }
+                        },
+                        {
+                            "input_amount": {
+                                "type": "label",
+                                "text": "1000 mB",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    18
+                                ],
+                                "size": [
+                                    34,
+                                    8
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "output_amount": {
+                                "type": "label",
+                                "text": "1000 mB",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    54,
+                                    18
+                                ],
+                                "size": [
+                                    34,
+                                    8
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "details": {
+                                "type": "label",
+                                "text": "1600 DE / 4 s",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    28
+                                ],
+                                "size": [
+                                    88,
+                                    16
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "recipe_1@uc.recipe_panel": {
+                    "size": [
+                        88,
+                        44
+                    ],
+                    "$recipe_control_name": "vaporizer_recipe_1",
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "$slot_offset": [
+                                    -27,
+                                    -12
+                                ],
+                                "bindings": [],
+                                "$slot_item_texture": "textures/entity/cryofluid",
+                                "$has_slot_count": false,
+                                "$slot_count_text": "1000",
+                                "$has_slot_hover": true,
+                                "$slot_hover_text": "ui.ascendant:recipe_book.vaporizer.1.input"
+                            }
+                        },
+                        {
+                            "arrow": {
+                                "type": "image",
+                                "texture": "textures/ui/steam_recipe_arrow",
+                                "size": [
+                                    14,
+                                    10
+                                ],
+                                "offset": [
+                                    0,
+                                    -12
+                                ],
+                                "layer": 7
+                            }
+                        },
+                        {
+                            "output@uc.recipe_slot_overlay": {
+                                "$slot_offset": [
+                                    27,
+                                    -12
+                                ],
+                                "bindings": [],
+                                "$slot_item_texture": "textures/static/images/steam",
+                                "$has_slot_count": false,
+                                "$slot_count_text": "1500",
+                                "$has_slot_hover": true,
+                                "$slot_hover_text": "ui.ascendant:recipe_book.vaporizer.1.output"
+                            }
+                        },
+                        {
+                            "input_amount": {
+                                "type": "label",
+                                "text": "1000 mB",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    18
+                                ],
+                                "size": [
+                                    34,
+                                    8
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "output_amount": {
+                                "type": "label",
+                                "text": "1500 mB",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    54,
+                                    18
+                                ],
+                                "size": [
+                                    34,
+                                    8
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "details": {
+                                "type": "label",
+                                "text": "2400 DE / 6 s",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    28
+                                ],
+                                "size": [
+                                    88,
+                                    16
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "recipe_2@uc.recipe_panel": {
+                    "size": [
+                        88,
+                        44
+                    ],
+                    "$recipe_control_name": "vaporizer_recipe_2",
+                    "controls": [
+                        {
+                            "input@uc.recipe_slot_overlay": {
+                                "$slot_offset": [
+                                    -27,
+                                    -12
+                                ],
+                                "bindings": [],
+                                "$slot_item_texture": "textures/entity/saline_coolant_fluid",
+                                "$has_slot_count": false,
+                                "$slot_count_text": "1000",
+                                "$has_slot_hover": true,
+                                "$slot_hover_text": "ui.ascendant:recipe_book.vaporizer.2.input"
+                            }
+                        },
+                        {
+                            "arrow": {
+                                "type": "image",
+                                "texture": "textures/ui/steam_recipe_arrow",
+                                "size": [
+                                    14,
+                                    10
+                                ],
+                                "offset": [
+                                    0,
+                                    -12
+                                ],
+                                "layer": 7
+                            }
+                        },
+                        {
+                            "output@uc.recipe_slot_overlay": {
+                                "$slot_offset": [
+                                    27,
+                                    -12
+                                ],
+                                "bindings": [],
+                                "$slot_item_texture": "textures/static/images/steam",
+                                "$has_slot_count": false,
+                                "$slot_count_text": "1500",
+                                "$has_slot_hover": true,
+                                "$slot_hover_text": "ui.ascendant:recipe_book.vaporizer.2.output"
+                            }
+                        },
+                        {
+                            "input_amount": {
+                                "type": "label",
+                                "text": "1000 mB",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    18
+                                ],
+                                "size": [
+                                    34,
+                                    8
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "output_amount": {
+                                "type": "label",
+                                "text": "1500 mB",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    54,
+                                    18
+                                ],
+                                "size": [
+                                    34,
+                                    8
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "details": {
+                                "type": "label",
+                                "text": "2000 DE / 5 s",
+                                "localize": true,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    28
+                                ],
+                                "size": [
+                                    88,
+                                    16
+                                ],
+                                "font_scale_factor": 0.55,
+                                "color": [
+                                    0.3,
+                                    0.3,
+                                    0.3
+                                ],
+                                "shadow": false,
+                                "layer": 3,
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

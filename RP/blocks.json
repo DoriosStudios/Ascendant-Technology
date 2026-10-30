@@ -1,384 +1,433 @@
 {
-	"utilitycraft:mob_chamber_controller": {"sound":"metal"},
-	"utilitycraft:mob_chamber_core": {"sound":"metal"},
-	"utilitycraft:essence_module": {"sound":"metal"},
-	"utilitycraft:titanium_case": {"sound":"metal"},
-	"utilitycraft:titanium_bricks": {"sound":"metal"},
-	"utilitycraft:tempered_titanium_glass": {"sound":"glass"},
-	"utilitycraft:reinforced_titanium_glass": {"sound":"glass"},
-	"utilitycraft:titanium_plated_block": {"sound":"metal"},
-	"utilitycraft:titanium_hazard_block": {"sound":"metal"},
-	"utilitycraft:titanium_vent_panel": {"sound":"metal"},
-	"utilitycraft:titanium_energy_port": {"sound":"metal"},
-	"utilitycraft:titanium_fluid_port": {"sound":"metal"},
-	"utilitycraft:titanium_item_port": {"sound":"metal"},
-	"utilitycraft:alchemical_station": { "sound": "wood" },
-	"utilitycraft:mob_slasher": { "sound": "metal" },
-	"utilitycraft:end_sand": {
-		"sound": "sand"
-	},
-	"format_version": [
-		1,
-		1,
-		0
-	],
-	"utilitycraft:conveyor_table": {
-		"sound": "netherite",
-		"textures": {
-			"up": "utilitycraft_ctup",
-			"east": "utilitycraft_ctside",
-			"north": "utilitycraft_ctside",
-			"south": "utilitycraft_ctside",
-			"west": "utilitycraft_ctside",
-			"down": "utilitycraft_ctbottom"
-		}
-	},
-	// BEGIN GENERATED COMPRESSED BLOCK SOUNDS
-	"utilitycraft:compressed_aetherium_block": {
-		"sound": "amethyst_block"
-	},
-	"utilitycraft:compressed_aetherium_block_2": {
-		"sound": "amethyst_block"
-	},
-	"utilitycraft:compressed_aetherium_block_3": {
-		"sound": "amethyst_block"
-	},
-	"utilitycraft:compressed_aetherium_block_4": {
-		"sound": "amethyst_block"
-	},
-	"utilitycraft:compressed_titanium_block": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_titanium_block_2": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_titanium_block_3": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_titanium_block_4": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_raw_titanium_block": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_raw_titanium_block_2": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_raw_titanium_block_3": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_raw_titanium_block_4": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_tungsten_block": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_tungsten_block_2": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_tungsten_block_3": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_tungsten_block_4": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_raw_tungsten_block": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_raw_tungsten_block_2": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_raw_tungsten_block_3": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_raw_tungsten_block_4": {
-		"sound": "metal"
-	},
-	"utilitycraft:compressed_aetherium_crystal_block": {
-		"sound": "amethyst_block"
-	},
-	"utilitycraft:compressed_aetherium_crystal_block_2": {
-		"sound": "amethyst_block"
-	},
-	"utilitycraft:compressed_aetherium_crystal_block_3": {
-		"sound": "amethyst_block"
-	},
-	"utilitycraft:compressed_aetherium_crystal_block_4": {
-		"sound": "amethyst_block"
-	},
-// END GENERATED COMPRESSED BLOCK SOUNDS
-// Compressed Blocks
-	"utilitycraft:absolute_battery": {
-		"sound": "metal"
-	},
-	"utilitycraft:absolute_container": {
-		"sound": "metal"
-	},
-	"utilitycraft:absolute_furnator": {
-		"sound": "metal"
-	},
-	"utilitycraft:absolute_magmator": {
-		"sound": "metal"
-	},
-	"utilitycraft:absolute_solar_panel": {
-		"sound": "metal"
-	},
-	"utilitycraft:absolute_thermo_generator": {
-		"sound": "metal"
-	},
-	"utilitycraft:absolute_wind_turbine": {
-		"sound": "metal"
-	},
-	"utilitycraft:catalyst_weaver": {
-		"sound": "metal"
-	},
-	"utilitycraft:duplicator": {
-		"sound": "metal"
-	},
-	"utilitycraft:arc_press_forge": {
-		"sound": "metal"
-	},
-	"utilitycraft:industrial_burner": {
-		"sound": "metal"
-	},
-	"utilitycraft:impact_crusher": {
-		"sound": "metal"
-	},
-	"utilitycraft:pulverizer": {
-		"sound": "metal"
-	},
-	"utilitycraft:centrifugal_siever": {
-		"sound": "metal"
-	},
-	"utilitycraft:dual_siever": {
-		"sound": "metal"
-	},
-	"utilitycraft:abyssal_fisher": {
-		"sound": "metal"
-	},
-	"utilitycraft:genetic_seed_synthesizer": {
-		"sound": "metal"
-	},
-	"utilitycraft:verdant_cultivator": {
-		"sound": "metal"
-	},
-	"utilitycraft:seismic_breaker": {
-		"sound": "metal"
-	},
-	"utilitycraft:pattern_placer": {
-		"sound": "metal"
-	},
-	"utilitycraft:cryo_chamber": {
-		"sound": "metal"
-	},
-	"utilitycraft:enchantment_station": {
-		"sound": "metal"
-	},
-	"utilitycraft:reinforcement_anvil": {
-		"sound": "metal"
-	},
-	"utilitycraft:refining_table": {
-		"sound": "metal"
-	},
-	"utilitycraft:energizer": {
-		"sound": "metal"
-	},
-	"utilitycraft:compactor": {
-		"sound": "metal"
-	},
-	"utilitycraft:decompactor": {
-		"sound": "metal"
-	},
-	"utilitycraft:laser_barrier": {
-		"sound": "metal"
-	},
-	"utilitycraft:laser_barrier_field": {
-		"sound": "glass",
-		"textures": "utilitycraft_laser_barrier_field"
-	},
-	"utilitycraft:liquifier": {
-		"sound": "metal"
-	},
-	"utilitycraft:mob_magnet": {
-		"sound": "metal"
-	},
-	"utilitycraft:network_center": {
-		"sound": "metal"
-	},
-	"utilitycraft:basic_power_beacon": {
-		"sound": "metal"
-	},
-	"utilitycraft:advanced_power_beacon": {
-		"sound": "metal"
-	},
-	"utilitycraft:expert_power_beacon": {
-		"sound": "metal"
-	},
-	"utilitycraft:ultimate_power_beacon": {
-		"sound": "metal"
-	},
-	"utilitycraft:absolute_power_beacon": {
-		"sound": "metal"
-	},
-	"utilitycraft:reinforced_machine_case": {
-		"sound": "metal"
-	},
-	"utilitycraft:superior_machine_case": {
-		"sound": "metal"
-	},
-	"utilitycraft:reinforced_cable": {
-		"sound": "metal"
-	},
-	"utilitycraft:universal_cable": {
-		"sound": "metal"
-	},
-	"utilitycraft:universal_importer": {
-		"sound": "metal"
-	},
-	"utilitycraft:universal_exporter": {
-		"sound": "metal"
-	},
-	"utilitycraft:overclock_tower": {
-		"sound": "metal"
-	},
-	"utilitycraft:overclock_relay": {
-		"sound": "metal"
-	},
-	"utilitycraft:residue_processor": {
-		"sound": "metal"
-	},
-	"utilitycraft:singularity_fabricator": {
-		"sound": "metal"
-	},
-	"utilitycraft:titanium_block": {
-		"sound": "metal"
-	},
-	"utilitycraft:aetherium_crystal_block": {
-		"sound": "amethyst_block"
-	},
-	"utilitycraft:aetherium_block": {
-		"sound": "metal"
-	},
-	"utilitycraft:deepslate_aetherium_ore": {
-		"sound": "deepslate"
-	},
-	"utilitycraft:end_aetherium_ore": {
-		"sound": "amethyst_block"
-	},
-	"utilitycraft:deepslate_titanium_ore": {
-		"sound": "deepslate"
-	},
-	"utilitycraft:raw_titanium_block": {
-		"sound": "metal"
-	},
-	"utilitycraft:conveyor_bridge_path": {
-		"sound": "glass"
-	},
-	"utilitycraft:copper_conveyor_bridge_path": {
-		"sound": "glass"
-	},
-	"utilitycraft:titanium_conveyor_bridge_path": {
-		"sound": "glass"
-	},
-	"utilitycraft:aetherium_conveyor_bridge_path": {
-		"sound": "glass"
-	},
-	"utilitycraft:conveyor_router": {
-		"sound": "metal"
-	},
-	"utilitycraft:conveyor_sorter": {
-		"sound": "metal"
-	},
-	"utilitycraft:conveyor_smart_router": {
-		"sound": "metal"
-	},
-	"utilitycraft:conveyor_inverted_sorter": {
-		"sound": "metal"
-	},
-	"utilitycraft:conveyor_overflow": {
-		"sound": "metal"
-	},
-	"utilitycraft:conveyor_underflow": {
-		"sound": "metal"
-	},
-	"utilitycraft:conveyor_junction": {
-		"sound": "metal"
-	},
-	"utilitycraft:conveyor_network_updater": {
-		"sound": "metal"
-	},
-	"utilitycraft:copper_conveyor_horizontal": {
-		"sound": "metal"
-	},
-	"utilitycraft:copper_conveyor_inclined": {
-		"sound": "metal"
-	},
-	"utilitycraft:copper_conveyor_declined": {
-		"sound": "metal"
-	},
-	"utilitycraft:copper_conveyor_vertical": {
-		"sound": "metal"
-	},
-	"utilitycraft:copper_conveyor_bridge_transmitter": {
-		"sound": "metal"
-	},
-	"utilitycraft:copper_conveyor_bridge_receiver": {
-		"sound": "metal"
-	},
-	"utilitycraft:titanium_conveyor_horizontal": {
-		"sound": "metal"
-	},
-	"utilitycraft:titanium_conveyor_inclined": {
-		"sound": "metal"
-	},
-	"utilitycraft:titanium_conveyor_declined": {
-		"sound": "metal"
-	},
-	"utilitycraft:titanium_conveyor_vertical": {
-		"sound": "metal"
-	},
-	"utilitycraft:titanium_conveyor_bridge_transmitter": {
-		"sound": "metal"
-	},
-	"utilitycraft:titanium_conveyor_bridge_receiver": {
-		"sound": "metal"
-	},
-	"utilitycraft:aetherium_conveyor_horizontal": {
-		"sound": "metal"
-	},
-	"utilitycraft:aetherium_conveyor_inclined": {
-		"sound": "metal"
-	},
-	"utilitycraft:aetherium_conveyor_declined": {
-		"sound": "metal"
-	},
-	"utilitycraft:aetherium_conveyor_vertical": {
-		"sound": "metal"
-	},
-	"utilitycraft:aetherium_conveyor_bridge_transmitter": {
-		"sound": "metal"
-	},
-	"utilitycraft:aetherium_conveyor_bridge_receiver": {
-		"sound": "metal"
-	},
-	"utilitycraft:pink_soil": {
-		"textures": {
-			"up": "utilitycraft_pink_soil",
-			"down": "utilitycraft_pink_soil_side",
-			"east": "utilitycraft_pink_soil_side",
-			"north": "utilitycraft_pink_soil_side",
-			"south": "utilitycraft_pink_soil_side",
-			"west": "utilitycraft_pink_soil_side"
-		},
-		"sound": "grass"
-	},
-	"utilitycraft:titanium_seeds": {
-		"sound": "grass"
-	},
-	"utilitycraft:tungsten_seeds": {
-		"sound": "grass"
-	},
-	"utilitycraft:aetherium_crystal_seeds": {
-		"sound": "grass"
-	}
+    "utilitycraft:mob_chamber_controller": {
+        "sound": "metal"
+    },
+    "utilitycraft:mob_chamber_core": {
+        "sound": "metal"
+    },
+    "utilitycraft:essence_module": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_case": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_bricks": {
+        "sound": "metal"
+    },
+    "utilitycraft:tempered_titanium_glass": {
+        "sound": "glass"
+    },
+    "utilitycraft:reinforced_titanium_glass": {
+        "sound": "glass"
+    },
+    "utilitycraft:titanium_plated_block": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_hazard_block": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_vent_panel": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_energy_port": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_fluid_port": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_item_port": {
+        "sound": "metal"
+    },
+    "utilitycraft:alchemical_station": {
+        "sound": "wood"
+    },
+    "utilitycraft:mob_slasher": {
+        "sound": "metal"
+    },
+    "utilitycraft:end_sand": {
+        "sound": "sand"
+    },
+    "format_version": [
+        1,
+        1,
+        0
+    ],
+    "utilitycraft:conveyor_table": {
+        "sound": "netherite",
+        "textures": {
+            "up": "utilitycraft_ctup",
+            "east": "utilitycraft_ctside",
+            "north": "utilitycraft_ctside",
+            "south": "utilitycraft_ctside",
+            "west": "utilitycraft_ctside",
+            "down": "utilitycraft_ctbottom"
+        }
+    },
+    "utilitycraft:compressed_aetherium_block": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:compressed_aetherium_block_2": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:compressed_aetherium_block_3": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:compressed_aetherium_block_4": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:compressed_titanium_block": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_titanium_block_2": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_titanium_block_3": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_titanium_block_4": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_raw_titanium_block": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_raw_titanium_block_2": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_raw_titanium_block_3": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_raw_titanium_block_4": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_tungsten_block": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_tungsten_block_2": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_tungsten_block_3": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_tungsten_block_4": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_raw_tungsten_block": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_raw_tungsten_block_2": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_raw_tungsten_block_3": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_raw_tungsten_block_4": {
+        "sound": "metal"
+    },
+    "utilitycraft:compressed_aetherium_crystal_block": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:compressed_aetherium_crystal_block_2": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:compressed_aetherium_crystal_block_3": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:compressed_aetherium_crystal_block_4": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:absolute_battery": {
+        "sound": "metal"
+    },
+    "utilitycraft:absolute_container": {
+        "sound": "metal"
+    },
+    "utilitycraft:absolute_furnator": {
+        "sound": "metal"
+    },
+    "utilitycraft:absolute_magmator": {
+        "sound": "metal"
+    },
+    "utilitycraft:absolute_solar_panel": {
+        "sound": "metal"
+    },
+    "utilitycraft:absolute_thermo_generator": {
+        "sound": "metal"
+    },
+    "utilitycraft:absolute_wind_turbine": {
+        "sound": "metal"
+    },
+    "utilitycraft:catalyst_weaver": {
+        "sound": "metal"
+    },
+    "utilitycraft:duplicator": {
+        "sound": "metal"
+    },
+    "utilitycraft:arc_press_forge": {
+        "sound": "metal"
+    },
+    "utilitycraft:industrial_burner": {
+        "sound": "metal"
+    },
+    "utilitycraft:impact_crusher": {
+        "sound": "metal"
+    },
+    "utilitycraft:pulverizer": {
+        "sound": "metal"
+    },
+    "utilitycraft:centrifugal_siever": {
+        "sound": "metal"
+    },
+    "utilitycraft:dual_siever": {
+        "sound": "metal"
+    },
+    "utilitycraft:abyssal_fisher": {
+        "sound": "metal"
+    },
+    "utilitycraft:genetic_seed_synthesizer": {
+        "sound": "metal"
+    },
+    "utilitycraft:verdant_cultivator": {
+        "sound": "metal"
+    },
+    "utilitycraft:seismic_breaker": {
+        "sound": "metal"
+    },
+    "utilitycraft:pattern_placer": {
+        "sound": "metal"
+    },
+    "utilitycraft:cryo_chamber": {
+        "sound": "metal"
+    },
+    "utilitycraft:enchantment_station": {
+        "sound": "metal"
+    },
+    "utilitycraft:reinforcement_anvil": {
+        "sound": "metal"
+    },
+    "utilitycraft:refining_table": {
+        "sound": "metal"
+    },
+    "utilitycraft:energizer": {
+        "sound": "metal"
+    },
+    "utilitycraft:compactor": {
+        "sound": "metal"
+    },
+    "utilitycraft:decompactor": {
+        "sound": "metal"
+    },
+    "utilitycraft:laser_barrier": {
+        "sound": "metal"
+    },
+    "utilitycraft:laser_barrier_field": {
+        "sound": "glass",
+        "textures": "utilitycraft_laser_barrier_field"
+    },
+    "utilitycraft:liquifier": {
+        "sound": "metal"
+    },
+    "utilitycraft:mob_magnet": {
+        "sound": "metal"
+    },
+    "utilitycraft:network_center": {
+        "sound": "metal"
+    },
+    "utilitycraft:basic_power_beacon": {
+        "sound": "metal"
+    },
+    "utilitycraft:advanced_power_beacon": {
+        "sound": "metal"
+    },
+    "utilitycraft:expert_power_beacon": {
+        "sound": "metal"
+    },
+    "utilitycraft:ultimate_power_beacon": {
+        "sound": "metal"
+    },
+    "utilitycraft:absolute_power_beacon": {
+        "sound": "metal"
+    },
+    "utilitycraft:reinforced_machine_case": {
+        "sound": "metal"
+    },
+    "utilitycraft:superior_machine_case": {
+        "sound": "metal"
+    },
+    "utilitycraft:reinforced_cable": {
+        "sound": "metal"
+    },
+    "utilitycraft:universal_cable": {
+        "sound": "metal"
+    },
+    "utilitycraft:universal_importer": {
+        "sound": "metal"
+    },
+    "utilitycraft:universal_exporter": {
+        "sound": "metal"
+    },
+    "utilitycraft:overclock_tower": {
+        "sound": "metal"
+    },
+    "utilitycraft:overclock_relay": {
+        "sound": "metal"
+    },
+    "utilitycraft:residue_processor": {
+        "sound": "metal"
+    },
+    "utilitycraft:singularity_fabricator": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_block": {
+        "sound": "metal"
+    },
+    "utilitycraft:aetherium_crystal_block": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:aetherium_block": {
+        "sound": "metal"
+    },
+    "utilitycraft:deepslate_aetherium_ore": {
+        "sound": "deepslate"
+    },
+    "utilitycraft:end_aetherium_ore": {
+        "sound": "amethyst_block"
+    },
+    "utilitycraft:deepslate_titanium_ore": {
+        "sound": "deepslate"
+    },
+    "utilitycraft:raw_titanium_block": {
+        "sound": "metal"
+    },
+    "utilitycraft:conveyor_bridge_path": {
+        "sound": "glass"
+    },
+    "utilitycraft:copper_conveyor_bridge_path": {
+        "sound": "glass"
+    },
+    "utilitycraft:titanium_conveyor_bridge_path": {
+        "sound": "glass"
+    },
+    "utilitycraft:aetherium_conveyor_bridge_path": {
+        "sound": "glass"
+    },
+    "utilitycraft:conveyor_router": {
+        "sound": "metal"
+    },
+    "utilitycraft:conveyor_sorter": {
+        "sound": "metal"
+    },
+    "utilitycraft:conveyor_smart_router": {
+        "sound": "metal"
+    },
+    "utilitycraft:conveyor_inverted_sorter": {
+        "sound": "metal"
+    },
+    "utilitycraft:conveyor_overflow": {
+        "sound": "metal"
+    },
+    "utilitycraft:conveyor_underflow": {
+        "sound": "metal"
+    },
+    "utilitycraft:conveyor_junction": {
+        "sound": "metal"
+    },
+    "utilitycraft:conveyor_network_updater": {
+        "sound": "metal"
+    },
+    "utilitycraft:copper_conveyor_horizontal": {
+        "sound": "metal"
+    },
+    "utilitycraft:copper_conveyor_inclined": {
+        "sound": "metal"
+    },
+    "utilitycraft:copper_conveyor_declined": {
+        "sound": "metal"
+    },
+    "utilitycraft:copper_conveyor_vertical": {
+        "sound": "metal"
+    },
+    "utilitycraft:copper_conveyor_bridge_transmitter": {
+        "sound": "metal"
+    },
+    "utilitycraft:copper_conveyor_bridge_receiver": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_conveyor_horizontal": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_conveyor_inclined": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_conveyor_declined": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_conveyor_vertical": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_conveyor_bridge_transmitter": {
+        "sound": "metal"
+    },
+    "utilitycraft:titanium_conveyor_bridge_receiver": {
+        "sound": "metal"
+    },
+    "utilitycraft:aetherium_conveyor_horizontal": {
+        "sound": "metal"
+    },
+    "utilitycraft:aetherium_conveyor_inclined": {
+        "sound": "metal"
+    },
+    "utilitycraft:aetherium_conveyor_declined": {
+        "sound": "metal"
+    },
+    "utilitycraft:aetherium_conveyor_vertical": {
+        "sound": "metal"
+    },
+    "utilitycraft:aetherium_conveyor_bridge_transmitter": {
+        "sound": "metal"
+    },
+    "utilitycraft:aetherium_conveyor_bridge_receiver": {
+        "sound": "metal"
+    },
+    "utilitycraft:pink_soil": {
+        "textures": {
+            "up": "utilitycraft_pink_soil",
+            "down": "utilitycraft_pink_soil_side",
+            "east": "utilitycraft_pink_soil_side",
+            "north": "utilitycraft_pink_soil_side",
+            "south": "utilitycraft_pink_soil_side",
+            "west": "utilitycraft_pink_soil_side"
+        },
+        "sound": "grass"
+    },
+    "utilitycraft:titanium_seeds": {
+        "sound": "grass"
+    },
+    "utilitycraft:tungsten_seeds": {
+        "sound": "grass"
+    },
+    "utilitycraft:aetherium_crystal_seeds": {
+        "sound": "grass"
+    },
+    "utilitycraft:steam_boiler": {
+        "sound": "metal",
+        "textures": {
+            "north": "utilitycraft_steam_boiler_off_north",
+            "south": "utilitycraft_steam_boiler_off_south",
+            "east": "utilitycraft_steam_boiler_off_east",
+            "west": "utilitycraft_steam_boiler_off_west",
+            "up": "utilitycraft_steam_boiler_off_up",
+            "down": "utilitycraft_steam_boiler_off_down"
+        }
+    },
+    "utilitycraft:vaporizer": {
+        "sound": "metal",
+        "textures": {
+            "north": "utilitycraft_vaporizer_off_north",
+            "south": "utilitycraft_vaporizer_off_south",
+            "east": "utilitycraft_vaporizer_off_east",
+            "west": "utilitycraft_vaporizer_off_west",
+            "up": "utilitycraft_vaporizer_off_up",
+            "down": "utilitycraft_vaporizer_off_down"
+        }
+    }
 }

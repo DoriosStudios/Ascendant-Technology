@@ -1,45 +1,28 @@
 // @ts-check
 
 import { system } from "@minecraft/server";
+import { VAPORIZER_RECIPES } from "../steamProcessing.js";
 
 const DEFAULT_COST = 2400;
 const DEFAULT_INPUT_AMOUNT = 1000;
 const DEFAULT_OUTPUT_AMOUNT = 1000;
 const DEFAULT_TICKS = 80;
 const REGISTER_EVENT_ID = "utilitycraft:register_vaporworks_processor_recipe";
+const VAPORIZER_EVENT_ID = "utilitycraft:register_vaporizer_recipe";
 
 /** @type {Map<string, any>} */
 const recipesByInput = new Map();
 /** @type {Map<string, any>} */
 const recipesById = new Map();
 
-export const vaporworksRecipeDefinitions = {
-    "utilitycraft:water_to_steam": {
-        inputFluid: { type: "water", amount: 1000 },
-        outputGas: { type: "steam", amount: 1000 },
-        cost: 1600,
-        ticks: 80,
-    },
-    "utilitycraft:cryofluid_to_steam": {
-        inputFluid: { type: "cryofluid", amount: 1000 },
-        outputGas: { type: "steam", amount: 1500 },
-        cost: 2400,
-        ticks: 120,
-    },
-    "utilitycraft:saline_coolant_to_steam": {
-        inputFluid: { type: "saline_coolant", amount: 1000 },
-        outputGas: { type: "steam", amount: 1500 },
-        cost: 2000,
-        ticks: 100,
-    },
-};
+export const vaporworksRecipeDefinitions = VAPORIZER_RECIPES;
 
 for (const [id, definition] of Object.entries(vaporworksRecipeDefinitions)) {
     registerVaporworksRecipe(id, definition);
 }
 
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
-    if (id !== REGISTER_EVENT_ID) return;
+    if (id !== REGISTER_EVENT_ID && id !== VAPORIZER_EVENT_ID) return;
 
     let payload;
     try {

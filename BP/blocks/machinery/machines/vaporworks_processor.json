@@ -4,17 +4,25 @@
         "description": {
             "identifier": "utilitycraft:vaporworks_processor",
             "menu_category": {
-                "category": "construction"
+                "category": "none"
             },
             "traits": {
                 "minecraft:placement_direction": {
-                    "enabled_states": ["minecraft:cardinal_direction"],
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
                     "y_rotation_offset": 180
                 }
             },
             "states": {
-                "utilitycraft:on": [false, true],
-                "utilitycraft:has_selection": [false, true]
+                "utilitycraft:on": [
+                    false,
+                    true
+                ],
+                "utilitycraft:has_selection": [
+                    false,
+                    true
+                ]
             }
         },
         "components": {
@@ -34,7 +42,12 @@
                     "fluid_types": 1,
                     "gas_cap": 128000,
                     "gas_types": 1,
-                    "upgrades": [5, 6, 7, 8]
+                    "upgrades": [
+                        5,
+                        6,
+                        7,
+                        8
+                    ]
                 }
             },
             "utilitycraft:machine_upgrades": [
@@ -90,7 +103,10 @@
                 }
             },
             "minecraft:tick": {
-                "interval_range": [4, 4]
+                "interval_range": [
+                    4,
+                    4
+                ]
             },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
@@ -106,7 +122,9 @@
         "permutations": [
             {
                 "condition": "!q.block_state('utilitycraft:has_selection')",
-                "components": { "minecraft:selection_box": false }
+                "components": {
+                    "minecraft:selection_box": false
+                }
             },
             {
                 "condition": "q.block_state('utilitycraft:on') == 1",
@@ -148,7 +166,11 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [0, 0, 0]
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
                     }
                 }
             },
@@ -156,7 +178,11 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [0, 180, 0]
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
                     }
                 }
             },
@@ -164,7 +190,11 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [0, -90, 0]
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
                     }
                 }
             },
@@ -172,7 +202,11 @@
                 "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
                     "minecraft:transformation": {
-                        "rotation": [0, 90, 0]
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
                     }
                 }
             }

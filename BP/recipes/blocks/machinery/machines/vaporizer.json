@@ -1,0 +1,45 @@
+{
+    "format_version": "1.21.100",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:vaporizer"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "CGC",
+            "ABA",
+            "PMP"
+        ],
+        "key": {
+            "A": {
+                "item": "utilitycraft:advanced_chip"
+            },
+            "B": {
+                "item": "utilitycraft:steam_boiler"
+            },
+            "C": {
+                "item": "minecraft:waxed_copper"
+            },
+            "G": {
+                "item": "minecraft:waxed_copper_grate"
+            },
+            "P": {
+                "item": "utilitycraft:compressed_copper_block"
+            },
+            "M": {
+                "item": "utilitycraft:machine_case"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:vaporizer",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "utilitycraft:steam_boiler"
+            }
+        ]
+    }
+}

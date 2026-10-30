@@ -304,12 +304,14 @@ export const crafterRecipeAdditions = {
             output: "utilitycraft:seismic_breaker",
             amount: 1,
         },
-    // BP/recipes/blocks/machinery/machines/vaporworks_processor.json
-    "waxed_copper,waxed_copper_grate,waxed_copper,advanced_chip,blast_furnace,advanced_chip,compressed_copper_block,machine_case,compressed_copper_block":
+    // Steam production: basic boiler, then advanced vaporizer.
+    "waxed_copper,waxed_copper_grate,waxed_copper,basic_chip,blast_furnace,basic_chip,compressed_copper_block,machine_case,compressed_copper_block":
         {
-            output: "utilitycraft:vaporworks_processor",
+            output: "utilitycraft:steam_boiler",
             amount: 1,
         },
+    "waxed_copper,waxed_copper_grate,waxed_copper,advanced_chip,steam_boiler,advanced_chip,compressed_copper_block,machine_case,compressed_copper_block":
+        { output: "utilitycraft:vaporizer", amount: 1 },
     // BP/recipes/blocks/machinery/machines/verdant_cultivator.json
     "titanium,netherite_hoe,titanium,tungsten,harvester,tungsten,titanium,superior_machine_case,titanium":
         {

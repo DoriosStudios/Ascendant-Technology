@@ -47,7 +47,8 @@
                             "utilitycraft:pulverizer",
                             "utilitycraft:reinforcement_anvil",
                             "utilitycraft:seismic_breaker",
-                            "utilitycraft:verdant_cultivator"
+                            "utilitycraft:verdant_cultivator",
+                            "utilitycraft:vaporizer"
                         ]
                     },
                     {
@@ -71,7 +72,7 @@
                             "utilitycraft:overclock_tower",
                             "utilitycraft:residue_processor",
                             "utilitycraft:singularity_fabricator",
-                            "utilitycraft:vaporworks_processor"
+                            "utilitycraft:steam_boiler"
                         ]
                     },
                     {

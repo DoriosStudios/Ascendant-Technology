@@ -12,6 +12,8 @@ const CLONER_RARITY_DATA = {
             "utilitycraft:liquifier": "rare",
             "utilitycraft:residue_processor": "rare",
             "utilitycraft:vaporworks_processor": "rare",
+            "utilitycraft:steam_boiler": "uncommon",
+            "utilitycraft:vaporizer": "rare",
             "utilitycraft:network_center": "rare",
             "utilitycraft:laser_barrier": "rare",
             "utilitycraft:laser_barrier_field": "rare",

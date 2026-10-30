@@ -9,6 +9,7 @@ import { registerIOInterface } from "../../ATCore/machinery/ioRegistration.js";
 import { Machine, registerATMachine } from "../../ATCore/machinery/atMachine.js";
 import { advanceProcess } from "../../ATCore/processing/index.js";
 import { getVaporworksRecipe } from "../../config/recipes/vaporworksProcessor.js";
+import { STEAM_MACHINES, STEAM_BOILER_RECIPE } from "../../config/steamProcessing.js";
 import {
     displayProgress,
     ensureMachineInventoryLayout,
@@ -18,7 +19,6 @@ import {
     setUiItem,
 } from "./runtime.js";
 
-const ID = "utilitycraft:vaporworks_processor";
 const INVENTORY_SIZE = 31;
 const SLOT_LAYOUTS = {
     30: [
@@ -34,7 +34,6 @@ const PREVIOUS_SLOT_LAYOUT = [
     0, 1, 2, 3, 4, 5, 6, 7, 30,
     8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
 ];
-const LAYOUT_KEY = "ascendant:vaporworks_processor_layout";
 const LAYOUT_VERSION = "contiguous_upgrades_v1";
 const FLUID_CONTAINER_INPUT_SLOT = 3;
 const GAS_CONTAINER_INPUT_SLOT = 4;
@@ -45,6 +44,12 @@ const GAS_DISPLAY_SLOT = 12;
 const RECIPE_KEY = "ascendant:vaporworks_recipe";
 const RESOURCE_IO_RATE = 128000;
 const itemMaximums = new Map();
+
+for (const [ID, profile] of Object.entries(STEAM_MACHINES)) {
+const LAYOUT_KEY = `ascendant:${ID.split(":")[1]}_layout`;
+const getRecipe = type => profile.recipeType === "steam_boiler"
+    ? (type === "water" ? STEAM_BOILER_RECIPE : undefined)
+    : getVaporworksRecipe(type);
 
 registerIOInterface(ID, {
     automaticDefaults: true,
@@ -89,6 +94,7 @@ registerATMachine(ID, {
             if (!machine.valid) return;
 
             machine.blockSlots([FLUID_DISPLAY_SLOT, GAS_DISPLAY_SLOT]);
+            if (profile.slots.length === 2) machine.blockSlots([7, 8]);
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");
@@ -96,6 +102,7 @@ registerATMachine(ID, {
 
             const steam = new GasStorage(machine.entity, 0);
             steam.setType("steam");
+            if (profile.recipeType === "steam_boiler") new FluidStorage(machine.entity, 0).setType("water");
         });
     },
 
@@ -109,13 +116,14 @@ registerATMachine(ID, {
 
         const liquid = new FluidStorage(machine.entity, 0);
         const steam = new GasStorage(machine.entity, 0);
+        if (profile.recipeType === "steam_boiler" && liquid.getType() === "empty") liquid.setType("water");
         if (steam.getType() === "empty") steam.setType("steam");
 
         machine.processIO({
             maxFluidMovedPerTick: RESOURCE_IO_RATE,
             maxGasMovedPerTick: RESOURCE_IO_RATE,
         });
-        processFluidInputContainer(machine.container, liquid);
+        processFluidInputContainer(machine.container, liquid, getRecipe);
         processGasOutputContainer(machine.container, steam);
 
         const inputType = liquid.getType();
@@ -124,7 +132,7 @@ registerATMachine(ID, {
             return;
         }
 
-        const recipe = getVaporworksRecipe(inputType);
+        const recipe = getRecipe(inputType);
         if (!recipe) {
             resetProcess(machine, liquid, steam, settings.machine.energy_cost, "Invalid Liquid", "");
             return;
@@ -137,10 +145,11 @@ registerATMachine(ID, {
 
         const cost = recipe.cost ?? settings.machine.energy_cost;
         const gasType = steam.getType();
-        if (gasType !== "empty" && gasType !== recipe.outputGas.type) {
+        if (steam.get() > 0 && gasType !== "empty" && gasType !== recipe.outputGas.type) {
             pauseProcess(machine, liquid, steam, cost, "Gas Output Conflict");
             return;
         }
+        if (steam.get() === 0 && gasType !== recipe.outputGas.type) steam.setType(recipe.outputGas.type);
 
         const inputCrafts = Math.floor(liquid.get() / recipe.inputFluid.amount);
         const outputCrafts = Math.floor(steam.getFreeSpace() / recipe.outputGas.amount);
@@ -183,13 +192,14 @@ registerATMachine(ID, {
         Machine.onDestroy(event);
     },
 });
+}
 
-function processFluidInputContainer(container, liquid) {
+function processFluidInputContainer(container, liquid, getRecipe) {
     const input = container.getItem(FLUID_CONTAINER_INPUT_SLOT);
     if (!input) return false;
 
     const definition = FluidStorage.getContainerData(input.typeId);
-    if (!definition || !getVaporworksRecipe(definition.type)) return false;
+    if (!definition || !getRecipe(definition.type)) return false;
 
     const resultType = definition.output;
     if (resultType && !canInsertItem(container, FLUID_CONTAINER_RETURN_SLOT, resultType)) return false;

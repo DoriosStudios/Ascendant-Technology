@@ -1,3 +1,4 @@
+import { migrateItemDescriptions } from "./migrate-item-tooltips.mjs";
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 
@@ -125,7 +126,7 @@ for (const file of readdirSync(folder).filter((name) => name.endsWith(".lang")))
     const original = readFileSync(path, "utf8");
     const locale = file.slice(0, -5);
     const text = descriptions[locale] ?? descriptions.en_US;
-    const updated = original
+    const updated = migrateItemDescriptions(original
         .split(/\r?\n/u)
         .map((line) => {
             const match = line.match(/^((?:item|tile|upgrade)\.[^=]+)=(.*)$/u);
@@ -147,20 +148,20 @@ for (const file of readdirSync(folder).filter((name) => name.endsWith(".lang")))
             }
             if (!key.startsWith("upgrade.")) {
                 const [title, ...body] = value.split("\\n");
-                const description = body.flatMap(wrap);
+                const description = (key.endsWith(".tooltip") ? [title, ...body] : body).flatMap(wrap);
                 for (const part of description) {
                     if (length(part) > WIDTH) throw new Error(`Overlong tooltip: ${file} ${key}`);
                     checked++;
                 }
-                value = [title, ...description].join("\\n");
+                value = (key.endsWith(".tooltip") ? description : [title, ...description]).join("\\n");
             }
-            if (value !== match[2]) changed++;
             return `${key}=${value}`;
         })
-        .join(original.includes("\r\n") ? "\r\n" : "\n");
+        .join(original.includes("\r\n") ? "\r\n" : "\n"));
+    if (updated !== original) changed++;
     if (!checkOnly && updated !== original) writeFileSync(path, updated);
 }
-if (checkOnly && changed) throw new Error(`${changed} tooltips need formatting`);
+if (checkOnly && changed) throw new Error(`${changed} locale files need formatting`);
 console.log(
-    `${WIDTH} visible characters/line; ${checked} description lines checked; ${changed} entries ${checkOnly ? "need changes" : "updated"}.`,
+    `${WIDTH} visible characters/line; ${checked} description lines checked; ${changed} files ${checkOnly ? "need changes" : "updated"}.`,
 );

@@ -474,7 +474,7 @@ async function updateBlockTranslations(crops) {
       const itemKey = `item.utilitycraft:${localName}`;
       const tileKey = `tile.utilitycraft:${localName}.name`;
       if (values.has(tileKey)) continue;
-      additions.push(`${tileKey}=${values.get(itemKey) ?? humanizeSeedName(localName)}`);
+      additions.push(`${tileKey}=${values.get(itemKey)?.split("\\n")[0] ?? humanizeSeedName(localName)}`);
     }
 
     if (additions.length > 0) {

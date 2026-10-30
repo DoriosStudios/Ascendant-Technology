@@ -119,7 +119,10 @@ export async function generateAlchemicalPotionTranslations() {
         const additions = new Map([[POTION_GROUP, groupNames[locale] ?? "Alchemical Potions"],
             ["ui.ascendant:alchemy.actual_duration", locale.startsWith("pt_") ? "Duração real:" : "Actual duration:"]]);
         for (const [id, labels] of Object.entries(names)) additions.set(`ui.ascendant:alchemy.effect.${id}`, labels[locale.startsWith("pt_") ? 1 : 0]);
-        for (const [id, p] of Object.entries(CUSTOM_POTIONS)) additions.set(`item.${id}.name`, `${defaultName(p, locale)}\\n${potionDescription(p, locale)}`);
+        for (const [id, p] of Object.entries(CUSTOM_POTIONS)) {
+            additions.set(`item.${id}.name`, defaultName(p, locale));
+            additions.set(`tile.${id}.tooltip`, `§r${potionDescription(p, locale)}`);
+        }
         const previous = new Map(source.split(/\r?\n/).filter(l => l.includes("=")).map(l => [l.slice(0, l.indexOf("=")), l.slice(l.indexOf("=") + 1).split("\\n")[0]]));
         const display = id => {
             const family = POTION_FAMILIES.find(f => f.id === id);
@@ -140,7 +143,7 @@ export async function generateAlchemicalPotionTranslations() {
             if (p) {
                 additions.delete(key);
                 const title = line.slice(separator + 1).split("\\n")[0].replace(/ · (Extended|Maximum|Estendida|Máxima)$/, "");
-                return `${key}=${title}\\n${potionDescription(p, locale)}`;
+                return `${key}=${title}`;
             }
             if (additions.has(key)) { const value = additions.get(key); additions.delete(key); return `${key}=${value}`; }
             return line;

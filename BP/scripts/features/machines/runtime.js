@@ -3,6 +3,7 @@
 import { ItemStack } from "@minecraft/server";
 import { EnergyStorage } from "DoriosCore/index.js";
 import * as DoriosLib from "DoriosLib/index.js";
+import { setLocalizedMachineInfo } from "./localizedInfo.js";
 
 export function setDynamicNumber(entity, key, value) {
     const normalized = Math.max(0, Number(value) || 0);
@@ -79,7 +80,7 @@ export function renderMachineInfo(machine, running, title, sections = [], option
     const drawRate = Math.max(0, (Number(machine.baseRate) || 0) * rateMultiplier * (machine.activeParallelOperations ?? 1));
 
     const normalizedSections = normalizeSections(sections, options.sectionTitle);
-    machine.setLabel([
+    setLocalizedMachineInfo(machine, [
         `§r§7Status: ${running ? "§a" : "§e"}${title}\n\n§r§eMachine Information`,
         `\n§r§aSpeed §fx${speed.toFixed(2)}\n§r§aEfficiency §fx${efficiency.toFixed(2)}\n§r§aRecipe Batch §fx${batch}\n§r§aCycle Cost §f${EnergyStorage.formatEnergyToText(cycleCost)}`,
         `\n§r§eEnergy Information\n\n§r§bCapacity §f${percent.toFixed(2)}%\n§r§bStored §f${EnergyStorage.formatEnergyToText(stored)} / ${EnergyStorage.formatEnergyToText(capacity)}\n§r§bRate §f${EnergyStorage.formatEnergyToText(drawRate)}/t`,

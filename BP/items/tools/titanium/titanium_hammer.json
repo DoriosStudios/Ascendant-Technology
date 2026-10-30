@@ -54,6 +54,12 @@
                     {
                         "speed": 12,
                         "block": {
+                            "tags": "q.any_tag('minecraft:is_shovel_item_destructible')"
+                        }
+                    },
+                    {
+                        "speed": 12,
+                        "block": {
                             "tags": "q.any_tag('minecraft:is_pickaxe_item_destructible')"
                         }
                     },

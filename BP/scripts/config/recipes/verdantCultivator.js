@@ -62,11 +62,6 @@ const utilityTiers = {
     },
 };
 
-const cropNameOverrides = {
-    prismarine_crystals: "prismarine_crystal_crop",
-    nether_star: "netherstar_crop",
-};
-
 const biomeProfiles = {
     water: { tokens: ["ocean", "river", "beach"], title: "Tidal Surge" },
     prismarine_crystals: { tokens: ["ocean", "river", "beach"], title: "Tidal Surge" },
@@ -138,7 +133,7 @@ for (const tier of Object.values(utilityTiers)) {
         const seedItemId = `utilitycraft:${rawName}_seeds`;
         const biome = biomeProfiles[rawName];
         verdantCropDefinitions[seedItemId] = {
-            cropBlockId: `utilitycraft:${cropNameOverrides[rawName] ?? `${rawName}_crop`}`,
+            cropBlockId: seedItemId,
             ageState: "utilitycraft:age",
             maxAge: 5,
             validSoils: [tier.soil],
@@ -148,6 +143,23 @@ for (const tier of Object.values(utilityTiers)) {
             pickupItemIds: [seedItemId, ...(utilityProduce[seedItemId] ?? [])],
         };
     }
+}
+
+// These crops use their seed identifier as the placed block identifier.
+for (const [seed, soil, produce] of [
+    ["titanium", "blue", "raw_titanium"],
+    ["tungsten", "blue", "raw_tungsten"],
+    ["aetherium_crystal", "pink", "aetherium_crystal"],
+]) {
+    const seedItemId = `utilitycraft:${seed}_seeds`;
+    verdantCropDefinitions[seedItemId] = {
+        cropBlockId: seedItemId,
+        ageState: "utilitycraft:age",
+        maxAge: 5,
+        validSoils: [`utilitycraft:${soil}_soil`],
+        bonusExclusions: [seedItemId],
+        pickupItemIds: [seedItemId, `utilitycraft:${produce}`],
+    };
 }
 
 registerVerdantCrops(verdantCropDefinitions);

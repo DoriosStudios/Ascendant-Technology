@@ -499,10 +499,11 @@ function executeOperation(machine, operation, settings) {
     }
 
     for (const target of operation.plantTargets) {
+        const originalSeed = machine.container.getItem(target.templateSlot)?.clone();
         const paidSeed = consumeSeed(machine, target.templateSlot, target.spec.seedItemId);
         if (paidSeed < 0) continue;
         if (plantAt(machine, target.position, target.spec)) planted++;
-        else if (paidSeed > 0) restoreSeed(machine.container, target.templateSlot, target.spec.seedItemId);
+        else if (paidSeed > 0 && originalSeed) machine.container.setItem(target.templateSlot, originalSeed);
     }
 
     if (harvestedPositions.length > 0) {
@@ -578,15 +579,6 @@ function consumeSeed(machine, slot, typeId) {
         container.setItem(slot, item);
     }
     return 1;
-}
-
-function restoreSeed(container, slot, typeId) {
-    const current = container.getItem(slot);
-    if (!current) container.setItem(slot, new ItemStack(typeId, 1));
-    else if (current.typeId === typeId && current.amount < current.maxAmount) {
-        current.amount++;
-        container.setItem(slot, current);
-    }
 }
 
 function scheduleDropCollection(machine, positions, specs, operation, settings) {

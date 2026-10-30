@@ -23,18 +23,9 @@ export const catalystWeaverRecipeDefinitions = {
             amount: 1,
         },
         catalysts: [
-            {
-                id: "minecraft:red_dye",
-                amount: 1,
-            },
-            {
-                id: "minecraft:redstone_block",
-                amount: 1,
-            },
-            {
-                id: "utilitycraft:aetherium_block",
-                amount: 1,
-            },
+            { id: "utilitycraft:expert_chip", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+            { id: "utilitycraft:aetherium", amount: 1 },
         ],
         output: {
             id: "utilitycraft:multi_processing_upgrade",
@@ -49,18 +40,9 @@ export const catalystWeaverRecipeDefinitions = {
             amount: 1,
         },
         catalysts: [
-            {
-                id: "minecraft:yellow_dye",
-                amount: 1,
-            },
-            {
-                id: "minecraft:redstone_block",
-                amount: 1,
-            },
-            {
-                id: "minecraft:diamond_block",
-                amount: 1,
-            },
+            { id: "utilitycraft:gold_dust", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+            { id: "utilitycraft:basic_battery", amount: 1 },
         ],
         output: {
             id: "utilitycraft:energy_capacity_upgrade",
@@ -75,18 +57,9 @@ export const catalystWeaverRecipeDefinitions = {
             amount: 1,
         },
         catalysts: [
-            {
-                id: "minecraft:cyan_dye",
-                amount: 1,
-            },
-            {
-                id: "minecraft:redstone_block",
-                amount: 1,
-            },
-            {
-                id: "utilitycraft:expert_fluid_tank",
-                amount: 1,
-            },
+            { id: "minecraft:glass", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+            { id: "utilitycraft:basic_fluid_tank", amount: 1 },
         ],
         output: {
             id: "utilitycraft:liquid_capacity_upgrade",
@@ -101,18 +74,9 @@ export const catalystWeaverRecipeDefinitions = {
             amount: 1,
         },
         catalysts: [
-            {
-                id: "minecraft:lime_dye",
-                amount: 1,
-            },
-            {
-                id: "minecraft:redstone_block",
-                amount: 1,
-            },
-            {
-                id: "utilitycraft:expert_gas_tank",
-                amount: 1,
-            },
+            { id: "minecraft:glass", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+            { id: "utilitycraft:basic_gas_tank", amount: 1 },
         ],
         output: {
             id: "utilitycraft:gas_capacity_upgrade",
@@ -127,18 +91,9 @@ export const catalystWeaverRecipeDefinitions = {
             amount: 1,
         },
         catalysts: [
-            {
-                id: "minecraft:green_dye",
-                amount: 1,
-            },
-            {
-                id: "minecraft:redstone_block",
-                amount: 1,
-            },
-            {
-                id: "utilitycraft:refined_aetherium_crystal",
-                amount: 1,
-            },
+            { id: "utilitycraft:diamond_dust", amount: 1 },
+            { id: "minecraft:redstone_block", amount: 1 },
+            { id: "utilitycraft:refined_aetherium_crystal", amount: 1 },
         ],
         output: {
             id: "utilitycraft:resource_efficiency_upgrade",

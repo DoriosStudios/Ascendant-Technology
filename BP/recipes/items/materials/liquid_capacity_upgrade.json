@@ -17,10 +17,10 @@
                 "item": "utilitycraft:base_upgrade"
             },
             "D": {
-                "item": "minecraft:cyan_dye"
+                "item": "minecraft:glass"
             },
             "I": {
-                "item": "utilitycraft:expert_fluid_tank"
+                "item": "utilitycraft:basic_fluid_tank"
             },
             "R": {
                 "item": "minecraft:redstone_block"
@@ -34,7 +34,7 @@
         },
         "unlock": [
             {
-                "item": "utilitycraft:base_upgrade"
+                "item": "utilitycraft:basic_fluid_tank"
             }
         ]
     }

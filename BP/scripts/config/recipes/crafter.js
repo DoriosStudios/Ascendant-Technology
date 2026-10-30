@@ -24,27 +24,27 @@ export const crafterRecipeAdditions = {
         output: "utilitycraft:tingstanium_dust",
         amount: 2,
     },
-    "steel_plate,red_dye,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,aetherium_block,steel_plate":
+    "titanium_plate,expert_chip,titanium_plate,redstone_block,base_upgrade,redstone_block,titanium_plate,aetherium,titanium_plate":
         {
             output: "utilitycraft:multi_processing_upgrade",
             amount: 1,
         },
-    "steel_plate,yellow_dye,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,diamond_block,steel_plate":
+    "steel_plate,gold_dust,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,basic_battery,steel_plate":
         {
             output: "utilitycraft:energy_capacity_upgrade",
             amount: 1,
         },
-    "steel_plate,cyan_dye,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,expert_fluid_tank,steel_plate":
+    "steel_plate,glass,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,basic_fluid_tank,steel_plate":
         {
             output: "utilitycraft:liquid_capacity_upgrade",
             amount: 1,
         },
-    "steel_plate,lime_dye,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,expert_gas_tank,steel_plate":
+    "lead_plate,glass,lead_plate,redstone_block,base_upgrade,redstone_block,lead_plate,basic_gas_tank,lead_plate":
         {
             output: "utilitycraft:gas_capacity_upgrade",
             amount: 1,
         },
-    "steel_plate,green_dye,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,refined_aetherium_crystal,steel_plate":
+    "tungsten_plate,diamond_dust,tungsten_plate,redstone_block,base_upgrade,redstone_block,tungsten_plate,refined_aetherium_crystal,tungsten_plate":
         {
             output: "utilitycraft:resource_efficiency_upgrade",
             amount: 1,

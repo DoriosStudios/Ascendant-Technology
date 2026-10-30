@@ -17,16 +17,16 @@
                 "item": "utilitycraft:base_upgrade"
             },
             "D": {
-                "item": "minecraft:lime_dye"
+                "item": "minecraft:glass"
             },
             "I": {
-                "item": "utilitycraft:expert_gas_tank"
+                "item": "utilitycraft:basic_gas_tank"
             },
             "R": {
                 "item": "minecraft:redstone_block"
             },
             "S": {
-                "item": "utilitycraft:steel_plate"
+                "item": "utilitycraft:lead_plate"
             }
         },
         "result": {
@@ -34,7 +34,7 @@
         },
         "unlock": [
             {
-                "item": "utilitycraft:base_upgrade"
+                "item": "utilitycraft:basic_gas_tank"
             }
         ]
     }

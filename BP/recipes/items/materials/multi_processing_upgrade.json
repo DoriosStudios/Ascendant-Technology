@@ -17,16 +17,16 @@
                 "item": "utilitycraft:base_upgrade"
             },
             "D": {
-                "item": "minecraft:red_dye"
+                "item": "utilitycraft:expert_chip"
             },
             "I": {
-                "item": "utilitycraft:aetherium_block"
+                "item": "utilitycraft:aetherium"
             },
             "R": {
                 "item": "minecraft:redstone_block"
             },
             "S": {
-                "item": "utilitycraft:steel_plate"
+                "item": "utilitycraft:titanium_plate"
             }
         },
         "result": {
@@ -34,7 +34,7 @@
         },
         "unlock": [
             {
-                "item": "utilitycraft:base_upgrade"
+                "item": "utilitycraft:aetherium"
             }
         ]
     }

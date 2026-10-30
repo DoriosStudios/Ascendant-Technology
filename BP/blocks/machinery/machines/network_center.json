@@ -19,21 +19,10 @@
             }
         },
         "components": {
-            // LEGACY_DISABLED             "utilitycraft:network_center": {
-            //                 "entity": {
-            //                     "type": "machine",
-            //                     "input_type": "none",
-            //                     "output_type": "none",
-            //                     "inventory_size": 6
-            //                 },
-            //                 "machine": {
-            //                     "energy_cap": 800000,
-            //                     "energy_cost": 400,
-            //                     "rate_speed_base": 8000,
-            //                     "upgrades": [],
-            //                     "hidden_slots": []
-            //                 }
-            //             },
+            "utilitycraft:network_center": {
+                "entity": { "type": "container", "inventory_size": 6 },
+                "machine": { "energy_cap": 0, "energy_cost": 0, "rate_speed_base": 0, "upgrades": [], "overclock": false }
+            },
             "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:material_instances": {
                 "*": {
@@ -65,7 +54,7 @@
                     "render_method": "alpha_test"
                 }
             },
-            // LEGACY_DISABLED             "minecraft:tick": { "interval_range": [4, 4] },
+            "minecraft:tick": { "interval_range": [4, 4] },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 1
             },

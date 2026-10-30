@@ -30,3 +30,4 @@ import "./abyssalFisher.js";
 import "./laserBarrier.js";
 import "./refiningTable.js";
 import "./alchemicalStation.js";
+import "./networkCenter.js";

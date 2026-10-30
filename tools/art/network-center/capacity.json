@@ -1,0 +1,277 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "segmented energy-storage battery",
+    "usage": "Network Center button-card tab icon",
+    "material": "cool blue machine casing with pale energy indicators",
+    "orientation": "front-facing upright glyph",
+    "lighting": "upper-left edge, darker lower/right edges",
+    "structure": [
+      "one-pixel dark outline",
+      "blue body and shadow",
+      "connected pale indicator clusters"
+    ],
+    "style": [
+      "one coherent four-icon family",
+      "native 12x12 symbol centered within a 16x16 transparent canvas",
+      "two-pixel transparent margin",
+      "no antialiasing or noise"
+    ]
+  },
+  "references": [
+    {
+      "path": "../../../RP/textures/blocks/machines/network_center_off_north.png",
+      "sha256": "fdd457525178ab68c15559468b4632b38031193564f7b3a1bbd37f1557532111",
+      "purpose": "exact outline, blue ramp and pale highlights",
+      "approval": "existing project texture; no formal art approval record"
+    }
+  ],
+  "composition": {
+    "min_margin": 2,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "outline": [
+      36,
+      30,
+      31
+    ],
+    "screen": [
+      28,
+      46,
+      46
+    ],
+    "shadow": [
+      117,
+      117,
+      200
+    ],
+    "body": [
+      136,
+      155,
+      217
+    ],
+    "light": [
+      164,
+      184,
+      249
+    ],
+    "glint": [
+      225,
+      236,
+      255
+    ]
+  },
+  "base_color": "outline",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          5,
+          2
+        ],
+        [
+          10,
+          2
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          12,
+          3
+        ],
+        [
+          13,
+          4
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          3,
+          13
+        ],
+        [
+          2,
+          12
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          5,
+          3
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "material-and-symbol",
+      "purpose": "shade the casing and distinguish the four functions through silhouette and readable clusters",
+      "commands": [
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              3,
+              4
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "color": "body"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              4
+            ],
+            [
+              12,
+              4
+            ]
+          ],
+          "width": 1,
+          "color": "glint"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              5
+            ],
+            [
+              3,
+              11
+            ]
+          ],
+          "width": 1,
+          "color": "light"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              12,
+              5
+            ],
+            [
+              12,
+              11
+            ]
+          ],
+          "width": 1,
+          "color": "shadow"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              6,
+              3
+            ],
+            [
+              9,
+              3
+            ]
+          ],
+          "color": "light"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              4,
+              5
+            ],
+            [
+              11,
+              11
+            ]
+          ],
+          "color": "screen"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              5,
+              6
+            ],
+            [
+              10,
+              6
+            ]
+          ],
+          "color": "glint"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              5,
+              8
+            ],
+            [
+              10,
+              8
+            ]
+          ],
+          "color": "body"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              5,
+              10
+            ],
+            [
+              10,
+              10
+            ]
+          ],
+          "color": "shadow"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              4,
+              12
+            ],
+            [
+              11,
+              12
+            ]
+          ],
+          "width": 1,
+          "color": "shadow"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "intent": {
+    "identity": "network monitor with four data cells",
+    "usage": "Network Center button-card tab icon",
+    "material": "cool blue machine casing with pale energy indicators",
+    "orientation": "front-facing upright glyph",
+    "lighting": "upper-left edge, darker lower/right edges",
+    "structure": [
+      "one-pixel dark outline",
+      "blue body and shadow",
+      "connected pale indicator clusters"
+    ],
+    "style": [
+      "one coherent four-icon family",
+      "native 12x12 symbol centered within a 16x16 transparent canvas",
+      "two-pixel transparent margin",
+      "no antialiasing or noise"
+    ]
+  },
+  "references": [
+    {
+      "path": "../../../RP/textures/blocks/machines/network_center_off_north.png",
+      "sha256": "fdd457525178ab68c15559468b4632b38031193564f7b3a1bbd37f1557532111",
+      "purpose": "exact outline, blue ramp and pale highlights",
+      "approval": "existing project texture; no formal art approval record"
+    }
+  ],
+  "composition": {
+    "min_margin": 2,
+    "edge_contact": "forbid",
+    "allow_clip": false
+  },
+  "palette": {
+    "outline": [
+      36,
+      30,
+      31
+    ],
+    "screen": [
+      28,
+      46,
+      46
+    ],
+    "shadow": [
+      117,
+      117,
+      200
+    ],
+    "body": [
+      136,
+      155,
+      217
+    ],
+    "light": [
+      164,
+      184,
+      249
+    ],
+    "glint": [
+      225,
+      236,
+      255
+    ]
+  },
+  "base_color": "outline",
+  "silhouette": [
+    {
+      "op": "polygon",
+      "points": [
+        [
+          3,
+          2
+        ],
+        [
+          12,
+          2
+        ],
+        [
+          13,
+          3
+        ],
+        [
+          13,
+          10
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          9,
+          12
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          4,
+          13
+        ],
+        [
+          4,
+          12
+        ],
+        [
+          6,
+          12
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          3,
+          11
+        ],
+        [
+          2,
+          10
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "name": "material-and-symbol",
+      "purpose": "shade the casing and distinguish the four functions through silhouette and readable clusters",
+      "commands": [
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              3,
+              3
+            ],
+            [
+              12,
+              9
+            ]
+          ],
+          "color": "body"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              3
+            ],
+            [
+              12,
+              3
+            ]
+          ],
+          "width": 1,
+          "color": "glint"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              3,
+              4
+            ],
+            [
+              3,
+              9
+            ]
+          ],
+          "width": 1,
+          "color": "light"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              12,
+              4
+            ],
+            [
+              12,
+              9
+            ]
+          ],
+          "width": 1,
+          "color": "shadow"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              4,
+              4
+            ],
+            [
+              11,
+              8
+            ]
+          ],
+          "color": "screen"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              5,
+              5
+            ],
+            [
+              6,
+              5
+            ]
+          ],
+          "color": "light"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              9,
+              5
+            ],
+            [
+              10,
+              5
+            ]
+          ],
+          "color": "glint"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              5,
+              7
+            ],
+            [
+              6,
+              7
+            ]
+          ],
+          "color": "body"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              9,
+              7
+            ],
+            [
+              10,
+              7
+            ]
+          ],
+          "color": "light"
+        },
+        {
+          "op": "rectangle",
+          "points": [
+            [
+              7,
+              11
+            ],
+            [
+              8,
+              12
+            ]
+          ],
+          "color": "body"
+        },
+        {
+          "op": "line",
+          "points": [
+            [
+              5,
+              12
+            ],
+            [
+              10,
+              12
+            ]
+          ],
+          "width": 1,
+          "color": "light"
+        }
+      ]
+    }
+  ]
+}

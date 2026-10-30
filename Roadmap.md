@@ -41,7 +41,7 @@ Machine status legend:
 | 🟢 **Residue Processor** | — |
 | 🟢 **Singularity Fabricator** | — |
 | 🟡 **Vacuum Particle Condenser** | — |
-| 🟢 **Vaporworks Processor** | — |
+| 🔵 **Steam Boiler / Vaporizer** | — |
 | 🟢 **Decompactor** | — |
 
 ## Items, gear, materials, and systems
@@ -77,7 +77,7 @@ Machine status legend:
     3. **Level III:** a stronger third-level version of the effect.
   - **Missing Effects:** Adds new potion families for effects that are absent from the current brewing progression, subject to recipe, balance, and effect-availability review.
   - **Potion Conversion:** Supports deliberate conversion paths between compatible potion forms and states, such as normal, splash, and lingering variants where the effect and recipe rules allow it. Conversion must preserve the intended effect tier and duration instead of silently resetting progression.
-  - **Implementation:** Six-bottle brewing batches, independent Aetherium amplification/extension sections (1,000/750 mB), a 64,000 mB blaze reservoir, a 128,000 mB Aetherium tank, and a collapsible brewing-only recipe book. Custom drinkable, splash, and lingering effect families are wired; in-game validation is pending.
+  - **Implementation:** Six-bottle brewing batches, independent Aetherium amplification/extension sections (1,000/750 mB), a 64,000 mB blaze reservoir, a 128,000 mB Aetherium tank, and a collapsible brewing-only recipe book. Custom drinkable, splash, and lingering effect families are wired. Creative, Workbench and Assembler acquisition restored for the next update; in-game release acceptance is pending. Brewing consumes 250 mB blaze per batch.
 
 - 🟡 **Aurora's Lance**
   - **Purpose:** Multiblock defensive turret designed to eliminate hostile targets with high-energy beams.
@@ -186,8 +186,11 @@ Machine status legend:
   - **Identity:** This is not a disguised miner; it is a placement-dependent logistics machine whose value comes from location, not from brute-force automation.
   - **Visual:** A large rotor or fan-centered housing with a central condensation chamber, built to sell the idea of suction, pressure, and particle separation.
 
-- 🟢 **Vaporworks Processor**
-  - **Purpose:** Produce steam/gas resources for auxiliary industrial use.
+- 🔵 **Steam Boiler / Vaporizer** *(Vaporworks rework)*
+  - **Steam Boiler:** Basic electric water-to-steam machine, two upgrade slots, 128 kDE and 32,000 mB liquid/gas tanks. One 1,000 mB batch costs 2,400 DE and 160 ticks.
+  - **Vaporizer:** Advanced electric processor crafted from the boiler, four upgrade slots, 1.024 MDE and 128,000 mB tanks. Water takes 1,600 DE / 80 ticks; Cryofluid and Saline Coolant keep their existing advanced recipes.
+  - **Compatibility:** The legacy Vaporworks ID, 31-slot inventory/migration, storage and runtime stay registered. Only its normal acquisition is retired. No forced replacement of placed blocks.
+  - **Status:** Runtime, crafting, Assembler, UI and books implemented; in-game acceptance pending. Existing artwork is reused for both blocks.
 
 ---
 

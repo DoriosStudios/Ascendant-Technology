@@ -312,6 +312,8 @@ export const crafterRecipeAdditions = {
         },
     "waxed_copper,waxed_copper_grate,waxed_copper,advanced_chip,steam_boiler,advanced_chip,compressed_copper_block,machine_case,compressed_copper_block":
         { output: "utilitycraft:vaporizer", amount: 1 },
+    "titanium_plate,aetherium,titanium_plate,absolute_chip,brewing_stand,absolute_chip,titanium_plate,reinforced_machine_case,titanium_plate":
+        { output: "utilitycraft:alchemical_station", amount: 1 },
     // BP/recipes/blocks/machinery/machines/verdant_cultivator.json
     "titanium,netherite_hoe,titanium,tungsten,harvester,tungsten,titanium,superior_machine_case,titanium":
         {

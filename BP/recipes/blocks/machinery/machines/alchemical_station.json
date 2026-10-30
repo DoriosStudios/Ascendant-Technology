@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "utilitycraft:alchemical_station"
+        },
+        "tags": [
+            "utilitycraft_workbench"
+        ],
+        "pattern": [
+            "PAP",
+            "CBC",
+            "PRP"
+        ],
+        "key": {
+            "P": {
+                "item": "utilitycraft:titanium_plate"
+            },
+            "A": {
+                "item": "utilitycraft:aetherium"
+            },
+            "C": {
+                "item": "utilitycraft:absolute_chip"
+            },
+            "B": {
+                "item": "minecraft:brewing_stand"
+            },
+            "R": {
+                "item": "utilitycraft:reinforced_machine_case"
+            }
+        },
+        "result": {
+            "item": "utilitycraft:alchemical_station",
+            "count": 1
+        },
+        "unlock": [
+            {
+                "item": "minecraft:brewing_stand"
+            }
+        ]
+    }
+}

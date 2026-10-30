@@ -61,11 +61,12 @@ const components = {
 };
 await json("BP/blocks/machinery/machines/alchemical_station.json", {
     format_version: "1.21.100", "minecraft:block": {
-        description: { identifier: "utilitycraft:alchemical_station", menu_category: { category: "none" },
+        description: { identifier: "utilitycraft:alchemical_station", menu_category: { category: "construction" },
             traits: { "minecraft:placement_direction": { enabled_states: ["minecraft:cardinal_direction"], y_rotation_offset: 180 } },
-            states: { "utilitycraft:on": [false, true] } },
+            states: { "utilitycraft:on": [false, true], "utilitycraft:has_selection": [false, true] } },
         components,
-        permutations: [{ condition: "q.block_state('utilitycraft:on') == 1", components: { "minecraft:light_emission": 4 } },
+        permutations: [{ condition: "!q.block_state('utilitycraft:has_selection')", components: { "minecraft:selection_box": false } },
+            { condition: "q.block_state('utilitycraft:on') == 1", components: { "minecraft:light_emission": 4 } },
             ...[["north", 0], ["south", 180], ["east", -90], ["west", 90]].map(([face, y]) => ({
                 condition: `q.block_state('minecraft:cardinal_direction') == '${face}'`, components: { "minecraft:transformation": { rotation: [0, y, 0] } },
             }))],
@@ -97,8 +98,7 @@ await json("RP/models/blocks/alchemical_station.geo.json", {
 });
 const recipeKey = { P: "utilitycraft:titanium_plate", A: "utilitycraft:aetherium", C: "utilitycraft:absolute_chip",
     B: "minecraft:brewing_stand", R: "utilitycraft:reinforced_machine_case" };
-// Keep the recipe outside BP while this machine is paused in v0.9.2.
-await json("extras/paused_recipes/blocks/machinery/machines/alchemical_station.json", {
+await json("BP/recipes/blocks/machinery/machines/alchemical_station.json", {
     format_version: "1.20.80", "minecraft:recipe_shaped": { description: { identifier: "utilitycraft:alchemical_station" },
         tags: ["utilitycraft_workbench"], pattern: ["PAP", "CBC", "PRP"],
         key: Object.fromEntries(Object.entries(recipeKey).map(([k, item]) => [k, { item }])),
@@ -195,7 +195,7 @@ async function localize() {
             `ui.ascendant:alchemy.extend=${portuguese ? "Estender" : "Extend"}`,
             `ui.ascendant:alchemy.information=${portuguese ? "Informações" : "Information"}`,
             `ui.ascendant:alchemy.batch=${portuguese ? "1 ingrediente → até 6 poções" : "1 reagent → up to 6 potions"}`,
-            `ui.ascendant:alchemy.recipe_cost=12,000 DE · 50 mB Blaze · ×6`,
+            `ui.ascendant:alchemy.recipe_cost=${C.brewEnergy.toLocaleString("en-US")} DE · ${C.blazePerBrew} mB Blaze · ×6`,
             `ui.ascendant:alchemy.io.items=${portuguese ? "Modos I/O:\\n§9E1: frascos\\n§9E2: reagente\\n§9E3: blaze\\n§cS: frascos\\n§c   vazios" : "I/O Modes:\\n§9IN 1: bottles\\n§9IN 2: reagent\\n§9IN 3: blaze\\n§cOUT: empty\\n§c     bottles"}`,
             `ui.ascendant:alchemy.io.fluids=${portuguese ? "Entrada:\\n§9Aetherium\\n§rTanque 1" : "Input:\\n§9Aetherium\\n§rTank 1"}`,
             `ui.ascendant:alchemy.help=${portuguese

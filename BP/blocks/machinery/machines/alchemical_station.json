@@ -4,7 +4,7 @@
         "description": {
             "identifier": "utilitycraft:alchemical_station",
             "menu_category": {
-                "category": "none"
+                "category": "construction"
             },
             "traits": {
                 "minecraft:placement_direction": {
@@ -105,7 +105,9 @@
         "permutations": [
             {
                 "condition": "!q.block_state('utilitycraft:has_selection')",
-                "components": { "minecraft:selection_box": false }
+                "components": {
+                    "minecraft:selection_box": false
+                }
             },
             {
                 "condition": "q.block_state('utilitycraft:on') == 1",

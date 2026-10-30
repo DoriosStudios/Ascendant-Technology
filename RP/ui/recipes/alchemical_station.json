@@ -332,7 +332,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -590,7 +590,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -848,7 +848,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -1106,7 +1106,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -1364,7 +1364,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -1622,7 +1622,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -1880,7 +1880,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -2138,7 +2138,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -2396,7 +2396,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -2654,7 +2654,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -2912,7 +2912,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -3170,7 +3170,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -3428,7 +3428,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -3686,7 +3686,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -3944,7 +3944,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -4202,7 +4202,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -4460,7 +4460,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -4718,7 +4718,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -4976,7 +4976,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -5234,7 +5234,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -5492,7 +5492,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -5750,7 +5750,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -6008,7 +6008,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -6266,7 +6266,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -6524,7 +6524,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -6782,7 +6782,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -7040,7 +7040,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -7298,7 +7298,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -7556,7 +7556,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -7814,7 +7814,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -8072,7 +8072,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -8330,7 +8330,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -8588,7 +8588,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -8846,7 +8846,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -9104,7 +9104,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -9362,7 +9362,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -9620,7 +9620,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -9878,7 +9878,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -10136,7 +10136,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -10394,7 +10394,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -10652,7 +10652,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -10910,7 +10910,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -11168,7 +11168,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -11426,7 +11426,7 @@
                         {
                             "arrow": {
                                 "type": "image",
-                                "texture": "textures/ui/progress_bar/arrow_right_22",
+                                "texture": "textures/ui/steam_recipe_arrow",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [

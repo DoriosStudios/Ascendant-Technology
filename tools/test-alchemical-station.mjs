@@ -149,7 +149,7 @@ delete Potions.getEffectType;
 let s = setup(); s.items.set(S.ingredient, new ItemStack("minecraft:nether_wart", 2));
 for (const slot of S.bottles) s.items.set(slot, drink("water"));
 run(3); assert.equal(s.m.energy.get(), 200000); assert.equal(s.items.get(S.ingredient).amount, 2);
-tick(); assert.equal(s.m.energy.get(), 188000); assert.equal(s.m.tanks[1].get(), 950); assert.equal(s.items.get(S.ingredient).amount, 1);
+tick(); assert.equal(s.m.energy.get(), 188000); assert.equal(s.m.tanks[1].get(), 1000 - C.blazePerBrew); assert.equal(s.items.get(S.ingredient).amount, 1);
 for (const slot of S.bottles) assert.equal(readPotion(s.items.get(slot)).family, "awkward");
 run(4); assert.equal(s.m.energy.get(), 188000);
 

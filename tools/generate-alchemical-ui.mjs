@@ -335,7 +335,7 @@ async function recipeBook(atlas) {
                 ctrl("input", recipeIcon(potion(r.input), `ui.ascendant:alchemy.recipe.${i}.input`, 4, 12)),
                 ctrl("plus", label("+", 24, 16, 6, 10)),
                 ctrl("ingredient", recipeIcon(reagent(r.ingredient), `ui.ascendant:alchemy.recipe.${i}.ingredient`, 34, 12)),
-                ctrl("arrow", image("textures/ui/progress_bar/arrow_right_22", 56, 16, 8, 10, 2)),
+                ctrl("arrow", image("textures/ui/steam_recipe_arrow", 56, 16, 8, 10, 2)),
                 ctrl("output", recipeIcon(potion(r.output), "", 68, 12)),
             ] })) },
         progression_book: { type: "panel", size: [98, 133], controls: [

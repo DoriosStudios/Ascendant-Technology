@@ -8,6 +8,7 @@
                 "group": "at:itemGroup.name.power_beacons"
             },
             "states": {
+                "utilitycraft:has_selection": [false, true],
                 "utilitycraft:on": [false, true]
             }
         },
@@ -26,7 +27,7 @@
             "minecraft:geometry": "geometry.utilitycraft_power_beacon",
             "minecraft:collision_box": {
                 "origin": [-8, 0, -8],
-                "size": [16, 24, 16]
+                "size": [16, 16, 16]
             },
             "minecraft:material_instances": {
                 "*": {
@@ -46,6 +47,10 @@
             "tag:minecraft:is_pickaxe_item_destructible": {}
         },
         "permutations": [
+            {
+                "condition": "!q.block_state('utilitycraft:has_selection')",
+                "components": { "minecraft:selection_box": false }
+            },
             {
                 "condition": "q.block_state('utilitycraft:on') == true",
                 "components": {

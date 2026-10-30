@@ -4,6 +4,7 @@
 		"description": {
 			"identifier": "utilitycraft:absolute_battery",
 			"states": {
+				"utilitycraft:has_selection": [false, true],
 				"utilitycraft:capacity": [
 					0,
 					1,
@@ -54,6 +55,10 @@
 			"tag:minecraft:is_pickaxe_item_destructible": {}
 		},
 		"permutations": [
+			{
+				"condition": "!q.block_state('utilitycraft:has_selection')",
+				"components": { "minecraft:selection_box": false }
+			},
 			{
 				"condition": "q.block_state('utilitycraft:capacity') == 0",
 				"components": {

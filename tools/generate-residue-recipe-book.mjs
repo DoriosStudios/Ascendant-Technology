@@ -21,26 +21,19 @@ const textures={
 for(const coral of ['tube','brain','bubble','fire','horn'])textures[`minecraft:dead_${coral}_coral_block`]=`textures/blocks/coral_${{tube:'blue',brain:'pink',bubble:'purple',fire:'red',horn:'yellow'}[coral]}_dead`;
 const texture=id=>textures[id]??'textures/items/'+id.split(':')[1];
 const name=id=>id.startsWith('utilitycraft:')?'item.'+id:((textures[id]??'').includes('/blocks/')?'tile.':'item.')+id.split(':')[1]+'.name';
-const bind=[{binding_type:'view',source_control_name:'recipes_toggle_button',source_property_name:'#toggle_state',target_property_name:'#visible',resolve_sibling_scope:false}];
-const rows=[],panels=[],slots=[8,9,16,17],positions=[[44,-12],[64,-12],[44,16],[64,16]];
+const rows=[],panels=[];
 const entries=Object.entries(recipes);
 for(let i=0;i<entries.length;i+=4){const controls=[];for(let j=i;j<Math.min(i+4,entries.length);j++){
  const [id,recipe]=entries[j],control='residue_recipe_'+j;
- controls.push({[control+'@uc.recipe_toggle']:{size:[18,18],anchor_from:'top_left',anchor_to:'top_left',offset:[4+(j-i)*18,0],$toggle_name:'residue_recipes',$toggle_index:7000+j,$toggle_control_name:control,$toggle_hover_text:name(id),$recipe_icon:texture(id),$toggle_layer:2}});
- const overlay=(id,amount,slot,offset)=>({collection_index:slot,bindings:[],$slot_offset:offset,$slot_item_texture:texture(id),$slot_hover_text:name(id),$has_slot_hover:true,$slot_count_text:String(amount),$has_slot_count:amount>1});
- const details=[{'input@uc.recipe_slot_overlay':overlay(id,recipe.required,3,[-18,1])}];
- recipe.outputs.forEach((output,k)=>{
-  details.push({['output_'+k+'@uc.recipe_slot_overlay']:overlay(output.item,output.amount,slots[k],positions[k])});
-  if(output.chance<1)details.push({['chance_'+k]:{type:'label',text:`${Math.round(output.chance*100)}%`,size:[20,8],offset:[positions[k][0],positions[k][1]+13],font_scale_factor:0.5,color:[0.3,0.3,0.3],text_alignment:'center',layer:9}});
+ controls.push({[control+'_button@uc.recipe_toggle']:{size:[18,18],anchor_from:'top_left',anchor_to:'top_left',offset:[6+(j-i)*18,0],$toggle_name:'residue_recipes',$toggle_index:7000+j,$toggle_control_name:control,$toggle_default_state:j===0,$toggle_hover_text:name(id),$toggle_hover_text_localize:true,$recipe_icon:texture(id),$toggle_layer:2}});
+ const overlay=(id,amount,offset)=>({bindings:[],$slot_offset:offset,$slot_item_texture:texture(id),$slot_hover_text:name(id),$has_slot_hover:true,$slot_count_text:String(amount),$has_slot_count:amount>1});
+ const details=[{'input@uc.recipe_slot_overlay':overlay(id,recipe.required,[-27,-18])},{arrow:{type:'image',texture:'textures/ui/steam_recipe_arrow',size:[14,10],offset:[0,-18],layer:7}},{cost:{type:'label',text:String(recipe.cost)+' DE',size:[32,8],offset:[27,-18],font_scale_factor:0.5,color:[0.3,0.3,0.3],text_alignment:'center',layer:9}}];
+ recipe.outputs.forEach((output,k)=>{const x=-27+k*18;
+  details.push({['output_'+k+'@uc.recipe_slot_overlay']:overlay(output.item,output.amount,[x,0])});
+  details.push({['chance_'+k]:{type:'label',text:String(Math.round(output.chance*100))+'%',size:[18,8],offset:[x,15],font_scale_factor:0.5,color:[0.3,0.3,0.3],text_alignment:'center',layer:9}});
  });
- panels.push({[control+'_panel@uc.recipe_panel']:{$recipe_control_name:control,size:[162,72],controls:details}});
-}rows.push({['row_'+i]:{type:'panel',size:[88,18],controls}});}
-const d={namespace:'residue_processor',recipe_book:{type:'panel',size:[104,166],anchor_from:'top_left',anchor_to:'top_left',offset:[-101,-7],layer:6,bindings:bind,controls:[
- {background:{type:'image',texture:'textures/ui/background/background_panel',size:[104,166]}},
- {title_bg:{type:'image',texture:'textures/ui/background/dark_top_tab',size:[104,22],anchor_from:'top_left',anchor_to:'top_left',layer:1}},
- {title:{type:'label',text:'ui.utilitycraft:recipes_panel.name',size:[88,14],offset:[0,-72],font_scale_factor:0.85,color:[0.9,0.9,0.9],layer:2}},
- {grid_bg:{type:'image',texture:'textures/ui/recipe_grid_bg',size:[92,138],offset:[0,10],layer:1}},
- {'scroll@at_common.scroll_panel':{size:[104,134],anchor_from:'top_left',anchor_to:'top_left',offset:[8,26],$content_ref:'residue_processor.recipe_rows',$scroll_view_port_size:[88,'100%'],$scroll_view_port_max_size:[88,'100%'],$scroll_view_port_size_touch:[88,'100%'],$scroll_view_port_max_size_touch:[88,'100%'],layer:6}},
-]},recipe_rows:{type:'stack_panel',orientation:'vertical',size:[88,'default'],controls:rows},recipe_overlays:{type:'panel',size:[162,72],bindings:bind,layer:20,controls:panels}};
+ panels.push({[control+'_panel@uc.recipe_panel']:{$recipe_control_name:control,size:[88,44],controls:details}});
+}rows.push({['row_'+i]:{type:'panel',size:[84,18],controls}});}
+const d={namespace:'residue_processor','recipe_book@at_machine_recipes.book':{anchor_from:'top_left',anchor_to:'top_left',offset:[-101,-7],$recipe_rows:'residue_processor.recipe_rows',$recipe_selection:'residue_processor.recipe_selection'},recipe_rows:{type:'stack_panel',orientation:'vertical',size:[84,'default'],controls:rows},recipe_selection:{type:'panel',size:[88,44],controls:panels}};
 await writeFile(new URL('RP/ui/recipes/residue_processor.json',root),JSON.stringify(d,null,4)+'\n');
-console.log(`Generated ${entries.length} Residue Processor recipes, up to four outputs.`);
+console.log('Generated '+entries.length+' Residue Processor recipes in the shared book.');

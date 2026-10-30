@@ -461,7 +461,7 @@
                         {
                             "recipe_card@at_common.button_card": {
                                 "$card_offset": [0, 4],
-                                "$card_background_texture": "textures/ui/button_card/tab_top_aqua",
+                                "$card_background_texture": "textures/ui/button_card/tab_top_dark",
                                 "$card_buttons_ref": "cryo_freezer.recipe_card_buttons"
                             }
                         }
@@ -535,10 +535,10 @@
                 "machine_view_toggle_button@at_common.card_tab": {
                     "$toggle_name": "machine_recipe_views",
                     "$card_tab_index": 0,
-                    "$card_unchecked_texture": "textures/ui/button_card/button_aqua",
-                    "$card_checked_texture": "textures/ui/button_card/button_aqua_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_aqua_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_aqua_pressed_hover",
+                    "$card_unchecked_texture": "textures/ui/button_card/button_light_gray",
+                    "$card_checked_texture": "textures/ui/button_card/button_light_gray_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_light_gray_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_light_gray_pressed_hover",
 
                     "$card_icon": "textures/ui/at_icons/freeze",
                     "$card_icon_size": [
@@ -552,10 +552,10 @@
                 "recipes_toggle_button@at_common.card_tab": {
                     "$toggle_name": "machine_recipe_views",
                     "$card_tab_index": 1,
-                    "$card_unchecked_texture": "textures/ui/button_card/button_aqua",
-                    "$card_checked_texture": "textures/ui/button_card/button_aqua_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_aqua_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_aqua_pressed_hover",
+                    "$card_unchecked_texture": "textures/ui/button_card/button_light_gray",
+                    "$card_checked_texture": "textures/ui/button_card/button_light_gray_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_light_gray_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_light_gray_pressed_hover",
 
                     "$card_icon": "textures/ui/at_icons/recipe_book",
                     "$card_icon_size": [

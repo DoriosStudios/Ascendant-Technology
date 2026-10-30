@@ -5,7 +5,7 @@
     },
     "button_card@at_core.button_card": {
         "$card_background_ref": "at_common._button_card_surface",
-        "$card_background_texture|default": "textures/ui/button_card/tab_top_default"
+        "$card_background_texture|default": "textures/ui/button_card/tab_top_dark"
     },
     "_card_face": {
         "type": "panel",
@@ -77,10 +77,10 @@
         "$card_face_alpha": 0.5
     },
     "card_tab@at_core.card_tab": {
-        "$card_unchecked_texture|default": "textures/ui/button_card/button_default",
-        "$card_checked_texture|default": "textures/ui/button_card/button_default_pressed",
-        "$card_unchecked_hover_texture|default": "textures/ui/button_card/button_default_hover",
-        "$card_checked_hover_texture|default": "textures/ui/button_card/button_default_pressed_hover",
+        "$card_unchecked_texture|default": "textures/ui/button_card/button_light_gray",
+        "$card_checked_texture|default": "textures/ui/button_card/button_light_gray_pressed",
+        "$card_unchecked_hover_texture|default": "textures/ui/button_card/button_light_gray_hover",
+        "$card_checked_hover_texture|default": "textures/ui/button_card/button_light_gray_pressed_hover",
         "$unchecked_control": "at_common._card_unchecked",
         "$checked_control": "at_common._card_checked",
         "$unchecked_hover_control": "at_common._card_unchecked_hover",
@@ -91,10 +91,10 @@
         "$checked_locked_hover_control": "at_common._card_checked_locked"
     },
     "card_button@at_core.card_button": {
-        "$card_unchecked_texture|default": "textures/ui/button_card/button_default",
-        "$card_checked_texture|default": "textures/ui/button_card/button_default_pressed",
-        "$card_unchecked_hover_texture|default": "textures/ui/button_card/button_default_hover",
-        "$card_checked_hover_texture|default": "textures/ui/button_card/button_default_pressed_hover",
+        "$card_unchecked_texture|default": "textures/ui/button_card/button_light_gray",
+        "$card_checked_texture|default": "textures/ui/button_card/button_light_gray_pressed",
+        "$card_unchecked_hover_texture|default": "textures/ui/button_card/button_light_gray_hover",
+        "$card_checked_hover_texture|default": "textures/ui/button_card/button_light_gray_pressed_hover",
         "default_control": "default",
         "hover_control": "hover",
         "pressed_control": "pressed",

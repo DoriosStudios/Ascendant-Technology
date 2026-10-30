@@ -217,9 +217,6 @@
             },
             {
                 "recipe_book@residue_processor.recipe_book": {}
-            },
-            {
-                "recipe_overlays@residue_processor.recipe_overlays": {}
             }
         ]
     },

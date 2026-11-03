@@ -36,6 +36,9 @@ This update introduces the Alchemical Station and an expanded potion system, rew
 - **Verdant Cultivator**
     - Added Titanium and Tungsten mineral crop support on Blue Soil, and Aetherium Crystal crop support on Pink Soil.
 
+### Transportation
+- Enabled **Universal Cable** in the Creative pipes group. Carries energy, items, liquids, gases, and overclock through the same cable, with shared physical connections and wrench disconnections. No crafting recipe is available yet.
+
 ### Overclock
 - **Reinforced Cable** now uses UtilityCraft's normal energy connections and can share energy networks with Energy Cables. Overclock follows its own network and does not travel through ordinary Energy Cables.
 - Overclock networks rebuild after placement, breaking, piston movement, and wrench disconnections, while preserving Tower fuel consumption, energy costs, the Relay requirement, and the strongest-Tower rule.

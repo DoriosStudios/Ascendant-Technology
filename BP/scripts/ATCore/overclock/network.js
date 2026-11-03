@@ -87,6 +87,27 @@ export function touchesOverclockNetwork(dimension, location) {
     return false;
 }
 
+/** Reconnect loaded helpers and clear persisted boosts from disconnected machines. */
+export function reconcileLoadedOverclockEntity(entity) {
+    if (!entity?.isValid) return;
+    try {
+        if (entity.getProperty(OVERCLOCK_PROPERTY) === undefined) return;
+    } catch {
+        return;
+    }
+    const dimension = entity.dimension;
+    const position = normalizePosition(entity.location);
+    const block = safeGetBlock(dimension, position);
+    if (!block) return;
+    if (!block.hasTag(OVERCLOCK_NETWORK_TAG)) {
+        if (!acceptsOverclock(block, entity)) return;
+        applyClaimedLevel(dimension, position, targetClaims.get(dimensionPositionKey(dimension, position)));
+    }
+    if (touchesOverclockNetwork(dimension, position)) {
+        scheduleOverclockNetworkRescan(position, dimension);
+    }
+}
+
 export function getOverclockNetworkForTower(towerEntity) {
     const networkId = networkIdByTowerId.get(towerEntity?.id);
     return networkId ? networksById.get(networkId) : undefined;
@@ -152,7 +173,6 @@ async function scanComponent(startPosition, dimension) {
     const relaysById = new Map();
     const targetsByKey = new Map();
     const checkedTargetKeys = new Set();
-    const pipeFaceCache = new Map();
 
     while (queueHead < queue.length) {
         if (processed > 0 && processed % NETWORK_SCAN_BATCH_SIZE === 0) {
@@ -180,23 +200,15 @@ async function scanComponent(startPosition, dimension) {
             if (entity) relaysById.set(entity.id, entity);
         }
 
-        const isMultiEndpoint = block.hasTag?.("dorios:multi_exporter")
-            || block.hasTag?.("dorios:multi_importer");
-        const isImporter = block.hasTag?.("dorios:multi_importer") === true;
-        const attachment = isMultiEndpoint ? getEndpointAttachmentPosition(block) : undefined;
-
         for (const offset of NETWORK_OFFSETS) {
             const adjacent = offsetPosition(position, offset);
             const adjacentBlock = safeGetBlock(dimension, adjacent);
-            if (!isOverclockNetworkConnectionOpen(block, offset, adjacentBlock, pipeFaceCache)) continue;
-            const isAttachment = attachment && isSamePosition(attachment, adjacent);
+            if (!isOverclockNetworkConnectionOpen(block, offset, adjacentBlock)) continue;
             if (adjacentBlock?.hasTag?.(OVERCLOCK_NETWORK_TAG)) {
-                if (isImporter && isAttachment) continue;
                 queue.push(adjacent);
                 continue;
             }
             if (!adjacentBlock) continue;
-            if (isMultiEndpoint && (!isImporter || !isAttachment)) continue;
 
             const targetKey = localPositionKey(adjacent);
             if (checkedTargetKeys.has(targetKey)) continue;
@@ -212,11 +224,6 @@ async function scanComponent(startPosition, dimension) {
     const targetEntries = [...targetsByKey.values()]
         .sort((a, b) => comparePositions(a.position, b.position));
     const targets = targetEntries.map(({ position }) => position);
-    const energyTargets = targetEntries.filter(({ entity }) => {
-        const family = entity?.getComponent("minecraft:type_family");
-        return family?.hasTypeFamily("dorios:energy_container") === true
-            && family.hasTypeFamily("dorios:energy_source") !== true;
-    }).map(({ position }) => position);
     nodeKeys.sort();
 
     return {
@@ -226,32 +233,7 @@ async function scanComponent(startPosition, dimension) {
         towers,
         relays,
         targets,
-        energyTargets,
     };
-}
-
-function getEndpointAttachmentPosition(block) {
-    let face;
-    try {
-        face = block.permutation.getState("minecraft:block_face");
-    } catch {
-        return undefined;
-    }
-    const offset = {
-        down: { x: 0, y: 1, z: 0 },
-        up: { x: 0, y: -1, z: 0 },
-        south: { x: 0, y: 0, z: -1 },
-        north: { x: 0, y: 0, z: 1 },
-        east: { x: -1, y: 0, z: 0 },
-        west: { x: 1, y: 0, z: 0 },
-    }[face];
-    return offset ? offsetPosition(block.location, offset) : undefined;
-}
-
-function isSamePosition(left, right) {
-    return Math.floor(left.x) === Math.floor(right.x)
-        && Math.floor(left.y) === Math.floor(right.y)
-        && Math.floor(left.z) === Math.floor(right.z);
 }
 
 function registerNetwork(component) {
@@ -268,25 +250,24 @@ function registerNetwork(component) {
         relays: component.relays,
         controller,
         targets: component.targets,
-        energyTargets: component.energyTargets,
         level: controller ? resolveSourceLevel(component.towers) : 0,
     };
 
     networksById.set(id, network);
     for (const nodeKey of network.nodeKeys) networkIdByNode.set(nodeKey, id);
-    for (const tower of network.towers) networkIdByTowerId.set(tower.id, id);
+    for (const tower of network.towers) {
+        networkIdByTowerId.set(tower.id, id);
+        clearPersistedTargets(tower);
+        persistTargets(tower, network.targets);
+    }
 
     for (const relay of network.relays) {
         networksByRelayId.set(relay.id, network);
         setOverclockLevel(relay, network.level);
         clearPersistedTargets(relay);
-        clearEnergyTargets(relay);
     }
 
     if (controller) persistTargets(controller, network.targets);
-    if (controller) {
-        for (const relay of network.relays) persistEnergyTargets(relay, network.energyTargets);
-    }
     addNetworkClaims(network);
 }
 
@@ -299,12 +280,12 @@ function detachNetwork(network) {
     }
     for (const tower of network.towers) {
         if (networkIdByTowerId.get(tower.id) === network.id) networkIdByTowerId.delete(tower.id);
+        clearPersistedTargets(tower);
     }
     for (const relay of network.relays) {
         if (networksByRelayId.get(relay.id) === network) networksByRelayId.delete(relay.id);
         setOverclockLevel(relay, 0);
         clearPersistedTargets(relay);
-        clearEnergyTargets(relay);
     }
 
     removeNetworkClaims(network);
@@ -337,7 +318,6 @@ function resolveSourceLevel(towers) {
 }
 
 function addNetworkClaims(network) {
-    if (!network.controller) return;
     for (const position of network.targets) {
         const key = dimensionPositionKey(network.dimension, position);
         let claims = targetClaims.get(key);
@@ -351,7 +331,6 @@ function addNetworkClaims(network) {
 }
 
 function removeNetworkClaims(network) {
-    if (!network.controller) return;
     for (const position of network.targets) {
         const key = dimensionPositionKey(network.dimension, position);
         const claims = targetClaims.get(key);
@@ -371,48 +350,23 @@ function applyClaimedLevel(dimension, position, claims) {
     if (entity) setOverclockLevel(entity, level);
 }
 
-function persistTargets(relay, targets) {
-    if (!relay?.isValid) return;
+function persistTargets(entity, targets) {
+    if (!entity?.isValid) return;
     for (const position of targets) {
         try {
-            relay.addTag(`${OVERCLOCK_TARGET_POSITION_PREFIX}${position.x},${position.y},${position.z}]`);
+            entity.addTag(`${OVERCLOCK_TARGET_POSITION_PREFIX}${position.x},${position.y},${position.z}]`);
         } catch {}
     }
 }
 
-function clearPersistedTargets(relay) {
-    if (!relay?.isValid) return;
-    for (const tag of relay.getTags()) {
+function clearPersistedTargets(entity) {
+    if (!entity?.isValid) return;
+    for (const tag of entity.getTags()) {
         if (!tag.startsWith(OVERCLOCK_TARGET_POSITION_PREFIX)) continue;
         try {
-            relay.removeTag(tag);
+            entity.removeTag(tag);
         } catch {}
     }
-}
-
-function persistEnergyTargets(relay, targets) {
-    if (!relay?.isValid) return;
-    for (const position of targets) {
-        try {
-            relay.addTag(`net:[${position.x},${position.y},${position.z}]`);
-        } catch {}
-    }
-    try {
-        relay.addTag("updateNetwork");
-    } catch {}
-}
-
-function clearEnergyTargets(relay) {
-    if (!relay?.isValid) return;
-    for (const tag of relay.getTags()) {
-        if (!tag.startsWith("net:[")) continue;
-        try {
-            relay.removeTag(tag);
-        } catch {}
-    }
-    try {
-        relay.addTag("updateNetwork");
-    } catch {}
 }
 
 function findNetworkEntityAt(dimension, position) {

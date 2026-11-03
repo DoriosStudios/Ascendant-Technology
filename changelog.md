@@ -36,6 +36,11 @@ This update introduces the Alchemical Station and an expanded potion system, rew
 - **Verdant Cultivator**
     - Added Titanium and Tungsten mineral crop support on Blue Soil, and Aetherium Crystal crop support on Pink Soil.
 
+### Overclock
+- **Reinforced Cable** now uses UtilityCraft's normal energy connections and can share energy networks with Energy Cables. Overclock follows its own network and does not travel through ordinary Energy Cables.
+- Overclock networks rebuild after placement, breaking, piston movement, and wrench disconnections, while preserving Tower fuel consumption, energy costs, the Relay requirement, and the strongest-Tower rule.
+- **Overclock Relay** retains its energy distribution and receives its destinations from UtilityCraft. It can power branches of ordinary Energy Cable without feeding energy back into Towers or other Overclock Relays.
+
 ## ITEMS
 ### Potions
 - Added **Alchemical Potions** with 702 custom variants across supported effects, levels, durations, and delivery forms.
@@ -92,6 +97,7 @@ This update introduces the Alchemical Station and an expanded potion system, rew
     - Renamed Power Beacons to **Emissor de Energia** in Portuguese.
 
 ## BUG FIXES
+- Fixed overclock network rebuilds overwriting energy destinations and disconnected machines retaining an old boost when their entities reload.
 - Fixed **Titanium Hammer** mining speed on shovel-breakable blocks such as dirt and sand.
 - Fixed **Verdant Cultivator** mineral seed registrations pointing to nonexistent crop blocks.
 - Fixed failed **Verdant Cultivator** planting replacing named or customized seeds with plain items.
@@ -101,4 +107,5 @@ This update introduces the Alchemical Station and an expanded potion system, rew
 - Fixed empty gas tanks retaining an incompatible previous output type and blocking a new recipe; tanks containing gas still prevent incompatible output mixing.
 
 ## THIRD-PARTY / INTEGRATION
+- Requires **UtilityCraft 3.6.2+** for extension energy cables, Relay energy-source support, and wrench connection notifications.
 - Added `utilitycraft:register_vaporizer_recipe` for custom advanced liquid-to-gas recipes. The previous `utilitycraft:register_vaporworks_processor_recipe` event remains supported by the same advanced recipe registry; the Steam Boiler remains Water-only.

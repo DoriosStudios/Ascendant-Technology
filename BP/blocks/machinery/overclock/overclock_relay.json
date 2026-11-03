@@ -22,7 +22,7 @@
 		"components": {
 			"utilitycraft:overclock_relay": {
 				"entity": {
-					"type": "machine",
+					"type": "energy_relay",
 					"inventory_size": 3
 				},
 				"machine": {

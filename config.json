@@ -8,7 +8,7 @@
 		"Dorios Studios"
 	],
 	"targetVersion": "1.26.30",
-	"description": "Ascendant Technology v0.9.2 — Requires UtilityCraft 3.6.0+",
+	"description": "Ascendant Technology v0.9.2 — Requires UtilityCraft 3.6.2+",
 	"experimentalGameplay": {
 		"upcomingCreatorFeatures": false,
 		"experimentalCreatorCameraFeatures": false,

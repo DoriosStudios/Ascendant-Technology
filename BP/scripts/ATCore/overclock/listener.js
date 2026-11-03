@@ -2,33 +2,18 @@
 
 import { system, world } from "@minecraft/server";
 import {
+    reconcileLoadedOverclockEntity,
     scheduleOverclockNetworkRescan,
     touchesOverclockNetwork,
 } from "./network.js";
 
 const PIPE_FACE_UPDATE_EVENT = "utilitycraft:pipe_face_update";
-const PIPE_RESOURCE_REGISTER_EVENT = "utilitycraft:register_pipe_resource";
-const PIPE_RESOURCE_REGISTRY_READY_EVENT = "utilitycraft:pipe_resource_registry_ready";
-const OVERCLOCK_PIPE_RESOURCE = Object.freeze({
-    id: "overclock",
-    tag: "dorios:overclock_network",
-    translationKey: "ui.utilitycraft:universal_pipe.channel_overclock",
+
+world.afterEvents.entityLoad.subscribe(({ entity }) => {
+    system.run(() => reconcileLoadedOverclockEntity(entity));
 });
 
-function registerOverclockPipeResource() {
-    try {
-        system.sendScriptEvent(
-            PIPE_RESOURCE_REGISTER_EVENT,
-            JSON.stringify(OVERCLOCK_PIPE_RESOURCE),
-        );
-    } catch {}
-}
-
 system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
-    if (id === PIPE_RESOURCE_REGISTRY_READY_EVENT) {
-        registerOverclockPipeResource();
-        return;
-    }
     if (id !== PIPE_FACE_UPDATE_EVENT) return;
 
     try {
@@ -39,15 +24,11 @@ system.afterEvents.scriptEventReceive.subscribe(({ id, message }) => {
             || !location
             || ![location.x, location.y, location.z].every(Number.isFinite)) return;
         const dimension = world.getDimension(dimensionId);
-        scheduleOverclockNetworkRescan(location, dimension);
+        queueIfConnected(dimension, location);
     } catch {}
 }, {
     namespaces: ["utilitycraft"],
 });
-
-// Register on the next tick as the normal path; the ready-event response above
-// makes the handshake independent of behavior-pack evaluation order.
-system.run(registerOverclockPipeResource);
 
 world.afterEvents.playerPlaceBlock.subscribe(({ block }) => {
     const dimension = block.dimension;

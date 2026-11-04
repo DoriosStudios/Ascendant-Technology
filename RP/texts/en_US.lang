@@ -3042,3 +3042,20 @@ ui.ascendant:network.capacityNote=Totals include the buffers of all connected de
 
 ui.ascendant:network.page=Page
 ui.ascendant:network.nextPage=Next page >
+
+## Universal transport
+ui.ascendant:universal.title=Universal Transport
+ui.ascendant:universal.description=Configure each resource independently. Speed Upgrades increase exporter throughput.
+ui.ascendant:universal.item=Items
+ui.ascendant:universal.fluid=Liquids
+ui.ascendant:universal.gas=Gases
+ui.ascendant:universal.enabled=Enabled
+ui.ascendant:universal.distribution=Distribution
+ui.ascendant:universal.nearest=Nearest
+ui.ascendant:universal.farthest=Farthest
+ui.ascendant:universal.round=Round Robin
+ui.ascendant:universal.whitelist=Whitelist
+ui.ascendant:universal.identifiers=Identifiers separated by commas (up to 8)
+ui.ascendant:universal.filter_upgrade=Install a Filter Upgrade to configure filters.
+ui.ascendant:universal.invalid_filter=Use up to 8 valid identifiers, separated by commas.
+ui.ascendant:universal.saved=Settings saved.

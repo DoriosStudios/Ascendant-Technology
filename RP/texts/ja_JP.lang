@@ -2997,3 +2997,20 @@ ui.ascendant:network.capacityNote=Totals include the buffers of all connected de
 
 ui.ascendant:network.page=ページ
 ui.ascendant:network.nextPage=次のページ >
+
+## Universal transport
+ui.ascendant:universal.title=万能輸送
+ui.ascendant:universal.description=リソースごとに設定できます。速度アップグレードで搬出量が増加します。
+ui.ascendant:universal.item=アイテム
+ui.ascendant:universal.fluid=液体
+ui.ascendant:universal.gas=気体
+ui.ascendant:universal.enabled=有効
+ui.ascendant:universal.distribution=配送順
+ui.ascendant:universal.nearest=近い順
+ui.ascendant:universal.farthest=遠い順
+ui.ascendant:universal.round=順番に配送
+ui.ascendant:universal.whitelist=許可リスト
+ui.ascendant:universal.identifiers=IDをカンマで区切って入力（最大8個）
+ui.ascendant:universal.filter_upgrade=フィルター設定にはフィルターアップグレードが必要です。
+ui.ascendant:universal.invalid_filter=有効なIDをカンマで区切って最大8個入力してください。
+ui.ascendant:universal.saved=設定を保存しました。

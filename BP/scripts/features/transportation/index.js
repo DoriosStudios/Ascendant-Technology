@@ -1,4 +1,5 @@
 import * as DoriosLib from "DoriosLib/index.js";
+import "./universalPorts.js";
 import {
     CONVEYOR_COMPONENT_ID,
     CONVEYOR_UPDATER_COMPONENT_ID,

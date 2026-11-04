@@ -2203,3 +2203,20 @@ ui.ascendant:network.capacityNote=Os totais incluem as reservas de todos os disp
 
 ui.ascendant:network.page=Página
 ui.ascendant:network.nextPage=Próxima página >
+
+## Universal transport
+ui.ascendant:universal.title=Transporte Universal
+ui.ascendant:universal.description=Configure cada recurso separadamente. Melhorias de velocidade aumentam a transferência do exportador.
+ui.ascendant:universal.item=Itens
+ui.ascendant:universal.fluid=Líquidos
+ui.ascendant:universal.gas=Gases
+ui.ascendant:universal.enabled=Ativado
+ui.ascendant:universal.distribution=Distribuição
+ui.ascendant:universal.nearest=Mais próximo
+ui.ascendant:universal.farthest=Mais distante
+ui.ascendant:universal.round=Alternada
+ui.ascendant:universal.whitelist=Lista de permitidos
+ui.ascendant:universal.identifiers=Identificadores separados por vírgulas (até 8)
+ui.ascendant:universal.filter_upgrade=Instale uma melhoria de filtro para configurar os filtros.
+ui.ascendant:universal.invalid_filter=Use até 8 identificadores válidos separados por vírgulas.
+ui.ascendant:universal.saved=Definições guardadas.

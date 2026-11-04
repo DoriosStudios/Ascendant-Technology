@@ -2997,3 +2997,20 @@ ui.ascendant:network.capacityNote=Totals include the buffers of all connected de
 
 ui.ascendant:network.page=页
 ui.ascendant:network.nextPage=下一页 >
+
+## Universal transport
+ui.ascendant:universal.title=通用运输
+ui.ascendant:universal.description=分别配置每种资源。速度升级可提高输出器的传输量。
+ui.ascendant:universal.item=物品
+ui.ascendant:universal.fluid=液体
+ui.ascendant:universal.gas=气体
+ui.ascendant:universal.enabled=启用
+ui.ascendant:universal.distribution=分配方式
+ui.ascendant:universal.nearest=最近优先
+ui.ascendant:universal.farthest=最远优先
+ui.ascendant:universal.round=轮流分配
+ui.ascendant:universal.whitelist=白名单
+ui.ascendant:universal.identifiers=用逗号分隔的标识符（最多8个）
+ui.ascendant:universal.filter_upgrade=安装过滤升级后即可配置过滤器。
+ui.ascendant:universal.invalid_filter=请输入最多8个有效标识符，并用逗号分隔。
+ui.ascendant:universal.saved=设置已保存。

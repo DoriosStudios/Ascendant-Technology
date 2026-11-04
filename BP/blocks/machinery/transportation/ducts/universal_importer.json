@@ -4,7 +4,8 @@
         "description": {
             "identifier": "utilitycraft:universal_importer",
             "menu_category": {
-                "category": "none"
+                "category": "construction",
+                "group": "dorios:itemGroup.name.pipes"
             },
             "traits": {
                 "minecraft:placement_position": {
@@ -21,11 +22,7 @@
             }
         },
         "components": {
-            //"utilitycraft:multi_importer": {},
-            "utilitycraft:upgradeable": {
-                "type": "persistent",
-                "filter_max": 1
-            },
+            "ascendant:universal_importer": {},
             "minecraft:geometry": {
                 "identifier": "geometry.utilitycraft_universal_importer",
                 "bone_visibility": {
@@ -64,7 +61,7 @@
                 "seconds_to_destroy": 1
             },
             "minecraft:destructible_by_explosion": false,
-            "tag:dorios:upgradeable": {},
+            "tag:dorios:external_transport": {},
             "tag:minecraft:is_pickaxe_item_destructible": {},
             "tag:dorios:item": {},
             "tag:dorios:fluid": {},

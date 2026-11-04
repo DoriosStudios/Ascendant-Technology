@@ -3210,3 +3210,20 @@ ui.ascendant:network.capacityNote=Totals include the buffers of all connected de
 
 ui.ascendant:network.page=Seite
 ui.ascendant:network.nextPage=Nächste Seite >
+
+## Universal transport
+ui.ascendant:universal.title=Universeller Transport
+ui.ascendant:universal.description=Jede Ressource einzeln konfigurieren. Geschwindigkeits-Upgrades erhöhen die Transferrate des Exporters.
+ui.ascendant:universal.item=Gegenstände
+ui.ascendant:universal.fluid=Flüssigkeiten
+ui.ascendant:universal.gas=Gase
+ui.ascendant:universal.enabled=Aktiviert
+ui.ascendant:universal.distribution=Verteilung
+ui.ascendant:universal.nearest=Nächste zuerst
+ui.ascendant:universal.farthest=Entfernteste zuerst
+ui.ascendant:universal.round=Reihum
+ui.ascendant:universal.whitelist=Erlaubnisliste
+ui.ascendant:universal.identifiers=Kennungen durch Kommas trennen (bis zu 8)
+ui.ascendant:universal.filter_upgrade=Installiere ein Filter-Upgrade, um Filter zu konfigurieren.
+ui.ascendant:universal.invalid_filter=Verwende bis zu 8 gültige Kennungen, getrennt durch Kommas.
+ui.ascendant:universal.saved=Einstellungen gespeichert.

@@ -37,6 +37,12 @@ This update introduces the Alchemical Station and an expanded potion system, rew
     - Added Titanium and Tungsten mineral crop support on Blue Soil, and Aetherium Crystal crop support on Pink Soil.
 
 ### Transportation
+- Enabled **Universal Exporter** and **Universal Importer** in the Creative pipes group.
+    - The Exporter independently transfers items, liquids, and gases using destinations discovered by UtilityCraft. The Importer delivers into its attached container through the correct input face.
+    - Transfers up to 64 items per operation and 4,000 mB of each fluid resource per 10-tick cycle. Up to four Speed Upgrades increase item operations and liquid/gas transfer limits.
+    - Includes separate enable switches and whitelist/blacklist filters for each resource, plus nearest, farthest, and round-robin distribution on the Exporter. Filters require a Filter Upgrade and accept up to eight identifiers per resource.
+    - Ascendant Technology owns the menus, saved settings, upgrades, and transfer filters. UtilityCraft supplies network routes only; settings are not synchronized between addons.
+    - Preserves machine I/O restrictions and keeps energy and overclock connections passive. No crafting recipes are available yet.
 - Enabled **Universal Cable** in the Creative pipes group. Carries energy, items, liquids, gases, and overclock through the same cable, with shared physical connections and wrench disconnections. No crafting recipe is available yet.
 
 ### Overclock

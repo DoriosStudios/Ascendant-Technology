@@ -2997,3 +2997,20 @@ ui.ascendant:network.capacityNote=Totals include the buffers of all connected de
 
 ui.ascendant:network.page=Страница
 ui.ascendant:network.nextPage=Далее >
+
+## Universal transport
+ui.ascendant:universal.title=Универсальный транспорт
+ui.ascendant:universal.description=Настройте каждый ресурс отдельно. Улучшения скорости увеличивают пропускную способность экспортера.
+ui.ascendant:universal.item=Предметы
+ui.ascendant:universal.fluid=Жидкости
+ui.ascendant:universal.gas=Газы
+ui.ascendant:universal.enabled=Включено
+ui.ascendant:universal.distribution=Распределение
+ui.ascendant:universal.nearest=Ближайшие
+ui.ascendant:universal.farthest=Дальние
+ui.ascendant:universal.round=По очереди
+ui.ascendant:universal.whitelist=Белый список
+ui.ascendant:universal.identifiers=Идентификаторы через запятую (до 8)
+ui.ascendant:universal.filter_upgrade=Установите улучшение фильтра для настройки фильтров.
+ui.ascendant:universal.invalid_filter=Введите до 8 допустимых идентификаторов через запятую.
+ui.ascendant:universal.saved=Настройки сохранены.

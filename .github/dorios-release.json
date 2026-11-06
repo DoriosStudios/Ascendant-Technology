@@ -6,8 +6,8 @@
         "slug": "ascendant-technology"
     },
     "release": {
-        "changelogPath": "changelog.md",
-        "defaultChannel": "stable",
+        "changelogPath": ".github/release-notes.md",
+        "defaultChannel": "beta",
         "bedrockManifestPaths": [
             "BP/manifest.json",
             "RP/manifest.json"

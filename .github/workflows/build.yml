@@ -26,6 +26,11 @@ on:
         options:
           - preview
           - production
+      announce_to_discord:
+        description: Announce published beta/alpha releases in the Discord beta channel
+        required: true
+        type: boolean
+        default: false
       production_confirmation:
         description: Type PUBLISH when execution is production
         required: false
@@ -37,7 +42,21 @@ permissions:
   statuses: write
 
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require beta webhook when production announcements are requested
+        if: ${{ inputs.execution == 'production' && inputs.announce_to_discord }}
+        env:
+          DISCORD_BETA_WEBHOOK: ${{ secrets.DISCORD_BETA_WEBHOOK }}
+        run: |
+          if [ -z "$DISCORD_BETA_WEBHOOK" ]; then
+            echo "::error::Add DISCORD_BETA_WEBHOOK or disable announce_to_discord."
+            exit 1
+          fi
+
   release:
+    needs: preflight
     uses: DoriosStudios/Dorios-Workflows/.github/workflows/release-addon.yml@v1.0.2
     with:
       operation: release_only
@@ -46,3 +65,12 @@ jobs:
       workflow_ref: v1.0.2
       preview_only: ${{ inputs.execution == 'preview' }}
       production_confirmation: ${{ inputs.production_confirmation }}
+
+  notify_beta:
+    needs: release
+    if: ${{ inputs.execution == 'production' && inputs.announce_to_discord }}
+    uses: ./.github/workflows/release.yml
+    with:
+      release_tag: ${{ inputs.release_tag }}
+    secrets:
+      DISCORD_BETA_WEBHOOK: ${{ secrets.DISCORD_BETA_WEBHOOK }}

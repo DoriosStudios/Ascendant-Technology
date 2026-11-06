@@ -15,7 +15,7 @@
                 }
             },
             {
-                "energy_bar@at_common.energy_display": {
+                "energy_bar@uc.energy_bar": {
                     "$collection_index": 0,
                     "offset": [97, 64],
                     "$background_texture": "textures/ui/toggle_button/right_bg"
@@ -48,25 +48,25 @@
                 }
             },
             {
-                "input_grid@at_common.grid_3x3": {
+                "input_grid@uc.slot_grid_3x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [-35, 11],
                     "$slot_control": "at_common.input_slot",
                     "$outline_texture": "textures/ui/slots/input_1_slot",
-                    "$slot_index_0": 3,
-                    "$slot_index_1": 4,
-                    "$slot_index_2": 5,
-                    "$slot_index_3": 6,
-                    "$slot_index_4": 7,
-                    "$slot_index_5": 8,
-                    "$slot_index_6": 9,
-                    "$slot_index_7": 10,
-                    "$slot_index_8": 11
+                    "$collection_index_1": 3,
+                    "$collection_index_2": 4,
+                    "$collection_index_3": 5,
+                    "$collection_index_4": 6,
+                    "$collection_index_5": 7,
+                    "$collection_index_6": 8,
+                    "$collection_index_7": 9,
+                    "$collection_index_8": 10,
+                    "$collection_index_9": 11
                 }
             },
             {
-                "process_progress@at_common.progress_arrow": {
+                "process_progress@uc.progress_display": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [9, 22],
@@ -74,21 +74,21 @@
                 }
             },
             {
-                "output_grid@at_common.grid_3x3": {
+                "output_grid@uc.slot_grid_3x3": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [53, 11],
                     "$slot_control": "at_common.output_slot",
                     "$outline_texture": "textures/ui/slots/output_1_slot",
-                    "$slot_index_0": 16,
-                    "$slot_index_1": 17,
-                    "$slot_index_2": 18,
-                    "$slot_index_3": 19,
-                    "$slot_index_4": 20,
-                    "$slot_index_5": 21,
-                    "$slot_index_6": 22,
-                    "$slot_index_7": 23,
-                    "$slot_index_8": 24
+                    "$collection_index_1": 16,
+                    "$collection_index_2": 17,
+                    "$collection_index_3": 18,
+                    "$collection_index_4": 19,
+                    "$collection_index_5": 20,
+                    "$collection_index_6": 21,
+                    "$collection_index_7": 22,
+                    "$collection_index_8": 23,
+                    "$collection_index_9": 24
                 }
             },
             {

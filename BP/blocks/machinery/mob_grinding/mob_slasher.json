@@ -11,6 +11,18 @@
                 "utilitycraft:isOn": [
                     false,
                     true
+                ],
+                "utilitycraft:blade_frame": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
                 ]
             }
         },
@@ -65,9 +77,87 @@
                     1.5,
                     1.5
                 ],
-                "translation": [0, 0.25, 0]
+                "translation": [
+                    0,
+                    0.25,
+                    0
+                ]
             },
             "utilitycraft:mob_slasher": {}
-        }
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('utilitycraft:isOn') && q.block_state('utilitycraft:blade_frame') == 1",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "geometry.utilitycraft_mob_slasher_spin_1"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('utilitycraft:isOn') && q.block_state('utilitycraft:blade_frame') == 2",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "geometry.utilitycraft_mob_slasher_spin_2"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('utilitycraft:isOn') && q.block_state('utilitycraft:blade_frame') == 3",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "geometry.utilitycraft_mob_slasher_spin_3"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('utilitycraft:isOn') && q.block_state('utilitycraft:blade_frame') == 4",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "geometry.utilitycraft_mob_slasher_spin_4"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('utilitycraft:isOn') && q.block_state('utilitycraft:blade_frame') == 5",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "geometry.utilitycraft_mob_slasher_spin_5"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('utilitycraft:isOn') && q.block_state('utilitycraft:blade_frame') == 6",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "geometry.utilitycraft_mob_slasher_spin_6"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('utilitycraft:isOn') && q.block_state('utilitycraft:blade_frame') == 7",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "geometry.utilitycraft_mob_slasher_spin_7"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('utilitycraft:isOn') && q.block_state('utilitycraft:blade_frame') == 8",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "geometry.utilitycraft_mob_slasher_spin_8"
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('utilitycraft:isOn') && q.block_state('utilitycraft:blade_frame') == 9",
+                "components": {
+                    "minecraft:geometry": {
+                        "identifier": "geometry.utilitycraft_mob_slasher_spin_9"
+                    }
+                }
+            }
+        ]
     }
 }

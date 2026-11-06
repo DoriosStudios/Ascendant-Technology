@@ -1,4 +1,6 @@
 export const ID = "utilitycraft:mob_slasher";
+export const BLADE_FRAMES = 10;
+export const BLADE_FRAME_TICKS = 10;
 export const RANGE = Object.freeze([0.5, 2, 3.5, 5, 6.5, 8, 9.5, 11, 12.5]);
 export const DAMAGE_CAP = 16;
 export const XP_CAP = 256000;

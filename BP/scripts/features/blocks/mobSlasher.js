@@ -1,6 +1,6 @@
 import * as DoriosLib from "DoriosLib/index.js";
 import { ItemStack, system } from "@minecraft/server";
-import { ID, RANGE, DAMAGE_CAP, MODULES, DIRECTIONS, rangeLevel } from "./slasher/config.js";
+import { ID, BLADE_FRAMES, BLADE_FRAME_TICKS, RANGE, DAMAGE_CAP, MODULES, DIRECTIONS, rangeLevel } from "./slasher/config.js";
 import { load, save, clear } from "./slasher/state.js";
 import { attack } from "./slasher/combat.js";
 import { openMain } from "./slasher/forms.js";
@@ -65,6 +65,20 @@ function process(state) {
         }
     }
 }
+function updateBlades(state) {
+    const { block } = state;
+    const permutation = block.permutation;
+    if (!permutation.getState("utilitycraft:isOn")) {
+        // The off permutation already displays the original pose.
+        state.nextBladeFrame = undefined;
+        return;
+    }
+    const now = system.currentTick;
+    if (now < (state.nextBladeFrame ?? 0)) return;
+    state.nextBladeFrame = now + BLADE_FRAME_TICKS;
+    const frame = permutation.getState("utilitycraft:blade_frame") ?? 0;
+    block.setPermutation(permutation.withState("utilitycraft:blade_frame", (frame + 1) % BLADE_FRAMES));
+}
 function install(state, player, hand) {
     const module = MODULES[hand.typeId];
     const upgrade = hand.typeId === "utilitycraft:range_upgrade" ? "range" : hand.typeId === "utilitycraft:damage_upgrade" ? "damage" : undefined;
@@ -100,7 +114,13 @@ function destroy(state, player) {
 DoriosLib.registry.blockComponent(ID, {
     beforeOnPlayerPlace({ block }) { clear(block); },
     onTick({ block }) {
-        try { process(load(block)); } catch (error) {
+        try {
+            const state = load(block);
+            process(state);
+            // Update only after the native block tick so frame writes cannot
+            // postpone gameplay from a separate timer.
+            updateBlades(state);
+        } catch (error) {
             const state = load(block);
             if (system.currentTick >= (state.nextError ?? 0)) {
                 state.nextError = system.currentTick + 200;

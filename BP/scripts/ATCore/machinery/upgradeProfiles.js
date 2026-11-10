@@ -1,7 +1,7 @@
 // AT machine capabilities. Keep slots and base capacities aligned with the block JSON.
 export const UPGRADE_PROFILES = {
     "utilitycraft:steam_boiler": {
-        slots: [5, 6],
+        slots: [3, 4],
         energy_cap: 128000,
         fluid_cap: 32000,
         gas_cap: 32000,

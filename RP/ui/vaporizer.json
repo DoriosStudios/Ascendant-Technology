@@ -88,7 +88,7 @@
             },
             {
                 "liquid_input@uc.liquid_input_1_bar": {
-                    "$collection_index": 11,
+                    "$collection_index": 9,
                     "$has_bg": false,
                     "offset": [
                         -41,
@@ -98,7 +98,7 @@
             },
             {
                 "steam_output@uc.liquid_output_1_bar": {
-                    "$collection_index": 12,
+                    "$collection_index": 10,
                     "$has_bg": false,
                     "offset": [
                         37,
@@ -123,20 +123,9 @@
                     "anchor_to": "top_middle",
                     "offset": [
                         -59,
-                        15
+                        27
                     ],
                     "collection_index": 3
-                }
-            },
-            {
-                "liquid_container_return@uc.output_1_slot": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [
-                        -59,
-                        39
-                    ],
-                    "collection_index": 9
                 }
             },
             {
@@ -145,20 +134,9 @@
                     "anchor_to": "top_middle",
                     "offset": [
                         79,
-                        15
+                        27
                     ],
                     "collection_index": 4
-                }
-            },
-            {
-                "gas_container_output@uc.output_2_slot": {
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [
-                        79,
-                        39
-                    ],
-                    "collection_index": 10
                 }
             },
             {
@@ -194,24 +172,24 @@
                     "$io_right_texture": "textures/blocks/machines/vaporizer_off_east",
                     "$io_bottom_texture": "textures/blocks/machines/vaporizer_off_down",
                     "$io_back_texture": "textures/blocks/machines/vaporizer_off_south",
-                    "$io_item_top_index": 13,
-                    "$io_item_left_index": 14,
-                    "$io_item_front_index": 15,
-                    "$io_item_right_index": 16,
-                    "$io_item_bottom_index": 17,
-                    "$io_item_back_index": 18,
-                    "$io_fluid_top_index": 19,
-                    "$io_fluid_left_index": 20,
-                    "$io_fluid_front_index": 21,
-                    "$io_fluid_right_index": 22,
-                    "$io_fluid_bottom_index": 23,
-                    "$io_fluid_back_index": 24,
-                    "$io_gas_top_index": 25,
-                    "$io_gas_left_index": 26,
-                    "$io_gas_front_index": 27,
-                    "$io_gas_right_index": 28,
-                    "$io_gas_bottom_index": 29,
-                    "$io_gas_back_index": 30
+                    "$io_item_top_index": 11,
+                    "$io_item_left_index": 12,
+                    "$io_item_front_index": 13,
+                    "$io_item_right_index": 14,
+                    "$io_item_bottom_index": 15,
+                    "$io_item_back_index": 16,
+                    "$io_fluid_top_index": 17,
+                    "$io_fluid_left_index": 18,
+                    "$io_fluid_front_index": 19,
+                    "$io_fluid_right_index": 20,
+                    "$io_fluid_bottom_index": 21,
+                    "$io_fluid_back_index": 22,
+                    "$io_gas_top_index": 23,
+                    "$io_gas_left_index": 24,
+                    "$io_gas_front_index": 25,
+                    "$io_gas_right_index": 26,
+                    "$io_gas_bottom_index": 27,
+                    "$io_gas_back_index": 28
                 }
             },
             {
@@ -268,6 +246,76 @@
                                     4
                                 ],
                                 "$card_buttons_ref": "vaporizer.recipe_card_buttons"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "liquid_container_hint@uc.function_panel": {
+                    "collection_index": 3,
+                    "type": "panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "size": [
+                        16,
+                        16
+                    ],
+                    "offset": [
+                        -59,
+                        28
+                    ],
+                    "controls": [
+                        {
+                            "container_image": {
+                                "type": "image",
+                                "texture": "textures/static/containers_atlas",
+                                "uv_size": [
+                                    16,
+                                    16
+                                ],
+                                "uv": "@vaporizer.container_flipbook",
+                                "size": [
+                                    16,
+                                    16
+                                ],
+                                "alpha": 0.5,
+                                "layer": 4
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "gas_container_hint@uc.function_panel": {
+                    "collection_index": 4,
+                    "type": "panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "size": [
+                        16,
+                        16
+                    ],
+                    "offset": [
+                        79,
+                        28
+                    ],
+                    "controls": [
+                        {
+                            "container_image": {
+                                "type": "image",
+                                "texture": "textures/static/containers_atlas",
+                                "uv_size": [
+                                    16,
+                                    16
+                                ],
+                                "uv": "@vaporizer.container_flipbook",
+                                "size": [
+                                    16,
+                                    16
+                                ],
+                                "alpha": 0.5,
+                                "layer": 4
                             }
                         }
                     ]
@@ -335,18 +383,6 @@
     "recipe_card_buttons@at_core.button_card_row": {
         "controls": [
             {
-                "machine_view_toggle_button@at_common.card_tab": {
-                    "$toggle_name": "machine_recipe_views",
-                    "$card_tab_index": 0,
-                    "$card_icon": "textures/ui/inventory_icon",
-                    "$card_icon_size": [
-                        19,
-                        13
-                    ],
-                    "$card_tooltip": "ui.utilitycraft:machine_view.machine"
-                }
-            },
-            {
                 "recipes_toggle_button@at_common.card_tab": {
                     "$toggle_name": "machine_recipe_views",
                     "$card_tab_index": 1,
@@ -357,7 +393,30 @@
                     ],
                     "$card_tooltip": "ui.utilitycraft:recipes_panel.name"
                 }
+            },
+            {
+                "machine_view_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_recipe_views",
+                    "$card_tab_index": 0,
+                    "$card_icon": "textures/ui/inventory_icon",
+                    "$card_icon_size": [
+                        19,
+                        13
+                    ],
+                    "$card_tooltip": "ui.utilitycraft:machine_view.machine"
+                }
             }
+        ]
+    },
+    "container_flipbook": {
+        "anim_type": "flip_book",
+        "frame_count": 3,
+        "frame_step": 0,
+        "fps": 1,
+        "easing": "linear",
+        "initial_uv": [
+            0,
+            0
         ]
     }
 }

@@ -100,7 +100,7 @@
             "utilitycraft:vaporizer": {
                 "entity": {
                     "type": "fluid_gas_machine",
-                    "inventory_size": 31,
+                    "inventory_size": 29,
                     "fixed_gas_types": true
                 },
                 "machine": {

@@ -32,11 +32,11 @@
             "utilitycraft:machine_upgrades": [
                 {
                     "type": "speed",
-                    "slot": 5
+                    "slot": 3
                 },
                 {
                     "type": "energy",
-                    "slot": 6
+                    "slot": 4
                 }
             ],
             "utilitycraft:machine_recipes": {
@@ -92,7 +92,7 @@
             "utilitycraft:steam_boiler": {
                 "entity": {
                     "type": "fluid_gas_machine",
-                    "inventory_size": 31,
+                    "inventory_size": 27,
                     "fixed_gas_types": true,
                     "fixed_fluid_types": true
                 },
@@ -105,8 +105,8 @@
                     "gas_cap": 32000,
                     "gas_types": 1,
                     "upgrades": [
-                        5,
-                        6
+                        3,
+                        4
                     ]
                 }
             }

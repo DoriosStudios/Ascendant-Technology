@@ -476,7 +476,7 @@
                                 "bindings": [],
                                 "$slot_item_texture": "textures/static/images/steam",
                                 "$has_slot_count": false,
-                                "$slot_count_text": "1500",
+                                "$slot_count_text": "3000",
                                 "$has_slot_hover": true,
                                 "$slot_hover_text": "ui.ascendant:recipe_book.vaporizer.1.output"
                             }
@@ -510,7 +510,7 @@
                         {
                             "output_amount": {
                                 "type": "label",
-                                "text": "1500 mB",
+                                "text": "3000 mB",
                                 "localize": true,
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
@@ -536,7 +536,7 @@
                         {
                             "details": {
                                 "type": "label",
-                                "text": "2400 DE / 6 s",
+                                "text": "2400 DE / 4 s",
                                 "localize": true,
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",

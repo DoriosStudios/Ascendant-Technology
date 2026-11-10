@@ -19,7 +19,7 @@ import {
     setUiItem,
 } from "./runtime.js";
 
-const INVENTORY_SIZE = 31;
+const LEGACY_INVENTORY_SIZE = 31;
 const SLOT_LAYOUTS = {
     30: [
         0, 1, 2, 3, 4, 5, 6, 7, -1,
@@ -39,14 +39,44 @@ const FLUID_CONTAINER_INPUT_SLOT = 3;
 const GAS_CONTAINER_INPUT_SLOT = 4;
 const FLUID_CONTAINER_RETURN_SLOT = 9;
 const GAS_CONTAINER_OUTPUT_SLOT = 10;
-const FLUID_DISPLAY_SLOT = 11;
-const GAS_DISPLAY_SLOT = 12;
+const COMPACT_LAYOUTS = {
+    steam_boiler: [0, 1, 2, 5, 6, 7, 8, 11, 12, ...Array.from({ length: 18 }, (_, i) => i + 13)],
+    vaporizer: [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, ...Array.from({ length: 18 }, (_, i) => i + 13)],
+};
 const RECIPE_KEY = "ascendant:vaporworks_recipe";
 const RESOURCE_IO_RATE = 128000;
 const itemMaximums = new Map();
 
 for (const [ID, profile] of Object.entries(STEAM_MACHINES)) {
-const LAYOUT_KEY = `ascendant:${ID.split(":")[1]}_layout`;
+const name = ID.split(":")[1];
+const boiler = profile.recipeType === "steam_boiler";
+const shared = name === "vaporizer";
+const size = profile.inventorySize;
+const fluidDisplay = boiler ? 7 : shared ? 9 : 11;
+const gasDisplay = fluidDisplay + 1;
+const itemIOStart = gasDisplay + 1;
+const itemButtons = Array.from({ length: 6 }, (_, i) => itemIOStart + i);
+const fluidButtons = itemButtons.map(i => i + 6);
+const gasButtons = itemButtons.map(i => i + 12);
+const version = profile.legacy ? LAYOUT_VERSION : "compact_containers_v2";
+const LAYOUT_KEY = `ascendant:${name}_layout`;
+function ensureLayout(machine) {
+    const marker = String(machine.entity.getDynamicProperty(LAYOUT_KEY) ?? "");
+    if (machine.container.size === size && (marker === version || marker === `resizing:${version}`)) {
+        setDynamicString(machine.entity, LAYOUT_KEY, version);
+        return true;
+    }
+    // If the resize event was unavailable, the source is still canonical.
+    // Retrying must not apply the older 31-slot permutation a second time.
+    if (machine.container.size === LEGACY_INVENTORY_SIZE && marker === `resizing:${version}`) {
+        setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
+    }
+    if (!ensureMachineInventoryLayout(machine, LEGACY_INVENTORY_SIZE,
+        SLOT_LAYOUTS[machine.container.size] ?? [], LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT)) return false;
+    if (profile.legacy) return true;
+    setDynamicString(machine.entity, LAYOUT_KEY, `resizing:${version}`);
+    return machine.ensureInventoryLayout(size, COMPACT_LAYOUTS[name]);
+}
 const getRecipe = type => profile.recipeType === "steam_boiler"
     ? (type === "water" ? STEAM_BOILER_RECIPE : undefined)
     : getVaporworksRecipe(type);
@@ -54,21 +84,21 @@ const getRecipe = type => profile.recipeType === "steam_boiler"
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
-        buttonSlots: [13, 14, 15, 16, 17, 18],
-        anyInputSlots: [FLUID_CONTAINER_INPUT_SLOT, GAS_CONTAINER_INPUT_SLOT],
-        anyOutputSlots: [FLUID_CONTAINER_RETURN_SLOT, GAS_CONTAINER_OUTPUT_SLOT],
-        modes: [
+        buttonSlots: itemButtons,
+        anyInputSlots: boiler ? [] : [FLUID_CONTAINER_INPUT_SLOT, GAS_CONTAINER_INPUT_SLOT],
+        anyOutputSlots: boiler ? [] : shared ? [FLUID_CONTAINER_INPUT_SLOT, GAS_CONTAINER_INPUT_SLOT] : [FLUID_CONTAINER_RETURN_SLOT, GAS_CONTAINER_OUTPUT_SLOT],
+        modes: boiler ? [{ id: "disabled" }] : [
             { id: "disabled" },
             { id: "input_1", inputSlots: [FLUID_CONTAINER_INPUT_SLOT] },
             { id: "input_2", inputSlots: [GAS_CONTAINER_INPUT_SLOT] },
             { id: "input_3", inputSlots: [FLUID_CONTAINER_INPUT_SLOT, GAS_CONTAINER_INPUT_SLOT] },
-            { id: "output_1", outputSlots: [FLUID_CONTAINER_RETURN_SLOT] },
-            { id: "output_2", outputSlots: [GAS_CONTAINER_OUTPUT_SLOT] },
-            { id: "output_3", outputSlots: [FLUID_CONTAINER_RETURN_SLOT, GAS_CONTAINER_OUTPUT_SLOT] },
+            { id: "output_1", outputSlots: [shared ? FLUID_CONTAINER_INPUT_SLOT : FLUID_CONTAINER_RETURN_SLOT] },
+            { id: "output_2", outputSlots: [shared ? GAS_CONTAINER_INPUT_SLOT : GAS_CONTAINER_OUTPUT_SLOT] },
+            { id: "output_3", outputSlots: shared ? [FLUID_CONTAINER_INPUT_SLOT, GAS_CONTAINER_INPUT_SLOT] : [FLUID_CONTAINER_RETURN_SLOT, GAS_CONTAINER_OUTPUT_SLOT] },
         ],
     },
     liquids: {
-        buttonSlots: [19, 20, 21, 22, 23, 24],
+        buttonSlots: fluidButtons,
         anyInputIndices: [0],
         anyOutputIndices: [],
         modes: [
@@ -77,7 +107,7 @@ registerIOInterface(ID, {
         ],
     },
     gases: {
-        buttonSlots: [25, 26, 27, 28, 29, 30],
+        buttonSlots: gasButtons,
         anyInputIndices: [],
         anyOutputIndices: [0],
         modes: [
@@ -93,12 +123,12 @@ registerATMachine(ID, {
             const machine = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!machine.valid) return;
 
-            machine.blockSlots([FLUID_DISPLAY_SLOT, GAS_DISPLAY_SLOT]);
-            if (profile.slots.length === 2) machine.blockSlots([7, 8]);
+            machine.blockSlots([fluidDisplay, gasDisplay]);
+            if (boiler) machine.blockSlots([5, 6]);
             setUiItem(machine.container, 2, "utilitycraft:progress_right_big_bar_00");
             setDynamicNumber(machine.entity, "dorios:energy_cost_0", settings.machine.energy_cost);
             setDynamicString(machine.entity, RECIPE_KEY, "");
-            setDynamicString(machine.entity, LAYOUT_KEY, LAYOUT_VERSION);
+            setDynamicString(machine.entity, LAYOUT_KEY, version);
 
             const steam = new GasStorage(machine.entity, 0);
             steam.setType("steam");
@@ -109,10 +139,8 @@ registerATMachine(ID, {
     onTick(event, { params: settings }) {
         const machine = new Machine(event.block, settings);
         if (!machine.valid) return;
-        if (!ensureMachineInventoryLayout(
-            machine, INVENTORY_SIZE, SLOT_LAYOUTS[machine.container.size] ?? [],
-            LAYOUT_KEY, LAYOUT_VERSION, PREVIOUS_SLOT_LAYOUT,
-        )) return;
+        if (!ensureLayout(machine)) return;
+        machine.steamDisplaySlots = [fluidDisplay, gasDisplay];
 
         const liquid = new FluidStorage(machine.entity, 0);
         const steam = new GasStorage(machine.entity, 0);
@@ -120,11 +148,28 @@ registerATMachine(ID, {
         if (steam.getType() === "empty") steam.setType("steam");
 
         machine.processIO({
+            ...(shared ? { maxOutputSlotsMovedPerTick: 0 } : {}),
             maxFluidMovedPerTick: RESOURCE_IO_RATE,
             maxGasMovedPerTick: RESOURCE_IO_RATE,
         });
-        processFluidInputContainer(machine.container, liquid, getRecipe);
-        processGasOutputContainer(machine.container, steam);
+        if (shared) {
+            processSharedContainer(machine.container, FLUID_CONTAINER_INPUT_SLOT, liquid, FluidStorage, "fluidItem", getRecipe);
+            processSharedContainer(machine.container, GAS_CONTAINER_INPUT_SLOT, steam, GasStorage, "gasItem");
+            // Separate pulling and pushing: no face may export a newly imported
+            // source container before its conversion has completed.
+            const liquidItem = machine.container.getItem(FLUID_CONTAINER_INPUT_SLOT);
+            const gasItem = machine.container.getItem(GAS_CONTAINER_INPUT_SLOT);
+            const pending = (liquidItem && FluidStorage.getContainerData(liquidItem.typeId))
+                || (gasItem && GasStorage.itemGasHolders[gasItem.typeId]);
+            if (!pending) machine.processIO({
+                maxInputSlotsScannedPerTick: 0,
+                maxFluidMovedPerTick: 0,
+                maxGasMovedPerTick: 0,
+            });
+        } else if (!boiler) {
+            processFluidInputContainer(machine.container, liquid, getRecipe);
+            processGasOutputContainer(machine.container, steam);
+        }
 
         const inputType = liquid.getType();
         if (inputType === "empty" || liquid.get() <= 0) {
@@ -229,6 +274,39 @@ function processGasOutputContainer(container, steam) {
     return true;
 }
 
+// A shared slot changes the entire stack atomically. Partial stacks cannot
+// coexist with their returned item in one inventory cell: leave them untouched
+// until the whole stack fits, so no container or fluid is lost.
+function processSharedContainer(container, slot, storage, Storage, method, getRecipe) {
+    const input = container.getItem(slot);
+    if (!input) return false;
+    const definition = getRecipe ? Storage.getContainerData(input.typeId) : undefined;
+    const holder = getRecipe ? undefined : Storage.itemGasHolders[input.typeId];
+    if (getRecipe && (!definition || !getRecipe(definition.type))) return false;
+    if (!getRecipe && !holder) return false;
+    const outputType = getRecipe ? definition.output ?? (definition.infinite ? input.typeId : undefined) : holder.types?.[storage.getType()];
+    if (!getRecipe && !outputType) return false;
+    const count = input.amount;
+    if (outputType && count > getItemMaximum(outputType)) return false;
+    if (definition?.infinite && count !== 1) return false;
+    if (definition && !definition.infinite && storage.getFreeSpace() < definition.amount * count) return false;
+    if (holder && storage.get() < holder.required * count) return false;
+    const amount = storage.get();
+    const type = storage.getType();
+    try {
+        const output = outputType ? (outputType === input.typeId ? input.clone() : new ItemStack(outputType, count)) : undefined;
+        for (let i = 0; i < count; i++) {
+            if (storage[method](input.typeId) === false) throw new Error("Container conversion refused");
+        }
+        container.setItem(slot, output);
+        return true;
+    } catch {
+        storage.set(amount);
+        storage.setType(type);
+        return false;
+    }
+}
+
 function canInsertItem(container, slot, typeId) {
     const item = container.getItem(slot);
     if (!item) return getItemMaximum(typeId) > 0;
@@ -281,8 +359,8 @@ function pauseProcess(machine, liquid, steam, cost, message) {
 function displayResources(machine, liquid, steam, cost) {
     displayProgress(machine, cost);
     if (!machine.shouldUpdateUI) return;
-    liquid.display(FLUID_DISPLAY_SLOT);
-    steam.display(GAS_DISPLAY_SLOT);
+    liquid.display(machine.steamDisplaySlots[0]);
+    steam.display(machine.steamDisplaySlots[1]);
 }
 
 function recipeStatusLines(recipe, liquid, steam) {

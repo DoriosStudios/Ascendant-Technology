@@ -16,7 +16,7 @@ Energy and ingredients/fluids are consumed once, at completion. Every tick reche
 
 Extension progresses from normal to long and then maximum (four times the normal long duration). Amplification preserves the input duration and delivery form. Level II with long duration and level III are custom potion items. Effects whose level has no useful meaning (night vision, invisibility, fire resistance, water breathing, slow falling, the four trial effects, blindness, darkness) can only be extended. Healing, harming, and saturation can only be amplified. Turtle Master preserves both effects and stops at Resistance IV/Slowness VI; Slowness retains its native level IV and supports one further amplification to V.
 
-Nine new brewable families use an Awkward potion:
+Eight additional families use an Awkward potion; Saturation uses a Thick potion:
 
 | Effect | Reagent | Normal / long |
 | --- | --- | --- |
@@ -28,9 +28,9 @@ Nine new brewable families use an Awkward potion:
 | Levitation | Shulker Shell | 0:15 / 0:45 |
 | Blindness | Ink Sac | 0:30 / 1:30 |
 | Darkness | Echo Shard | 0:30 / 1:30 |
-| Saturation | Enchanted Golden Apple | Instant |
+| Saturation (Thick potion) | Golden Carrot | Instant |
 
-Seven StatsCore families also brew from Awkward potions. Each has levels I–III, normal/long/maximum durations, and drink/splash/lingering forms: 189 additional variants, bringing the catalog to 35 families and 702 custom items.
+Six StatsCore families brew from Awkward potions; Adaptive Resilience uses a Resistance potion. Each has levels I–III, normal/long/maximum durations, and drink/splash/lingering forms: 189 additional variants, bringing the catalog to 35 families and 702 custom items.
 
 | StatsCore effect | Reagent | Normal / long |
 | --- | --- | --- |
@@ -39,7 +39,7 @@ Seven StatsCore families also brew from Awkward potions. Each has levels I–III
 | Blessing | Glow Berries | 2:00 / 5:00 |
 | Curse | Void Essence | 0:30 / 1:30 |
 | Berserk | Fire Charge | 1:00 / 3:00 |
-| Adaptive Resilience | Titanium Plate | 1:00 / 3:00 |
+| Adaptive Resilience (Resistance potion) | Steel Dust | 1:00 / 3:00 |
 | Soul Collector | Enderling Tear | 1:00 / 3:00 |
 
 `StatsCore/effects/potions.js` applies these statuses through the real StatsCore processors and publishes their levels, timers and charges to Insight. Potion states use the independent `alchemy` source, preserving equipment effects and charges. Marked increases incoming eligible attack damage by 10% per level; Bleeding deals 1 damage per second per level. Blessing heals living targets once and applies regeneration, health boost and resistance, while harming undead through the existing blessing processor. Curse applies slowness, weakness and hunger. Berserk applies Strength and adds 1 attack damage per level. Adaptive Resilience reduces damage by 3% per level per successive hit of the same damage type, up to five stacks and 45%; a different damage type resets the stacks. Soul Collector gains a charge per kill, spends five charges on the next eligible hit for 25% bonus damage per level, and heals `(0.35 + 0.2 × level) × 5`. Status expiry disables these bonuses; weaker bottles cannot replace stronger active doses.
@@ -63,3 +63,18 @@ Node tests cover recipe resolution, duration/form preservation, display instruct
 Run `node --experimental-vm-modules tools/test-statscore-potions.mjs` for the seven real status processors, source isolation, charge consumption, lethal charged hits, expiration and cloud refresh. Run `node --experimental-vm-modules tools/test-alchemical-station.mjs` for recipes, potion delivery and machine transactions.
 
 References: [native potion API](https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/potions?view=minecraft-bedrock-stable), [custom potion components](https://learn.microsoft.com/en-us/minecraft/creator/documents/create-custom-potions?view=minecraft-bedrock-stable), [vanilla resource/UI reference](https://github.com/Mojang/bedrock-samples).
+
+
+## Revised brewing paths
+
+Recipes match both the input potion family and reagent. A family-changing recipe starts at Level I and the new family’s normal duration, preserving drink/splash/lingering form. Existing potions and their upgrade paths retain their IDs.
+
+| Result | Input potion | Reagent |
+| --- | --- | --- |
+| Infestation | Awkward | Contaminated Hide |
+| Oozing | Awkward | Slime Block |
+| Weaving | Poison | Spool of Strings (`utilitycraft:spool_of_strings`) |
+| Adaptive Resilience | Resistance | Steel Dust (`utilitycraft:steel_dust`) |
+| Saturation | Thick | Golden Carrot |
+
+Contaminated Hide (`utilitycraft:contaminated_hide`) drops once per Silverfish death, including automated kills, while `doMobLoot` is enabled. There is no Looting bonus. Its existing 16×16 texture is reused unchanged. Poison is brewed from Awkward Potion and Spider Eye; Resistance from Awkward Potion and Aetherium Dust; Thick Potion from Water and Glowstone Dust. Awkward Potion with Golden Carrot still produces Night Vision; Awkward Potion with Golden Apple still produces Absorption.

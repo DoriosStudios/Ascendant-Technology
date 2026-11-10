@@ -2,6 +2,9 @@
     "resource_pack_name": "UtilityCraft Expanded",
     "texture_name": "atlas.items",
     "texture_data": {
+        "utilitycraft_contaminated_hide": {
+            "textures": "textures/items/misc/contaminated_hide"
+        },
         "utilitycraft_aetherium_storage_part": {
             "textures": "textures/items/machinery/absolute_storage_part"
         },

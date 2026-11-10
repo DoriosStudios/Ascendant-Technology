@@ -14,13 +14,13 @@
         ],
         "key": {
             "P": {
-                "item": "utilitycraft:titanium_plate"
+                "item": "minecraft:quartz_block"
             },
             "A": {
-                "item": "utilitycraft:aetherium"
+                "item": "utilitycraft:netherite_plate"
             },
             "C": {
-                "item": "utilitycraft:absolute_chip"
+                "item": "utilitycraft:ultimate_chip"
             },
             "B": {
                 "item": "minecraft:brewing_stand"

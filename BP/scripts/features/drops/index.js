@@ -1,5 +1,7 @@
 // @ts-check
 
+import "./mobDrops.js";
+
 import * as DoriosLib from "DoriosLib/index.js";
 import { EffectTypes, ItemStack, system, world } from "@minecraft/server";
 import { resolveBlockDrops } from "../../ATCore/drops/index.js";

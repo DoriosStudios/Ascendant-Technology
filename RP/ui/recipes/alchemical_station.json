@@ -4321,7 +4321,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/items/potion_bottle_drinkable",
+                                            "texture": "textures/items/potion_bottle_poison",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "offset": [
@@ -4410,7 +4410,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/blocks/web",
+                                            "texture": "textures/items/compressed_items/spool_of_strings",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "offset": [
@@ -4668,7 +4668,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/items/slimeball",
+                                            "texture": "textures/blocks/slime",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "offset": [
@@ -4926,7 +4926,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/blocks/stone",
+                                            "texture": "textures/items/misc/contaminated_hide",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "offset": [
@@ -7248,7 +7248,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/items/apple_golden",
+                                            "texture": "textures/items/carrot_golden",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "offset": [
@@ -8707,7 +8707,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/items/potion_bottle_drinkable",
+                                            "texture": "textures/items/alchemy/resistance_drink",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "offset": [
@@ -8796,7 +8796,7 @@
                                     {
                                         "icon": {
                                             "type": "image",
-                                            "texture": "textures/items/ores/titanium_plate",
+                                            "texture": "textures/items/dusts/steel_dust",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "offset": [

@@ -8,7 +8,7 @@ export const ALCHEMY_POTION_COMPONENTS = {
 export const ALCHEMY_UI = { blazeFrames: 52, blazeItemPrefix: "utilitycraft:alchemical_blaze_" };
 
 const family = (id, effect, normal, long, ingredient, options = {}) => ({
-    id, effect, normal, long, ingredient, maxLevel: 3, native: id, ...options,
+    id, effect, normal, long, ingredient, brewInput: "awkward", maxLevel: 3, native: id, ...options,
 });
 
 export const POTION_FAMILIES = [
@@ -28,9 +28,9 @@ export const POTION_FAMILIES = [
     family("slow_falling", "slow_falling", 90, 240, "minecraft:phantom_membrane", { maxLevel: 1, icon: "slowFall" }),
     family("turtle_master", "resistance", 20, 40, "minecraft:turtle_helmet", { strong: 20, maxLevel: 2, icon: "turtleMaster" }),
     family("wind_charged", "wind_charged", 180, 480, "minecraft:breeze_rod", { nativeLong: false, maxLevel: 1, icon: "windCharged" }),
-    family("weaving", "weaving", 180, 480, "minecraft:web", { nativeLong: false, maxLevel: 1 }),
+    family("weaving", "weaving", 180, 480, "utilitycraft:spool_of_strings", { brewInput: "poison", nativeLong: false, maxLevel: 1 }),
     family("oozing", "oozing", 180, 480, "minecraft:slime", { nativeLong: false, maxLevel: 1 }),
-    family("infested", "infested", 180, 480, "minecraft:stone", { nativeLong: false, maxLevel: 1 }),
+    family("infested", "infested", 180, 480, "utilitycraft:contaminated_hide", { nativeLong: false, maxLevel: 1 }),
     // New brewable effect families. No education-only effects or omen/raid triggers.
     family("haste", "haste", 180, 480, "utilitycraft:titanium_dust", { native: null, icon: "digSpeed" }),
     family("resistance", "resistance", 180, 480, "utilitycraft:aetherium_dust", { native: null }),
@@ -40,14 +40,14 @@ export const POTION_FAMILIES = [
     family("levitation", "levitation", 15, 45, "minecraft:shulker_shell", { native: null }),
     family("blindness", "blindness", 30, 90, "minecraft:ink_sac", { native: null, maxLevel: 1 }),
     family("darkness", "darkness", 30, 90, "minecraft:echo_shard", { native: null, maxLevel: 1, icon: "blindness" }),
-    family("saturation", "saturation", 0, 0, "minecraft:golden_apple", { native: null, instant: true }),
+    family("saturation", "saturation", 0, 0, "minecraft:golden_carrot", { brewInput: "thick", native: null, instant: true }),
     // StatsCore statuses use their gameplay processors, never Entity.addEffect.
     family("marked", "marked", 30, 90, "minecraft:ender_eye", { native: null, statsCore: true, paletteGlyph: "mark" }),
     family("bleeding", "bleeding", 15, 45, "minecraft:sweet_berries", { native: null, statsCore: true, paletteGlyph: "blood" }),
     family("blessed", "blessed", 120, 300, "minecraft:glow_berries", { native: null, statsCore: true, paletteGlyph: "blessedHeart" }),
     family("cursed", "cursed", 30, 90, "utilitycraft:void_essence", { native: null, statsCore: true, paletteGlyph: "curse" }),
     family("berserk", "berserk", 60, 180, "minecraft:fire_charge", { native: null, statsCore: true, paletteGlyph: "rage" }),
-    family("adaptive_resilience", "adaptive_resilience", 60, 180, "utilitycraft:titanium_plate", { native: null, statsCore: true, paletteGlyph: "fullArmor" }),
+    family("adaptive_resilience", "adaptive_resilience", 60, 180, "utilitycraft:steel_dust", { brewInput: "resistance", native: null, statsCore: true, paletteGlyph: "fullArmor" }),
     family("soul_collector", "soul_collector", 60, 180, "utilitycraft:enderling_tear", { native: null, statsCore: true, paletteGlyph: "soul" }),
 ];
 

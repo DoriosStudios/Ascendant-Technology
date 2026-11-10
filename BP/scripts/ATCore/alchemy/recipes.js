@@ -43,8 +43,8 @@ export function resolveBrew(p, ingredient) {
             ...p, level: f.strongLevel ?? 2, duration: f.strong ?? f.normal,
         };
     }
-    if (p.family !== "awkward") return null;
-    const f = POTION_FAMILIES.find(f => f.ingredient === ingredient && f.id !== "weakness");
+    const f = POTION_FAMILIES.find(f => f.brewInput === p.family && f.ingredient === ingredient && f.id !== "weakness");
+    // A new family starts at its own Level I/duration; retain only delivery form.
     return f ? { family: f.id, level: 1, extent: "normal", form: p.form } : null;
 }
 
@@ -63,7 +63,7 @@ export const BREWING_RECIPES = [
     { input: "water", ingredient: "minecraft:fermented_spider_eye", output: "weakness" },
     { input: "water", ingredient: "minecraft:glowstone_dust", output: "thick" },
     { input: "water", ingredient: "minecraft:redstone", output: "mundane" },
-    ...POTION_FAMILIES.filter(f => f.ingredient && f.id !== "weakness").map(f => ({ input: "awkward", ingredient: f.ingredient, output: f.id })),
+    ...POTION_FAMILIES.filter(f => f.ingredient && f.id !== "weakness").map(f => ({ input: f.brewInput, ingredient: f.ingredient, output: f.id })),
     ...Object.entries({ healing: "harming", poison: "harming", swiftness: "slowness", leaping: "slowness", nightvision: "invisibility" })
         .map(([input, output]) => ({ input, ingredient: "minecraft:fermented_spider_eye", output })),
     { input: "Level I", ingredient: "minecraft:redstone", output: "Long I" },

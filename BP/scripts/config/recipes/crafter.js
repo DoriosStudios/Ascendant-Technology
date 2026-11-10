@@ -24,22 +24,22 @@ export const crafterRecipeAdditions = {
         output: "utilitycraft:tingstanium_dust",
         amount: 2,
     },
-    "titanium_plate,expert_chip,titanium_plate,redstone_block,base_upgrade,redstone_block,titanium_plate,aetherium,titanium_plate":
+    "aetherium_plate,expert_chip,aetherium_plate,redstone_block,base_upgrade,redstone_block,aetherium_plate,aetherium,aetherium_plate":
         {
             output: "utilitycraft:multi_processing_upgrade",
             amount: 1,
         },
-    "steel_plate,gold_dust,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,basic_battery,steel_plate":
+    "steel_plate,gold_dust,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,expert_battery,steel_plate":
         {
             output: "utilitycraft:energy_capacity_upgrade",
             amount: 1,
         },
-    "steel_plate,glass,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,basic_fluid_tank,steel_plate":
+    "steel_plate,glass,steel_plate,redstone_block,base_upgrade,redstone_block,steel_plate,expert_fluid_tank,steel_plate":
         {
             output: "utilitycraft:liquid_capacity_upgrade",
             amount: 1,
         },
-    "lead_plate,glass,lead_plate,redstone_block,base_upgrade,redstone_block,lead_plate,basic_gas_tank,lead_plate":
+    "lead_plate,glass,lead_plate,redstone_block,base_upgrade,redstone_block,lead_plate,expert_gas_tank,lead_plate":
         {
             output: "utilitycraft:gas_capacity_upgrade",
             amount: 1,

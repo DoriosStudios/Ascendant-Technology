@@ -3015,3 +3015,4 @@ ui.ascendant:universal.filter_upgrade=安装过滤升级后即可配置过滤器
 ui.ascendant:universal.invalid_filter=请输入最多8个有效标识符，并用逗号分隔。
 ui.ascendant:universal.saved=设置已保存。
 item.utilitycraft:contaminated_hide.name=受污染的皮
+item.utilitycraft:aetherium_plate.name=以太合金板

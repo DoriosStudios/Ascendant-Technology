@@ -2221,3 +2221,4 @@ ui.ascendant:universal.filter_upgrade=Instale uma melhoria de filtro para config
 ui.ascendant:universal.invalid_filter=Use até 8 identificadores válidos separados por vírgulas.
 ui.ascendant:universal.saved=Definições guardadas.
 item.utilitycraft:contaminated_hide.name=Pele Contaminada
+item.utilitycraft:aetherium_plate.name=Placa de Aetherium

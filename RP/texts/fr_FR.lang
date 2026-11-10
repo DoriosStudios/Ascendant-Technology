@@ -3016,3 +3016,4 @@ ui.ascendant:universal.filter_upgrade=Installez une amélioration de filtre pour
 ui.ascendant:universal.invalid_filter=Utilisez au maximum 8 identifiants valides séparés par des virgules.
 ui.ascendant:universal.saved=Configuration enregistrée.
 item.utilitycraft:contaminated_hide.name=Peau contaminée
+item.utilitycraft:aetherium_plate.name=Plaque d’Aetherium

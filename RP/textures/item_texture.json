@@ -56,6 +56,9 @@
         "utilitycraft_titanium_nugget": {
             "textures": "textures/items/ores/titanium_nugget"
         },
+        "utilitycraft_aetherium_plate": {
+            "textures": "textures/items/ores/aetherium_plate"
+        },
         "utilitycraft_titanium_plate": {
             "textures": "textures/items/ores/titanium_plate"
         },

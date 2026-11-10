@@ -42,7 +42,7 @@ export const catalystWeaverRecipeDefinitions = {
         catalysts: [
             { id: "utilitycraft:gold_dust", amount: 1 },
             { id: "minecraft:redstone_block", amount: 1 },
-            { id: "utilitycraft:basic_battery", amount: 1 },
+            { id: "utilitycraft:expert_battery", amount: 1 },
         ],
         output: {
             id: "utilitycraft:energy_capacity_upgrade",
@@ -59,7 +59,7 @@ export const catalystWeaverRecipeDefinitions = {
         catalysts: [
             { id: "minecraft:glass", amount: 1 },
             { id: "minecraft:redstone_block", amount: 1 },
-            { id: "utilitycraft:basic_fluid_tank", amount: 1 },
+            { id: "utilitycraft:expert_fluid_tank", amount: 1 },
         ],
         output: {
             id: "utilitycraft:liquid_capacity_upgrade",
@@ -76,7 +76,7 @@ export const catalystWeaverRecipeDefinitions = {
         catalysts: [
             { id: "minecraft:glass", amount: 1 },
             { id: "minecraft:redstone_block", amount: 1 },
-            { id: "utilitycraft:basic_gas_tank", amount: 1 },
+            { id: "utilitycraft:expert_gas_tank", amount: 1 },
         ],
         output: {
             id: "utilitycraft:gas_capacity_upgrade",

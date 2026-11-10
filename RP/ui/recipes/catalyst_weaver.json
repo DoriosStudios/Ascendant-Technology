@@ -1782,8 +1782,8 @@
                         },
                         {
                             "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
-                                "$slot_item_texture": "textures/blocks/generators/battery/basic_0_side",
-                                "$slot_hover_text": "tile.utilitycraft:basic_battery.name",
+                                "$slot_item_texture": "textures/blocks/generators/battery/expert_0_side",
+                                "$slot_hover_text": "tile.utilitycraft:expert_battery.name",
                                 "$has_slot_hover": true
                             }
                         },
@@ -1826,8 +1826,8 @@
                         },
                         {
                             "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
-                                "$slot_item_texture": "textures/blocks/tanks/fluid_tank_basic",
-                                "$slot_hover_text": "tile.utilitycraft:basic_fluid_tank.name",
+                                "$slot_item_texture": "textures/blocks/tanks/fluid_t3_icon",
+                                "$slot_hover_text": "tile.utilitycraft:expert_fluid_tank.name",
                                 "$has_slot_hover": true
                             }
                         },
@@ -1870,8 +1870,8 @@
                         },
                         {
                             "catalyst_3@catalyst_weaver.recipe_catalyst_3": {
-                                "$slot_item_texture": "textures/blocks/tanks/basic_gas_tank",
-                                "$slot_hover_text": "tile.utilitycraft:basic_gas_tank.name",
+                                "$slot_item_texture": "textures/blocks/tanks/gas_t3_icon",
+                                "$slot_hover_text": "tile.utilitycraft:expert_gas_tank.name",
                                 "$has_slot_hover": true
                             }
                         },

@@ -20,7 +20,7 @@
                 "item": "utilitycraft:gold_dust"
             },
             "I": {
-                "item": "utilitycraft:basic_battery"
+                "item": "utilitycraft:expert_battery"
             },
             "R": {
                 "item": "minecraft:redstone_block"
@@ -34,7 +34,7 @@
         },
         "unlock": [
             {
-                "item": "utilitycraft:basic_battery"
+                "item": "utilitycraft:expert_battery"
             }
         ]
     }

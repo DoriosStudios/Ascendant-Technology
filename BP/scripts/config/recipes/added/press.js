@@ -10,6 +10,10 @@ export const pressRecipeAdditions = {
         output: "utilitycraft:aetherium_crystal_block",
         required: 4,
     },
+    "utilitycraft:aetherium": {
+        output: "utilitycraft:aetherium_plate",
+        required: 1,
+    },
     "utilitycraft:tungsten": {
         output: "utilitycraft:tungsten_plate",
     },

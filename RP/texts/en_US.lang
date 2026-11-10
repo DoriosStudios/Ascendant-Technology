@@ -3060,3 +3060,4 @@ ui.ascendant:universal.filter_upgrade=Install a Filter Upgrade to configure filt
 ui.ascendant:universal.invalid_filter=Use up to 8 valid identifiers, separated by commas.
 ui.ascendant:universal.saved=Settings saved.
 item.utilitycraft:contaminated_hide.name=Contaminated Hide
+item.utilitycraft:aetherium_plate.name=Aetherium Plate

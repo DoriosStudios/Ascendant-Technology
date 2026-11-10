@@ -3228,3 +3228,4 @@ ui.ascendant:universal.filter_upgrade=Installiere ein Filter-Upgrade, um Filter 
 ui.ascendant:universal.invalid_filter=Verwende bis zu 8 gültige Kennungen, getrennt durch Kommas.
 ui.ascendant:universal.saved=Einstellungen gespeichert.
 item.utilitycraft:contaminated_hide.name=Kontaminierte Haut
+item.utilitycraft:aetherium_plate.name=Aetheriumplatte

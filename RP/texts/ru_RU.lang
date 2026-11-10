@@ -3015,3 +3015,4 @@ ui.ascendant:universal.filter_upgrade=Установите улучшение ф
 ui.ascendant:universal.invalid_filter=Введите до 8 допустимых идентификаторов через запятую.
 ui.ascendant:universal.saved=Настройки сохранены.
 item.utilitycraft:contaminated_hide.name=Заражённая шкура
+item.utilitycraft:aetherium_plate.name=Пластина этериума

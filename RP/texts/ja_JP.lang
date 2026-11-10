@@ -3015,3 +3015,4 @@ ui.ascendant:universal.filter_upgrade=フィルター設定にはフィルター
 ui.ascendant:universal.invalid_filter=有効なIDをカンマで区切って最大8個入力してください。
 ui.ascendant:universal.saved=設定を保存しました。
 item.utilitycraft:contaminated_hide.name=汚染された皮
+item.utilitycraft:aetherium_plate.name=エーテリウムのプレート

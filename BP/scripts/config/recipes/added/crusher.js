@@ -80,6 +80,12 @@ export const crusherRecipeAdditions = {
         cost: 14400,
         tier: 5,
     },
+    "utilitycraft:aetherium_plate": {
+        output: "utilitycraft:aetherium_dust",
+        amount: 1,
+        cost: 2400,
+        tier: 6,
+    },
     "utilitycraft:aetherium": {
         output: "utilitycraft:aetherium_dust",
         amount: 1,

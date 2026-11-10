@@ -338,6 +338,19 @@ export const crafterRecipeAdditions = {
             output: "utilitycraft:overclock_tower",
             amount: 1,
         },
+    // Restored universal transportation recipes from before the 0.9.2 cut.
+    "fluid_pipe,netherite_plate,energy_cable,netherite_plate,reinforced_cable,netherite_plate,gas_pipe,netherite_plate,item_conduit": {
+        output: "utilitycraft:universal_cable",
+        amount: 8,
+    },
+    "air,universal_cable,air,universal_cable,hopper,universal_cable,air,universal_cable,air": {
+        output: "utilitycraft:universal_exporter",
+        amount: 1,
+    },
+    "air,universal_cable,air,universal_cable,universal_cable,universal_cable,air,hopper,air": {
+        output: "utilitycraft:universal_importer",
+        amount: 1,
+    },
     // BP/recipes/blocks/machinery/overclock/reinforced_cable.json
     "titanium_nugget,redstone,titanium_nugget,copper_nugget,energized_iron_dust,copper_nugget,titanium_nugget,redstone,titanium_nugget":
         {

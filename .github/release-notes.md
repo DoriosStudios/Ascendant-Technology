@@ -2,14 +2,14 @@
 
 > **Status: draft.** Describes the current implementation. Release blockers and unfinished work are listed at the end.
 
-This update introduces the Alchemical Station and its expanded potion system, splits steam production into two machine tiers, reworks the Network Center, and enables universal logistics in Creative. It also updates upgrade recipes, machine navigation, localization, and interaction.
+This update introduces the Alchemical Station and its expanded potion system, splits steam production into two machine tiers, reworks the Network Center, and restores survival recipes for universal logistics. It also updates upgrade recipes, machine navigation, localization, and interaction.
 
 ## HIGHLIGHTS
 
 - Added **Alchemical Station**, with six-bottle brewing, stronger potions, extended durations, and 35 potion families.
 - Added **Steam Boiler** and **Vaporizer**. Cryofluid now produces three times as much steam per second as Water in the Vaporizer.
 - Reworked **Network Center** into a passive network dashboard.
-- Enabled **Universal Cable**, **Universal Exporter**, and **Universal Importer** in Creative; survival recipes remain unfinished.
+- Enabled **Universal Cable**, **Universal Exporter**, and **Universal Importer** and restored their original survival recipes.
 - Standardized section menus with default gray buttons and the machine inventory tab on the right.
 
 ## ALCHEMY
@@ -70,14 +70,14 @@ All values below are before upgrades and overclock. Each recipe consumes 1,000 m
 - Added storage breakdowns, free space, fill percentages, activity, and comparable net energy samples. Generators, consumers, batteries, and wireless distributors are listed separately; Power Beacons no longer inflate generation totals.
 - Uses a 250-pixel dashboard, compact tab symbols, and category titles/page controls in the main title row. The dashboard is functional; its survival recipe remains undefined.
 
-### Universal logistics — Creative access
+### Universal logistics — restored survival recipes
 
 - Enabled **Universal Cable** in the pipes group. It carries energy, items, liquids, gases, and overclock through shared physical connections, including wrench disconnections.
 - Enabled **Universal Exporter** and **Universal Importer**. The Exporter independently transfers items, liquids, and gases over routes discovered by UtilityCraft; the Importer delivers through the attached container's input face.
 - Supports up to 64 items per operation and 4,000 mB of each fluid resource per 10-tick cycle. Up to four Speed Upgrades increase transfer limits.
 - Added resource enable switches, whitelist/blacklist filters, and Exporter nearest/farthest/round-robin distribution. Filters require a Filter Upgrade and support eight identifiers per resource.
 - AT owns settings, menus, upgrades, and filters; UtilityCraft supplies network routes. Machine I/O restrictions remain enforced, with energy and overclock connections passive.
-- **No survival recipes are provided yet for these three universal blocks.**
+- Restored the original Workbench recipes without changing ingredients, patterns, unlocks, or quantities. Universal Cable combines Fluid Pipe, Gas Pipe, Energy Cable, Item Conduit, Reinforced Cable, and four Netherite Plates to produce eight cables. Exporter and Importer each use four Universal Cables and a Hopper in their original arrangements. The Assembler supports the same recipes.
 
 ### Overclock
 
@@ -130,7 +130,7 @@ Reworked five Workbench recipes. Each uses one Base Upgrade, two Redstone Blocks
 ## UNFINISHED WORK / RELEASE CHECKLIST
 
 - **Network Center:** the dashboard is functional. Define its survival recipe and register it in the Assembler.
-- **Universal logistics:** define survival recipes or explicitly retain Creative-only availability for this release; validate transfers, filters, routing, and machine I/O together in Bedrock.
+- **Universal logistics:** original survival recipes are restored. Validate transfers, filters, routing, and machine I/O together in Bedrock.
 - **Alchemical Station:** the balanced Workbench and Assembler recipes are synchronized. Validate brewing, modifier operations, container returns, automation, thrown potions, lingering clouds, and StatsCore effects in Bedrock.
 - **Steam machines:** validate compact-inventory migration, returned items, shared-slot stacks, animated hints, upgrades, overclock, and Arc-Press Steam supply in Bedrock. The Cryofluid throughput change has local runtime coverage; synthesis-chain balance still needs gameplay evaluation.
 - **Cryo Chamber and shared UI:** finish in-game review of the current interface changes and mouse/controller/touch navigation across GUI scales.

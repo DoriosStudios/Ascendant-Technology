@@ -3,16 +3,6 @@
     "button_card_buttons@at_core.button_card_row": {
         "controls": [
             {
-                "machine_view_toggle_button@at_common.card_tab": {
-                    "$toggle_name": "machine_view_tabs",
-                    "$card_tab_index": 0,
-                    "$card_icon": "textures/ui/inventory_icon",
-                    "$card_icon_size": [19, 13],
-                    "$card_tooltip": "ui.utilitycraft:machine_view.machine",
-                    "$toggle_tts_name": "ui.utilitycraft:machine_view.machine"
-                }
-            },
-            {
                 "recipes_toggle_button@at_common.card_tab": {
                     "$toggle_name": "machine_view_tabs",
                     "$card_tab_index": 1,
@@ -20,6 +10,16 @@
                     "$card_icon_size": [16, 16],
                     "$card_tooltip": "ui.utilitycraft:recipes_panel.name",
                     "$toggle_tts_name": "ui.utilitycraft:recipes_panel.name"
+                }
+            },
+            {
+                "machine_view_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_view_tabs",
+                    "$card_tab_index": 0,
+                    "$card_icon": "textures/ui/inventory_icon",
+                    "$card_icon_size": [19, 13],
+                    "$card_tooltip": "ui.utilitycraft:machine_view.machine",
+                    "$toggle_tts_name": "ui.utilitycraft:machine_view.machine"
                 }
             }
         ]

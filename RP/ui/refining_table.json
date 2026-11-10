@@ -10,10 +10,10 @@
                     "$card_icon_size": [16, 16],
                     "$card_tooltip": "ui.utilitycraft:machine_view.machine",
                     "$toggle_tts_name": "ui.utilitycraft:machine_view.machine",
-                    "$card_unchecked_texture": "textures/ui/button_card/button_purple",
-                    "$card_checked_texture": "textures/ui/button_card/button_purple_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_purple_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_purple_pressed_hover"
+                    "$card_unchecked_texture": "textures/ui/button_card/button_default",
+                    "$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
                 }
             },
             {
@@ -24,10 +24,10 @@
                     "$card_icon_size": [16, 16],
                     "$card_tooltip": "ui.utilitycraft:refining_table.stats_tab",
                     "$toggle_tts_name": "ui.utilitycraft:refining_table.stats_tab",
-                    "$card_unchecked_texture": "textures/ui/button_card/button_purple",
-                    "$card_checked_texture": "textures/ui/button_card/button_purple_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_purple_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_purple_pressed_hover",
+                    "$card_unchecked_texture": "textures/ui/button_card/button_default",
+                    "$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover",
                     "$toggle_property_bag": {
                         "#toggle_state": false
                     },
@@ -40,7 +40,7 @@
     "view_top_bar@at_common.button_card": {
         "$card_offset": [0, 4],
         "$card_buttons_ref": "refining_table.button_card_buttons",
-        "$card_background_texture": "textures/ui/button_card/tab_top_purple"
+        "$card_background_texture": "textures/ui/button_card/tab_top_default"
     },
     "refining_table_top": {
         "type": "collection_panel",

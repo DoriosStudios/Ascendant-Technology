@@ -306,18 +306,6 @@
     "recipe_card_buttons@at_core.button_card_row": {
         "controls": [
             {
-                "machine_view_toggle_button@at_common.card_tab": {
-                    "$toggle_name": "machine_recipe_views",
-                    "$card_tab_index": 0,
-                    "$card_icon": "textures/ui/at_icons/freeze",
-                    "$card_icon_size": [
-                        16,
-                        16
-                    ],
-                    "$card_tooltip": "ui.utilitycraft:machine_view.machine"
-                }
-            },
-            {
                 "recipes_toggle_button@at_common.card_tab": {
                     "$toggle_name": "machine_recipe_views",
                     "$card_tab_index": 1,
@@ -327,6 +315,18 @@
                         16
                     ],
                     "$card_tooltip": "ui.utilitycraft:recipes_panel.name"
+                }
+            },
+            {
+                "machine_view_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_recipe_views",
+                    "$card_tab_index": 0,
+                    "$card_icon": "textures/ui/at_icons/freeze",
+                    "$card_icon_size": [
+                        16,
+                        16
+                    ],
+                    "$card_tooltip": "ui.utilitycraft:machine_view.machine"
                 }
             }
         ]

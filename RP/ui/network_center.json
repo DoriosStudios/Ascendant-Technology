@@ -354,10 +354,10 @@
                     ],
                     "$card_tooltip": "ui.ascendant:network.overview",
                     "$toggle_tts_name": "ui.ascendant:network.overview",
-                    "$card_unchecked_texture": "textures/ui/button_card/button_light_blue",
-                    "$card_checked_texture": "textures/ui/button_card/button_light_blue_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_light_blue_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_light_blue_pressed_hover"
+                    "$card_unchecked_texture": "textures/ui/button_card/button_default",
+                    "$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
                 }
             },
             {
@@ -377,10 +377,10 @@
                     ],
                     "$card_tooltip": "ui.ascendant:network.gains",
                     "$toggle_tts_name": "ui.ascendant:network.gains",
-                    "$card_unchecked_texture": "textures/ui/button_card/button_light_blue",
-                    "$card_checked_texture": "textures/ui/button_card/button_light_blue_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_light_blue_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_light_blue_pressed_hover"
+                    "$card_unchecked_texture": "textures/ui/button_card/button_default",
+                    "$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
                 }
             },
             {
@@ -400,10 +400,10 @@
                     ],
                     "$card_tooltip": "ui.ascendant:network.losses",
                     "$toggle_tts_name": "ui.ascendant:network.losses",
-                    "$card_unchecked_texture": "textures/ui/button_card/button_light_blue",
-                    "$card_checked_texture": "textures/ui/button_card/button_light_blue_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_light_blue_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_light_blue_pressed_hover"
+                    "$card_unchecked_texture": "textures/ui/button_card/button_default",
+                    "$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
                 }
             },
             {
@@ -423,10 +423,10 @@
                     ],
                     "$card_tooltip": "ui.ascendant:network.capacity",
                     "$toggle_tts_name": "ui.ascendant:network.capacity",
-                    "$card_unchecked_texture": "textures/ui/button_card/button_light_blue",
-                    "$card_checked_texture": "textures/ui/button_card/button_light_blue_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_light_blue_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_light_blue_pressed_hover"
+                    "$card_unchecked_texture": "textures/ui/button_card/button_default",
+                    "$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
                 }
             }
         ]

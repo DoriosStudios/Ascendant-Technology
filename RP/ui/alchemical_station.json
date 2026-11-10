@@ -10,10 +10,10 @@
 					"$card_icon_size": [16, 16],
 					"$card_tooltip": "ui.ascendant:alchemy.tab.brewing",
 					"$toggle_tts_name": "ui.ascendant:alchemy.tab.brewing",
-					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
-					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
-					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
-					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+					"$card_unchecked_texture": "textures/ui/button_card/button_default",
+					"$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
 				}
 			},
 			{
@@ -24,10 +24,10 @@
 					"$card_icon_size": [16, 16],
 					"$card_tooltip": "ui.ascendant:alchemy.tab.upgrades",
 					"$toggle_tts_name": "ui.ascendant:alchemy.tab.upgrades",
-					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
-					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
-					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
-					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+					"$card_unchecked_texture": "textures/ui/button_card/button_default",
+					"$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
 				}
 			}
 		]
@@ -35,7 +35,7 @@
 	"view_top_bar@at_common.button_card": {
 		"$card_offset": [0, 4],
 		"$card_buttons_ref": "alchemical_station.button_card_buttons",
-		"$card_background_texture": "textures/ui/button_card/tab_top_brown"
+		"$card_background_texture": "textures/ui/button_card/tab_top_default"
 	},
 	"side_button_card_buttons@at_core.button_card_row": {
 		"controls": [
@@ -47,10 +47,10 @@
 					"$card_icon_size": [16, 16],
 					"$card_tooltip": "ui.ascendant:alchemy.tab.display",
 					"$toggle_tts_name": "ui.ascendant:alchemy.tab.display",
-					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
-					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
-					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
-					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+					"$card_unchecked_texture": "textures/ui/button_card/button_default",
+					"$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
 				}
 			},
 			{
@@ -61,10 +61,10 @@
 					"$card_icon_size": [16, 16],
 					"$card_tooltip": "ui.ascendant:alchemy.tab.recipes",
 					"$toggle_tts_name": "ui.ascendant:alchemy.tab.recipes",
-					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
-					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
-					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
-					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+					"$card_unchecked_texture": "textures/ui/button_card/button_default",
+					"$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
 				}
 			},
 			{
@@ -75,17 +75,17 @@
 					"$card_icon_size": [16, 16],
 					"$card_tooltip": "ui.ascendant:alchemy.tab.progression",
 					"$toggle_tts_name": "ui.ascendant:alchemy.tab.progression",
-					"$card_unchecked_texture": "textures/ui/button_card/button_brown",
-					"$card_checked_texture": "textures/ui/button_card/button_brown_pressed",
-					"$card_unchecked_hover_texture": "textures/ui/button_card/button_brown_hover",
-					"$card_checked_hover_texture": "textures/ui/button_card/button_brown_pressed_hover"
+					"$card_unchecked_texture": "textures/ui/button_card/button_default",
+					"$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+					"$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+					"$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover"
 				}
 			}
 		]
 	},
 	"side_view_top_bar@at_common.button_card": {
 		"$card_buttons_ref": "alchemical_station.side_button_card_buttons",
-		"$card_background_texture": "textures/ui/button_card/tab_top_brown",
+		"$card_background_texture": "textures/ui/button_card/tab_top_default",
 		"anchor_from": "top_right",
 		"anchor_to": "top_right",
 		"$card_offset": [-22, 0],

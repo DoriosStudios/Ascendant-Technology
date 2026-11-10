@@ -461,7 +461,7 @@
                         {
                             "recipe_card@at_common.button_card": {
                                 "$card_offset": [0, 4],
-                                "$card_background_texture": "textures/ui/button_card/tab_top_dark",
+                                "$card_background_texture": "textures/ui/button_card/tab_top_default",
                                 "$card_buttons_ref": "cryo_freezer.recipe_card_buttons"
                             }
                         }
@@ -532,30 +532,13 @@
     "recipe_card_buttons@at_core.button_card_row": {
         "controls": [
             {
-                "machine_view_toggle_button@at_common.card_tab": {
-                    "$toggle_name": "machine_recipe_views",
-                    "$card_tab_index": 0,
-                    "$card_unchecked_texture": "textures/ui/button_card/button_light_gray",
-                    "$card_checked_texture": "textures/ui/button_card/button_light_gray_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_light_gray_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_light_gray_pressed_hover",
-
-                    "$card_icon": "textures/ui/at_icons/freeze",
-                    "$card_icon_size": [
-                        16,
-                        16
-                    ],
-                    "$card_tooltip": "ui.utilitycraft:machine_view.machine"
-                }
-            },
-            {
                 "recipes_toggle_button@at_common.card_tab": {
                     "$toggle_name": "machine_recipe_views",
                     "$card_tab_index": 1,
-                    "$card_unchecked_texture": "textures/ui/button_card/button_light_gray",
-                    "$card_checked_texture": "textures/ui/button_card/button_light_gray_pressed",
-                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_light_gray_hover",
-                    "$card_checked_hover_texture": "textures/ui/button_card/button_light_gray_pressed_hover",
+                    "$card_unchecked_texture": "textures/ui/button_card/button_default",
+                    "$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover",
 
                     "$card_icon": "textures/ui/at_icons/recipe_book",
                     "$card_icon_size": [
@@ -563,6 +546,23 @@
                         16
                     ],
                     "$card_tooltip": "ui.utilitycraft:recipes_panel.name"
+                }
+            },
+            {
+                "machine_view_toggle_button@at_common.card_tab": {
+                    "$toggle_name": "machine_recipe_views",
+                    "$card_tab_index": 0,
+                    "$card_unchecked_texture": "textures/ui/button_card/button_default",
+                    "$card_checked_texture": "textures/ui/button_card/button_default_pressed",
+                    "$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
+                    "$card_checked_hover_texture": "textures/ui/button_card/button_default_pressed_hover",
+
+                    "$card_icon": "textures/ui/at_icons/freeze",
+                    "$card_icon_size": [
+                        16,
+                        16
+                    ],
+                    "$card_tooltip": "ui.utilitycraft:machine_view.machine"
                 }
             }
         ]

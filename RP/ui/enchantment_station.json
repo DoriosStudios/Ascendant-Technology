@@ -10,7 +10,7 @@
 					"$card_icon_size": [16, 16],
 					"$card_tooltip": "ui.utilitycraft:enchantment_station.variant.tab.enchant",
 					"$toggle_tts_name": "ui.utilitycraft:enchantment_station.variant.tab.enchant",
-					"$card_face_color": [0.3, 0.65, 0.62],
+					"$card_face_color": [1, 1, 1],
                     "$card_unchecked_texture": "textures/ui/button_card/button_default",
 					"$card_checked_texture": "textures/ui/button_card/button_default_pressed",
 					"$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
@@ -25,7 +25,7 @@
 					"$card_icon_size": [16, 16],
 					"$card_tooltip": "ui.utilitycraft:enchantment_station.variant.tab.disenchant",
 					"$toggle_tts_name": "ui.utilitycraft:enchantment_station.variant.tab.disenchant",
-					"$card_face_color": [0.3, 0.65, 0.62],
+					"$card_face_color": [1, 1, 1],
                     "$card_unchecked_texture": "textures/ui/button_card/button_default",
 					"$card_checked_texture": "textures/ui/button_card/button_default_pressed",
 					"$card_unchecked_hover_texture": "textures/ui/button_card/button_default_hover",
@@ -37,7 +37,7 @@
 	"view_top_bar@at_common.button_card": {
 		"$card_offset": [0, 4],
 		"$card_buttons_ref": "enchantment_station.button_card_buttons",
-		"$card_background_texture": "textures/ui/button_card/tab_top_black"
+		"$card_background_texture": "textures/ui/button_card/tab_top_default"
 	},
 	"enchanting_slot@at_core.slot": {
 		"$background_ref": "at_common._slot_surface",

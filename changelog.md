@@ -1,4 +1,4 @@
-# Ascendant Technology v0.9.3-beta
+# Ascendant Technology v0.9.3
 
 This update introduces the Alchemical Station and new potion effects, expands steam production and universal logistics, and improves machine progression, interfaces, and network monitoring.
 

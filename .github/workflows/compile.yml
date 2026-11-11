@@ -1,60 +1,216 @@
-
-name: Build MCAddon
+name: Build & Attach MCAddon
 
 on:
   workflow_dispatch:
+    inputs:
+      release_target:
+        description: 'Destino dos arquivos compilados'
+        required: true
+        type: choice
+        default: latest-prerelease
+        options:
+          - latest-prerelease
+          - latest-stable
+          - latest-any
+          - specific-tag
+          - artifacts-only
+      release_tag:
+        description: 'Tag da release (apenas para specific-tag; aceita draft)'
+        required: false
+        type: string
+        default: ''
+      source_ref:
+        description: 'Branch, tag ou SHA para compilar (vazio = branch selecionada)'
+        required: false
+        type: string
+        default: ''
+      replace_existing:
+        description: 'Substituir arquivos com o mesmo nome na release?'
+        required: true
+        type: boolean
+        default: false
   release:
-    types: [created, published]
+    types: [published]
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: at-mcaddon-${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag || inputs.release_target || github.ref_name }}
+  cancel-in-progress: false
 
 jobs:
   build:
+    name: Build development and minified MCAddon
     runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
 
     steps:
-      - name: Checkout
+      - name: Resolve target release
+        id: destination
+        shell: bash
+        env:
+          RELEASE_TARGET: ${{ inputs.release_target }}
+          REQUESTED_TAG: ${{ inputs.release_tag }}
+          EVENT_RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+          tag=''
+          if [[ "$GITHUB_EVENT_NAME" == 'release' ]]; then
+            tag="$EVENT_RELEASE_TAG"
+          else
+            case "$RELEASE_TARGET" in
+              latest-prerelease|latest-stable|latest-any)
+                releases="$(gh release list --limit 100 \
+                  --json tagName,isDraft,isPrerelease,publishedAt)"
+                tag="$(jq -r --arg target "$RELEASE_TARGET" '
+                  [.[] | select(.isDraft == false)
+                    | select(if $target == "latest-prerelease" then .isPrerelease
+                             elif $target == "latest-stable" then (.isPrerelease | not)
+                             else true end)]
+                  | sort_by(.publishedAt) | last | .tagName // empty
+                ' <<< "$releases")"
+                [[ -n "$tag" ]] || { echo '::error::Nenhuma release encontrada nessa categoria.'; exit 1; }
+                ;;
+              specific-tag)
+                tag="$REQUESTED_TAG"
+                [[ -n "$tag" ]] || { echo '::error::Informe release_tag.'; exit 1; }
+                ;;
+              artifacts-only)
+                ;;
+              *)
+                echo "::error::Destino desconhecido: $RELEASE_TARGET"
+                exit 1
+                ;;
+            esac
+          fi
+
+          if [[ -n "$tag" ]]; then
+            metadata="$(gh release view "$tag" --json name,tagName,isDraft,isPrerelease,isImmutable)"
+            if [[ "$(jq -r '.isImmutable' <<< "$metadata")" == 'true' ]]; then
+              echo "::error::A release $tag e imutavel; seus assets nao podem ser alterados."
+              exit 1
+            fi
+            release_name="$(jq -r '.name // empty' <<< "$metadata" | head -n 1)"
+            [[ -n "$release_name" ]] || release_name="Ascendant Technology $tag"
+            echo "Selecionada: $tag"
+          else
+            release_name="Ascendant Technology build ${GITHUB_RUN_NUMBER}"
+            echo 'Modo artifacts-only: nenhum upload para Releases.'
+          fi
+
+          {
+            echo "tag=$tag"
+            echo "release_name=$release_name"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Checkout project source
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.release.tag_name || github.ref }}
+          path: project
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.source_ref || github.ref }}
+
+      - name: Checkout Dorios Workflows v1.0.2
+        uses: actions/checkout@v4
+        with:
+          repository: DoriosStudios/Dorios-Workflows
+          ref: v1.0.2
+          path: dorios-workflows
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: dorios-workflows/package-lock.json
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install shared packager dependencies
+        run: npm ci --prefix dorios-workflows
 
-      - name: Install Regolith
-        run: |
-          curl -fL \
-            https://github.com/Bedrock-OSS/regolith/releases/download/1.8.0/regolith_1.8.0_linux_amd64.tar.gz \
-            -o regolith.tar.gz
-          tar -xzf regolith.tar.gz
-          sudo install regolith /usr/local/bin/regolith
-
-      - name: Compile addon
-        run: regolith run buildMinify
-
-      - name: Package MCAddon
+      - name: Install Regolith 1.8.0
         shell: bash
         run: |
-          VERSION="${{ github.event.release.tag_name || github.ref_name }}"
-          mkdir -p dist
-          (
-            cd build
-            zip -qr "../dist/Ascendant-Technology_${VERSION}.mcaddon" \
-              "Ascendant Technology BP" \
-              "Ascendant Technology RP"
-          )
+          set -euo pipefail
+          curl --fail --location --show-error \
+            https://github.com/Bedrock-OSS/regolith/releases/download/1.8.0/regolith_1.8.0_linux_amd64.tar.gz \
+            --output "$RUNNER_TEMP/regolith.tar.gz"
+          tar -xzf "$RUNNER_TEMP/regolith.tar.gz" -C "$RUNNER_TEMP"
+          sudo install "$RUNNER_TEMP/regolith" /usr/local/bin/regolith
+          regolith --version
 
-      - name: Upload MCAddon
+      - name: Build both MCAddon packages
+        shell: bash
+        env:
+          RELEASE_NAME: ${{ steps.destination.outputs.release_name }}
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {packageProject} from './dorios-workflows/releases/src/package.mjs';
+
+          const root = path.resolve('project');
+          const config = JSON.parse(fs.readFileSync(path.join(root, '.github/dorios-release.json'), 'utf8'));
+          const plan = {
+            release: {name: process.env.RELEASE_NAME},
+            build: config.build,
+          };
+          const artifacts = await packageProject(plan, root);
+          if (artifacts.length !== 2) throw new Error(`Expected 2 MCAddon files; got ${artifacts.length}`);
+          for (const artifact of artifacts) console.log(`${artifact.kind}: ${artifact.path}`);
+          NODE
+
+      - name: Keep build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Ascendant-Technology-MCAddon
-          path: dist/*.mcaddon
+          name: Ascendant-Technology-${{ github.run_id }}
+          path: project/.dorios-release/artifacts/*.mcaddon
           if-no-files-found: error
           retention-days: 30
+
+      - name: Attach to selected release
+        if: ${{ steps.destination.outputs.tag != '' }}
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ steps.destination.outputs.tag }}
+          REPLACE_EXISTING: ${{ inputs.replace_existing }}
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          artifacts=(project/.dorios-release/artifacts/*.mcaddon)
+          [[ ${#artifacts[@]} -eq 2 ]] || { echo '::error::Expected 2 assets.'; exit 1; }
+
+          for artifact in "${artifacts[@]}"; do
+            name="$(basename "$artifact")"
+            if gh release view "$RELEASE_TAG" --json assets \
+              --jq '.assets[].name' | grep -Fxq -- "$name"; then
+              if [[ "$REPLACE_EXISTING" == 'true' ]]; then
+                echo "Replacing: $name"
+                gh release upload "$RELEASE_TAG" "$artifact" --clobber
+              else
+                echo "Skipping existing asset: $name"
+              fi
+            else
+              echo "Uploading: $name"
+              gh release upload "$RELEASE_TAG" "$artifact"
+            fi
+          done
+
+      - name: Execution summary
+        if: ${{ always() && steps.destination.outcome == 'success' }}
+        env:
+          RELEASE_TAG: ${{ steps.destination.outputs.tag }}
+        run: |
+          {
+            echo '## Ascendant Technology MCAddon'
+            if [[ -n "$RELEASE_TAG" ]]; then
+              echo "Release: [$RELEASE_TAG](https://github.com/$GITHUB_REPOSITORY/releases/tag/$RELEASE_TAG)"
+            else
+              echo 'Release: none (artifacts only)'
+            fi
+            echo ''
+            echo "Artifacts: [run #$GITHUB_RUN_NUMBER](https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)"
+          } >> "$GITHUB_STEP_SUMMARY"

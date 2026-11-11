@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release_target:
-        description: 'Destino dos arquivos compilados'
+        description: "Destino dos arquivos compilados"
         required: true
         type: choice
         default: latest-prerelease
@@ -15,17 +15,17 @@ on:
           - specific-tag
           - artifacts-only
       release_tag:
-        description: 'Tag da release (apenas para specific-tag; aceita draft)'
+        description: "Tag da release (apenas para specific-tag; aceita draft)"
         required: false
         type: string
-        default: ''
+        default: ""
       source_ref:
-        description: 'Branch, tag ou SHA para compilar (vazio = branch selecionada)'
+        description: "Branch, tag ou SHA para compilar (vazio = branch selecionada)"
         required: false
         type: string
-        default: ''
+        default: ""
       replace_existing:
-        description: 'Substituir arquivos com o mesmo nome na release?'
+        description: "Substituir arquivos com o mesmo nome na release?"
         required: true
         type: boolean
         default: false
@@ -155,7 +155,7 @@ jobs:
           const root = path.resolve('project');
           const config = JSON.parse(fs.readFileSync(path.join(root, '.github/dorios-release.json'), 'utf8'));
           const plan = {
-            release: {name: process.env.RELEASE_NAME},
+            release: {name: `Ascendant-Tech-${process.env.RELEASE_NAME}`},
             build: config.build,
           };
           const artifacts = await packageProject(plan, root);

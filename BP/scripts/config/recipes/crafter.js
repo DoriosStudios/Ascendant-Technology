@@ -8,6 +8,10 @@ import * as DoriosLib from "DoriosLib/index.js";
  * crafting-table recipes intended for automation.
  */
 export const crafterRecipeAdditions = {
+    "steel_block,netherite_plate,steel_block,titanium_plate,machine_case,titanium_plate,steel_block,netherite_plate,steel_block": {
+        output: "utilitycraft:network_center",
+        amount: 1,
+    },
     "refined_aetherium_shard,air,air,air,air,air,air,air,air": {
         output: "utilitycraft:refined_aetherium_crystal",
         amount: 1,
@@ -442,7 +446,6 @@ export const crafterRecipeAdditions = {
             output: "utilitycraft:titanium_conveyor_vertical",
             amount: 16,
         },
-    // Universal Tube recipes are paused in v0.9.2 (see extras/paused_recipes).
     // BP/recipes/items/machinery/ultimate_chip.json
     "redstone,aetherium,redstone,aetherium,ultimate_chip,aetherium,redstone,aetherium,redstone": {
         output: "utilitycraft:absolute_chip",

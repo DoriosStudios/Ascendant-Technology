@@ -1,7 +1,7 @@
 # Ascendant Technology
 An official expansion add-on for UtilityCraft, aiming to add more end-game content.
 ---
-This project was created just because I wanted more useful stuff. It turned out to be my greatest creation, made with passion and lots of challenges.
+This project was created just because I (Kauziin) wanted more useful stuff. It turned out to be my greatest creation, made with passion and lots of challenges.
 
 Here, you have:
 - Cool UI — Some machines have a rich, pleasant to the eyes User Interface.

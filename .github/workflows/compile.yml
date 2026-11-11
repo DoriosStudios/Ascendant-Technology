@@ -1,0 +1,60 @@
+
+name: Build MCAddon
+
+on:
+  workflow_dispatch:
+  release:
+    types: [created, published]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Regolith
+        run: |
+          curl -fL \
+            https://github.com/Bedrock-OSS/regolith/releases/download/1.8.0/regolith_1.8.0_linux_amd64.tar.gz \
+            -o regolith.tar.gz
+          tar -xzf regolith.tar.gz
+          sudo install regolith /usr/local/bin/regolith
+
+      - name: Compile addon
+        run: regolith run buildMinify
+
+      - name: Package MCAddon
+        shell: bash
+        run: |
+          VERSION="${{ github.event.release.tag_name || github.ref_name }}"
+          mkdir -p dist
+          (
+            cd build
+            zip -qr "../dist/Ascendant-Technology_${VERSION}.mcaddon" \
+              "Ascendant Technology BP" \
+              "Ascendant Technology RP"
+          )
+
+      - name: Upload MCAddon
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ascendant-Technology-MCAddon
+          path: dist/*.mcaddon
+          if-no-files-found: error
+          retention-days: 30

@@ -1,130 +1,161 @@
-# Ascendant Technology v0.9.3
+This update introduces the Alchemical Station and new potion effects, expands steam production and universal logistics, and improves machine progression, interfaces, and network monitoring.
 
-This update introduces the Alchemical Station and its expanded potion system, splits steam production into two machine tiers, reworks the Network Center, and adds universal cables and transfer ports. It also updates upgrade recipes, machine navigation, localization, and interaction.
+> [!WARNING]
+> Requires UtilityCraft 3.6.2 or newer.
 
 ## HIGHLIGHTS
 
-- Added **Alchemical Station**, with six-bottle brewing, stronger potions, extended durations, and 35 potion families.
-- Added **Steam Boiler** and **Vaporizer**. Cryofluid now produces three times as much steam per second as Water in the Vaporizer.
-- Reworked **Network Center** into a passive network dashboard.
-- Added **Universal Cable**, **Universal Exporter**, and **Universal Importer**, craftable in the Workbench and Assembler.
-- Standardized section menus with default gray buttons and the machine inventory tab on the right.
+- Added **Alchemical Station**, with six-bottle brewing, amplification, extension, and 35 potion families.
+- Reworked **Machine Upgrade** recipes with Expert components and Aetherium Plates.
+- Reworked **Network Center** with a passive, paged network dashboard.
+- Added **Steam Boiler** and **Vaporizer** for two-stage steam production.
+- Added **Universal Cable**, **Universal Exporter**, and **Universal Importer**.
 
-## ALCHEMY
+## BLOCKS
 
-- Added **Alchemical Station**, with Brewing and Amplify/Extend pages, process information, a recipe book, and a potion progression guide.
-- Brews up to six compatible bottles with one reagent per batch, skipping empty or incompatible slots. A base batch takes 20 seconds, 12,000 DE, and 250 mB of Blaze Essence. One Blaze Powder supplies 1,000 mB.
-- Amplify raises supported potion levels; Extend advances supported duration variants. Both operations use a shared central potion slot. Each operation has its own button and costs 16,000 DE over 10 seconds. Amplify consumes 1,000 mB of Liquified Aetherium; Extend consumes 750 mB. Instant effects cannot be extended.
-- Preserves delivery form during amplification and extension, and preserves upgraded levels and durations when converting between drinkable, splash, and lingering potions. Dragon's Breath conversion returns one Glass Bottle per batch.
-- Stores 2.048 MDE, 64,000 mB of Blaze Essence, and 128,000 mB of Liquified Aetherium. Supports Speed and Energy upgrades, bottle/reagent/fuel input modes, empty-bottle extraction, and liquid input. Finished potions are collected manually.
-- Added **702 custom potion variants** across supported effects, levels, durations, and delivery forms. Additional effects include Haste, Resistance, Absorption, Health Boost, Wither, Levitation, Blindness, Darkness, and Saturation.
-- Added StatsCore potion families: **Marked, Bleeding, Blessing, Curse, Berserk, Adaptive Resilience, and Soul Collector**. Effects cover damage marking, periodic damage, healing and protection, harmful effects, stronger attacks, resistance to repeated damage types, and kill charges for empowered hits.
-- Splash strength decreases with distance; lingering clouds apply shorter effects with a reapplication cooldown. Potion tooltips show effect levels, durations, and positive or negative effect colors.
+### Machines
 
-### Brewing recipes
+- Added **Alchemical Station**.
+    - Brews up to six compatible bottles with one reagent per batch, skipping empty or incompatible slots.
+    - A base brewing batch takes 20 seconds and consumes 12,000 DE and 250 mB of Blaze Essence. One Blaze Powder supplies 1,000 mB.
+    - Amplify raises supported potion levels; Extend increases supported durations. Both use a shared central potion slot and separate action buttons.
+    - Each upgrade takes 10 seconds and 16,000 DE. Amplify consumes 1,000 mB of Liquified Aetherium; Extend consumes 750 mB. Instant effects cannot be extended.
+    - Preserves potion delivery forms during upgrades and upgraded levels and durations when converting between drinkable, splash, and lingering forms.
+    - Returns one Glass Bottle per Dragon's Breath conversion batch.
+    - Stores 2.048 MDE, 64,000 mB of Blaze Essence, and 128,000 mB of Liquified Aetherium. Accepts Speed and Energy upgrades.
+    - Supports bottle, reagent, and Blaze Powder input modes, empty-bottle extraction, and Liquified Aetherium input. Finished potions are collected manually.
+- Added **Steam Boiler**.
+    - Converts 1,000 mB of Water into 1,000 mB of Steam for 2,400 DE in 8 seconds before upgrades.
+    - Stores 128 kDE and 32,000 mB in each Water and Steam tank. Accepts Speed and Energy upgrades.
+    - Receives Water through liquid I/O and exports Steam through gas I/O, without container conversion slots.
+- Added **Vaporizer**.
+    - Superior version of Steam Boiler, with 1.024 MDE, two 128,000 mB tanks, and four upgrade slots.
+    - Converts 1,000 mB of Water into 1,000 mB of Steam for 1,600 DE in 4 seconds.
+    - Converts 1,000 mB of Cryofluid into 3,000 mB of Steam for 2,400 DE in 4 seconds: three times the Water recipe's steam production per second. Cryofluid preparation has its own costs.
+    - Converts 1,000 mB of Saline Coolant into 1,500 mB of Steam for 2,000 DE in 5 seconds.
+    - Uses one container slot per side. Filled liquid containers return empty in the left slot; empty gas capsules return filled in the right slot.
+    - Converts each container stack together when sufficient tank space or gas is available.
+- **Network Center**
+    - Rebuilt the dashboard with Overview, Gains, Losses, and Capacity tabs, independent scrolling, paged device information, and scan status.
+    - Now monitors the network without storing energy or charging for scans.
+    - Shows storage breakdowns, free space, fill percentages, activity, and comparable net energy samples.
+    - Separates generators, consumers, batteries, and wireless distributors. Power Beacons no longer inflate generation totals.
+    - Supports larger device lists without cutting off connected device types.
+- **Verdant Cultivator**
+    - Added Titanium and Tungsten mineral crop support on Blue Soil and Aetherium Crystal crop support on Pink Soil.
+- **Vaporworks Processor**
+    - Replaced normal crafting progression with Steam Boiler and Vaporizer. Existing processors remain functional and retain their inventories and stored resources.
 
-| Potion | Base potion | Reagent |
-| --- | --- | --- |
-| Infestation | Awkward | Contaminated Hide |
-| Oozing | Awkward | Slime Block |
-| Weaving | Poison | Spool of Strings |
-| Adaptive Resilience | Resistance | Steel Dust |
-| Saturation | Thick | Golden Carrot |
+### Transportation
 
-- Some effects require a prepared potion: Weaving starts from Poison, Adaptive Resilience from Resistance, and Saturation from Thick Potion.
-- Added **Contaminated Hide**, dropped by Silverfish when mob loot is enabled, including automated kills. Each kill drops one Hide without a Looting multiplier.
-- Contaminated Hide has its own texture and appears in the Creative inventory and Alchemical Station recipe book.
-- Updated the Alchemical Station recipe book across all ten bundled languages.
-- Craft the Alchemical Station with Quartz Blocks, a Netherite Plate, Ultimate Chips, a Brewing Stand, and a Reinforced Machine Case. The same recipe is available in the Assembler.
-
-## STEAM PRODUCTION
-
-- Added **Steam Boiler** as the entry machine, with 128 kDE, two 32,000 mB tanks, and two Speed/Energy upgrade slots. It accepts Water through liquid I/O and exports Steam through gas I/O. Its interface has no container conversion slots.
-- Added **Vaporizer** as the superior machine, with 1.024 MDE, two 128,000 mB tanks, and four upgrade slots.
-
-All values below are before upgrades and overclock. Each recipe consumes 1,000 mB of its input liquid.
-
-| Machine / input | Steam output | Energy | Time |
-| --- | ---: | ---: | ---: |
-| Steam Boiler / Water | 1,000 mB | 2,400 DE | 8 s |
-| Vaporizer / Water | 1,000 mB | 1,600 DE | 4 s |
-| Vaporizer / Cryofluid | **3,000 mB** | **2,400 DE** | **4 s** |
-| Vaporizer / Saline Coolant | 1,500 mB | 2,000 DE | 5 s |
-
-- Cryofluid supplies **750 mB of Steam per second per Vaporizer**, compared with Water's 250 mB/s. Cryofluid synthesis still has its separate material and energy costs.
-- Vaporizer has one container slot per side: filled liquid containers return empty in the left slot; empty gas capsules return filled in the right slot. Each stack converts together when sufficient tank space or gas is available. Empty slots show animated container hints.
-- Container stacks wait until the entire stack can be converted, preventing partial consumption when there is insufficient tank space or gas.
-- Both machines have dedicated powered/unpowered textures, recipe books, operating descriptions, and Workbench/Assembler recipes. Boiler uses Basic Chips and a Blast Furnace; Vaporizer uses Advanced Chips and a Steam Boiler.
-- Steam Boiler and Vaporizer replace the Vaporworks Processor in the crafting progression. Existing Vaporworks Processors continue to work and retain their inventories and stored resources.
-
-## NETWORKS AND LOGISTICS
-
-### Network Center
-
-- Rebuilt the dashboard with **Overview, Gains, Losses, and Capacity** tabs, independent scrolling, paged device information, and a compact scan-status footer.
-- Monitor the network without supplying energy to the Center or paying an energy cost for scans.
-- Browse connected device types across pages, including larger networks that previously exceeded the display limit.
-- Added storage breakdowns, free space, fill percentages, activity, and comparable net energy samples. Generators, consumers, batteries, and wireless distributors are listed separately; Power Beacons no longer inflate generation totals.
-- Added a more compact dashboard with clear tab icons and page controls.
-- Craft the Network Center in the Workbench or Assembler using four Steel Blocks, two Titanium Plates, two Netherite Plates, and a Machine Case.
-
-### Universal Cable and transfer ports
-
-- Added **Universal Cable** in the pipes group. It carries energy, items, liquids, gases, and overclock through shared physical connections, including wrench disconnections.
-- Added **Universal Exporter** and **Universal Importer**. The Exporter independently transfers items, liquids, and gases over routes discovered by UtilityCraft; the Importer delivers through the attached container's input face.
-- Supports up to 64 items per operation and 4,000 mB of each fluid resource per 10-tick cycle. Up to four Speed Upgrades increase transfer limits.
-- Added resource enable switches, whitelist/blacklist filters, and Exporter nearest/farthest/round-robin distribution. Filters require a Filter Upgrade and support eight identifiers per resource.
-- Configure transfer settings and filters from each port. Transfers respect the connected machines’ input and output settings.
-- Craft eight Universal Cables with Fluid Pipe, Gas Pipe, Energy Cable, Item Conduit, Reinforced Cable, and four Netherite Plates. Each Exporter or Importer uses four Universal Cables and a Hopper. All three recipes are available in the Workbench and Assembler.
+- Added **Universal Cable**.
+    - Carries energy, items, liquids, gases, and overclock through shared physical connections, including wrench disconnections.
+- Added **Universal Exporter** and **Universal Importer**.
+    - Exporter independently distributes items, liquids, and gases. Importer delivers resources through its attached container's input face.
+    - Transfers up to 64 items per operation and 4,000 mB of each fluid resource per 10-tick cycle. Up to four Speed Upgrades increase transfer limits.
+    - Includes separate resource switches, whitelist/blacklist filters, and nearest, farthest, or round-robin Exporter distribution.
+    - Filters require a Filter Upgrade and support eight identifiers per resource. Transfers respect connected machine I/O settings.
 
 ### Overclock
 
-- Reinforced Cable now shares normal energy networks with Energy Cable while retaining a separate overclock network. Ordinary Energy Cable does not carry overclock.
-- Overclock connections update after blocks are placed, broken, moved by pistons, or disconnected with a wrench.
-- Overclock Relay can power ordinary Energy Cable branches without feeding energy back into Towers or other Relays.
+- **Reinforced Cable**
+    - Can share normal energy networks with Energy Cable while retaining a separate overclock network. Ordinary Energy Cable does not carry overclock.
+    - Overclock connections update after placement, breaking, piston movement, and wrench disconnections.
+- **Overclock Relay**
+    - Can power ordinary Energy Cable branches without feeding energy back into Towers or other Relays.
 
-## MACHINE UPGRADES
+## ITEMS
 
-Reworked five Workbench recipes. Each uses one Base Upgrade, two Redstone Blocks, and the components below.
+### Materials
 
-| Upgrade | Structural material | Functional components |
-| --- | --- | --- |
-| Multi Processing | 4 Aetherium Plates | Expert Chip + Aetherium Ingot |
-| Energy Capacity | 4 Steel Plates | Gold Dust + Expert Battery |
-| Liquid Capacity | 4 Steel Plates | Glass + Expert Fluid Tank |
-| Gas Capacity | 4 Lead Plates | Glass + Expert Gas Tank |
-| Resource Efficiency | 4 Tungsten Plates | Diamond Dust + Refined Aetherium Crystal |
+- Added **Aetherium Plate**.
+    - Produced from one Aetherium Ingot in the Electro Press and recyclable into one Aetherium Dust in the Crusher.
+    - Used in the Multi Processing Upgrade recipe.
+- Added **Contaminated Hide**.
+    - Silverfish drop one Hide when mob loot is enabled, including automated kills, without a Looting multiplier.
+    - Used to brew Infestation potions.
 
-- Added **Aetherium Plate**, produced from one Aetherium Ingot in the Press and recyclable into one Aetherium Dust in the Crusher. Multi Processing uses four Aetherium Plates, an Expert Chip, an Aetherium Ingot, a Base Upgrade, and two Redstone Blocks.
-- Craft the updated upgrades in the Workbench or Assembler. Catalyst Weaver alternatives save four structural plates and one Redstone Block.
-- Updated recipe-book ingredients and dedicated Expert tank icons. Capacity upgrades now consistently use Expert components.
+### Potions
 
-## INTERFACES AND LOCALIZATION
+- Added **Alchemical Potions**, with 702 custom variants across supported effects, levels, durations, and delivery forms.
+    - Includes Haste, Resistance, Absorption, Health Boost, Wither, Levitation, Blindness, Darkness, and Saturation.
+    - Supports drinkable, splash, and lingering forms. Splash strength decreases with distance; lingering clouds apply shorter effects with a reapplication cooldown.
+    - Tooltips show effect levels, durations, and positive or negative effect colors.
+- Added **StatsCore Potions**.
+    - **Marked:** Increases incoming eligible attack damage.
+    - **Bleeding:** Inflicts periodic damage.
+    - **Blessing:** Provides healing and protective effects.
+    - **Curse:** Applies harmful effects.
+    - **Berserk:** Strengthens attacks.
+    - **Adaptive Resilience:** Builds resistance to repeated damage of the same type.
+    - **Soul Collector:** Stores kill charges for empowered hits and healing.
 
-- Alchemical Station upgrades use a 24×24 central potion slot with an orange Amplify path and a blue Extend path. Paths fill toward the slot without covering it.
+## RECIPES
 
-- Alchemical Station brewing progress now follows a pixel-art path from the reagent to all six potion slots, with gray vanilla-style channels and a purple blaze fill.
+### Machines
 
-- Standardized section-menu buttons and backgrounds to default gray, including screens with their own color overrides. Machine inventory tabs appear on the right, with the machine page still selected on opening.
-- Standardized Steam Boiler and Vaporizer descriptions with the other machines.
-- Added Aetherium Plate production and recycling entries to the Electro Press and Crusher recipe books.
-- Translated steam machine descriptions, I/O modes, processing states, and recipe-book fluid names across all ten bundled languages.
-- Reworked Residue Processor recipe selection and previews so ingredients, outputs, costs, and chances appear in the recipe book instead of covering the inventory.
-- Corrected Compactor energy, progress, and inventory grid controls.
-- Updated Cryo Chamber’s interface and section navigation.
-- I/O panels show clear views of each machine face for Refining Table, Enchantment Station, Seismic Breaker, and Pattern Placer.
-- Moved block/item descriptions into native tooltips across ten languages and added shared machine information/status translations. Cleaned up machine-name formatting and renamed Power Beacons to **Emissor de Energia** in Portuguese.
-- Added animated blade movement to Mob Slasher.
+- Added **Alchemical Station** crafting with Quartz Blocks, a Netherite Plate, Ultimate Chips, a Brewing Stand, and a Reinforced Machine Case.
+- Added **Network Center** crafting with four Steel Blocks, two Titanium Plates, two Netherite Plates, and a Machine Case.
+- Added **Steam Boiler** crafting with Basic Chips and a Blast Furnace, and **Vaporizer** crafting with Advanced Chips and a Steam Boiler.
+- All four recipes are available in the Workbench and Assembler.
 
-## OTHER FIXES
+### Alchemical Station
+
+- **Infestation:** Awkward Potion + Contaminated Hide.
+- **Weaving:** Poison Potion + Spool of Strings.
+- **Adaptive Resilience:** Resistance Potion + Steel Dust.
+- **Saturation:** Thick Potion + Golden Carrot, keeping it distinct from Night Vision and Absorption.
+
+### Machine Upgrades
+
+- Reworked five Workbench recipes. Each uses one Base Upgrade, two Redstone Blocks, and:
+    - **Multi Processing:** Four Aetherium Plates, an Expert Chip, and an Aetherium Ingot.
+    - **Energy Capacity:** Four Steel Plates, Gold Dust, and an Expert Battery.
+    - **Liquid Capacity:** Four Steel Plates, Glass, and an Expert Fluid Tank.
+    - **Gas Capacity:** Four Lead Plates, Glass, and an Expert Gas Tank.
+    - **Resource Efficiency:** Four Tungsten Plates, Diamond Dust, and a Refined Aetherium Crystal.
+- Updated the corresponding Assembler and Catalyst Weaver recipes. Weaver alternatives save four structural plates and one Redstone Block.
+
+### Transportation
+
+- Added **Universal Cable** crafting with Fluid Pipe, Gas Pipe, Energy Cable, Item Conduit, Reinforced Cable, and four Netherite Plates. Produces eight cables.
+- Added **Universal Exporter** and **Universal Importer** crafting with four Universal Cables and a Hopper in their respective arrangements.
+- All three recipes are available in the Workbench and Assembler.
+
+## UI/UX
+
+- **Alchemical Station**
+    - Added Brewing and Amplify/Extend pages, process information, a recipe book, and a potion progression guide.
+    - Brewing progress follows a purple, pixelated path from the reagent to all six potion slots.
+    - Upgrades use a 24×24 central potion slot, with an orange Amplify path and a blue Extend path that stop at the slot border.
+- **Machine Navigation**
+    - Standardized section menus with default gray buttons and the machine inventory tab on the right, keeping the machine page selected on opening.
+- **Machine I/O**
+    - Added clear views of machine faces for Refining Table, Enchantment Station, Seismic Breaker, and Pattern Placer.
+- **Mob Slasher**
+    - Added animated blade movement.
+- **Recipe Books**
+    - Added Steam Boiler and Vaporizer recipe books and animated empty-container hints for Vaporizer.
+    - Added Aetherium Plate production and recycling entries to the Electro Press and Crusher books.
+    - Updated upgrade ingredients and dedicated Expert tank icons.
+    - Moved Residue Processor recipe previews into its book so they no longer cover the machine inventory.
+- **Tooltips and Localization**
+    - Moved block and item descriptions into native tooltips and standardized machine names, upgrade information, and addon identification.
+    - Updated steam machine descriptions, I/O modes, processing states, fluid names, and alchemy ingredients across all ten bundled languages.
+    - Renamed Power Beacons to **Emissor de Energia** in Portuguese and corrected the Absolute tier's name color.
+- Updated **Cryo Chamber** interface and section navigation.
+
+## BUG FIXES
 
 - Fixed overclock rebuilds overwriting energy destinations and disconnected machines retaining old boosts after entity reloads.
-- Fixed Titanium Hammer mining speed on shovel-breakable blocks.
-- Added Verdant Cultivator support for Titanium/Tungsten crops on Blue Soil and Aetherium Crystal crops on Pink Soil. Fixed nonexistent crop references and preserved customized seeds when planting fails.
-- Improved inventory access and sneaking to mine for Absolute generators, Absolute Battery, Absolute Container, Overclock Relay/Tower, and all five Power Beacon tiers.
-- Fixed missing recipe-book arrows, incorrect Redstone Block icons, and empty gas tanks retaining incompatible output types. Tanks containing gas still prevent incompatible mixing.
+- Fixed **Titanium Hammer** mining speed on shovel-breakable blocks.
+- Fixed **Verdant Cultivator** crop references and preserved customized seeds when planting fails.
+- Improved inventory access and sneaking to mine for Absolute generators, Absolute Battery, Absolute Container, Overclock Relay, Overclock Tower, and all five Power Beacon tiers.
+- Fixed **Compactor** energy, progress, and inventory grid displays.
+- Fixed missing recipe-book arrows and incorrect Redstone Block icons.
+- Fixed empty gas tanks retaining an incompatible output type. Tanks containing gas still prevent incompatible mixing.
 
-## COMPATIBILITY
+## THIRD-PARTY / INTEGRATION
 
-- Requires compatible **UtilityCraft 3.6.2+** content for shared machines, items, and networks.
-- **Dorios' Insight** remains optional for custom effect HUD icons, levels, timers, and charges. StatsCore effects continue to work without it, and the addon no longer shows a missing-Insight warning in chat.
+- Added `utilitycraft:register_vaporizer_recipe` for custom advanced liquid-to-gas recipes. The previous `utilitycraft:register_vaporworks_processor_recipe` event remains supported; Steam Boiler remains Water-only.
+- **Dorios' Insight** remains optional for custom effect HUD icons, levels, timers, and charges. Effects continue to work without it, and missing Insight no longer produces a chat warning.

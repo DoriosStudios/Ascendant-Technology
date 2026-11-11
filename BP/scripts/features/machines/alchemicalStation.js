@@ -10,6 +10,8 @@ import { setRunning, setDynamicNumber, setDynamicString, setUiItem } from "./run
 const ID = "utilitycraft:alchemical_station";
 const key = lane => `ascendant:alchemy_${lane}`;
 const lanes = ["brew", "amplify", "extend"];
+const UPGRADE_SLOT = S.amplify;
+const UPGRADE_LAYOUT = key("central_upgrade_slot");
 const progressSlots = [S.progress, S.amplifyProgress, S.extendProgress];
 
 registerIOInterface(ID, {
@@ -36,8 +38,12 @@ for (const [lane, slot] of [["amplify", S.amplifyButton], ["extend", S.extendBut
     ButtonManager.registerMachineButton(ID, slot, ({ entity }) => {
         if (entity.getDynamicProperty(key(`${lane}_queued`))) return;
         const container = entity.getComponent("inventory")?.container;
-        const item = container?.getItem(lane === "amplify" ? S.amplify : S.extend);
+        const item = container?.getItem(UPGRADE_SLOT);
         if (!readPotion(item)) return;
+        const other = lane === "amplify" ? "extend" : "amplify";
+        setDynamicNumber(entity, key(`${other}_queued`), 0);
+        setDynamicString(entity, key(`${other}_requested`), "");
+        setDynamicNumber(entity, `dorios:progress_${other === "amplify" ? 1 : 2}`, 0);
         setDynamicString(entity, key(`${lane}_requested`), potionSignature(item));
         setDynamicNumber(entity, key(`${lane}_queued`), 1);
     });
@@ -49,6 +55,7 @@ registerATMachine(ID, {
             const m = new Machine(event.block, { ...settings, ignoreTick: true });
             if (!m.valid) return;
             m.blockSlots([S.blaze, S.aetherium, ...progressSlots]);
+            setDynamicNumber(m.entity, UPGRADE_LAYOUT, 1);
             configureTanks(m);
             for (let i = 0; i < lanes.length; i++) m.setProgress(0, C.brewTicks, { index: i, slot: progressSlots[i], display: false });
             setUiItem(m.container, S.amplifyButton, "utilitycraft:ui_filler", "§rAmplify · 1000 mB");
@@ -58,6 +65,7 @@ registerATMachine(ID, {
     onTick(event, { params: settings }) {
         const m = new Machine(event.block, settings);
         if (!m.valid || m.container.size !== S.size) return;
+        migrateUpgradeSlot(m);
         const [aetherium, blaze] = configureTanks(m);
         m.processIO();
         if (m.shouldUpdateUI) ButtonManager.ensureWatching(m.entity, ID);
@@ -80,18 +88,42 @@ registerATMachine(ID, {
             const brewFrame = Math.min(28, Math.floor(28 * m.getProgress(0) / C.brewTicks));
             const brewMarker = `§0§a${String(brewFrame).padStart(2, "0").split("").map(d => `§${d}`).join("")}§r`;
             setUiItem(m.container, S.progress, "utilitycraft:ui_filler", `§rBrewing: ${Math.floor(100 * m.getProgress(0) / C.brewTicks)}%${brewMarker}`);
-            for (let i = 1; i < lanes.length; i++) m.displayProgress(C.upgradeTicks, { slot: progressSlots[i], index: i });
+            for (let i = 1; i < lanes.length; i++) {
+                const lane = lanes[i];
+                const frame = Math.min(28, Math.floor(28 * m.getProgress(i) / C.upgradeTicks));
+                const marker = `§0§a${String(frame).padStart(2, "0").split("").map(d => `§${d}`).join("")}§r`;
+                const selected = m.entity.getDynamicProperty(key(`${lane}_queued`)) ? "§0§b§1§r" : "";
+                setUiItem(m.container, progressSlots[i], "utilitycraft:ui_filler", `§r${lane}${marker}${selected}`);
+            }
         }
         setRunning(m, running);
         if (m.shouldUpdateUI) m.setLabel([
             `§r§eBrewing\n§r§f${statuses[0]}\n§r§7Reagent: middle slot\n§r§7Fuel: blaze powder\n§r§7Up to 6 bottles per batch`,
-            `§r§eAmplify\n§r§f${statuses[1]}\n§r§7Left slot + left button\n§r§7Cost: ${C.amplifyCost} mB Aetherium`,
-            `§r§eExtend\n§r§f${statuses[2]}\n§r§7Right slot + right button\n§r§7Cost: ${C.extendCost} mB Aetherium`,
+            `§r§eAmplify\n§r§f${statuses[1]}\n§r§7Middle slot + left button\n§r§7Cost: ${C.amplifyCost} mB Aetherium`,
+            `§r§eExtend\n§r§f${statuses[2]}\n§r§7Middle slot + right button\n§r§7Cost: ${C.extendCost} mB Aetherium`,
             `§r§eStorage\n§r§fBlaze: ${blaze.get()} / ${C.blazeCapacity} mB\n§r§fAetherium: ${aetherium.get()} / ${C.aetheriumCapacity} mB\n§r§fEnergy: ${m.energy.get()} / ${m.energy.getCap()} DE`,
         ]);
     },
     onPlayerBreak(event) { Machine.onDestroy(event); },
 });
+
+// Keep legacy slot 14 recoverable until its item can move into the central slot.
+// The UI exposes occupied legacy cells, so existing inventories never lose items.
+function migrateUpgradeSlot(m) {
+    if (!m.entity.getDynamicProperty(UPGRADE_LAYOUT)) {
+        for (const [i, lane] of [[1, "amplify"], [2, "extend"]]) {
+            setDynamicNumber(m.entity, key(`${lane}_queued`), 0);
+            setDynamicString(m.entity, key(`${lane}_requested`), "");
+            setDynamicNumber(m.entity, `dorios:progress_${i}`, 0);
+        }
+        setDynamicNumber(m.entity, UPGRADE_LAYOUT, 1);
+    }
+    const legacy = m.container.getItem(S.extend);
+    if (legacy && !m.container.getItem(UPGRADE_SLOT)) {
+        m.container.setItem(UPGRADE_SLOT, legacy);
+        m.container.setItem(S.extend, undefined);
+    }
+}
 
 function configureTanks(m) {
     const tanks = [new FluidStorage(m.entity, 0), new FluidStorage(m.entity, 1)];
@@ -122,7 +154,7 @@ function buildPlan(m, lane) {
         const signature = [ingredient.typeId, ...S.bottles.map(slot => potionSignature(m.container.getItem(slot)))].join("|");
         return { ...plan, signature, ingredient, fluid: 0 };
     }
-    const slot = lane === "amplify" ? S.amplify : S.extend;
+    const slot = UPGRADE_SLOT;
     const item = m.container.getItem(slot);
     if (!m.entity.getDynamicProperty(key(`${lane}_queued`))) {
         const potion = readPotion(item);
@@ -149,8 +181,8 @@ function processLane(m, lane, index, plan, aetherium, blaze) {
         const side = lane === "amplify" ? "left" : "right";
         const status = plan?.invalid ? (lane === "amplify" ? "No further level upgrade available." : "No longer duration available.")
             : lane === "brew" ? (!m.container.getItem(S.ingredient) ? "Add a reagent to the middle slot." : "Add bottles that match the reagent.")
-            : readPotion(m.container.getItem(lane === "amplify" ? S.amplify : S.extend))
-                ? `Press the ${side} button to start.` : `Insert a potion in the ${side} slot.`;
+            : readPotion(m.container.getItem(UPGRADE_SLOT))
+                ? `Press the ${side} button to start.` : "Insert a potion in the middle slot.";
         return { running: false, status };
     }
     if (m.entity.getDynamicProperty(key(`${lane}_signature`)) !== plan.signature) {

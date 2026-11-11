@@ -1,4 +1,4 @@
-﻿{
+{
     "namespace": "uc",
     "electro_press_recipes_buttons/addon_recipe_rows": {
         "modifications": [
@@ -116,6 +116,31 @@
                                 "$toggle_control_name": "at_aetherium_crystal_block_recipe",
                                 "$recipe_icon": "textures/blocks/ores/aetherium_crystal_block",
                                 "offset": [108, 0]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "at_electro_press_recipe_row_1": {
+                    "type": "panel",
+                    "size": [
+                        126,
+                        18
+                    ],
+                    "controls": [
+                        {
+                            "at_aetherium_plate_toggle@uc.electro_press_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 3007,
+                                "$toggle_hover_text": "item.utilitycraft:aetherium_plate.name",
+                                "$toggle_control_name": "at_aetherium_plate_recipe",
+                                "$recipe_icon": "textures/items/ores/aetherium_plate",
+                                "offset": [
+                                    0,
+                                    0
+                                ]
                             }
                         }
                     ]
@@ -280,6 +305,27 @@
                             "output@uc.electro_press_recipe_output": {
                                 "$slot_item_texture": "textures/blocks/ores/aetherium_crystal_block",
                                 "$slot_hover_text": "tile.utilitycraft:aetherium_crystal_block.name",
+                                "$has_slot_hover": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "at_aetherium_plate_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "at_aetherium_plate_recipe",
+                    "controls": [
+                        {
+                            "input@uc.electro_press_recipe_input": {
+                                "$slot_item_texture": "textures/items/ores/aetherium_ingot",
+                                "$slot_hover_text": "item.utilitycraft:aetherium",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "output@uc.electro_press_recipe_output": {
+                                "$slot_item_texture": "textures/items/ores/aetherium_plate",
+                                "$slot_hover_text": "item.utilitycraft:aetherium_plate.name",
                                 "$has_slot_hover": true
                             }
                         }

@@ -1,4 +1,4 @@
-﻿{
+{
     "namespace": "uc",
     "crusher_recipes_buttons/addon_recipe_rows": {
         "modifications": [
@@ -222,6 +222,20 @@
                                 "$toggle_control_name": "at_aetherium_crystal_dust_from_block_recipe",
                                 "$recipe_icon": "textures/items/ores/aetherium_crystal_dust",
                                 "offset": [0, 0]
+                            }
+                        },
+                        {
+                            "at_aetherium_plate_dust_toggle@uc.crusher_recipe_toggle": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "$toggle_index": 3015,
+                                "$toggle_hover_text": "item.utilitycraft:aetherium_plate.name",
+                                "$toggle_control_name": "at_aetherium_plate_dust_recipe",
+                                "$recipe_icon": "textures/items/ores/aetherium_plate",
+                                "offset": [
+                                    18,
+                                    0
+                                ]
                             }
                         }
                     ]
@@ -569,6 +583,27 @@
                                 "$has_slot_hover": true,
                                 "$slot_count_text": "8",
                                 "$has_slot_count": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "at_aetherium_plate_dust_panel@uc.recipe_panel": {
+                    "$recipe_control_name": "at_aetherium_plate_dust_recipe",
+                    "controls": [
+                        {
+                            "input@uc.crusher_recipe_input": {
+                                "$slot_item_texture": "textures/items/ores/aetherium_plate",
+                                "$slot_hover_text": "item.utilitycraft:aetherium_plate.name",
+                                "$has_slot_hover": true
+                            }
+                        },
+                        {
+                            "output@uc.crusher_recipe_output": {
+                                "$slot_item_texture": "textures/items/ores/aetherium_dust",
+                                "$slot_hover_text": "item.utilitycraft:aetherium_dust",
+                                "$has_slot_hover": true
                             }
                         }
                     ]

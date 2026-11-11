@@ -155,22 +155,20 @@
 		"type": "panel",
 		"$item_collection_name": "container_items",
 		"collection_index": 2,
-		"size": [9, 28],
+		"size": [32, 42],
 		"controls": [
 			{
 				"empty": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_empty",
-					"size": [9, 28]
+					"texture": "textures/ui/alchemy_path/empty",
+					"size": [32, 42]
 				}
 			},
 			{
 				"fill_0": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0,
+					"texture": "textures/ui/alchemy_path/fill_00",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -189,10 +187,8 @@
 			{
 				"fill_1": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.03571428571428571,
+					"texture": "textures/ui/alchemy_path/fill_01",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -211,10 +207,8 @@
 			{
 				"fill_2": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.07142857142857142,
+					"texture": "textures/ui/alchemy_path/fill_02",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -233,10 +227,8 @@
 			{
 				"fill_3": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.10714285714285714,
+					"texture": "textures/ui/alchemy_path/fill_03",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -255,10 +247,8 @@
 			{
 				"fill_4": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.14285714285714285,
+					"texture": "textures/ui/alchemy_path/fill_04",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -277,10 +267,8 @@
 			{
 				"fill_5": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.17857142857142858,
+					"texture": "textures/ui/alchemy_path/fill_05",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -299,10 +287,8 @@
 			{
 				"fill_6": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.21428571428571427,
+					"texture": "textures/ui/alchemy_path/fill_06",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -321,10 +307,8 @@
 			{
 				"fill_7": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.25,
+					"texture": "textures/ui/alchemy_path/fill_07",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -343,10 +327,8 @@
 			{
 				"fill_8": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.2857142857142857,
+					"texture": "textures/ui/alchemy_path/fill_08",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -365,10 +347,8 @@
 			{
 				"fill_9": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.32142857142857145,
+					"texture": "textures/ui/alchemy_path/fill_09",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -387,10 +367,8 @@
 			{
 				"fill_10": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.35714285714285715,
+					"texture": "textures/ui/alchemy_path/fill_10",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -409,10 +387,8 @@
 			{
 				"fill_11": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.39285714285714285,
+					"texture": "textures/ui/alchemy_path/fill_11",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -431,10 +407,8 @@
 			{
 				"fill_12": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.42857142857142855,
+					"texture": "textures/ui/alchemy_path/fill_12",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -453,10 +427,8 @@
 			{
 				"fill_13": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.4642857142857143,
+					"texture": "textures/ui/alchemy_path/fill_13",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -475,10 +447,8 @@
 			{
 				"fill_14": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.5,
+					"texture": "textures/ui/alchemy_path/fill_14",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -497,10 +467,8 @@
 			{
 				"fill_15": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.5357142857142857,
+					"texture": "textures/ui/alchemy_path/fill_15",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -519,10 +487,8 @@
 			{
 				"fill_16": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.5714285714285714,
+					"texture": "textures/ui/alchemy_path/fill_16",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -541,10 +507,8 @@
 			{
 				"fill_17": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.6071428571428571,
+					"texture": "textures/ui/alchemy_path/fill_17",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -563,10 +527,8 @@
 			{
 				"fill_18": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.6428571428571429,
+					"texture": "textures/ui/alchemy_path/fill_18",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -585,10 +547,8 @@
 			{
 				"fill_19": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.6785714285714286,
+					"texture": "textures/ui/alchemy_path/fill_19",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -607,10 +567,8 @@
 			{
 				"fill_20": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.7142857142857143,
+					"texture": "textures/ui/alchemy_path/fill_20",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -629,10 +587,8 @@
 			{
 				"fill_21": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.75,
+					"texture": "textures/ui/alchemy_path/fill_21",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -651,10 +607,8 @@
 			{
 				"fill_22": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.7857142857142857,
+					"texture": "textures/ui/alchemy_path/fill_22",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -673,10 +627,8 @@
 			{
 				"fill_23": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.8214285714285714,
+					"texture": "textures/ui/alchemy_path/fill_23",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -695,10 +647,8 @@
 			{
 				"fill_24": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.8571428571428571,
+					"texture": "textures/ui/alchemy_path/fill_24",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -717,10 +667,8 @@
 			{
 				"fill_25": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.8928571428571429,
+					"texture": "textures/ui/alchemy_path/fill_25",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -739,10 +687,8 @@
 			{
 				"fill_26": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.9285714285714286,
+					"texture": "textures/ui/alchemy_path/fill_26",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -761,10 +707,8 @@
 			{
 				"fill_27": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 0.9642857142857143,
+					"texture": "textures/ui/alchemy_path/fill_27",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -783,10 +727,8 @@
 			{
 				"fill_28": {
 					"type": "image",
-					"texture": "textures/ui/brewing_arrow_full",
-					"size": [9, 28],
-					"clip_direction": "down",
-					"clip_ratio": 1,
+					"texture": "textures/ui/alchemy_path/fill_28",
+					"size": [32, 42],
 					"layer": 2,
 					"bindings": [
 						{
@@ -878,7 +820,7 @@
 					"anchor_from": "center",
 					"anchor_to": "center",
 					"offset": [0, 8],
-					"size": [9, 28]
+					"size": [32, 42]
 				}
 			},
 			{
@@ -984,7 +926,10 @@
 		"type": "collection_panel",
 		"collection_name": "container_items",
 		"$item_collection_name": "container_items",
-		"size": [176, 86],
+		"size": [
+			176,
+			86
+		],
 		"visible": false,
 		"bindings": [
 			{
@@ -997,26 +942,1455 @@
 		],
 		"controls": [
 			{
+				"central_slot_background": {
+					"type": "image",
+					"texture": "textures/ui/cells/brown_cell_image",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [
+						76,
+						31
+					],
+					"size": [
+						24,
+						24
+					],
+					"layer": 1
+				}
+			},
+			{
+				"extend_path": {
+					"type": "panel",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [
+						0,
+						0
+					],
+					"size": [
+						176,
+						86
+					],
+					"layer": 3,
+					"$item_collection_name": "container_items",
+					"collection_index": 20,
+					"controls": [
+						{
+							"empty": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_empty",
+								"size": [
+									176,
+									86
+								]
+							}
+						},
+						{
+							"fill_0": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_00",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§0§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_1": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_01",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§1§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_2": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_02",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§2§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_3": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_03",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§3§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_4": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_04",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§4§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_5": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_05",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§5§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_6": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_06",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§6§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_7": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_07",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§7§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_8": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_08",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§8§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_9": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_09",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§9§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_10": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_10",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§0§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_11": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_11",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§1§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_12": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_12",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§2§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_13": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_13",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§3§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_14": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_14",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§4§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_15": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_15",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§5§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_16": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_16",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§6§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_17": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_17",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§7§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_18": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_18",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§8§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_19": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_19",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§9§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_20": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_20",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§0§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_21": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_21",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§1§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_22": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_22",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§2§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_23": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_23",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§3§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_24": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_24",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§4§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_25": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_25",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§5§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_26": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_26",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§6§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_27": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_27",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§7§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_28": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/extend_28",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§8§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"amplify_path": {
+					"type": "panel",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [
+						0,
+						0
+					],
+					"size": [
+						176,
+						86
+					],
+					"layer": 3,
+					"$item_collection_name": "container_items",
+					"collection_index": 17,
+					"controls": [
+						{
+							"empty": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_empty",
+								"size": [
+									176,
+									86
+								]
+							}
+						},
+						{
+							"fill_0": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_00",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§0§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_1": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_01",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§1§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_2": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_02",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§2§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_3": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_03",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§3§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_4": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_04",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§4§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_5": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_05",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§5§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_6": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_06",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§6§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_7": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_07",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§7§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_8": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_08",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§8§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_9": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_09",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§0§9§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_10": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_10",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§0§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_11": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_11",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§1§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_12": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_12",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§2§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_13": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_13",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§3§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_14": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_14",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§4§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_15": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_15",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§5§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_16": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_16",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§6§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_17": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_17",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§7§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_18": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_18",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§8§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_19": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_19",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§1§9§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_20": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_20",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§0§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_21": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_21",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§1§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_22": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_22",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§2§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_23": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_23",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§3§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_24": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_24",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§4§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_25": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_25",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§5§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_26": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_26",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§6§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_27": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_27",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§7§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						},
+						{
+							"fill_28": {
+								"type": "image",
+								"texture": "textures/ui/alchemy_upgrade/amplify_28",
+								"size": [
+									176,
+									86
+								],
+								"layer": 1,
+								"bindings": [
+									{
+										"binding_name": "#hover_text",
+										"binding_type": "collection",
+										"binding_collection_name": "container_items"
+									},
+									{
+										"binding_type": "view",
+										"source_property_name": "(not ((#hover_text - '§0§a§2§8§r') = #hover_text))",
+										"target_property_name": "#visible"
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
 				"aetherium": {
 					"type": "collection_panel",
 					"collection_name": "container_items",
 					"$item_collection_name": "container_items",
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [154, 29],
-					"size": [16, 48],
+					"offset": [
+						16,
+						29
+					],
+					"size": [
+						16,
+						48
+					],
 					"controls": [
 						{
 							"item@common.container_item": {
 								"collection_index": 12,
-								"size": [16, 48],
-								"$cell_image_size": [16, 48],
+								"size": [
+									16,
+									48
+								],
+								"$cell_image_size": [
+									16,
+									48
+								],
 								"$cell_overlay_ref": "common.empty_panel",
 								"$background_images": "common.empty_panel",
 								"$button_ref": "uc.slot_button",
 								"$highlight_control": "uc.slot_highlight",
-								"$item_renderer_panel_size": [48, 48],
-								"$item_renderer_size": [48, 48],
+								"$item_renderer_panel_size": [
+									48,
+									48
+								],
+								"$item_renderer_size": [
+									48,
+									48
+								],
 								"$stack_count_required": false,
 								"$durability_bar_required": false,
 								"$storage_bar_required": false
@@ -1026,7 +2400,10 @@
 							"border": {
 								"type": "image",
 								"texture": "textures/ui/liquid_border",
-								"size": [16, 48],
+								"size": [
+									16,
+									48
+								],
 								"layer": 9
 							}
 						}
@@ -1034,41 +2411,45 @@
 				}
 			},
 			{
-				"amplify_slot@common.container_item": {
+				"central_potion@common.container_item": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [96, 26],
-					"size": [18, 18],
+					"offset": [
+						76,
+						31
+					],
+					"size": [
+						24,
+						24
+					],
 					"collection_index": 13,
 					"$item_collection_name": "container_items",
 					"$cell_overlay_ref": "alchemical_station.bottle_empty",
-					"$background_images": "alchemical_station.potion_slot_background"
-				}
-			},
-			{
-				"amplify_progress@uc.progress_display": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [96, 46],
-					"size": [18, 16],
-					"collection_index": 17,
-					"$cell_image_size": [18, 16],
-					"$item_renderer_panel_size": [18, 16],
-					"$item_renderer_size": [16, 16],
-					"$cell_overlay_ref": "common.empty_panel",
-					"$stack_count_required": false,
-					"$durability_bar_required": false,
-					"$storage_bar_required": false
+					"$background_images": "common.empty_panel",
+					"$cell_image_size": [
+						24,
+						24
+					],
+					"layer": 5
 				}
 			},
 			{
 				"amplify_button@uc.machine_button": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [96, 64],
-					"size": [18, 18],
+					"offset": [
+						44,
+						56
+					],
+					"size": [
+						18,
+						18
+					],
 					"$index": 15,
-					"$button_size": [18, 18],
+					"$button_size": [
+						18,
+						18
+					],
 					"$button_text": "",
 					"$default_texture": "textures/ui/toggle_button/recipe_base_unchecked",
 					"$hover_texture": "textures/ui/toggle_button/recipe_base_unchecked_hover",
@@ -1142,7 +2523,10 @@
 										"action_icon": {
 											"type": "image",
 											"texture": "textures/items/glowstone_dust",
-											"size": [12, 12],
+											"size": [
+												12,
+												12
+											],
 											"layer": 18
 										}
 									}
@@ -1153,41 +2537,22 @@
 				}
 			},
 			{
-				"extend_slot@common.container_item": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [132, 26],
-					"size": [18, 18],
-					"collection_index": 14,
-					"$item_collection_name": "container_items",
-					"$cell_overlay_ref": "alchemical_station.bottle_empty",
-					"$background_images": "alchemical_station.potion_slot_background"
-				}
-			},
-			{
-				"extend_progress@uc.progress_display": {
-					"anchor_from": "top_left",
-					"anchor_to": "top_left",
-					"offset": [132, 46],
-					"size": [18, 16],
-					"collection_index": 20,
-					"$cell_image_size": [18, 16],
-					"$item_renderer_panel_size": [18, 16],
-					"$item_renderer_size": [16, 16],
-					"$cell_overlay_ref": "common.empty_panel",
-					"$stack_count_required": false,
-					"$durability_bar_required": false,
-					"$storage_bar_required": false
-				}
-			},
-			{
 				"extend_button@uc.machine_button": {
 					"anchor_from": "top_left",
 					"anchor_to": "top_left",
-					"offset": [132, 64],
-					"size": [18, 18],
+					"offset": [
+						114,
+						56
+					],
+					"size": [
+						18,
+						18
+					],
 					"$index": 16,
-					"$button_size": [18, 18],
+					"$button_size": [
+						18,
+						18
+					],
 					"$button_text": "",
 					"$default_texture": "textures/ui/toggle_button/recipe_base_unchecked",
 					"$hover_texture": "textures/ui/toggle_button/recipe_base_unchecked_hover",
@@ -1261,12 +2626,107 @@
 										"action_icon": {
 											"type": "image",
 											"texture": "textures/items/redstone_dust",
-											"size": [12, 12],
+											"size": [
+												12,
+												12
+											],
 											"layer": 18
 										}
 									}
 								]
 							}
+						}
+					]
+				}
+			},
+			{
+				"selected_amplify": {
+					"type": "image",
+					"texture": "textures/ui/toggle_button/recipe_base_checked",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [
+						44,
+						56
+					],
+					"size": [
+						18,
+						18
+					],
+					"layer": 16,
+					"collection_index": 17,
+					"$item_collection_name": "container_items",
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§b§1§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"selected_extend": {
+					"type": "image",
+					"texture": "textures/ui/toggle_button/recipe_base_checked",
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [
+						114,
+						56
+					],
+					"size": [
+						18,
+						18
+					],
+					"layer": 16,
+					"collection_index": 20,
+					"$item_collection_name": "container_items",
+					"bindings": [
+						{
+							"binding_name": "#hover_text",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(not ((#hover_text - '§0§b§1§r') = #hover_text))",
+							"target_property_name": "#visible"
+						}
+					]
+				}
+			},
+			{
+				"legacy_potion@common.container_item": {
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"offset": [
+						79,
+						62
+					],
+					"size": [
+						18,
+						18
+					],
+					"collection_index": 14,
+					"$item_collection_name": "container_items",
+					"$background_images": "alchemical_station.potion_slot_background",
+					"$cell_overlay_ref": "alchemical_station.bottle_empty",
+					"bindings": [
+						{
+							"binding_name": "#item_id_aux",
+							"binding_type": "collection",
+							"binding_collection_name": "container_items"
+						},
+						{
+							"binding_type": "view",
+							"source_property_name": "(#item_id_aux > 0)",
+							"target_property_name": "#visible"
 						}
 					]
 				}

@@ -11,7 +11,7 @@
 	],
 	"header": {
 		"name": "§uUtilityCraft: Ascendant Technology§8",
-		"description": "v0.9.2",
+		"description": "v0.9.3",
 		"min_engine_version": [
 			1,
 			21,
@@ -21,7 +21,7 @@
 		"version": [
 			0,
 			9,
-			2
+			3
 		]
 	},
 	"modules": [
@@ -29,9 +29,9 @@
 			"type": "resources",
 			"uuid": "91d85c39-5c71-4597-b095-598a8436d59c",
 			"version": [
-				1,
 				0,
-				0
+				9,
+				3
 			]
 		}
 	],
@@ -41,7 +41,7 @@
 			"version": [
 				0,
 				9,
-				2
+				3
 			]
 		}
 	]

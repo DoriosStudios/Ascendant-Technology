@@ -1,6 +1,7 @@
 import { world, EntityTypes, ItemStack } from "@minecraft/server";
 import { FALLBACK_DROPS } from "./fallbackDrops.js";
 import { weightedChoice, randomInt } from "./essences.js";
+import { rollEnderlingTear } from "../../drops/mobDrops.js";
 
 const apiFailures = new Set();
 // Type-only API exposes no killer context. Conservatively use the local baseline
@@ -26,6 +27,15 @@ export function fallbackLoot(profile, random = Math.random) {
 }
 
 export function generateDeathLoot(profile, random = Math.random) {
+    const result = generateBaseDeathLoot(profile, random);
+    if (profile.mob === "enderman" && world.gameRules.doMobLoot) {
+        const tear = rollEnderlingTear({ typeId: profile.entityId }, random);
+        if (tear) result.push(tear);
+    }
+    return result;
+}
+
+function generateBaseDeathLoot(profile, random) {
     if (profile.size !== undefined || playerContextProfiles.has(profile.mob)) return fallbackLoot(profile, random);
     try {
         const entityType = EntityTypes.get(profile.entityId);

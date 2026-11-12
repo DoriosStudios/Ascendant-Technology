@@ -378,7 +378,7 @@ tile.utilitycraft:void_essence.tooltip=§r§o§9@UC: Ascendant Technology
 item.utilitycraft:liquid_void=Ampola de Vazio Líquido
 tile.utilitycraft:liquid_void.tooltip=§r§o§9@UC: Ascendant Technology
 item.utilitycraft:enderling_tear=Lágrima de Enderling
-tile.utilitycraft:enderling_tear.tooltip=§r§7- Queda dos mobs Enderling\n- Usada para craft\n  Interdimensional\n§o§9@UC: Ascendant Technology
+tile.utilitycraft:enderling_tear.tooltip=§r§7- Chance no Enderman: 0,01%\n- Chance nos Enderlings: 1%\n- Usada na poção Coletor de Almas\n§o§9@UC: Ascendant Technology
 item.utilitycraft:pure_enderling_tear=Lágrima Pura de Enderling
 tile.utilitycraft:pure_enderling_tear.tooltip=§r§7- Queda rara dos Enderlings\n- Material de craft premium\n§o§9@UC: Ascendant Technology
 

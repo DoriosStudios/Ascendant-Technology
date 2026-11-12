@@ -15,6 +15,8 @@ import {
 const ID = "utilitycraft:power_beacon";
 const TRANSMISSION_BUTTON_SLOT = 2;
 const TRANSMISSION_PROPERTY = "ascendant:power_beacon_transmission";
+const SELECTION_STATE = "utilitycraft:has_selection";
+const EMPTY_SELECTION_PROPERTY = "utilitycraft:selection_empty";
 
 // All inventory slots are UI controls; cables provide the stored energy.
 for (const tier of ["basic", "advanced", "expert", "ultimate", "absolute"]) {
@@ -69,7 +71,14 @@ DoriosLib.registry.blockComponent(ID, {
     },
 
     onTick(event, { params: settings }) {
-        const generator = new Generator(event.block, settings);
+        const entity = findPowerBeaconEntity(event.block);
+        // Keep the block reachable while its helper is missing or has a
+        // shrunken interaction box, including restored inconsistent states.
+        if ((!entity || entity.getProperty(EMPTY_SELECTION_PROPERTY) === true)
+            && DoriosLib.block.getState(event.block, SELECTION_STATE) === false) {
+            DoriosLib.block.setState(event.block, SELECTION_STATE, true);
+        }
+        const generator = new Generator(event.block, settings, () => entity);
         if (!generator.valid) return;
 
         const record = maintainPowerBeacon(generator.entity, settings.generator.range);

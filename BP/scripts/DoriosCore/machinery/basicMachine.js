@@ -237,6 +237,7 @@ export class BasicMachine {
    * @param {number} [limits.maxOutputSlotsMovedPerTick=9] Output slots moved per output face as full stacks.
    * @param {number} [limits.maxFluidMovedPerTick=2500] Fluid mB moved per tick.
    * @param {number} [limits.maxGasMovedPerTick=2500] Gas units moved per tick.
+   * @param {number[]} [limits.itemOutputSlots] Restricts this operation to the listed item output slots.
    * @returns {{itemsMoved:number, inputSlotsScanned:number, fluidMoved:number, gasMoved:number}} Transfer summary.
    */
   processIO(limits = {}) {
@@ -257,7 +258,7 @@ export class BasicMachine {
       this.itemIOReady = ensureItemIOConfig(this.entity, this.block.typeId);
     }
     if (this.itemIOReady && targets.items) {
-      this.#processItemIO(targets.items, maxInputScans, maxOutputSlots, summary);
+      this.#processItemIO(targets.items, maxInputScans, maxOutputSlots, summary, limits.itemOutputSlots);
     }
 
     if (!this.fluidIOReady) {
@@ -277,17 +278,18 @@ export class BasicMachine {
     return summary;
   }
 
-  #processItemIO(targets, maxInputScans, maxOutputSlots, summary) {
+  #processItemIO(targets, maxInputScans, maxOutputSlots, summary, allowedOutputSlots) {
     for (const direction of DIRECTIONS) {
       if (targets[direction] !== true) continue;
 
       const neighborLocation = OutputTracker.getNeighborLocation(this.block, direction);
       if (!neighborLocation) continue;
 
-      const outputSlots = DoriosContainer.getOutputSlots(this.entity, {
+      let outputSlots = DoriosContainer.getOutputSlots(this.entity, {
         face: direction,
         automatic: true,
       });
+      if (allowedOutputSlots) outputSlots = outputSlots.filter(slot => allowedOutputSlots.includes(slot));
       if (outputSlots.length > 0 && maxOutputSlots > 0) {
         const result = this.#pushOutputItems(neighborLocation, outputSlots, direction, maxOutputSlots);
         summary.itemsMoved += result.itemsMoved;

@@ -13,6 +13,7 @@ let maxLiquidsData;
  * Each index represents an independent tank slot (e.g., 0, 1, 2).
  */
 const objectives = new Map();
+const inputFilters = new Map();
 
 /**
  * Manages scoreboard-based fluid values for entities or machines.
@@ -24,6 +25,20 @@ const objectives = new Map();
  * to support large numbers efficiently while maintaining scoreboard safety.
  */
 export class FluidStorage {
+  /** Restricts incoming fluid types for a block, including external transfers. */
+  static registerInputFilter(blockTypeId, filter) {
+    inputFilters.set(blockTypeId, filter);
+  }
+
+  acceptsType(type) {
+    if (inputFilters.size === 0) return true;
+    const { dimension, location } = this.entity;
+    const block = dimension?.getBlock?.({
+      x: Math.floor(location.x), y: Math.floor(location.y), z: Math.floor(location.z),
+    });
+    const filter = inputFilters.get(block?.typeId);
+    return !filter || filter(type, this.index);
+  }
   /**
    * Creates a new FluidStorage instance for a specific entity and tank index.
    *
@@ -502,6 +517,7 @@ export class FluidStorage {
       FluidStorage.initializeObjectives(i);
 
       const tank = new FluidStorage(entity, i);
+      if (!tank.acceptsType(type)) continue;
       const tankType = tank.getType();
 
       // If this type already exists in any slot, keep using that slot
@@ -565,6 +581,7 @@ export class FluidStorage {
    */
   tryInsert(type, amount) {
     if (amount <= 0) return false;
+    if (!this.acceptsType(type)) return false;
     const currentType = this.getType();
     if (currentType === Constants.EMPTY_FLUID_TYPE || currentType === type) {
       if (amount <= this.getFreeSpace()) {
@@ -592,6 +609,7 @@ export class FluidStorage {
     const insertData = FluidStorage.itemFluidStorages[typeId];
     if (insertData) {
       const { type, amount, output, infinite } = insertData;
+      if (!this.acceptsType(type)) return false;
 
       if (infinite === true) {
         const currentType = this.getType();
@@ -794,7 +812,7 @@ export class FluidStorage {
    */
   getType() {
     const tag = this.entity.getTags().find((t) => t.startsWith(`fluid${this.index}Type:`));
-    return tag ? tag.split(":")[1] : Constants.EMPTY_FLUID_TYPE;
+    return tag ? tag.slice(tag.indexOf(":") + 1) : Constants.EMPTY_FLUID_TYPE;
   }
 
   /**
@@ -968,14 +986,16 @@ export class FluidStorage {
    * @returns {number} The actual amount transferred.
    */
   transferTo(other, amount) {
-    if (this.getType() !== other.getType() && other.getType() !== Constants.EMPTY_FLUID_TYPE) return 0;
+    const sourceType = this.getType();
+    if (!other.acceptsType(sourceType)) return 0;
+    if (sourceType !== other.getType() && other.getType() !== Constants.EMPTY_FLUID_TYPE) return 0;
 
     const transferable = Math.min(amount, this.get(), other.getFreeSpace());
     if (transferable <= 0) return 0;
 
+    if (other.getType() === Constants.EMPTY_FLUID_TYPE) other.setType(sourceType);
     this.consume(transferable);
     other.add(transferable);
-    if (other.getType() === Constants.EMPTY_FLUID_TYPE) other.setType(this.getType());
     return transferable;
   }
 

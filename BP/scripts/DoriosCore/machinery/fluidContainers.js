@@ -227,6 +227,7 @@ export function insertFluid(target, options) {
   for (const fluidIndex of indices) {
     const storage = getOrCreateStorage(resolved, fluidIndex, options.type);
     if (!storage) continue;
+    if (!storage.acceptsType(options.type)) continue;
     const currentType = storage.getType();
     if (currentType !== Constants.EMPTY_FLUID_TYPE && currentType !== options.type) continue;
     const free = storage.getFreeSpace();

@@ -81,6 +81,8 @@ const getRecipe = type => profile.recipeType === "steam_boiler"
     ? (type === "water" ? STEAM_BOILER_RECIPE : undefined)
     : getVaporworksRecipe(type);
 
+FluidStorage.registerInputFilter(ID, type => Boolean(getRecipe(type)));
+
 registerIOInterface(ID, {
     automaticDefaults: true,
     items: {
@@ -104,6 +106,7 @@ registerIOInterface(ID, {
         modes: [
             { id: "disabled" },
             { id: "input_1", inputIndices: [0] },
+            { id: "output_1", outputIndices: [0] },
         ],
     },
     gases: {
@@ -157,14 +160,18 @@ registerATMachine(ID, {
             processSharedContainer(machine.container, GAS_CONTAINER_INPUT_SLOT, steam, GasStorage, "gasItem");
             // Separate pulling and pushing: no face may export a newly imported
             // source container before its conversion has completed.
-            const liquidItem = machine.container.getItem(FLUID_CONTAINER_INPUT_SLOT);
-            const gasItem = machine.container.getItem(GAS_CONTAINER_INPUT_SLOT);
-            const pending = (liquidItem && FluidStorage.getContainerData(liquidItem.typeId))
-                || (gasItem && GasStorage.itemGasHolders[gasItem.typeId]);
-            if (!pending) machine.processIO({
+            const readySlots = [FLUID_CONTAINER_INPUT_SLOT, GAS_CONTAINER_INPUT_SLOT].filter(slot => {
+                const item = machine.container.getItem(slot);
+                if (!item) return false;
+                return slot === FLUID_CONTAINER_INPUT_SLOT
+                    ? !FluidStorage.getContainerData(item.typeId)
+                    : !GasStorage.itemGasHolders[item.typeId];
+            });
+            if (readySlots.length > 0) machine.processIO({
                 maxInputSlotsScannedPerTick: 0,
                 maxFluidMovedPerTick: 0,
                 maxGasMovedPerTick: 0,
+                itemOutputSlots: readySlots,
             });
         } else if (!boiler) {
             processFluidInputContainer(machine.container, liquid, getRecipe);

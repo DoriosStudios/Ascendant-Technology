@@ -795,7 +795,7 @@ export class GasStorage {
    */
   getType() {
     const tag = this.entity.getTags().find((t) => t.startsWith(`gas${this.index}Type:`));
-    return tag ? tag.split(":")[1] : Constants.EMPTY_GAS_TYPE;
+    return tag ? tag.slice(tag.indexOf(":") + 1) : Constants.EMPTY_GAS_TYPE;
   }
 
   /**

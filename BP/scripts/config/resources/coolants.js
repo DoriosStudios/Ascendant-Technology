@@ -3,8 +3,8 @@ import * as DoriosLib from "DoriosLib/index.js";
 
 export const coolantAdditions = {
     cryofluid: {
-        efficiency: 1.75,
-        tier: 2,
+        efficiency: 2.5,
+        tier: 4,
     },
 };
 
@@ -13,8 +13,8 @@ export const coolantAdditions = {
 // after their first processing tick.
 export const compatibleCoolants = {
     saline_coolant: {
-        efficiency: 1.25,
-        tier: 1,
+        efficiency: 1,
+        tier: 0,
     },
 };
 

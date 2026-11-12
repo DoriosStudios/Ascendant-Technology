@@ -18,12 +18,15 @@ This update fixes Genetic Seed Synthesizer processing, restores missing recipes 
 - Restored missing Resin Clump drops from Pale Oak Saplings.
 
 ## UI/UX
-- Updated English and Brazilian Portuguese Enderling Tear tooltips with drop chances and Soul Collector potion usage.
+- Updated Enderling Tear tooltips in all eight supported languages with drop chances and Soul Collector potion usage.
+- Updated machine help with Genetic Seed Synthesizer batch processing and configurable liquid output recovery.
 
 ## FLUIDS
 - Increased **Cryofluid** coolant efficiency from 1.75x to 2.5x and its coolant tier from 2 to 4.
 
 ## BUG FIXES
+- Fixed missing localization entries and untranslated English text across all eight supported languages, including potion names, tooltips, machine help, network screens, and recipe books.
+- Fixed the Alchemical Station recipe cost text displaying an invalid Blaze amount. It now shows 12,000 DE and 250 mB for six bottles.
 - Fixed **Power Beacon** hitboxes across all five tiers, restoring mining while sneaking and opening the interface while standing. Newly placed beacons start selectable, and block selection recovers when the interaction helper is missing or its hitbox is disabled.
 - Fixed breaking machines, generators, and multiblock controllers removing previously dropped blocks of the same type. Merged item stacks retain their remaining items, and repeated destruction callbacks produce a single machine drop.
 - Fixed **Forger** and **Berserk** conversions consuming item stacks that were already on the ground near the mined block.

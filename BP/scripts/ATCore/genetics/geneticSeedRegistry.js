@@ -68,11 +68,15 @@ function normalizeRecipe(inputTypeId, definition, overrides) {
     for (const rawDrop of definition.drops) {
         if (!rawDrop || typeof rawDrop.item !== "string" || rawDrop.item.length === 0) continue;
         const item = overrides?.[rawDrop.item] ?? rawDrop.item;
-        const chance = clamp(Number(rawDrop.chance), 0, 1);
+        const reproductive = isReproductiveDrop(item, inputTypeId);
+        const concentratedDye = inputTypeId === "utilitycraft:dyes_seeds" && !reproductive;
+        const chance = clamp(Number(rawDrop.chance), 0, 1) * (concentratedDye ? 0.5 : 1);
         if (chance <= 0) continue;
 
-        const amount = normalizeAmount(rawDrop.amount);
-        const reproductive = isReproductiveDrop(item, inputTypeId);
+        const baseAmount = normalizeAmount(rawDrop.amount);
+        const amount = concentratedDye
+            ? (Array.isArray(baseAmount) ? baseAmount.map(value => value * 2) : baseAmount * 2)
+            : baseAmount;
         const average = Array.isArray(amount) ? (amount[0] + amount[1]) / 2 : amount;
         drops.push({ item, amount, chance, reproductive });
         outputTypeIds.add(item);

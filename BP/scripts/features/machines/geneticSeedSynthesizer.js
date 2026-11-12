@@ -33,6 +33,7 @@ const SOIL_SLOT = 5;
 const COOLANT_DISPLAY_SLOT = 6;
 const OUTPUT_SLOTS = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
 const OPERATION_KEY = "ascendant:genetic_seed_operation";
+const PENDING_OUTPUT_KEY = "ascendant:genetic_seed_pending_output";
 const FLUID_IO_RATE = 128000;
 const MACHINE_UPDATES_PER_SECOND = 5;
 const itemMaximums = new Map();
@@ -94,6 +95,14 @@ registerATMachine(ID, {
         const coolantTank = new FluidStorage(machine.entity, 0);
         machine.processIO({ maxFluidMovedPerTick: FLUID_IO_RATE });
         const profile = STANDARD_PROFILE;
+        if (machine.entity.getDynamicProperty(PENDING_OUTPUT_KEY)) {
+            const distribution = flushPendingOutputs(machine);
+            if (machine.shouldUpdateUI) coolantTank.display(COOLANT_DISPLAY_SLOT);
+            renderMachineStatus(machine, coolantTank, false,
+                distribution.overflow > 0 ? "Output Full" : "Synthesized", profile,
+                null, null, distribution.inserted, distribution.overflow);
+            return;
+        }
         const soilItem = machine.container.getItem(SOIL_SLOT);
         if (!soilItem) {
             resetProcess(machine, coolantTank, settings.machine.energy_cost, "Insert Soil", profile);
@@ -111,7 +120,7 @@ registerATMachine(ID, {
             resetProcess(machine, coolantTank, settings.machine.energy_cost, "Insert Seeds", profile, soil);
             return;
         }
-        if (operation.validCount === 0 || !canFitOperation(machine.container, operation)) {
+        if (operation.validCount === 0 || !hasOutputSpace(machine.container)) {
             resetProcess(
                 machine,
                 coolantTank,
@@ -134,7 +143,8 @@ registerATMachine(ID, {
             pauseProcess(machine, coolantTank, operation, "Invalid Coolant");
             return;
         }
-        const coolantCost = Math.max(1, Math.ceil(operation.coolantCost / coolant.efficiency));
+        const coolantCosts = operation.lanes.map(lane => Math.max(1, Math.ceil(lane.coolantCost / coolant.efficiency)));
+        const coolantCost = operation.lanes.reduce((total, lane, index) => total + lane.crafts * coolantCosts[index], 0);
         if (coolantTank.get() < coolantCost) {
             setDynamicNumber(machine.entity, "dorios:progress_0", 0);
             pauseProcess(machine, coolantTank, operation, "Low Coolant", coolant, coolantCost);
@@ -158,13 +168,30 @@ registerATMachine(ID, {
         let overflow = 0;
         if (result.processCount > 0) {
             const rolled = rollOperation(operation, profile);
-            const distribution = insertOutputs(machine, rolled);
-            produced = distribution.inserted;
-            overflow = distribution.overflow;
-            coolantTank.consume(resourceCost(machine, coolantCost, coolantCost));
+            const paidCoolant = operation.lanes.reduce((total, lane, index) =>
+                total + resourceCost(machine, lane.crafts * coolantCosts[index], coolantCosts[index]), 0);
+            let consumed = 0;
+            try {
+                // Persist the complete roll before touching the inventory. A full
+                // output pauses delivery and never rolls the same operation again.
+                savePendingOutputs(machine.entity, rolled);
+                consumed = coolantTank.consume(paidCoolant);
+                if (consumed !== paidCoolant) throw new Error("Coolant unavailable at synthesis commit");
+            } catch (error) {
+                machine.entity.setDynamicProperty(PENDING_OUTPUT_KEY, undefined);
+                if (consumed > 0) coolantTank.add(consumed);
+                result.progress += result.cost;
+                result.processCount = 0;
+                console.warn(`[Genetic Seed Synthesizer] Batch preserved for retry: ${error}`);
+            }
         }
 
         setDynamicNumber(machine.entity, "dorios:progress_0", result.progress);
+        if (result.processCount > 0) {
+            const distribution = flushPendingOutputs(machine);
+            produced = distribution.inserted;
+            overflow = distribution.overflow;
+        }
         setDynamicNumber(machine.entity, "dorios:energy_cost_0", operation.energyCost);
         displayProgress(machine, operation.energyCost);
         if (machine.shouldUpdateUI) coolantTank.display(COOLANT_DISPLAY_SLOT);
@@ -178,7 +205,9 @@ registerATMachine(ID, {
         renderMachineStatus(machine, coolantTank, active, message, profile, soil, operation, produced, overflow, coolant, coolantCost);
     },
 
-    onPlayerBreak(event) {
+    onPlayerBreak(event, { params: settings }) {
+        const machine = new Machine(event.block, { ...settings, ignoreTick: true });
+        if (machine.valid) dropPendingOutputs(machine.entity);
         Machine.onDestroy(event);
     },
 });
@@ -188,9 +217,9 @@ function buildOperation(machine, soil, profile) {
     let seedCount = 0;
     let invalidCount = 0;
     let energyCost = 0;
-    let coolantCost = 0;
     let cycleSeconds = 0;
     let expectedOutput = 0;
+    const batch = Math.max(1, Math.floor(machine.boosts.process_batch ?? 1));
     let key = `${profile.id}|${soil.typeId}`;
     let activeKey = "";
 
@@ -203,7 +232,8 @@ function buildOperation(machine, soil, profile) {
         }
 
         seedCount++;
-        key += `|${slot}:${seed.typeId}`;
+        const crafts = Math.min(seed.amount, batch);
+        key += `|${slot}:${seed.typeId}:${crafts}`;
         const recipe = getGeneticSeedRecipe(seed.typeId);
         if (!recipe) {
             invalidCount++;
@@ -214,12 +244,11 @@ function buildOperation(machine, soil, profile) {
             1,
             Math.ceil(Math.max(25, Math.ceil(laneEnergy / 256)) * 1.75 * profile.coolant),
         );
-        lanes.push({ slot, recipe });
+        lanes.push({ slot, recipe, crafts, coolantCost: laneCoolant });
         activeKey += `${activeKey ? "," : ""}${slot}`;
         energyCost += laneEnergy;
-        coolantCost += laneCoolant;
         cycleSeconds = Math.max(cycleSeconds, recipe.cycleSeconds);
-        expectedOutput += recipe.expectedBase + recipe.expectedBonus * profile.bonusRollChance;
+        expectedOutput += crafts * (recipe.expectedBase + recipe.expectedBonus * profile.bonusRollChance);
     }
 
     key += `|active:${activeKey}`;
@@ -228,64 +257,33 @@ function buildOperation(machine, soil, profile) {
         soil,
         profile,
         lanes,
+        batch,
         seedCount,
         invalidCount,
         validCount: lanes.length,
         energyCost,
-        coolantCost,
         cycleSeconds,
         expectedOutput: Math.round(expectedOutput),
     };
 }
 
-/**
- * Reserves room for every possible result before an operation starts.  This
- * avoids charging the machine and then dropping an overflow stack on the
- * ground when a multi-drop recipe rolls more than the remaining space.
- */
-function canFitOperation(container, operation) {
-    const required = new Map();
-    const freeInExistingStacks = new Map();
-    let emptySlots = 0;
-
-    for (const lane of operation.lanes) {
-        for (const drop of lane.recipe.drops) {
-            const maximum = Array.isArray(drop.amount) ? drop.amount[1] : drop.amount;
-            required.set(drop.item, (required.get(drop.item) ?? 0) + maximum);
-        }
-    }
-
-    for (const slot of OUTPUT_SLOTS) {
+function hasOutputSpace(container) {
+    return OUTPUT_SLOTS.some(slot => {
         const item = container.getItem(slot);
-        if (!item) {
-            emptySlots++;
-            continue;
-        }
-        freeInExistingStacks.set(
-            item.typeId,
-            (freeInExistingStacks.get(item.typeId) ?? 0) + Math.max(0, item.maxAmount - item.amount),
-        );
-    }
-
-    let requiredSlots = 0;
-    for (const [typeId, amount] of required) {
-        const remaining = Math.max(0, amount - (freeInExistingStacks.get(typeId) ?? 0));
-        if (remaining <= 0) continue;
-        const maximum = getItemMaximum(typeId);
-        if (maximum <= 0) return false;
-        requiredSlots += Math.ceil(remaining / maximum);
-    }
-    return requiredSlots <= emptySlots;
+        return !item || item.amount < item.maxAmount;
+    });
 }
 
 function rollOperation(operation, profile) {
     const rolled = new Map();
     for (const lane of operation.lanes) {
-        for (const drop of lane.recipe.drops) {
-            if (Math.random() > drop.chance) continue;
-            addRoll(rolled, drop.item, randomAmount(drop.amount));
-            if (!drop.reproductive && profile.bonusRollChance > 0 && Math.random() <= profile.bonusRollChance) {
+        for (let craft = 0; craft < lane.crafts; craft++) {
+            for (const drop of lane.recipe.drops) {
+                if (Math.random() >= drop.chance) continue;
                 addRoll(rolled, drop.item, randomAmount(drop.amount));
+                if (!drop.reproductive && profile.bonusRollChance > 0 && Math.random() <= profile.bonusRollChance) {
+                    addRoll(rolled, drop.item, randomAmount(drop.amount));
+                }
             }
         }
     }
@@ -305,11 +303,57 @@ function addRoll(rolled, typeId, amount) {
 
 function insertOutputs(machine, rolled) {
     let inserted = 0;
+    let overflow = 0;
     for (const [typeId, amount] of rolled) {
         const accepted = insertSingleOutput(machine.container, typeId, amount);
         inserted += accepted;
+        if (accepted === amount) rolled.delete(typeId);
+        else {
+            rolled.set(typeId, amount - accepted);
+            overflow += amount - accepted;
+        }
     }
-    return { inserted, overflow: 0 };
+    return { inserted, overflow };
+}
+
+function savePendingOutputs(entity, rolled) {
+    entity.setDynamicProperty(PENDING_OUTPUT_KEY, rolled.size > 0 ? JSON.stringify([...rolled]) : undefined);
+}
+
+function flushPendingOutputs(machine) {
+    const raw = machine.entity.getDynamicProperty(PENDING_OUTPUT_KEY);
+    if (!raw) return { inserted: 0, overflow: 0 };
+    const rolled = new Map(JSON.parse(String(raw)));
+    const previous = OUTPUT_SLOTS.map(slot => machine.container.getItem(slot));
+    try {
+        const distribution = insertOutputs(machine, rolled);
+        savePendingOutputs(machine.entity, rolled);
+        return distribution;
+    } catch (error) {
+        for (let index = 0; index < OUTPUT_SLOTS.length; index++) {
+            machine.container.setItem(OUTPUT_SLOTS[index], previous[index]);
+        }
+        throw error;
+    }
+}
+
+function dropPendingOutputs(entity) {
+    const raw = entity.getDynamicProperty(PENDING_OUTPUT_KEY);
+    if (!raw) return;
+    const rolled = new Map(JSON.parse(String(raw)));
+    for (const [typeId, amount] of rolled) {
+        let remaining = amount;
+        const maximum = getItemMaximum(typeId);
+        if (maximum <= 0) throw new Error(`Unavailable pending output: ${typeId}`);
+        while (remaining > 0) {
+            const count = Math.min(remaining, maximum);
+            entity.dimension.spawnItem(new ItemStack(typeId, count), entity.location);
+            remaining -= count;
+            if (remaining > 0) rolled.set(typeId, remaining);
+            else rolled.delete(typeId);
+            savePendingOutputs(entity, rolled);
+        }
+    }
 }
 
 function insertSingleOutput(container, typeId, amount) {
@@ -410,7 +454,7 @@ function renderMachineStatus(machine, coolantTank, running, message, profile, so
     renderMachineInfo(machine, running, message, sections, {
         energyCost: operation?.energyCost,
         rateMultiplier,
-        batch: 1,
+        batch: operation?.batch ?? 1,
     });
 }
 

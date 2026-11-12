@@ -53,6 +53,44 @@ export const geneticSeedRecipeDefinitions = {
 			{ item: "minecraft:bamboo", amount: [4, 8], chance: 1 }
 		]
 	},
+	"minecraft:azalea": {
+		cost: 8000,
+		drops: [
+			{ item: "minecraft:oak_log", amount: [4, 9], chance: 1 },
+			{ item: "minecraft:azalea_leaves", amount: [2, 5], chance: 1 },
+			{ item: "minecraft:stick", amount: [6, 8], chance: 1 },
+			{ item: "minecraft:azalea", amount: [1, 2], chance: 0.1 },
+			{ item: "minecraft:flowering_azalea", amount: 1, chance: 0.02 }
+		]
+	},
+	"minecraft:flowering_azalea": {
+		cost: 8000,
+		drops: [
+			{ item: "minecraft:oak_log", amount: [4, 9], chance: 1 },
+			{ item: "minecraft:flowering_azalea_leaves", amount: [2, 5], chance: 1 },
+			{ item: "minecraft:stick", amount: [6, 8], chance: 1 },
+			{ item: "minecraft:flowering_azalea", amount: [1, 2], chance: 0.2 },
+			{ item: "minecraft:spore_flower", amount: 1, chance: 0.05 }
+		]
+	},
+	"minecraft:chorus_fruit": {
+		cost: 8000,
+		drops: [
+			{ item: "minecraft:chorus_fruit", amount: [1, 2], chance: 1 },
+			{ item: "minecraft:chorus_flower", amount: 1, chance: 0.05 }
+		]
+	},
+	"minecraft:sea_pickle": {
+		cost: 8000,
+		drops: [{ item: "minecraft:sea_pickle", amount: [1, 4], chance: 1 }]
+	},
+	"utilitycraft:resin_seeds": {
+		cost: 128000,
+		drops: [
+			{ item: "minecraft:resin_clump", amount: [3, 6], chance: 1 },
+			{ item: "utilitycraft:resin_seeds", amount: 1, chance: 0.1 }
+		]
+	},
 	"minecraft:beetroot_seeds": {
 		cost: 8000,
 		drops: [
@@ -182,6 +220,7 @@ export const geneticSeedRecipeDefinitions = {
 			{ item: "minecraft:pale_oak_log", amount: [6, 10], chance: 1 },
 			{ item: "minecraft:pale_oak_leaves", amount: [0, 4], chance: 1 },
 			{ item: "minecraft:stick", amount: [0, 6], chance: 1 },
+			{ item: "minecraft:resin_clump", amount: [1, 2], chance: 0.03 },
 			{ item: "minecraft:pale_oak_sapling", amount: 1, chance: 0.05 }
 		]
 	},
@@ -255,23 +294,23 @@ export const geneticSeedRecipeDefinitions = {
 	"utilitycraft:dyes_seeds": {
 		cost: 64000,
 		drops: [
-			{ item: "minecraft:black_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:blue_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:brown_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:cyan_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:gray_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:green_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:light_blue_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:light_gray_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:lime_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:magenta_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:orange_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:pink_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:purple_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:red_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:white_dye", amount: 1, chance: 0.05 },
-			{ item: "minecraft:yellow_dye", amount: 1, chance: 0.05 },
-			{ item: "utilitycraft:dyes_seeds", amount: 1, chance: 0.05 }
+			{ item: "minecraft:black_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:blue_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:brown_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:cyan_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:gray_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:green_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:light_blue_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:light_gray_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:lime_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:magenta_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:orange_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:pink_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:purple_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:red_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:white_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "minecraft:yellow_dye", amount: [1, 2], chance: 0.5 },
+			{ item: "utilitycraft:dyes_seeds", amount: 1, chance: 0.12 }
 		]
 	},
 	"utilitycraft:glass_seeds": {

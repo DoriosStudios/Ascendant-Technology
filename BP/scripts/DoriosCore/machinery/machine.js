@@ -16,6 +16,7 @@ import { TickScheduler } from "./tickScheduler.js";
 import { MachineUpgradeRegistry } from "./machineUpgrades.js";
 import { Rotation } from "../utils/rotation";
 import * as Utils from "../utils/entity";
+import { takeNativeDropSnapshot, replaceNativeBlockDrop, queueBlockDestruction } from "../utils/nativeDrops.js";
 import { InterfaceManager } from "../interfaces/index.js";
 import { ensureItemIOConfig } from "../interfaces/itemIO.js";
 import { ensureFluidIOConfig } from "../interfaces/fluidIO.js";
@@ -88,11 +89,13 @@ export class Machine extends BasicMachine {
    * @returns {boolean} True when a matching machine entity was found and queued for removal.
    */
   static onDestroy(e) {
-    const { block, brokenBlockPermutation, player, dimension: dim } = e;
-    const entity = dim.getEntitiesAtBlockLocation(block.location)[0];
+    const { block, brokenBlockPermutation, dimension: dim } = e;
+    const entity = dim.getEntitiesAtBlockLocation(block.location).find(candidate =>
+      candidate.getComponent("minecraft:type_family")?.hasTypeFamily("utilitycraft:block_container"));
     if (!entity) return false;
 
     const blockItemId = brokenBlockPermutation.type.id;
+    const nativeDrop = takeNativeDropSnapshot(dim, block.location, blockItemId);
     const blockItem = new ItemStack(blockItemId);
     const lore = createResourceLore(entity);
 
@@ -101,23 +104,12 @@ export class Machine extends BasicMachine {
     }
 
     // Drop item and cleanup
-    system.run(() => {
-      if (DoriosLib.player.isSurvival(player)) {
-        const oldItemEntity = dim
-          .getEntities({
-            type: "item",
-            maxDistance: 3,
-            location: block.center(),
-          })
-          .find((item) => item.getComponent("minecraft:item")?.itemStack?.typeId === blockItemId);
-        oldItemEntity?.remove();
-      }
+    return queueBlockDestruction(entity, () => {
+      if (!replaceNativeBlockDrop(nativeDrop, blockItem)) dim.spawnItem(blockItem, block.center());
       TickScheduler.releaseTickGroup(entity);
       Utils.dropAllItems(entity);
       entity.remove();
-      dim.spawnItem(blockItem, block.center());
     });
-    return true;
   }
 
   /**

@@ -11,6 +11,7 @@ import {
     CROP_GROWTH_CONFIG,
 } from "../config/mining.js";
 import { ItemStack, system, world } from "@minecraft/server";
+import { takeNativeDropSnapshot, replaceNativeBlockDrop } from "../../../DoriosCore/utils/nativeDrops.js";
 import { ITEM_TYPES, STATSCORE } from "../constants.js";
 import { getEquipment, persistEquipmentItem } from "../core/equipment.js";
 import { getProgressAmount, grantStatsProgress } from "../progression/refinement.js";
@@ -425,35 +426,12 @@ function executeOperatorBreak(snapshot) {
     system.run(() => processMiningBreak(snapshot)); 
 }
 
-function removeNativeBlockDrops(snapshot, acceptedItemIds) {
-    if (!snapshot?.dimension || !snapshot?.location) return false;
-    const accepted = new Set((acceptedItemIds ?? []).map(normalizeBlockId));
-    let removed = false;
-
-    try {
-        for (const entity of snapshot.dimension.getEntities({
-            type: "item",
-            location: { x: snapshot.location.x + 0.5, y: snapshot.location.y + 0.5, z: snapshot.location.z + 0.5 },
-            maxDistance: 1.75,
-        })) {
-            const stack = entity?.getComponent?.("minecraft:item")?.itemStack;
-            if (!accepted.has(normalizeBlockId(stack?.typeId))) continue;
-            entity.remove();
-            removed = true;
-        }
-    } catch { }
-
-    return removed;
-}
-
 function executeForgerNetherrackBreak(snapshot) {
-    if (!removeNativeBlockDrops(snapshot, ["minecraft:netherrack"])) return false;
-    const applied = spawnBonusDropCount(snapshot.dimension, snapshot.location, "minecraft:nether_brick", 4);
+    const applied = replaceNativeBlockDrop(snapshot.nativeDrop, new ItemStack("minecraft:nether_brick", 4));
     if (applied) {
         showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "\u00A7bForger Bricks" });
     }
     return applied;
-    system.run(() => processMiningBreak(snapshot));
 }
 
 function executeGardenerBreak(snapshot) {
@@ -732,9 +710,7 @@ function executeBerserkLogConversion(snapshot, effect, pendingState = null) {
     const extraMin = Math.max(1, Math.floor(Number(effect?.extraPlanksMin ?? 1) || 1));
     const extraMax = Math.max(extraMin, Math.floor(Number(effect?.extraPlanksMax ?? 4) || 4));
     const totalAmount = 4 + rollInclusiveAmount(extraMin, extraMax);
-    if (!removeNativeBlockDrops(snapshot, [snapshot.blockId])) return false;
-
-    const applied = spawnBonusDropCount(snapshot.dimension, snapshot.location, plankId, totalAmount);
+    const applied = replaceNativeBlockDrop(snapshot.nativeDrop, new ItemStack(plankId, totalAmount));
     if (!applied) return false;
     showMiningFeedback(snapshot.player, snapshot.blockId, { bonusDrop: true, bonusXp: false, bonusDropLabel: "\u00A7bBerserk Planks" });
     return true;
@@ -881,6 +857,7 @@ function handleBeforeBreak(event) {
 function handleAfterBreak(event) {
     const snapshot = snapshotBreakEvent(event);
     if (!snapshot) return;
+    snapshot.nativeDrop = takeNativeDropSnapshot(snapshot.dimension, snapshot.location, snapshot.blockId);
 
     system.run(() => {
         const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);

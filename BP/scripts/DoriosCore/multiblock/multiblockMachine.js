@@ -15,6 +15,7 @@ import { DeactivationManager } from "./deactivationManager.js";
 import { EntityManager } from "./entityManager.js";
 import { StructureDetector } from "./structureDetection.js";
 import * as Utils from "../utils/entity.js";
+import { takeNativeDropSnapshot, replaceNativeBlockDrop, queueBlockDestruction } from "../utils/nativeDrops.js";
 import * as Constants from "./constants.js";
 import { ensureGasIOConfig } from "../interfaces/gasIO.js";
 
@@ -204,11 +205,12 @@ export class MultiblockMachine extends BasicMachine {
    * @returns {boolean} `true` if a controller entity was found and removed.
    */
   static onDestroy(e) {
-    const { block, brokenBlockPermutation, player, dimension: dim } = e;
+    const { block, brokenBlockPermutation, dimension: dim } = e;
     const entity = EntityManager.getControllerEntityFromBlock(block, brokenBlockPermutation);
     if (!entity) return false;
 
     const blockItemId = brokenBlockPermutation.type.id;
+    const nativeDrop = takeNativeDropSnapshot(dim, block.location, blockItemId);
     const blockItem = new ItemStack(blockItemId);
     const lore = createResourceLore(entity);
 
@@ -216,24 +218,11 @@ export class MultiblockMachine extends BasicMachine {
       blockItem.setLore(lore);
     }
 
-    system.run(() => {
-      if (DoriosLib.player.isSurvival(player)) {
-        const oldItemEntity = dim
-          .getEntities({
-            type: "item",
-            maxDistance: 3,
-            location: block.center(),
-          })
-          .find((item) => item.getComponent("minecraft:item")?.itemStack?.typeId === blockItemId);
-        oldItemEntity?.remove();
-      }
-
+    return queueBlockDestruction(entity, () => {
+      if (!replaceNativeBlockDrop(nativeDrop, blockItem)) dim.spawnItem(blockItem, block.center());
       Utils.dropAllItems(entity);
       entity.remove();
-      dim.spawnItem(blockItem, block.center());
     });
-
-    return true;
   }
 
   /**

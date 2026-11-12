@@ -12,17 +12,11 @@ export const RESOURCE_LORE_MARKERS = Object.freeze({
 const MAX_LORE_LINES = 20;
 const MAX_LORE_LINE_LENGTH = 50;
 const VISIBLE_COLOR = "§7";
+const EXACT_LORE_MARKER = "§r§r";
+const CONTINUATION_MARKER = "§r§r§8";
 
 function stripFormatting(value) {
   return String(value ?? "").replace(/§./g, "").trim();
-}
-
-function formatType(type) {
-  return String(type ?? "")
-    .split("_")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
 }
 
 function encodeIndex(index) {
@@ -51,21 +45,20 @@ function makeLine(prefix, label, stored, capacity) {
   if (withCapacity.length <= MAX_LORE_LINE_LENGTH) return withCapacity;
 
   const storedOnly = `${prefix}${VISIBLE_COLOR}  ${label}: ${stored}`;
-  if (storedOnly.length <= MAX_LORE_LINE_LENGTH) return storedOnly;
-
-  throw new RangeError(`Resource lore line exceeds ${MAX_LORE_LINE_LENGTH} characters: ${stripFormatting(storedOnly)}`);
+  return storedOnly;
 }
 
 /**
  * @param {number} amount Stored energy.
  * @param {number} cap Maximum energy capacity.
+ * @param {boolean} [exact=false] Preserve the stored amount for block restoration.
  * @returns {string} Encoded energy lore line.
  */
-export function buildEnergyLoreLine(amount, cap) {
+export function buildEnergyLoreLine(amount, cap, exact = false) {
   return makeLine(
     RESOURCE_LORE_MARKERS.energy,
     "Energy",
-    EnergyStorage.formatEnergyToText(amount),
+    exact ? `${amount} DE` : EnergyStorage.formatEnergyToText(amount),
     EnergyStorage.formatEnergyToText(cap),
   );
 }
@@ -78,13 +71,10 @@ export function buildEnergyLoreLine(amount, cap) {
  * @returns {string} Encoded fluid lore line.
  */
 export function buildFluidLoreLine(index, type, amount, cap) {
-  const stored = type === "xp"
-    ? `${Math.floor(amount)} mB`
-    : FluidStorage.formatFluid(amount);
   return makeLine(
-    `${RESOURCE_LORE_MARKERS.fluid}${encodeIndex(index)}`,
-    formatType(type),
-    stored,
+    `${RESOURCE_LORE_MARKERS.fluid}${encodeIndex(index)}${EXACT_LORE_MARKER}`,
+    type,
+    `${amount} mB`,
     FluidStorage.formatFluid(cap),
   );
 }
@@ -98,9 +88,9 @@ export function buildFluidLoreLine(index, type, amount, cap) {
  */
 export function buildGasLoreLine(index, type, amount, cap) {
   return makeLine(
-    `${RESOURCE_LORE_MARKERS.gas}${encodeIndex(index)}`,
-    `Gas (${formatType(type)})`,
-    GasStorage.formatGas(amount),
+    `${RESOURCE_LORE_MARKERS.gas}${encodeIndex(index)}${EXACT_LORE_MARKER}`,
+    `Gas (${type})`,
+    `${amount} mB`,
     GasStorage.formatGas(cap),
   );
 }
@@ -135,7 +125,7 @@ export function createResourceLore(entity, options = {}) {
   if (includeEnergy) {
     const energy = new EnergyStorage(entity);
     const amount = energy.get();
-    if (amount > 0) lore.push(buildEnergyLoreLine(amount, energy.getCap()));
+    if (amount > 0) lore.push(buildEnergyLoreLine(amount, energy.getCap(), true));
   }
 
   if (includeFluids) {
@@ -160,10 +150,21 @@ export function createResourceLore(entity, options = {}) {
     }
   }
 
-  if (lore.length > MAX_LORE_LINES) {
+  const lines = lore.flatMap(line => {
+    const parts = [];
+    while (line.length > MAX_LORE_LINE_LENGTH) {
+      const end = line[MAX_LORE_LINE_LENGTH - 1] === "§"
+        ? MAX_LORE_LINE_LENGTH - 1 : MAX_LORE_LINE_LENGTH;
+      parts.push(line.slice(0, end));
+      line = CONTINUATION_MARKER + line.slice(end);
+    }
+    parts.push(line);
+    return parts;
+  });
+  if (lines.length > MAX_LORE_LINES) {
     throw new RangeError(`Resource lore exceeds the ${MAX_LORE_LINES}-line ItemStack limit.`);
   }
-  return lore;
+  return lines;
 }
 
 function setIndexedResource(target, entry) {
@@ -185,7 +186,16 @@ export function parseResourceLore(lore) {
   let energy = 0;
   let hasMarkedEnergy = false;
 
+  const lines = [];
   for (const rawLine of Array.isArray(lore) ? lore : []) {
+    const line = String(rawLine ?? "");
+    if (line.startsWith(CONTINUATION_MARKER) && lines.length > 0) {
+      lines[lines.length - 1] += line.slice(CONTINUATION_MARKER.length);
+    } else {
+      lines.push(line);
+    }
+  }
+  for (const rawLine of lines) {
     const line = String(rawLine ?? "");
 
     if (line.startsWith(RESOURCE_LORE_MARKERS.energy)) {
@@ -196,13 +206,17 @@ export function parseResourceLore(lore) {
 
     if (line.startsWith(RESOURCE_LORE_MARKERS.fluid)) {
       const { index, content } = decodeIndex(line, RESOURCE_LORE_MARKERS.fluid);
-      setIndexedResource(fluids, { index, ...FluidStorage.getFluidFromText(content) });
+      const entry = content.startsWith(EXACT_LORE_MARKER)
+        ? parseExactResource(content, false) : FluidStorage.getFluidFromText(content);
+      setIndexedResource(fluids, { index, ...entry });
       continue;
     }
 
     if (line.startsWith(RESOURCE_LORE_MARKERS.gas)) {
       const { index, content } = decodeIndex(line, RESOURCE_LORE_MARKERS.gas);
-      setIndexedResource(gases, { index, ...GasStorage.getGasFromText(content) });
+      const entry = content.startsWith(EXACT_LORE_MARKER)
+        ? parseExactResource(content, true) : GasStorage.getGasFromText(content);
+      setIndexedResource(gases, { index, ...entry });
       continue;
     }
 
@@ -237,6 +251,14 @@ export function parseResourceLore(lore) {
  */
 export function getResourcesFromItem(item) {
   return parseResourceLore(item?.getLore?.() ?? []);
+}
+
+function parseExactResource(content, gas) {
+  const cleaned = stripFormatting(content);
+  const match = gas
+    ? cleaned.match(/^Gas \((.+)\):\s*(\S+) mB(?:\/|$)/)
+    : cleaned.match(/^(.+):\s*(\S+) mB(?:\/|$)/);
+  return match ? { type: match[1], amount: Number(match[2]) } : {};
 }
 
 function restoreIndexed(entries, managers) {

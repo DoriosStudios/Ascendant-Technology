@@ -4,7 +4,15 @@
         "description": {
             "identifier": "utilitycraft:alchemical_potion_projectile",
             "is_spawnable": false,
-            "is_summonable": true
+            "is_summonable": true,
+            "properties": {
+                "ascendant:potion_visual": {
+                    "type": "int",
+                    "range": [0, 69],
+                    "default": 0,
+                    "client_sync": true
+                }
+            }
         },
         "components": {
             "minecraft:collision_box": {
@@ -16,8 +24,9 @@
                 "is_pushable": false
             },
             "minecraft:projectile": {
-                "gravity": 0.05,
-                "power": 0.6,
+                "gravity": 0.018,
+                "power": 0.3,
+                "inertia": 0.9939879436616983,
                 "anchor": 1,
                 "offset": [
                     0,

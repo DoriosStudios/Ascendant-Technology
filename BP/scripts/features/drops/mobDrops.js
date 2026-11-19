@@ -7,6 +7,7 @@ const ENDERLING_ID = /enderling|blastling|snareling|watchling|endersent/;
 const AUXILIARY_ID = /(?:^|[:_])(?:projectile|ammo|goo|web|trap)(?:[:_]|$)/;
 
 export function getEnderlingTearChance(entity) {
+    if (!entity || entity.isValid === false) return 0;
     if (entity.typeId === "minecraft:enderman") return ENDERMAN_TEAR_CHANCE;
     const family = entity.getComponent?.("minecraft:type_family");
     if (family?.hasTypeFamily("projectile") || family?.hasTypeFamily("inanimate")) return 0;
@@ -25,7 +26,8 @@ export function rollEnderlingTear(entity, random = Math.random) {
 
 // One hide per Silverfish, including automated kills; no Looting multiplier.
 world.afterEvents.entityDie.subscribe(({ deadEntity }) => {
-    if (!world.gameRules.doMobLoot) return;
+    // Some projectiles are already removed when their death event is delivered.
+    if (!world.gameRules.doMobLoot || !deadEntity.isValid) return;
     if (deadEntity.typeId === "minecraft:silverfish") {
         deadEntity.dimension.spawnItem(new ItemStack("utilitycraft:contaminated_hide", 1), deadEntity.location);
     }

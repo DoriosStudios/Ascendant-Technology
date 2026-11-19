@@ -13,7 +13,7 @@
                 "default": "geometry.alchemical_cloud"
             },
             "render_controllers": [
-                "controller.render.alchemical_potion"
+                "controller.render.alchemical_cloud"
             ]
         }
     }

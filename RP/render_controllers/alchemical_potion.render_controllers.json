@@ -9,6 +9,93 @@
                 }
             ],
             "textures": [
+                "Array.potions[query.property('ascendant:potion_visual')]"
+            ],
+            "arrays": {
+                "textures": {
+                    "Array.potions": [
+                        "Texture.swiftness_splash",
+                        "Texture.swiftness_lingering",
+                        "Texture.slowness_splash",
+                        "Texture.slowness_lingering",
+                        "Texture.leaping_splash",
+                        "Texture.leaping_lingering",
+                        "Texture.strength_splash",
+                        "Texture.strength_lingering",
+                        "Texture.healing_splash",
+                        "Texture.healing_lingering",
+                        "Texture.harming_splash",
+                        "Texture.harming_lingering",
+                        "Texture.poison_splash",
+                        "Texture.poison_lingering",
+                        "Texture.regeneration_splash",
+                        "Texture.regeneration_lingering",
+                        "Texture.nightvision_splash",
+                        "Texture.nightvision_lingering",
+                        "Texture.invisibility_splash",
+                        "Texture.invisibility_lingering",
+                        "Texture.fire_resistance_splash",
+                        "Texture.fire_resistance_lingering",
+                        "Texture.water_breathing_splash",
+                        "Texture.water_breathing_lingering",
+                        "Texture.weakness_splash",
+                        "Texture.weakness_lingering",
+                        "Texture.slow_falling_splash",
+                        "Texture.slow_falling_lingering",
+                        "Texture.turtle_master_splash",
+                        "Texture.turtle_master_lingering",
+                        "Texture.wind_charged_splash",
+                        "Texture.wind_charged_lingering",
+                        "Texture.weaving_splash",
+                        "Texture.weaving_lingering",
+                        "Texture.oozing_splash",
+                        "Texture.oozing_lingering",
+                        "Texture.infested_splash",
+                        "Texture.infested_lingering",
+                        "Texture.haste_splash",
+                        "Texture.haste_lingering",
+                        "Texture.resistance_splash",
+                        "Texture.resistance_lingering",
+                        "Texture.absorption_splash",
+                        "Texture.absorption_lingering",
+                        "Texture.health_boost_splash",
+                        "Texture.health_boost_lingering",
+                        "Texture.wither_splash",
+                        "Texture.wither_lingering",
+                        "Texture.levitation_splash",
+                        "Texture.levitation_lingering",
+                        "Texture.blindness_splash",
+                        "Texture.blindness_lingering",
+                        "Texture.darkness_splash",
+                        "Texture.darkness_lingering",
+                        "Texture.saturation_splash",
+                        "Texture.saturation_lingering",
+                        "Texture.marked_splash",
+                        "Texture.marked_lingering",
+                        "Texture.bleeding_splash",
+                        "Texture.bleeding_lingering",
+                        "Texture.blessed_splash",
+                        "Texture.blessed_lingering",
+                        "Texture.cursed_splash",
+                        "Texture.cursed_lingering",
+                        "Texture.berserk_splash",
+                        "Texture.berserk_lingering",
+                        "Texture.adaptive_resilience_splash",
+                        "Texture.adaptive_resilience_lingering",
+                        "Texture.soul_collector_splash",
+                        "Texture.soul_collector_lingering"
+                    ]
+                }
+            }
+        },
+        "controller.render.alchemical_cloud": {
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "textures": [
                 "Texture.default"
             ]
         }

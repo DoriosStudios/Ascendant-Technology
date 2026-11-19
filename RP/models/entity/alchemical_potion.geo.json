@@ -11,7 +11,7 @@
             },
             "bones": [
                 {
-                    "name": "bottle",
+                    "name": "body",
                     "pivot": [
                         0,
                         2,

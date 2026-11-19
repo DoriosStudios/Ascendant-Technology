@@ -72,6 +72,8 @@ export function processChamber(entity, container, stats, energy, xp, random = Ma
 }
 
 export function tickChamber(block) {
+    // Block ticks can resume before Core rebinds its scoreboard objectives on reload.
+    if (!globalThis.worldLoaded) return;
     const entity = Multiblock.EntityManager.getControllerEntityFromBlock(block);
     if (!entity || entity.getDynamicProperty(Multiblock.Constants.STATE_PROPERTY_ID) !== Multiblock.Constants.ACTIVE_STATE_VALUE) return;
     const raw = entity.getDynamicProperty(STATS_KEY);

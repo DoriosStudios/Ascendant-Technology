@@ -25,6 +25,7 @@ This update fixes Genetic Seed Synthesizer processing, restores missing recipes 
 - Increased **Cryofluid** coolant efficiency from 1.75x to 2.5x and its coolant tier from 2 to 4.
 
 ## BUG FIXES
+
 - Fixed missing localization entries and untranslated English text across all eight supported languages, including potion names, tooltips, machine help, network screens, and recipe books.
 - Fixed the Alchemical Station recipe cost text displaying an invalid Blaze amount. It now shows 12,000 DE and 250 mB for six bottles.
 - Fixed **Power Beacon** hitboxes across all five tiers, restoring mining while sneaking and opening the interface while standing. Newly placed beacons start selectable, and block selection recovers when the interaction helper is missing or its hitbox is disabled.
@@ -47,3 +48,5 @@ This update fixes Genetic Seed Synthesizer processing, restores missing recipes 
 ## THIRD-PARTY / INTEGRATION
 - Enderling Tear drops recognize Enderling, Blastling, Snareling, Watchling, and Endersent IDs across addon namespaces, including prefixed and suffixed variants. Compatible mobs receive the 1% drop chance.
 - Mobs declaring the `enderling` or `Enderling` family are also recognized. Projectile and inanimate families, plus projectile, ammo, goo, web, and trap IDs, are excluded.
+
+Contributors: @Kauziin

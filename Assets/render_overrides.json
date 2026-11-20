@@ -1,0 +1,24 @@
+{
+    "path_rules": [
+        {
+            "contains": "_conveyor_inclined.json",
+            "view": "iso-se"
+        },
+        {
+            "contains": "_conveyor_vertical.json",
+            "view": "iso-se",
+            "model_rotation": "90,0,0"
+        }
+    ],
+    "blocks": {
+        "utilitycraft:universal_cable": {
+            "hide_bones": ["up", "down", "east", "west", "cables_north", "cables_south"]
+        },
+        "utilitycraft:universal_exporter": {
+            "hide_bones": ["up", "down", "south", "east", "west", "cables_north"]
+        },
+        "utilitycraft:universal_importer": {
+            "hide_bones": ["up", "down", "south", "east", "west", "cables_north"]
+        }
+    }
+}

@@ -857,7 +857,11 @@ function handleBeforeBreak(event) {
 function handleAfterBreak(event) {
     const snapshot = snapshotBreakEvent(event);
     if (!snapshot) return;
-    snapshot.nativeDrop = takeNativeDropSnapshot(snapshot.dimension, snapshot.location, snapshot.blockId);
+    // Machine destruction also consumes this snapshot to replace its native drop.
+    // Claim it here only for the block conversions owned by mining effects.
+    if (normalizeBlockId(snapshot.blockId) === "minecraft:netherrack" || isBerserkLogBlockId(snapshot.blockId)) {
+        snapshot.nativeDrop = takeNativeDropSnapshot(snapshot.dimension, snapshot.location, snapshot.blockId);
+    }
 
     system.run(() => {
         const context = getEquipmentStatsContext(snapshot.player, STATSCORE.slots.mainhand, snapshot.expected);

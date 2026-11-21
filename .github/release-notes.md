@@ -16,7 +16,7 @@ This patch improves custom potion projectiles, sounds, and particles, fixes dupl
 ## BUG FIXES
 
 - Fixed an invalid-entity error when vanilla splash potion projectiles are removed, including splash water bottles.
-- Fixed **Compactor** and **Industrial Crucible** dropping duplicate machine items when mined. Stored resources and inventory contents are preserved.
+- Fixed duplicate block drops when mining AT machines, generators, and multiblock controllers, including empty blocks and blocks with stored resources. Each break now produces a single block item preserving stored energy, fluids, and gases, with inventory contents dropped separately.
 - Fixed inherited **Infuser** recipe previews in the **Catalyst Weaver** using the byproduct slot instead of the main output slot.
 - Fixed **Mob Chamber** throwing a storage initialization error after `/reload`. Processing now waits for world initialization before resuming.
 

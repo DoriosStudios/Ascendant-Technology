@@ -27,9 +27,11 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const snapshot = { dimension, location, typeId, items, used: false };
   const key = breakKey(dimension, location);
   pendingBreaks.set(key, snapshot);
-  system.run(() => {
+  // A run queued from beforeEvents can execute before the block's break callback
+  // in the same tick. Keep the snapshot through that callback and its deferred work.
+  system.runTimeout(() => {
     if (pendingBreaks.get(key) === snapshot) pendingBreaks.delete(key);
-  });
+  }, 2);
 });
 
 /** Takes the pre-break snapshot synchronously from a block break callback. */

@@ -79,5 +79,10 @@ export const machineInfoTerms = {
     "Tidal Surge": "ui.ascendant:machine_info.tidal_surge",
     "Bog Bloom": "ui.ascendant:machine_info.bog_bloom",
     "Flower Burst": "ui.ascendant:machine_info.flower_burst",
-    "Nether Resonance": "ui.ascendant:machine_info.nether_resonance"
+    "Nether Resonance": "ui.ascendant:machine_info.nether_resonance",
+    "Fuel": "ui.at.fuel",
+    "Crude Oil": "ui.at.resource.crude_oil",
+    "Petroleum": "ui.at.resource.petroleum",
+    "Diesel": "ui.at.resource.diesel",
+    "Lava": "ui.at.resource.lava"
 };

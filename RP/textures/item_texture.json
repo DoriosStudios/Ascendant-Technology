@@ -1603,6 +1603,390 @@
         },
         "utilitycraft_alchemical_soul_collector_lingering": {
             "textures": "textures/items/alchemy/soul_collector_lingering"
+        },
+        "utilitycraft_heavy_water_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/heavy_water_capsule_1"
+        },
+        "utilitycraft_heavy_water_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/heavy_water_capsule_2"
+        },
+        "utilitycraft_heavy_water_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/heavy_water_capsule_3"
+        },
+        "utilitycraft_heavy_water_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/heavy_water_capsule_4"
+        },
+        "utilitycraft_heavy_water_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/heavy_water_capsule_5"
+        },
+        "utilitycraft_heavy_water_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/heavy_water_capsule_6"
+        },
+        "utilitycraft_heavy_water_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/heavy_water_capsule_7"
+        },
+        "utilitycraft_heavy_water_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/heavy_water_capsule_8"
+        },
+        "utilitycraft_saline_coolant_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/saline_coolant_capsule_1"
+        },
+        "utilitycraft_saline_coolant_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/saline_coolant_capsule_2"
+        },
+        "utilitycraft_saline_coolant_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/saline_coolant_capsule_3"
+        },
+        "utilitycraft_saline_coolant_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/saline_coolant_capsule_4"
+        },
+        "utilitycraft_saline_coolant_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/saline_coolant_capsule_5"
+        },
+        "utilitycraft_saline_coolant_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/saline_coolant_capsule_6"
+        },
+        "utilitycraft_saline_coolant_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/saline_coolant_capsule_7"
+        },
+        "utilitycraft_saline_coolant_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/saline_coolant_capsule_8"
+        },
+        "utilitycraft_crude_oil_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/crude_oil_capsule_1"
+        },
+        "utilitycraft_crude_oil_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/crude_oil_capsule_2"
+        },
+        "utilitycraft_crude_oil_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/crude_oil_capsule_3"
+        },
+        "utilitycraft_crude_oil_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/crude_oil_capsule_4"
+        },
+        "utilitycraft_crude_oil_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/crude_oil_capsule_5"
+        },
+        "utilitycraft_crude_oil_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/crude_oil_capsule_6"
+        },
+        "utilitycraft_crude_oil_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/crude_oil_capsule_7"
+        },
+        "utilitycraft_crude_oil_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/crude_oil_capsule_8"
+        },
+        "utilitycraft_petroleum_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/petroleum_capsule_1"
+        },
+        "utilitycraft_petroleum_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/petroleum_capsule_2"
+        },
+        "utilitycraft_petroleum_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/petroleum_capsule_3"
+        },
+        "utilitycraft_petroleum_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/petroleum_capsule_4"
+        },
+        "utilitycraft_petroleum_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/petroleum_capsule_5"
+        },
+        "utilitycraft_petroleum_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/petroleum_capsule_6"
+        },
+        "utilitycraft_petroleum_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/petroleum_capsule_7"
+        },
+        "utilitycraft_petroleum_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/petroleum_capsule_8"
+        },
+        "utilitycraft_diesel_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/diesel_capsule_1"
+        },
+        "utilitycraft_diesel_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/diesel_capsule_2"
+        },
+        "utilitycraft_diesel_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/diesel_capsule_3"
+        },
+        "utilitycraft_diesel_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/diesel_capsule_4"
+        },
+        "utilitycraft_diesel_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/diesel_capsule_5"
+        },
+        "utilitycraft_diesel_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/diesel_capsule_6"
+        },
+        "utilitycraft_diesel_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/diesel_capsule_7"
+        },
+        "utilitycraft_diesel_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/diesel_capsule_8"
+        },
+        "utilitycraft_sulfuric_acid_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/sulfuric_acid_capsule_1"
+        },
+        "utilitycraft_sulfuric_acid_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/sulfuric_acid_capsule_2"
+        },
+        "utilitycraft_sulfuric_acid_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/sulfuric_acid_capsule_3"
+        },
+        "utilitycraft_sulfuric_acid_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/sulfuric_acid_capsule_4"
+        },
+        "utilitycraft_sulfuric_acid_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/sulfuric_acid_capsule_5"
+        },
+        "utilitycraft_sulfuric_acid_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/sulfuric_acid_capsule_6"
+        },
+        "utilitycraft_sulfuric_acid_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/sulfuric_acid_capsule_7"
+        },
+        "utilitycraft_sulfuric_acid_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/sulfuric_acid_capsule_8"
+        },
+        "utilitycraft_hydrogen_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_capsule_1"
+        },
+        "utilitycraft_hydrogen_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_capsule_2"
+        },
+        "utilitycraft_hydrogen_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_capsule_3"
+        },
+        "utilitycraft_hydrogen_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_capsule_4"
+        },
+        "utilitycraft_hydrogen_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_capsule_5"
+        },
+        "utilitycraft_hydrogen_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_capsule_6"
+        },
+        "utilitycraft_hydrogen_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_capsule_7"
+        },
+        "utilitycraft_hydrogen_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_capsule_8"
+        },
+        "utilitycraft_oxygen_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/oxygen_capsule_1"
+        },
+        "utilitycraft_oxygen_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/oxygen_capsule_2"
+        },
+        "utilitycraft_oxygen_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/oxygen_capsule_3"
+        },
+        "utilitycraft_oxygen_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/oxygen_capsule_4"
+        },
+        "utilitycraft_oxygen_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/oxygen_capsule_5"
+        },
+        "utilitycraft_oxygen_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/oxygen_capsule_6"
+        },
+        "utilitycraft_oxygen_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/oxygen_capsule_7"
+        },
+        "utilitycraft_oxygen_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/oxygen_capsule_8"
+        },
+        "utilitycraft_methane_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/methane_capsule_1"
+        },
+        "utilitycraft_methane_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/methane_capsule_2"
+        },
+        "utilitycraft_methane_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/methane_capsule_3"
+        },
+        "utilitycraft_methane_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/methane_capsule_4"
+        },
+        "utilitycraft_methane_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/methane_capsule_5"
+        },
+        "utilitycraft_methane_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/methane_capsule_6"
+        },
+        "utilitycraft_methane_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/methane_capsule_7"
+        },
+        "utilitycraft_methane_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/methane_capsule_8"
+        },
+        "utilitycraft_heated_saline_coolant_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/heated_saline_coolant_capsule_1"
+        },
+        "utilitycraft_heated_saline_coolant_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/heated_saline_coolant_capsule_2"
+        },
+        "utilitycraft_heated_saline_coolant_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/heated_saline_coolant_capsule_3"
+        },
+        "utilitycraft_heated_saline_coolant_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/heated_saline_coolant_capsule_4"
+        },
+        "utilitycraft_heated_saline_coolant_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/heated_saline_coolant_capsule_5"
+        },
+        "utilitycraft_heated_saline_coolant_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/heated_saline_coolant_capsule_6"
+        },
+        "utilitycraft_heated_saline_coolant_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/heated_saline_coolant_capsule_7"
+        },
+        "utilitycraft_heated_saline_coolant_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/heated_saline_coolant_capsule_8"
+        },
+        "utilitycraft_fluorine_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/fluorine_capsule_1"
+        },
+        "utilitycraft_fluorine_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/fluorine_capsule_2"
+        },
+        "utilitycraft_fluorine_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/fluorine_capsule_3"
+        },
+        "utilitycraft_fluorine_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/fluorine_capsule_4"
+        },
+        "utilitycraft_fluorine_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/fluorine_capsule_5"
+        },
+        "utilitycraft_fluorine_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/fluorine_capsule_6"
+        },
+        "utilitycraft_fluorine_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/fluorine_capsule_7"
+        },
+        "utilitycraft_fluorine_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/fluorine_capsule_8"
+        },
+        "utilitycraft_hydrogen_fluoride_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_fluoride_capsule_1"
+        },
+        "utilitycraft_hydrogen_fluoride_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_fluoride_capsule_2"
+        },
+        "utilitycraft_hydrogen_fluoride_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_fluoride_capsule_3"
+        },
+        "utilitycraft_hydrogen_fluoride_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_fluoride_capsule_4"
+        },
+        "utilitycraft_hydrogen_fluoride_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_fluoride_capsule_5"
+        },
+        "utilitycraft_hydrogen_fluoride_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_fluoride_capsule_6"
+        },
+        "utilitycraft_hydrogen_fluoride_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_fluoride_capsule_7"
+        },
+        "utilitycraft_hydrogen_fluoride_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/hydrogen_fluoride_capsule_8"
+        },
+        "utilitycraft_natural_uranium_hexafluoride_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/natural_uranium_hexafluoride_capsule_1"
+        },
+        "utilitycraft_natural_uranium_hexafluoride_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/natural_uranium_hexafluoride_capsule_2"
+        },
+        "utilitycraft_natural_uranium_hexafluoride_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/natural_uranium_hexafluoride_capsule_3"
+        },
+        "utilitycraft_natural_uranium_hexafluoride_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/natural_uranium_hexafluoride_capsule_4"
+        },
+        "utilitycraft_natural_uranium_hexafluoride_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/natural_uranium_hexafluoride_capsule_5"
+        },
+        "utilitycraft_natural_uranium_hexafluoride_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/natural_uranium_hexafluoride_capsule_6"
+        },
+        "utilitycraft_natural_uranium_hexafluoride_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/natural_uranium_hexafluoride_capsule_7"
+        },
+        "utilitycraft_natural_uranium_hexafluoride_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/natural_uranium_hexafluoride_capsule_8"
+        },
+        "utilitycraft_enriched_uranium_hexafluoride_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/enriched_uranium_hexafluoride_capsule_1"
+        },
+        "utilitycraft_enriched_uranium_hexafluoride_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/enriched_uranium_hexafluoride_capsule_2"
+        },
+        "utilitycraft_enriched_uranium_hexafluoride_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/enriched_uranium_hexafluoride_capsule_3"
+        },
+        "utilitycraft_enriched_uranium_hexafluoride_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/enriched_uranium_hexafluoride_capsule_4"
+        },
+        "utilitycraft_enriched_uranium_hexafluoride_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/enriched_uranium_hexafluoride_capsule_5"
+        },
+        "utilitycraft_enriched_uranium_hexafluoride_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/enriched_uranium_hexafluoride_capsule_6"
+        },
+        "utilitycraft_enriched_uranium_hexafluoride_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/enriched_uranium_hexafluoride_capsule_7"
+        },
+        "utilitycraft_enriched_uranium_hexafluoride_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/enriched_uranium_hexafluoride_capsule_8"
+        },
+        "utilitycraft_depleted_uranium_hexafluoride_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/depleted_uranium_hexafluoride_capsule_1"
+        },
+        "utilitycraft_depleted_uranium_hexafluoride_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/depleted_uranium_hexafluoride_capsule_2"
+        },
+        "utilitycraft_depleted_uranium_hexafluoride_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/depleted_uranium_hexafluoride_capsule_3"
+        },
+        "utilitycraft_depleted_uranium_hexafluoride_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/depleted_uranium_hexafluoride_capsule_4"
+        },
+        "utilitycraft_depleted_uranium_hexafluoride_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/depleted_uranium_hexafluoride_capsule_5"
+        },
+        "utilitycraft_depleted_uranium_hexafluoride_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/depleted_uranium_hexafluoride_capsule_6"
+        },
+        "utilitycraft_depleted_uranium_hexafluoride_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/depleted_uranium_hexafluoride_capsule_7"
+        },
+        "utilitycraft_depleted_uranium_hexafluoride_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/depleted_uranium_hexafluoride_capsule_8"
+        },
+        "utilitycraft_nuclear_waste_capsule_1": {
+            "textures": "textures/items/tools/capsules/chemistry/nuclear_waste_capsule_1"
+        },
+        "utilitycraft_nuclear_waste_capsule_2": {
+            "textures": "textures/items/tools/capsules/chemistry/nuclear_waste_capsule_2"
+        },
+        "utilitycraft_nuclear_waste_capsule_3": {
+            "textures": "textures/items/tools/capsules/chemistry/nuclear_waste_capsule_3"
+        },
+        "utilitycraft_nuclear_waste_capsule_4": {
+            "textures": "textures/items/tools/capsules/chemistry/nuclear_waste_capsule_4"
+        },
+        "utilitycraft_nuclear_waste_capsule_5": {
+            "textures": "textures/items/tools/capsules/chemistry/nuclear_waste_capsule_5"
+        },
+        "utilitycraft_nuclear_waste_capsule_6": {
+            "textures": "textures/items/tools/capsules/chemistry/nuclear_waste_capsule_6"
+        },
+        "utilitycraft_nuclear_waste_capsule_7": {
+            "textures": "textures/items/tools/capsules/chemistry/nuclear_waste_capsule_7"
+        },
+        "utilitycraft_nuclear_waste_capsule_8": {
+            "textures": "textures/items/tools/capsules/chemistry/nuclear_waste_capsule_8"
         }
     }
 }

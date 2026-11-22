@@ -13,7 +13,17 @@ const fluidFamilies = {
     water_capsule: "water",
     lava_capsule: "lava",
     xp_capsule: "xp",
+    heavy_water_capsule: "heavy_water",
+    saline_coolant_capsule: "saline_coolant",
+    crude_oil_capsule: "crude_oil",
+    petroleum_capsule: "petroleum",
+    diesel_capsule: "diesel",
+    sulfuric_acid_capsule: "sulfuric_acid",
 };
+
+const infiniteFluidFamilies = new Set([
+    "liquified_aetherium", "dark_matter", "cryofluid", "water", "lava", "xp",
+]);
 
 const fluidItems = {};
 const fluidOutputs = {};
@@ -34,13 +44,15 @@ for (const [capsule, fluid] of Object.entries(fluidFamilies)) {
         };
     }
 
-    const infiniteCapsule = `utilitycraft:${capsule}_infinite`;
-    fluidItems[infiniteCapsule] = {
-        type: fluid,
-        amount: infiniteCapacity,
-        output: infiniteCapsule,
-        infinite: true,
-    };
+    if (infiniteFluidFamilies.has(fluid)) {
+        const infiniteCapsule = `utilitycraft:${capsule}_infinite`;
+        fluidItems[infiniteCapsule] = {
+            type: fluid,
+            amount: infiniteCapacity,
+            output: infiniteCapsule,
+            infinite: true,
+        };
+    }
     fluidOutputs[fluid] = `utilitycraft:${capsule}_8`;
 }
 
@@ -60,19 +72,36 @@ DoriosLib.registry.registerFluidHolder({
 });
 
 const gasItems = {};
+const gasOutputs = {};
+const gasFamilies = {
+    steam_capsule: "steam",
+    hydrogen_capsule: "hydrogen_gas",
+    oxygen_capsule: "oxygen_gas",
+    methane_capsule: "methane_gas",
+    heated_saline_coolant_capsule: "heated_saline_coolant_gas",
+    fluorine_capsule: "fluorine_gas",
+    hydrogen_fluoride_capsule: "hydrogen_fluoride_gas",
+    natural_uranium_hexafluoride_capsule: "natural_uranium_hexafluoride_gas",
+    enriched_uranium_hexafluoride_capsule: "enriched_uranium_hexafluoride_gas",
+    depleted_uranium_hexafluoride_capsule: "depleted_uranium_hexafluoride_gas",
+    nuclear_waste_capsule: "nuclear_waste_gas",
+};
 
-for (let tier = 1; tier <= 8; tier++) {
-    gasItems[`utilitycraft:steam_capsule_${tier}`] = {
-        type: "steam",
-        amount: tier * 1000,
-        output: emptyCapsule,
-    };
+for (const [capsule, gas] of Object.entries(gasFamilies)) {
+    for (let tier = 1; tier <= 8; tier++) {
+        gasItems[`utilitycraft:${capsule}_${tier}`] = {
+            type: gas,
+            amount: tier * 1000,
+            output: emptyCapsule,
+        };
+    }
+    gasOutputs[gas] = `utilitycraft:${capsule}_8`;
 }
 
 DoriosLib.registry.registerGasItem(gasItems);
 DoriosLib.registry.registerGasHolder({
     [emptyCapsule]: {
-        types: { steam: "utilitycraft:steam_capsule_8" },
+        types: gasOutputs,
         required: capsuleCapacity,
     },
 });

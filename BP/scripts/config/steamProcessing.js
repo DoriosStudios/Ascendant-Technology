@@ -24,6 +24,10 @@ export const STEAM_BOILER_RECIPE = {
 };
 
 export const VAPORIZER_RECIPES = {
+    "utilitycraft:heavy_water_to_steam": {
+        inputFluid: { type: "heavy_water", amount: 1000 },
+        outputGas: { type: "steam", amount: 2000 }, cost: 2400, ticks: 100,
+    },
     "utilitycraft:water_to_steam": {
         inputFluid: { type: "water", amount: 1000 },
         outputGas: { type: "steam", amount: 1000 }, cost: 1600, ticks: 80,

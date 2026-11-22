@@ -1833,6 +1833,18 @@
         },
         "utilitycraft_vaporizer_on_down": {
             "textures": "textures/blocks/machines/vaporizer_on_down"
+        },
+        "utilitycraft_absolute_gas_tank": {
+            "textures": "textures/blocks/pipes/absolute_gas_tank"
+        },
+        "ascendant_tank_liquified_aetherium": {
+            "textures": "textures/entity/aetherium_fluid"
+        },
+        "ascendant_tank_dark_matter": {
+            "textures": "textures/entity/dark_matter_fluid"
+        },
+        "ascendant_tank_cryofluid": {
+            "textures": "textures/entity/cryofluid"
         }
     }
 }

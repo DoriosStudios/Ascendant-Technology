@@ -1,0 +1,94 @@
+{
+    "format_version": "1.19.20",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "ascendant:absolute_gas_tank",
+            "is_spawnable": false,
+            "is_summonable": true,
+            "is_experimental": false,
+            "properties": {
+                "ascendant:resource_visual": {
+                    "type": "int",
+                    "range": [
+                        0,
+                        10
+                    ],
+                    "default": 0,
+                    "client_sync": true
+                },
+                "ascendant:fill_level": {
+                    "type": "float",
+                    "range": [
+                        0.0,
+                        1.0
+                    ],
+                    "default": 0.0,
+                    "client_sync": true
+                }
+            }
+        },
+        "component_groups": {
+            "despawn": {
+                "minecraft:instant_despawn": {}
+            }
+        },
+        "components": {
+            "minecraft:type_family": {
+                "family": [
+                    "inanimate",
+                    "dorios:gas_container"
+                ]
+            },
+            "minecraft:damage_sensor": {
+                "triggers": [
+                    {
+                        "cause": "all",
+                        "deals_damage": false
+                    }
+                ]
+            },
+            "minecraft:health": {
+                "max": 1,
+                "min": 1,
+                "value": 1
+            },
+            "minecraft:collision_box": {
+                "height": 0,
+                "width": 0
+            },
+            "minecraft:physics": {
+                "has_collision": false,
+                "has_gravity": false
+            },
+            "minecraft:pushable": {
+                "is_pushable": false,
+                "is_pushable_by_piston": false
+            },
+            "minecraft:fire_immune": true,
+            "minecraft:scale": {
+                "value": 1
+            },
+            "minecraft:inside_block_notifier": {
+                "block_list": [
+                    {
+                        "block": {
+                            "name": "air"
+                        },
+                        "entered_block_event": {
+                            "event": "despawn"
+                        }
+                    }
+                ]
+            }
+        },
+        "events": {
+            "despawn": {
+                "add": {
+                    "component_groups": [
+                        "despawn"
+                    ]
+                }
+            }
+        }
+    }
+}

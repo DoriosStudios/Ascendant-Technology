@@ -1,0 +1,38 @@
+{
+    "format_version": "1.8.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "ascendant:absolute_gas_tank",
+            "materials": {
+                "default": "entity_alphablend"
+            },
+            "textures": {
+                "resource0": "textures/entity/steam_gas",
+                "resource1": "textures/entity/hydrogen_gas",
+                "resource2": "textures/entity/oxygen_gas",
+                "resource3": "textures/entity/methane_gas",
+                "resource4": "textures/entity/heated_saline_coolant_gas",
+                "resource5": "textures/entity/fluorine_gas",
+                "resource6": "textures/entity/hydrogen_fluoride_gas",
+                "resource7": "textures/entity/natural_uranium_hexafluoride_gas",
+                "resource8": "textures/entity/enriched_uranium_hexafluoride_gas",
+                "resource9": "textures/entity/depleted_uranium_hexafluoride_gas",
+                "resource10": "textures/entity/nuclear_waste_gas"
+            },
+            "geometry": {
+                "default": "geometry.utilitycraft_gas_tank_entity"
+            },
+            "render_controllers": [
+                "controller.render.ascendant_absolute_gas_tank"
+            ],
+            "animations": {
+                "fill": "animation.ascendant_absolute_gas_tank.fill"
+            },
+            "animation_controllers": [
+                {
+                    "gas_fill": "controller.animation.gas_fill"
+                }
+            ]
+        }
+    }
+}

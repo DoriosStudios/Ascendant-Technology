@@ -1,0 +1,35 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.ascendant_absolute_fluid_tank": {
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "arrays": {
+                "textures": {
+                    "Array.resources": [
+                        "Texture.resource0",
+                        "Texture.resource1",
+                        "Texture.resource2",
+                        "Texture.resource3",
+                        "Texture.resource4",
+                        "Texture.resource5",
+                        "Texture.resource6",
+                        "Texture.resource7",
+                        "Texture.resource8",
+                        "Texture.resource9",
+                        "Texture.resource10",
+                        "Texture.resource11",
+                        "Texture.resource12"
+                    ]
+                }
+            },
+            "textures": [
+                "Array.resources[query.property('ascendant:resource_visual')]"
+            ]
+        }
+    }
+}

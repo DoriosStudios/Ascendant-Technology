@@ -429,5 +429,20 @@
             "up": "utilitycraft_vaporizer_off_up",
             "down": "utilitycraft_vaporizer_off_down"
         }
+    },
+    "utilitycraft:absolute_fluid_tank": {
+        "sound": "metal"
+    },
+    "utilitycraft:absolute_gas_tank": {
+        "sound": "metal"
+    },
+    "utilitycraft:creative_liquified_aetherium_tank": {
+        "sound": "metal"
+    },
+    "utilitycraft:creative_dark_matter_tank": {
+        "sound": "metal"
+    },
+    "utilitycraft:creative_cryofluid_tank": {
+        "sound": "metal"
     }
 }

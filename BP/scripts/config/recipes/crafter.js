@@ -8,6 +8,9 @@ import * as DoriosLib from "DoriosLib/index.js";
  * crafting-table recipes intended for automation.
  */
 export const crafterRecipeAdditions = {
+    "aetherium_plate,glass,aetherium_plate,absolute_chip,ultimate_fluid_tank,absolute_chip,aetherium_plate,fluid_pipe,aetherium_plate": { output: "utilitycraft:absolute_fluid_tank", amount: 1 },
+    "aetherium_plate,glass,aetherium_plate,absolute_chip,ultimate_gas_tank,absolute_chip,aetherium_plate,gas_pipe,aetherium_plate": { output: "utilitycraft:absolute_gas_tank", amount: 1 },
+
     "steel_block,netherite_plate,steel_block,titanium_plate,machine_case,titanium_plate,steel_block,netherite_plate,steel_block": {
         output: "utilitycraft:network_center",
         amount: 1,

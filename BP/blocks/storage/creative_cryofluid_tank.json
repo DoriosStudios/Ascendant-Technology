@@ -1,0 +1,69 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "description": {
+            "identifier": "utilitycraft:creative_cryofluid_tank",
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:geometry": "geometry.utilitycraft_creative_fluid_tank",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "utilitycraft_creative_fluid_tank",
+                    "face_dimming": false,
+                    "ambient_occlusion": false,
+                    "render_method": "blend"
+                },
+                "fluid": {
+                    "texture": "ascendant_tank_cryofluid",
+                    "face_dimming": false,
+                    "ambient_occlusion": false,
+                    "render_method": "blend"
+                }
+            },
+            "minecraft:collision_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    16,
+                    12
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    16,
+                    12
+                ]
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1.1
+            },
+            "minecraft:light_dampening": 0,
+            "tag:dorios:fluid": {},
+            "ascendant:resource_tank": {
+                "resource": "fluid",
+                "infinite": true,
+                "type": "cryofluid"
+            },
+            "minecraft:tick": {
+                "interval_range": [
+                    20,
+                    20
+                ]
+            },
+            "minecraft:destructible_by_explosion": false
+        }
+    }
+}

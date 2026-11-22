@@ -16,8 +16,12 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const location = { ...block.location };
   const typeId = block.typeId;
   if (typeId !== "minecraft:netherrack" && !/(?:_log|_wood|_stem|_hyphae|bamboo_block)$/.test(typeId)
-    && !dimension.getEntitiesAtBlockLocation(location).some(entity =>
-      entity.getComponent("minecraft:inventory"))) return;
+    && !dimension.getEntitiesAtBlockLocation(location).some(entity => {
+      const family = entity.getComponent("minecraft:type_family");
+      return entity.getComponent("minecraft:inventory")
+        || family?.hasTypeFamily("dorios:fluid_container")
+        || family?.hasTypeFamily("dorios:gas_container");
+    })) return;
 
   const items = new Map();
   for (const entity of dimension.getEntities({ type: "item", location: block.center(), maxDistance: 3 })) {

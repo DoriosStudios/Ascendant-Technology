@@ -155,6 +155,19 @@
                             "utilitycraft:titanium_conveyor_inclined",
                             "utilitycraft:titanium_conveyor_vertical"
                         ]
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "utilitycraft:absolute_fluid_tank",
+                            "name": "at:itemGroup.name.tanks"
+                        },
+                        "items": [
+                            "utilitycraft:absolute_fluid_tank",
+                            "utilitycraft:absolute_gas_tank",
+                            "utilitycraft:creative_liquified_aetherium_tank",
+                            "utilitycraft:creative_dark_matter_tank",
+                            "utilitycraft:creative_cryofluid_tank"
+                        ]
                     }
                 ]
             },

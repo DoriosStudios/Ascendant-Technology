@@ -1,0 +1,61 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "description": {
+            "identifier": "utilitycraft:absolute_fluid_tank",
+            "menu_category": {
+                "category": "construction"
+            }
+        },
+        "components": {
+            "minecraft:geometry": "geometry.utilitycraft_fluid_tank",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "utilitycraft_absolute_tank",
+                    "face_dimming": false,
+                    "ambient_occlusion": false,
+                    "render_method": "alpha_test"
+                }
+            },
+            "minecraft:collision_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    16,
+                    12
+                ]
+            },
+            "minecraft:selection_box": {
+                "origin": [
+                    -6,
+                    0,
+                    -6
+                ],
+                "size": [
+                    12,
+                    16,
+                    12
+                ]
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 1.1
+            },
+            "minecraft:light_dampening": 0,
+            "tag:dorios:fluid": {},
+            "ascendant:resource_tank": {
+                "resource": "fluid"
+            },
+            "minecraft:tick": {
+                "interval_range": [
+                    4,
+                    4
+                ]
+            },
+            "minecraft:destructible_by_explosion": false
+        }
+    }
+}

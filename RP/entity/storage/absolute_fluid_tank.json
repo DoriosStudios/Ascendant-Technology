@@ -1,0 +1,40 @@
+{
+    "format_version": "1.8.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "ascendant:absolute_fluid_tank",
+            "materials": {
+                "default": "entity_alphablend"
+            },
+            "textures": {
+                "resource0": "textures/entity/milk_fluid",
+                "resource1": "textures/entity/water_fluid",
+                "resource2": "textures/entity/lava_fluid",
+                "resource3": "textures/entity/xp_fluid",
+                "resource4": "textures/entity/heavy_water_fluid",
+                "resource5": "textures/entity/saline_coolant_fluid",
+                "resource6": "textures/static/images/crude_oil",
+                "resource7": "textures/static/images/petroleum",
+                "resource8": "textures/static/images/diesel",
+                "resource9": "textures/entity/sulfuric_acid_fluid",
+                "resource10": "textures/entity/aetherium_fluid",
+                "resource11": "textures/entity/dark_matter_fluid",
+                "resource12": "textures/entity/cryofluid"
+            },
+            "geometry": {
+                "default": "geometry.utilitycraft_fluid_tank_entity"
+            },
+            "render_controllers": [
+                "controller.render.ascendant_absolute_fluid_tank"
+            ],
+            "animations": {
+                "fill": "animation.ascendant_absolute_fluid_tank.fill"
+            },
+            "animation_controllers": [
+                {
+                    "fluid_fill": "controller.animation.fluid_fill"
+                }
+            ]
+        }
+    }
+}

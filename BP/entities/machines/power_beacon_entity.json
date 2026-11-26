@@ -91,13 +91,14 @@
                             "name": "air"
                         },
                         "entered_block_event": {
-                            "event": "despawn"
+                            "event": "utilitycraft:container_check_air"
                         }
                     }
                 ]
             }
         },
         "events": {
+            "utilitycraft:container_check_air": {},
             "utilitycraft:selection_full": {
                 "set_property": { "utilitycraft:selection_empty": false },
                 "remove": { "component_groups": ["utilitycraft:selection_empty"] },
